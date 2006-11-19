@@ -8,7 +8,7 @@ import com.trazere.util.ObjectUtils;
  * @param <Category> Type of the categories.
  * @param <Code> Type of the codes.
  */
-public class SimpleReportEntry<Category, Code extends Enum>
+public class SimpleReportEntry<Category, Code extends Enum<?>>
 implements ReportEntry<Category, Code> {
 	/** Category of the report entry. May be <code>null</code>. */
 	protected final Category _category;
@@ -45,6 +45,7 @@ implements ReportEntry<Category, Code> {
 		return _message;
 	}
 
+	@Override
 	public int hashCode() {
 		int result = getClass().hashCode();
 		if (null != _category) {
@@ -59,6 +60,7 @@ implements ReportEntry<Category, Code> {
 		return result;
 	}
 
+	@Override
 	public boolean equals(final Object object) {
 		if (this == object) {
 			return true;
@@ -70,6 +72,7 @@ implements ReportEntry<Category, Code> {
 		}
 	}
 
+	@Override
 	public String toString() {
 		return ReportUtils.render(_category, _code, _message);
 	}

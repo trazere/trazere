@@ -8,7 +8,11 @@ package com.trazere.util.report;
  */
 public class ReportWrapperException
 extends Exception {
-	protected final ReportEntry _entry;
+	/**
+	 * DOCME
+	 */
+	private static final long serialVersionUID = 1L;
+	protected final ReportEntry<?, ?> _entry;
 
 	/**
 	 * Instanciate a new exception using the given entry.

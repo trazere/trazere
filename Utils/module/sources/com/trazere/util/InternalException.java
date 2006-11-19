@@ -5,6 +5,8 @@ package com.trazere.util;
  */
 public class InternalException
 extends RuntimeException {
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Instanciate a new exception.
 	 */

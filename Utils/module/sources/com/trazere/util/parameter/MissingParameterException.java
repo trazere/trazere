@@ -5,6 +5,8 @@ package com.trazere.util.parameter;
  */
 public class MissingParameterException
 extends ParameterException {
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Instanciate a new exception.
 	 */

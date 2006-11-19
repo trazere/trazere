@@ -29,7 +29,7 @@ public class ReportUtils {
 	 * @param message Message of the report entry. May be <code>null</code>.
 	 * @return The representation.
 	 */
-	public static <Category, Code extends Enum> String render(final Category category, final Code code, final String message) {
+	public static <Category, Code extends Enum<?>> String render(final Category category, final Code code, final String message) {
 		final StringBuilder builder = new StringBuilder();
 		if (null != category) {
 			builder.append(category);
@@ -55,11 +55,13 @@ public class ReportUtils {
 	/**
 	 * Build a new report entry by chaining the given report entries.
 	 * 
+	 * @param <Category> Type of the categories.
+	 * @param <Code> Type of the codes.
 	 * @param entry The leading report entry.
 	 * @param causeEntry The cause report entry.
 	 * @return The chained report entry.
 	 */
-	public static ReportEntry chain(final ReportEntry<?, ?> entry, final ReportEntry causeEntry) {
+	public static <Category, Code extends Enum<?>> ReportEntry<Category, Code> chain(final ReportEntry<Category, Code> entry, final ReportEntry<?, ?> causeEntry) {
 		Assert.notNull(entry);
 
 		// Chain.
@@ -77,7 +79,7 @@ public class ReportUtils {
 	 * @param causeEntry The cause report entry.
 	 * @return The chained report entry.
 	 */
-	public static <Category, Code extends Enum> ReportEntry<Category, Code> chain(final Category category, final Code code, final String message, final ReportEntry causeEntry) {
+	public static <Category, Code extends Enum<?>> ReportEntry<Category, Code> chain(final Category category, final Code code, final String message, final ReportEntry<?, ?> causeEntry) {
 		Assert.notNull(causeEntry);
 
 		// Build the new entry..

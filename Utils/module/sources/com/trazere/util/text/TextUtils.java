@@ -46,7 +46,7 @@ public class TextUtils {
 		// Split the string.
 		final List<String> allTokens = Arrays.asList(string.split(delimiter.replaceAll("[^\\w]", "\\\\$0")));
 
-		final List<String> tokens = new ArrayList(allTokens.size());
+		final List<String> tokens = new ArrayList<String>(allTokens.size());
 		for (final String token : allTokens) {
 			final String trimmedToken = trim ? token.trim() : token;
 			if (!ignoreEmpty || trimmedToken.length() > 0) {

@@ -138,7 +138,7 @@ implements ReportStore<Entry> {
 
 		// Fill the cache.
 		if (null != _entries) {
-			_entries.add(new ReportStoreEntry(date, level, entry));
+			_entries.add(new ReportStoreEntry<Entry>(date, level, entry));
 		}
 	}
 
@@ -170,13 +170,13 @@ implements ReportStore<Entry> {
 				} else {
 					LOG.warn("Reseting report file at path " + _path + " with incompatilble headers.");
 					_writer = getWriter(headers, false);
-					_entries = new ArrayList();
+					_entries = new ArrayList<ReportStoreEntry<Entry>>();
 				}
 			} else {
 				// Build the writer for a new file.
 				LOG.info("Creating report file at path " + _path);
 				_writer = getWriter(headers, false);
-				_entries = new ArrayList();
+				_entries = new ArrayList<ReportStoreEntry<Entry>>();
 			}
 		}
 	}
@@ -204,7 +204,7 @@ implements ReportStore<Entry> {
 		}
 	}
 
-	public int countEntries(Filter<ReportStoreEntry<Entry>> filter)
+	public int countEntries(final Filter<ReportStoreEntry<Entry>> filter)
 	throws ReportException {
 		// Load the entries.
 		try {
@@ -237,7 +237,7 @@ implements ReportStore<Entry> {
 			closeWriter();
 
 			// Read the ile.
-			_entries = new ArrayList();
+			_entries = new ArrayList<ReportStoreEntry<Entry>>();
 
 			if (_path.exists()) {
 				// Open the file.
@@ -323,7 +323,7 @@ implements ReportStore<Entry> {
 	}
 
 	protected List<String> buildHeaders() {
-		final List<String> headers = new ArrayList();
+		final List<String> headers = new ArrayList<String>();
 		headers.add(getDateHeader());
 		headers.add(getLevelHeader());
 		headers.addAll(getEntryHeaders());

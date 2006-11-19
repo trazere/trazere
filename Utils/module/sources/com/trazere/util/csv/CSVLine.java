@@ -23,7 +23,7 @@ public class CSVLine {
 		 * Instanciate a new builder.
 		 */
 		public Builder() {
-			_fields = new HashMap();
+			_fields = new HashMap<String, String>();
 		}
 
 		/**
@@ -35,7 +35,7 @@ public class CSVLine {
 			Assert.notNull(line);
 
 			// Initialization.
-			_fields = new HashMap(line.getFields());
+			_fields = new HashMap<String, String>(line.getFields());
 		}
 
 		/**
@@ -47,7 +47,7 @@ public class CSVLine {
 			Assert.notNull(fields);
 
 			// Initialization.
-			_fields = new HashMap(fields);
+			_fields = new HashMap<String, String>(fields);
 		}
 
 		/**
@@ -107,13 +107,14 @@ public class CSVLine {
 		 * @return The built CSV line.
 		 */
 		public CSVLine build() {
-			return new CSVLine(new HashMap(_fields));
+			return new CSVLine(new HashMap<String, String>(_fields));
 		}
 	}
 
 	/**
 	 * Empty line.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final CSVLine EMPTY = new CSVLine(Collections.EMPTY_MAP);
 
 	/**
@@ -129,7 +130,7 @@ public class CSVLine {
 		Assert.notNull(header);
 
 		// Build.
-		final Map<String, String> fields = new HashMap();
+		final Map<String, String> fields = new HashMap<String, String>();
 		if (null != value) {
 			fields.put(header, value);
 		}
@@ -152,7 +153,7 @@ public class CSVLine {
 		Assert.notNull(header2);
 
 		// Build.
-		final Map<String, String> fields = new HashMap();
+		final Map<String, String> fields = new HashMap<String, String>();
 		if (null != value1) {
 			fields.put(header1, value1);
 		}
@@ -209,10 +210,12 @@ public class CSVLine {
 		return _fields;
 	}
 
+	@Override
 	public int hashCode() {
 		return _fields.hashCode();
 	}
 
+	@Override
 	public boolean equals(final Object object) {
 		if (this == object) {
 			return true;
@@ -224,6 +227,7 @@ public class CSVLine {
 		}
 	}
 
+	@Override
 	public String toString() {
 		return _fields.toString();
 	}

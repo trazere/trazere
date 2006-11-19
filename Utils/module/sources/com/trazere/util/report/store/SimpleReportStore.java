@@ -21,7 +21,7 @@ import com.trazere.util.report.ReportLevel;
 public class SimpleReportStore<Entry extends ReportEntry<?, ?>>
 implements ReportStore<Entry> {
 	/** Report store entries. */
-	protected final List<ReportStoreEntry<Entry>> _entries = new ArrayList();
+	protected final List<ReportStoreEntry<Entry>> _entries = new ArrayList<ReportStoreEntry<Entry>>();
 
 	/** Higher bound. */
 	protected final int _limit;

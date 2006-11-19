@@ -27,7 +27,7 @@ public abstract class LazyMap<K, V> {
 	 */
 	public LazyMap() {
 		// Initialization.
-		_entries = new HashMap();
+		_entries = new HashMap<K, V>();
 	}
 
 	/**
@@ -39,7 +39,7 @@ public abstract class LazyMap<K, V> {
 		Assert.notNull(entries);
 
 		// Initialization.
-		_entries = new HashMap(entries);
+		_entries = new HashMap<K, V>(entries);
 	}
 
 	/**
@@ -148,6 +148,7 @@ public abstract class LazyMap<K, V> {
 		_entries.clear();
 	}
 
+	@Override
 	public String toString() {
 		return _entries.toString();
 	}

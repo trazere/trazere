@@ -25,7 +25,7 @@ public class Tuple3<T1, T2, T3> {
 	 * @return The result of the comparison as defined by the {@link Comparable#compareTo(Object)} method.
 	 * @see Comparable#compareTo(Object)
 	 */
-	public static <T1 extends Comparable, T2 extends Comparable, T3 extends Comparable> int compare(final Tuple3<T1, T2, T3> tuple1, final Tuple3<T1, T2, T3> tuple2, final Tuple3<T1, T2, T3> tuple3) {
+	public static <T1 extends Comparable<T1>, T2 extends Comparable<T2>, T3 extends Comparable<T3>> int compare(final Tuple3<T1, T2, T3> tuple1, final Tuple3<T1, T2, T3> tuple2, final Tuple3<T1, T2, T3> tuple3) {
 		Assert.notNull(tuple1);
 		Assert.notNull(tuple2);
 		Assert.notNull(tuple3);
@@ -94,6 +94,7 @@ public class Tuple3<T1, T2, T3> {
 		return _third;
 	}
 
+	@Override
 	public int hashCode() {
 		int result = getClass().hashCode();
 		if (null != _first) {
@@ -108,6 +109,7 @@ public class Tuple3<T1, T2, T3> {
 		return result;
 	}
 
+	@Override
 	public boolean equals(final Object object) {
 		if (this == object) {
 			return true;
@@ -119,6 +121,7 @@ public class Tuple3<T1, T2, T3> {
 		}
 	}
 
+	@Override
 	public String toString() {
 		return "(" + _first + "," + _second + "," + _third + ")";
 	}

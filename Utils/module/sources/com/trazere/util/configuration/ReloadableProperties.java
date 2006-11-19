@@ -34,7 +34,7 @@ public class ReloadableProperties {
 	 * @param path Path of the file containing the properties.
 	 * @param local Flag indicating wether the properties may be overridden in a <em>local</em> file.
 	 */
-	public ReloadableProperties(final String path, boolean local) {
+	public ReloadableProperties(final String path, final boolean local) {
 		this(path, local, null);
 	}
 
@@ -56,7 +56,7 @@ public class ReloadableProperties {
 	 * @param local Flag indicating wether the properties may be overridden in a <em>local</em> file.
 	 * @param defaults Default properties.
 	 */
-	public ReloadableProperties(final String path, boolean local, final Properties defaults) {
+	public ReloadableProperties(final String path, final boolean local, final Properties defaults) {
 		// Initialization.
 		_path = path;
 		_local = local;
@@ -129,6 +129,7 @@ public class ReloadableProperties {
 		return _properties;
 	}
 
+	@Override
 	public String toString() {
 		return String.valueOf(_properties);
 	}

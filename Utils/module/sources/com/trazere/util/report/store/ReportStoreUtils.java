@@ -27,29 +27,29 @@ public class ReportStoreUtils {
 	 * @param codes Codes of the entries to accept. May be <code>null</code> to accept all codes.
 	 * @return The filter.
 	 */
-	public static <Category, Code extends Enum, Entry extends ReportEntry<Category, Code>> Filter<ReportStoreEntry<Entry>> buildFilter(final Date startDate, final Date endDate, final Set<Category> categories, final Set<Code> codes) {
+	public static <Category, Code extends Enum<?>, Entry extends ReportEntry<Category, Code>> Filter<ReportStoreEntry<Entry>> buildFilter(final Date startDate, final Date endDate, final Set<Category> categories, final Set<Code> codes) {
 		return new Filter<ReportStoreEntry<Entry>>() {
 			public boolean filter(final ReportStoreEntry<Entry> entry) {
 				// Start date.
 				if (null != startDate && entry.getDate().before(startDate)) {
 					return false;
 				}
-				
+
 				// End date.
 				if (null != endDate && !entry.getDate().before(endDate)) {
 					return false;
 				}
-				
+
 				// Category.
 				if (null != categories && !categories.contains(entry.getEntry().getCategory())) {
 					return false;
 				}
-				
+
 				// Code.
 				if (null != codes && !codes.contains(entry.getEntry().getCode())) {
 					return false;
 				}
-				
+
 				return true;
 			}
 		};
@@ -69,7 +69,7 @@ public class ReportStoreUtils {
 	public static <Entry extends ReportEntry<?, ?>> List<ReportStoreEntry<Entry>> filterEntries(final List<ReportStoreEntry<Entry>> entries, final Filter<ReportStoreEntry<Entry>> filter, final int limit, final boolean fromEnd) {
 		// Filtered entries.
 		if (null != filter) {
-			final List<ReportStoreEntry<Entry>> filteredEntries = new ArrayList();
+			final List<ReportStoreEntry<Entry>> filteredEntries = new ArrayList<ReportStoreEntry<Entry>>();
 
 			// Filter the entries, and limit the result.
 			if (fromEnd) {
@@ -104,11 +104,11 @@ public class ReportStoreUtils {
 			} else {
 				truncatedEntries = entries.subList(0, limit);
 			}
-			return new ArrayList(truncatedEntries);
+			return new ArrayList<ReportStoreEntry<Entry>>(truncatedEntries);
 		}
 
 		// All entries.
-		return new ArrayList(entries);
+		return new ArrayList<ReportStoreEntry<Entry>>(entries);
 	}
 
 	private ReportStoreUtils() {

@@ -23,19 +23,22 @@ extends CSVReportStore<TaskReportEntry> {
 		super(path);
 	}
 
+	@Override
 	protected List<String> getEntryHeaders() {
 		return TaskCSVReportStoreHeaders.ENTRY_HEADERS;
 	}
 
+	@Override
 	protected Map<String, String> serializeEntry(final TaskReportEntry entry)
 	throws ReportException {
-		final Map<String, String> fields = new HashMap();
+		final Map<String, String> fields = new HashMap<String, String>();
 		fields.put(TaskCSVReportStoreHeaders.NAME, entry.getCategory());
 		fields.put(TaskCSVReportStoreHeaders.STATUS, entry.getCode().toString());
 
 		return fields;
 	}
 
+	@Override
 	protected TaskReportEntry buildEntry(final CSVLine line)
 	throws ReportException {
 		// Get the name.

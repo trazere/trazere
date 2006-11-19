@@ -7,10 +7,12 @@ import java.util.Observable;
  */
 public class SimpleObservable
 extends Observable {
+	@Override
 	public void clearChanged() {
 		super.clearChanged();
 	}
 
+	@Override
 	public void setChanged() {
 		super.setChanged();
 	}

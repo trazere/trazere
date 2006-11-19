@@ -1,5 +1,8 @@
 package com.trazere.util.type;
 
+import static com.trazere.util.type.Maybe.Tag.NONE;
+import static com.trazere.util.type.Maybe.Tag.SOME;
+
 import com.trazere.util.Assert;
 import com.trazere.util.InternalException;
 
@@ -22,11 +25,13 @@ public abstract class Maybe<T> {
 	/**
 	 * Constant for the <code>NONE</code> instances.
 	 */
-	protected static final Maybe _NONE = new Maybe() {
+	protected static final Maybe<?> _NONE = new Maybe<Object>() {
+		@Override
 		public Tag getTag() {
 			return Tag.NONE;
 		}
 
+		@Override
 		public Object getValue() {
 			throw new UnsupportedOperationException();
 		}
@@ -38,8 +43,9 @@ public abstract class Maybe<T> {
 	 * @param <T> Type of the value.
 	 * @return The instance.
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T> Maybe<T> none() {
-		return _NONE;
+		return (Maybe<T>) _NONE;
 	}
 
 	/**
@@ -54,20 +60,24 @@ public abstract class Maybe<T> {
 
 		// Build.
 		return new Maybe<T>() {
+			@Override
 			public Tag getTag() {
 				return Tag.SOME;
 			}
 
+			@Override
 			public T getValue() {
 				return value;
 			}
 
+			@Override
 			public int hashCode() {
 				int result = getClass().hashCode();
 				result = result * 31 + value.hashCode();
 				return result;
 			}
 
+			@Override
 			public boolean equals(final Object object) {
 				if (this == object) {
 					return true;
@@ -94,7 +104,11 @@ public abstract class Maybe<T> {
 	 * @return The instance.
 	 */
 	public static <T> Maybe<T> fromValue(final T value) {
-		return null != value ? some(value) : (Maybe<T>) none();
+		if (null != value) {
+			return some(value);
+		} else {
+			return none();
+		}
 	}
 
 	/**

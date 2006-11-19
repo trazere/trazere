@@ -93,6 +93,7 @@ public abstract class LazyValue<T> {
 	protected abstract T computeValue()
 	throws CannotComputeValueException;
 
+	@Override
 	public String toString() {
 		if (_memoized) {
 			return null != _value ? _value.toString() : "null";

@@ -5,6 +5,8 @@ package com.trazere.util.report;
  */
 public class ReportException
 extends Exception {
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Instanciate a new exception.
 	 */

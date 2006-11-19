@@ -68,6 +68,7 @@ public class ReportStoreEntry<Entry extends ReportEntry<?, ?>> {
 		return _entry;
 	}
 
+	@Override
 	public int hashCode() {
 		int result = getClass().hashCode();
 		result = result * 31 + _date.hashCode();
@@ -76,11 +77,12 @@ public class ReportStoreEntry<Entry extends ReportEntry<?, ?>> {
 		return result;
 	}
 
+	@Override
 	public boolean equals(final Object object) {
 		if (this == object) {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
-			final ReportStoreEntry entry = (ReportStoreEntry) object;
+			final ReportStoreEntry<Entry> entry = (ReportStoreEntry<Entry>) object;
 			return _date.equals(entry._date) && _level == entry._level && _entry.equals(entry._entry);
 		} else {
 			return false;
