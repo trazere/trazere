@@ -12,6 +12,8 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 import com.trazere.util.Assert;
+import com.trazere.util.function.Function;
+import com.trazere.util.type.Tuple2;
 
 /**
  * The <code>CollectionUtils</code> class provides various helpers regarding the manipulation of collections and maps.
@@ -378,7 +380,7 @@ public class CollectionUtils {
 	 * 
 	 * @param <T> Type of the elements.
 	 * @param <L> Type of the list to instanciate.
-	 * @param list List.
+	 * @param list List to reverse. It is not modified by the method.
 	 * @param type Class of the list to build. Must be instanciable with no arguments.
 	 * @return The reversed <code>List</code>.
 	 */
@@ -389,6 +391,71 @@ public class CollectionUtils {
 		final L results = buildCollection(type);
 		results.addAll(list);
 		Collections.reverse(results);
+		return results;
+	}
+
+	/**
+	 * Sort the given values topologically according.
+	 * <p>
+	 * The dependencies between the values are computed using the given function. This function must compute the values whose the argument value depends on. The
+	 * computed value must belong to the values to sort.
+	 * <p>
+	 * This method places the dependencies before the value which depend on them. The sort is stable and fails when the dependencies form a cyclic graph.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <L> Type of the list to instanciate.
+	 * @param values Values to sort. The given collection is not modified by the method.
+	 * @param dependencyFunction Function which computes the dependencies.
+	 * @param type Class of the list to build. Must be instanciable with no arguments.
+	 * @return The sorted values.
+	 */
+	public static <T, L extends List<T>> List<T> topologicalSort(final Collection<T> values, final Function<T, ? extends Collection<T>> dependencyFunction, final Class<L> type) {
+		Assert.notNull(values);
+		Assert.notNull(dependencyFunction);
+
+		// Compute the dependencies.
+		final Collection<Tuple2<T, T>> dependencies = new ArrayList<Tuple2<T, T>>();
+		for (final T value : values) {
+			for (final T dependencyValue : dependencyFunction.apply(value)) {
+				dependencies.add(new Tuple2<T, T>(value, dependencyValue));
+			}
+		}
+
+		// Sort the values.
+		final List<T> results = buildCollection(type);
+
+		final Collection<T> pendingValues = new ArrayList<T>(values);
+		while (!pendingValues.isEmpty()) {
+			// Find the leaves.
+			final Set<T> leafValues = new HashSet<T>(values);
+			for (final Tuple2<T, T> dependency : dependencies) {
+				leafValues.remove(dependency.getFirst());
+			}
+
+			if (leafValues.isEmpty()) {
+				throw new RuntimeException("Cyclic graph !");
+			}
+
+			// Add the leaves to the result.
+			final Iterator<T> pendingValuesIt = pendingValues.iterator();
+			while (pendingValuesIt.hasNext()) {
+				final T value = pendingValuesIt.next();
+				if (leafValues.contains(value)) {
+					results.add(value);
+					pendingValuesIt.remove();
+				}
+			}
+
+			// Clean the dependencies.
+			final Iterator<Tuple2<T, T>> dependenciesIt = dependencies.iterator();
+			while (dependenciesIt.hasNext()) {
+				final Tuple2<T, T> dependency = dependenciesIt.next();
+				if (leafValues.contains(dependency.getSecond())) {
+					dependenciesIt.remove();
+				}
+			}
+		}
+
 		return results;
 	}
 
