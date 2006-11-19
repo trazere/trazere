@@ -152,7 +152,7 @@ public class CollectionUtils {
 	 */
 	public static <T> Set<T> set(final T value) {
 		// Build the set.
-		final Set<T> set = new HashSet(1);
+		final Set<T> set = new HashSet<T>(1);
 		set.add(value);
 
 		return set;
@@ -171,7 +171,7 @@ public class CollectionUtils {
 	 */
 	public static <T> Set<T> set(final T value1, final T value2) {
 		// Build the set.
-		final Set<T> set = new HashSet(2);
+		final Set<T> set = new HashSet<T>(2);
 		set.add(value1);
 		set.add(value2);
 
@@ -192,7 +192,7 @@ public class CollectionUtils {
 	 */
 	public static <T> Set<T> set(final T value1, final T value2, final T value3) {
 		// Build the set.
-		final Set<T> set = new HashSet(3);
+		final Set<T> set = new HashSet<T>(3);
 		set.add(value1);
 		set.add(value2);
 		set.add(value3);
@@ -236,7 +236,7 @@ public class CollectionUtils {
 	 */
 	public static <K, V> Map<K, V> map(final K key, final V value) {
 		// Build the map.
-		final Map<K, V> result = new HashMap();
+		final Map<K, V> result = new HashMap<K, V>();
 		result.put(key, value);
 
 		return result;
@@ -258,7 +258,7 @@ public class CollectionUtils {
 	 */
 	public static <K, V> Map<K, V> map(final K key1, final V value1, final K key2, final V value2) {
 		// Build the map.
-		final Map<K, V> result = new HashMap();
+		final Map<K, V> result = new HashMap<K, V>();
 		result.put(key2, value2);
 		result.put(key1, value1);
 
@@ -382,7 +382,7 @@ public class CollectionUtils {
 	 * @param type Class of the list to build. Must be instanciable with no arguments.
 	 * @return The reversed <code>List</code>.
 	 */
-	public static <T, L extends List> L reverse(final List<T> list, final Class<L> type) {
+	public static <T, L extends List<T>> L reverse(final List<T> list, final Class<L> type) {
 		Assert.notNull(list);
 
 		// Build the list.

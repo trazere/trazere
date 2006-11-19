@@ -47,6 +47,7 @@ implements ReportEntry<String, TaskStatus> {
 		return _status.getMessage();
 	}
 
+	@Override
 	public int hashCode() {
 		int result = getClass().hashCode();
 		result = result * 31 + _name.hashCode();
@@ -54,6 +55,7 @@ implements ReportEntry<String, TaskStatus> {
 		return result;
 	}
 
+	@Override
 	public boolean equals(final Object object) {
 		if (this == object) {
 			return true;

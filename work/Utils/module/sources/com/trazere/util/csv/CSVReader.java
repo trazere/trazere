@@ -4,6 +4,7 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Iterator;
@@ -78,9 +79,9 @@ public class CSVReader {
 		// Initialization.
 		_scanner = new Scanner(reader);
 		_delimiter = delimiter;
-		_options = Collections.unmodifiableSet(EnumSet.copyOf(options));
+		_options = Collections.unmodifiableSet(EnumSet.copyOf((Collection<CSVReaderOption>) options)); // FIXME: useless cast, eclipse bug workaround
 
-		final List<String> headers = new ArrayList();
+		final List<String> headers = new ArrayList<String>();
 		_headers = Collections.unmodifiableList(headers);
 
 		// Read the headers from the input.
@@ -111,7 +112,7 @@ public class CSVReader {
 		// Initialize the instance.
 		_scanner = new Scanner(reader);
 		_delimiter = delimiter;
-		_headers = Collections.unmodifiableList(new ArrayList(headers));
+		_headers = Collections.unmodifiableList(new ArrayList<String>(headers));
 		_options = Collections.unmodifiableSet(EnumSet.copyOf(options));
 	}
 
@@ -167,7 +168,7 @@ public class CSVReader {
 			do {
 				// Read the next line.
 				LOG.debug("Fetching line (" + (_nextEntryLine + 1) + ")");
-				final List line = readLine();
+				final List<String> line = readLine();
 				if (null != line) {
 					_nextEntryLine += 1;
 
@@ -204,7 +205,7 @@ public class CSVReader {
 		}
 
 		// Read the line.
-		final List<String> line = new ArrayList();
+		final List<String> line = new ArrayList<String>();
 		readLine(line);
 		return line;
 	}

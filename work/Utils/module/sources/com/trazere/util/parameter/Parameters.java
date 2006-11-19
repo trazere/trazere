@@ -31,7 +31,7 @@ public class Parameters<T> {
 		 */
 		public Builder() {
 			// Initialization.
-			_parameters = new HashMap();
+			_parameters = new HashMap<String, T>();
 		}
 
 		/**
@@ -43,7 +43,7 @@ public class Parameters<T> {
 			Assert.notNull(parameters);
 
 			// Initialization.
-			_parameters = new HashMap(parameters._parameters);
+			_parameters = new HashMap<String, T>(parameters._parameters);
 		}
 
 		/**
@@ -223,14 +223,15 @@ public class Parameters<T> {
 		 * @return The built parameter set.
 		 */
 		public Parameters<T> build() {
-			return new Parameters<T>(new HashMap(_parameters));
+			return new Parameters<T>(new HashMap<String, T>(_parameters));
 		}
 	}
 
 	/**
 	 * Empty parameter set.
 	 */
-	public static final Parameters EMPTY = new Parameters(Collections.EMPTY_MAP);
+	@SuppressWarnings("unchecked")
+	public static final Parameters<?> EMPTY = new Parameters<Object>(Collections.EMPTY_MAP);
 
 	/**
 	 * Build a new single parameter set with the given name and value.
@@ -246,7 +247,7 @@ public class Parameters<T> {
 		Assert.notNull(name);
 
 		// Build.
-		final Map<String, T> parameters = new HashMap();
+		final Map<String, T> parameters = new HashMap<String, T>();
 		if (null != value) {
 			parameters.put(name, value);
 		}
@@ -270,7 +271,7 @@ public class Parameters<T> {
 		Assert.notNull(name2);
 
 		// Build.
-		final Map<String, T> parameters = new HashMap();
+		final Map<String, T> parameters = new HashMap<String, T>();
 		if (null != value1) {
 			parameters.put(name1, value1);
 		}
@@ -290,6 +291,7 @@ public class Parameters<T> {
 	 * @param parameters2 Second set of parameters.
 	 * @return The union parameter set.
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T> Parameters<T> union(final Parameters<T> parameters1, final Parameters<T> parameters2) {
 		Assert.notNull(parameters1);
 		Assert.notNull(parameters2);
@@ -377,10 +379,12 @@ public class Parameters<T> {
 		}
 	}
 
+	@Override
 	public int hashCode() {
 		return _parameters.hashCode();
 	}
 
+	@Override
 	public boolean equals(final Object object) {
 		if (this == object) {
 			return true;
@@ -392,6 +396,7 @@ public class Parameters<T> {
 		}
 	}
 
+	@Override
 	public String toString() {
 		final StringBuilder builder = new StringBuilder();
 		builder.append("[");

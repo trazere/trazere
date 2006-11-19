@@ -312,7 +312,7 @@ public class Scanner {
 	/**
 	 * Close the reader of the receiver scanner.
 	 * 
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public void close()
 	throws IOException {

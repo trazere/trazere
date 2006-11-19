@@ -8,7 +8,7 @@ package com.trazere.util.report;
  * @param <Category> Type of the categories.
  * @param <Code> Type of the codes.
  */
-public interface ReportEntry<Category, Code extends Enum> {
+public interface ReportEntry<Category, Code extends Enum<?>> {
 	/**
 	 * Get the category of the receiver report entry.
 	 * 

@@ -3,6 +3,7 @@ package com.trazere.util.csv;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
@@ -34,7 +35,7 @@ public class CSVWriter {
 	 * @param headers Headers of the CSV output.
 	 * @param options Options.
 	 */
-	public CSVWriter(final Writer writer, final String delimiter, final List headers, final EnumSet<CSVWriterOption> options) {
+	public CSVWriter(final Writer writer, final String delimiter, final List<String> headers, final EnumSet<CSVWriterOption> options) {
 		Assert.notNull(writer);
 		Assert.notNull(delimiter);
 		Assert.expression(delimiter.length() > 0, "Empty delimiter");
@@ -43,8 +44,8 @@ public class CSVWriter {
 		// Initialization.
 		_writer = writer;
 		_delimiter = delimiter;
-		_headers = Collections.unmodifiableList(new ArrayList(headers));
-		_options = Collections.unmodifiableSet(EnumSet.copyOf(options));
+		_headers = Collections.unmodifiableList(new ArrayList<String>(headers));
+		_options = Collections.unmodifiableSet(EnumSet.copyOf((Collection<CSVWriterOption>) options)); // FIXME: useless cast, eclipse bug workaround
 	}
 
 	/**
@@ -128,7 +129,7 @@ public class CSVWriter {
 
 	/**
 	 * Escape the given CSV field value if needed.
-	 *
+	 * 
 	 * @param value Value to escape.
 	 * @return The escapted value.
 	 */
@@ -150,7 +151,7 @@ public class CSVWriter {
 
 	/**
 	 * Close the underlying writer of the receiver CSV writer.
-	 *
+	 * 
 	 * @throws IOException
 	 */
 	public void close()

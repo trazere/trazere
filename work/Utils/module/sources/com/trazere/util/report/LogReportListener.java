@@ -19,7 +19,7 @@ implements ReportListener<Entry> {
 
 	/**
 	 * Instanciate a new listener with the given logger.
-	 *
+	 * 
 	 * @param log Logger to use.
 	 */
 	public LogReportListener(final Log log) {
@@ -31,7 +31,7 @@ implements ReportListener<Entry> {
 
 	/**
 	 * Get the logger used by the receiver listener.
-	 *
+	 * 
 	 * @return The logger.
 	 */
 	public Log getLog() {

@@ -24,7 +24,7 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 	protected final Class<C> _familyType;
 
 	/** Families of values identified by their keys. */
-	protected final Map<K, C> _families = new HashMap();
+	protected final Map<K, C> _families = new HashMap<K, C>();
 
 	/**
 	 * Build a new family map with the given type of collection.
@@ -159,10 +159,12 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 		}
 	}
 
+	@Override
 	public int hashCode() {
 		return _families.hashCode();
 	}
 
+	@Override
 	public boolean equals(final Object object) {
 		if (this == object) {
 			return true;
@@ -174,6 +176,7 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 		}
 	}
 
+	@Override
 	public String toString() {
 		return _families.toString();
 	}

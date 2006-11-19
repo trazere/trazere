@@ -5,6 +5,8 @@ package com.trazere.util.configuration;
  */
 public class ConfigurationException
 extends Exception {
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Instanciate a new exception.
 	 */

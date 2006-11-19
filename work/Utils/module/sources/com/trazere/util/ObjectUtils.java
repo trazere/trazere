@@ -31,7 +31,7 @@ public class ObjectUtils {
 	 * @return The result of the comparison as defined by the {@link Comparable#compareTo(Object)} method.
 	 * @see Comparable#compareTo(Object)
 	 */
-	public static <T extends Comparable> int compare(final T object1, final T object2) {
+	public static <T extends Comparable<T>> int compare(final T object1, final T object2) {
 		// Compare.
 		if (null == object1) {
 			return null == object2 ? 0 : -1;
