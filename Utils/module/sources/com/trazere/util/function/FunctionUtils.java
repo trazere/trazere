@@ -21,7 +21,8 @@ import java.util.Map;
 import java.util.Set;
 
 import com.trazere.util.Assert;
-import com.trazere.util.collection.CollectionUtils;
+import com.trazere.util.collection.CollectionFactory;
+import com.trazere.util.collection.MapFactory;
 
 /**
  * The <code>FunctionUtils</code> provides various helpers regarding the manipulation of filters and functions.
@@ -34,7 +35,25 @@ import com.trazere.util.collection.CollectionUtils;
  */
 public class FunctionUtils {
 	/**
-	 * Filter the given collection with the given filter function.
+	 * Filter the given values with the given filter function.
+	 * 
+	 * @param <T> Type of the values to filter.
+	 * @param <C> Type of the result collection to build.
+	 * @param values Values to filter.
+	 * @param filter Filter function to use.
+	 * @param factory Factory to use to build the result collection.
+	 * @return The accepted values.
+	 * @see #filter(Collection, Filter, Collection)
+	 */
+	public static <T, C extends Collection<T>> C filter(final Collection<? extends T> values, final Filter<T> filter, final CollectionFactory<T, C> factory) {
+		Assert.notNull(factory);
+
+		// Filter.
+		return filter(values, filter, factory.build());
+	}
+
+	/**
+	 * Filter the given values with the given filter function and populate the given result collection with them.
 	 * <p>
 	 * This method applies the filter function to every value of the given collection and returns a collection of the accepted values.
 	 * 
@@ -42,15 +61,15 @@ public class FunctionUtils {
 	 * @param <C> Type of the result collection to build.
 	 * @param values Values to filter.
 	 * @param filter Filter function to use.
-	 * @param type Class of the result collection to build. Must be instanciable with no arguments.
-	 * @return A <code>Collection</code> containing the accepted values.
+	 * @param results The collection to populate with the results.
+	 * @return The populated result collection.
 	 */
-	public static <T, C extends Collection<T>> C filter(final Collection<? extends T> values, final Filter<T> filter, final Class<C> type) {
+	public static <T, C extends Collection<T>> C filter(final Collection<? extends T> values, final Filter<T> filter, final C results) {
 		Assert.notNull(values);
 		Assert.notNull(filter);
+		Assert.notNull(results);
 
 		// Filter.
-		final C results = CollectionUtils.buildCollection(type);
 		for (final T value : values) {
 			if (filter.filter(value)) {
 				results.add(value);
@@ -60,7 +79,26 @@ public class FunctionUtils {
 	}
 
 	/**
-	 * Filter the given map with the given filter function.
+	 * Filter the given bindings with the given filter function.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <M> Type of the result map to build.
+	 * @param bindings Bindings to filter.
+	 * @param filter Filter function to use.
+	 * @param factory Factory to use to build the result map.
+	 * @return The accepted bindings.
+	 * @see #filter(Map, Filter2, Map)
+	 */
+	public static <K, V, M extends Map<K, V>> M filter(final Map<? extends K, ? extends V> bindings, final Filter2<K, V> filter, final MapFactory<K, V, M> factory) {
+		Assert.notNull(factory);
+
+		// Filter.
+		return filter(bindings, filter, factory.build());
+	}
+
+	/**
+	 * Filter the given bindings with the given filter function and populate the given result map with them.
 	 * <p>
 	 * This method applies the filter function to every binding of the given map and returns a map containing the accepted bindings. The keys and the values of
 	 * the map are respectively passed as first and second arguments to the filter function.
@@ -68,18 +106,18 @@ public class FunctionUtils {
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param <M> Type of the result map to build.
-	 * @param map Map to filter.
+	 * @param bindings Bindings to filter.
 	 * @param filter Filter function to use.
-	 * @param type Class of the result map to build. Must be instanciable with no arguments.
-	 * @return A <code>Map</code> containing the accepted bindings.
+	 * @param results The map to populate with the results.
+	 * @return The populated result map.
 	 */
-	public static <K, V, M extends Map<K, V>> M filter(final Map<? extends K, ? extends V> map, final Filter2<K, V> filter, final Class<M> type) {
-		Assert.notNull(map);
+	public static <K, V, M extends Map<K, V>> M filter(final Map<? extends K, ? extends V> bindings, final Filter2<K, V> filter, final M results) {
+		Assert.notNull(bindings);
 		Assert.notNull(filter);
+		Assert.notNull(results);
 
 		// Filter.
-		final M results = CollectionUtils.buildMap(type);
-		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
+		for (final Map.Entry<? extends K, ? extends V> entry : bindings.entrySet()) {
 			final K key = entry.getKey();
 			final V value = entry.getValue();
 			if (filter.filter(key, value)) {
@@ -90,7 +128,26 @@ public class FunctionUtils {
 	}
 
 	/**
-	 * Filter the given map with the given filter function.
+	 * Filter the given bindings with the given filter function.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <S> Type of the result set to build.
+	 * @param bindings Bindings to filter.
+	 * @param filter Filter function to use.
+	 * @param factory Factory to use to build the result set.
+	 * @return The accepted keys.
+	 * @see #filterKeys(Map, Filter2, Set)
+	 */
+	public static <K, V, S extends Set<K>> S filterKeys(final Map<? extends K, ? extends V> bindings, final Filter2<K, V> filter, final CollectionFactory<K, S> factory) {
+		Assert.notNull(factory);
+
+		// Filter.
+		return filterKeys(bindings, filter, factory.build());
+	}
+
+	/**
+	 * Filter the given bindings with the given filter function and populate the given result set with their keys.
 	 * <p>
 	 * This method applies the filter function to every binding of the given map and returns a set of the keys of the accepted bindings. The keys and the values
 	 * of the map are respectively passed as first and second arguments to filter function.
@@ -98,18 +155,18 @@ public class FunctionUtils {
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param <S> Type of the result set to build.
-	 * @param map Map to filter.
+	 * @param bindings Bindings to filter.
 	 * @param filter Filter function to use.
-	 * @param type Class of the result set to build. Must be instanciable with no arguments.
-	 * @return A <code>Set</code> containing the accepted keys.
+	 * @param results The set to populate with the results.
+	 * @return The populated result set.
 	 */
-	public static <K, V, S extends Set<K>> S filterKeys(final Map<? extends K, ? extends V> map, final Filter2<K, V> filter, final Class<S> type) {
-		Assert.notNull(map);
+	public static <K, V, S extends Set<K>> S filterKeys(final Map<? extends K, ? extends V> bindings, final Filter2<K, V> filter, final S results) {
+		Assert.notNull(bindings);
 		Assert.notNull(filter);
+		Assert.notNull(results);
 
 		// Filter.
-		final S results = CollectionUtils.buildCollection(type);
-		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
+		for (final Map.Entry<? extends K, ? extends V> entry : bindings.entrySet()) {
 			final K key = entry.getKey();
 			final V value = entry.getValue();
 			if (filter.filter(key, value)) {
@@ -120,7 +177,26 @@ public class FunctionUtils {
 	}
 
 	/**
-	 * Filter the given map with the given filter function.
+	 * Filter the given bindings with the given filter function.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <C> Type of the result collection to build.
+	 * @param bindings Bindings to filter.
+	 * @param filter Filter function to use.
+	 * @param factory Factory to use to build the result collection.
+	 * @return The accepted values.
+	 * @see #filterValues(Map, Filter2, Collection)
+	 */
+	public static <K, V, C extends Collection<V>> C filterValues(final Map<? extends K, ? extends V> bindings, final Filter2<K, V> filter, final CollectionFactory<V, C> factory) {
+		Assert.notNull(factory);
+
+		// Filter.
+		return filterValues(bindings, filter, factory.build());
+	}
+
+	/**
+	 * Filter the given bindings with the given filter function and populate the given result collection with their values.
 	 * <p>
 	 * This method applies the filter function to every binding of the given map and returns a collection of the values of the accepted bindings. The keys and
 	 * the values of the map are respectively passed as first and second arguments to the filter function.
@@ -128,18 +204,18 @@ public class FunctionUtils {
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param <C> Type of the result collection to build.
-	 * @param map Map to filter.
+	 * @param bindings Bindings to filter.
 	 * @param filter Filter function to use.
-	 * @param type Class of the result collection to build. Must be instanciable with no arguments.
-	 * @return A <code>Collection</code> containing the accepted values.
+	 * @param results The collection to populate with the results.
+	 * @return The populated result collection.
 	 */
-	public static <K, V, C extends Collection<V>> C filterValues(final Map<? extends K, ? extends V> map, final Filter2<K, V> filter, final Class<C> type) {
-		Assert.notNull(map);
+	public static <K, V, C extends Collection<V>> C filterValues(final Map<? extends K, ? extends V> bindings, final Filter2<K, V> filter, final C results) {
+		Assert.notNull(bindings);
 		Assert.notNull(filter);
+		Assert.notNull(results);
 
 		// Filter.
-		final C results = CollectionUtils.buildCollection(type);
-		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
+		for (final Map.Entry<? extends K, ? extends V> entry : bindings.entrySet()) {
 			final K key = entry.getKey();
 			final V value = entry.getValue();
 			if (filter.filter(key, value)) {
@@ -250,15 +326,35 @@ public class FunctionUtils {
 	 * @param values Argument values.
 	 * @param function Function to apply.
 	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
-	 * @param type Class of the result collection to build. Must be instanciable with no arguments.
-	 * @return A <code>Collection</code> containing the results of the function applications.
+	 * @param factory Factory to use to build the result collection.
+	 * @return The results of the function applications.
+	 * @see #map(Collection, Function, boolean, Collection)
 	 */
-	public static <T1, T2, C extends Collection<T2>> C map(final Collection<? extends T1> values, final Function<T1, T2> function, final boolean ignoreNull, final Class<C> type) {
-		Assert.notNull(values);
-		Assert.notNull(function);
+	public static <T1, T2, C extends Collection<T2>> C map(final Collection<? extends T1> values, final Function<T1, T2> function, final boolean ignoreNull, final CollectionFactory<T2, C> factory) {
+		Assert.notNull(factory);
 
 		// Map.
-		final C results = CollectionUtils.buildCollection(type);
+		return map(values, function, ignoreNull, factory.build(values.size()));
+	}
+
+	/**
+	 * Apply the given function to the given values and populate the given result collection with the results.
+	 * 
+	 * @param <T1> Type of the argument values.
+	 * @param <T2> Type of the result values.
+	 * @param <C> Type of the result collection to build.
+	 * @param values Argument values.
+	 * @param function Function to apply.
+	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
+	 * @param results The collection to populate with the results.
+	 * @return The populated result collection.
+	 */
+	public static <T1, T2, C extends Collection<T2>> C map(final Collection<? extends T1> values, final Function<T1, T2> function, final boolean ignoreNull, final C results) {
+		Assert.notNull(values);
+		Assert.notNull(function);
+		Assert.notNull(results);
+
+		// Map.
 		for (final T1 value : values) {
 			final T2 result = function.apply(value);
 			if (null != result || !ignoreNull) {
@@ -269,7 +365,28 @@ public class FunctionUtils {
 	}
 
 	/**
-	 * Apply the given function to the bindings of the given map and return a map of the results associated to their argument keys.
+	 * Apply the given function to the given bindings and return a map of the results associated to their argument keys.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V1> Type of the argument values.
+	 * @param <V2> Type of the result values.
+	 * @param <M> Type of the result map to build.
+	 * @param bindings Argument bindings.
+	 * @param function Function to apply.
+	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
+	 * @param factory Factory to use to build the result map.
+	 * @return A map of the function applications results associated to the corresponding argument keys.
+	 * @see #map(Map, Function2, boolean, Map)
+	 */
+	public static <K, V1, V2, M extends Map<K, V2>> M map(final Map<? extends K, ? extends V1> bindings, final Function2<K, V1, V2> function, final boolean ignoreNull, final MapFactory<K, V2, M> factory) {
+		Assert.notNull(factory);
+
+		// Map.
+		return map(bindings, function, ignoreNull, factory.build(bindings.size()));
+	}
+
+	/**
+	 * Apply the given function to the given bindings and populate the given result map with the results associated to their argument keys.
 	 * <p>
 	 * This method applies the function to every binding of the given map. The keys and the values of the map are respectively passed as first and second
 	 * arguments to the function.
@@ -278,19 +395,19 @@ public class FunctionUtils {
 	 * @param <V1> Type of the argument values.
 	 * @param <V2> Type of the result values.
 	 * @param <M> Type of the result map to build.
-	 * @param map Argument map.
+	 * @param bindings Argument bindings.
 	 * @param function Function to apply.
 	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
-	 * @param type Class of the result map to build. Must be instanciable with no arguments.
-	 * @return A <code>Map</code> containing the results of the function applications identified by the corresponding argument keys.
+	 * @param results The map to populate with the results.
+	 * @return The populated result map.
 	 */
-	public static <K, V1, V2, M extends Map<K, V2>> M map(final Map<? extends K, ? extends V1> map, final Function2<K, V1, V2> function, final boolean ignoreNull, final Class<M> type) {
-		Assert.notNull(map);
+	public static <K, V1, V2, M extends Map<K, V2>> M map(final Map<? extends K, ? extends V1> bindings, final Function2<K, V1, V2> function, final boolean ignoreNull, final M results) {
+		Assert.notNull(bindings);
 		Assert.notNull(function);
+		Assert.notNull(results);
 
 		// Map.
-		final M results = CollectionUtils.buildMap(type);
-		for (final Map.Entry<? extends K, ? extends V1> entry : map.entrySet()) {
+		for (final Map.Entry<? extends K, ? extends V1> entry : bindings.entrySet()) {
 			final K key = entry.getKey();
 			final V1 value = entry.getValue();
 			final V2 result = function.apply(key, value);
@@ -310,15 +427,35 @@ public class FunctionUtils {
 	 * @param keys Keys to map.
 	 * @param function Function computing the values.
 	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
-	 * @param type Class of the result map to build. Must be instanciable with no arguments.
-	 * @return A <code>Map</code> containing the results of the function applications identified by the corresponding argument keys.
+	 * @param factory Factory to use to build the result map.
+	 * @return A map of the function application results associated to the corresponding argument keys.
+	 * @see #mapKeys(Set, Function, boolean, Map)
 	 */
-	public static <K, V, M extends Map<K, V>> Map<K, V> mapKeys(final Set<? extends K> keys, final Function<K, V> function, final boolean ignoreNull, final Class<M> type) {
-		Assert.notNull(keys);
-		Assert.notNull(function);
+	public static <K, V, M extends Map<K, V>> Map<K, V> mapKeys(final Set<? extends K> keys, final Function<K, V> function, final boolean ignoreNull, final MapFactory<K, V, M> factory) {
+		Assert.notNull(factory);
 
 		// Map the keys.
-		final M results = CollectionUtils.buildMap(type);
+		return mapKeys(keys, function, ignoreNull, factory.build(keys.size()));
+	}
+
+	/**
+	 * Apply the given function to the given keys and populate the given result map of the results associated to their argument keys.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <M> Type of the result map to build.
+	 * @param keys Keys to map.
+	 * @param function Function computing the values.
+	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
+	 * @param results The map to populate with the results.
+	 * @return The populated result map.
+	 */
+	public static <K, V, M extends Map<K, V>> Map<K, V> mapKeys(final Set<? extends K> keys, final Function<K, V> function, final boolean ignoreNull, final M results) {
+		Assert.notNull(keys);
+		Assert.notNull(function);
+		Assert.notNull(results);
+
+		// Map the keys.
 		for (final K key : keys) {
 			final V value = function.apply(key);
 			if (null != value || !ignoreNull) {
@@ -330,6 +467,26 @@ public class FunctionUtils {
 
 	/**
 	 * Apply the given function to the given values and build a map of the argument values associated to their corresponding results.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <M> Type of the result map to build.
+	 * @param values Values to map.
+	 * @param function Function computing the keys.
+	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
+	 * @param factory Factory to use to build the result map.
+	 * @return A map of the argument values associated to the corresponding function application results.
+	 * @see #mapValues(Collection, Function, boolean, Map)
+	 */
+	public static <K, V, M extends Map<K, V>> M mapValues(final Collection<? extends V> values, final Function<V, K> function, final boolean ignoreNull, final MapFactory<K, V, M> factory) {
+		Assert.notNull(factory);
+
+		// Map the values.
+		return mapValues(values, function, ignoreNull, factory.build(values.size()));
+	}
+
+	/**
+	 * Apply the given function to the given values and populate the given result map with the argument values associated to their corresponding results.
 	 * <p>
 	 * When the function return a same key for different values, the last value is associated to the key in the result map.
 	 * 
@@ -339,15 +496,15 @@ public class FunctionUtils {
 	 * @param values Values to map.
 	 * @param function Function computing the keys.
 	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
-	 * @param type Class of the result map to build. Must be instanciable with no arguments.
-	 * @return A <code>Map</code> containing the argument values identified by the corresponding result of the function application.
+	 * @param results The map to populate with the results.
+	 * @return The populated result map.
 	 */
-	public static <K, V, M extends Map<K, V>> M mapValues(final Collection<? extends V> values, final Function<V, K> function, final boolean ignoreNull, final Class<M> type) {
+	public static <K, V, M extends Map<K, V>> M mapValues(final Collection<? extends V> values, final Function<V, K> function, final boolean ignoreNull, final M results) {
 		Assert.notNull(values);
 		Assert.notNull(function);
+		Assert.notNull(results);
 
 		// Map the values.
-		final M results = CollectionUtils.buildMap(type);
 		for (final V value : values) {
 			final K key = function.apply(value);
 			if (null != key || !ignoreNull) {
@@ -367,15 +524,36 @@ public class FunctionUtils {
 	 * @param map Map to read.
 	 * @param function Function to apply.
 	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
-	 * @param type Class of the result map to build. Must be instanciable with no arguments.
-	 * @return A <code>Map</code> containing the values corresponding the the argument keys associated to the result keys.
+	 * @param factory Factory to use to build the result map.
+	 * @return A map of the values corresponding to the argument keys associated to the result keys.
+	 * @see #remap(Map, Function, boolean, Map)
 	 */
-	public static <K1, K2, V, M extends Map<K2, V>> M remap(final Map<? extends K1, ? extends V> map, final Function<K1, K2> function, final boolean ignoreNull, final Class<M> type) {
-		Assert.notNull(map);
-		Assert.notNull(function);
+	public static <K1, K2, V, M extends Map<K2, V>> M remap(final Map<? extends K1, ? extends V> map, final Function<K1, K2> function, final boolean ignoreNull, final MapFactory<K2, V, M> factory) {
+		Assert.notNull(factory);
 
 		// Remap.
-		final M results = CollectionUtils.buildMap(type);
+		return remap(map, function, ignoreNull, factory.build(map.size()));
+	}
+
+	/**
+	 * Apply the given function to the keys of the given map and populate the given result map with the values corresponding to the argument keys associated to the result keys.
+	 * 
+	 * @param <K1> Type of the argument keys.
+	 * @param <K2> Type of the result keys.
+	 * @param <V> Type of the values.
+	 * @param <M> Type of the result map to build.
+	 * @param map Map to read.
+	 * @param function Function to apply.
+	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
+	 * @param results The map to populate with the results.
+	 * @return The populated result map.
+	 */
+	public static <K1, K2, V, M extends Map<K2, V>> M remap(final Map<? extends K1, ? extends V> map, final Function<K1, K2> function, final boolean ignoreNull, final M results) {
+		Assert.notNull(map);
+		Assert.notNull(function);
+		Assert.notNull(results);
+
+		// Remap.
 		for (final Map.Entry<? extends K1, ? extends V> entry : map.entrySet()) {
 			final K1 key = entry.getKey();
 			final K2 newKey = function.apply(key);
@@ -388,7 +566,28 @@ public class FunctionUtils {
 	}
 
 	/**
-	 * Apply the given function to the bindings of the given map and return a map of the values associated to the result keys.
+	 * Apply the given function to the given bindings and return a map of the values associated to the result keys.
+	 * 
+	 * @param <K1> Type of the argument keys.
+	 * @param <K2> Type of the result keys.
+	 * @param <V> Type of the values.
+	 * @param <M> Type of the result map to build.
+	 * @param bindings Argument bindings.
+	 * @param function Function to apply.
+	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
+	 * @param factory Factory to use to build the result map.
+	 * @return A map of the values associated to the corresponding result keys.
+	 * @see #remap(Map, Function2, boolean, Map)
+	 */
+	public static <K1, K2, V, M extends Map<K2, V>> M remap(final Map<? extends K1, ? extends V> bindings, final Function2<K1, V, K2> function, final boolean ignoreNull, final MapFactory<K2, V, M> factory) {
+		Assert.notNull(factory);
+
+		// Remap.
+		return remap(bindings, function, ignoreNull, factory.build(bindings.size()));
+	}
+
+	/**
+	 * Apply the given function to the given bindings and populate the given result map with the values associated to the result keys.
 	 * <p>
 	 * This method applies the function to every binding of the given map. The keys and the values of the map are respectively passed as first and second
 	 * arguments to the function.
@@ -397,19 +596,19 @@ public class FunctionUtils {
 	 * @param <K2> Type of the result keys.
 	 * @param <V> Type of the values.
 	 * @param <M> Type of the result map to build.
-	 * @param map Map to read.
+	 * @param bindings Argument bindings.
 	 * @param function Function to apply.
 	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
-	 * @param type Class of the result map to build. Must be instanciable with no arguments.
-	 * @return A <code>Map</code> containing the values associated to the result keys.
+	 * @param results The map to populate with the results.
+	 * @return The populated result map.
 	 */
-	public static <K1, K2, V, M extends Map<K2, V>> M remap(final Map<? extends K1, ? extends V> map, final Function2<K1, V, K2> function, final boolean ignoreNull, final Class<M> type) {
-		Assert.notNull(map);
+	public static <K1, K2, V, M extends Map<K2, V>> M remap(final Map<? extends K1, ? extends V> bindings, final Function2<K1, V, K2> function, final boolean ignoreNull, final M results) {
+		Assert.notNull(bindings);
 		Assert.notNull(function);
+		Assert.notNull(results);
 
 		// Remap.
-		final M results = CollectionUtils.buildMap(type);
-		for (final Map.Entry<? extends K1, ? extends V> entry : map.entrySet()) {
+		for (final Map.Entry<? extends K1, ? extends V> entry : bindings.entrySet()) {
 			final K1 key = entry.getKey();
 			final V value = entry.getValue();
 			final K2 newKey = function.apply(key, value);
