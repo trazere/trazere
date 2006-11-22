@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="tools.impl">
+	<!-- Imports -->
+	<import file="../../module/modules.xml" />
+	<import file="${trazere.ant.env}" />
+
+	<!-- Commons logging -->
+	<property name="tools.commons-logging" location="${tools.module}/commons-logging-1.1" />
+	<path id="tools.commons-logging.classpath">
+		<fileset id="tools.commons-logging.jars" dir="${tools.commons-logging}">
+			<include name="commons-logging.jar" />
+		</fileset>
+	</path>
+</project>
