@@ -35,8 +35,8 @@ import com.trazere.util.Assert;
  * @param <C> Type of the collections to build.
  */
 public class FamilyMap<K, V, C extends Collection<V>> {
-	/** Class of the collections to build. */
-	protected final Class<C> _familyType;
+	/** Factory of the family collections. */
+	protected final CollectionFactory<V, C> _familyFactory;
 
 	/** Families of values identified by their keys. */
 	protected final Map<K, C> _families = new HashMap<K, C>();
@@ -44,13 +44,13 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 	/**
 	 * Build a new family map with the given type of collection.
 	 * 
-	 * @param familyType Class of the collections to build.
+	 * @param familyFactory Factory of the family collections.
 	 */
-	public FamilyMap(final Class<C> familyType) {
-		Assert.notNull(familyType);
+	public FamilyMap(final CollectionFactory<V, C> familyFactory) {
+		Assert.notNull(familyFactory);
 
 		// Initialization.
-		_familyType = familyType;
+		_familyFactory = familyFactory;
 	}
 
 	protected C getFamily(final K key) {
@@ -61,7 +61,7 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 		}
 
 		// Create a new family.
-		final C family = CollectionUtils.buildCollection(_familyType);
+		final C family = _familyFactory.build();
 		_families.put(key, family);
 		return family;
 	}

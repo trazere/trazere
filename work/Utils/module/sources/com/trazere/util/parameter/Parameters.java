@@ -54,7 +54,7 @@ public class Parameters<T> {
 		 * 
 		 * @param parameters Parameter set initially populating the builder.
 		 */
-		public Builder(final Parameters<T> parameters) {
+		public Builder(final Parameters<? extends T> parameters) {
 			Assert.notNull(parameters);
 
 			// Initialization.
@@ -127,7 +127,7 @@ public class Parameters<T> {
 		 * @param parameters Parameter set to add.
 		 * @throws ParameterAlreadyExistsException When a parameter with a name of the given parameter set has already been added.
 		 */
-		public void add(final Parameters<T> parameters)
+		public void add(final Parameters<? extends T> parameters)
 		throws ParameterAlreadyExistsException {
 			Assert.notNull(parameters);
 
@@ -165,7 +165,7 @@ public class Parameters<T> {
 		 * 
 		 * @param parameters Parameter set to set.
 		 */
-		public void set(final Parameters<T> parameters) {
+		public void set(final Parameters<? extends T> parameters) {
 			Assert.notNull(parameters);
 
 			// Set the parameters.
@@ -246,7 +246,21 @@ public class Parameters<T> {
 	 * Empty parameter set.
 	 */
 	@SuppressWarnings("unchecked")
-	public static final Parameters<?> EMPTY = new Parameters<Object>(Collections.EMPTY_MAP);
+	protected static final Parameters<?> EMPTY = new Parameters<Object>(Collections.EMPTY_MAP);
+
+	/**
+	 * Build an empty parameter set.
+	 * <p>
+	 * This method actually does not build a new objet, it returns a singleton instead.
+	 * 
+	 * @param <T> Type of the parameter values.
+	 * @return The built parameter set.
+	 * @see #EMPTY
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> Parameters<T> build() {
+		return (Parameters<T>) EMPTY;
+	}
 
 	/**
 	 * Build a new single parameter set with the given name and value.
@@ -306,13 +320,12 @@ public class Parameters<T> {
 	 * @param parameters2 Second set of parameters.
 	 * @return The union parameter set.
 	 */
-	@SuppressWarnings("unchecked")
-	public static <T> Parameters<T> union(final Parameters<T> parameters1, final Parameters<T> parameters2) {
+	public static <T> Parameters<T> union(final Parameters<? extends T> parameters1, final Parameters<? extends T> parameters2) {
 		Assert.notNull(parameters1);
 		Assert.notNull(parameters2);
 
 		// Build.
-		return new Parameters<T>(CollectionUtils.union(parameters1._parameters, parameters2._parameters, HashMap.class));
+		return new Parameters<T>(CollectionUtils.unionMap(parameters1._parameters, parameters2._parameters));
 	}
 
 	/** Values of the parameters identified by their names. */
@@ -366,7 +379,6 @@ public class Parameters<T> {
 	 * @return The value of the parameter, or the given default value if the set contains no parameters with the given name.
 	 */
 	public T getParameter(final String name, final T defaultValue) {
-		// Checks.
 		Assert.notNull(name);
 
 		// Get the parameter value.
@@ -391,6 +403,82 @@ public class Parameters<T> {
 			return value;
 		} else {
 			throw new MissingParameterException("Missing \"" + name + "\" parameter from parameters " + this);
+		}
+	}
+
+	/**
+	 * Get the typed value of the parameter with the given name of the receiver set.
+	 * 
+	 * @param <C> Type of the value.
+	 * @param name Name of the parameter.
+	 * @param type Class of the value.
+	 * @return The value of the parameter, or <code>null</code> if the set contains no parameters with the given name.
+	 * @throws IncompatibleParameterException When the value of the parameter is not compatible with the given type.
+	 */
+	@SuppressWarnings("unchecked")
+	public <C extends T> C getTypedParameter(final String name, final Class<C> type)
+	throws IncompatibleParameterException {
+		Assert.notNull(name);
+		Assert.notNull(type);
+
+		// Get the parameter value.
+		final T value = _parameters.get(name);
+		if (null == value || type.isInstance(value)) {
+			return (C) value;
+		} else {
+			throw new IncompatibleParameterException("Value " + value + " of parameter " + name + " is not compatible with type " + type);
+		}
+	}
+
+	/**
+	 * Get the typed value of the parameter with the given name of the receiver set.
+	 * 
+	 * @param <C> Type of the value.
+	 * @param name Name of the parameter.
+	 * @param defaultValue Default value of the parameter.
+	 * @param type Class of the value.
+	 * @return The value of the parameter, or the given default value if the set contains no parameters with the given name.
+	 * @throws IncompatibleParameterException When the value of the parameter is not compatible with the given type.
+	 */
+	@SuppressWarnings("unchecked")
+	public <C extends T> C getTypedParameter(final String name, final C defaultValue, final Class<C> type)
+	throws IncompatibleParameterException {
+		Assert.notNull(name);
+
+		// Get the parameter value.
+		final T value = _parameters.get(name);
+		if (null == value) {
+			return defaultValue;
+		} else if (type.isInstance(value)) {
+			return (C) value;
+		} else {
+			throw new IncompatibleParameterException("Value " + value + " of parameter " + name + " is not compatible with type " + type);
+		}
+	}
+
+	/**
+	 * Get the typed value of the mandatory parameter with the given name of the receiver set.
+	 * 
+	 * @param <C> Type of the value.
+	 * @param name Name of the parameter.
+	 * @param type Class of the value.
+	 * @return The value of the parameter.
+	 * @throws MissingParameterException When the receiver set contains no parameters with the given name.
+	 * @throws IncompatibleParameterException When the value of the parameter is not compatible with the given type.
+	 */
+	@SuppressWarnings("unchecked")
+	public <C extends T> C getTypedMandatoryParameter(final String name, final Class<C> type)
+	throws MissingParameterException, IncompatibleParameterException {
+		Assert.notNull(name);
+
+		// Get the parameter value.
+		final T value = _parameters.get(name);
+		if (null == value) {
+			throw new MissingParameterException("Missing " + name + " parameter from parameters " + this);
+		} else if (type.isInstance(value)) {
+			return (C) value;
+		} else {
+			throw new IncompatibleParameterException("Value " + value + " of parameter " + name + " is not compatible with type " + type);
 		}
 	}
 
