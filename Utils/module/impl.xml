@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="utils.impl">
+	<!-- Imports -->
+	<import file="../../module/modules.xml" />
+	<import file="${trazere.ant.env}" />
+	<import file="${tools.ant.impl}" />
+
+	<!-- Declarations -->
+	<property name="utils.sources" location="${utils.module}/sources" />
+
+	<property name="utils.binary.lib" value="lib" />
+
+	<property name="utils.build" location="${utils.module}/build" />
+	<property name="utils.build.classes" location="${utils.build}/classes" />
+
+	<property name="utils.dist" location="${utils.module}/dist" />
+	<property name="utils.dist.binary" location="${utils.dist}/binary" />
+	<property name="utils.dist.archive" location="${utils.dist}/utils" />
+	<property name="utils.dist.jar" location="${utils.dist}/utils.jar" />
+
+	<path id="utils.dist.classpath">
+		<pathelement location="${utils.dist.jar}" />
+	</path>
+
+	<!-- Clean -->
+	<target name="utils.clean">
+		<echo>Cleaning (Utils)</echo>
+
+		<delete dir="${utils.build}" />
+		<delete dir="${utils.dist}" />
+	</target>
+
+	<!-- Compile sources -->
+	<target name="utils.compileSources">
+		<echo>Compiling the sources (Utils)</echo>
+
+		<mkdir dir="${utils.build.classes}" />
+		<javac srcdir="${utils.sources}" destdir="${utils.build.classes}" source="${trazere.java.version}" debug="${trazere.java.debug}" target="${trazere.java.version}" failonerror="true" encoding="${trazere.java.encoding}">
+			<include name="**/*.java" />
+			<classpath>
+				<path refid="tools.commons-logging.classpath" />
+			</classpath>
+		</javac>
+	</target>
+
+	<!-- Build the binary skeleton -->
+	<target name="utils.doBuildBinarySkeleton">
+		<mkdir dir="${utils.skeleton}" />
+	</target>
+
+	<!-- Build the archive -->
+	<target name="utils.buildArchive" depends="utils.compileSources">
+		<echo>Building the archive (Utils)</echo>
+
+		<mkdir dir="${utils.dist.archive}" />
+		<copy todir="${utils.dist.archive}" includeemptydirs="false">
+			<fileset dir="${utils.build.classes}" includes="**/*.class" />
+		</copy>
+	</target>
+
+	<!-- Build the JAR -->
+	<target name="utils.buildJar" depends="utils.buildArchive">
+		<echo>Building the JAR (Utils)</echo>
+
+		<mkdir dir="${utils.dist}" />
+		<jar destfile="${utils.dist.jar}" basedir="${utils.dist.archive}" />
+	</target>
+
+	<!-- Build the binary -->
+	<target name="utils.buildBinary" depends="utils.buildJar">
+		<echo>Building the binary (Utils)</echo>
+
+		<!-- Skeleton -->
+		<antcall target="utils.doBuildBinarySkeleton">
+			<param name="utils.skeleton" location="${utils.dist.binary}" />
+		</antcall>
+
+		<!-- Jars -->
+		<mkdir dir="${utils.dist.binary}/${utils.binary.lib}" />
+		<copy tofile="${utils.dist.binary}/${utils.binary.lib}/trazere-utils.jar" file="${utils.dist.jar}" />
+	</target>
+</project>

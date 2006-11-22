@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2006 Julien Dufour
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<project name="trazere.impl">
+	<!-- Imports -->
+	<import file="modules.xml" />
+	<import file="${utils.ant.impl}" />
+
+	<!-- Declarations -->
+	<property name="trazere.resources" location="${trazere.module}/resources" />
+
+	<property name="trazere.build" location="${trazere.module}/build" />
+
+	<property name="trazere.dist" location="${trazere.module}/dist" />
+	<property name="trazere.dist.binary" location="${trazere.dist}/trazere-${trazere.version}" />
+	<property name="trazere.dist.zip" location="${trazere.dist}/trazere-${trazere.version}.zip" />
+
+	<!-- Clean -->
+	<target name="trazere.clean" depends="utils.clean">
+		<echo>Cleaning</echo>
+
+		<delete dir="${trazere.build}" />
+		<delete dir="${trazere.dist}" />
+	</target>
+
+	<!-- Build the distribution -->
+	<target name="trazere.buildBinary" depends="utils.buildBinary">
+		<echo>Building the distribution</echo>
+
+		<!-- Utils -->
+		<copy todir="${trazere.dist.binary}">
+			<fileset dir="${utils.dist.binary}" />
+		</copy>
+
+		<!-- Distribution -->
+		<mkdir dir="${trazere.dist.binary}" />
+		<copy todir="${trazere.dist.binary}">
+			<fileset dir="${trazere.resources}">
+				<include name="README.txt" />
+				<include name="LICENSE.txt" />
+			</fileset>
+		</copy>
+	</target>
+
+	<!-- Build the distribution (ZIP archive) -->
+	<target name="trazere.buildBinaryZip" depends="trazere.buildBinary">
+		<echo>Building the distribution (ZIP archive)</echo>
+
+		<zip destfile="${trazere.dist.zip}" basedir="${trazere.dist.binary}" encoding="iso-8859-1" />
+	</target>
+</project>
