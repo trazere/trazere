@@ -17,7 +17,7 @@
 <project name="trazere.impl">
 	<!-- Imports -->
 	<import file="modules.xml" />
-	<import file="${utils.ant.impl}" />
+	<import file="${tests.ant.impl}" />
 
 	<!-- Declarations -->
 	<property name="trazere.resources" location="${trazere.module}/resources" />
@@ -29,7 +29,7 @@
 	<property name="trazere.dist.zip" location="${trazere.dist}/trazere-${trazere.version}.zip" />
 
 	<!-- Clean -->
-	<target name="trazere.clean" depends="utils.clean">
+	<target name="trazere.clean" depends="tests.clean, utils.clean">
 		<echo>Cleaning</echo>
 
 		<delete dir="${trazere.build}" />

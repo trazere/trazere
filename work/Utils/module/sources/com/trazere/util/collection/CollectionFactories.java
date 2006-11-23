@@ -16,6 +16,7 @@
 package com.trazere.util.collection;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.TreeSet;
 
@@ -25,7 +26,20 @@ import java.util.TreeSet;
  * @see CollectionFactory
  */
 public class CollectionFactories {
-	private static final ArrayListFactory<?> ARRAYLIST = new ArrayListFactory<Object>();
+	@SuppressWarnings("unchecked")
+	private static final CollectionFactory ARRAYLIST = new CollectionFactory<Object, ArrayList<Object>>() {
+		public ArrayList<Object> build() {
+			return new ArrayList<Object>();
+		}
+
+		public ArrayList<Object> build(final int capacity) {
+			return new ArrayList<Object>(capacity);
+		}
+
+		public ArrayList<Object> build(final Collection<? extends Object> values) {
+			return new ArrayList<Object>(values);
+		}
+	};
 
 	/**
 	 * Build a collection factory which produces <code>ArrayList</code>s.
@@ -35,10 +49,23 @@ public class CollectionFactories {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> CollectionFactory<T, ArrayList<T>> arrayList() {
-		return (ArrayListFactory<T>) ARRAYLIST;
+		return ARRAYLIST;
 	}
 
-	private static final HashSetFactory<?> HASHSET = new HashSetFactory<Object>();
+	@SuppressWarnings("unchecked")
+	private static final CollectionFactory HASHSET = new CollectionFactory<Object, HashSet<Object>>() {
+		public HashSet<Object> build() {
+			return new HashSet<Object>();
+		}
+
+		public HashSet<Object> build(final int capacity) {
+			return new HashSet<Object>(capacity);
+		}
+
+		public HashSet<Object> build(final Collection<? extends Object> values) {
+			return new HashSet<Object>(values);
+		}
+	};
 
 	/**
 	 * Build a collection factory which produces <code>HashSet</code>s.
@@ -48,10 +75,23 @@ public class CollectionFactories {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> CollectionFactory<T, HashSet<T>> hashSet() {
-		return (HashSetFactory<T>) HASHSET;
+		return HASHSET;
 	}
 
-	private static final TreeSetFactory<?> TREESET = new TreeSetFactory<Object>();
+	@SuppressWarnings("unchecked")
+	private static final CollectionFactory TREESET = new CollectionFactory<Object, TreeSet<Object>>() {
+		public TreeSet<Object> build() {
+			return new TreeSet<Object>();
+		}
+
+		public TreeSet<Object> build(final int capacity) {
+			return new TreeSet<Object>();
+		}
+
+		public TreeSet<Object> build(final Collection<? extends Object> values) {
+			return new TreeSet<Object>(values);
+		}
+	};
 
 	/**
 	 * Build a collection factory which produces <code>TreeSet</code>s.
@@ -61,7 +101,7 @@ public class CollectionFactories {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> CollectionFactory<T, TreeSet<T>> treeSet() {
-		return (TreeSetFactory<T>) TREESET;
+		return TREESET;
 	}
 
 	private CollectionFactories() {

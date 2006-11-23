@@ -24,13 +24,12 @@ public class CollectionUtils {
 	 * <p>
 	 * This method instanciates an <code>ArrayList</code>.
 	 * 
-	 * @param <T> Type of the the values of the list.
-	 * @param <ST> Type of the the given values.
+	 * @param <T> Type of the the values.
 	 * @param value Value. May be <code>null</code>.
 	 * @return The list.
 	 * @see ArrayList
 	 */
-	public static <T, ST extends T> List<T> list(final ST value) {
+	public static <T> List<T> list(final T value) {
 		// Build the list.
 		final List<T> list = new ArrayList<T>(1);
 		list.add(value);
@@ -43,14 +42,13 @@ public class CollectionUtils {
 	 * <p>
 	 * This method instanciates an <code>ArrayList</code>.
 	 * 
-	 * @param <T> Type of the the values of the list.
-	 * @param <ST> Type of the the given values.
+	 * @param <T> Type of the the values.
 	 * @param value1 First value. May be <code>null</code>.
 	 * @param value2 Second value. May be <code>null</code>.
 	 * @return The list.
 	 * @see ArrayList
 	 */
-	public static <T, ST extends T> List<T> list(final ST value1, final ST value2) {
+	public static <T> List<T> list(final T value1, final T value2) {
 		// Build the list.
 		final List<T> list = new ArrayList<T>(2);
 		list.add(value1);
@@ -64,15 +62,14 @@ public class CollectionUtils {
 	 * <p>
 	 * This method instanciates an <code>ArrayList</code>.
 	 * 
-	 * @param <T> Type of the the values of the list.
-	 * @param <ST> Type of the the given values.
+	 * @param <T> Type of the the values.
 	 * @param value1 First value. May be <code>null</code>.
 	 * @param value2 Second value. May be <code>null</code>.
 	 * @param value3 Second value. May be <code>null</code>.
 	 * @return The list.
 	 * @see ArrayList
 	 */
-	public static <T, ST extends T> List<T> list(final ST value1, final ST value2, final ST value3) {
+	public static <T> List<T> list(final T value1, final T value2, final T value3) {
 		// Build the list.
 		final List<T> list = new ArrayList<T>(3);
 		list.add(value1);
@@ -87,12 +84,11 @@ public class CollectionUtils {
 	 * <p>
 	 * This method instanciates an <code>ArrayList</code>.
 	 * 
-	 * @param <T> Type of the the values of the list.
-	 * @param <ST> Type of the the given values.
+	 * @param <T> Type of the the values.
 	 * @param values Array containing the values.
 	 * @return The set.
 	 */
-	public static <T, ST extends T> List<T> listN(final ST[] values) {
+	public static <T> List<T> listN(final T[] values) {
 		Assert.notNull(values);
 
 		// Build the list.
@@ -108,13 +104,12 @@ public class CollectionUtils {
 	 * <p>
 	 * This method instanciates a <code>HashSet</code>.
 	 * 
-	 * @param <T> Type of the the values of the set.
-	 * @param <ST> Type of the the given values.
+	 * @param <T> Type of the the values.
 	 * @param value Value. May be <code>null</code>.
 	 * @return The set.
 	 * @see HashSet
 	 */
-	public static <T, ST extends T> Set<T> set(final ST value) {
+	public static <T> Set<T> set(final T value) {
 		// Build the set.
 		final Set<T> set = new HashSet<T>(1);
 		set.add(value);
@@ -127,14 +122,13 @@ public class CollectionUtils {
 	 * <p>
 	 * This method instanciates a <code>HashSet</code>.
 	 * 
-	 * @param <T> Type of the the values of the set.
-	 * @param <ST> Type of the the given values.
+	 * @param <T> Type of the the values.
 	 * @param value1 First value. May be <code>null</code>.
 	 * @param value2 Second value. May be <code>null</code>.
 	 * @return The set.
 	 * @see HashSet
 	 */
-	public static <T, ST extends T> Set<T> set(final ST value1, final ST value2) {
+	public static <T> Set<T> set(final T value1, final T value2) {
 		// Build the set.
 		final Set<T> set = new HashSet<T>(2);
 		set.add(value1);
@@ -148,15 +142,14 @@ public class CollectionUtils {
 	 * <p>
 	 * This method instanciates a <code>HashSet</code>.
 	 * 
-	 * @param <T> Type of the the values of the set.
-	 * @param <ST> Type of the the given values.
+	 * @param <T> Type of the the values.
 	 * @param value1 First value. May be <code>null</code>.
 	 * @param value2 Second value. May be <code>null</code>.
 	 * @param value3 Third value. May be <code>null</code>.
 	 * @return The set.
 	 * @see HashSet
 	 */
-	public static <T, ST extends T> Set<T> set(final ST value1, final ST value2, final ST value3) {
+	public static <T> Set<T> set(final T value1, final T value2, final T value3) {
 		// Build the set.
 		final Set<T> set = new HashSet<T>(3);
 		set.add(value1);
@@ -171,13 +164,12 @@ public class CollectionUtils {
 	 * <p>
 	 * This method instanciates a <code>HashSet</code>.
 	 * 
-	 * @param <T> Type of the the values of the set.
-	 * @param <ST> Type of the the given values.
+	 * @param <T> Type of the the values.
 	 * @param values Array containing the values.
 	 * @return The set.
 	 * @see HashSet
 	 */
-	public static <T, ST extends T> Set<T> setN(final ST[] values) {
+	public static <T> Set<T> setN(final T[] values) {
 		Assert.notNull(values);
 
 		// Build the set.
@@ -193,16 +185,14 @@ public class CollectionUtils {
 	 * <p>
 	 * This method instanciates a <code>HashMap</code>.
 	 * 
-	 * @param <K> Type of the keys of the map.
-	 * @param <SK> Type of the given keys.
-	 * @param <V> Type of the values of the map.
-	 * @param <SV> Type of the given values.
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
 	 * @param key Key of the binding. May be <code>null</code>.
 	 * @param value Value of the binding. May be <code>null</code>.
 	 * @return The map.
 	 * @see HashMap
 	 */
-	public static <K, SK extends K, V, SV extends V> Map<K, V> map(final SK key, final SV value) {
+	public static <K, V> Map<K, V> map(final K key, final V value) {
 		// Build the map.
 		final Map<K, V> result = new HashMap<K, V>();
 		result.put(key, value);
@@ -215,10 +205,8 @@ public class CollectionUtils {
 	 * <p>
 	 * This method instanciates a <code>HashMap</code>.
 	 * 
-	 * @param <K> Type of the keys of the map.
-	 * @param <SK> Type of the given keys.
-	 * @param <V> Type of the values of the map.
-	 * @param <SV> Type of the given values.
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
 	 * @param key1 Key of the first binding. May be <code>null</code>.
 	 * @param value1 Value of the first binding. May be <code>null</code>.
 	 * @param key2 Key of the second binding. May be <code>null</code>.
@@ -226,7 +214,7 @@ public class CollectionUtils {
 	 * @return The map.
 	 * @see HashMap
 	 */
-	public static <K, SK extends K, V, SV extends V> Map<K, V> map(final SK key1, final SV value1, final SK key2, final SV value2) {
+	public static <K, V> Map<K, V> map(final K key1, final V value1, final K key2, final V value2) {
 		// Build the map.
 		final Map<K, V> result = new HashMap<K, V>();
 		result.put(key2, value2);
@@ -238,12 +226,11 @@ public class CollectionUtils {
 	/**
 	 * Build an iterator over the given value.
 	 * 
-	 * @param <T> Type of the the values of the iterator.
-	 * @param <ST> Type of the the given values.
+	 * @param <T> Type of the the values.
 	 * @param value Value to iterate. May be <code>null</code>.
 	 * @return The iterator.
 	 */
-	public static <T, ST extends T> Iterator<T> iterator(final ST value) {
+	public static <T> Iterator<T> iterator(final T value) {
 		// Build the iterator.
 		return new Iterator<T>() {
 			protected boolean _iterated = false;
@@ -270,12 +257,11 @@ public class CollectionUtils {
 	/**
 	 * Build an iterator over the given values.
 	 * 
-	 * @param <T> Type of the the values of the iterator.
-	 * @param <ST> Type of the the given values.
+	 * @param <T> Type of the the values.
 	 * @param values Values to iterate.
 	 * @return The iterator.
 	 */
-	public static <T, ST extends T> Iterator<T> iteratorN(final ST[] values) {
+	public static <T> Iterator<T> iteratorN(final T[] values) {
 		Assert.notNull(values);
 
 		// Build the iterator.
@@ -393,7 +379,7 @@ public class CollectionUtils {
 	 * @param factory Factory to use to build the result list.
 	 * @return The sorted values.
 	 */
-	public static <T, L extends List<T>> L topologicalSort(final Collection<? extends T> values, final Function<T, ? extends Collection<T>> dependencyFunction, final CollectionFactory<T, L> factory) {
+	public static <T, L extends List<T>> L topologicalSort(final Collection<? extends T> values, final Function<? super T, ? extends Collection<T>> dependencyFunction, final CollectionFactory<? super T, ? extends L> factory) {
 		return topologicalSort(values, dependencyFunction, factory.build(values.size()));
 	}
 
@@ -412,7 +398,7 @@ public class CollectionUtils {
 	 * @param results List to populate with the results.
 	 * @return The populated list.
 	 */
-	public static <T, L extends List<T>> L topologicalSort(final Collection<? extends T> values, final Function<T, ? extends Collection<T>> dependencyFunction, final L results) {
+	public static <T, L extends List<T>> L topologicalSort(final Collection<? extends T> values, final Function<? super T, ? extends Collection<T>> dependencyFunction, final L results) {
 		Assert.notNull(values);
 		Assert.notNull(dependencyFunction);
 		Assert.notNull(results);
@@ -504,7 +490,7 @@ public class CollectionUtils {
 	 * @param factory Factory to use to build the result collection.
 	 * @return The union collection.
 	 */
-	public static <T, C extends Collection<T>> C union(final Collection<? extends T> collection1, final Collection<? extends T> collection2, final CollectionFactory<T, C> factory) {
+	public static <T, C extends Collection<T>> C union(final Collection<? extends T> collection1, final Collection<? extends T> collection2, final CollectionFactory<? super T, ? extends C> factory) {
 		Assert.notNull(collection1);
 		Assert.notNull(factory);
 
@@ -564,7 +550,7 @@ public class CollectionUtils {
 	 * @param factory Factory to use to build the result map.
 	 * @return The union map.
 	 */
-	public static <K, V, M extends Map<K, V>> M union(final Map<? extends K, ? extends V> map1, final Map<? extends K, ? extends V> map2, final MapFactory<K, V, M> factory) {
+	public static <K, V, M extends Map<K, V>> M union(final Map<? extends K, ? extends V> map1, final Map<? extends K, ? extends V> map2, final MapFactory<? super K, ? super V, ? extends M> factory) {
 		Assert.notNull(map1);
 		Assert.notNull(factory);
 
@@ -659,7 +645,7 @@ public class CollectionUtils {
 	 * @param factory Factory to use to build the result collection.
 	 * @return The intersection collection.
 	 */
-	public static <T, C extends Collection<T>> C intersection(final Collection<? extends T> collection1, final Collection<? extends T> collection2, final CollectionFactory<T, C> factory) {
+	public static <T, C extends Collection<T>> C intersection(final Collection<? extends T> collection1, final Collection<? extends T> collection2, final CollectionFactory<? super T, ? extends C> factory) {
 		Assert.notNull(factory);
 
 		// Build the intersection.
@@ -738,7 +724,7 @@ public class CollectionUtils {
 	 * @param factory Factory to use to build the result collection.
 	 * @return The exclusion collection.
 	 */
-	public static <T, C extends Collection<T>> C exclusion(final Collection<? extends T> collection1, final Collection<? extends T> collection2, final CollectionFactory<T, C> factory) {
+	public static <T, C extends Collection<T>> C exclusion(final Collection<? extends T> collection1, final Collection<? extends T> collection2, final CollectionFactory<? super T, ? extends C> factory) {
 		Assert.notNull(factory);
 
 		// Build the exclusion.
@@ -800,7 +786,7 @@ public class CollectionUtils {
 	 * @param factory Factory to use to build the result map.
 	 * @return The sub map.
 	 */
-	public static <K, V, M extends Map<K, V>> M subMap(final Map<? extends K, ? extends V> map, final Set<? extends K> keys, final MapFactory<K, V, M> factory) {
+	public static <K, V, M extends Map<K, V>> M subMap(final Map<? extends K, ? extends V> map, final Set<? extends K> keys, final MapFactory<? super K, ? super V, ? extends M> factory) {
 		Assert.notNull(factory);
 
 		// Build the map.
@@ -858,7 +844,7 @@ public class CollectionUtils {
 	 * @param factory Factory to use to build the result map.
 	 * @return The exclusion map.
 	 */
-	public static <K, V, M extends Map<K, V>> M retainMap(final Map<? extends K, ? extends V> map, final Collection<? extends K> keys, final MapFactory<K, V, M> factory) {
+	public static <K, V, M extends Map<K, V>> M retainMap(final Map<? extends K, ? extends V> map, final Collection<? extends K> keys, final MapFactory<? super K, ? super V, ? extends M> factory) {
 		Assert.notNull(factory);
 
 		// Build the exclusion.

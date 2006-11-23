@@ -22,11 +22,9 @@
 	<property name="trazere.ant.impl" location="${trazere.module}/impl.xml" />
 
 	<!-- Tests -->
-	<!--
 	<property name="tests" location="${trazere}/Tests" />
 	<property name="tests.module" location="${tests}/module" />
 	<property name="tests.ant.impl" location="${tests.module}/impl.xml" />
-	-->
 
 	<!-- Tools -->
 	<property name="tools" location="${trazere}/Tools" />
