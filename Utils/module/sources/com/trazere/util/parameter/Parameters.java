@@ -246,7 +246,7 @@ public class Parameters<T> {
 	 * Empty parameter set.
 	 */
 	@SuppressWarnings("unchecked")
-	protected static final Parameters<?> EMPTY = new Parameters<Object>(Collections.EMPTY_MAP);
+	protected static final Parameters EMPTY = new Parameters<Object>(Collections.EMPTY_MAP);
 
 	/**
 	 * Build an empty parameter set.
@@ -258,8 +258,8 @@ public class Parameters<T> {
 	 * @see #EMPTY
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> Parameters<T> build() {
-		return (Parameters<T>) EMPTY;
+	public static <T>Parameters<T> build() {
+		return EMPTY;
 	}
 
 	/**
@@ -272,7 +272,7 @@ public class Parameters<T> {
 	 * @param value Value of the parameter. May be <code>null</code>.
 	 * @return The built parameter set.
 	 */
-	public static <T> Parameters<T> build(final String name, final T value) {
+	public static <T>Parameters<T> build(final String name, final T value) {
 		Assert.notNull(name);
 
 		// Build.
@@ -295,7 +295,7 @@ public class Parameters<T> {
 	 * @param value2 Value of the second parameter. May be <code>null</code>.
 	 * @return The built parameter set.
 	 */
-	public static <T> Parameters<T> build(final String name1, final T value1, final String name2, final T value2) {
+	public static <T>Parameters<T> build(final String name1, final T value1, final String name2, final T value2) {
 		Assert.notNull(name1);
 		Assert.notNull(name2);
 
@@ -311,6 +311,17 @@ public class Parameters<T> {
 	}
 
 	/**
+	 * Build a new parameter set with the given names and values.
+	 * 
+	 * @param <T> Type of the parameter values.
+	 * @param values Value of the parameters identified by their names.
+	 * @return The built parameter set.
+	 */
+	public static <T>Parameters<T> build(final Map<String, T> values) {
+		return new Parameters<T>(new HashMap<String, T>(values));
+	}
+
+	/**
 	 * Build a new parameter set containing the union of the parameters of the given parameter sets.
 	 * <p>
 	 * The parameters of the first set have precedence over the parameters of the second set when some parameters have the same names.
@@ -320,7 +331,7 @@ public class Parameters<T> {
 	 * @param parameters2 Second set of parameters.
 	 * @return The union parameter set.
 	 */
-	public static <T> Parameters<T> union(final Parameters<? extends T> parameters1, final Parameters<? extends T> parameters2) {
+	public static <T>Parameters<T> union(final Parameters<? extends T> parameters1, final Parameters<? extends T> parameters2) {
 		Assert.notNull(parameters1);
 		Assert.notNull(parameters2);
 
@@ -416,7 +427,7 @@ public class Parameters<T> {
 	 * @throws IncompatibleParameterException When the value of the parameter is not compatible with the given type.
 	 */
 	@SuppressWarnings("unchecked")
-	public <C extends T> C getTypedParameter(final String name, final Class<C> type)
+	public <C extends T>C getTypedParameter(final String name, final Class<C> type)
 	throws IncompatibleParameterException {
 		Assert.notNull(name);
 		Assert.notNull(type);
@@ -441,7 +452,7 @@ public class Parameters<T> {
 	 * @throws IncompatibleParameterException When the value of the parameter is not compatible with the given type.
 	 */
 	@SuppressWarnings("unchecked")
-	public <C extends T> C getTypedParameter(final String name, final C defaultValue, final Class<C> type)
+	public <C extends T>C getTypedParameter(final String name, final C defaultValue, final Class<C> type)
 	throws IncompatibleParameterException {
 		Assert.notNull(name);
 
@@ -467,7 +478,7 @@ public class Parameters<T> {
 	 * @throws IncompatibleParameterException When the value of the parameter is not compatible with the given type.
 	 */
 	@SuppressWarnings("unchecked")
-	public <C extends T> C getTypedMandatoryParameter(final String name, final Class<C> type)
+	public <C extends T>C getTypedMandatoryParameter(final String name, final Class<C> type)
 	throws MissingParameterException, IncompatibleParameterException {
 		Assert.notNull(name);
 

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="tests" default="usage">
+	<!-- Imports -->
+	<import file="../../module/modules.xml" />
+	<import file="${tests.ant.impl}" />
+
+	<!-- Usage -->
+	<target name="usage">
+		<echo>TODO</echo>
+	</target>
+
+	<!-- Clean -->
+	<target name="clean" description="Clean" depends="tests.clean" />
+
+	<!-- Build -->
+	<target name="build" description="Build" depends="tests.compileSources" />
+</project>

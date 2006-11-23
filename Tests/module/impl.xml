@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="tests.impl">
+	<!-- Imports -->
+	<import file="../../module/modules.xml" />
+	<import file="${utils.ant.impl}" />
+
+	<!-- Declarations -->
+	<property name="tests.sources" location="${tests.module}/sources" />
+
+	<property name="tests.build" location="${tests.module}/build" />
+	<property name="tests.build.classes" location="${tests.build}/classes" />
+
+	<!-- Clean -->
+	<target name="tests.clean" depends="utils.clean">
+		<echo>Cleaning (Tests)</echo>
+
+		<delete dir="${tests.build}" />
+	</target>
+
+	<!-- Compile sources -->
+	<target name="tests.compileSources" depends="utils.buildJar">
+		<echo>Compiling the sources (Tests)</echo>
+
+		<mkdir dir="${tests.build.classes}" />
+		<javac srcdir="${tests.sources}" destdir="${tests.build.classes}" source="${trazere.java.version}" debug="${trazere.java.debug}" target="${trazere.java.version}" failonerror="true" encoding="${trazere.java.encoding}">
+			<include name="**/*.java" />
+			<classpath>
+				<path refid="utils.dist.classpath" />
+				<path refid="tools.commons-logging.classpath" />
+			</classpath>
+		</javac>
+	</target>
+</project>

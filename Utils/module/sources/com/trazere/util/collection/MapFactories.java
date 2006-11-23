@@ -16,6 +16,7 @@
 package com.trazere.util.collection;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeMap;
 
 /**
@@ -24,7 +25,20 @@ import java.util.TreeMap;
  * @see MapFactory
  */
 public class MapFactories {
-	private static final HashMapFactory<?, ?> HASHMAP = new HashMapFactory<Object, Object>();
+	@SuppressWarnings("unchecked")
+	private static final MapFactory HASHMAP = new MapFactory<Object, Object, HashMap<Object, Object>>() {
+		public HashMap<Object, Object> build() {
+			return new HashMap<Object, Object>();
+		}
+
+		public HashMap<Object, Object> build(final int capacity) {
+			return new HashMap<Object, Object>(capacity);
+		}
+
+		public HashMap<Object, Object> build(final Map<? extends Object, ? extends Object> bindings) {
+			return new HashMap<Object, Object>(bindings);
+		}
+	};
 
 	/**
 	 * Build a map factory which produces <code>HashMap</code>s.
@@ -35,10 +49,23 @@ public class MapFactories {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <K, V> MapFactory<K, V, HashMap<K, V>> hashMap() {
-		return (HashMapFactory<K, V>) HASHMAP;
+		return HASHMAP;
 	}
 
-	private static final TreeMapFactory<?, ?> TREEMAP = new TreeMapFactory<Object, Object>();
+	@SuppressWarnings("unchecked")
+	private static final MapFactory TREEMAP = new MapFactory<Object, Object, TreeMap<Object, Object>>() {
+		public TreeMap<Object, Object> build() {
+			return new TreeMap<Object, Object>();
+		}
+
+		public TreeMap<Object, Object> build(final int capacity) {
+			return new TreeMap<Object, Object>();
+		}
+
+		public TreeMap<Object, Object> build(final Map<? extends Object, ? extends Object> bindings) {
+			return new TreeMap<Object, Object>(bindings);
+		}
+	};
 
 	/**
 	 * Build a map factory which produces <code>TreeMap</code>s.
@@ -49,7 +76,7 @@ public class MapFactories {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <K, V> MapFactory<K, V, TreeMap<K, V>> treeMap() {
-		return (TreeMapFactory<K, V>) TREEMAP;
+		return TREEMAP;
 	}
 
 	private MapFactories() {
