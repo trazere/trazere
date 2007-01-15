@@ -26,6 +26,8 @@ public interface Filter<T> {
 	 * 
 	 * @param value Argument value to filter.
 	 * @return <code>true</code> to accept the value, <code>false</code> to reject it.
+	 * @throws ApplicationException When the function application fails.
 	 */
-	public boolean filter(final T value);
+	public boolean filter(final T value)
+	throws ApplicationException;
 }

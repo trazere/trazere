@@ -36,7 +36,7 @@ import com.trazere.util.Assert;
  */
 public class FamilyMap<K, V, C extends Collection<V>> {
 	/** Factory of the family collections. */
-	protected final CollectionFactory<V, C> _familyFactory;
+	protected final CollectionFactory<V, ? extends C> _familyFactory;
 
 	/** Families of values identified by their keys. */
 	protected final Map<K, C> _families = new HashMap<K, C>();
@@ -46,7 +46,7 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 	 * 
 	 * @param familyFactory Factory of the family collections.
 	 */
-	public FamilyMap(final CollectionFactory<V, C> familyFactory) {
+	public FamilyMap(final CollectionFactory<V, ? extends C> familyFactory) {
 		Assert.notNull(familyFactory);
 
 		// Initialization.

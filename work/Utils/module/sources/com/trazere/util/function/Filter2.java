@@ -28,6 +28,8 @@ public interface Filter2<T1, T2> {
 	 * @param value1 First argument value to filter.
 	 * @param value2 Second argument value to filter.
 	 * @return <code>true</code> to accept the values, <code>false</code> to reject them.
+	 * @throws ApplicationException When the function application fails.
 	 */
-	public boolean filter(final T1 value1, final T2 value2);
+	public boolean filter(final T1 value1, final T2 value2)
+	throws ApplicationException;
 }

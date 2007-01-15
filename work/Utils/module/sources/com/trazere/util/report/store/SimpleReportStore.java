@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import com.trazere.util.function.ApplicationException;
 import com.trazere.util.function.Filter;
 import com.trazere.util.function.FunctionUtils;
 import com.trazere.util.report.ReportEntry;
@@ -76,7 +77,11 @@ implements ReportStore<Entry> {
 	public int countEntries(final Filter<ReportStoreEntry<Entry>> filter)
 	throws ReportException {
 		if (null != filter) {
-			return FunctionUtils.count(_entries, filter);
+			try {
+				return FunctionUtils.count(_entries, filter);
+			} catch (final ApplicationException exception) {
+				throw new ReportException(exception);
+			}
 		} else {
 			return _entries.size();
 		}
@@ -93,7 +98,12 @@ implements ReportStore<Entry> {
 		return Collections.unmodifiableList(_entries);
 	}
 
-	public List<ReportStoreEntry<Entry>> getEntries(final Filter<ReportStoreEntry<Entry>> filter, final int limit, final boolean fromEnd) {
-		return ReportStoreUtils.filterEntries(_entries, filter, limit, fromEnd);
+	public List<ReportStoreEntry<Entry>> getEntries(final Filter<ReportStoreEntry<Entry>> filter, final int limit, final boolean fromEnd)
+	throws ReportException {
+		try {
+			return ReportStoreUtils.filterEntries(_entries, filter, limit, fromEnd);
+		} catch (final ApplicationException exception) {
+			throw new ReportException(exception);
+		}
 	}
 }

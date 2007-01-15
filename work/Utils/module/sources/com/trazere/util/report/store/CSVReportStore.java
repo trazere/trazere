@@ -28,19 +28,20 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.trazere.util.Assert;
 import com.trazere.util.csv.CSVLine;
 import com.trazere.util.csv.CSVReader;
 import com.trazere.util.csv.CSVReaderOption;
 import com.trazere.util.csv.CSVWriter;
 import com.trazere.util.csv.CSVWriterOption;
+import com.trazere.util.function.ApplicationException;
 import com.trazere.util.function.Filter;
 import com.trazere.util.report.ReportEntry;
 import com.trazere.util.report.ReportException;
 import com.trazere.util.report.ReportLevel;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * The <code>CSVReportStore</code> abstract class represents report stores relying on CSV files.
@@ -242,7 +243,11 @@ implements ReportStore<Entry> {
 		}
 
 		// Get the entries.
-		return ReportStoreUtils.filterEntries(_entries, filter, limit, fromEnd);
+		try {
+			return ReportStoreUtils.filterEntries(_entries, filter, limit, fromEnd);
+		} catch (final ApplicationException exception) {
+			throw new ReportException(exception);
+		}
 	}
 
 	protected void load()

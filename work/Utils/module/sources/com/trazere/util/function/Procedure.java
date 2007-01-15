@@ -25,6 +25,8 @@ public interface Procedure<T> {
 	 * Process the given argument value.
 	 * 
 	 * @param value Argument value to process.
+	 * @throws ApplicationException When the function application fails.
 	 */
-	public void apply(final T value);
+	public void apply(final T value)
+	throws ApplicationException;
 }

@@ -29,6 +29,8 @@ public interface Function2<T1, T2, R> {
 	 * @param value1 First argument value.
 	 * @param value2 Second argument value.
 	 * @return The result of the function application.
+	 * @throws ApplicationException When the function application fails.
 	 */
-	public R apply(final T1 value1, final T2 value2);
+	public R apply(final T1 value1, final T2 value2)
+	throws ApplicationException;
 }

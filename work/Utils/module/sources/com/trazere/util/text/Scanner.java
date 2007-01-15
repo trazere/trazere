@@ -32,16 +32,30 @@ public class Scanner {
 	/** Reader providing the character stream. */
 	protected final PushbackReader _reader;
 
+	/** Scanning position. */
+	protected int _position;
+
 	/**
 	 * Instanciate a new scanner with the given reader.
 	 * 
 	 * @param reader Reader providing the character stream.
 	 */
 	public Scanner(final Reader reader) {
+		this(reader, 0);
+	}
+
+	/**
+	 * Instanciate a new scanner with the given reader.
+	 * 
+	 * @param reader Reader providing the character stream.
+	 * @param position Initial scanning position.
+	 */
+	public Scanner(final Reader reader, final int position) {
 		Assert.notNull(reader);
 
 		// Initialization.
 		_reader = new PushbackReader(reader, 512);
+		_position = position;
 	}
 
 	/**
@@ -51,6 +65,15 @@ public class Scanner {
 	 */
 	public Reader getReader() {
 		return _reader;
+	}
+
+	/**
+	 * Get the current scanning position of the receiver scanner.
+	 * 
+	 * @return The position.
+	 */
+	public int getPosition() {
+		return _position;
 	}
 
 	/**
@@ -85,6 +108,7 @@ public class Scanner {
 			return null;
 		}
 
+		_position += 1;
 		return new Character((char) i);
 	}
 
@@ -105,6 +129,7 @@ public class Scanner {
 		}
 
 		if ((char) i == c) {
+			_position += 1;
 			return true;
 		} else {
 			_reader.unread(i);
@@ -151,6 +176,7 @@ public class Scanner {
 
 			final char c = (char) i;
 			if (filter.filter(c)) {
+				_position += 1;
 				buffer.append(c);
 			} else {
 				_reader.unread(i);
@@ -182,11 +208,37 @@ public class Scanner {
 
 		final String s = new String(buffer, 0, n);
 		if (s.equals(string)) {
+			_position += n;
 			return true;
 		} else {
 			_reader.unread(buffer, 0, n);
 			return false;
 		}
+	}
+
+	/**
+	 * Scan the remaining characters.
+	 * <p>
+	 * This scan operation accumulates the upcoming sequence of characters until the end-of-file is reached. The scan always succeeds, but the sequence may be
+	 * empty.
+	 * 
+	 * @return The sequence of scanned characters.
+	 * @throws IOException
+	 */
+	public String scanUpToEOF()
+	throws IOException {
+		// Scan.
+		final StringBuilder buffer = new StringBuilder();
+		while (true) {
+			final int i = _reader.read();
+			if (-1 == i) {
+				break;
+			}
+		
+			_position += 1;
+			buffer.append((char) i);
+		}
+		return buffer.toString();
 	}
 
 	/**
@@ -211,6 +263,7 @@ public class Scanner {
 
 			final char rc = (char) i;
 			if (rc != c) {
+				_position += 1;
 				buffer.append(rc);
 			} else {
 				_reader.unread(i);
@@ -264,6 +317,7 @@ public class Scanner {
 
 			final char c = (char) i;
 			if (!filter.filter(c)) {
+				_position += 1;
 				buffer.append(c);
 			} else {
 				_reader.unread(i);
@@ -291,7 +345,7 @@ public class Scanner {
 		// Scan.
 		final char c = string.charAt(0);
 
-		final StringBuffer buffer = new StringBuffer();
+		final StringBuilder buffer = new StringBuilder();
 		while (true) {
 			// Scan part.
 			buffer.append(scanUpToChar(c));
@@ -307,6 +361,7 @@ public class Scanner {
 			if (-1 == i) {
 				break;
 			}
+			_position += 1;
 			buffer.append((char) i);
 		}
 		return buffer.toString();

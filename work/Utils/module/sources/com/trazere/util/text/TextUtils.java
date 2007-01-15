@@ -89,6 +89,24 @@ public class TextUtils {
 		return builder.toString();
 	}
 
+	/**
+	 * Compare the given string ignoring case.
+	 * <p>
+	 * This method supports comparisons of <code>null</code> values. <code>null</code> values are considered as less than non <code>null</code> values.
+	 * 
+	 * @param string1 First string to compare. May be <code>null</code>.
+	 * @param string2 Second string to compare. May be <code>null</code>.
+	 * @return The result of the comparison as defined by the {@link String#compareToIgnoreCase(String)} method.
+	 * @see String#compareToIgnoreCase(String)
+	 */
+	public static int compareIgnoreCase(final String string1, final String string2) {
+		if (null == string1) {
+			return null == string2 ? 0 : -1;
+		} else {
+			return null == string2 ? 1 : string1.compareToIgnoreCase(string2);
+		}
+	}
+
 	private TextUtils() {
 		// Prevent instanciation.
 	}

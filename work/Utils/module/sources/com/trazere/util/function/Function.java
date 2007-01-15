@@ -27,6 +27,8 @@ public interface Function<T, R> {
 	 * 
 	 * @param value Argument value of the function.
 	 * @return The result of the function application.
+	 * @throws ApplicationException When the function application fails.
 	 */
-	public R apply(final T value);
+	public R apply(final T value)
+	throws ApplicationException;
 }
