@@ -54,6 +54,7 @@
 
 		<mkdir dir="${utils.dist.archive}" />
 		<copy todir="${utils.dist.archive}" includeemptydirs="false">
+			<fileset dir="${utils.sources}" includes="**/*.java" />
 			<fileset dir="${utils.build.classes}" includes="**/*.class" />
 		</copy>
 	</target>

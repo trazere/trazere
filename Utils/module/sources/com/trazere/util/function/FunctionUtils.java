@@ -43,9 +43,11 @@ public class FunctionUtils {
 	 * @param filter Filter function to use.
 	 * @param factory Factory to use to build the result collection.
 	 * @return The accepted values.
+	 * @throws ApplicationException When some function application fails.
 	 * @see #filter(Collection, Filter, Collection)
 	 */
-	public static <T, C extends Collection<? super T>> C filter(final Collection<? extends T> values, final Filter<? super T> filter, final CollectionFactory<? super T, ? extends C> factory) {
+	public static <T, C extends Collection<? super T>> C filter(final Collection<? extends T> values, final Filter<? super T> filter, final CollectionFactory<? super T, ? extends C> factory)
+	throws ApplicationException {
 		Assert.notNull(factory);
 
 		// Filter.
@@ -63,8 +65,10 @@ public class FunctionUtils {
 	 * @param filter Filter function to use.
 	 * @param results The collection to populate with the results.
 	 * @return The populated result collection.
+	 * @throws ApplicationException When some function application fails.
 	 */
-	public static <T, C extends Collection<? super T>> C filter(final Collection<? extends T> values, final Filter<? super T> filter, final C results) {
+	public static <T, C extends Collection<? super T>> C filter(final Collection<? extends T> values, final Filter<? super T> filter, final C results)
+	throws ApplicationException {
 		Assert.notNull(values);
 		Assert.notNull(filter);
 		Assert.notNull(results);
@@ -88,9 +92,11 @@ public class FunctionUtils {
 	 * @param filter Filter function to use.
 	 * @param factory Factory to use to build the result map.
 	 * @return The accepted bindings.
+	 * @throws ApplicationException When some function application fails.
 	 * @see #filter(Map, Filter2, Map)
 	 */
-	public static <K, V, M extends Map<K, V>> M filter(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter, final MapFactory<? super K, ? super V, ? extends M> factory) {
+	public static <K, V, M extends Map<K, V>> M filter(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter, final MapFactory<? super K, ? super V, ? extends M> factory)
+	throws ApplicationException {
 		Assert.notNull(factory);
 
 		// Filter.
@@ -110,8 +116,10 @@ public class FunctionUtils {
 	 * @param filter Filter function to use.
 	 * @param results The map to populate with the results.
 	 * @return The populated result map.
+	 * @throws ApplicationException When some function application fails.
 	 */
-	public static <K, V, M extends Map<K, V>> M filter(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter, final M results) {
+	public static <K, V, M extends Map<K, V>> M filter(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter, final M results)
+	throws ApplicationException {
 		Assert.notNull(bindings);
 		Assert.notNull(filter);
 		Assert.notNull(results);
@@ -137,9 +145,11 @@ public class FunctionUtils {
 	 * @param filter Filter function to use.
 	 * @param factory Factory to use to build the result set.
 	 * @return The accepted keys.
+	 * @throws ApplicationException When some function application fails.
 	 * @see #filterKeys(Map, Filter2, Set)
 	 */
-	public static <K, V, S extends Set<K>> S filterKeys(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter, final CollectionFactory<? super K, ? extends S> factory) {
+	public static <K, V, S extends Set<K>> S filterKeys(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter, final CollectionFactory<? super K, ? extends S> factory)
+	throws ApplicationException {
 		Assert.notNull(factory);
 
 		// Filter.
@@ -159,8 +169,10 @@ public class FunctionUtils {
 	 * @param filter Filter function to use.
 	 * @param results The set to populate with the results.
 	 * @return The populated result set.
+	 * @throws ApplicationException When some function application fails.
 	 */
-	public static <K, V, S extends Set<K>> S filterKeys(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter, final S results) {
+	public static <K, V, S extends Set<K>> S filterKeys(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter, final S results)
+	throws ApplicationException {
 		Assert.notNull(bindings);
 		Assert.notNull(filter);
 		Assert.notNull(results);
@@ -186,9 +198,11 @@ public class FunctionUtils {
 	 * @param filter Filter function to use.
 	 * @param factory Factory to use to build the result collection.
 	 * @return The accepted values.
+	 * @throws ApplicationException When some function application fails.
 	 * @see #filterValues(Map, Filter2, Collection)
 	 */
-	public static <K, V, C extends Collection<V>> C filterValues(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter, final CollectionFactory<? super V, ? extends C> factory) {
+	public static <K, V, C extends Collection<V>> C filterValues(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter, final CollectionFactory<? super V, ? extends C> factory)
+	throws ApplicationException {
 		Assert.notNull(factory);
 
 		// Filter.
@@ -208,8 +222,10 @@ public class FunctionUtils {
 	 * @param filter Filter function to use.
 	 * @param results The collection to populate with the results.
 	 * @return The populated result collection.
+	 * @throws ApplicationException When some function application fails.
 	 */
-	public static <K, V, C extends Collection<V>> C filterValues(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter, final C results) {
+	public static <K, V, C extends Collection<V>> C filterValues(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter, final C results)
+	throws ApplicationException {
 		Assert.notNull(bindings);
 		Assert.notNull(filter);
 		Assert.notNull(results);
@@ -232,8 +248,10 @@ public class FunctionUtils {
 	 * @param values Values to count.
 	 * @param filter Filter function to use.
 	 * @return The number of accepted values.
+	 * @throws ApplicationException When some function application fails.
 	 */
-	public static <T> int count(final Collection<? extends T> values, final Filter<? super T> filter) {
+	public static <T> int count(final Collection<? extends T> values, final Filter<? super T> filter)
+	throws ApplicationException {
 		Assert.notNull(values);
 		Assert.notNull(filter);
 
@@ -258,8 +276,10 @@ public class FunctionUtils {
 	 * @param map Map to count.
 	 * @param filter Filter function to use.
 	 * @return The number of accepted bindings.
+	 * @throws ApplicationException When some function application fails.
 	 */
-	public static <K, V> int count(final Map<? extends K, ? extends V> map, final Filter2<? super K, ? super V> filter) {
+	public static <K, V> int count(final Map<? extends K, ? extends V> map, final Filter2<? super K, ? super V> filter)
+	throws ApplicationException {
 		Assert.notNull(map);
 		Assert.notNull(filter);
 
@@ -282,8 +302,10 @@ public class FunctionUtils {
 	 * @param values Values to test.
 	 * @param filter Filter function to use.
 	 * @return <code>true</code> if any value is accepted, <code>false</code> if all values are rejected.
+	 * @throws ApplicationException When some function application fails.
 	 */
-	public static <T> boolean isAny(final Collection<? extends T> values, final Filter<? super T> filter) {
+	public static <T> boolean isAny(final Collection<? extends T> values, final Filter<? super T> filter)
+	throws ApplicationException {
 		Assert.notNull(values);
 		Assert.notNull(filter);
 
@@ -303,8 +325,10 @@ public class FunctionUtils {
 	 * @param values Values to test.
 	 * @param filter Filter function to use.
 	 * @return <code>true</code> if all values are accepted, <code>false</code> if any value is rejected.
+	 * @throws ApplicationException When some function application fails.
 	 */
-	public static <T> boolean areAll(final Collection<? extends T> values, final Filter<? super T> filter) {
+	public static <T> boolean areAll(final Collection<? extends T> values, final Filter<? super T> filter)
+	throws ApplicationException {
 		Assert.notNull(values);
 		Assert.notNull(filter);
 
@@ -328,9 +352,11 @@ public class FunctionUtils {
 	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
 	 * @param factory Factory to use to build the result collection.
 	 * @return The results of the function applications.
+	 * @throws ApplicationException When some function application fails.
 	 * @see #map(Collection, Function, boolean, Collection)
 	 */
-	public static <T1, T2, C extends Collection<T2>> C map(final Collection<? extends T1> values, final Function<? super T1, ? extends T2> function, final boolean ignoreNull, final CollectionFactory<? super T2, ? extends C> factory) {
+	public static <T1, T2, C extends Collection<T2>> C map(final Collection<? extends T1> values, final Function<? super T1, ? extends T2> function, final boolean ignoreNull, final CollectionFactory<? super T2, ? extends C> factory)
+	throws ApplicationException {
 		Assert.notNull(factory);
 
 		// Map.
@@ -348,8 +374,10 @@ public class FunctionUtils {
 	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
 	 * @param results The collection to populate with the results.
 	 * @return The populated result collection.
+	 * @throws ApplicationException When some function application fails.
 	 */
-	public static <T1, T2, C extends Collection<T2>> C map(final Collection<? extends T1> values, final Function<? super T1, ? extends T2> function, final boolean ignoreNull, final C results) {
+	public static <T1, T2, C extends Collection<T2>> C map(final Collection<? extends T1> values, final Function<? super T1, ? extends T2> function, final boolean ignoreNull, final C results)
+	throws ApplicationException {
 		Assert.notNull(values);
 		Assert.notNull(function);
 		Assert.notNull(results);
@@ -376,9 +404,11 @@ public class FunctionUtils {
 	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
 	 * @param factory Factory to use to build the result map.
 	 * @return A map of the function applications results associated to the corresponding argument keys.
+	 * @throws ApplicationException When some function application fails.
 	 * @see #map(Map, Function2, boolean, Map)
 	 */
-	public static <K, V1, V2, M extends Map<K, V2>> M map(final Map<? extends K, ? extends V1> bindings, final Function2<? super K, ? super V1, ? extends V2> function, final boolean ignoreNull, final MapFactory<? super K, ? super V2, ? extends M> factory) {
+	public static <K, V1, V2, M extends Map<K, V2>> M map(final Map<? extends K, ? extends V1> bindings, final Function2<? super K, ? super V1, ? extends V2> function, final boolean ignoreNull, final MapFactory<? super K, ? super V2, ? extends M> factory)
+	throws ApplicationException {
 		Assert.notNull(factory);
 
 		// Map.
@@ -400,8 +430,10 @@ public class FunctionUtils {
 	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
 	 * @param results The map to populate with the results.
 	 * @return The populated result map.
+	 * @throws ApplicationException When some function application fails.
 	 */
-	public static <K, V1, V2, M extends Map<K, V2>> M map(final Map<? extends K, ? extends V1> bindings, final Function2<? super K, ? super V1, ? extends V2> function, final boolean ignoreNull, final M results) {
+	public static <K, V1, V2, M extends Map<K, V2>> M map(final Map<? extends K, ? extends V1> bindings, final Function2<? super K, ? super V1, ? extends V2> function, final boolean ignoreNull, final M results)
+	throws ApplicationException {
 		Assert.notNull(bindings);
 		Assert.notNull(function);
 		Assert.notNull(results);
@@ -429,9 +461,11 @@ public class FunctionUtils {
 	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
 	 * @param factory Factory to use to build the result map.
 	 * @return A map of the function application results associated to the corresponding argument keys.
+	 * @throws ApplicationException When some function application fails.
 	 * @see #mapKeys(Set, Function, boolean, Map)
 	 */
-	public static <K, V, M extends Map<K, V>> Map<K, V> mapKeys(final Set<? extends K> keys, final Function<? super K, ? extends V> function, final boolean ignoreNull, final MapFactory<? super K, ? super V, ? extends M> factory) {
+	public static <K, V, M extends Map<K, V>> Map<K, V> mapKeys(final Set<? extends K> keys, final Function<? super K, ? extends V> function, final boolean ignoreNull, final MapFactory<? super K, ? super V, ? extends M> factory)
+	throws ApplicationException {
 		Assert.notNull(factory);
 
 		// Map the keys.
@@ -449,8 +483,10 @@ public class FunctionUtils {
 	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
 	 * @param results The map to populate with the results.
 	 * @return The populated result map.
+	 * @throws ApplicationException When some function application fails.
 	 */
-	public static <K, V, M extends Map<K, V>> Map<K, V> mapKeys(final Set<? extends K> keys, final Function<? super K, ? extends V> function, final boolean ignoreNull, final M results) {
+	public static <K, V, M extends Map<K, V>> Map<K, V> mapKeys(final Set<? extends K> keys, final Function<? super K, ? extends V> function, final boolean ignoreNull, final M results)
+	throws ApplicationException {
 		Assert.notNull(keys);
 		Assert.notNull(function);
 		Assert.notNull(results);
@@ -476,9 +512,11 @@ public class FunctionUtils {
 	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
 	 * @param factory Factory to use to build the result map.
 	 * @return A map of the argument values associated to the corresponding function application results.
+	 * @throws ApplicationException When some function application fails.
 	 * @see #mapValues(Collection, Function, boolean, Map)
 	 */
-	public static <K, V, M extends Map<K, V>> M mapValues(final Collection<? extends V> values, final Function<? super V, ? extends K> function, final boolean ignoreNull, final MapFactory<? super K, ? super V, ? extends M> factory) {
+	public static <K, V, M extends Map<K, V>> M mapValues(final Collection<? extends V> values, final Function<? super V, ? extends K> function, final boolean ignoreNull, final MapFactory<? super K, ? super V, ? extends M> factory)
+	throws ApplicationException {
 		Assert.notNull(factory);
 
 		// Map the values.
@@ -498,8 +536,10 @@ public class FunctionUtils {
 	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
 	 * @param results The map to populate with the results.
 	 * @return The populated result map.
+	 * @throws ApplicationException When some function application fails.
 	 */
-	public static <K, V, M extends Map<K, V>> M mapValues(final Collection<? extends V> values, final Function<? super V, ? extends K> function, final boolean ignoreNull, final M results) {
+	public static <K, V, M extends Map<K, V>> M mapValues(final Collection<? extends V> values, final Function<? super V, ? extends K> function, final boolean ignoreNull, final M results)
+	throws ApplicationException {
 		Assert.notNull(values);
 		Assert.notNull(function);
 		Assert.notNull(results);
@@ -526,9 +566,11 @@ public class FunctionUtils {
 	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
 	 * @param factory Factory to use to build the result map.
 	 * @return A map of the values corresponding to the argument keys associated to the result keys.
+	 * @throws ApplicationException When some function application fails.
 	 * @see #remap(Map, Function, boolean, Map)
 	 */
-	public static <K1, K2, V, M extends Map<K2, V>> M remap(final Map<? extends K1, ? extends V> map, final Function<? super K1, ? extends K2> function, final boolean ignoreNull, final MapFactory<? super K2, ? super V, ? extends M> factory) {
+	public static <K1, K2, V, M extends Map<K2, V>> M remap(final Map<? extends K1, ? extends V> map, final Function<? super K1, ? extends K2> function, final boolean ignoreNull, final MapFactory<? super K2, ? super V, ? extends M> factory)
+	throws ApplicationException {
 		Assert.notNull(factory);
 
 		// Remap.
@@ -536,7 +578,8 @@ public class FunctionUtils {
 	}
 
 	/**
-	 * Apply the given function to the keys of the given map and populate the given result map with the values corresponding to the argument keys associated to the result keys.
+	 * Apply the given function to the keys of the given map and populate the given result map with the values corresponding to the argument keys associated to
+	 * the result keys.
 	 * 
 	 * @param <K1> Type of the argument keys.
 	 * @param <K2> Type of the result keys.
@@ -547,8 +590,10 @@ public class FunctionUtils {
 	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
 	 * @param results The map to populate with the results.
 	 * @return The populated result map.
+	 * @throws ApplicationException When some function application fails.
 	 */
-	public static <K1, K2, V, M extends Map<K2, V>> M remap(final Map<? extends K1, ? extends V> map, final Function<? super K1, ? extends K2> function, final boolean ignoreNull, final M results) {
+	public static <K1, K2, V, M extends Map<K2, V>> M remap(final Map<? extends K1, ? extends V> map, final Function<? super K1, ? extends K2> function, final boolean ignoreNull, final M results)
+	throws ApplicationException {
 		Assert.notNull(map);
 		Assert.notNull(function);
 		Assert.notNull(results);
@@ -577,9 +622,11 @@ public class FunctionUtils {
 	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
 	 * @param factory Factory to use to build the result map.
 	 * @return A map of the values associated to the corresponding result keys.
+	 * @throws ApplicationException When some function application fails.
 	 * @see #remap(Map, Function2, boolean, Map)
 	 */
-	public static <K1, K2, V, M extends Map<K2, V>> M remap(final Map<? extends K1, ? extends V> bindings, final Function2<? super K1, ? super V, ? extends K2> function, final boolean ignoreNull, final MapFactory<? super K2, ? super V, ? extends M> factory) {
+	public static <K1, K2, V, M extends Map<K2, V>> M remap(final Map<? extends K1, ? extends V> bindings, final Function2<? super K1, ? super V, ? extends K2> function, final boolean ignoreNull, final MapFactory<? super K2, ? super V, ? extends M> factory)
+	throws ApplicationException {
 		Assert.notNull(factory);
 
 		// Remap.
@@ -601,8 +648,10 @@ public class FunctionUtils {
 	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
 	 * @param results The map to populate with the results.
 	 * @return The populated result map.
+	 * @throws ApplicationException When some function application fails.
 	 */
-	public static <K1, K2, V, M extends Map<K2, V>> M remap(final Map<? extends K1, ? extends V> bindings, final Function2<? super K1, ? super V, ? extends K2> function, final boolean ignoreNull, final M results) {
+	public static <K1, K2, V, M extends Map<K2, V>> M remap(final Map<? extends K1, ? extends V> bindings, final Function2<? super K1, ? super V, ? extends K2> function, final boolean ignoreNull, final M results)
+	throws ApplicationException {
 		Assert.notNull(bindings);
 		Assert.notNull(function);
 		Assert.notNull(results);
@@ -625,8 +674,10 @@ public class FunctionUtils {
 	 * @param <T> Type of the argument values.
 	 * @param values Argument values
 	 * @param procedure Procedure to apply.
+	 * @throws ApplicationException When some function application fails.
 	 */
-	public static <T> void apply(final Collection<? extends T> values, final Procedure<? super T> procedure) {
+	public static <T> void apply(final Collection<? extends T> values, final Procedure<? super T> procedure)
+	throws ApplicationException {
 		Assert.notNull(values);
 		Assert.notNull(procedure);
 
@@ -642,8 +693,10 @@ public class FunctionUtils {
 	 * @param <T> Type of the argument values.
 	 * @param iterator Iterator providing the argument values.
 	 * @param procedure Procedure to apply.
+	 * @throws ApplicationException When some function application fails.
 	 */
-	public static <T> void apply(final Iterator<? extends T> iterator, final Procedure<? super T> procedure) {
+	public static <T> void apply(final Iterator<? extends T> iterator, final Procedure<? super T> procedure)
+	throws ApplicationException {
 		Assert.notNull(iterator);
 		Assert.notNull(procedure);
 
@@ -655,7 +708,8 @@ public class FunctionUtils {
 	}
 
 	// DOCME
-	public static <T, A> A fold(final Collection<? extends T> values, final Function2<? super A, ? super T, ? extends A> function, final A initialAccumulator) {
+	public static <T, A> A fold(final Collection<? extends T> values, final Function2<? super A, ? super T, ? extends A> function, final A initialAccumulator)
+	throws ApplicationException {
 		Assert.notNull(values);
 		Assert.notNull(function);
 
@@ -668,7 +722,8 @@ public class FunctionUtils {
 	}
 
 	// DOCME
-	public static <T, A> A fold(final Iterator<? extends T> iterator, final Function2<? super A, ? super T, ? extends A> function, final A initialAccumulator) {
+	public static <T, A> A fold(final Iterator<? extends T> iterator, final Function2<? super A, ? super T, ? extends A> function, final A initialAccumulator)
+	throws ApplicationException {
 		Assert.notNull(iterator);
 		Assert.notNull(function);
 

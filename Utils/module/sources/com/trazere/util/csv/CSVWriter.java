@@ -165,6 +165,16 @@ public class CSVWriter {
 	}
 
 	/**
+	 * Flush the underlying writer of the receiver CSV writer.
+	 * 
+	 * @throws IOException
+	 */
+	public void flush()
+	throws IOException {
+		_writer.flush();
+	}
+
+	/**
 	 * Close the underlying writer of the receiver CSV writer.
 	 * 
 	 * @throws IOException

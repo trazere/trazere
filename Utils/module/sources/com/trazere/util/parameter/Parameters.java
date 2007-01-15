@@ -97,18 +97,41 @@ public class Parameters<T> {
 		}
 
 		/**
+		 * Get the typed value of the parameter with the given name contained in the receiver builder.
+		 * 
+		 * @param <C> Type of the value.
+		 * @param name Name of the parameter.
+		 * @param type Class of the value.
+		 * @return The value of the parameter, or <code>null</code> if the builder contains no parameters with the given name.
+		 * @throws IncompatibleParameterException When the value of the parameter is not compatible with the given type.
+		 */
+		@SuppressWarnings("unchecked")
+		public <C extends T> C getTyped(final String name, final Class<C> type)
+		throws IncompatibleParameterException {
+			Assert.notNull(name);
+			Assert.notNull(type);
+
+			// Get the parameter value.
+			final T value = _parameters.get(name);
+			if (null == value || type.isInstance(value)) {
+				return (C) value;
+			} else {
+				throw new IncompatibleParameterException("Value " + value + " of parameter " + name + " is not compatible with type " + type);
+			}
+		}
+
+		/**
 		 * Add a new parameter with the given key and value to the receiver builder.
 		 * <p>
 		 * The receiver builder must not already contain a parameter with the given name.
 		 * 
 		 * @param name Name of the parameter to add.
-		 * @param value Value of the paramter to add.
+		 * @param value Value of the parameter to add. May be <code>null</code>.
 		 * @throws ParameterAlreadyExistsException When a parameter with the given name has already been added.
 		 */
 		public void add(final String name, final T value)
 		throws ParameterAlreadyExistsException {
 			Assert.notNull(name);
-			Assert.notNull(value);
 
 			// Check that the parameter does not exist.
 			if (_parameters.containsKey(name)) {
@@ -146,12 +169,11 @@ public class Parameters<T> {
 		 * A new parameter is added when the receiver builder contains no parameters with the given name. The value of the existing parameter is replaced
 		 * otherwise.
 		 * 
-		 * @param name Name of the parameter to add.
-		 * @param value Value of the paramter to add.
+		 * @param name Name of the parameter to set.
+		 * @param value Value of the parameter to set. May be <code>null</code>.
 		 */
 		public void set(final String name, final T value) {
 			Assert.notNull(name);
-			Assert.notNull(value);
 
 			// Set the parameter.
 			_parameters.put(name, value);
@@ -178,7 +200,7 @@ public class Parameters<T> {
 		 * The receiver builder must contain a parameter with the given name.
 		 * 
 		 * @param name Name of the parameter to remove.
-		 * @return The value of the removed parameter.
+		 * @return The value of the removed parameter. May be <code>null</code>.
 		 * @throws MissingParameterException When the receiver builder contains no parameters with the given name.
 		 */
 		public T remove(final String name)
@@ -258,7 +280,7 @@ public class Parameters<T> {
 	 * @see #EMPTY
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T>Parameters<T> build() {
+	public static <T> Parameters<T> build() {
 		return EMPTY;
 	}
 
@@ -272,7 +294,7 @@ public class Parameters<T> {
 	 * @param value Value of the parameter. May be <code>null</code>.
 	 * @return The built parameter set.
 	 */
-	public static <T>Parameters<T> build(final String name, final T value) {
+	public static <T> Parameters<T> build(final String name, final T value) {
 		Assert.notNull(name);
 
 		// Build.
@@ -295,7 +317,7 @@ public class Parameters<T> {
 	 * @param value2 Value of the second parameter. May be <code>null</code>.
 	 * @return The built parameter set.
 	 */
-	public static <T>Parameters<T> build(final String name1, final T value1, final String name2, final T value2) {
+	public static <T> Parameters<T> build(final String name1, final T value1, final String name2, final T value2) {
 		Assert.notNull(name1);
 		Assert.notNull(name2);
 
@@ -317,7 +339,7 @@ public class Parameters<T> {
 	 * @param values Value of the parameters identified by their names.
 	 * @return The built parameter set.
 	 */
-	public static <T>Parameters<T> build(final Map<String, T> values) {
+	public static <T> Parameters<T> build(final Map<String, T> values) {
 		return new Parameters<T>(new HashMap<String, T>(values));
 	}
 
@@ -331,7 +353,7 @@ public class Parameters<T> {
 	 * @param parameters2 Second set of parameters.
 	 * @return The union parameter set.
 	 */
-	public static <T>Parameters<T> union(final Parameters<? extends T> parameters1, final Parameters<? extends T> parameters2) {
+	public static <T> Parameters<T> union(final Parameters<? extends T> parameters1, final Parameters<? extends T> parameters2) {
 		Assert.notNull(parameters1);
 		Assert.notNull(parameters2);
 
@@ -427,7 +449,7 @@ public class Parameters<T> {
 	 * @throws IncompatibleParameterException When the value of the parameter is not compatible with the given type.
 	 */
 	@SuppressWarnings("unchecked")
-	public <C extends T>C getTypedParameter(final String name, final Class<C> type)
+	public <C extends T> C getTypedParameter(final String name, final Class<C> type)
 	throws IncompatibleParameterException {
 		Assert.notNull(name);
 		Assert.notNull(type);
@@ -452,7 +474,7 @@ public class Parameters<T> {
 	 * @throws IncompatibleParameterException When the value of the parameter is not compatible with the given type.
 	 */
 	@SuppressWarnings("unchecked")
-	public <C extends T>C getTypedParameter(final String name, final C defaultValue, final Class<C> type)
+	public <C extends T> C getTypedParameter(final String name, final C defaultValue, final Class<C> type)
 	throws IncompatibleParameterException {
 		Assert.notNull(name);
 
@@ -478,7 +500,7 @@ public class Parameters<T> {
 	 * @throws IncompatibleParameterException When the value of the parameter is not compatible with the given type.
 	 */
 	@SuppressWarnings("unchecked")
-	public <C extends T>C getTypedMandatoryParameter(final String name, final Class<C> type)
+	public <C extends T> C getTypedMandatoryParameter(final String name, final Class<C> type)
 	throws MissingParameterException, IncompatibleParameterException {
 		Assert.notNull(name);
 

@@ -26,6 +26,19 @@ import com.trazere.util.ObjectUtils;
  */
 public class Tuple2<T1, T2> {
 	/**
+	 * Build a tuple with the given values.
+	 * 
+	 * @param <T1> Type of the first value.
+	 * @param <T2> Type of the second value.
+	 * @param first First value. May be <code>null</code>.
+	 * @param second Second value. May be <code>null</code>.
+	 * @return The tuple.
+	 */
+	public static <T1, T2> Tuple2<T1, T2> build(final T1 first, final T2 second) {
+		return new Tuple2<T1, T2>(first, second);
+	}
+
+	/**
 	 * Compare the given tuples.
 	 * <p>
 	 * The comparison is performed by comparing the respective values of the tuples in sequence.

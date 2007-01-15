@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
 
+import com.trazere.util.function.ApplicationException;
 import com.trazere.util.function.Filter;
 import com.trazere.util.report.ReportEntry;
 
@@ -80,8 +81,10 @@ public class ReportStoreUtils {
 	 * @param fromEnd Flag indicating wether the entries should be extracted from the beginning or the end of the store. This flag changes nothing when the
 	 *        maximum number of retrieved entries is not limited.
 	 * @return The filtered entries.
+	 * @throws ApplicationException When some filter application fails.
 	 */
-	public static <Entry extends ReportEntry<?, ?>> List<ReportStoreEntry<Entry>> filterEntries(final List<ReportStoreEntry<Entry>> entries, final Filter<ReportStoreEntry<Entry>> filter, final int limit, final boolean fromEnd) {
+	public static <Entry extends ReportEntry<?, ?>> List<ReportStoreEntry<Entry>> filterEntries(final List<ReportStoreEntry<Entry>> entries, final Filter<ReportStoreEntry<Entry>> filter, final int limit, final boolean fromEnd)
+	throws ApplicationException {
 		// Filtered entries.
 		if (null != filter) {
 			final List<ReportStoreEntry<Entry>> filteredEntries = new ArrayList<ReportStoreEntry<Entry>>();

@@ -12,6 +12,7 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 import com.trazere.util.Assert;
+import com.trazere.util.function.ApplicationException;
 import com.trazere.util.function.Function;
 import com.trazere.util.type.Tuple2;
 
@@ -359,8 +360,10 @@ public class CollectionUtils {
 	 * @param values Values to sort. The given collection is not modified by the method.
 	 * @param dependencyFunction Function which computes the dependencies.
 	 * @return The sorted values.
+	 * @throws CollectionException When some dependencies are invalid or cyclic.
 	 */
-	public static <T> ArrayList<T> topologicalSort(final Collection<? extends T> values, final Function<T, ? extends Collection<T>> dependencyFunction) {
+	public static <T> ArrayList<T> topologicalSort(final Collection<? extends T> values, final Function<T, ? extends Collection<T>> dependencyFunction)
+	throws CollectionException {
 		return topologicalSort(values, dependencyFunction, new ArrayList<T>(values.size()));
 	}
 
@@ -378,8 +381,10 @@ public class CollectionUtils {
 	 * @param dependencyFunction Function which computes the dependencies.
 	 * @param factory Factory to use to build the result list.
 	 * @return The sorted values.
+	 * @throws CollectionException When some dependencies are invalid or cyclic.
 	 */
-	public static <T, L extends List<T>> L topologicalSort(final Collection<? extends T> values, final Function<? super T, ? extends Collection<T>> dependencyFunction, final CollectionFactory<? super T, ? extends L> factory) {
+	public static <T, L extends List<T>> L topologicalSort(final Collection<? extends T> values, final Function<? super T, ? extends Collection<T>> dependencyFunction, final CollectionFactory<? super T, ? extends L> factory)
+	throws CollectionException {
 		return topologicalSort(values, dependencyFunction, factory.build(values.size()));
 	}
 
@@ -397,8 +402,10 @@ public class CollectionUtils {
 	 * @param dependencyFunction Function which computes the dependencies.
 	 * @param results List to populate with the results.
 	 * @return The populated list.
+	 * @throws CollectionException When some dependencies are invalid or cyclic.
 	 */
-	public static <T, L extends List<T>> L topologicalSort(final Collection<? extends T> values, final Function<? super T, ? extends Collection<T>> dependencyFunction, final L results) {
+	public static <T, L extends List<T>> L topologicalSort(final Collection<? extends T> values, final Function<? super T, ? extends Collection<T>> dependencyFunction, final L results)
+	throws CollectionException {
 		Assert.notNull(values);
 		Assert.notNull(dependencyFunction);
 		Assert.notNull(results);
@@ -406,8 +413,16 @@ public class CollectionUtils {
 		// Compute the dependencies.
 		final Collection<Tuple2<T, T>> dependencies = new ArrayList<Tuple2<T, T>>();
 		for (final T value : values) {
-			for (final T dependencyValue : dependencyFunction.apply(value)) {
-				dependencies.add(new Tuple2<T, T>(value, dependencyValue));
+			try {
+				for (final T dependencyValue : dependencyFunction.apply(value)) {
+					if (values.contains(dependencyValue)) {
+						dependencies.add(new Tuple2<T, T>(value, dependencyValue));
+					} else {
+						throw new CollectionException("Invalid dependency " + dependencyValue + " for value " + value);
+					}
+				}
+			} catch (final ApplicationException exception) {
+				throw new CollectionException("Failed computing dependencies for value " + value, exception);
 			}
 		}
 
@@ -415,16 +430,17 @@ public class CollectionUtils {
 		final Collection<T> pendingValues = new ArrayList<T>(values);
 		while (!pendingValues.isEmpty()) {
 			// Find the leaves.
-			final Set<T> leafValues = new HashSet<T>(values);
+			final Set<T> leafValues = new HashSet<T>(pendingValues);
 			for (final Tuple2<T, T> dependency : dependencies) {
 				leafValues.remove(dependency.getFirst());
 			}
 
 			if (leafValues.isEmpty()) {
-				throw new RuntimeException("Cyclic graph !");
+				throw new CollectionException("Cyclic dependencies for values " + pendingValues);
 			}
 
 			// Add the leaves to the result.
+			// Pending values are iterated instead of leaf values to keep the sort stable.
 			final Iterator<T> pendingValuesIt = pendingValues.iterator();
 			while (pendingValuesIt.hasNext()) {
 				final T value = pendingValuesIt.next();

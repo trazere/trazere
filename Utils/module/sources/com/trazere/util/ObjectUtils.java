@@ -38,7 +38,7 @@ public class ObjectUtils {
 	/**
 	 * Compare the given comparable objets.
 	 * <p>
-	 * This method supports comparisons with <code>null</code> values. <code>null</code> values are considered as less than non <code>null</code> values.
+	 * This method supports comparisons of <code>null</code> values. <code>null</code> values are considered as less than non <code>null</code> values.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param object1 First value to compare. May be <code>null</code>.
