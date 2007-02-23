@@ -97,7 +97,7 @@ public class ReportStoreEntry<Entry extends ReportEntry<?, ?>> {
 		if (this == object) {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
-			final ReportStoreEntry<?> entry = (ReportStoreEntry) object;
+			final ReportStoreEntry<?> entry = (ReportStoreEntry<?>) object;
 			return _date.equals(entry._date) && _level == entry._level && _entry.equals(entry._entry);
 		} else {
 			return false;
