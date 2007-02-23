@@ -18,7 +18,7 @@ package com.trazere.util.observer;
 import java.util.Observable;
 
 /**
- * The <code>SimpleObservable</code> class represents observable which provide public control of their <em>changed</em> status.
+ * The <code>SimpleObservable</code> class represents observables which provide public control of their <em>changed</em> status.
  */
 public class SimpleObservable
 extends Observable {
