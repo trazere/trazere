@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="javadoc">
+	<target name="javadoc">
+		<javadoc access="public" author="true" classpath="/Users/jdr/Trazere/Head/Tools/module/commons-logging-1.1/commons-logging.jar" destdir="doc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="com.trazere.util.text,com.trazere.util.type,com.trazere.util.task,com.trazere.util.configuration,com.trazere.util.function,com.trazere.util.report,com.trazere.util.parameter,com.trazere.util.csv,com.trazere.util.report.store,com.trazere.util.observer,com.trazere.util,com.trazere.util.collection" source="1.5" sourcepath="sources" splitindex="true" use="true" version="true" />
+	</target>
+</project>
