@@ -25,9 +25,9 @@ import com.trazere.util.collection.CollectionUtils;
 import com.trazere.util.text.TextUtils;
 
 /**
- * The <code>Parameters</code> class represents collections of parameter values identified by unique names.
+ * The <code>Parameters</code> class represents collections of values identified by unique names which aim to be used as parameters.
  * <p>
- * Parameter set are not mutable. Parameter values may not be <code>null</code>.
+ * Parameter sets are not mutable. Parameter names may not be <code>null</code>.
  * 
  * @param <T> Type of the parameter values.
  */
@@ -135,7 +135,7 @@ public class Parameters<T> {
 
 			// Check that the parameter does not exist.
 			if (_parameters.containsKey(name)) {
-				throw new ParameterAlreadyExistsException("Parameter \"" + name + "\" alread exists in parameters " + _parameters);
+				throw new ParameterAlreadyExistsException("Parameter \"" + name + "\" already exists in parameters " + _parameters);
 			}
 
 			// Add the parameter.
@@ -156,7 +156,7 @@ public class Parameters<T> {
 
 			// Check that the parameters do not exist.
 			if (CollectionUtils.intersects(_parameters.keySet(), parameters._parameters.keySet())) {
-				throw new ParameterAlreadyExistsException("Some parameter of " + parameters + " alread exists in parameters " + _parameters);
+				throw new ParameterAlreadyExistsException("Some parameter of " + parameters + " already exists in parameters " + _parameters);
 			}
 
 			// Add the parameters.
@@ -210,7 +210,7 @@ public class Parameters<T> {
 
 			// Check that the parameter do exist.
 			if (!_parameters.containsKey(name)) {
-				throw new MissingParameterException("Parameter \"" + name + "\" alread does not exist in parameters " + _parameters);
+				throw new MissingParameterException("Parameter \"" + name + "\" does not exist in parameters " + _parameters);
 			}
 
 			// Remove the parameter.
