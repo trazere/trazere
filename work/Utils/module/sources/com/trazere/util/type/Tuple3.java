@@ -19,13 +19,14 @@ import com.trazere.util.Assert;
 import com.trazere.util.ObjectUtils;
 
 /**
- * The <code>Tuple3</code> class represents the 3-tuple (triplet) data type which store a sequence of 3 values.
+ * The {@link Tuple3} class represents the 3-tuple (triplet) data type which stores a sequence of 3 values.
  * 
  * @param <T1> Type of the first value.
  * @param <T2> Type of the second value.
  * @param <T3> Type of the third value.
  */
-public class Tuple3<T1, T2, T3> {
+public class Tuple3<T1, T2, T3>
+extends Tuple2<T1, T2> {
 	/**
 	 * Build a tuple with the given values.
 	 * 
@@ -51,34 +52,21 @@ public class Tuple3<T1, T2, T3> {
 	 * @param <T3> Type of the third values.
 	 * @param tuple1 First tuple.
 	 * @param tuple2 Second tuple.
-	 * @param tuple3 Third tuple.
 	 * @return The result of the comparison as defined by the {@link Comparable#compareTo(Object)} method.
 	 * @see Comparable#compareTo(Object)
 	 */
-	public static <T1 extends Comparable<T1>, T2 extends Comparable<T2>, T3 extends Comparable<T3>> int compare(final Tuple3<T1, T2, T3> tuple1, final Tuple3<T1, T2, T3> tuple2, final Tuple3<T1, T2, T3> tuple3) {
+	public static <T1 extends Comparable<T1>, T2 extends Comparable<T2>, T3 extends Comparable<T3>> int compare(final Tuple3<T1, T2, T3> tuple1, final Tuple3<T1, T2, T3> tuple2) {
 		Assert.notNull(tuple1);
 		Assert.notNull(tuple2);
-		Assert.notNull(tuple3);
 
 		// Compare.
-		final int comp1 = ObjectUtils.compare(tuple1._first, tuple2._first);
-		if (0 != comp1) {
-			return comp1;
+		final int comp = Tuple2.compare(tuple1, tuple2);
+		if (0 != comp) {
+			return comp;
+		} else {
+			return ObjectUtils.compare(tuple1._third, tuple2._third);
 		}
-
-		final int comp2 = ObjectUtils.compare(tuple1._second, tuple2._second);
-		if (0 != comp2) {
-			return comp2;
-		}
-
-		return ObjectUtils.compare(tuple1._third, tuple2._third);
 	}
-
-	/** First value. May be <code>null</code>. */
-	protected final T1 _first;
-
-	/** Second value. May be <code>null</code>. */
-	protected final T2 _second;
 
 	/** Third value. May be <code>null</code>. */
 	protected final T3 _third;
@@ -91,28 +79,10 @@ public class Tuple3<T1, T2, T3> {
 	 * @param third Third value. May be <code>null</code>.
 	 */
 	public Tuple3(final T1 first, final T2 second, final T3 third) {
+		super(first, second);
+
 		// Initialization.
-		_first = first;
-		_second = second;
 		_third = third;
-	}
-
-	/**
-	 * Get the first value of the receiver tuple.
-	 * 
-	 * @return The value. May be <code>null</code>.
-	 */
-	public T1 getFirst() {
-		return _first;
-	}
-
-	/**
-	 * Get the second value of the receiver tuple.
-	 * 
-	 * @return The value. May be <code>null</code>.
-	 */
-	public T2 getSecond() {
-		return _second;
 	}
 
 	/**

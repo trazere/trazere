@@ -19,7 +19,7 @@ import com.trazere.util.Assert;
 import com.trazere.util.ObjectUtils;
 
 /**
- * The <code>Tuple2</code> class represents the 2-tuple (pair) data type which store a sequence of 2 values.
+ * The {@link Tuple2} class represents the 2-tuple (pair) data type which stores a sequence of 2 values.
  * 
  * @param <T1> Type of the first value.
  * @param <T2> Type of the second value.
@@ -58,9 +58,9 @@ public class Tuple2<T1, T2> {
 		final int comp1 = ObjectUtils.compare(tuple1._first, tuple2._first);
 		if (0 != comp1) {
 			return comp1;
+		} else {
+			return ObjectUtils.compare(tuple1._second, tuple2._second);
 		}
-
-		return ObjectUtils.compare(tuple1._second, tuple2._second);
 	}
 
 	/** First value. May be <code>null</code>. */

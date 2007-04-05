@@ -59,7 +59,7 @@ implements Descriptable {
 	/**
 	 * Get the current receiver reference.
 	 * 
-	 * @return {@link Maybe.Tag#SOME} of the set value or {@link Maybe.Tag#NONE} when the reference has not been set.
+	 * @return A <code>Some</code> of the set value or a <code>None</code> instance when the reference has not been set.
 	 */
 	public Maybe<T> get() {
 		return _value;
@@ -72,7 +72,7 @@ implements Descriptable {
 
 	public void fillDescription(final StringBuilder builder) {
 		if (_value.isSome()) {
-			builder.append(" - Value = ").append(_value.getValue());
+			builder.append(" - Value = ").append(((Maybe.Some<?>) _value).getValue());
 		} else {
 			builder.append(" - Empty");
 		}
