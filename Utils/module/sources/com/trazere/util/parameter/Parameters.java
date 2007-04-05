@@ -22,6 +22,7 @@ import java.util.Map;
 
 import com.trazere.util.Assert;
 import com.trazere.util.collection.CollectionUtils;
+import com.trazere.util.text.Descriptable;
 import com.trazere.util.text.TextUtils;
 
 /**
@@ -31,7 +32,8 @@ import com.trazere.util.text.TextUtils;
  * 
  * @param <T> Type of the parameter values.
  */
-public class Parameters<T> {
+public class Parameters<T>
+implements Descriptable {
 	/**
 	 * The <code>Builder</code> class provides a tool to build of parameter sets.
 	 * 
@@ -534,20 +536,12 @@ public class Parameters<T> {
 
 	@Override
 	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("[");
-		builder.append(CollectionUtils.last(TextUtils.split(getClass().getName(), ".", true, false)));
-		completeDescription(builder);
-		builder.append("]");
-		return builder.toString();
+		return TextUtils.computeDescription(this);
 	}
 
-	protected void completeDescription(final StringBuilder builder) {
+	public void fillDescription(final StringBuilder builder) {
 		for (final Map.Entry<String, T> entry : _parameters.entrySet()) {
-			builder.append(" - ");
-			builder.append(entry.getKey());
-			builder.append(" = ");
-			builder.append(entry.getValue());
+			builder.append(" - ").append(entry.getKey()).append(" = ").append(entry.getValue());
 		}
 	}
 }

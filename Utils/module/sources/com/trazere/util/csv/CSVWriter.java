@@ -154,9 +154,7 @@ public class CSVWriter {
 		if (value.indexOf('\n') >= 0 || value.indexOf('\r') >= 0 || value.indexOf('"') >= 0 || value.indexOf(_delimiter) >= 0) {
 			// Escape.
 			final StringBuilder builder = new StringBuilder();
-			builder.append('"');
-			builder.append(value.replaceAll("[\"]", "\"\""));
-			builder.append('"');
+			builder.append('"').append(value.replaceAll("[\"]", "\"\"")).append('"');
 			return builder.toString();
 		} else {
 			// Identity.

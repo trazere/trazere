@@ -137,8 +137,7 @@ public class TextUtils {
 
 		// Compute.
 		final StringBuilder builder = new StringBuilder();
-		builder.append("[");
-		builder.append(TextUtils.computeClassName(object.getClass()));
+		builder.append("[").append(TextUtils.computeClassName(object.getClass()));
 		object.fillDescription(builder);
 		builder.append("]");
 		return builder.toString();
