@@ -15,40 +15,80 @@
  */
 package com.trazere.util.type;
 
-import com.trazere.util.Assert;
-import com.trazere.util.InternalException;
+import com.trazere.util.ObjectUtils;
 import com.trazere.util.text.Descriptable;
 import com.trazere.util.text.TextUtils;
 
 /**
- * The <code>Maybe</code> class represents the <em>Maybe</em> algebraic data type which wraps an optional value.
+ * The {@link Maybe} class represents an algebraic data type which wraps an optional value.
+ * <ul>
+ * <li>The <code>None</code> constructor builds instances which wrap absent values.
+ * <li>The <code>Some</code> constructor builds instances which wrap available values.
  * <p>
  * This class aims to improve the reliability of the code by avoiding uses of <code>null</code> values.
  * 
- * @param <T> Type of the value.
+ * @param <Value> Type of the value.
  */
-public abstract class Maybe<T>
+public abstract class Maybe<Value>
 implements Descriptable {
 	/**
-	 * The <code>Tag</code> enumeration represents the various constructors of the algebraic data type.
+	 * The {@link Constructor} enumeration represents the constructors of the algebraic data type.
 	 */
-	public static enum Tag {
+	public static enum Constructor {
 		NONE,
 		SOME,
 	}
 
 	/**
-	 * Constant for the <code>NONE</code> instances.
+	 * The {@link Matcher} interface defines functions on unwrapped {@link Maybe} instances.
+	 * 
+	 * @param <Value> Type of the value.
+	 * @param <Result> Type of the result.
+	 * @see Maybe#match(Matcher)
 	 */
-	protected static final Maybe<?> _NONE = new Maybe<Object>() {
+	public static interface Matcher<Value, Result> {
+		/**
+		 * Apply the receiver function to the given <code>None</code> instance.
+		 * 
+		 * @param none Argument instance of the function.
+		 * @return The result of the function application.
+		 */
+		public Result none(final None<Value> none);
+
+		/**
+		 * Apply the receiver function to the given <code>Some</code> instance.
+		 * 
+		 * @param some Argument instance of the function.
+		 * @return The result of the function application.
+		 */
+		public Result some(final Some<Value> some);
+	}
+
+	/**
+	 * The {@link None} class represents the instances built using the <code>None</code> constructor.
+	 * 
+	 * @param <Value> Type of the value.
+	 */
+	public static final class None<Value>
+	extends Maybe<Value> {
 		@Override
-		public Tag getTag() {
-			return Tag.NONE;
+		public boolean isNone() {
+			return true;
 		}
 
 		@Override
-		public Object getValue() {
-			throw new UnsupportedOperationException();
+		public boolean isSome() {
+			return false;
+		}
+
+		@Override
+		public Constructor getConstructor() {
+			return Constructor.NONE;
+		}
+
+		@Override
+		public <Result> Result match(final Matcher<Value, Result> matcher) {
+			return matcher.none(this);
 		}
 
 		public void fillDescription(final StringBuilder builder) {
@@ -70,79 +110,119 @@ implements Descriptable {
 				return false;
 			}
 		}
-	};
+	}
 
 	/**
-	 * Build a new instance using the <code>NONE</code> constuctor.
+	 * The {@link Some} class represents the instances built using the <code>Some</code> constructor.
 	 * 
-	 * @param <T> Type of the value.
+	 * @param <Value> Type of the value.
+	 */
+	public static final class Some<Value>
+	extends Maybe<Value> {
+		protected final Value _value;
+
+		/**
+		 * Build a new instance wrapping the given value.
+		 * 
+		 * @param value Value to wrap. May be <code>null</code>.
+		 */
+		public Some(final Value value) {
+			// Initialization.
+			_value = value;
+		}
+
+		@Override
+		public boolean isNone() {
+			return false;
+		}
+
+		@Override
+		public boolean isSome() {
+			return true;
+		}
+
+		@Override
+		public Constructor getConstructor() {
+			return Constructor.SOME;
+		}
+
+		/**
+		 * Get the value wrapped in the receiver instance.
+		 * 
+		 * @return The wrapped value. May be <code>null</code>.
+		 */
+		public Value getValue() {
+			return _value;
+		}
+
+		@Override
+		public <Result> Result match(final Matcher<Value, Result> matcher) {
+			return matcher.some(this);
+		}
+
+		@Override
+		public int hashCode() {
+			int result = getClass().hashCode();
+			if (null != _value) {
+				result = result * 31 + _value.hashCode();
+			}
+			return result;
+		}
+
+		@Override
+		public boolean equals(final Object object) {
+			if (this == object) {
+				return true;
+			} else if (null != object && getClass().equals(object.getClass())) {
+				final Some<?> maybe = (Some<?>) object;
+				return ObjectUtils.equals(_value, maybe._value);
+			} else {
+				return false;
+			}
+		}
+
+		public void fillDescription(final StringBuilder builder) {
+			builder.append(" - Some = ").append(_value);
+		}
+	}
+
+	private static final None<?> _NONE = new None<Object>();
+
+	/**
+	 * Build an instance using the <code>None</code> constructor.
+	 * 
+	 * @param <Value> Type of the value.
 	 * @return The instance.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> Maybe<T> none() {
-		return (Maybe<T>) _NONE;
+	public static <Value> None<Value> none() {
+		return (None<Value>) _NONE;
 	}
 
 	/**
-	 * Build a new instance using the <code>SOME</code> constuctor.
+	 * Build an instance using the <code>Some</code> constructor wrapping the given value.
 	 * 
-	 * @param <T> Type of the value.
-	 * @param value Value to wrap.
-	 * @return The instance.
-	 */
-	public static <T> Maybe<T> some(final T value) {
-		Assert.notNull(value);
-
-		// Build.
-		return new Maybe<T>() {
-			@Override
-			public Tag getTag() {
-				return Tag.SOME;
-			}
-
-			@Override
-			public T getValue() {
-				return value;
-			}
-
-			@Override
-			public int hashCode() {
-				int result = getClass().hashCode();
-				result = result * 31 + value.hashCode();
-				return result;
-			}
-
-			@Override
-			public boolean equals(final Object object) {
-				if (this == object) {
-					return true;
-				} else if (null != object && getClass().equals(object.getClass())) {
-					final Maybe<?> maybe = (Maybe<?>) object;
-					return value.equals(maybe.getValue());
-				} else {
-					return false;
-				}
-			}
-
-			public void fillDescription(final StringBuilder builder) {
-				builder.append(" - Some = ").append(value);
-			}
-		};
-	}
-
-	/**
-	 * Wrap the given value into a <code>Maybe</code> instance.
-	 * <p>
-	 * This factory uses the <code>NONE</code> constructor when the value is <code>null</code>, or wrap it using the <code>SOME</code> constructor
-	 * otherwise.
-	 * <p>
-	 * This method aims to simplify the interoperability with legacy Java code.
-	 * 
-	 * @param <T> Type of the value.
+	 * @param <Value> Type of the value.
 	 * @param value Value to wrap. May be <code>null</code>.
 	 * @return The instance.
 	 */
-	public static <T> Maybe<T> fromValue(final T value) {
+	public static <Value> Some<Value> some(final Value value) {
+		return new Some<Value>(value);
+	}
+
+	/**
+	 * Wrap the given value into a {@link Maybe} instance.
+	 * <p>
+	 * This method wraps <code>null</code> values using the <code>None</code> constructor and non <code>null</code> values using the <code>Some</code>
+	 * constructor.
+	 * <p>
+	 * This method aims to simplify the interoperability with legacy Java code.
+	 * 
+	 * @param <Value> Type of the value.
+	 * @param value Value to wrap. May be <code>null</code>.
+	 * @return The instance.
+	 */
+	public static <Value> Maybe<Value> fromValue(final Value value) {
 		if (null != value) {
 			return some(value);
 		} else {
@@ -150,66 +230,63 @@ implements Descriptable {
 		}
 	}
 
+	private static final Matcher<?, ?> TO_MATCHER = new Matcher<Object, Object>() {
+		public Object none(final None<Object> none) {
+			return null;
+		}
+
+		public Object some(final Some<Object> some) {
+			return some.getValue();
+		}
+	};
+
 	/**
-	 * Unwrap the value from the given <code>Maybe</code> instance.
+	 * Unwrap the value from the given {@link Maybe} instance.
 	 * <p>
-	 * This method returns <code>null</code> for the instances built using the <code>NONE</code> constructors, or the wrapped value for the instances built
-	 * using the <code>SOME</code> constuctors.
+	 * This method returns <code>null</code> for the <code>None</code> instances and the wrapped value for the <code>Some</code> instances.
 	 * <p>
 	 * This method aims to simplify the interoperability with legacy Java code.
 	 * 
-	 * @param <T> Type of the value.
-	 * @param instance The instance containing the value to unwrap.
+	 * @param <Value> Type of the value.
+	 * @param maybe The instance to unwrap.
 	 * @return The wrapped value or <code>null</code>.
 	 */
-	public static <T> T toValue(final Maybe<T> instance) {
-		switch (instance.getTag()) {
-			case NONE: {
-				return null;
-			}
-			case SOME: {
-				return instance.getValue();
-			}
-			default: {
-				throw new InternalException("Internal error");
-			}
-		}
+	@SuppressWarnings("unchecked")
+	public static <Value> Value toValue(final Maybe<Value> maybe) {
+		return maybe.match((Matcher<Value, Value>) TO_MATCHER);
 	}
 
 	/**
-	 * Get the algebraic type of the receiver instance.
+	 * Test wether the receiver instance has been built using the <code>None</code> constructor.
 	 * 
-	 * @return The tag.
+	 * @return <code>true</code> when the instance has been built with the <code>None</code> constructor, <code>false</code> otherwise.
 	 */
-	public abstract Tag getTag();
+	public abstract boolean isNone();
 
 	/**
-	 * Test wether the receiver instance has been built using the <code>NONE</code> constructor.
+	 * Test wether the receiver instance has been built using the <code>Some</code> constructor.
 	 * 
-	 * @return <code>true</code> when the instance has been built with the <code>NONE</code> constructor, <code>false</code> otherwise.
+	 * @return <code>true</code> when the instance has been built with the <code>Some</code> constructor, <code>false</code> otherwise.
 	 */
-	public boolean isNone() {
-		return getTag() == Tag.NONE;
-	}
+	public abstract boolean isSome();
 
 	/**
-	 * Test wether the receiver instance has been built using the <code>SOME</code> constructor.
+	 * Get the constructor of the receiver instance.
 	 * 
-	 * @return <code>true</code> when the instance has been built with the <code>SOME</code> constructor, <code>false</code> otherwise.
+	 * @return The constructor.
 	 */
-	public boolean isSome() {
-		return getTag() == Tag.SOME;
-	}
+	public abstract Constructor getConstructor();
 
 	/**
-	 * Get the value wrapped in the receiver instance.
+	 * Apply the given matcher function to the receiver instance.
 	 * <p>
-	 * This method should only be called with instances built with the <code>SOME</code> constructor.
+	 * This method implements some kind of simple pattern matching.
 	 * 
-	 * @return The wrapped value.
-	 * @throws UnsupportedOperationException when the receiver instance has not been built using the <code>SOME</code> constuctor.
+	 * @param <Result> Type of the result.
+	 * @param matcher Matcher to use.
+	 * @return The result of the function application.
 	 */
-	public abstract T getValue();
+	public abstract <Result> Result match(final Matcher<Value, Result> matcher);
 
 	@Override
 	public final String toString() {

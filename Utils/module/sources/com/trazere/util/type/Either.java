@@ -20,185 +20,255 @@ import com.trazere.util.text.Descriptable;
 import com.trazere.util.text.TextUtils;
 
 /**
- * The <code>Either</code> class represents the <em>Either</em> algebraic data type which wraps a disjonction value.
+ * The {@link Either} class represents an algebraic data type which wraps a binary disjonction.
+ * <ul>
+ * <li>The <code>Left</code> constructor builds instances which encode the first alternative and wrap the corresponding values.
+ * <li>The <code>Right</code> constructor builds instances which encode the second alternative and wrap the corresponding values.
  * 
- * @param <Left> Type of the left value.
- * @param <Right> Type of the right value.
+ * @param <LeftValue> Type of the left value.
+ * @param <RightValue> Type of the right value.
  */
-public abstract class Either<Left, Right>
+public abstract class Either<LeftValue, RightValue>
 implements Descriptable {
 	/**
-	 * The <code>Tag</code> enumeration represents the various constructors of the algebraic data type.
+	 * The {@link Constructor} enumeration represents the constructors of the algebraic data type.
 	 */
-	public static enum Tag {
+	public static enum Constructor {
 		LEFT,
 		RIGHT,
 	}
 
 	/**
-	 * Build a new instance using the <code>LEFT</code> constuctor.
+	 * The {@link Matcher} interface defines functions on unwrapped {@link Either} instances.
 	 * 
-	 * @param <Left> Type of the left value.
-	 * @param <Right> Type of the right value.
-	 * @param left Left value to wrap.
-	 * @return The instance.
+	 * @param <LeftValue> Type of the left value.
+	 * @param <RightValue> Type of the right value.
+	 * @param <Result> Type of the result.
+	 * @see Either#match(Matcher)
 	 */
-	public static <Left, Right> Either<Left, Right> left(final Left left) {
-		return new Either<Left, Right>() {
-			@Override
-			public Tag getTag() {
-				return Tag.LEFT;
-			}
+	public static interface Matcher<LeftValue, RightValue, Result> {
+		/**
+		 * Apply the receiver function to the given <code>Left</code> instance.
+		 * 
+		 * @param left Argument instance of the function.
+		 * @return The result of the function application.
+		 */
+		public Result left(final Left<LeftValue, RightValue> left);
 
-			@Override
-			public boolean isLeft() {
-				return true;
-			}
-
-			@Override
-			public boolean isRight() {
-				return false;
-			}
-
-			@Override
-			public Left getLeft() {
-				return left;
-			}
-
-			@Override
-			public Right getRight() {
-				throw new UnsupportedOperationException();
-			}
-
-			@Override
-			public int hashCode() {
-				int result = getClass().hashCode();
-				if (null != left) {
-					result = result * 31 + left.hashCode();
-				}
-				return result;
-			}
-
-			@Override
-			public boolean equals(final Object object) {
-				if (this == object) {
-					return true;
-				} else if (null != object && getClass().equals(object.getClass())) {
-					final Either<?, ?> either = (Either<?, ?>) object;
-					return ObjectUtils.equals(left, either.getLeft());
-				} else {
-					return false;
-				}
-			}
-
-			public void fillDescription(final StringBuilder builder) {
-				builder.append(" - Left = ").append(left);
-			}
-		};
+		/**
+		 * Apply the receiver function to the given <code>Right</code> instance.
+		 * 
+		 * @param right Argument instance of the function.
+		 * @return The result of the function application.
+		 */
+		public Result right(final Right<LeftValue, RightValue> right);
 	}
 
 	/**
-	 * Build a new instance using the <code>RIGHT</code> constuctor.
+	 * The {@link Left} class represents the instances built using the <code>Left</code> constructor.
 	 * 
-	 * @param <Left> Type of the left value.
-	 * @param <Right> Type of the right value.
-	 * @param right Right value to wrap.
-	 * @return The instance.
+	 * @param <LeftValue> Type of the left value.
+	 * @param <RightValue> Type of the right value.
 	 */
-	public static <Left, Right> Either<Left, Right> right(final Right right) {
-		return new Either<Left, Right>() {
-			@Override
-			public Tag getTag() {
-				return Tag.RIGHT;
-			}
+	public final static class Left<LeftValue, RightValue>
+	extends Either<LeftValue, RightValue> {
+		protected LeftValue _left;
 
-			@Override
-			public boolean isLeft() {
+		/**
+		 * Build a new instance wrapping the given left value.
+		 * 
+		 * @param left Left value to wrap. May be <code>null</code>.
+		 */
+		public Left(final LeftValue left) {
+			// Initialization.
+			_left = left;
+		}
+
+		@Override
+		public boolean isLeft() {
+			return true;
+		}
+
+		@Override
+		public boolean isRight() {
+			return false;
+		}
+
+		@Override
+		public Constructor getConstructor() {
+			return Constructor.LEFT;
+		}
+
+		/**
+		 * Get the left value wrapped in the receiver instance.
+		 * 
+		 * @return The wrapped value. May be <code>null</code>.
+		 */
+		public LeftValue getLeft() {
+			return _left;
+		}
+
+		@Override
+		public <Result> Result match(final Matcher<LeftValue, RightValue, Result> matcher) {
+			return matcher.left(this);
+		}
+
+		@Override
+		public int hashCode() {
+			int result = getClass().hashCode();
+			if (null != _left) {
+				result = result * 31 + _left.hashCode();
+			}
+			return result;
+		}
+
+		@Override
+		public boolean equals(final Object object) {
+			if (this == object) {
+				return true;
+			} else if (null != object && getClass().equals(object.getClass())) {
+				final Left<?, ?> either = (Left<?, ?>) object;
+				return ObjectUtils.equals(_left, either._left);
+			} else {
 				return false;
 			}
+		}
 
-			@Override
-			public boolean isRight() {
-				return true;
-			}
-
-			@Override
-			public Left getLeft() {
-				throw new UnsupportedOperationException();
-			}
-
-			@Override
-			public Right getRight() {
-				return right;
-			}
-
-			@Override
-			public int hashCode() {
-				int result = getClass().hashCode();
-				if (null != right) {
-					result = result * 31 + right.hashCode();
-				}
-				return result;
-			}
-
-			@Override
-			public boolean equals(final Object object) {
-				if (this == object) {
-					return true;
-				} else if (null != object && getClass().equals(object.getClass())) {
-					final Either<?, ?> either = (Either<?, ?>) object;
-					return ObjectUtils.equals(right, either.getRight());
-				} else {
-					return false;
-				}
-			}
-
-			public void fillDescription(final StringBuilder builder) {
-				builder.append(" - Right = ").append(right);
-			}
-		};
+		public void fillDescription(final StringBuilder builder) {
+			builder.append(" - Left = ").append(_left);
+		}
 	}
 
 	/**
-	 * Get the algebraic type of the receiver instance.
+	 * The {@link Right} class represents the instances built using the <code>Right</code> constructor.
 	 * 
-	 * @return The tag.
+	 * @param <LeftValue> Type of the left value.
+	 * @param <RightValue> Type of the right value.
 	 */
-	public abstract Tag getTag();
+	public final static class Right<LeftValue, RightValue>
+	extends Either<LeftValue, RightValue> {
+		protected final RightValue _right;
+
+		/**
+		 * Build a new instance wrapping the given right value.
+		 * 
+		 * @param right Right value to wrap. May be <code>null</code>.
+		 */
+		public Right(final RightValue right) {
+			// Initialization.
+			_right = right;
+		}
+
+		@Override
+		public boolean isLeft() {
+			return false;
+		}
+
+		@Override
+		public boolean isRight() {
+			return true;
+		}
+
+		@Override
+		public Constructor getConstructor() {
+			return Constructor.RIGHT;
+		}
+
+		/**
+		 * Get the right value wrapped in the receiver instance.
+		 * 
+		 * @return The wrapped value. May be <code>null</code>.
+		 */
+		public RightValue getRight() {
+			return _right;
+		}
+
+		@Override
+		public <Result> Result match(final Matcher<LeftValue, RightValue, Result> matcher) {
+			return matcher.right(this);
+		}
+
+		@Override
+		public int hashCode() {
+			int result = getClass().hashCode();
+			if (null != _right) {
+				result = result * 31 + _right.hashCode();
+			}
+			return result;
+		}
+
+		@Override
+		public boolean equals(final Object object) {
+			if (this == object) {
+				return true;
+			} else if (null != object && getClass().equals(object.getClass())) {
+				final Right<?, ?> either = (Right<?, ?>) object;
+				return ObjectUtils.equals(_right, either._right);
+			} else {
+				return false;
+			}
+		}
+
+		public void fillDescription(final StringBuilder builder) {
+			builder.append(" - Right = ").append(_right);
+		}
+	}
 
 	/**
-	 * Test wether the receiver instance has been built using the <code>LEFT</code> constructor.
+	 * Build an instance using the <code>Left</code> constructor wrapping the given value.
 	 * 
-	 * @return <code>true</code> when the instance has been built with the <code>LEFT</code> constructor, <code>false</code> otherwise.
+	 * @param <LeftValue> Type of the left value.
+	 * @param <RightValue> Type of the right value.
+	 * @param left Left value to wrap. May be <code>null</code>.
+	 * @return The instance.
+	 */
+	public static <LeftValue, RightValue> Either<LeftValue, RightValue> left(final LeftValue left) {
+		return new Left<LeftValue, RightValue>(left);
+	}
+
+	/**
+	 * Build an instance using the <code>Left</code> constructor wrapping the given value.
+	 * 
+	 * @param <LeftValue> Type of the left value.
+	 * @param <RightValue> Type of the right value.
+	 * @param right Right value to wrap. May be <code>null</code>.
+	 * @return The instance.
+	 */
+	public static <LeftValue, RightValue> Either<LeftValue, RightValue> right(final RightValue right) {
+		return new Right<LeftValue, RightValue>(right);
+	}
+
+	/**
+	 * Test wether the receiver instance has been built using the <code>Left</code> constructor.
+	 * 
+	 * @return <code>true</code> when the instance has been built with the <code>Left</code> constructor, <code>false</code> otherwise.
 	 */
 	public abstract boolean isLeft();
 
 	/**
-	 * Test wether the receiver instance has been built using the <code>RIGHT</code> constructor.
+	 * Test wether the receiver instance has been built using the <code>Right</code> constructor.
 	 * 
-	 * @return <code>true</code> when the instance has been built with the <code>RIGHT</code> constructor, <code>false</code> otherwise.
+	 * @return <code>true</code> when the instance has been built with the <code>Right</code> constructor, <code>false</code> otherwise.
 	 */
 	public abstract boolean isRight();
 
 	/**
-	 * Get the left value wrapped in the receiver instance.
-	 * <p>
-	 * This method should only be called with instances built with the <code>LEFT</code> constructor.
+	 * Get the constructor of the receiver instance.
 	 * 
-	 * @return The wrapped value.
-	 * @throws UnsupportedOperationException when the receiver instance has not been built using the <code>LEFT</code> constuctor.
+	 * @return The constructor.
 	 */
-	public abstract Left getLeft();
+	public abstract Constructor getConstructor();
 
 	/**
-	 * Get the right value wrapped in the receiver instance.
+	 * Apply the given matcher function to the receiver instance.
 	 * <p>
-	 * This method should only be called with instances built with the <code>RIGHT</code> constructor.
+	 * This method implements some kind of simple pattern matching.
 	 * 
-	 * @return The wrapped value.
-	 * @throws UnsupportedOperationException when the receiver instance has not been built using the <code>RIGHT</code> constuctor.
+	 * @param <Result> Type of the result.
+	 * @param matcher Matcher to use.
+	 * @return The result of the function application.
 	 */
-	public abstract Right getRight();
+	public abstract <Result> Result match(final Matcher<LeftValue, RightValue, Result> matcher);
 
 	@Override
 	public final String toString() {
