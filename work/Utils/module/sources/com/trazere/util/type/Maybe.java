@@ -15,11 +15,10 @@
  */
 package com.trazere.util.type;
 
-import static com.trazere.util.type.Maybe.Tag.NONE;
-import static com.trazere.util.type.Maybe.Tag.SOME;
-
 import com.trazere.util.Assert;
 import com.trazere.util.InternalException;
+import com.trazere.util.text.Descriptable;
+import com.trazere.util.text.TextUtils;
 
 /**
  * The <code>Maybe</code> class represents the <em>Maybe</em> algebraic data type which wraps an optional value.
@@ -28,7 +27,8 @@ import com.trazere.util.InternalException;
  * 
  * @param <T> Type of the value.
  */
-public abstract class Maybe<T> {
+public abstract class Maybe<T>
+implements Descriptable {
 	/**
 	 * The <code>Tag</code> enumeration represents the various constructors of the algebraic data type.
 	 */
@@ -49,6 +49,26 @@ public abstract class Maybe<T> {
 		@Override
 		public Object getValue() {
 			throw new UnsupportedOperationException();
+		}
+
+		public void fillDescription(final StringBuilder builder) {
+			builder.append(" - None");
+		}
+
+		@Override
+		public int hashCode() {
+			return getClass().hashCode();
+		}
+
+		@Override
+		public boolean equals(final Object object) {
+			if (this == object) {
+				return true;
+			} else if (null != object && getClass().equals(object.getClass())) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 	};
 
@@ -97,11 +117,15 @@ public abstract class Maybe<T> {
 				if (this == object) {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
-					final Maybe<?> entry = (Maybe<?>) object;
-					return value.equals(entry.getValue());
+					final Maybe<?> maybe = (Maybe<?>) object;
+					return value.equals(maybe.getValue());
 				} else {
 					return false;
 				}
+			}
+
+			public void fillDescription(final StringBuilder builder) {
+				builder.append(" - Some = ").append(value);
 			}
 		};
 	}
@@ -186,4 +210,9 @@ public abstract class Maybe<T> {
 	 * @throws UnsupportedOperationException when the receiver instance has not been built using the <code>SOME</code> constuctor.
 	 */
 	public abstract T getValue();
+
+	@Override
+	public final String toString() {
+		return TextUtils.computeDescription(this);
+	}
 }

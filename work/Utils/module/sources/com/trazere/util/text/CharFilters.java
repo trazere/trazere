@@ -15,10 +15,30 @@
  */
 package com.trazere.util.text;
 
+import com.trazere.util.Assert;
+
 /**
  * The <code>CharFilters</code> class provides various standard character filters.
  */
 public class CharFilters {
+	/**
+	 * Filter accepting no characters.
+	 */
+	public static final CharFilter NONE = new CharFilter() {
+		public boolean filter(final char c) {
+			return false;
+		}
+	};
+
+	/**
+	 * Filter accepting all characters.
+	 */
+	public static final CharFilter ALL = new CharFilter() {
+		public boolean filter(final char c) {
+			return true;
+		}
+	};
+
 	/**
 	 * Filter accepting the digit characters.
 	 * 
@@ -51,6 +71,37 @@ public class CharFilters {
 			return Character.isLetterOrDigit(c) || '_' == c;
 		}
 	};
+
+	/**
+	 * Build a char filter accepting the given char.
+	 * 
+	 * @param c Accepted char.
+	 * @return The char filter.
+	 */
+	public static CharFilter build(final char c) {
+		return new CharFilter() {
+			public boolean filter(final char c_) {
+				return c == c_;
+			}
+		};
+	}
+
+	/**
+	 * Build a char filter accepting any char from the given string.
+	 * 
+	 * @param chars Accepted chars.
+	 * @return The char filter.
+	 */
+	public static CharFilter build(final String chars) {
+		Assert.notNull(chars);
+
+		// Build.
+		return new CharFilter() {
+			public boolean filter(final char c) {
+				return chars.indexOf(c) >= 0;
+			}
+		};
+	}
 
 	private CharFilters() {
 		// Prevent instanciation.

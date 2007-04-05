@@ -47,20 +47,16 @@ public class ReportUtils {
 	public static <Category, Code extends Enum<?>> String render(final Category category, final Code code, final String message) {
 		final StringBuilder builder = new StringBuilder();
 		if (null != category) {
-			builder.append(category);
-			builder.append(" : ");
+			builder.append(category).append(" : ");
 		}
 		if (null != message) {
 			builder.append(message);
 
 			if (null != code) {
-				builder.append(" (");
-				builder.append(code);
-				builder.append(")");
+				builder.append(" (").append(code).append(")");
 			}
 		} else if (null != code) {
-			builder.append("Code ");
-			builder.append(code);
+			builder.append("Code ").append(code);
 		} else {
 			builder.append("n/a");
 		}
@@ -100,12 +96,9 @@ public class ReportUtils {
 		// Build the new entry..
 		final StringBuilder builder = new StringBuilder();
 		if (null != message) {
-			builder.append(message);
-			builder.append(", caused by ");
-			builder.append(causeEntry);
+			builder.append(message).append(", caused by ").append(causeEntry);
 		} else {
-			builder.append("Caused by ");
-			builder.append(causeEntry);
+			builder.append("Caused by ").append(causeEntry);
 		}
 
 		return new SimpleReportEntry<Category, Code>(category, code, builder.toString());

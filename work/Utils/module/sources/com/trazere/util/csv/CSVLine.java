@@ -20,13 +20,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.trazere.util.Assert;
+import com.trazere.util.text.Descriptable;
+import com.trazere.util.text.TextUtils;
 
 /**
  * The <code>CSVLine</code> class represents lines from CSV files.
  * <p>
  * CSV lines are defined as a set of values associated to the field headers.
  */
-public class CSVLine {
+public class CSVLine
+implements Descriptable {
 	/**
 	 * The <code>Builder</code> class provides a tool to build of CSV lines.
 	 */
@@ -244,6 +247,12 @@ public class CSVLine {
 
 	@Override
 	public String toString() {
-		return _fields.toString();
+		return TextUtils.computeDescription(this);
+	}
+
+	public void fillDescription(final StringBuilder builder) {
+		for (final Map.Entry<String, String> entry : _fields.entrySet()) {
+			builder.append(" - ").append(entry.getKey()).append(" = ").append(entry.getValue());
+		}
 	}
 }

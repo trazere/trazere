@@ -91,7 +91,7 @@ public abstract class LazyMap<K, V> {
 	 * <p>
 	 * When no values are associated to the given key, this method tries to compute to value for the key and implicif
 	 * 
-	 * @param key Key which the value is associated to.
+	 * @param key Key which the value is associated to. May be <code>null</code>.
 	 * @return The value.
 	 * @throws CannotComputeValueException
 	 */
@@ -112,7 +112,7 @@ public abstract class LazyMap<K, V> {
 	/**
 	 * Compute the value to associate to the given key.
 	 * 
-	 * @param key Key whose value should be computed.
+	 * @param key Key whose value should be computed. May be <code>null</code>.
 	 * @return The computed value. May be <code>null</code>.
 	 * @throws CannotComputeValueException
 	 */
@@ -149,7 +149,7 @@ public abstract class LazyMap<K, V> {
 	/**
 	 * Remove the association of the given key.
 	 * 
-	 * @param key Key whose association should be removed.
+	 * @param key Key whose association should be removed. May be <code>null</code>.
 	 * @return The value associated to the key or <code>null</code>.
 	 */
 	public V remove(final K key) {

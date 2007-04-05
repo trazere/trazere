@@ -146,6 +146,6 @@ public class ReloadableProperties {
 
 	@Override
 	public String toString() {
-		return String.valueOf(_properties);
+		return _properties.toString();
 	}
 }

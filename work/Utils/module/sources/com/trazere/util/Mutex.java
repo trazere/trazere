@@ -15,12 +15,16 @@
  */
 package com.trazere.util;
 
+import com.trazere.util.text.Descriptable;
+import com.trazere.util.text.TextUtils;
+
 /**
  * The <code>Mutex</code> class represents mutexes.
  * <p>
  * The class supports embedded locks from the owner thread.
  */
-public class Mutex {
+public class Mutex
+implements Descriptable {
 	/** Owner thread of the lock. May be <code>null</code>. */
 	protected Thread _owner = null;
 
@@ -80,18 +84,14 @@ public class Mutex {
 
 	@Override
 	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("[Mutex");
+		return TextUtils.computeDescription(this);
+	}
+
+	public void fillDescription(final StringBuilder builder) {
 		if (null != _owner) {
-			builder.append(" - Locked by ");
-			builder.append(_owner);
-			builder.append(" ");
-			builder.append(_count);
-			builder.append(" time(s)");
+			builder.append(" - Locked by ").append(_owner).append(" ").append(_count).append(" time(s)");
 		} else {
 			builder.append(" - Unlocked");
 		}
-		builder.append("]");
-		return builder.toString();
 	}
 }
