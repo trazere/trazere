@@ -75,6 +75,9 @@ public class CSVReader {
 	/** Line number of the current CSV entry. */
 	protected int _line = -1;
 
+	protected final char _delimiterChar;
+	protected final String _specialChars;
+
 	/**
 	 * Instanciate a new CSV reader using the given reader, delimiter and options. The CSV input is considered as self-describing. Its first line is read in
 	 * order to determine the headers.
@@ -94,6 +97,8 @@ public class CSVReader {
 		// Initialization.
 		_scanner = new Scanner(reader);
 		_delimiter = delimiter;
+		_delimiterChar = delimiter.charAt(0);
+		_specialChars = _delimiterChar + "\"\n\r";
 		_options = Collections.unmodifiableSet(EnumSet.copyOf((Collection<CSVReaderOption>) options)); // FIXME: useless cast, eclipse bug workaround
 
 		final List<String> headers = new ArrayList<String>();
@@ -103,7 +108,7 @@ public class CSVReader {
 		final List<String> headers_ = readLine();
 		if (null != headers_) {
 			_nextEntryLine += 1;
-			headers.addAll(headers);
+			headers.addAll(headers_);
 		} else {
 			throw new EOFException("Missing header line");
 		}
@@ -127,6 +132,8 @@ public class CSVReader {
 		// Initialize the instance.
 		_scanner = new Scanner(reader);
 		_delimiter = delimiter;
+		_delimiterChar = delimiter.charAt(0);
+		_specialChars = _delimiterChar + "\"\n\r";
 		_headers = Collections.unmodifiableList(new ArrayList<String>(headers));
 		_options = Collections.unmodifiableSet(EnumSet.copyOf(options));
 	}
@@ -247,12 +254,9 @@ public class CSVReader {
 
 	protected boolean readCell(final StringBuilder buffer)
 	throws IOException {
-		final char delimiter = _delimiter.charAt(0);
-		final String upto = delimiter + "\"\n\r";
-
 		while (true) {
 			// Read the data.
-			final String part = _scanner.scanUpToAnyChar(upto);
+			final String part = _scanner.scanUpToAnyChar(_specialChars);
 			buffer.append(part);
 
 			if (_scanner.scanChar('"')) {
@@ -261,9 +265,9 @@ public class CSVReader {
 			} else if (_scanner.scanString(_delimiter)) {
 				// Delimiter.
 				return true;
-			} else if (_scanner.scanChar(delimiter)) {
+			} else if (_scanner.scanChar(_delimiterChar)) {
 				// False delimiter.
-				buffer.append(delimiter);
+				buffer.append(_delimiterChar);
 			} else if (_scanner.scanChar('\r')) {
 				// Line end (Windows/Mac).
 				_scanner.scanChar('\n');

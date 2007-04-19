@@ -19,9 +19,11 @@ import com.trazere.util.Assert;
 
 /**
  * The <code>CopyParameterTransformer</code> class represents parameter transformers which copy single parameters.
+ * 
+ * @param <T> Type of the parameter values.
  */
-public class CopyParameterTransformer
-implements ParameterTransformer {
+public class CopyParameterTransformer<T>
+implements ParameterTransformer<T> {
 	/** Name of the parameter to set. */
 	protected final String _name;
 
@@ -49,16 +51,14 @@ implements ParameterTransformer {
 		_source = source;
 	}
 
-	public void apply(final Parameters<Object> parameters, final Parameters.Builder<Object> builder)
+	public void apply(final Parameters<T> parameters, final Parameters.Builder<T> builder)
 	throws ParameterException {
 		// Copy.
-		final Object value = builder.get(_source);
-		if (null != value) {
-			if (_strict) {
-				builder.add(_name, value);
-			} else {
-				builder.set(_name, value);
-			}
+		final T value = builder.get(_source);
+		if (_strict) {
+			builder.add(_name, value);
+		} else {
+			builder.set(_name, value);
 		}
 	}
 }

@@ -19,9 +19,11 @@ import com.trazere.util.Assert;
 
 /**
  * The <code>SetParameterTransformer</code> class represents parameter transformers which set single parameters.
+ * 
+ * @param <T> Type of the parameter values.
  */
-public class SetParameterTransformer
-implements ParameterTransformer {
+public class SetParameterTransformer<T>
+implements ParameterTransformer<T> {
 	/** Name of the parameter to set. */
 	protected final String _name;
 
@@ -29,7 +31,7 @@ implements ParameterTransformer {
 	protected final boolean _strict;
 
 	/** Value of the parameter to set. May be <code>null</code>. */
-	protected final Object _value;
+	protected final T _value;
 
 	/**
 	 * Build a new transformer using the given parameters.
@@ -38,7 +40,7 @@ implements ParameterTransformer {
 	 * @param strict Flag indicating wether the affectation is strict or not.
 	 * @param value Value of the parameter to set. May be <code>null</code>.
 	 */
-	public SetParameterTransformer(final String name, final boolean strict, final Object value) {
+	public SetParameterTransformer(final String name, final boolean strict, final T value) {
 		// Checks.
 		Assert.notNull(name);
 
@@ -48,7 +50,7 @@ implements ParameterTransformer {
 		_strict = strict;
 	}
 
-	public void apply(final Parameters<Object> parameters, final Parameters.Builder<Object> builder)
+	public void apply(final Parameters<T> parameters, final Parameters.Builder<T> builder)
 	throws ParameterException {
 		// Set.
 		if (_strict) {
