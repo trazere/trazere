@@ -19,37 +19,30 @@ import com.trazere.util.Assert;
 
 /**
  * The <code>RemoveParameterTransformer</code> class represents parameter transformers which remove single parameters.
+ * 
+ * @param <T> Type of the parameter values.
  */
-public class RemoveParameterTransformer
-implements ParameterTransformer {
+public class RemoveParameterTransformer<T>
+implements ParameterTransformer<T> {
 	/** Name of the parameter to remove. */
 	protected final String _name;
-
-	/** Flag indicating wether the deletion is strict or not. Strict deletion require the removed parameters to exist. */
-	protected final boolean _strict;
 
 	/**
 	 * Build a new transformer using the given parameters.
 	 * 
 	 * @param name Name of the parameter to remove.
-	 * @param strict Flag indicating wether the deletion is strict or not.
 	 */
-	public RemoveParameterTransformer(final String name, final boolean strict) {
+	public RemoveParameterTransformer(final String name) {
 		// Checks.
 		Assert.notNull(name);
 
 		// Initialization.
 		_name = name;
-		_strict = strict;
 	}
 
-	public void apply(final Parameters<Object> parameters, final Parameters.Builder<Object> builder)
+	public void apply(final Parameters<T> parameters, final Parameters.Builder<T> builder)
 	throws ParameterException {
 		// Remove.
-		if (_strict) {
-			builder.remove(_name);
-		} else {
-			builder.clear(_name);
-		}
+		builder.remove(_name);
 	}
 }

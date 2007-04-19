@@ -19,9 +19,11 @@ import com.trazere.util.Assert;
 
 /**
  * The <code>MoveParameterTransformer</code> class represents parameter transformers which move (rename) single parameters.
+ * 
+ * @param <T> Type of the parameter values.
  */
-public class MoveParameterTransformer
-implements ParameterTransformer {
+public class MoveParameterTransformer<T>
+implements ParameterTransformer<T> {
 	/** New name of the renamed parameter. */
 	protected final String _name;
 
@@ -49,16 +51,14 @@ implements ParameterTransformer {
 		_source = source;
 	}
 
-	public void apply(final Parameters<Object> parameters, final Parameters.Builder<Object> builder)
+	public void apply(final Parameters<T> parameters, final Parameters.Builder<T> builder)
 	throws ParameterException {
 		// Move.
-		final Object value = builder.remove(_source);
-		if (null != value) {
-			if (_strict) {
-				builder.add(_name, value);
-			} else {
-				builder.set(_name, value);
-			}
+		final T value = builder.remove(_source);
+		if (_strict) {
+			builder.add(_name, value);
+		} else {
+			builder.set(_name, value);
 		}
 	}
 }

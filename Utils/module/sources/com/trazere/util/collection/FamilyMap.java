@@ -82,7 +82,7 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 	 * @param key Key which the value should be associated to. May be <code>null</code>.
 	 * @param values Values to associate.
 	 */
-	public void putAll(final K key, final Collection<V> values) {
+	public void putAll(final K key, final Collection<? extends V> values) {
 		Assert.notNull(values);
 
 		// Add.
@@ -161,7 +161,7 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 	 * @param values Values whose associations should be removed.
 	 * @return <code>true</code> if the associations are removed, <code>false</code> otherwise.
 	 */
-	public boolean removeAll(final K key, final Collection<V> values) {
+	public boolean removeAll(final K key, final Collection<? extends V> values) {
 		final C family = _families.get(key);
 		if (null != family) {
 			final boolean result = family.removeAll(values);

@@ -17,8 +17,10 @@ package com.trazere.util.parameter;
 
 /**
  * The <code>ParameterTransformer</code> interface defines transformations of parameters.
+ * 
+ * @param <T> Type of the parameter values.
  */
-public interface ParameterTransformer {
+public interface ParameterTransformer<T> {
 	/**
 	 * Apply the transformation to the given parameter builder.
 	 * 
@@ -26,6 +28,6 @@ public interface ParameterTransformer {
 	 * @param builder Parameter builder to transform.
 	 * @throws ParameterException When some error occurs.
 	 */
-	public void apply(final Parameters<Object> parameters, final Parameters.Builder<Object> builder)
+	public void apply(final Parameters<T> parameters, final Parameters.Builder<T> builder)
 	throws ParameterException;
 }

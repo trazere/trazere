@@ -19,6 +19,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.trazere.util.Assert;
 import com.trazere.util.collection.CollectionUtils;
@@ -86,50 +87,107 @@ implements Descriptable {
 		}
 
 		/**
-		 * Get the value of the parameter with the given name contained in the receiver builder.
+		 * Get the value of the parameter with the given name of the receiver builder.
 		 * 
 		 * @param name Name of the parameter.
-		 * @return The value of the parameter, or <code>null</code> if the builder contains no parameters with the given name.
+		 * @return The value of the parameter. May be <code>null</code>.
+		 * @throws MissingParameterException When the receiver builder contains no parameters with the given name.
 		 */
-		public T get(final String name) {
+		public T get(final String name)
+		throws MissingParameterException {
 			Assert.notNull(name);
 
 			// Get the parameter value.
-			return _parameters.get(name);
+			if (_parameters.containsKey(name)) {
+				return _parameters.get(name);
+			} else {
+				throw new MissingParameterException("Missing \"" + name + "\" parameter from parameters " + this);
+			}
 		}
 
 		/**
-		 * Get the typed value of the parameter with the given name contained in the receiver builder.
+		 * Get the value of the parameter with the given name of the receiver builder.
+		 * 
+		 * @param name Name of the parameter.
+		 * @param defaultValue Default value of the parameter. May be <code>null</code>.
+		 * @return The value of the parameter, or the given default value if the builder contains no parameters with the given name. May be <code>null</code>.
+		 */
+		public T get(final String name, final T defaultValue) {
+			Assert.notNull(name);
+
+			// Get the parameter value.
+			if (_parameters.containsKey(name)) {
+				return _parameters.get(name);
+			} else {
+				return defaultValue;
+			}
+		}
+
+		/**
+		 * Get the typed value of the parameter with the given name of the receiver builder.
 		 * 
 		 * @param <C> Type of the value.
 		 * @param name Name of the parameter.
 		 * @param type Class of the value.
-		 * @return The value of the parameter, or <code>null</code> if the builder contains no parameters with the given name.
+		 * @return The value of the parameter. May be <code>null</code>.
+		 * @throws MissingParameterException When the receiver builder contains no parameters with the given name.
 		 * @throws IncompatibleParameterException When the value of the parameter is not compatible with the given type.
 		 */
 		@SuppressWarnings("unchecked")
 		public <C extends T> C getTyped(final String name, final Class<C> type)
-		throws IncompatibleParameterException {
+		throws MissingParameterException, IncompatibleParameterException {
 			Assert.notNull(name);
 			Assert.notNull(type);
 
 			// Get the parameter value.
-			final T value = _parameters.get(name);
-			if (null == value || type.isInstance(value)) {
-				return (C) value;
+			if (_parameters.containsKey(name)) {
+				final T value = _parameters.get(name);
+				if (null == value || type.isInstance(value)) {
+					return (C) value;
+				} else {
+					throw new IncompatibleParameterException("Value " + value + " of parameter " + name + " is not compatible with type " + type);
+				}
 			} else {
-				throw new IncompatibleParameterException("Value " + value + " of parameter " + name + " is not compatible with type " + type);
+				throw new MissingParameterException("Missing \"" + name + "\" parameter from parameters " + this);
+			}
+		}
+
+		/**
+		 * Get the typed value of the parameter with the given name of the receiver builder.
+		 * 
+		 * @param <C> Type of the value.
+		 * @param name Name of the parameter.
+		 * @param defaultValue Default value of the parameter. May be <code>null</code>.
+		 * @param type Class of the value.
+		 * @return The value of the parameter, or the given default value if the builder contains no parameters with the given name. May be <code>null</code>.
+		 * @throws IncompatibleParameterException When the value of the parameter is not compatible with the given type.
+		 */
+		@SuppressWarnings("unchecked")
+		public <C extends T> C getTyped(final String name, final C defaultValue, final Class<C> type)
+		throws IncompatibleParameterException {
+			Assert.notNull(name);
+
+			// Get the parameter value.
+			if (_parameters.containsKey(name)) {
+				final T value = _parameters.get(name);
+				if (null == value || type.isInstance(value)) {
+					return (C) value;
+				} else {
+					throw new IncompatibleParameterException("Value " + value + " of parameter " + name + " is not compatible with type " + type);
+				}
+			} else {
+				return defaultValue;
 			}
 		}
 
 		/**
 		 * Add a new parameter with the given key and value to the receiver builder.
 		 * <p>
-		 * The receiver builder must not already contain a parameter with the given name.
+		 * The receiver builder must contain no parameters with the given name.
 		 * 
 		 * @param name Name of the parameter to add.
 		 * @param value Value of the parameter to add. May be <code>null</code>.
-		 * @throws ParameterAlreadyExistsException When a parameter with the given name has already been added.
+		 * @throws ParameterAlreadyExistsException When the builder contains a parameter with the given name.
 		 */
 		public void add(final String name, final T value)
 		throws ParameterAlreadyExistsException {
@@ -147,10 +205,10 @@ implements Descriptable {
 		/**
 		 * Add the parameters of the given set to the receiver builder.
 		 * <p>
-		 * The receiver builder must not already contain any parameter with the names of the given parameter set.
+		 * The receiver builder must contain no parameters with the names of the given parameter set.
 		 * 
 		 * @param parameters Parameter set to add.
-		 * @throws ParameterAlreadyExistsException When a parameter with a name of the given parameter set has already been added.
+		 * @throws ParameterAlreadyExistsException When the builder contains a parameter with the name of some parametre of the given set.
 		 */
 		public void add(final Parameters<? extends T> parameters)
 		throws ParameterAlreadyExistsException {
@@ -223,7 +281,7 @@ implements Descriptable {
 		 * Remove the parameter with the given name from the receiver builder.
 		 * 
 		 * @param name Name of the parameter to remove.
-		 * @return The value of the removed parameters, or <code>null</code> if the builder contained no parameters with the given name.
+		 * @return The value of the removed parameter. May be <code>null</code>.
 		 */
 		public T clear(final String name) {
 			// Checks.
@@ -288,8 +346,6 @@ implements Descriptable {
 
 	/**
 	 * Build a new single parameter set with the given name and value.
-	 * <p>
-	 * <code>null</code> values are ignored.
 	 * 
 	 * @param <T> Type of the parameter values.
 	 * @param name Name of the parameter.
@@ -301,16 +357,12 @@ implements Descriptable {
 
 		// Build.
 		final Map<String, T> parameters = new HashMap<String, T>();
-		if (null != value) {
-			parameters.put(name, value);
-		}
+		parameters.put(name, value);
 		return new Parameters<T>(parameters);
 	}
 
 	/**
 	 * Build a new two parameter set with the given names and values.
-	 * <p>
-	 * <code>null</code> values are ignored.
 	 * 
 	 * @param <T> Type of the parameter values.
 	 * @param name1 Name of the first parameter.
@@ -325,12 +377,8 @@ implements Descriptable {
 
 		// Build.
 		final Map<String, T> parameters = new HashMap<String, T>();
-		if (null != value1) {
-			parameters.put(name1, value1);
-		}
-		if (null != value2) {
-			parameters.put(name2, value2);
-		}
+		parameters.put(name1, value1);
+		parameters.put(name2, value2);
 		return new Parameters<T>(parameters);
 	}
 
@@ -385,57 +433,66 @@ implements Descriptable {
 	}
 
 	/**
-	 * Get the parameters of the given set as a map.
-	 * 
-	 * @return A unmodifiable map of the values of the paramters identified by their names.
-	 */
-	public Map<String, T> getParameters() {
-		return _parameters;
-	}
-
-	/**
 	 * Get the value of the parameter with the given name of the receiver set.
 	 * 
 	 * @param name Name of the parameter.
-	 * @return The value of the parameter, or <code>null</code> if the set contains no parameters with the given name.
-	 */
-	public T getParameter(final String name) {
-		Assert.notNull(name);
-
-		// Get the parameter value.
-		return _parameters.get(name);
-	}
-
-	/**
-	 * Get the value of the parameter with the given name of the receiver set.
-	 * 
-	 * @param name Name of the parameter.
-	 * @param defaultValue Default value of the parameter.
-	 * @return The value of the parameter, or the given default value if the set contains no parameters with the given name.
-	 */
-	public T getParameter(final String name, final T defaultValue) {
-		Assert.notNull(name);
-
-		// Get the parameter value.
-		final T value = _parameters.get(name);
-		return null != value ? value : defaultValue;
-	}
-
-	/**
-	 * Get the value of the mandatory parameter with the given name of the receiver set.
-	 * 
-	 * @param name Name of the parameter.
-	 * @return The value of the parameter.
+	 * @return The value of the parameter. May be <code>null</code>.
 	 * @throws MissingParameterException When the receiver set contains no parameters with the given name.
 	 */
-	public T getMandatoryParameter(final String name)
+	public T get(final String name)
 	throws MissingParameterException {
 		Assert.notNull(name);
 
 		// Get the parameter value.
-		final T value = _parameters.get(name);
-		if (null != value) {
-			return value;
+		if (_parameters.containsKey(name)) {
+			return _parameters.get(name);
+		} else {
+			throw new MissingParameterException("Missing \"" + name + "\" parameter from parameters " + this);
+		}
+	}
+
+	/**
+	 * Get the value of the parameter with the given name of the receiver set.
+	 * 
+	 * @param name Name of the parameter.
+	 * @param defaultValue Default value of the parameter. May be <code>null</code>.
+	 * @return The value of the parameter, or the given default value if the set contains no parameters with the given name. May be <code>null</code>.
+	 */
+	public T get(final String name, final T defaultValue) {
+		Assert.notNull(name);
+
+		// Get the parameter value.
+		if (_parameters.containsKey(name)) {
+			return _parameters.get(name);
+		} else {
+			return defaultValue;
+		}
+	}
+
+	/**
+	 * Get the typed value of the parameter with the given name of the receiver set.
+	 * 
+	 * @param <C> Type of the value.
+	 * @param name Name of the parameter.
+	 * @param type Class of the value.
+	 * @return The value of the parameter. May be <code>null</code>.
+	 * @throws MissingParameterException When the receiver set contains no parameters with the given name.
+	 * @throws IncompatibleParameterException When the value of the parameter is not compatible with the given type.
+	 */
+	@SuppressWarnings("unchecked")
+	public <C extends T> C getTyped(final String name, final Class<C> type)
+	throws MissingParameterException, IncompatibleParameterException {
+		Assert.notNull(name);
+		Assert.notNull(type);
+
+		// Get the parameter value.
+		if (_parameters.containsKey(name)) {
+			final T value = _parameters.get(name);
+			if (null == value || type.isInstance(value)) {
+				return (C) value;
+			} else {
+				throw new IncompatibleParameterException("Value " + value + " of parameter " + name + " is not compatible with type " + type);
+			}
 		} else {
 			throw new MissingParameterException("Missing \"" + name + "\" parameter from parameters " + this);
 		}
@@ -446,75 +503,45 @@ implements Descriptable {
 	 * 
 	 * @param <C> Type of the value.
 	 * @param name Name of the parameter.
+	 * @param defaultValue Default value of the parameter. May be <code>null</code>.
 	 * @param type Class of the value.
-	 * @return The value of the parameter, or <code>null</code> if the set contains no parameters with the given name.
+	 * @return The value of the parameter, or the given default value if the set contains no parameters with the given name. May be <code>null</code>.
 	 * @throws IncompatibleParameterException When the value of the parameter is not compatible with the given type.
 	 */
 	@SuppressWarnings("unchecked")
-	public <C extends T> C getTypedParameter(final String name, final Class<C> type)
+	public <C extends T> C getTyped(final String name, final C defaultValue, final Class<C> type)
 	throws IncompatibleParameterException {
 		Assert.notNull(name);
-		Assert.notNull(type);
 
 		// Get the parameter value.
-		final T value = _parameters.get(name);
-		if (null == value || type.isInstance(value)) {
-			return (C) value;
+		if (_parameters.containsKey(name)) {
+			final T value = _parameters.get(name);
+			if (null == value || type.isInstance(value)) {
+				return (C) value;
+			} else {
+				throw new IncompatibleParameterException("Value " + value + " of parameter " + name + " is not compatible with type " + type);
+			}
 		} else {
-			throw new IncompatibleParameterException("Value " + value + " of parameter " + name + " is not compatible with type " + type);
-		}
-	}
-
-	/**
-	 * Get the typed value of the parameter with the given name of the receiver set.
-	 * 
-	 * @param <C> Type of the value.
-	 * @param name Name of the parameter.
-	 * @param defaultValue Default value of the parameter.
-	 * @param type Class of the value.
-	 * @return The value of the parameter, or the given default value if the set contains no parameters with the given name.
-	 * @throws IncompatibleParameterException When the value of the parameter is not compatible with the given type.
-	 */
-	@SuppressWarnings("unchecked")
-	public <C extends T> C getTypedParameter(final String name, final C defaultValue, final Class<C> type)
-	throws IncompatibleParameterException {
-		Assert.notNull(name);
-
-		// Get the parameter value.
-		final T value = _parameters.get(name);
-		if (null == value) {
 			return defaultValue;
-		} else if (type.isInstance(value)) {
-			return (C) value;
-		} else {
-			throw new IncompatibleParameterException("Value " + value + " of parameter " + name + " is not compatible with type " + type);
 		}
 	}
 
 	/**
-	 * Get the typed value of the mandatory parameter with the given name of the receiver set.
+	 * Get the names of the parameters of the receiver set.
 	 * 
-	 * @param <C> Type of the value.
-	 * @param name Name of the parameter.
-	 * @param type Class of the value.
-	 * @return The value of the parameter.
-	 * @throws MissingParameterException When the receiver set contains no parameters with the given name.
-	 * @throws IncompatibleParameterException When the value of the parameter is not compatible with the given type.
+	 * @return The names.
 	 */
-	@SuppressWarnings("unchecked")
-	public <C extends T> C getTypedMandatoryParameter(final String name, final Class<C> type)
-	throws MissingParameterException, IncompatibleParameterException {
-		Assert.notNull(name);
+	public Set<String> nameSet() {
+		return _parameters.keySet();
+	}
 
-		// Get the parameter value.
-		final T value = _parameters.get(name);
-		if (null == value) {
-			throw new MissingParameterException("Missing " + name + " parameter from parameters " + this);
-		} else if (type.isInstance(value)) {
-			return (C) value;
-		} else {
-			throw new IncompatibleParameterException("Value " + value + " of parameter " + name + " is not compatible with type " + type);
-		}
+	/**
+	 * Get the map entries corresponding to the parameters of the receiver set.
+	 * 
+	 * @return The entries.
+	 */
+	public Set<Map.Entry<String, T>> entrySet() {
+		return _parameters.entrySet();
 	}
 
 	@Override
@@ -535,7 +562,7 @@ implements Descriptable {
 	}
 
 	@Override
-	public String toString() {
+	public final String toString() {
 		return TextUtils.computeDescription(this);
 	}
 

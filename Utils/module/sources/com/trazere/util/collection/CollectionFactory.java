@@ -25,8 +25,8 @@ import java.util.Collection;
  */
 public interface CollectionFactory<T, C extends Collection<? super T>> {
 	public C build();
-	
+
 	public C build(final int capacity);
-	
+
 	public C build(final Collection<? extends T> values);
 }
