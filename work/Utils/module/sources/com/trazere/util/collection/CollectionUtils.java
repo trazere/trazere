@@ -894,6 +894,6 @@ public class CollectionUtils {
 	}
 
 	private CollectionUtils() {
-		// Prevent instanciation.
+		// Prevent instantiation.
 	}
 }

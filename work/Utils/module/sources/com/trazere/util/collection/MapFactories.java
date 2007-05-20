@@ -80,6 +80,6 @@ public class MapFactories {
 	}
 
 	private MapFactories() {
-		// Prevent instanciation.
+		// Prevent instantiation.
 	}
 }

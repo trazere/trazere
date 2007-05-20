@@ -169,6 +169,6 @@ public class ConfigurationUtils {
 	}
 
 	private ConfigurationUtils() {
-		// Prevent instanciation.
+		// Prevent instantiation.
 	}
 }

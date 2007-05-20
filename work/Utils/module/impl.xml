@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2006 Julien Dufour
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
 <project name="utils.impl">
 	<!-- Imports -->
 	<import file="../../module/modules.xml" />
@@ -8,17 +23,14 @@
 	<!-- Declarations -->
 	<property name="utils.sources" location="${utils.module}/sources" />
 
-	<property name="utils.binary.lib" value="lib" />
-
 	<property name="utils.build" location="${utils.module}/build" />
 	<property name="utils.build.classes" location="${utils.build}/classes" />
+	<property name="utils.build.jar" location="${utils.build}/utils.jar" />
 
 	<property name="utils.dist" location="${utils.module}/dist" />
-	<property name="utils.dist.binary" location="${utils.dist}/binary" />
-	<property name="utils.dist.archive" location="${utils.dist}/utils" />
-	<property name="utils.dist.jar" location="${utils.dist}/utils.jar" />
+	<property name="utils.dist.lib" value="${utils.dist}/lib" />
 
-	<path id="utils.dist.classpath">
+	<path id="utils.classpath">
 		<pathelement location="${utils.dist.jar}" />
 	</path>
 
@@ -27,10 +39,17 @@
 		<echo>Cleaning (Utils)</echo>
 
 		<delete dir="${utils.build}" />
+	</target>
+
+	<!-- Clean the distribution -->
+	<target name="utils.distclean">
+		<echo>Cleaning distribution (Utils)</echo>
+
+		<delete dir="${utils.build}" />
 		<delete dir="${utils.dist}" />
 	</target>
 
-	<!-- Compile sources -->
+	<!-- Compile the sources -->
 	<target name="utils.compileSources">
 		<echo>Compiling the sources (Utils)</echo>
 
@@ -43,41 +62,38 @@
 		</javac>
 	</target>
 
-	<!-- Build the binary skeleton -->
-	<target name="utils.doBuildBinarySkeleton">
-		<mkdir dir="${utils.skeleton}" />
-	</target>
-
-	<!-- Build the archive -->
-	<target name="utils.buildArchive" depends="utils.compileSources">
-		<echo>Building the archive (Utils)</echo>
-
-		<mkdir dir="${utils.dist.archive}" />
-		<copy todir="${utils.dist.archive}" includeemptydirs="false">
-			<fileset dir="${utils.sources}" includes="**/*.java" />
-			<fileset dir="${utils.build.classes}" includes="**/*.class" />
-		</copy>
-	</target>
-
 	<!-- Build the JAR -->
-	<target name="utils.buildJar" depends="utils.buildArchive">
+	<target name="utils.buildJar" depends="utils.compileSources">
 		<echo>Building the JAR (Utils)</echo>
 
-		<mkdir dir="${utils.dist}" />
-		<jar destfile="${utils.dist.jar}" basedir="${utils.dist.archive}" />
+		<mkdir dir="${utils.build}" />
+		<jar destfile="${utils.build.jar}">
+			<fileset dir="${utils.sources}" includes="**/*.java" />
+			<fileset dir="${utils.build.classes}" includes="**/*.class" />
+		</jar>
 	</target>
 
-	<!-- Build the binary -->
-	<target name="utils.buildBinary" depends="utils.buildJar">
-		<echo>Building the binary (Utils)</echo>
+	<!-- Build the distribution -->
+	<target name="utils.build" depends="utils.buildJar">
+		<echo>Building the distribution (Utils)</echo>
 
-		<!-- Skeleton -->
-		<antcall target="utils.doBuildBinarySkeleton">
-			<param name="utils.skeleton" location="${utils.dist.binary}" />
-		</antcall>
+		<mkdir dir="${utils.dist}" />
 
 		<!-- Jars -->
-		<mkdir dir="${utils.dist.binary}/${utils.binary.lib}" />
-		<copy tofile="${utils.dist.binary}/${utils.binary.lib}/trazere-utils.jar" file="${utils.dist.jar}" />
+		<mkdir dir="${utils.dist.lib}" />
+		<copy tofile="${utils.dist.lib}/trazere-utils.jar" file="${utils.build.jar}" />
 	</target>
+
+	<!-- Build the bootstrap JAR -->
+	<!--
+	<target name="utils.buildBootstrapJar" depends="utils.compileSources">
+		<echo>Building the bootstrap JAR</echo>
+
+		<mkdir dir="${utils.dist}" />
+		<jar destfile="${utils.dist.bootstrap_jar}">
+			<fileset dir="${utils.sources}" includes="com/trazere/util/TargetTask.java" />
+			<fileset dir="${utils.build.classes}" includes="com/trazere/util/TargetTask.class" />
+		</jar>
+	</target>
+	-->
 </project>

@@ -25,18 +25,25 @@
 	</target>
 
 	<!-- Clean -->
-	<target name="clean" description="Clean" depends="trazere.clean" />
+	<target name="clean" description="Clean" depends="tests.clean, utils.clean, trazere.clean" />
 
-	<!-- Build -->
-	<target name="build" description="Build" depends="trazere.buildBinary" />
+	<!-- Clean the distribution -->
+	<target name="distclean" description="Clean the distribution" depends="utils.distclean, trazere.distclean" />
+
+	<!-- Build the distribution -->
+	<target name="build" description="Build the distribution">
+		<antcall target="trazere.build" inheritall="false">
+			<param name="utils.dist" location="${trazere.dist.binary}" />
+		</antcall>
+	</target>
 
 	<!-- Environment -->
-	<target name="environment" description="Display the environment">
+	<target name="environment" description="Display the Ant environment">
 		<echoproperties />
 	</target>
 
 	<!-- Xalan -->
-	<target name="checkXalan" description="Check Xalan version">
+	<target name="xalan" description="Display the Xalan environment">
 		<java classname="org.apache.xalan.xslt.EnvironmentCheck" failonerror="true" />
 	</target>
 </project>

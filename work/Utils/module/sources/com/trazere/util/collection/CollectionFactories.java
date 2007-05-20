@@ -105,6 +105,6 @@ public class CollectionFactories {
 	}
 
 	private CollectionFactories() {
-		// Prevent instanciation.
+		// Prevent instantiation.
 	}
 }

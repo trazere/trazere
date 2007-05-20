@@ -56,6 +56,6 @@ public class ObjectUtils {
 	}
 
 	private ObjectUtils() {
-		// Prevent instanciation.
+		// Prevent instantiation.
 	}
 }

@@ -145,6 +145,6 @@ public class Assert {
 	}
 
 	private Assert() {
-		// Prevent instanciation.
+		// Prevent instantiation.
 	}
 }

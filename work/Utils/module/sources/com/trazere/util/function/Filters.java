@@ -78,6 +78,6 @@ public class Filters {
 	}
 
 	private Filters() {
-		// Prevent instanciation.
+		// Prevent instantiation.
 	}
 }
