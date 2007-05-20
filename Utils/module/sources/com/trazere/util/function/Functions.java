@@ -50,6 +50,6 @@ public class Functions {
 	}
 
 	private Functions() {
-		// Prevent instanciation.
+		// Prevent instantiation.
 	}
 }

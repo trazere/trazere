@@ -11,13 +11,13 @@
 	<property name="tests.build.classes" location="${tests.build}/classes" />
 
 	<!-- Clean -->
-	<target name="tests.clean" depends="utils.clean">
+	<target name="tests.clean">
 		<echo>Cleaning (Tests)</echo>
 
 		<delete dir="${tests.build}" />
 	</target>
 
-	<!-- Compile sources -->
+	<!-- Compile the sources -->
 	<target name="tests.compileSources" depends="utils.buildJar">
 		<echo>Compiling the sources (Tests)</echo>
 

@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="sources"/>
+	<classpathentry kind="lib" path="/Trazere - Tools/ant-1.7.0/ant.jar"/>
 	<classpathentry kind="lib" path="/Trazere - Tools/commons-logging-1.1/commons-logging.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

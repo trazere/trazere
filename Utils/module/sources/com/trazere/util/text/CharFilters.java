@@ -104,6 +104,6 @@ public class CharFilters {
 	}
 
 	private CharFilters() {
-		// Prevent instanciation.
+		// Prevent instantiation.
 	}
 }

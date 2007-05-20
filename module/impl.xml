@@ -29,24 +29,27 @@
 	<property name="trazere.dist.zip" location="${trazere.dist}/trazere-${trazere.version}.zip" />
 
 	<!-- Clean -->
-	<target name="trazere.clean" depends="tests.clean, utils.clean">
+	<target name="trazere.clean">
 		<echo>Cleaning</echo>
+
+		<delete dir="${trazere.build}" />
+	</target>
+
+	<!-- Clean the distribution -->
+	<target name="trazere.distclean">
+		<echo>Cleaning the distribution</echo>
 
 		<delete dir="${trazere.build}" />
 		<delete dir="${trazere.dist}" />
 	</target>
 
 	<!-- Build the distribution -->
-	<target name="trazere.buildBinary" depends="utils.buildBinary">
+	<target name="trazere.build" depends="utils.build">
 		<echo>Building the distribution</echo>
 
-		<!-- Utils -->
-		<copy todir="${trazere.dist.binary}">
-			<fileset dir="${utils.dist.binary}" />
-		</copy>
+		<mkdir dir="${trazere.dist.binary}" />
 
 		<!-- Distribution -->
-		<mkdir dir="${trazere.dist.binary}" />
 		<copy todir="${trazere.dist.binary}">
 			<fileset dir="${trazere.resources}">
 				<include name="README.txt" />
@@ -55,9 +58,9 @@
 		</copy>
 	</target>
 
-	<!-- Build the distribution (ZIP archive) -->
-	<target name="trazere.buildBinaryZip" depends="trazere.buildBinary">
-		<echo>Building the distribution (ZIP archive)</echo>
+	<!-- Build the ZIP -->
+	<target name="trazere.buildZip" depends="trazere.build">
+		<echo>Building the ZIP</echo>
 
 		<zip destfile="${trazere.dist.zip}" basedir="${trazere.dist.binary}" encoding="iso-8859-1" />
 	</target>

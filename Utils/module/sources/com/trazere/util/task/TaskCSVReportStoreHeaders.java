@@ -31,6 +31,6 @@ public class TaskCSVReportStoreHeaders {
 	});
 
 	private TaskCSVReportStoreHeaders() {
-		// Prevent instanciation.
+		// Prevent instantiation.
 	}
 }

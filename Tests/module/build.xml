@@ -12,6 +12,6 @@
 	<!-- Clean -->
 	<target name="clean" description="Clean" depends="tests.clean" />
 
-	<!-- Build -->
-	<target name="build" description="Build" depends="tests.compileSources" />
+	<!-- Compile -->
+	<target name="compile" description="Compile" depends="tests.compileSources" />
 </project>

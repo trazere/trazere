@@ -737,6 +737,6 @@ public class FunctionUtils {
 	}
 
 	private FunctionUtils() {
-		// Prevent instanciation.
+		// Prevent instantiation.
 	}
 }

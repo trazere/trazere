@@ -105,6 +105,6 @@ public class ReportUtils {
 	}
 
 	private ReportUtils() {
-		// Prevent instanciation.
+		// Prevent instantiation.
 	}
 }
