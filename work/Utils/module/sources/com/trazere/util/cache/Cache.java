@@ -1,13 +1,15 @@
 package com.trazere.util.cache;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
 import com.trazere.util.Assert;
 import com.trazere.util.function.Filter;
+import com.trazere.util.function.FunctionUtils;
 import com.trazere.util.text.Descriptable;
 import com.trazere.util.text.TextUtils;
 
@@ -131,12 +133,9 @@ implements Descriptable {
 	 * @param filter Filter of the entries.
 	 */
 	public void flush(final Filter<? super E> filter) {
-		final Iterator<Map.Entry<K, E>> entries = _entriesByKey.entrySet().iterator();
-		while (entries.hasNext()) {
-			final Map.Entry<K, E> entry = entries.next();
-			if (filter.filter(entry.getValue())) {
-				entries.remove();
-			}
+		final Collection<E> entries = FunctionUtils.filter(_entriesByKey.values(), filter, new ArrayList<E>());
+		for (final E entry : entries) {
+			removeEntry(entry);
 		}
 	}
 
@@ -174,10 +173,7 @@ implements Descriptable {
 		Assert.notNull(entry);
 
 		// Fill the cache.
-		final K key = entry.getKey();
-		if (null != key) {
-			_entriesByKey.put(key, entry);
-		}
+		_entriesByKey.put(entry.getKey(), entry);
 	}
 
 	/**

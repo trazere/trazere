@@ -15,6 +15,7 @@
  */
 package com.trazere.util.type;
 
+import com.trazere.util.CannotComputeValueException;
 import com.trazere.util.ObjectUtils;
 import com.trazere.util.text.Descriptable;
 import com.trazere.util.text.TextUtils;
@@ -52,16 +53,20 @@ implements Descriptable {
 		 * 
 		 * @param left Argument instance of the function.
 		 * @return The result of the function application.
+		 * @throws CannotComputeValueException When the computation fails.
 		 */
-		public Result left(final Left<LeftValue, RightValue> left);
+		public Result left(final Left<LeftValue, RightValue> left)
+		throws CannotComputeValueException;
 
 		/**
 		 * Apply the receiver function to the given <code>Right</code> instance.
 		 * 
 		 * @param right Argument instance of the function.
 		 * @return The result of the function application.
+		 * @throws CannotComputeValueException When the computation fails.
 		 */
-		public Result right(final Right<LeftValue, RightValue> right);
+		public Result right(final Right<LeftValue, RightValue> right)
+		throws CannotComputeValueException;
 	}
 
 	/**
@@ -90,8 +95,19 @@ implements Descriptable {
 		}
 
 		@Override
+		public Left<LeftValue, RightValue> asLeft() {
+			return this;
+		}
+
+		@Override
 		public boolean isRight() {
 			return false;
+		}
+
+		@Override
+		public Right<LeftValue, RightValue> asRight()
+		throws InvalidConstructorException {
+			throw new InvalidConstructorException("Cannot cast instance " + this);
 		}
 
 		@Override
@@ -165,8 +181,19 @@ implements Descriptable {
 		}
 
 		@Override
+		public Left<LeftValue, RightValue> asLeft()
+		throws InvalidConstructorException {
+			throw new InvalidConstructorException("Cannot cast instance " + this);
+		}
+
+		@Override
 		public boolean isRight() {
 			return true;
+		}
+
+		@Override
+		public Right<LeftValue, RightValue> asRight() {
+			return this;
 		}
 
 		@Override
@@ -246,11 +273,29 @@ implements Descriptable {
 	public abstract boolean isLeft();
 
 	/**
+	 * Cast the receiver instance as a {@link Left} instance.
+	 * 
+	 * @return The instance.
+	 * @throws InvalidConstructorException when the receiver instance has not been built with the <code>Left</code> constructor.
+	 */
+	public abstract Left<LeftValue, RightValue> asLeft()
+	throws InvalidConstructorException;
+
+	/**
 	 * Test wether the receiver instance has been built using the <code>Right</code> constructor.
 	 * 
 	 * @return <code>true</code> when the instance has been built with the <code>Right</code> constructor, <code>false</code> otherwise.
 	 */
 	public abstract boolean isRight();
+
+	/**
+	 * Cast the receiver instance as a {@link Right} instance.
+	 * 
+	 * @return The instance.
+	 * @throws InvalidConstructorException when the receiver instance has not been built with the <code>Right</code> constructor.
+	 */
+	public abstract Right<LeftValue, RightValue> asRight()
+	throws InvalidConstructorException;
 
 	/**
 	 * Get the constructor of the receiver instance.

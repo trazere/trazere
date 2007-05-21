@@ -53,6 +53,33 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 		_familyFactory = familyFactory;
 	}
 
+	/**
+	 * Build a new family map with the given map.
+	 * 
+	 * @param map Family map to copy.
+	 */
+	public FamilyMap(final FamilyMap<? extends K, V, C> map) {
+		this(map, map._familyFactory);
+	}
+
+	/**
+	 * Build a new family map with the given map.
+	 * 
+	 * @param map Family map to copy.
+	 * @param familyFactory Factory of the family collections.
+	 */
+	public FamilyMap(final FamilyMap<? extends K, ? extends V, ? extends C> map, final CollectionFactory<V, ? extends C> familyFactory) {
+		Assert.notNull(map);
+
+		// Initialization.
+		_familyFactory = familyFactory;
+
+		// Copy the families.
+		for (final Map.Entry<? extends K, ? extends C> familyEntry : map._families.entrySet()) {
+			_families.put(familyEntry.getKey(), familyFactory.build(familyEntry.getValue()));
+		}
+	}
+
 	protected C getFamily(final K key) {
 		// Look for the family.
 		final C currentFamily = _families.get(key);

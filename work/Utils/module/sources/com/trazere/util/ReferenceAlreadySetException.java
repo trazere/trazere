@@ -16,12 +16,14 @@
 package com.trazere.util;
 
 /**
- * <code>ReferenceAlreadySetException</code> exceptions are thrown when trying to fill some reference which has already been defined.
+ * {@link ReferenceAlreadySetException} exceptions are thrown when trying to set some reference which has already been set.
+ * <p>
+ * These exceptions are runtime exceptions in order to reduce clutter when using computations which cannot fail.
  * 
  * @see LazyReference
  */
 public class ReferenceAlreadySetException
-extends Exception {
+extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
 	/**
