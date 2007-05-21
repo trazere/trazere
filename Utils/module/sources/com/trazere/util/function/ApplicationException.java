@@ -16,9 +16,9 @@
 package com.trazere.util.function;
 
 /**
- * <code>ApplicationException</code> exceptions are thrown when errors occur during function applications.
+ * {@link ApplicationException} exceptions are thrown when errors occur during function applications.
  * <p>
- * <code>ApplicationException</code> is a runtime exception in order to avoid clutter when using functions which cannot fail.
+ * These exceptions are runtime exceptions in order to reduce clutter when using functions which cannot fail.
  */
 public class ApplicationException
 extends RuntimeException {

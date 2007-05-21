@@ -15,6 +15,7 @@
  */
 package com.trazere.util.type;
 
+import com.trazere.util.CannotComputeValueException;
 import com.trazere.util.ObjectUtils;
 import com.trazere.util.text.Descriptable;
 import com.trazere.util.text.TextUtils;
@@ -52,16 +53,20 @@ implements Descriptable {
 		 * 
 		 * @param none Argument instance of the function.
 		 * @return The result of the function application.
+		 * @throws CannotComputeValueException When the computation fails.
 		 */
-		public Result none(final None<Value> none);
+		public Result none(final None<Value> none)
+		throws CannotComputeValueException;
 
 		/**
 		 * Apply the receiver function to the given <code>Some</code> instance.
 		 * 
 		 * @param some Argument instance of the function.
 		 * @return The result of the function application.
+		 * @throws CannotComputeValueException When the computation fails.
 		 */
-		public Result some(final Some<Value> some);
+		public Result some(final Some<Value> some)
+		throws CannotComputeValueException;
 	}
 
 	/**
@@ -77,8 +82,19 @@ implements Descriptable {
 		}
 
 		@Override
+		public None<Value> asNone() {
+			return this;
+		}
+
+		@Override
 		public boolean isSome() {
 			return false;
+		}
+
+		@Override
+		public Some<Value> asSome()
+		throws InvalidConstructorException {
+			throw new InvalidConstructorException("Cannot cast instance " + this);
 		}
 
 		@Override
@@ -137,8 +153,19 @@ implements Descriptable {
 		}
 
 		@Override
+		public None<Value> asNone()
+		throws InvalidConstructorException {
+			throw new InvalidConstructorException("Cannot cast instance " + this);
+		}
+
+		@Override
 		public boolean isSome() {
 			return true;
+		}
+
+		@Override
+		public Some<Value> asSome() {
+			return this;
 		}
 
 		@Override
@@ -264,11 +291,29 @@ implements Descriptable {
 	public abstract boolean isNone();
 
 	/**
+	 * Cast the receiver instance as a {@link None} instance.
+	 * 
+	 * @return The instance.
+	 * @throws InvalidConstructorException when the receiver instance has not been built with the <code>None</code> constructor.
+	 */
+	public abstract None<Value> asNone()
+	throws InvalidConstructorException;
+
+	/**
 	 * Test wether the receiver instance has been built using the <code>Some</code> constructor.
 	 * 
 	 * @return <code>true</code> when the instance has been built with the <code>Some</code> constructor, <code>false</code> otherwise.
 	 */
 	public abstract boolean isSome();
+
+	/**
+	 * Cast the receiver instance as a {@link Some} instance.
+	 * 
+	 * @return The instance.
+	 * @throws InvalidConstructorException when the receiver instance has not been built with the <code>Some</code> constructor.
+	 */
+	public abstract Some<Value> asSome()
+	throws InvalidConstructorException;
 
 	/**
 	 * Get the constructor of the receiver instance.

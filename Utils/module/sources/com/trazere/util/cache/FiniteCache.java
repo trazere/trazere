@@ -1,5 +1,7 @@
 package com.trazere.util.cache;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -91,7 +93,8 @@ extends Cache<K, V, TimedCacheEntry<K, V>> {
 		final long time = System.currentTimeMillis();
 		final int capacity = _capacity > 0 ? _capacity : _history.size();
 
-		// Iterate through oldest entries.
+		// Find the oldest entries to clean up.
+		final Collection<TimedCacheEntry<K, V>> entriesToClean = new ArrayList<TimedCacheEntry<K, V>>();
 		final ListIterator<TimedCacheEntry<K, V>> entries = _history.listIterator(_history.size());
 		while (entries.hasPrevious()) {
 			final TimedCacheEntry<K, V> entry = entries.previous();
@@ -99,10 +102,15 @@ extends Cache<K, V, TimedCacheEntry<K, V>> {
 			// Remove the entry if needed.
 			final long lifeTime = time - entry.getTimestamp();
 			if ((_minLifeTime <= 0 || lifeTime >= _minLifeTime) && ((capacity > 0 && _history.size() > capacity) || (_maxLifeTime > 0 && lifeTime > _maxLifeTime))) {
-				removeEntry(entry);
+				entriesToClean.add(entry);
 			} else {
 				break;
 			}
+		}
+
+		// Clean the entries.
+		for (final TimedCacheEntry<K, V> entry : entriesToClean) {
+			removeEntry(entry);
 		}
 	}
 

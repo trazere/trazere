@@ -13,21 +13,21 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util;
+package com.trazere.util.type;
 
 /**
- * {@link CannotComputeValueException} exceptions are thrown when some values cannot be computed.
+ * {@link InvalidConstructorException} exceptions are thrown when trying to cast some instance of some algebraic data type according to a wrong constructor.
  * <p>
- * These exceptions are runtime exceptions in order to reduce clutter when using computations which cannot fail.
+ * These exceptions are runtime exceptions in order to reduce clutter.
  */
-public class CannotComputeValueException
+public class InvalidConstructorException
 extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Instanciate a new exception.
 	 */
-	public CannotComputeValueException() {
+	public InvalidConstructorException() {
 		super();
 	}
 
@@ -36,7 +36,7 @@ extends RuntimeException {
 	 * 
 	 * @param message Details about the exception.
 	 */
-	public CannotComputeValueException(final String message) {
+	public InvalidConstructorException(final String message) {
 		super(message);
 	}
 
@@ -45,7 +45,7 @@ extends RuntimeException {
 	 * 
 	 * @param cause Cause of the exception.
 	 */
-	public CannotComputeValueException(final Throwable cause) {
+	public InvalidConstructorException(final Throwable cause) {
 		super(cause);
 	}
 
@@ -55,7 +55,7 @@ extends RuntimeException {
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
 	 */
-	public CannotComputeValueException(final String message, final Throwable cause) {
+	public InvalidConstructorException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 }
