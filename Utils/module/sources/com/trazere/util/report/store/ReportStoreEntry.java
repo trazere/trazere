@@ -39,7 +39,7 @@ public class ReportStoreEntry<Entry extends ReportEntry<?, ?>> {
 	protected final Entry _entry;
 
 	/**
-	 * Instanciate a new store report entry with the given date, level and entry.
+	 * Instantiate a new store report entry with the given date, level and entry.
 	 * 
 	 * @param date Date of the report entry.
 	 * @param level Level of the report entry.

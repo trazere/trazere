@@ -35,14 +35,14 @@ public class ReloadableProperties {
 	protected final Properties _properties;
 
 	/**
-	 * Instanciate new reloadable properties with no path and no default properties.
+	 * Instantiate new reloadable properties with no path and no default properties.
 	 */
 	public ReloadableProperties() {
 		this(null, false, null);
 	}
 
 	/**
-	 * Instanciate new reloadable properties with the given path and no default properties.
+	 * Instantiate new reloadable properties with the given path and no default properties.
 	 * <p>
 	 * The properties are no loaded by the constructor.
 	 * 
@@ -54,7 +54,7 @@ public class ReloadableProperties {
 	}
 
 	/**
-	 * Instanciate new reloadable properties with no path and the given default properties.
+	 * Instantiate new reloadable properties with no path and the given default properties.
 	 * 
 	 * @param defaults Default properties.
 	 */
@@ -63,7 +63,7 @@ public class ReloadableProperties {
 	}
 
 	/**
-	 * Instanciate new reloadable properties with the given path and default properties.
+	 * Instantiate new reloadable properties with the given path and default properties.
 	 * <p>
 	 * The properties are no loaded by the constructor.
 	 * 

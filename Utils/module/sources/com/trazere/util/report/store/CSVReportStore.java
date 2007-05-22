@@ -74,7 +74,7 @@ implements ReportStore<Entry> {
 	protected CSVWriter _writer = null;
 
 	/**
-	 * Instanciate a new store using the given path.
+	 * Instantiate a new store using the given path.
 	 * 
 	 * @param path Path of the backing CSV file.
 	 */

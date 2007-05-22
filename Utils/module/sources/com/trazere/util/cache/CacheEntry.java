@@ -18,7 +18,7 @@ implements Descriptable {
 	protected final V _value;
 
 	/**
-	 * Instanciate an new entry with the given key and value.
+	 * Instantiate an new entry with the given key and value.
 	 * 
 	 * @param key Key of the entry. May be <code>null</code>.
 	 * @param value Value of the entry. May be <code>null</code>.

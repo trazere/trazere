@@ -34,7 +34,7 @@ implements ReportEntry<String, TaskStatus> {
 	protected final TaskStatus _status;
 
 	/**
-	 * Instanciate a new entry with the given task name and status.
+	 * Instantiate a new entry with the given task name and status.
 	 * <p>
 	 * The entry uses the current date.
 	 * 

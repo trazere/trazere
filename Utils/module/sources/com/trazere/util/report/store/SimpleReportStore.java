@@ -43,7 +43,7 @@ implements ReportStore<Entry> {
 	protected final int _limit;
 
 	/**
-	 * Instanciate a new store with the given higher bound.
+	 * Instantiate a new store with the given higher bound.
 	 * 
 	 * @param limit Maximum number of entries, or a negative value to disable the higher bound.
 	 */

@@ -36,7 +36,7 @@ public class Scanner {
 	protected int _position;
 
 	/**
-	 * Instanciate a new scanner with the given reader.
+	 * Instantiate a new scanner with the given reader.
 	 * 
 	 * @param reader Reader providing the character stream.
 	 */
@@ -45,7 +45,7 @@ public class Scanner {
 	}
 
 	/**
-	 * Instanciate a new scanner with the given reader.
+	 * Instantiate a new scanner with the given reader.
 	 * 
 	 * @param reader Reader providing the character stream.
 	 * @param position Initial scanning position.

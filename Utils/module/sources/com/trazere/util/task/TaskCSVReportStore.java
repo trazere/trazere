@@ -30,7 +30,7 @@ import com.trazere.util.report.store.CSVReportStore;
 public class TaskCSVReportStore
 extends CSVReportStore<TaskReportEntry> {
 	/**
-	 * Instanciate a new store with the given path.
+	 * Instantiate a new store with the given path.
 	 * 
 	 * @param path Path of the backing CSV file.
 	 */

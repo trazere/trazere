@@ -38,14 +38,14 @@ implements Descriptable {
 		protected final Map<String, String> _fields;
 
 		/**
-		 * Instanciate a new builder.
+		 * Instantiate a new builder.
 		 */
 		public Builder() {
 			_fields = new HashMap<String, String>();
 		}
 
 		/**
-		 * Instanciate a new builder and initialize it with the fields of the given line.
+		 * Instantiate a new builder and initialize it with the fields of the given line.
 		 * 
 		 * @param line CSV line initially populating the builder.
 		 */
@@ -57,7 +57,7 @@ implements Descriptable {
 		}
 
 		/**
-		 * Instanciate a new builder and initialize it with the given fields.
+		 * Instantiate a new builder and initialize it with the given fields.
 		 * 
 		 * @param fields CSV fields initially populating the builder.
 		 */
@@ -185,7 +185,7 @@ implements Descriptable {
 	protected final Map<String, String> _fields;
 
 	/**
-	 * Instanciate a new line with the given fields.
+	 * Instantiate a new line with the given fields.
 	 * 
 	 * @param fields Values of the fields identified by their header.
 	 */

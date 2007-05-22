@@ -33,7 +33,7 @@ implements ReportListener<Entry> {
 	protected final Log _log;
 
 	/**
-	 * Instanciate a new listener with the given logger.
+	 * Instantiate a new listener with the given logger.
 	 * 
 	 * @param log Logger to use.
 	 */
