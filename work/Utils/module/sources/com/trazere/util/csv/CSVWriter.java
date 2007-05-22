@@ -43,7 +43,7 @@ public class CSVWriter {
 	protected final Set<CSVWriterOption> _options;
 
 	/**
-	 * Instanciate a new CSV writer with the given writer, headers and options.
+	 * Instantiate a new CSV writer with the given writer, headers and options.
 	 * 
 	 * @param writer Writer receiving the CSV output.
 	 * @param delimiter Delimiter of the CSV fields.

@@ -23,14 +23,14 @@ extends ParameterException {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Instanciate a new exception.
+	 * Instantiate a new exception.
 	 */
 	public IncompatibleParameterException() {
 		super();
 	}
 
 	/**
-	 * Instanciate a new exception using the given message.
+	 * Instantiate a new exception using the given message.
 	 * 
 	 * @param message Details about the exception.
 	 */
@@ -39,7 +39,7 @@ extends ParameterException {
 	}
 
 	/**
-	 * Instanciate a new exception using the given cause.
+	 * Instantiate a new exception using the given cause.
 	 * 
 	 * @param cause Cause of the exception.
 	 */
@@ -48,7 +48,7 @@ extends ParameterException {
 	}
 
 	/**
-	 * Instanciate a new exception using the given message and cause.
+	 * Instantiate a new exception using the given message and cause.
 	 * 
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.

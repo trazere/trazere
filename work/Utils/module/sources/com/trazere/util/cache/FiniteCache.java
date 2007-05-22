@@ -32,7 +32,7 @@ extends Cache<K, V, TimedCacheEntry<K, V>> {
 	protected final long _maxLifeTime;
 
 	/**
-	 * Instanciate a new cache with the given parameters.
+	 * Instantiate a new cache with the given parameters.
 	 * 
 	 * @param capacity Capacity of the cache. <code>0</code> means an infinite capacity.
 	 * @param minLifeTime Minimum life time of the entries of the cache. <code>0</code> means no minimym life time.

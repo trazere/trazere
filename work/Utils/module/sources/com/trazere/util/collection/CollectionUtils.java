@@ -23,7 +23,7 @@ public class CollectionUtils {
 	/**
 	 * Build a new list with the given value.
 	 * <p>
-	 * This method instanciates an <code>ArrayList</code>.
+	 * This method Instantiates an <code>ArrayList</code>.
 	 * 
 	 * @param <T> Type of the the values.
 	 * @param value Value. May be <code>null</code>.
@@ -41,7 +41,7 @@ public class CollectionUtils {
 	/**
 	 * Build a list with the given values.
 	 * <p>
-	 * This method instanciates an <code>ArrayList</code>.
+	 * This method Instantiates an <code>ArrayList</code>.
 	 * 
 	 * @param <T> Type of the the values.
 	 * @param value1 First value. May be <code>null</code>.
@@ -61,7 +61,7 @@ public class CollectionUtils {
 	/**
 	 * Build a list with the given values.
 	 * <p>
-	 * This method instanciates an <code>ArrayList</code>.
+	 * This method Instantiates an <code>ArrayList</code>.
 	 * 
 	 * @param <T> Type of the the values.
 	 * @param value1 First value. May be <code>null</code>.
@@ -83,7 +83,7 @@ public class CollectionUtils {
 	/**
 	 * Build a list with the given values.
 	 * <p>
-	 * This method instanciates an <code>ArrayList</code>.
+	 * This method Instantiates an <code>ArrayList</code>.
 	 * 
 	 * @param <T> Type of the the values.
 	 * @param values Array containing the values.
@@ -103,7 +103,7 @@ public class CollectionUtils {
 	/**
 	 * Build a set with the given value.
 	 * <p>
-	 * This method instanciates a <code>HashSet</code>.
+	 * This method Instantiates a <code>HashSet</code>.
 	 * 
 	 * @param <T> Type of the the values.
 	 * @param value Value. May be <code>null</code>.
@@ -121,7 +121,7 @@ public class CollectionUtils {
 	/**
 	 * Build a set with the given values.
 	 * <p>
-	 * This method instanciates a <code>HashSet</code>.
+	 * This method Instantiates a <code>HashSet</code>.
 	 * 
 	 * @param <T> Type of the the values.
 	 * @param value1 First value. May be <code>null</code>.
@@ -141,7 +141,7 @@ public class CollectionUtils {
 	/**
 	 * Build a set with the given values.
 	 * <p>
-	 * This method instanciates a <code>HashSet</code>.
+	 * This method Instantiates a <code>HashSet</code>.
 	 * 
 	 * @param <T> Type of the the values.
 	 * @param value1 First value. May be <code>null</code>.
@@ -163,7 +163,7 @@ public class CollectionUtils {
 	/**
 	 * Build a set with the given values.
 	 * <p>
-	 * This method instanciates a <code>HashSet</code>.
+	 * This method Instantiates a <code>HashSet</code>.
 	 * 
 	 * @param <T> Type of the the values.
 	 * @param values Array containing the values.
@@ -184,7 +184,7 @@ public class CollectionUtils {
 	/**
 	 * Build a map with the binding of the given key and value.
 	 * <p>
-	 * This method instanciates a <code>HashMap</code>.
+	 * This method Instantiates a <code>HashMap</code>.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -204,7 +204,7 @@ public class CollectionUtils {
 	/**
 	 * Build a map with the bindings of the given keys and values.
 	 * <p>
-	 * This method instanciates a <code>HashMap</code>.
+	 * This method Instantiates a <code>HashMap</code>.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -376,7 +376,7 @@ public class CollectionUtils {
 	 * This method places the dependencies before the value which depend on them. The sort is stable and fails when the dependencies form a cyclic graph.
 	 * 
 	 * @param <T> Type of the values.
-	 * @param <L> Type of the list to instanciate.
+	 * @param <L> Type of the list to Instantiate.
 	 * @param values Values to sort. The given collection is not modified by the method.
 	 * @param dependencyFunction Function which computes the dependencies.
 	 * @param factory Factory to use to build the result list.
@@ -500,7 +500,7 @@ public class CollectionUtils {
 	 * When the populated collection is ordered, the items of the first given collection precede the items of the second one.
 	 * 
 	 * @param <T> Type of the elements.
-	 * @param <C> Type of the collection to instanciate.
+	 * @param <C> Type of the collection to Instantiate.
 	 * @param collection1 First collection.
 	 * @param collection2 Second collection.
 	 * @param factory Factory to use to build the result collection.
@@ -560,7 +560,7 @@ public class CollectionUtils {
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
-	 * @param <M> Type of the map to instanciate.
+	 * @param <M> Type of the map to Instantiate.
 	 * @param map1 First map.
 	 * @param map2 Second map.
 	 * @param factory Factory to use to build the result map.
@@ -655,7 +655,7 @@ public class CollectionUtils {
 	 * collection and a second collection with a faster test method is more efficient.
 	 * 
 	 * @param <T> Type of the elements.
-	 * @param <C> Type of the collection to instanciate.
+	 * @param <C> Type of the collection to Instantiate.
 	 * @param collection1 First collection.
 	 * @param collection2 Second collection.
 	 * @param factory Factory to use to build the result collection.
@@ -734,7 +734,7 @@ public class CollectionUtils {
 	 * collection and a second collection with a faster test method is more efficient.
 	 * 
 	 * @param <T> Type of the elements.
-	 * @param <C> Type of the result collection to instanciate.
+	 * @param <C> Type of the result collection to Instantiate.
 	 * @param collection1 First collection.
 	 * @param collection2 Second collection.
 	 * @param factory Factory to use to build the result collection.
@@ -796,7 +796,7 @@ public class CollectionUtils {
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
-	 * @param <M> Type of the map to instanciate.
+	 * @param <M> Type of the map to Instantiate.
 	 * @param map Map to copy.
 	 * @param keys Keys of the bindings to retain.
 	 * @param factory Factory to use to build the result map.
@@ -854,7 +854,7 @@ public class CollectionUtils {
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
-	 * @param <M> Type of the map to instanciate.
+	 * @param <M> Type of the map to Instantiate.
 	 * @param map Map to copy.
 	 * @param keys Keys of the binding to exclude.
 	 * @param factory Factory to use to build the result map.

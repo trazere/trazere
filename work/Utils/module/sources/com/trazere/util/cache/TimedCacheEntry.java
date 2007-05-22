@@ -12,7 +12,7 @@ extends CacheEntry<K, V> {
 	protected final long _timestamp;
 
 	/**
-	 * Instanciate a new cache entry with the given key and value, and set its creation date to now.
+	 * Instantiate a new cache entry with the given key and value, and set its creation date to now.
 	 * 
 	 * @param key Key of the entry. The key can be <code>null</code> if the value is not <code>null</code>.
 	 * @param value Value of the entry. The value can be <code>null</code> if the key is not <code>null</code>.

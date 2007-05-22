@@ -35,7 +35,7 @@ implements ReportEntry<Category, Code> {
 	protected final String _message;
 
 	/**
-	 * Instanciate a new report entry with the given parameters.
+	 * Instantiate a new report entry with the given parameters.
 	 * 
 	 * @param category Category of the report entry. May be <code>null</code>.
 	 * @param code Code of the report entry. May be <code>null</code>.

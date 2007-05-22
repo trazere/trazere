@@ -79,7 +79,7 @@ public class CSVReader {
 	protected final String _specialChars;
 
 	/**
-	 * Instanciate a new CSV reader using the given reader, delimiter and options. The CSV input is considered as self-describing. Its first line is read in
+	 * Instantiate a new CSV reader using the given reader, delimiter and options. The CSV input is considered as self-describing. Its first line is read in
 	 * order to determine the headers.
 	 * 
 	 * @param reader Reader providing the CSV input.
@@ -115,7 +115,7 @@ public class CSVReader {
 	}
 
 	/**
-	 * Instanciate a new CSV reader using the given reader, delimiter, headers, and options.
+	 * Instantiate a new CSV reader using the given reader, delimiter, headers, and options.
 	 * 
 	 * @param reader Reader providing the CSV input.
 	 * @param delimiter Delimiter of the CSV fields.

@@ -30,7 +30,7 @@ extends Exception {
 	protected final ReportEntry<?, ?> _entry;
 
 	/**
-	 * Instanciate a new exception using the given entry.
+	 * Instantiate a new exception using the given entry.
 	 * 
 	 * @param entry Report entry.
 	 */
@@ -42,7 +42,7 @@ extends Exception {
 	}
 
 	/**
-	 * Instanciate a new exception using the given entry and cause.
+	 * Instantiate a new exception using the given entry and cause.
 	 * 
 	 * @param entry Report entry.
 	 * @param cause Cause exception.

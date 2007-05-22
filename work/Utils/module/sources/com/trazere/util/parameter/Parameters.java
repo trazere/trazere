@@ -45,7 +45,7 @@ implements Descriptable {
 		final Map<String, T> _parameters;
 
 		/**
-		 * Instanciate a new builder.
+		 * Instantiate a new builder.
 		 */
 		public Builder() {
 			// Initialization.
@@ -53,7 +53,7 @@ implements Descriptable {
 		}
 
 		/**
-		 * Instanciate a new builder populated with the given parameter set.
+		 * Instantiate a new builder populated with the given parameter set.
 		 * 
 		 * @param parameters Parameter set initially populating the builder.
 		 */
