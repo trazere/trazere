@@ -36,8 +36,6 @@
 
 	<!-- Clean -->
 	<target name="utils.clean">
-		<echo>Cleaning (Utils)</echo>
-
 		<delete dir="${utils.build}" />
 	</target>
 
@@ -54,8 +52,8 @@
 		<echo>Compiling the sources (Utils)</echo>
 
 		<mkdir dir="${utils.build.classes}" />
-		<javac srcdir="${utils.sources}" destdir="${utils.build.classes}" source="${trazere.java.version}" debug="${trazere.java.debug}" target="${trazere.java.version}" failonerror="true" encoding="${trazere.java.encoding}">
-			<include name="**/*.java" />
+		<javac destdir="${utils.build.classes}" source="${trazere.java.version}" debug="${trazere.java.debug}" target="${trazere.java.version}" failonerror="true" encoding="${trazere.java.encoding}">
+			<src location="${utils.sources}" />
 			<classpath>
 				<path refid="tools.commons-logging.classpath" />
 			</classpath>
@@ -64,8 +62,6 @@
 
 	<!-- Build the JAR -->
 	<target name="utils.buildJar" depends="utils.compileSources">
-		<echo>Building the JAR (Utils)</echo>
-
 		<mkdir dir="${utils.build}" />
 		<jar destfile="${utils.build.jar}">
 			<fileset dir="${utils.sources}" includes="**/*.java" />
@@ -75,8 +71,6 @@
 
 	<!-- Build the distribution -->
 	<target name="utils.build" depends="utils.buildJar">
-		<echo>Building the distribution (Utils)</echo>
-
 		<mkdir dir="${utils.dist}" />
 
 		<!-- Jars -->

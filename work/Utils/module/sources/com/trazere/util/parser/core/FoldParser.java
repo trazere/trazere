@@ -1,0 +1,74 @@
+/*
+ *  Copyright 2006 Julien Dufour
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package com.trazere.util.parser.core;
+
+import com.trazere.util.Assert;
+import com.trazere.util.parser.AbstractParser;
+import com.trazere.util.parser.Parser;
+import com.trazere.util.parser.ParserClosure;
+import com.trazere.util.parser.ParserException;
+import com.trazere.util.parser.ParserHandler;
+import com.trazere.util.parser.ParserState;
+
+/**
+ * DOCME
+ * 
+ * @param <Token>
+ * @param <SubResult>
+ * @param <Result>
+ */
+public abstract class FoldParser<Token, SubResult, Result>
+extends AbstractParser<Token, Result> {
+	protected final Parser<Token, SubResult> _subParser;
+	protected final Result _initialValue;
+	
+	public FoldParser(final Parser<Token, SubResult> subParser, final Result initialValue, final String description) {
+		super(description);
+		
+		// Checks.
+		Assert.notNull(subParser);
+		
+		// Initialization.
+		_subParser = subParser;
+		_initialValue = initialValue;
+	}
+	
+	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
+	throws ParserException {
+		// Zero.
+		state.reportSuccess(closure, _initialValue);
+		
+		// More.
+		state.run(_subParser, buildMoreHandler(closure, _initialValue));
+	}
+	
+	protected ParserHandler<Token, SubResult> buildMoreHandler(final ParserClosure<Token, Result> closure, final Result previousValue) {
+		return new ParserHandler<Token, SubResult>() {
+			public void result(final SubResult subResult, final ParserState<Token> state)
+			throws ParserException {
+				// Fold the result.
+				final Result value = fold(previousValue, subResult);
+				state.reportSuccess(closure, value);
+				
+				// More.
+				state.run(_subParser, buildMoreHandler(closure, value));
+			}
+		};
+	}
+	
+	protected abstract Result fold(final Result previousValue, final SubResult subResult)
+	throws ParserException;
+}
