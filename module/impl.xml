@@ -30,23 +30,17 @@
 
 	<!-- Clean -->
 	<target name="trazere.clean">
-		<echo>Cleaning</echo>
-
 		<delete dir="${trazere.build}" />
 	</target>
 
 	<!-- Clean the distribution -->
 	<target name="trazere.distclean">
-		<echo>Cleaning the distribution</echo>
-
 		<delete dir="${trazere.build}" />
 		<delete dir="${trazere.dist}" />
 	</target>
 
 	<!-- Build the distribution -->
 	<target name="trazere.build" depends="utils.build">
-		<echo>Building the distribution</echo>
-
 		<mkdir dir="${trazere.dist.binary}" />
 
 		<!-- Distribution -->
@@ -60,8 +54,6 @@
 
 	<!-- Build the ZIP -->
 	<target name="trazere.buildZip" depends="trazere.build">
-		<echo>Building the ZIP</echo>
-
 		<zip destfile="${trazere.dist.zip}" basedir="${trazere.dist.binary}" encoding="iso-8859-1" />
 	</target>
 </project>
