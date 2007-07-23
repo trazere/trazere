@@ -34,10 +34,10 @@ public class CollectionUtils {
 		// Build the list.
 		final List<T> list = new ArrayList<T>(1);
 		list.add(value);
-
+		
 		return list;
 	}
-
+	
 	/**
 	 * Build a list with the given values.
 	 * <p>
@@ -54,10 +54,10 @@ public class CollectionUtils {
 		final List<T> list = new ArrayList<T>(2);
 		list.add(value1);
 		list.add(value2);
-
+		
 		return list;
 	}
-
+	
 	/**
 	 * Build a list with the given values.
 	 * <p>
@@ -76,10 +76,10 @@ public class CollectionUtils {
 		list.add(value1);
 		list.add(value2);
 		list.add(value3);
-
+		
 		return list;
 	}
-
+	
 	/**
 	 * Build a list with the given values.
 	 * <p>
@@ -91,7 +91,7 @@ public class CollectionUtils {
 	 */
 	public static <T> List<T> listN(final T[] values) {
 		Assert.notNull(values);
-
+		
 		// Build the list.
 		final List<T> list = new ArrayList<T>(values.length);
 		for (final T value : values) {
@@ -99,7 +99,7 @@ public class CollectionUtils {
 		}
 		return list;
 	}
-
+	
 	/**
 	 * Build a set with the given value.
 	 * <p>
@@ -114,10 +114,10 @@ public class CollectionUtils {
 		// Build the set.
 		final Set<T> set = new HashSet<T>(1);
 		set.add(value);
-
+		
 		return set;
 	}
-
+	
 	/**
 	 * Build a set with the given values.
 	 * <p>
@@ -134,10 +134,10 @@ public class CollectionUtils {
 		final Set<T> set = new HashSet<T>(2);
 		set.add(value1);
 		set.add(value2);
-
+		
 		return set;
 	}
-
+	
 	/**
 	 * Build a set with the given values.
 	 * <p>
@@ -156,10 +156,10 @@ public class CollectionUtils {
 		set.add(value1);
 		set.add(value2);
 		set.add(value3);
-
+		
 		return set;
 	}
-
+	
 	/**
 	 * Build a set with the given values.
 	 * <p>
@@ -172,7 +172,7 @@ public class CollectionUtils {
 	 */
 	public static <T> Set<T> setN(final T[] values) {
 		Assert.notNull(values);
-
+		
 		// Build the set.
 		final Set<T> set = new HashSet<T>(values.length);
 		for (final T value : values) {
@@ -180,7 +180,7 @@ public class CollectionUtils {
 		}
 		return set;
 	}
-
+	
 	/**
 	 * Build a map with the binding of the given key and value.
 	 * <p>
@@ -197,10 +197,10 @@ public class CollectionUtils {
 		// Build the map.
 		final Map<K, V> result = new HashMap<K, V>();
 		result.put(key, value);
-
+		
 		return result;
 	}
-
+	
 	/**
 	 * Build a map with the bindings of the given keys and values.
 	 * <p>
@@ -220,10 +220,35 @@ public class CollectionUtils {
 		final Map<K, V> result = new HashMap<K, V>();
 		result.put(key2, value2);
 		result.put(key1, value1);
-
+		
 		return result;
 	}
-
+	
+	private static final Iterator<?> EMPTY_ITERATOR = new Iterator<Object>() {
+		public boolean hasNext() {
+			return false;
+		}
+		
+		public Object next() {
+			throw new NoSuchElementException();
+		}
+		
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
+	};
+	
+	/**
+	 * Build an iterator over no values.
+	 * 
+	 * @param <T> Type of the the values.
+	 * @return The iterator.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> Iterator<T> iterator() {
+		return (Iterator<T>) EMPTY_ITERATOR;
+	}
+	
 	/**
 	 * Build an iterator over the given value.
 	 * 
@@ -235,11 +260,11 @@ public class CollectionUtils {
 		// Build the iterator.
 		return new Iterator<T>() {
 			protected boolean _iterated = false;
-
+			
 			public boolean hasNext() {
 				return !_iterated;
 			}
-
+			
 			public T next() {
 				if (!_iterated) {
 					_iterated = true;
@@ -248,13 +273,13 @@ public class CollectionUtils {
 					throw new NoSuchElementException();
 				}
 			}
-
+			
 			public void remove() {
 				throw new UnsupportedOperationException();
 			}
 		};
 	}
-
+	
 	/**
 	 * Build an iterator over the given values.
 	 * 
@@ -264,28 +289,28 @@ public class CollectionUtils {
 	 */
 	public static <T> Iterator<T> iteratorN(final T[] values) {
 		Assert.notNull(values);
-
+		
 		// Build the iterator.
 		return new Iterator<T>() {
 			protected int _index = 0;
-
+			
 			public boolean hasNext() {
 				return _index < values.length;
 			}
-
+			
 			public T next() {
 				final T value = values[_index];
 				_index += 1;
-
+				
 				return value;
 			}
-
+			
 			public void remove() {
 				throw new UnsupportedOperationException();
 			}
 		};
 	}
-
+	
 	/**
 	 * Get an objet from the given collection.
 	 * 
@@ -295,12 +320,12 @@ public class CollectionUtils {
 	 */
 	public static <T> T any(final Collection<T> collection) {
 		Assert.notNull(collection);
-
+		
 		// Read.
 		final Iterator<T> iterator = collection.iterator();
 		return iterator.hasNext() ? iterator.next() : null;
 	}
-
+	
 	/**
 	 * Get an entry from the given map.
 	 * 
@@ -311,12 +336,12 @@ public class CollectionUtils {
 	 */
 	public static <K, V> Map.Entry<K, V> any(final Map<K, V> map) {
 		Assert.notNull(map);
-
+		
 		// Read.
 		final Iterator<Map.Entry<K, V>> iterator = map.entrySet().iterator();
 		return iterator.hasNext() ? iterator.next() : null;
 	}
-
+	
 	/**
 	 * Get the last value from the given list.
 	 * 
@@ -326,12 +351,12 @@ public class CollectionUtils {
 	 */
 	public static <T> T last(final List<T> list) {
 		Assert.notNull(list);
-
+		
 		// Read.
 		final int size = list.size();
 		return size > 0 ? list.get(size - 1) : null;
 	}
-
+	
 	/**
 	 * Build a list containing the given list in the reverse order.
 	 * 
@@ -341,13 +366,13 @@ public class CollectionUtils {
 	 */
 	public static <T> ArrayList<T> reverse(final List<? extends T> list) {
 		Assert.notNull(list);
-
+		
 		// Build the list.
 		final ArrayList<T> results = new ArrayList<T>(list);
 		Collections.reverse(results);
 		return results;
 	}
-
+	
 	/**
 	 * Sort the given values topologically.
 	 * <p>
@@ -366,7 +391,7 @@ public class CollectionUtils {
 	throws CollectionException {
 		return topologicalSort(values, dependencyFunction, new ArrayList<T>(values.size()));
 	}
-
+	
 	/**
 	 * Sort the given values topologically.
 	 * <p>
@@ -387,7 +412,7 @@ public class CollectionUtils {
 	throws CollectionException {
 		return topologicalSort(values, dependencyFunction, factory.build(values.size()));
 	}
-
+	
 	/**
 	 * Sort the given values topologically and populate the given list with the results.
 	 * <p>
@@ -409,7 +434,7 @@ public class CollectionUtils {
 		Assert.notNull(values);
 		Assert.notNull(dependencyFunction);
 		Assert.notNull(results);
-
+		
 		// Compute the dependencies.
 		final Collection<Tuple2<T, T>> dependencies = new ArrayList<Tuple2<T, T>>();
 		for (final T value : values) {
@@ -425,7 +450,7 @@ public class CollectionUtils {
 				throw new CollectionException("Failed computing dependencies for value " + value, exception);
 			}
 		}
-
+		
 		// Sort the values.
 		final Collection<T> pendingValues = new ArrayList<T>(values);
 		while (!pendingValues.isEmpty()) {
@@ -434,11 +459,11 @@ public class CollectionUtils {
 			for (final Tuple2<T, T> dependency : dependencies) {
 				leafValues.remove(dependency.getFirst());
 			}
-
+			
 			if (leafValues.isEmpty()) {
 				throw new CollectionException("Cyclic dependencies for values " + pendingValues);
 			}
-
+			
 			// Add the leaves to the result.
 			// Pending values are iterated instead of leaf values to keep the sort stable.
 			final Iterator<T> pendingValuesIt = pendingValues.iterator();
@@ -449,7 +474,7 @@ public class CollectionUtils {
 					pendingValuesIt.remove();
 				}
 			}
-
+			
 			// Clean the dependencies.
 			final Iterator<Tuple2<T, T>> dependenciesIt = dependencies.iterator();
 			while (dependenciesIt.hasNext()) {
@@ -459,10 +484,10 @@ public class CollectionUtils {
 				}
 			}
 		}
-
+		
 		return results;
 	}
-
+	
 	/**
 	 * Build a list containing the union of the given collections.
 	 * <p>
@@ -476,11 +501,11 @@ public class CollectionUtils {
 	public static <T> ArrayList<T> unionList(final Collection<? extends T> collection1, final Collection<? extends T> collection2) {
 		Assert.notNull(collection1);
 		Assert.notNull(collection2);
-
+		
 		// Build the union.
 		return union(collection1, collection2, new ArrayList<T>(collection1.size() + collection2.size()));
 	}
-
+	
 	/**
 	 * Build a set containing the union of the given collections.
 	 * 
@@ -493,7 +518,7 @@ public class CollectionUtils {
 		// Build the union.
 		return union(collection1, collection2, new HashSet<T>());
 	}
-
+	
 	/**
 	 * Build a collection containing the union of the given collections.
 	 * <p>
@@ -509,11 +534,11 @@ public class CollectionUtils {
 	public static <T, C extends Collection<T>> C union(final Collection<? extends T> collection1, final Collection<? extends T> collection2, final CollectionFactory<? super T, ? extends C> factory) {
 		Assert.notNull(collection1);
 		Assert.notNull(factory);
-
+		
 		// Build the union.
 		return union(collection1, collection2, factory.build(collection1.size()));
 	}
-
+	
 	/**
 	 * Build the union of the given collections and populate the given result collection with it.
 	 * <p>
@@ -530,13 +555,13 @@ public class CollectionUtils {
 		Assert.notNull(collection1);
 		Assert.notNull(collection2);
 		Assert.notNull(results);
-
+		
 		// Build the union.
 		results.addAll(collection1);
 		results.addAll(collection2);
 		return results;
 	}
-
+	
 	/**
 	 * Build a map containing the union of the given maps.
 	 * <p>
@@ -552,7 +577,7 @@ public class CollectionUtils {
 		// Build the union.
 		return union(map1, map2, new HashMap<K, V>());
 	}
-
+	
 	/**
 	 * Build a map containing the union of the given maps.
 	 * <p>
@@ -569,11 +594,11 @@ public class CollectionUtils {
 	public static <K, V, M extends Map<K, V>> M union(final Map<? extends K, ? extends V> map1, final Map<? extends K, ? extends V> map2, final MapFactory<? super K, ? super V, ? extends M> factory) {
 		Assert.notNull(map1);
 		Assert.notNull(factory);
-
+		
 		// Build the union.
 		return union(map1, map2, factory.build(map1.size()));
 	}
-
+	
 	/**
 	 * Build the union of the given maps and populate the given result map with it.
 	 * <p>
@@ -591,13 +616,13 @@ public class CollectionUtils {
 		Assert.notNull(map1);
 		Assert.notNull(map2);
 		Assert.notNull(results);
-
+		
 		// Build the union.
 		results.putAll(map2);
 		results.putAll(map1);
 		return results;
 	}
-
+	
 	/**
 	 * Test wether the given collections intersect. Collections instersect when they have some common value.
 	 * <p>
@@ -612,7 +637,7 @@ public class CollectionUtils {
 	public static <T> boolean intersects(final Collection<? extends T> collection1, final Collection<? extends T> collection2) {
 		Assert.notNull(collection1);
 		Assert.notNull(collection2);
-
+		
 		// Test.
 		for (final Object value : collection1) {
 			if (collection2.contains(value)) {
@@ -621,7 +646,7 @@ public class CollectionUtils {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * Build a list containing the intersection of the given collections.
 	 * 
@@ -634,7 +659,7 @@ public class CollectionUtils {
 		// Build the intersection.
 		return intersection(collection1, collection2, new ArrayList<T>());
 	}
-
+	
 	/**
 	 * Build a set containing the intersection of the given collections.
 	 * 
@@ -647,7 +672,7 @@ public class CollectionUtils {
 		// Build the intersection.
 		return intersection(collection1, collection2, new HashSet<T>());
 	}
-
+	
 	/**
 	 * Build a collection containing the intersection of the given collections.
 	 * <p>
@@ -663,11 +688,11 @@ public class CollectionUtils {
 	 */
 	public static <T, C extends Collection<T>> C intersection(final Collection<? extends T> collection1, final Collection<? extends T> collection2, final CollectionFactory<? super T, ? extends C> factory) {
 		Assert.notNull(factory);
-
+		
 		// Build the intersection.
 		return intersection(collection1, collection2, factory.build());
 	}
-
+	
 	/**
 	 * Build the intersection of the given collections and populate the given result collection with it.
 	 * <p>
@@ -685,7 +710,7 @@ public class CollectionUtils {
 		Assert.notNull(collection1);
 		Assert.notNull(collection2);
 		Assert.notNull(results);
-
+		
 		// Build the intersection.
 		for (final T value : collection1) {
 			if (collection2.contains(value)) {
@@ -694,7 +719,7 @@ public class CollectionUtils {
 		}
 		return results;
 	}
-
+	
 	/**
 	 * Build a list containing the exclusion of the second given collection from the first given collection.
 	 * <p>
@@ -710,7 +735,7 @@ public class CollectionUtils {
 		// Build the exclusion.
 		return exclusion(collection1, collection2, new ArrayList<T>());
 	}
-
+	
 	/**
 	 * Build a set containing the exclusion of the given collections (first minus second).
 	 * <p>
@@ -726,7 +751,7 @@ public class CollectionUtils {
 		// Build the exclusion.
 		return exclusion(collection1, collection2, new HashSet<T>());
 	}
-
+	
 	/**
 	 * Build a collection containing the exclusion of the given collections (first minus second).
 	 * <p>
@@ -742,11 +767,11 @@ public class CollectionUtils {
 	 */
 	public static <T, C extends Collection<T>> C exclusion(final Collection<? extends T> collection1, final Collection<? extends T> collection2, final CollectionFactory<? super T, ? extends C> factory) {
 		Assert.notNull(factory);
-
+		
 		// Build the exclusion.
 		return exclusion(collection1, collection2, factory.build());
 	}
-
+	
 	/**
 	 * Build the exclusion of given collections (first minus second) and populate the given results collection with it.
 	 * <p>
@@ -765,7 +790,7 @@ public class CollectionUtils {
 		Assert.notNull(collection1);
 		Assert.notNull(collection2);
 		Assert.notNull(results);
-
+		
 		// Build the exclusion.
 		for (final T value : collection1) {
 			if (!collection2.contains(value)) {
@@ -774,7 +799,7 @@ public class CollectionUtils {
 		}
 		return results;
 	}
-
+	
 	/**
 	 * Build a map containing the bindings of the given map with the given keys.
 	 * 
@@ -786,11 +811,11 @@ public class CollectionUtils {
 	 */
 	public static <K, V> HashMap<K, V> subMap(final Map<? extends K, ? extends V> map, final Set<? extends K> keys) {
 		Assert.notNull(keys);
-
+		
 		// Build the map.
 		return subMap(map, keys, new HashMap<K, V>(keys.size()));
 	}
-
+	
 	/**
 	 * Build a map containing the bindings of the given map with the given keys.
 	 * 
@@ -804,11 +829,11 @@ public class CollectionUtils {
 	 */
 	public static <K, V, M extends Map<K, V>> M subMap(final Map<? extends K, ? extends V> map, final Set<? extends K> keys, final MapFactory<? super K, ? super V, ? extends M> factory) {
 		Assert.notNull(factory);
-
+		
 		// Build the map.
 		return subMap(map, keys, factory.build());
 	}
-
+	
 	/**
 	 * Get the bindings of the given map with the given keys and populate the given result map with them.
 	 * 
@@ -824,7 +849,7 @@ public class CollectionUtils {
 		Assert.notNull(map);
 		Assert.notNull(keys);
 		Assert.notNull(results);
-
+		
 		// Build the map.
 		for (final K key : keys) {
 			if (map.containsKey(key)) {
@@ -834,7 +859,7 @@ public class CollectionUtils {
 		}
 		return results;
 	}
-
+	
 	/**
 	 * Build a map containing the bindings of the given map whose keys do not belong to the given keys.
 	 * 
@@ -848,7 +873,7 @@ public class CollectionUtils {
 		// Build the exclusion.
 		return retainMap(map, keys, new HashMap<K, V>());
 	}
-
+	
 	/**
 	 * Build a map containing the bindings of the given map whose keys do not belong to the given keys.
 	 * 
@@ -862,11 +887,11 @@ public class CollectionUtils {
 	 */
 	public static <K, V, M extends Map<K, V>> M retainMap(final Map<? extends K, ? extends V> map, final Collection<? extends K> keys, final MapFactory<? super K, ? super V, ? extends M> factory) {
 		Assert.notNull(factory);
-
+		
 		// Build the exclusion.
 		return retainMap(map, keys, factory.build());
 	}
-
+	
 	/**
 	 * Get the bindings of the given map whose keys do not belong to the given keys and populate the given result map with them.
 	 * 
@@ -882,7 +907,7 @@ public class CollectionUtils {
 		Assert.notNull(map);
 		Assert.notNull(keys);
 		Assert.notNull(results);
-
+		
 		// Build the exclusion.
 		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
 			final K key = entry.getKey();
@@ -892,7 +917,7 @@ public class CollectionUtils {
 		}
 		return results;
 	}
-
+	
 	private CollectionUtils() {
 		// Prevent instantiation.
 	}
