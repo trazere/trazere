@@ -18,7 +18,6 @@ package com.trazere.util.collection;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import com.trazere.util.Assert;
@@ -37,10 +36,10 @@ import com.trazere.util.Assert;
 public class FamilyMap<K, V, C extends Collection<V>> {
 	/** Factory of the family collections. */
 	protected final CollectionFactory<V, ? extends C> _familyFactory;
-
+	
 	/** Families of values identified by their keys. */
 	protected final Map<K, C> _families = new HashMap<K, C>();
-
+	
 	/**
 	 * Build a new family map with the given type of collection.
 	 * 
@@ -48,11 +47,11 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 	 */
 	public FamilyMap(final CollectionFactory<V, ? extends C> familyFactory) {
 		Assert.notNull(familyFactory);
-
+		
 		// Initialization.
 		_familyFactory = familyFactory;
 	}
-
+	
 	/**
 	 * Build a new family map with the given map.
 	 * 
@@ -61,7 +60,7 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 	public FamilyMap(final FamilyMap<? extends K, V, C> map) {
 		this(map, map._familyFactory);
 	}
-
+	
 	/**
 	 * Build a new family map with the given map.
 	 * 
@@ -70,29 +69,29 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 	 */
 	public FamilyMap(final FamilyMap<? extends K, ? extends V, ? extends C> map, final CollectionFactory<V, ? extends C> familyFactory) {
 		Assert.notNull(map);
-
+		
 		// Initialization.
 		_familyFactory = familyFactory;
-
+		
 		// Copy the families.
 		for (final Map.Entry<? extends K, ? extends C> familyEntry : map._families.entrySet()) {
 			_families.put(familyEntry.getKey(), familyFactory.build(familyEntry.getValue()));
 		}
 	}
-
+	
 	protected C getFamily(final K key) {
 		// Look for the family.
 		final C currentFamily = _families.get(key);
 		if (null != currentFamily) {
 			return currentFamily;
 		}
-
+		
 		// Create a new family.
 		final C family = _familyFactory.build();
 		_families.put(key, family);
 		return family;
 	}
-
+	
 	/**
 	 * Associate the given value to the given key.
 	 * 
@@ -102,7 +101,7 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 	public void put(final K key, final V value) {
 		getFamily(key).add(value);
 	}
-
+	
 	/**
 	 * Associate the given values to the given key.
 	 * 
@@ -111,11 +110,11 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 	 */
 	public void putAll(final K key, final Collection<? extends V> values) {
 		Assert.notNull(values);
-
+		
 		// Add.
 		getFamily(key).addAll(values);
 	}
-
+	
 	/**
 	 * Indicate wether the receiver family map is empty or not.
 	 * 
@@ -124,7 +123,17 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 	public boolean isEmpty() {
 		return _families.isEmpty();
 	}
-
+	
+	/**
+	 * Check wether the receiver family contains values for the given key.
+	 * 
+	 * @param key Key whose associated value should be checked.
+	 * @return <code>true</code> when some values are associated to the key, <code>false</code> otherwise.
+	 */
+	public boolean contains(final K key) {
+		return _families.containsKey(key);
+	}
+	
 	/**
 	 * Get the values associated to the given key.
 	 * 
@@ -134,23 +143,25 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 	public C get(final K key) {
 		return _families.get(key);
 	}
-
+	
 	/**
-	 * Get an iterator over the families.
+	 * Get the families as a map.
+	 * <p>
+	 * The returned map is backed by the family map so changes to the family map are reflected.
 	 * 
-	 * @return The iterator.
+	 * @return The families.
 	 */
-	public Iterator<Map.Entry<K, C>> iterator() {
-		return Collections.unmodifiableMap(_families).entrySet().iterator();
+	public Map<K, C> map() {
+		return Collections.unmodifiableMap(_families);
 	}
-
+	
 	/**
 	 * Clear the receiver family map.
 	 */
 	public void clear() {
 		_families.clear();
 	}
-
+	
 	/**
 	 * Remove the associations to the given key.
 	 * 
@@ -160,7 +171,7 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 	public C remove(final K key) {
 		return _families.remove(key);
 	}
-
+	
 	/**
 	 * Remove the association of the given value to the given key.
 	 * 
@@ -180,7 +191,7 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 			return false;
 		}
 	}
-
+	
 	/**
 	 * Remove the associations of the given values to the given key.
 	 * 
@@ -200,12 +211,12 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 			return false;
 		}
 	}
-
+	
 	@Override
 	public int hashCode() {
 		return _families.hashCode();
 	}
-
+	
 	@Override
 	public boolean equals(final Object object) {
 		if (this == object) {
@@ -217,7 +228,7 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 			return false;
 		}
 	}
-
+	
 	@Override
 	public String toString() {
 		return _families.toString();

@@ -24,10 +24,78 @@ import java.util.Collection;
  * @see Filter2
  */
 public class Filters {
+	private static final Filter<Object> ALL = new Filter<Object>() {
+		public boolean filter(final Object value) {
+			return true;
+		}
+	};
+	
 	/**
-	 * Build a filter function defined by the given values.
-	 * <p>
-	 * The built filter function accepts the values included in the given values.
+	 * Build a filter function which accepts all values.
+	 * 
+	 * @param <T> Type of the argument values.
+	 * @return The filter function.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> Filter<T> all() {
+		return (Filter<T>) ALL;
+	}
+	
+	private static final Filter<Object> NONE = new Filter<Object>() {
+		public boolean filter(final Object value) {
+			return false;
+		}
+	};
+	
+	/**
+	 * Build a filter function which accepts no values.
+	 * 
+	 * @param <T> Type of the argument values.
+	 * @return The filter function.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> Filter<T> none() {
+		return (Filter<T>) NONE;
+	}
+	
+	private static final Filter2<Object, Object> ALL2 = new Filter2<Object, Object>() {
+		public boolean filter(final Object value1, final Object value2) {
+			return true;
+		}
+	};
+	
+	/**
+	 * Build a two arguments filter function which accepts all values.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @return The filter function.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T1, T2> Filter2<T1, T2> all2() {
+		return (Filter2<T1, T2>) ALL2;
+	}
+	
+	private static final Filter2<Object, Object> NONE2 = new Filter2<Object, Object>() {
+		public boolean filter(final Object value1, final Object value2) {
+			return false;
+		}
+	};
+	
+	/**
+	 * Build a two arguments filter function which accepts no values.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @return The filter function.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T1, T2> Filter2<T1, T2> none2() {
+		return (Filter2<T1, T2>) NONE2;
+	}
+	
+	/**
+	 * Build a filter function which accepts the given values.
 	 * 
 	 * @param <T> Type of the argument values.
 	 * @param values Values accepted by the filter function to build.
@@ -40,11 +108,9 @@ public class Filters {
 			}
 		};
 	}
-
+	
 	/**
-	 * Build a two arguments filter function defined by the given values.
-	 * <p>
-	 * The built filter function accepts the values when the first argument value is included in the given values.
+	 * Build a two arguments filter function which accepts the values whose first argument is included in the given values.
 	 * 
 	 * @param <T1> Type of the first argument values.
 	 * @param <T2> Type of the second argument values.
@@ -58,11 +124,9 @@ public class Filters {
 			}
 		};
 	}
-
+	
 	/**
-	 * Build a two arguments filter function defined by the given values.
-	 * <p>
-	 * The built filter function accepts the values when the second argument value is included in the given values.
+	 * Build a two arguments filter function which accepts the values whose second argument is included in the given values.
 	 * 
 	 * @param <T1> Type of the first argument values.
 	 * @param <T2> Type of the second argument values.
@@ -76,7 +140,7 @@ public class Filters {
 			}
 		};
 	}
-
+	
 	private Filters() {
 		// Prevent instantiation.
 	}
