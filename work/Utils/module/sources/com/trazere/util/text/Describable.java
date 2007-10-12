@@ -16,11 +16,11 @@
 package com.trazere.util.text;
 
 /**
- * The <code>Descriptable</code> interfaces defines descriptable elements.
+ * The {@link Describable} interfaces defines descriptable elements.
  * 
- * @see TextUtils#computeDescription(Descriptable)
+ * @see TextUtils#computeDescription(Describable)
  */
-public interface Descriptable {
+public interface Describable {
 	/**
 	 * Append the description of the receiver object in the given string builder.
 	 * 

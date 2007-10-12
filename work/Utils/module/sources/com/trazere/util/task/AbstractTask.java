@@ -15,118 +15,112 @@
  */
 package com.trazere.util.task;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.Collections;
+import java.util.List;
 
 import com.trazere.util.Assert;
-import com.trazere.util.report.ReportEntry;
-import com.trazere.util.report.ReportException;
-import com.trazere.util.report.ReportLevel;
-import com.trazere.util.report.ReportListener;
 
 /**
- * The <code>AbstractTask</code> represents abstract task.
+ * The {@link AbstractTask} abstract class provide a task basic implementation which supports notification about the executions.
+ * 
+ * @see TaskListener
  */
 public abstract class AbstractTask
 implements Task {
-	private static final Log LOG = LogFactory.getLog(AbstractTask.class);
-
 	/** Name of the task. */
 	protected final String _name;
-
-	/** Report listener to use. May be <code>null</code>. */
-	protected final ReportListener<TaskReportEntry> _reportListener;
-
-	public AbstractTask(final String name, final ReportListener<TaskReportEntry> reportListener) {
+	
+	/**
+	 * Instantiate a new task with the given name and report listener.
+	 * 
+	 * @param name Name of the task.
+	 */
+	public AbstractTask(final String name) {
 		Assert.notNull(name);
-
+		
 		// Initialize instance.
 		_name = name;
-		_reportListener = reportListener;
 	}
-
+	
 	public String getName() {
 		return _name;
 	}
-
-	public ReportListener<? extends ReportEntry<String, TaskStatus>> getReportListener() {
-		return _reportListener;
-	}
-
+	
 	public void performTask()
 	throws TaskException {
-		performTask(false);
+		performTask(Collections.<TaskListener>emptyList());
 	}
-
-	public boolean unsafePerformTask() {
+	
+	public void performTask(final List<TaskListener> listeners)
+	throws TaskException {
+		Assert.notNull(listeners);
+		
+		// Start.
+		taskStarted(listeners);
+		
 		try {
-			performTask(true);
+			// Perform the task.
+			performAbstractTask();
+			
+			// Success.
+			taskSucceeded(listeners);
+		} catch (final TaskException exception) {
+			// Failure.
+			taskFailed(listeners, exception);
+			throw exception;
+		} catch (final RuntimeException exception) {
+			// Failure.
+			taskFailed(listeners, exception);
+			throw exception;
+		} finally {
+			// End.
+			taskEnded(listeners);
+		}
+	}
+	
+	public boolean unsafePerformTask() {
+		return unsafePerformTask(Collections.<TaskListener>emptyList());
+	}
+	
+	public boolean unsafePerformTask(final List<TaskListener> listeners) {
+		try {
+			performTask(listeners);
 			return true;
 		} catch (final TaskException exception) {
 			return false;
 		}
 	}
-
-	protected void performTask(final boolean trace)
-	throws TaskException {
-		LOG.info("*** " + _name + " ***");
-
-		try {
-			// Perform the task.
-			performAbstractTask();
-
-			// Log.
-			LOG.info("*** " + _name + " [OK] ***");
-
-			// Report.
-			if (null != _reportListener) {
-				try {
-					_reportListener.report(ReportLevel.NOTICE, new TaskReportEntry(_name, TaskStatus.SUCCEEDED));
-				} catch (final ReportException exception) {
-					LOG.info("Failed reporting", exception);
-				}
-			}
-		} catch (final TaskException exception) {
-			// Log.
-			if (trace) {
-				LOG.info("*** " + _name + " [FAILED] ***");
-			} else {
-				LOG.info("*** " + _name + " [FAILED] ***", exception);
-			}
-
-			// Report.
-			if (null != _reportListener) {
-				try {
-					_reportListener.report(ReportLevel.ERROR, new TaskReportEntry(_name, TaskStatus.FAILED));
-				} catch (final ReportException exception1) {
-					LOG.info("Failed reporting", exception1);
-				}
-			}
-
-			throw exception;
-		} catch (final RuntimeException exception) {
-			// Log.
-			if (trace) {
-				LOG.info("*** " + _name + " [FAILED] ***");
-			} else {
-				LOG.info("*** " + _name + " [FAILED] ***", exception);
-			}
-
-			// Report.
-			if (null != _reportListener) {
-				try {
-					_reportListener.report(ReportLevel.WARNING, new TaskReportEntry(_name, TaskStatus.FAILED));
-				} catch (final ReportException exception1) {
-					LOG.info("Failed reporting", exception1);
-				}
-			}
-
-			throw exception;
-		} finally {
-			LOG.info("");
-		}
-	}
-
+	
 	protected abstract void performAbstractTask()
 	throws TaskException;
+	
+	protected void taskStarted(final List<TaskListener> listeners) {
+		for (final TaskListener listener : listeners) {
+			listener.taskStarted();
+		}
+	}
+	
+	protected void taskSucceeded(final List<TaskListener> listeners) {
+		for (final TaskListener listener : listeners) {
+			listener.taskSucceeded();
+		}
+	}
+	
+	protected void taskFailed(final List<TaskListener> listeners, final TaskException exception) {
+		for (final TaskListener listener : listeners) {
+			listener.taskFailed(exception);
+		}
+	}
+	
+	protected void taskFailed(final List<TaskListener> listeners, final RuntimeException exception) {
+		for (final TaskListener listener : listeners) {
+			listener.taskFailed(exception);
+		}
+	}
+	
+	protected void taskEnded(final List<TaskListener> listeners) {
+		for (final TaskListener listener : listeners) {
+			listener.taskEnded();
+		}
+	}
 }

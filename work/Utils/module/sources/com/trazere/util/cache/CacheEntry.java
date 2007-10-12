@@ -1,6 +1,6 @@
 package com.trazere.util.cache;
 
-import com.trazere.util.text.Descriptable;
+import com.trazere.util.text.Describable;
 import com.trazere.util.text.TextUtils;
 
 /**
@@ -10,7 +10,7 @@ import com.trazere.util.text.TextUtils;
  * @param <V> Type of the values.
  */
 public class CacheEntry<K, V>
-implements Descriptable {
+implements Describable {
 	/** Key of the entry. May be <code>null</code>. */
 	protected final K _key;
 

@@ -28,10 +28,10 @@ import com.trazere.util.Assert;
 public class LogReportListener<Entry extends ReportEntry<?, ?>>
 implements ReportListener<Entry> {
 	private static final Log LOG = LogFactory.getLog(LogReportListener.class);
-
+	
 	/** Logger to use. */
 	protected final Log _log;
-
+	
 	/**
 	 * Instantiate a new listener with the given logger.
 	 * 
@@ -39,11 +39,11 @@ implements ReportListener<Entry> {
 	 */
 	public LogReportListener(final Log log) {
 		Assert.notNull(log);
-
+		
 		// Initialization.
 		_log = log;
 	}
-
+	
 	/**
 	 * Get the logger used by the receiver listener.
 	 * 
@@ -52,13 +52,13 @@ implements ReportListener<Entry> {
 	public Log getLog() {
 		return _log;
 	}
-
+	
 	public void report(final ReportLevel level, final Entry entry) {
 		Assert.notNull(entry);
-
+		
 		// Render the message.
 		final String message_ = ReportUtils.render(entry);
-
+		
 		// Log.
 		switch (level) {
 			case NOTICE: {
@@ -79,5 +79,10 @@ implements ReportListener<Entry> {
 				break;
 			}
 		}
+	}
+	
+	public void sleep()
+	throws ReportException {
+		// Nothing to do.
 	}
 }

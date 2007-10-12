@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.trazere.util.Assert;
-import com.trazere.util.text.Descriptable;
+import com.trazere.util.text.Describable;
 import com.trazere.util.text.TextUtils;
 
 /**
@@ -29,7 +29,7 @@ import com.trazere.util.text.TextUtils;
  * CSV lines are defined as a set of values associated to the field headers.
  */
 public class CSVLine
-implements Descriptable {
+implements Describable {
 	/**
 	 * The <code>Builder</code> class provides a tool to build of CSV lines.
 	 */

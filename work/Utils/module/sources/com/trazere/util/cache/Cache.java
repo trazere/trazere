@@ -10,7 +10,7 @@ import java.util.Set;
 import com.trazere.util.Assert;
 import com.trazere.util.function.Filter;
 import com.trazere.util.function.FunctionUtils;
-import com.trazere.util.text.Descriptable;
+import com.trazere.util.text.Describable;
 import com.trazere.util.text.TextUtils;
 
 /**
@@ -21,7 +21,7 @@ import com.trazere.util.text.TextUtils;
  * @param <E> Type of the entries.
  */
 public abstract class Cache<K, V, E extends CacheEntry<K, V>>
-implements Descriptable {
+implements Describable {
 	/** Cache entries identified by key. */
 	protected final Map<K, E> _entriesByKey = new HashMap<K, E>();
 

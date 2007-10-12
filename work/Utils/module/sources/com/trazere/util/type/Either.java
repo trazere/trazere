@@ -17,7 +17,7 @@ package com.trazere.util.type;
 
 import com.trazere.util.CannotComputeValueException;
 import com.trazere.util.ObjectUtils;
-import com.trazere.util.text.Descriptable;
+import com.trazere.util.text.Describable;
 import com.trazere.util.text.TextUtils;
 
 /**
@@ -30,7 +30,7 @@ import com.trazere.util.text.TextUtils;
  * @param <RightValue> Type of the right value.
  */
 public abstract class Either<LeftValue, RightValue>
-implements Descriptable {
+implements Describable {
 	/**
 	 * The {@link Constructor} enumeration represents the constructors of the algebraic data type.
 	 */
