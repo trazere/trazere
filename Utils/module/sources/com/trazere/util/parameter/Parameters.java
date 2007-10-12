@@ -23,7 +23,7 @@ import java.util.Set;
 
 import com.trazere.util.Assert;
 import com.trazere.util.collection.CollectionUtils;
-import com.trazere.util.text.Descriptable;
+import com.trazere.util.text.Describable;
 import com.trazere.util.text.TextUtils;
 
 /**
@@ -34,7 +34,7 @@ import com.trazere.util.text.TextUtils;
  * @param <T> Type of the parameter values.
  */
 public class Parameters<T>
-implements Descriptable {
+implements Describable {
 	/**
 	 * The <code>Builder</code> class provides a tool to build of parameter sets.
 	 * 

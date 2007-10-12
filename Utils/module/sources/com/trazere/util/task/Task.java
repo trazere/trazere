@@ -15,6 +15,8 @@
  */
 package com.trazere.util.task;
 
+import java.util.List;
+
 /**
  * The <code>Task</code> interface defines executable, named tasks.
  */
@@ -25,7 +27,7 @@ public interface Task {
 	 * @return The name.
 	 */
 	public String getName();
-
+	
 	/**
 	 * Execute the receiver task.
 	 * 
@@ -33,7 +35,16 @@ public interface Task {
 	 */
 	public void performTask()
 	throws TaskException;
-
+	
+	/**
+	 * Execute the receiver task.
+	 * 
+	 * @param listeners Task listeners.
+	 * @throws TaskException When an error occur during the execution.
+	 */
+	public void performTask(final List<TaskListener> listeners)
+	throws TaskException;
+	
 	/**
 	 * Execute the receiver task.
 	 * <p>
@@ -42,4 +53,14 @@ public interface Task {
 	 * @return <code>true</code> if the task has executed correctly, <code>false</code> if some error occured.
 	 */
 	public boolean unsafePerformTask();
+	
+	/**
+	 * Execute the receiver task.
+	 * <p>
+	 * This method silently ignore errors.
+	 * 
+	 * @param listeners Task listeners.
+	 * @return <code>true</code> if the task has executed correctly, <code>false</code> if some error occured.
+	 */
+	public boolean unsafePerformTask(final List<TaskListener> listeners);
 }

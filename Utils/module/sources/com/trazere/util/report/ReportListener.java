@@ -32,4 +32,14 @@ public interface ReportListener<Entry extends ReportEntry<?, ?>> {
 	 */
 	public void report(final ReportLevel level, final Entry entry)
 	throws ReportException;
+	
+	/**
+	 * Put the receiver listener to sleep between reports.
+	 * <p>
+	 * This method allows the receiver to temporarily release its resources. For instance, a file based report store may close the file until the next report.
+	 * 
+	 * @throws ReportException
+	 */
+	public void sleep()
+	throws ReportException;
 }

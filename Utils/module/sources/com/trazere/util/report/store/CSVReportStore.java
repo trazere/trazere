@@ -15,6 +15,7 @@
  */
 package com.trazere.util.report.store;
 
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -26,7 +27,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.List;
-import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.trazere.util.Assert;
 import com.trazere.util.csv.CSVLine;
@@ -39,9 +42,7 @@ import com.trazere.util.function.Filter;
 import com.trazere.util.report.ReportEntry;
 import com.trazere.util.report.ReportException;
 import com.trazere.util.report.ReportLevel;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.trazere.util.type.Maybe;
 
 /**
  * The <code>CSVReportStore</code> abstract class represents report stores relying on CSV files.
@@ -51,28 +52,28 @@ import org.apache.commons.logging.LogFactory;
 public abstract class CSVReportStore<Entry extends ReportEntry<?, ?>>
 implements ReportStore<Entry> {
 	private static final Log LOG = LogFactory.getLog(CSVReportStore.class);
-
+	
 	/** Default delimiter of the CSV fields. */
 	public static final String DELIMITER = ";";
-
+	
 	/** Default header of the report entry level fields in the CSV files. */
 	public static final String LEVEL_HEADER = "Level";
-
+	
 	/** Default header of the report entry date fields in the CSV files. */
 	public static final String DATE_HEADER = "Date";
-
+	
 	/** Default format of the report entry date fields in the CSV files. */
 	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-
+	
 	/** Path of the backing CSV file. */
 	protected final File _path;
-
+	
 	/** Report entries of the CSV file. Many be <code>null</code> when the entries have not been loaded. */
 	protected List<ReportStoreEntry<Entry>> _entries = null;
-
+	
 	/** Open writer to the CSV file. May be <code>null</code>. */
 	protected CSVWriter _writer = null;
-
+	
 	/**
 	 * Instantiate a new store using the given path.
 	 * 
@@ -80,11 +81,11 @@ implements ReportStore<Entry> {
 	 */
 	public CSVReportStore(final File path) {
 		Assert.notNull(path);
-
+		
 		// Initializtion.
 		_path = path;
 	}
-
+	
 	/**
 	 * Get the path of the backing CSV file of the receiver store.
 	 * 
@@ -93,7 +94,7 @@ implements ReportStore<Entry> {
 	public File getPath() {
 		return _path;
 	}
-
+	
 	/**
 	 * Get the header of the report entry level fields in the CSV file of the receiver store.
 	 * 
@@ -102,7 +103,7 @@ implements ReportStore<Entry> {
 	public String getLevelHeader() {
 		return LEVEL_HEADER;
 	}
-
+	
 	/**
 	 * Get the header of the report entry date fields in the CSV file of the receiver store.
 	 * 
@@ -111,7 +112,7 @@ implements ReportStore<Entry> {
 	public String getDateHeader() {
 		return DATE_HEADER;
 	}
-
+	
 	/**
 	 * Get the format of the report entry dates in the CSV file of the receiver store.
 	 * 
@@ -120,7 +121,7 @@ implements ReportStore<Entry> {
 	public DateFormat getDateFormat() {
 		return DATE_FORMAT;
 	}
-
+	
 	/**
 	 * Get the field headers for the serialized report entries.
 	 * <p>
@@ -131,117 +132,130 @@ implements ReportStore<Entry> {
 	 * @see #getLevelHeader()
 	 */
 	protected abstract List<String> getEntryHeaders();
-
+	
 	public void report(final ReportLevel level, final Entry entry)
 	throws ReportException {
 		Assert.notNull(level);
 		Assert.notNull(entry);
-
+		
 		final Date date = new Date();
-
+		
 		// Build the line.
-		final CSVLine.Builder builder = new CSVLine.Builder(serializeEntry(entry));
+		final CSVLine.Builder builder = new CSVLine.Builder();
+		serializeEntry(entry, builder);
 		builder.setField(getDateHeader(), getDateFormat().format(date));
 		builder.setField(getLevelHeader(), level.toString());
-
+		
 		// Write the line.
 		try {
-			openWriter();
+			open();
 			_writer.writeLine(builder.build());
 		} catch (final IOException exception) {
 			throw new ReportException("Failed writing line for entry " + entry, exception);
 		}
-
+		
 		// Fill the cache.
 		if (null != _entries) {
 			_entries.add(new ReportStoreEntry<Entry>(date, level, entry));
 		}
 	}
-
+	
 	/**
 	 * Serialize the given report entry to a set of CSV fields.
 	 * 
 	 * @param entry The entry to serialize.
-	 * @return The values of the CSV fields identified by their headers.
+	 * @param builder Build of the CSV line.
 	 * @throws ReportException
 	 */
-	protected abstract Map<String, String> serializeEntry(final Entry entry)
+	protected abstract void serializeEntry(final Entry entry, final CSVLine.Builder builder)
 	throws ReportException;
-
-	protected void openWriter()
+	
+	public void sleep()
+	throws ReportException {
+		close();
+	}
+	
+	/**
+	 * Test wether the CSV file of the receiver store is currently opened for writing.
+	 * 
+	 * @return <code>true</code> when the file of opened for writing, <code>false</code> otherwise.
+	 */
+	public boolean isOpen() {
+		return null != _writer;
+	}
+	
+	protected void open()
 	throws IOException {
 		if (null == _writer) {
-			// Build the headers.
+			// Open the report.
 			final List<String> headers = buildHeaders();
-
-			if (_path.exists()) {
+			final Maybe<CSVReader> reader_ = getReader(headers);
+			if (reader_.isSome()) {
 				// Get the current headers.
-				final CSVReader reader = getReader();
+				final CSVReader reader = reader_.asSome().getValue();
 				final List<String> currentHeaders = reader.getHeaders();
 				reader.close();
-
-				// Build the writer.
-				if (currentHeaders.containsAll(headers)) {
-					_writer = getWriter(currentHeaders, true);
-				} else {
-					LOG.warn("Reseting report file at path " + _path + " with incompatilble headers.");
-					_writer = getWriter(headers, false);
-					_entries = new ArrayList<ReportStoreEntry<Entry>>();
-				}
+				
+				// Build the writer for the current report.
+				_writer = getWriter(currentHeaders, true);
 			} else {
-				// Build the writer for a new file.
+				// Build the writer for a new report.
 				LOG.info("Creating report file at path " + _path);
 				_writer = getWriter(headers, false);
 				_entries = new ArrayList<ReportStoreEntry<Entry>>();
 			}
 		}
 	}
-
+	
 	/**
-	 * Test wether the CSV file of the receiver store is currently opened for writing.
+	 * Write any buffered data in the CSV file.
 	 * 
-	 * @return <code>true</code> when the file of opened for writing, <code>false</code> otherwise.
+	 * @throws ReportException
 	 */
-	public boolean isWritting() {
-		return null != _writer;
+	public void flush()
+	throws ReportException {
+		// Flush the writer if needed.
+		if (null != _writer) {
+			try {
+				_writer.flush();
+			} catch (final IOException exception) {
+				throw new ReportException(exception);
+			}
+		}
 	}
-
+	
 	/**
 	 * Write any buffered data and close the CSV file.
 	 * 
-	 * @throws IOException
+	 * @throws ReportException
 	 */
-	public void closeWriter()
-	throws IOException {
+	public void close()
+	throws ReportException {
 		// Close and release the writer if needed.
 		if (null != _writer) {
-			_writer.close();
-			_writer = null;
+			try {
+				_writer.close();
+				_writer = null;
+			} catch (final IOException exception) {
+				throw new ReportException(exception);
+			}
 		}
 	}
-
+	
 	public int countEntries(final Filter<ReportStoreEntry<Entry>> filter)
 	throws ReportException {
 		// Load the entries.
-		try {
-			load();
-		} catch (final IOException exception) {
-			throw new ReportException(exception);
-		}
-
+		load();
+		
 		// Count.
 		return _entries.size();
 	}
-
+	
 	public List<ReportStoreEntry<Entry>> getEntries(final Filter<ReportStoreEntry<Entry>> filter, final int limit, final boolean fromEnd)
 	throws ReportException {
 		// Load the entries.
-		try {
-			load();
-		} catch (final IOException exception) {
-			throw new ReportException(exception);
-		}
-
+		load();
+		
 		// Get the entries.
 		try {
 			return ReportStoreUtils.filterEntries(_entries, filter, limit, fromEnd);
@@ -249,34 +263,50 @@ implements ReportStore<Entry> {
 			throw new ReportException(exception);
 		}
 	}
-
-	protected void load()
-	throws IOException, ReportException {
-		if (null != _entries) {
-			// Stop writing first if needed.
-			closeWriter();
-
-			// Read the ile.
-			_entries = new ArrayList<ReportStoreEntry<Entry>>();
-
-			if (_path.exists()) {
-				// Open the file.
-				final CSVReader reader = getReader();
-				try {
-					// Check the current headers.
-					final List<String> currentHeaders = reader.getHeaders();
-					if (currentHeaders.containsAll(buildHeaders())) {
+	
+	/**
+	 * Test wether the file of the receiver store has been loaded (cached).
+	 * 
+	 * @return <code>true</code> when the file is loaded, <code>false</code> otherwise.
+	 */
+	public boolean isLoaded() {
+		return null != _entries;
+	}
+	
+	/**
+	 * Load the report from the CSV file.
+	 * <p>
+	 * Calling this method is not required because data is automatically when needed. It may however useful to preload the data in order to control time
+	 * allocation.
+	 * 
+	 * @throws ReportException
+	 */
+	public void load()
+	throws ReportException {
+		if (null == _entries) {
+			try {
+				// First, ensure that the writer is closed.
+				close();
+				
+				// Reset the entries.
+				_entries = new ArrayList<ReportStoreEntry<Entry>>();
+				
+				// Open the report.
+				final Maybe<CSVReader> reader_ = getReader(buildHeaders());
+				if (reader_.isSome()) {
+					final CSVReader reader = reader_.asSome().getValue();
+					try {
 						// Read the entries.
 						while (reader.hasNext()) {
 							final CSVLine line = reader.next();
-
+							
 							// Read the date.
 							final String dateField = line.getField(getDateHeader());
 							if (null == dateField) {
 								LOG.warn("Ignoring invalid entry at line " + reader.getLine() + " from report file at path " + _path + " (missing date)");
 								continue;
 							}
-
+							
 							final Date date;
 							try {
 								date = getDateFormat().parse(dateField);
@@ -284,14 +314,14 @@ implements ReportStore<Entry> {
 								LOG.warn("Ignoring invalid entry at line " + reader.getLine() + " from report file at path " + _path + " (invalid date)");
 								continue;
 							}
-
+							
 							// Read the level.
 							final String levelField = line.getField(getLevelHeader());
 							if (null == levelField) {
 								LOG.warn("Ignoring invalid entry at line " + reader.getLine() + " from report file at path " + _path + " (missing level)");
 								continue;
 							}
-
+							
 							final ReportLevel level;
 							try {
 								level = ReportLevel.valueOf(levelField);
@@ -299,30 +329,27 @@ implements ReportStore<Entry> {
 								LOG.warn("Ignoring invalid entry at line " + reader.getLine() + " from report file at path " + _path + " (invalid level)");
 								continue;
 							}
-
+							
 							// Read the entry.
 							final Entry entry = buildEntry(line);
 							if (null == entry) {
 								LOG.warn("Ignoring invalid entry at line " + reader.getLine() + " from report file at path " + _path + " (invalid entry)");
 								continue;
 							}
-
+							
 							// Add the entry.
 							_entries.add(new ReportStoreEntry<Entry>(date, level, entry));
 						}
-					} else {
-						LOG.warn("Ignoring content of report file at path " + _path + " with incompatilble headers.");
+					} finally {
+						reader.close();
 					}
-				} finally {
-					reader.close();
 				}
-			} else {
-				// Build the writer for a new file.
-				LOG.info("No report file at path " + _path);
+			} catch (final IOException exception) {
+				throw new ReportException(exception);
 			}
 		}
 	}
-
+	
 	/**
 	 * Build the entry corresponding to the given serialized CSV line.
 	 * 
@@ -332,16 +359,7 @@ implements ReportStore<Entry> {
 	 */
 	protected abstract Entry buildEntry(final CSVLine line)
 	throws ReportException;
-
-	/**
-	 * Test wether the file of the receiver store has been loaded (cached).
-	 * 
-	 * @return <code>true</code> when the file is loaded, <code>false</code> otherwise.
-	 */
-	public boolean isLoaded() {
-		return null != _entries;
-	}
-
+	
 	protected List<String> buildHeaders() {
 		final List<String> headers = new ArrayList<String>();
 		headers.add(getDateHeader());
@@ -349,20 +367,45 @@ implements ReportStore<Entry> {
 		headers.addAll(getEntryHeaders());
 		return headers;
 	}
-
-	protected CSVReader getReader()
+	
+	protected Maybe<CSVReader> getReader(final List<String> headers)
 	throws IOException {
-		// Open the file.
-		final FileReader reader = new FileReader(_path);
-		try {
-			// Build the reader.
-			return new CSVReader(reader, DELIMITER, EnumSet.of(CSVReaderOption.CHECK_CARDINALITY, CSVReaderOption.SKIP_INVALID_LINES, CSVReaderOption.STRIP_EMPTY_FIELDS));
-		} catch (final IOException exception) {
-			reader.close();
-			throw exception;
+		if (_path.exists()) {
+			// Open the file.
+			final FileReader reader = new FileReader(_path);
+			try {
+				// Build the CSV reader.
+				final CSVReader csvReader = new CSVReader(reader, DELIMITER, EnumSet.of(CSVReaderOption.CHECK_CARDINALITY, CSVReaderOption.SKIP_INVALID_LINES, CSVReaderOption.STRIP_EMPTY_FIELDS));
+				
+				// Check the headers.
+				final List<String> currentHeaders = csvReader.getHeaders();
+				if (!currentHeaders.containsAll(headers)) {
+					// Invalid headers.
+					LOG.warn("Ignoring report at path " + _path + " with incompatible headers " + currentHeaders);
+					
+					csvReader.close();
+					return Maybe.none();
+				}
+				
+				return Maybe.some(csvReader);
+			} catch (final EOFException exception) {
+				// Invalid report.
+				LOG.warn("Ignoring invalid report at path " + _path);
+				
+				reader.close();
+				return Maybe.none();
+			} catch (final IOException exception) {
+				reader.close();
+				throw exception;
+			}
+		} else {
+			// Missing report.
+			LOG.warn("Ignoring missing report at path " + _path);
+			
+			return Maybe.none();
 		}
 	}
-
+	
 	protected CSVWriter getWriter(final List<String> headers, final boolean append)
 	throws IOException {
 		// Open the file.
@@ -370,12 +413,12 @@ implements ReportStore<Entry> {
 		try {
 			// Build the writer.
 			final CSVWriter csvWriter = new CSVWriter(writer, DELIMITER, headers, EnumSet.noneOf(CSVWriterOption.class));
-
+			
 			// Write the headers.
 			if (!append) {
 				csvWriter.writeHeaders();
 			}
-
+			
 			return csvWriter;
 		} catch (final IOException exception) {
 			writer.close();

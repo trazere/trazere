@@ -22,6 +22,8 @@ import java.util.Map;
 
 import com.trazere.util.Assert;
 
+// TODO: empty families should not be null (get, remove...)
+
 /**
  * The <code>FamilyMap</code> represents indexed families of collections.
  * <p>

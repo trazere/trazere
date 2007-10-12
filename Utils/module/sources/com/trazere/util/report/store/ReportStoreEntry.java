@@ -20,6 +20,8 @@ import java.util.Date;
 import com.trazere.util.Assert;
 import com.trazere.util.report.ReportEntry;
 import com.trazere.util.report.ReportLevel;
+import com.trazere.util.text.Describable;
+import com.trazere.util.text.TextUtils;
 
 /**
  * The <code>ReportStoreEntry</code> class represents entries of the report stores.
@@ -28,16 +30,17 @@ import com.trazere.util.report.ReportLevel;
  * 
  * @param <Entry> Type of the report entries.
  */
-public class ReportStoreEntry<Entry extends ReportEntry<?, ?>> {
+public class ReportStoreEntry<Entry extends ReportEntry<?, ?>>
+implements Describable {
 	/** Date of the report entry. */
 	protected final Date _date;
-
+	
 	/** Level of the report entry. */
 	protected final ReportLevel _level;
-
+	
 	/** Report entry. */
 	protected final Entry _entry;
-
+	
 	/**
 	 * Instantiate a new store report entry with the given date, level and entry.
 	 * 
@@ -49,13 +52,13 @@ public class ReportStoreEntry<Entry extends ReportEntry<?, ?>> {
 		Assert.notNull(date);
 		Assert.notNull(level);
 		Assert.notNull(entry);
-
+		
 		// Initialization.
 		_date = date;
 		_level = level;
 		_entry = entry;
 	}
-
+	
 	/**
 	 * Get the date of the receiver report entry.
 	 * 
@@ -64,7 +67,7 @@ public class ReportStoreEntry<Entry extends ReportEntry<?, ?>> {
 	public Date getDate() {
 		return _date;
 	}
-
+	
 	/**
 	 * Get the level of the receiver report entry.
 	 * 
@@ -73,7 +76,7 @@ public class ReportStoreEntry<Entry extends ReportEntry<?, ?>> {
 	public ReportLevel getLevel() {
 		return _level;
 	}
-
+	
 	/**
 	 * Get the report entry of the receiver store report entry.
 	 * 
@@ -82,7 +85,7 @@ public class ReportStoreEntry<Entry extends ReportEntry<?, ?>> {
 	public Entry getEntry() {
 		return _entry;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		int result = getClass().hashCode();
@@ -91,7 +94,7 @@ public class ReportStoreEntry<Entry extends ReportEntry<?, ?>> {
 		result = result * 31 + _entry.hashCode();
 		return result;
 	}
-
+	
 	@Override
 	public boolean equals(final Object object) {
 		if (this == object) {
@@ -102,5 +105,16 @@ public class ReportStoreEntry<Entry extends ReportEntry<?, ?>> {
 		} else {
 			return false;
 		}
+	}
+	
+	@Override
+	public String toString() {
+		return TextUtils.computeDescription(this);
+	}
+	
+	public void fillDescription(final StringBuilder builder) {
+		builder.append(" - Level = ").append(_level);
+		builder.append(" - Date = ").append(_date);
+		builder.append(" - Entry = ").append(_entry);
 	}
 }

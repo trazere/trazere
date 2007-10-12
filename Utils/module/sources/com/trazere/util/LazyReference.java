@@ -15,7 +15,7 @@
  */
 package com.trazere.util;
 
-import com.trazere.util.text.Descriptable;
+import com.trazere.util.text.Describable;
 import com.trazere.util.text.TextUtils;
 import com.trazere.util.type.Maybe;
 
@@ -25,7 +25,7 @@ import com.trazere.util.type.Maybe;
  * @param <T> Type of the referenced values.
  */
 public class LazyReference<T>
-implements Descriptable {
+implements Describable {
 	/** Reference to the value. */
 	protected Maybe<T> _value = Maybe.none();
 

@@ -38,10 +38,10 @@ public class SimpleReportStore<Entry extends ReportEntry<?, ?>>
 implements ReportStore<Entry> {
 	/** Report store entries. */
 	protected final List<ReportStoreEntry<Entry>> _entries = new ArrayList<ReportStoreEntry<Entry>>();
-
+	
 	/** Higher bound. */
 	protected final int _limit;
-
+	
 	/**
 	 * Instantiate a new store with the given higher bound.
 	 * 
@@ -51,7 +51,7 @@ implements ReportStore<Entry> {
 		// Initialization.
 		_limit = limit;
 	}
-
+	
 	/**
 	 * Get the maximum number of entries (higher bound) of the receiver store.
 	 * 
@@ -60,12 +60,12 @@ implements ReportStore<Entry> {
 	public int getLimit() {
 		return _limit;
 	}
-
+	
 	public synchronized void report(final ReportLevel level, final Entry entry)
 	throws ReportException {
 		// Add the entry.
 		_entries.add(new ReportStoreEntry<Entry>(new Date(), level, entry));
-
+		
 		// Constrain to the higher bound.
 		if (_limit >= 0) {
 			while (_entries.size() > _limit) {
@@ -73,7 +73,12 @@ implements ReportStore<Entry> {
 			}
 		}
 	}
-
+	
+	public void sleep()
+	throws ReportException {
+		// Nothing to do.
+	}
+	
 	public int countEntries(final Filter<ReportStoreEntry<Entry>> filter)
 	throws ReportException {
 		if (null != filter) {
@@ -86,7 +91,7 @@ implements ReportStore<Entry> {
 			return _entries.size();
 		}
 	}
-
+	
 	/**
 	 * Get all entries.
 	 * <p>
@@ -97,7 +102,7 @@ implements ReportStore<Entry> {
 	public List<ReportStoreEntry<Entry>> getEntries() {
 		return Collections.unmodifiableList(_entries);
 	}
-
+	
 	public List<ReportStoreEntry<Entry>> getEntries(final Filter<ReportStoreEntry<Entry>> filter, final int limit, final boolean fromEnd)
 	throws ReportException {
 		try {

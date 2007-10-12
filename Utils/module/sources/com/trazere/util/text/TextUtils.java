@@ -132,7 +132,7 @@ public class TextUtils {
 	 * @param object Object whose description should be computed.
 	 * @return The description.
 	 */
-	public static String computeDescription(final Descriptable object) {
+	public static String computeDescription(final Describable object) {
 		Assert.notNull(object);
 
 		// Compute.

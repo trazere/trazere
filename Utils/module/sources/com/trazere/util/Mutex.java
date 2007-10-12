@@ -15,7 +15,7 @@
  */
 package com.trazere.util;
 
-import com.trazere.util.text.Descriptable;
+import com.trazere.util.text.Describable;
 import com.trazere.util.text.TextUtils;
 
 /**
@@ -24,7 +24,7 @@ import com.trazere.util.text.TextUtils;
  * The class supports embedded locks from the owner thread.
  */
 public class Mutex
-implements Descriptable {
+implements Describable {
 	/** Owner thread of the lock. May be <code>null</code>. */
 	protected Thread _owner = null;
 

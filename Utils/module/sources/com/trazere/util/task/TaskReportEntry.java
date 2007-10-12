@@ -16,7 +16,9 @@
 package com.trazere.util.task;
 
 import com.trazere.util.Assert;
+import com.trazere.util.ObjectUtils;
 import com.trazere.util.report.ReportEntry;
+import com.trazere.util.report.ReportUtils;
 
 /**
  * The <code>TaskReportEntry</code> class represents report entries regarding task execution.
@@ -29,10 +31,13 @@ public class TaskReportEntry
 implements ReportEntry<String, TaskStatus> {
 	/** Name of the task. */
 	protected final String _name;
-
+	
 	/** Status of the task. */
 	protected final TaskStatus _status;
-
+	
+	/** Comment of the task. May be <code>null</code>. */
+	protected final String _comment;
+	
 	/**
 	 * Instantiate a new entry with the given task name and status.
 	 * <p>
@@ -40,45 +45,82 @@ implements ReportEntry<String, TaskStatus> {
 	 * 
 	 * @param name Name of the task.
 	 * @param status Status of the task.
+	 * @param comment Comment of the task. May be <code>null</code>.
 	 */
-	public TaskReportEntry(final String name, final TaskStatus status) {
+	public TaskReportEntry(final String name, final TaskStatus status, final String comment) {
 		Assert.notNull(name);
 		Assert.notNull(status);
-
+		
 		// Initialization.
 		_name = name;
 		_status = status;
+		_comment = comment;
 	}
-
+	
+	/**
+	 * Get the name of the receiver task entry.
+	 * 
+	 * @return The name.
+	 */
+	public String getName() {
+		return _name;
+	}
+	
+	/**
+	 * Get the status of the receiver task entry.
+	 * 
+	 * @return The status.
+	 */
+	public TaskStatus getStatus() {
+		return _status;
+	}
+	
+	/**
+	 * Get the comment of the receiver task entry.
+	 * 
+	 * @return The comment. May be <code>null</code>.
+	 */
+	public String getComment() {
+		return _comment;
+	}
+	
 	public String getCategory() {
 		return _name;
 	}
-
+	
 	public TaskStatus getCode() {
 		return _status;
 	}
-
+	
 	public String getMessage() {
-		return _status.getMessage();
+		return _comment;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		int result = getClass().hashCode();
 		result = result * 31 + _name.hashCode();
 		result = result * 31 + _status.hashCode();
+		if (null != _comment) {
+			result = result * 31 + _comment.hashCode();
+		}
 		return result;
 	}
-
+	
 	@Override
 	public boolean equals(final Object object) {
 		if (this == object) {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final TaskReportEntry entry = (TaskReportEntry) object;
-			return _name.equals(entry._name) && _status == _status;
+			return _name.equals(entry._name) && _status == _status && ObjectUtils.equals(_comment, entry._comment);
 		} else {
 			return false;
 		}
+	}
+	
+	@Override
+	public String toString() {
+		return ReportUtils.render(this);
 	}
 }
