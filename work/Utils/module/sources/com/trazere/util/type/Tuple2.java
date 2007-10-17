@@ -37,7 +37,7 @@ public class Tuple2<T1, T2> {
 	public static <T1, T2> Tuple2<T1, T2> build(final T1 first, final T2 second) {
 		return new Tuple2<T1, T2>(first, second);
 	}
-
+	
 	/**
 	 * Compare the given tuples.
 	 * <p>
@@ -53,22 +53,18 @@ public class Tuple2<T1, T2> {
 	public static <T1 extends Comparable<T1>, T2 extends Comparable<T2>> int compare(final Tuple2<T1, T2> tuple1, final Tuple2<T1, T2> tuple2) {
 		Assert.notNull(tuple1);
 		Assert.notNull(tuple2);
-
+		
 		// Compare.
 		final int comp1 = ObjectUtils.compare(tuple1._first, tuple2._first);
-		if (0 != comp1) {
-			return comp1;
-		} else {
-			return ObjectUtils.compare(tuple1._second, tuple2._second);
-		}
+		return 0 != comp1 ? comp1 : ObjectUtils.compare(tuple1._second, tuple2._second);
 	}
-
+	
 	/** First value. May be <code>null</code>. */
 	protected final T1 _first;
-
+	
 	/** Second value. May be <code>null</code>. */
 	protected final T2 _second;
-
+	
 	/**
 	 * Build a new instance with the given values.
 	 * 
@@ -80,7 +76,7 @@ public class Tuple2<T1, T2> {
 		_first = first;
 		_second = second;
 	}
-
+	
 	/**
 	 * Get the first value of the receiver tuple.
 	 * 
@@ -89,7 +85,7 @@ public class Tuple2<T1, T2> {
 	public T1 getFirst() {
 		return _first;
 	}
-
+	
 	/**
 	 * Get the second value of the receiver tuple.
 	 * 
@@ -98,7 +94,7 @@ public class Tuple2<T1, T2> {
 	public T2 getSecond() {
 		return _second;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		int result = getClass().hashCode();
@@ -110,7 +106,7 @@ public class Tuple2<T1, T2> {
 		}
 		return result;
 	}
-
+	
 	@Override
 	public boolean equals(final Object object) {
 		if (this == object) {
@@ -122,7 +118,7 @@ public class Tuple2<T1, T2> {
 			return false;
 		}
 	}
-
+	
 	@Override
 	public String toString() {
 		return "(" + _first + "," + _second + ")";

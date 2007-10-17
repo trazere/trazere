@@ -22,6 +22,7 @@ import java.util.List;
 import com.trazere.util.Assert;
 import com.trazere.util.collection.CollectionUtils;
 import com.trazere.util.parser.AbstractParser;
+import com.trazere.util.parser.AbstractParserHandler;
 import com.trazere.util.parser.Parser;
 import com.trazere.util.parser.ParserClosure;
 import com.trazere.util.parser.ParserException;
@@ -36,9 +37,9 @@ import com.trazere.util.parser.ParserState;
  */
 public class Many1Parser<Token, Result>
 extends AbstractParser<Token, List<Result>> {
-	protected final Parser<Token, Result> _subParser;
+	protected final Parser<Token, ? extends Result> _subParser;
 	
-	public Many1Parser(final Parser<Token, Result> subParser, final String description) {
+	public Many1Parser(final Parser<Token, ? extends Result> subParser, final String description) {
 		super(description);
 		
 		// Checks.
@@ -55,7 +56,7 @@ extends AbstractParser<Token, List<Result>> {
 	}
 	
 	protected ParserHandler<Token, Result> buildOneHandler(final ParserClosure<Token, List<Result>> closure) {
-		return new ParserHandler<Token, Result>() {
+		return new AbstractParserHandler<Token, Result>(closure) {
 			public void result(final Result result, final ParserState<Token> state)
 			throws ParserException {
 				// Wrap the result.
@@ -69,7 +70,7 @@ extends AbstractParser<Token, List<Result>> {
 	}
 	
 	protected ParserHandler<Token, Result> buildMoreHandler(final ParserClosure<Token, List<Result>> closure, final List<Result> previousResults) {
-		return new ParserHandler<Token, Result>() {
+		return new AbstractParserHandler<Token, Result>(closure) {
 			public void result(final Result result, final ParserState<Token> state)
 			throws ParserException {
 				// Wrap the result.

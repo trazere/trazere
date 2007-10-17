@@ -17,6 +17,7 @@ package com.trazere.util.parser.text;
 
 import com.trazere.util.Assert;
 import com.trazere.util.parser.AbstractParser;
+import com.trazere.util.parser.AbstractParserContinuation;
 import com.trazere.util.parser.ParserClosure;
 import com.trazere.util.parser.ParserContinuation;
 import com.trazere.util.parser.ParserException;
@@ -47,7 +48,7 @@ extends AbstractParser<Character, Character> {
 	}
 	
 	protected ParserContinuation<Character> buildContinuation(final ParserClosure<Character, Character> closure) {
-		return new ParserContinuation<Character>() {
+		return new AbstractParserContinuation<Character>(closure) {
 			public void parseToken(final Character token, final ParserState<Character> state)
 			throws ParserException {
 				if (_filter.filter(token.charValue())) {

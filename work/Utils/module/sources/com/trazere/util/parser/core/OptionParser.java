@@ -17,6 +17,7 @@ package com.trazere.util.parser.core;
 
 import com.trazere.util.Assert;
 import com.trazere.util.parser.AbstractParser;
+import com.trazere.util.parser.AbstractParserHandler;
 import com.trazere.util.parser.Parser;
 import com.trazere.util.parser.ParserClosure;
 import com.trazere.util.parser.ParserException;
@@ -54,7 +55,7 @@ extends AbstractParser<Token, Maybe<Result>> {
 	}
 	
 	protected ParserHandler<Token, Result> buildOneHandler(final ParserClosure<Token, Maybe<Result>> closure) {
-		return new ParserHandler<Token, Result>() {
+		return new AbstractParserHandler<Token, Result>(closure) {
 			public void result(final Result result, final ParserState<Token> state)
 			throws ParserException {
 				// Wrap the result.

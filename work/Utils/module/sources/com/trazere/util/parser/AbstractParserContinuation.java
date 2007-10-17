@@ -15,19 +15,34 @@
  */
 package com.trazere.util.parser;
 
+import java.util.Collections;
 import java.util.Set;
+
+import com.trazere.util.Assert;
+import com.trazere.util.collection.CollectionUtils;
 
 /**
  * DOCME
  * 
  * @param <Token>
  */
-public interface ParserContinuation<Token> {
-	public void parseToken(final Token token, final ParserState<Token> state)
-	throws ParserException;
+public abstract class AbstractParserContinuation<Token>
+implements ParserContinuation<Token> {
+	protected final Set<? extends ParserClosure<Token, ?>> _closures;
 	
-	public void parseEOF(final ParserState<Token> state)
-	throws ParserException;
+	public AbstractParserContinuation(final ParserClosure<Token, ?> closure) {
+		this(CollectionUtils.set(closure));
+	}
 	
-	public Set<? extends ParserClosure<Token, ?>> getClosures();
+	public AbstractParserContinuation(final Set<? extends ParserClosure<Token, ?>> closures) {
+		// Checks.
+		Assert.notNull(closures);
+		
+		// Initialization.
+		_closures = Collections.unmodifiableSet(closures);
+	}
+	
+	public Set<? extends ParserClosure<Token, ?>> getClosures() {
+		return _closures;
+	}
 }

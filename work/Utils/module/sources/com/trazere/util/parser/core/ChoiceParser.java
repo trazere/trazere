@@ -20,6 +20,7 @@ import java.util.List;
 
 import com.trazere.util.Assert;
 import com.trazere.util.parser.AbstractParser;
+import com.trazere.util.parser.AbstractParserHandler;
 import com.trazere.util.parser.Parser;
 import com.trazere.util.parser.ParserClosure;
 import com.trazere.util.parser.ParserException;
@@ -34,9 +35,9 @@ import com.trazere.util.parser.ParserState;
  */
 public class ChoiceParser<Token, Result>
 extends AbstractParser<Token, Result> {
-	protected final List<Parser<Token, ? extends Result>> _subParsers;
+	protected final List<? extends Parser<Token, ? extends Result>> _subParsers;
 	
-	public ChoiceParser(final List<Parser<Token, ? extends Result>> subParsers, final String description) {
+	public ChoiceParser(final List<? extends Parser<Token, ? extends Result>> subParsers, final String description) {
 		super(description);
 		
 		// Checks.
@@ -56,7 +57,7 @@ extends AbstractParser<Token, Result> {
 	}
 	
 	protected ParserHandler<Token, Result> buildHandler(final ParserClosure<Token, Result> closure) {
-		return new ParserHandler<Token, Result>() {
+		return new AbstractParserHandler<Token, Result>(closure) {
 			public void result(final Result result, final ParserState<Token> state)
 			throws ParserException {
 				state.reportSuccess(closure, result);

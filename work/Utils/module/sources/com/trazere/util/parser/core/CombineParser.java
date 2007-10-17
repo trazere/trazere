@@ -21,6 +21,7 @@ import java.util.List;
 
 import com.trazere.util.Assert;
 import com.trazere.util.parser.AbstractParser;
+import com.trazere.util.parser.AbstractParserHandler;
 import com.trazere.util.parser.Parser;
 import com.trazere.util.parser.ParserClosure;
 import com.trazere.util.parser.ParserException;
@@ -66,7 +67,7 @@ extends AbstractParser<Token, Result> {
 	}
 	
 	protected ParserHandler<Token, SubResult> buildHandler(final ParserClosure<Token, Result> closure, final List<SubResult> previousSubResults) {
-		return new ParserHandler<Token, SubResult>() {
+		return new AbstractParserHandler<Token, SubResult>(closure) {
 			public void result(final SubResult subResult, final ParserState<Token> state)
 			throws ParserException {
 				// Accumulate the result.

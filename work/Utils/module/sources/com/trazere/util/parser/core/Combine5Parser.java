@@ -31,26 +31,34 @@ import com.trazere.util.parser.ParserState;
  * @param <SubResult1>
  * @param <SubResult2>
  * @param <SubResult3>
+ * @param <SubResult4>
+ * @param <SubResult5>
  * @param <Result>
  */
-public abstract class Combine3Parser<Token, SubResult1, SubResult2, SubResult3, Result>
+public abstract class Combine5Parser<Token, SubResult1, SubResult2, SubResult3, SubResult4, SubResult5, Result>
 extends AbstractParser<Token, Result> {
 	protected final Parser<Token, ? extends SubResult1> _subParser1;
 	protected final Parser<Token, ? extends SubResult2> _subParser2;
 	protected final Parser<Token, ? extends SubResult3> _subParser3;
+	protected final Parser<Token, ? extends SubResult4> _subParser4;
+	protected final Parser<Token, ? extends SubResult5> _subParser5;
 	
-	public Combine3Parser(final Parser<Token, ? extends SubResult1> subParser1, final Parser<Token, ? extends SubResult2> subParser2, final Parser<Token, ? extends SubResult3> subParser3, final String description) {
+	public Combine5Parser(final Parser<Token, ? extends SubResult1> subParser1, final Parser<Token, ? extends SubResult2> subParser2, final Parser<Token, ? extends SubResult3> subParser3, final Parser<Token, ? extends SubResult4> subParser4, final Parser<Token, ? extends SubResult5> subParser5, final String description) {
 		super(description);
 		
 		// Checks.
 		Assert.notNull(subParser1);
 		Assert.notNull(subParser2);
 		Assert.notNull(subParser3);
+		Assert.notNull(subParser4);
+		Assert.notNull(subParser5);
 		
 		// Initialization.
 		_subParser1 = subParser1;
 		_subParser2 = subParser2;
 		_subParser3 = subParser3;
+		_subParser4 = subParser4;
+		_subParser5 = subParser5;
 	}
 	
 	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
@@ -83,12 +91,32 @@ extends AbstractParser<Token, Result> {
 		return new AbstractParserHandler<Token, SubResult3>(closure) {
 			public void result(final SubResult3 subResult3, final ParserState<Token> state)
 			throws ParserException {
-				// Success.
-				state.reportSuccess(closure, combine(subResult1, subResult2, subResult3));
+				// Part 4.
+				state.run(_subParser4, buildHandler4(closure, subResult1, subResult2, subResult3));
 			}
 		};
 	}
 	
-	protected abstract Result combine(final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3)
+	protected ParserHandler<Token, SubResult4> buildHandler4(final ParserClosure<Token, Result> closure, final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3) {
+		return new AbstractParserHandler<Token, SubResult4>(closure) {
+			public void result(final SubResult4 subResult4, final ParserState<Token> state)
+			throws ParserException {
+				// Part 5.
+				state.run(_subParser5, buildHandler5(closure, subResult1, subResult2, subResult3, subResult4));
+			}
+		};
+	}
+	
+	protected ParserHandler<Token, SubResult5> buildHandler5(final ParserClosure<Token, Result> closure, final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3, final SubResult4 subResult4) {
+		return new AbstractParserHandler<Token, SubResult5>(closure) {
+			public void result(final SubResult5 subResult5, final ParserState<Token> state)
+			throws ParserException {
+				// Success.
+				state.reportSuccess(closure, combine(subResult1, subResult2, subResult3, subResult4, subResult5));
+			}
+		};
+	}
+	
+	protected abstract Result combine(final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3, final SubResult4 subResult4, final SubResult5 subResult5)
 	throws ParserException;
 }
