@@ -26,23 +26,4 @@ extends AbstractParserClosure<Token, Result> {
 	public SuccessParserClosure(final Parser<Token, Result> parser, final int position) {
 		super(parser, position);
 	}
-	//	@Override
-	//	public int hashCode() {
-	//		int result = getClass().hashCode();
-	//		result = result * 31 + _parser.hashCode();
-	//		result = result * 31 + _position;
-	//		return result;
-	//	}
-	//
-	//	@Override
-	//	public boolean equals(final Object object) {
-	//		if (this == object) {
-	//			return true;
-	//		} else if (null != object && getClass().equals(object.getClass())) {
-	//			final SimpleParserNode node = (SimpleParserNode) object;
-	//			return _parser.equals(node._parser) && _position == node._position;
-	//		} else {
-	//			return false;
-	//		}
-	//	}
 }

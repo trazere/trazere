@@ -16,6 +16,7 @@
 package com.trazere.util.parser.core;
 
 import com.trazere.util.parser.AbstractParser;
+import com.trazere.util.parser.AbstractParserContinuation;
 import com.trazere.util.parser.ParserClosure;
 import com.trazere.util.parser.ParserContinuation;
 import com.trazere.util.parser.ParserException;
@@ -39,7 +40,7 @@ extends AbstractParser<Token, Result> {
 	}
 	
 	protected ParserContinuation<Token> buildContinuation(final ParserClosure<Token, Result> closure) {
-		return new ParserContinuation<Token>() {
+		return new AbstractParserContinuation<Token>(closure) {
 			public void parseToken(final Token token, final ParserState<Token> state)
 			throws ParserException {
 				// Failure.

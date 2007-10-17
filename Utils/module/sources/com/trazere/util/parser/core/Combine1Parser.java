@@ -17,6 +17,7 @@ package com.trazere.util.parser.core;
 
 import com.trazere.util.Assert;
 import com.trazere.util.parser.AbstractParser;
+import com.trazere.util.parser.AbstractParserHandler;
 import com.trazere.util.parser.Parser;
 import com.trazere.util.parser.ParserClosure;
 import com.trazere.util.parser.ParserException;
@@ -32,9 +33,9 @@ import com.trazere.util.parser.ParserState;
  */
 public abstract class Combine1Parser<Token, SubResult1, Result>
 extends AbstractParser<Token, Result> {
-	protected final Parser<Token, SubResult1> _subParser1;
+	protected final Parser<Token, ? extends SubResult1> _subParser1;
 	
-	public Combine1Parser(final Parser<Token, SubResult1> subParser1, final String description) {
+	public Combine1Parser(final Parser<Token, ? extends SubResult1> subParser1, final String description) {
 		super(description);
 		
 		// Checks.
@@ -51,7 +52,7 @@ extends AbstractParser<Token, Result> {
 	}
 	
 	protected ParserHandler<Token, SubResult1> buildHandler1(final ParserClosure<Token, Result> closure) {
-		return new ParserHandler<Token, SubResult1>() {
+		return new AbstractParserHandler<Token, SubResult1>(closure) {
 			public void result(final SubResult1 subResult1, final ParserState<Token> state)
 			throws ParserException {
 				// Success.

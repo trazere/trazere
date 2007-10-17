@@ -17,6 +17,7 @@ package com.trazere.util.parser.text;
 
 import com.trazere.util.Assert;
 import com.trazere.util.parser.AbstractParser;
+import com.trazere.util.parser.AbstractParserContinuation;
 import com.trazere.util.parser.ParserClosure;
 import com.trazere.util.parser.ParserContinuation;
 import com.trazere.util.parser.ParserException;
@@ -42,23 +43,23 @@ extends AbstractParser<Character, String> {
 	
 	public void run(final ParserClosure<Character, String> closure, final ParserState<Character> state)
 	throws ParserException {
-		// Start.
+		// One.
 		state.push(buildContinuation(closure, new StringBuilder()));
 	}
 	
 	protected ParserContinuation<Character> buildContinuation(final ParserClosure<Character, String> closure, final StringBuilder builder) {
-		return new ParserContinuation<Character>() {
+		return new AbstractParserContinuation<Character>(closure) {
 			public void parseToken(final Character token, final ParserState<Character> state)
 			throws ParserException {
 				if (_filter.filter(token.charValue())) {
 					// Accumulate the result.
 					builder.append(token.charValue());
 					
-					// More.
-					state.push(buildContinuation(closure, builder));
-				} else if (builder.length() > 0) {
 					// Success.
 					state.reportSuccess(closure, builder.toString());
+					
+					// More.
+					state.push(buildContinuation(closure, builder));
 				} else {
 					// Failure.
 					state.reportFailure(closure);
@@ -67,13 +68,8 @@ extends AbstractParser<Character, String> {
 			
 			public void parseEOF(final ParserState<Character> state)
 			throws ParserException {
-				if (builder.length() > 0) {
-					// Success.
-					state.reportSuccess(closure, builder.toString());
-				} else {
-					// Failure.
-					state.reportFailure(closure);
-				}
+				// Failure.
+				state.reportFailure(closure);
 			}
 		};
 	}

@@ -18,7 +18,6 @@ package com.trazere.util.parser;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.trazere.util.Assert;
 import com.trazere.util.LazyReference;
 import com.trazere.util.ReferenceAlreadySetException;
 import com.trazere.util.type.Maybe;
@@ -27,37 +26,14 @@ import com.trazere.util.type.Maybe;
  * DOCME
  */
 public class ParserUtils {
-	protected static final ParserEngine SUCCESS_ENGINE = new ParserEngine() {
+	protected static final ParserEngine SUCCESS_ENGINE = new AbstractParserEngine() {
 		@Override
-		protected <Token> ParserState<Token> buildState(final List<ParserContinuation<Token>> continuations, final int position)
+		protected <Token> ParserState<Token> buildState(final int position, final List<ParserContinuation<Token>> continuations, final HandlerMap<Token> handlers)
 		throws ParserException {
-			Assert.notNull(continuations);
-			
-			// Build.
-			return new AbstractParserState<Token>() {
-				public int getPosition() {
-					return position;
-				}
-				
+			return new AbstractParserState<Token>(position, continuations, handlers) {
 				@Override
-				protected <Result> AbstractParserClosure<Token, Result> buildClosure(Parser<Token, Result> parser) {
+				protected <Result> AbstractParserClosure<Token, Result> buildClosure(final Parser<Token, Result> parser) {
 					return new SuccessParserClosure<Token, Result>(parser, position);
-				}
-				
-				public void push(final ParserContinuation<Token> continuation)
-				throws ParserException {
-					// Push the contination.
-					continuations.add(continuation);
-				}
-				
-				public <Result> void reportSuccess(final ParserClosure<Token, Result> closure, final Result result)
-				throws ParserException {
-					// Handle the result.
-					closure.callHandlers(result, this);
-				}
-				
-				public void reportFailure(ParserClosure<Token, ?> closure) {
-					// Nothing to do.
 				}
 			};
 		}
@@ -108,7 +84,7 @@ public class ParserUtils {
 	throws ParserException {
 		// Build the root handler.
 		final List<Result> results = new ArrayList<Result>();
-		final ParserHandler<Token, Result> handler = new ParserHandler<Token, Result>() {
+		final ParserHandler<Token, Result> handler = new AbstractParserHandler<Token, Result>() {
 			public void result(final Result result, final ParserState<Token> state)
 			throws ParserException {
 				results.add(result);
@@ -124,7 +100,7 @@ public class ParserUtils {
 	throws ParserException {
 		// Build the root handler.
 		final LazyReference<Result> resultReference = new LazyReference<Result>();
-		final ParserHandler<Token, Result> handler = new ParserHandler<Token, Result>() {
+		final ParserHandler<Token, Result> handler = new AbstractParserHandler<Token, Result>() {
 			protected int _position = -1;
 			
 			public void result(final Result result, final ParserState<Token> state)
@@ -145,8 +121,6 @@ public class ParserUtils {
 		return resultReference.get();
 	}
 	
-	// List<Result> parseSuccesses
-	// Maybe<Result> parseLongestSuccess
 	// Either<Result, Failure> parseLongestSuccessOrLongestFailure
 	// Either<Result, List<Failure>> parseLongestSuccessOrFailures
 	// Either<List<Result>, List<Failure>> parseSuccessesOrFailures

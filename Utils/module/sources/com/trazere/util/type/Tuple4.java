@@ -19,27 +19,30 @@ import com.trazere.util.Assert;
 import com.trazere.util.ObjectUtils;
 
 /**
- * The {@link Tuple3} class represents the 3-tuple (triplet) data type which stores a sequence of 3 values.
+ * The {@link Tuple4} class represents the 4-tuple (quadruplet) data type which stores a sequence of 4 values.
  * 
  * @param <T1> Type of the first value.
  * @param <T2> Type of the second value.
  * @param <T3> Type of the third value.
+ * @param <T4> Type of the fourth value.
  */
-public class Tuple3<T1, T2, T3>
-extends Tuple2<T1, T2> {
+public class Tuple4<T1, T2, T3, T4>
+extends Tuple3<T1, T2, T3> {
 	/**
 	 * Build a tuple with the given values.
 	 * 
 	 * @param <T1> Type of the first value.
 	 * @param <T2> Type of the second value.
 	 * @param <T3> Type of the third value.
+	 * @param <T4> Type of the fourth value.
 	 * @param first First value. May be <code>null</code>.
 	 * @param second Second value. May be <code>null</code>.
 	 * @param third Third value. May be <code>null</code>.
+	 * @param fourth Fourth value. May be <code>null</code>.
 	 * @return The tuple.
 	 */
-	public static <T1, T2, T3> Tuple3<T1, T2, T3> build(final T1 first, final T2 second, final T3 third) {
-		return new Tuple3<T1, T2, T3>(first, second, third);
+	public static <T1, T2, T3, T4> Tuple4<T1, T2, T3, T4> build(final T1 first, final T2 second, final T3 third, final T4 fourth) {
+		return new Tuple4<T1, T2, T3, T4>(first, second, third, fourth);
 	}
 	
 	/**
@@ -50,22 +53,23 @@ extends Tuple2<T1, T2> {
 	 * @param <T1> Type of the first values.
 	 * @param <T2> Type of the second values.
 	 * @param <T3> Type of the third values.
+	 * @param <T4> Type of the fourth value.
 	 * @param tuple1 First tuple.
 	 * @param tuple2 Second tuple.
 	 * @return The result of the comparison as defined by the {@link Comparable#compareTo(Object)} method.
 	 * @see Comparable#compareTo(Object)
 	 */
-	public static <T1 extends Comparable<T1>, T2 extends Comparable<T2>, T3 extends Comparable<T3>> int compare(final Tuple3<T1, T2, T3> tuple1, final Tuple3<T1, T2, T3> tuple2) {
+	public static <T1 extends Comparable<T1>, T2 extends Comparable<T2>, T3 extends Comparable<T3>, T4 extends Comparable<T4>> int compare(final Tuple4<T1, T2, T3, T4> tuple1, final Tuple4<T1, T2, T3, T4> tuple2) {
 		Assert.notNull(tuple1);
 		Assert.notNull(tuple2);
 		
 		// Compare.
-		final int comp = Tuple2.compare(tuple1, tuple2);
-		return 0 != comp ? comp : ObjectUtils.compare(tuple1._third, tuple2._third);
+		final int comp = Tuple3.compare(tuple1, tuple2);
+		return 0 != comp ? comp : ObjectUtils.compare(tuple1._fourth, tuple2._fourth);
 	}
 	
-	/** Third value. May be <code>null</code>. */
-	protected final T3 _third;
+	/** Fourth value. May be <code>null</code>. */
+	protected final T4 _fourth;
 	
 	/**
 	 * Build a new instance with the given values.
@@ -73,21 +77,22 @@ extends Tuple2<T1, T2> {
 	 * @param first First value. May be <code>null</code>.
 	 * @param second Second value. May be <code>null</code>.
 	 * @param third Third value. May be <code>null</code>.
+	 * @param fourth Fourth value. May be <code>null</code>.
 	 */
-	public Tuple3(final T1 first, final T2 second, final T3 third) {
-		super(first, second);
+	public Tuple4(final T1 first, final T2 second, final T3 third, final T4 fourth) {
+		super(first, second, third);
 		
 		// Initialization.
-		_third = third;
+		_fourth = fourth;
 	}
 	
 	/**
-	 * Get the third value of the receiver tuple.
+	 * Get the fourth value of the receiver tuple.
 	 * 
 	 * @return The value. May be <code>null</code>.
 	 */
-	public T3 getThird() {
-		return _third;
+	public T4 getFourth() {
+		return _fourth;
 	}
 	
 	@Override
@@ -102,6 +107,9 @@ extends Tuple2<T1, T2> {
 		if (null != _third) {
 			result = result * 31 + _third.hashCode();
 		}
+		if (null != _fourth) {
+			result = result * 31 + _fourth.hashCode();
+		}
 		return result;
 	}
 	
@@ -110,8 +118,8 @@ extends Tuple2<T1, T2> {
 		if (this == object) {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
-			final Tuple3<?, ?, ?> tuple = (Tuple3<?, ?, ?>) object;
-			return ObjectUtils.equals(_first, tuple._first) && ObjectUtils.equals(_second, tuple._second) && ObjectUtils.equals(_third, tuple._third);
+			final Tuple4<?, ?, ?, ?> tuple = (Tuple4<?, ?, ?, ?>) object;
+			return ObjectUtils.equals(_first, tuple._first) && ObjectUtils.equals(_second, tuple._second) && ObjectUtils.equals(_third, tuple._third) && ObjectUtils.equals(_fourth, tuple._fourth);
 		} else {
 			return false;
 		}
@@ -119,6 +127,6 @@ extends Tuple2<T1, T2> {
 	
 	@Override
 	public String toString() {
-		return "(" + _first + "," + _second + "," + _third + ")";
+		return "(" + _first + "," + _second + "," + _third + "," + _fourth + ")";
 	}
 }

@@ -17,6 +17,7 @@ package com.trazere.util.parser.core;
 
 import com.trazere.util.Assert;
 import com.trazere.util.parser.AbstractParser;
+import com.trazere.util.parser.AbstractParserHandler;
 import com.trazere.util.parser.Parser;
 import com.trazere.util.parser.ParserClosure;
 import com.trazere.util.parser.ParserException;
@@ -32,10 +33,10 @@ import com.trazere.util.parser.ParserState;
  */
 public abstract class FoldParser<Token, SubResult, Result>
 extends AbstractParser<Token, Result> {
-	protected final Parser<Token, SubResult> _subParser;
+	protected final Parser<Token, ? extends SubResult> _subParser;
 	protected final Result _initialValue;
 	
-	public FoldParser(final Parser<Token, SubResult> subParser, final Result initialValue, final String description) {
+	public FoldParser(final Parser<Token, ? extends SubResult> subParser, final Result initialValue, final String description) {
 		super(description);
 		
 		// Checks.
@@ -56,7 +57,7 @@ extends AbstractParser<Token, Result> {
 	}
 	
 	protected ParserHandler<Token, SubResult> buildMoreHandler(final ParserClosure<Token, Result> closure, final Result previousValue) {
-		return new ParserHandler<Token, SubResult>() {
+		return new AbstractParserHandler<Token, SubResult>(closure) {
 			public void result(final SubResult subResult, final ParserState<Token> state)
 			throws ParserException {
 				// Fold the result.

@@ -15,8 +15,11 @@
  */
 package com.trazere.util.parser;
 
+
 /**
  * DOCME
+ * <p>
+ * Handlers must be stored in closure to so that cleaning is automatic.
  * 
  * @param <Token>
  * @param <Result>
@@ -26,10 +29,10 @@ public interface ParserClosure<Token, Result> {
 	
 	public int getPosition();
 	
-	// TODO: should not be visible
-	public void addHandler(final ParserHandler<Token, ? super Result> handler);
-	
-	// TODO: should not be visible
-	public void callHandlers(final Result result, final ParserState<Token> state)
-	throws ParserException;
+	//	// TODO: should not be visible
+	//	public void addHandler(final ParserHandler<Token, ? super Result> handler);
+	//	
+	//	// TODO: should not be visible
+	//	public Collection<ParserHandler<Token, ? super Result>> getHandlers()
+	//	throws ParserException;
 }
