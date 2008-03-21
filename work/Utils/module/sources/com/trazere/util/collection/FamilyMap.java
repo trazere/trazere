@@ -19,10 +19,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.trazere.util.Assert;
 
-// TODO: empty families should not be null (get, remove...)
+// TODO: get should return unmodifiable collections
 
 /**
  * The <code>FamilyMap</code> represents indexed families of collections.
@@ -127,12 +128,21 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 	}
 	
 	/**
+	 * Get the keys which values are associated to.
+	 * 
+	 * @return The keys.
+	 */
+	public Set<K> keySet() {
+		return Collections.unmodifiableSet(_families.keySet());
+	}
+	
+	/**
 	 * Check wether the receiver family contains values for the given key.
 	 * 
 	 * @param key Key whose associated value should be checked.
 	 * @return <code>true</code> when some values are associated to the key, <code>false</code> otherwise.
 	 */
-	public boolean contains(final K key) {
+	public boolean containsKey(final K key) {
 		return _families.containsKey(key);
 	}
 	
@@ -143,18 +153,7 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 	 * @return The associated values, or <code>null</code> when no values are associated to the key.
 	 */
 	public C get(final K key) {
-		return _families.get(key);
-	}
-	
-	/**
-	 * Get the families as a map.
-	 * <p>
-	 * The returned map is backed by the family map so changes to the family map are reflected.
-	 * 
-	 * @return The families.
-	 */
-	public Map<K, C> map() {
-		return Collections.unmodifiableMap(_families);
+		return _families.containsKey(key) ? _families.get(key) : _familyFactory.build();
 	}
 	
 	/**

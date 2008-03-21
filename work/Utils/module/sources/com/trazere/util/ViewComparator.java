@@ -4,6 +4,10 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
+// TODO: add an option to disable memoization
+// TODO: add a argument for the comparator to use
+// TODO: getValue should return a Maybe
+
 /**
  * The {@link ViewComparator} abstract class is a comparator working according some value computed from the compared objects. It applies some kind of view over
  * the compared objects.
