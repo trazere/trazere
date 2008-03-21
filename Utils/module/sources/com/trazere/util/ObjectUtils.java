@@ -20,6 +20,21 @@ package com.trazere.util;
  */
 public class ObjectUtils {
 	/**
+	 * Cast the given object to any type.
+	 * <p>
+	 * This methods aims to work around various limitations of the Java type system where regular casts cannot be used. It performs no verifications whatsoever
+	 * and should be used as seldom as possible because it is inherently unsafe.
+	 * 
+	 * @param <R> Resulting type of the object.
+	 * @param object Object to cast.
+	 * @return The casted object.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <R> R cast(final Object object) {
+		return (R) object;
+	}
+	
+	/**
 	 * Test for equality of the given objects.
 	 * <p>
 	 * This method supports <code>null</code> values.
@@ -34,7 +49,7 @@ public class ObjectUtils {
 		// Compare.
 		return (null == object1 && null == object2) || (null != object1 && null != object2 && object1.equals(object2));
 	}
-
+	
 	/**
 	 * Compare the given comparable objets.
 	 * <p>
@@ -54,7 +69,7 @@ public class ObjectUtils {
 			return null == object2 ? 1 : object1.compareTo(object2);
 		}
 	}
-
+	
 	private ObjectUtils() {
 		// Prevent instantiation.
 	}

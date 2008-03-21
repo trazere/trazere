@@ -24,6 +24,8 @@ import java.util.Map.Entry;
 
 import com.trazere.util.Assert;
 import com.trazere.util.CannotComputeValueException;
+import com.trazere.util.function.ApplicationException;
+import com.trazere.util.function.Function;
 
 /**
  * The <code>LazyMap</code> class represents maps which can lazily fill themselves upon access.
@@ -33,10 +35,11 @@ import com.trazere.util.CannotComputeValueException;
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  */
-public abstract class LazyMap<K, V> {
+public abstract class LazyMap<K, V>
+implements Function<K, V> {
 	/** Entries. */
 	protected final Map<K, V> _entries;
-
+	
 	/**
 	 * Build a new empty lazy map.
 	 */
@@ -44,7 +47,7 @@ public abstract class LazyMap<K, V> {
 		// Initialization.
 		_entries = new HashMap<K, V>();
 	}
-
+	
 	/**
 	 * Build a new lazy map containing the given entries.
 	 * 
@@ -52,11 +55,11 @@ public abstract class LazyMap<K, V> {
 	 */
 	public LazyMap(final Map<? extends K, ? extends V> entries) {
 		Assert.notNull(entries);
-
+		
 		// Initialization.
 		_entries = new HashMap<K, V>(entries);
 	}
-
+	
 	/**
 	 * Associate the given value to the given key in the receiver map.
 	 * 
@@ -67,7 +70,7 @@ public abstract class LazyMap<K, V> {
 	public V put(final K key, final V value) {
 		return _entries.put(key, value);
 	}
-
+	
 	/**
 	 * Test wether the receiver map is empty.
 	 * 
@@ -76,7 +79,7 @@ public abstract class LazyMap<K, V> {
 	public boolean isEmpty() {
 		return _entries.isEmpty();
 	}
-
+	
 	/**
 	 * Get the number of entries in the receiver map.
 	 * 
@@ -85,7 +88,7 @@ public abstract class LazyMap<K, V> {
 	public int size() {
 		return _entries.size();
 	}
-
+	
 	/**
 	 * Get the value associated to the given key in the receiver map.
 	 * <p>
@@ -101,14 +104,14 @@ public abstract class LazyMap<K, V> {
 		if (_entries.containsKey(key)) {
 			return _entries.get(key);
 		}
-
+		
 		// Compute the value.
 		final V value = computeValue(key);
 		put(key, value);
-
+		
 		return value;
 	}
-
+	
 	/**
 	 * Compute the value to associate to the given key.
 	 * 
@@ -118,7 +121,7 @@ public abstract class LazyMap<K, V> {
 	 */
 	protected abstract V computeValue(final K key)
 	throws CannotComputeValueException;
-
+	
 	/**
 	 * Get the keys of the receiver map.
 	 * 
@@ -127,7 +130,7 @@ public abstract class LazyMap<K, V> {
 	public Set<K> keySet() {
 		return Collections.unmodifiableSet(_entries.keySet());
 	}
-
+	
 	/**
 	 * Get the values of the receiver map.
 	 * 
@@ -136,7 +139,7 @@ public abstract class LazyMap<K, V> {
 	public Collection<V> values() {
 		return Collections.unmodifiableCollection(_entries.values());
 	}
-
+	
 	/**
 	 * Get the entries of the receiver map.
 	 * 
@@ -145,7 +148,7 @@ public abstract class LazyMap<K, V> {
 	public Set<Entry<K, V>> entrySet() {
 		return Collections.unmodifiableSet(_entries.entrySet());
 	}
-
+	
 	/**
 	 * Remove the association of the given key.
 	 * 
@@ -155,14 +158,23 @@ public abstract class LazyMap<K, V> {
 	public V remove(final K key) {
 		return _entries.remove(key);
 	}
-
+	
 	/**
 	 * Clear the receiver map.
 	 */
 	public void clear() {
 		_entries.clear();
 	}
-
+	
+	public V apply(final K key)
+	throws ApplicationException {
+		try {
+			return get(key);
+		} catch (final CannotComputeValueException exception) {
+			throw new ApplicationException(exception);
+		}
+	}
+	
 	@Override
 	public String toString() {
 		return _entries.toString();

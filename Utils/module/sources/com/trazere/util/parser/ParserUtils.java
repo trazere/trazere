@@ -32,7 +32,7 @@ public class ParserUtils {
 		throws ParserException {
 			return new AbstractParserState<Token>(position, continuations, handlers) {
 				@Override
-				protected <Result> AbstractParserClosure<Token, Result> buildClosure(final Parser<Token, Result> parser) {
+				protected <Result> ParserClosure<Token, Result> buildClosure(final Parser<Token, Result> parser) {
 					return new SuccessParserClosure<Token, Result>(parser, position);
 				}
 			};

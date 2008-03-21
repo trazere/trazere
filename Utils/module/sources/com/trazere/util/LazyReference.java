@@ -28,7 +28,7 @@ public class LazyReference<T>
 implements Describable {
 	/** Reference to the value. */
 	protected Maybe<T> _value = Maybe.none();
-
+	
 	/**
 	 * Set the receiver reference to the given value.
 	 * 
@@ -39,7 +39,7 @@ implements Describable {
 	throws ReferenceAlreadySetException {
 		set(value, false);
 	}
-
+	
 	/**
 	 * Set the receiver reference to the given value.
 	 * 
@@ -52,10 +52,10 @@ implements Describable {
 		if (overwrite || !_value.isSome()) {
 			_value = Maybe.some(value);
 		} else {
-			throw new ReferenceAlreadySetException("Hole already filled");
+			throw new ReferenceAlreadySetException("Reference already filled with " + _value.asSome().getValue());
 		}
 	}
-
+	
 	/**
 	 * Get the current receiver reference.
 	 * 
@@ -64,12 +64,12 @@ implements Describable {
 	public Maybe<T> get() {
 		return _value;
 	}
-
+	
 	@Override
 	public final String toString() {
 		return TextUtils.computeDescription(this);
 	}
-
+	
 	public void fillDescription(final StringBuilder builder) {
 		if (_value.isSome()) {
 			builder.append(" - Value = ").append(((Maybe.Some<?>) _value).getValue());
