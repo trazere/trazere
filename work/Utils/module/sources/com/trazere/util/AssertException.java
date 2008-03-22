@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006 Julien Dufour
+ *  Copyright 2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -26,14 +26,14 @@ extends RuntimeException {
 	 * DOCME
 	 */
 	private static final long serialVersionUID = 1L;
-
+	
 	/**
 	 * Instantiate a new exception.
 	 */
 	public AssertException() {
 		super();
 	}
-
+	
 	/**
 	 * Instantiate a new exception using the given message.
 	 * 
@@ -42,7 +42,7 @@ extends RuntimeException {
 	public AssertException(final String message) {
 		super(message);
 	}
-
+	
 	/**
 	 * Instantiate a new exception using the given cause.
 	 * 
@@ -51,7 +51,7 @@ extends RuntimeException {
 	public AssertException(final Throwable cause) {
 		super(cause);
 	}
-
+	
 	/**
 	 * Instantiate a new exception using the given message and cause.
 	 * 

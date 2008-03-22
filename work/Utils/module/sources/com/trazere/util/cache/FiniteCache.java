@@ -21,16 +21,16 @@ public class FiniteCache<K, V>
 extends Cache<K, V, TimedCacheEntry<K, V>> {
 	/** List of the entries ordered by creation date. */
 	protected final List<TimedCacheEntry<K, V>> _history = new LinkedList<TimedCacheEntry<K, V>>();
-
+	
 	/** Capacity of the cache. <code>0</code> means an infinite capacity. */
 	protected final int _capacity;
-
+	
 	/** Minimum life time of the entries of the cache in millisedonds. <code>0</code> means no minimum life time. */
 	protected final long _minLifeTime;
-
+	
 	/** Maximim life time of the entries of the cache in millisedonds. <code>0</code> means no maximum life time. */
 	protected final long _maxLifeTime;
-
+	
 	/**
 	 * Instantiate a new cache with the given parameters.
 	 * 
@@ -43,7 +43,7 @@ extends Cache<K, V, TimedCacheEntry<K, V>> {
 		_minLifeTime = minLifeTime;
 		_maxLifeTime = 0 == maxLifeTime || minLifeTime <= maxLifeTime ? maxLifeTime : minLifeTime;
 	}
-
+	
 	/**
 	 * Get the capacity of the cache.
 	 * 
@@ -52,7 +52,7 @@ extends Cache<K, V, TimedCacheEntry<K, V>> {
 	public int getCapacity() {
 		return _capacity;
 	}
-
+	
 	/**
 	 * Get the minimum life time of the entries of the cache.
 	 * 
@@ -61,7 +61,7 @@ extends Cache<K, V, TimedCacheEntry<K, V>> {
 	public long getMinLifeTime() {
 		return _minLifeTime;
 	}
-
+	
 	/**
 	 * Get the maximum life time of the entries of the cache.
 	 * 
@@ -70,15 +70,15 @@ extends Cache<K, V, TimedCacheEntry<K, V>> {
 	public long getMaxLifeTime() {
 		return _maxLifeTime;
 	}
-
+	
 	@Override
 	public void flush() {
 		super.flush();
-
+		
 		// Clear the history.
 		_history.clear();
 	}
-
+	
 	/**
 	 * Clean up the cache from the extra entries in order to control its size. The oldest entries are removed:
 	 * <ul>
@@ -89,16 +89,16 @@ extends Cache<K, V, TimedCacheEntry<K, V>> {
 	@Override
 	public void cleanup() {
 		super.cleanup();
-
+		
 		final long time = System.currentTimeMillis();
 		final int capacity = _capacity > 0 ? _capacity : _history.size();
-
+		
 		// Find the oldest entries to clean up.
 		final Collection<TimedCacheEntry<K, V>> entriesToClean = new ArrayList<TimedCacheEntry<K, V>>();
 		final ListIterator<TimedCacheEntry<K, V>> entries = _history.listIterator(_history.size());
 		while (entries.hasPrevious()) {
 			final TimedCacheEntry<K, V> entry = entries.previous();
-
+			
 			// Remove the entry if needed.
 			final long lifeTime = time - entry.getTimestamp();
 			if ((_minLifeTime <= 0 || lifeTime >= _minLifeTime) && ((capacity > 0 && _history.size() > capacity) || (_maxLifeTime > 0 && lifeTime > _maxLifeTime))) {
@@ -107,30 +107,30 @@ extends Cache<K, V, TimedCacheEntry<K, V>> {
 				break;
 			}
 		}
-
+		
 		// Clean the entries.
 		for (final TimedCacheEntry<K, V> entry : entriesToClean) {
 			removeEntry(entry);
 		}
 	}
-
+	
 	@Override
 	protected TimedCacheEntry<K, V> buildEntry(final K key, final V value) {
 		return new TimedCacheEntry<K, V>(key, value);
 	}
-
+	
 	@Override
 	protected void addEntry(final TimedCacheEntry<K, V> entry) {
 		super.addEntry(entry);
-
+		
 		// Complete the history.
 		_history.add(0, entry);
 	}
-
+	
 	@Override
 	protected void removeEntry(final TimedCacheEntry<K, V> entry) {
 		super.removeEntry(entry);
-
+		
 		// Clean the history.
 		_history.remove(entry);
 	}

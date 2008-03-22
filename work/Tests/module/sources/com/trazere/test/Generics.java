@@ -20,11 +20,11 @@ public class Generics {
 		System.out.println(numbers1);
 		final List<Object> numbers2 = CollectionUtils.<Object>list(0, 1, 2);
 		System.out.println(numbers2);
-
+		
 		final List<Object> objects1 = CollectionUtils.<Object>list(0, "a");
 		System.out.println(objects1);
 	}
-
+	
 	public static void functions() {
 		final List<Integer> numbers = CollectionUtils.list(0, 1, 2);
 		final Filter<Integer> isEven = new Filter<Integer>() {
@@ -37,31 +37,31 @@ public class Generics {
 				return null != value;
 			}
 		};
-
+		
 		final List<Integer> evens1 = FunctionUtils.filter(numbers, isEven, new ArrayList<Integer>());
 		System.out.println(evens1);
-		final List<Integer> evens2 = FunctionUtils.filter(numbers, isEven, CollectionFactories.<Integer> arrayList());
+		final List<Integer> evens2 = FunctionUtils.filter(numbers, isEven, CollectionFactories.<Integer>arrayList());
 		System.out.println(evens2);
-
+		
 		final List<Object> evens3 = FunctionUtils.filter(numbers, isEven, new ArrayList<Object>());
 		System.out.println(evens3);
-		final List<Object> evens4 = FunctionUtils.filter(numbers, isEven, CollectionFactories.<Object> arrayList());
+		final List<Object> evens4 = FunctionUtils.filter(numbers, isEven, CollectionFactories.<Object>arrayList());
 		System.out.println(evens4);
-
+		
 		final Set<Integer> notNulls1 = FunctionUtils.filter(numbers, isNotNull, new HashSet<Integer>());
 		System.out.println(notNulls1);
-		final Set<Integer> notNulls2 = FunctionUtils.filter(numbers, isNotNull, CollectionFactories.<Integer> hashSet());
+		final Set<Integer> notNulls2 = FunctionUtils.filter(numbers, isNotNull, CollectionFactories.<Integer>hashSet());
 		System.out.println(notNulls2);
-
+		
 		final Function<Object, String> toString = new Function<Object, String>() {
 			public String apply(final Object value) {
 				return null != value ? value.toString() : "null";
 			}
 		};
-
+		
 		final List<String> strings1 = FunctionUtils.map(numbers, toString, false, new ArrayList<String>());
 		System.out.println(strings1);
-		final List<String> strings2 = FunctionUtils.map(numbers, toString, false, CollectionFactories.<String> arrayList());
+		final List<String> strings2 = FunctionUtils.map(numbers, toString, false, CollectionFactories.<String>arrayList());
 		System.out.println(strings2);
 	}
 }

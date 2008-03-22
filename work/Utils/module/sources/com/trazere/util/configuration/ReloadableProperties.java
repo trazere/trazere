@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006 Julien Dufour
+ *  Copyright 2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -27,20 +27,20 @@ import com.trazere.util.Assert;
 public class ReloadableProperties {
 	/** Path of the file containing the properties. */
 	protected String _path = null;
-
+	
 	/** Flag indicating wether the properties may be overridden in a <em>local</em> file. */
 	protected boolean _local = false;
-
+	
 	/** Properties. May be <code>null</code> when no properties has ever been loaded. */
 	protected final Properties _properties;
-
+	
 	/**
 	 * Instantiate new reloadable properties with no path and no default properties.
 	 */
 	public ReloadableProperties() {
 		this(null, false, null);
 	}
-
+	
 	/**
 	 * Instantiate new reloadable properties with the given path and no default properties.
 	 * <p>
@@ -52,7 +52,7 @@ public class ReloadableProperties {
 	public ReloadableProperties(final String path, final boolean local) {
 		this(path, local, null);
 	}
-
+	
 	/**
 	 * Instantiate new reloadable properties with no path and the given default properties.
 	 * 
@@ -61,7 +61,7 @@ public class ReloadableProperties {
 	public ReloadableProperties(final Properties defaults) {
 		this(null, false, defaults);
 	}
-
+	
 	/**
 	 * Instantiate new reloadable properties with the given path and default properties.
 	 * <p>
@@ -77,7 +77,7 @@ public class ReloadableProperties {
 		_local = local;
 		_properties = null == defaults ? new Properties() : new Properties(defaults);
 	}
-
+	
 	/**
 	 * Get the path of the receiver reloadable properties.
 	 * 
@@ -86,7 +86,7 @@ public class ReloadableProperties {
 	public String getPath() {
 		return _path;
 	}
-
+	
 	/**
 	 * Get the flag indicating wether the properties may be overridden in a <em>local</em> file.
 	 * 
@@ -95,7 +95,7 @@ public class ReloadableProperties {
 	public boolean getLocal() {
 		return _local;
 	}
-
+	
 	/**
 	 * Load the properties at the given path.
 	 * 
@@ -106,16 +106,16 @@ public class ReloadableProperties {
 	public synchronized void load(final String path, final boolean local)
 	throws ConfigurationException {
 		Assert.notNull(path);
-
+		
 		// Set the path.
 		_path = path;
 		_local = local;
-
+		
 		// Load the properties.
 		_properties.clear();
 		ConfigurationUtils.loadConfiguration(_properties, _path, _local);
 	}
-
+	
 	/**
 	 * Reload the properties using the current path.
 	 * <p>
@@ -134,7 +134,7 @@ public class ReloadableProperties {
 			throw new IllegalStateException("No path");
 		}
 	}
-
+	
 	/**
 	 * Get the loaded or default properties.
 	 * 
@@ -143,7 +143,7 @@ public class ReloadableProperties {
 	public Properties getProperties() {
 		return _properties;
 	}
-
+	
 	@Override
 	public String toString() {
 		return _properties.toString();

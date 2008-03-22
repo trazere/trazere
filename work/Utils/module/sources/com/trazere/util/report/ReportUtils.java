@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006 Julien Dufour
+ *  Copyright 2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -29,11 +29,11 @@ public class ReportUtils {
 	 */
 	public static String render(final ReportEntry<?, ?> entry) {
 		Assert.notNull(entry);
-
+		
 		// Render.
 		return render(entry.getCategory(), entry.getCode(), entry.getMessage());
 	}
-
+	
 	/**
 	 * Render a human readable string representation of a report entry with the given code and message.
 	 * 
@@ -51,7 +51,7 @@ public class ReportUtils {
 		}
 		if (null != message) {
 			builder.append(message);
-
+			
 			if (null != code) {
 				builder.append(" (").append(code).append(")");
 			}
@@ -62,7 +62,7 @@ public class ReportUtils {
 		}
 		return builder.toString();
 	}
-
+	
 	/**
 	 * Build a new report entry by chaining the given report entries.
 	 * 
@@ -74,11 +74,11 @@ public class ReportUtils {
 	 */
 	public static <Category, Code extends Enum<?>> ReportEntry<Category, Code> chain(final ReportEntry<Category, Code> entry, final ReportEntry<?, ?> causeEntry) {
 		Assert.notNull(entry);
-
+		
 		// Chain.
 		return chain(entry.getCategory(), entry.getCode(), entry.getMessage(), causeEntry);
 	}
-
+	
 	/**
 	 * Build a new report entry by chaining the report entry for the given entry parameters and the given cause report entry.
 	 * 
@@ -92,7 +92,7 @@ public class ReportUtils {
 	 */
 	public static <Category, Code extends Enum<?>> ReportEntry<Category, Code> chain(final Category category, final Code code, final String message, final ReportEntry<?, ?> causeEntry) {
 		Assert.notNull(causeEntry);
-
+		
 		// Build the new entry..
 		final StringBuilder builder = new StringBuilder();
 		if (null != message) {
@@ -100,10 +100,10 @@ public class ReportUtils {
 		} else {
 			builder.append("Caused by ").append(causeEntry);
 		}
-
+		
 		return new SimpleReportEntry<Category, Code>(category, code, builder.toString());
 	}
-
+	
 	private ReportUtils() {
 		// Prevent instantiation.
 	}

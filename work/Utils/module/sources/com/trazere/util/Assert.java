@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006 Julien Dufour
+ *  Copyright 2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ public class Assert {
 			throw new AssertException("Condition not fulfilled");
 		}
 	}
-
+	
 	/**
 	 * Check that the given condition is fulfilled (is <code>true</code>).
 	 * 
@@ -48,7 +48,7 @@ public class Assert {
 			throw new AssertException(message);
 		}
 	}
-
+	
 	/**
 	 * Check that the given value is not <code>null</code>.
 	 * 
@@ -60,7 +60,7 @@ public class Assert {
 			throw new AssertException("Should not be null");
 		}
 	}
-
+	
 	/**
 	 * Check that the given value is <code>null</code>.
 	 * 
@@ -72,7 +72,7 @@ public class Assert {
 			throw new AssertException("Should be null (" + value + ")");
 		}
 	}
-
+	
 	/**
 	 * Check that the given <code>boolean</code> values are equal.
 	 * 
@@ -85,7 +85,7 @@ public class Assert {
 			throw new AssertException("Should be equal (" + value1 + " != " + value2 + ")");
 		}
 	}
-
+	
 	/**
 	 * Check that the given <code>int</code> values are equal.
 	 * 
@@ -98,7 +98,7 @@ public class Assert {
 			throw new AssertException("Should be equal (" + value1 + " != " + value2 + ")");
 		}
 	}
-
+	
 	/**
 	 * Check that the given <code>long</code> values are equal.
 	 * 
@@ -111,7 +111,7 @@ public class Assert {
 			throw new AssertException("Should be equal (" + value1 + " != " + value2 + ")");
 		}
 	}
-
+	
 	/**
 	 * Check that the given object values are equal.
 	 * <p>
@@ -127,7 +127,7 @@ public class Assert {
 			throw new AssertException("Should be equal (" + value1 + " <> " + value2 + ")");
 		}
 	}
-
+	
 	/**
 	 * Check that the given object values are equal.
 	 * <p>
@@ -143,7 +143,7 @@ public class Assert {
 			throw new AssertException("Should be same (" + value1 + " != " + value2 + ")");
 		}
 	}
-
+	
 	private Assert() {
 		// Prevent instantiation.
 	}

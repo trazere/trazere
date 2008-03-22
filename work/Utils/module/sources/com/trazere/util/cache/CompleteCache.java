@@ -18,22 +18,22 @@ extends Cache<K, V, CacheEntry<K, V>> {
 	public CacheEntry<K, V> fillNoValues(final K key) {
 		// Remove the entry for the key.
 		remove(key);
-
+		
 		// Return a placebo entry.
 		return buildEntry(key, null);
 	}
-
+	
 	@Override
 	public CacheEntry<K, V> get(final K key) {
 		final CacheEntry<K, V> entry = super.get(key);
 		return null != entry ? entry : buildEntry(key, null);
 	}
-
+	
 	@Override
 	public Set<K> getAllKeys() {
 		return new HashSet<K>(_entriesByKey.keySet());
 	}
-
+	
 	@Override
 	protected CacheEntry<K, V> buildEntry(final K key, final V value) {
 		return new CacheEntry<K, V>(key, value);

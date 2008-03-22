@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006 Julien Dufour
+ *  Copyright 2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,14 +21,14 @@ package com.trazere.util.report;
 public class ReportException
 extends Exception {
 	private static final long serialVersionUID = 1L;
-
+	
 	/**
 	 * Instantiate a new exception.
 	 */
 	public ReportException() {
 		super();
 	}
-
+	
 	/**
 	 * Instantiate a new exception using the given message.
 	 * 
@@ -37,7 +37,7 @@ extends Exception {
 	public ReportException(final String message) {
 		super(message);
 	}
-
+	
 	/**
 	 * Instantiate a new exception using the given cause.
 	 * 
@@ -46,7 +46,7 @@ extends Exception {
 	public ReportException(final Throwable cause) {
 		super(cause);
 	}
-
+	
 	/**
 	 * Instantiate a new exception using the given message and cause.
 	 * 

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006 Julien Dufour
+ *  Copyright 2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,8 +25,8 @@ import java.util.Collection;
  */
 public interface CollectionFactory<T, C extends Collection<? super T>> {
 	public C build();
-
+	
 	public C build(final int capacity);
-
+	
 	public C build(final Collection<? extends T> values);
 }

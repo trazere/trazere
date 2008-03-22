@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006 Julien Dufour
+ *  Copyright 2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -27,10 +27,10 @@ public class Mutex
 implements Describable {
 	/** Owner thread of the lock. May be <code>null</code>. */
 	protected Thread _owner = null;
-
+	
 	/** Lock count. */
 	protected int _count = 0;
-
+	
 	/**
 	 * Lock the receiver mutex.
 	 * <p>
@@ -45,23 +45,23 @@ implements Describable {
 			}
 		}
 	}
-
+	
 	protected synchronized boolean doLock() {
 		final Thread owner = Thread.currentThread();
 		if (null == _owner) {
 			_owner = owner;
 			_count = 1;
-
+			
 			return true;
 		} else if (owner == _owner) {
 			_count += 1;
-
+			
 			return true;
 		} else {
 			return false;
 		}
 	}
-
+	
 	/**
 	 * Unlock the receiver mutex.
 	 * <p>
@@ -72,7 +72,7 @@ implements Describable {
 		final Thread owner = Thread.currentThread();
 		if (owner == _owner) {
 			_count -= 1;
-
+			
 			if (0 == _count) {
 				_owner = null;
 				notify();
@@ -81,12 +81,12 @@ implements Describable {
 			throw new IllegalMonitorStateException("Lock owned by " + _owner + " <> " + owner);
 		}
 	}
-
+	
 	@Override
 	public String toString() {
 		return TextUtils.computeDescription(this);
 	}
-
+	
 	public void fillDescription(final StringBuilder builder) {
 		if (null != _owner) {
 			builder.append(" - Locked by ").append(_owner).append(" ").append(_count).append(" time(s)");

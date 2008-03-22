@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006 Julien Dufour
+ *  Copyright 2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -28,27 +28,27 @@ implements ParserSource<Character> {
 	protected final Reader _reader;
 	protected boolean _lookAhead = false;
 	protected int _next = -1;
-
+	
 	public ReaderParserSource(final Reader reader) {
 		Assert.notNull(reader);
-
+		
 		// Initialization.
 		_reader = reader;
 	}
-
+	
 	public boolean hasNext()
 	throws ParserException {
 		lookAhead();
 		return -1 != _next;
 	}
-
+	
 	public Character next()
 	throws ParserException {
 		lookAhead();
 		_lookAhead = false;
 		return Character.valueOf((char) _next);
 	}
-
+	
 	protected void lookAhead()
 	throws ParserException {
 		if (!_lookAhead) {

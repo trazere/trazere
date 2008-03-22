@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006 Julien Dufour
+ *  Copyright 2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ implements Describable {
 		LEFT,
 		RIGHT,
 	}
-
+	
 	/**
 	 * The {@link Matcher} interface defines functions on unwrapped {@link Either} instances.
 	 * 
@@ -57,7 +57,7 @@ implements Describable {
 		 */
 		public Result left(final Left<LeftValue, RightValue> left)
 		throws CannotComputeValueException;
-
+		
 		/**
 		 * Apply the receiver function to the given <code>Right</code> instance.
 		 * 
@@ -68,7 +68,7 @@ implements Describable {
 		public Result right(final Right<LeftValue, RightValue> right)
 		throws CannotComputeValueException;
 	}
-
+	
 	/**
 	 * The {@link Left} class represents the instances built using the <code>Left</code> constructor.
 	 * 
@@ -78,7 +78,7 @@ implements Describable {
 	public final static class Left<LeftValue, RightValue>
 	extends Either<LeftValue, RightValue> {
 		protected LeftValue _left;
-
+		
 		/**
 		 * Build a new instance wrapping the given left value.
 		 * 
@@ -88,33 +88,33 @@ implements Describable {
 			// Initialization.
 			_left = left;
 		}
-
+		
 		@Override
 		public boolean isLeft() {
 			return true;
 		}
-
+		
 		@Override
 		public Left<LeftValue, RightValue> asLeft() {
 			return this;
 		}
-
+		
 		@Override
 		public boolean isRight() {
 			return false;
 		}
-
+		
 		@Override
 		public Right<LeftValue, RightValue> asRight()
 		throws InvalidConstructorException {
 			throw new InvalidConstructorException("Cannot cast instance " + this);
 		}
-
+		
 		@Override
 		public Constructor getConstructor() {
 			return Constructor.LEFT;
 		}
-
+		
 		/**
 		 * Get the left value wrapped in the receiver instance.
 		 * 
@@ -123,12 +123,12 @@ implements Describable {
 		public LeftValue getLeft() {
 			return _left;
 		}
-
+		
 		@Override
 		public <Result> Result match(final Matcher<LeftValue, RightValue, Result> matcher) {
 			return matcher.left(this);
 		}
-
+		
 		@Override
 		public int hashCode() {
 			int result = getClass().hashCode();
@@ -137,7 +137,7 @@ implements Describable {
 			}
 			return result;
 		}
-
+		
 		@Override
 		public boolean equals(final Object object) {
 			if (this == object) {
@@ -149,12 +149,12 @@ implements Describable {
 				return false;
 			}
 		}
-
+		
 		public void fillDescription(final StringBuilder builder) {
 			builder.append(" - Left = ").append(_left);
 		}
 	}
-
+	
 	/**
 	 * The {@link Right} class represents the instances built using the <code>Right</code> constructor.
 	 * 
@@ -164,7 +164,7 @@ implements Describable {
 	public final static class Right<LeftValue, RightValue>
 	extends Either<LeftValue, RightValue> {
 		protected final RightValue _right;
-
+		
 		/**
 		 * Build a new instance wrapping the given right value.
 		 * 
@@ -174,33 +174,33 @@ implements Describable {
 			// Initialization.
 			_right = right;
 		}
-
+		
 		@Override
 		public boolean isLeft() {
 			return false;
 		}
-
+		
 		@Override
 		public Left<LeftValue, RightValue> asLeft()
 		throws InvalidConstructorException {
 			throw new InvalidConstructorException("Cannot cast instance " + this);
 		}
-
+		
 		@Override
 		public boolean isRight() {
 			return true;
 		}
-
+		
 		@Override
 		public Right<LeftValue, RightValue> asRight() {
 			return this;
 		}
-
+		
 		@Override
 		public Constructor getConstructor() {
 			return Constructor.RIGHT;
 		}
-
+		
 		/**
 		 * Get the right value wrapped in the receiver instance.
 		 * 
@@ -209,12 +209,12 @@ implements Describable {
 		public RightValue getRight() {
 			return _right;
 		}
-
+		
 		@Override
 		public <Result> Result match(final Matcher<LeftValue, RightValue, Result> matcher) {
 			return matcher.right(this);
 		}
-
+		
 		@Override
 		public int hashCode() {
 			int result = getClass().hashCode();
@@ -223,7 +223,7 @@ implements Describable {
 			}
 			return result;
 		}
-
+		
 		@Override
 		public boolean equals(final Object object) {
 			if (this == object) {
@@ -235,12 +235,12 @@ implements Describable {
 				return false;
 			}
 		}
-
+		
 		public void fillDescription(final StringBuilder builder) {
 			builder.append(" - Right = ").append(_right);
 		}
 	}
-
+	
 	/**
 	 * Build an instance using the <code>Left</code> constructor wrapping the given value.
 	 * 
@@ -252,7 +252,7 @@ implements Describable {
 	public static <LeftValue, RightValue> Either<LeftValue, RightValue> left(final LeftValue left) {
 		return new Left<LeftValue, RightValue>(left);
 	}
-
+	
 	/**
 	 * Build an instance using the <code>Left</code> constructor wrapping the given value.
 	 * 
@@ -264,14 +264,14 @@ implements Describable {
 	public static <LeftValue, RightValue> Either<LeftValue, RightValue> right(final RightValue right) {
 		return new Right<LeftValue, RightValue>(right);
 	}
-
+	
 	/**
 	 * Test wether the receiver instance has been built using the <code>Left</code> constructor.
 	 * 
 	 * @return <code>true</code> when the instance has been built with the <code>Left</code> constructor, <code>false</code> otherwise.
 	 */
 	public abstract boolean isLeft();
-
+	
 	/**
 	 * Cast the receiver instance as a {@link Left} instance.
 	 * 
@@ -280,14 +280,14 @@ implements Describable {
 	 */
 	public abstract Left<LeftValue, RightValue> asLeft()
 	throws InvalidConstructorException;
-
+	
 	/**
 	 * Test wether the receiver instance has been built using the <code>Right</code> constructor.
 	 * 
 	 * @return <code>true</code> when the instance has been built with the <code>Right</code> constructor, <code>false</code> otherwise.
 	 */
 	public abstract boolean isRight();
-
+	
 	/**
 	 * Cast the receiver instance as a {@link Right} instance.
 	 * 
@@ -296,14 +296,14 @@ implements Describable {
 	 */
 	public abstract Right<LeftValue, RightValue> asRight()
 	throws InvalidConstructorException;
-
+	
 	/**
 	 * Get the constructor of the receiver instance.
 	 * 
 	 * @return The constructor.
 	 */
 	public abstract Constructor getConstructor();
-
+	
 	/**
 	 * Apply the given matcher function to the receiver instance.
 	 * <p>
@@ -314,7 +314,7 @@ implements Describable {
 	 * @return The result of the function application.
 	 */
 	public abstract <Result> Result match(final Matcher<LeftValue, RightValue, Result> matcher);
-
+	
 	@Override
 	public final String toString() {
 		return TextUtils.computeDescription(this);

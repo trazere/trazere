@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006 Julien Dufour
+ *  Copyright 2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -30,16 +30,16 @@ public class MapFactories {
 		public HashMap<Object, Object> build() {
 			return new HashMap<Object, Object>();
 		}
-
+		
 		public HashMap<Object, Object> build(final int capacity) {
 			return new HashMap<Object, Object>(capacity);
 		}
-
+		
 		public HashMap<Object, Object> build(final Map<? extends Object, ? extends Object> bindings) {
 			return new HashMap<Object, Object>(bindings);
 		}
 	};
-
+	
 	/**
 	 * Build a map factory which produces <code>HashMap</code>s.
 	 * 
@@ -51,22 +51,22 @@ public class MapFactories {
 	public static <K, V> MapFactory<K, V, HashMap<K, V>> hashMap() {
 		return HASHMAP;
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	private static final MapFactory TREEMAP = new MapFactory<Object, Object, TreeMap<Object, Object>>() {
 		public TreeMap<Object, Object> build() {
 			return new TreeMap<Object, Object>();
 		}
-
+		
 		public TreeMap<Object, Object> build(final int capacity) {
 			return new TreeMap<Object, Object>();
 		}
-
+		
 		public TreeMap<Object, Object> build(final Map<? extends Object, ? extends Object> bindings) {
 			return new TreeMap<Object, Object>(bindings);
 		}
 	};
-
+	
 	/**
 	 * Build a map factory which produces <code>TreeMap</code>s.
 	 * 
@@ -78,7 +78,7 @@ public class MapFactories {
 	public static <K, V> MapFactory<K, V, TreeMap<K, V>> treeMap() {
 		return TREEMAP;
 	}
-
+	
 	private MapFactories() {
 		// Prevent instantiation.
 	}

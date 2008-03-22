@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006 Julien Dufour
+ *  Copyright 2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ extends Exception {
 	 */
 	private static final long serialVersionUID = 1L;
 	protected final ReportEntry<?, ?> _entry;
-
+	
 	/**
 	 * Instantiate a new exception using the given entry.
 	 * 
@@ -36,11 +36,11 @@ extends Exception {
 	 */
 	public ReportWrapperException(final ReportEntry<?, ?> entry) {
 		super(entry.toString());
-
+		
 		// Initialization.
 		_entry = entry;
 	}
-
+	
 	/**
 	 * Instantiate a new exception using the given entry and cause.
 	 * 
@@ -50,7 +50,7 @@ extends Exception {
 	public ReportWrapperException(final ReportEntry<?, ?> entry, final ReportWrapperException cause) {
 		this(ReportUtils.chain(entry, cause.getEntry()));
 	}
-
+	
 	/**
 	 * Get the report entry.
 	 * 

@@ -28,7 +28,7 @@ public class CSVTest {
 		read(file, EnumSet.of(CSVReaderOption.TRIM_FIELDS));
 		read(file, EnumSet.of(CSVReaderOption.TRIM_FIELDS, CSVReaderOption.STRIP_EMPTY_FIELDS));
 		final List<CSVLine> lines = read(file, EnumSet.of(CSVReaderOption.TRIM_FIELDS, CSVReaderOption.STRIP_EMPTY_FIELDS, CSVReaderOption.CHECK_CARDINALITY, CSVReaderOption.SKIP_INVALID_LINES));
-
+		
 		// Write.
 		write(new File(args[1]), CollectionUtils.listN(new String[] {
 		    "C1",
@@ -37,7 +37,7 @@ public class CSVTest {
 		    "----"
 		}), EnumSet.noneOf(CSVWriterOption.class), lines);
 	}
-
+	
 	public static List<CSVLine> read(final File file, final EnumSet<CSVReaderOption> options)
 	throws IOException {
 		System.out.println("Reading file " + file + " with options " + options);
@@ -56,7 +56,7 @@ public class CSVTest {
 		}
 		return lines;
 	}
-
+	
 	public static void write(final File file, final List<String> headers, final EnumSet<CSVWriterOption> options, final List<CSVLine> lines)
 	throws IOException {
 		System.out.println("Writing file " + file + " with options " + options);

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006 Julien Dufour
+ *  Copyright 2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ package com.trazere.util.parser;
 public interface ParserSource<Token> {
 	public boolean hasNext()
 	throws ParserException;
-
+	
 	public Token next()
 	throws ParserException;
 }

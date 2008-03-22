@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006 Julien Dufour
+ *  Copyright 2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -30,14 +30,14 @@ public interface ReportEntry<Category, Code extends Enum<?>> {
 	 * @return The category. May be <code>null</code>.
 	 */
 	public Category getCategory();
-
+	
 	/**
 	 * Get the code of the receiver report entry.
 	 * 
 	 * @return The code. May be <code>null</code>.
 	 */
 	public Code getCode();
-
+	
 	/**
 	 * Get the message of the receiver report entry.
 	 * 

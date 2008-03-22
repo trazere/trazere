@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006 Julien Dufour
+ *  Copyright 2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ public class RemoveParameterTransformer<T>
 implements ParameterTransformer<T> {
 	/** Name of the parameter to remove. */
 	protected final String _name;
-
+	
 	/**
 	 * Build a new transformer using the given parameters.
 	 * 
@@ -35,11 +35,11 @@ implements ParameterTransformer<T> {
 	public RemoveParameterTransformer(final String name) {
 		// Checks.
 		Assert.notNull(name);
-
+		
 		// Initialization.
 		_name = name;
 	}
-
+	
 	public void apply(final Parameters<T> parameters, final Parameters.Builder<T> builder)
 	throws ParameterException {
 		// Remove.

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006 Julien Dufour
+ *  Copyright 2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -36,14 +36,14 @@ implements Describable {
 	public static class Builder {
 		/** Values of the CSV fields identified by their headers. */
 		protected final Map<String, String> _fields;
-
+		
 		/**
 		 * Instantiate a new builder.
 		 */
 		public Builder() {
 			_fields = new HashMap<String, String>();
 		}
-
+		
 		/**
 		 * Instantiate a new builder and initialize it with the fields of the given line.
 		 * 
@@ -51,11 +51,11 @@ implements Describable {
 		 */
 		public Builder(final CSVLine line) {
 			Assert.notNull(line);
-
+			
 			// Initialization.
 			_fields = new HashMap<String, String>(line.getFields());
 		}
-
+		
 		/**
 		 * Instantiate a new builder and initialize it with the given fields.
 		 * 
@@ -63,11 +63,11 @@ implements Describable {
 		 */
 		public Builder(final Map<String, String> fields) {
 			Assert.notNull(fields);
-
+			
 			// Initialization.
 			_fields = new HashMap<String, String>(fields);
 		}
-
+		
 		/**
 		 * Get the value of the field with the given header from the receiver builder.
 		 * 
@@ -76,11 +76,11 @@ implements Describable {
 		 */
 		public String getField(final String header) {
 			Assert.notNull(header);
-
+			
 			// Get.
 			return _fields.get(header);
 		}
-
+		
 		/**
 		 * Set the value of the field with the given header in the receiver builder.
 		 * 
@@ -90,11 +90,11 @@ implements Describable {
 		public void setField(final String header, final String value) {
 			Assert.notNull(header);
 			Assert.notNull(value);
-
+			
 			// Set.
 			_fields.put(header, value);
 		}
-
+		
 		/**
 		 * Set the value of the given fields in the receiver builder.
 		 * 
@@ -102,11 +102,11 @@ implements Describable {
 		 */
 		public void setFields(final Map<String, String> fields) {
 			Assert.notNull(fields);
-
+			
 			// Set.
 			_fields.putAll(fields);
 		}
-
+		
 		/**
 		 * Remove the field with the given header from the receiver builder.
 		 * 
@@ -114,11 +114,11 @@ implements Describable {
 		 */
 		public void removeField(final String header) {
 			Assert.notNull(header);
-
+			
 			// Remove.
 			_fields.remove(header);
 		}
-
+		
 		/**
 		 * Build a new CSV line with the fields of the receiver builder.
 		 * 
@@ -128,13 +128,13 @@ implements Describable {
 			return new CSVLine(new HashMap<String, String>(_fields));
 		}
 	}
-
+	
 	/**
 	 * Empty line.
 	 */
 	@SuppressWarnings("unchecked")
 	public static final CSVLine EMPTY = new CSVLine(Collections.EMPTY_MAP);
-
+	
 	/**
 	 * Build a new CSV line with the given field.
 	 * <p>
@@ -146,7 +146,7 @@ implements Describable {
 	 */
 	public static CSVLine build(final String header, final String value) {
 		Assert.notNull(header);
-
+		
 		// Build.
 		final Map<String, String> fields = new HashMap<String, String>();
 		if (null != value) {
@@ -154,7 +154,7 @@ implements Describable {
 		}
 		return new CSVLine(fields);
 	}
-
+	
 	/**
 	 * Build a new CSV line with the given fields.
 	 * <p>
@@ -169,7 +169,7 @@ implements Describable {
 	public static CSVLine build(final String header1, final String value1, final String header2, final String value2) {
 		Assert.notNull(header1);
 		Assert.notNull(header2);
-
+		
 		// Build.
 		final Map<String, String> fields = new HashMap<String, String>();
 		if (null != value1) {
@@ -180,10 +180,10 @@ implements Describable {
 		}
 		return new CSVLine(fields);
 	}
-
+	
 	/** Values of the fields identified by their header. */
 	protected final Map<String, String> _fields;
-
+	
 	/**
 	 * Instantiate a new line with the given fields.
 	 * 
@@ -192,7 +192,7 @@ implements Describable {
 	protected CSVLine(final Map<String, String> fields) {
 		_fields = Collections.unmodifiableMap(fields);
 	}
-
+	
 	/**
 	 * Test wether the receiver line contains a value for the given header.
 	 * 
@@ -201,11 +201,11 @@ implements Describable {
 	 */
 	public boolean containsField(final String header) {
 		Assert.notNull(header);
-
+		
 		// Test.
 		return _fields.containsKey(header);
 	}
-
+	
 	/**
 	 * Get the value of the field with the given header from the receiver line.
 	 * 
@@ -214,11 +214,11 @@ implements Describable {
 	 */
 	public String getField(final String header) {
 		Assert.notNull(header);
-
+		
 		// Get.
 		return _fields.get(header);
 	}
-
+	
 	/**
 	 * Get the fields of the receicer line.
 	 * 
@@ -227,12 +227,12 @@ implements Describable {
 	public Map<String, String> getFields() {
 		return _fields;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		return _fields.hashCode();
 	}
-
+	
 	@Override
 	public boolean equals(final Object object) {
 		if (this == object) {
@@ -244,12 +244,12 @@ implements Describable {
 			return false;
 		}
 	}
-
+	
 	@Override
 	public String toString() {
 		return TextUtils.computeDescription(this);
 	}
-
+	
 	public void fillDescription(final StringBuilder builder) {
 		for (final Map.Entry<String, String> entry : _fields.entrySet()) {
 			builder.append(" - ").append(entry.getKey()).append(" = ").append(entry.getValue());
