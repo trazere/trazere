@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006 Julien Dufour
+ *  Copyright 2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -26,13 +26,13 @@ public class MoveParameterTransformer<T>
 implements ParameterTransformer<T> {
 	/** New name of the renamed parameter. */
 	protected final String _name;
-
+	
 	/** Flag indicating wether the move is strict or not. Strict moves may not overwrite existing parameters. */
 	protected final boolean _strict;
-
+	
 	/** Name of the parameter to rename. */
 	protected final String _source;
-
+	
 	/**
 	 * Build a new transformer using the given parameters.
 	 * 
@@ -44,13 +44,13 @@ implements ParameterTransformer<T> {
 		// Checks.
 		Assert.notNull(name);
 		Assert.notNull(source);
-
+		
 		// Initialization.
 		_name = name;
 		_strict = strict;
 		_source = source;
 	}
-
+	
 	public void apply(final Parameters<T> parameters, final Parameters.Builder<T> builder)
 	throws ParameterException {
 		// Move.

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006 Julien Dufour
+ *  Copyright 2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -40,14 +40,14 @@ public class ConfigurationUtils {
 	public static Properties loadConfiguration(final String path, final boolean local)
 	throws ConfigurationException {
 		Assert.notNull(path);
-
+		
 		// Load the properties.
 		final Properties properties = new Properties();
 		loadConfiguration(properties, path, local);
-
+		
 		return properties;
 	}
-
+	
 	/**
 	 * Load the configuration file located at the given path, and its possible local version.
 	 * <p>
@@ -62,7 +62,7 @@ public class ConfigurationUtils {
 	throws ConfigurationException {
 		Assert.notNull(properties);
 		Assert.notNull(path);
-
+		
 		// Load the properties.
 		final File file = new File(path);
 		try {
@@ -75,7 +75,7 @@ public class ConfigurationUtils {
 		} catch (final IOException exception) {
 			throw new ConfigurationException("Failed loading properties", exception);
 		}
-
+		
 		// Load the local properties if needed.
 		if (local) {
 			final File localFile = new File(path + ".local");
@@ -93,7 +93,7 @@ public class ConfigurationUtils {
 			}
 		}
 	}
-
+	
 	/**
 	 * Get the property with the given name from the given properties. The read value is trimmed, and the given default value is returned if the property does
 	 * not exist.
@@ -106,12 +106,12 @@ public class ConfigurationUtils {
 	public static String getProperty(final Properties properties, final String name, final String defaultValue) {
 		Assert.notNull(properties);
 		Assert.notNull(name);
-
+		
 		// Get the property.
 		final String value = properties.getProperty(name);
 		return null != value ? value.trim() : defaultValue;
 	}
-
+	
 	/**
 	 * Get the property with the given name from the given properties. The read value is trimmed, and the given default value is returned if the property does
 	 * not exist.
@@ -123,11 +123,11 @@ public class ConfigurationUtils {
 	 */
 	public static String getProperty(final ReloadableProperties properties, final String name, final String defaultValue) {
 		Assert.notNull(properties);
-
+		
 		// Get.
 		return getProperty(properties.getProperties(), name, defaultValue);
 	}
-
+	
 	/**
 	 * Get the mandatory property with the given name from the given properties. The read value is trimmed, and an exception is raised if the property does not
 	 * exist.
@@ -141,7 +141,7 @@ public class ConfigurationUtils {
 	throws ConfigurationException {
 		Assert.notNull(properties);
 		Assert.notNull(name);
-
+		
 		// Get the property.
 		final String value = properties.getProperty(name);
 		if (null != value) {
@@ -150,7 +150,7 @@ public class ConfigurationUtils {
 			throw new ConfigurationException("Missing property " + name);
 		}
 	}
-
+	
 	/**
 	 * Get the mandatory property with the given name from the given properties. The read value is trimmed, and an exception is raised if the property does not
 	 * exist.
@@ -163,11 +163,11 @@ public class ConfigurationUtils {
 	public static String getMandatoryProperty(final ReloadableProperties properties, final String name)
 	throws ConfigurationException {
 		Assert.notNull(properties);
-
+		
 		// Get.
 		return getMandatoryProperty(properties.getProperties(), name);
 	}
-
+	
 	private ConfigurationUtils() {
 		// Prevent instantiation.
 	}

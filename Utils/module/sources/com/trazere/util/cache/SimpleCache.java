@@ -1,6 +1,5 @@
 package com.trazere.util.cache;
 
-
 /**
  * DOCME
  * 

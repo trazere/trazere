@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006 Julien Dufour
+ *  Copyright 2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -50,27 +50,27 @@ public class ReportStoreUtils {
 				if (null != startDate && entry.getDate().before(startDate)) {
 					return false;
 				}
-
+				
 				// End date.
 				if (null != endDate && !entry.getDate().before(endDate)) {
 					return false;
 				}
-
+				
 				// Category.
 				if (null != categories && !categories.contains(entry.getEntry().getCategory())) {
 					return false;
 				}
-
+				
 				// Code.
 				if (null != codes && !codes.contains(entry.getEntry().getCode())) {
 					return false;
 				}
-
+				
 				return true;
 			}
 		};
 	}
-
+	
 	/**
 	 * Filter the given entries using the given filter and parameters.
 	 * 
@@ -88,7 +88,7 @@ public class ReportStoreUtils {
 		// Filtered entries.
 		if (null != filter) {
 			final List<ReportStoreEntry<Entry>> filteredEntries = new ArrayList<ReportStoreEntry<Entry>>();
-
+			
 			// Filter the entries, and limit the result.
 			if (fromEnd) {
 				final ListIterator<ReportStoreEntry<Entry>> entriesIt = entries.listIterator(entries.size());
@@ -108,10 +108,10 @@ public class ReportStoreUtils {
 					}
 				}
 			}
-
+			
 			return filteredEntries;
 		}
-
+		
 		// Limited entries.
 		final int count = entries.size();
 		if (limit >= 0 && limit < count) {
@@ -124,11 +124,11 @@ public class ReportStoreUtils {
 			}
 			return new ArrayList<ReportStoreEntry<Entry>>(truncatedEntries);
 		}
-
+		
 		// All entries.
 		return new ArrayList<ReportStoreEntry<Entry>>(entries);
 	}
-
+	
 	private ReportStoreUtils() {
 		// Prevent instantiation.
 	}

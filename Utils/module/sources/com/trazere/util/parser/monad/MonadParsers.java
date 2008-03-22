@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006 Julien Dufour
+ *  Copyright 2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,11 +22,11 @@ public class MonadParsers {
 	public static <Token, Result> FailureParser<Token, Result> failure(final String description) {
 		return new FailureParser<Token, Result>(description);
 	}
-
+	
 	public static <Token, Result> SuccessParser<Token, Result> success(final Result result, final String description) {
 		return new SuccessParser<Token, Result>(result, description);
 	}
-
+	
 	private MonadParsers() {
 		// Prevent instantiation.
 	}

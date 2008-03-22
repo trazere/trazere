@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006 Julien Dufour
+ *  Copyright 2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -26,13 +26,13 @@ public class SetParameterTransformer<T>
 implements ParameterTransformer<T> {
 	/** Name of the parameter to set. */
 	protected final String _name;
-
+	
 	/** Flag indicating wether the affectation is strict or not. Strict affectations may not overwrite existing parameters. */
 	protected final boolean _strict;
-
+	
 	/** Value of the parameter to set. May be <code>null</code>. */
 	protected final T _value;
-
+	
 	/**
 	 * Build a new transformer using the given parameters.
 	 * 
@@ -43,13 +43,13 @@ implements ParameterTransformer<T> {
 	public SetParameterTransformer(final String name, final boolean strict, final T value) {
 		// Checks.
 		Assert.notNull(name);
-
+		
 		// Initialization.
 		_name = name;
 		_value = value;
 		_strict = strict;
 	}
-
+	
 	public void apply(final Parameters<T> parameters, final Parameters.Builder<T> builder)
 	throws ParameterException {
 		// Set.

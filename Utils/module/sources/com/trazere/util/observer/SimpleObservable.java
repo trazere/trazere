@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006 Julien Dufour
+ *  Copyright 2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -26,12 +26,12 @@ extends Observable {
 	public void clearChanged() {
 		super.clearChanged();
 	}
-
+	
 	@Override
 	public void setChanged() {
 		super.setChanged();
 	}
-
+	
 	/**
 	 * Mark the receiver observable as changed and immediately notify its observers.
 	 */
@@ -39,7 +39,7 @@ extends Observable {
 		setChanged();
 		notifyObservers();
 	}
-
+	
 	/**
 	 * Mark the receiver observable as changed and immediately notify its observers with the given argument.
 	 * 

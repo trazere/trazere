@@ -24,7 +24,7 @@ public abstract class Cache<K, V, E extends CacheEntry<K, V>>
 implements Describable {
 	/** Cache entries identified by key. */
 	protected final Map<K, E> _entriesByKey = new HashMap<K, E>();
-
+	
 	/**
 	 * Associate the given value to the given key.
 	 * <p>
@@ -38,14 +38,14 @@ implements Describable {
 		// Checks.
 		Assert.notNull(key);
 		Assert.notNull(value);
-
+		
 		// Fill the cache.
 		final E entry = buildEntry(key, value);
 		fill(entry);
-
+		
 		return entry;
 	}
-
+	
 	/**
 	 * Associate no values to the given key.
 	 * <p>
@@ -57,14 +57,14 @@ implements Describable {
 	public E fillNoValues(final K key) {
 		// Checks.
 		Assert.notNull(key);
-
+		
 		// Fill the cache.
 		final E entry = buildEntry(key, null);
 		fill(entry);
-
+		
 		return entry;
 	}
-
+	
 	/**
 	 * Fill the cache with the given entry.
 	 * <p>
@@ -76,7 +76,7 @@ implements Describable {
 		addEntry(entry);
 		cleanup();
 	}
-
+	
 	/**
 	 * Get the cache entry for the given key. The value of the retrieved entry may be <code>null</code> if no values are attached to the given key.
 	 * 
@@ -86,11 +86,11 @@ implements Describable {
 	public E get(final K key) {
 		// Checks.
 		Assert.notNull(key);
-
+		
 		// Get.
 		return _entriesByKey.get(key);
 	}
-
+	
 	/**
 	 * Get all keys which are associated to a value.
 	 * 
@@ -105,7 +105,7 @@ implements Describable {
 		}
 		return keys;
 	}
-
+	
 	/**
 	 * Remove all information about the given key from the cache.
 	 * 
@@ -115,7 +115,7 @@ implements Describable {
 	public E remove(final K key) {
 		// Checks.
 		Assert.notNull(key);
-
+		
 		// Remove the entry.
 		final E entry = _entriesByKey.get(key);
 		if (null != entry) {
@@ -126,7 +126,7 @@ implements Describable {
 			return null;
 		}
 	}
-
+	
 	/**
 	 * Flush the receiver cache from some information according to the given filter.
 	 * 
@@ -138,14 +138,14 @@ implements Describable {
 			removeEntry(entry);
 		}
 	}
-
+	
 	/**
 	 * Flush the receiver cache from all information. All entries are removed.
 	 */
 	public void flush() {
 		_entriesByKey.clear();
 	}
-
+	
 	/**
 	 * Clean up the cache from the extra entries in order to control its size. This method is called when filling the cache with some entry, and may be called
 	 * externally at any time. The default implementation does nothing. Subclasses may override it with the required behavior.
@@ -153,7 +153,7 @@ implements Describable {
 	public void cleanup() {
 		// Nothing to do
 	}
-
+	
 	/**
 	 * Build a new cache entry with the given key and value. Subclasses should override this factory in order to provide their own cache entry implementation.
 	 * 
@@ -162,7 +162,7 @@ implements Describable {
 	 * @return The built cache entry.
 	 */
 	protected abstract E buildEntry(final K key, final V value);
-
+	
 	/**
 	 * Primitive method which adds the given entry into the receiver cache.
 	 * 
@@ -171,11 +171,11 @@ implements Describable {
 	protected void addEntry(final E entry) {
 		// Checks.
 		Assert.notNull(entry);
-
+		
 		// Fill the cache.
 		_entriesByKey.put(entry.getKey(), entry);
 	}
-
+	
 	/**
 	 * Primitive method which removes the given entry from the receiver cache.
 	 * 
@@ -184,16 +184,16 @@ implements Describable {
 	protected void removeEntry(final E entry) {
 		// Checks.
 		Assert.notNull(entry);
-
+		
 		// Clean the entries.
 		_entriesByKey.remove(entry.getKey());
 	}
-
+	
 	@Override
 	public final String toString() {
 		return TextUtils.computeDescription(this);
 	}
-
+	
 	public void fillDescription(final StringBuilder builder) {
 		builder.append(" - Entries = ").append(_entriesByKey.values());
 	}

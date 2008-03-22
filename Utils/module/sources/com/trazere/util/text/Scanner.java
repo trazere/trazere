@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006 Julien Dufour
+ *  Copyright 2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -31,10 +31,10 @@ import com.trazere.util.Assert;
 public class Scanner {
 	/** Reader providing the character stream. */
 	protected final PushbackReader _reader;
-
+	
 	/** Scanning position. */
 	protected int _position;
-
+	
 	/**
 	 * Instantiate a new scanner with the given reader.
 	 * 
@@ -43,7 +43,7 @@ public class Scanner {
 	public Scanner(final Reader reader) {
 		this(reader, 0);
 	}
-
+	
 	/**
 	 * Instantiate a new scanner with the given reader.
 	 * 
@@ -52,12 +52,12 @@ public class Scanner {
 	 */
 	public Scanner(final Reader reader, final int position) {
 		Assert.notNull(reader);
-
+		
 		// Initialization.
 		_reader = new PushbackReader(reader, 512);
 		_position = position;
 	}
-
+	
 	/**
 	 * Get the reader of the receiver scanner.
 	 * 
@@ -66,7 +66,7 @@ public class Scanner {
 	public Reader getReader() {
 		return _reader;
 	}
-
+	
 	/**
 	 * Get the current scanning position of the receiver scanner.
 	 * 
@@ -75,7 +75,7 @@ public class Scanner {
 	public int getPosition() {
 		return _position;
 	}
-
+	
 	/**
 	 * Test wether the end-of-file has been reached.
 	 * 
@@ -92,7 +92,7 @@ public class Scanner {
 			return false;
 		}
 	}
-
+	
 	/**
 	 * Scan the upcoming character.
 	 * <p>
@@ -107,11 +107,11 @@ public class Scanner {
 		if (-1 == i) {
 			return null;
 		}
-
+		
 		_position += 1;
 		return new Character((char) i);
 	}
-
+	
 	/**
 	 * Scan the given character.
 	 * <p>
@@ -127,7 +127,7 @@ public class Scanner {
 		if (-1 == i) {
 			return false;
 		}
-
+		
 		if ((char) i == c) {
 			_position += 1;
 			return true;
@@ -136,7 +136,7 @@ public class Scanner {
 			return false;
 		}
 	}
-
+	
 	/**
 	 * Scan the characters belonging to the character set defined by the given string.
 	 * <p>
@@ -155,7 +155,7 @@ public class Scanner {
 		};
 		return scanChars(filter);
 	}
-
+	
 	/**
 	 * Scan the characters accepted by the given filter.
 	 * <p>
@@ -173,7 +173,7 @@ public class Scanner {
 			if (-1 == i) {
 				break;
 			}
-
+			
 			final char c = (char) i;
 			if (filter.filter(c)) {
 				_position += 1;
@@ -185,7 +185,7 @@ public class Scanner {
 		}
 		return buffer.toString();
 	}
-
+	
 	/**
 	 * Scan the given sequence of characters.
 	 * <p>
@@ -198,14 +198,14 @@ public class Scanner {
 	public boolean scanString(final String string)
 	throws IOException {
 		Assert.notNull(string);
-
+		
 		// Scan.
 		final char[] buffer = new char[string.length()];
 		final int n = _reader.read(buffer);
 		if (-1 == n) {
 			return false;
 		}
-
+		
 		final String s = new String(buffer, 0, n);
 		if (s.equals(string)) {
 			_position += n;
@@ -215,7 +215,7 @@ public class Scanner {
 			return false;
 		}
 	}
-
+	
 	/**
 	 * Scan the remaining characters.
 	 * <p>
@@ -234,13 +234,13 @@ public class Scanner {
 			if (-1 == i) {
 				break;
 			}
-		
+			
 			_position += 1;
 			buffer.append((char) i);
 		}
 		return buffer.toString();
 	}
-
+	
 	/**
 	 * Scan the upcoming characters up to the given character.
 	 * <p>
@@ -260,7 +260,7 @@ public class Scanner {
 			if (-1 == i) {
 				break;
 			}
-
+			
 			final char rc = (char) i;
 			if (rc != c) {
 				_position += 1;
@@ -272,7 +272,7 @@ public class Scanner {
 		}
 		return buffer.toString();
 	}
-
+	
 	/**
 	 * Scan the upcoming characters up to any given character.
 	 * <p>
@@ -292,7 +292,7 @@ public class Scanner {
 		};
 		return scanUpToAnyChar(filter);
 	}
-
+	
 	/**
 	 * Scan the upcoming characters up to any character accepted by the given filter.
 	 * <p>
@@ -306,7 +306,7 @@ public class Scanner {
 	public String scanUpToAnyChar(final CharFilter filter)
 	throws IOException {
 		Assert.notNull(filter);
-
+		
 		// Scan.
 		final StringBuffer buffer = new StringBuffer();
 		while (true) {
@@ -314,7 +314,7 @@ public class Scanner {
 			if (-1 == i) {
 				break;
 			}
-
+			
 			final char c = (char) i;
 			if (!filter.filter(c)) {
 				_position += 1;
@@ -326,7 +326,7 @@ public class Scanner {
 		}
 		return buffer.toString();
 	}
-
+	
 	/**
 	 * Scan the upcoming characters up to the given sequence of character.
 	 * <p>
@@ -341,21 +341,21 @@ public class Scanner {
 	throws IOException {
 		Assert.notNull(string);
 		Assert.expression(string.length() > 0, "empty string");
-
+		
 		// Scan.
 		final char c = string.charAt(0);
-
+		
 		final StringBuilder buffer = new StringBuilder();
 		while (true) {
 			// Scan part.
 			buffer.append(scanUpToChar(c));
-
+			
 			// Check string.
 			if (scanString(string)) {
 				_reader.unread(string.toCharArray());
 				break;
 			}
-
+			
 			// Scan char.
 			final int i = _reader.read();
 			if (-1 == i) {
@@ -366,7 +366,7 @@ public class Scanner {
 		}
 		return buffer.toString();
 	}
-
+	
 	// public Integer scanInteger() {
 	//		
 	// }
@@ -378,7 +378,7 @@ public class Scanner {
 	// public String scanUpToPattern(final Pattern pattern) {
 	//		
 	// }
-
+	
 	/**
 	 * Close the reader of the receiver scanner.
 	 * 

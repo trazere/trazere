@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006 Julien Dufour
+ *  Copyright 2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,12 +24,12 @@ package com.trazere.util.parser;
 public abstract class AbstractParser<Token, Result>
 implements Parser<Token, Result> {
 	protected final String _description;
-
+	
 	public AbstractParser(final String description) {
 		// Initialization.
 		_description = description;
 	}
-
+	
 	public String getDescription() {
 		return _description;
 	}

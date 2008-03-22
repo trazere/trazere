@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006 Julien Dufour
+ *  Copyright 2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,24 +24,24 @@ public class StringParserSource
 implements ParserSource<Character> {
 	protected final String _string;
 	protected int _position = 0;
-
+	
 	public StringParserSource(final String string) {
 		Assert.notNull(string);
-
+		
 		// Initialization.
 		_string = string;
 	}
-
+	
 	public boolean hasNext()
 	throws ParserException {
 		return _position < _string.length();
 	}
-
+	
 	public Character next()
 	throws ParserException {
 		final char c = _string.charAt(_position);
 		_position += 1;
-
+		
 		return Character.valueOf(c);
 	}
 }

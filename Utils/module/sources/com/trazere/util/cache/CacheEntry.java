@@ -13,10 +13,10 @@ public class CacheEntry<K, V>
 implements Describable {
 	/** Key of the entry. May be <code>null</code>. */
 	protected final K _key;
-
+	
 	/** Value of the entry. May be <code>null</code>. */
 	protected final V _value;
-
+	
 	/**
 	 * Instantiate an new entry with the given key and value.
 	 * 
@@ -28,7 +28,7 @@ implements Describable {
 		_key = key;
 		_value = value;
 	}
-
+	
 	/**
 	 * Get the key of the receiver entry.
 	 * 
@@ -37,7 +37,7 @@ implements Describable {
 	public K getKey() {
 		return _key;
 	}
-
+	
 	/**
 	 * Get the value of the entry.
 	 * 
@@ -46,12 +46,12 @@ implements Describable {
 	public V getValue() {
 		return _value;
 	}
-
+	
 	@Override
 	public final String toString() {
 		return TextUtils.computeDescription(this);
 	}
-
+	
 	public void fillDescription(final StringBuilder builder) {
 		builder.append(" - Key = ").append(null != _key ? _key.toString() : "n/a");
 		builder.append(" - Value = ").append(null != _value ? _value.toString() : "n/a");

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006 Julien Dufour
+ *  Copyright 2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ public class CharFilters {
 			return false;
 		}
 	};
-
+	
 	/**
 	 * Filter accepting all characters.
 	 */
@@ -38,7 +38,7 @@ public class CharFilters {
 			return true;
 		}
 	};
-
+	
 	/**
 	 * Filter accepting the digit characters.
 	 * 
@@ -49,7 +49,7 @@ public class CharFilters {
 			return Character.isDigit(c);
 		}
 	};
-
+	
 	/**
 	 * Filter accepting the letter characters.
 	 * 
@@ -60,7 +60,7 @@ public class CharFilters {
 			return Character.isLetter(c);
 		}
 	};
-
+	
 	/**
 	 * Filter accepting the alphanumeric characters.
 	 * 
@@ -71,7 +71,7 @@ public class CharFilters {
 			return Character.isLetterOrDigit(c) || '_' == c;
 		}
 	};
-
+	
 	/**
 	 * Build a char filter accepting the given char.
 	 * 
@@ -85,7 +85,7 @@ public class CharFilters {
 			}
 		};
 	}
-
+	
 	/**
 	 * Build a char filter accepting any char from the given string.
 	 * 
@@ -94,7 +94,7 @@ public class CharFilters {
 	 */
 	public static CharFilter build(final String chars) {
 		Assert.notNull(chars);
-
+		
 		// Build.
 		return new CharFilter() {
 			public boolean filter(final char c) {
@@ -102,7 +102,7 @@ public class CharFilters {
 			}
 		};
 	}
-
+	
 	private CharFilters() {
 		// Prevent instantiation.
 	}

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006 Julien Dufour
+ *  Copyright 2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -47,37 +47,37 @@ import com.trazere.util.text.Scanner;
  */
 public class CSVReader {
 	private static final Log LOG = LogFactory.getLog(CSVReader.class);
-
+	
 	/** Scanner of the CSV input. */
 	protected final Scanner _scanner;
-
+	
 	/** Delimiter of the CSV fields. */
 	protected final String _delimiter;
-
+	
 	/** Headers of the CSV input. */
 	protected final List<String> _headers;
-
+	
 	/** Read options. */
 	protected final Set<CSVReaderOption> _options;
-
+	
 	/** Flag indicating wether the input reader has been exhausted or not. */
 	protected boolean _eof = false;
-
+	
 	/** Flag indicating wether the next entry has been fetched or not. */
 	protected boolean _lookAhead = false;
-
+	
 	/** Next CSV line. */
 	protected CSVLine _nextEntry = null;
-
+	
 	/** Line number of the next CSV entry in the input. */
 	protected int _nextEntryLine = 0;
-
+	
 	/** Line number of the current CSV entry. */
 	protected int _line = -1;
-
+	
 	protected final char _delimiterChar;
 	protected final String _specialChars;
-
+	
 	/**
 	 * Instantiate a new CSV reader using the given reader, delimiter and options. The CSV input is considered as self-describing. Its first line is read in
 	 * order to determine the headers.
@@ -93,17 +93,17 @@ public class CSVReader {
 		Assert.notNull(delimiter);
 		Assert.expression(delimiter.length() > 0, "empty delimiter");
 		Assert.notNull(options);
-
+		
 		// Initialization.
 		_scanner = new Scanner(reader);
 		_delimiter = delimiter;
 		_delimiterChar = delimiter.charAt(0);
 		_specialChars = _delimiterChar + "\"\n\r";
 		_options = Collections.unmodifiableSet(EnumSet.copyOf((Collection<CSVReaderOption>) options)); // FIXME: useless cast, eclipse bug workaround
-
+		
 		final List<String> headers = new ArrayList<String>();
 		_headers = Collections.unmodifiableList(headers);
-
+		
 		// Read the headers from the input.
 		final List<String> headers_ = readLine();
 		if (null != headers_) {
@@ -113,7 +113,7 @@ public class CSVReader {
 			throw new EOFException("Missing header line");
 		}
 	}
-
+	
 	/**
 	 * Instantiate a new CSV reader using the given reader, delimiter, headers, and options.
 	 * 
@@ -128,7 +128,7 @@ public class CSVReader {
 		Assert.expression(delimiter.length() > 0, "empty delimiter");
 		Assert.notNull(headers);
 		Assert.notNull(options);
-
+		
 		// Initialize the instance.
 		_scanner = new Scanner(reader);
 		_delimiter = delimiter;
@@ -137,7 +137,7 @@ public class CSVReader {
 		_headers = Collections.unmodifiableList(new ArrayList<String>(headers));
 		_options = Collections.unmodifiableSet(EnumSet.copyOf(options));
 	}
-
+	
 	/**
 	 * Get the delimiter of the CSV fields of the receiver reader.
 	 * 
@@ -146,7 +146,7 @@ public class CSVReader {
 	public String getDelimiter() {
 		return _delimiter;
 	}
-
+	
 	/**
 	 * Get the headers of the CSV input of the receiver reader.
 	 * 
@@ -155,7 +155,7 @@ public class CSVReader {
 	public List<String> getHeaders() {
 		return _headers;
 	}
-
+	
 	/**
 	 * Get the options of the receiver reader.
 	 * 
@@ -164,7 +164,7 @@ public class CSVReader {
 	public Set<CSVReaderOption> getOptions() {
 		return _options;
 	}
-
+	
 	/**
 	 * Test wether another CSV entry is available from the input.
 	 * <p>
@@ -179,21 +179,21 @@ public class CSVReader {
 		readEntry();
 		return !_eof;
 	}
-
+	
 	protected void readEntry()
 	throws IOException {
 		// Test that input is not exhausted and that the next line has not already been read ahead.
 		if (!_eof && !_lookAhead) {
 			_lookAhead = true;
 			_nextEntry = null;
-
+			
 			do {
 				// Read the next line.
 				LOG.debug("Fetching line (" + (_nextEntryLine + 1) + ")");
 				final List<String> line = readLine();
 				if (null != line) {
 					_nextEntryLine += 1;
-
+					
 					// Test the cardinality.
 					if (_options.contains(CSVReaderOption.CHECK_CARDINALITY) && (_headers.size() != line.size())) {
 						LOG.warn("Cardinality check failed for line: " + line);
@@ -218,20 +218,20 @@ public class CSVReader {
 			} while (!_eof && _options.contains(CSVReaderOption.SKIP_INVALID_LINES) && null == _nextEntry);
 		}
 	}
-
+	
 	protected List<String> readLine()
 	throws IOException {
 		// Test for EOF.
 		if (_scanner.eof()) {
 			return null;
 		}
-
+		
 		// Read the line.
 		final List<String> line = new ArrayList<String>();
 		readLine(line);
 		return line;
 	}
-
+	
 	protected void readLine(final List<String> line)
 	throws IOException {
 		while (true) {
@@ -239,26 +239,26 @@ public class CSVReader {
 			if (_scanner.eof()) {
 				break;
 			}
-
+			
 			// Read the cell.
 			final StringBuilder buffer = new StringBuilder();
 			final boolean delimiter = readCell(buffer);
 			line.add(buffer.toString());
-
+			
 			// Test for line end.
 			if (!delimiter) {
 				break;
 			}
 		}
 	}
-
+	
 	protected boolean readCell(final StringBuilder buffer)
 	throws IOException {
 		while (true) {
 			// Read the data.
 			final String part = _scanner.scanUpToAnyChar(_specialChars);
 			buffer.append(part);
-
+			
 			if (_scanner.scanChar('"')) {
 				// Quoted content.
 				readQuotedCell(buffer);
@@ -283,14 +283,14 @@ public class CSVReader {
 			}
 		}
 	}
-
+	
 	protected void readQuotedCell(final StringBuilder buffer)
 	throws IOException {
 		while (true) {
 			// Read the data.
 			final String part = _scanner.scanUpToChar('"');
 			buffer.append(part);
-
+			
 			if (_scanner.scanChar('"')) {
 				// Double quote
 				if (_scanner.scanChar('"')) {
@@ -307,7 +307,7 @@ public class CSVReader {
 			}
 		}
 	}
-
+	
 	/**
 	 * Read the next CSV entry. This method should not be called if <code>hasNext</code> returns <code>false</code>.
 	 * 
@@ -318,16 +318,16 @@ public class CSVReader {
 	throws IOException {
 		// Read one line ahead.
 		readEntry();
-
+		
 		// Consume the entry.
 		final CSVLine entry = _nextEntry;
 		_lookAhead = false;
 		_nextEntry = null;
 		_line = _nextEntryLine;
-
+		
 		return entry;
 	}
-
+	
 	/**
 	 * Get the line number of the current CSV entry (the entry returned by the last call to {@link #next()}.
 	 * 
@@ -336,7 +336,7 @@ public class CSVReader {
 	public int getLine() {
 		return _line;
 	}
-
+	
 	/**
 	 * Close the underlying reader.
 	 * 

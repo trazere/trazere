@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006 Julien Dufour
+ *  Copyright 2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -27,13 +27,13 @@ public class SimpleReportEntry<Category, Code extends Enum<?>>
 implements ReportEntry<Category, Code> {
 	/** Category of the report entry. May be <code>null</code>. */
 	protected final Category _category;
-
+	
 	/** Code of the report entry. May be <code>null</code>. */
 	protected final Code _code;
-
+	
 	/** Message of the report entry. May be <code>null</code>. */
 	protected final String _message;
-
+	
 	/**
 	 * Instantiate a new report entry with the given parameters.
 	 * 
@@ -47,19 +47,19 @@ implements ReportEntry<Category, Code> {
 		_code = code;
 		_message = message;
 	}
-
+	
 	public Category getCategory() {
 		return _category;
 	}
-
+	
 	public Code getCode() {
 		return _code;
 	}
-
+	
 	public String getMessage() {
 		return _message;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		int result = getClass().hashCode();
@@ -74,7 +74,7 @@ implements ReportEntry<Category, Code> {
 		}
 		return result;
 	}
-
+	
 	@Override
 	public boolean equals(final Object object) {
 		if (this == object) {
@@ -86,7 +86,7 @@ implements ReportEntry<Category, Code> {
 			return false;
 		}
 	}
-
+	
 	@Override
 	public String toString() {
 		return ReportUtils.render(_category, _code, _message);

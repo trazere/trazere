@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006 Julien Dufour
+ *  Copyright 2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,13 +25,13 @@ package com.trazere.util;
 public abstract class LazyValue<T> {
 	/** Flag indicating wether the computed value should be memoized (call-by-need evaluation) or not (call-by-name evaluation). */
 	protected final boolean _memoize;
-
+	
 	/** Flag indicating wether the value has been memoized or not. */
 	protected boolean _memoized;
-
+	
 	/** The last computed value. May be <code>null</code>. */
 	protected T _value;
-
+	
 	/**
 	 * Build a new lazy value.
 	 * 
@@ -43,7 +43,7 @@ public abstract class LazyValue<T> {
 		_memoized = false;
 		_value = null;
 	}
-
+	
 	/**
 	 * Build a new memoized lazy value.
 	 * <p>
@@ -57,7 +57,7 @@ public abstract class LazyValue<T> {
 		_memoized = true;
 		_value = value;
 	}
-
+	
 	/**
 	 * Indicate wether the computed value should be memoized (call-by-need evaluation) or not (call-by-name evaluation).
 	 * 
@@ -66,7 +66,7 @@ public abstract class LazyValue<T> {
 	public boolean shouldMemoize() {
 		return _memoize;
 	}
-
+	
 	/**
 	 * Indicate wether a value has been memoized or not.
 	 * 
@@ -75,7 +75,7 @@ public abstract class LazyValue<T> {
 	public boolean isMemoized() {
 		return _memoized;
 	}
-
+	
 	/**
 	 * Get the lazy value.
 	 * <p>
@@ -89,16 +89,16 @@ public abstract class LazyValue<T> {
 		// Compute the value if needed.
 		if (!_memoized) {
 			_value = computeValue();
-
+			
 			// Memoize the value if needed.
 			if (_memoize) {
 				_memoized = true;
 			}
 		}
-
+		
 		return _value;
 	}
-
+	
 	/**
 	 * Compute the lazy value.
 	 * 
@@ -107,7 +107,7 @@ public abstract class LazyValue<T> {
 	 */
 	protected abstract T computeValue()
 	throws CannotComputeValueException;
-
+	
 	@Override
 	public String toString() {
 		if (_memoized) {
