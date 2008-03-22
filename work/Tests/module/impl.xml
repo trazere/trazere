@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="tests.impl">
 	<!-- Imports -->
-	<import file="../../module/modules.xml" />
+	<import file="../../module/env.xml" />
 	<import file="${utils.ant.impl}" />
 
 	<!-- Declarations -->
@@ -30,4 +30,7 @@
 			</classpath>
 		</javac>
 	</target>
+
+	<!-- Compile -->
+	<target name="tests.compile" depends="tests.compileSources" />
 </project>

@@ -16,8 +16,7 @@
 -->
 <project name="tools.impl">
 	<!-- Imports -->
-	<import file="../../module/modules.xml" />
-	<import file="${trazere.ant.env}" />
+	<import file="../../module/env.xml" />
 
 	<!-- Ant -->
 	<property name="tools.ant" location="${tools.module}/ant-1.7.0" />
@@ -28,7 +27,7 @@
 	</path>
 
 	<!-- Commons logging -->
-	<property name="tools.commons-logging" location="${tools.module}/commons-logging-1.1" />
+	<property name="tools.commons-logging" location="${tools.module}/commons-logging-1.1.1" />
 	<path id="tools.commons-logging.classpath">
 		<fileset id="tools.commons-logging.jars" dir="${tools.commons-logging}">
 			<include name="commons-logging.jar" />

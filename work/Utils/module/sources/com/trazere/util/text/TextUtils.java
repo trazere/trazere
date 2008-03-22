@@ -15,9 +15,7 @@
  */
 package com.trazere.util.text;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collection;
 
 import com.trazere.util.Assert;
 
@@ -42,33 +40,92 @@ public class TextUtils {
 			return null == string2 ? 1 : string1.compareToIgnoreCase(string2);
 		}
 	}
-
+	
+	/**
+	 * Strip the given string, that is converting the empty string to <code>null</code>.
+	 * 
+	 * @param s String to strip.
+	 * @return <code>null</code> when the given string is empty, the given string otherwise.
+	 */
+	public static String strip(final String s) {
+		Assert.notNull(s);
+		
+		// Strip.
+		return s.length() > 0 ? s : null;
+	}
+	
+	/**
+	 * Unstrip the given string, that is converting <code>null</code> to the empty string.
+	 * 
+	 * @param s String to unstrip
+	 * @return The empty string when the given string is <code>null</code>, the given string otherwise.
+	 */
+	public static String unstrip(final String s) {
+		return null != s ? s : "";
+	}
+	
 	/**
 	 * Split the given string according to the given delimiter.
 	 * 
+	 * @param <C> Type of the collection filled with the results.
 	 * @param string String to split.
 	 * @param delimiter Delimiter string.
 	 * @param trim Flag indicating wether the empty tokens are trimmed.
 	 * @param ignoreEmpty Flag indicating wether the empty tokens are ignored.
-	 * @return An unmodifiable <code>List</code> of the parts.
+	 * @param results Collection to fill with the tokens.
+	 * @return The given result collection.
 	 */
-	public static List<String> split(final String string, final String delimiter, final boolean trim, final boolean ignoreEmpty) {
+	public static <C extends Collection<? super String>> C split(final String string, final String delimiter, final boolean trim, final boolean ignoreEmpty, final C results) {
 		Assert.notNull(string);
 		Assert.notNull(delimiter);
-
+		
 		// Split the string.
-		final List<String> allTokens = Arrays.asList(string.split(delimiter.replaceAll("[^\\w]", "\\\\$0")));
-
-		final List<String> tokens = new ArrayList<String>(allTokens.size());
-		for (final String token : allTokens) {
+		for (final String token : string.split(delimiter.replaceAll("[^\\w]", "\\\\$0"))) {
 			final String trimmedToken = trim ? token.trim() : token;
 			if (!ignoreEmpty || trimmedToken.length() > 0) {
-				tokens.add(trimmedToken);
+				results.add(trimmedToken);
 			}
 		}
-		return tokens;
+		return results;
 	}
-
+	
+	/**
+	 * Join the given string token using the given delimiter.
+	 * 
+	 * @param tokens The token to join.
+	 * @param delimiter The delimiter.
+	 * @return The resulting string.
+	 */
+	public static String join(final Collection<String> tokens, final String delimiter) {
+		return join(tokens, delimiter, new StringBuilder()).toString();
+	}
+	
+	/**
+	 * Join the given string token using the given delimiter.
+	 * 
+	 * @param tokens The token to join.
+	 * @param delimiter The delimiter.
+	 * @param builder The string build to fill.
+	 * @return The given string builder.
+	 */
+	public static StringBuilder join(final Collection<String> tokens, final String delimiter, final StringBuilder builder) {
+		Assert.notNull(tokens);
+		Assert.notNull(delimiter);
+		Assert.notNull(builder);
+		
+		// Join the strings.
+		boolean first = true;
+		for (final String token : tokens) {
+			if (!first) {
+				builder.append(delimiter);
+			}
+			builder.append(token);
+			first = false;
+		}
+		
+		return builder;
+	}
+	
 	/** Array of the hexadecimal digits characters (upper case). */
 	public static final char[] HEX_DIGITS = {
 	    '0',
@@ -88,7 +145,7 @@ public class TextUtils {
 	    'E',
 	    'F'
 	};
-
+	
 	/**
 	 * Compute the hexadecimal representation of the given array of bytes.
 	 * <p>
@@ -99,7 +156,7 @@ public class TextUtils {
 	 */
 	public static String toHexString(final byte[] bytes) {
 		Assert.notNull(bytes);
-
+		
 		final StringBuilder builder = new StringBuilder();
 		for (int i = 0; i < bytes.length; i += 1) {
 			final byte b = bytes[i];
@@ -108,7 +165,21 @@ public class TextUtils {
 		}
 		return builder.toString();
 	}
-
+	
+	/**
+	 * Capitalize the given string.
+	 * 
+	 * @param s The string to capitalize.
+	 * @return The capitalized string.
+	 */
+	public static String capitalize(final String s) {
+		if (s.length() > 0) {
+			return s.substring(0, 1).toUpperCase() + s.substring(1);
+		} else {
+			return s;
+		}
+	}
+	
 	/**
 	 * Compute the name of the given class (without package information).
 	 * 
@@ -117,13 +188,13 @@ public class TextUtils {
 	 */
 	public static String computeClassName(final Class<?> class_) {
 		Assert.notNull(class_);
-
+		
 		// Compute.
 		final String fullName = class_.getName();
 		final int index = fullName.lastIndexOf('.');
 		return index > 0 ? fullName.substring(index + 1) : fullName;
 	}
-
+	
 	/**
 	 * Compute the description of the given object.
 	 * <p>
@@ -134,7 +205,7 @@ public class TextUtils {
 	 */
 	public static String computeDescription(final Describable object) {
 		Assert.notNull(object);
-
+		
 		// Compute.
 		final StringBuilder builder = new StringBuilder();
 		builder.append("[").append(TextUtils.computeClassName(object.getClass()));
@@ -142,7 +213,7 @@ public class TextUtils {
 		builder.append("]");
 		return builder.toString();
 	}
-
+	
 	private TextUtils() {
 		// Prevent instantiation.
 	}

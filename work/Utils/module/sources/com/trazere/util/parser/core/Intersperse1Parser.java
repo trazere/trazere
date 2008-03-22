@@ -34,24 +34,27 @@ import com.trazere.util.parser.ParserState;
  * @param <Token>
  * @param <Result>
  */
-public class Many1Parser<Token, Result>
+public class Intersperse1Parser<Token, Result>
 extends AbstractParser<Token, List<Result>> {
-	protected final Parser<Token, ? extends Result> _subParser;
+	protected final Parser<Token, ? extends Result> _valueParser;
+	protected final Parser<Token, ?> _delimiterParser;
 	
-	public Many1Parser(final Parser<Token, ? extends Result> subParser, final String description) {
+	public Intersperse1Parser(final Parser<Token, ? extends Result> valueParser, final Parser<Token, ?> delimiterParser, final String description) {
 		super(description);
 		
 		// Checks.
-		Assert.notNull(subParser);
+		Assert.notNull(valueParser);
+		Assert.notNull(delimiterParser);
 		
 		// Initialization.
-		_subParser = subParser;
+		_valueParser = valueParser;
+		_delimiterParser = delimiterParser;
 	}
 	
 	public void run(final ParserClosure<Token, List<Result>> closure, final ParserState<Token> state)
 	throws ParserException {
 		// One.
-		state.run(_subParser, buildMoreHandler(closure, new ArrayList<Result>()));
+		state.run(_valueParser, buildMoreHandler(closure, new ArrayList<Result>()));
 	}
 	
 	protected ParserHandler<Token, Result> buildMoreHandler(final ParserClosure<Token, List<Result>> closure, final List<Result> previousResults) {
@@ -64,7 +67,7 @@ extends AbstractParser<Token, List<Result>> {
 				state.reportSuccess(closure, Collections.unmodifiableList(results));
 				
 				// More.
-				state.run(_subParser, buildMoreHandler(closure, results));
+				state.run(CoreParsers.second(_delimiterParser, _valueParser, null), buildMoreHandler(closure, results));
 			}
 		};
 	}
