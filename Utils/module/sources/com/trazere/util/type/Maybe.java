@@ -15,8 +15,11 @@
  */
 package com.trazere.util.type;
 
+import com.trazere.util.Assert;
 import com.trazere.util.CannotComputeValueException;
 import com.trazere.util.ObjectUtils;
+import com.trazere.util.function.ApplicationException;
+import com.trazere.util.function.Function;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.TextUtils;
 
@@ -39,7 +42,7 @@ implements Describable {
 		NONE,
 		SOME,
 	}
-
+	
 	/**
 	 * The {@link Matcher} interface defines functions on unwrapped {@link Maybe} instances.
 	 * 
@@ -57,7 +60,7 @@ implements Describable {
 		 */
 		public Result none(final None<Value> none)
 		throws CannotComputeValueException;
-
+		
 		/**
 		 * Apply the receiver function to the given <code>Some</code> instance.
 		 * 
@@ -68,7 +71,7 @@ implements Describable {
 		public Result some(final Some<Value> some)
 		throws CannotComputeValueException;
 	}
-
+	
 	/**
 	 * The {@link None} class represents the instances built using the <code>None</code> constructor.
 	 * 
@@ -80,42 +83,50 @@ implements Describable {
 		public boolean isNone() {
 			return true;
 		}
-
+		
 		@Override
 		public None<Value> asNone() {
 			return this;
 		}
-
+		
 		@Override
 		public boolean isSome() {
 			return false;
 		}
-
+		
 		@Override
 		public Some<Value> asSome()
 		throws InvalidConstructorException {
 			throw new InvalidConstructorException("Cannot cast instance " + this);
 		}
-
+		
 		@Override
 		public Constructor getConstructor() {
 			return Constructor.NONE;
 		}
-
+		
 		@Override
 		public <Result> Result match(final Matcher<Value, Result> matcher) {
 			return matcher.none(this);
 		}
-
+		
+		@Override
+		public <Result> Maybe<Result> lift(final Function<? super Value, Result> function) {
+			Assert.notNull(function);
+			
+			// Lift.
+			return none();
+		}
+		
 		public void fillDescription(final StringBuilder builder) {
 			builder.append(" - None");
 		}
-
+		
 		@Override
 		public int hashCode() {
 			return getClass().hashCode();
 		}
-
+		
 		@Override
 		public boolean equals(final Object object) {
 			if (this == object) {
@@ -127,7 +138,7 @@ implements Describable {
 			}
 		}
 	}
-
+	
 	/**
 	 * The {@link Some} class represents the instances built using the <code>Some</code> constructor.
 	 * 
@@ -136,7 +147,7 @@ implements Describable {
 	public static final class Some<Value>
 	extends Maybe<Value> {
 		protected final Value _value;
-
+		
 		/**
 		 * Build a new instance wrapping the given value.
 		 * 
@@ -146,33 +157,33 @@ implements Describable {
 			// Initialization.
 			_value = value;
 		}
-
+		
 		@Override
 		public boolean isNone() {
 			return false;
 		}
-
+		
 		@Override
 		public None<Value> asNone()
 		throws InvalidConstructorException {
 			throw new InvalidConstructorException("Cannot cast instance " + this);
 		}
-
+		
 		@Override
 		public boolean isSome() {
 			return true;
 		}
-
+		
 		@Override
 		public Some<Value> asSome() {
 			return this;
 		}
-
+		
 		@Override
 		public Constructor getConstructor() {
 			return Constructor.SOME;
 		}
-
+		
 		/**
 		 * Get the value wrapped in the receiver instance.
 		 * 
@@ -181,12 +192,21 @@ implements Describable {
 		public Value getValue() {
 			return _value;
 		}
-
+		
 		@Override
 		public <Result> Result match(final Matcher<Value, Result> matcher) {
 			return matcher.some(this);
 		}
-
+		
+		@Override
+		public <Result> Maybe<Result> lift(final Function<? super Value, Result> function)
+		throws ApplicationException {
+			Assert.notNull(function);
+			
+			// Lift.
+			return some(function.apply(_value));
+		}
+		
 		@Override
 		public int hashCode() {
 			int result = getClass().hashCode();
@@ -195,7 +215,7 @@ implements Describable {
 			}
 			return result;
 		}
-
+		
 		@Override
 		public boolean equals(final Object object) {
 			if (this == object) {
@@ -207,14 +227,14 @@ implements Describable {
 				return false;
 			}
 		}
-
+		
 		public void fillDescription(final StringBuilder builder) {
 			builder.append(" - Some = ").append(_value);
 		}
 	}
-
+	
 	private static final None<?> _NONE = new None<Object>();
-
+	
 	/**
 	 * Build an instance using the <code>None</code> constructor.
 	 * 
@@ -225,7 +245,7 @@ implements Describable {
 	public static <Value> None<Value> none() {
 		return (None<Value>) _NONE;
 	}
-
+	
 	/**
 	 * Build an instance using the <code>Some</code> constructor wrapping the given value.
 	 * 
@@ -236,7 +256,7 @@ implements Describable {
 	public static <Value> Some<Value> some(final Value value) {
 		return new Some<Value>(value);
 	}
-
+	
 	/**
 	 * Wrap the given value into a {@link Maybe} instance.
 	 * <p>
@@ -256,17 +276,17 @@ implements Describable {
 			return none();
 		}
 	}
-
+	
 	private static final Matcher<?, ?> TO_MATCHER = new Matcher<Object, Object>() {
 		public Object none(final None<Object> none) {
 			return null;
 		}
-
+		
 		public Object some(final Some<Object> some) {
 			return some.getValue();
 		}
 	};
-
+	
 	/**
 	 * Unwrap the value from the given {@link Maybe} instance.
 	 * <p>
@@ -282,14 +302,14 @@ implements Describable {
 	public static <Value> Value toValue(final Maybe<Value> maybe) {
 		return maybe.match((Matcher<Value, Value>) TO_MATCHER);
 	}
-
+	
 	/**
 	 * Test wether the receiver instance has been built using the <code>None</code> constructor.
 	 * 
 	 * @return <code>true</code> when the instance has been built with the <code>None</code> constructor, <code>false</code> otherwise.
 	 */
 	public abstract boolean isNone();
-
+	
 	/**
 	 * Cast the receiver instance as a {@link None} instance.
 	 * 
@@ -298,14 +318,14 @@ implements Describable {
 	 */
 	public abstract None<Value> asNone()
 	throws InvalidConstructorException;
-
+	
 	/**
 	 * Test wether the receiver instance has been built using the <code>Some</code> constructor.
 	 * 
 	 * @return <code>true</code> when the instance has been built with the <code>Some</code> constructor, <code>false</code> otherwise.
 	 */
 	public abstract boolean isSome();
-
+	
 	/**
 	 * Cast the receiver instance as a {@link Some} instance.
 	 * 
@@ -314,14 +334,14 @@ implements Describable {
 	 */
 	public abstract Some<Value> asSome()
 	throws InvalidConstructorException;
-
+	
 	/**
 	 * Get the constructor of the receiver instance.
 	 * 
 	 * @return The constructor.
 	 */
 	public abstract Constructor getConstructor();
-
+	
 	/**
 	 * Apply the given matcher function to the receiver instance.
 	 * <p>
@@ -332,7 +352,10 @@ implements Describable {
 	 * @return The result of the function application.
 	 */
 	public abstract <Result> Result match(final Matcher<Value, Result> matcher);
-
+	
+	public abstract <Result> Maybe<Result> lift(final Function<? super Value, Result> function)
+	throws ApplicationException;
+	
 	@Override
 	public final String toString() {
 		return TextUtils.computeDescription(this);

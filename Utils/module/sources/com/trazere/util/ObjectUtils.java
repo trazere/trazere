@@ -15,6 +15,8 @@
  */
 package com.trazere.util;
 
+import java.util.Comparator;
+
 /**
  * The <code>ObjectUtils</code> class provides various helpers regarding the manipulation of objets.
  */
@@ -67,6 +69,30 @@ public class ObjectUtils {
 			return null == object2 ? 0 : -1;
 		} else {
 			return null == object2 ? 1 : object1.compareTo(object2);
+		}
+	}
+	
+	/**
+	 * Compare the given objets using the given comparator.
+	 * <p>
+	 * This method supports comparisons of <code>null</code> values. <code>null</code> values are considered as less than non <code>null</code> values.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param object1 First value to compare. May be <code>null</code>.
+	 * @param object2 Second value to compare. May be <code>null</code>.
+	 * @param comparator Comparator to use.
+	 * @return The result of the comparison as defined by the {@link Comparator#compare(Object, Object)} method.
+	 * @see Comparable#compareTo(Object)
+	 */
+	public static <T> int compare(final T object1, final T object2, final Comparator<T> comparator) {
+		// Checks.
+		Assert.notNull(comparator);
+		
+		// Compare.
+		if (null == object1) {
+			return null == object2 ? 0 : -1;
+		} else {
+			return null == object2 ? 1 : comparator.compare(object1, object2);
 		}
 	}
 	

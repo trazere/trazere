@@ -87,6 +87,14 @@ public class CoreParsers {
 		};
 	}
 	
+	public static <Token, Result> Parser<Token, List<Result>> intersperse(final Parser<Token, ? extends Result> valueParser, final Parser<Token, ?> delimiterParser, final String description) {
+		return new IntersperseParser<Token, Result>(valueParser, delimiterParser, description);
+	}
+	
+	public static <Token, Result> Parser<Token, List<Result>> intersperse1(final Parser<Token, ? extends Result> valueParser, final Parser<Token, ?> delimiterParser, final String description) {
+		return new Intersperse1Parser<Token, Result>(valueParser, delimiterParser, description);
+	}
+	
 	public static <Token, Result> ChoiceParser<Token, Result> choice(final Parser<Token, ? extends Result> subParser1, final Parser<Token, ? extends Result> subParser2, final String description) {
 		return choice(CollectionUtils.<Parser<Token, ? extends Result>>list(subParser1, subParser2), description);
 	}

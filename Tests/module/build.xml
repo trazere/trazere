@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="tests" default="usage">
 	<!-- Imports -->
-	<import file="../../module/modules.xml" />
-	<import file="${tests.ant.impl}" />
+	<import file="impl.xml" />
 
 	<!-- Usage -->
 	<target name="usage">
@@ -13,5 +12,5 @@
 	<target name="clean" description="Clean" depends="tests.clean" />
 
 	<!-- Compile -->
-	<target name="compile" description="Compile" depends="tests.compileSources" />
+	<target name="compile" description="Compile" depends="tests.compile" />
 </project>

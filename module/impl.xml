@@ -16,7 +16,7 @@
 -->
 <project name="trazere.impl">
 	<!-- Imports -->
-	<import file="modules.xml" />
+	<import file="env.xml" />
 	<import file="${tests.ant.impl}" />
 
 	<!-- Declarations -->
@@ -35,9 +35,11 @@
 
 	<!-- Clean the distribution -->
 	<target name="trazere.distclean">
-		<delete dir="${trazere.build}" />
 		<delete dir="${trazere.dist}" />
 	</target>
+
+	<!-- Compile -->
+	<target name="trazere.compile" depends="utils.compile, tests.compile" />
 
 	<!-- Build the distribution -->
 	<target name="trazere.build" depends="utils.build">

@@ -16,8 +16,7 @@
 -->
 <project name="trazere" default="usage">
 	<!-- Imports -->
-	<import file="modules.xml" />
-	<import file="${trazere.ant.impl}" />
+	<import file="impl.xml" />
 
 	<!-- Usage -->
 	<target name="usage">
@@ -28,7 +27,10 @@
 	<target name="clean" description="Clean" depends="tests.clean, utils.clean, trazere.clean" />
 
 	<!-- Clean the distribution -->
-	<target name="distclean" description="Clean the distribution" depends="utils.distclean, trazere.distclean" />
+	<target name="distclean" description="Clean the distribution" depends="clean, trazere.distclean" />
+
+	<!-- Compile -->
+	<target name="compile" description="Compile" depends="trazere.compile" />
 
 	<!-- Build the distribution -->
 	<target name="build" description="Build the distribution">

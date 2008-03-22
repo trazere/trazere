@@ -26,6 +26,8 @@ import com.trazere.util.collection.CollectionUtils;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.TextUtils;
 
+// TODO: improve parameters according to records (builder, exceptions...)
+
 /**
  * The <code>Parameters</code> class represents collections of values identified by unique names which aim to be used as parameters.
  * <p>
@@ -43,7 +45,7 @@ implements Describable {
 	public static class Builder<T> {
 		/** Values of the parameters identified by their names. */
 		final Map<String, T> _parameters;
-
+		
 		/**
 		 * Instantiate a new builder.
 		 */
@@ -51,7 +53,7 @@ implements Describable {
 			// Initialization.
 			_parameters = new HashMap<String, T>();
 		}
-
+		
 		/**
 		 * Instantiate a new builder populated with the given parameter set.
 		 * 
@@ -59,11 +61,11 @@ implements Describable {
 		 */
 		public Builder(final Parameters<? extends T> parameters) {
 			Assert.notNull(parameters);
-
+			
 			// Initialization.
 			_parameters = new HashMap<String, T>(parameters._parameters);
 		}
-
+		
 		/**
 		 * Test wether the receiver builder is empty or not. A builder is empty when parameters have been added.
 		 * 
@@ -72,7 +74,7 @@ implements Describable {
 		public boolean isEmpty() {
 			return _parameters.isEmpty();
 		}
-
+		
 		/**
 		 * Test wether the receiver builder contains a parameter with the given name.
 		 * 
@@ -81,11 +83,11 @@ implements Describable {
 		 */
 		public boolean contains(final String name) {
 			Assert.notNull(name);
-
+			
 			// Test.
 			return _parameters.containsKey(name);
 		}
-
+		
 		/**
 		 * Get the value of the parameter with the given name of the receiver builder.
 		 * 
@@ -96,7 +98,7 @@ implements Describable {
 		public T get(final String name)
 		throws MissingParameterException {
 			Assert.notNull(name);
-
+			
 			// Get the parameter value.
 			if (_parameters.containsKey(name)) {
 				return _parameters.get(name);
@@ -104,7 +106,7 @@ implements Describable {
 				throw new MissingParameterException("Missing \"" + name + "\" parameter from parameters " + this);
 			}
 		}
-
+		
 		/**
 		 * Get the value of the parameter with the given name of the receiver builder.
 		 * 
@@ -114,7 +116,7 @@ implements Describable {
 		 */
 		public T get(final String name, final T defaultValue) {
 			Assert.notNull(name);
-
+			
 			// Get the parameter value.
 			if (_parameters.containsKey(name)) {
 				return _parameters.get(name);
@@ -122,7 +124,7 @@ implements Describable {
 				return defaultValue;
 			}
 		}
-
+		
 		/**
 		 * Get the typed value of the parameter with the given name of the receiver builder.
 		 * 
@@ -138,7 +140,7 @@ implements Describable {
 		throws MissingParameterException, IncompatibleParameterException {
 			Assert.notNull(name);
 			Assert.notNull(type);
-
+			
 			// Get the parameter value.
 			if (_parameters.containsKey(name)) {
 				final T value = _parameters.get(name);
@@ -151,7 +153,7 @@ implements Describable {
 				throw new MissingParameterException("Missing \"" + name + "\" parameter from parameters " + this);
 			}
 		}
-
+		
 		/**
 		 * Get the typed value of the parameter with the given name of the receiver builder.
 		 * 
@@ -166,7 +168,7 @@ implements Describable {
 		public <C extends T> C getTyped(final String name, final C defaultValue, final Class<C> type)
 		throws IncompatibleParameterException {
 			Assert.notNull(name);
-
+			
 			// Get the parameter value.
 			if (_parameters.containsKey(name)) {
 				final T value = _parameters.get(name);
@@ -179,7 +181,7 @@ implements Describable {
 				return defaultValue;
 			}
 		}
-
+		
 		/**
 		 * Add a new parameter with the given key and value to the receiver builder.
 		 * <p>
@@ -192,16 +194,16 @@ implements Describable {
 		public void add(final String name, final T value)
 		throws ParameterAlreadyExistsException {
 			Assert.notNull(name);
-
+			
 			// Check that the parameter does not exist.
 			if (_parameters.containsKey(name)) {
 				throw new ParameterAlreadyExistsException("Parameter \"" + name + "\" already exists in parameters " + _parameters);
 			}
-
+			
 			// Add the parameter.
 			_parameters.put(name, value);
 		}
-
+		
 		/**
 		 * Add the parameters of the given set to the receiver builder.
 		 * <p>
@@ -213,16 +215,16 @@ implements Describable {
 		public void add(final Parameters<? extends T> parameters)
 		throws ParameterAlreadyExistsException {
 			Assert.notNull(parameters);
-
+			
 			// Check that the parameters do not exist.
 			if (CollectionUtils.intersects(_parameters.keySet(), parameters._parameters.keySet())) {
 				throw new ParameterAlreadyExistsException("Some parameter of " + parameters + " already exists in parameters " + _parameters);
 			}
-
+			
 			// Add the parameters.
 			_parameters.putAll(parameters._parameters);
 		}
-
+		
 		/**
 		 * Set the parameter with the given key and value in the receiver builder.
 		 * <p>
@@ -234,11 +236,11 @@ implements Describable {
 		 */
 		public void set(final String name, final T value) {
 			Assert.notNull(name);
-
+			
 			// Set the parameter.
 			_parameters.put(name, value);
 		}
-
+		
 		/**
 		 * Set the parameters of the given set in the receiver builder.
 		 * <p>
@@ -249,11 +251,11 @@ implements Describable {
 		 */
 		public void set(final Parameters<? extends T> parameters) {
 			Assert.notNull(parameters);
-
+			
 			// Set the parameters.
 			_parameters.putAll(parameters._parameters);
 		}
-
+		
 		/**
 		 * Remove the parameter with the given name from the receiver builder.
 		 * <p>
@@ -267,16 +269,16 @@ implements Describable {
 		throws MissingParameterException {
 			// Checks.
 			Assert.notNull(name);
-
+			
 			// Check that the parameter do exist.
 			if (!_parameters.containsKey(name)) {
 				throw new MissingParameterException("Parameter \"" + name + "\" does not exist in parameters " + _parameters);
 			}
-
+			
 			// Remove the parameter.
 			return _parameters.remove(name);
 		}
-
+		
 		/**
 		 * Remove the parameter with the given name from the receiver builder.
 		 * 
@@ -286,11 +288,11 @@ implements Describable {
 		public T clear(final String name) {
 			// Checks.
 			Assert.notNull(name);
-
+			
 			// Remove the parameter.
 			return _parameters.remove(name);
 		}
-
+		
 		/**
 		 * Remove the parameters with the given names from the receiver builder.
 		 * 
@@ -299,13 +301,13 @@ implements Describable {
 		public void clear(final Collection<String> names) {
 			// Checks.
 			Assert.notNull(names);
-
+			
 			// Remove the parameters.
 			for (final String name : names) {
 				_parameters.remove(name);
 			}
 		}
-
+		
 		/**
 		 * Remove all paramaters from the receiver builder.
 		 */
@@ -313,7 +315,7 @@ implements Describable {
 			// Clear the parameters.
 			_parameters.clear();
 		}
-
+		
 		/**
 		 * Build a new parameter set with the parameters of the receiver builder.
 		 * 
@@ -323,13 +325,13 @@ implements Describable {
 			return new Parameters<T>(new HashMap<String, T>(_parameters));
 		}
 	}
-
+	
 	/**
 	 * Empty parameter set.
 	 */
 	@SuppressWarnings("unchecked")
 	protected static final Parameters EMPTY = new Parameters<Object>(Collections.EMPTY_MAP);
-
+	
 	/**
 	 * Build an empty parameter set.
 	 * <p>
@@ -343,7 +345,7 @@ implements Describable {
 	public static <T> Parameters<T> build() {
 		return EMPTY;
 	}
-
+	
 	/**
 	 * Build a new single parameter set with the given name and value.
 	 * 
@@ -354,13 +356,13 @@ implements Describable {
 	 */
 	public static <T> Parameters<T> build(final String name, final T value) {
 		Assert.notNull(name);
-
+		
 		// Build.
 		final Map<String, T> parameters = new HashMap<String, T>();
 		parameters.put(name, value);
 		return new Parameters<T>(parameters);
 	}
-
+	
 	/**
 	 * Build a new two parameter set with the given names and values.
 	 * 
@@ -374,14 +376,14 @@ implements Describable {
 	public static <T> Parameters<T> build(final String name1, final T value1, final String name2, final T value2) {
 		Assert.notNull(name1);
 		Assert.notNull(name2);
-
+		
 		// Build.
 		final Map<String, T> parameters = new HashMap<String, T>();
 		parameters.put(name1, value1);
 		parameters.put(name2, value2);
 		return new Parameters<T>(parameters);
 	}
-
+	
 	/**
 	 * Build a new parameter set with the given names and values.
 	 * 
@@ -392,7 +394,7 @@ implements Describable {
 	public static <T> Parameters<T> build(final Map<String, T> values) {
 		return new Parameters<T>(new HashMap<String, T>(values));
 	}
-
+	
 	/**
 	 * Build a new parameter set containing the union of the parameters of the given parameter sets.
 	 * <p>
@@ -406,19 +408,19 @@ implements Describable {
 	public static <T> Parameters<T> union(final Parameters<? extends T> parameters1, final Parameters<? extends T> parameters2) {
 		Assert.notNull(parameters1);
 		Assert.notNull(parameters2);
-
+		
 		// Build.
 		return new Parameters<T>(CollectionUtils.unionMap(parameters1._parameters, parameters2._parameters));
 	}
-
+	
 	/** Values of the parameters identified by their names. */
 	protected final Map<String, T> _parameters;
-
+	
 	protected Parameters(final Map<String, T> parameters) {
 		// Initialization.
 		_parameters = Collections.unmodifiableMap(parameters);
 	}
-
+	
 	/**
 	 * Test wether the receiver set contains a parameter with the given name.
 	 * 
@@ -427,11 +429,11 @@ implements Describable {
 	 */
 	public boolean contains(final String name) {
 		Assert.notNull(name);
-
+		
 		// Test.
 		return _parameters.containsKey(name);
 	}
-
+	
 	/**
 	 * Get the value of the parameter with the given name of the receiver set.
 	 * 
@@ -442,7 +444,7 @@ implements Describable {
 	public T get(final String name)
 	throws MissingParameterException {
 		Assert.notNull(name);
-
+		
 		// Get the parameter value.
 		if (_parameters.containsKey(name)) {
 			return _parameters.get(name);
@@ -450,7 +452,7 @@ implements Describable {
 			throw new MissingParameterException("Missing \"" + name + "\" parameter from parameters " + this);
 		}
 	}
-
+	
 	/**
 	 * Get the value of the parameter with the given name of the receiver set.
 	 * 
@@ -460,7 +462,7 @@ implements Describable {
 	 */
 	public T get(final String name, final T defaultValue) {
 		Assert.notNull(name);
-
+		
 		// Get the parameter value.
 		if (_parameters.containsKey(name)) {
 			return _parameters.get(name);
@@ -468,7 +470,7 @@ implements Describable {
 			return defaultValue;
 		}
 	}
-
+	
 	/**
 	 * Get the typed value of the parameter with the given name of the receiver set.
 	 * 
@@ -484,7 +486,7 @@ implements Describable {
 	throws MissingParameterException, IncompatibleParameterException {
 		Assert.notNull(name);
 		Assert.notNull(type);
-
+		
 		// Get the parameter value.
 		if (_parameters.containsKey(name)) {
 			final T value = _parameters.get(name);
@@ -497,7 +499,7 @@ implements Describable {
 			throw new MissingParameterException("Missing \"" + name + "\" parameter from parameters " + this);
 		}
 	}
-
+	
 	/**
 	 * Get the typed value of the parameter with the given name of the receiver set.
 	 * 
@@ -512,7 +514,7 @@ implements Describable {
 	public <C extends T> C getTyped(final String name, final C defaultValue, final Class<C> type)
 	throws IncompatibleParameterException {
 		Assert.notNull(name);
-
+		
 		// Get the parameter value.
 		if (_parameters.containsKey(name)) {
 			final T value = _parameters.get(name);
@@ -525,7 +527,7 @@ implements Describable {
 			return defaultValue;
 		}
 	}
-
+	
 	/**
 	 * Get the names of the parameters of the receiver set.
 	 * 
@@ -534,7 +536,7 @@ implements Describable {
 	public Set<String> nameSet() {
 		return _parameters.keySet();
 	}
-
+	
 	/**
 	 * Get the map entries corresponding to the parameters of the receiver set.
 	 * 
@@ -543,12 +545,12 @@ implements Describable {
 	public Set<Map.Entry<String, T>> entrySet() {
 		return _parameters.entrySet();
 	}
-
+	
 	@Override
 	public int hashCode() {
 		return _parameters.hashCode();
 	}
-
+	
 	@Override
 	public boolean equals(final Object object) {
 		if (this == object) {
@@ -560,12 +562,12 @@ implements Describable {
 			return false;
 		}
 	}
-
+	
 	@Override
 	public final String toString() {
 		return TextUtils.computeDescription(this);
 	}
-
+	
 	public void fillDescription(final StringBuilder builder) {
 		for (final Map.Entry<String, T> entry : _parameters.entrySet()) {
 			builder.append(" - ").append(entry.getKey()).append(" = ").append(entry.getValue());

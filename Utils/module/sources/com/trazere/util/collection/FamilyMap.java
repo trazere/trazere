@@ -170,7 +170,7 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 	 * @return The removed associated values, or <code>null</code> when no values where associated to the key.
 	 */
 	public C remove(final K key) {
-		return _families.remove(key);
+		return _families.containsKey(key) ? _families.remove(key) : _familyFactory.build();
 	}
 	
 	/**
@@ -181,8 +181,8 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 	 * @return <code>true</code> if an association is removed, <code>false</code> otherwise.
 	 */
 	public boolean remove(final K key, final V value) {
-		final C family = _families.get(key);
-		if (null != family) {
+		if (_families.containsKey(key)) {
+			final C family = _families.get(key);
 			final boolean result = family.remove(value);
 			if (family.isEmpty()) {
 				_families.remove(key);
@@ -201,8 +201,8 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 	 * @return <code>true</code> if the associations are removed, <code>false</code> otherwise.
 	 */
 	public boolean removeAll(final K key, final Collection<? extends V> values) {
-		final C family = _families.get(key);
-		if (null != family) {
+		if (_families.containsKey(key)) {
+			final C family = _families.get(key);
 			final boolean result = family.removeAll(values);
 			if (family.isEmpty()) {
 				_families.remove(key);

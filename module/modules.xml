@@ -18,7 +18,6 @@
 	<!-- Trazere -->
 	<dirname property="trazere.module" file="${ant.file.trazere.modules}" />
 	<property name="trazere" location="${trazere.module}/.." />
-	<property name="trazere.ant.env" location="${trazere.module}/env.xml" />
 	<property name="trazere.ant.impl" location="${trazere.module}/impl.xml" />
 
 	<!-- Tests -->

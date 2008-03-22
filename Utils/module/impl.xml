@@ -16,8 +16,7 @@
 -->
 <project name="utils.impl">
 	<!-- Imports -->
-	<import file="../../module/modules.xml" />
-	<import file="${trazere.ant.env}" />
+	<import file="../../module/env.xml" />
 	<import file="${tools.ant.impl}" />
 
 	<!-- Declarations -->
@@ -41,16 +40,11 @@
 
 	<!-- Clean the distribution -->
 	<target name="utils.distclean">
-		<echo>Cleaning distribution (Utils)</echo>
-
-		<delete dir="${utils.build}" />
 		<delete dir="${utils.dist}" />
 	</target>
 
 	<!-- Compile the sources -->
 	<target name="utils.compileSources">
-		<echo>Compiling the sources (Utils)</echo>
-
 		<mkdir dir="${utils.build.classes}" />
 		<javac destdir="${utils.build.classes}" source="${trazere.java.version}" debug="${trazere.java.debug}" target="${trazere.java.version}" failonerror="true" encoding="${trazere.java.encoding}">
 			<src location="${utils.sources}" />
@@ -59,6 +53,9 @@
 			</classpath>
 		</javac>
 	</target>
+
+	<!-- Compile -->
+	<target name="utils.compile" depends="utils.compileSources" />
 
 	<!-- Build the JAR -->
 	<target name="utils.buildJar" depends="utils.compileSources">

@@ -27,6 +27,22 @@ import com.trazere.util.Assert;
  */
 public class Functions {
 	/**
+	 * Build a function always returning the given value.
+	 * 
+	 * @param <T> Type of the argument values.
+	 * @param <R> Type of the result value.
+	 * @param result Result value.
+	 * @return The function.
+	 */
+	public static <T, R> Function<T, R> constant(final R result) {
+		return new Function<T, R>() {
+			public R apply(final T value) {
+				return result;
+			}
+		};
+	}
+	
+	/**
 	 * Build a function defined by the given map.
 	 * <p>
 	 * The domain of the built function is the set of keys of the map. The built function returns the values associated to the keys in the map, or
@@ -40,7 +56,7 @@ public class Functions {
 	public static <T, R> Function<T, R> map(final Map<T, R> map) {
 		// Checks.
 		Assert.notNull(map);
-
+		
 		// Build the function.
 		return new Function<T, R>() {
 			public R apply(final T key) {
@@ -48,7 +64,7 @@ public class Functions {
 			}
 		};
 	}
-
+	
 	private Functions() {
 		// Prevent instantiation.
 	}
