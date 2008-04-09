@@ -15,11 +15,10 @@
  */
 package com.trazere.util.record;
 
-import java.util.Comparator;
-
 import com.trazere.util.Assert;
-import com.trazere.util.CannotComputeValueException;
-import com.trazere.util.ObjectUtils;
+import com.trazere.util.lang.CannotComputeValueException;
+import com.trazere.util.lang.ObjectUtils;
+import java.util.Comparator;
 
 /**
  * The {@link RecordComparator} class represents comparators of records based on the content of a single field.

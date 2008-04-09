@@ -15,10 +15,9 @@
  */
 package com.trazere.util.parser;
 
+import com.trazere.util.Assert;
 import java.io.IOException;
 import java.io.Reader;
-
-import com.trazere.util.Assert;
 
 /**
  * DOCME

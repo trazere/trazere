@@ -15,10 +15,9 @@
  */
 package com.trazere.util.io;
 
+import com.trazere.util.Assert;
 import java.io.IOException;
 import java.io.OutputStream;
-
-import com.trazere.util.Assert;
 
 /**
  * The {@link CarbonCopyOutputStream} class carbon copies the data written to a destination output stream to another output stream.

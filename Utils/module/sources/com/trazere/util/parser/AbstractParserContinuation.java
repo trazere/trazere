@@ -15,11 +15,10 @@
  */
 package com.trazere.util.parser;
 
-import java.util.Collections;
-import java.util.Set;
-
 import com.trazere.util.Assert;
 import com.trazere.util.collection.CollectionUtils;
+import java.util.Collections;
+import java.util.Set;
 
 /**
  * DOCME

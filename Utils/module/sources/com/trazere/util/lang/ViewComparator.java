@@ -1,4 +1,4 @@
-package com.trazere.util;
+package com.trazere.util.lang;
 
 import java.util.Comparator;
 import java.util.HashMap;

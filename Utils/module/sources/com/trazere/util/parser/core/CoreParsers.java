@@ -15,14 +15,13 @@
  */
 package com.trazere.util.parser.core;
 
-import java.util.List;
-
 import com.trazere.util.collection.CollectionUtils;
 import com.trazere.util.parser.Parser;
 import com.trazere.util.type.Tuple2;
 import com.trazere.util.type.Tuple3;
 import com.trazere.util.type.Tuple4;
 import com.trazere.util.type.Tuple5;
+import java.util.List;
 
 /**
  * DOCME

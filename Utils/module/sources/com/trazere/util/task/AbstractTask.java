@@ -15,10 +15,9 @@
  */
 package com.trazere.util.task;
 
+import com.trazere.util.Assert;
 import java.util.Collections;
 import java.util.List;
-
-import com.trazere.util.Assert;
 
 /**
  * The {@link AbstractTask} abstract class provide a task basic implementation which supports notification about the executions.

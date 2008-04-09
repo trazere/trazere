@@ -19,7 +19,6 @@ import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
 import java.util.Observable;
 import java.util.Observer;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

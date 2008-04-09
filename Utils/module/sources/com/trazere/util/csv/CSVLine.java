@@ -15,13 +15,12 @@
  */
 package com.trazere.util.csv;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.trazere.util.Assert;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.TextUtils;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The <code>CSVLine</code> class represents lines from CSV files.

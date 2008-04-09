@@ -43,11 +43,19 @@ public interface Record<K, V> {
 	public boolean contains(final K key);
 	
 	/**
+	 * Get the keys identifying the fields of the receiver record.
+	 * 
+	 * @return An unmodiable set of the keys identifying the fields.
+	 */
+	public Set<K> getKeys();
+	
+	/**
 	 * Get the value of the field of the receiver record identified by the given key.
 	 * 
 	 * @param key Key of the field to read.
 	 * @return The value of the field. May be <code>null</code>.
-	 * @throws RecordException When the field does not exist.
+	 * @throws MissingFieldRecordException When the record does not contain a field identified by the given key.
+	 * @throws RecordException When the field cannot be got.
 	 */
 	public V get(final K key)
 	throws RecordException;
@@ -58,27 +66,26 @@ public interface Record<K, V> {
 	 * @param key Key of the field to read.
 	 * @param defaultValue Default value to return. May be <code>null</code>.
 	 * @return The value of the field or the given default value when the field does not exist. May be <code>null</code>.
+	 * @throws RecordException When the field cannot be got.
 	 */
-	public V get(final K key, final V defaultValue);
-	
-	/**
-	 * Get the keys identifying the fields of the receiver record.
-	 * 
-	 * @return An unmodiable set of the keys identifying the fields.
-	 */
-	public Set<K> keys();
+	public V get(final K key, final V defaultValue)
+	throws RecordException;
 	
 	/**
 	 * Get the values of the fields of the receiver record.
 	 * 
 	 * @return An unmodiable collection of the values of the fields.
+	 * @throws RecordException The values of the fields cannot by got.
 	 */
-	public Collection<V> values();
+	public Collection<V> getValues()
+	throws RecordException;
 	
 	/**
-	 * Get the contents of the receiver record represented as a map.
+	 * Get a view of the fields of the receiver record as a map.
 	 * 
 	 * @return An unmodiable map of the values of the fields identified by their keys.
+	 * @throws RecordException The view cannot be built.
 	 */
-	public Map<K, V> asMap();
+	public Map<K, V> asMap()
+	throws RecordException;
 }

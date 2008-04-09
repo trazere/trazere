@@ -15,6 +15,8 @@
  */
 package com.trazere.util.csv;
 
+import com.trazere.util.Assert;
+import com.trazere.util.text.Scanner;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.Reader;
@@ -25,12 +27,8 @@ import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import com.trazere.util.Assert;
-import com.trazere.util.text.Scanner;
 
 /**
  * The <code>CSVReader</code> class provides a tool to read CSV files.
@@ -91,7 +89,7 @@ public class CSVReader {
 	throws IOException {
 		Assert.notNull(reader);
 		Assert.notNull(delimiter);
-		Assert.expression(delimiter.length() > 0, "empty delimiter");
+		Assert.isTrue(delimiter.length() > 0, "empty delimiter");
 		Assert.notNull(options);
 		
 		// Initialization.
@@ -125,7 +123,7 @@ public class CSVReader {
 	public CSVReader(final Reader reader, final String delimiter, final List<String> headers, final Set<CSVReaderOption> options) {
 		Assert.notNull(reader);
 		Assert.notNull(delimiter);
-		Assert.expression(delimiter.length() > 0, "empty delimiter");
+		Assert.isTrue(delimiter.length() > 0, "empty delimiter");
 		Assert.notNull(headers);
 		Assert.notNull(options);
 		

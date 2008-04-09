@@ -15,25 +15,25 @@
  */
 package com.trazere.util.function;
 
+import com.trazere.util.Assert;
+import com.trazere.util.collection.CollectionFactory;
+import com.trazere.util.collection.MapFactory;
+import com.trazere.util.type.Tuple2;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.trazere.util.Assert;
-import com.trazere.util.collection.CollectionFactory;
-import com.trazere.util.collection.MapFactory;
-import com.trazere.util.type.Tuple2;
-
 /**
- * The <code>FunctionUtils</code> provides various helpers regarding the manipulation of filters and functions.
+ * The {@link FunctionUtils} provides various helpers regarding the manipulation of filters and functions.
  * 
  * @see Filter
  * @see Filter2
  * @see Function
  * @see Function2
  * @see Procedure
+ * @see Procedure2
  */
 public class FunctionUtils {
 	/**
@@ -706,6 +706,26 @@ public class FunctionUtils {
 		while (iterator.hasNext()) {
 			final T value = iterator.next();
 			procedure.apply(value);
+		}
+	}
+	
+	/**
+	 * Apply the given procedure to the given bindings.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param bindings Argument bindings.
+	 * @param procedure Procedure to apply.
+	 * @throws ApplicationException When some function application fails.
+	 */
+	public static <K, V> void apply(final Map<? extends K, ? extends V> bindings, final Procedure2<? super K, ? super V> procedure)
+	throws ApplicationException {
+		Assert.notNull(bindings);
+		Assert.notNull(procedure);
+		
+		// Apply.
+		for (final Map.Entry<? extends K, ? extends V> entry : bindings.entrySet()) {
+			procedure.apply(entry.getKey(), entry.getValue());
 		}
 	}
 	

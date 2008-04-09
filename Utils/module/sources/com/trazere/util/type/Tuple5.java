@@ -16,7 +16,7 @@
 package com.trazere.util.type;
 
 import com.trazere.util.Assert;
-import com.trazere.util.ObjectUtils;
+import com.trazere.util.lang.ObjectUtils;
 
 /**
  * The {@link Tuple5} class represents the 5-tuple (quintuplet) data type which stores a sequence of 5 values.

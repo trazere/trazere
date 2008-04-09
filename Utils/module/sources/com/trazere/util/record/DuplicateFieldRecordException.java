@@ -16,16 +16,16 @@
 package com.trazere.util.record;
 
 /**
- * {@link IncompatibleValueRecordException} exceptions are thrown when some value of a record does not have the excepted type.
+ * {@link DuplicateFieldRecordException} exceptions are thrown when some record already contains a value for a given key.
  */
-public class IncompatibleValueRecordException
+public class DuplicateFieldRecordException
 extends RecordException {
 	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * Instantiate a new exception.
 	 */
-	public IncompatibleValueRecordException() {
+	public DuplicateFieldRecordException() {
 		super();
 	}
 	
@@ -34,7 +34,7 @@ extends RecordException {
 	 * 
 	 * @param message Details about the exception.
 	 */
-	public IncompatibleValueRecordException(final String message) {
+	public DuplicateFieldRecordException(final String message) {
 		super(message);
 	}
 	
@@ -43,7 +43,7 @@ extends RecordException {
 	 * 
 	 * @param cause Cause of the exception.
 	 */
-	public IncompatibleValueRecordException(final Throwable cause) {
+	public DuplicateFieldRecordException(final Throwable cause) {
 		super(cause);
 	}
 	
@@ -53,7 +53,7 @@ extends RecordException {
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
 	 */
-	public IncompatibleValueRecordException(final String message, final Throwable cause) {
+	public DuplicateFieldRecordException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 }

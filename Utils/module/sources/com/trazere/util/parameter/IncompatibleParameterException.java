@@ -16,7 +16,7 @@
 package com.trazere.util.parameter;
 
 /**
- * <code>IncompatibleParameterException</code> exceptions are thrown when some parameters doesn't have the excepted type.
+ * {@link IncompatibleParameterException} exceptions are thrown when some parameter doesn't have the appropriate type.
  */
 public class IncompatibleParameterException
 extends ParameterException {

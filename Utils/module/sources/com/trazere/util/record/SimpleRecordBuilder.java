@@ -15,8 +15,10 @@
  */
 package com.trazere.util.record;
 
+import java.util.Map;
+
 /**
- * The {@link SimpleRecordBuilder} class implemtents builders of {@link SimpleRecord simple records}.
+ * The {@link SimpleRecordBuilder} class implements builders of {@link SimpleRecord simple records}.
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
@@ -32,26 +34,37 @@ extends AbstractRecordBuilder<K, V, SimpleRecord<K, V>> {
 	}
 	
 	/**
-	 * Instantiate a new record builder containing the contents of the given record.
+	 * Instantiate a new record builder populated with the fields of the given record.
 	 * 
 	 * @param record Record containing the initial fields of the new record builder.
+	 * @throws RecordException When the record cannot be read.
 	 */
-	public SimpleRecordBuilder(final Record<? extends K, ? extends V> record) {
+	public SimpleRecordBuilder(final Record<? extends K, ? extends V> record)
+	throws RecordException {
 		super(record);
-		
 	}
 	
 	/**
-	 * Instantiate a new record builder containing the contents of the given record builder.
+	 * Instantiate a new record builder populated with the fields of the given record builder.
 	 * 
 	 * @param builder Record builder containing the initial fields of the new record builder.
+	 * @throws RecordException When the record builder cannot be read.
 	 */
-	public SimpleRecordBuilder(final RecordBuilder<? extends K, ? extends V, ?> builder) {
+	public SimpleRecordBuilder(final RecordBuilder<? extends K, ? extends V, ?> builder)
+	throws RecordException {
 		super(builder);
-		
+	}
+	
+	/**
+	 * Instantiate a new record builder populated with the given fields.
+	 * 
+	 * @param fields Values of the initial fields identified by their keys.
+	 */
+	public SimpleRecordBuilder(final Map<? extends K, ? extends V> fields) {
+		super(fields);
 	}
 	
 	public SimpleRecord<K, V> build() {
-		return new SimpleRecord<K, V>(_values);
+		return new SimpleRecord<K, V>(_fields);
 	}
 }

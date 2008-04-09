@@ -15,7 +15,7 @@
  */
 package com.trazere.util.report;
 
-import com.trazere.util.ObjectUtils;
+import com.trazere.util.lang.ObjectUtils;
 
 /**
  * The <code>SimpleReportEntry</code> represents simple report entries.

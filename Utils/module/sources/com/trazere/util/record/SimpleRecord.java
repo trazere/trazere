@@ -15,15 +15,15 @@
  */
 package com.trazere.util.record;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Set;
-
 import com.trazere.util.Assert;
 import com.trazere.util.collection.CollectionUtils;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.TextUtils;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The {@link SimpleRecord} class implements simple records.
@@ -38,6 +38,8 @@ implements Record<K, V>, Describable {
 	
 	/**
 	 * Build an empty record.
+	 * <p>
+	 * This method actually returns a singleton instead of building a new objet.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -55,36 +57,55 @@ implements Record<K, V>, Describable {
 	 * @param <V> Type of the values.
 	 * @param key Key of the field.
 	 * @param value Value of the field.
-	 * @return The record.
+	 * @return The built record.
 	 */
 	public static <K, V> SimpleRecord<K, V> build(final K key, final V value) {
 		return new SimpleRecord<K, V>(CollectionUtils.map(key, value));
 	}
 	
+	/**
+	 * Build a record with the given fields.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param fields Values of the fields identified by their keys.
+	 * @return The built record.
+	 */
+	public static <K, V> SimpleRecord<K, V> build(final Map<? extends K, ? extends V> fields) {
+		Assert.notNull(fields);
+		
+		// Build.
+		return new SimpleRecord<K, V>(new HashMap<K, V>(fields));
+	}
+	
 	/** Values of the fields identified by their keys. */
-	protected Map<K, V> _values;
+	protected Map<K, V> _fields;
 	
 	/**
 	 * Instantiate a new record with the given values.
 	 * 
-	 * @param values Values of the fields identified by their keys.
+	 * @param fields Values of the fields identified by their keys.
 	 */
-	protected SimpleRecord(final Map<K, V> values) {
-		Assert.notNull(values);
+	protected SimpleRecord(final Map<K, V> fields) {
+		Assert.notNull(fields);
 		
 		// Initialization.
-		_values = Collections.unmodifiableMap(values);
+		_fields = Collections.unmodifiableMap(fields);
 	}
 	
 	public boolean isEmpty() {
-		return _values.isEmpty();
+		return _fields.isEmpty();
 	}
 	
 	public boolean contains(final K key) {
 		Assert.notNull(key);
 		
 		// Test.
-		return _values.containsKey(key);
+		return _fields.containsKey(key);
+	}
+	
+	public Set<K> getKeys() {
+		return Collections.unmodifiableSet(_fields.keySet());
 	}
 	
 	public V get(final K key)
@@ -92,10 +113,10 @@ implements Record<K, V>, Describable {
 		Assert.notNull(key);
 		
 		// Get.
-		if (_values.containsKey(key)) {
-			return _values.get(key);
+		if (_fields.containsKey(key)) {
+			return _fields.get(key);
 		} else {
-			throw new MissingValueRecordException("Missing value for key " + key);
+			throw new MissingFieldRecordException("Missing value for key " + key);
 		}
 	}
 	
@@ -103,25 +124,21 @@ implements Record<K, V>, Describable {
 		Assert.notNull(key);
 		
 		// Get.
-		return _values.containsKey(key) ? _values.get(key) : defaultValue;
+		return _fields.containsKey(key) ? _fields.get(key) : defaultValue;
 	}
 	
-	public Set<K> keys() {
-		return _values.keySet();
-	}
-	
-	public Collection<V> values() {
-		return _values.values();
+	public Collection<V> getValues() {
+		return Collections.unmodifiableCollection(_fields.values());
 	}
 	
 	public Map<K, V> asMap() {
-		return _values;
+		return _fields;
 	}
 	
 	@Override
 	public int hashCode() {
 		int result = getClass().hashCode();
-		result = result * 31 + _values.hashCode();
+		result = result * 31 + _fields.hashCode();
 		return result;
 	}
 	
@@ -131,7 +148,7 @@ implements Record<K, V>, Describable {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final SimpleRecord<?, ?> record = (SimpleRecord<?, ?>) object;
-			return _values.equals(record._values);
+			return _fields.equals(record._fields);
 		} else {
 			return false;
 		}
@@ -143,6 +160,6 @@ implements Record<K, V>, Describable {
 	}
 	
 	public void fillDescription(final StringBuilder builder) {
-		builder.append(" - Values = ").append(_values);
+		builder.append(" - Values = ").append(_fields);
 	}
 }

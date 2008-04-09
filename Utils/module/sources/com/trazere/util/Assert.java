@@ -29,10 +29,10 @@ public class Assert {
 	 * @param condition Condition to test.
 	 * @throws AssertException
 	 */
-	public static void expression(final boolean condition)
+	public static void isTrue(final boolean condition)
 	throws AssertException {
 		if (!condition) {
-			throw new AssertException("Condition not fulfilled");
+			throw new AssertException();
 		}
 	}
 	
@@ -43,7 +43,7 @@ public class Assert {
 	 * @param message Failure message.
 	 * @throws AssertException
 	 */
-	public static void expression(final boolean condition, final String message) {
+	public static void isTrue(final boolean condition, final String message) {
 		if (!condition) {
 			throw new AssertException(message);
 		}

@@ -16,7 +16,7 @@
 package com.trazere.util.type;
 
 import com.trazere.util.Assert;
-import com.trazere.util.ObjectUtils;
+import com.trazere.util.lang.ObjectUtils;
 
 /**
  * The {@link Tuple4} class represents the 4-tuple (quadruplet) data type which stores a sequence of 4 values.

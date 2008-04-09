@@ -13,21 +13,22 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.parameter;
+package com.trazere.util.function;
 
 /**
- * The <code>ParameterTransformer</code> interface defines transformations of parameters.
+ * The {@link Procedure2} interface defines two arguments procedures (two arguments functions which return no results).
  * 
- * @param <T> Type of the parameter values.
+ * @param <T1> Type of the first argument values.
+ * @param <T2> Type of the second argument values.
  */
-public interface ParameterTransformer<T> {
+public interface Procedure2<T1, T2> {
 	/**
-	 * Apply the transformation to the given parameter builder.
+	 * Process the given argument values.
 	 * 
-	 * @param parameters Source parameter set being transformed as reference.
-	 * @param builder Parameter builder to transform.
-	 * @throws ParameterException When some error occurs.
+	 * @param value1 First argument value.
+	 * @param value2 Second argument value.
+	 * @throws ApplicationException When the procedure application fails.
 	 */
-	public void apply(final Parameters<T> parameters, final Parameters.Builder<T> builder)
-	throws ParameterException;
+	public void apply(final T1 value1, final T2 value2)
+	throws ApplicationException;
 }

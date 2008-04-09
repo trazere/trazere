@@ -15,6 +15,10 @@
  */
 package com.trazere.util.record;
 
+import com.trazere.util.Assert;
+import com.trazere.util.lang.MultipleComparator;
+import com.trazere.util.lang.ReverseComparator;
+import com.trazere.util.type.Tuple2;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -22,11 +26,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import com.trazere.util.Assert;
-import com.trazere.util.MultipleComparator;
-import com.trazere.util.ReverseComparator;
-import com.trazere.util.type.Tuple2;
 
 /**
  * The {@link RecordUtils} class provides various utilities to manipulate records.
@@ -90,15 +89,17 @@ public class RecordUtils {
 	 * @param builder Record builder to fill.
 	 * @param keys Keys identifying the fields to fill.
 	 * @param value Value to set. May be <code>null</code>.
+	 * @throws RecordException When some field already exists.
 	 */
-	public static <K, V> void fillRecord(final RecordBuilder<? super K, ? super V, ?> builder, final Collection<? extends K> keys, final V value) {
+	public static <K, V> void fillRecord(final RecordBuilder<? super K, ? super V, ?> builder, final Collection<? extends K> keys, final V value)
+	throws RecordException {
 		Assert.notNull(builder);
 		Assert.notNull(keys);
 		
 		// Fill.
 		for (final K key : keys) {
 			if (!builder.contains(key)) {
-				builder.set(key, value);
+				builder.add(key, value);
 			}
 		}
 	}
@@ -152,28 +153,6 @@ public class RecordUtils {
 		// Fill the builder.
 		for (final K key : keys) {
 			builder.add(key, record.get(key));
-		}
-	}
-	
-	/**
-	 * Fill the given destination record builder with the fields of the given record builder identified by the given keys.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param builder Record builder to read.
-	 * @param keys Key of the fields to keep.
-	 * @param resultBuilder Record builder to fill.
-	 * @throws RecordException When some field already exist.
-	 */
-	public static <K, V> void subRecord(final RecordBuilder<? super K, ? extends V, ?> builder, final Set<? extends K> keys, final RecordBuilder<? super K, ? super V, ?> resultBuilder)
-	throws RecordException {
-		Assert.notNull(builder);
-		Assert.notNull(keys);
-		Assert.notNull(resultBuilder);
-		
-		// Fill the builder.
-		for (final K key : keys) {
-			resultBuilder.add(key, builder.get(key));
 		}
 	}
 	

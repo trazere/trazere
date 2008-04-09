@@ -15,13 +15,14 @@
  */
 package com.trazere.util.task;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.trazere.util.Assert;
 import com.trazere.util.report.ReportException;
 import com.trazere.util.report.ReportLevel;
 import com.trazere.util.report.ReportListener;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+// TODO: add some TaskListener combinator to copy events
 
 /**
  * DOCME
@@ -57,6 +58,7 @@ public class TaskListeners {
 		};
 	}
 	
+	// TODO: merge with log() using an option
 	public static TaskListener trace(final Task task, final Log log) {
 		Assert.notNull(task);
 		Assert.notNull(log);

@@ -13,12 +13,13 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util;
+package com.trazere.util.lang;
 
+import com.trazere.util.Assert;
 import java.util.Comparator;
 
 /**
- * The <code>ObjectUtils</code> class provides various helpers regarding the manipulation of objets.
+ * The {@link ObjectUtils} class provides various helpers regarding the manipulation of objets.
  */
 public class ObjectUtils {
 	/**

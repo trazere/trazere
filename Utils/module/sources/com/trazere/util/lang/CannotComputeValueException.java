@@ -13,10 +13,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util;
+package com.trazere.util.lang;
 
 /**
- * {@link CannotComputeValueException} exceptions are thrown when some values cannot be computed.
+ * {@link CannotComputeValueException} exceptions are thrown when some value cannot be computed.
  * <p>
  * These exceptions are runtime exceptions in order to reduce clutter when using computations which cannot fail.
  */

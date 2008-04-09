@@ -15,17 +15,16 @@
  */
 package com.trazere.util.report.store;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
 import com.trazere.util.function.ApplicationException;
 import com.trazere.util.function.Filter;
 import com.trazere.util.function.FunctionUtils;
 import com.trazere.util.report.ReportEntry;
 import com.trazere.util.report.ReportException;
 import com.trazere.util.report.ReportLevel;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 /**
  * The <code>SimpleReportStore</code> class represents report stores relying on the memory.

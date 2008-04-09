@@ -13,19 +13,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.parameter;
+package com.trazere.util.record;
 
 /**
- * <code>MissingParameterException</code> exception are thrown when some parameter already exist.
+ * {@link IncompatibleFieldRecordException} exceptions are thrown when some value of a record does not have the excepted type.
  */
-public class ParameterAlreadyExistsException
-extends ParameterException {
+public class IncompatibleFieldRecordException
+extends RecordException {
 	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * Instantiate a new exception.
 	 */
-	public ParameterAlreadyExistsException() {
+	public IncompatibleFieldRecordException() {
 		super();
 	}
 	
@@ -34,7 +34,7 @@ extends ParameterException {
 	 * 
 	 * @param message Details about the exception.
 	 */
-	public ParameterAlreadyExistsException(final String message) {
+	public IncompatibleFieldRecordException(final String message) {
 		super(message);
 	}
 	
@@ -43,7 +43,7 @@ extends ParameterException {
 	 * 
 	 * @param cause Cause of the exception.
 	 */
-	public ParameterAlreadyExistsException(final Throwable cause) {
+	public IncompatibleFieldRecordException(final Throwable cause) {
 		super(cause);
 	}
 	
@@ -53,7 +53,7 @@ extends ParameterException {
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
 	 */
-	public ParameterAlreadyExistsException(final String message, final Throwable cause) {
+	public IncompatibleFieldRecordException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 }

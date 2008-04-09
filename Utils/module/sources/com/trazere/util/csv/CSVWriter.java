@@ -15,6 +15,7 @@
  */
 package com.trazere.util.csv;
 
+import com.trazere.util.Assert;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -23,8 +24,6 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
-
-import com.trazere.util.Assert;
 
 /**
  * The <code>CSVWriter</code> class provides a tool to write CSV files.
@@ -53,7 +52,7 @@ public class CSVWriter {
 	public CSVWriter(final Writer writer, final String delimiter, final List<String> headers, final EnumSet<CSVWriterOption> options) {
 		Assert.notNull(writer);
 		Assert.notNull(delimiter);
-		Assert.expression(delimiter.length() > 0, "Empty delimiter");
+		Assert.isTrue(delimiter.length() > 0, "Empty delimiter");
 		Assert.notNull(headers);
 		
 		// Initialization.

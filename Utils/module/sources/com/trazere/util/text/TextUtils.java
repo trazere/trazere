@@ -15,9 +15,8 @@
  */
 package com.trazere.util.text;
 
-import java.util.Collection;
-
 import com.trazere.util.Assert;
+import java.util.Collection;
 
 /**
  * The <code>TextUtils</code> class provides various helpers regarding the manipulation of text.

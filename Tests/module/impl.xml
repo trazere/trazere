@@ -25,7 +25,7 @@
 		<javac srcdir="${tests.sources}" destdir="${tests.build.classes}" source="${trazere.java.version}" debug="${trazere.java.debug}" target="${trazere.java.version}" failonerror="true" encoding="${trazere.java.encoding}">
 			<include name="**/*.java" />
 			<classpath>
-				<path refid="utils.dist.classpath" />
+				<pathelement location="${utils.build.jar}" />
 				<path refid="tools.commons-logging.classpath" />
 			</classpath>
 		</javac>

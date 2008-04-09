@@ -15,12 +15,11 @@
  */
 package com.trazere.util.function;
 
+import com.trazere.util.Assert;
 import java.util.Map;
 
-import com.trazere.util.Assert;
-
 /**
- * The <code>Functions</code> class provides various standard functions.
+ * The {@link Functions} class provides various standard functions.
  * 
  * @see Function
  * @see Function2

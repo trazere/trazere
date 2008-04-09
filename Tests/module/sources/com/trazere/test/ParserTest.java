@@ -15,10 +15,6 @@
  */
 package com.trazere.test;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import com.trazere.util.collection.CollectionUtils;
 import com.trazere.util.parser.Parser;
 import com.trazere.util.parser.ParserException;
@@ -31,6 +27,9 @@ import com.trazere.util.parser.core.CoreParsers;
 import com.trazere.util.parser.core.ParserReference;
 import com.trazere.util.parser.text.TextParsers;
 import com.trazere.util.type.Maybe;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * DOCME

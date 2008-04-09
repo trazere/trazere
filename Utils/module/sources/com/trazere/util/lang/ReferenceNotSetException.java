@@ -13,19 +13,23 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.record;
+package com.trazere.util.lang;
 
 /**
- * {@link MissingValueRecordException} exceptions are thrown when some value is missing from a record.
+ * {@link ReferenceNotSetException} exceptions are thrown when trying to reset some reference which has not been set.
+ * <p>
+ * These exceptions are runtime exceptions in order to reduce clutter when using computations which cannot fail.
+ * 
+ * @see LazyReference
  */
-public class MissingValueRecordException
-extends RecordException {
+public class ReferenceNotSetException
+extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * Instantiate a new exception.
 	 */
-	public MissingValueRecordException() {
+	public ReferenceNotSetException() {
 		super();
 	}
 	
@@ -34,7 +38,7 @@ extends RecordException {
 	 * 
 	 * @param message Details about the exception.
 	 */
-	public MissingValueRecordException(final String message) {
+	public ReferenceNotSetException(final String message) {
 		super(message);
 	}
 	
@@ -43,7 +47,7 @@ extends RecordException {
 	 * 
 	 * @param cause Cause of the exception.
 	 */
-	public MissingValueRecordException(final Throwable cause) {
+	public ReferenceNotSetException(final Throwable cause) {
 		super(cause);
 	}
 	
@@ -53,7 +57,7 @@ extends RecordException {
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
 	 */
-	public MissingValueRecordException(final String message, final Throwable cause) {
+	public ReferenceNotSetException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 }

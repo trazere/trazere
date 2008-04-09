@@ -16,7 +16,7 @@
 package com.trazere.util.parameter;
 
 /**
- * <code>ParameterException</code> exceptions are thrown when parameter related errors occur.
+ * {@link ParameterException} exceptions are thrown when parameter related errors occur.
  */
 public class ParameterException
 extends Exception {
