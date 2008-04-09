@@ -1,5 +1,9 @@
 package com.trazere.util.collection;
 
+import com.trazere.util.Assert;
+import com.trazere.util.function.ApplicationException;
+import com.trazere.util.function.Function;
+import com.trazere.util.type.Tuple2;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -10,11 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
-
-import com.trazere.util.Assert;
-import com.trazere.util.function.ApplicationException;
-import com.trazere.util.function.Function;
-import com.trazere.util.type.Tuple2;
 
 /**
  * The <code>CollectionUtils</code> class provides various helpers regarding the manipulation of collections and maps.

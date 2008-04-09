@@ -15,12 +15,11 @@
  */
 package com.trazere.util.report.store;
 
-import java.util.List;
-
 import com.trazere.util.function.Filter;
 import com.trazere.util.report.ReportEntry;
 import com.trazere.util.report.ReportException;
 import com.trazere.util.report.ReportListener;
+import java.util.List;
 
 /**
  * The <code>ReportStore</code> interface defines report entry stores.

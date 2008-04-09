@@ -15,13 +15,12 @@
  */
 package com.trazere.util.collection;
 
+import com.trazere.util.Assert;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
-import com.trazere.util.Assert;
 
 // TODO: get should return unmodifiable collections
 

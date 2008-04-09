@@ -15,13 +15,12 @@
  */
 package com.trazere.util.configuration;
 
+import com.trazere.util.Assert;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-
-import com.trazere.util.Assert;
 
 /**
  * The <code>ConfigurationUtils</code> class provides various helpers regarding the configuration.

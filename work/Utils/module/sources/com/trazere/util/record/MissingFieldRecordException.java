@@ -13,23 +13,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util;
+package com.trazere.util.record;
 
 /**
- * {@link ReferenceAlreadySetException} exceptions are thrown when trying to set some reference which has already been set.
- * <p>
- * These exceptions are runtime exceptions in order to reduce clutter when using computations which cannot fail.
- * 
- * @see LazyReference
+ * {@link MissingFieldRecordException} exceptions are thrown when some value is missing from a record.
  */
-public class ReferenceAlreadySetException
-extends RuntimeException {
+public class MissingFieldRecordException
+extends RecordException {
 	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * Instantiate a new exception.
 	 */
-	public ReferenceAlreadySetException() {
+	public MissingFieldRecordException() {
 		super();
 	}
 	
@@ -38,7 +34,7 @@ extends RuntimeException {
 	 * 
 	 * @param message Details about the exception.
 	 */
-	public ReferenceAlreadySetException(final String message) {
+	public MissingFieldRecordException(final String message) {
 		super(message);
 	}
 	
@@ -47,7 +43,7 @@ extends RuntimeException {
 	 * 
 	 * @param cause Cause of the exception.
 	 */
-	public ReferenceAlreadySetException(final Throwable cause) {
+	public MissingFieldRecordException(final Throwable cause) {
 		super(cause);
 	}
 	
@@ -57,7 +53,7 @@ extends RuntimeException {
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
 	 */
-	public ReferenceAlreadySetException(final String message, final Throwable cause) {
+	public MissingFieldRecordException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 }

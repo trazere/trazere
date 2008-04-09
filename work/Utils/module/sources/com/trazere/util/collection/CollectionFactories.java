@@ -15,13 +15,12 @@
  */
 package com.trazere.util.collection;
 
+import com.trazere.util.lang.ObjectUtils;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.TreeSet;
-
-import com.trazere.util.ObjectUtils;
 
 /**
  * The <code>CollectionFactories</code> class provides various standard collection factories.

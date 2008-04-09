@@ -15,10 +15,6 @@
  */
 package com.trazere.util.parser.core;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import com.trazere.util.Assert;
 import com.trazere.util.parser.AbstractParser;
 import com.trazere.util.parser.AbstractParserHandler;
@@ -27,6 +23,9 @@ import com.trazere.util.parser.ParserClosure;
 import com.trazere.util.parser.ParserException;
 import com.trazere.util.parser.ParserHandler;
 import com.trazere.util.parser.ParserState;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * DOCME

@@ -15,13 +15,12 @@
  */
 package com.trazere.util.task;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.List;
-
 import com.trazere.util.csv.CSVLine;
 import com.trazere.util.report.ReportException;
 import com.trazere.util.report.store.CSVReportStore;
+import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * The {@link AbstractTaskCSVReportStore} class represents task report stores relying on CSV files.

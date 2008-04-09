@@ -15,12 +15,11 @@
  */
 package com.trazere.util.parser;
 
+import com.trazere.util.lang.LazyReference;
+import com.trazere.util.lang.ReferenceAlreadySetException;
+import com.trazere.util.type.Maybe;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.trazere.util.LazyReference;
-import com.trazere.util.ReferenceAlreadySetException;
-import com.trazere.util.type.Maybe;
 
 /**
  * DOCME

@@ -1,17 +1,16 @@
 package com.trazere.util.cache;
 
+import com.trazere.util.Assert;
+import com.trazere.util.function.Filter;
+import com.trazere.util.function.FunctionUtils;
+import com.trazere.util.text.Describable;
+import com.trazere.util.text.TextUtils;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
-import com.trazere.util.Assert;
-import com.trazere.util.function.Filter;
-import com.trazere.util.function.FunctionUtils;
-import com.trazere.util.text.Describable;
-import com.trazere.util.text.TextUtils;
 
 /**
  * The <code>Cache</code> abstract class provides the core implementation single value caches.

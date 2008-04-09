@@ -16,13 +16,10 @@
 package com.trazere.util.record;
 
 import java.util.Map;
-
-// TODO: inherit from Record ??
+import java.util.Set;
 
 /**
  * The {@link RecordBuilder} interface defines builders of {@link Record records}.
- * <p>
- * Record builders behave like mutable records with a {@link #build() snapshot} method.
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
@@ -31,31 +28,40 @@ import java.util.Map;
  */
 public interface RecordBuilder<K, V, R extends Record<K, V>> {
 	/**
-	 * Add a new field identified by the given key and containing the given value to the receiver record.
+	 * Add a field identified by the given key and containing the given value to the receiver record builder.
+	 * <p>
+	 * The receiver builder must not contain a field identified by the given key.
 	 * 
-	 * @param key Key identifying the new field.
-	 * @param value Value of the new field.
-	 * @throws RecordException When the field already exists.
+	 * @param key Key identifying the field to add.
+	 * @param value Value of the field to add.
+	 * @throws DuplicateFieldRecordException When the builder contains a field identified by the given key.
+	 * @throws RecordException When the field cannot be added.
 	 */
 	public void add(final K key, final V value)
 	throws RecordException;
 	
 	/**
-	 * Add new fields corresponding the contents of the given record to the receiver record.
+	 * Add fields corresponding to the fields of the given record to the receiver record builder.
+	 * <p>
+	 * The receiver builder must not contain fields identified by keys of the fields of the given record.
 	 * 
-	 * @param record Record containing the new fields to add.
-	 * @throws RecordException When some field already exists.
+	 * @param record Record containing the fields to add.
+	 * @throws DuplicateFieldRecordException When the builder contains fields identified by keys of the fields of the given record.
+	 * @throws RecordException When some field cannot be added.
 	 */
 	public void addAll(final Record<? extends K, ? extends V> record)
 	throws RecordException;
 	
 	/**
-	 * Add new fields corresponding the contents of the given record builder to the receiver record.
+	 * Add the given fields to the receiver record builder.
+	 * <p>
+	 * The receiver builder must not contain fields identified by keys of the given fields.
 	 * 
-	 * @param builder Record builder containing the new fields to add.
-	 * @throws RecordException When some field already exists.
+	 * @param fields Values of the fields to add identified by their keys.
+	 * @throws DuplicateFieldRecordException When the builder contains fields identified by keys of the given fields.
+	 * @throws RecordException When some field cannot be added.
 	 */
-	public void addAll(final RecordBuilder<? extends K, ? extends V, ?> builder)
+	public void addAll(final Map<? extends K, ? extends V> fields)
 	throws RecordException;
 	
 	/**
@@ -74,84 +80,67 @@ public interface RecordBuilder<K, V, R extends Record<K, V>> {
 	public boolean contains(final K key);
 	
 	/**
-	 * Get the value of the field of the receiver record builder identified by the given key.
+	 * Get the keys of the fields of the receiver record builder.
 	 * 
-	 * @param key Key of the field to read.
-	 * @return The value of the field. May be <code>null</code>.
-	 * @throws RecordException When the field does not exist.
+	 * @return An unmodiable set of the keys identifying the fields.
 	 */
-	public V get(final K key)
-	throws RecordException;
-	
-	/**
-	 * Get the value of the field of the receiver record builder identified by the given key.
-	 * 
-	 * @param key Key of the field to read.
-	 * @param defaultValue Default value to return. May be <code>null</code>.
-	 * @return The value of the field or the given default value when the field does not exist. May be <code>null</code>.
-	 */
-	public V get(final K key, final V defaultValue);
-	
-	/**
-	 * Get the contents of the receiver record represented as a map.
-	 * 
-	 * @return An unmodiable map of the values of the fields identified by their keys.
-	 */
-	public Map<K, V> asMap();
-	
-	/**
-	 * Set the given value in the field identified by the given key in the receiver record builder.
-	 * <p>
-	 * A new field is created if needed.
-	 * 
-	 * @param key Key of the field to set.
-	 * @param value Value of the field. May be <code>null</code>.
-	 */
-	public void set(final K key, final V value);
-	
-	/**
-	 * Set the fields corresponding to the contents of the given record in the receiver record builder.
-	 * <p>
-	 * New fields are created if needed.
-	 * 
-	 * @param record Record containing the fields to set.
-	 */
-	public void setAll(final Record<? extends K, ? extends V> record);
-	
-	/**
-	 * Set the fields corresponding to the contents of the given record builder in the receiver record builder.
-	 * <p>
-	 * New fields are created if needed.
-	 * 
-	 * @param builder Record builder containing the fields to set.
-	 */
-	public void setAll(final RecordBuilder<? extends K, ? extends V, ?> builder);
+	public Set<K> getKeys();
 	
 	/**
 	 * Remove the field identified by the given key from the receiver record builder.
+	 * <p>
+	 * The receiver builder must contain a field identified by the given key.
 	 * 
 	 * @param key Key of the field to remove.
-	 * @throws RecordException When the field does not exist.
+	 * @throws MissingFieldRecordException When the builder does not contain a field identified by the given key.
+	 * @throws RecordException When the field cannot be removed.
 	 */
 	public void remove(final K key)
 	throws RecordException;
 	
 	/**
-	 * Remove the field identified by the given key from the receiver record builder if it exists.
-	 * 
-	 * @param key Key of the field to remove.
-	 */
-	public void clear(final K key);
-	
-	/**
 	 * Remove all fields from the receiver record.
+	 * 
+	 * @throws RecordException When the builder cannot be cleared.
 	 */
-	public void clear();
+	public void clear()
+	throws RecordException;
 	
 	/**
-	 * Build a new record with the contents of the receiver record builder.
+	 * Populate the given record builder with the fields of the receiver record builder.
+	 * <p>
+	 * The given builder must not contain fields identified by keys of fields of the receiver builder.
+	 * 
+	 * @param <B> Type of the record builder to fill.
+	 * @param builder Record builder to fill.
+	 * @return The given record builder.
+	 * @throws DuplicateFieldRecordException When the given builder contain fields identified by keys of the given record builder.
+	 * @throws RecordException When the given builder cannot be populated.
+	 */
+	public <B extends RecordBuilder<? super K, ? super V, ?>> B populate(final B builder)
+	throws RecordException;
+	
+	/**
+	 * Populate the given record builder with the fields of the receiver record builder identified by the given keys.
+	 * <p>
+	 * The receiver builder must contain fields for all given keys and the given builder must not contain fields identified by given keys.
+	 * 
+	 * @param <B> Type of the record builder to fill.
+	 * @param builder Record builder to fill.
+	 * @param keys Keys of the fields to copy.
+	 * @return The given record builder.
+	 * @throws DuplicateFieldRecordException When the given builder contain fields identified by keys of the given record builder.
+	 * @throws RecordException When the given builder cannot be populated.
+	 */
+	public <B extends RecordBuilder<? super K, ? super V, ?>> B populate(final B builder, final Set<? extends K> keys)
+	throws RecordException;
+	
+	/**
+	 * Build a new record filled with the fields of the receiver record builder.
 	 * 
 	 * @return The built record.
+	 * @throws RecordException When the record cannot be built.
 	 */
-	public R build();
+	public R build()
+	throws RecordException;
 }

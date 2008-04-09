@@ -15,13 +15,12 @@
  */
 package com.trazere.util.report.store;
 
-import java.util.Date;
-
 import com.trazere.util.Assert;
 import com.trazere.util.report.ReportEntry;
 import com.trazere.util.report.ReportLevel;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.TextUtils;
+import java.util.Date;
 
 /**
  * The <code>ReportStoreEntry</code> class represents entries of the report stores.

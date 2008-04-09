@@ -16,7 +16,7 @@
 package com.trazere.util.function;
 
 /**
- * The <code>Filter</code> interface defines two arguments filter functions.
+ * The {@link Filter2} interface defines two arguments filter functions.
  * 
  * @param <T1> Type of the first argument values.
  * @param <T2> Type of the second argument values.

@@ -15,10 +15,9 @@
  */
 package com.trazere.util.report;
 
+import com.trazere.util.Assert;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import com.trazere.util.Assert;
 
 /**
  * The <code>LogReportListener</code> class represents report listeners which forward the entries to a logger.

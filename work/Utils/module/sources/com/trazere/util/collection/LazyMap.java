@@ -15,17 +15,16 @@
  */
 package com.trazere.util.collection;
 
+import com.trazere.util.Assert;
+import com.trazere.util.function.ApplicationException;
+import com.trazere.util.function.Function;
+import com.trazere.util.lang.CannotComputeValueException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
-
-import com.trazere.util.Assert;
-import com.trazere.util.CannotComputeValueException;
-import com.trazere.util.function.ApplicationException;
-import com.trazere.util.function.Function;
 
 /**
  * The <code>LazyMap</code> class represents maps which can lazily fill themselves upon access.

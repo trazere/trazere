@@ -15,11 +15,10 @@
  */
 package com.trazere.util.text;
 
+import com.trazere.util.Assert;
 import java.io.IOException;
 import java.io.PushbackReader;
 import java.io.Reader;
-
-import com.trazere.util.Assert;
 
 /**
  * The <code>Scanner</code> class provides a tool to analyse character streams.
@@ -340,7 +339,7 @@ public class Scanner {
 	public String scanUpToString(final String string)
 	throws IOException {
 		Assert.notNull(string);
-		Assert.expression(string.length() > 0, "empty string");
+		Assert.isTrue(string.length() > 0, "empty string");
 		
 		// Scan.
 		final char c = string.charAt(0);

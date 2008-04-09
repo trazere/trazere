@@ -18,13 +18,13 @@ package com.trazere.util.function;
 import java.util.Collection;
 
 /**
- * The <code>Filters</code> class provides various standard filter functions.
+ * The {@link Filters} class provides various standard filter functions.
  * 
  * @see Filter
  * @see Filter2
  */
 public class Filters {
-	private static final Filter<Object> ALL = new Filter<Object>() {
+	private static final Filter<?> ALL = new Filter<Object>() {
 		public boolean filter(final Object value) {
 			return true;
 		}
@@ -41,7 +41,7 @@ public class Filters {
 		return (Filter<T>) ALL;
 	}
 	
-	private static final Filter<Object> NONE = new Filter<Object>() {
+	private static final Filter<?> NONE = new Filter<Object>() {
 		public boolean filter(final Object value) {
 			return false;
 		}
@@ -58,7 +58,7 @@ public class Filters {
 		return (Filter<T>) NONE;
 	}
 	
-	private static final Filter2<Object, Object> ALL2 = new Filter2<Object, Object>() {
+	private static final Filter2<?, ?> ALL2 = new Filter2<Object, Object>() {
 		public boolean filter(final Object value1, final Object value2) {
 			return true;
 		}
@@ -76,7 +76,7 @@ public class Filters {
 		return (Filter2<T1, T2>) ALL2;
 	}
 	
-	private static final Filter2<Object, Object> NONE2 = new Filter2<Object, Object>() {
+	private static final Filter2<?, ?> NONE2 = new Filter2<Object, Object>() {
 		public boolean filter(final Object value1, final Object value2) {
 			return false;
 		}

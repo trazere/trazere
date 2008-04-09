@@ -16,7 +16,7 @@
 package com.trazere.util.function;
 
 /**
- * The <code>Procedure</code> interface defines one argument procedures (one argument functions which return no results).
+ * The {@link Procedure} interface defines one argument procedures (one argument functions which return no results).
  * 
  * @param <T> Type of the argument values.
  */

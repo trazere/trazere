@@ -15,6 +15,9 @@
  */
 package com.trazere.util.report.store;
 
+import com.trazere.util.function.ApplicationException;
+import com.trazere.util.function.Filter;
+import com.trazere.util.report.ReportEntry;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -22,10 +25,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
-
-import com.trazere.util.function.ApplicationException;
-import com.trazere.util.function.Filter;
-import com.trazere.util.report.ReportEntry;
 
 /**
  * The <code>ReportStoreUtils</code> class provides various helpers regarding the manipulation of report stores.

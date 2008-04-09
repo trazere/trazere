@@ -16,7 +16,7 @@
 package com.trazere.util.task;
 
 import com.trazere.util.Assert;
-import com.trazere.util.ObjectUtils;
+import com.trazere.util.lang.ObjectUtils;
 import com.trazere.util.report.ReportEntry;
 import com.trazere.util.report.ReportUtils;
 

@@ -16,7 +16,7 @@
 package com.trazere.util.function;
 
 /**
- * The <code>Function2</code> interface defines two arguments functions.
+ * The {@link Function2} interface defines two arguments functions.
  * 
  * @param <T1> Type of the first argument values.
  * @param <T2> Type of the second argument values.
@@ -29,7 +29,7 @@ public interface Function2<T1, T2, R> {
 	 * @param value1 First argument value.
 	 * @param value2 Second argument value.
 	 * @return The result of the function application.
-	 * @throws ApplicationException When the function application fails.
+	 * @throws ApplicationException When the procedure application fails.
 	 */
 	public R apply(final T1 value1, final T2 value2)
 	throws ApplicationException;

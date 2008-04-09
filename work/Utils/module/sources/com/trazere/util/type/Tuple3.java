@@ -16,7 +16,7 @@
 package com.trazere.util.type;
 
 import com.trazere.util.Assert;
-import com.trazere.util.ObjectUtils;
+import com.trazere.util.lang.ObjectUtils;
 
 /**
  * The {@link Tuple3} class represents the 3-tuple (triplet) data type which stores a sequence of 3 values.

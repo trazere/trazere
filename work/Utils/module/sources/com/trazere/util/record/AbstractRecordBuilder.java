@@ -15,66 +15,85 @@
  */
 package com.trazere.util.record;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.trazere.util.Assert;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.TextUtils;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
- * The {@link AbstractRecordBuilder} abstract class provides a skeleton for record builder implementations
+ * The {@link AbstractRecordBuilder} abstract class implements skeletons of builders of {@link Record records}.
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  * @param <R> Type of the records.
+ * @see Record
  */
 public abstract class AbstractRecordBuilder<K, V, R extends Record<K, V>>
 implements RecordBuilder<K, V, R>, Describable {
-	protected final Map<K, V> _values;
+	/** Values of the fields of the builder identified by their keys. */
+	protected final Map<K, V> _fields;
 	
 	/**
 	 * Instantiate a new empty record builder.
 	 */
 	public AbstractRecordBuilder() {
 		// Initialization.
-		_values = new HashMap<K, V>();
+		_fields = new HashMap<K, V>();
 	}
 	
 	/**
-	 * Instantiate a new record builder containing the contents of the given record.
+	 * Instantiate a new record builder populated with the fields of the given record.
 	 * 
 	 * @param record Record containing the initial fields of the new record builder.
+	 * @throws RecordException When the record cannot be read.
 	 */
-	public AbstractRecordBuilder(final Record<? extends K, ? extends V> record) {
+	public AbstractRecordBuilder(final Record<? extends K, ? extends V> record)
+	throws RecordException {
 		Assert.notNull(record);
 		
 		// Initialization.
-		_values = new HashMap<K, V>(record.asMap());
+		_fields = new HashMap<K, V>(record.asMap());
 	}
 	
 	/**
-	 * Instantiate a new record builder containing the contents of the given record builder.
+	 * Instantiate a new record builder populated with the fields of the given record builder.
 	 * 
 	 * @param builder Record builder containing the initial fields of the new record builder.
+	 * @throws RecordException When the record builder cannot be read.
 	 */
-	public AbstractRecordBuilder(final RecordBuilder<? extends K, ? extends V, ?> builder) {
+	public AbstractRecordBuilder(final RecordBuilder<? extends K, ? extends V, ?> builder)
+	throws RecordException {
 		Assert.notNull(builder);
 		
+		// Populate.
+		_fields = new HashMap<K, V>();
+		builder.populate(this);
+	}
+	
+	/**
+	 * Instantiate a new record builder populated with the given fields.
+	 * 
+	 * @param fields Values of the initial fields identified by their keys.
+	 */
+	public AbstractRecordBuilder(final Map<? extends K, ? extends V> fields) {
+		Assert.notNull(fields);
+		
 		// Initialization.
-		_values = new HashMap<K, V>(builder.asMap());
+		_fields = new HashMap<K, V>(fields);
 	}
 	
 	public void add(final K key, final V value)
 	throws RecordException {
 		Assert.notNull(key);
 		
-		// Add.
-		if (!_values.containsKey(key)) {
-			_values.put(key, value);
+		// Add the field.
+		if (!_fields.containsKey(key)) {
+			_fields.put(key, value);
 		} else {
-			throw new DuplicateValueRecordException("Value already defined for key " + key);
+			throw new DuplicateFieldRecordException("Field \"" + key + "\" already exists in builder " + this);
 		}
 	}
 	
@@ -82,112 +101,82 @@ implements RecordBuilder<K, V, R>, Describable {
 	throws RecordException {
 		Assert.notNull(record);
 		
-		// Add.
+		// Add the fields.
 		addAll(record.asMap());
 	}
 	
-	public void addAll(final RecordBuilder<? extends K, ? extends V, ?> builder)
+	public void addAll(final Map<? extends K, ? extends V> fields)
 	throws RecordException {
-		Assert.notNull(builder);
+		Assert.notNull(fields);
 		
-		// Add.
-		addAll(builder.asMap());
-	}
-	
-	protected void addAll(final Map<? extends K, ? extends V> values)
-	throws RecordException {
-		// Iterate over the values.
-		for (final Map.Entry<? extends K, ? extends V> entry : values.entrySet()) {
+		// Add the fields.
+		for (final Map.Entry<? extends K, ? extends V> entry : fields.entrySet()) {
 			final K key = entry.getKey();
-			final V value = entry.getValue();
-			
-			// Add.
-			if (!_values.containsKey(key)) {
-				_values.put(key, value);
+			if (!_fields.containsKey(key)) {
+				_fields.put(key, entry.getValue());
 			} else {
-				throw new DuplicateValueRecordException("Value already defined for key " + key);
+				throw new DuplicateFieldRecordException("Field \"" + key + "\" already exists in builder " + this);
 			}
 		}
 	}
 	
 	public boolean isEmpty() {
-		return _values.isEmpty();
+		return _fields.isEmpty();
 	}
 	
 	public boolean contains(final K key) {
 		Assert.notNull(key);
 		
 		// Test.
-		return _values.containsKey(key);
+		return _fields.containsKey(key);
 	}
 	
-	public V get(final K key)
-	throws RecordException {
-		Assert.notNull(key);
-		
-		// Get.
-		if (_values.containsKey(key)) {
-			return _values.get(key);
-		} else {
-			throw new MissingValueRecordException("Missing value for key " + key);
-		}
-	}
-	
-	public V get(final K key, final V defaultValue) {
-		Assert.notNull(key);
-		Assert.notNull(defaultValue);
-		
-		// Get.
-		return _values.containsKey(key) ? _values.get(key) : defaultValue;
-	}
-	
-	public Map<K, V> asMap() {
-		return Collections.unmodifiableMap(_values);
-	}
-	
-	public void set(final K key, final V value) {
-		Assert.notNull(value);
-		
-		// Set.
-		_values.put(key, value);
-	}
-	
-	public void setAll(final Record<? extends K, ? extends V> record) {
-		Assert.notNull(record);
-		
-		// Set.
-		_values.putAll(record.asMap());
-	}
-	
-	public void setAll(final RecordBuilder<? extends K, ? extends V, ?> builder) {
-		Assert.notNull(builder);
-		
-		// Set.
-		_values.putAll(builder.asMap());
+	public Set<K> getKeys() {
+		return Collections.unmodifiableSet(_fields.keySet());
 	}
 	
 	public void remove(final K key)
 	throws RecordException {
 		Assert.notNull(key);
 		
-		// Remove.
-		if (_values.containsKey(key)) {
-			_values.remove(key);
+		// Remove the field.
+		if (_fields.containsKey(key)) {
+			_fields.remove(key);
 		} else {
-			throw new MissingValueRecordException("Missing value for key " + key);
+			throw new MissingFieldRecordException("Field \"" + key + "\" does not exist in builder " + this);
 		}
 	}
 	
-	public void clear(final K key) {
-		Assert.notNull(key);
-		
-		// Clear.
-		_values.remove(key);
+	public void clear() {
+		// Remove all fields.
+		_fields.clear();
 	}
 	
-	public void clear() {
-		// Clear.
-		_values.clear();
+	public <B extends RecordBuilder<? super K, ? super V, ?>> B populate(final B builder)
+	throws RecordException {
+		Assert.notNull(builder);
+		
+		// Fill.
+		builder.addAll(Collections.unmodifiableMap(_fields));
+		
+		return builder;
+	}
+	
+	public <B extends RecordBuilder<? super K, ? super V, ?>> B populate(final B builder, final Set<? extends K> keys)
+	throws RecordException {
+		Assert.notNull(builder);
+		Assert.notNull(keys);
+		
+		// Fill.
+		for (final K key : keys) {
+			if (_fields.containsKey(key)) {
+				builder.add(key, _fields.get(key));
+			} else {
+				throw new MissingFieldRecordException("Field \"" + key + "\" does not exist in builder " + this);
+			}
+		}
+		
+		return builder;
 	}
 	
 	@Override
@@ -196,6 +185,6 @@ implements RecordBuilder<K, V, R>, Describable {
 	}
 	
 	public void fillDescription(final StringBuilder builder) {
-		builder.append(" - Values = ").append(_values);
+		builder.append(" - Values = ").append(_fields);
 	}
 }

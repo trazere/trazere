@@ -16,7 +16,7 @@
 package com.trazere.util.function;
 
 /**
- * The <code>Function</code> interface defines one argument functions.
+ * The {@link Function} interface defines one argument functions.
  * 
  * @param <T> Type of the argument values.
  * @param <R> Type of the result values.

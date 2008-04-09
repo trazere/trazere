@@ -15,9 +15,8 @@
  */
 package com.trazere.util.configuration;
 
-import java.util.Properties;
-
 import com.trazere.util.Assert;
+import java.util.Properties;
 
 /**
  * The <code>ReloadableProperties</code> class represent reloadble persistent sets of properties stored in files.

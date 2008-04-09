@@ -1,15 +1,14 @@
 package com.trazere.test;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import com.trazere.util.collection.CollectionFactories;
 import com.trazere.util.collection.CollectionUtils;
 import com.trazere.util.function.Filter;
 import com.trazere.util.function.Function;
 import com.trazere.util.function.FunctionUtils;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * DOCME

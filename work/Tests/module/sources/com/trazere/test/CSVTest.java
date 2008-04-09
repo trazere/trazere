@@ -1,5 +1,11 @@
 package com.trazere.test;
 
+import com.trazere.util.collection.CollectionUtils;
+import com.trazere.util.csv.CSVLine;
+import com.trazere.util.csv.CSVReader;
+import com.trazere.util.csv.CSVReaderOption;
+import com.trazere.util.csv.CSVWriter;
+import com.trazere.util.csv.CSVWriterOption;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -9,13 +15,6 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
-
-import com.trazere.util.collection.CollectionUtils;
-import com.trazere.util.csv.CSVLine;
-import com.trazere.util.csv.CSVReader;
-import com.trazere.util.csv.CSVReaderOption;
-import com.trazere.util.csv.CSVWriter;
-import com.trazere.util.csv.CSVWriterOption;
 
 /**
  * DOCME

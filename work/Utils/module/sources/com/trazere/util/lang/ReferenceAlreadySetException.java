@@ -13,19 +13,23 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.parameter;
+package com.trazere.util.lang;
 
 /**
- * {@link MissingParameterException} exceptions are thrown when some parameter is missing.
+ * {@link ReferenceAlreadySetException} exceptions are thrown when trying to set some reference which has already been set.
+ * <p>
+ * These exceptions are runtime exceptions in order to reduce clutter when using computations which cannot fail.
+ * 
+ * @see LazyReference
  */
-public class MissingParameterException
-extends ParameterException {
+public class ReferenceAlreadySetException
+extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * Instantiate a new exception.
 	 */
-	public MissingParameterException() {
+	public ReferenceAlreadySetException() {
 		super();
 	}
 	
@@ -34,7 +38,7 @@ extends ParameterException {
 	 * 
 	 * @param message Details about the exception.
 	 */
-	public MissingParameterException(final String message) {
+	public ReferenceAlreadySetException(final String message) {
 		super(message);
 	}
 	
@@ -43,7 +47,7 @@ extends ParameterException {
 	 * 
 	 * @param cause Cause of the exception.
 	 */
-	public MissingParameterException(final Throwable cause) {
+	public ReferenceAlreadySetException(final Throwable cause) {
 		super(cause);
 	}
 	
@@ -53,7 +57,7 @@ extends ParameterException {
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
 	 */
-	public MissingParameterException(final String message, final Throwable cause) {
+	public ReferenceAlreadySetException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 }

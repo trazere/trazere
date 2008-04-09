@@ -15,8 +15,8 @@
  */
 package com.trazere.util.type;
 
-import com.trazere.util.CannotComputeValueException;
-import com.trazere.util.ObjectUtils;
+import com.trazere.util.lang.CannotComputeValueException;
+import com.trazere.util.lang.ObjectUtils;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.TextUtils;
 
