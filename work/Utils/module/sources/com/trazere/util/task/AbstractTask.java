@@ -15,7 +15,6 @@
  */
 package com.trazere.util.task;
 
-import com.trazere.util.Assert;
 import java.util.Collections;
 import java.util.List;
 
@@ -35,7 +34,7 @@ implements Task {
 	 * @param name Name of the task.
 	 */
 	public AbstractTask(final String name) {
-		Assert.notNull(name);
+		assert null != name;
 		
 		// Initialize instance.
 		_name = name;
@@ -52,7 +51,7 @@ implements Task {
 	
 	public void performTask(final List<TaskListener> listeners)
 	throws TaskException {
-		Assert.notNull(listeners);
+		assert null != listeners;
 		
 		// Start.
 		taskStarted(listeners);

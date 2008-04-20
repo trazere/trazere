@@ -15,7 +15,6 @@
  */
 package com.trazere.util.parser.core;
 
-import com.trazere.util.Assert;
 import com.trazere.util.parser.AbstractParser;
 import com.trazere.util.parser.AbstractParserHandler;
 import com.trazere.util.parser.Parser;
@@ -42,7 +41,7 @@ extends AbstractParser<Token, Result> {
 		super(description);
 		
 		// Checks.
-		Assert.notNull(subParsers);
+		assert null != subParsers;
 		
 		// Initialization.
 		_subParsers = Collections.unmodifiableList(subParsers);

@@ -15,7 +15,7 @@
  */
 package com.trazere.util.task;
 
-import com.trazere.util.Assert;
+import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.ObjectUtils;
 import com.trazere.util.report.ReportEntry;
 import com.trazere.util.report.ReportUtils;
@@ -48,8 +48,8 @@ implements ReportEntry<String, TaskStatus> {
 	 * @param comment Comment of the task. May be <code>null</code>.
 	 */
 	public TaskReportEntry(final String name, final TaskStatus status, final String comment) {
-		Assert.notNull(name);
-		Assert.notNull(status);
+		assert null != name;
+		assert null != status;
 		
 		// Initialization.
 		_name = name;
@@ -98,13 +98,11 @@ implements ReportEntry<String, TaskStatus> {
 	
 	@Override
 	public int hashCode() {
-		int result = getClass().hashCode();
-		result = result * 31 + _name.hashCode();
-		result = result * 31 + _status.hashCode();
-		if (null != _comment) {
-			result = result * 31 + _comment.hashCode();
-		}
-		return result;
+		final HashCode hashCode = new HashCode(this);
+		hashCode.append(_name);
+		hashCode.append(_status);
+		hashCode.append(_comment);
+		return hashCode.get();
 	}
 	
 	@Override

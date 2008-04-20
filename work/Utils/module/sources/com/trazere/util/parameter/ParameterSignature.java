@@ -15,7 +15,7 @@
  */
 package com.trazere.util.parameter;
 
-import com.trazere.util.Assert;
+import com.trazere.util.lang.HashCode;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.TextUtils;
 
@@ -39,8 +39,8 @@ implements Describable {
 	 * @param type Java class of the value of the parameter.
 	 */
 	public ParameterSignature(final String name, final Class<T> type) {
-		Assert.notNull(name);
-		Assert.notNull(type);
+		assert null != name;
+		assert null != type;
 		
 		// Initialization.
 		_name = name;
@@ -67,10 +67,10 @@ implements Describable {
 	
 	@Override
 	public int hashCode() {
-		int result = getClass().hashCode();
-		result = result * 31 + _name.hashCode();
-		result = result * 31 + _type.hashCode();
-		return result;
+		final HashCode hashCode = new HashCode(this);
+		hashCode.append(_name);
+		hashCode.append(_type);
+		return hashCode.get();
 	}
 	
 	@Override

@@ -15,7 +15,7 @@
  */
 package com.trazere.util.parameter;
 
-import com.trazere.util.Assert;
+import com.trazere.util.lang.HashCode;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.TextUtils;
 import java.util.Collections;
@@ -56,7 +56,7 @@ implements ParameterSet<T>, Describable {
 	 * @return The parameter set.
 	 */
 	public static <T> SimpleParameterSet<T> build(final String name, final T value) {
-		Assert.notNull(name);
+		assert null != name;
 		
 		// Build.
 		final Map<String, T> parameters = new HashMap<String, T>();
@@ -75,8 +75,8 @@ implements ParameterSet<T>, Describable {
 	 * @return The parameter set.
 	 */
 	public static <T> SimpleParameterSet<T> build(final String name1, final T value1, final String name2, final T value2) {
-		Assert.notNull(name1);
-		Assert.notNull(name2);
+		assert null != name1;
+		assert null != name2;
 		
 		// Build.
 		final Map<String, T> parameters = new HashMap<String, T>();
@@ -104,7 +104,9 @@ implements ParameterSet<T>, Describable {
 	 * 
 	 * @param parameters Value of the parameters identified by their names.
 	 */
-	protected SimpleParameterSet(final Map<String, T> parameters) {
+	protected SimpleParameterSet(final Map<String, ? extends T> parameters) {
+		assert null != parameters;
+		
 		// Initialization.
 		_parameters = Collections.unmodifiableMap(parameters);
 	}
@@ -114,7 +116,7 @@ implements ParameterSet<T>, Describable {
 	}
 	
 	public boolean contains(final String name) {
-		Assert.notNull(name);
+		assert null != name;
 		
 		// Test.
 		return _parameters.containsKey(name);
@@ -126,7 +128,7 @@ implements ParameterSet<T>, Describable {
 	
 	public T get(final String name)
 	throws MissingParameterException {
-		Assert.notNull(name);
+		assert null != name;
 		
 		// Get.
 		if (_parameters.containsKey(name)) {
@@ -137,7 +139,7 @@ implements ParameterSet<T>, Describable {
 	}
 	
 	public T get(final String name, final T defaultValue) {
-		Assert.notNull(name);
+		assert null != name;
 		
 		// Get.
 		if (_parameters.containsKey(name)) {
@@ -149,8 +151,8 @@ implements ParameterSet<T>, Describable {
 	
 	public <C extends T> C getTyped(final String name, final Class<C> type)
 	throws MissingParameterException, IncompatibleParameterException {
-		Assert.notNull(name);
-		Assert.notNull(type);
+		assert null != name;
+		assert null != type;
 		
 		// Get.
 		if (_parameters.containsKey(name)) {
@@ -169,8 +171,8 @@ implements ParameterSet<T>, Describable {
 	
 	public <C extends T> C getTyped(final String name, final Class<C> type, final C defaultValue)
 	throws IncompatibleParameterException {
-		Assert.notNull(name);
-		Assert.notNull(type);
+		assert null != name;
+		assert null != type;
 		
 		// Get.
 		if (_parameters.containsKey(name)) {
@@ -189,7 +191,7 @@ implements ParameterSet<T>, Describable {
 	
 	public <C extends T> C getTyped(final ParameterSignature<C> signature)
 	throws MissingParameterException, IncompatibleParameterException {
-		Assert.notNull(signature);
+		assert null != signature;
 		
 		// Get.
 		return getTyped(signature.getName(), signature.getType());
@@ -197,7 +199,7 @@ implements ParameterSet<T>, Describable {
 	
 	public <C extends T> C getTyped(final ParameterSignature<C> signature, final C defaultValue)
 	throws IncompatibleParameterException {
-		Assert.notNull(signature);
+		assert null != signature;
 		
 		// Get.
 		return getTyped(signature.getName(), signature.getType(), defaultValue);
@@ -209,7 +211,9 @@ implements ParameterSet<T>, Describable {
 	
 	@Override
 	public int hashCode() {
-		return _parameters.hashCode();
+		final HashCode hashCode = new HashCode(this);
+		hashCode.append(_parameters);
+		return hashCode.get();
 	}
 	
 	@Override

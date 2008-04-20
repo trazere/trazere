@@ -15,7 +15,6 @@
  */
 package com.trazere.util.text;
 
-import com.trazere.util.Assert;
 import java.io.IOException;
 import java.io.PushbackReader;
 import java.io.Reader;
@@ -50,7 +49,7 @@ public class Scanner {
 	 * @param position Initial scanning position.
 	 */
 	public Scanner(final Reader reader, final int position) {
-		Assert.notNull(reader);
+		assert null != reader;
 		
 		// Initialization.
 		_reader = new PushbackReader(reader, 512);
@@ -196,7 +195,7 @@ public class Scanner {
 	 */
 	public boolean scanString(final String string)
 	throws IOException {
-		Assert.notNull(string);
+		assert null != string;
 		
 		// Scan.
 		final char[] buffer = new char[string.length()];
@@ -304,7 +303,7 @@ public class Scanner {
 	 */
 	public String scanUpToAnyChar(final CharFilter filter)
 	throws IOException {
-		Assert.notNull(filter);
+		assert null != filter;
 		
 		// Scan.
 		final StringBuffer buffer = new StringBuffer();
@@ -338,8 +337,8 @@ public class Scanner {
 	 */
 	public String scanUpToString(final String string)
 	throws IOException {
-		Assert.notNull(string);
-		Assert.isTrue(string.length() > 0, "empty string");
+		assert null != string;
+		assert string.length() > 0;
 		
 		// Scan.
 		final char c = string.charAt(0);

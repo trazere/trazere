@@ -15,7 +15,6 @@
  */
 package com.trazere.util.parser;
 
-import com.trazere.util.Assert;
 import com.trazere.util.collection.CollectionUtils;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -79,9 +78,9 @@ implements ParserEngine {
 	
 	public <Token, Result> void parse(final Parser<Token, Result> parser, final ParserSource<Token> source, final int rootPosition, final ParserHandler<Token, ? super Result> rootHandler)
 	throws ParserException {
-		Assert.notNull(parser);
-		Assert.notNull(source);
-		Assert.notNull(rootHandler);
+		assert null != parser;
+		assert null != source;
+		assert null != rootHandler;
 		
 		// Parsing initialization.
 		HandlerMap<Token> handlers = new HandlerMap<Token>();

@@ -15,7 +15,6 @@
  */
 package com.trazere.util.parser;
 
-import com.trazere.util.Assert;
 import com.trazere.util.collection.CollectionUtils;
 import java.util.Collections;
 import java.util.Set;
@@ -40,7 +39,7 @@ implements ParserHandler<Token, Result> {
 	
 	public AbstractParserHandler(final Set<? extends ParserClosure<Token, ?>> closures) {
 		// Checks.
-		Assert.notNull(closures);
+		assert null != closures;
 		
 		// Initialization.
 		_closures = Collections.unmodifiableSet(closures);

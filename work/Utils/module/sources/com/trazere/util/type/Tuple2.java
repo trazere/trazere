@@ -15,7 +15,7 @@
  */
 package com.trazere.util.type;
 
-import com.trazere.util.Assert;
+import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.ObjectUtils;
 
 /**
@@ -51,8 +51,8 @@ public class Tuple2<T1, T2> {
 	 * @see Comparable#compareTo(Object)
 	 */
 	public static <T1 extends Comparable<T1>, T2 extends Comparable<T2>> int compare(final Tuple2<T1, T2> tuple1, final Tuple2<T1, T2> tuple2) {
-		Assert.notNull(tuple1);
-		Assert.notNull(tuple2);
+		assert null != tuple1;
+		assert null != tuple2;
 		
 		// Compare.
 		final int comp1 = ObjectUtils.compare(tuple1._first, tuple2._first);
@@ -97,14 +97,10 @@ public class Tuple2<T1, T2> {
 	
 	@Override
 	public int hashCode() {
-		int result = getClass().hashCode();
-		if (null != _first) {
-			result = result * 31 + _first.hashCode();
-		}
-		if (null != _second) {
-			result = result * 31 + _second.hashCode();
-		}
-		return result;
+		final HashCode hashCode = new HashCode(this);
+		hashCode.append(_first);
+		hashCode.append(_second);
+		return hashCode.get();
 	}
 	
 	@Override

@@ -15,7 +15,6 @@
  */
 package com.trazere.util.record;
 
-import com.trazere.util.Assert;
 import com.trazere.util.lang.CannotComputeValueException;
 import com.trazere.util.lang.ObjectUtils;
 import java.util.Comparator;
@@ -42,8 +41,8 @@ implements Comparator<R> {
 	 * @param comparator Comparator of the svalues of the fields.
 	 */
 	public RecordComparator(final K key, final Comparator<V> comparator) {
-		Assert.notNull(key);
-		Assert.notNull(comparator);
+		assert null != key;
+		assert null != comparator;
 		
 		// Initialization.
 		_key = key;

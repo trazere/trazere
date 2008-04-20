@@ -15,7 +15,7 @@
  */
 package com.trazere.util.report.store;
 
-import com.trazere.util.Assert;
+import com.trazere.util.lang.HashCode;
 import com.trazere.util.report.ReportEntry;
 import com.trazere.util.report.ReportLevel;
 import com.trazere.util.text.Describable;
@@ -48,9 +48,9 @@ implements Describable {
 	 * @param entry Report entry.
 	 */
 	public ReportStoreEntry(final Date date, final ReportLevel level, final Entry entry) {
-		Assert.notNull(date);
-		Assert.notNull(level);
-		Assert.notNull(entry);
+		assert null != date;
+		assert null != level;
+		assert null != entry;
 		
 		// Initialization.
 		_date = date;
@@ -87,11 +87,11 @@ implements Describable {
 	
 	@Override
 	public int hashCode() {
-		int result = getClass().hashCode();
-		result = result * 31 + _date.hashCode();
-		result = result * 31 + _level.hashCode();
-		result = result * 31 + _entry.hashCode();
-		return result;
+		final HashCode hashCode = new HashCode(this);
+		hashCode.append(_date);
+		hashCode.append(_level);
+		hashCode.append(_entry);
+		return hashCode.get();
 	}
 	
 	@Override

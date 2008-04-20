@@ -15,7 +15,7 @@
  */
 package com.trazere.util.collection;
 
-import com.trazere.util.Assert;
+import com.trazere.util.lang.HashCode;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -48,7 +48,7 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 	 * @param familyFactory Factory of the family collections.
 	 */
 	public FamilyMap(final CollectionFactory<V, ? extends C> familyFactory) {
-		Assert.notNull(familyFactory);
+		assert null != familyFactory;
 		
 		// Initialization.
 		_familyFactory = familyFactory;
@@ -70,7 +70,7 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 	 * @param familyFactory Factory of the family collections.
 	 */
 	public FamilyMap(final FamilyMap<? extends K, ? extends V, ? extends C> map, final CollectionFactory<V, ? extends C> familyFactory) {
-		Assert.notNull(map);
+		assert null != map;
 		
 		// Initialization.
 		_familyFactory = familyFactory;
@@ -111,7 +111,7 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 	 * @param values Values to associate.
 	 */
 	public void putAll(final K key, final Collection<? extends V> values) {
-		Assert.notNull(values);
+		assert null != values;
 		
 		// Add.
 		getFamily(key).addAll(values);
@@ -214,7 +214,9 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 	
 	@Override
 	public int hashCode() {
-		return _families.hashCode();
+		final HashCode hashCode = new HashCode(this);
+		hashCode.append(_families);
+		return hashCode.get();
 	}
 	
 	@Override

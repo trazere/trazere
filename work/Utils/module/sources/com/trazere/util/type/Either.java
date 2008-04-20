@@ -16,6 +16,7 @@
 package com.trazere.util.type;
 
 import com.trazere.util.lang.CannotComputeValueException;
+import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.ObjectUtils;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.TextUtils;
@@ -131,11 +132,9 @@ implements Describable {
 		
 		@Override
 		public int hashCode() {
-			int result = getClass().hashCode();
-			if (null != _left) {
-				result = result * 31 + _left.hashCode();
-			}
-			return result;
+			final HashCode hashCode = new HashCode(this);
+			hashCode.append(_left);
+			return hashCode.get();
 		}
 		
 		@Override
@@ -217,11 +216,9 @@ implements Describable {
 		
 		@Override
 		public int hashCode() {
-			int result = getClass().hashCode();
-			if (null != _right) {
-				result = result * 31 + _right.hashCode();
-			}
-			return result;
+			final HashCode hashCode = new HashCode(this);
+			hashCode.append(_right);
+			return hashCode.get();
 		}
 		
 		@Override

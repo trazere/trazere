@@ -15,7 +15,6 @@
  */
 package com.trazere.util.parser;
 
-import com.trazere.util.Assert;
 
 /**
  * DOCME
@@ -29,7 +28,7 @@ implements ParserClosure<Token, Result> {
 	protected final int _position;
 	
 	public AbstractParserClosure(final Parser<Token, Result> parser, final int position) {
-		Assert.notNull(parser);
+		assert null != parser;
 		
 		// Initialization.
 		_parser = parser;

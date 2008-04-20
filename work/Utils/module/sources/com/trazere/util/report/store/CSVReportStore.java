@@ -15,7 +15,6 @@
  */
 package com.trazere.util.report.store;
 
-import com.trazere.util.Assert;
 import com.trazere.util.csv.CSVLine;
 import com.trazere.util.csv.CSVReader;
 import com.trazere.util.csv.CSVReaderOption;
@@ -78,7 +77,7 @@ implements ReportStore<Entry> {
 	 * @param path Path of the backing CSV file.
 	 */
 	public CSVReportStore(final File path) {
-		Assert.notNull(path);
+		assert null != path;
 		
 		// Initializtion.
 		_path = path;
@@ -133,8 +132,8 @@ implements ReportStore<Entry> {
 	
 	public void report(final ReportLevel level, final Entry entry)
 	throws ReportException {
-		Assert.notNull(level);
-		Assert.notNull(entry);
+		assert null != level;
+		assert null != entry;
 		
 		final Date date = new Date();
 		

@@ -60,7 +60,7 @@ extends AbstractRecordBuilder<K, V, SimpleRecord<K, V>> {
 	 * 
 	 * @param fields Values of the initial fields identified by their keys.
 	 */
-	public SimpleRecordBuilder(final Map<? extends K, ? extends V> fields) {
+	protected SimpleRecordBuilder(final Map<? extends K, ? extends V> fields) {
 		super(fields);
 	}
 	

@@ -1,6 +1,5 @@
 package com.trazere.util.lang;
 
-import com.trazere.util.Assert;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.TextUtils;
 
@@ -9,7 +8,7 @@ implements Describable {
 	private int _hashCode;
 	
 	public HashCode(final Object object) {
-		Assert.notNull(object);
+		assert null != object;
 		
 		// Initialization.
 		_hashCode = object.getClass().hashCode();

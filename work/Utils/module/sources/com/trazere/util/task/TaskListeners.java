@@ -15,7 +15,6 @@
  */
 package com.trazere.util.task;
 
-import com.trazere.util.Assert;
 import com.trazere.util.report.ReportException;
 import com.trazere.util.report.ReportLevel;
 import com.trazere.util.report.ReportListener;
@@ -31,8 +30,8 @@ public class TaskListeners {
 	private static final Log LOG = LogFactory.getLog(TaskListener.class);
 	
 	public static TaskListener log(final Task task, final Log log) {
-		Assert.notNull(task);
-		Assert.notNull(log);
+		assert null != task;
+		assert null != log;
 		
 		// Build.
 		return new TaskListener() {
@@ -60,8 +59,8 @@ public class TaskListeners {
 	
 	// TODO: merge with log() using an option
 	public static TaskListener trace(final Task task, final Log log) {
-		Assert.notNull(task);
-		Assert.notNull(log);
+		assert null != task;
+		assert null != log;
 		
 		// Build.
 		return new TaskListener() {
@@ -88,8 +87,8 @@ public class TaskListeners {
 	}
 	
 	public static TaskListener report(final Task task, final ReportListener<TaskReportEntry> reportListener) {
-		Assert.notNull(task);
-		Assert.notNull(reportListener);
+		assert null != task;
+		assert null != reportListener;
 		
 		// Build.
 		return new TaskListener() {

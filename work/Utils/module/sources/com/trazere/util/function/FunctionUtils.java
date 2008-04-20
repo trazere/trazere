@@ -15,7 +15,6 @@
  */
 package com.trazere.util.function;
 
-import com.trazere.util.Assert;
 import com.trazere.util.collection.CollectionFactory;
 import com.trazere.util.collection.MapFactory;
 import com.trazere.util.type.Tuple2;
@@ -50,7 +49,7 @@ public class FunctionUtils {
 	 */
 	public static <T, C extends Collection<? super T>> C filter(final Collection<? extends T> values, final Filter<? super T> filter, final CollectionFactory<? super T, ? extends C> factory)
 	throws ApplicationException {
-		Assert.notNull(factory);
+		assert null != factory;
 		
 		// Filter.
 		return filter(values, filter, factory.build());
@@ -71,9 +70,9 @@ public class FunctionUtils {
 	 */
 	public static <T, C extends Collection<? super T>> C filter(final Collection<? extends T> values, final Filter<? super T> filter, final C results)
 	throws ApplicationException {
-		Assert.notNull(values);
-		Assert.notNull(filter);
-		Assert.notNull(results);
+		assert null != values;
+		assert null != filter;
+		assert null != results;
 		
 		// Filter.
 		for (final T value : values) {
@@ -99,7 +98,7 @@ public class FunctionUtils {
 	 */
 	public static <K, V, M extends Map<K, V>> M filter(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter, final MapFactory<? super K, ? super V, ? extends M> factory)
 	throws ApplicationException {
-		Assert.notNull(factory);
+		assert null != factory;
 		
 		// Filter.
 		return filter(bindings, filter, factory.build());
@@ -122,9 +121,9 @@ public class FunctionUtils {
 	 */
 	public static <K, V, M extends Map<K, V>> M filter(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter, final M results)
 	throws ApplicationException {
-		Assert.notNull(bindings);
-		Assert.notNull(filter);
-		Assert.notNull(results);
+		assert null != bindings;
+		assert null != filter;
+		assert null != results;
 		
 		// Filter.
 		for (final Map.Entry<? extends K, ? extends V> entry : bindings.entrySet()) {
@@ -152,7 +151,7 @@ public class FunctionUtils {
 	 */
 	public static <K, V, S extends Set<K>> S filterKeys(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter, final CollectionFactory<? super K, ? extends S> factory)
 	throws ApplicationException {
-		Assert.notNull(factory);
+		assert null != factory;
 		
 		// Filter.
 		return filterKeys(bindings, filter, factory.build());
@@ -175,9 +174,9 @@ public class FunctionUtils {
 	 */
 	public static <K, V, S extends Set<K>> S filterKeys(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter, final S results)
 	throws ApplicationException {
-		Assert.notNull(bindings);
-		Assert.notNull(filter);
-		Assert.notNull(results);
+		assert null != bindings;
+		assert null != filter;
+		assert null != results;
 		
 		// Filter.
 		for (final Map.Entry<? extends K, ? extends V> entry : bindings.entrySet()) {
@@ -205,7 +204,7 @@ public class FunctionUtils {
 	 */
 	public static <K, V, C extends Collection<V>> C filterValues(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter, final CollectionFactory<? super V, ? extends C> factory)
 	throws ApplicationException {
-		Assert.notNull(factory);
+		assert null != factory;
 		
 		// Filter.
 		return filterValues(bindings, filter, factory.build());
@@ -228,9 +227,9 @@ public class FunctionUtils {
 	 */
 	public static <K, V, C extends Collection<V>> C filterValues(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter, final C results)
 	throws ApplicationException {
-		Assert.notNull(bindings);
-		Assert.notNull(filter);
-		Assert.notNull(results);
+		assert null != bindings;
+		assert null != filter;
+		assert null != results;
 		
 		// Filter.
 		for (final Map.Entry<? extends K, ? extends V> entry : bindings.entrySet()) {
@@ -254,8 +253,8 @@ public class FunctionUtils {
 	 */
 	public static <T> int count(final Collection<? extends T> values, final Filter<? super T> filter)
 	throws ApplicationException {
-		Assert.notNull(values);
-		Assert.notNull(filter);
+		assert null != values;
+		assert null != filter;
 		
 		// Count.
 		int count = 0;
@@ -282,8 +281,8 @@ public class FunctionUtils {
 	 */
 	public static <K, V> int count(final Map<? extends K, ? extends V> map, final Filter2<? super K, ? super V> filter)
 	throws ApplicationException {
-		Assert.notNull(map);
-		Assert.notNull(filter);
+		assert null != map;
+		assert null != filter;
 		
 		// Count.
 		int count = 0;
@@ -308,8 +307,8 @@ public class FunctionUtils {
 	 */
 	public static <T> boolean isAny(final Collection<? extends T> values, final Filter<? super T> filter)
 	throws ApplicationException {
-		Assert.notNull(values);
-		Assert.notNull(filter);
+		assert null != values;
+		assert null != filter;
 		
 		// Test.
 		for (final T value : values) {
@@ -331,8 +330,8 @@ public class FunctionUtils {
 	 */
 	public static <T> boolean areAll(final Collection<? extends T> values, final Filter<? super T> filter)
 	throws ApplicationException {
-		Assert.notNull(values);
-		Assert.notNull(filter);
+		assert null != values;
+		assert null != filter;
 		
 		// Test.
 		for (final T value : values) {
@@ -359,7 +358,7 @@ public class FunctionUtils {
 	 */
 	public static <T1, T2, C extends Collection<T2>> C map(final Collection<? extends T1> values, final Function<? super T1, ? extends T2> function, final boolean ignoreNull, final CollectionFactory<? super T2, ? extends C> factory)
 	throws ApplicationException {
-		Assert.notNull(factory);
+		assert null != factory;
 		
 		// Map.
 		return map(values, function, ignoreNull, factory.build(values.size()));
@@ -380,9 +379,9 @@ public class FunctionUtils {
 	 */
 	public static <T1, T2, C extends Collection<T2>> C map(final Collection<? extends T1> values, final Function<? super T1, ? extends T2> function, final boolean ignoreNull, final C results)
 	throws ApplicationException {
-		Assert.notNull(values);
-		Assert.notNull(function);
-		Assert.notNull(results);
+		assert null != values;
+		assert null != function;
+		assert null != results;
 		
 		// Map.
 		for (final T1 value : values) {
@@ -411,7 +410,7 @@ public class FunctionUtils {
 	 */
 	public static <K, V1, V2, M extends Map<K, V2>> M map(final Map<? extends K, ? extends V1> bindings, final Function2<? super K, ? super V1, ? extends V2> function, final boolean ignoreNull, final MapFactory<? super K, ? super V2, ? extends M> factory)
 	throws ApplicationException {
-		Assert.notNull(factory);
+		assert null != factory;
 		
 		// Map.
 		return map(bindings, function, ignoreNull, factory.build(bindings.size()));
@@ -436,9 +435,9 @@ public class FunctionUtils {
 	 */
 	public static <K, V1, V2, M extends Map<K, V2>> M map(final Map<? extends K, ? extends V1> bindings, final Function2<? super K, ? super V1, ? extends V2> function, final boolean ignoreNull, final M results)
 	throws ApplicationException {
-		Assert.notNull(bindings);
-		Assert.notNull(function);
-		Assert.notNull(results);
+		assert null != bindings;
+		assert null != function;
+		assert null != results;
 		
 		// Map.
 		for (final Map.Entry<? extends K, ? extends V1> entry : bindings.entrySet()) {
@@ -468,7 +467,7 @@ public class FunctionUtils {
 	 */
 	public static <K, V, M extends Map<K, V>> Map<K, V> mapKeys(final Set<? extends K> keys, final Function<? super K, ? extends V> function, final boolean ignoreNull, final MapFactory<? super K, ? super V, ? extends M> factory)
 	throws ApplicationException {
-		Assert.notNull(factory);
+		assert null != factory;
 		
 		// Map the keys.
 		return mapKeys(keys, function, ignoreNull, factory.build(keys.size()));
@@ -489,9 +488,9 @@ public class FunctionUtils {
 	 */
 	public static <K, V, M extends Map<K, V>> Map<K, V> mapKeys(final Set<? extends K> keys, final Function<? super K, ? extends V> function, final boolean ignoreNull, final M results)
 	throws ApplicationException {
-		Assert.notNull(keys);
-		Assert.notNull(function);
-		Assert.notNull(results);
+		assert null != keys;
+		assert null != function;
+		assert null != results;
 		
 		// Map the keys.
 		for (final K key : keys) {
@@ -519,7 +518,7 @@ public class FunctionUtils {
 	 */
 	public static <K, V, M extends Map<K, V>> M mapValues(final Collection<? extends V> values, final Function<? super V, ? extends K> function, final boolean ignoreNull, final MapFactory<? super K, ? super V, ? extends M> factory)
 	throws ApplicationException {
-		Assert.notNull(factory);
+		assert null != factory;
 		
 		// Map the values.
 		return mapValues(values, function, ignoreNull, factory.build(values.size()));
@@ -542,9 +541,9 @@ public class FunctionUtils {
 	 */
 	public static <K, V, M extends Map<K, V>> M mapValues(final Collection<? extends V> values, final Function<? super V, ? extends K> function, final boolean ignoreNull, final M results)
 	throws ApplicationException {
-		Assert.notNull(values);
-		Assert.notNull(function);
-		Assert.notNull(results);
+		assert null != values;
+		assert null != function;
+		assert null != results;
 		
 		// Map the values.
 		for (final V value : values) {
@@ -573,7 +572,7 @@ public class FunctionUtils {
 	 */
 	public static <K1, K2, V, M extends Map<K2, V>> M remap(final Map<? extends K1, ? extends V> map, final Function<? super K1, ? extends K2> function, final boolean ignoreNull, final MapFactory<? super K2, ? super V, ? extends M> factory)
 	throws ApplicationException {
-		Assert.notNull(factory);
+		assert null != factory;
 		
 		// Remap.
 		return remap(map, function, ignoreNull, factory.build(map.size()));
@@ -596,9 +595,9 @@ public class FunctionUtils {
 	 */
 	public static <K1, K2, V, M extends Map<K2, V>> M remap(final Map<? extends K1, ? extends V> map, final Function<? super K1, ? extends K2> function, final boolean ignoreNull, final M results)
 	throws ApplicationException {
-		Assert.notNull(map);
-		Assert.notNull(function);
-		Assert.notNull(results);
+		assert null != map;
+		assert null != function;
+		assert null != results;
 		
 		// Remap.
 		for (final Map.Entry<? extends K1, ? extends V> entry : map.entrySet()) {
@@ -629,7 +628,7 @@ public class FunctionUtils {
 	 */
 	public static <K1, K2, V, M extends Map<K2, V>> M remap(final Map<? extends K1, ? extends V> bindings, final Function2<? super K1, ? super V, ? extends K2> function, final boolean ignoreNull, final MapFactory<? super K2, ? super V, ? extends M> factory)
 	throws ApplicationException {
-		Assert.notNull(factory);
+		assert null != factory;
 		
 		// Remap.
 		return remap(bindings, function, ignoreNull, factory.build(bindings.size()));
@@ -654,9 +653,9 @@ public class FunctionUtils {
 	 */
 	public static <K1, K2, V, M extends Map<K2, V>> M remap(final Map<? extends K1, ? extends V> bindings, final Function2<? super K1, ? super V, ? extends K2> function, final boolean ignoreNull, final M results)
 	throws ApplicationException {
-		Assert.notNull(bindings);
-		Assert.notNull(function);
-		Assert.notNull(results);
+		assert null != bindings;
+		assert null != function;
+		assert null != results;
 		
 		// Remap.
 		for (final Map.Entry<? extends K1, ? extends V> entry : bindings.entrySet()) {
@@ -680,8 +679,8 @@ public class FunctionUtils {
 	 */
 	public static <T> void apply(final Collection<? extends T> values, final Procedure<? super T> procedure)
 	throws ApplicationException {
-		Assert.notNull(values);
-		Assert.notNull(procedure);
+		assert null != values;
+		assert null != procedure;
 		
 		// Apply.
 		for (final T value : values) {
@@ -699,8 +698,8 @@ public class FunctionUtils {
 	 */
 	public static <T> void apply(final Iterator<? extends T> iterator, final Procedure<? super T> procedure)
 	throws ApplicationException {
-		Assert.notNull(iterator);
-		Assert.notNull(procedure);
+		assert null != iterator;
+		assert null != procedure;
 		
 		// Apply.
 		while (iterator.hasNext()) {
@@ -720,8 +719,8 @@ public class FunctionUtils {
 	 */
 	public static <K, V> void apply(final Map<? extends K, ? extends V> bindings, final Procedure2<? super K, ? super V> procedure)
 	throws ApplicationException {
-		Assert.notNull(bindings);
-		Assert.notNull(procedure);
+		assert null != bindings;
+		assert null != procedure;
 		
 		// Apply.
 		for (final Map.Entry<? extends K, ? extends V> entry : bindings.entrySet()) {
@@ -732,8 +731,8 @@ public class FunctionUtils {
 	// DOCME
 	public static <T, A> A fold(final Collection<? extends T> values, final Function2<? super A, ? super T, ? extends A> function, final A initialAccumulator)
 	throws ApplicationException {
-		Assert.notNull(values);
-		Assert.notNull(function);
+		assert null != values;
+		assert null != function;
 		
 		// Fold.
 		A accumulator = initialAccumulator;
@@ -746,8 +745,8 @@ public class FunctionUtils {
 	// DOCME
 	public static <T, A> A fold(final Iterator<? extends T> iterator, final Function2<? super A, ? super T, ? extends A> function, final A initialAccumulator)
 	throws ApplicationException {
-		Assert.notNull(iterator);
-		Assert.notNull(function);
+		assert null != iterator;
+		assert null != function;
 		
 		// Fold.
 		A accumulator = initialAccumulator;
@@ -760,9 +759,9 @@ public class FunctionUtils {
 	
 	// DOCME
 	public static <T1, T2, L extends List<Tuple2<T1, T2>>> L zip(final Iterator<T1> list1, final Iterator<T2> list2, final L results) {
-		Assert.notNull(list1);
-		Assert.notNull(list2);
-		Assert.notNull(results);
+		assert null != list1;
+		assert null != list2;
+		assert null != results;
 		
 		// Zip.
 		while (list1.hasNext() && list2.hasNext()) {
@@ -773,9 +772,9 @@ public class FunctionUtils {
 	
 	// DOCME
 	public static <T1, T2, L1 extends List<T1>, L2 extends List<T2>> void unzip(final Iterator<? extends Tuple2<T1, T2>> list, final L1 results1, final L2 results2) {
-		Assert.notNull(list);
-		Assert.notNull(results1);
-		Assert.notNull(results2);
+		assert null != list;
+		assert null != results1;
+		assert null != results2;
 		
 		// Unzip.
 		while (list.hasNext()) {

@@ -51,7 +51,7 @@ public interface ParameterSet<T> {
 	 * 
 	 * @param name Name of the parameter.
 	 * @return The value of the parameter. May be <code>null</code>.
-	 * @throws MissingParameterException When the receiver set contains no value for the given name.
+	 * @throws MissingParameterException When the receiver set contains no parameter identified by the given name.
 	 * @throws ParameterException When the parameter cannot be got.
 	 */
 	public T get(final String name)

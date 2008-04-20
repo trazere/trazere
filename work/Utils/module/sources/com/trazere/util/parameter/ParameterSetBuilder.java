@@ -29,7 +29,7 @@ public interface ParameterSetBuilder<T, S extends ParameterSet<T>> {
 	/**
 	 * Add a parameter identified by the given name with the given value to the receiver builder.
 	 * <p>
-	 * The receiver builder not must contain a parameter identified by the given name.
+	 * The receiver builder must not contain a parameter identified by the given name.
 	 * 
 	 * @param name Name of the parameter to add.
 	 * @param value Value of the parameter to add. May be <code>null</code>.
@@ -37,18 +37,6 @@ public interface ParameterSetBuilder<T, S extends ParameterSet<T>> {
 	 * @throws ParameterException When the parameter cannot by added.
 	 */
 	public void add(final String name, final T value)
-	throws ParameterException;
-	
-	/**
-	 * Add parameters corresponding to the parameters of the given set to the receiver builder.
-	 * <p>
-	 * The receiver builder must not contain parameters identified by names of the parameters of the given set.
-	 * 
-	 * @param parameters Parameters to add.
-	 * @throws DuplicateParameterException When the builder contains parameters identified by names of the parameters of the given set.
-	 * @throws ParameterException When some parameter cannot by added.
-	 */
-	public void addAll(final ParameterSet<? extends T> parameters)
 	throws ParameterException;
 	
 	/**
@@ -61,6 +49,18 @@ public interface ParameterSetBuilder<T, S extends ParameterSet<T>> {
 	 * @throws ParameterException When some parameter cannot by added.
 	 */
 	public void addAll(final Map<String, ? extends T> parameters)
+	throws ParameterException;
+	
+	/**
+	 * Add parameters corresponding to the parameters of the given set to the receiver builder.
+	 * <p>
+	 * The receiver builder must not contain parameters identified by names of the parameters of the given set.
+	 * 
+	 * @param parameters Parameters to add.
+	 * @throws DuplicateParameterException When the builder contains parameters identified by names of the parameters of the given set.
+	 * @throws ParameterException When some parameter cannot by added.
+	 */
+	public void addAll(final ParameterSet<? extends T> parameters)
 	throws ParameterException;
 	
 	/**
@@ -106,30 +106,30 @@ public interface ParameterSetBuilder<T, S extends ParameterSet<T>> {
 	throws ParameterException;
 	
 	/**
-	 * Fill the given builder with the fields of the receiver builder.
+	 * Populate the given builder with the parameters of the receiver builder.
 	 * <p>
 	 * The given builder must not contain parameters identified by names of parameters of the receiver builder.
 	 * 
-	 * @param <B> Type of the builder to fill.
-	 * @param builder Builder to fill.
+	 * @param <B> Type of the builder to populate.
+	 * @param builder Builder to populate.
 	 * @return The given builder.
 	 * @throws DuplicateParameterException When the given builder contain parameters identified by names of parameters of the given builder.
-	 * @throws ParameterException When the given builder cannot be filled.
+	 * @throws ParameterException When the given builder cannot be populated.
 	 */
 	public <B extends ParameterSetBuilder<? super T, ?>> B populate(final B builder)
 	throws ParameterException;
 	
 	/**
-	 * Fill the given builder with the fields of the receiver builder identified by the given names.
+	 * Populate the given builder with the parameters of the receiver builder identified by the given names.
 	 * <p>
 	 * The receiver builder must contain parameters for all given keys and the given builder must not contain parameters identified by given names.
 	 * 
-	 * @param <B> Type of the builder to fill.
-	 * @param builder Builder to fill.
+	 * @param <B> Type of the builder to populate.
+	 * @param builder Builder to populate.
 	 * @param names Names of the parameters to copy.
 	 * @return The given builder.
 	 * @throws DuplicateParameterException When the given builder contain parameters identified by keys of parameters of the given builder.
-	 * @throws ParameterException When the given builder cannot be filled.
+	 * @throws ParameterException When the given builder cannot be populated.
 	 */
 	public <B extends ParameterSetBuilder<? super T, ?>> B populate(final B builder, final Set<String> names)
 	throws ParameterException;

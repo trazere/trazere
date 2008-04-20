@@ -15,7 +15,6 @@
  */
 package com.trazere.util.parser.core;
 
-import com.trazere.util.Assert;
 import com.trazere.util.collection.CollectionUtils;
 import com.trazere.util.parser.AbstractParser;
 import com.trazere.util.parser.AbstractParserHandler;
@@ -43,8 +42,8 @@ extends AbstractParser<Token, List<Result>> {
 		super(description);
 		
 		// Checks.
-		Assert.notNull(valueParser);
-		Assert.notNull(delimiterParser);
+		assert null != valueParser;
+		assert null != delimiterParser;
 		
 		// Initialization.
 		_valueParser = valueParser;

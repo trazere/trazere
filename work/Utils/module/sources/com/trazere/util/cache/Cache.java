@@ -1,6 +1,5 @@
 package com.trazere.util.cache;
 
-import com.trazere.util.Assert;
 import com.trazere.util.function.Filter;
 import com.trazere.util.function.FunctionUtils;
 import com.trazere.util.text.Describable;
@@ -34,9 +33,8 @@ implements Describable {
 	 * @return The corresponding cache entry.
 	 */
 	public E fill(final K key, final V value) {
-		// Checks.
-		Assert.notNull(key);
-		Assert.notNull(value);
+		assert null != key;
+		assert null != value;
 		
 		// Fill the cache.
 		final E entry = buildEntry(key, value);
@@ -54,8 +52,7 @@ implements Describable {
 	 * @return The built cache entry.
 	 */
 	public E fillNoValues(final K key) {
-		// Checks.
-		Assert.notNull(key);
+		assert null != key;
 		
 		// Fill the cache.
 		final E entry = buildEntry(key, null);
@@ -83,8 +80,7 @@ implements Describable {
 	 * @return The corresponding cache entry, or <code>null</code> if no information is available about the given key.
 	 */
 	public E get(final K key) {
-		// Checks.
-		Assert.notNull(key);
+		assert null != key;
 		
 		// Get.
 		return _entriesByKey.get(key);
@@ -112,8 +108,7 @@ implements Describable {
 	 * @return The removed cache entry, or <code>null</code> if no information is available about the given key.
 	 */
 	public E remove(final K key) {
-		// Checks.
-		Assert.notNull(key);
+		assert null != key;
 		
 		// Remove the entry.
 		final E entry = _entriesByKey.get(key);
@@ -168,8 +163,7 @@ implements Describable {
 	 * @param entry Cache entry to add.
 	 */
 	protected void addEntry(final E entry) {
-		// Checks.
-		Assert.notNull(entry);
+		assert null != entry;
 		
 		// Fill the cache.
 		_entriesByKey.put(entry.getKey(), entry);
@@ -181,8 +175,7 @@ implements Describable {
 	 * @param entry Cache entry to remove.
 	 */
 	protected void removeEntry(final E entry) {
-		// Checks.
-		Assert.notNull(entry);
+		assert null != entry;
 		
 		// Clean the entries.
 		_entriesByKey.remove(entry.getKey());

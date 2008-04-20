@@ -15,7 +15,6 @@
  */
 package com.trazere.util.record;
 
-import com.trazere.util.Assert;
 import com.trazere.util.lang.MultipleComparator;
 import com.trazere.util.lang.ReverseComparator;
 import com.trazere.util.type.Tuple2;
@@ -45,8 +44,8 @@ public class RecordUtils {
 	 * @return The comparator.
 	 */
 	public static <K, V, R extends Record<? super K, ? extends V>> Comparator<R> buildRecordComparator(final List<K> criterion, final boolean ascending, final Comparator<V> comparator) {
-		Assert.notNull(criterion);
-		Assert.notNull(comparator);
+		assert null != criterion;
+		assert null != comparator;
 		
 		// Build the comparator.
 		final List<Comparator<R>> comparators = new ArrayList<Comparator<R>>();
@@ -69,7 +68,7 @@ public class RecordUtils {
 	 * @return The comparator.
 	 */
 	public static <K, V, R extends Record<? super K, ? extends V>> Comparator<R> buildRecordComparator(final List<Tuple2<K, Boolean>> criterion, final Comparator<V> comparator) {
-		Assert.notNull(criterion);
+		assert null != criterion;
 		
 		// Build the comparator.
 		final List<Comparator<R>> comparators = new ArrayList<Comparator<R>>();
@@ -93,8 +92,8 @@ public class RecordUtils {
 	 */
 	public static <K, V> void fillRecord(final RecordBuilder<? super K, ? super V, ?> builder, final Collection<? extends K> keys, final V value)
 	throws RecordException {
-		Assert.notNull(builder);
-		Assert.notNull(keys);
+		assert null != builder;
+		assert null != keys;
 		
 		// Fill.
 		for (final K key : keys) {
@@ -118,9 +117,9 @@ public class RecordUtils {
 	 */
 	public static <K, V, R extends Record<K, V>> R subRecord(final Record<? super K, ? extends V> record, final Set<? extends K> keys, final RecordFactory<K, V, R> factory)
 	throws RecordException {
-		Assert.notNull(record);
-		Assert.notNull(keys);
-		Assert.notNull(factory);
+		assert null != record;
+		assert null != keys;
+		assert null != factory;
 		
 		// Build the sub record.
 		if (keys.isEmpty()) {
@@ -146,9 +145,9 @@ public class RecordUtils {
 	 */
 	public static <K, V> void subRecord(final Record<? super K, ? extends V> record, final Set<? extends K> keys, final RecordBuilder<? super K, ? super V, ?> builder)
 	throws RecordException {
-		Assert.notNull(record);
-		Assert.notNull(keys);
-		Assert.notNull(builder);
+		assert null != record;
+		assert null != keys;
+		assert null != builder;
 		
 		// Fill the builder.
 		for (final K key : keys) {

@@ -15,7 +15,6 @@
  */
 package com.trazere.util.parameter;
 
-import com.trazere.util.Assert;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.TextUtils;
 import java.util.Collections;
@@ -43,6 +42,18 @@ implements ParameterSetBuilder<T, S>, Describable {
 	}
 	
 	/**
+	 * Instantiate a new builder populated with the given parameters.
+	 * 
+	 * @param parameters Values of the initial parameters identified by their names.
+	 */
+	public AbstractParameterSetBuilder(final Map<String, ? extends T> parameters) {
+		assert null != parameters;
+		
+		// Initialization.
+		_parameters = new HashMap<String, T>(parameters);
+	}
+	
+	/**
 	 * Instantiate a new builder populated with the parameters of the given set.
 	 * 
 	 * @param parameters Parameter set containing the initial parameter the new builder.
@@ -50,6 +61,8 @@ implements ParameterSetBuilder<T, S>, Describable {
 	 */
 	public AbstractParameterSetBuilder(final ParameterSet<? extends T> parameters)
 	throws ParameterException {
+		assert null != parameters;
+		
 		// Initialization.
 		_parameters = new HashMap<String, T>(parameters.asMap());
 	}
@@ -62,28 +75,16 @@ implements ParameterSetBuilder<T, S>, Describable {
 	 */
 	public AbstractParameterSetBuilder(final ParameterSetBuilder<? extends T, ?> builder)
 	throws ParameterException {
-		Assert.notNull(builder);
+		assert null != builder;
 		
 		// Initialization.
 		_parameters = new HashMap<String, T>();
 		builder.populate(this);
 	}
 	
-	/**
-	 * Instantiate a new builder populated with the given parameters.
-	 * 
-	 * @param parameters Values of the initial parameters identified by their names.
-	 */
-	public AbstractParameterSetBuilder(final Map<String, ? extends T> parameters) {
-		Assert.notNull(parameters);
-		
-		// Initialization.
-		_parameters = new HashMap<String, T>(parameters);
-	}
-	
 	public void add(final String name, final T value)
-	throws DuplicateParameterException {
-		Assert.notNull(name);
+	throws ParameterException {
+		assert null != name;
 		
 		// Add the parameter.
 		if (!_parameters.containsKey(name)) {
@@ -93,19 +94,11 @@ implements ParameterSetBuilder<T, S>, Describable {
 		}
 	}
 	
-	public void addAll(final ParameterSet<? extends T> parameters)
-	throws ParameterException {
-		Assert.notNull(parameters);
-		
-		// Add the parameters.
-		addAll(parameters.asMap());
-	}
-	
 	public void addAll(final Map<String, ? extends T> parameters)
 	throws ParameterException {
-		Assert.notNull(parameters);
+		assert null != parameters;
 		
-		// Add the fields.
+		// Add the parameters.
 		for (final Map.Entry<String, ? extends T> entry : parameters.entrySet()) {
 			final String name = entry.getKey();
 			if (!_parameters.containsKey(name)) {
@@ -116,12 +109,20 @@ implements ParameterSetBuilder<T, S>, Describable {
 		}
 	}
 	
+	public void addAll(final ParameterSet<? extends T> parameters)
+	throws ParameterException {
+		assert null != parameters;
+		
+		// Add the parameters.
+		addAll(parameters.asMap());
+	}
+	
 	public boolean isEmpty() {
 		return _parameters.isEmpty();
 	}
 	
 	public boolean contains(final String name) {
-		Assert.notNull(name);
+		assert null != name;
 		
 		// Test.
 		return _parameters.containsKey(name);
@@ -133,7 +134,7 @@ implements ParameterSetBuilder<T, S>, Describable {
 	
 	public void remove(final String name)
 	throws ParameterException {
-		Assert.notNull(name);
+		assert null != name;
 		
 		// Remove the parameter.
 		if (_parameters.containsKey(name)) {
@@ -150,7 +151,7 @@ implements ParameterSetBuilder<T, S>, Describable {
 	
 	public <B extends ParameterSetBuilder<? super T, ?>> B populate(final B builder)
 	throws ParameterException {
-		Assert.notNull(builder);
+		assert null != builder;
 		
 		// Fill.
 		builder.addAll(Collections.unmodifiableMap(_parameters));
@@ -160,8 +161,8 @@ implements ParameterSetBuilder<T, S>, Describable {
 	
 	public <B extends ParameterSetBuilder<? super T, ?>> B populate(final B builder, final Set<String> names)
 	throws ParameterException {
-		Assert.notNull(builder);
-		Assert.notNull(names);
+		assert null != builder;
+		assert null != names;
 		
 		// Fill.
 		for (final String name : names) {

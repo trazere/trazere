@@ -15,7 +15,6 @@
  */
 package com.trazere.util.parameter;
 
-import com.trazere.util.Assert;
 import java.util.Set;
 
 public class ParameterUtils {
@@ -54,9 +53,9 @@ public class ParameterUtils {
 	 */
 	public static <T> void subSet(final ParameterSet<? extends T> parameters, final Set<String> names, final ParameterSetBuilder<? super T, ?> builder)
 	throws ParameterException {
-		Assert.notNull(parameters);
-		Assert.notNull(names);
-		Assert.notNull(builder);
+		assert null != parameters;
+		assert null != names;
+		assert null != builder;
 		
 		// Fill the builder.
 		for (final String key : names) {

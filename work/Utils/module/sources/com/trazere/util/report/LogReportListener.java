@@ -15,7 +15,6 @@
  */
 package com.trazere.util.report;
 
-import com.trazere.util.Assert;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -37,7 +36,7 @@ implements ReportListener<Entry> {
 	 * @param log Logger to use.
 	 */
 	public LogReportListener(final Log log) {
-		Assert.notNull(log);
+		assert null != log;
 		
 		// Initialization.
 		_log = log;
@@ -53,7 +52,7 @@ implements ReportListener<Entry> {
 	}
 	
 	public void report(final ReportLevel level, final Entry entry) {
-		Assert.notNull(entry);
+		assert null != entry;
 		
 		// Render the message.
 		final String message_ = ReportUtils.render(entry);

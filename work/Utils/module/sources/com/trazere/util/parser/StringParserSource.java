@@ -15,7 +15,6 @@
  */
 package com.trazere.util.parser;
 
-import com.trazere.util.Assert;
 
 /**
  * DOCME
@@ -26,7 +25,7 @@ implements ParserSource<Character> {
 	protected int _position = 0;
 	
 	public StringParserSource(final String string) {
-		Assert.notNull(string);
+		assert null != string;
 		
 		// Initialization.
 		_string = string;

@@ -15,7 +15,6 @@
  */
 package com.trazere.util.collection;
 
-import com.trazere.util.Assert;
 import com.trazere.util.function.ApplicationException;
 import com.trazere.util.function.Function;
 import com.trazere.util.lang.CannotComputeValueException;
@@ -53,7 +52,7 @@ implements Function<K, V> {
 	 * @param entries Entries of the map.
 	 */
 	public LazyMap(final Map<? extends K, ? extends V> entries) {
-		Assert.notNull(entries);
+		assert null != entries;
 		
 		// Initialization.
 		_entries = new HashMap<K, V>(entries);

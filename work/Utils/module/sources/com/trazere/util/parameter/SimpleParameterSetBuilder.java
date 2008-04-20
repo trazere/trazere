@@ -33,6 +33,15 @@ extends AbstractParameterSetBuilder<T, SimpleParameterSet<T>> {
 	}
 	
 	/**
+	 * Instantiate a new builder populated with the given parameters.
+	 * 
+	 * @param parameters Values of the initial parameters identified by their names.
+	 */
+	public SimpleParameterSetBuilder(final Map<String, ? extends T> parameters) {
+		super(parameters);
+	}
+	
+	/**
 	 * Instantiate a new builder populated with the parameters of the given set.
 	 * 
 	 * @param parameters Parameter set containing the initial parameter the new builder.
@@ -52,15 +61,6 @@ extends AbstractParameterSetBuilder<T, SimpleParameterSet<T>> {
 	public SimpleParameterSetBuilder(final ParameterSetBuilder<? extends T, ?> builder)
 	throws ParameterException {
 		super(builder);
-	}
-	
-	/**
-	 * Instantiate a new builder populated with the given parameters.
-	 * 
-	 * @param parameters Values of the initial parameters identified by their names.
-	 */
-	public SimpleParameterSetBuilder(final Map<String, ? extends T> parameters) {
-		super(parameters);
 	}
 	
 	public SimpleParameterSet<T> build() {

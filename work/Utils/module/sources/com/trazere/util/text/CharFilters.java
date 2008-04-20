@@ -15,7 +15,6 @@
  */
 package com.trazere.util.text;
 
-import com.trazere.util.Assert;
 
 /**
  * The <code>CharFilters</code> class provides various standard character filters.
@@ -93,7 +92,7 @@ public class CharFilters {
 	 * @return The char filter.
 	 */
 	public static CharFilter build(final String chars) {
-		Assert.notNull(chars);
+		assert null != chars;
 		
 		// Build.
 		return new CharFilter() {

@@ -15,7 +15,6 @@
  */
 package com.trazere.util.lang;
 
-import com.trazere.util.Assert;
 import java.util.Comparator;
 
 /**
@@ -36,8 +35,7 @@ implements Comparator<T> {
 	 * @return The built comparator.
 	 */
 	public static <T> Comparator<T> build(final Comparator<T> comparator, final boolean ascending) {
-		// Checks.
-		Assert.notNull(comparator);
+		assert null != comparator;
 		
 		// Build.
 		return ascending ? comparator : new ReverseComparator<T>(comparator);
@@ -52,8 +50,7 @@ implements Comparator<T> {
 	 * @param comparator Reversed comparator.
 	 */
 	public ReverseComparator(final Comparator<T> comparator) {
-		// Checks.
-		Assert.notNull(comparator);
+		assert null != comparator;
 		
 		// Initialization.
 		_comparator = comparator;
@@ -74,9 +71,9 @@ implements Comparator<T> {
 	
 	@Override
 	public int hashCode() {
-		int result = getClass().hashCode();
-		result = result * 31 + _comparator.hashCode();
-		return result;
+		final HashCode hashCode = new HashCode(this);
+		hashCode.append(_comparator);
+		return hashCode.get();
 	}
 	
 	@Override

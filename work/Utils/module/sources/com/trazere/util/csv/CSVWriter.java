@@ -15,7 +15,6 @@
  */
 package com.trazere.util.csv;
 
-import com.trazere.util.Assert;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -50,10 +49,10 @@ public class CSVWriter {
 	 * @param options Options.
 	 */
 	public CSVWriter(final Writer writer, final String delimiter, final List<String> headers, final EnumSet<CSVWriterOption> options) {
-		Assert.notNull(writer);
-		Assert.notNull(delimiter);
-		Assert.isTrue(delimiter.length() > 0, "Empty delimiter");
-		Assert.notNull(headers);
+		assert null != writer;
+		assert null != delimiter;
+		assert delimiter.length() > 0;
+		assert null != headers;
 		
 		// Initialization.
 		_writer = writer;
@@ -148,7 +147,7 @@ public class CSVWriter {
 	 * @return The escapted value.
 	 */
 	public final String escapeValue(final String value) {
-		Assert.notNull(value);
+		assert null != value;
 		
 		if (value.indexOf('\n') >= 0 || value.indexOf('\r') >= 0 || value.indexOf('"') >= 0 || value.indexOf(_delimiter) >= 0) {
 			// Escape.
