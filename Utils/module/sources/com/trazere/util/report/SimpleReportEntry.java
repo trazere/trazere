@@ -15,6 +15,7 @@
  */
 package com.trazere.util.report;
 
+import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.ObjectUtils;
 
 /**
@@ -62,17 +63,11 @@ implements ReportEntry<Category, Code> {
 	
 	@Override
 	public int hashCode() {
-		int result = getClass().hashCode();
-		if (null != _category) {
-			result = result * 31 + _category.hashCode();
-		}
-		if (null != _code) {
-			result = result * 31 + _code.hashCode();
-		}
-		if (null != _message) {
-			result = result * 31 + _message.hashCode();
-		}
-		return result;
+		final HashCode hashCode = new HashCode(this);
+		hashCode.append(_category);
+		hashCode.append(_code);
+		hashCode.append(_message);
+		return hashCode.get();
 	}
 	
 	@Override

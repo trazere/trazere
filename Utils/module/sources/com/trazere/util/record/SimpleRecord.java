@@ -15,8 +15,8 @@
  */
 package com.trazere.util.record;
 
-import com.trazere.util.Assert;
 import com.trazere.util.collection.CollectionUtils;
+import com.trazere.util.lang.HashCode;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.TextUtils;
 import java.util.Collection;
@@ -72,7 +72,7 @@ implements Record<K, V>, Describable {
 	 * @return The built record.
 	 */
 	public static <K, V> SimpleRecord<K, V> build(final Map<? extends K, ? extends V> fields) {
-		Assert.notNull(fields);
+		assert null != fields;
 		
 		// Build.
 		return new SimpleRecord<K, V>(new HashMap<K, V>(fields));
@@ -86,8 +86,8 @@ implements Record<K, V>, Describable {
 	 * 
 	 * @param fields Values of the fields identified by their keys.
 	 */
-	protected SimpleRecord(final Map<K, V> fields) {
-		Assert.notNull(fields);
+	protected SimpleRecord(final Map<? extends K, ? extends V> fields) {
+		assert null != fields;
 		
 		// Initialization.
 		_fields = Collections.unmodifiableMap(fields);
@@ -98,7 +98,7 @@ implements Record<K, V>, Describable {
 	}
 	
 	public boolean contains(final K key) {
-		Assert.notNull(key);
+		assert null != key;
 		
 		// Test.
 		return _fields.containsKey(key);
@@ -110,7 +110,7 @@ implements Record<K, V>, Describable {
 	
 	public V get(final K key)
 	throws RecordException {
-		Assert.notNull(key);
+		assert null != key;
 		
 		// Get.
 		if (_fields.containsKey(key)) {
@@ -121,7 +121,7 @@ implements Record<K, V>, Describable {
 	}
 	
 	public V get(final K key, final V defaultValue) {
-		Assert.notNull(key);
+		assert null != key;
 		
 		// Get.
 		return _fields.containsKey(key) ? _fields.get(key) : defaultValue;
@@ -137,9 +137,9 @@ implements Record<K, V>, Describable {
 	
 	@Override
 	public int hashCode() {
-		int result = getClass().hashCode();
-		result = result * 31 + _fields.hashCode();
-		return result;
+		final HashCode hashCode = new HashCode(this);
+		hashCode.append(_fields);
+		return hashCode.get();
 	}
 	
 	@Override

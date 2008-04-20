@@ -15,7 +15,6 @@
  */
 package com.trazere.util.csv;
 
-import com.trazere.util.Assert;
 import com.trazere.util.text.Scanner;
 import java.io.EOFException;
 import java.io.IOException;
@@ -87,10 +86,10 @@ public class CSVReader {
 	 */
 	public CSVReader(final Reader reader, final String delimiter, final EnumSet<CSVReaderOption> options)
 	throws IOException {
-		Assert.notNull(reader);
-		Assert.notNull(delimiter);
-		Assert.isTrue(delimiter.length() > 0, "empty delimiter");
-		Assert.notNull(options);
+		assert null != reader;
+		assert null != delimiter;
+		assert delimiter.length() > 0;
+		assert null != options;
 		
 		// Initialization.
 		_scanner = new Scanner(reader);
@@ -121,11 +120,11 @@ public class CSVReader {
 	 * @param options Options.
 	 */
 	public CSVReader(final Reader reader, final String delimiter, final List<String> headers, final Set<CSVReaderOption> options) {
-		Assert.notNull(reader);
-		Assert.notNull(delimiter);
-		Assert.isTrue(delimiter.length() > 0, "empty delimiter");
-		Assert.notNull(headers);
-		Assert.notNull(options);
+		assert null != reader;
+		assert null != delimiter;
+		assert delimiter.length() > 0;
+		assert null != headers;
+		assert null != options;
 		
 		// Initialize the instance.
 		_scanner = new Scanner(reader);

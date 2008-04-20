@@ -15,7 +15,7 @@
  */
 package com.trazere.util.csv;
 
-import com.trazere.util.Assert;
+import com.trazere.util.lang.HashCode;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.TextUtils;
 import java.util.Collections;
@@ -49,7 +49,7 @@ implements Describable {
 		 * @param line CSV line initially populating the builder.
 		 */
 		public Builder(final CSVLine line) {
-			Assert.notNull(line);
+			assert null != line;
 			
 			// Initialization.
 			_fields = new HashMap<String, String>(line.getFields());
@@ -61,7 +61,7 @@ implements Describable {
 		 * @param fields CSV fields initially populating the builder.
 		 */
 		public Builder(final Map<String, String> fields) {
-			Assert.notNull(fields);
+			assert null != fields;
 			
 			// Initialization.
 			_fields = new HashMap<String, String>(fields);
@@ -74,7 +74,7 @@ implements Describable {
 		 * @return The value of the field, or <code>null</code> if no field with the given name exists.
 		 */
 		public String getField(final String header) {
-			Assert.notNull(header);
+			assert null != header;
 			
 			// Get.
 			return _fields.get(header);
@@ -87,8 +87,8 @@ implements Describable {
 		 * @param value Value of the field.
 		 */
 		public void setField(final String header, final String value) {
-			Assert.notNull(header);
-			Assert.notNull(value);
+			assert null != header;
+			assert null != value;
 			
 			// Set.
 			_fields.put(header, value);
@@ -100,7 +100,7 @@ implements Describable {
 		 * @param fields Values of the CSV fields to set identified by their headers.
 		 */
 		public void setFields(final Map<String, String> fields) {
-			Assert.notNull(fields);
+			assert null != fields;
 			
 			// Set.
 			_fields.putAll(fields);
@@ -112,7 +112,7 @@ implements Describable {
 		 * @param header Header of the field to remove.
 		 */
 		public void removeField(final String header) {
-			Assert.notNull(header);
+			assert null != header;
 			
 			// Remove.
 			_fields.remove(header);
@@ -144,7 +144,7 @@ implements Describable {
 	 * @return The built CSV line.
 	 */
 	public static CSVLine build(final String header, final String value) {
-		Assert.notNull(header);
+		assert null != header;
 		
 		// Build.
 		final Map<String, String> fields = new HashMap<String, String>();
@@ -166,8 +166,8 @@ implements Describable {
 	 * @return The built CSV line.
 	 */
 	public static CSVLine build(final String header1, final String value1, final String header2, final String value2) {
-		Assert.notNull(header1);
-		Assert.notNull(header2);
+		assert null != header1;
+		assert null != header2;
 		
 		// Build.
 		final Map<String, String> fields = new HashMap<String, String>();
@@ -199,7 +199,7 @@ implements Describable {
 	 * @return <code>true</code> if the lien contains a value for the field, <code>false</code> otherwise.
 	 */
 	public boolean containsField(final String header) {
-		Assert.notNull(header);
+		assert null != header;
 		
 		// Test.
 		return _fields.containsKey(header);
@@ -212,7 +212,7 @@ implements Describable {
 	 * @return The value of the field, or <code>null</code> if no field with the given name exists.
 	 */
 	public String getField(final String header) {
-		Assert.notNull(header);
+		assert null != header;
 		
 		// Get.
 		return _fields.get(header);
@@ -229,7 +229,9 @@ implements Describable {
 	
 	@Override
 	public int hashCode() {
-		return _fields.hashCode();
+		final HashCode hashCode = new HashCode(this);
+		hashCode.append(_fields);
+		return hashCode.get();
 	}
 	
 	@Override

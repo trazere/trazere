@@ -15,7 +15,6 @@
  */
 package com.trazere.util.function;
 
-import com.trazere.util.Assert;
 import java.util.Map;
 
 /**
@@ -53,8 +52,7 @@ public class Functions {
 	 * @return The function.
 	 */
 	public static <T, R> Function<T, R> map(final Map<T, R> map) {
-		// Checks.
-		Assert.notNull(map);
+		assert null != map;
 		
 		// Build the function.
 		return new Function<T, R>() {

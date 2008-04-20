@@ -15,10 +15,10 @@
  */
 package com.trazere.util.type;
 
-import com.trazere.util.Assert;
 import com.trazere.util.function.ApplicationException;
 import com.trazere.util.function.Function;
 import com.trazere.util.lang.CannotComputeValueException;
+import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.ObjectUtils;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.TextUtils;
@@ -112,7 +112,7 @@ implements Describable {
 		
 		@Override
 		public <Result> Maybe<Result> lift(final Function<? super Value, Result> function) {
-			Assert.notNull(function);
+			assert null != function;
 			
 			// Lift.
 			return none();
@@ -124,7 +124,8 @@ implements Describable {
 		
 		@Override
 		public int hashCode() {
-			return getClass().hashCode();
+			final HashCode hashCode = new HashCode(this);
+			return hashCode.get();
 		}
 		
 		@Override
@@ -201,7 +202,7 @@ implements Describable {
 		@Override
 		public <Result> Maybe<Result> lift(final Function<? super Value, Result> function)
 		throws ApplicationException {
-			Assert.notNull(function);
+			assert null != function;
 			
 			// Lift.
 			return some(function.apply(_value));
@@ -209,11 +210,9 @@ implements Describable {
 		
 		@Override
 		public int hashCode() {
-			int result = getClass().hashCode();
-			if (null != _value) {
-				result = result * 31 + _value.hashCode();
-			}
-			return result;
+			final HashCode hashCode = new HashCode(this);
+			hashCode.append(_value);
+			return hashCode.get();
 		}
 		
 		@Override

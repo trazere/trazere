@@ -15,7 +15,6 @@
  */
 package com.trazere.util.text;
 
-import com.trazere.util.Assert;
 import java.util.Collection;
 
 /**
@@ -47,7 +46,7 @@ public class TextUtils {
 	 * @return <code>null</code> when the given string is empty, the given string otherwise.
 	 */
 	public static String strip(final String s) {
-		Assert.notNull(s);
+		assert null != s;
 		
 		// Strip.
 		return s.length() > 0 ? s : null;
@@ -75,8 +74,8 @@ public class TextUtils {
 	 * @return The given result collection.
 	 */
 	public static <C extends Collection<? super String>> C split(final String string, final String delimiter, final boolean trim, final boolean ignoreEmpty, final C results) {
-		Assert.notNull(string);
-		Assert.notNull(delimiter);
+		assert null != string;
+		assert null != delimiter;
 		
 		// Split the string.
 		for (final String token : string.split(delimiter.replaceAll("[^\\w]", "\\\\$0"))) {
@@ -108,9 +107,9 @@ public class TextUtils {
 	 * @return The given string builder.
 	 */
 	public static StringBuilder join(final Collection<String> tokens, final String delimiter, final StringBuilder builder) {
-		Assert.notNull(tokens);
-		Assert.notNull(delimiter);
-		Assert.notNull(builder);
+		assert null != tokens;
+		assert null != delimiter;
+		assert null != builder;
 		
 		// Join the strings.
 		boolean first = true;
@@ -154,7 +153,7 @@ public class TextUtils {
 	 * @return The string representation.
 	 */
 	public static String toHexString(final byte[] bytes) {
-		Assert.notNull(bytes);
+		assert null != bytes;
 		
 		final StringBuilder builder = new StringBuilder();
 		for (int i = 0; i < bytes.length; i += 1) {
@@ -186,7 +185,7 @@ public class TextUtils {
 	 * @return The name of the class.
 	 */
 	public static String computeClassName(final Class<?> class_) {
-		Assert.notNull(class_);
+		assert null != class_;
 		
 		// Compute.
 		final String fullName = class_.getName();
@@ -203,7 +202,7 @@ public class TextUtils {
 	 * @return The description.
 	 */
 	public static String computeDescription(final Describable object) {
-		Assert.notNull(object);
+		assert null != object;
 		
 		// Compute.
 		final StringBuilder builder = new StringBuilder();

@@ -15,7 +15,6 @@
  */
 package com.trazere.util.report;
 
-import com.trazere.util.Assert;
 
 /**
  * The <code>ReportUtils</code> class provides various helpers regarding the manipulation of report entries.
@@ -28,7 +27,7 @@ public class ReportUtils {
 	 * @return The representation.
 	 */
 	public static String render(final ReportEntry<?, ?> entry) {
-		Assert.notNull(entry);
+		assert null != entry;
 		
 		// Render.
 		return render(entry.getCategory(), entry.getCode(), entry.getMessage());
@@ -73,7 +72,7 @@ public class ReportUtils {
 	 * @return The chained report entry.
 	 */
 	public static <Category, Code extends Enum<?>> ReportEntry<Category, Code> chain(final ReportEntry<Category, Code> entry, final ReportEntry<?, ?> causeEntry) {
-		Assert.notNull(entry);
+		assert null != entry;
 		
 		// Chain.
 		return chain(entry.getCategory(), entry.getCode(), entry.getMessage(), causeEntry);
@@ -91,7 +90,7 @@ public class ReportUtils {
 	 * @return The chained report entry.
 	 */
 	public static <Category, Code extends Enum<?>> ReportEntry<Category, Code> chain(final Category category, final Code code, final String message, final ReportEntry<?, ?> causeEntry) {
-		Assert.notNull(causeEntry);
+		assert null != causeEntry;
 		
 		// Build the new entry..
 		final StringBuilder builder = new StringBuilder();

@@ -15,7 +15,6 @@
  */
 package com.trazere.util.parser;
 
-import com.trazere.util.Assert;
 import com.trazere.util.parser.AbstractParserEngine.HandlerMap;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -88,7 +87,7 @@ implements ParserState<Token> {
 	
 	public AbstractParserState(final int position, final List<ParserContinuation<Token>> continuations, final HandlerMap<Token> handlers) {
 		// Checks.
-		Assert.notNull(continuations);
+		assert null != continuations;
 		
 		// Initialization.
 		_position = position;

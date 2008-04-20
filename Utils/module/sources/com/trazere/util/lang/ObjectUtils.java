@@ -15,7 +15,6 @@
  */
 package com.trazere.util.lang;
 
-import com.trazere.util.Assert;
 import java.util.Comparator;
 
 /**
@@ -86,8 +85,7 @@ public class ObjectUtils {
 	 * @see Comparable#compareTo(Object)
 	 */
 	public static <T> int compare(final T object1, final T object2, final Comparator<T> comparator) {
-		// Checks.
-		Assert.notNull(comparator);
+		assert null != comparator;
 		
 		// Compare.
 		if (null == object1) {

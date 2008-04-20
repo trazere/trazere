@@ -43,7 +43,7 @@ public class ParserUtils {
 	//
 	// public void reportSuccess(final ParserNode<Token, ?> node)
 	// throws ParserException {
-	// Assert.notNull(node);
+	// assert null != node;
 	//
 	// // Clean the nodes.
 	// clearDescendentNodes(_successNodes, node);
@@ -56,7 +56,7 @@ public class ParserUtils {
 	//
 	// public void reportFailure(final ParserNode<Token, ?> node)
 	// throws ParserException {
-	// Assert.notNull(node);
+	// assert null != node;
 	//
 	// // Filter the failure.
 	// if (!_successNodes.contains(node) && !CollectionUtils.intersects(node.getParentNodes(), _successNodes)) {
@@ -134,7 +134,7 @@ public class ParserUtils {
 	
 	// public static <Token, Result, SubResult> ParserNode<Token, SubResult> buildSubNode(final ParserNode<Token, Result> node, final Parser<Token, SubResult>
 	// subParser, final int position) {
-	// Assert.notNull(node);
+	// assert null != node;
 	//
 	// // Build the node.
 	// final Set<ParserNode<Token, ?>> parentNodes = new HashSet<ParserNode<Token, ?>>(node.getParentNodes());

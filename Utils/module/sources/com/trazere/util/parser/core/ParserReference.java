@@ -15,7 +15,6 @@
  */
 package com.trazere.util.parser.core;
 
-import com.trazere.util.Assert;
 import com.trazere.util.parser.Parser;
 import com.trazere.util.parser.ParserClosure;
 import com.trazere.util.parser.ParserException;
@@ -32,7 +31,7 @@ implements Parser<Token, Result> {
 	protected Parser<Token, Result> _parser = null;
 	
 	public void set(final Parser<Token, Result> parser) {
-		Assert.notNull(parser);
+		assert null != parser;
 		
 		// Set.
 		_parser = parser;

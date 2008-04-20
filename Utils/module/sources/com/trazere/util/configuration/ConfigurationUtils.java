@@ -15,11 +15,12 @@
  */
 package com.trazere.util.configuration;
 
-import com.trazere.util.Assert;
+import com.trazere.util.type.Tuple2;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -27,70 +28,74 @@ import java.util.Properties;
  */
 public class ConfigurationUtils {
 	/**
-	 * Load the configuration file located at the given path, and its possible local version.
+	 * Load and merge the property files at the given paths.
 	 * <p>
-	 * Local property file is after the property file with the <tt>.local</tt> extension.
+	 * Later files in the list are having priority over the previous ones.
 	 * 
-	 * @param path Path of the property file.
-	 * @param local Flag indicating wether the local property file should be loaded and merged within the properties.
+	 * @param files Property files to load paired with flags indicating wether they are optional.
 	 * @return The loaded properties.
-	 * @throws ConfigurationException
+	 * @throws ConfigurationException When some property file is not optional and does not exist.
+	 * @throws ConfigurationException When some property file cannot be loaded.
 	 */
-	public static Properties loadConfiguration(final String path, final boolean local)
+	public static Properties loadProperties(final List<Tuple2<File, Boolean>> files)
 	throws ConfigurationException {
-		Assert.notNull(path);
+		return loadProperties(new Properties(), files);
+	}
+	
+	/**
+	 * Populate the given properties with the contents of the given property files.
+	 * <p>
+	 * The loaded properties override the given properties. Later files in the list are having priority over the previous ones.
+	 * 
+	 * @param properties Properties to fill.
+	 * @param files Property files to load paired with flags indicating wether they are optional.
+	 * @return The given properties.
+	 * @throws ConfigurationException When some property file is not optional and does not exist.
+	 * @throws ConfigurationException When some property file cannot be loaded.
+	 */
+	public static Properties loadProperties(final Properties properties, final List<Tuple2<File, Boolean>> files)
+	throws ConfigurationException {
+		assert null != properties;
+		assert null != files;
 		
 		// Load the properties.
-		final Properties properties = new Properties();
-		loadConfiguration(properties, path, local);
-		
+		for (final Tuple2<File, Boolean> file : files) {
+			loadProperties(properties, file.getFirst(), file.getSecond().booleanValue());
+		}
 		return properties;
 	}
 	
 	/**
-	 * Load the configuration file located at the given path, and its possible local version.
+	 * Populate the given properties with the content of the given property file.
 	 * <p>
-	 * Local property file is after the property file with the <tt>.local</tt> extension.
+	 * The loaded properties override the given properties.
 	 * 
-	 * @param properties Properties to fill.
-	 * @param path Path of the property file.
-	 * @param local Flag indicating wether the local property file should be loaded and merged within the properties.
-	 * @throws ConfigurationException
+	 * @param properties Properties to populate.
+	 * @param file Property file to load.
+	 * @param optional Flag indicating wether the property file is optional.
+	 * @return The given properties.
+	 * @throws ConfigurationException When the property file is not optional and does not exist.
+	 * @throws ConfigurationException When the property file cannot be loaded.
 	 */
-	public static void loadConfiguration(final Properties properties, final String path, final boolean local)
+	public static Properties loadProperties(final Properties properties, final File file, final boolean optional)
 	throws ConfigurationException {
-		Assert.notNull(properties);
-		Assert.notNull(path);
+		assert null != properties;
+		assert null != file;
 		
-		// Load the properties.
-		final File file = new File(path);
-		try {
-			final InputStream stream = new FileInputStream(file);
+		if (!optional || file.exists()) {
+			// Load the properties.
 			try {
-				properties.load(stream);
-			} finally {
-				stream.close();
-			}
-		} catch (final IOException exception) {
-			throw new ConfigurationException("Failed loading properties", exception);
-		}
-		
-		// Load the local properties if needed.
-		if (local) {
-			final File localFile = new File(path + ".local");
-			try {
-				if (localFile.exists()) {
-					final InputStream localStream = new FileInputStream(localFile);
-					try {
-						properties.load(localStream);
-					} finally {
-						localStream.close();
-					}
+				final InputStream stream = new FileInputStream(file);
+				try {
+					properties.load(stream);
+				} finally {
+					stream.close();
 				}
 			} catch (final IOException exception) {
 				throw new ConfigurationException("Failed loading properties", exception);
 			}
 		}
+		return properties;
 	}
 	
 	/**
@@ -103,8 +108,8 @@ public class ConfigurationUtils {
 	 * @return The value.
 	 */
 	public static String getProperty(final Properties properties, final String name, final String defaultValue) {
-		Assert.notNull(properties);
-		Assert.notNull(name);
+		assert null != properties;
+		assert null != name;
 		
 		// Get the property.
 		final String value = properties.getProperty(name);
@@ -121,7 +126,7 @@ public class ConfigurationUtils {
 	 * @return The value.
 	 */
 	public static String getProperty(final ReloadableProperties properties, final String name, final String defaultValue) {
-		Assert.notNull(properties);
+		assert null != properties;
 		
 		// Get.
 		return getProperty(properties.getProperties(), name, defaultValue);
@@ -138,8 +143,8 @@ public class ConfigurationUtils {
 	 */
 	public static String getMandatoryProperty(final Properties properties, final String name)
 	throws ConfigurationException {
-		Assert.notNull(properties);
-		Assert.notNull(name);
+		assert null != properties;
+		assert null != name;
 		
 		// Get the property.
 		final String value = properties.getProperty(name);
@@ -161,7 +166,7 @@ public class ConfigurationUtils {
 	 */
 	public static String getMandatoryProperty(final ReloadableProperties properties, final String name)
 	throws ConfigurationException {
-		Assert.notNull(properties);
+		assert null != properties;
 		
 		// Get.
 		return getMandatoryProperty(properties.getProperties(), name);

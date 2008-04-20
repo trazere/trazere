@@ -15,7 +15,7 @@
  */
 package com.trazere.util.type;
 
-import com.trazere.util.Assert;
+import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.ObjectUtils;
 
 /**
@@ -64,8 +64,8 @@ extends Tuple4<T1, T2, T3, T4> {
 	 * @see Comparable#compareTo(Object)
 	 */
 	public static <T1 extends Comparable<T1>, T2 extends Comparable<T2>, T3 extends Comparable<T3>, T4 extends Comparable<T4>, T5 extends Comparable<T5>> int compare(final Tuple5<T1, T2, T3, T4, T5> tuple1, final Tuple5<T1, T2, T3, T4, T5> tuple2) {
-		Assert.notNull(tuple1);
-		Assert.notNull(tuple2);
+		assert null != tuple1;
+		assert null != tuple2;
 		
 		// Compare.
 		final int comp = Tuple4.compare(tuple1, tuple2);
@@ -102,23 +102,13 @@ extends Tuple4<T1, T2, T3, T4> {
 	
 	@Override
 	public int hashCode() {
-		int result = getClass().hashCode();
-		if (null != _first) {
-			result = result * 31 + _first.hashCode();
-		}
-		if (null != _second) {
-			result = result * 31 + _second.hashCode();
-		}
-		if (null != _third) {
-			result = result * 31 + _third.hashCode();
-		}
-		if (null != _fourth) {
-			result = result * 31 + _fourth.hashCode();
-		}
-		if (null != _fifth) {
-			result = result * 31 + _fifth.hashCode();
-		}
-		return result;
+		final HashCode hashCode = new HashCode(this);
+		hashCode.append(_first);
+		hashCode.append(_second);
+		hashCode.append(_third);
+		hashCode.append(_fourth);
+		hashCode.append(_fifth);
+		return hashCode.get();
 	}
 	
 	@Override

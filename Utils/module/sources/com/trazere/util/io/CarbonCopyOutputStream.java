@@ -15,7 +15,6 @@
  */
 package com.trazere.util.io;
 
-import com.trazere.util.Assert;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -37,8 +36,8 @@ extends OutputStream {
 	 * @param copy Copy output stream receiving the copy of the data.
 	 */
 	public CarbonCopyOutputStream(final OutputStream output, final OutputStream copy) {
-		Assert.notNull(output);
-		Assert.notNull(copy);
+		assert null != output;
+		assert null != copy;
 		
 		// Initialization.
 		_output = output;

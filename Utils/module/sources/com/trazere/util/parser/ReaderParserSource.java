@@ -15,7 +15,6 @@
  */
 package com.trazere.util.parser;
 
-import com.trazere.util.Assert;
 import java.io.IOException;
 import java.io.Reader;
 
@@ -29,7 +28,7 @@ implements ParserSource<Character> {
 	protected int _next = -1;
 	
 	public ReaderParserSource(final Reader reader) {
-		Assert.notNull(reader);
+		assert null != reader;
 		
 		// Initialization.
 		_reader = reader;

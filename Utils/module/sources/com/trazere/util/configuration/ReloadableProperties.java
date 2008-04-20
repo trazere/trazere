@@ -15,129 +15,76 @@
  */
 package com.trazere.util.configuration;
 
-import com.trazere.util.Assert;
+import com.trazere.util.type.Maybe;
+import com.trazere.util.type.Tuple2;
+import java.io.File;
+import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
 
 /**
- * The <code>ReloadableProperties</code> class represent reloadble persistent sets of properties stored in files.
- * <p>
- * TODO: local feature
+ * The {@link ReloadableProperties} class wraps properties which can be loaded and reloaded from a list of files.
  */
 public class ReloadableProperties {
-	/** Path of the file containing the properties. */
-	protected String _path = null;
+	/** Property files to load paired with flags indicating wether they are optional. */
+	protected final List<Tuple2<File, Boolean>> _files;
 	
-	/** Flag indicating wether the properties may be overridden in a <em>local</em> file. */
-	protected boolean _local = false;
-	
-	/** Properties. May be <code>null</code> when no properties has ever been loaded. */
+	/** Properties. */
 	protected final Properties _properties;
 	
 	/**
-	 * Instantiate new reloadable properties with no path and no default properties.
-	 */
-	public ReloadableProperties() {
-		this(null, false, null);
-	}
-	
-	/**
-	 * Instantiate new reloadable properties with the given path and no default properties.
+	 * Instantiate a new wrapper with the given property files.
 	 * <p>
-	 * The properties are no loaded by the constructor.
+	 * The properties are not loaded until the {@link #load()} method is called.
 	 * 
-	 * @param path Path of the file containing the properties.
-	 * @param local Flag indicating wether the properties may be overridden in a <em>local</em> file.
+	 * @param files Files containing the properties.
 	 */
-	public ReloadableProperties(final String path, final boolean local) {
-		this(path, local, null);
+	public ReloadableProperties(final List<Tuple2<File, Boolean>> files) {
+		this(files, Maybe.<Properties>none());
 	}
 	
 	/**
-	 * Instantiate new reloadable properties with no path and the given default properties.
-	 * 
-	 * @param defaults Default properties.
-	 */
-	public ReloadableProperties(final Properties defaults) {
-		this(null, false, defaults);
-	}
-	
-	/**
-	 * Instantiate new reloadable properties with the given path and default properties.
+	 * Instantiate a new wrapper with the given property files and default properties.
 	 * <p>
-	 * The properties are no loaded by the constructor.
+	 * The constructor does not load the properties.
 	 * 
-	 * @param path Path of the file containing the properties.
-	 * @param local Flag indicating wether the properties may be overridden in a <em>local</em> file.
-	 * @param defaults Default properties.
+	 * @param files Files containing the properties.
+	 * @param defaultProperties Default properties.
 	 */
-	public ReloadableProperties(final String path, final boolean local, final Properties defaults) {
+	public ReloadableProperties(final List<Tuple2<File, Boolean>> files, final Maybe<Properties> defaultProperties) {
+		assert null != files;
+		assert null != defaultProperties;
+		
 		// Initialization.
-		_path = path;
-		_local = local;
-		_properties = null == defaults ? new Properties() : new Properties(defaults);
+		_files = Collections.unmodifiableList(files);
+		_properties = defaultProperties.isSome() ? new Properties(defaultProperties.asSome().getValue()) : new Properties();
 	}
 	
 	/**
-	 * Get the path of the receiver reloadable properties.
+	 * Get the property files loaded by the receiver wrapper.
 	 * 
-	 * @return The path. May be <code>null</code>.
+	 * @return The property files paired with flags indicating wether they are optional.
 	 */
-	public String getPath() {
-		return _path;
+	public List<Tuple2<File, Boolean>> getFiles() {
+		return _files;
 	}
 	
 	/**
-	 * Get the flag indicating wether the properties may be overridden in a <em>local</em> file.
+	 * Load or reload the properties of the receiver wrapper.
 	 * 
-	 * @return The flag.
+	 * @throws ConfigurationException When some property file is not optional and does not exist.
+	 * @throws ConfigurationException When some property file cannot be loaded.
 	 */
-	public boolean getLocal() {
-		return _local;
-	}
-	
-	/**
-	 * Load the properties at the given path.
-	 * 
-	 * @param path Path of the properties.
-	 * @param local Flag indicating wether the properties may be overridden in a <em>local</em> file.
-	 * @throws ConfigurationException
-	 */
-	public synchronized void load(final String path, final boolean local)
+	public void load()
 	throws ConfigurationException {
-		Assert.notNull(path);
-		
-		// Set the path.
-		_path = path;
-		_local = local;
-		
-		// Load the properties.
 		_properties.clear();
-		ConfigurationUtils.loadConfiguration(_properties, _path, _local);
+		ConfigurationUtils.loadProperties(_properties, _files);
 	}
 	
 	/**
-	 * Reload the properties using the current path.
-	 * <p>
-	 * This method should not be called when no path has been set.
+	 * Get the properties of the receiver wrapper.
 	 * 
-	 * @throws ConfigurationException
-	 * @throws IllegalStateException When no path has been set.
-	 */
-	public synchronized void reload()
-	throws ConfigurationException {
-		if (null != _path) {
-			// Reload the properties.
-			_properties.clear();
-			ConfigurationUtils.loadConfiguration(_properties, _path, _local);
-		} else {
-			throw new IllegalStateException("No path");
-		}
-	}
-	
-	/**
-	 * Get the loaded or default properties.
-	 * 
-	 * @return The properties. May be <code>null</code> when no default properties have been provided and when no properties have ever been loaded.
+	 * @return The properties.
 	 */
 	public Properties getProperties() {
 		return _properties;

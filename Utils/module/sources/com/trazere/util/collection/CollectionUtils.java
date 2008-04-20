@@ -1,6 +1,5 @@
 package com.trazere.util.collection;
 
-import com.trazere.util.Assert;
 import com.trazere.util.function.ApplicationException;
 import com.trazere.util.function.Function;
 import com.trazere.util.type.Tuple2;
@@ -89,7 +88,7 @@ public class CollectionUtils {
 	 * @return The set.
 	 */
 	public static <T> List<T> listN(final T[] values) {
-		Assert.notNull(values);
+		assert null != values;
 		
 		// Build the list.
 		final List<T> list = new ArrayList<T>(values.length);
@@ -170,7 +169,7 @@ public class CollectionUtils {
 	 * @see HashSet
 	 */
 	public static <T> Set<T> setN(final T[] values) {
-		Assert.notNull(values);
+		assert null != values;
 		
 		// Build the set.
 		final Set<T> set = new HashSet<T>(values.length);
@@ -287,7 +286,7 @@ public class CollectionUtils {
 	 * @return The iterator.
 	 */
 	public static <T> Iterator<T> iteratorN(final T[] values) {
-		Assert.notNull(values);
+		assert null != values;
 		
 		// Build the iterator.
 		return new Iterator<T>() {
@@ -318,7 +317,7 @@ public class CollectionUtils {
 	 * @return Any object from the collection, or <code>null</code> when the collection is empty.
 	 */
 	public static <T> T any(final Collection<T> collection) {
-		Assert.notNull(collection);
+		assert null != collection;
 		
 		// Read.
 		final Iterator<T> iterator = collection.iterator();
@@ -334,7 +333,7 @@ public class CollectionUtils {
 	 * @return Any entry from the map, or <code>null</code> if the map is empty.
 	 */
 	public static <K, V> Map.Entry<K, V> any(final Map<K, V> map) {
-		Assert.notNull(map);
+		assert null != map;
 		
 		// Read.
 		final Iterator<Map.Entry<K, V>> iterator = map.entrySet().iterator();
@@ -349,7 +348,7 @@ public class CollectionUtils {
 	 * @return The last value, or <code>null</code> when the list is empty.
 	 */
 	public static <T> T last(final List<T> list) {
-		Assert.notNull(list);
+		assert null != list;
 		
 		// Read.
 		final int size = list.size();
@@ -364,7 +363,7 @@ public class CollectionUtils {
 	 * @return The reversed <code>List</code>.
 	 */
 	public static <T> ArrayList<T> reverse(final List<? extends T> list) {
-		Assert.notNull(list);
+		assert null != list;
 		
 		// Build the list.
 		final ArrayList<T> results = new ArrayList<T>(list);
@@ -430,9 +429,9 @@ public class CollectionUtils {
 	 */
 	public static <T, L extends List<T>> L topologicalSort(final Collection<? extends T> values, final Function<? super T, ? extends Collection<T>> dependencyFunction, final L results)
 	throws CollectionException {
-		Assert.notNull(values);
-		Assert.notNull(dependencyFunction);
-		Assert.notNull(results);
+		assert null != values;
+		assert null != dependencyFunction;
+		assert null != results;
 		
 		// Compute the dependencies.
 		final Collection<Tuple2<T, T>> dependencies = new ArrayList<Tuple2<T, T>>();
@@ -498,8 +497,8 @@ public class CollectionUtils {
 	 * @return The union list.
 	 */
 	public static <T> ArrayList<T> unionList(final Collection<? extends T> collection1, final Collection<? extends T> collection2) {
-		Assert.notNull(collection1);
-		Assert.notNull(collection2);
+		assert null != collection1;
+		assert null != collection2;
 		
 		// Build the union.
 		return union(collection1, collection2, new ArrayList<T>(collection1.size() + collection2.size()));
@@ -531,8 +530,8 @@ public class CollectionUtils {
 	 * @return The union collection.
 	 */
 	public static <T, C extends Collection<T>> C union(final Collection<? extends T> collection1, final Collection<? extends T> collection2, final CollectionFactory<? super T, ? extends C> factory) {
-		Assert.notNull(collection1);
-		Assert.notNull(factory);
+		assert null != collection1;
+		assert null != factory;
 		
 		// Build the union.
 		return union(collection1, collection2, factory.build(collection1.size()));
@@ -551,9 +550,9 @@ public class CollectionUtils {
 	 * @return The populated collection.
 	 */
 	public static <T, C extends Collection<T>> C union(final Collection<? extends T> collection1, final Collection<? extends T> collection2, final C results) {
-		Assert.notNull(collection1);
-		Assert.notNull(collection2);
-		Assert.notNull(results);
+		assert null != collection1;
+		assert null != collection2;
+		assert null != results;
 		
 		// Build the union.
 		results.addAll(collection1);
@@ -591,8 +590,8 @@ public class CollectionUtils {
 	 * @return The union map.
 	 */
 	public static <K, V, M extends Map<K, V>> M union(final Map<? extends K, ? extends V> map1, final Map<? extends K, ? extends V> map2, final MapFactory<? super K, ? super V, ? extends M> factory) {
-		Assert.notNull(map1);
-		Assert.notNull(factory);
+		assert null != map1;
+		assert null != factory;
 		
 		// Build the union.
 		return union(map1, map2, factory.build(map1.size()));
@@ -612,9 +611,9 @@ public class CollectionUtils {
 	 * @return The populated map.
 	 */
 	public static <K, V, M extends Map<K, V>> M union(final Map<? extends K, ? extends V> map1, final Map<? extends K, ? extends V> map2, final M results) {
-		Assert.notNull(map1);
-		Assert.notNull(map2);
-		Assert.notNull(results);
+		assert null != map1;
+		assert null != map2;
+		assert null != results;
 		
 		// Build the union.
 		results.putAll(map2);
@@ -634,8 +633,8 @@ public class CollectionUtils {
 	 * @return <code>true</code> if the given collections intersect, <code>false</code> otherwise.
 	 */
 	public static <T> boolean intersects(final Collection<? extends T> collection1, final Collection<? extends T> collection2) {
-		Assert.notNull(collection1);
-		Assert.notNull(collection2);
+		assert null != collection1;
+		assert null != collection2;
 		
 		// Test.
 		for (final Object value : collection1) {
@@ -686,7 +685,7 @@ public class CollectionUtils {
 	 * @return The intersection collection.
 	 */
 	public static <T, C extends Collection<T>> C intersection(final Collection<? extends T> collection1, final Collection<? extends T> collection2, final CollectionFactory<? super T, ? extends C> factory) {
-		Assert.notNull(factory);
+		assert null != factory;
 		
 		// Build the intersection.
 		return intersection(collection1, collection2, factory.build());
@@ -706,9 +705,9 @@ public class CollectionUtils {
 	 * @return The populated collection.
 	 */
 	public static <T, C extends Collection<T>> C intersection(final Collection<? extends T> collection1, final Collection<? extends T> collection2, final C results) {
-		Assert.notNull(collection1);
-		Assert.notNull(collection2);
-		Assert.notNull(results);
+		assert null != collection1;
+		assert null != collection2;
+		assert null != results;
 		
 		// Build the intersection.
 		for (final T value : collection1) {
@@ -765,7 +764,7 @@ public class CollectionUtils {
 	 * @return The exclusion collection.
 	 */
 	public static <T, C extends Collection<T>> C exclusion(final Collection<? extends T> collection1, final Collection<? extends T> collection2, final CollectionFactory<? super T, ? extends C> factory) {
-		Assert.notNull(factory);
+		assert null != factory;
 		
 		// Build the exclusion.
 		return exclusion(collection1, collection2, factory.build());
@@ -786,9 +785,9 @@ public class CollectionUtils {
 	 */
 	public static <T, C extends Collection<T>> C exclusion(final Collection<? extends T> collection1, final Collection<? extends T> collection2, final C results) {
 		// Checks
-		Assert.notNull(collection1);
-		Assert.notNull(collection2);
-		Assert.notNull(results);
+		assert null != collection1;
+		assert null != collection2;
+		assert null != results;
 		
 		// Build the exclusion.
 		for (final T value : collection1) {
@@ -809,7 +808,7 @@ public class CollectionUtils {
 	 * @return The sub map.
 	 */
 	public static <K, V> HashMap<K, V> subMap(final Map<? extends K, ? extends V> map, final Set<? extends K> keys) {
-		Assert.notNull(keys);
+		assert null != keys;
 		
 		// Build the map.
 		return subMap(map, keys, new HashMap<K, V>(keys.size()));
@@ -827,7 +826,7 @@ public class CollectionUtils {
 	 * @return The sub map.
 	 */
 	public static <K, V, M extends Map<K, V>> M subMap(final Map<? extends K, ? extends V> map, final Set<? extends K> keys, final MapFactory<? super K, ? super V, ? extends M> factory) {
-		Assert.notNull(factory);
+		assert null != factory;
 		
 		// Build the map.
 		return subMap(map, keys, factory.build());
@@ -845,9 +844,9 @@ public class CollectionUtils {
 	 * @return The populated map.
 	 */
 	public static <K, V, M extends Map<K, V>> M subMap(final Map<? extends K, ? extends V> map, final Set<? extends K> keys, final M results) {
-		Assert.notNull(map);
-		Assert.notNull(keys);
-		Assert.notNull(results);
+		assert null != map;
+		assert null != keys;
+		assert null != results;
 		
 		// Build the map.
 		for (final K key : keys) {
@@ -885,7 +884,7 @@ public class CollectionUtils {
 	 * @return The exclusion map.
 	 */
 	public static <K, V, M extends Map<K, V>> M retainMap(final Map<? extends K, ? extends V> map, final Collection<? extends K> keys, final MapFactory<? super K, ? super V, ? extends M> factory) {
-		Assert.notNull(factory);
+		assert null != factory;
 		
 		// Build the exclusion.
 		return retainMap(map, keys, factory.build());
@@ -903,9 +902,9 @@ public class CollectionUtils {
 	 * @return The populated map.
 	 */
 	public static <K, V, M extends Map<K, V>> M retainMap(final Map<? extends K, ? extends V> map, final Collection<? extends K> keys, final M results) {
-		Assert.notNull(map);
-		Assert.notNull(keys);
-		Assert.notNull(results);
+		assert null != map;
+		assert null != keys;
+		assert null != results;
 		
 		// Build the exclusion.
 		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {

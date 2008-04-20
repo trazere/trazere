@@ -15,7 +15,6 @@
  */
 package com.trazere.util.parser.text;
 
-import com.trazere.util.Assert;
 import com.trazere.util.parser.AbstractParser;
 import com.trazere.util.parser.AbstractParserContinuation;
 import com.trazere.util.parser.ParserClosure;
@@ -35,7 +34,7 @@ extends AbstractParser<Character, String> {
 		super(description);
 		
 		// Checks.
-		Assert.notNull(filter);
+		assert null != filter;
 		
 		// Initialization.
 		_filter = filter;

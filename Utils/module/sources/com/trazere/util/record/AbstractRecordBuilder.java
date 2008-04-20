@@ -15,7 +15,6 @@
  */
 package com.trazere.util.record;
 
-import com.trazere.util.Assert;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.TextUtils;
 import java.util.Collections;
@@ -52,7 +51,7 @@ implements RecordBuilder<K, V, R>, Describable {
 	 */
 	public AbstractRecordBuilder(final Record<? extends K, ? extends V> record)
 	throws RecordException {
-		Assert.notNull(record);
+		assert null != record;
 		
 		// Initialization.
 		_fields = new HashMap<K, V>(record.asMap());
@@ -66,7 +65,7 @@ implements RecordBuilder<K, V, R>, Describable {
 	 */
 	public AbstractRecordBuilder(final RecordBuilder<? extends K, ? extends V, ?> builder)
 	throws RecordException {
-		Assert.notNull(builder);
+		assert null != builder;
 		
 		// Populate.
 		_fields = new HashMap<K, V>();
@@ -79,7 +78,7 @@ implements RecordBuilder<K, V, R>, Describable {
 	 * @param fields Values of the initial fields identified by their keys.
 	 */
 	public AbstractRecordBuilder(final Map<? extends K, ? extends V> fields) {
-		Assert.notNull(fields);
+		assert null != fields;
 		
 		// Initialization.
 		_fields = new HashMap<K, V>(fields);
@@ -87,7 +86,7 @@ implements RecordBuilder<K, V, R>, Describable {
 	
 	public void add(final K key, final V value)
 	throws RecordException {
-		Assert.notNull(key);
+		assert null != key;
 		
 		// Add the field.
 		if (!_fields.containsKey(key)) {
@@ -99,7 +98,7 @@ implements RecordBuilder<K, V, R>, Describable {
 	
 	public void addAll(final Record<? extends K, ? extends V> record)
 	throws RecordException {
-		Assert.notNull(record);
+		assert null != record;
 		
 		// Add the fields.
 		addAll(record.asMap());
@@ -107,7 +106,7 @@ implements RecordBuilder<K, V, R>, Describable {
 	
 	public void addAll(final Map<? extends K, ? extends V> fields)
 	throws RecordException {
-		Assert.notNull(fields);
+		assert null != fields;
 		
 		// Add the fields.
 		for (final Map.Entry<? extends K, ? extends V> entry : fields.entrySet()) {
@@ -125,7 +124,7 @@ implements RecordBuilder<K, V, R>, Describable {
 	}
 	
 	public boolean contains(final K key) {
-		Assert.notNull(key);
+		assert null != key;
 		
 		// Test.
 		return _fields.containsKey(key);
@@ -137,7 +136,7 @@ implements RecordBuilder<K, V, R>, Describable {
 	
 	public void remove(final K key)
 	throws RecordException {
-		Assert.notNull(key);
+		assert null != key;
 		
 		// Remove the field.
 		if (_fields.containsKey(key)) {
@@ -154,7 +153,7 @@ implements RecordBuilder<K, V, R>, Describable {
 	
 	public <B extends RecordBuilder<? super K, ? super V, ?>> B populate(final B builder)
 	throws RecordException {
-		Assert.notNull(builder);
+		assert null != builder;
 		
 		// Fill.
 		builder.addAll(Collections.unmodifiableMap(_fields));
@@ -164,8 +163,8 @@ implements RecordBuilder<K, V, R>, Describable {
 	
 	public <B extends RecordBuilder<? super K, ? super V, ?>> B populate(final B builder, final Set<? extends K> keys)
 	throws RecordException {
-		Assert.notNull(builder);
-		Assert.notNull(keys);
+		assert null != builder;
+		assert null != keys;
 		
 		// Fill.
 		for (final K key : keys) {

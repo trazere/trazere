@@ -15,7 +15,6 @@
  */
 package com.trazere.util.io;
 
-import com.trazere.util.Assert;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -35,8 +34,8 @@ public class IOUtils {
 	 */
 	public static void copyStream(final InputStream input, final OutputStream output)
 	throws IOException {
-		Assert.notNull(input);
-		Assert.notNull(output);
+		assert null != input;
+		assert null != output;
 		
 		// Copy.
 		final byte[] buffer = new byte[512];
@@ -59,8 +58,8 @@ public class IOUtils {
 	 */
 	public static void copyText(final Reader reader, final Writer writer)
 	throws IOException {
-		Assert.notNull(reader);
-		Assert.notNull(writer);
+		assert null != reader;
+		assert null != writer;
 		
 		// Copy.
 		final char[] buffer = new char[512];

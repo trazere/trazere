@@ -15,7 +15,6 @@
  */
 package com.trazere.util.lang;
 
-import com.trazere.util.Assert;
 import com.trazere.util.parameter.ParameterSet;
 import com.trazere.util.parameter.SimpleParameterSet;
 import com.trazere.util.text.Describable;
@@ -67,9 +66,8 @@ implements Describable {
 	 * @param parameters Parameters of the closure.
 	 */
 	public ParameterClosure(final Value value, final ParameterSet<Parameter> parameters) {
-		// Checks.
-		Assert.notNull(value);
-		Assert.notNull(parameters);
+		assert null != value;
+		assert null != parameters;
 		
 		// Initialization.
 		_value = value;

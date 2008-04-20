@@ -15,7 +15,6 @@
  */
 package com.trazere.util.lang;
 
-import com.trazere.util.Assert;
 import java.util.Comparator;
 import java.util.List;
 
@@ -37,8 +36,7 @@ implements Comparator<T> {
 	 * @param comparators Comparators to apply ordered by priority.
 	 */
 	public MultipleComparator(final List<? extends Comparator<T>> comparators) {
-		// Checks.
-		Assert.notNull(comparators);
+		assert null != comparators;
 		
 		// Initialization.
 		@SuppressWarnings("unchecked")
@@ -59,9 +57,9 @@ implements Comparator<T> {
 	
 	@Override
 	public int hashCode() {
-		int result = getClass().hashCode();
-		result = result * 31 + _comparators.hashCode();
-		return result;
+		final HashCode hashCode = new HashCode(this);
+		hashCode.append(_comparators);
+		return hashCode.get();
 	}
 	
 	@Override
