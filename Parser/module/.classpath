@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Trazere - Parser"/>
+	<classpathentry kind="lib" path="/Trazere - Tools/commons-logging-1.1.1/commons-logging.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Trazere - Utils"/>
 	<classpathentry kind="src" path="sources"/>
 	<classpathentry kind="output" path="build/classes"/>
