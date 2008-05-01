@@ -14,7 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<project name="tests" default="usage">
+<project name="parser" default="usage">
 	<!-- Imports -->
 	<import file="impl.xml" />
 
@@ -24,8 +24,16 @@
 	</target>
 
 	<!-- Clean -->
-	<target name="clean" description="Clean" depends="tests.clean" />
+	<target name="clean" description="Clean" depends="parser.clean" />
+
+	<!-- Clean the distribution -->
+	<target name="distclean" description="Clean the distribution" depends="parser.distclean" />
 
 	<!-- Compile -->
-	<target name="compile" description="Compile" depends="tests.compile" />
+	<target name="compile" description="Compile" depends="parser.compile" />
+
+	<!-- Build the distribution -->
+	<target name="build" description="Build the distribution">
+		<antcall target="parser.build" inheritall="false" />
+	</target>
 </project>

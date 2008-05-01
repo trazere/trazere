@@ -29,10 +29,6 @@
 	<property name="utils.dist" location="${utils.module}/dist" />
 	<property name="utils.dist.lib" value="${utils.dist}/lib" />
 
-	<path id="utils.classpath">
-		<pathelement location="${utils.dist.jar}" />
-	</path>
-
 	<!-- Clean -->
 	<target name="utils.clean">
 		<delete dir="${utils.build}" />

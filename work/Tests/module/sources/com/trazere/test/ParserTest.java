@@ -15,17 +15,17 @@
  */
 package com.trazere.test;
 
+import com.trazere.parser.Parser;
+import com.trazere.parser.ParserException;
+import com.trazere.parser.ParserUtils;
+import com.trazere.parser.StringParserSource;
+import com.trazere.parser.core.ChoiceParser;
+import com.trazere.parser.core.Combine1Parser;
+import com.trazere.parser.core.Combine3Parser;
+import com.trazere.parser.core.CoreParsers;
+import com.trazere.parser.core.ParserReference;
+import com.trazere.parser.text.TextParsers;
 import com.trazere.util.collection.CollectionUtils;
-import com.trazere.util.parser.Parser;
-import com.trazere.util.parser.ParserException;
-import com.trazere.util.parser.ParserUtils;
-import com.trazere.util.parser.StringParserSource;
-import com.trazere.util.parser.core.ChoiceParser;
-import com.trazere.util.parser.core.Combine1Parser;
-import com.trazere.util.parser.core.Combine3Parser;
-import com.trazere.util.parser.core.CoreParsers;
-import com.trazere.util.parser.core.ParserReference;
-import com.trazere.util.parser.text.TextParsers;
 import com.trazere.util.type.Maybe;
 import java.util.ArrayList;
 import java.util.Collection;

@@ -29,7 +29,7 @@
 	<property name="trazere.dist.zip" location="${trazere.dist}/trazere-${trazere.version}.zip" />
 
 	<!-- Clean -->
-	<target name="trazere.clean">
+	<target name="trazere.clean" depends="parser.clean, tests.clean, utils.clean">
 		<delete dir="${trazere.build}" />
 	</target>
 
@@ -39,10 +39,10 @@
 	</target>
 
 	<!-- Compile -->
-	<target name="trazere.compile" depends="utils.compile, tests.compile" />
+	<target name="trazere.compile" depends="parser.compile, tests.compile, utils.compile" />
 
 	<!-- Build the distribution -->
-	<target name="trazere.build" depends="utils.build">
+	<target name="trazere.build" depends="parser.build, utils.build">
 		<mkdir dir="${trazere.dist.binary}" />
 
 		<!-- Distribution -->

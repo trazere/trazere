@@ -24,10 +24,10 @@
 	</target>
 
 	<!-- Clean -->
-	<target name="clean" description="Clean" depends="tests.clean, utils.clean, trazere.clean" />
+	<target name="clean" description="Clean" depends="trazere.clean" />
 
 	<!-- Clean the distribution -->
-	<target name="distclean" description="Clean the distribution" depends="clean, trazere.distclean" />
+	<target name="distclean" description="Clean the distribution" depends="trazere.distclean" />
 
 	<!-- Compile -->
 	<target name="compile" description="Compile" depends="trazere.compile" />
@@ -35,17 +35,18 @@
 	<!-- Build the distribution -->
 	<target name="build" description="Build the distribution">
 		<antcall target="trazere.build" inheritall="false">
+			<param name="parser.dist" location="${trazere.dist.binary}" />
 			<param name="utils.dist" location="${trazere.dist.binary}" />
 		</antcall>
 	</target>
 
 	<!-- Environment -->
-	<target name="environment" description="Display the Ant environment">
+	<target name="environment" description="Display the environment">
 		<echoproperties />
 	</target>
 
 	<!-- Xalan -->
-	<target name="xalan" description="Display the Xalan environment">
+	<target name="xalan" description="Display the Xalan version">
 		<java classname="org.apache.xalan.xslt.EnvironmentCheck" failonerror="true" />
 	</target>
 </project>

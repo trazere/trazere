@@ -20,6 +20,11 @@
 	<property name="trazere" location="${trazere.module}/.." />
 	<property name="trazere.ant.impl" location="${trazere.module}/impl.xml" />
 
+	<!-- Parser -->
+	<property name="parser" location="${trazere}/Parser" />
+	<property name="parser.module" location="${parser}/module" />
+	<property name="parser.ant.impl" location="${parser.module}/impl.xml" />
+
 	<!-- Tests -->
 	<property name="tests" location="${trazere}/Tests" />
 	<property name="tests.module" location="${tests}/module" />
