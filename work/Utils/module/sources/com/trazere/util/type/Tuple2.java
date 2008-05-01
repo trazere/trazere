@@ -16,7 +16,7 @@
 package com.trazere.util.type;
 
 import com.trazere.util.lang.HashCode;
-import com.trazere.util.lang.ObjectUtils;
+import com.trazere.util.lang.LangUtils;
 
 /**
  * The {@link Tuple2} class represents the 2-tuple (pair) data type which stores a sequence of 2 values.
@@ -55,8 +55,8 @@ public class Tuple2<T1, T2> {
 		assert null != tuple2;
 		
 		// Compare.
-		final int comp1 = ObjectUtils.compare(tuple1._first, tuple2._first);
-		return 0 != comp1 ? comp1 : ObjectUtils.compare(tuple1._second, tuple2._second);
+		final int comp1 = LangUtils.compare(tuple1._first, tuple2._first);
+		return 0 != comp1 ? comp1 : LangUtils.compare(tuple1._second, tuple2._second);
 	}
 	
 	/** First value. May be <code>null</code>. */
@@ -109,7 +109,7 @@ public class Tuple2<T1, T2> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final Tuple2<?, ?> tuple = (Tuple2<?, ?>) object;
-			return ObjectUtils.equals(_first, tuple._first) && ObjectUtils.equals(_second, tuple._second);
+			return LangUtils.equals(_first, tuple._first) && LangUtils.equals(_second, tuple._second);
 		} else {
 			return false;
 		}

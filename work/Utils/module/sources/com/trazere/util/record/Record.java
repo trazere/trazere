@@ -20,7 +20,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * The {@link Record} interface defines unmutable collections of identified fields.
+ * The {@link Record} interface defines unmutable records.
+ * <p>
+ * A record is a collection of fields uniquely identified by keys.
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
@@ -30,31 +32,31 @@ public interface Record<K, V> {
 	/**
 	 * Test wether the receiver record is empty or not.
 	 * 
-	 * @return <code>true</code> when the record is empty, <code>false</code> otherwise.
+	 * @return <code>true</code> when empty, <code>false</code> otherwise.
 	 */
 	public boolean isEmpty();
 	
 	/**
-	 * Test wether the receiver record contains a field identified by the given key or not.
+	 * Test wether some field if identified by the given key in the receiver record or not.
 	 * 
 	 * @param key Key of the field to test.
-	 * @return <code>true</code> when the record contains a field identified by the given key, <code>false</code> otherwise.
+	 * @return <code>true</code> when some field is identified by the given key, <code>false</code> otherwise.
 	 */
 	public boolean contains(final K key);
 	
 	/**
 	 * Get the keys identifying the fields of the receiver record.
 	 * 
-	 * @return An unmodiable set of the keys identifying the fields.
+	 * @return An unmodiable set of the keys.
 	 */
 	public Set<K> getKeys();
 	
 	/**
 	 * Get the value of the field of the receiver record identified by the given key.
 	 * 
-	 * @param key Key of the field to read.
+	 * @param key Key of the field.
 	 * @return The value of the field. May be <code>null</code>.
-	 * @throws MissingFieldRecordException When the record does not contain a field identified by the given key.
+	 * @throws MissingFieldException When no fields are identified by the given key.
 	 * @throws RecordException When the field cannot be got.
 	 */
 	public V get(final K key)
@@ -63,19 +65,73 @@ public interface Record<K, V> {
 	/**
 	 * Get the value of the field of the receiver record identified by the given key.
 	 * 
-	 * @param key Key of the field to read.
-	 * @param defaultValue Default value to return. May be <code>null</code>.
-	 * @return The value of the field or the given default value when the field does not exist. May be <code>null</code>.
+	 * @param key Key of the field.
+	 * @param defaultValue Default value of the field. May be <code>null</code>.
+	 * @return The value of the field or the given default value when no fields are identified by the given key. May be <code>null</code>.
 	 * @throws RecordException When the field cannot be got.
 	 */
 	public V get(final K key, final V defaultValue)
 	throws RecordException;
 	
 	/**
+	 * Get the value of the field of the receiver record identified by the given key according to the given type.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param key Key of the field.
+	 * @param type Type of the value.
+	 * @return The value of the field. May be <code>null</code>.
+	 * @throws MissingFieldException When no fields are identified by the given key.
+	 * @throws IncompatibleFieldException When the value of the field is not compatible with the given type.
+	 * @throws RecordException When the field cannot be got.
+	 */
+	public <T extends V> T getTyped(final K key, final Class<T> type)
+	throws RecordException;
+	
+	/**
+	 * Get the value of the field of the receiver record identified by the given key according to the given type.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param key Key of the field.
+	 * @param type Type of the value.
+	 * @param defaultValue Default value of the field. May be <code>null</code>.
+	 * @return The value of the field or the given default value when no fields are identified by the given key. May be <code>null</code>.
+	 * @throws IncompatibleFieldException When the value of the field is not compatible with the given type.
+	 * @throws RecordException When the field cannot be got.
+	 */
+	public <T extends V> T getTyped(final K key, final Class<T> type, final T defaultValue)
+	throws RecordException;
+	
+	/**
+	 * Get the value of the field of the receiver record identified by the given signature.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param signature Signature of the field.
+	 * @return The value of the field. May be <code>null</code>.
+	 * @throws MissingFieldException When no fields are identified by the key of the given signature.
+	 * @throws IncompatibleFieldException When the value of the field is not compatible with the given type.
+	 * @throws RecordException When the field cannot be got.
+	 */
+	public <T extends V> T getTyped(final FieldSignature<? extends K, T> signature)
+	throws RecordException;
+	
+	/**
+	 * Get the value of the field of the receiver record identified by the given signature.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param signature Signature of the field.
+	 * @param defaultValue Default value of the field. May be <code>null</code>.
+	 * @return The value of the field or the given default value when no fields are identified by the key of the given signature. May be <code>null</code>.
+	 * @throws IncompatibleFieldException When the value of the field is not compatible with the given type.
+	 * @throws RecordException When the field cannot be got.
+	 */
+	public <T extends V> T getTyped(final FieldSignature<? extends K, T> signature, final T defaultValue)
+	throws RecordException;
+	
+	/**
 	 * Get the values of the fields of the receiver record.
 	 * 
 	 * @return An unmodiable collection of the values of the fields.
-	 * @throws RecordException The values of the fields cannot by got.
+	 * @throws RecordException When the values of the fields cannot by got.
 	 */
 	public Collection<V> getValues()
 	throws RecordException;
@@ -84,7 +140,7 @@ public interface Record<K, V> {
 	 * Get a view of the fields of the receiver record as a map.
 	 * 
 	 * @return An unmodiable map of the values of the fields identified by their keys.
-	 * @throws RecordException The view cannot be built.
+	 * @throws RecordException When the view cannot be built.
 	 */
 	public Map<K, V> asMap()
 	throws RecordException;

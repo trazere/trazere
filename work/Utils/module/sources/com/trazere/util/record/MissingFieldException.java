@@ -13,19 +13,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.parameter;
+package com.trazere.util.record;
 
 /**
- * {@link MissingParameterException} exceptions are thrown when some parameter is missing.
+ * {@link MissingFieldException} exceptions are thrown when some record field is missing.
  */
-public class MissingParameterException
-extends ParameterException {
+public class MissingFieldException
+extends RecordException {
 	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * Instantiate a new exception.
 	 */
-	public MissingParameterException() {
+	public MissingFieldException() {
 		super();
 	}
 	
@@ -34,7 +34,7 @@ extends ParameterException {
 	 * 
 	 * @param message Details about the exception.
 	 */
-	public MissingParameterException(final String message) {
+	public MissingFieldException(final String message) {
 		super(message);
 	}
 	
@@ -43,7 +43,7 @@ extends ParameterException {
 	 * 
 	 * @param cause Cause of the exception.
 	 */
-	public MissingParameterException(final Throwable cause) {
+	public MissingFieldException(final Throwable cause) {
 		super(cause);
 	}
 	
@@ -53,7 +53,7 @@ extends ParameterException {
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
 	 */
-	public MissingParameterException(final String message, final Throwable cause) {
+	public MissingFieldException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 }

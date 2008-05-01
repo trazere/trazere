@@ -19,7 +19,7 @@ import com.trazere.util.function.ApplicationException;
 import com.trazere.util.function.Function;
 import com.trazere.util.lang.CannotComputeValueException;
 import com.trazere.util.lang.HashCode;
-import com.trazere.util.lang.ObjectUtils;
+import com.trazere.util.lang.LangUtils;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.TextUtils;
 
@@ -221,7 +221,7 @@ implements Describable {
 				return true;
 			} else if (null != object && getClass().equals(object.getClass())) {
 				final Some<?> maybe = (Some<?>) object;
-				return ObjectUtils.equals(_value, maybe._value);
+				return LangUtils.equals(_value, maybe._value);
 			} else {
 				return false;
 			}

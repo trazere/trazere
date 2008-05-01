@@ -17,7 +17,7 @@ package com.trazere.util.type;
 
 import com.trazere.util.lang.CannotComputeValueException;
 import com.trazere.util.lang.HashCode;
-import com.trazere.util.lang.ObjectUtils;
+import com.trazere.util.lang.LangUtils;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.TextUtils;
 
@@ -143,7 +143,7 @@ implements Describable {
 				return true;
 			} else if (null != object && getClass().equals(object.getClass())) {
 				final Left<?, ?> either = (Left<?, ?>) object;
-				return ObjectUtils.equals(_left, either._left);
+				return LangUtils.equals(_left, either._left);
 			} else {
 				return false;
 			}
@@ -227,7 +227,7 @@ implements Describable {
 				return true;
 			} else if (null != object && getClass().equals(object.getClass())) {
 				final Right<?, ?> either = (Right<?, ?>) object;
-				return ObjectUtils.equals(_right, either._right);
+				return LangUtils.equals(_right, either._right);
 			} else {
 				return false;
 			}

@@ -16,29 +16,31 @@
 package com.trazere.util.record;
 
 import com.trazere.util.lang.CannotComputeValueException;
-import com.trazere.util.lang.ObjectUtils;
+import com.trazere.util.lang.LangUtils;
+import com.trazere.util.text.Describable;
+import com.trazere.util.text.TextUtils;
 import java.util.Comparator;
 
 /**
- * The {@link RecordComparator} class represents comparators of records based on the content of a single field.
+ * The {@link RecordComparator} class represents comparators of records based on the value of a single field.
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  * @param <R> Type of the records.
  */
 public class RecordComparator<K, V, R extends Record<? super K, ? extends V>>
-implements Comparator<R> {
-	/** Key identified the fields used for comparison. */
+implements Comparator<R>, Describable {
+	/** Key identifying the field used for comparison. */
 	protected final K _key;
 	
-	/** Comparator of the values of the fields. */
+	/** Comparator of the values of the field. */
 	protected final Comparator<V> _comparator;
 	
 	/**
 	 * Instantiate a new record comparator.
 	 * 
 	 * @param key Key identifying the field used for comparison.
-	 * @param comparator Comparator of the svalues of the fields.
+	 * @param comparator Comparator of the values of the field.
 	 */
 	public RecordComparator(final K key, final Comparator<V> comparator) {
 		assert null != key;
@@ -50,7 +52,7 @@ implements Comparator<R> {
 	}
 	
 	/**
-	 * Get the key identifying the fields used for comparison.
+	 * Get the key identifying the field used for comparison.
 	 * 
 	 * @return The key.
 	 */
@@ -60,9 +62,18 @@ implements Comparator<R> {
 	
 	public int compare(final R record1, final R record2) {
 		try {
-			return ObjectUtils.compare(record1.get(_key), record2.get(_key), _comparator);
+			return LangUtils.compare(record1.get(_key), record2.get(_key), _comparator);
 		} catch (final RecordException exception) {
 			throw new CannotComputeValueException("Failed reading records " + record1 + " and " + record2, exception);
 		}
+	}
+	
+	@Override
+	public String toString() {
+		return TextUtils.computeDescription(this);
+	}
+	
+	public void fillDescription(final StringBuilder builder) {
+		builder.append(" - Key = ").append(_key);
 	}
 }

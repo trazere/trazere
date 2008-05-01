@@ -16,7 +16,7 @@
 package com.trazere.util.type;
 
 import com.trazere.util.lang.HashCode;
-import com.trazere.util.lang.ObjectUtils;
+import com.trazere.util.lang.LangUtils;
 
 /**
  * The {@link Tuple5} class represents the 5-tuple (quintuplet) data type which stores a sequence of 5 values.
@@ -69,7 +69,7 @@ extends Tuple4<T1, T2, T3, T4> {
 		
 		// Compare.
 		final int comp = Tuple4.compare(tuple1, tuple2);
-		return 0 != comp ? comp : ObjectUtils.compare(tuple1._fifth, tuple2._fifth);
+		return 0 != comp ? comp : LangUtils.compare(tuple1._fifth, tuple2._fifth);
 	}
 	
 	/** Fifth value. May be <code>null</code>. */
@@ -117,7 +117,7 @@ extends Tuple4<T1, T2, T3, T4> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final Tuple5<?, ?, ?, ?, ?> tuple = (Tuple5<?, ?, ?, ?, ?>) object;
-			return ObjectUtils.equals(_first, tuple._first) && ObjectUtils.equals(_second, tuple._second) && ObjectUtils.equals(_third, tuple._third) && ObjectUtils.equals(_fourth, tuple._fourth) && ObjectUtils.equals(_fifth, tuple._fifth);
+			return LangUtils.equals(_first, tuple._first) && LangUtils.equals(_second, tuple._second) && LangUtils.equals(_third, tuple._third) && LangUtils.equals(_fourth, tuple._fourth) && LangUtils.equals(_fifth, tuple._fifth);
 		} else {
 			return false;
 		}

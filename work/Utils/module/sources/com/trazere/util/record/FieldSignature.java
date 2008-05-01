@@ -13,62 +13,65 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.parameter;
+package com.trazere.util.record;
 
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.TextUtils;
 
 /**
- * The {@link ParameterSignature} class describes the signature of a parameter, that is its name and the type of its values.
+ * The {@link FieldSignature} class describes signatures of record fields.
+ * <p>
+ * The signature is caracterized by the key and the type of the value of the field.
  * 
- * @param <T> Type of the parameter.
+ * @param <K> Type of the keys.
+ * @param <V> Type of the values.
  */
-public final class ParameterSignature<T>
+public final class FieldSignature<K, V>
 implements Describable {
-	/** Name of the parameter. */
-	private final String _name;
+	/** Key of the field. */
+	private final K _key;
 	
-	/** Java class of the value of the parameter. */
-	private final Class<T> _type;
+	/** Type of the value of the field. */
+	private final Class<V> _type;
 	
 	/**
-	 * Instantiate a new parameter signature with the given name and type.
+	 * Instantiate a new record field signature with the given key and type.
 	 * 
-	 * @param name Name of the parameter.
-	 * @param type Java class of the value of the parameter.
+	 * @param key Key of the field.
+	 * @param type Type of the value of the field.
 	 */
-	public ParameterSignature(final String name, final Class<T> type) {
-		assert null != name;
+	public FieldSignature(final K key, final Class<V> type) {
+		assert null != key;
 		assert null != type;
 		
 		// Initialization.
-		_name = name;
+		_key = key;
 		_type = type;
 	}
 	
 	/**
-	 * Get the name of the parameter described by the receiver signature.
+	 * Get the key of the record field described by the receiver signature.
 	 * 
-	 * @return The name.
+	 * @return The key.
 	 */
-	public String getName() {
-		return _name;
+	public K getKey() {
+		return _key;
 	}
 	
 	/**
-	 * Get the type of the values of the parameter described by the receiver signature.
+	 * Get the type of the values of the record field described by the receiver signature.
 	 * 
 	 * @return The Java class of the type.
 	 */
-	public Class<T> getType() {
+	public Class<V> getType() {
 		return _type;
 	}
 	
 	@Override
 	public int hashCode() {
 		final HashCode hashCode = new HashCode(this);
-		hashCode.append(_name);
+		hashCode.append(_key);
 		hashCode.append(_type);
 		return hashCode.get();
 	}
@@ -78,8 +81,8 @@ implements Describable {
 		if (this == object) {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
-			final ParameterSignature<?> signature = (ParameterSignature<?>) object;
-			return _name.equals(signature._name) && _type.equals(signature._type);
+			final FieldSignature<?, ?> signature = (FieldSignature<?, ?>) object;
+			return _key.equals(signature._key) && _type.equals(signature._type);
 		} else {
 			return false;
 		}
@@ -91,7 +94,7 @@ implements Describable {
 	}
 	
 	public void fillDescription(final StringBuilder builder) {
-		builder.append(" - Name = ").append(_name);
+		builder.append(" - Key = ").append(_key);
 		builder.append(" - Type = ").append(_type);
 	}
 }

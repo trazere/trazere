@@ -16,12 +16,13 @@
 package com.trazere.util.record;
 
 /**
- * The {@link RecordBuilderFactory} defines factories of record builders.
+ * The {@link RecordBuilderFactory} interface defines factories of {@link RecordBuilder record builders}.
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  * @param <R> Type of the records.
  * @param <B> Type of the record builders.
+ * @see RecordBuilder
  */
 public interface RecordBuilderFactory<K, V, R extends Record<K, V>, B extends RecordBuilder<K, V, R>> {
 	/**

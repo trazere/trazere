@@ -18,29 +18,30 @@ package com.trazere.util.record;
 import java.util.Map;
 
 /**
- * The {@link RecordFactory} interface defines factories of records.
+ * The {@link RecordFactory} interface defines factories of {@link Record records}.
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  * @param <R> Type of the records.
+ * @see Record
  */
 public interface RecordFactory<K, V, R extends Record<K, V>> {
 	/**
 	 * Build a new empty record.
 	 * 
 	 * @return The built record.
-	 * @throws RecordException
+	 * @throws RecordException When the record cannot be built.
 	 */
 	public R build()
 	throws RecordException;
 	
 	/**
-	 * Build a new record containing fields corresponding to the given map.
+	 * Build a new record populated with the given fields.
 	 * 
-	 * @param values Values identified by the keys of the fields to fill the record with.
+	 * @param fields Values of the fields identified by their keys.
 	 * @return The built record builder.
-	 * @throws RecordException
+	 * @throws RecordException When the record cannot be built.
 	 */
-	public R build(final Map<K, V> values)
+	public R build(final Map<K, V> fields)
 	throws RecordException;
 }

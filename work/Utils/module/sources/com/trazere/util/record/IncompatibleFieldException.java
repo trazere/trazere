@@ -16,16 +16,16 @@
 package com.trazere.util.record;
 
 /**
- * {@link IncompatibleFieldRecordException} exceptions are thrown when some value of a record does not have the excepted type.
+ * {@link IncompatibleFieldException} exceptions are thrown when some record field does not have the appropriate type.
  */
-public class IncompatibleFieldRecordException
+public class IncompatibleFieldException
 extends RecordException {
 	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * Instantiate a new exception.
 	 */
-	public IncompatibleFieldRecordException() {
+	public IncompatibleFieldException() {
 		super();
 	}
 	
@@ -34,7 +34,7 @@ extends RecordException {
 	 * 
 	 * @param message Details about the exception.
 	 */
-	public IncompatibleFieldRecordException(final String message) {
+	public IncompatibleFieldException(final String message) {
 		super(message);
 	}
 	
@@ -43,7 +43,7 @@ extends RecordException {
 	 * 
 	 * @param cause Cause of the exception.
 	 */
-	public IncompatibleFieldRecordException(final Throwable cause) {
+	public IncompatibleFieldException(final Throwable cause) {
 		super(cause);
 	}
 	
@@ -53,7 +53,7 @@ extends RecordException {
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
 	 */
-	public IncompatibleFieldRecordException(final String message, final Throwable cause) {
+	public IncompatibleFieldException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 }
