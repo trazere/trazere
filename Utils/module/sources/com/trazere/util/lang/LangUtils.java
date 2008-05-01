@@ -18,9 +18,9 @@ package com.trazere.util.lang;
 import java.util.Comparator;
 
 /**
- * The {@link ObjectUtils} class provides various helpers regarding the manipulation of objets.
+ * The {@link LangUtils} class provides various helpers regarding the manipulation of objets.
  */
-public class ObjectUtils {
+public class LangUtils {
 	/**
 	 * Cast the given object to any type.
 	 * <p>
@@ -95,7 +95,7 @@ public class ObjectUtils {
 		}
 	}
 	
-	private ObjectUtils() {
+	private LangUtils() {
 		// Prevent instantiation.
 	}
 }

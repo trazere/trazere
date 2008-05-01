@@ -25,7 +25,7 @@ import java.util.Map;
  * @see SimpleRecord
  */
 public class SimpleRecordBuilder<K, V>
-extends AbstractRecordBuilder<K, V, SimpleRecord<K, V>> {
+extends AbstractSimpleRecordBuilder<K, V, SimpleRecord<K, V>> {
 	/**
 	 * Instantiate a new empty record builder.
 	 */
@@ -34,10 +34,19 @@ extends AbstractRecordBuilder<K, V, SimpleRecord<K, V>> {
 	}
 	
 	/**
+	 * Instantiate a new record builder populated with the given fields.
+	 * 
+	 * @param fields Values of the initial fields identified by their keys.
+	 */
+	protected SimpleRecordBuilder(final Map<? extends K, ? extends V> fields) {
+		super(fields);
+	}
+	
+	/**
 	 * Instantiate a new record builder populated with the fields of the given record.
 	 * 
 	 * @param record Record containing the initial fields of the new record builder.
-	 * @throws RecordException When the record cannot be read.
+	 * @throws RecordException When the given record cannot be read.
 	 */
 	public SimpleRecordBuilder(final Record<? extends K, ? extends V> record)
 	throws RecordException {
@@ -48,20 +57,11 @@ extends AbstractRecordBuilder<K, V, SimpleRecord<K, V>> {
 	 * Instantiate a new record builder populated with the fields of the given record builder.
 	 * 
 	 * @param builder Record builder containing the initial fields of the new record builder.
-	 * @throws RecordException When the record builder cannot be read.
+	 * @throws RecordException When the given record builder cannot populate the new record builder.
 	 */
 	public SimpleRecordBuilder(final RecordBuilder<? extends K, ? extends V, ?> builder)
 	throws RecordException {
 		super(builder);
-	}
-	
-	/**
-	 * Instantiate a new record builder populated with the given fields.
-	 * 
-	 * @param fields Values of the initial fields identified by their keys.
-	 */
-	protected SimpleRecordBuilder(final Map<? extends K, ? extends V> fields) {
-		super(fields);
 	}
 	
 	public SimpleRecord<K, V> build() {

@@ -13,19 +13,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.parameter;
+package com.trazere.util.record;
 
 /**
- * {@link DuplicateParameterException} exceptions are thrown when some parameter already exist.
+ * {@link DuplicateFieldException} exceptions are thrown when some record field already exists.
  */
-public class DuplicateParameterException
-extends ParameterException {
+public class DuplicateFieldException
+extends RecordException {
 	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * Instantiate a new exception.
 	 */
-	public DuplicateParameterException() {
+	public DuplicateFieldException() {
 		super();
 	}
 	
@@ -34,7 +34,7 @@ extends ParameterException {
 	 * 
 	 * @param message Details about the exception.
 	 */
-	public DuplicateParameterException(final String message) {
+	public DuplicateFieldException(final String message) {
 		super(message);
 	}
 	
@@ -43,7 +43,7 @@ extends ParameterException {
 	 * 
 	 * @param cause Cause of the exception.
 	 */
-	public DuplicateParameterException(final Throwable cause) {
+	public DuplicateFieldException(final Throwable cause) {
 		super(cause);
 	}
 	
@@ -53,7 +53,7 @@ extends ParameterException {
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
 	 */
-	public DuplicateParameterException(final String message, final Throwable cause) {
+	public DuplicateFieldException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 }

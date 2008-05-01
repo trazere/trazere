@@ -39,7 +39,7 @@ implements Comparator<T> {
 	public int compare(final T object1, final T object2) {
 		final V value1 = _cache ? getValue(object1) : computeValue(object1);
 		final V value2 = _cache ? getValue(object2) : computeValue(object2);
-		return ObjectUtils.compare(value1, value2);
+		return LangUtils.compare(value1, value2);
 	}
 	
 	/**

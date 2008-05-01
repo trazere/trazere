@@ -16,7 +16,7 @@
 package com.trazere.util.task;
 
 import com.trazere.util.lang.HashCode;
-import com.trazere.util.lang.ObjectUtils;
+import com.trazere.util.lang.LangUtils;
 import com.trazere.util.report.ReportEntry;
 import com.trazere.util.report.ReportUtils;
 
@@ -111,7 +111,7 @@ implements ReportEntry<String, TaskStatus> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final TaskReportEntry entry = (TaskReportEntry) object;
-			return _name.equals(entry._name) && _status == _status && ObjectUtils.equals(_comment, entry._comment);
+			return _name.equals(entry._name) && _status == _status && LangUtils.equals(_comment, entry._comment);
 		} else {
 			return false;
 		}

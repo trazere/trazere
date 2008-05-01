@@ -16,7 +16,7 @@
 package com.trazere.util.report;
 
 import com.trazere.util.lang.HashCode;
-import com.trazere.util.lang.ObjectUtils;
+import com.trazere.util.lang.LangUtils;
 
 /**
  * The <code>SimpleReportEntry</code> represents simple report entries.
@@ -76,7 +76,7 @@ implements ReportEntry<Category, Code> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final SimpleReportEntry<?, ?> entry = (SimpleReportEntry<?, ?>) object;
-			return ObjectUtils.equals(_category, entry._category) && ObjectUtils.equals(_code, entry._code) && ObjectUtils.equals(_message, entry._message);
+			return LangUtils.equals(_category, entry._category) && LangUtils.equals(_code, entry._code) && LangUtils.equals(_message, entry._message);
 		} else {
 			return false;
 		}

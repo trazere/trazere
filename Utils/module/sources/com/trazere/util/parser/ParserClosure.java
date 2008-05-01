@@ -27,11 +27,4 @@ public interface ParserClosure<Token, Result> {
 	public Parser<Token, Result> getParser();
 	
 	public int getPosition();
-	
-	//	// TODO: should not be visible
-	//	public void addHandler(final ParserHandler<Token, ? super Result> handler);
-	//	
-	//	// TODO: should not be visible
-	//	public Collection<ParserHandler<Token, ? super Result>> getHandlers()
-	//	throws ParserException;
 }
