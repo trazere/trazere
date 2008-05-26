@@ -15,32 +15,30 @@
  */
 package com.trazere.parser;
 
-import com.trazere.util.collection.CollectionUtils;
-import java.util.Collections;
-import java.util.Set;
-
 /**
  * DOCME
  * 
  * @param <Token>
  */
-public abstract class AbstractParserContinuation<Token>
-implements ParserContinuation<Token> {
-	protected final Set<? extends ParserClosure<Token, ?>> _closures;
+public class ParserFailureImpl<Token>
+implements ParserFailure<Token> {
+	protected final Parser<Token, ?> _parser;
+	protected final ParserPosition<Token> _position;
 	
-	public AbstractParserContinuation(final ParserClosure<Token, ?> closure) {
-		this(CollectionUtils.set(closure));
-	}
-	
-	public AbstractParserContinuation(final Set<? extends ParserClosure<Token, ?>> closures) {
-		// Checks.
-		assert null != closures;
+	public ParserFailureImpl(final Parser<Token, ?> parser, final ParserPosition<Token> position) {
+		assert null != parser;
+		assert null != position;
 		
 		// Initialization.
-		_closures = Collections.unmodifiableSet(closures);
+		_parser = parser;
+		_position = position;
 	}
 	
-	public Set<? extends ParserClosure<Token, ?>> getClosures() {
-		return _closures;
+	public Parser<Token, ?> getParser() {
+		return _parser;
+	}
+	
+	public ParserPosition<Token> getPosition() {
+		return _position;
 	}
 }

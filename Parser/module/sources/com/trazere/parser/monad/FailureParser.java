@@ -35,6 +35,6 @@ extends AbstractParser<Token, Result> {
 	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
 	throws ParserException {
 		// Failure.
-		state.reportFailure(closure);
+		closure.failure(state);
 	}
 }

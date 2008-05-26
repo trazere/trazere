@@ -15,6 +15,7 @@
  */
 package com.trazere.util.function;
 
+import com.trazere.util.type.Maybe;
 import java.util.Map;
 
 /**
@@ -43,8 +44,7 @@ public class Functions {
 	/**
 	 * Build a function defined by the given map.
 	 * <p>
-	 * The domain of the built function is the set of keys of the map. The built function returns the values associated to the keys in the map, or
-	 * <code>null</code>.
+	 * The built function returns the values associated to the keys in the map, or <code>null</code> for the unmapped keys.
 	 * 
 	 * @param <T> Type of the keys of the map (the argument values).
 	 * @param <R> Type of the values of the map (the result values).
@@ -58,6 +58,32 @@ public class Functions {
 		return new Function<T, R>() {
 			public R apply(final T key) {
 				return map.get(key);
+			}
+		};
+	}
+	
+	/**
+	 * Build a function defined by the given map.
+	 * <p>
+	 * The built function returns the values associated to the keys in the map. Value resulting values are wrapped into a {@link Maybe maybe} instance to
+	 * reflect the domain of the map.
+	 * 
+	 * @param <T> Type of the keys of the map (the argument values).
+	 * @param <R> Type of the values of the map (the result values).
+	 * @param map Map defining the function to build.
+	 * @return The function.
+	 */
+	public static <T, R> Function<T, Maybe<R>> maybeMap(final Map<T, R> map) {
+		assert null != map;
+		
+		// Build the function.
+		return new Function<T, Maybe<R>>() {
+			public Maybe<R> apply(final T key) {
+				if (map.containsKey(key)) {
+					return Maybe.some(map.get(key));
+				} else {
+					return Maybe.none();
+				}
 			}
 		};
 	}

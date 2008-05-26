@@ -35,6 +35,31 @@ import java.util.Map.Entry;
  */
 public abstract class LazyMap<K, V>
 implements Function<K, V> {
+	/**
+	 * Build a lazy map using the given function.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param function Function computing the values of the map.
+	 * @return The built lazy map.
+	 */
+	public static <K, V> LazyMap<K, V> lazyMap(final Function<K, V> function) {
+		assert null != function;
+		
+		// Build.
+		return new LazyMap<K, V>() {
+			@Override
+			protected V computeValue(final K key)
+			throws CannotComputeValueException {
+				try {
+					return function.apply(key);
+				} catch (final ApplicationException exception) {
+					throw new CannotComputeValueException(exception);
+				}
+			}
+		};
+	}
+	
 	/** Entries. */
 	protected final Map<K, V> _entries;
 	

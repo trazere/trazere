@@ -16,7 +16,6 @@
 package com.trazere.parser.core;
 
 import com.trazere.parser.AbstractParser;
-import com.trazere.parser.AbstractParserHandler;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
@@ -57,15 +56,15 @@ extends AbstractParser<Token, Result> {
 	throws ParserException {
 		if (subResults.size() < _subParsers.size()) {
 			// Continue.
-			state.run(_subParsers.get(subResults.size()), buildHandler(closure, subResults));
+			state.parse(_subParsers.get(subResults.size()), buildHandler(closure, subResults), closure);
 		} else {
 			// Success.
-			state.reportSuccess(closure, combine(subResults));
+			closure.success(combine(subResults), state);
 		}
 	}
 	
 	protected ParserHandler<Token, SubResult> buildHandler(final ParserClosure<Token, Result> closure, final List<SubResult> previousSubResults) {
-		return new AbstractParserHandler<Token, SubResult>(closure) {
+		return new ParserHandler<Token, SubResult>() {
 			public void result(final SubResult subResult, final ParserState<Token> state)
 			throws ParserException {
 				// Accumulate the result.

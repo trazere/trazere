@@ -18,6 +18,8 @@ package com.trazere.util.lang;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.TextUtils;
 import com.trazere.util.type.Maybe;
+import com.trazere.util.type.Maybe.None;
+import com.trazere.util.type.Maybe.Some;
 
 /**
  * The {@link LazyReference} class represents undefined refererences which await to be filled.
@@ -26,7 +28,7 @@ import com.trazere.util.type.Maybe;
  */
 public class LazyReference<T>
 implements Describable {
-	/** Reference to the value. */
+	/** Value. */
 	protected Maybe<T> _value = Maybe.none();
 	
 	/**
@@ -39,40 +41,9 @@ implements Describable {
 	}
 	
 	/**
-	 * Get the current receiver reference.
-	 * 
-	 * @return A <code>Some</code> of the set value or a <code>None</code> instance when the reference has not been set.
-	 */
-	public Maybe<T> get() {
-		return _value;
-	}
-	
-	/**
-	 * Reset the receiver reference.
-	 * 
-	 * @throws ReferenceNotSetException When the reference was not set.
-	 */
-	public void reset() {
-		reset(true);
-	}
-	
-	/**
-	 * Reset the receiver reference.
-	 * 
-	 * @param overwrite Flag indicating wether unset references may be reset.
-	 * @throws ReferenceNotSetException When the reference was not set.
-	 */
-	public void reset(final boolean overwrite)
-	throws ReferenceNotSetException {
-		if (overwrite || !_value.isNone()) {
-			_value = Maybe.none();
-		} else {
-			throw new ReferenceNotSetException("Reference no set");
-		}
-	}
-	
-	/**
 	 * Set the receiver reference to the given value.
+	 * <p>
+	 * The reference must not be set.
 	 * 
 	 * @param value Value to set. May be <code>null</code>.
 	 * @throws ReferenceAlreadySetException When the reference has already been set.
@@ -84,6 +55,8 @@ implements Describable {
 	
 	/**
 	 * Set the receiver reference to the given value.
+	 * <p>
+	 * The reference must not be set or the overwrite flag must be <code>true</code>.
 	 * 
 	 * @param value Value to set. May be <code>null</code>.
 	 * @param overwrite Flag indicating wether already set references may be overwritten.
@@ -98,6 +71,56 @@ implements Describable {
 		}
 	}
 	
+	/**
+	 * Get the value set in the receiver reference.
+	 * <p>
+	 * The reference must be set.
+	 * 
+	 * @return The set value.
+	 * @throws ReferenceNotSetException When the reference has not been set.
+	 */
+	public T get()
+	throws ReferenceNotSetException {
+		if (_value.isSome()) {
+			return _value.asSome().getValue();
+		} else {
+			throw new ReferenceNotSetException("Reference " + this + " is not set");
+		}
+	}
+	
+	/**
+	 * Reset the receiver reference.
+	 */
+	public void reset() {
+		reset(true);
+	}
+	
+	/**
+	 * Reset the receiver reference.
+	 * <p>
+	 * The reference must be set, of the overwrite flag must be <code>true</code>.
+	 * 
+	 * @param overwrite Flag indicating wether unset references may be reset.
+	 * @throws ReferenceNotSetException When the reference has not been set.
+	 */
+	public void reset(final boolean overwrite)
+	throws ReferenceNotSetException {
+		if (overwrite || !_value.isNone()) {
+			_value = Maybe.none();
+		} else {
+			throw new ReferenceNotSetException("Reference " + this + " is not set");
+		}
+	}
+	
+	/**
+	 * Get a view of the value set in the receiver reference as an instance of {@link Maybe}.
+	 * 
+	 * @return The set value wrapped in {@link Some}, or {@link None} when the reference has not been set.
+	 */
+	public Maybe<T> asMaybe() {
+		return _value;
+	}
+	
 	@Override
 	public final String toString() {
 		return TextUtils.computeDescription(this);
@@ -105,7 +128,7 @@ implements Describable {
 	
 	public void fillDescription(final StringBuilder builder) {
 		if (_value.isSome()) {
-			builder.append(" - Value = ").append(((Maybe.Some<?>) _value).getValue());
+			builder.append(" - Value = ").append(_value.asSome().getValue());
 		} else {
 			builder.append(" - Empty");
 		}

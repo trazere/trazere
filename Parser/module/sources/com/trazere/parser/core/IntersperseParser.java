@@ -16,7 +16,6 @@
 package com.trazere.parser.core;
 
 import com.trazere.parser.AbstractParser;
-import com.trazere.parser.AbstractParserHandler;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
@@ -54,37 +53,37 @@ extends AbstractParser<Token, List<Result>> {
 	throws ParserException {
 		// Zero.
 		final List<Result> results = new ArrayList<Result>();
-		state.reportSuccess(closure, Collections.unmodifiableList(results));
+		closure.success(Collections.unmodifiableList(results), state);
 		
 		// One.
-		state.run(_valueParser, buildOneHandler(closure));
+		state.parse(_valueParser, buildOneHandler(closure), closure);
 	}
 	
 	protected ParserHandler<Token, Result> buildOneHandler(final ParserClosure<Token, List<Result>> closure) {
-		return new AbstractParserHandler<Token, Result>(closure) {
+		return new ParserHandler<Token, Result>() {
 			public void result(final Result result, final ParserState<Token> state)
 			throws ParserException {
 				// Wrap the result.
 				final List<Result> results = CollectionUtils.list(result);
-				state.reportSuccess(closure, Collections.unmodifiableList(results));
+				closure.success(Collections.unmodifiableList(results), state);
 				
 				// More.
-				state.run(CoreParsers.second(_delimiterParser, _valueParser, null), buildMoreHandler(closure, results));
+				state.parse(CoreParsers.second(_delimiterParser, _valueParser, null), buildMoreHandler(closure, results), closure);
 			}
 		};
 	}
 	
 	protected ParserHandler<Token, Result> buildMoreHandler(final ParserClosure<Token, List<Result>> closure, final List<Result> previousResults) {
-		return new AbstractParserHandler<Token, Result>(closure) {
+		return new ParserHandler<Token, Result>() {
 			public void result(final Result result, final ParserState<Token> state)
 			throws ParserException {
 				// Wrap the result.
 				final List<Result> results = new ArrayList<Result>(previousResults);
 				results.add(result);
-				state.reportSuccess(closure, Collections.unmodifiableList(results));
+				closure.success(Collections.unmodifiableList(results), state);
 				
 				// More.
-				state.run(CoreParsers.second(_delimiterParser, _valueParser, null), buildMoreHandler(closure, results));
+				state.parse(CoreParsers.second(_delimiterParser, _valueParser, null), buildMoreHandler(closure, results), closure);
 			}
 		};
 	}

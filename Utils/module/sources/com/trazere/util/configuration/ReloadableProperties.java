@@ -15,58 +15,58 @@
  */
 package com.trazere.util.configuration;
 
+import com.trazere.util.io.Input;
 import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Tuple2;
-import java.io.File;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
 /**
- * The {@link ReloadableProperties} class wraps properties which can be loaded and reloaded from a list of files.
+ * The {@link ReloadableProperties} class wraps properties which can be loaded and reloaded from a list of inputs.
  */
 public class ReloadableProperties {
-	/** Property files to load paired with flags indicating wether they are optional. */
-	protected final List<Tuple2<File, Boolean>> _files;
+	/** Inputs providing the property files paired with flags indicating wether they are optional. */
+	protected final List<Tuple2<Input, Boolean>> _inputs;
 	
 	/** Properties. */
 	protected final Properties _properties;
 	
 	/**
-	 * Instantiate a new wrapper with the given property files.
+	 * Instantiate a new wrapper with the given property file inputs and no defaut properties.
 	 * <p>
 	 * The properties are not loaded until the {@link #load()} method is called.
 	 * 
-	 * @param files Files containing the properties.
+	 * @param inputs Inputs provinding the property files paired with flags indicating wether they are optional.
 	 */
-	public ReloadableProperties(final List<Tuple2<File, Boolean>> files) {
-		this(files, Maybe.<Properties>none());
+	public ReloadableProperties(final List<Tuple2<Input, Boolean>> inputs) {
+		this(inputs, Maybe.<Properties>none());
 	}
 	
 	/**
-	 * Instantiate a new wrapper with the given property files and default properties.
+	 * Instantiate a new wrapper with the given property file inputs and default properties.
 	 * <p>
 	 * The constructor does not load the properties.
 	 * 
-	 * @param files Files containing the properties.
+	 * @param inputs Inputs provinding the property files paired with flags indicating wether they are optional.
 	 * @param defaultProperties Default properties.
 	 */
-	public ReloadableProperties(final List<Tuple2<File, Boolean>> files, final Maybe<Properties> defaultProperties) {
-		assert null != files;
+	public ReloadableProperties(final List<Tuple2<Input, Boolean>> inputs, final Maybe<Properties> defaultProperties) {
+		assert null != inputs;
 		assert null != defaultProperties;
 		
 		// Initialization.
-		_files = Collections.unmodifiableList(files);
+		_inputs = Collections.unmodifiableList(inputs);
 		_properties = defaultProperties.isSome() ? new Properties(defaultProperties.asSome().getValue()) : new Properties();
 	}
 	
 	/**
-	 * Get the property files loaded by the receiver wrapper.
+	 * Get the inputs providing the property files loaded by the receiver wrapper.
 	 * 
-	 * @return The property files paired with flags indicating wether they are optional.
+	 * @return The providing the property files paired with flags indicating wether they are optional.
 	 */
-	public List<Tuple2<File, Boolean>> getFiles() {
-		return _files;
+	public List<Tuple2<Input, Boolean>> getInputs() {
+		return _inputs;
 	}
 	
 	/**
@@ -78,7 +78,7 @@ public class ReloadableProperties {
 	public void load()
 	throws ConfigurationException {
 		_properties.clear();
-		ConfigurationUtils.loadProperties(_properties, _files);
+		ConfigurationUtils.loadProperties(_properties, _inputs);
 	}
 	
 	/**

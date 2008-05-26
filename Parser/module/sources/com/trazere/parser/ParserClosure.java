@@ -23,8 +23,15 @@ package com.trazere.parser;
  * @param <Token>
  * @param <Result>
  */
-public interface ParserClosure<Token, Result> {
+public interface ParserClosure<Token, Result>
+extends ParserFailure<Token> {
 	public Parser<Token, Result> getParser();
 	
-	public int getPosition();
+	public ParserPosition<Token> getPosition();
+	
+	public void success(final Result result, final ParserState<Token> state)
+	throws ParserException;
+	
+	public void failure(final ParserState<Token> state)
+	throws ParserException;
 }

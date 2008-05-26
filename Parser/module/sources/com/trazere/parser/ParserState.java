@@ -21,17 +21,11 @@ package com.trazere.parser;
  * @param <Token>
  */
 public interface ParserState<Token> {
-	public int getPosition();
+	public ParserPosition<Token> getPosition();
 	
-	public <Result> void run(final Parser<Token, Result> parser, final ParserHandler<Token, ? super Result> handler)
+	public <Result> void parse(final Parser<Token, Result> parser, final ParserHandler<Token, ? super Result> handler, final ParserClosure<Token, ?> parent)
 	throws ParserException;
 	
-	public void push(final ParserContinuation<Token> continuation)
-	throws ParserException;
-	
-	public <Result> void reportSuccess(final ParserClosure<Token, Result> closure, final Result result)
-	throws ParserException;
-	
-	public void reportFailure(final ParserClosure<Token, ?> closure)
+	public void read(final ParserContinuation<Token> continuation)
 	throws ParserException;
 }

@@ -17,8 +17,11 @@ package com.trazere.parser;
 
 /**
  * DOCME
+ * 
+ * @param <Token>
  */
-public interface ParserEngine {
-	public <Token, Result> void parse(final Parser<Token, Result> parser, final ParserSource<Token> source, final int rootPosition, final ParserHandler<Token, ? super Result> rootHandler)
-	throws ParserException;
+public interface ParserFailure<Token> {
+	public Parser<Token, ?> getParser();
+	
+	public ParserPosition<Token> getPosition();
 }

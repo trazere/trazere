@@ -15,6 +15,7 @@
  */
 package com.trazere.util.record;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -65,6 +66,6 @@ extends AbstractSimpleRecordBuilder<K, V, SimpleRecord<K, V>> {
 	}
 	
 	public SimpleRecord<K, V> build() {
-		return new SimpleRecord<K, V>(_fields);
+		return new SimpleRecord<K, V>(new HashMap<K, V>(_fields));
 	}
 }

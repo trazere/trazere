@@ -15,19 +15,15 @@
  */
 package com.trazere.parser;
 
-import java.util.Set;
-
 /**
  * DOCME
  * 
  * @param <Token>
  */
 public interface ParserContinuation<Token> {
-	public void parseToken(final Token token, final ParserState<Token> state)
+	public void token(final Token token, final ParserState<Token> state)
 	throws ParserException;
 	
-	public void parseEOF(final ParserState<Token> state)
+	public void eof(final ParserState<Token> state)
 	throws ParserException;
-	
-	public Set<? extends ParserClosure<Token, ?>> getClosures();
 }
