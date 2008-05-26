@@ -16,7 +16,6 @@
 package com.trazere.parser.core;
 
 import com.trazere.parser.AbstractParser;
-import com.trazere.parser.AbstractParserHandler;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
@@ -50,15 +49,15 @@ extends AbstractParser<Token, Result> {
 		// Branches.
 		final ParserHandler<Token, Result> handler = buildHandler(closure);
 		for (final Parser<Token, ? extends Result> subParser : _subParsers) {
-			state.run(subParser, handler);
+			state.parse(subParser, handler, closure);
 		}
 	}
 	
 	protected ParserHandler<Token, Result> buildHandler(final ParserClosure<Token, Result> closure) {
-		return new AbstractParserHandler<Token, Result>(closure) {
+		return new ParserHandler<Token, Result>() {
 			public void result(final Result result, final ParserState<Token> state)
 			throws ParserException {
-				state.reportSuccess(closure, result);
+				closure.success(result, state);
 			}
 		};
 	}

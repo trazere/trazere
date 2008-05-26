@@ -15,8 +15,6 @@
  */
 package com.trazere.parser;
 
-import java.util.Set;
-
 /**
  * DOCME
  * 
@@ -26,6 +24,4 @@ import java.util.Set;
 public interface ParserHandler<Token, Result> {
 	public void result(final Result result, final ParserState<Token> state)
 	throws ParserException;
-	
-	public Set<? extends ParserClosure<Token, ?>> getClosures();
 }

@@ -40,6 +40,6 @@ extends AbstractParser<Token, Result> {
 	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
 	throws ParserException {
 		// Success.
-		state.reportSuccess(closure, _result);
+		closure.success(_result, state);
 	}
 }

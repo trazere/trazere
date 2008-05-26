@@ -17,6 +17,7 @@ package com.trazere.test;
 
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserException;
+import com.trazere.parser.ParserFailure;
 import com.trazere.parser.ParserUtils;
 import com.trazere.parser.StringParserSource;
 import com.trazere.parser.core.ChoiceParser;
@@ -26,6 +27,7 @@ import com.trazere.parser.core.CoreParsers;
 import com.trazere.parser.core.ParserReference;
 import com.trazere.parser.text.TextParsers;
 import com.trazere.util.collection.CollectionUtils;
+import com.trazere.util.type.Either;
 import com.trazere.util.type.Maybe;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,44 +39,120 @@ import java.util.List;
 public class ParserTest {
 	public static void main(final String[] args)
 	throws ParserException {
-		runSuccesses(EXPR2, CollectionUtils.listN(new String[] {
+		runLongestSuccessOrFailures(EXPR2, CollectionUtils.listN(new String[] {
 		    "",
 		    "a",
+		    "a+",
+		    "a-",
 		    "a+b",
 		    "+b",
 		    "a+b+c",
 		    "(a+b)+c",
 		}));
+		runLongestSuccessOrFailures(EXPR, CollectionUtils.listN(new String[] {
+		    "",
+		    "1",
+		    "1+2",
+		    "+2",
+		    "1+2+3",
+		    "2*3",
+		    "1+2*3",
+		}));
 	}
 	
 	public static <Result> void runSuccesses(final Parser<Character, Result> parser, final Collection<String> sources)
 	throws ParserException {
+		System.out.println("Parser = " + parser.getDescription());
+		
 		for (final String source : sources) {
+			System.out.println();
 			System.out.println("Source = " + source);
 			
-			final List<Result> results = ParserUtils.parseSuccesses(parser, new StringParserSource(source));
-			System.out.println(results.size() + " results");
-			for (final Result result : results) {
-				System.out.println(" -> " + result);
-			}
-			
+			final List<Result> successes = ParserUtils.parseSuccesses(parser, new StringParserSource(source));
+			displaySuccesses(successes);
+		}
+	}
+	
+	public static <Result> void runSuccessesOrFailures(final Parser<Character, Result> parser, final Collection<String> sources)
+	throws ParserException {
+		System.out.println("Parser = " + parser.getDescription());
+		
+		for (final String source : sources) {
 			System.out.println();
+			System.out.println("Source = " + source);
+			
+			final Either<List<Result>, List<ParserFailure<Character>>> results = ParserUtils.parseSuccessesOrFailures(parser, new StringParserSource(source));
+			if (results.isLeft()) {
+				displaySuccesses(results.asLeft().getLeft());
+			} else {
+				displayFailures(results.asRight().getRight());
+			}
 		}
 	}
 	
 	public static <Result> void runLongestSuccess(final Parser<Character, Result> parser, final Collection<String> sources)
 	throws ParserException {
+		System.out.println("Parser = " + parser.getDescription());
+		
 		for (final String source : sources) {
+			System.out.println();
 			System.out.println("Source = " + source);
 			
 			final Maybe<Result> result = ParserUtils.parseLongestSuccess(parser, new StringParserSource(source));
 			if (result.isSome()) {
-				System.out.println("Sussess = " + result);
+				System.out.println("Success = " + result.asSome().getValue());
 			} else {
 				System.out.println("Failure");
 			}
-			
+		}
+	}
+	
+	public static <Result> void runLongestSuccessOrFailures(final Parser<Character, Result> parser, final Collection<String> sources)
+	throws ParserException {
+		System.out.println("Parser = " + parser.getDescription());
+		
+		for (final String source : sources) {
 			System.out.println();
+			System.out.println("Source = " + source);
+			
+			final Either<Result, List<ParserFailure<Character>>> result = ParserUtils.parseLongestSuccessOrFailures(parser, new StringParserSource(source));
+			if (result.isLeft()) {
+				System.out.println("Success = " + result.asLeft().getLeft());
+			} else {
+				displayFailures(result.asRight().getRight());
+			}
+		}
+	}
+	
+	public static <Result> void runLongestSuccessOrLongestFailure(final Parser<Character, Result> parser, final Collection<String> sources)
+	throws ParserException {
+		System.out.println("Parser = " + parser.getDescription());
+		
+		for (final String source : sources) {
+			System.out.println();
+			System.out.println("Source = " + source);
+			
+			final Either<Result, ParserFailure<Character>> result = ParserUtils.parseLongestSuccessOrLongestFailure(parser, new StringParserSource(source));
+			if (result.isLeft()) {
+				System.out.println("Success = " + result.asLeft().getLeft());
+			} else {
+				final ParserFailure<?> failure = result.asRight().getRight();
+				System.out.println("Failure: Excepted " + failure.getParser().getDescription() + " at " + failure.getPosition().getDescription());
+			}
+		}
+	}
+	
+	private static <Result> void displaySuccesses(final List<Result> successes) {
+		System.out.println("Success (" + successes.size() + ")");
+		for (final Result success : successes) {
+			System.out.println(" -> " + success);
+		}
+	}
+	
+	private static <Token> void displayFailures(final List<ParserFailure<Token>> failures) {
+		System.out.println("Failure (" + failures.size() + ")");
+		for (final ParserFailure<Token> failure : failures) {
+			System.out.println(" -> Excepted " + failure.getParser().getDescription() + " at " + failure.getPosition().getDescription());
 		}
 	}
 	
@@ -102,12 +180,7 @@ public class ParserTest {
 	
 	// Expr
 	public static final ParserReference<Character, Integer> EXPR = new ParserReference<Character, Integer>();
-	public static final Parser<Character, Integer> EXPR_PAREN = new Combine3Parser<Character, Character, Integer, Character, Integer>(TextParsers.character('('), EXPR, TextParsers.character(')'), null) {
-		@Override
-		protected Integer combine(final Character subResult1, final Integer subResult2, final Character subResult3) {
-			return subResult2;
-		}
-	};
+	public static final Parser<Character, Integer> EXPR_PAREN = CoreParsers.second(TextParsers.character('('), EXPR, TextParsers.character(')'), null);
 	public static final Parser<Character, Integer> EXPR_PLUS = new Combine3Parser<Character, Integer, Character, Integer, Integer>(EXPR, TextParsers.character('+'), EXPR, null) {
 		@Override
 		protected Integer combine(final Integer subResult1, final Character subResult2, final Integer subResult3) {
@@ -126,12 +199,12 @@ public class ParserTest {
 		exprs.add(EXPR_PAREN);
 		exprs.add(EXPR_PLUS);
 		exprs.add(EXPR_MUL);
-		EXPR.set(CoreParsers.<Character, Integer>choice(exprs, null));
+		EXPR.set(CoreParsers.<Character, Integer>choice(exprs, "expr add/mul"));
 	}
 	
 	// Expr 2
 	public static final ParserReference<Character, String> EXPR2 = new ParserReference<Character, String>();
-	public static final Parser<Character, String> EXPR2_ATOM = new Combine1Parser<Character, List<Character>, String>(CoreParsers.many(TextParsers.letter(), null), null) {
+	public static final Parser<Character, String> EXPR2_ATOM = new Combine1Parser<Character, List<Character>, String>(CoreParsers.many1(TextParsers.letter(), null), "atom") {
 		@Override
 		protected String combine(final List<Character> characters) {
 			final StringBuilder builder = new StringBuilder();
@@ -147,13 +220,7 @@ public class ParserTest {
 	public static final Parser<Character, String> EXPR2_PLUS = new Combine3Parser<Character, String, Character, String, String>(EXPR2, TextParsers.character('+'), EXPR2, null) {
 		@Override
 		protected String combine(final String subResult1, final Character subResult2, final String subResult3) {
-			final StringBuilder builder = new StringBuilder();
-			builder.append("(");
-			builder.append(subResult1);
-			builder.append(" + ");
-			builder.append(subResult3);
-			builder.append(")");
-			return builder.toString();
+			return "(" + subResult1 + " + " + subResult3 + ")";
 		}
 	};
 	static {
@@ -161,6 +228,6 @@ public class ParserTest {
 		exprs.add(EXPR2_ATOM);
 		exprs.add(EXPR2_PAREN);
 		exprs.add(EXPR2_PLUS);
-		EXPR2.set(CoreParsers.<Character, String>choice(exprs, null));
+		EXPR2.set(CoreParsers.<Character, String>choice(exprs, "expr plus/parens"));
 	}
 }

@@ -63,6 +63,26 @@ public class TextUtils {
 	}
 	
 	/**
+	 * Filter the given string using the given filter.
+	 * 
+	 * @param s String to filter.
+	 * @param filter Filter to use.
+	 * @return <code>true</code> when filter accepts the string, <code>false</code> otherwise.
+	 */
+	public static boolean filter(final String s, final CharFilter filter) {
+		assert null != s;
+		assert null != filter;
+		
+		// Filter.
+		for (int index = 0; index < s.length(); index += 1) {
+			if (!filter.filter(s.charAt(index))) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
 	 * Split the given string according to the given delimiter.
 	 * 
 	 * @param <C> Type of the collection filled with the results.

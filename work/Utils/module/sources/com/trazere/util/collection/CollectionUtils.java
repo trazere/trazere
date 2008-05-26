@@ -1,11 +1,13 @@
 package com.trazere.util.collection;
 
 import com.trazere.util.function.ApplicationException;
+import com.trazere.util.function.Filter;
 import com.trazere.util.function.Function;
 import com.trazere.util.type.Tuple2;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -356,19 +358,41 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Build a list containing the given list in the reverse order.
+	 * Reverse the given list.
+	 * <p>
+	 * This method does modify the given list.
 	 * 
 	 * @param <T> Type of the elements.
-	 * @param list List to reverse. It is not modified by the method.
-	 * @return The reversed <code>List</code>.
+	 * @param <L> Type of the list.
+	 * @param list List to reverse.
+	 * @return The given modified list.
 	 */
-	public static <T> ArrayList<T> reverse(final List<? extends T> list) {
+	public static <T, L extends List<T>> L reverse(final L list) {
 		assert null != list;
 		
 		// Build the list.
-		final ArrayList<T> results = new ArrayList<T>(list);
-		Collections.reverse(results);
-		return results;
+		Collections.reverse(list);
+		return list;
+	}
+	
+	/**
+	 * Sort the given list using the given comparator.
+	 * <p>
+	 * This method does modify the given list.
+	 * 
+	 * @param <T> Type of the elements.
+	 * @param <L> Type of the list.
+	 * @param list List to sort.
+	 * @param comparator Comparator to use.
+	 * @return The given modified list.
+	 */
+	public static <T, L extends List<T>> L sort(final L list, final Comparator<? super T> comparator) {
+		assert null != list;
+		assert null != comparator;
+		
+		// Sort.
+		Collections.sort(list, comparator);
+		return list;
 	}
 	
 	/**
@@ -484,6 +508,32 @@ public class CollectionUtils {
 		}
 		
 		return results;
+	}
+	
+	/**
+	 * Filter the content of the given collection using the given filter.
+	 * <p>
+	 * This method does modify the given collection.
+	 * 
+	 * @param <T> Type of the elements.
+	 * @param <C> Type of the collection.
+	 * @param collection Collection to filter.
+	 * @param filter Filter to use.
+	 * @return The given modified collection.
+	 */
+	public static <T, C extends Collection<T>> C filter(final C collection, final Filter<? super T> filter) {
+		assert null != collection;
+		assert null != filter;
+		
+		// Filter.
+		final Iterator<? extends T> values_ = collection.iterator();
+		while (values_.hasNext()) {
+			final T value = values_.next();
+			if (!filter.filter(value)) {
+				values_.remove();
+			}
+		}
+		return collection;
 	}
 	
 	/**

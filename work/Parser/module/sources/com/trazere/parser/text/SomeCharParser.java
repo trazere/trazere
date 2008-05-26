@@ -16,7 +16,6 @@
 package com.trazere.parser.text;
 
 import com.trazere.parser.AbstractParser;
-import com.trazere.parser.AbstractParserContinuation;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserContinuation;
 import com.trazere.parser.ParserException;
@@ -43,26 +42,26 @@ extends AbstractParser<Character, Character> {
 	public void run(final ParserClosure<Character, Character> closure, final ParserState<Character> state)
 	throws ParserException {
 		// Char.
-		state.push(buildContinuation(closure));
+		state.read(buildContinuation(closure));
 	}
 	
 	protected ParserContinuation<Character> buildContinuation(final ParserClosure<Character, Character> closure) {
-		return new AbstractParserContinuation<Character>(closure) {
-			public void parseToken(final Character token, final ParserState<Character> state)
+		return new ParserContinuation<Character>() {
+			public void token(final Character token, final ParserState<Character> state)
 			throws ParserException {
 				if (_filter.filter(token.charValue())) {
 					// Success.
-					state.reportSuccess(closure, token);
+					closure.success(token, state);
 				} else {
 					// Failure.
-					state.reportFailure(closure);
+					closure.failure(state);
 				}
 			}
 			
-			public void parseEOF(final ParserState<Character> state)
+			public void eof(final ParserState<Character> state)
 			throws ParserException {
 				// Failure.
-				state.reportFailure(closure);
+				closure.failure(state);
 			}
 		};
 	}

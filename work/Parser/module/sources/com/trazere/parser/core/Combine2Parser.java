@@ -16,7 +16,6 @@
 package com.trazere.parser.core;
 
 import com.trazere.parser.AbstractParser;
-import com.trazere.parser.AbstractParserHandler;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
@@ -51,25 +50,25 @@ extends AbstractParser<Token, Result> {
 	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
 	throws ParserException {
 		// Part 1.
-		state.run(_subParser1, buildHandler1(closure));
+		state.parse(_subParser1, buildHandler1(closure), closure);
 	}
 	
 	protected ParserHandler<Token, SubResult1> buildHandler1(final ParserClosure<Token, Result> closure) {
-		return new AbstractParserHandler<Token, SubResult1>(closure) {
+		return new ParserHandler<Token, SubResult1>() {
 			public void result(final SubResult1 subResult1, final ParserState<Token> state)
 			throws ParserException {
 				// Part 2.
-				state.run(_subParser2, buildHandler2(closure, subResult1));
+				state.parse(_subParser2, buildHandler2(closure, subResult1), closure);
 			}
 		};
 	}
 	
 	protected ParserHandler<Token, SubResult2> buildHandler2(final ParserClosure<Token, Result> closure, final SubResult1 subResult1) {
-		return new AbstractParserHandler<Token, SubResult2>(closure) {
+		return new ParserHandler<Token, SubResult2>() {
 			public void result(final SubResult2 subResult2, final ParserState<Token> state)
 			throws ParserException {
 				// Success.
-				state.reportSuccess(closure, combine(subResult1, subResult2));
+				closure.success(combine(subResult1, subResult2), state);
 			}
 		};
 	}

@@ -16,7 +16,6 @@
 package com.trazere.parser.core;
 
 import com.trazere.parser.AbstractParser;
-import com.trazere.parser.AbstractParserHandler;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
@@ -47,18 +46,18 @@ extends AbstractParser<Token, Maybe<Result>> {
 	public void run(final ParserClosure<Token, Maybe<Result>> closure, final ParserState<Token> state)
 	throws ParserException {
 		// Zero.
-		state.reportSuccess(closure, Maybe.<Result>none());
+		closure.success(Maybe.<Result>none(), state);
 		
 		// One.
-		state.run(_subParser, buildOneHandler(closure));
+		state.parse(_subParser, buildOneHandler(closure), closure);
 	}
 	
 	protected ParserHandler<Token, Result> buildOneHandler(final ParserClosure<Token, Maybe<Result>> closure) {
-		return new AbstractParserHandler<Token, Result>(closure) {
+		return new ParserHandler<Token, Result>() {
 			public void result(final Result result, final ParserState<Token> state)
 			throws ParserException {
 				// Wrap the result.
-				state.reportSuccess(closure, Maybe.some(result));
+				closure.success(Maybe.some(result), state);
 			}
 		};
 	}

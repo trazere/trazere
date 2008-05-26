@@ -15,30 +15,10 @@
  */
 package com.trazere.parser;
 
-/**
- * DOCME
- * 
- * @param <Token>
- * @param <Result>
- */
-public abstract class AbstractParserClosure<Token, Result>
-implements ParserClosure<Token, Result> {
-	protected final Parser<Token, Result> _parser;
-	protected final int _position;
+public interface ParserPosition<Token>
+extends Comparable<ParserPosition<Token>> {
+	public String getDescription();
 	
-	public AbstractParserClosure(final Parser<Token, Result> parser, final int position) {
-		assert null != parser;
-		
-		// Initialization.
-		_parser = parser;
-		_position = position;
-	}
-	
-	public Parser<Token, Result> getParser() {
-		return _parser;
-	}
-	
-	public int getPosition() {
-		return _position;
-	}
+	public ParserPosition<Token> next(final Token token)
+	throws ParserException;
 }

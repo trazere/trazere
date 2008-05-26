@@ -24,11 +24,24 @@ import com.trazere.util.text.TextUtils;
  * <p>
  * The signature is caracterized by the key and the type of the value of the field.
  * 
- * @param <K> Type of the keys.
+ * @param <K> Type of the key.
  * @param <V> Type of the values.
  */
 public final class FieldSignature<K, V>
 implements Describable {
+	/**
+	 * Build a new field signature with the given key and type.
+	 * 
+	 * @param <K> Type of the key.
+	 * @param <V> Type of the values.
+	 * @param key Key of the field.
+	 * @param type Type of the value of the field.
+	 * @return The built signature.
+	 */
+	public static <K, V> FieldSignature<K, V> build(final K key, final Class<V> type) {
+		return new FieldSignature<K, V>(key, type);
+	}
+	
 	/** Key of the field. */
 	private final K _key;
 	
