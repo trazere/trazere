@@ -1,192 +1,90 @@
+/*
+ *  Copyright 2008 Julien Dufour
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
 package com.trazere.util.cache;
 
-import com.trazere.util.function.Filter;
-import com.trazere.util.function.FunctionUtils;
-import com.trazere.util.text.Describable;
-import com.trazere.util.text.TextUtils;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import com.trazere.util.function.Filter2;
 import java.util.Set;
 
 /**
- * The <code>Cache</code> abstract class provides the core implementation single value caches.
+ * The {@link Cache} interface defines caches.
+ * <p>
+ * A cache is a collection of values associated to unique keys which, unlike a regular map, can be flushed at any time according to some policy.
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
- * @param <E> Type of the entries.
  */
-public abstract class Cache<K, V, E extends CacheEntry<K, V>>
-implements Describable {
-	/** Cache entries identified by key. */
-	protected final Map<K, E> _entriesByKey = new HashMap<K, E>();
-	
+public interface Cache<K, V> {
 	/**
-	 * Associate the given value to the given key.
+	 * Fill the receiver cache with the given value associating it to the given key.
 	 * <p>
 	 * The possible previous associated value is discarded.
 	 * 
-	 * @param key Key of the association.
-	 * @param value Value of the association.
-	 * @return The corresponding cache entry.
+	 * @param key Key.
+	 * @param value Value. May be <code>null</code>.
 	 */
-	public E fill(final K key, final V value) {
-		assert null != key;
-		assert null != value;
-		
-		// Fill the cache.
-		final E entry = buildEntry(key, value);
-		fill(entry);
-		
-		return entry;
-	}
+	public void fill(final K key, final V value);
 	
 	/**
-	 * Associate no values to the given key.
-	 * <p>
-	 * The possible previous associated value is discarded.
+	 * Test wether a value is associated to the given key in the receiver cache.
 	 * 
-	 * @param key Key of the association.
-	 * @return The built cache entry.
+	 * @param key Key to test.
+	 * @return <code>true</code> when a value is associated to the key, <code>false</code> otherwise.
 	 */
-	public E fillNoValues(final K key) {
-		assert null != key;
-		
-		// Fill the cache.
-		final E entry = buildEntry(key, null);
-		fill(entry);
-		
-		return entry;
-	}
+	public boolean contains(final K key);
 	
 	/**
-	 * Fill the cache with the given entry.
-	 * <p>
-	 * The possible previous entry associated to key of the given entry is discarded.
-	 * 
-	 * @param entry Cache entry with which fill the cache.
-	 */
-	protected void fill(final E entry) {
-		addEntry(entry);
-		cleanup();
-	}
-	
-	/**
-	 * Get the cache entry for the given key. The value of the retrieved entry may be <code>null</code> if no values are attached to the given key.
-	 * 
-	 * @param key Association key.
-	 * @return The corresponding cache entry, or <code>null</code> if no information is available about the given key.
-	 */
-	public E get(final K key) {
-		assert null != key;
-		
-		// Get.
-		return _entriesByKey.get(key);
-	}
-	
-	/**
-	 * Get all keys which are associated to a value.
+	 * Get all keys which values are associated to in the receiver cache.
 	 * 
 	 * @return The keys.
 	 */
-	public Set<K> getAllKeys() {
-		final Set<K> keys = new HashSet<K>();
-		for (final E entry : _entriesByKey.values()) {
-			if (null != entry.getValue()) {
-				keys.add(entry.getKey());
-			}
-		}
-		return keys;
-	}
+	public Set<K> getKeys();
 	
 	/**
-	 * Remove all information about the given key from the cache.
+	 * Get the value associated to the given key in the receiver cache.
+	 * 
+	 * @param key Key.
+	 * @return The associated value, or <code>null</code> when no values is associated to the key.
+	 */
+	public V get(final K key);
+	
+	/**
+	 * Clear the receiver cache from the possible value associated to the given key.
 	 * 
 	 * @param key Key to clear.
-	 * @return The removed cache entry, or <code>null</code> if no information is available about the given key.
+	 * @return The clear value, or <code>null</code> when no values was associated to the key.
 	 */
-	public E remove(final K key) {
-		assert null != key;
-		
-		// Remove the entry.
-		final E entry = _entriesByKey.get(key);
-		if (null != entry) {
-			// Remove the entry.
-			removeEntry(entry);
-			return entry;
-		} else {
-			return null;
-		}
-	}
+	public V clear(final K key);
 	
 	/**
-	 * Flush the receiver cache from some information according to the given filter.
+	 * Clear the receiver cache according to the given key/value pair filter.
 	 * 
-	 * @param filter Filter of the entries.
+	 * @param filter Filter of the key/value associations to use.
 	 */
-	public void flush(final Filter<? super E> filter) {
-		final Collection<E> entries = FunctionUtils.filter(_entriesByKey.values(), filter, new ArrayList<E>());
-		for (final E entry : entries) {
-			removeEntry(entry);
-		}
-	}
+	public void clear(final Filter2<? super K, ? super V> filter);
 	
 	/**
-	 * Flush the receiver cache from all information. All entries are removed.
+	 * Clear the receiver cache from all values.
 	 */
-	public void flush() {
-		_entriesByKey.clear();
-	}
+	public void clear();
 	
 	/**
-	 * Clean up the cache from the extra entries in order to control its size. This method is called when filling the cache with some entry, and may be called
-	 * externally at any time. The default implementation does nothing. Subclasses may override it with the required behavior.
+	 * Clean the receiver cache up.
+	 * <p>
+	 * This methods removes the unnecessary values from the cache according to its policy. This maintenance is automatically performed when the cache is
+	 * modified, but calling this method manually may still useful with various policies (those depending on time for instance).
 	 */
-	public void cleanup() {
-		// Nothing to do
-	}
-	
-	/**
-	 * Build a new cache entry with the given key and value. Subclasses should override this factory in order to provide their own cache entry implementation.
-	 * 
-	 * @param key Key of the entry. The key can be <code>null</code> if the value is not <code>null</code>.
-	 * @param value Value of the entry. The value can be <code>null</code> if the key is not <code>null</code>.
-	 * @return The built cache entry.
-	 */
-	protected abstract E buildEntry(final K key, final V value);
-	
-	/**
-	 * Primitive method which adds the given entry into the receiver cache.
-	 * 
-	 * @param entry Cache entry to add.
-	 */
-	protected void addEntry(final E entry) {
-		assert null != entry;
-		
-		// Fill the cache.
-		_entriesByKey.put(entry.getKey(), entry);
-	}
-	
-	/**
-	 * Primitive method which removes the given entry from the receiver cache.
-	 * 
-	 * @param entry Cache entry to remove.
-	 */
-	protected void removeEntry(final E entry) {
-		assert null != entry;
-		
-		// Clean the entries.
-		_entriesByKey.remove(entry.getKey());
-	}
-	
-	@Override
-	public final String toString() {
-		return TextUtils.computeDescription(this);
-	}
-	
-	public void fillDescription(final StringBuilder builder) {
-		builder.append(" - Entries = ").append(_entriesByKey.values());
-	}
+	public void cleanup();
 }

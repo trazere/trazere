@@ -22,11 +22,11 @@ import com.trazere.util.type.Maybe.None;
 import com.trazere.util.type.Maybe.Some;
 
 /**
- * The {@link LazyReference} class represents undefined refererences which await to be filled.
+ * The {@link MutableReference} class represents mutable refererences.
  * 
  * @param <T> Type of the referenced values.
  */
-public class LazyReference<T>
+public class MutableReference<T>
 implements Describable {
 	/** Value. */
 	protected Maybe<T> _value = Maybe.none();

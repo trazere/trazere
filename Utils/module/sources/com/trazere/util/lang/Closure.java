@@ -17,94 +17,77 @@ package com.trazere.util.lang;
 
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.TextUtils;
+import com.trazere.util.type.Maybe;
+import com.trazere.util.type.Maybe.None;
+import com.trazere.util.type.Maybe.Some;
 
 /**
- * The {@link Closure} class represents closures of values over context records.
+ * The {@link Closure} abstract class represents closures.
+ * <p>
+ * A closure is a value which is lazily computed and memoized. This class simulates call-by-need evaluations.
  * 
  * @param <T> Type of the value.
- * @param <C> Type of the context.
  */
-public class Closure<T, C>
+public abstract class Closure<T>
 implements Describable {
-	/**
-	 * Build a new closure with the given value and context.
-	 * 
-	 * @param <T> Type of the value.
-	 * @param <C> Type of the context.
-	 * @param value Value of the closure.
-	 * @param context Context of the closure.
-	 * @return The built closure.
-	 */
-	public static <T, C> Closure<T, C> build(final T value, final C context) {
-		return new Closure<T, C>(value, context);
-	}
-	
-	/** Value of the closure. */
-	private final T _value;
-	
-	/** Context of the closure. */
-	private final C _context;
+	/** The computed value. */
+	protected Maybe<T> _value = Maybe.none();
 	
 	/**
-	 * Instantiate a new closure with the given value and parameter set.
+	 * Indicate wether the value of the receiver closure has been computed.
 	 * 
-	 * @param value Value of the closure.
-	 * @param context Context of the closure.
+	 * @return <code>true</code> if a value has been computed, <code>false</code> otherwise.
 	 */
-	public Closure(final T value, final C context) {
-		assert null != value;
-		assert null != context;
-		
-		// Initialization.
-		_value = value;
-		_context = context;
+	public boolean isComputed() {
+		return _value.isSome();
 	}
 	
 	/**
 	 * Get the value of the receiver closure.
+	 * <p>
+	 * The value is computed if needed and memoized for future calls.
 	 * 
-	 * @return The value.
+	 * @return The computed value. May be <code>null</code>.
+	 * @throws CannotComputeValueException When the computation of the value fails.
 	 */
-	public T getValue() {
-		return _value;
+	public T get()
+	throws CannotComputeValueException {
+		if (_value.isSome()) {
+			return _value.asSome().getValue();
+		} else {
+			final T value = compute();
+			_value = Maybe.some(value);
+			return value;
+		}
 	}
 	
 	/**
-	 * Get the context record of the receiver closure.
+	 * Compute the value of the receiver closure.
 	 * 
-	 * @return The context.
+	 * @return The computed value. May be <code>null</code>.
+	 * @throws CannotComputeValueException When the computation fails.
 	 */
-	public C getContext() {
-		return _context;
+	protected abstract T compute()
+	throws CannotComputeValueException;
+	
+	/**
+	 * Reset the value memoized in the receiver closure. The value will be computed (again) during the next call to {@link #get()}.
+	 */
+	public void reset() {
+		_value = Maybe.none();
 	}
 	
-	@Override
-	public int hashCode() {
-		final HashCode result = new HashCode(this);
-		result.append(_value);
-		result.append(_context);
-		return result.get();
-	}
-	
-	@Override
-	public boolean equals(final Object object) {
-		if (this == object) {
-			return true;
-		} else if (null != object && getClass().equals(object.getClass())) {
-			final Closure<?, ?> closure = (Closure<?, ?>) object;
-			return _value.equals(closure._value) && _context.equals(closure._context);
-		} else {
-			return false;
-		}
+	/**
+	 * Get a view of the computed value of the receiver closure as an instance of {@link Maybe}.
+	 * 
+	 * @return The computed value wrapped in {@link Some}, or {@link None} when the value has not been computed yet.
+	 */
+	public Maybe<T> asMaybe() {
+		return _value;
 	}
 	
 	@Override
 	public String toString() {
-		return TextUtils.computeDescription(this);
-	}
-	
-	public void fillDescription(final StringBuilder builder) {
-		builder.append(" - Value = ").append(_value);
-		builder.append(" - Context = ").append(_context);
+		return _value.isSome() ? String.valueOf(_value.asSome().getValue()) : TextUtils.computeDescription(this);
 	}
 }

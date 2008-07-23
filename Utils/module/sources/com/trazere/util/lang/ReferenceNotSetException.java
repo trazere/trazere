@@ -20,7 +20,7 @@ package com.trazere.util.lang;
  * <p>
  * These exceptions are runtime exceptions in order to reduce clutter when using computations which cannot fail.
  * 
- * @see LazyReference
+ * @see MutableReference
  */
 public class ReferenceNotSetException
 extends RuntimeException {
