@@ -164,15 +164,17 @@ public class RecordUtils {
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
+	 * @param <B> Type of the record builder.
 	 * @param record Record to read.
 	 * @param keys Key of the fields to copy.
 	 * @param builder Record builder to populate.
+	 * @return The given record builder.
 	 * @throws MissingFieldException When no fields are identified by any given key in the the given record.
 	 * @throws DuplicateFieldException When some field is identified by any given key in the given builder.
 	 * @throws RecordException When the fields cannot be read.
 	 * @throws RecordException When the fields cannot be added.
 	 */
-	public static <K, V> void subRecord(final Record<? super K, ? extends V> record, final Set<? extends K> keys, final RecordBuilder<? super K, ? super V, ?> builder)
+	public static <K, V, B extends RecordBuilder<? super K, ? super V, ?>> B subRecord(final Record<? super K, ? extends V> record, final Set<? extends K> keys, final B builder)
 	throws RecordException {
 		assert null != record;
 		assert null != keys;
@@ -182,6 +184,7 @@ public class RecordUtils {
 		for (final K key : keys) {
 			builder.add(key, record.get(key));
 		}
+		return builder;
 	}
 	
 	/**

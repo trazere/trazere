@@ -1,7 +1,23 @@
+/*
+ *  Copyright 2008 Julien Dufour
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
 package com.trazere.util.collection;
 
 import com.trazere.util.function.ApplicationException;
 import com.trazere.util.function.Filter;
+import com.trazere.util.function.Filter2;
 import com.trazere.util.function.Function;
 import com.trazere.util.type.Tuple2;
 import java.util.ArrayList;
@@ -388,7 +404,6 @@ public class CollectionUtils {
 	 */
 	public static <T, L extends List<T>> L sort(final L list, final Comparator<? super T> comparator) {
 		assert null != list;
-		assert null != comparator;
 		
 		// Sort.
 		Collections.sort(list, comparator);
@@ -526,7 +541,7 @@ public class CollectionUtils {
 		assert null != filter;
 		
 		// Filter.
-		final Iterator<? extends T> values_ = collection.iterator();
+		final Iterator<T> values_ = collection.iterator();
 		while (values_.hasNext()) {
 			final T value = values_.next();
 			if (!filter.filter(value)) {
@@ -534,6 +549,33 @@ public class CollectionUtils {
 			}
 		}
 		return collection;
+	}
+	
+	/**
+	 * Filter the content of the given map using the given filter.
+	 * <p>
+	 * This method does modify the given map.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <M> Type of the map.
+	 * @param map Map to filter.
+	 * @param filter Filter to use.
+	 * @return The given modified map.
+	 */
+	public static <K, V, M extends Map<K, V>> M filter(final M map, final Filter2<? super K, ? super V> filter) {
+		assert null != map;
+		assert null != filter;
+		
+		// Filter.
+		final Iterator<Map.Entry<K, V>> entries = map.entrySet().iterator();
+		while (entries.hasNext()) {
+			final Map.Entry<K, V> entry = entries.next();
+			if (!filter.filter(entry.getKey(), entry.getValue())) {
+				entries.remove();
+			}
+		}
+		return map;
 	}
 	
 	/**

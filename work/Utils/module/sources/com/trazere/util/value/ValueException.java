@@ -13,23 +13,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.lang;
+package com.trazere.util.value;
 
 /**
- * {@link CannotComputeValueException} exceptions are thrown when some value cannot be computed.
- * <p>
- * These exceptions are runtime exceptions in order to reduce clutter when using computations which cannot fail.
- * 
- * @see Closure
+ * {@link ValueException} exceptions are thrown when value related errors occur.
  */
-public class CannotComputeValueException
-extends RuntimeException {
+public class ValueException
+extends Exception {
 	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * Instantiate a new exception.
 	 */
-	public CannotComputeValueException() {
+	public ValueException() {
 		super();
 	}
 	
@@ -38,7 +34,7 @@ extends RuntimeException {
 	 * 
 	 * @param message Details about the exception.
 	 */
-	public CannotComputeValueException(final String message) {
+	public ValueException(final String message) {
 		super(message);
 	}
 	
@@ -47,7 +43,7 @@ extends RuntimeException {
 	 * 
 	 * @param cause Cause of the exception.
 	 */
-	public CannotComputeValueException(final Throwable cause) {
+	public ValueException(final Throwable cause) {
 		super(cause);
 	}
 	
@@ -57,7 +53,7 @@ extends RuntimeException {
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
 	 */
-	public CannotComputeValueException(final String message, final Throwable cause) {
+	public ValueException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 }

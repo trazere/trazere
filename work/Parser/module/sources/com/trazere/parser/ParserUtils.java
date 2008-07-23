@@ -15,7 +15,7 @@
  */
 package com.trazere.parser;
 
-import com.trazere.util.lang.LazyReference;
+import com.trazere.util.lang.MutableReference;
 import com.trazere.util.type.Either;
 import com.trazere.util.type.Maybe;
 import java.util.ArrayList;
@@ -86,9 +86,9 @@ public class ParserUtils {
 	public static <Token, Result> Maybe<Result> parseLongestSuccess(final Parser<Token, Result> parser, final ParserSource<Token> source, final ParserPosition<Token> position)
 	throws ParserException {
 		// Parse.
-		final LazyReference<Result> successReference = new LazyReference<Result>();
+		final MutableReference<Result> successReference = new MutableReference<Result>();
 		SUCCESS_ENGINE.parse(parser, source, position, new SuccessParserEngine.Handler<Token, Result>() {
-			private final LazyReference<ParserPosition<Token>> _position = new LazyReference<ParserPosition<Token>>();
+			private final MutableReference<ParserPosition<Token>> _position = new MutableReference<ParserPosition<Token>>();
 			
 			public void success(final Result result, final ParserPosition<Token> resultPosition) {
 				if (!_position.isSet() || resultPosition.compareTo(_position.get()) > 0) {
@@ -110,10 +110,10 @@ public class ParserUtils {
 	public static <Token, Result> Either<Result, List<ParserFailure<Token>>> parseLongestSuccessOrFailures(final Parser<Token, Result> parser, final ParserSource<Token> source, final ParserPosition<Token> position)
 	throws ParserException {
 		// Parse.
-		final LazyReference<Result> successReference = new LazyReference<Result>();
+		final MutableReference<Result> successReference = new MutableReference<Result>();
 		final List<ParserFailure<Token>> failures = new ArrayList<ParserFailure<Token>>();
 		FAILURE_ENGINE.parse(parser, source, position, new FailureParserEngine.Handler<Token, Result>() {
-			private final LazyReference<ParserPosition<Token>> _position = new LazyReference<ParserPosition<Token>>();
+			private final MutableReference<ParserPosition<Token>> _position = new MutableReference<ParserPosition<Token>>();
 			
 			public void success(final Result result, final ParserPosition<Token> resultPosition) {
 				if (!_position.isSet() || resultPosition.compareTo(_position.get()) > 0) {
@@ -144,11 +144,11 @@ public class ParserUtils {
 	public static <Token, Result> Either<Result, ParserFailure<Token>> parseLongestSuccessOrLongestFailure(final Parser<Token, Result> parser, final ParserSource<Token> source, final ParserPosition<Token> position)
 	throws ParserException {
 		// Parse.
-		final LazyReference<Result> successReference = new LazyReference<Result>();
-		final LazyReference<ParserFailure<Token>> failureReference = new LazyReference<ParserFailure<Token>>();
+		final MutableReference<Result> successReference = new MutableReference<Result>();
+		final MutableReference<ParserFailure<Token>> failureReference = new MutableReference<ParserFailure<Token>>();
 		FAILURE_ENGINE.parse(parser, source, position, new FailureParserEngine.Handler<Token, Result>() {
-			private final LazyReference<ParserPosition<Token>> _successPosition = new LazyReference<ParserPosition<Token>>();
-			private final LazyReference<ParserPosition<Token>> _failurePosition = new LazyReference<ParserPosition<Token>>();
+			private final MutableReference<ParserPosition<Token>> _successPosition = new MutableReference<ParserPosition<Token>>();
+			private final MutableReference<ParserPosition<Token>> _failurePosition = new MutableReference<ParserPosition<Token>>();
 			
 			public void success(final Result result, final ParserPosition<Token> resultPosition) {
 				if (!_successPosition.isSet() || resultPosition.compareTo(_successPosition.get()) > 0) {

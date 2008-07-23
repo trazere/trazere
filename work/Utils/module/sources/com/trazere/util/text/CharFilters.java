@@ -15,7 +15,6 @@
  */
 package com.trazere.util.text;
 
-
 /**
  * The <code>CharFilters</code> class provides various standard character filters.
  */
