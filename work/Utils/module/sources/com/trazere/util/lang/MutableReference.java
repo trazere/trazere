@@ -1,5 +1,5 @@
 /*
- *  Copyright 2008 Julien Dufour
+ *  Copyright 2006-2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -67,7 +67,50 @@ implements Describable {
 		if (overwrite || !_value.isSome()) {
 			_value = Maybe.some(value);
 		} else {
-			throw new ReferenceAlreadySetException("Reference already filled with " + _value.asSome().getValue());
+			throw new ReferenceAlreadySetException("Reference already set to " + _value.asSome().getValue());
+		}
+	}
+	
+	/**
+	 * Reset the receiver reference.
+	 * 
+	 * @throws ReferenceNotSetException When the reference has not been set.
+	 */
+	public void reset() {
+		_value = Maybe.none();
+	}
+	
+	/**
+	 * Set or reset the receiver reference according to the given value.
+	 * <p>
+	 * The reference must not be set when a value is given.
+	 * 
+	 * @param value Value to set. May be <code>null</code>.
+	 * @throws ReferenceAlreadySetException When the reference has already been set.
+	 */
+	public void update(final Maybe<T> value)
+	throws ReferenceAlreadySetException {
+		update(value, false);
+	}
+	
+	/**
+	 * Set or reset the receiver reference according to the given value.
+	 * <p>
+	 * The reference must not be set or the overwrite flag must be <code>true</code> when a value is given.
+	 * 
+	 * @param value Value to set. May be <code>null</code>.
+	 * @param overwrite Flag indicating wether already set references may be overwritten.
+	 * @throws ReferenceAlreadySetException When the reference has already been set.
+	 */
+	public void update(final Maybe<T> value, final boolean overwrite)
+	throws ReferenceAlreadySetException {
+		assert null != value;
+		
+		// Set.
+		if (value.isNone() || overwrite || !_value.isSome()) {
+			_value = value;
+		} else {
+			throw new ReferenceAlreadySetException("Reference already set to " + _value.asSome().getValue());
 		}
 	}
 	
@@ -83,30 +126,6 @@ implements Describable {
 	throws ReferenceNotSetException {
 		if (_value.isSome()) {
 			return _value.asSome().getValue();
-		} else {
-			throw new ReferenceNotSetException("Reference " + this + " is not set");
-		}
-	}
-	
-	/**
-	 * Reset the receiver reference.
-	 */
-	public void reset() {
-		reset(true);
-	}
-	
-	/**
-	 * Reset the receiver reference.
-	 * <p>
-	 * The reference must be set, of the overwrite flag must be <code>true</code>.
-	 * 
-	 * @param overwrite Flag indicating wether unset references may be reset.
-	 * @throws ReferenceNotSetException When the reference has not been set.
-	 */
-	public void reset(final boolean overwrite)
-	throws ReferenceNotSetException {
-		if (overwrite || !_value.isNone()) {
-			_value = Maybe.none();
 		} else {
 			throw new ReferenceNotSetException("Reference " + this + " is not set");
 		}

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2008 Julien Dufour
+ *  Copyright 2006-2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -42,13 +42,16 @@ implements RecordFactory<K, V, SimpleRecord<K, V>> {
 		return (SimpleRecordFactory<K, V>) _FACTORY;
 	}
 	
-	public SimpleRecord<K, V> build()
-	throws RecordException {
+	public SimpleRecord<K, V> build() {
 		return SimpleRecord.build();
 	}
 	
-	public SimpleRecord<K, V> build(final Map<K, V> fields)
-	throws RecordException {
+	public SimpleRecord<K, V> build(final Map<? extends K, ? extends V> fields) {
 		return SimpleRecord.build(fields);
+	}
+	
+	public SimpleRecord<K, V> build(final Record<? extends K, ? extends V> record)
+	throws RecordException {
+		return SimpleRecord.build(record);
 	}
 }

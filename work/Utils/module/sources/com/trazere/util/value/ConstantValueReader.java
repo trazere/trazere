@@ -1,5 +1,5 @@
 /*
- *  Copyright 2008 Julien Dufour
+ *  Copyright 2006-2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  */
 package com.trazere.util.value;
 
+import com.trazere.util.lang.HashCode;
+import com.trazere.util.lang.LangUtils;
 import com.trazere.util.record.Record;
 import com.trazere.util.record.RecordSignature;
 import com.trazere.util.record.RecordSignatureBuilder;
@@ -54,10 +56,6 @@ extends AbstractValueReader<T> {
 		return _value;
 	}
 	
-	public T read(final Record<String, Object> parameters) {
-		return _value;
-	}
-	
 	@Override
 	public RecordSignature<String, Object> getRequirements() {
 		return SimpleRecordSignature.build();
@@ -65,6 +63,30 @@ extends AbstractValueReader<T> {
 	
 	public <B extends RecordSignatureBuilder<String, Object, ?>> B unifyRequirements(final B builder) {
 		return builder;
+	}
+	
+	public T read(final Record<String, Object> parameters) {
+		return _value;
+	}
+	
+	@Override
+	public int hashCode() {
+		final HashCode result = new HashCode(this);
+		result.append(_type);
+		result.append(_value);
+		return result.get();
+	}
+	
+	@Override
+	public boolean equals(final Object object) {
+		if (this == object) {
+			return true;
+		} else if (null != object && getClass().equals(object.getClass())) {
+			final ConstantValueReader<?> reader = (ConstantValueReader<?>) object;
+			return _type.equals(reader._type) && LangUtils.equals(_value, reader._value);
+		} else {
+			return false;
+		}
 	}
 	
 	@Override

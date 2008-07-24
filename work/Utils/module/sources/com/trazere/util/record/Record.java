@@ -1,5 +1,5 @@
 /*
- *  Copyright 2008 Julien Dufour
+ *  Copyright 2006-2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -18,6 +18,8 @@ package com.trazere.util.record;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
+
+// TODO: add some get :: K -> Maybe<V> method
 
 /**
  * The {@link Record} interface defines unmutable records.

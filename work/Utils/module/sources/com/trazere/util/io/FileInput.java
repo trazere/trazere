@@ -1,5 +1,5 @@
 /*
- *  Copyright 2008 Julien Dufour
+ *  Copyright 2006-2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package com.trazere.util.io;
 
+import com.trazere.util.lang.HashCode;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -57,6 +58,25 @@ implements Input {
 	public InputStream open()
 	throws IOException {
 		return new FileInputStream(_file);
+	}
+	
+	@Override
+	public int hashCode() {
+		final HashCode result = new HashCode(this);
+		result.append(_file);
+		return result.get();
+	}
+	
+	@Override
+	public boolean equals(final Object object) {
+		if (this == object) {
+			return true;
+		} else if (null != object && getClass().equals(object.getClass())) {
+			final FileInput input = (FileInput) object;
+			return _file.equals(input._file);
+		} else {
+			return false;
+		}
 	}
 	
 	@Override

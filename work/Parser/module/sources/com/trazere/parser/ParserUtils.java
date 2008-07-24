@@ -1,5 +1,5 @@
 /*
- *  Copyright 2008 Julien Dufour
+ *  Copyright 2006-2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -174,6 +174,21 @@ public class ParserUtils {
 		} else {
 			throw new ParserException("Incompatibles successes or failures !");
 		}
+	}
+	
+	public static <Token> String renderFailures(final List<ParserFailure<Token>> failures) {
+		assert null != failures;
+		
+		// Render.
+		final StringBuilder builder = new StringBuilder();
+		final boolean first = true;
+		for (final ParserFailure<Token> failure : failures) {
+			if (first) {
+				builder.append(", or ");
+			}
+			builder.append(failure.getParser().getDescription()).append(" at ").append(failure.getPosition().getDescription());
+		}
+		return builder.toString();
 	}
 	
 	private ParserUtils() {

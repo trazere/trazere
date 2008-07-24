@@ -1,5 +1,5 @@
 /*
- *  Copyright 2008 Julien Dufour
+ *  Copyright 2006-2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,11 +25,12 @@ import com.trazere.util.text.CharFilter;
 /**
  * DOCME
  */
-public class SomeCharParser
-extends AbstractParser<Character, Character> {
+public class FilterStringParser
+extends AbstractParser<Character, String> {
 	protected final CharFilter _filter;
+	protected final boolean _empty;
 	
-	public SomeCharParser(final CharFilter filter, final String description) {
+	public FilterStringParser(final CharFilter filter, final boolean empty, final String description) {
 		super(description);
 		
 		// Checks.
@@ -37,21 +38,34 @@ extends AbstractParser<Character, Character> {
 		
 		// Initialization.
 		_filter = filter;
+		_empty = empty;
 	}
 	
-	public void run(final ParserClosure<Character, Character> closure, final ParserState<Character> state)
+	public void run(final ParserClosure<Character, String> closure, final ParserState<Character> state)
 	throws ParserException {
-		// Char.
-		state.read(buildContinuation(closure));
+		// Zero.
+		final StringBuilder result = new StringBuilder();
+		if (_empty) {
+			closure.success(result.toString(), state);
+		}
+		
+		// More.
+		state.read(buildContinuation(closure, result));
 	}
 	
-	protected ParserContinuation<Character> buildContinuation(final ParserClosure<Character, Character> closure) {
+	protected ParserContinuation<Character> buildContinuation(final ParserClosure<Character, String> closure, final StringBuilder builder) {
 		return new ParserContinuation<Character>() {
 			public void token(final Character token, final ParserState<Character> state)
 			throws ParserException {
 				if (_filter.filter(token.charValue())) {
+					// Accumulate the result.
+					builder.append(token.charValue());
+					
 					// Success.
-					closure.success(token, state);
+					closure.success(builder.toString(), state);
+					
+					// More.
+					state.read(buildContinuation(closure, builder));
 				} else {
 					// Failure.
 					closure.failure(state);

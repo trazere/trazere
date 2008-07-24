@@ -1,5 +1,5 @@
 /*
- *  Copyright 2008 Julien Dufour
+ *  Copyright 2006-2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -16,7 +16,9 @@
 package com.trazere.util;
 
 /**
- * <code>InternalException</code> exceptions are thrown when some internal error occurs (when there is something wrong in the code).
+ * {@link InternalException} exceptions are thrown when internal errors occur.
+ * <p>
+ * These exceptions aim to indicate problems in the code (like situation which are supposed to be impossible) rather than runtime issues.
  */
 public class InternalException
 extends RuntimeException {

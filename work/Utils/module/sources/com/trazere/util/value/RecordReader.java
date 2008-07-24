@@ -1,5 +1,5 @@
 /*
- *  Copyright 2008 Julien Dufour
+ *  Copyright 2006-2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -28,6 +28,27 @@ import com.trazere.util.record.RecordSignatureBuilder;
  * @param <V> Type of the values.
  */
 public interface RecordReader<K, V> {
+	/**
+	 * Get the requirements of the receiver reader over its parameters.
+	 * 
+	 * @return The signature of the requirements.
+	 * @throws ValueException When the requirements cannot be computed.
+	 */
+	public RecordSignature<String, Object> getRequirements()
+	throws ValueException;
+	
+	/**
+	 * Unify the requirements of the receiver reader within the given builder.
+	 * 
+	 * @param <B> Type of the signature builder.
+	 * @param builder The builder within which the requirements should be unified.
+	 * @return The given signature builder.
+	 * @throws ValueException When the requirements cannot be computed.
+	 * @throws IncompatibleFieldException When the unification fails.
+	 */
+	public <B extends RecordSignatureBuilder<String, Object, ?>> B unifyRequirements(final B builder)
+	throws ValueException, IncompatibleFieldException;
+	
 	/**
 	 * Get the signature of the records produced by the receiver reader.
 	 * 
@@ -58,25 +79,4 @@ public interface RecordReader<K, V> {
 	 */
 	public <B extends RecordBuilder<K, V, ?>> B read(final Record<String, Object> parameters, final B builder)
 	throws ValueException;
-	
-	/**
-	 * Get the requirements of the receiver reader over its parameters.
-	 * 
-	 * @return The signature of the requirements.
-	 * @throws ValueException When the requirements cannot be computed.
-	 */
-	public RecordSignature<String, Object> getRequirements()
-	throws ValueException;
-	
-	/**
-	 * Unify the requirements of the receiver reader within the given builder.
-	 * 
-	 * @param <B> Type of the signature builder.
-	 * @param builder The builder within which the requirements should be unified.
-	 * @return The given signature builder.
-	 * @throws ValueException When the requirements cannot be computed.
-	 * @throws IncompatibleFieldException When the unification fails.
-	 */
-	public <B extends RecordSignatureBuilder<String, Object, ?>> B unifyRequirements(final B builder)
-	throws ValueException, IncompatibleFieldException;
 }

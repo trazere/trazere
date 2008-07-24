@@ -1,5 +1,5 @@
 /*
- *  Copyright 2008 Julien Dufour
+ *  Copyright 2006-2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -52,6 +52,31 @@ implements RecordReader<K, V> {
 		_fields = Collections.unmodifiableMap(fields);
 	}
 	
+	public RecordSignature<String, Object> getRequirements()
+	throws ValueException {
+		try {
+			if (_fields.isEmpty()) {
+				return SimpleRecordSignature.build();
+			} else {
+				final RecordSignatureBuilder<String, Object, ?> builder = new SimpleRecordSignatureBuilder<String, Object>();
+				unifyRequirements(builder);
+				return builder.build();
+			}
+		} catch (final IncompatibleFieldException exception) {
+			throw new ValueException("Internal error", exception);
+		} catch (final RecordException exception) {
+			throw new ValueException(exception);
+		}
+	}
+	
+	public <B extends RecordSignatureBuilder<String, Object, ?>> B unifyRequirements(final B builder)
+	throws ValueException, IncompatibleFieldException {
+		for (final ValueReader<? extends V> factory : _fields.values()) {
+			factory.unifyRequirements(builder);
+		}
+		return builder;
+	}
+	
 	public RecordSignature<K, V> getSignature()
 	throws ValueException {
 		try {
@@ -88,30 +113,5 @@ implements RecordReader<K, V> {
 		} catch (final RecordException exception) {
 			throw new ValueException(exception);
 		}
-	}
-	
-	public RecordSignature<String, Object> getRequirements()
-	throws ValueException {
-		try {
-			if (_fields.isEmpty()) {
-				return SimpleRecordSignature.build();
-			} else {
-				final RecordSignatureBuilder<String, Object, ?> builder = new SimpleRecordSignatureBuilder<String, Object>();
-				unifyRequirements(builder);
-				return builder.build();
-			}
-		} catch (final IncompatibleFieldException exception) {
-			throw new ValueException("Internal error", exception);
-		} catch (final RecordException exception) {
-			throw new ValueException(exception);
-		}
-	}
-	
-	public <B extends RecordSignatureBuilder<String, Object, ?>> B unifyRequirements(final B builder)
-	throws ValueException, IncompatibleFieldException {
-		for (final ValueReader<? extends V> factory : _fields.values()) {
-			factory.unifyRequirements(builder);
-		}
-		return builder;
 	}
 }

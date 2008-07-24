@@ -1,5 +1,5 @@
 /*
- *  Copyright 2008 Julien Dufour
+ *  Copyright 2006-2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -371,6 +371,23 @@ public class CollectionUtils {
 		// Read.
 		final int size = list.size();
 		return size > 0 ? list.get(size - 1) : null;
+	}
+	
+	/**
+	 * Get the value identified by the given key in the given map using the given default value.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param map Map to read.
+	 * @param key Key identifying the value to get. May be <code>null</code>.
+	 * @param defaultValue Default value. May be <code>null</code>.
+	 * @return The value identified by the key if any, or the default value.
+	 */
+	public static <K, V> V get(final Map<K, V> map, final K key, final V defaultValue) {
+		assert null != map;
+		
+		// Get.
+		return map.containsKey(key) ? map.get(key) : defaultValue;
 	}
 	
 	/**
