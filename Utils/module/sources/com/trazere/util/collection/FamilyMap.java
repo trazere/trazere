@@ -1,5 +1,5 @@
 /*
- *  Copyright 2008 Julien Dufour
+ *  Copyright 2006-2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -99,9 +99,10 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 	 * 
 	 * @param key Key which the value should be associated to. May be <code>null</code>.
 	 * @param value Value to associate. May be <code>null</code>.
+	 * @return <code>true</code> when the family has changed, <code>false</code> otherwise.
 	 */
-	public void put(final K key, final V value) {
-		getFamily(key).add(value);
+	public boolean put(final K key, final V value) {
+		return getFamily(key).add(value);
 	}
 	
 	/**
@@ -109,12 +110,13 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 	 * 
 	 * @param key Key which the value should be associated to. May be <code>null</code>.
 	 * @param values Values to associate.
+	 * @return <code>true</code> when the family has changed, <code>false</code> otherwise.
 	 */
-	public void putAll(final K key, final Collection<? extends V> values) {
+	public boolean putAll(final K key, final Collection<? extends V> values) {
 		assert null != values;
 		
 		// Add.
-		getFamily(key).addAll(values);
+		return getFamily(key).addAll(values);
 	}
 	
 	/**
@@ -136,13 +138,24 @@ public class FamilyMap<K, V, C extends Collection<V>> {
 	}
 	
 	/**
-	 * Check wether the receiver family contains values for the given key.
+	 * Test wether some values are associated to the given key in the receiver family.
 	 * 
-	 * @param key Key whose associated value should be checked.
+	 * @param key Key to test.
 	 * @return <code>true</code> when some values are associated to the key, <code>false</code> otherwise.
 	 */
 	public boolean containsKey(final K key) {
 		return _families.containsKey(key);
+	}
+	
+	/**
+	 * Test wether the given value is associated to the given key in the receiver family.
+	 * 
+	 * @param key Key whose value is associated to.
+	 * @param value Value to test.
+	 * @return <code>true</code> when the given value is associated to the key, <code>false</code> otherwise.
+	 */
+	public boolean containsValue(final K key, final V value) {
+		return _families.containsKey(key) && _families.get(key).contains(value);
 	}
 	
 	/**

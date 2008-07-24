@@ -1,5 +1,5 @@
 /*
- *  Copyright 2008 Julien Dufour
+ *  Copyright 2006-2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -30,33 +30,6 @@ import java.util.Set;
  * The {@link RecordUtils} class provides various utilities regarding record manipulatation.
  */
 public class RecordUtils {
-	private static final RecordFactory<?, ?, ?> _SIMPLE_RECORD_FACTORY = new RecordFactory<Object, Object, SimpleRecord<Object, Object>>() {
-		public SimpleRecord<Object, Object> build()
-		throws RecordException {
-			return SimpleRecord.build();
-		}
-		
-		public SimpleRecord<Object, Object> build(final Map<Object, Object> fields)
-		throws RecordException {
-			return SimpleRecord.build(fields);
-		}
-	};
-	
-	/**
-	 * Build a factory of simple records.
-	 * <p>
-	 * This method actually returns a singleton instead of building a new objet.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @return The factory.
-	 * @see SimpleRecord
-	 */
-	@SuppressWarnings("unchecked")
-	public static <K, V> RecordFactory<K, V, SimpleRecord<K, V>> buildSimpleRecordFactory() {
-		return (RecordFactory<K, V, SimpleRecord<K, V>>) _SIMPLE_RECORD_FACTORY;
-	}
-	
 	/**
 	 * Fill the given record builder with fields identified by the given keys and containing the given value.
 	 * <p>
@@ -70,7 +43,7 @@ public class RecordUtils {
 	 * @throws DuplicateFieldException When some field is identified by the given key in the receiver builder.
 	 * @throws RecordException When the fields cannot be added.
 	 */
-	public static <K, V> void fillRecord(final RecordBuilder<? super K, ? super V, ?> builder, final Collection<? extends K> keys, final V value)
+	public static <K, V> void fill(final RecordBuilder<? super K, ? super V, ?> builder, final Collection<? extends K> keys, final V value)
 	throws RecordException {
 		assert null != builder;
 		assert null != keys;
@@ -93,7 +66,7 @@ public class RecordUtils {
 	 * @param value Value to set. May be <code>null</code>.
 	 * @throws RecordException When the fields cannot be added.
 	 */
-	public static <K, V> void completeRecord(final RecordBuilder<? super K, ? super V, ?> builder, final Collection<? extends K> keys, final V value)
+	public static <K, V> void complete(final RecordBuilder<? super K, ? super V, ?> builder, final Collection<? extends K> keys, final V value)
 	throws RecordException {
 		assert null != builder;
 		assert null != keys;
@@ -119,9 +92,9 @@ public class RecordUtils {
 	 * @throws MissingFieldException When no fields are identified by any given key in the the given record.
 	 * @throws RecordException When the fields cannot be read.
 	 */
-	public static <K, V> SimpleRecord<K, V> subRecord(final Record<? super K, ? extends V> record, final Set<? extends K> keys)
+	public static <K, V> SimpleRecord<K, V> sub(final Record<? super K, ? extends V> record, final Set<? extends K> keys)
 	throws RecordException {
-		return subRecord(record, keys, RecordUtils.<K, V>buildSimpleRecordFactory());
+		return sub(record, keys, SimpleRecordFactory.<K, V>factory());
 	}
 	
 	/**
@@ -139,7 +112,7 @@ public class RecordUtils {
 	 * @throws MissingFieldException When no fields are identified by any given key in the the given record.
 	 * @throws RecordException When the fields cannot be read.
 	 */
-	public static <K, V, R extends Record<K, V>> R subRecord(final Record<? super K, ? extends V> record, final Set<? extends K> keys, final RecordFactory<K, V, R> factory)
+	public static <K, V, R extends Record<K, V>> R sub(final Record<? super K, ? extends V> record, final Set<? extends K> keys, final RecordFactory<K, V, R> factory)
 	throws RecordException {
 		assert null != record;
 		assert null != keys;
@@ -158,7 +131,7 @@ public class RecordUtils {
 	}
 	
 	/**
-	 * Popultate the given record builder with the fields of the given record identified by the given keys.
+	 * Populate the given record builder with the fields of the given record identified by the given keys.
 	 * <p>
 	 * Some field must be identified by every given key in the given record and no fields may be identified by any given key in the given builder.
 	 * 
@@ -174,7 +147,7 @@ public class RecordUtils {
 	 * @throws RecordException When the fields cannot be read.
 	 * @throws RecordException When the fields cannot be added.
 	 */
-	public static <K, V, B extends RecordBuilder<? super K, ? super V, ?>> B subRecord(final Record<? super K, ? extends V> record, final Set<? extends K> keys, final B builder)
+	public static <K, V, B extends RecordBuilder<? super K, ? super V, ?>> B sub(final Record<? super K, ? extends V> record, final Set<? extends K> keys, final B builder)
 	throws RecordException {
 		assert null != record;
 		assert null != keys;
@@ -184,6 +157,85 @@ public class RecordUtils {
 		for (final K key : keys) {
 			builder.add(key, record.get(key));
 		}
+		return builder;
+	}
+	
+	/**
+	 * Compute the sub record of the given record containing the fields which are not identified by the given keys.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param record Record to read.
+	 * @param keys Key of the fields to drop.
+	 * @return The sub record.
+	 * @throws RecordException When the fields cannot be read.
+	 */
+	public static <K, V> SimpleRecord<K, V> drop(final Record<K, ? extends V> record, final Set<? extends K> keys)
+	throws RecordException {
+		return drop(record, keys, SimpleRecordFactory.<K, V>factory());
+	}
+	
+	/**
+	 * Compute the sub record of the given record containing the fields which are not identified by the given keys.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <R> Type of the sub record.
+	 * @param record Record to read.
+	 * @param keys Key of the fields to drop.
+	 * @param factory Record factory to use.
+	 * @return The sub record.
+	 * @throws RecordException When the fields cannot be read.
+	 */
+	public static <K, V, R extends Record<K, V>> R drop(final Record<K, ? extends V> record, final Set<? extends K> keys, final RecordFactory<K, V, R> factory)
+	throws RecordException {
+		assert null != record;
+		assert null != keys;
+		assert null != factory;
+		
+		// Build the sub record.
+		if (keys.isEmpty()) {
+			return factory.build(record);
+		} else {
+			final Map<K, V> fields = new HashMap<K, V>();
+			for (final Map.Entry<K, ? extends V> entry : record.asMap().entrySet()) {
+				final K key = entry.getKey();
+				if (!keys.contains(key)) {
+					fields.put(key, entry.getValue());
+				}
+			}
+			return factory.build(fields);
+		}
+	}
+	
+	/**
+	 * Populate the given record builder with the fields of the given record which are not identified by the given keys.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <B> Type of the record builder.
+	 * @param record Record to read.
+	 * @param keys Key of the fields to drop.
+	 * @param builder Record builder to populate.
+	 * @return The given record builder.
+	 * @throws DuplicateFieldException When some fields are identified by the keys of kept fields in the given builder.
+	 * @throws RecordException When the fields cannot be read.
+	 * @throws RecordException When the fields cannot be added.
+	 */
+	public static <K, V, B extends RecordBuilder<K, ? super V, ?>> B drop(final Record<K, ? extends V> record, final Set<? extends K> keys, final B builder)
+	throws RecordException {
+		assert null != record;
+		assert null != keys;
+		assert null != builder;
+		
+		// Fill the builder.
+		for (final Map.Entry<K, ? extends V> entry : record.asMap().entrySet()) {
+			final K key = entry.getKey();
+			if (!keys.contains(key)) {
+				builder.add(key, entry.getValue());
+			}
+		}
+		
 		return builder;
 	}
 	
@@ -202,7 +254,7 @@ public class RecordUtils {
 	 */
 	public static <K, V> SimpleRecord<K, V> union(final Record<? extends K, ? extends V> record1, final Record<? extends K, ? extends V> record2)
 	throws RecordException {
-		return union(record1, record2, RecordUtils.<K, V>buildSimpleRecordFactory());
+		return union(record1, record2, SimpleRecordFactory.<K, V>factory());
 	}
 	
 	/**
@@ -242,6 +294,43 @@ public class RecordUtils {
 		} else {
 			return factory.build(fields);
 		}
+	}
+	
+	/**
+	 * Build the union of the given records.
+	 * <p>
+	 * The keys identifying the fields of the given records must not overlap.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <B> Type of the record builder.
+	 * @param record1 First record.
+	 * @param record2 Second record.
+	 * @param builder Record builder to populate.
+	 * @return The union record.
+	 * @throws DuplicateFieldException When some fields are identified by a same key in both records.
+	 * @throws DuplicateFieldException When some fields are identified by the keys of unified fields in the given builder.
+	 * @throws RecordException When the fields cannot be read.
+	 */
+	public static <K, V, B extends RecordBuilder<? super K, ? super V, ?>> B union(final Record<? extends K, ? extends V> record1, final Record<? extends K, ? extends V> record2, final B builder)
+	throws RecordException {
+		assert null != record1;
+		assert null != record2;
+		assert null != builder;
+		
+		// Populate the builder.
+		builder.addAll(record1);
+		
+		final Set<? extends K> keys1 = record1.getKeys();
+		for (final Map.Entry<? extends K, ? extends V> entry : record2.asMap().entrySet()) {
+			final K key = entry.getKey();
+			if (keys1.contains(key)) {
+				throw new DuplicateFieldException("Field \"" + key + "\" exist in both record " + record1 + " and " + record2);
+			}
+			builder.add(key, entry.getValue());
+		}
+		
+		return builder;
 	}
 	
 	/**

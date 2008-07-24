@@ -1,5 +1,5 @@
 /*
- *  Copyright 2008 Julien Dufour
+ *  Copyright 2006-2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,11 +25,11 @@ import com.trazere.util.text.CharFilter;
 /**
  * DOCME
  */
-public class SomeStringParser
-extends AbstractParser<Character, String> {
+public class FilterCharParser
+extends AbstractParser<Character, Character> {
 	protected final CharFilter _filter;
 	
-	public SomeStringParser(final CharFilter filter, final String description) {
+	public FilterCharParser(final CharFilter filter, final String description) {
 		super(description);
 		
 		// Checks.
@@ -39,25 +39,19 @@ extends AbstractParser<Character, String> {
 		_filter = filter;
 	}
 	
-	public void run(final ParserClosure<Character, String> closure, final ParserState<Character> state)
+	public void run(final ParserClosure<Character, Character> closure, final ParserState<Character> state)
 	throws ParserException {
-		// One.
-		state.read(buildContinuation(closure, new StringBuilder()));
+		// Char.
+		state.read(buildContinuation(closure));
 	}
 	
-	protected ParserContinuation<Character> buildContinuation(final ParserClosure<Character, String> closure, final StringBuilder builder) {
+	protected ParserContinuation<Character> buildContinuation(final ParserClosure<Character, Character> closure) {
 		return new ParserContinuation<Character>() {
 			public void token(final Character token, final ParserState<Character> state)
 			throws ParserException {
 				if (_filter.filter(token.charValue())) {
-					// Accumulate the result.
-					builder.append(token.charValue());
-					
 					// Success.
-					closure.success(builder.toString(), state);
-					
-					// More.
-					state.read(buildContinuation(closure, builder));
+					closure.success(token, state);
 				} else {
 					// Failure.
 					closure.failure(state);

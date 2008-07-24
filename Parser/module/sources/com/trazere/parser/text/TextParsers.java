@@ -1,5 +1,5 @@
 /*
- *  Copyright 2008 Julien Dufour
+ *  Copyright 2006-2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -26,11 +26,15 @@ import com.trazere.util.text.CharFilters;
  */
 public class TextParsers {
 	public static Parser<Character, Character> character(final char c) {
-		return someCharacter(CharFilters.build(c), "char \'" + c + "\'");
+		return character(c, "char \'" + c + "\'");
 	}
 	
 	public static Parser<Character, Character> character(final char c, final String description) {
-		return new SomeCharParser(CharFilters.build(c), description);
+		return character(CharFilters.build(c), description);
+	}
+	
+	public static Parser<Character, Character> character(final CharFilter filter, final String description) {
+		return new FilterCharParser(filter, description);
 	}
 	
 	public static Parser<Character, Character> anyCharacter() {
@@ -38,11 +42,7 @@ public class TextParsers {
 	}
 	
 	public static Parser<Character, Character> anyCharacter(final String description) {
-		return someCharacter(CharFilters.ALL, description);
-	}
-	
-	public static Parser<Character, Character> someCharacter(final CharFilter filter, final String description) {
-		return new SomeCharParser(filter, description);
+		return character(CharFilters.ALL, description);
 	}
 	
 	private static final Parser<Character, Character> SPACE = space("a space");
@@ -52,7 +52,7 @@ public class TextParsers {
 	}
 	
 	public static Parser<Character, Character> space(final String description) {
-		return new SomeCharParser(CharFilters.build(' '), description);
+		return character(' ', description);
 	}
 	
 	private static final Parser<Character, Character> DIGIT = digit("a digit");
@@ -62,7 +62,7 @@ public class TextParsers {
 	}
 	
 	public static Parser<Character, Character> digit(final String description) {
-		return new SomeCharParser(CharFilters.DIGIT, description);
+		return character(CharFilters.DIGIT, description);
 	}
 	
 	private static final Parser<Character, Character> LETTER = letter("a letter");
@@ -72,7 +72,7 @@ public class TextParsers {
 	}
 	
 	public static Parser<Character, Character> letter(final String description) {
-		return new SomeCharParser(CharFilters.LETTER, description);
+		return character(CharFilters.LETTER, description);
 	}
 	
 	private static final Parser<Character, Character> ALPHANUMERIC = alphanumeric("an alphanumeric");
@@ -82,7 +82,7 @@ public class TextParsers {
 	}
 	
 	public static Parser<Character, Character> alphanumeric(final String description) {
-		return new SomeCharParser(CharFilters.ALPHANUMERIC, description);
+		return character(CharFilters.ALPHANUMERIC, description);
 	}
 	
 	public static Parser<Character, String> string(final String string) {
@@ -93,8 +93,12 @@ public class TextParsers {
 		return new StringParser(string, description);
 	}
 	
-	public static Parser<Character, String> someString(final CharFilter filter, final String description) {
-		return new SomeStringParser(filter, description);
+	public static Parser<Character, String> string(final CharFilter filter, final boolean empty, final String description) {
+		return new FilterStringParser(filter, empty, description);
+	}
+	
+	public static Parser<Character, String> string(final Parser<Character, Character> characterParser, final boolean empty, final String description) {
+		return new CharacterStringParser(characterParser, empty, description);
 	}
 	
 	private static final Parser<Character, Integer> DECIMAL = decimal("a decimal");
@@ -121,7 +125,7 @@ public class TextParsers {
 	}
 	
 	public static Parser<Character, String> word(final String description) {
-		return new SomeStringParser(CharFilters.LETTER, description);
+		return string(CharFilters.LETTER, false, description);
 	}
 	
 	private TextParsers() {

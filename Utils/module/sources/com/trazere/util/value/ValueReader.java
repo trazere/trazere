@@ -1,5 +1,5 @@
 /*
- *  Copyright 2008 Julien Dufour
+ *  Copyright 2006-2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -34,16 +34,6 @@ public interface ValueReader<T> {
 	public Class<T> getType();
 	
 	/**
-	 * Read the value defined by the receiver reader using the given parameters.
-	 * 
-	 * @param parameters Parameters to use.
-	 * @return The produced value. May be <code>null</code>.
-	 * @throws ValueException When the value cannot be read.
-	 */
-	public T read(final Record<String, Object> parameters)
-	throws ValueException;
-	
-	/**
 	 * Get the requirements of the receiver reader over its parameters.
 	 * 
 	 * @return The signature of the requirements.
@@ -63,4 +53,14 @@ public interface ValueReader<T> {
 	 */
 	public <B extends RecordSignatureBuilder<String, Object, ?>> B unifyRequirements(final B builder)
 	throws ValueException, IncompatibleFieldException;
+	
+	/**
+	 * Read the value defined by the receiver reader using the given parameters.
+	 * 
+	 * @param parameters Parameters to use.
+	 * @return The produced value. May be <code>null</code>.
+	 * @throws ValueException When the value cannot be read.
+	 */
+	public T read(final Record<String, Object> parameters)
+	throws ValueException;
 }

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2008 Julien Dufour
+ *  Copyright 2006-2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -42,6 +42,16 @@ public interface RecordFactory<K, V, R extends Record<K, V>> {
 	 * @return The built record builder.
 	 * @throws RecordException When the record cannot be built.
 	 */
-	public R build(final Map<K, V> fields)
+	public R build(final Map<? extends K, ? extends V> fields)
+	throws RecordException;
+	
+	/**
+	 * Build a new record populated with the fields of given record.
+	 * 
+	 * @param record Record to copy.
+	 * @return The built record builder.
+	 * @throws RecordException When the record cannot be built.
+	 */
+	public R build(final Record<? extends K, ? extends V> record)
 	throws RecordException;
 }

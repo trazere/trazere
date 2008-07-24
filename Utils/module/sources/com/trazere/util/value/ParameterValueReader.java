@@ -1,5 +1,5 @@
 /*
- *  Copyright 2008 Julien Dufour
+ *  Copyright 2006-2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package com.trazere.util.value;
 
+import com.trazere.util.lang.HashCode;
 import com.trazere.util.record.FieldSignature;
 import com.trazere.util.record.IncompatibleFieldException;
 import com.trazere.util.record.Record;
@@ -24,7 +25,7 @@ import com.trazere.util.record.RecordSignatureBuilder;
 // TODO: signature is incomplete when the parameter is optional !
 
 /**
- * The {@link ParameterValueReader} class read values from the parameters.
+ * The {@link ParameterValueReader} class reads values from the parameters.
  * <p>
  * When the parameter read by this reader is mandatory, it has a single requirement corresponding to the parameter. When the parameter is optional, the reader
  * has no requirements and produce a null value when the parameter is missing.
@@ -95,15 +96,6 @@ extends AbstractValueReader<T> {
 		return _name;
 	}
 	
-	public T read(final Record<String, Object> parameters)
-	throws ValueException {
-		try {
-			return _optional ? parameters.getTyped(_name, _type, null) : parameters.getTyped(_name, _type);
-		} catch (final RecordException exception) {
-			throw new ValueException(exception);
-		}
-	}
-	
 	public <B extends RecordSignatureBuilder<String, Object, ?>> B unifyRequirements(final B builder)
 	throws ValueException, IncompatibleFieldException {
 		try {
@@ -115,6 +107,36 @@ extends AbstractValueReader<T> {
 			throw exception;
 		} catch (final RecordException exception) {
 			throw new ValueException(exception);
+		}
+	}
+	
+	public T read(final Record<String, Object> parameters)
+	throws ValueException {
+		try {
+			return _optional ? parameters.getTyped(_name, _type, null) : parameters.getTyped(_name, _type);
+		} catch (final RecordException exception) {
+			throw new ValueException(exception);
+		}
+	}
+	
+	@Override
+	public int hashCode() {
+		final HashCode result = new HashCode(this);
+		result.append(_type);
+		result.append(_name);
+		result.append(_optional);
+		return result.get();
+	}
+	
+	@Override
+	public boolean equals(final Object object) {
+		if (this == object) {
+			return true;
+		} else if (null != object && getClass().equals(object.getClass())) {
+			final ParameterValueReader<?> reader = (ParameterValueReader<?>) object;
+			return _type.equals(reader._type) && _name.equals(reader._name) && _optional == reader._optional;
+		} else {
+			return false;
 		}
 	}
 	

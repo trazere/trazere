@@ -1,5 +1,5 @@
 /*
- *  Copyright 2008 Julien Dufour
+ *  Copyright 2006-2008 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -101,6 +101,23 @@ implements Record<K, V>, Describable {
 		
 		// Build.
 		return new SimpleRecord<K, V>(new HashMap<K, V>(fields));
+	}
+	
+	/**
+	 * Build a record populated with the fields of the given record.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param record Record to copy.
+	 * @return The built record.
+	 * @throws RecordException When the given record cannot be read.
+	 */
+	public static <K, V> SimpleRecord<K, V> build(final Record<? extends K, ? extends V> record)
+	throws RecordException {
+		assert null != record;
+		
+		// Build.
+		return new SimpleRecord<K, V>(new HashMap<K, V>(record.asMap()));
 	}
 	
 	/** Values of the fields identified by their keys. */
