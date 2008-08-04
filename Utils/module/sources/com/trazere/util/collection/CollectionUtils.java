@@ -433,7 +433,7 @@ public class CollectionUtils {
 	 * The dependencies between the values are computed using the given function. This function must compute the values whose the argument value depends on. The
 	 * computed value must belong to the values to sort.
 	 * <p>
-	 * This method places the dependencies before the value which depend on them. The sort is stable and fails when the dependencies form a cyclic graph.
+	 * This method places the dependencies before the values which depend on them. The sort is stable and fails when the dependencies form a cyclic graph.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param values Values to sort. The given collection is not modified by the method.
@@ -441,7 +441,7 @@ public class CollectionUtils {
 	 * @return The sorted values.
 	 * @throws CollectionException When some dependencies are invalid or cyclic.
 	 */
-	public static <T> ArrayList<T> topologicalSort(final Collection<? extends T> values, final Function<T, ? extends Collection<T>> dependencyFunction)
+	public static <T> ArrayList<T> topologicalSort(final Collection<? extends T> values, final Function<T, ? extends Collection<? extends T>> dependencyFunction)
 	throws CollectionException {
 		return topologicalSort(values, dependencyFunction, new ArrayList<T>(values.size()));
 	}
@@ -462,7 +462,7 @@ public class CollectionUtils {
 	 * @return The sorted values.
 	 * @throws CollectionException When some dependencies are invalid or cyclic.
 	 */
-	public static <T, L extends List<T>> L topologicalSort(final Collection<? extends T> values, final Function<? super T, ? extends Collection<T>> dependencyFunction, final CollectionFactory<? super T, ? extends L> factory)
+	public static <T, L extends List<T>> L topologicalSort(final Collection<? extends T> values, final Function<? super T, ? extends Collection<? extends T>> dependencyFunction, final CollectionFactory<? super T, ? extends L> factory)
 	throws CollectionException {
 		return topologicalSort(values, dependencyFunction, factory.build(values.size()));
 	}
@@ -483,7 +483,7 @@ public class CollectionUtils {
 	 * @return The populated list.
 	 * @throws CollectionException When some dependencies are invalid or cyclic.
 	 */
-	public static <T, L extends List<T>> L topologicalSort(final Collection<? extends T> values, final Function<? super T, ? extends Collection<T>> dependencyFunction, final L results)
+	public static <T, L extends List<T>> L topologicalSort(final Collection<? extends T> values, final Function<? super T, ? extends Collection<? extends T>> dependencyFunction, final L results)
 	throws CollectionException {
 		assert null != values;
 		assert null != dependencyFunction;
