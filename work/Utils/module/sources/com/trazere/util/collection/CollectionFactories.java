@@ -72,7 +72,6 @@ public class CollectionFactories {
 	 * @param <T> Type of the elements.
 	 * @return The factory.
 	 */
-	@SuppressWarnings("unchecked")
 	public static <T> CollectionFactory<T, HashSet<T>> hashSet() {
 		return LangUtils.cast(HASHSET);
 	}
@@ -97,7 +96,6 @@ public class CollectionFactories {
 	 * @param <T> Type of the elements.
 	 * @return The factory.
 	 */
-	@SuppressWarnings("unchecked")
 	public static <T> CollectionFactory<T, LinkedList<T>> linkedList() {
 		return LangUtils.cast(LINKEDLIST);
 	}
@@ -122,7 +120,6 @@ public class CollectionFactories {
 	 * @param <T> Type of the elements.
 	 * @return The factory.
 	 */
-	@SuppressWarnings("unchecked")
 	public static <T> CollectionFactory<T, TreeSet<T>> treeSet() {
 		return LangUtils.cast(TREESET);
 	}

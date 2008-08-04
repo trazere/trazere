@@ -71,7 +71,7 @@ public interface Cache<K, V> {
 	/**
 	 * Clear the receiver cache according to the given key/value pair filter.
 	 * 
-	 * @param filter Filter of the key/value associations to use.
+	 * @param filter Filter of the key/value associations to clear.
 	 */
 	public void clear(final Filter2<? super K, ? super V> filter);
 	

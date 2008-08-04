@@ -70,7 +70,7 @@ implements Cache<K, V>, Describable {
 		assert null != key;
 		
 		// Clear.
-		final E entry = _entries.get(key);
+		final E entry = _entries.remove(key);
 		if (null != entry) {
 			clearedEntry(entry);
 			return entry.getValue();
@@ -87,7 +87,7 @@ implements Cache<K, V>, Describable {
 		while (entries.hasNext()) {
 			final Map.Entry<K, E> entryEntry = entries.next();
 			final E entry = entryEntry.getValue();
-			if (!filter.filter(entryEntry.getKey(), entry.getValue())) {
+			if (filter.filter(entryEntry.getKey(), entry.getValue())) {
 				entries.remove();
 				clearedEntry(entry);
 			}
