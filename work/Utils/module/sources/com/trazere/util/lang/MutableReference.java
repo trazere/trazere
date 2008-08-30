@@ -21,6 +21,8 @@ import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Maybe.None;
 import com.trazere.util.type.Maybe.Some;
 
+// TODO: equals/hash code
+
 /**
  * The {@link MutableReference} class represents mutable refererences.
  * 

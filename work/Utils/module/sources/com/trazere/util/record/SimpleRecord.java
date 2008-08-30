@@ -82,10 +82,10 @@ implements Record<K, V>, Describable {
 		assert null != key2;
 		
 		// Build.
-		final Map<K, V> parameters = new HashMap<K, V>();
-		parameters.put(key1, value1);
-		parameters.put(key2, value2);
-		return new SimpleRecord<K, V>(parameters);
+		final Map<K, V> fields = new HashMap<K, V>();
+		fields.put(key1, value1);
+		fields.put(key2, value2);
+		return new SimpleRecord<K, V>(fields);
 	}
 	
 	/**

@@ -44,7 +44,7 @@ implements Describable {
 	}
 	
 	/**
-	 * The {@link Matcher} interface defines functions on unwrapped {@link Maybe} instances.
+	 * The {@link Maybe.Matcher} interface defines functions on unwrapped {@link Maybe} instances.
 	 * 
 	 * @param <Value> Type of the value.
 	 * @param <Result> Type of the result.
@@ -73,7 +73,7 @@ implements Describable {
 	}
 	
 	/**
-	 * The {@link None} class represents the instances built using the <code>None</code> constructor.
+	 * The {@link Maybe.None} class represents the instances built using the <code>None</code> constructor.
 	 * 
 	 * @param <Value> Type of the value.
 	 */
@@ -141,7 +141,7 @@ implements Describable {
 	}
 	
 	/**
-	 * The {@link Some} class represents the instances built using the <code>Some</code> constructor.
+	 * The {@link Maybe.Some} class represents the instances built using the <code>Some</code> constructor.
 	 * 
 	 * @param <Value> Type of the value.
 	 */

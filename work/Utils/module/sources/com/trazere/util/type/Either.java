@@ -41,7 +41,7 @@ implements Describable {
 	}
 	
 	/**
-	 * The {@link Matcher} interface defines functions on unwrapped {@link Either} instances.
+	 * The {@link Either.Matcher} interface defines functions on unwrapped {@link Either} instances.
 	 * 
 	 * @param <LeftValue> Type of the left value.
 	 * @param <RightValue> Type of the right value.
@@ -71,7 +71,7 @@ implements Describable {
 	}
 	
 	/**
-	 * The {@link Left} class represents the instances built using the <code>Left</code> constructor.
+	 * The {@link Either.Left} class represents the instances built using the <code>Left</code> constructor.
 	 * 
 	 * @param <LeftValue> Type of the left value.
 	 * @param <RightValue> Type of the right value.
@@ -155,7 +155,7 @@ implements Describable {
 	}
 	
 	/**
-	 * The {@link Right} class represents the instances built using the <code>Right</code> constructor.
+	 * The {@link Either.Right} class represents the instances built using the <code>Right</code> constructor.
 	 * 
 	 * @param <LeftValue> Type of the left value.
 	 * @param <RightValue> Type of the right value.
