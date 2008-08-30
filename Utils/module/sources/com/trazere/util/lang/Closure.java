@@ -30,6 +30,26 @@ import com.trazere.util.type.Maybe.Some;
  */
 public abstract class Closure<T>
 implements Describable {
+	/**
+	 * Build a closure containing the given value.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param value Value. May be <code>null</code>.
+	 * @return The closure.
+	 */
+	public static <T> Closure<T> build(final T value) {
+		return new Closure<T>() {
+			@Override
+			protected T compute() {
+				return value;
+			}
+			
+			public void fillDescription(final StringBuilder builder) {
+				builder.append(" - Value = ").append(value);
+			}
+		};
+	}
+	
 	/** The computed value. */
 	protected Maybe<T> _value = Maybe.none();
 	
