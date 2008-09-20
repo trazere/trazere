@@ -15,8 +15,7 @@
  */
 package com.trazere.util.function;
 
-import com.trazere.util.collection.CollectionFactory;
-import com.trazere.util.collection.MapFactory;
+import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Tuple2;
 import java.util.Collection;
 import java.util.Iterator;
@@ -36,26 +35,6 @@ import java.util.Set;
  */
 public class FunctionUtils {
 	/**
-	 * Filter the given values with the given filter function.
-	 * 
-	 * @param <T> Type of the values to filter.
-	 * @param <C> Type of the result collection to build.
-	 * @param values Values to filter.
-	 * @param filter Filter function to use.
-	 * @param factory Factory to use to build the result collection.
-	 * @return The accepted values.
-	 * @throws ApplicationException When some function application fails.
-	 * @see #filter(Collection, Filter, Collection)
-	 */
-	public static <T, C extends Collection<? super T>> C filter(final Collection<? extends T> values, final Filter<? super T> filter, final CollectionFactory<? super T, ? extends C> factory)
-	throws ApplicationException {
-		assert null != factory;
-		
-		// Filter.
-		return filter(values, filter, factory.build());
-	}
-	
-	/**
 	 * Filter the given values with the given filter function and populate the given result collection with them.
 	 * <p>
 	 * This method applies the filter function to every value of the given collection and returns a collection of the accepted values.
@@ -65,7 +44,7 @@ public class FunctionUtils {
 	 * @param values Values to filter.
 	 * @param filter Filter function to use.
 	 * @param results The collection to populate with the results.
-	 * @return The populated result collection.
+	 * @return The given result collection.
 	 * @throws ApplicationException When some function application fails.
 	 */
 	public static <T, C extends Collection<? super T>> C filter(final Collection<? extends T> values, final Filter<? super T> filter, final C results)
@@ -84,27 +63,6 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Filter the given bindings with the given filter function.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <M> Type of the result map to build.
-	 * @param bindings Bindings to filter.
-	 * @param filter Filter function to use.
-	 * @param factory Factory to use to build the result map.
-	 * @return The accepted bindings.
-	 * @throws ApplicationException When some function application fails.
-	 * @see #filter(Map, Filter2, Map)
-	 */
-	public static <K, V, M extends Map<K, V>> M filter(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter, final MapFactory<? super K, ? super V, ? extends M> factory)
-	throws ApplicationException {
-		assert null != factory;
-		
-		// Filter.
-		return filter(bindings, filter, factory.build());
-	}
-	
-	/**
 	 * Filter the given bindings with the given filter function and populate the given result map with them.
 	 * <p>
 	 * This method applies the filter function to every binding of the given map and returns a map containing the accepted bindings. The keys and the values of
@@ -116,7 +74,7 @@ public class FunctionUtils {
 	 * @param bindings Bindings to filter.
 	 * @param filter Filter function to use.
 	 * @param results The map to populate with the results.
-	 * @return The populated result map.
+	 * @return The given result map.
 	 * @throws ApplicationException When some function application fails.
 	 */
 	public static <K, V, M extends Map<K, V>> M filter(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter, final M results)
@@ -137,27 +95,6 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Filter the given bindings with the given filter function.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <S> Type of the result set to build.
-	 * @param bindings Bindings to filter.
-	 * @param filter Filter function to use.
-	 * @param factory Factory to use to build the result set.
-	 * @return The accepted keys.
-	 * @throws ApplicationException When some function application fails.
-	 * @see #filterKeys(Map, Filter2, Set)
-	 */
-	public static <K, V, S extends Set<K>> S filterKeys(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter, final CollectionFactory<? super K, ? extends S> factory)
-	throws ApplicationException {
-		assert null != factory;
-		
-		// Filter.
-		return filterKeys(bindings, filter, factory.build());
-	}
-	
-	/**
 	 * Filter the given bindings with the given filter function and populate the given result set with their keys.
 	 * <p>
 	 * This method applies the filter function to every binding of the given map and returns a set of the keys of the accepted bindings. The keys and the values
@@ -169,7 +106,7 @@ public class FunctionUtils {
 	 * @param bindings Bindings to filter.
 	 * @param filter Filter function to use.
 	 * @param results The set to populate with the results.
-	 * @return The populated result set.
+	 * @return The given result set.
 	 * @throws ApplicationException When some function application fails.
 	 */
 	public static <K, V, S extends Set<K>> S filterKeys(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter, final S results)
@@ -181,33 +118,11 @@ public class FunctionUtils {
 		// Filter.
 		for (final Map.Entry<? extends K, ? extends V> entry : bindings.entrySet()) {
 			final K key = entry.getKey();
-			final V value = entry.getValue();
-			if (filter.filter(key, value)) {
+			if (filter.filter(key, entry.getValue())) {
 				results.add(key);
 			}
 		}
 		return results;
-	}
-	
-	/**
-	 * Filter the given bindings with the given filter function.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <C> Type of the result collection to build.
-	 * @param bindings Bindings to filter.
-	 * @param filter Filter function to use.
-	 * @param factory Factory to use to build the result collection.
-	 * @return The accepted values.
-	 * @throws ApplicationException When some function application fails.
-	 * @see #filterValues(Map, Filter2, Collection)
-	 */
-	public static <K, V, C extends Collection<V>> C filterValues(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter, final CollectionFactory<? super V, ? extends C> factory)
-	throws ApplicationException {
-		assert null != factory;
-		
-		// Filter.
-		return filterValues(bindings, filter, factory.build());
 	}
 	
 	/**
@@ -222,7 +137,7 @@ public class FunctionUtils {
 	 * @param bindings Bindings to filter.
 	 * @param filter Filter function to use.
 	 * @param results The collection to populate with the results.
-	 * @return The populated result collection.
+	 * @return The given result collection.
 	 * @throws ApplicationException When some function application fails.
 	 */
 	public static <K, V, C extends Collection<V>> C filterValues(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter, final C results)
@@ -243,7 +158,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Count the number of values of the given collection accepted by the given filter.
+	 * Count the number of given values accepted by the given filter.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param values Values to count.
@@ -267,29 +182,23 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Count the number of bindings of the given map accepted by the given filter.
-	 * <p>
-	 * This method applies the filter function to every binding of the given map. The keys and the values of the map are respectively passed as first and second
-	 * arguments to the filter function.
+	 * Count the number of values provided by the given iterator accepted by the given filter.
 	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param map Map to count.
+	 * @param <T> Type of the values.
+	 * @param values Iterator providing the values to count.
 	 * @param filter Filter function to use.
-	 * @return The number of accepted bindings.
+	 * @return The number of accepted values.
 	 * @throws ApplicationException When some function application fails.
 	 */
-	public static <K, V> int count(final Map<? extends K, ? extends V> map, final Filter2<? super K, ? super V> filter)
+	public static <T> int count(final Iterator<? extends T> values, final Filter<? super T> filter)
 	throws ApplicationException {
-		assert null != map;
+		assert null != values;
 		assert null != filter;
 		
 		// Count.
 		int count = 0;
-		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
-			final K key = entry.getKey();
-			final V value = entry.getValue();
-			if (filter.filter(key, value)) {
+		while (values.hasNext()) {
+			if (filter.filter(values.next())) {
 				count += 1;
 			}
 		}
@@ -297,7 +206,35 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Test wether any of the given values is accepted by the given filter function.
+	 * Count the number of given bindings accepted by the given filter.
+	 * <p>
+	 * This method applies the filter function to every binding of the given map. The keys and the values of the map are respectively passed as first and second
+	 * arguments to the filter function.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param bindings Bindings to count.
+	 * @param filter Filter function to use.
+	 * @return The number of accepted bindings.
+	 * @throws ApplicationException When some function application fails.
+	 */
+	public static <K, V> int count(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter)
+	throws ApplicationException {
+		assert null != bindings;
+		assert null != filter;
+		
+		// Count.
+		int count = 0;
+		for (final Map.Entry<? extends K, ? extends V> binding : bindings.entrySet()) {
+			if (filter.filter(binding.getKey(), binding.getValue())) {
+				count += 1;
+			}
+		}
+		return count;
+	}
+	
+	/**
+	 * Test wether any given value is accepted by the given filter function.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param values Values to test.
@@ -313,6 +250,53 @@ public class FunctionUtils {
 		// Test.
 		for (final T value : values) {
 			if (filter.filter(value)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Test wether any value provided by the goiven iterator is accepted by the given filter function.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param values Iterator providing the values to test.
+	 * @param filter Filter function to use.
+	 * @return <code>true</code> if any value is accepted, <code>false</code> if all values are rejected.
+	 * @throws ApplicationException When some function application fails.
+	 */
+	public static <T> boolean isAny(final Iterator<? extends T> values, final Filter<? super T> filter)
+	throws ApplicationException {
+		assert null != values;
+		assert null != filter;
+		
+		// Test.
+		while (values.hasNext()) {
+			if (filter.filter(values.next())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Test wether any given binding is accepted by the given filter function.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param bindings Bindings to test.
+	 * @param filter Filter function to use.
+	 * @return <code>true</code> if any binding is accepted, <code>false</code> if all bindings are rejected.
+	 * @throws ApplicationException When some function application fails.
+	 */
+	public static <K, V> boolean isAny(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter)
+	throws ApplicationException {
+		assert null != bindings;
+		assert null != filter;
+		
+		// Test.
+		for (final Map.Entry<? extends K, ? extends V> binding : bindings.entrySet()) {
+			if (filter.filter(binding.getKey(), binding.getValue())) {
 				return true;
 			}
 		}
@@ -343,25 +327,50 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Apply the given function to the given values and return the results.
+	 * Test wether all values provided by the given iterator are accepted by the given filter function.
 	 * 
-	 * @param <T1> Type of the argument values.
-	 * @param <T2> Type of the result values.
-	 * @param <C> Type of the result collection to build.
-	 * @param values Argument values.
-	 * @param function Function to apply.
-	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
-	 * @param factory Factory to use to build the result collection.
-	 * @return The results of the function applications.
+	 * @param <T> Type of the values.
+	 * @param values Iterator providing the values to test.
+	 * @param filter Filter function to use.
+	 * @return <code>true</code> if all values are accepted, <code>false</code> if any value is rejected.
 	 * @throws ApplicationException When some function application fails.
-	 * @see #map(Collection, Function, boolean, Collection)
 	 */
-	public static <T1, T2, C extends Collection<T2>> C map(final Collection<? extends T1> values, final Function<? super T1, ? extends T2> function, final boolean ignoreNull, final CollectionFactory<? super T2, ? extends C> factory)
+	public static <T> boolean areAll(final Iterator<? extends T> values, final Filter<? super T> filter)
 	throws ApplicationException {
-		assert null != factory;
+		assert null != values;
+		assert null != filter;
 		
-		// Map.
-		return map(values, function, ignoreNull, factory.build(values.size()));
+		// Test.
+		while (values.hasNext()) {
+			if (!filter.filter(values.next())) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * Test wether all given bindings are accepted by the given filter function.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param bindings Bindings to test.
+	 * @param filter Filter function to use.
+	 * @return <code>true</code> if all bindings are accepted, <code>false</code> if any binding is rejected.
+	 * @throws ApplicationException When some function application fails.
+	 */
+	public static <K, V> boolean areAll(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter)
+	throws ApplicationException {
+		assert null != bindings;
+		assert null != filter;
+		
+		// Test.
+		for (final Map.Entry<? extends K, ? extends V> binding : bindings.entrySet()) {
+			if (!filter.filter(binding.getKey(), binding.getValue())) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	/**
@@ -372,12 +381,11 @@ public class FunctionUtils {
 	 * @param <C> Type of the result collection to build.
 	 * @param values Argument values.
 	 * @param function Function to apply.
-	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
 	 * @param results The collection to populate with the results.
-	 * @return The populated result collection.
+	 * @return The given result collection.
 	 * @throws ApplicationException When some function application fails.
 	 */
-	public static <T1, T2, C extends Collection<T2>> C map(final Collection<? extends T1> values, final Function<? super T1, ? extends T2> function, final boolean ignoreNull, final C results)
+	public static <T1, T2, C extends Collection<T2>> C map(final Collection<? extends T1> values, final Function<? super T1, ? extends Maybe<? extends T2>> function, final C results)
 	throws ApplicationException {
 		assert null != values;
 		assert null != function;
@@ -385,39 +393,46 @@ public class FunctionUtils {
 		
 		// Map.
 		for (final T1 value : values) {
-			final T2 result = function.apply(value);
-			if (null != result || !ignoreNull) {
-				results.add(result);
+			final Maybe<? extends T2> result = function.apply(value);
+			if (result.isSome()) {
+				results.add(result.asSome().getValue());
 			}
 		}
 		return results;
 	}
 	
 	/**
-	 * Apply the given function to the given bindings and return a map of the results associated to their argument keys.
+	 * Apply the given function to the values provided by the given iterator and populate the given result collection with the results accepted by the given
+	 * filter.
 	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V1> Type of the argument values.
-	 * @param <V2> Type of the result values.
-	 * @param <M> Type of the result map to build.
-	 * @param bindings Argument bindings.
+	 * @param <T1> Type of the argument values.
+	 * @param <T2> Type of the result values.
+	 * @param <C> Type of the result collection to build.
+	 * @param values Iterator providing the argument values.
 	 * @param function Function to apply.
-	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
-	 * @param factory Factory to use to build the result map.
-	 * @return A map of the function applications results associated to the corresponding argument keys.
+	 * @param results The collection to populate with the results.
+	 * @return The given result collection.
 	 * @throws ApplicationException When some function application fails.
-	 * @see #map(Map, Function2, boolean, Map)
 	 */
-	public static <K, V1, V2, M extends Map<K, V2>> M map(final Map<? extends K, ? extends V1> bindings, final Function2<? super K, ? super V1, ? extends V2> function, final boolean ignoreNull, final MapFactory<? super K, ? super V2, ? extends M> factory)
+	public static <T1, T2, C extends Collection<T2>> C map(final Iterator<? extends T1> values, final Function<? super T1, ? extends Maybe<? extends T2>> function, final C results)
 	throws ApplicationException {
-		assert null != factory;
+		assert null != values;
+		assert null != function;
+		assert null != results;
 		
 		// Map.
-		return map(bindings, function, ignoreNull, factory.build(bindings.size()));
+		while (values.hasNext()) {
+			final Maybe<? extends T2> result = function.apply(values.next());
+			if (result.isSome()) {
+				results.add(result.asSome().getValue());
+			}
+		}
+		return results;
 	}
 	
 	/**
-	 * Apply the given function to the given bindings and populate the given result map with the results associated to their argument keys.
+	 * Apply the given function to the given bindings and populate the given result map with the results accepted by the given filter associated to their
+	 * argument keys.
 	 * <p>
 	 * This method applies the function to every binding of the given map. The keys and the values of the map are respectively passed as first and second
 	 * arguments to the function.
@@ -428,49 +443,25 @@ public class FunctionUtils {
 	 * @param <M> Type of the result map to build.
 	 * @param bindings Argument bindings.
 	 * @param function Function to apply.
-	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
 	 * @param results The map to populate with the results.
-	 * @return The populated result map.
+	 * @return The given result map.
 	 * @throws ApplicationException When some function application fails.
 	 */
-	public static <K, V1, V2, M extends Map<K, V2>> M map(final Map<? extends K, ? extends V1> bindings, final Function2<? super K, ? super V1, ? extends V2> function, final boolean ignoreNull, final M results)
+	public static <K, V1, V2, M extends Map<K, V2>> M map(final Map<? extends K, ? extends V1> bindings, final Function2<? super K, ? super V1, ? extends Maybe<? extends V2>> function, final M results)
 	throws ApplicationException {
 		assert null != bindings;
 		assert null != function;
 		assert null != results;
 		
 		// Map.
-		for (final Map.Entry<? extends K, ? extends V1> entry : bindings.entrySet()) {
-			final K key = entry.getKey();
-			final V1 value = entry.getValue();
-			final V2 result = function.apply(key, value);
-			if (null != result || !ignoreNull) {
-				results.put(key, result);
+		for (final Map.Entry<? extends K, ? extends V1> binding : bindings.entrySet()) {
+			final K key = binding.getKey();
+			final Maybe<? extends V2> result = function.apply(key, binding.getValue());
+			if (result.isSome()) {
+				results.put(key, result.asSome().getValue());
 			}
 		}
 		return results;
-	}
-	
-	/**
-	 * Apply the given function to the given keys and build a map of the results associated to their argument keys.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <M> Type of the result map to build.
-	 * @param keys Keys to map.
-	 * @param function Function computing the values.
-	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
-	 * @param factory Factory to use to build the result map.
-	 * @return A map of the function application results associated to the corresponding argument keys.
-	 * @throws ApplicationException When some function application fails.
-	 * @see #mapKeys(Set, Function, boolean, Map)
-	 */
-	public static <K, V, M extends Map<K, V>> Map<K, V> mapKeys(final Set<? extends K> keys, final Function<? super K, ? extends V> function, final boolean ignoreNull, final MapFactory<? super K, ? super V, ? extends M> factory)
-	throws ApplicationException {
-		assert null != factory;
-		
-		// Map the keys.
-		return mapKeys(keys, function, ignoreNull, factory.build(keys.size()));
 	}
 	
 	/**
@@ -481,12 +472,11 @@ public class FunctionUtils {
 	 * @param <M> Type of the result map to build.
 	 * @param keys Keys to map.
 	 * @param function Function computing the values.
-	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
 	 * @param results The map to populate with the results.
-	 * @return The populated result map.
+	 * @return The given result map.
 	 * @throws ApplicationException When some function application fails.
 	 */
-	public static <K, V, M extends Map<K, V>> Map<K, V> mapKeys(final Set<? extends K> keys, final Function<? super K, ? extends V> function, final boolean ignoreNull, final M results)
+	public static <K, V, M extends Map<K, V>> Map<K, V> mapKeys(final Set<? extends K> keys, final Function<? super K, ? extends Maybe<? extends V>> function, final M results)
 	throws ApplicationException {
 		assert null != keys;
 		assert null != function;
@@ -494,34 +484,12 @@ public class FunctionUtils {
 		
 		// Map the keys.
 		for (final K key : keys) {
-			final V value = function.apply(key);
-			if (null != value || !ignoreNull) {
-				results.put(key, value);
+			final Maybe<? extends V> value = function.apply(key);
+			if (value.isSome()) {
+				results.put(key, value.asSome().getValue());
 			}
 		}
 		return results;
-	}
-	
-	/**
-	 * Apply the given function to the given values and build a map of the argument values associated to their corresponding results.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <M> Type of the result map to build.
-	 * @param values Values to map.
-	 * @param function Function computing the keys.
-	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
-	 * @param factory Factory to use to build the result map.
-	 * @return A map of the argument values associated to the corresponding function application results.
-	 * @throws ApplicationException When some function application fails.
-	 * @see #mapValues(Collection, Function, boolean, Map)
-	 */
-	public static <K, V, M extends Map<K, V>> M mapValues(final Collection<? extends V> values, final Function<? super V, ? extends K> function, final boolean ignoreNull, final MapFactory<? super K, ? super V, ? extends M> factory)
-	throws ApplicationException {
-		assert null != factory;
-		
-		// Map the values.
-		return mapValues(values, function, ignoreNull, factory.build(values.size()));
 	}
 	
 	/**
@@ -534,12 +502,11 @@ public class FunctionUtils {
 	 * @param <M> Type of the result map to build.
 	 * @param values Values to map.
 	 * @param function Function computing the keys.
-	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
 	 * @param results The map to populate with the results.
-	 * @return The populated result map.
+	 * @return The given result map.
 	 * @throws ApplicationException When some function application fails.
 	 */
-	public static <K, V, M extends Map<K, V>> M mapValues(final Collection<? extends V> values, final Function<? super V, ? extends K> function, final boolean ignoreNull, final M results)
+	public static <K, V, M extends Map<K, V>> M mapValues(final Collection<? extends V> values, final Function<? super V, ? extends Maybe<? extends K>> function, final M results)
 	throws ApplicationException {
 		assert null != values;
 		assert null != function;
@@ -547,35 +514,12 @@ public class FunctionUtils {
 		
 		// Map the values.
 		for (final V value : values) {
-			final K key = function.apply(value);
-			if (null != key || !ignoreNull) {
-				results.put(key, value);
+			final Maybe<? extends K> key = function.apply(value);
+			if (key.isSome()) {
+				results.put(key.asSome().getValue(), value);
 			}
 		}
 		return results;
-	}
-	
-	/**
-	 * Apply the given function to the keys of the given map and return a map of the values corresponding to the argument keys associated to the result keys.
-	 * 
-	 * @param <K1> Type of the argument keys.
-	 * @param <K2> Type of the result keys.
-	 * @param <V> Type of the values.
-	 * @param <M> Type of the result map to build.
-	 * @param map Map to read.
-	 * @param function Function to apply.
-	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
-	 * @param factory Factory to use to build the result map.
-	 * @return A map of the values corresponding to the argument keys associated to the result keys.
-	 * @throws ApplicationException When some function application fails.
-	 * @see #remap(Map, Function, boolean, Map)
-	 */
-	public static <K1, K2, V, M extends Map<K2, V>> M remap(final Map<? extends K1, ? extends V> map, final Function<? super K1, ? extends K2> function, final boolean ignoreNull, final MapFactory<? super K2, ? super V, ? extends M> factory)
-	throws ApplicationException {
-		assert null != factory;
-		
-		// Remap.
-		return remap(map, function, ignoreNull, factory.build(map.size()));
 	}
 	
 	/**
@@ -588,12 +532,11 @@ public class FunctionUtils {
 	 * @param <M> Type of the result map to build.
 	 * @param map Map to read.
 	 * @param function Function to apply.
-	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
 	 * @param results The map to populate with the results.
-	 * @return The populated result map.
+	 * @return The given result map.
 	 * @throws ApplicationException When some function application fails.
 	 */
-	public static <K1, K2, V, M extends Map<K2, V>> M remap(final Map<? extends K1, ? extends V> map, final Function<? super K1, ? extends K2> function, final boolean ignoreNull, final M results)
+	public static <K1, K2, V, M extends Map<K2, V>> M remap(final Map<? extends K1, ? extends V> map, final Function<? super K1, ? extends Maybe<? extends K2>> function, final M results)
 	throws ApplicationException {
 		assert null != map;
 		assert null != function;
@@ -601,37 +544,12 @@ public class FunctionUtils {
 		
 		// Remap.
 		for (final Map.Entry<? extends K1, ? extends V> entry : map.entrySet()) {
-			final K1 key = entry.getKey();
-			final K2 newKey = function.apply(key);
-			if (null != newKey || !ignoreNull) {
-				final V value = entry.getValue();
-				results.put(newKey, value);
+			final Maybe<? extends K2> newKey = function.apply(entry.getKey());
+			if (newKey.isSome()) {
+				results.put(newKey.asSome().getValue(), entry.getValue());
 			}
 		}
 		return results;
-	}
-	
-	/**
-	 * Apply the given function to the given bindings and return a map of the values associated to the result keys.
-	 * 
-	 * @param <K1> Type of the argument keys.
-	 * @param <K2> Type of the result keys.
-	 * @param <V> Type of the values.
-	 * @param <M> Type of the result map to build.
-	 * @param bindings Argument bindings.
-	 * @param function Function to apply.
-	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
-	 * @param factory Factory to use to build the result map.
-	 * @return A map of the values associated to the corresponding result keys.
-	 * @throws ApplicationException When some function application fails.
-	 * @see #remap(Map, Function2, boolean, Map)
-	 */
-	public static <K1, K2, V, M extends Map<K2, V>> M remap(final Map<? extends K1, ? extends V> bindings, final Function2<? super K1, ? super V, ? extends K2> function, final boolean ignoreNull, final MapFactory<? super K2, ? super V, ? extends M> factory)
-	throws ApplicationException {
-		assert null != factory;
-		
-		// Remap.
-		return remap(bindings, function, ignoreNull, factory.build(bindings.size()));
 	}
 	
 	/**
@@ -646,12 +564,11 @@ public class FunctionUtils {
 	 * @param <M> Type of the result map to build.
 	 * @param bindings Argument bindings.
 	 * @param function Function to apply.
-	 * @param ignoreNull Flag indincating wether the <code>null</code> results should be ignored or not.
 	 * @param results The map to populate with the results.
-	 * @return The populated result map.
+	 * @return The given result map.
 	 * @throws ApplicationException When some function application fails.
 	 */
-	public static <K1, K2, V, M extends Map<K2, V>> M remap(final Map<? extends K1, ? extends V> bindings, final Function2<? super K1, ? super V, ? extends K2> function, final boolean ignoreNull, final M results)
+	public static <K1, K2, V, M extends Map<K2, V>> M remap(final Map<? extends K1, ? extends V> bindings, final Function2<? super K1, ? super V, ? extends Maybe<? extends K2>> function, final M results)
 	throws ApplicationException {
 		assert null != bindings;
 		assert null != function;
@@ -659,11 +576,10 @@ public class FunctionUtils {
 		
 		// Remap.
 		for (final Map.Entry<? extends K1, ? extends V> entry : bindings.entrySet()) {
-			final K1 key = entry.getKey();
 			final V value = entry.getValue();
-			final K2 newKey = function.apply(key, value);
-			if (null != newKey || !ignoreNull) {
-				results.put(newKey, value);
+			final Maybe<? extends K2> newKey = function.apply(entry.getKey(), value);
+			if (newKey.isSome()) {
+				results.put(newKey.asSome().getValue(), value);
 			}
 		}
 		return results;
@@ -692,19 +608,18 @@ public class FunctionUtils {
 	 * Apply the given procedure to the values provided by the given iterator.
 	 * 
 	 * @param <T> Type of the argument values.
-	 * @param iterator Iterator providing the argument values.
+	 * @param values Iterator providing the argument values.
 	 * @param procedure Procedure to apply.
 	 * @throws ApplicationException When some function application fails.
 	 */
-	public static <T> void apply(final Iterator<? extends T> iterator, final Procedure<? super T> procedure)
+	public static <T> void apply(final Iterator<? extends T> values, final Procedure<? super T> procedure)
 	throws ApplicationException {
-		assert null != iterator;
+		assert null != values;
 		assert null != procedure;
 		
 		// Apply.
-		while (iterator.hasNext()) {
-			final T value = iterator.next();
-			procedure.apply(value);
+		while (values.hasNext()) {
+			procedure.apply(values.next());
 		}
 	}
 	
@@ -723,8 +638,8 @@ public class FunctionUtils {
 		assert null != procedure;
 		
 		// Apply.
-		for (final Map.Entry<? extends K, ? extends V> entry : bindings.entrySet()) {
-			procedure.apply(entry.getKey(), entry.getValue());
+		for (final Map.Entry<? extends K, ? extends V> binding : bindings.entrySet()) {
+			procedure.apply(binding.getKey(), binding.getValue());
 		}
 	}
 	
@@ -758,6 +673,15 @@ public class FunctionUtils {
 	}
 	
 	// DOCME
+	public static <T1, T2, L extends List<Tuple2<T1, T2>>> L zip(final Collection<T1> values1, final Collection<T2> values2, final L results) {
+		assert null != values1;
+		assert null != values2;
+		
+		// Zip.
+		return zip(values1.iterator(), values2.iterator(), results);
+	}
+	
+	// DOCME
 	public static <T1, T2, L extends List<Tuple2<T1, T2>>> L zip(final Iterator<T1> list1, final Iterator<T2> list2, final L results) {
 		assert null != list1;
 		assert null != list2;
@@ -771,14 +695,27 @@ public class FunctionUtils {
 	}
 	
 	// DOCME
-	public static <T1, T2, L1 extends List<T1>, L2 extends List<T2>> void unzip(final Iterator<? extends Tuple2<T1, T2>> list, final L1 results1, final L2 results2) {
-		assert null != list;
+	public static <T1, T2, L1 extends List<T1>, L2 extends List<T2>> void unzip(final Collection<? extends Tuple2<T1, T2>> values, final L1 results1, final L2 results2) {
+		assert null != values;
 		assert null != results1;
 		assert null != results2;
 		
 		// Unzip.
-		while (list.hasNext()) {
-			final Tuple2<T1, T2> value = list.next();
+		for (final Tuple2<T1, T2> value : values) {
+			results1.add(value.getFirst());
+			results2.add(value.getSecond());
+		}
+	}
+	
+	// DOCME
+	public static <T1, T2, L1 extends List<T1>, L2 extends List<T2>> void unzip(final Iterator<? extends Tuple2<T1, T2>> values, final L1 results1, final L2 results2) {
+		assert null != values;
+		assert null != results1;
+		assert null != results2;
+		
+		// Unzip.
+		while (values.hasNext()) {
+			final Tuple2<T1, T2> value = values.next();
 			results1.add(value.getFirst());
 			results2.add(value.getSecond());
 		}

@@ -19,6 +19,7 @@ import com.trazere.util.function.ApplicationException;
 import com.trazere.util.function.Filter;
 import com.trazere.util.function.Filter2;
 import com.trazere.util.function.Function;
+import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Tuple2;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -334,12 +335,12 @@ public class CollectionUtils {
 	 * @param collection Collection to read.
 	 * @return Any object from the collection, or <code>null</code> when the collection is empty.
 	 */
-	public static <T> T any(final Collection<T> collection) {
+	public static <T> Maybe<T> any(final Collection<T> collection) {
 		assert null != collection;
 		
 		// Read.
 		final Iterator<T> iterator = collection.iterator();
-		return iterator.hasNext() ? iterator.next() : null;
+		return iterator.hasNext() ? Maybe.some(iterator.next()) : Maybe.<T>none();
 	}
 	
 	/**
@@ -350,12 +351,12 @@ public class CollectionUtils {
 	 * @param map Map to read.
 	 * @return Any entry from the map, or <code>null</code> if the map is empty.
 	 */
-	public static <K, V> Map.Entry<K, V> any(final Map<K, V> map) {
+	public static <K, V> Maybe<Map.Entry<K, V>> any(final Map<K, V> map) {
 		assert null != map;
 		
 		// Read.
 		final Iterator<Map.Entry<K, V>> iterator = map.entrySet().iterator();
-		return iterator.hasNext() ? iterator.next() : null;
+		return iterator.hasNext() ? Maybe.some(iterator.next()) : Maybe.<Map.Entry<K, V>>none();
 	}
 	
 	/**
@@ -374,6 +375,22 @@ public class CollectionUtils {
 	}
 	
 	/**
+	 * Get the value identified by the given key in the given map.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param map Map to read.
+	 * @param key Key identifying the value to get. May be <code>null</code>.
+	 * @return The value identified by the key if any, or the default value.
+	 */
+	public static <K, V> Maybe<V> get(final Map<K, V> map, final K key) {
+		assert null != map;
+		
+		// Get.
+		return map.containsKey(key) ? Maybe.some(map.get(key)) : Maybe.<V>none();
+	}
+	
+	/**
 	 * Get the value identified by the given key in the given map using the given default value.
 	 * 
 	 * @param <K> Type of the keys.
@@ -388,6 +405,27 @@ public class CollectionUtils {
 		
 		// Get.
 		return map.containsKey(key) ? map.get(key) : defaultValue;
+	}
+	
+	/**
+	 * Remove an objet from the given collection.
+	 * 
+	 * @param <T> Type of the elements.
+	 * @param collection Collection to modify.
+	 * @return The remove object, or <code>null</code> when the collection is empty.
+	 */
+	public static <T> T removeAny(final Collection<T> collection) {
+		assert null != collection;
+		
+		// Remove.
+		final Iterator<T> iterator = collection.iterator();
+		if (iterator.hasNext()) {
+			final T object = iterator.next();
+			iterator.remove();
+			return object;
+		} else {
+			return null;
+		}
 	}
 	
 	/**
@@ -425,46 +463,6 @@ public class CollectionUtils {
 		// Sort.
 		Collections.sort(list, comparator);
 		return list;
-	}
-	
-	/**
-	 * Sort the given values topologically.
-	 * <p>
-	 * The dependencies between the values are computed using the given function. This function must compute the values whose the argument value depends on. The
-	 * computed value must belong to the values to sort.
-	 * <p>
-	 * This method places the dependencies before the values which depend on them. The sort is stable and fails when the dependencies form a cyclic graph.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param values Values to sort. The given collection is not modified by the method.
-	 * @param dependencyFunction Function which computes the dependencies.
-	 * @return The sorted values.
-	 * @throws CollectionException When some dependencies are invalid or cyclic.
-	 */
-	public static <T> ArrayList<T> topologicalSort(final Collection<? extends T> values, final Function<T, ? extends Collection<? extends T>> dependencyFunction)
-	throws CollectionException {
-		return topologicalSort(values, dependencyFunction, new ArrayList<T>(values.size()));
-	}
-	
-	/**
-	 * Sort the given values topologically.
-	 * <p>
-	 * The dependencies between the values are computed using the given function. This function must compute the values whose the argument value depends on. The
-	 * computed value must belong to the values to sort.
-	 * <p>
-	 * This method places the dependencies before the value which depend on them. The sort is stable and fails when the dependencies form a cyclic graph.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param <L> Type of the list to Instantiate.
-	 * @param values Values to sort. The given collection is not modified by the method.
-	 * @param dependencyFunction Function which computes the dependencies.
-	 * @param factory Factory to use to build the result list.
-	 * @return The sorted values.
-	 * @throws CollectionException When some dependencies are invalid or cyclic.
-	 */
-	public static <T, L extends List<T>> L topologicalSort(final Collection<? extends T> values, final Function<? super T, ? extends Collection<? extends T>> dependencyFunction, final CollectionFactory<? super T, ? extends L> factory)
-	throws CollectionException {
-		return topologicalSort(values, dependencyFunction, factory.build(values.size()));
 	}
 	
 	/**
@@ -596,57 +594,6 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Build a list containing the union of the given collections.
-	 * <p>
-	 * The items of the first given collection precede the items of the second one.
-	 * 
-	 * @param <T> Type of the elements.
-	 * @param collection1 First collection.
-	 * @param collection2 Second collection.
-	 * @return The union list.
-	 */
-	public static <T> ArrayList<T> unionList(final Collection<? extends T> collection1, final Collection<? extends T> collection2) {
-		assert null != collection1;
-		assert null != collection2;
-		
-		// Build the union.
-		return union(collection1, collection2, new ArrayList<T>(collection1.size() + collection2.size()));
-	}
-	
-	/**
-	 * Build a set containing the union of the given collections.
-	 * 
-	 * @param <T> Type of the elements.
-	 * @param collection1 First collection.
-	 * @param collection2 Second collection.
-	 * @return The union set.
-	 */
-	public static <T> HashSet<T> unionSet(final Collection<? extends T> collection1, final Collection<? extends T> collection2) {
-		// Build the union.
-		return union(collection1, collection2, new HashSet<T>());
-	}
-	
-	/**
-	 * Build a collection containing the union of the given collections.
-	 * <p>
-	 * When the populated collection is ordered, the items of the first given collection precede the items of the second one.
-	 * 
-	 * @param <T> Type of the elements.
-	 * @param <C> Type of the collection to Instantiate.
-	 * @param collection1 First collection.
-	 * @param collection2 Second collection.
-	 * @param factory Factory to use to build the result collection.
-	 * @return The union collection.
-	 */
-	public static <T, C extends Collection<T>> C union(final Collection<? extends T> collection1, final Collection<? extends T> collection2, final CollectionFactory<? super T, ? extends C> factory) {
-		assert null != collection1;
-		assert null != factory;
-		
-		// Build the union.
-		return union(collection1, collection2, factory.build(collection1.size()));
-	}
-	
-	/**
 	 * Build the union of the given collections and populate the given result collection with it.
 	 * <p>
 	 * When the populated collection is ordered, the items of the first given collection precede the items of the second one.
@@ -667,43 +614,6 @@ public class CollectionUtils {
 		results.addAll(collection1);
 		results.addAll(collection2);
 		return results;
-	}
-	
-	/**
-	 * Build a map containing the union of the given maps.
-	 * <p>
-	 * The values of the first map have precedence over the values of the second map when their domains intersect.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param map1 First map.
-	 * @param map2 Second map.
-	 * @return The union map.
-	 */
-	public static <K, V> HashMap<K, V> unionMap(final Map<? extends K, ? extends V> map1, final Map<? extends K, ? extends V> map2) {
-		// Build the union.
-		return union(map1, map2, new HashMap<K, V>());
-	}
-	
-	/**
-	 * Build a map containing the union of the given maps.
-	 * <p>
-	 * The values of the first map have precedence over the values of the second map when their domains intersect.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <M> Type of the map to Instantiate.
-	 * @param map1 First map.
-	 * @param map2 Second map.
-	 * @param factory Factory to use to build the result map.
-	 * @return The union map.
-	 */
-	public static <K, V, M extends Map<K, V>> M union(final Map<? extends K, ? extends V> map1, final Map<? extends K, ? extends V> map2, final MapFactory<? super K, ? super V, ? extends M> factory) {
-		assert null != map1;
-		assert null != factory;
-		
-		// Build the union.
-		return union(map1, map2, factory.build(map1.size()));
 	}
 	
 	/**
@@ -755,52 +665,6 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Build a list containing the intersection of the given collections.
-	 * 
-	 * @param <T> Type of the elements.
-	 * @param collection1 First collection.
-	 * @param collection2 Second collection.
-	 * @return The intersection list.
-	 */
-	public static <T> ArrayList<T> intersectionList(final Collection<? extends T> collection1, final Collection<? extends T> collection2) {
-		// Build the intersection.
-		return intersection(collection1, collection2, new ArrayList<T>());
-	}
-	
-	/**
-	 * Build a set containing the intersection of the given collections.
-	 * 
-	 * @param <T> Type of the elements.
-	 * @param collection1 First collection.
-	 * @param collection2 Second collection.
-	 * @return The intersection set.
-	 */
-	public static <T> HashSet<T> intersectionSet(final Collection<? extends T> collection1, final Collection<? extends T> collection2) {
-		// Build the intersection.
-		return intersection(collection1, collection2, new HashSet<T>());
-	}
-	
-	/**
-	 * Build a collection containing the intersection of the given collections.
-	 * <p>
-	 * This method iterates over the first collection and tests the presence of the values within the second collection. Therefore, providing a smaller first
-	 * collection and a second collection with a faster test method is more efficient.
-	 * 
-	 * @param <T> Type of the elements.
-	 * @param <C> Type of the collection to Instantiate.
-	 * @param collection1 First collection.
-	 * @param collection2 Second collection.
-	 * @param factory Factory to use to build the result collection.
-	 * @return The intersection collection.
-	 */
-	public static <T, C extends Collection<T>> C intersection(final Collection<? extends T> collection1, final Collection<? extends T> collection2, final CollectionFactory<? super T, ? extends C> factory) {
-		assert null != factory;
-		
-		// Build the intersection.
-		return intersection(collection1, collection2, factory.build());
-	}
-	
-	/**
 	 * Build the intersection of the given collections and populate the given result collection with it.
 	 * <p>
 	 * This method iterates over the first collection and tests the presence of the values within the second collection. Therefore, providing a smaller first
@@ -825,58 +689,6 @@ public class CollectionUtils {
 			}
 		}
 		return results;
-	}
-	
-	/**
-	 * Build a list containing the exclusion of the second given collection from the first given collection.
-	 * <p>
-	 * This method iterates over the first collection and tests the presence of the values within the second collection. Therefore, providing a smaller first
-	 * collection and a second collection with a faster test method is more efficient.
-	 * 
-	 * @param <T> Type of the elements.
-	 * @param collection1 First collection.
-	 * @param collection2 Second collection.
-	 * @return The exclusion list.
-	 */
-	public static <T> ArrayList<T> exclusionList(final Collection<? extends T> collection1, final Collection<? extends T> collection2) {
-		// Build the exclusion.
-		return exclusion(collection1, collection2, new ArrayList<T>());
-	}
-	
-	/**
-	 * Build a set containing the exclusion of the given collections (first minus second).
-	 * <p>
-	 * This method iterates over the first collection and tests the presence of the values within the second collection. Therefore, providing a smaller first
-	 * collection and a second collection with a faster test method is more efficient.
-	 * 
-	 * @param <T> Type of the elements.
-	 * @param collection1 First collection.
-	 * @param collection2 Second collection.
-	 * @return The exclusion list.
-	 */
-	public static <T> HashSet<T> exclusionSet(final Collection<? extends T> collection1, final Collection<? extends T> collection2) {
-		// Build the exclusion.
-		return exclusion(collection1, collection2, new HashSet<T>());
-	}
-	
-	/**
-	 * Build a collection containing the exclusion of the given collections (first minus second).
-	 * <p>
-	 * This method iterates over the first collection and tests the presence of the values within the second collection. Therefore, providing a smaller first
-	 * collection and a second collection with a faster test method is more efficient.
-	 * 
-	 * @param <T> Type of the elements.
-	 * @param <C> Type of the result collection to Instantiate.
-	 * @param collection1 First collection.
-	 * @param collection2 Second collection.
-	 * @param factory Factory to use to build the result collection.
-	 * @return The exclusion collection.
-	 */
-	public static <T, C extends Collection<T>> C exclusion(final Collection<? extends T> collection1, final Collection<? extends T> collection2, final CollectionFactory<? super T, ? extends C> factory) {
-		assert null != factory;
-		
-		// Build the exclusion.
-		return exclusion(collection1, collection2, factory.build());
 	}
 	
 	/**
@@ -908,40 +720,6 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Build a map containing the bindings of the given map with the given keys.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param map Map to copy.
-	 * @param keys Keys of the bindings to retain.
-	 * @return The sub map.
-	 */
-	public static <K, V> HashMap<K, V> subMap(final Map<? extends K, ? extends V> map, final Set<? extends K> keys) {
-		assert null != keys;
-		
-		// Build the map.
-		return subMap(map, keys, new HashMap<K, V>(keys.size()));
-	}
-	
-	/**
-	 * Build a map containing the bindings of the given map with the given keys.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <M> Type of the map to Instantiate.
-	 * @param map Map to copy.
-	 * @param keys Keys of the bindings to retain.
-	 * @param factory Factory to use to build the result map.
-	 * @return The sub map.
-	 */
-	public static <K, V, M extends Map<K, V>> M subMap(final Map<? extends K, ? extends V> map, final Set<? extends K> keys, final MapFactory<? super K, ? super V, ? extends M> factory) {
-		assert null != factory;
-		
-		// Build the map.
-		return subMap(map, keys, factory.build());
-	}
-	
-	/**
 	 * Get the bindings of the given map with the given keys and populate the given result map with them.
 	 * 
 	 * @param <K> Type of the keys.
@@ -965,38 +743,6 @@ public class CollectionUtils {
 			}
 		}
 		return results;
-	}
-	
-	/**
-	 * Build a map containing the bindings of the given map whose keys do not belong to the given keys.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param map Map to copy.
-	 * @param keys Keys of the binding to exclude.
-	 * @return The exclusion map.
-	 */
-	public static <K, V> HashMap<K, V> retainMap(final Map<? extends K, ? extends V> map, final Collection<? extends K> keys) {
-		// Build the exclusion.
-		return retainMap(map, keys, new HashMap<K, V>());
-	}
-	
-	/**
-	 * Build a map containing the bindings of the given map whose keys do not belong to the given keys.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <M> Type of the map to Instantiate.
-	 * @param map Map to copy.
-	 * @param keys Keys of the binding to exclude.
-	 * @param factory Factory to use to build the result map.
-	 * @return The exclusion map.
-	 */
-	public static <K, V, M extends Map<K, V>> M retainMap(final Map<? extends K, ? extends V> map, final Collection<? extends K> keys, final MapFactory<? super K, ? super V, ? extends M> factory) {
-		assert null != factory;
-		
-		// Build the exclusion.
-		return retainMap(map, keys, factory.build());
 	}
 	
 	/**

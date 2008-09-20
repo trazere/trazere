@@ -31,7 +31,35 @@ import com.trazere.util.type.Maybe.Some;
 public class MutableReference<T>
 implements Describable {
 	/** Value. */
-	protected Maybe<T> _value = Maybe.none();
+	protected Maybe<T> _value;
+	
+	/**
+	 * Instantiate an unset reference.
+	 */
+	public MutableReference() {
+		this(Maybe.<T>none());
+	}
+	
+	/**
+	 * Instantiate a reference set with the given value.
+	 * 
+	 * @param value Value to set. May be <code>null</code>.
+	 */
+	public MutableReference(final T value) {
+		this(Maybe.some(value));
+	}
+	
+	/**
+	 * Instantiate a reference with the given value.
+	 * 
+	 * @param value Initial value.
+	 */
+	public MutableReference(final Maybe<T> value) {
+		assert null != value;
+		
+		// Initialization.
+		_value = value;
+	}
 	
 	/**
 	 * Test wether the receiver reference is set.
