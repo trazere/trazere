@@ -44,6 +44,7 @@ implements Describable {
 				return value;
 			}
 			
+			@Override
 			public void fillDescription(final StringBuilder builder) {
 				builder.append(" - Value = ").append(value);
 			}
@@ -109,5 +110,9 @@ implements Describable {
 	@Override
 	public String toString() {
 		return _value.isSome() ? String.valueOf(_value.asSome().getValue()) : TextUtils.computeDescription(this);
+	}
+	
+	public void fillDescription(final StringBuilder builder) {
+		// Nothing to do.
 	}
 }
