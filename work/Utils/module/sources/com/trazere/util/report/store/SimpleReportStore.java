@@ -15,9 +15,8 @@
  */
 package com.trazere.util.report.store;
 
-import com.trazere.util.function.ApplicationException;
-import com.trazere.util.function.Filter;
 import com.trazere.util.function.FunctionUtils;
+import com.trazere.util.function.Predicate;
 import com.trazere.util.report.ReportEntry;
 import com.trazere.util.report.ReportException;
 import com.trazere.util.report.ReportLevel;
@@ -78,14 +77,10 @@ implements ReportStore<Entry> {
 		// Nothing to do.
 	}
 	
-	public int countEntries(final Filter<ReportStoreEntry<Entry>> filter)
+	public int countEntries(final Predicate<? super ReportStoreEntry<Entry>, ReportException> filter)
 	throws ReportException {
 		if (null != filter) {
-			try {
-				return FunctionUtils.count(_entries, filter);
-			} catch (final ApplicationException exception) {
-				throw new ReportException(exception);
-			}
+			return FunctionUtils.count(filter, _entries);
 		} else {
 			return _entries.size();
 		}
@@ -94,7 +89,7 @@ implements ReportStore<Entry> {
 	/**
 	 * Get all entries.
 	 * <p>
-	 * This method returns the backing list of entries. It is faster than {@link #getEntries(Filter, int, boolean)} to get all the entries (no copy).
+	 * This method returns the backing list of entries. It is faster than {@link #getEntries(Predicate, int, boolean)} to get all the entries (no copy).
 	 * 
 	 * @return The unmodifiable list of entries.
 	 */
@@ -102,12 +97,8 @@ implements ReportStore<Entry> {
 		return Collections.unmodifiableList(_entries);
 	}
 	
-	public List<ReportStoreEntry<Entry>> getEntries(final Filter<ReportStoreEntry<Entry>> filter, final int limit, final boolean fromEnd)
+	public List<ReportStoreEntry<Entry>> getEntries(final Predicate<? super ReportStoreEntry<Entry>, ReportException> filter, final int limit, final boolean fromEnd)
 	throws ReportException {
-		try {
-			return ReportStoreUtils.filterEntries(_entries, filter, limit, fromEnd);
-		} catch (final ApplicationException exception) {
-			throw new ReportException(exception);
-		}
+		return ReportStoreUtils.filterEntries(_entries, filter, limit, fromEnd);
 	}
 }

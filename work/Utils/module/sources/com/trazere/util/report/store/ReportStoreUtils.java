@@ -15,8 +15,8 @@
  */
 package com.trazere.util.report.store;
 
-import com.trazere.util.function.ApplicationException;
-import com.trazere.util.function.Filter;
+import com.trazere.util.function.Predicate;
+import com.trazere.util.record.RecordException;
 import com.trazere.util.report.ReportEntry;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,7 +27,7 @@ import java.util.ListIterator;
 import java.util.Set;
 
 /**
- * The <code>ReportStoreUtils</code> class provides various helpers regarding the manipulation of report stores.
+ * The {@link ReportStoreUtils} class provides various helpers regarding the manipulation of report stores.
  */
 public class ReportStoreUtils {
 	/**
@@ -42,9 +42,9 @@ public class ReportStoreUtils {
 	 * @param codes Codes of the entries to accept. May be <code>null</code> to accept all codes.
 	 * @return The filter.
 	 */
-	public static <Category, Code extends Enum<?>, Entry extends ReportEntry<Category, Code>> Filter<ReportStoreEntry<Entry>> buildFilter(final Date startDate, final Date endDate, final Set<Category> categories, final Set<Code> codes) {
-		return new Filter<ReportStoreEntry<Entry>>() {
-			public boolean filter(final ReportStoreEntry<Entry> entry) {
+	public static <Category, Code extends Enum<?>, Entry extends ReportEntry<Category, Code>> Predicate<ReportStoreEntry<Entry>, RecordException> buildFilter(final Date startDate, final Date endDate, final Set<Category> categories, final Set<Code> codes) {
+		return new Predicate<ReportStoreEntry<Entry>, RecordException>() {
+			public boolean evaluate(final ReportStoreEntry<Entry> entry) {
 				// Start date.
 				if (null != startDate && entry.getDate().before(startDate)) {
 					return false;
@@ -74,16 +74,17 @@ public class ReportStoreUtils {
 	 * Filter the given entries using the given filter and parameters.
 	 * 
 	 * @param <Entry> Type of the report entries.
+	 * @param <E> Type of the exceptions.
 	 * @param entries Report store entries to filter.
 	 * @param filter Filter to use. May be <code>null</code> to accept all entries.
 	 * @param limit Maximum number of retrieved entries. May be negative to disable the limit.
 	 * @param fromEnd Flag indicating wether the entries should be extracted from the beginning or the end of the store. This flag changes nothing when the
 	 *        maximum number of retrieved entries is not limited.
 	 * @return The filtered entries.
-	 * @throws ApplicationException When some filter application fails.
+	 * @throws E When some filter application fails.
 	 */
-	public static <Entry extends ReportEntry<?, ?>> List<ReportStoreEntry<Entry>> filterEntries(final List<ReportStoreEntry<Entry>> entries, final Filter<ReportStoreEntry<Entry>> filter, final int limit, final boolean fromEnd)
-	throws ApplicationException {
+	public static <Entry extends ReportEntry<?, ?>, E extends Exception> List<ReportStoreEntry<Entry>> filterEntries(final List<ReportStoreEntry<Entry>> entries, final Predicate<? super ReportStoreEntry<Entry>, E> filter, final int limit, final boolean fromEnd)
+	throws E {
 		// Filtered entries.
 		if (null != filter) {
 			final List<ReportStoreEntry<Entry>> filteredEntries = new ArrayList<ReportStoreEntry<Entry>>();
@@ -93,7 +94,7 @@ public class ReportStoreUtils {
 				final ListIterator<ReportStoreEntry<Entry>> entriesIt = entries.listIterator(entries.size());
 				while (entriesIt.hasPrevious() && (limit < 0 || filteredEntries.size() < limit)) {
 					final ReportStoreEntry<Entry> entry = entriesIt.previous();
-					if (filter.filter(entry)) {
+					if (filter.evaluate(entry)) {
 						filteredEntries.add(entry);
 					}
 				}
@@ -102,7 +103,7 @@ public class ReportStoreUtils {
 				final Iterator<ReportStoreEntry<Entry>> entriesIt = entries.iterator();
 				while (entriesIt.hasNext() && (limit < 0 || filteredEntries.size() < limit)) {
 					final ReportStoreEntry<Entry> entry = entriesIt.next();
-					if (filter.filter(entry)) {
+					if (filter.evaluate(entry)) {
 						filteredEntries.add(entry);
 					}
 				}

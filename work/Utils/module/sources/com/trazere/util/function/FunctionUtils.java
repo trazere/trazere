@@ -15,6 +15,7 @@
  */
 package com.trazere.util.function;
 
+import com.trazere.util.lang.MutableReference;
 import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Tuple2;
 import java.util.Collection;
@@ -24,10 +25,10 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * The {@link FunctionUtils} provides various helpers regarding the manipulation of filters and functions.
+ * The {@link FunctionUtils} provides various helpers regarding predicates, functions and procedures.
  * 
- * @see Filter
- * @see Filter2
+ * @see Predicate
+ * @see Predicate2
  * @see Function
  * @see Function2
  * @see Procedure
@@ -35,27 +36,26 @@ import java.util.Set;
  */
 public class FunctionUtils {
 	/**
-	 * Filter the given values with the given filter function and populate the given result collection with them.
-	 * <p>
-	 * This method applies the filter function to every value of the given collection and returns a collection of the accepted values.
+	 * Filter the given values using the given predicate and populate the given result collection with them.
 	 * 
 	 * @param <T> Type of the values to filter.
-	 * @param <C> Type of the result collection to build.
+	 * @param <C> Type of the collection to populate.
+	 * @param <E> Type of the exceptions.
+	 * @param predicate Predicate to use.
 	 * @param values Values to filter.
-	 * @param filter Filter function to use.
-	 * @param results The collection to populate with the results.
+	 * @param results The collection to populate with the accepted values.
 	 * @return The given result collection.
-	 * @throws ApplicationException When some function application fails.
+	 * @throws E When some filter evaluation fails.
 	 */
-	public static <T, C extends Collection<? super T>> C filter(final Collection<? extends T> values, final Filter<? super T> filter, final C results)
-	throws ApplicationException {
+	public static <T, C extends Collection<? super T>, E extends Exception> C filter(final Predicate<? super T, E> predicate, final Collection<? extends T> values, final C results)
+	throws E {
 		assert null != values;
-		assert null != filter;
+		assert null != predicate;
 		assert null != results;
 		
 		// Filter.
 		for (final T value : values) {
-			if (filter.filter(value)) {
+			if (predicate.evaluate(value)) {
 				results.add(value);
 			}
 		}
@@ -63,31 +63,31 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Filter the given bindings with the given filter function and populate the given result map with them.
+	 * Filter the given bindings using the given predicate and populate the given result map with them.
 	 * <p>
-	 * This method applies the filter function to every binding of the given map and returns a map containing the accepted bindings. The keys and the values of
-	 * the map are respectively passed as first and second arguments to the filter function.
+	 * This method evaluates the predicate by passing the keys and values of the bindings respectively as first and second arguments.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
-	 * @param <M> Type of the result map to build.
+	 * @param <M> Type of the map to populate.
+	 * @param <E> Type of the exceptions.
+	 * @param predicate Predicate to use.
 	 * @param bindings Bindings to filter.
-	 * @param filter Filter function to use.
-	 * @param results The map to populate with the results.
+	 * @param results The map to populate with the accepted bindings.
 	 * @return The given result map.
-	 * @throws ApplicationException When some function application fails.
+	 * @throws E When some predicate evaluation fails.
 	 */
-	public static <K, V, M extends Map<K, V>> M filter(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter, final M results)
-	throws ApplicationException {
+	public static <K, V, M extends Map<? super K, ? super V>, E extends Exception> M filter(final Predicate2<? super K, ? super V, E> predicate, final Map<? extends K, ? extends V> bindings, final M results)
+	throws E {
+		assert null != predicate;
 		assert null != bindings;
-		assert null != filter;
 		assert null != results;
 		
 		// Filter.
 		for (final Map.Entry<? extends K, ? extends V> entry : bindings.entrySet()) {
 			final K key = entry.getKey();
 			final V value = entry.getValue();
-			if (filter.filter(key, value)) {
+			if (predicate.evaluate(key, value)) {
 				results.put(key, value);
 			}
 		}
@@ -95,30 +95,30 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Filter the given bindings with the given filter function and populate the given result set with their keys.
+	 * Filter the given bindings using the given predicate and populate the given result set with their keys.
 	 * <p>
-	 * This method applies the filter function to every binding of the given map and returns a set of the keys of the accepted bindings. The keys and the values
-	 * of the map are respectively passed as first and second arguments to filter function.
+	 * This method evaluates the predicate by passing the keys and values of the bindings respectively as first and second arguments.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
-	 * @param <S> Type of the result set to build.
+	 * @param <S> Type of the set to populate.
+	 * @param <E> Type of the exceptions.
+	 * @param predicate Predicate to use.
 	 * @param bindings Bindings to filter.
-	 * @param filter Filter function to use.
-	 * @param results The set to populate with the results.
+	 * @param results The set to populate with the keys of the accepted bindings.
 	 * @return The given result set.
-	 * @throws ApplicationException When some function application fails.
+	 * @throws E When some predicate evaluation fails.
 	 */
-	public static <K, V, S extends Set<K>> S filterKeys(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter, final S results)
-	throws ApplicationException {
+	public static <K, V, S extends Set<? super K>, E extends Exception> S filterKeys(final Predicate2<? super K, ? super V, E> predicate, final Map<? extends K, ? extends V> bindings, final S results)
+	throws E {
+		assert null != predicate;
 		assert null != bindings;
-		assert null != filter;
 		assert null != results;
 		
 		// Filter.
 		for (final Map.Entry<? extends K, ? extends V> entry : bindings.entrySet()) {
 			final K key = entry.getKey();
-			if (filter.filter(key, entry.getValue())) {
+			if (predicate.evaluate(key, entry.getValue())) {
 				results.add(key);
 			}
 		}
@@ -126,31 +126,31 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Filter the given bindings with the given filter function and populate the given result collection with their values.
+	 * Filter the given bindings using the given predicate and populate the given result set with their values.
 	 * <p>
-	 * This method applies the filter function to every binding of the given map and returns a collection of the values of the accepted bindings. The keys and
-	 * the values of the map are respectively passed as first and second arguments to the filter function.
+	 * This method evaluates the predicate by passing the keys and values of the bindings respectively as first and second arguments.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
-	 * @param <C> Type of the result collection to build.
+	 * @param <C> Type of the collection to populate.
+	 * @param <E> Type of the exceptions.
+	 * @param predicate Predicate to use.
 	 * @param bindings Bindings to filter.
-	 * @param filter Filter function to use.
 	 * @param results The collection to populate with the results.
 	 * @return The given result collection.
-	 * @throws ApplicationException When some function application fails.
+	 * @throws E When some predicate evaluation fails.
 	 */
-	public static <K, V, C extends Collection<V>> C filterValues(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter, final C results)
-	throws ApplicationException {
+	public static <K, V, C extends Collection<? super V>, E extends Exception> C filterValues(final Predicate2<? super K, ? super V, E> predicate, final Map<? extends K, ? extends V> bindings, final C results)
+	throws E {
+		assert null != predicate;
 		assert null != bindings;
-		assert null != filter;
 		assert null != results;
 		
 		// Filter.
 		for (final Map.Entry<? extends K, ? extends V> entry : bindings.entrySet()) {
 			final K key = entry.getKey();
 			final V value = entry.getValue();
-			if (filter.filter(key, value)) {
+			if (predicate.evaluate(key, value)) {
 				results.add(value);
 			}
 		}
@@ -158,23 +158,24 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Count the number of given values accepted by the given filter.
+	 * Count the given values accepted by the given predicate.
 	 * 
 	 * @param <T> Type of the values.
+	 * @param <E> Type of the exceptions.
+	 * @param predicate Predicate to use.
 	 * @param values Values to count.
-	 * @param filter Filter function to use.
 	 * @return The number of accepted values.
-	 * @throws ApplicationException When some function application fails.
+	 * @throws E When some predicate evaluation fails.
 	 */
-	public static <T> int count(final Collection<? extends T> values, final Filter<? super T> filter)
-	throws ApplicationException {
+	public static <T, E extends Exception> int count(final Predicate<? super T, E> predicate, final Collection<? extends T> values)
+	throws E {
+		assert null != predicate;
 		assert null != values;
-		assert null != filter;
 		
 		// Count.
 		int count = 0;
 		for (final T value : values) {
-			if (filter.filter(value)) {
+			if (predicate.evaluate(value)) {
 				count += 1;
 			}
 		}
@@ -182,23 +183,24 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Count the number of values provided by the given iterator accepted by the given filter.
+	 * Count the values provided by the given iterator accepted by the given predicate.
 	 * 
 	 * @param <T> Type of the values.
+	 * @param <E> Type of the exceptions.
+	 * @param predicate Predicate to use.
 	 * @param values Iterator providing the values to count.
-	 * @param filter Filter function to use.
 	 * @return The number of accepted values.
-	 * @throws ApplicationException When some function application fails.
+	 * @throws E When some predicate evaluation fails.
 	 */
-	public static <T> int count(final Iterator<? extends T> values, final Filter<? super T> filter)
-	throws ApplicationException {
+	public static <T, E extends Exception> int count(final Predicate<? super T, E> predicate, final Iterator<? extends T> values)
+	throws E {
+		assert null != predicate;
 		assert null != values;
-		assert null != filter;
 		
 		// Count.
 		int count = 0;
 		while (values.hasNext()) {
-			if (filter.filter(values.next())) {
+			if (predicate.evaluate(values.next())) {
 				count += 1;
 			}
 		}
@@ -206,27 +208,27 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Count the number of given bindings accepted by the given filter.
+	 * Count the given bindings accepted by the given predicate.
 	 * <p>
-	 * This method applies the filter function to every binding of the given map. The keys and the values of the map are respectively passed as first and second
-	 * arguments to the filter function.
+	 * This method evaluates the predicate by passing the keys and values of the bindings respectively as first and second arguments.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
+	 * @param <E> Type of the exceptions.
+	 * @param predicate Predicate to use.
 	 * @param bindings Bindings to count.
-	 * @param filter Filter function to use.
 	 * @return The number of accepted bindings.
-	 * @throws ApplicationException When some function application fails.
+	 * @throws E When some predicate evaluation fails.
 	 */
-	public static <K, V> int count(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter)
-	throws ApplicationException {
+	public static <K, V, E extends Exception> int count(final Predicate2<? super K, ? super V, E> predicate, final Map<? extends K, ? extends V> bindings)
+	throws E {
+		assert null != predicate;
 		assert null != bindings;
-		assert null != filter;
 		
 		// Count.
 		int count = 0;
 		for (final Map.Entry<? extends K, ? extends V> binding : bindings.entrySet()) {
-			if (filter.filter(binding.getKey(), binding.getValue())) {
+			if (predicate.evaluate(binding.getKey(), binding.getValue())) {
 				count += 1;
 			}
 		}
@@ -234,22 +236,23 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Test wether any given value is accepted by the given filter function.
+	 * Test wether any given value is accepted by the given predicate.
 	 * 
 	 * @param <T> Type of the values.
+	 * @param <E> Type of the exceptions.
+	 * @param predicate Predicate to use.
 	 * @param values Values to test.
-	 * @param filter Filter function to use.
 	 * @return <code>true</code> if any value is accepted, <code>false</code> if all values are rejected.
-	 * @throws ApplicationException When some function application fails.
+	 * @throws E When some predicate evaluation fails.
 	 */
-	public static <T> boolean isAny(final Collection<? extends T> values, final Filter<? super T> filter)
-	throws ApplicationException {
+	public static <T, E extends Exception> boolean isAny(final Predicate<? super T, E> predicate, final Collection<? extends T> values)
+	throws E {
+		assert null != predicate;
 		assert null != values;
-		assert null != filter;
 		
 		// Test.
 		for (final T value : values) {
-			if (filter.filter(value)) {
+			if (predicate.evaluate(value)) {
 				return true;
 			}
 		}
@@ -257,22 +260,23 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Test wether any value provided by the goiven iterator is accepted by the given filter function.
+	 * Test wether any value provided by the given iterator is accepted by the given predicate.
 	 * 
 	 * @param <T> Type of the values.
+	 * @param <E> Type of the exceptions.
+	 * @param predicate Predicate to use.
 	 * @param values Iterator providing the values to test.
-	 * @param filter Filter function to use.
 	 * @return <code>true</code> if any value is accepted, <code>false</code> if all values are rejected.
-	 * @throws ApplicationException When some function application fails.
+	 * @throws E When some predicate evaluation fails.
 	 */
-	public static <T> boolean isAny(final Iterator<? extends T> values, final Filter<? super T> filter)
-	throws ApplicationException {
+	public static <T, E extends Exception> boolean isAny(final Predicate<? super T, E> predicate, final Iterator<? extends T> values)
+	throws E {
+		assert null != predicate;
 		assert null != values;
-		assert null != filter;
 		
 		// Test.
 		while (values.hasNext()) {
-			if (filter.filter(values.next())) {
+			if (predicate.evaluate(values.next())) {
 				return true;
 			}
 		}
@@ -280,23 +284,26 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Test wether any given binding is accepted by the given filter function.
+	 * Test wether any given binding is accepted by the given predicate.
+	 * <p>
+	 * This method evaluates the predicate by passing the keys and values of the bindings respectively as first and second arguments.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
+	 * @param <E> Type of the exceptions.
+	 * @param predicate Predicate to use.
 	 * @param bindings Bindings to test.
-	 * @param filter Filter function to use.
 	 * @return <code>true</code> if any binding is accepted, <code>false</code> if all bindings are rejected.
-	 * @throws ApplicationException When some function application fails.
+	 * @throws E When some predicate evaluation fails.
 	 */
-	public static <K, V> boolean isAny(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter)
-	throws ApplicationException {
+	public static <K, V, E extends Exception> boolean isAny(final Predicate2<? super K, ? super V, E> predicate, final Map<? extends K, ? extends V> bindings)
+	throws E {
+		assert null != predicate;
 		assert null != bindings;
-		assert null != filter;
 		
 		// Test.
 		for (final Map.Entry<? extends K, ? extends V> binding : bindings.entrySet()) {
-			if (filter.filter(binding.getKey(), binding.getValue())) {
+			if (predicate.evaluate(binding.getKey(), binding.getValue())) {
 				return true;
 			}
 		}
@@ -304,22 +311,23 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Test wether all given values are accepted by the given filter function.
+	 * Test wether all given values are accepted by the given predicate.
 	 * 
 	 * @param <T> Type of the values.
+	 * @param <E> Type of the exceptions.
+	 * @param predicate Predicate to use.
 	 * @param values Values to test.
-	 * @param filter Filter function to use.
 	 * @return <code>true</code> if all values are accepted, <code>false</code> if any value is rejected.
-	 * @throws ApplicationException When some function application fails.
+	 * @throws E When some predicate evaluation fails.
 	 */
-	public static <T> boolean areAll(final Collection<? extends T> values, final Filter<? super T> filter)
-	throws ApplicationException {
+	public static <T, E extends Exception> boolean areAll(final Predicate<? super T, E> predicate, final Collection<? extends T> values)
+	throws E {
+		assert null != predicate;
 		assert null != values;
-		assert null != filter;
 		
 		// Test.
 		for (final T value : values) {
-			if (!filter.filter(value)) {
+			if (!predicate.evaluate(value)) {
 				return false;
 			}
 		}
@@ -327,22 +335,23 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Test wether all values provided by the given iterator are accepted by the given filter function.
+	 * Test wether all values provided by the given iterator are accepted by the given predicate.
 	 * 
 	 * @param <T> Type of the values.
+	 * @param <E> Type of the exceptions.
+	 * @param predicate Predicate to use.
 	 * @param values Iterator providing the values to test.
-	 * @param filter Filter function to use.
 	 * @return <code>true</code> if all values are accepted, <code>false</code> if any value is rejected.
-	 * @throws ApplicationException When some function application fails.
+	 * @throws E When some predicate evaluation fails.
 	 */
-	public static <T> boolean areAll(final Iterator<? extends T> values, final Filter<? super T> filter)
-	throws ApplicationException {
+	public static <T, E extends Exception> boolean areAll(final Predicate<? super T, E> predicate, final Iterator<? extends T> values)
+	throws E {
+		assert null != predicate;
 		assert null != values;
-		assert null != filter;
 		
 		// Test.
 		while (values.hasNext()) {
-			if (!filter.filter(values.next())) {
+			if (!predicate.evaluate(values.next())) {
 				return false;
 			}
 		}
@@ -350,23 +359,26 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Test wether all given bindings are accepted by the given filter function.
+	 * Test wether all given bindings are accepted by the given predicate.
+	 * <p>
+	 * This method evaluates the predicate by passing the keys and values of the bindings respectively as first and second arguments.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
+	 * @param <E> Type of the exceptions.
+	 * @param predicate Predicate to use.
 	 * @param bindings Bindings to test.
-	 * @param filter Filter function to use.
 	 * @return <code>true</code> if all bindings are accepted, <code>false</code> if any binding is rejected.
-	 * @throws ApplicationException When some function application fails.
+	 * @throws E When some predicate evaluation fails.
 	 */
-	public static <K, V> boolean areAll(final Map<? extends K, ? extends V> bindings, final Filter2<? super K, ? super V> filter)
-	throws ApplicationException {
+	public static <K, V, E extends Exception> boolean areAll(final Predicate2<? super K, ? super V, E> predicate, final Map<? extends K, ? extends V> bindings)
+	throws E {
+		assert null != predicate;
 		assert null != bindings;
-		assert null != filter;
 		
 		// Test.
 		for (final Map.Entry<? extends K, ? extends V> binding : bindings.entrySet()) {
-			if (!filter.filter(binding.getKey(), binding.getValue())) {
+			if (!predicate.evaluate(binding.getKey(), binding.getValue())) {
 				return false;
 			}
 		}
@@ -378,22 +390,23 @@ public class FunctionUtils {
 	 * 
 	 * @param <T1> Type of the argument values.
 	 * @param <T2> Type of the result values.
-	 * @param <C> Type of the result collection to build.
+	 * @param <C> Type of the collection to populate.
+	 * @param <E> Type of the exceptions.
+	 * @param function Function to use.
 	 * @param values Argument values.
-	 * @param function Function to apply.
 	 * @param results The collection to populate with the results.
 	 * @return The given result collection.
-	 * @throws ApplicationException When some function application fails.
+	 * @throws E When some function evaluation fails.
 	 */
-	public static <T1, T2, C extends Collection<T2>> C map(final Collection<? extends T1> values, final Function<? super T1, ? extends Maybe<? extends T2>> function, final C results)
-	throws ApplicationException {
-		assert null != values;
+	public static <T1, T2, C extends Collection<? super T2>, E extends Exception> C map(final Function<? super T1, ? extends Maybe<? extends T2>, E> function, final Collection<? extends T1> values, final C results)
+	throws E {
 		assert null != function;
+		assert null != values;
 		assert null != results;
 		
 		// Map.
 		for (final T1 value : values) {
-			final Maybe<? extends T2> result = function.apply(value);
+			final Maybe<? extends T2> result = function.evaluate(value);
 			if (result.isSome()) {
 				results.add(result.asSome().getValue());
 			}
@@ -402,27 +415,27 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Apply the given function to the values provided by the given iterator and populate the given result collection with the results accepted by the given
-	 * filter.
+	 * Apply the given function to the values provided by the given iterator and populate the given result collection with the results.
 	 * 
 	 * @param <T1> Type of the argument values.
 	 * @param <T2> Type of the result values.
-	 * @param <C> Type of the result collection to build.
+	 * @param <C> Type of the collection to populate.
+	 * @param <E> Type of the exceptions.
+	 * @param function Function to use.
 	 * @param values Iterator providing the argument values.
-	 * @param function Function to apply.
 	 * @param results The collection to populate with the results.
 	 * @return The given result collection.
-	 * @throws ApplicationException When some function application fails.
+	 * @throws E When some function evaluation fails.
 	 */
-	public static <T1, T2, C extends Collection<T2>> C map(final Iterator<? extends T1> values, final Function<? super T1, ? extends Maybe<? extends T2>> function, final C results)
-	throws ApplicationException {
-		assert null != values;
+	public static <T1, T2, C extends Collection<? super T2>, E extends Exception> C map(final Function<? super T1, ? extends Maybe<? extends T2>, E> function, final Iterator<? extends T1> values, final C results)
+	throws E {
 		assert null != function;
+		assert null != values;
 		assert null != results;
 		
 		// Map.
 		while (values.hasNext()) {
-			final Maybe<? extends T2> result = function.apply(values.next());
+			final Maybe<? extends T2> result = function.evaluate(values.next());
 			if (result.isSome()) {
 				results.add(result.asSome().getValue());
 			}
@@ -431,32 +444,32 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Apply the given function to the given bindings and populate the given result map with the results accepted by the given filter associated to their
-	 * argument keys.
+	 * Apply the given function to the given bindings and populate the given result map by associating the results to the keys of the corresponding argument
+	 * bindings.
 	 * <p>
-	 * This method applies the function to every binding of the given map. The keys and the values of the map are respectively passed as first and second
-	 * arguments to the function.
+	 * This method evaluates the function by passing the keys and values of the bindings respectively as first and second arguments.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V1> Type of the argument values.
 	 * @param <V2> Type of the result values.
-	 * @param <M> Type of the result map to build.
+	 * @param <M> Type of the map to populate.
+	 * @param <E> Type of the exceptions.
+	 * @param function Function to use.
 	 * @param bindings Argument bindings.
-	 * @param function Function to apply.
 	 * @param results The map to populate with the results.
 	 * @return The given result map.
-	 * @throws ApplicationException When some function application fails.
+	 * @throws E When some function evaluation fails.
 	 */
-	public static <K, V1, V2, M extends Map<K, V2>> M map(final Map<? extends K, ? extends V1> bindings, final Function2<? super K, ? super V1, ? extends Maybe<? extends V2>> function, final M results)
-	throws ApplicationException {
-		assert null != bindings;
+	public static <K, V1, V2, M extends Map<? super K, ? super V2>, E extends Exception> M map(final Function2<? super K, ? super V1, ? extends Maybe<? extends V2>, E> function, final Map<? extends K, ? extends V1> bindings, final M results)
+	throws E {
 		assert null != function;
+		assert null != bindings;
 		assert null != results;
 		
 		// Map.
 		for (final Map.Entry<? extends K, ? extends V1> binding : bindings.entrySet()) {
 			final K key = binding.getKey();
-			final Maybe<? extends V2> result = function.apply(key, binding.getValue());
+			final Maybe<? extends V2> result = function.evaluate(key, binding.getValue());
 			if (result.isSome()) {
 				results.put(key, result.asSome().getValue());
 			}
@@ -465,26 +478,27 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Apply the given function to the given keys and populate the given result map of the results associated to their argument keys.
+	 * Apply the given function to the given keys and populate the given result map by associating the results to their argument keys.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
-	 * @param <M> Type of the result map to build.
+	 * @param <M> Type of the map to populate.
+	 * @param <E> Type of the exceptions.
+	 * @param function Function to use.
 	 * @param keys Keys to map.
-	 * @param function Function computing the values.
 	 * @param results The map to populate with the results.
 	 * @return The given result map.
-	 * @throws ApplicationException When some function application fails.
+	 * @throws E When some function evaluation fails.
 	 */
-	public static <K, V, M extends Map<K, V>> Map<K, V> mapKeys(final Set<? extends K> keys, final Function<? super K, ? extends Maybe<? extends V>> function, final M results)
-	throws ApplicationException {
-		assert null != keys;
+	public static <K, V, M extends Map<? super K, ? super V>, E extends Exception> M mapKeys(final Function<? super K, ? extends Maybe<? extends V>, E> function, final Set<? extends K> keys, final M results)
+	throws E {
 		assert null != function;
+		assert null != keys;
 		assert null != results;
 		
 		// Map the keys.
 		for (final K key : keys) {
-			final Maybe<? extends V> value = function.apply(key);
+			final Maybe<? extends V> value = function.evaluate(key);
 			if (value.isSome()) {
 				results.put(key, value.asSome().getValue());
 			}
@@ -493,28 +507,29 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Apply the given function to the given values and populate the given result map with the argument values associated to their corresponding results.
+	 * Apply the given function to the given values and populate the given result map by associating the argument values to their corresponding result keys.
 	 * <p>
-	 * When the function return a same key for different values, the last value is associated to the key in the result map.
+	 * When the function evaluates to the same key result for different argument values, the last value is associated to the key in the result map.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
-	 * @param <M> Type of the result map to build.
+	 * @param <M> Type of the map to populate.
+	 * @param <E> Type of the exceptions.
+	 * @param function Function to use.
 	 * @param values Values to map.
-	 * @param function Function computing the keys.
 	 * @param results The map to populate with the results.
 	 * @return The given result map.
-	 * @throws ApplicationException When some function application fails.
+	 * @throws E When some function evaluation fails.
 	 */
-	public static <K, V, M extends Map<K, V>> M mapValues(final Collection<? extends V> values, final Function<? super V, ? extends Maybe<? extends K>> function, final M results)
-	throws ApplicationException {
-		assert null != values;
+	public static <K, V, M extends Map<? super K, ? super V>, E extends Exception> M mapValues(final Function<? super V, ? extends Maybe<? extends K>, E> function, final Collection<? extends V> values, final M results)
+	throws E {
 		assert null != function;
+		assert null != values;
 		assert null != results;
 		
 		// Map the values.
 		for (final V value : values) {
-			final Maybe<? extends K> key = function.apply(value);
+			final Maybe<? extends K> key = function.evaluate(value);
 			if (key.isSome()) {
 				results.put(key.asSome().getValue(), value);
 			}
@@ -523,28 +538,29 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Apply the given function to the keys of the given map and populate the given result map with the values corresponding to the argument keys associated to
-	 * the result keys.
+	 * Apply the given function to the keys of the given bindings and populate the given result map by associating the values associated to the argument keys to
+	 * the corresponding result keys.
 	 * 
 	 * @param <K1> Type of the argument keys.
 	 * @param <K2> Type of the result keys.
 	 * @param <V> Type of the values.
-	 * @param <M> Type of the result map to build.
-	 * @param map Map to read.
-	 * @param function Function to apply.
+	 * @param <M> Type of the map to populate.
+	 * @param <E> Type of the exceptions.
+	 * @param function Function to use.
+	 * @param bindings Map to remap.
 	 * @param results The map to populate with the results.
 	 * @return The given result map.
-	 * @throws ApplicationException When some function application fails.
+	 * @throws E When some function evaluation fails.
 	 */
-	public static <K1, K2, V, M extends Map<K2, V>> M remap(final Map<? extends K1, ? extends V> map, final Function<? super K1, ? extends Maybe<? extends K2>> function, final M results)
-	throws ApplicationException {
-		assert null != map;
+	public static <K1, K2, V, M extends Map<? super K2, ? super V>, E extends Exception> M remap(final Function<? super K1, ? extends Maybe<? extends K2>, E> function, final Map<? extends K1, ? extends V> bindings, final M results)
+	throws E {
 		assert null != function;
+		assert null != bindings;
 		assert null != results;
 		
 		// Remap.
-		for (final Map.Entry<? extends K1, ? extends V> entry : map.entrySet()) {
-			final Maybe<? extends K2> newKey = function.apply(entry.getKey());
+		for (final Map.Entry<? extends K1, ? extends V> entry : bindings.entrySet()) {
+			final Maybe<? extends K2> newKey = function.evaluate(entry.getKey());
 			if (newKey.isSome()) {
 				results.put(newKey.asSome().getValue(), entry.getValue());
 			}
@@ -553,31 +569,32 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Apply the given function to the given bindings and populate the given result map with the values associated to the result keys.
+	 * Apply the given function to the keys of the given bindings and populate the given result map by associating the values associated to the argument keys to
+	 * the corresponding result keys.
 	 * <p>
-	 * This method applies the function to every binding of the given map. The keys and the values of the map are respectively passed as first and second
-	 * arguments to the function.
+	 * This method evaluates the function by passing the keys and values of the bindings respectively as first and second arguments.
 	 * 
 	 * @param <K1> Type of the argument keys.
 	 * @param <K2> Type of the result keys.
 	 * @param <V> Type of the values.
-	 * @param <M> Type of the result map to build.
-	 * @param bindings Argument bindings.
-	 * @param function Function to apply.
+	 * @param <M> Type of the map to populate.
+	 * @param <E> Type of the exceptions.
+	 * @param function Function to use.
+	 * @param bindings Argument to remap.
 	 * @param results The map to populate with the results.
 	 * @return The given result map.
-	 * @throws ApplicationException When some function application fails.
+	 * @throws E When some function evaluation fails.
 	 */
-	public static <K1, K2, V, M extends Map<K2, V>> M remap(final Map<? extends K1, ? extends V> bindings, final Function2<? super K1, ? super V, ? extends Maybe<? extends K2>> function, final M results)
-	throws ApplicationException {
-		assert null != bindings;
+	public static <K1, K2, V, M extends Map<? super K2, ? super V>, E extends Exception> M remap(final Function2<? super K1, ? super V, ? extends Maybe<? extends K2>, E> function, final Map<? extends K1, ? extends V> bindings, final M results)
+	throws E {
 		assert null != function;
+		assert null != bindings;
 		assert null != results;
 		
 		// Remap.
 		for (final Map.Entry<? extends K1, ? extends V> entry : bindings.entrySet()) {
 			final V value = entry.getValue();
-			final Maybe<? extends K2> newKey = function.apply(entry.getKey(), value);
+			final Maybe<? extends K2> newKey = function.evaluate(entry.getKey(), value);
 			if (newKey.isSome()) {
 				results.put(newKey.asSome().getValue(), value);
 			}
@@ -586,90 +603,94 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Apply the given procedure to the given values.
+	 * Execute the given procedure with the given values.
 	 * 
 	 * @param <T> Type of the argument values.
-	 * @param values Argument values
-	 * @param procedure Procedure to apply.
-	 * @throws ApplicationException When some function application fails.
+	 * @param <E> Type of the exceptions.
+	 * @param procedure Procedure to execute.
+	 * @param values Argument values.
+	 * @throws E When some procedure execution fails.
 	 */
-	public static <T> void apply(final Collection<? extends T> values, final Procedure<? super T> procedure)
-	throws ApplicationException {
-		assert null != values;
+	public static <T, E extends Exception> void execute(final Procedure<? super T, E> procedure, final Collection<? extends T> values)
+	throws E {
 		assert null != procedure;
+		assert null != values;
 		
 		// Apply.
 		for (final T value : values) {
-			procedure.apply(value);
+			procedure.execute(value);
 		}
 	}
 	
 	/**
-	 * Apply the given procedure to the values provided by the given iterator.
+	 * Execute the given procedure with the values provided by the given iterator.
 	 * 
 	 * @param <T> Type of the argument values.
+	 * @param <E> Type of the exceptions.
+	 * @param procedure Procedure to execute.
 	 * @param values Iterator providing the argument values.
-	 * @param procedure Procedure to apply.
-	 * @throws ApplicationException When some function application fails.
+	 * @throws E When some procedure execution fails.
 	 */
-	public static <T> void apply(final Iterator<? extends T> values, final Procedure<? super T> procedure)
-	throws ApplicationException {
-		assert null != values;
+	public static <T, E extends Exception> void execute(final Procedure<? super T, E> procedure, final Iterator<? extends T> values)
+	throws E {
 		assert null != procedure;
+		assert null != values;
 		
 		// Apply.
 		while (values.hasNext()) {
-			procedure.apply(values.next());
+			procedure.execute(values.next());
 		}
 	}
 	
 	/**
-	 * Apply the given procedure to the given bindings.
+	 * Execute the given procedure with the given bindings.
+	 * <p>
+	 * This method executes the procedure by passing the keys and values of the bindings respectively as first and second arguments.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
-	 * @param bindings Argument bindings.
+	 * @param <E> Type of the exceptions.
 	 * @param procedure Procedure to apply.
-	 * @throws ApplicationException When some function application fails.
+	 * @param bindings Argument bindings.
+	 * @throws E When some procedure execution fails.
 	 */
-	public static <K, V> void apply(final Map<? extends K, ? extends V> bindings, final Procedure2<? super K, ? super V> procedure)
-	throws ApplicationException {
-		assert null != bindings;
+	public static <K, V, E extends Exception> void apply(final Procedure2<? super K, ? super V, E> procedure, final Map<? extends K, ? extends V> bindings)
+	throws E {
 		assert null != procedure;
+		assert null != bindings;
 		
 		// Apply.
 		for (final Map.Entry<? extends K, ? extends V> binding : bindings.entrySet()) {
-			procedure.apply(binding.getKey(), binding.getValue());
+			procedure.execute(binding.getKey(), binding.getValue());
 		}
 	}
 	
 	// DOCME
-	public static <T, A> A fold(final Collection<? extends T> values, final Function2<? super A, ? super T, ? extends A> function, final A initialAccumulator)
-	throws ApplicationException {
+	public static <T, A, E extends Exception> A fold(final Function2<? super A, ? super T, ? extends A, E> function, final A initialAccumulator, final Collection<? extends T> values)
+	throws E {
+		assert null != function;
 		assert null != values;
-		assert null != function;
 		
 		// Fold.
-		A accumulator = initialAccumulator;
+		final MutableReference<A> accumulator = new MutableReference<A>(initialAccumulator);
 		for (final T value : values) {
-			accumulator = function.apply(accumulator, value);
+			accumulator.set(function.evaluate(accumulator.get(), value), true);
 		}
-		return accumulator;
+		return accumulator.get();
 	}
 	
 	// DOCME
-	public static <T, A> A fold(final Iterator<? extends T> iterator, final Function2<? super A, ? super T, ? extends A> function, final A initialAccumulator)
-	throws ApplicationException {
-		assert null != iterator;
+	public static <T, A, E extends Exception> A fold(final Function2<? super A, ? super T, ? extends A, E> function, final A initialAccumulator, final Iterator<? extends T> iterator)
+	throws E {
 		assert null != function;
+		assert null != iterator;
 		
 		// Fold.
-		A accumulator = initialAccumulator;
+		final MutableReference<A> accumulator = new MutableReference<A>(initialAccumulator);
 		while (iterator.hasNext()) {
-			final T value = iterator.next();
-			accumulator = function.apply(accumulator, value);
+			accumulator.set(function.evaluate(accumulator.get(), iterator.next()));
 		}
-		return accumulator;
+		return accumulator.get();
 	}
 	
 	// DOCME

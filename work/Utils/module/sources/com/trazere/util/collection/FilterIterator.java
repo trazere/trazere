@@ -15,8 +15,7 @@
  */
 package com.trazere.util.collection;
 
-import com.trazere.util.function.ApplicationException;
-import com.trazere.util.function.Filter;
+import com.trazere.util.function.Predicate;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -26,22 +25,22 @@ import java.util.NoSuchElementException;
  * @param <T> Type of the elements.
  */
 public abstract class FilterIterator<T>
-implements Iterator<T>, Filter<T> {
+implements Iterator<T> {
 	/**
-	 * Build an iterator using the given feed and filter.
+	 * Build an iterator using the given feed and predicate.
 	 * 
 	 * @param <T> Type of the elements.
 	 * @param feed Element feed.
-	 * @param filter Filter to use.
+	 * @param predicate Predicate to use.
 	 * @return The built iterator.
 	 */
-	public static <T> FilterIterator<T> build(final Iterator<T> feed, final Filter<? super T> filter) {
-		assert null != filter;
+	public static <T> FilterIterator<T> build(final Iterator<T> feed, final Predicate<? super T, ? extends RuntimeException> predicate) {
+		assert null != predicate;
 		
 		return new FilterIterator<T>(feed) {
-			public boolean filter(final T value)
-			throws ApplicationException {
-				return filter.filter(value);
+			@Override
+			public boolean filter(final T value) {
+				return predicate.evaluate(value);
 			}
 		};
 	}
@@ -102,6 +101,14 @@ implements Iterator<T>, Filter<T> {
 			}
 		}
 	}
+	
+	/**
+	 * Filter the given value.
+	 * 
+	 * @param value Value to filter. May be <code>null</code>.
+	 * @return <code>true</code> when the value is accepted, <code>false</code> otherwise.
+	 */
+	protected abstract boolean filter(final T value);
 	
 	public void remove() {
 		throw new UnsupportedOperationException();

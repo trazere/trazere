@@ -15,7 +15,7 @@
  */
 package com.trazere.util.cache;
 
-import com.trazere.util.function.Filter2;
+import com.trazere.util.function.Predicate2;
 import java.util.Set;
 
 /**
@@ -71,9 +71,12 @@ public interface Cache<K, V> {
 	/**
 	 * Clear the receiver cache according to the given key/value pair filter.
 	 * 
+	 * @param <E> Type of the exceptions.
 	 * @param filter Filter of the key/value associations to clear.
+	 * @throws E When some filter evaluation fails.
 	 */
-	public void clear(final Filter2<? super K, ? super V> filter);
+	public <E extends Exception> void clear(final Predicate2<? super K, ? super V, E> filter)
+	throws E;
 	
 	/**
 	 * Clear the receiver cache from all values.

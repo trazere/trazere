@@ -20,8 +20,8 @@ import com.trazere.util.csv.CSVReader;
 import com.trazere.util.csv.CSVReaderOption;
 import com.trazere.util.csv.CSVWriter;
 import com.trazere.util.csv.CSVWriterOption;
-import com.trazere.util.function.ApplicationException;
-import com.trazere.util.function.Filter;
+import com.trazere.util.function.Predicate;
+import com.trazere.util.record.RecordException;
 import com.trazere.util.report.ReportEntry;
 import com.trazere.util.report.ReportException;
 import com.trazere.util.report.ReportLevel;
@@ -42,7 +42,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * The <code>CSVReportStore</code> abstract class represents report stores relying on CSV files.
+ * The {@link CSVReportStore} abstract class represents report stores relying on CSV files.
  * 
  * @param <Entry> Type of the report entries.
  */
@@ -239,7 +239,7 @@ implements ReportStore<Entry> {
 		}
 	}
 	
-	public int countEntries(final Filter<ReportStoreEntry<Entry>> filter)
+	public int countEntries2(final Predicate<? super ReportStoreEntry<Entry>, RecordException> filter)
 	throws ReportException {
 		// Load the entries.
 		load();
@@ -248,17 +248,13 @@ implements ReportStore<Entry> {
 		return _entries.size();
 	}
 	
-	public List<ReportStoreEntry<Entry>> getEntries(final Filter<ReportStoreEntry<Entry>> filter, final int limit, final boolean fromEnd)
+	public List<ReportStoreEntry<Entry>> getEntries(final Predicate<? super ReportStoreEntry<Entry>, ReportException> filter, final int limit, final boolean fromEnd)
 	throws ReportException {
 		// Load the entries.
 		load();
 		
 		// Get the entries.
-		try {
-			return ReportStoreUtils.filterEntries(_entries, filter, limit, fromEnd);
-		} catch (final ApplicationException exception) {
-			throw new ReportException(exception);
-		}
+		return ReportStoreUtils.filterEntries(_entries, filter, limit, fromEnd);
 	}
 	
 	/**

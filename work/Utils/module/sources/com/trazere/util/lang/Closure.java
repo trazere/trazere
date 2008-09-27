@@ -27,18 +27,20 @@ import com.trazere.util.type.Maybe.Some;
  * A closure is a value which is lazily computed and memoized. This class simulates call-by-need evaluations.
  * 
  * @param <T> Type of the value.
+ * @param <E> Type of the exceptions.
  */
-public abstract class Closure<T>
+public abstract class Closure<T, E extends Exception>
 implements Describable {
 	/**
 	 * Build a closure containing the given value.
 	 * 
 	 * @param <T> Type of the value.
+	 * @param <E> Type of the exceptions.
 	 * @param value Value. May be <code>null</code>.
 	 * @return The closure.
 	 */
-	public static <T> Closure<T> build(final T value) {
-		return new Closure<T>() {
+	public static <T, E extends Exception> Closure<T, E> build(final T value) {
+		return new Closure<T, E>() {
 			@Override
 			protected T compute() {
 				return value;
@@ -69,10 +71,10 @@ implements Describable {
 	 * The value is computed if needed and memoized for future calls.
 	 * 
 	 * @return The computed value. May be <code>null</code>.
-	 * @throws CannotComputeValueException When the computation of the value fails.
+	 * @throws E When the computation of the value fails.
 	 */
 	public T get()
-	throws CannotComputeValueException {
+	throws E {
 		if (_value.isSome()) {
 			return _value.asSome().getValue();
 		} else {
@@ -86,10 +88,10 @@ implements Describable {
 	 * Compute the value of the receiver closure.
 	 * 
 	 * @return The computed value. May be <code>null</code>.
-	 * @throws CannotComputeValueException When the computation fails.
+	 * @throws E When the computation fails.
 	 */
 	protected abstract T compute()
-	throws CannotComputeValueException;
+	throws E;
 	
 	/**
 	 * Reset the value memoized in the receiver closure. The value will be computed (again) during the next call to {@link #get()}.

@@ -15,18 +15,17 @@
  */
 package com.trazere.util.collection;
 
-import com.trazere.util.function.ApplicationException;
 import com.trazere.util.function.Function;
 import java.util.Iterator;
 
 /**
- * The {@link FunctionIterator} abstract class represents iterator combinators which transform the iterated elements.
+ * The {@link MapIterator} abstract class represents iterator combinators which transform the iterated elements.
  * 
  * @param <T> Type of the elements of the feeds.
  * @param <R> Type of the produced elements.
  */
-public abstract class FunctionIterator<T, R>
-implements Iterator<R>, Function<T, R> {
+public abstract class MapIterator<T, R>
+implements Iterator<R> {
 	/**
 	 * Build an iterator using the given feed and function.
 	 * 
@@ -36,13 +35,13 @@ implements Iterator<R>, Function<T, R> {
 	 * @param function Function to use to transform the elements.
 	 * @return The built iterator.
 	 */
-	public static <T, R> FunctionIterator<T, R> build(final Iterator<T> feed, final Function<? super T, ? extends R> function) {
+	public static <T, R> MapIterator<T, R> build(final Iterator<T> feed, final Function<? super T, ? extends R, ? extends RuntimeException> function) {
 		assert null != function;
 		
-		return new FunctionIterator<T, R>(feed) {
-			public R apply(final T value)
-			throws ApplicationException {
-				return function.apply(value);
+		return new MapIterator<T, R>(feed) {
+			@Override
+			public R map(final T value) {
+				return function.evaluate(value);
 			}
 		};
 	}
@@ -55,7 +54,7 @@ implements Iterator<R>, Function<T, R> {
 	 * 
 	 * @param feed Element feed.
 	 */
-	public FunctionIterator(final Iterator<T> feed) {
+	public MapIterator(final Iterator<T> feed) {
 		assert null != feed;
 		
 		// Initialization.
@@ -67,8 +66,10 @@ implements Iterator<R>, Function<T, R> {
 	}
 	
 	public R next() {
-		return apply(_feed.next());
+		return map(_feed.next());
 	}
+	
+	protected abstract R map(final T value);
 	
 	public void remove() {
 		_feed.remove();

@@ -29,12 +29,7 @@ public class CSVTest {
 		final List<CSVLine> lines = read(file, EnumSet.of(CSVReaderOption.TRIM_FIELDS, CSVReaderOption.STRIP_EMPTY_FIELDS, CSVReaderOption.CHECK_CARDINALITY, CSVReaderOption.SKIP_INVALID_LINES));
 		
 		// Write.
-		write(new File(args[1]), CollectionUtils.listN(new String[] {
-		    "C1",
-		    "C2",
-		    "C3",
-		    "----"
-		}), EnumSet.noneOf(CSVWriterOption.class), lines);
+		write(new File(args[1]), CollectionUtils.listN("C1", "C2", "C3", "----"), EnumSet.noneOf(CSVWriterOption.class), lines);
 	}
 	
 	public static List<CSVLine> read(final File file, final EnumSet<CSVReaderOption> options)

@@ -15,9 +15,7 @@
  */
 package com.trazere.util.collection;
 
-import com.trazere.util.function.ApplicationException;
 import com.trazere.util.function.Function;
-import com.trazere.util.lang.CannotComputeValueException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -26,36 +24,34 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 /**
- * The <code>LazyMap</code> class represents maps which can lazily fill themselves upon access.
+ * The {@link LazyMap} class represents maps which can lazily fill themselves upon access.
  * <p>
  * The backing map supports <code>null</code> keys and values.
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
+ * @param <E> Type of the exceptions.
  */
-public abstract class LazyMap<K, V>
-implements Function<K, V> {
+public abstract class LazyMap<K, V, E extends Exception>
+implements Function<K, V, E> {
 	/**
 	 * Build a lazy map using the given function.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
+	 * @param <E> Type of the exceptions.
 	 * @param function Function computing the values of the map.
 	 * @return The built lazy map.
 	 */
-	public static <K, V> LazyMap<K, V> lazyMap(final Function<K, V> function) {
+	public static <K, V, E extends Exception> LazyMap<K, V, E> lazyMap(final Function<K, V, E> function) {
 		assert null != function;
 		
 		// Build.
-		return new LazyMap<K, V>() {
+		return new LazyMap<K, V, E>() {
 			@Override
 			protected V computeValue(final K key)
-			throws CannotComputeValueException {
-				try {
-					return function.apply(key);
-				} catch (final ApplicationException exception) {
-					throw new CannotComputeValueException(exception);
-				}
+			throws E {
+				return function.evaluate(key);
 			}
 		};
 	}
@@ -119,10 +115,10 @@ implements Function<K, V> {
 	 * 
 	 * @param key Key which the value is associated to. May be <code>null</code>.
 	 * @return The value.
-	 * @throws CannotComputeValueException
+	 * @throws E When the value cannot be computed.
 	 */
 	public V get(final K key)
-	throws CannotComputeValueException {
+	throws E {
 		// Check the entries.
 		if (_entries.containsKey(key)) {
 			return _entries.get(key);
@@ -140,10 +136,10 @@ implements Function<K, V> {
 	 * 
 	 * @param key Key whose value should be computed. May be <code>null</code>.
 	 * @return The computed value. May be <code>null</code>.
-	 * @throws CannotComputeValueException
+	 * @throws E When the value cannot be computed.
 	 */
 	protected abstract V computeValue(final K key)
-	throws CannotComputeValueException;
+	throws E;
 	
 	/**
 	 * Get the keys of the receiver map.
@@ -189,13 +185,9 @@ implements Function<K, V> {
 		_entries.clear();
 	}
 	
-	public V apply(final K key)
-	throws ApplicationException {
-		try {
-			return get(key);
-		} catch (final CannotComputeValueException exception) {
-			throw new ApplicationException(exception);
-		}
+	public V evaluate(final K key)
+	throws E {
+		return get(key);
 	}
 	
 	@Override

@@ -25,60 +25,81 @@ import java.util.Map;
  * @see Function2
  */
 public class Functions {
+	private static final Function<?, ?, ?> IDENTITY = new Function<Object, Object, RuntimeException>() {
+		public Object evaluate(final Object value) {
+			return value;
+		}
+	};
+	
 	/**
-	 * Build a function always returning the given value.
+	 * Build an identity function.
+	 * 
+	 * @param <T> Type of the argument and result values.
+	 * @param <E> Type of the exceptions.
+	 * @return The built function.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T, E extends Exception> Function<T, T, E> identity() {
+		return (Function<T, T, E>) IDENTITY;
+	}
+	
+	/**
+	 * Build a function which evaluates to the given value for all values.
 	 * 
 	 * @param <T> Type of the argument values.
-	 * @param <R> Type of the result value.
-	 * @param result Result value.
-	 * @return The function.
+	 * @param <R> Type of the result values.
+	 * @param <E> Type of the exceptions.
+	 * @param result Value value.
+	 * @return The built function.
 	 */
-	public static <T, R> Function<T, R> constant(final R result) {
-		return new Function<T, R>() {
-			public R apply(final T value) {
+	public static <T, R, E extends Exception> Function<T, R, E> constant(final R result) {
+		return new Function<T, R, E>() {
+			public R evaluate(final T value) {
 				return result;
 			}
 		};
 	}
 	
 	/**
-	 * Build a function defined by the given map.
+	 * Build a function corresponding to the given map.
 	 * <p>
-	 * The built function returns the values associated to the keys in the map, or <code>null</code> for the unmapped keys.
+	 * The built function evaluates to the values associated to the keys in the map and to <code>null</code> for the other keys.
 	 * 
-	 * @param <T> Type of the keys of the map (the argument values).
-	 * @param <R> Type of the values of the map (the result values).
+	 * @param <K> Type of the keys of the map (the argument values).
+	 * @param <V> Type of the values of the map (the result values).
+	 * @param <E> Type of the exceptions.
 	 * @param map Map defining the function to build.
-	 * @return The function.
+	 * @return The built function.
 	 */
-	public static <T, R> Function<T, R> map(final Map<T, R> map) {
+	public static <K, V, E extends Exception> Function<K, V, E> map(final Map<K, V> map) {
 		assert null != map;
 		
 		// Build the function.
-		return new Function<T, R>() {
-			public R apply(final T key) {
+		return new Function<K, V, E>() {
+			public V evaluate(final K key) {
 				return map.get(key);
 			}
 		};
 	}
 	
 	/**
-	 * Build a function defined by the given map.
+	 * Build a function corresponding to the given map.
 	 * <p>
-	 * The built function returns the values associated to the keys in the map. Value resulting values are wrapped into a {@link Maybe maybe} instance to
-	 * reflect the domain of the map.
+	 * The built function evaluates to the values associated to the keys in the map wrapped into a {@link Maybe maybe} instance to reflect the domain of the
+	 * map.
 	 * 
 	 * @param <T> Type of the keys of the map (the argument values).
 	 * @param <R> Type of the values of the map (the result values).
+	 * @param <E> Type of the exceptions.
 	 * @param map Map defining the function to build.
-	 * @return The function.
+	 * @return The built function.
 	 */
-	public static <T, R> Function<T, Maybe<R>> maybeMap(final Map<T, R> map) {
+	public static <T, R, E extends Exception> Function<T, Maybe<R>, E> maybeMap(final Map<T, R> map) {
 		assert null != map;
 		
 		// Build the function.
-		return new Function<T, Maybe<R>>() {
-			public Maybe<R> apply(final T key) {
+		return new Function<T, Maybe<R>, E>() {
+			public Maybe<R> evaluate(final T key) {
 				if (map.containsKey(key)) {
 					return Maybe.some(map.get(key));
 				} else {
