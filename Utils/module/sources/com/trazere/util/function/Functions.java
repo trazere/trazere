@@ -35,12 +35,12 @@ public class Functions {
 	 * Build an identity function.
 	 * 
 	 * @param <T> Type of the argument and result values.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @return The built function.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T, E extends Exception> Function<T, T, E> identity() {
-		return (Function<T, T, E>) IDENTITY;
+	public static <T, X extends Exception> Function<T, T, X> identity() {
+		return (Function<T, T, X>) IDENTITY;
 	}
 	
 	/**
@@ -48,12 +48,12 @@ public class Functions {
 	 * 
 	 * @param <T> Type of the argument values.
 	 * @param <R> Type of the result values.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param result Value value.
 	 * @return The built function.
 	 */
-	public static <T, R, E extends Exception> Function<T, R, E> constant(final R result) {
-		return new Function<T, R, E>() {
+	public static <T, R, X extends Exception> Function<T, R, X> constant(final R result) {
+		return new Function<T, R, X>() {
 			public R evaluate(final T value) {
 				return result;
 			}
@@ -67,15 +67,15 @@ public class Functions {
 	 * 
 	 * @param <K> Type of the keys of the map (the argument values).
 	 * @param <V> Type of the values of the map (the result values).
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param map Map defining the function to build.
 	 * @return The built function.
 	 */
-	public static <K, V, E extends Exception> Function<K, V, E> map(final Map<K, V> map) {
+	public static <K, V, X extends Exception> Function<K, V, X> map(final Map<K, V> map) {
 		assert null != map;
 		
 		// Build the function.
-		return new Function<K, V, E>() {
+		return new Function<K, V, X>() {
 			public V evaluate(final K key) {
 				return map.get(key);
 			}
@@ -90,15 +90,15 @@ public class Functions {
 	 * 
 	 * @param <T> Type of the keys of the map (the argument values).
 	 * @param <R> Type of the values of the map (the result values).
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param map Map defining the function to build.
 	 * @return The built function.
 	 */
-	public static <T, R, E extends Exception> Function<T, Maybe<R>, E> maybeMap(final Map<T, R> map) {
+	public static <T, R, X extends Exception> Function<T, Maybe<R>, X> maybeMap(final Map<T, R> map) {
 		assert null != map;
 		
 		// Build the function.
-		return new Function<T, Maybe<R>, E>() {
+		return new Function<T, Maybe<R>, X>() {
 			public Maybe<R> evaluate(final T key) {
 				if (map.containsKey(key)) {
 					return Maybe.some(map.get(key));

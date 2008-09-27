@@ -40,15 +40,15 @@ public class FunctionUtils {
 	 * 
 	 * @param <T> Type of the values to filter.
 	 * @param <C> Type of the collection to populate.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param predicate Predicate to use.
 	 * @param values Values to filter.
 	 * @param results The collection to populate with the accepted values.
 	 * @return The given result collection.
-	 * @throws E When some filter evaluation fails.
+	 * @throws X When some filter evaluation fails.
 	 */
-	public static <T, C extends Collection<? super T>, E extends Exception> C filter(final Predicate<? super T, E> predicate, final Collection<? extends T> values, final C results)
-	throws E {
+	public static <T, C extends Collection<? super T>, X extends Exception> C filter(final Predicate<? super T, X> predicate, final Collection<? extends T> values, final C results)
+	throws X {
 		assert null != values;
 		assert null != predicate;
 		assert null != results;
@@ -70,15 +70,15 @@ public class FunctionUtils {
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param <M> Type of the map to populate.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param predicate Predicate to use.
 	 * @param bindings Bindings to filter.
 	 * @param results The map to populate with the accepted bindings.
 	 * @return The given result map.
-	 * @throws E When some predicate evaluation fails.
+	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <K, V, M extends Map<? super K, ? super V>, E extends Exception> M filter(final Predicate2<? super K, ? super V, E> predicate, final Map<? extends K, ? extends V> bindings, final M results)
-	throws E {
+	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M filter(final Predicate2<? super K, ? super V, X> predicate, final Map<? extends K, ? extends V> bindings, final M results)
+	throws X {
 		assert null != predicate;
 		assert null != bindings;
 		assert null != results;
@@ -102,15 +102,15 @@ public class FunctionUtils {
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param <S> Type of the set to populate.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param predicate Predicate to use.
 	 * @param bindings Bindings to filter.
 	 * @param results The set to populate with the keys of the accepted bindings.
 	 * @return The given result set.
-	 * @throws E When some predicate evaluation fails.
+	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <K, V, S extends Set<? super K>, E extends Exception> S filterKeys(final Predicate2<? super K, ? super V, E> predicate, final Map<? extends K, ? extends V> bindings, final S results)
-	throws E {
+	public static <K, V, S extends Set<? super K>, X extends Exception> S filterKeys(final Predicate2<? super K, ? super V, X> predicate, final Map<? extends K, ? extends V> bindings, final S results)
+	throws X {
 		assert null != predicate;
 		assert null != bindings;
 		assert null != results;
@@ -133,15 +133,15 @@ public class FunctionUtils {
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param <C> Type of the collection to populate.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param predicate Predicate to use.
 	 * @param bindings Bindings to filter.
 	 * @param results The collection to populate with the results.
 	 * @return The given result collection.
-	 * @throws E When some predicate evaluation fails.
+	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <K, V, C extends Collection<? super V>, E extends Exception> C filterValues(final Predicate2<? super K, ? super V, E> predicate, final Map<? extends K, ? extends V> bindings, final C results)
-	throws E {
+	public static <K, V, C extends Collection<? super V>, X extends Exception> C filterValues(final Predicate2<? super K, ? super V, X> predicate, final Map<? extends K, ? extends V> bindings, final C results)
+	throws X {
 		assert null != predicate;
 		assert null != bindings;
 		assert null != results;
@@ -161,14 +161,14 @@ public class FunctionUtils {
 	 * Count the given values accepted by the given predicate.
 	 * 
 	 * @param <T> Type of the values.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param predicate Predicate to use.
 	 * @param values Values to count.
 	 * @return The number of accepted values.
-	 * @throws E When some predicate evaluation fails.
+	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <T, E extends Exception> int count(final Predicate<? super T, E> predicate, final Collection<? extends T> values)
-	throws E {
+	public static <T, X extends Exception> int count(final Predicate<? super T, X> predicate, final Collection<? extends T> values)
+	throws X {
 		assert null != predicate;
 		assert null != values;
 		
@@ -186,14 +186,14 @@ public class FunctionUtils {
 	 * Count the values provided by the given iterator accepted by the given predicate.
 	 * 
 	 * @param <T> Type of the values.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param predicate Predicate to use.
 	 * @param values Iterator providing the values to count.
 	 * @return The number of accepted values.
-	 * @throws E When some predicate evaluation fails.
+	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <T, E extends Exception> int count(final Predicate<? super T, E> predicate, final Iterator<? extends T> values)
-	throws E {
+	public static <T, X extends Exception> int count(final Predicate<? super T, X> predicate, final Iterator<? extends T> values)
+	throws X {
 		assert null != predicate;
 		assert null != values;
 		
@@ -214,14 +214,14 @@ public class FunctionUtils {
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param predicate Predicate to use.
 	 * @param bindings Bindings to count.
 	 * @return The number of accepted bindings.
-	 * @throws E When some predicate evaluation fails.
+	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <K, V, E extends Exception> int count(final Predicate2<? super K, ? super V, E> predicate, final Map<? extends K, ? extends V> bindings)
-	throws E {
+	public static <K, V, X extends Exception> int count(final Predicate2<? super K, ? super V, X> predicate, final Map<? extends K, ? extends V> bindings)
+	throws X {
 		assert null != predicate;
 		assert null != bindings;
 		
@@ -239,14 +239,14 @@ public class FunctionUtils {
 	 * Test wether any given value is accepted by the given predicate.
 	 * 
 	 * @param <T> Type of the values.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param predicate Predicate to use.
 	 * @param values Values to test.
 	 * @return <code>true</code> if any value is accepted, <code>false</code> if all values are rejected.
-	 * @throws E When some predicate evaluation fails.
+	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <T, E extends Exception> boolean isAny(final Predicate<? super T, E> predicate, final Collection<? extends T> values)
-	throws E {
+	public static <T, X extends Exception> boolean isAny(final Predicate<? super T, X> predicate, final Collection<? extends T> values)
+	throws X {
 		assert null != predicate;
 		assert null != values;
 		
@@ -263,14 +263,14 @@ public class FunctionUtils {
 	 * Test wether any value provided by the given iterator is accepted by the given predicate.
 	 * 
 	 * @param <T> Type of the values.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param predicate Predicate to use.
 	 * @param values Iterator providing the values to test.
 	 * @return <code>true</code> if any value is accepted, <code>false</code> if all values are rejected.
-	 * @throws E When some predicate evaluation fails.
+	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <T, E extends Exception> boolean isAny(final Predicate<? super T, E> predicate, final Iterator<? extends T> values)
-	throws E {
+	public static <T, X extends Exception> boolean isAny(final Predicate<? super T, X> predicate, final Iterator<? extends T> values)
+	throws X {
 		assert null != predicate;
 		assert null != values;
 		
@@ -290,14 +290,14 @@ public class FunctionUtils {
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param predicate Predicate to use.
 	 * @param bindings Bindings to test.
 	 * @return <code>true</code> if any binding is accepted, <code>false</code> if all bindings are rejected.
-	 * @throws E When some predicate evaluation fails.
+	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <K, V, E extends Exception> boolean isAny(final Predicate2<? super K, ? super V, E> predicate, final Map<? extends K, ? extends V> bindings)
-	throws E {
+	public static <K, V, X extends Exception> boolean isAny(final Predicate2<? super K, ? super V, X> predicate, final Map<? extends K, ? extends V> bindings)
+	throws X {
 		assert null != predicate;
 		assert null != bindings;
 		
@@ -314,14 +314,14 @@ public class FunctionUtils {
 	 * Test wether all given values are accepted by the given predicate.
 	 * 
 	 * @param <T> Type of the values.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param predicate Predicate to use.
 	 * @param values Values to test.
 	 * @return <code>true</code> if all values are accepted, <code>false</code> if any value is rejected.
-	 * @throws E When some predicate evaluation fails.
+	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <T, E extends Exception> boolean areAll(final Predicate<? super T, E> predicate, final Collection<? extends T> values)
-	throws E {
+	public static <T, X extends Exception> boolean areAll(final Predicate<? super T, X> predicate, final Collection<? extends T> values)
+	throws X {
 		assert null != predicate;
 		assert null != values;
 		
@@ -338,14 +338,14 @@ public class FunctionUtils {
 	 * Test wether all values provided by the given iterator are accepted by the given predicate.
 	 * 
 	 * @param <T> Type of the values.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param predicate Predicate to use.
 	 * @param values Iterator providing the values to test.
 	 * @return <code>true</code> if all values are accepted, <code>false</code> if any value is rejected.
-	 * @throws E When some predicate evaluation fails.
+	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <T, E extends Exception> boolean areAll(final Predicate<? super T, E> predicate, final Iterator<? extends T> values)
-	throws E {
+	public static <T, X extends Exception> boolean areAll(final Predicate<? super T, X> predicate, final Iterator<? extends T> values)
+	throws X {
 		assert null != predicate;
 		assert null != values;
 		
@@ -365,14 +365,14 @@ public class FunctionUtils {
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param predicate Predicate to use.
 	 * @param bindings Bindings to test.
 	 * @return <code>true</code> if all bindings are accepted, <code>false</code> if any binding is rejected.
-	 * @throws E When some predicate evaluation fails.
+	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <K, V, E extends Exception> boolean areAll(final Predicate2<? super K, ? super V, E> predicate, final Map<? extends K, ? extends V> bindings)
-	throws E {
+	public static <K, V, X extends Exception> boolean areAll(final Predicate2<? super K, ? super V, X> predicate, final Map<? extends K, ? extends V> bindings)
+	throws X {
 		assert null != predicate;
 		assert null != bindings;
 		
@@ -391,15 +391,15 @@ public class FunctionUtils {
 	 * @param <T1> Type of the argument values.
 	 * @param <T2> Type of the result values.
 	 * @param <C> Type of the collection to populate.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param function Function to use.
 	 * @param values Argument values.
 	 * @param results The collection to populate with the results.
 	 * @return The given result collection.
-	 * @throws E When some function evaluation fails.
+	 * @throws X When some function evaluation fails.
 	 */
-	public static <T1, T2, C extends Collection<? super T2>, E extends Exception> C map(final Function<? super T1, ? extends Maybe<? extends T2>, E> function, final Collection<? extends T1> values, final C results)
-	throws E {
+	public static <T1, T2, C extends Collection<? super T2>, X extends Exception> C map(final Function<? super T1, ? extends Maybe<? extends T2>, X> function, final Collection<? extends T1> values, final C results)
+	throws X {
 		assert null != function;
 		assert null != values;
 		assert null != results;
@@ -420,15 +420,15 @@ public class FunctionUtils {
 	 * @param <T1> Type of the argument values.
 	 * @param <T2> Type of the result values.
 	 * @param <C> Type of the collection to populate.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param function Function to use.
 	 * @param values Iterator providing the argument values.
 	 * @param results The collection to populate with the results.
 	 * @return The given result collection.
-	 * @throws E When some function evaluation fails.
+	 * @throws X When some function evaluation fails.
 	 */
-	public static <T1, T2, C extends Collection<? super T2>, E extends Exception> C map(final Function<? super T1, ? extends Maybe<? extends T2>, E> function, final Iterator<? extends T1> values, final C results)
-	throws E {
+	public static <T1, T2, C extends Collection<? super T2>, X extends Exception> C map(final Function<? super T1, ? extends Maybe<? extends T2>, X> function, final Iterator<? extends T1> values, final C results)
+	throws X {
 		assert null != function;
 		assert null != values;
 		assert null != results;
@@ -453,15 +453,15 @@ public class FunctionUtils {
 	 * @param <V1> Type of the argument values.
 	 * @param <V2> Type of the result values.
 	 * @param <M> Type of the map to populate.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param function Function to use.
 	 * @param bindings Argument bindings.
 	 * @param results The map to populate with the results.
 	 * @return The given result map.
-	 * @throws E When some function evaluation fails.
+	 * @throws X When some function evaluation fails.
 	 */
-	public static <K, V1, V2, M extends Map<? super K, ? super V2>, E extends Exception> M map(final Function2<? super K, ? super V1, ? extends Maybe<? extends V2>, E> function, final Map<? extends K, ? extends V1> bindings, final M results)
-	throws E {
+	public static <K, V1, V2, M extends Map<? super K, ? super V2>, X extends Exception> M map(final Function2<? super K, ? super V1, ? extends Maybe<? extends V2>, X> function, final Map<? extends K, ? extends V1> bindings, final M results)
+	throws X {
 		assert null != function;
 		assert null != bindings;
 		assert null != results;
@@ -483,15 +483,15 @@ public class FunctionUtils {
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param <M> Type of the map to populate.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param function Function to use.
 	 * @param keys Keys to map.
 	 * @param results The map to populate with the results.
 	 * @return The given result map.
-	 * @throws E When some function evaluation fails.
+	 * @throws X When some function evaluation fails.
 	 */
-	public static <K, V, M extends Map<? super K, ? super V>, E extends Exception> M mapKeys(final Function<? super K, ? extends Maybe<? extends V>, E> function, final Set<? extends K> keys, final M results)
-	throws E {
+	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M mapKeys(final Function<? super K, ? extends Maybe<? extends V>, X> function, final Set<? extends K> keys, final M results)
+	throws X {
 		assert null != function;
 		assert null != keys;
 		assert null != results;
@@ -514,15 +514,15 @@ public class FunctionUtils {
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param <M> Type of the map to populate.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param function Function to use.
 	 * @param values Values to map.
 	 * @param results The map to populate with the results.
 	 * @return The given result map.
-	 * @throws E When some function evaluation fails.
+	 * @throws X When some function evaluation fails.
 	 */
-	public static <K, V, M extends Map<? super K, ? super V>, E extends Exception> M mapValues(final Function<? super V, ? extends Maybe<? extends K>, E> function, final Collection<? extends V> values, final M results)
-	throws E {
+	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M mapValues(final Function<? super V, ? extends Maybe<? extends K>, X> function, final Collection<? extends V> values, final M results)
+	throws X {
 		assert null != function;
 		assert null != values;
 		assert null != results;
@@ -545,15 +545,15 @@ public class FunctionUtils {
 	 * @param <K2> Type of the result keys.
 	 * @param <V> Type of the values.
 	 * @param <M> Type of the map to populate.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param function Function to use.
 	 * @param bindings Map to remap.
 	 * @param results The map to populate with the results.
 	 * @return The given result map.
-	 * @throws E When some function evaluation fails.
+	 * @throws X When some function evaluation fails.
 	 */
-	public static <K1, K2, V, M extends Map<? super K2, ? super V>, E extends Exception> M remap(final Function<? super K1, ? extends Maybe<? extends K2>, E> function, final Map<? extends K1, ? extends V> bindings, final M results)
-	throws E {
+	public static <K1, K2, V, M extends Map<? super K2, ? super V>, X extends Exception> M remap(final Function<? super K1, ? extends Maybe<? extends K2>, X> function, final Map<? extends K1, ? extends V> bindings, final M results)
+	throws X {
 		assert null != function;
 		assert null != bindings;
 		assert null != results;
@@ -578,15 +578,15 @@ public class FunctionUtils {
 	 * @param <K2> Type of the result keys.
 	 * @param <V> Type of the values.
 	 * @param <M> Type of the map to populate.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param function Function to use.
 	 * @param bindings Argument to remap.
 	 * @param results The map to populate with the results.
 	 * @return The given result map.
-	 * @throws E When some function evaluation fails.
+	 * @throws X When some function evaluation fails.
 	 */
-	public static <K1, K2, V, M extends Map<? super K2, ? super V>, E extends Exception> M remap(final Function2<? super K1, ? super V, ? extends Maybe<? extends K2>, E> function, final Map<? extends K1, ? extends V> bindings, final M results)
-	throws E {
+	public static <K1, K2, V, M extends Map<? super K2, ? super V>, X extends Exception> M remap(final Function2<? super K1, ? super V, ? extends Maybe<? extends K2>, X> function, final Map<? extends K1, ? extends V> bindings, final M results)
+	throws X {
 		assert null != function;
 		assert null != bindings;
 		assert null != results;
@@ -606,13 +606,13 @@ public class FunctionUtils {
 	 * Execute the given procedure with the given values.
 	 * 
 	 * @param <T> Type of the argument values.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param procedure Procedure to execute.
 	 * @param values Argument values.
-	 * @throws E When some procedure execution fails.
+	 * @throws X When some procedure execution fails.
 	 */
-	public static <T, E extends Exception> void execute(final Procedure<? super T, E> procedure, final Collection<? extends T> values)
-	throws E {
+	public static <T, X extends Exception> void execute(final Procedure<? super T, X> procedure, final Collection<? extends T> values)
+	throws X {
 		assert null != procedure;
 		assert null != values;
 		
@@ -626,13 +626,13 @@ public class FunctionUtils {
 	 * Execute the given procedure with the values provided by the given iterator.
 	 * 
 	 * @param <T> Type of the argument values.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param procedure Procedure to execute.
 	 * @param values Iterator providing the argument values.
-	 * @throws E When some procedure execution fails.
+	 * @throws X When some procedure execution fails.
 	 */
-	public static <T, E extends Exception> void execute(final Procedure<? super T, E> procedure, final Iterator<? extends T> values)
-	throws E {
+	public static <T, X extends Exception> void execute(final Procedure<? super T, X> procedure, final Iterator<? extends T> values)
+	throws X {
 		assert null != procedure;
 		assert null != values;
 		
@@ -649,13 +649,13 @@ public class FunctionUtils {
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param procedure Procedure to apply.
 	 * @param bindings Argument bindings.
-	 * @throws E When some procedure execution fails.
+	 * @throws X When some procedure execution fails.
 	 */
-	public static <K, V, E extends Exception> void apply(final Procedure2<? super K, ? super V, E> procedure, final Map<? extends K, ? extends V> bindings)
-	throws E {
+	public static <K, V, X extends Exception> void apply(final Procedure2<? super K, ? super V, X> procedure, final Map<? extends K, ? extends V> bindings)
+	throws X {
 		assert null != procedure;
 		assert null != bindings;
 		
@@ -666,8 +666,8 @@ public class FunctionUtils {
 	}
 	
 	// DOCME
-	public static <T, A, E extends Exception> A fold(final Function2<? super A, ? super T, ? extends A, E> function, final A initialAccumulator, final Collection<? extends T> values)
-	throws E {
+	public static <T, A, X extends Exception> A fold(final Function2<? super A, ? super T, ? extends A, X> function, final A initialAccumulator, final Collection<? extends T> values)
+	throws X {
 		assert null != function;
 		assert null != values;
 		
@@ -680,8 +680,8 @@ public class FunctionUtils {
 	}
 	
 	// DOCME
-	public static <T, A, E extends Exception> A fold(final Function2<? super A, ? super T, ? extends A, E> function, final A initialAccumulator, final Iterator<? extends T> iterator)
-	throws E {
+	public static <T, A, X extends Exception> A fold(final Function2<? super A, ? super T, ? extends A, X> function, final A initialAccumulator, final Iterator<? extends T> iterator)
+	throws X {
 		assert null != function;
 		assert null != iterator;
 		

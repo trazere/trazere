@@ -29,19 +29,19 @@ import java.util.Set;
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
- * @param <CE> Type of the entries.
+ * @param <E> Type of the entries.
  */
-public abstract class AbstractCache<K, V, CE extends CacheEntry<K, V>>
+public abstract class AbstractCache<K, V, E extends CacheEntry<K, V>>
 implements Cache<K, V>, Describable {
 	/** Cache entries identified by key. */
-	protected final Map<K, CE> _entries = new HashMap<K, CE>();
+	protected final Map<K, E> _entries = new HashMap<K, E>();
 	
 	public void fill(final K key, final V value) {
 		assert null != key;
 		
 		// Add the entry.
-		final CE entry = buildEntry(key, value);
-		final CE currentEntry = _entries.put(entry.getKey(), entry);
+		final E entry = buildEntry(key, value);
+		final E currentEntry = _entries.put(entry.getKey(), entry);
 		
 		clearedEntry(currentEntry);
 		addedEntry(entry);
@@ -62,7 +62,7 @@ implements Cache<K, V>, Describable {
 		assert null != key;
 		
 		// Get.
-		final CE entry = _entries.get(key);
+		final E entry = _entries.get(key);
 		return null != entry ? entry.getValue() : null;
 	}
 	
@@ -70,7 +70,7 @@ implements Cache<K, V>, Describable {
 		assert null != key;
 		
 		// Clear.
-		final CE entry = _entries.remove(key);
+		final E entry = _entries.remove(key);
 		if (null != entry) {
 			clearedEntry(entry);
 			return entry.getValue();
@@ -79,15 +79,15 @@ implements Cache<K, V>, Describable {
 		}
 	}
 	
-	public <E extends Exception> void clear(final Predicate2<? super K, ? super V, E> filter)
-	throws E {
+	public <X extends Exception> void clear(final Predicate2<? super K, ? super V, X> filter)
+	throws X {
 		assert null != filter;
 		
 		// Filter.
-		final Iterator<Map.Entry<K, CE>> entries = _entries.entrySet().iterator();
+		final Iterator<Map.Entry<K, E>> entries = _entries.entrySet().iterator();
 		while (entries.hasNext()) {
-			final Map.Entry<K, CE> entryEntry = entries.next();
-			final CE entry = entryEntry.getValue();
+			final Map.Entry<K, E> entryEntry = entries.next();
+			final E entry = entryEntry.getValue();
 			if (filter.evaluate(entryEntry.getKey(), entry.getValue())) {
 				entries.remove();
 				clearedEntry(entry);
@@ -107,21 +107,21 @@ implements Cache<K, V>, Describable {
 	 * @param value Value. May be <code>null</code>.
 	 * @return The built cache entry.
 	 */
-	protected abstract CE buildEntry(final K key, final V value);
+	protected abstract E buildEntry(final K key, final V value);
 	
 	/**
 	 * Notify that the given entry was added to the receiver cache.
 	 * 
 	 * @param entry The entry which was added.
 	 */
-	protected abstract void addedEntry(final CE entry);
+	protected abstract void addedEntry(final E entry);
 	
 	/**
 	 * Notify that the given entry was removed from the receiver cache.
 	 * 
 	 * @param entry The entry which was removed.
 	 */
-	protected abstract void clearedEntry(final CE entry);
+	protected abstract void clearedEntry(final E entry);
 	
 	/**
 	 * Notify that the all entries were removed from the receiver cache.

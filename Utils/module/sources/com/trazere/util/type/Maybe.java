@@ -46,29 +46,29 @@ implements Describable {
 	 * 
 	 * @param <Value> Type of the value.
 	 * @param <Result> Type of the result.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @see Maybe#match(Matcher)
 	 */
-	public static interface Matcher<Value, Result, E extends Exception> {
+	public static interface Matcher<Value, Result, X extends Exception> {
 		/**
 		 * Apply the receiver function to the given <code>None</code> instance.
 		 * 
 		 * @param none Argument instance of the function.
 		 * @return The result of the function application.
-		 * @throws E When the computation fails.
+		 * @throws X When the computation fails.
 		 */
 		public Result none(final None<Value> none)
-		throws E;
+		throws X;
 		
 		/**
 		 * Apply the receiver function to the given <code>Some</code> instance.
 		 * 
 		 * @param some Argument instance of the function.
 		 * @return The result of the function application.
-		 * @throws E When the computation fails.
+		 * @throws X When the computation fails.
 		 */
 		public Result some(final Some<Value> some)
-		throws E;
+		throws X;
 	}
 	
 	/**
@@ -105,13 +105,13 @@ implements Describable {
 		}
 		
 		@Override
-		public <Result, E extends Exception> Result match(final Matcher<Value, Result, E> matcher)
-		throws E {
+		public <Result, X extends Exception> Result match(final Matcher<Value, Result, X> matcher)
+		throws X {
 			return matcher.none(this);
 		}
 		
 		@Override
-		public <Result, E extends Exception> Maybe<Result> lift(final Function<? super Value, Result, E> function) {
+		public <Result, X extends Exception> Maybe<Result> lift(final Function<? super Value, Result, X> function) {
 			assert null != function;
 			
 			// Lift.
@@ -195,14 +195,14 @@ implements Describable {
 		}
 		
 		@Override
-		public <Result, E extends Exception> Result match(final Matcher<Value, Result, E> matcher)
-		throws E {
+		public <Result, X extends Exception> Result match(final Matcher<Value, Result, X> matcher)
+		throws X {
 			return matcher.some(this);
 		}
 		
 		@Override
-		public <Result, E extends Exception> Maybe<Result> lift(final Function<? super Value, Result, E> function)
-		throws E {
+		public <Result, X extends Exception> Maybe<Result> lift(final Function<? super Value, Result, X> function)
+		throws X {
 			assert null != function;
 			
 			// Lift.
@@ -348,25 +348,25 @@ implements Describable {
 	 * This method implements some kind of simple pattern matching.
 	 * 
 	 * @param <Result> Type of the result.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param matcher Matcher to use.
 	 * @return The result of the function application.
-	 * @throws E When the match fails.
+	 * @throws X When the match fails.
 	 */
-	public abstract <Result, E extends Exception> Result match(final Matcher<Value, Result, E> matcher)
-	throws E;
+	public abstract <Result, X extends Exception> Result match(final Matcher<Value, Result, X> matcher)
+	throws X;
 	
 	/**
 	 * DOCME
 	 * 
 	 * @param function
 	 * @param <Result>
-	 * @param <E>
+	 * @param <X>
 	 * @return xxx
-	 * @throws E
+	 * @throws X
 	 */
-	public abstract <Result, E extends Exception> Maybe<Result> lift(final Function<? super Value, Result, E> function)
-	throws E;
+	public abstract <Result, X extends Exception> Maybe<Result> lift(final Function<? super Value, Result, X> function)
+	throws X;
 	
 	@Override
 	public final String toString() {

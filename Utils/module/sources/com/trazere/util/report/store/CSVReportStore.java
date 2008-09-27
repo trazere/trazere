@@ -21,7 +21,6 @@ import com.trazere.util.csv.CSVReaderOption;
 import com.trazere.util.csv.CSVWriter;
 import com.trazere.util.csv.CSVWriterOption;
 import com.trazere.util.function.Predicate;
-import com.trazere.util.record.RecordException;
 import com.trazere.util.report.ReportEntry;
 import com.trazere.util.report.ReportException;
 import com.trazere.util.report.ReportLevel;
@@ -239,7 +238,7 @@ implements ReportStore<Entry> {
 		}
 	}
 	
-	public int countEntries2(final Predicate<? super ReportStoreEntry<Entry>, RecordException> filter)
+	public int countEntries(final Predicate<? super ReportStoreEntry<Entry>, ReportException> filter)
 	throws ReportException {
 		// Load the entries.
 		load();

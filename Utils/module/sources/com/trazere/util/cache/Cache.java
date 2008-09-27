@@ -71,12 +71,12 @@ public interface Cache<K, V> {
 	/**
 	 * Clear the receiver cache according to the given key/value pair filter.
 	 * 
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param filter Filter of the key/value associations to clear.
-	 * @throws E When some filter evaluation fails.
+	 * @throws X When some filter evaluation fails.
 	 */
-	public <E extends Exception> void clear(final Predicate2<? super K, ? super V, E> filter)
-	throws E;
+	public <X extends Exception> void clear(final Predicate2<? super K, ? super V, X> filter)
+	throws X;
 	
 	/**
 	 * Clear the receiver cache from all values.
