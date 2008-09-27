@@ -1,9 +1,9 @@
 package com.trazere.test;
 
 import com.trazere.util.collection.CollectionUtils;
-import com.trazere.util.function.Filter;
 import com.trazere.util.function.Function;
 import com.trazere.util.function.FunctionUtils;
+import com.trazere.util.function.Predicate;
 import com.trazere.util.type.Maybe;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,6 +17,7 @@ public class Generics {
 	public static void collections() {
 		final List<Integer> numbers1 = CollectionUtils.list(0, 1, 2);
 		System.out.println(numbers1);
+		
 		final List<Object> numbers2 = CollectionUtils.<Object>list(0, 1, 2);
 		System.out.println(numbers2);
 		
@@ -26,33 +27,33 @@ public class Generics {
 	
 	public static void functions() {
 		final List<Integer> numbers = CollectionUtils.list(0, 1, 2);
-		final Filter<Integer> isEven = new Filter<Integer>() {
-			public boolean filter(final Integer value) {
+		final Predicate<Integer, RuntimeException> isEven = new Predicate<Integer, RuntimeException>() {
+			public boolean evaluate(final Integer value) {
 				return 0 == (value % 2);
 			}
 		};
-		final Filter<Object> isNotNull = new Filter<Object>() {
-			public boolean filter(final Object value) {
+		final Predicate<Object, RuntimeException> isNotNull = new Predicate<Object, RuntimeException>() {
+			public boolean evaluate(final Object value) {
 				return null != value;
 			}
 		};
 		
-		final List<Integer> evens1 = FunctionUtils.filter(numbers, isEven, new ArrayList<Integer>());
+		final List<Integer> evens1 = FunctionUtils.filter(isEven, numbers, new ArrayList<Integer>());
 		System.out.println(evens1);
 		
-		final List<Object> evens2 = FunctionUtils.filter(numbers, isEven, new ArrayList<Object>());
+		final List<Object> evens2 = FunctionUtils.filter(isEven, numbers, new ArrayList<Object>());
 		System.out.println(evens2);
 		
-		final Set<Integer> notNulls1 = FunctionUtils.filter(numbers, isNotNull, new HashSet<Integer>());
+		final Set<Integer> notNulls1 = FunctionUtils.filter(isNotNull, numbers, new HashSet<Integer>());
 		System.out.println(notNulls1);
 		
-		final Function<Object, Maybe<String>> toString = new Function<Object, Maybe<String>>() {
-			public Maybe<String> apply(final Object value) {
+		final Function<Object, Maybe<String>, RuntimeException> toString = new Function<Object, Maybe<String>, RuntimeException>() {
+			public Maybe<String> evaluate(final Object value) {
 				return Maybe.some(null != value ? value.toString() : "null");
 			}
 		};
 		
-		final List<String> strings1 = FunctionUtils.map(numbers, toString, new ArrayList<String>());
+		final List<String> strings1 = FunctionUtils.map(toString, numbers, new ArrayList<String>());
 		System.out.println(strings1);
 	}
 }

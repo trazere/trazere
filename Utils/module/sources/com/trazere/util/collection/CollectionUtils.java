@@ -15,10 +15,9 @@
  */
 package com.trazere.util.collection;
 
-import com.trazere.util.function.ApplicationException;
-import com.trazere.util.function.Filter;
-import com.trazere.util.function.Filter2;
 import com.trazere.util.function.Function;
+import com.trazere.util.function.Predicate;
+import com.trazere.util.function.Predicate2;
 import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Tuple2;
 import java.util.ArrayList;
@@ -34,58 +33,53 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 /**
- * The <code>CollectionUtils</code> class provides various helpers regarding the manipulation of collections and maps.
+ * The {@link CollectionUtils} class provides various helpers regarding collections and maps.
  */
 public class CollectionUtils {
 	/**
 	 * Build a new list with the given value.
 	 * <p>
-	 * This method Instantiates an <code>ArrayList</code>.
+	 * This method instantiates an {@link ArrayList}.
 	 * 
 	 * @param <T> Type of the the values.
 	 * @param value Value. May be <code>null</code>.
 	 * @return The list.
-	 * @see ArrayList
 	 */
 	public static <T> List<T> list(final T value) {
 		// Build the list.
 		final List<T> list = new ArrayList<T>(1);
 		list.add(value);
-		
 		return list;
 	}
 	
 	/**
-	 * Build a list with the given values.
+	 * Build a new list with the given values.
 	 * <p>
-	 * This method Instantiates an <code>ArrayList</code>.
+	 * This method instantiates an {@link ArrayList}.
 	 * 
 	 * @param <T> Type of the the values.
 	 * @param value1 First value. May be <code>null</code>.
 	 * @param value2 Second value. May be <code>null</code>.
 	 * @return The list.
-	 * @see ArrayList
 	 */
 	public static <T> List<T> list(final T value1, final T value2) {
 		// Build the list.
 		final List<T> list = new ArrayList<T>(2);
 		list.add(value1);
 		list.add(value2);
-		
 		return list;
 	}
 	
 	/**
-	 * Build a list with the given values.
+	 * Build a new list with the given values.
 	 * <p>
-	 * This method Instantiates an <code>ArrayList</code>.
+	 * This method instantiates an {@link ArrayList}.
 	 * 
 	 * @param <T> Type of the the values.
 	 * @param value1 First value. May be <code>null</code>.
 	 * @param value2 Second value. May be <code>null</code>.
 	 * @param value3 Second value. May be <code>null</code>.
 	 * @return The list.
-	 * @see ArrayList
 	 */
 	public static <T> List<T> list(final T value1, final T value2, final T value3) {
 		// Build the list.
@@ -93,20 +87,19 @@ public class CollectionUtils {
 		list.add(value1);
 		list.add(value2);
 		list.add(value3);
-		
 		return list;
 	}
 	
 	/**
-	 * Build a list with the given values.
+	 * Build a new list with the given values.
 	 * <p>
-	 * This method Instantiates an <code>ArrayList</code>.
+	 * This method instantiates an {@link ArrayList}.
 	 * 
 	 * @param <T> Type of the the values.
-	 * @param values Array containing the values.
-	 * @return The set.
+	 * @param values Values. May be <code>null</code>.
+	 * @return The list.
 	 */
-	public static <T> List<T> listN(final T[] values) {
+	public static <T> List<T> listN(final T... values) {
 		assert null != values;
 		
 		// Build the list.
@@ -120,52 +113,47 @@ public class CollectionUtils {
 	/**
 	 * Build a set with the given value.
 	 * <p>
-	 * This method Instantiates a <code>HashSet</code>.
+	 * This method instantiates a {@link HashSet}.
 	 * 
 	 * @param <T> Type of the the values.
 	 * @param value Value. May be <code>null</code>.
 	 * @return The set.
-	 * @see HashSet
 	 */
 	public static <T> Set<T> set(final T value) {
 		// Build the set.
 		final Set<T> set = new HashSet<T>(1);
 		set.add(value);
-		
 		return set;
 	}
 	
 	/**
 	 * Build a set with the given values.
 	 * <p>
-	 * This method Instantiates a <code>HashSet</code>.
+	 * This method instantiates a {@link HashSet}.
 	 * 
 	 * @param <T> Type of the the values.
 	 * @param value1 First value. May be <code>null</code>.
 	 * @param value2 Second value. May be <code>null</code>.
 	 * @return The set.
-	 * @see HashSet
 	 */
 	public static <T> Set<T> set(final T value1, final T value2) {
 		// Build the set.
 		final Set<T> set = new HashSet<T>(2);
 		set.add(value1);
 		set.add(value2);
-		
 		return set;
 	}
 	
 	/**
 	 * Build a set with the given values.
 	 * <p>
-	 * This method Instantiates a <code>HashSet</code>.
+	 * This method instantiates a {@link HashSet}.
 	 * 
 	 * @param <T> Type of the the values.
 	 * @param value1 First value. May be <code>null</code>.
 	 * @param value2 Second value. May be <code>null</code>.
 	 * @param value3 Third value. May be <code>null</code>.
 	 * @return The set.
-	 * @see HashSet
 	 */
 	public static <T> Set<T> set(final T value1, final T value2, final T value3) {
 		// Build the set.
@@ -173,21 +161,19 @@ public class CollectionUtils {
 		set.add(value1);
 		set.add(value2);
 		set.add(value3);
-		
 		return set;
 	}
 	
 	/**
 	 * Build a set with the given values.
 	 * <p>
-	 * This method Instantiates a <code>HashSet</code>.
+	 * This method instantiates a {@link HashSet}.
 	 * 
 	 * @param <T> Type of the the values.
-	 * @param values Array containing the values.
+	 * @param values Values. May be <code>null</code>.
 	 * @return The set.
-	 * @see HashSet
 	 */
-	public static <T> Set<T> setN(final T[] values) {
+	public static <T> Set<T> setN(final T... values) {
 		assert null != values;
 		
 		// Build the set.
@@ -201,27 +187,25 @@ public class CollectionUtils {
 	/**
 	 * Build a map with the binding of the given key and value.
 	 * <p>
-	 * This method Instantiates a <code>HashMap</code>.
+	 * This method instantiates a {@link HashMap}.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param key Key of the binding. May be <code>null</code>.
 	 * @param value Value of the binding. May be <code>null</code>.
 	 * @return The map.
-	 * @see HashMap
 	 */
 	public static <K, V> Map<K, V> map(final K key, final V value) {
 		// Build the map.
 		final Map<K, V> result = new HashMap<K, V>();
 		result.put(key, value);
-		
 		return result;
 	}
 	
 	/**
 	 * Build a map with the bindings of the given keys and values.
 	 * <p>
-	 * This method Instantiates a <code>HashMap</code>.
+	 * This method instantiates a {@link HashMap}.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -230,14 +214,12 @@ public class CollectionUtils {
 	 * @param key2 Key of the second binding. May be <code>null</code>.
 	 * @param value2 Value of the second binding. May be <code>null</code>.
 	 * @return The map.
-	 * @see HashMap
 	 */
 	public static <K, V> Map<K, V> map(final K key1, final V value1, final K key2, final V value2) {
 		// Build the map.
 		final Map<K, V> result = new HashMap<K, V>();
 		result.put(key2, value2);
 		result.put(key1, value1);
-		
 		return result;
 	}
 	
@@ -267,44 +249,13 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Build an iterator over the given value.
-	 * 
-	 * @param <T> Type of the the values.
-	 * @param value Value to iterate. May be <code>null</code>.
-	 * @return The iterator.
-	 */
-	public static <T> Iterator<T> iterator(final T value) {
-		// Build the iterator.
-		return new Iterator<T>() {
-			protected boolean _iterated = false;
-			
-			public boolean hasNext() {
-				return !_iterated;
-			}
-			
-			public T next() {
-				if (!_iterated) {
-					_iterated = true;
-					return value;
-				} else {
-					throw new NoSuchElementException();
-				}
-			}
-			
-			public void remove() {
-				throw new UnsupportedOperationException();
-			}
-		};
-	}
-	
-	/**
 	 * Build an iterator over the given values.
 	 * 
 	 * @param <T> Type of the the values.
-	 * @param values Values to iterate.
+	 * @param values Values to iterate. May be <code>null</code>.
 	 * @return The iterator.
 	 */
-	public static <T> Iterator<T> iteratorN(final T[] values) {
+	public static <T> Iterator<T> iterator(final T... values) {
 		assert null != values;
 		
 		// Build the iterator.
@@ -329,11 +280,11 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Get an objet from the given collection.
+	 * Get an element of the given collection.
 	 * 
 	 * @param <T> Type of the elements.
 	 * @param collection Collection to read.
-	 * @return Any object from the collection, or <code>null</code> when the collection is empty.
+	 * @return Any element of the collection.
 	 */
 	public static <T> Maybe<T> any(final Collection<T> collection) {
 		assert null != collection;
@@ -344,12 +295,12 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Get an entry from the given map.
+	 * Get a binding of the given map.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param map Map to read.
-	 * @return Any entry from the map, or <code>null</code> if the map is empty.
+	 * @return Any binding of the map.
 	 */
 	public static <K, V> Maybe<Map.Entry<K, V>> any(final Map<K, V> map) {
 		assert null != map;
@@ -360,18 +311,18 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Get the last value from the given list.
+	 * Get the last element of the given list.
 	 * 
 	 * @param <T> Type of the elements.
 	 * @param list List to read.
-	 * @return The last value, or <code>null</code> when the list is empty.
+	 * @return The last element..
 	 */
-	public static <T> T last(final List<T> list) {
+	public static <T> Maybe<T> last(final List<T> list) {
 		assert null != list;
 		
 		// Read.
 		final int size = list.size();
-		return size > 0 ? list.get(size - 1) : null;
+		return size > 0 ? Maybe.some(list.get(size - 1)) : Maybe.<T>none();
 	}
 	
 	/**
@@ -381,7 +332,7 @@ public class CollectionUtils {
 	 * @param <V> Type of the values.
 	 * @param map Map to read.
 	 * @param key Key identifying the value to get. May be <code>null</code>.
-	 * @return The value identified by the key if any, or the default value.
+	 * @return The value identified by the key.
 	 */
 	public static <K, V> Maybe<V> get(final Map<K, V> map, final K key) {
 		assert null != map;
@@ -408,13 +359,15 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Remove an objet from the given collection.
+	 * Remove an element from the given collection.
+	 * <p>
+	 * This method does modify the given list.
 	 * 
 	 * @param <T> Type of the elements.
 	 * @param collection Collection to modify.
-	 * @return The remove object, or <code>null</code> when the collection is empty.
+	 * @return The removed object.
 	 */
-	public static <T> T removeAny(final Collection<T> collection) {
+	public static <T> Maybe<T> removeAny(final Collection<T> collection) {
 		assert null != collection;
 		
 		// Remove.
@@ -422,9 +375,9 @@ public class CollectionUtils {
 		if (iterator.hasNext()) {
 			final T object = iterator.next();
 			iterator.remove();
-			return object;
+			return Maybe.some(object);
 		} else {
-			return null;
+			return Maybe.none();
 		}
 	}
 	
@@ -469,20 +422,23 @@ public class CollectionUtils {
 	 * Sort the given values topologically and populate the given list with the results.
 	 * <p>
 	 * The dependencies between the values are computed using the given function. This function must compute the values whose the argument value depends on. The
-	 * computed value must belong to the values to sort.
+	 * computed values must belong to the values to sort.
 	 * <p>
 	 * This method places the dependencies before the value which depend on them. The sort is stable and fails when the dependencies form a cyclic graph.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param <L> Type of the populated list.
-	 * @param values Values to sort. The given collection is not modified by the method.
+	 * @param <E> Type of the exceptions.
+	 * @param values Values to sort.
 	 * @param dependencyFunction Function which computes the dependencies.
 	 * @param results List to populate with the results.
 	 * @return The populated list.
-	 * @throws CollectionException When some dependencies are invalid or cyclic.
+	 * @throws CollectionException When some computed dependency value does not belong to the values to sort.
+	 * @throws CollectionException When there is a cycle in the dependencies.
+	 * @throws E When some dependency computation fails.
 	 */
-	public static <T, L extends List<T>> L topologicalSort(final Collection<? extends T> values, final Function<? super T, ? extends Collection<? extends T>> dependencyFunction, final L results)
-	throws CollectionException {
+	public static <T, L extends List<? super T>, E extends Exception> L topologicalSort(final Collection<? extends T> values, final Function<? super T, ? extends Collection<? extends T>, E> dependencyFunction, final L results)
+	throws CollectionException, E {
 		assert null != values;
 		assert null != dependencyFunction;
 		assert null != results;
@@ -490,16 +446,12 @@ public class CollectionUtils {
 		// Compute the dependencies.
 		final Collection<Tuple2<T, T>> dependencies = new ArrayList<Tuple2<T, T>>();
 		for (final T value : values) {
-			try {
-				for (final T dependencyValue : dependencyFunction.apply(value)) {
-					if (values.contains(dependencyValue)) {
-						dependencies.add(new Tuple2<T, T>(value, dependencyValue));
-					} else {
-						throw new CollectionException("Invalid dependency " + dependencyValue + " for value " + value);
-					}
+			for (final T dependencyValue : dependencyFunction.evaluate(value)) {
+				if (values.contains(dependencyValue)) {
+					dependencies.add(new Tuple2<T, T>(value, dependencyValue));
+				} else {
+					throw new CollectionException("Invalid dependency " + dependencyValue + " for value " + value);
 				}
-			} catch (final ApplicationException exception) {
-				throw new CollectionException("Failed computing dependencies for value " + value, exception);
 			}
 		}
 		
@@ -541,25 +493,28 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Filter the content of the given collection using the given filter.
+	 * Filter the content of the given collection using the given predicate.
 	 * <p>
 	 * This method does modify the given collection.
 	 * 
 	 * @param <T> Type of the elements.
 	 * @param <C> Type of the collection.
+	 * @param <E> Type of the exceptions.
 	 * @param collection Collection to filter.
-	 * @param filter Filter to use.
+	 * @param predicate Predicate to use.
 	 * @return The given modified collection.
+	 * @throws E When some predicate evaluation fails.
 	 */
-	public static <T, C extends Collection<T>> C filter(final C collection, final Filter<? super T> filter) {
+	public static <T, C extends Collection<T>, E extends Exception> C filter(final C collection, final Predicate<? super T, E> predicate)
+	throws E {
 		assert null != collection;
-		assert null != filter;
+		assert null != predicate;
 		
 		// Filter.
 		final Iterator<T> values_ = collection.iterator();
 		while (values_.hasNext()) {
 			final T value = values_.next();
-			if (!filter.filter(value)) {
+			if (!predicate.evaluate(value)) {
 				values_.remove();
 			}
 		}
@@ -567,26 +522,29 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Filter the content of the given map using the given filter.
+	 * Filter the content of the given map using the given predicate.
 	 * <p>
 	 * This method does modify the given map.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param <M> Type of the map.
+	 * @param <E> Type of the exceptions.
 	 * @param map Map to filter.
-	 * @param filter Filter to use.
+	 * @param predicate Predicate to use.
 	 * @return The given modified map.
+	 * @throws E When some predicate evaluation fails.
 	 */
-	public static <K, V, M extends Map<K, V>> M filter(final M map, final Filter2<? super K, ? super V> filter) {
+	public static <K, V, M extends Map<K, V>, E extends Exception> M filter(final M map, final Predicate2<? super K, ? super V, E> predicate)
+	throws E {
 		assert null != map;
-		assert null != filter;
+		assert null != predicate;
 		
 		// Filter.
 		final Iterator<Map.Entry<K, V>> entries = map.entrySet().iterator();
 		while (entries.hasNext()) {
 			final Map.Entry<K, V> entry = entries.next();
-			if (!filter.filter(entry.getKey(), entry.getValue())) {
+			if (!predicate.evaluate(entry.getKey(), entry.getValue())) {
 				entries.remove();
 			}
 		}
@@ -602,10 +560,10 @@ public class CollectionUtils {
 	 * @param <C> Type of the populated collection.
 	 * @param collection1 First collection.
 	 * @param collection2 Second collection.
-	 * @param results The populated collection.
-	 * @return The populated collection.
+	 * @param results The collection to populate with the results.
+	 * @return The given populated collection.
 	 */
-	public static <T, C extends Collection<T>> C union(final Collection<? extends T> collection1, final Collection<? extends T> collection2, final C results) {
+	public static <T, C extends Collection<? super T>> C union(final Collection<? extends T> collection1, final Collection<? extends T> collection2, final C results) {
 		assert null != collection1;
 		assert null != collection2;
 		assert null != results;
@@ -627,9 +585,9 @@ public class CollectionUtils {
 	 * @param map1 First map.
 	 * @param map2 Second map.
 	 * @param results Map to populate with the results.
-	 * @return The populated map.
+	 * @return The given populated map.
 	 */
-	public static <K, V, M extends Map<K, V>> M union(final Map<? extends K, ? extends V> map1, final Map<? extends K, ? extends V> map2, final M results) {
+	public static <K, V, M extends Map<? super K, ? super V>> M union(final Map<? extends K, ? extends V> map1, final Map<? extends K, ? extends V> map2, final M results) {
 		assert null != map1;
 		assert null != map2;
 		assert null != results;
@@ -656,7 +614,7 @@ public class CollectionUtils {
 		assert null != collection2;
 		
 		// Test.
-		for (final Object value : collection1) {
+		for (final T value : collection1) {
 			if (collection2.contains(value)) {
 				return true;
 			}
@@ -675,9 +633,9 @@ public class CollectionUtils {
 	 * @param collection1 First collection.
 	 * @param collection2 Second collection.
 	 * @param results Collection to populate with the results.
-	 * @return The populated collection.
+	 * @return The given populated collection.
 	 */
-	public static <T, C extends Collection<T>> C intersection(final Collection<? extends T> collection1, final Collection<? extends T> collection2, final C results) {
+	public static <T, C extends Collection<? super T>> C intersection(final Collection<? extends T> collection1, final Collection<? extends T> collection2, final C results) {
 		assert null != collection1;
 		assert null != collection2;
 		assert null != results;
@@ -692,7 +650,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Build the exclusion of given collections (first minus second) and populate the given results collection with it.
+	 * Build the exclusion of given collections (first minus second) and populate the given result collection with it.
 	 * <p>
 	 * This method iterates over the first collection and tests the presence of the values within the second collection. Therefore, providing a smaller first
 	 * collection and a second collection with a faster test method is more efficient.
@@ -702,9 +660,9 @@ public class CollectionUtils {
 	 * @param collection1 First collection.
 	 * @param collection2 Second collection.
 	 * @param results The collection to populate with the results.
-	 * @return The populated collection.
+	 * @return The given populated collection.
 	 */
-	public static <T, C extends Collection<T>> C exclusion(final Collection<? extends T> collection1, final Collection<? extends T> collection2, final C results) {
+	public static <T, C extends Collection<? super T>> C exclusion(final Collection<? extends T> collection1, final Collection<? extends T> collection2, final C results) {
 		// Checks
 		assert null != collection1;
 		assert null != collection2;
@@ -720,7 +678,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Get the bindings of the given map with the given keys and populate the given result map with them.
+	 * Get the bindings of the given map identified by the given keys and populate the given result map with them.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -728,9 +686,9 @@ public class CollectionUtils {
 	 * @param map Map to copy.
 	 * @param keys Keys of the bindings to retain.
 	 * @param results Map to populate with the bindings.
-	 * @return The populated map.
+	 * @return The given populated map.
 	 */
-	public static <K, V, M extends Map<K, V>> M subMap(final Map<? extends K, ? extends V> map, final Set<? extends K> keys, final M results) {
+	public static <K, V, M extends Map<? super K, ? super V>> M subMap(final Map<? extends K, ? extends V> map, final Set<? extends K> keys, final M results) {
 		assert null != map;
 		assert null != keys;
 		assert null != results;
@@ -746,7 +704,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Get the bindings of the given map whose keys do not belong to the given keys and populate the given result map with them.
+	 * Get the bindings of the given map not identified by the given keys and populate the given result map with them.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -754,9 +712,9 @@ public class CollectionUtils {
 	 * @param map Map to copy.
 	 * @param keys Keys of the binding to exclude.
 	 * @param results Map to populate with the results.
-	 * @return The populated map.
+	 * @return The given populated map.
 	 */
-	public static <K, V, M extends Map<K, V>> M retainMap(final Map<? extends K, ? extends V> map, final Collection<? extends K> keys, final M results) {
+	public static <K, V, M extends Map<? super K, ? super V>> M retainMap(final Map<? extends K, ? extends V> map, final Collection<? extends K> keys, final M results) {
 		assert null != map;
 		assert null != keys;
 		assert null != results;

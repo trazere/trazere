@@ -15,11 +15,11 @@
  */
 package com.trazere.util.lang;
 
+import com.trazere.util.function.Function;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-// TODO: add an option to disable memoization
 // TODO: add a argument for the comparator to use
 // TODO: getValue should return a Maybe
 
@@ -35,6 +35,26 @@ import java.util.Map;
  */
 public abstract class ViewComparator<T, V extends Comparable<V>>
 implements Comparator<T> {
+	/**
+	 * Build a comparation using the function.
+	 * 
+	 * @param <T> Type of the compared objets.
+	 * @param <V> Type of the values to compore.
+	 * @param function Function to use to compute the view.
+	 * @param cache Flag indicating wether the cache if enabled or not.
+	 * @return The built iterator.
+	 */
+	public static <T, V extends Comparable<V>> ViewComparator<T, V> build(final Function<? super T, ? extends V, ? extends RuntimeException> function, final boolean cache) {
+		assert null != function;
+		
+		return new ViewComparator<T, V>(cache) {
+			@Override
+			protected V computeValue(final T object) {
+				return function.evaluate(object);
+			}
+		};
+	}
+	
 	/** Flag indicating wether the cache if enabled or not. */
 	protected final boolean _cache;
 	
@@ -62,10 +82,8 @@ implements Comparator<T> {
 	 * 
 	 * @param object Compared object whose comparison is retrieved. May be <code>null</code>.
 	 * @return The comparison value. May be <code>null</code>.
-	 * @throws CannotComputeValueException When the value could not be computed.
 	 */
-	protected V getValue(final T object)
-	throws CannotComputeValueException {
+	protected V getValue(final T object) {
 		// Read the cache.
 		final V cachedValue = _values.get(object);
 		if (null != cachedValue) {
@@ -86,10 +104,8 @@ implements Comparator<T> {
 	 * 
 	 * @param object Compared object whose comparison is retrieved. May be <code>null</code>.
 	 * @return The comparison value. May be <code>null</code>.
-	 * @throws CannotComputeValueException When the value could not be computed.
 	 */
-	protected abstract V computeValue(final T object)
-	throws CannotComputeValueException;
+	protected abstract V computeValue(final T object);
 	
 	public void flushCache() {
 		_values.clear();

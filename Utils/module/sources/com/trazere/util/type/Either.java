@@ -15,7 +15,6 @@
  */
 package com.trazere.util.type;
 
-import com.trazere.util.lang.CannotComputeValueException;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.LangUtils;
 import com.trazere.util.text.Describable;
@@ -46,28 +45,29 @@ implements Describable {
 	 * @param <LeftValue> Type of the left value.
 	 * @param <RightValue> Type of the right value.
 	 * @param <Result> Type of the result.
+	 * @param <E> Type of the exceptions.
 	 * @see Either#match(Matcher)
 	 */
-	public static interface Matcher<LeftValue, RightValue, Result> {
+	public static interface Matcher<LeftValue, RightValue, Result, E extends Exception> {
 		/**
 		 * Apply the receiver function to the given <code>Left</code> instance.
 		 * 
 		 * @param left Argument instance of the function.
 		 * @return The result of the function application.
-		 * @throws CannotComputeValueException When the computation fails.
+		 * @throws E When the computation fails.
 		 */
 		public Result left(final Left<LeftValue, RightValue> left)
-		throws CannotComputeValueException;
+		throws E;
 		
 		/**
 		 * Apply the receiver function to the given <code>Right</code> instance.
 		 * 
 		 * @param right Argument instance of the function.
 		 * @return The result of the function application.
-		 * @throws CannotComputeValueException When the computation fails.
+		 * @throws E When the computation fails.
 		 */
 		public Result right(final Right<LeftValue, RightValue> right)
-		throws CannotComputeValueException;
+		throws E;
 	}
 	
 	/**
@@ -126,7 +126,8 @@ implements Describable {
 		}
 		
 		@Override
-		public <Result> Result match(final Matcher<LeftValue, RightValue, Result> matcher) {
+		public <Result, E extends Exception> Result match(final Matcher<LeftValue, RightValue, Result, E> matcher)
+		throws E {
 			return matcher.left(this);
 		}
 		
@@ -210,7 +211,8 @@ implements Describable {
 		}
 		
 		@Override
-		public <Result> Result match(final Matcher<LeftValue, RightValue, Result> matcher) {
+		public <Result, E extends Exception> Result match(final Matcher<LeftValue, RightValue, Result, E> matcher)
+		throws E {
 			return matcher.right(this);
 		}
 		
@@ -307,10 +309,13 @@ implements Describable {
 	 * This method implements some kind of simple pattern matching.
 	 * 
 	 * @param <Result> Type of the result.
+	 * @param <E> Type of the exceptions.
 	 * @param matcher Matcher to use.
 	 * @return The result of the function application.
+	 * @throws E When the match fails.
 	 */
-	public abstract <Result> Result match(final Matcher<LeftValue, RightValue, Result> matcher);
+	public abstract <Result, E extends Exception> Result match(final Matcher<LeftValue, RightValue, Result, E> matcher)
+	throws E;
 	
 	@Override
 	public final String toString() {

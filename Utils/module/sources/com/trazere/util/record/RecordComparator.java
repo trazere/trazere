@@ -15,11 +15,12 @@
  */
 package com.trazere.util.record;
 
-import com.trazere.util.lang.CannotComputeValueException;
 import com.trazere.util.lang.LangUtils;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.TextUtils;
 import java.util.Comparator;
+
+// TODO: should extend ViewComparator
 
 /**
  * The {@link RecordComparator} class represents comparators of records based on the value of a single field.
@@ -64,7 +65,7 @@ implements Comparator<R>, Describable {
 		try {
 			return LangUtils.compare(record1.get(_key), record2.get(_key), _comparator);
 		} catch (final RecordException exception) {
-			throw new CannotComputeValueException("Failed reading records " + record1 + " and " + record2, exception);
+			throw new RuntimeException("Failed reading records " + record1 + " and " + record2, exception);
 		}
 	}
 	

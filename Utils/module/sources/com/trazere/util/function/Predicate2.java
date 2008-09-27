@@ -16,18 +16,21 @@
 package com.trazere.util.function;
 
 /**
- * The {@link Filter} interface defines one argument filter functions.
+ * The {@link Predicate2} interface defines two arguments predicate functions.
  * 
- * @param <T> Type of the argument values.
+ * @param <T1> Type of the first argument values.
+ * @param <T2> Type of the second argument values.
+ * @param <E> Type of the exceptions.
  */
-public interface Filter<T> {
+public interface Predicate2<T1, T2, E extends Exception> {
 	/**
-	 * Filter the given argument value.
+	 * Evaluate the receiver predicate with the given argument values.
 	 * 
-	 * @param value Argument value to filter.
-	 * @return <code>true</code> to accept the value, <code>false</code> to reject it.
-	 * @throws ApplicationException When the function application fails.
+	 * @param value1 First argument value.
+	 * @param value2 Second argument value.
+	 * @return The result of the predicate evaluation.
+	 * @throws E When the predicate evaluation fails.
 	 */
-	public boolean filter(final T value)
-	throws ApplicationException;
+	public boolean evaluate(final T1 value1, final T2 value2)
+	throws E;
 }
