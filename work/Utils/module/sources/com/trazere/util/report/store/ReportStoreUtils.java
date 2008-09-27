@@ -74,17 +74,17 @@ public class ReportStoreUtils {
 	 * Filter the given entries using the given filter and parameters.
 	 * 
 	 * @param <Entry> Type of the report entries.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param entries Report store entries to filter.
 	 * @param filter Filter to use. May be <code>null</code> to accept all entries.
 	 * @param limit Maximum number of retrieved entries. May be negative to disable the limit.
 	 * @param fromEnd Flag indicating wether the entries should be extracted from the beginning or the end of the store. This flag changes nothing when the
 	 *        maximum number of retrieved entries is not limited.
 	 * @return The filtered entries.
-	 * @throws E When some filter application fails.
+	 * @throws X When some filter application fails.
 	 */
-	public static <Entry extends ReportEntry<?, ?>, E extends Exception> List<ReportStoreEntry<Entry>> filterEntries(final List<ReportStoreEntry<Entry>> entries, final Predicate<? super ReportStoreEntry<Entry>, E> filter, final int limit, final boolean fromEnd)
-	throws E {
+	public static <Entry extends ReportEntry<?, ?>, X extends Exception> List<ReportStoreEntry<Entry>> filterEntries(final List<ReportStoreEntry<Entry>> entries, final Predicate<? super ReportStoreEntry<Entry>, X> filter, final int limit, final boolean fromEnd)
+	throws X {
 		// Filtered entries.
 		if (null != filter) {
 			final List<ReportStoreEntry<Entry>> filteredEntries = new ArrayList<ReportStoreEntry<Entry>>();

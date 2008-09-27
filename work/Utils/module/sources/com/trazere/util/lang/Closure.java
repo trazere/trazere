@@ -22,25 +22,29 @@ import com.trazere.util.type.Maybe.None;
 import com.trazere.util.type.Maybe.Some;
 
 /**
- * The {@link Closure} abstract class represents closures.
+ * The {@link Closure} abstract class represents zero argument closures.
  * <p>
- * A closure is a value which is lazily computed and memoized. This class simulates call-by-need evaluations.
+ * This class provides an abstraction for computing values and for lazy evaluation. The computation methods are provided by the subclasses and rely solely on
+ * the contexts captured by the closures (no arguments). The values are computed when the closures are read and are memoized so that they are computed at most
+ * once.
+ * <p>
+ * This class simulated call-by-need evaluations.
  * 
  * @param <T> Type of the value.
- * @param <E> Type of the exceptions.
+ * @param <X> Type of the exceptions.
  */
-public abstract class Closure<T, E extends Exception>
+public abstract class Closure<T, X extends Exception>
 implements Describable {
 	/**
 	 * Build a closure containing the given value.
 	 * 
 	 * @param <T> Type of the value.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param value Value. May be <code>null</code>.
 	 * @return The closure.
 	 */
-	public static <T, E extends Exception> Closure<T, E> build(final T value) {
-		return new Closure<T, E>() {
+	public static <T, X extends Exception> Closure<T, X> build(final T value) {
+		return new Closure<T, X>() {
 			@Override
 			protected T compute() {
 				return value;
@@ -57,24 +61,15 @@ implements Describable {
 	protected Maybe<T> _value = Maybe.none();
 	
 	/**
-	 * Indicate wether the value of the receiver closure has been computed.
-	 * 
-	 * @return <code>true</code> if a value has been computed, <code>false</code> otherwise.
-	 */
-	public boolean isComputed() {
-		return _value.isSome();
-	}
-	
-	/**
 	 * Get the value of the receiver closure.
 	 * <p>
 	 * The value is computed if needed and memoized for future calls.
 	 * 
 	 * @return The computed value. May be <code>null</code>.
-	 * @throws E When the computation of the value fails.
+	 * @throws X When the computation of the value fails.
 	 */
 	public T get()
-	throws E {
+	throws X {
 		if (_value.isSome()) {
 			return _value.asSome().getValue();
 		} else {
@@ -88,10 +83,19 @@ implements Describable {
 	 * Compute the value of the receiver closure.
 	 * 
 	 * @return The computed value. May be <code>null</code>.
-	 * @throws E When the computation fails.
+	 * @throws X When the computation fails.
 	 */
 	protected abstract T compute()
-	throws E;
+	throws X;
+	
+	/**
+	 * Indicate wether the value of the receiver closure has been computed.
+	 * 
+	 * @return <code>true</code> if a value has been computed, <code>false</code> otherwise.
+	 */
+	public boolean isComputed() {
+		return _value.isSome();
+	}
 	
 	/**
 	 * Reset the value memoized in the receiver closure. The value will be computed (again) during the next call to {@link #get()}.

@@ -30,27 +30,27 @@ import java.util.Map.Entry;
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
- * @param <E> Type of the exceptions.
+ * @param <X> Type of the exceptions.
  */
-public abstract class LazyMap<K, V, E extends Exception>
-implements Function<K, V, E> {
+public abstract class LazyMap<K, V, X extends Exception>
+implements Function<K, V, X> {
 	/**
 	 * Build a lazy map using the given function.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param function Function computing the values of the map.
 	 * @return The built lazy map.
 	 */
-	public static <K, V, E extends Exception> LazyMap<K, V, E> lazyMap(final Function<K, V, E> function) {
+	public static <K, V, X extends Exception> LazyMap<K, V, X> lazyMap(final Function<K, V, X> function) {
 		assert null != function;
 		
 		// Build.
-		return new LazyMap<K, V, E>() {
+		return new LazyMap<K, V, X>() {
 			@Override
-			protected V computeValue(final K key)
-			throws E {
+			protected V compute(final K key)
+			throws X {
 				return function.evaluate(key);
 			}
 		};
@@ -115,17 +115,17 @@ implements Function<K, V, E> {
 	 * 
 	 * @param key Key which the value is associated to. May be <code>null</code>.
 	 * @return The value.
-	 * @throws E When the value cannot be computed.
+	 * @throws X When the value cannot be computed.
 	 */
 	public V get(final K key)
-	throws E {
+	throws X {
 		// Check the entries.
 		if (_entries.containsKey(key)) {
 			return _entries.get(key);
 		}
 		
 		// Compute the value.
-		final V value = computeValue(key);
+		final V value = compute(key);
 		put(key, value);
 		
 		return value;
@@ -136,10 +136,10 @@ implements Function<K, V, E> {
 	 * 
 	 * @param key Key whose value should be computed. May be <code>null</code>.
 	 * @return The computed value. May be <code>null</code>.
-	 * @throws E When the value cannot be computed.
+	 * @throws X When the value cannot be computed.
 	 */
-	protected abstract V computeValue(final K key)
-	throws E;
+	protected abstract V compute(final K key)
+	throws X;
 	
 	/**
 	 * Get the keys of the receiver map.
@@ -186,7 +186,7 @@ implements Function<K, V, E> {
 	}
 	
 	public V evaluate(final K key)
-	throws E {
+	throws X {
 		return get(key);
 	}
 	

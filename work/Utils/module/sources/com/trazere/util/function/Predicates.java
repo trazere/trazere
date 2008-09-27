@@ -34,12 +34,12 @@ public class Predicates {
 	 * Build a predicate which evaluates to <code>true</code> for all values.
 	 * 
 	 * @param <T> Type of the argument values.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @return The built predicate.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T, E extends Exception> Predicate<T, E> all() {
-		return (Predicate<T, E>) ALL;
+	public static <T, X extends Exception> Predicate<T, X> all() {
+		return (Predicate<T, X>) ALL;
 	}
 	
 	private static final Predicate<?, ?> NONE = new Predicate<Object, Exception>() {
@@ -52,12 +52,12 @@ public class Predicates {
 	 * Build a predicate which evaluates to <code>false</code> for all values.
 	 * 
 	 * @param <T> Type of the argument values.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @return The built predicate.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T, E extends Exception> Predicate<T, E> none() {
-		return (Predicate<T, E>) NONE;
+	public static <T, X extends Exception> Predicate<T, X> none() {
+		return (Predicate<T, X>) NONE;
 	}
 	
 	private static final Predicate2<?, ?, ?> ALL2 = new Predicate2<Object, Object, Exception>() {
@@ -71,12 +71,12 @@ public class Predicates {
 	 * 
 	 * @param <T1> Type of the first argument values.
 	 * @param <T2> Type of the second argument values.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @return The built predicate.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T1, T2, E extends Exception> Predicate2<T1, T2, E> all2() {
-		return (Predicate2<T1, T2, E>) ALL2;
+	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> all2() {
+		return (Predicate2<T1, T2, X>) ALL2;
 	}
 	
 	private static final Predicate2<?, ?, ?> NONE2 = new Predicate2<Object, Object, Exception>() {
@@ -90,24 +90,24 @@ public class Predicates {
 	 * 
 	 * @param <T1> Type of the first argument values.
 	 * @param <T2> Type of the second argument values.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @return The built predicate.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T1, T2, E extends Exception> Predicate2<T1, T2, E> none2() {
-		return (Predicate2<T1, T2, E>) NONE2;
+	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> none2() {
+		return (Predicate2<T1, T2, X>) NONE2;
 	}
 	
 	/**
 	 * Build a predicate which evaluates to <code>true</code> for the given values.
 	 * 
 	 * @param <T> Type of the argument values.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param values Values defining the predicate.
 	 * @return The built predicate.
 	 */
-	public static <T, E extends Exception> Predicate<T, E> values(final Collection<T> values) {
-		return new Predicate<T, E>() {
+	public static <T, X extends Exception> Predicate<T, X> values(final Collection<T> values) {
+		return new Predicate<T, X>() {
 			public boolean evaluate(final T value) {
 				return values.contains(value);
 			}
@@ -119,12 +119,12 @@ public class Predicates {
 	 * 
 	 * @param <T1> Type of the first argument values.
 	 * @param <T2> Type of the second argument values.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param values First values defining the predicate.
 	 * @return The built predicate.
 	 */
-	public static <T1, T2, E extends Exception> Predicate2<T1, T2, E> values1(final Collection<T1> values) {
-		return new Predicate2<T1, T2, E>() {
+	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> values1(final Collection<T1> values) {
+		return new Predicate2<T1, T2, X>() {
 			public boolean evaluate(final T1 value1, final T2 value2) {
 				return values.contains(value1);
 			}
@@ -136,12 +136,12 @@ public class Predicates {
 	 * 
 	 * @param <T1> Type of the first argument values.
 	 * @param <T2> Type of the second argument values.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param values Second values defining the predicate.
 	 * @return The built predicate.
 	 */
-	public static <T1, T2, E extends Exception> Predicate2<T1, T2, E> values2(final Collection<T2> values) {
-		return new Predicate2<T1, T2, E>() {
+	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> values2(final Collection<T2> values) {
+		return new Predicate2<T1, T2, X>() {
 			public boolean evaluate(final T1 value1, final T2 value2) {
 				return values.contains(value2);
 			}

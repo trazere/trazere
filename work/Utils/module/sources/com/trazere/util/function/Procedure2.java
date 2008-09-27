@@ -20,16 +20,16 @@ package com.trazere.util.function;
  * 
  * @param <T1> Type of the first argument values.
  * @param <T2> Type of the second argument values.
- * @param <E> Type of the exceptions.
+ * @param <X> Type of the exceptions.
  */
-public interface Procedure2<T1, T2, E extends Exception> {
+public interface Procedure2<T1, T2, X extends Exception> {
 	/**
 	 * Execute the receiver procedure with the given argument values.
 	 * 
 	 * @param value1 First argument value.
 	 * @param value2 Second argument value.
-	 * @throws E When the procedure execution fails.
+	 * @throws X When the procedure execution fails.
 	 */
 	public void execute(final T1 value1, final T2 value2)
-	throws E;
+	throws X;
 }

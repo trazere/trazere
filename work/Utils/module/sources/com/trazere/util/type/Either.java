@@ -45,29 +45,29 @@ implements Describable {
 	 * @param <LeftValue> Type of the left value.
 	 * @param <RightValue> Type of the right value.
 	 * @param <Result> Type of the result.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @see Either#match(Matcher)
 	 */
-	public static interface Matcher<LeftValue, RightValue, Result, E extends Exception> {
+	public static interface Matcher<LeftValue, RightValue, Result, X extends Exception> {
 		/**
 		 * Apply the receiver function to the given <code>Left</code> instance.
 		 * 
 		 * @param left Argument instance of the function.
 		 * @return The result of the function application.
-		 * @throws E When the computation fails.
+		 * @throws X When the computation fails.
 		 */
 		public Result left(final Left<LeftValue, RightValue> left)
-		throws E;
+		throws X;
 		
 		/**
 		 * Apply the receiver function to the given <code>Right</code> instance.
 		 * 
 		 * @param right Argument instance of the function.
 		 * @return The result of the function application.
-		 * @throws E When the computation fails.
+		 * @throws X When the computation fails.
 		 */
 		public Result right(final Right<LeftValue, RightValue> right)
-		throws E;
+		throws X;
 	}
 	
 	/**
@@ -126,8 +126,8 @@ implements Describable {
 		}
 		
 		@Override
-		public <Result, E extends Exception> Result match(final Matcher<LeftValue, RightValue, Result, E> matcher)
-		throws E {
+		public <Result, X extends Exception> Result match(final Matcher<LeftValue, RightValue, Result, X> matcher)
+		throws X {
 			return matcher.left(this);
 		}
 		
@@ -211,8 +211,8 @@ implements Describable {
 		}
 		
 		@Override
-		public <Result, E extends Exception> Result match(final Matcher<LeftValue, RightValue, Result, E> matcher)
-		throws E {
+		public <Result, X extends Exception> Result match(final Matcher<LeftValue, RightValue, Result, X> matcher)
+		throws X {
 			return matcher.right(this);
 		}
 		
@@ -309,13 +309,13 @@ implements Describable {
 	 * This method implements some kind of simple pattern matching.
 	 * 
 	 * @param <Result> Type of the result.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param matcher Matcher to use.
 	 * @return The result of the function application.
-	 * @throws E When the match fails.
+	 * @throws X When the match fails.
 	 */
-	public abstract <Result, E extends Exception> Result match(final Matcher<LeftValue, RightValue, Result, E> matcher)
-	throws E;
+	public abstract <Result, X extends Exception> Result match(final Matcher<LeftValue, RightValue, Result, X> matcher)
+	throws X;
 	
 	@Override
 	public final String toString() {

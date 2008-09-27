@@ -19,15 +19,15 @@ package com.trazere.util.function;
  * The {@link Procedure} interface defines one argument procedures (one argument functions which return no results).
  * 
  * @param <T> Type of the argument values.
- * @param <E> Type of the exceptions.
+ * @param <X> Type of the exceptions.
  */
-public interface Procedure<T, E extends Exception> {
+public interface Procedure<T, X extends Exception> {
 	/**
 	 * Execute the receiver procedure with the given argument value.
 	 * 
 	 * @param value Argument value.
-	 * @throws E When the procedure execution fails.
+	 * @throws X When the procedure execution fails.
 	 */
 	public void execute(final T value)
-	throws E;
+	throws X;
 }

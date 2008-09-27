@@ -20,17 +20,17 @@ package com.trazere.util.function;
  * 
  * @param <T1> Type of the first argument values.
  * @param <T2> Type of the second argument values.
- * @param <E> Type of the exceptions.
+ * @param <X> Type of the exceptions.
  */
-public interface Predicate2<T1, T2, E extends Exception> {
+public interface Predicate2<T1, T2, X extends Exception> {
 	/**
 	 * Evaluate the receiver predicate with the given argument values.
 	 * 
 	 * @param value1 First argument value.
 	 * @param value2 Second argument value.
 	 * @return The result of the predicate evaluation.
-	 * @throws E When the predicate evaluation fails.
+	 * @throws X When the predicate evaluation fails.
 	 */
 	public boolean evaluate(final T1 value1, final T2 value2)
-	throws E;
+	throws X;
 }

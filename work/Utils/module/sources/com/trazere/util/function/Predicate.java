@@ -19,16 +19,16 @@ package com.trazere.util.function;
  * The {@link Predicate} interface defines one argument predicate functions.
  * 
  * @param <T> Type of the argument values.
- * @param <E> Type of the exceptions.
+ * @param <X> Type of the exceptions.
  */
-public interface Predicate<T, E extends Exception> {
+public interface Predicate<T, X extends Exception> {
 	/**
 	 * Evaluate the receiver predicate with the given argument value.
 	 * 
 	 * @param value Argument value.
 	 * @return The result of the predicate evaluation.
-	 * @throws E When the predicate evaluation fails.
+	 * @throws X When the predicate evaluation fails.
 	 */
 	public boolean evaluate(final T value)
-	throws E;
+	throws X;
 }

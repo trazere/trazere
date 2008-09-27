@@ -412,6 +412,7 @@ public class CollectionUtils {
 	 */
 	public static <T, L extends List<T>> L sort(final L list, final Comparator<? super T> comparator) {
 		assert null != list;
+		assert null != comparator;
 		
 		// Sort.
 		Collections.sort(list, comparator);
@@ -428,17 +429,17 @@ public class CollectionUtils {
 	 * 
 	 * @param <T> Type of the values.
 	 * @param <L> Type of the populated list.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param values Values to sort.
 	 * @param dependencyFunction Function which computes the dependencies.
 	 * @param results List to populate with the results.
 	 * @return The populated list.
 	 * @throws CollectionException When some computed dependency value does not belong to the values to sort.
 	 * @throws CollectionException When there is a cycle in the dependencies.
-	 * @throws E When some dependency computation fails.
+	 * @throws X When some dependency computation fails.
 	 */
-	public static <T, L extends List<? super T>, E extends Exception> L topologicalSort(final Collection<? extends T> values, final Function<? super T, ? extends Collection<? extends T>, E> dependencyFunction, final L results)
-	throws CollectionException, E {
+	public static <T, L extends List<? super T>, X extends Exception> L topologicalSort(final Collection<? extends T> values, final Function<? super T, ? extends Collection<? extends T>, X> dependencyFunction, final L results)
+	throws CollectionException, X {
 		assert null != values;
 		assert null != dependencyFunction;
 		assert null != results;
@@ -499,14 +500,14 @@ public class CollectionUtils {
 	 * 
 	 * @param <T> Type of the elements.
 	 * @param <C> Type of the collection.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param collection Collection to filter.
 	 * @param predicate Predicate to use.
 	 * @return The given modified collection.
-	 * @throws E When some predicate evaluation fails.
+	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <T, C extends Collection<T>, E extends Exception> C filter(final C collection, final Predicate<? super T, E> predicate)
-	throws E {
+	public static <T, C extends Collection<T>, X extends Exception> C filter(final C collection, final Predicate<? super T, X> predicate)
+	throws X {
 		assert null != collection;
 		assert null != predicate;
 		
@@ -529,14 +530,14 @@ public class CollectionUtils {
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param <M> Type of the map.
-	 * @param <E> Type of the exceptions.
+	 * @param <X> Type of the exceptions.
 	 * @param map Map to filter.
 	 * @param predicate Predicate to use.
 	 * @return The given modified map.
-	 * @throws E When some predicate evaluation fails.
+	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <K, V, M extends Map<K, V>, E extends Exception> M filter(final M map, final Predicate2<? super K, ? super V, E> predicate)
-	throws E {
+	public static <K, V, M extends Map<K, V>, X extends Exception> M filter(final M map, final Predicate2<? super K, ? super V, X> predicate)
+	throws X {
 		assert null != map;
 		assert null != predicate;
 		

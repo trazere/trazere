@@ -21,17 +21,17 @@ package com.trazere.util.function;
  * @param <T1> Type of the first argument values.
  * @param <T2> Type of the second argument values.
  * @param <R> Type of the result values.
- * @param <E> Type of the exceptions.
+ * @param <X> Type of the exceptions.
  */
-public interface Function2<T1, T2, R, E extends Exception> {
+public interface Function2<T1, T2, R, X extends Exception> {
 	/**
 	 * Evaluate the receiver function with the given argument values.
 	 * 
 	 * @param value1 First argument value.
 	 * @param value2 Second argument value.
 	 * @return The result of the function evaluation.
-	 * @throws E When the function evaluation fails.
+	 * @throws X When the function evaluation fails.
 	 */
 	public R evaluate(final T1 value1, final T2 value2)
-	throws E;
+	throws X;
 }
