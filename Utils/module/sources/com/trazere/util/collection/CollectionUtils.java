@@ -407,12 +407,11 @@ public class CollectionUtils {
 	 * @param <T> Type of the elements.
 	 * @param <L> Type of the list.
 	 * @param list List to sort.
-	 * @param comparator Comparator to use.
+	 * @param comparator Comparator to use. May be <code>null</code>.
 	 * @return The given modified list.
 	 */
 	public static <T, L extends List<T>> L sort(final L list, final Comparator<? super T> comparator) {
 		assert null != list;
-		assert null != comparator;
 		
 		// Sort.
 		Collections.sort(list, comparator);

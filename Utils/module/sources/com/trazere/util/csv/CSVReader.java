@@ -15,6 +15,8 @@
  */
 package com.trazere.util.csv;
 
+import com.trazere.util.InternalException;
+import com.trazere.util.record.DuplicateFieldException;
 import com.trazere.util.text.Scanner;
 import java.io.EOFException;
 import java.io.IOException;
@@ -30,7 +32,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * The <code>CSVReader</code> class provides a tool to read CSV files.
+ * The {@link CSVReader} class provides support for reading CSV files.
  * <p>
  * This class behaves like an iterator over the CSV lines. It takes an arbitrar reader as input, parse it, and produces maps of the values of the CSV fields
  * identified by the corresponding headers.
@@ -167,8 +169,8 @@ public class CSVReader {
 	 * <p>
 	 * This methods does not garantee that the entry will be valid, only that it is available so that the {@link #next()} method can be called.
 	 * 
-	 * @return <code>true</code> if another entry is available, <code>false</code> if the input has been exausted or if the reader hangs because of an
-	 *         invalid line.
+	 * @return <code>true</code> if another entry is available, <code>false</code> if the input has been exausted or if the reader hangs because of an invalid
+	 *         line.
 	 * @throws IOException
 	 */
 	public boolean hasNext()
@@ -196,15 +198,18 @@ public class CSVReader {
 						LOG.warn("Cardinality check failed for line: " + line);
 					} else {
 						// Build the entry.
-						final CSVLine.Builder builder = new CSVLine.Builder();
+						final CSVLineBuilder builder = new CSVLineBuilder();
 						final Iterator<String> headers = _headers.iterator();
 						final Iterator<String> values = line.iterator();
 						while (headers.hasNext() && values.hasNext()) {
 							final String header = headers.next();
-							final String value_ = values.next();
-							final String value = _options.contains(CSVReaderOption.TRIM_FIELDS) ? value_.trim() : value_;
-							if (value.length() > 0 || !_options.contains(CSVReaderOption.STRIP_EMPTY_FIELDS)) {
-								builder.setField(header, value);
+							final String value = values.next();
+							final String trimmedValue = _options.contains(CSVReaderOption.TRIM_FIELDS) ? value.trim() : value;
+							final String stripedValue = trimmedValue.length() > 0 || !_options.contains(CSVReaderOption.STRIP_EMPTY_FIELDS) ? trimmedValue : null;
+							try {
+								builder.add(header, stripedValue);
+							} catch (final DuplicateFieldException exception) {
+								throw new InternalException(exception);
 							}
 						}
 						_nextEntry = builder.build();
