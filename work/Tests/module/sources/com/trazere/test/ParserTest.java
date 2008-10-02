@@ -195,7 +195,7 @@ public class ParserTest {
 	};
 	static {
 		final List<Parser<Character, ? extends Integer>> exprs = new ArrayList<Parser<Character, ? extends Integer>>();
-		exprs.add(TextParsers.decimal());
+		exprs.add(TextParsers.integer());
 		exprs.add(EXPR_PAREN);
 		exprs.add(EXPR_PLUS);
 		exprs.add(EXPR_MUL);

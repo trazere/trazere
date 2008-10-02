@@ -15,12 +15,15 @@
  */
 package com.trazere.util.report.store;
 
+import com.trazere.util.InternalException;
 import com.trazere.util.csv.CSVLine;
+import com.trazere.util.csv.CSVLineBuilder;
 import com.trazere.util.csv.CSVReader;
 import com.trazere.util.csv.CSVReaderOption;
 import com.trazere.util.csv.CSVWriter;
 import com.trazere.util.csv.CSVWriterOption;
 import com.trazere.util.function.Predicate;
+import com.trazere.util.record.DuplicateFieldException;
 import com.trazere.util.report.ReportEntry;
 import com.trazere.util.report.ReportException;
 import com.trazere.util.report.ReportLevel;
@@ -137,10 +140,14 @@ implements ReportStore<Entry> {
 		final Date date = new Date();
 		
 		// Build the line.
-		final CSVLine.Builder builder = new CSVLine.Builder();
+		final CSVLineBuilder builder = new CSVLineBuilder();
+		try {
+			builder.add(getDateHeader(), getDateFormat().format(date));
+			builder.add(getLevelHeader(), level.toString());
+		} catch (final DuplicateFieldException exception) {
+			throw new InternalException(exception);
+		}
 		serializeEntry(entry, builder);
-		builder.setField(getDateHeader(), getDateFormat().format(date));
-		builder.setField(getLevelHeader(), level.toString());
 		
 		// Write the line.
 		try {
@@ -163,7 +170,7 @@ implements ReportStore<Entry> {
 	 * @param builder Build of the CSV line.
 	 * @throws ReportException
 	 */
-	protected abstract void serializeEntry(final Entry entry, final CSVLine.Builder builder)
+	protected abstract void serializeEntry(final Entry entry, final CSVLineBuilder builder)
 	throws ReportException;
 	
 	public void sleep()
@@ -293,7 +300,7 @@ implements ReportStore<Entry> {
 							final CSVLine line = reader.next();
 							
 							// Read the date.
-							final String dateField = line.getField(getDateHeader());
+							final String dateField = line.get(getDateHeader(), null);
 							if (null == dateField) {
 								LOG.warn("Ignoring invalid entry at line " + reader.getLine() + " from report file at path " + _path + " (missing date)");
 								continue;
@@ -308,7 +315,7 @@ implements ReportStore<Entry> {
 							}
 							
 							// Read the level.
-							final String levelField = line.getField(getLevelHeader());
+							final String levelField = line.get(getLevelHeader(), null);
 							if (null == levelField) {
 								LOG.warn("Ignoring invalid entry at line " + reader.getLine() + " from report file at path " + _path + " (missing level)");
 								continue;
@@ -323,14 +330,14 @@ implements ReportStore<Entry> {
 							}
 							
 							// Read the entry.
-							final Entry entry = buildEntry(line);
-							if (null == entry) {
+							final Maybe<Entry> entry = buildEntry(line);
+							if (entry.isNone()) {
 								LOG.warn("Ignoring invalid entry at line " + reader.getLine() + " from report file at path " + _path + " (invalid entry)");
 								continue;
 							}
 							
 							// Add the entry.
-							_entries.add(new ReportStoreEntry<Entry>(date, level, entry));
+							_entries.add(new ReportStoreEntry<Entry>(date, level, entry.asSome().getValue()));
 						}
 					} finally {
 						reader.close();
@@ -346,10 +353,10 @@ implements ReportStore<Entry> {
 	 * Build the entry corresponding to the given serialized CSV line.
 	 * 
 	 * @param line CSV line to read.
-	 * @return The built entry, or <code>null</code> if the line is not valid.
+	 * @return The built entry.
 	 * @throws ReportException
 	 */
-	protected abstract Entry buildEntry(final CSVLine line)
+	protected abstract Maybe<Entry> buildEntry(final CSVLine line)
 	throws ReportException;
 	
 	protected List<String> buildHeaders() {
