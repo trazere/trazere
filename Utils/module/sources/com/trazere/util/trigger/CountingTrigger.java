@@ -63,6 +63,6 @@ extends AbstractTrigger {
 		assert _value > 0;
 		
 		_value -= 1;
-		return _value <= _resetBound;
+		return _value > _resetBound;
 	}
 }
