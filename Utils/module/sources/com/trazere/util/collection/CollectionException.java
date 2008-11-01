@@ -16,7 +16,7 @@
 package com.trazere.util.collection;
 
 /**
- * <code>CollectionException</code> exceptions are thrown when collection related errors occur.
+ * {@link CollectionException} exceptions are thrown when collection related errors occur.
  */
 public class CollectionException
 extends Exception {

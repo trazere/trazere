@@ -18,7 +18,7 @@ package com.trazere.util.collection;
 import java.util.Map;
 
 /**
- * The <code>MapFactory</code> interface defines factories which build maps.
+ * The {@link MapFactory} interface defines factories which build maps.
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.

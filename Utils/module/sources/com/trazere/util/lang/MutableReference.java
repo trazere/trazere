@@ -21,8 +21,6 @@ import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Maybe.None;
 import com.trazere.util.type.Maybe.Some;
 
-// TODO: equals/hash code
-
 /**
  * The {@link MutableReference} class represents mutable refererences.
  * 
@@ -80,25 +78,34 @@ implements Describable {
 	 */
 	public void set(final T value)
 	throws ReferenceAlreadySetException {
-		set(value, false);
+		// Check that the reference is not set.
+		if (_value.isSome()) {
+			throw new ReferenceAlreadySetException("Reference already set to " + _value.asSome().getValue());
+		}
+		
+		// Set the value.
+		_value = Maybe.some(value);
 	}
 	
 	/**
-	 * Set the receiver reference to the given value.
+	 * Set or reset the receiver reference according to the given value.
 	 * <p>
-	 * The reference must not be set or the overwrite flag must be <code>true</code>.
+	 * The reference must not be set when a value is given.
 	 * 
 	 * @param value Value to set. May be <code>null</code>.
-	 * @param overwrite Flag indicating wether already set references may be overwritten.
 	 * @throws ReferenceAlreadySetException When the reference has already been set.
 	 */
-	public void set(final T value, final boolean overwrite)
+	public void set(final Maybe<T> value)
 	throws ReferenceAlreadySetException {
-		if (overwrite || !_value.isSome()) {
-			_value = Maybe.some(value);
-		} else {
+		assert null != value;
+		
+		// Check that the reference is not set.
+		if (value.isSome() && _value.isSome()) {
 			throw new ReferenceAlreadySetException("Reference already set to " + _value.asSome().getValue());
 		}
+		
+		// Update the value.
+		_value = value;
 	}
 	
 	/**
@@ -111,37 +118,28 @@ implements Describable {
 	}
 	
 	/**
-	 * Set or reset the receiver reference according to the given value.
+	 * Update the receiver reference to the given value.
 	 * <p>
-	 * The reference must not be set when a value is given.
+	 * The reference may already be set.
 	 * 
 	 * @param value Value to set. May be <code>null</code>.
-	 * @throws ReferenceAlreadySetException When the reference has already been set.
 	 */
-	public void update(final Maybe<T> value)
-	throws ReferenceAlreadySetException {
-		update(value, false);
+	public void update(final T value) {
+		_value = Maybe.some(value);
 	}
 	
 	/**
 	 * Set or reset the receiver reference according to the given value.
 	 * <p>
-	 * The reference must not be set or the overwrite flag must be <code>true</code> when a value is given.
+	 * The reference may already be set.
 	 * 
-	 * @param value Value to set. May be <code>null</code>.
-	 * @param overwrite Flag indicating wether already set references may be overwritten.
-	 * @throws ReferenceAlreadySetException When the reference has already been set.
+	 * @param value Value to set.
 	 */
-	public void update(final Maybe<T> value, final boolean overwrite)
-	throws ReferenceAlreadySetException {
+	public void update(final Maybe<T> value) {
 		assert null != value;
 		
-		// Set.
-		if (value.isNone() || overwrite || !_value.isSome()) {
-			_value = value;
-		} else {
-			throw new ReferenceAlreadySetException("Reference already set to " + _value.asSome().getValue());
-		}
+		// Update.
+		_value = value;
 	}
 	
 	/**
@@ -168,6 +166,25 @@ implements Describable {
 	 */
 	public Maybe<T> asMaybe() {
 		return _value;
+	}
+	
+	@Override
+	public int hashCode() {
+		final HashCode result = new HashCode(this);
+		result.append(_value);
+		return result.get();
+	}
+	
+	@Override
+	public boolean equals(final Object object) {
+		if (this == object) {
+			return true;
+		} else if (null != object && getClass().equals(object.getClass())) {
+			final MutableReference<?> reference = (MutableReference<?>) object;
+			return LangUtils.equals(_value, reference._value);
+		} else {
+			return false;
+		}
 	}
 	
 	@Override
