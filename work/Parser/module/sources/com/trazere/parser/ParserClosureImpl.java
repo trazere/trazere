@@ -18,6 +18,8 @@ package com.trazere.parser;
 import java.util.ArrayList;
 import java.util.Collection;
 
+// TODO: make a sub class for isValidFailure()
+
 /**
  * DOCME
  * 

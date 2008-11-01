@@ -674,7 +674,7 @@ public class FunctionUtils {
 		// Fold.
 		final MutableReference<A> accumulator = new MutableReference<A>(initialAccumulator);
 		for (final T value : values) {
-			accumulator.set(function.evaluate(accumulator.get(), value), true);
+			accumulator.update(function.evaluate(accumulator.get(), value));
 		}
 		return accumulator.get();
 	}

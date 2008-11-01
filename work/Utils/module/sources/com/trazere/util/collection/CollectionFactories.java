@@ -15,7 +15,6 @@
  */
 package com.trazere.util.collection;
 
-import com.trazere.util.lang.LangUtils;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -23,7 +22,7 @@ import java.util.LinkedList;
 import java.util.TreeSet;
 
 /**
- * The <code>CollectionFactories</code> class provides various standard collection factories.
+ * The {@link CollectionFactories} class provides various standard collection factories.
  * 
  * @see CollectionFactory
  */
@@ -43,13 +42,14 @@ public class CollectionFactories {
 	};
 	
 	/**
-	 * Build a collection factory which produces <code>ArrayList</code>s.
+	 * Build a collection factory which produces {@link ArrayList}s.
 	 * 
 	 * @param <T> Type of the elements.
 	 * @return The factory.
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T> CollectionFactory<T, ArrayList<T>> arrayList() {
-		return LangUtils.cast(ARRAYLIST);
+		return (CollectionFactory<T, ArrayList<T>>) ARRAYLIST;
 	}
 	
 	private static final CollectionFactory<?, ?> HASHSET = new CollectionFactory<Object, HashSet<Object>>() {
@@ -67,13 +67,14 @@ public class CollectionFactories {
 	};
 	
 	/**
-	 * Build a collection factory which produces <code>HashSet</code>s.
+	 * Build a collection factory which produces {@link HashSet}s.
 	 * 
 	 * @param <T> Type of the elements.
 	 * @return The factory.
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T> CollectionFactory<T, HashSet<T>> hashSet() {
-		return LangUtils.cast(HASHSET);
+		return (CollectionFactory<T, HashSet<T>>) HASHSET;
 	}
 	
 	private static final CollectionFactory<?, ?> LINKEDLIST = new CollectionFactory<Object, LinkedList<Object>>() {
@@ -91,13 +92,14 @@ public class CollectionFactories {
 	};
 	
 	/**
-	 * Build a collection factory which produces <code>LinkedList</code>s.
+	 * Build a collection factory which produces {@link LinkedList}s.
 	 * 
 	 * @param <T> Type of the elements.
 	 * @return The factory.
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T> CollectionFactory<T, LinkedList<T>> linkedList() {
-		return LangUtils.cast(LINKEDLIST);
+		return (CollectionFactory<T, LinkedList<T>>) LINKEDLIST;
 	}
 	
 	private static final CollectionFactory<?, ?> TREESET = new CollectionFactory<Object, TreeSet<Object>>() {
@@ -115,13 +117,14 @@ public class CollectionFactories {
 	};
 	
 	/**
-	 * Build a collection factory which produces <code>TreeSet</code>s.
+	 * Build a collection factory which produces {@link TreeSet}s.
 	 * 
 	 * @param <T> Type of the elements.
 	 * @return The factory.
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T> CollectionFactory<T, TreeSet<T>> treeSet() {
-		return LangUtils.cast(TREESET);
+		return (CollectionFactory<T, TreeSet<T>>) TREESET;
 	}
 	
 	private CollectionFactories() {

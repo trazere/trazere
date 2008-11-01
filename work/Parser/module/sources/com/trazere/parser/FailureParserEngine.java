@@ -108,8 +108,7 @@ public class FailureParserEngine {
 							return false;
 						} else if (parent.isSome()) {
 							// HACK: work around the type system: higher order types are needed to parametrize the type of the closures (because of the result parameter)
-							@SuppressWarnings("unchecked")
-							final ParserClosureImpl<Token, Result> closure = (ParserClosureImpl<Token, Result>) parent.asSome().getValue();
+							final ParserClosureImpl<Token, ?> closure = (ParserClosureImpl<Token, ?>) parent.asSome().getValue();
 							return closure.isValidFailure();
 						} else {
 							return true;

@@ -18,7 +18,7 @@ package com.trazere.util.collection;
 import java.util.Collection;
 
 /**
- * The <code>CollectionFactory</code> interface defines factories which build collections.
+ * The {@link CollectionFactory} interface defines factories which build collections.
  * 
  * @param <T> Type of the elements.
  * @param <C> Type of the collections.

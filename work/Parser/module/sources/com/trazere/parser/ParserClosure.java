@@ -27,8 +27,6 @@ public interface ParserClosure<Token, Result>
 extends ParserFailure<Token> {
 	public Parser<Token, Result> getParser();
 	
-	public ParserPosition<Token> getPosition();
-	
 	public void success(final Result result, final ParserState<Token> state)
 	throws ParserException;
 	

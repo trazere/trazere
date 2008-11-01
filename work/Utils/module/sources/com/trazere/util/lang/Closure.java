@@ -57,6 +57,29 @@ implements Describable {
 		};
 	}
 	
+	/**
+	 * Build a closure which gets its from the given factory.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param <X> Type of the exceptions.
+	 * @param factory The factory which builds the value.
+	 * @return The closure.
+	 */
+	public static <T, X extends Exception> Closure<T, X> build(final Factory<T, X> factory) {
+		return new Closure<T, X>() {
+			@Override
+			protected T compute()
+			throws X {
+				return factory.build();
+			}
+			
+			@Override
+			public void fillDescription(final StringBuilder builder) {
+				builder.append(" - Factory = ").append(factory);
+			}
+		};
+	}
+	
 	/** The computed value. */
 	protected Maybe<T> _value = Maybe.none();
 	

@@ -92,8 +92,8 @@ public class ParserUtils {
 			
 			public void success(final Result result, final ParserPosition<Token> resultPosition) {
 				if (!_position.isSet() || resultPosition.compareTo(_position.get()) > 0) {
-					successReference.set(result, true);
-					_position.set(resultPosition, true);
+					successReference.update(result);
+					_position.update(resultPosition);
 				}
 			}
 		});
@@ -117,8 +117,8 @@ public class ParserUtils {
 			
 			public void success(final Result result, final ParserPosition<Token> resultPosition) {
 				if (!_position.isSet() || resultPosition.compareTo(_position.get()) > 0) {
-					successReference.set(result, true);
-					_position.set(resultPosition, true);
+					successReference.update(result);
+					_position.update(resultPosition);
 				}
 			}
 			
@@ -152,16 +152,16 @@ public class ParserUtils {
 			
 			public void success(final Result result, final ParserPosition<Token> resultPosition) {
 				if (!_successPosition.isSet() || resultPosition.compareTo(_successPosition.get()) > 0) {
-					successReference.set(result, true);
-					_successPosition.set(resultPosition, true);
+					successReference.update(result);
+					_successPosition.update(resultPosition);
 				}
 			}
 			
 			public void failure(final Parser<Token, ?> failureParser, final ParserPosition<Token> failurePosition)
 			throws ParserException {
 				if (!_failurePosition.isSet() || failurePosition.compareTo(_failurePosition.get()) > 0) {
-					failureReference.set(new ParserFailureImpl<Token>(failureParser, failurePosition), true);
-					_failurePosition.set(failurePosition, true);
+					failureReference.update(new ParserFailureImpl<Token>(failureParser, failurePosition));
+					_failurePosition.update(failurePosition);
 				}
 			}
 		});

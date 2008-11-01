@@ -16,6 +16,8 @@
 package com.trazere.util.collection;
 
 import com.trazere.util.function.Predicate;
+import com.trazere.util.lang.MutableBoolean;
+import com.trazere.util.lang.MutableReference;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -49,13 +51,10 @@ implements Iterator<T> {
 	private final Iterator<T> _feed;
 	
 	/** Flag indicating wether the next element has been retrieved from the feed. */
-	private boolean _lookAhead = false;
-	
-	/** Flag indicating wether the feed is exhauted. */
-	private boolean _eof;
+	private final MutableBoolean _lookAhead = new MutableBoolean(false);
 	
 	/** Next element from the feed. */
-	private T _next = null;
+	private final MutableReference<T> _next = new MutableReference<T>();
 	
 	/**
 	 * Instanciate a new iterator with the given feed.
@@ -71,33 +70,35 @@ implements Iterator<T> {
 	
 	public boolean hasNext() {
 		lookAhead();
-		return !_eof;
+		
+		return !_next.isSet();
 	}
 	
 	public T next() {
 		lookAhead();
-		if (_eof) {
+		
+		if (_next.isSet()) {
+			final T next = _next.get();
+			_next.reset();
+			_lookAhead.set(false);
+			
+			return next;
+		} else {
 			throw new NoSuchElementException();
 		}
-		
-		final T next = _next;
-		_next = null;
-		_lookAhead = false;
-		
-		return next;
 	}
 	
 	private void lookAhead() {
-		while (!_lookAhead) {
+		while (!_lookAhead.get()) {
 			if (_feed.hasNext()) {
 				final T next = _feed.next();
 				if (filter(next)) {
-					_next = next;
-					_lookAhead = true;
+					_next.update(next);
+					_lookAhead.set(true);
 				}
 			} else {
-				_eof = true;
-				_lookAhead = true;
+				_next.reset();
+				_lookAhead.set(true);
 			}
 		}
 	}

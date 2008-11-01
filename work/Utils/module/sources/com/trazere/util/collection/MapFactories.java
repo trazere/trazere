@@ -20,13 +20,12 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * The <code>MapFactories</code> class provides various standard map factories.
+ * The {@link MapFactories} class provides various standard map factories.
  * 
  * @see MapFactory
  */
 public class MapFactories {
-	@SuppressWarnings("unchecked")
-	private static final MapFactory HASHMAP = new MapFactory<Object, Object, HashMap<Object, Object>>() {
+	private static final MapFactory<?, ?, ?> HASHMAP = new MapFactory<Object, Object, HashMap<Object, Object>>() {
 		public HashMap<Object, Object> build() {
 			return new HashMap<Object, Object>();
 		}
@@ -41,7 +40,7 @@ public class MapFactories {
 	};
 	
 	/**
-	 * Build a map factory which produces <code>HashMap</code>s.
+	 * Build a map factory which produces {@link HashMap}s.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -49,11 +48,10 @@ public class MapFactories {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <K, V> MapFactory<K, V, HashMap<K, V>> hashMap() {
-		return HASHMAP;
+		return (MapFactory<K, V, HashMap<K, V>>) HASHMAP;
 	}
 	
-	@SuppressWarnings("unchecked")
-	private static final MapFactory TREEMAP = new MapFactory<Object, Object, TreeMap<Object, Object>>() {
+	private static final MapFactory<?, ?, ?> TREEMAP = new MapFactory<Object, Object, TreeMap<Object, Object>>() {
 		public TreeMap<Object, Object> build() {
 			return new TreeMap<Object, Object>();
 		}
@@ -68,7 +66,7 @@ public class MapFactories {
 	};
 	
 	/**
-	 * Build a map factory which produces <code>TreeMap</code>s.
+	 * Build a map factory which produces {@link TreeMap}s.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -76,7 +74,7 @@ public class MapFactories {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <K, V> MapFactory<K, V, TreeMap<K, V>> treeMap() {
-		return TREEMAP;
+		return (MapFactory<K, V, TreeMap<K, V>>) TREEMAP;
 	}
 	
 	private MapFactories() {
