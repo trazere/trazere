@@ -61,6 +61,70 @@ public class Predicates {
 		return (Predicate<T, X>) NONE;
 	}
 	
+	/**
+	 * Build a predicate corresponding to the inverse of the given predicate.
+	 * 
+	 * @param <T> Type of the argument values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate The predicate.
+	 * @return The built predicate.
+	 */
+	public static <T, X extends Exception> Predicate<T, X> not(final Predicate<T, X> predicate) {
+		assert null != predicate;
+		
+		// Build.
+		return new Predicate<T, X>() {
+			public boolean evaluate(final T value)
+			throws X {
+				return !predicate.evaluate(value);
+			}
+		};
+	}
+	
+	/**
+	 * Build a predicate corresponding to the conjonction of the given predicates.
+	 * 
+	 * @param <T> Type of the argument values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate1 The first predicate.
+	 * @param predicate2 The second predicate.
+	 * @return The built predicate.
+	 */
+	public static <T, X extends Exception> Predicate<T, X> and(final Predicate<? super T, ? extends X> predicate1, final Predicate<? super T, ? extends X> predicate2) {
+		assert null != predicate1;
+		assert null != predicate2;
+		
+		// Build.
+		return new Predicate<T, X>() {
+			public boolean evaluate(final T value)
+			throws X {
+				return predicate1.evaluate(value) && predicate2.evaluate(value);
+			}
+		};
+	}
+	
+	/**
+	 * Build a predicate corresponding to the disjunction of the given predicates.
+	 * 
+	 * @param <T> Type of the argument values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate1 The first predicate.
+	 * @param predicate2 The second predicate.
+	 * @return The built predicate.
+	 */
+	public static <T, X extends Exception> Predicate<T, X> or(final Predicate<? super T, ? extends X> predicate1, final Predicate<? super T, ? extends X> predicate2) {
+		assert null != predicate1;
+		assert null != predicate2;
+		
+		// Build.
+		return new Predicate<T, X>() {
+			public boolean evaluate(final T value)
+			throws X {
+				return predicate1.evaluate(value) || predicate2.evaluate(value);
+			}
+		};
+	}
+	
 	private static final Predicate2<?, ?, ?> ALL2 = new Predicate2<Object, Object, Exception>() {
 		public boolean evaluate(final Object value1, final Object value2) {
 			return true;

@@ -50,6 +50,10 @@ public class CoreParsers {
 		return new Many1Parser<Token, Result>(subParser, description);
 	}
 	
+	public static <Token, Result> ManyNParser<Token, Result> manyN(final Parser<Token, Result> subParser, final String description) {
+		return new ManyNParser<Token, Result>(subParser, description);
+	}
+	
 	public static <Token, SubResult1, SubResult2> Parser<Token, Tuple2<SubResult1, SubResult2>> sequence(final Parser<Token, ? extends SubResult1> subParser1, final Parser<Token, ? extends SubResult2> subParser2, final String description) {
 		return new Combine2Parser<Token, SubResult1, SubResult2, Tuple2<SubResult1, SubResult2>>(subParser1, subParser2, description) {
 			@Override
@@ -92,6 +96,10 @@ public class CoreParsers {
 	
 	public static <Token, Result> Parser<Token, List<Result>> intersperse1(final Parser<Token, ? extends Result> valueParser, final Parser<Token, ?> delimiterParser, final String description) {
 		return new Intersperse1Parser<Token, Result>(valueParser, delimiterParser, description);
+	}
+	
+	public static <Token, Result> Parser<Token, List<Result>> intersperseN(final Parser<Token, ? extends Result> valueParser, final Parser<Token, ?> delimiterParser, final String description) {
+		return new IntersperseNParser<Token, Result>(valueParser, delimiterParser, description);
 	}
 	
 	public static <Token, Result> ChoiceParser<Token, Result> choice(final Parser<Token, ? extends Result> subParser1, final Parser<Token, ? extends Result> subParser2, final String description) {
