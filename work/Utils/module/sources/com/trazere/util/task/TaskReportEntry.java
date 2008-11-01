@@ -21,9 +21,9 @@ import com.trazere.util.report.ReportEntry;
 import com.trazere.util.report.ReportUtils;
 
 /**
- * The <code>TaskReportEntry</code> class represents report entries regarding task execution.
+ * The {@link TaskReportEntry} class represents report entries of task executions.
  * <p>
- * The entries use the name of the tasks as category and their code reflect the status of the task according to the {@link TaskStatus} enumeration.
+ * The entries use the name of the tasks as category and their code reflects the status of the task according to the {@link TaskStatus} enumeration.
  * 
  * @see Task
  */

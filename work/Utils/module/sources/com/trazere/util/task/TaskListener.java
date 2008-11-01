@@ -21,30 +21,38 @@ package com.trazere.util.task;
 public interface TaskListener {
 	/**
 	 * Notify the receiver listener that the execution of the given task has started.
+	 * 
+	 * @param task The task.
 	 */
-	public void taskStarted();
+	public void taskStarted(final Task task);
 	
 	/**
 	 * Notify the receiver listener that the execution of the given task has succeeded.
+	 * 
+	 * @param task The task.
 	 */
-	public void taskSucceeded();
+	public void taskSucceeded(final Task task);
 	
 	/**
 	 * Notify the receiver listener that the execution of the given task has failed.
 	 * 
-	 * @param exception Failure exception.
+	 * @param task The task.
+	 * @param exception The failure exception.
 	 */
-	public void taskFailed(final TaskException exception);
+	public void taskFailed(final Task task, final TaskException exception);
 	
 	/**
 	 * Notify the receiver listener that the execution of the given task has failed.
 	 * 
-	 * @param exception Failure exception.
+	 * @param task The task.
+	 * @param exception The failure exception.
 	 */
-	public void taskFailed(final RuntimeException exception);
+	public void taskFailed(final Task task, final RuntimeException exception);
 	
 	/**
 	 * Notify the receiver listener that the execution of the given task has ended.
+	 * 
+	 * @param task The task.
 	 */
-	public void taskEnded();
+	public void taskEnded(final Task task);
 }

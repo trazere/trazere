@@ -15,10 +15,10 @@
  */
 package com.trazere.util.task;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
- * The <code>Task</code> interface defines executable, named tasks.
+ * The {@link Task} interface defines executable, named tasks.
  */
 public interface Task {
 	/**
@@ -29,38 +29,38 @@ public interface Task {
 	public String getName();
 	
 	/**
-	 * Execute the receiver task.
+	 * Run the receiver task.
 	 * 
 	 * @throws TaskException When an error occur during the execution.
 	 */
-	public void performTask()
+	public void run()
 	throws TaskException;
 	
 	/**
-	 * Execute the receiver task.
+	 * Run the receiver task.
 	 * 
 	 * @param listeners Task listeners.
 	 * @throws TaskException When an error occur during the execution.
 	 */
-	public void performTask(final List<TaskListener> listeners)
+	public void run(final Collection<? extends TaskListener> listeners)
 	throws TaskException;
+	
+	/**
+	 * Run the receiver task.
+	 * <p>
+	 * This method silently ignore errors.
+	 * 
+	 * @return <code>true</code> if the task has executed correctly, <code>false</code> if some error occured.
+	 */
+	public boolean unsafeRun();
 	
 	/**
 	 * Execute the receiver task.
 	 * <p>
 	 * This method silently ignore errors.
 	 * 
-	 * @return <code>true</code> if the task has executed correctly, <code>false</code> if some error occured.
-	 */
-	public boolean unsafePerformTask();
-	
-	/**
-	 * Execute the receiver task.
-	 * <p>
-	 * This method silently ignore errors.
-	 * 
 	 * @param listeners Task listeners.
 	 * @return <code>true</code> if the task has executed correctly, <code>false</code> if some error occured.
 	 */
-	public boolean unsafePerformTask(final List<TaskListener> listeners);
+	public boolean unsafeRun(final Collection<? extends TaskListener> listeners);
 }

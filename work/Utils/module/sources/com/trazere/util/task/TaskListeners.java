@@ -21,109 +21,97 @@ import com.trazere.util.report.ReportListener;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-// TODO: add some TaskListener combinator to copy events
-
 /**
- * DOCME
+ * The {@link TaskListeners} class provides various task listeners.
  */
 public class TaskListeners {
 	private static final Log LOG = LogFactory.getLog(TaskListener.class);
 	
-	public static TaskListener log(final Task task, final Log log) {
-		assert null != task;
+	/**
+	 * Build a task listener which logs the task executions using the given log.
+	 * 
+	 * @param log The log to use.
+	 * @param trace Flag indicated wether the exception trace should be logged or not.
+	 * @return The built listener.
+	 */
+	public static TaskListener log(final Log log, final boolean trace) {
 		assert null != log;
 		
 		// Build.
 		return new TaskListener() {
-			public void taskStarted() {
+			public void taskStarted(final Task task) {
 				log.info("*** " + task.getName() + " ***");
 			}
 			
-			public void taskSucceeded() {
+			public void taskSucceeded(final Task task) {
 				log.info("*** " + task.getName() + " [OK] ***");
 			}
 			
-			public void taskFailed(final TaskException exception) {
-				log.info("*** " + task.getName() + " [FAILED] ***");
+			public void taskFailed(final Task task, final TaskException exception) {
+				if (trace) {
+					log.info("*** " + task.getName() + " [FAILED] ***", exception);
+				} else {
+					log.info("*** " + task.getName() + " [FAILED] ***");
+				}
 			}
 			
-			public void taskFailed(final RuntimeException exception) {
-				log.info("*** " + task.getName() + " [FAILED] ***");
+			public void taskFailed(final Task task, final RuntimeException exception) {
+				if (trace) {
+					log.info("*** " + task.getName() + " [FAILED] ***", exception);
+				} else {
+					log.info("*** " + task.getName() + " [FAILED] ***");
+				}
 			}
 			
-			public void taskEnded() {
+			public void taskEnded(final Task task) {
 				log.info("");
 			}
 		};
 	}
 	
-	// TODO: merge with log() using an option
-	public static TaskListener trace(final Task task, final Log log) {
-		assert null != task;
-		assert null != log;
-		
-		// Build.
-		return new TaskListener() {
-			public void taskStarted() {
-				log.info("*** " + task.getName() + " ***");
-			}
-			
-			public void taskSucceeded() {
-				log.info("*** " + task.getName() + " [OK] ***");
-			}
-			
-			public void taskFailed(final TaskException exception) {
-				log.info("*** " + task.getName() + " [FAILED] ***", exception);
-			}
-			
-			public void taskFailed(final RuntimeException exception) {
-				log.info("*** " + task.getName() + " [FAILED] ***", exception);
-			}
-			
-			public void taskEnded() {
-				log.info("");
-			}
-		};
-	}
-	
-	public static TaskListener report(final Task task, final ReportListener<TaskReportEntry> reportListener) {
-		assert null != task;
+	/**
+	 * Build a task listener which reports the task executions using the given report listener.
+	 * 
+	 * @param reportListener The report listener to use.
+	 * @return The built listener.
+	 */
+	public static TaskListener report(final ReportListener<TaskReportEntry> reportListener) {
 		assert null != reportListener;
 		
 		// Build.
 		return new TaskListener() {
-			public void taskStarted() {
+			public void taskStarted(final Task task) {
 				// Nothing to do.
 			}
 			
-			public void taskSucceeded() {
+			public void taskSucceeded(final Task task) {
 				try {
 					reportListener.report(ReportLevel.NOTICE, new TaskReportEntry(task.getName(), TaskStatus.SUCCEEDED, null));
 					reportListener.sleep();
 				} catch (final ReportException exception) {
-					LOG.info("Failed reporting", exception);
+					LOG.info("Failed reporting execution of task " + task.getName(), exception);
 				}
 			}
 			
-			public void taskFailed(final TaskException exception) {
+			public void taskFailed(final Task task, final TaskException exception) {
 				try {
 					reportListener.report(ReportLevel.ERROR, new TaskReportEntry(task.getName(), TaskStatus.FAILED, exception.getMessage()));
 					reportListener.sleep();
 				} catch (final ReportException exception1) {
-					LOG.info("Failed reporting", exception1);
+					LOG.info("Failed reporting execution of task " + task.getName(), exception1);
 				}
 			}
 			
-			public void taskFailed(final RuntimeException exception) {
+			public void taskFailed(final Task task, final RuntimeException exception) {
 				try {
 					reportListener.report(ReportLevel.WARNING, new TaskReportEntry(task.getName(), TaskStatus.FAILED, exception.getMessage()));
 					reportListener.sleep();
 				} catch (final ReportException exception1) {
-					LOG.info("Failed reporting", exception1);
+					LOG.info("Failed reporting execution of task " + task.getName(), exception1);
 				}
 			}
 			
-			public void taskEnded() {
+			public void taskEnded(final Task task) {
 				// Nothing to do.
 			}
 		};

@@ -15,8 +15,8 @@
  */
 package com.trazere.util.task;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 /**
  * The {@link AbstractTask} abstract class provide a task basic implementation which supports notification about the executions.
@@ -44,12 +44,12 @@ implements Task {
 		return _name;
 	}
 	
-	public void performTask()
+	public void run()
 	throws TaskException {
-		performTask(Collections.<TaskListener>emptyList());
+		run(Collections.<TaskListener>emptyList());
 	}
 	
-	public void performTask(final List<TaskListener> listeners)
+	public void run(final Collection<? extends TaskListener> listeners)
 	throws TaskException {
 		assert null != listeners;
 		
@@ -58,7 +58,7 @@ implements Task {
 		
 		try {
 			// Perform the task.
-			performAbstractTask();
+			doRun();
 			
 			// Success.
 			taskSucceeded(listeners);
@@ -76,49 +76,66 @@ implements Task {
 		}
 	}
 	
-	public boolean unsafePerformTask() {
-		return unsafePerformTask(Collections.<TaskListener>emptyList());
+	public boolean unsafeRun() {
+		return unsafeRun(Collections.<TaskListener>emptyList());
 	}
 	
-	public boolean unsafePerformTask(final List<TaskListener> listeners) {
+	public boolean unsafeRun(final Collection<? extends TaskListener> listeners) {
 		try {
-			performTask(listeners);
+			run(listeners);
 			return true;
 		} catch (final TaskException exception) {
 			return false;
 		}
 	}
 	
-	protected abstract void performAbstractTask()
+	/**
+	 * Run the receiver task.
+	 * 
+	 * @throws TaskException When an error occur during the execution.
+	 */
+	protected abstract void doRun()
 	throws TaskException;
 	
-	protected void taskStarted(final List<TaskListener> listeners) {
+	protected void taskStarted(final Collection<? extends TaskListener> listeners) {
+		assert null != listeners;
+		
 		for (final TaskListener listener : listeners) {
-			listener.taskStarted();
+			listener.taskStarted(this);
 		}
 	}
 	
-	protected void taskSucceeded(final List<TaskListener> listeners) {
+	protected void taskSucceeded(final Collection<? extends TaskListener> listeners) {
+		assert null != listeners;
+		
 		for (final TaskListener listener : listeners) {
-			listener.taskSucceeded();
+			listener.taskSucceeded(this);
 		}
 	}
 	
-	protected void taskFailed(final List<TaskListener> listeners, final TaskException exception) {
+	protected void taskFailed(final Collection<? extends TaskListener> listeners, final TaskException exception) {
+		assert null != listeners;
+		assert null != exception;
+		
 		for (final TaskListener listener : listeners) {
-			listener.taskFailed(exception);
+			listener.taskFailed(this, exception);
 		}
 	}
 	
-	protected void taskFailed(final List<TaskListener> listeners, final RuntimeException exception) {
+	protected void taskFailed(final Collection<? extends TaskListener> listeners, final RuntimeException exception) {
+		assert null != listeners;
+		assert null != exception;
+		
 		for (final TaskListener listener : listeners) {
-			listener.taskFailed(exception);
+			listener.taskFailed(this, exception);
 		}
 	}
 	
-	protected void taskEnded(final List<TaskListener> listeners) {
+	protected void taskEnded(final Collection<? extends TaskListener> listeners) {
+		assert null != listeners;
+		
 		for (final TaskListener listener : listeners) {
-			listener.taskEnded();
+			listener.taskEnded(this);
 		}
 	}
 }

@@ -15,6 +15,7 @@
  */
 package com.trazere.util.collection;
 
+import com.trazere.util.lang.Factory;
 import java.util.Collection;
 
 /**
@@ -23,7 +24,8 @@ import java.util.Collection;
  * @param <T> Type of the elements.
  * @param <C> Type of the collections.
  */
-public interface CollectionFactory<T, C extends Collection<? super T>> {
+public interface CollectionFactory<T, C extends Collection<? super T>>
+extends Factory<C, RuntimeException> {
 	public C build();
 	
 	public C build(final int capacity);
