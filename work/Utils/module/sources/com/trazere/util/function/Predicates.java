@@ -15,6 +15,7 @@
  */
 package com.trazere.util.function;
 
+import com.trazere.util.lang.LangUtils;
 import java.util.Collection;
 
 /**
@@ -96,6 +97,22 @@ public class Predicates {
 	@SuppressWarnings("unchecked")
 	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> none2() {
 		return (Predicate2<T1, T2, X>) NONE2;
+	}
+	
+	/**
+	 * Build a predicate which evaluates to <code>true</code> for the given value.
+	 * 
+	 * @param <T> Type of the argument values.
+	 * @param <X> Type of the exceptions.
+	 * @param value The value. May be <code>null</code>.
+	 * @return The built predicate.
+	 */
+	public static <T, X extends Exception> Predicate<T, X> value(final T value) {
+		return new Predicate<T, X>() {
+			public boolean evaluate(final T value_) {
+				return LangUtils.equals(value, value_);
+			}
+		};
 	}
 	
 	/**

@@ -15,6 +15,7 @@
  */
 package com.trazere.util.text;
 
+import com.trazere.util.lang.MutableBoolean;
 import java.util.Collection;
 
 /**
@@ -114,7 +115,7 @@ public class TextUtils {
 	 * @param delimiter The delimiter.
 	 * @return The resulting string.
 	 */
-	public static String join(final Collection<String> tokens, final String delimiter) {
+	public static String join(final Collection<?> tokens, final String delimiter) {
 		return join(tokens, delimiter, new StringBuilder()).toString();
 	}
 	
@@ -126,19 +127,20 @@ public class TextUtils {
 	 * @param builder The string build to fill.
 	 * @return The given string builder.
 	 */
-	public static StringBuilder join(final Collection<String> tokens, final String delimiter, final StringBuilder builder) {
+	public static StringBuilder join(final Collection<?> tokens, final String delimiter, final StringBuilder builder) {
 		assert null != tokens;
 		assert null != delimiter;
 		assert null != builder;
 		
 		// Join the strings.
-		boolean first = true;
-		for (final String token : tokens) {
-			if (!first) {
+		final MutableBoolean first = new MutableBoolean(true);
+		for (final Object token : tokens) {
+			if (!first.get()) {
 				builder.append(delimiter);
+			} else {
+				first.set(false);
 			}
 			builder.append(token);
-			first = false;
 		}
 		
 		return builder;

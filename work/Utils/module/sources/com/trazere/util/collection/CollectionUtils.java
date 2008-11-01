@@ -37,7 +37,7 @@ import java.util.Set;
  */
 public class CollectionUtils {
 	/**
-	 * Build a new list with the given value.
+	 * Build a new list containing the given value.
 	 * <p>
 	 * This method instantiates an {@link ArrayList}.
 	 * 
@@ -53,7 +53,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Build a new list with the given values.
+	 * Build a new list containing the given values.
 	 * <p>
 	 * This method instantiates an {@link ArrayList}.
 	 * 
@@ -71,7 +71,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Build a new list with the given values.
+	 * Build a new list containing the given values.
 	 * <p>
 	 * This method instantiates an {@link ArrayList}.
 	 * 
@@ -91,7 +91,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Build a new list with the given values.
+	 * Build a new list containing the given values.
 	 * <p>
 	 * This method instantiates an {@link ArrayList}.
 	 * 
@@ -111,7 +111,27 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Build a set with the given value.
+	 * Build a new list containing the given value.
+	 * <p>
+	 * This method instantiates an {@link ArrayList}.
+	 * 
+	 * @param <T> Type of the the values.
+	 * @param value The value.
+	 * @return The list.
+	 */
+	public static <T> List<T> list(final Maybe<T> value) {
+		assert null != value;
+		
+		// Build the list.
+		final List<T> list = new ArrayList<T>();
+		if (value.isSome()) {
+			list.add(value.asSome().getValue());
+		}
+		return list;
+	}
+	
+	/**
+	 * Build a set containing the given value.
 	 * <p>
 	 * This method instantiates a {@link HashSet}.
 	 * 
@@ -127,7 +147,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Build a set with the given values.
+	 * Build a set containing the given values.
 	 * <p>
 	 * This method instantiates a {@link HashSet}.
 	 * 
@@ -145,7 +165,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Build a set with the given values.
+	 * Build a set containing the given values.
 	 * <p>
 	 * This method instantiates a {@link HashSet}.
 	 * 
@@ -165,7 +185,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Build a set with the given values.
+	 * Build a set containing the given values.
 	 * <p>
 	 * This method instantiates a {@link HashSet}.
 	 * 
@@ -185,7 +205,27 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Build a map with the binding of the given key and value.
+	 * Build a set containing the given value.
+	 * <p>
+	 * This method instantiates a {@link HashSet}.
+	 * 
+	 * @param <T> Type of the the values.
+	 * @param value The value.
+	 * @return The set.
+	 */
+	public static <T> Set<T> set(final Maybe<T> value) {
+		assert null != value;
+		
+		// Build the set.
+		final Set<T> set = new HashSet<T>();
+		if (value.isSome()) {
+			set.add(value.asSome().getValue());
+		}
+		return set;
+	}
+	
+	/**
+	 * Build a map containing the binding of the given key and value.
 	 * <p>
 	 * This method instantiates a {@link HashMap}.
 	 * 
@@ -203,7 +243,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Build a map with the bindings of the given keys and values.
+	 * Build a map containing the bindings of the given keys and values.
 	 * <p>
 	 * This method instantiates a {@link HashMap}.
 	 * 
