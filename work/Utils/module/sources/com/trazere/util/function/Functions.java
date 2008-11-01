@@ -16,6 +16,7 @@
 package com.trazere.util.function;
 
 import com.trazere.util.type.Maybe;
+import com.trazere.util.type.Tuple2;
 import java.util.Map;
 
 /**
@@ -41,6 +42,30 @@ public class Functions {
 	@SuppressWarnings("unchecked")
 	public static <T, X extends Exception> Function<T, T, X> identity() {
 		return (Function<T, T, X>) IDENTITY;
+	}
+	
+	/**
+	 * Build a function corresponding to the composition of the given functions (f . g).
+	 * 
+	 * @param <T1> Type of the argument values of the inner function.
+	 * @param <T2> Type of the argument values of the outer function.
+	 * @param <T3> Type of the results.
+	 * @param <X> Type of the exceptions.
+	 * @param f The outer function.
+	 * @param g The inner function.
+	 * @return The built function.
+	 */
+	public static <T1, T2, T3, X extends Exception> Function<T1, T3, X> compose(final Function<? super T2, T3, ? extends X> f, final Function<T1, ? extends T2, ? extends X> g) {
+		assert null != f;
+		assert null != g;
+		
+		// Build.
+		return new Function<T1, T3, X>() {
+			public T3 evaluate(final T1 value)
+			throws X {
+				return f.evaluate(g.evaluate(value));
+			}
+		};
 	}
 	
 	/**
@@ -107,6 +132,62 @@ public class Functions {
 				}
 			}
 		};
+	}
+	
+	private static final Function<?, ?, RuntimeException> SOME = new Function<Object, Maybe<Object>, RuntimeException>() {
+		public Maybe<Object> evaluate(final Object value) {
+			return Maybe.some(value);
+		}
+	};
+	
+	/**
+	 * Build a function wrapping the arguments in {@link Maybe.Some} instances.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @return The built function.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T, X extends Exception> Function<T, Maybe<T>, X> some() {
+		return (Function<T, Maybe<T>, X>) SOME;
+	}
+	
+	private static final Function<?, ?, RuntimeException> FIRST = new Function<Tuple2<Object, Object>, Object, RuntimeException>() {
+		public Object evaluate(final Tuple2<Object, Object> value) {
+			return value.getFirst();
+		}
+	};
+	
+	/**
+	 * Build a function getting the first value of a tuple.
+	 * 
+	 * @param <T1> Type of the first values of the tuples.
+	 * @param <T2> Type of the second values of the tuples.
+	 * @param <X> The of the exceptions.
+	 * @return The built function.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T1, T2, X extends Exception> Function<Tuple2<T1, T2>, T1, X> first() {
+		return (Function<Tuple2<T1, T2>, T1, X>) FIRST;
+	}
+	
+	private static final Function<?, ?, RuntimeException> SECOND = new Function<Tuple2<Object, Object>, Object, RuntimeException>() {
+		public Object evaluate(final Tuple2<Object, Object> value) {
+			return value.getSecond();
+		}
+	};
+	
+	/**
+	 * Build a function getting the second value of a tuple.
+	 * 
+	 * @param <T1> Type of the first values of the tuples.
+	 * @param <T2> Type of the second values of the tuples.
+	 * @param <X> The of the exceptions.
+	 * @return The built function.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T1, T2, X extends Exception> Function<Tuple2<T1, T2>, T2, X> second() {
+		return (Function<Tuple2<T1, T2>, T2, X>) SECOND;
 	}
 	
 	private Functions() {

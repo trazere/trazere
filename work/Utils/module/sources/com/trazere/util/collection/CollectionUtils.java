@@ -718,6 +718,28 @@ public class CollectionUtils {
 	}
 	
 	/**
+	 * Fill the given map with bindings identified by the given keys.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <M> Type of the map.
+	 * @param map The map.
+	 * @param keys The keys.
+	 * @param value The value. May be <code>null</code>.
+	 * @return The given map.
+	 */
+	public static <K, V, M extends Map<? super K, ? super V>> M fill(final M map, final Collection<? extends K> keys, final V value) {
+		assert null != map;
+		assert null != keys;
+		
+		// Fill.
+		for (final K key : keys) {
+			map.put(key, value);
+		}
+		return map;
+	}
+	
+	/**
 	 * Get the bindings of the given map identified by the given keys and populate the given result map with them.
 	 * 
 	 * @param <K> Type of the keys.
@@ -728,7 +750,7 @@ public class CollectionUtils {
 	 * @param results Map to populate with the bindings.
 	 * @return The given populated map.
 	 */
-	public static <K, V, M extends Map<? super K, ? super V>> M subMap(final Map<? extends K, ? extends V> map, final Set<? extends K> keys, final M results) {
+	public static <K, V, M extends Map<? super K, ? super V>> M sub(final Map<? extends K, ? extends V> map, final Set<? extends K> keys, final M results) {
 		assert null != map;
 		assert null != keys;
 		assert null != results;
@@ -754,7 +776,7 @@ public class CollectionUtils {
 	 * @param results Map to populate with the results.
 	 * @return The given populated map.
 	 */
-	public static <K, V, M extends Map<? super K, ? super V>> M retainMap(final Map<? extends K, ? extends V> map, final Collection<? extends K> keys, final M results) {
+	public static <K, V, M extends Map<? super K, ? super V>> M retain(final Map<? extends K, ? extends V> map, final Collection<? extends K> keys, final M results) {
 		assert null != map;
 		assert null != keys;
 		assert null != results;
