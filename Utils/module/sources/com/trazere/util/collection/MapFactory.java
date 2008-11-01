@@ -15,6 +15,7 @@
  */
 package com.trazere.util.collection;
 
+import com.trazere.util.lang.Factory;
 import java.util.Map;
 
 /**
@@ -24,7 +25,8 @@ import java.util.Map;
  * @param <V> Type of the values.
  * @param <M> Type of the maps.
  */
-public interface MapFactory<K, V, M extends Map<? super K, ? super V>> {
+public interface MapFactory<K, V, M extends Map<? super K, ? super V>>
+extends Factory<M, RuntimeException> {
 	public M build();
 	
 	public M build(final int capacity);

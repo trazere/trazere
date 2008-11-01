@@ -16,9 +16,12 @@
 package com.trazere.util.task;
 
 /**
- * DOCME
+ * The {@link TaskStatus} enumeration represents the execution status of the tasks.
  */
 public enum TaskStatus {
+	/** The execution of the task succeeded. */
 	SUCCEEDED,
+	
+	/** The execution of the task failed. */
 	FAILED;
 }

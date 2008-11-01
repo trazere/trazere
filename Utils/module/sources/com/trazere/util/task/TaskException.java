@@ -16,7 +16,7 @@
 package com.trazere.util.task;
 
 /**
- * <code>TaskException</code> exceptions are thrown when task related errors occur.
+ * {@link TaskException} exceptions are thrown when task related errors occur.
  */
 public class TaskException
 extends Exception {
