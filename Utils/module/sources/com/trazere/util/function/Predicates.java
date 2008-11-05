@@ -188,6 +188,8 @@ public class Predicates {
 	 * @return The built predicate.
 	 */
 	public static <T, X extends Exception> Predicate<T, X> values(final Collection<T> values) {
+		assert null != values;
+		
 		return new Predicate<T, X>() {
 			public boolean evaluate(final T value) {
 				return values.contains(value);
@@ -205,6 +207,8 @@ public class Predicates {
 	 * @return The built predicate.
 	 */
 	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> values1(final Collection<T1> values) {
+		assert null != values;
+		
 		return new Predicate2<T1, T2, X>() {
 			public boolean evaluate(final T1 value1, final T2 value2) {
 				return values.contains(value1);
@@ -222,6 +226,8 @@ public class Predicates {
 	 * @return The built predicate.
 	 */
 	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> values2(final Collection<T2> values) {
+		assert null != values;
+		
 		return new Predicate2<T1, T2, X>() {
 			public boolean evaluate(final T1 value1, final T2 value2) {
 				return values.contains(value2);
