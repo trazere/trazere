@@ -15,6 +15,7 @@
  */
 package com.trazere.util.collection;
 
+import com.trazere.util.lang.LangUtils;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -46,9 +47,8 @@ public class MapFactories {
 	 * @param <V> Type of the values.
 	 * @return The factory.
 	 */
-	@SuppressWarnings("unchecked")
 	public static <K, V> MapFactory<K, V, HashMap<K, V>> hashMap() {
-		return (MapFactory<K, V, HashMap<K, V>>) HASHMAP;
+		return LangUtils.cast(HASHMAP);
 	}
 	
 	private static final MapFactory<?, ?, ?> TREEMAP = new MapFactory<Object, Object, TreeMap<Object, Object>>() {
@@ -72,9 +72,8 @@ public class MapFactories {
 	 * @param <V> Type of the values.
 	 * @return The factory.
 	 */
-	@SuppressWarnings("unchecked")
 	public static <K, V> MapFactory<K, V, TreeMap<K, V>> treeMap() {
-		return (MapFactory<K, V, TreeMap<K, V>>) TREEMAP;
+		return LangUtils.cast(TREEMAP);
 	}
 	
 	private MapFactories() {

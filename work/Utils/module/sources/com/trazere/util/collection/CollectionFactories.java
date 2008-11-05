@@ -15,6 +15,7 @@
  */
 package com.trazere.util.collection;
 
+import com.trazere.util.lang.LangUtils;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -47,9 +48,8 @@ public class CollectionFactories {
 	 * @param <T> Type of the elements.
 	 * @return The factory.
 	 */
-	@SuppressWarnings("unchecked")
 	public static <T> CollectionFactory<T, ArrayList<T>> arrayList() {
-		return (CollectionFactory<T, ArrayList<T>>) ARRAYLIST;
+		return LangUtils.cast(ARRAYLIST);
 	}
 	
 	private static final CollectionFactory<?, ?> HASHSET = new CollectionFactory<Object, HashSet<Object>>() {
@@ -72,9 +72,8 @@ public class CollectionFactories {
 	 * @param <T> Type of the elements.
 	 * @return The factory.
 	 */
-	@SuppressWarnings("unchecked")
 	public static <T> CollectionFactory<T, HashSet<T>> hashSet() {
-		return (CollectionFactory<T, HashSet<T>>) HASHSET;
+		return LangUtils.cast(HASHSET);
 	}
 	
 	private static final CollectionFactory<?, ?> LINKEDLIST = new CollectionFactory<Object, LinkedList<Object>>() {
@@ -97,9 +96,8 @@ public class CollectionFactories {
 	 * @param <T> Type of the elements.
 	 * @return The factory.
 	 */
-	@SuppressWarnings("unchecked")
 	public static <T> CollectionFactory<T, LinkedList<T>> linkedList() {
-		return (CollectionFactory<T, LinkedList<T>>) LINKEDLIST;
+		return LangUtils.cast(LINKEDLIST);
 	}
 	
 	private static final CollectionFactory<?, ?> TREESET = new CollectionFactory<Object, TreeSet<Object>>() {
@@ -122,9 +120,8 @@ public class CollectionFactories {
 	 * @param <T> Type of the elements.
 	 * @return The factory.
 	 */
-	@SuppressWarnings("unchecked")
 	public static <T> CollectionFactory<T, TreeSet<T>> treeSet() {
-		return (CollectionFactory<T, TreeSet<T>>) TREESET;
+		return LangUtils.cast(TREESET);
 	}
 	
 	private CollectionFactories() {
