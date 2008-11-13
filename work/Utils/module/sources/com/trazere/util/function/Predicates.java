@@ -171,7 +171,7 @@ public class Predicates {
 	 * @param value The value. May be <code>null</code>.
 	 * @return The built predicate.
 	 */
-	public static <T, X extends Exception> Predicate<T, X> value(final T value) {
+	public static <T, X extends Exception> Predicate<T, X> equal(final T value) {
 		return new Predicate<T, X>() {
 			public boolean evaluate(final T value_) {
 				return LangUtils.equals(value, value_);
@@ -180,14 +180,14 @@ public class Predicates {
 	}
 	
 	/**
-	 * Build a predicate which evaluates to <code>true</code> for the given values.
+	 * Build a predicate which evaluates to <code>true</code> for any given values.
 	 * 
 	 * @param <T> Type of the argument values.
 	 * @param <X> Type of the exceptions.
 	 * @param values Values defining the predicate.
 	 * @return The built predicate.
 	 */
-	public static <T, X extends Exception> Predicate<T, X> values(final Collection<T> values) {
+	public static <T, X extends Exception> Predicate<T, X> any(final Collection<T> values) {
 		assert null != values;
 		
 		return new Predicate<T, X>() {
@@ -206,7 +206,7 @@ public class Predicates {
 	 * @param values First values defining the predicate.
 	 * @return The built predicate.
 	 */
-	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> values1(final Collection<T1> values) {
+	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> any1(final Collection<T1> values) {
 		assert null != values;
 		
 		return new Predicate2<T1, T2, X>() {
@@ -225,7 +225,7 @@ public class Predicates {
 	 * @param values Second values defining the predicate.
 	 * @return The built predicate.
 	 */
-	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> values2(final Collection<T2> values) {
+	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> any2(final Collection<T2> values) {
 		assert null != values;
 		
 		return new Predicate2<T1, T2, X>() {
