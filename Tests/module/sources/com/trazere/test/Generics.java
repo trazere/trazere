@@ -53,7 +53,7 @@ public class Generics {
 			}
 		};
 		
-		final List<String> strings1 = FunctionUtils.map(toString, numbers, new ArrayList<String>());
+		final List<String> strings1 = FunctionUtils.mapFilter(toString, numbers, new ArrayList<String>());
 		System.out.println(strings1);
 	}
 }
