@@ -386,19 +386,156 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Apply the given function to the given values and populate the given result collection with the results.
+	 * Transform the given values using the given function and populate the given collection with the result values.
 	 * 
 	 * @param <T1> Type of the argument values.
 	 * @param <T2> Type of the result values.
-	 * @param <C> Type of the collection to populate.
+	 * @param <C> Type of the collection to populate with the result values.
 	 * @param <X> Type of the exceptions.
-	 * @param function Function to use.
-	 * @param values Argument values.
-	 * @param results The collection to populate with the results.
+	 * @param function The function.
+	 * @param values The argument values.
+	 * @param results The collection to populate with the result values.
 	 * @return The given result collection.
 	 * @throws X When some function evaluation fails.
 	 */
-	public static <T1, T2, C extends Collection<? super T2>, X extends Exception> C map(final Function<? super T1, ? extends Maybe<? extends T2>, X> function, final Collection<? extends T1> values, final C results)
+	public static <T1, T2, C extends Collection<? super T2>, X extends Exception> C map(final Function<? super T1, ? extends T2, X> function, final Collection<? extends T1> values, final C results)
+	throws X {
+		assert null != function;
+		assert null != values;
+		assert null != results;
+		
+		// Map.
+		for (final T1 value : values) {
+			results.add(function.evaluate(value));
+		}
+		return results;
+	}
+	
+	/**
+	 * Transform the values provided by the given iterator using the given function and populate the given collection with the result values.
+	 * 
+	 * @param <T1> Type of the argument values.
+	 * @param <T2> Type of the result values.
+	 * @param <C> Type of the collection to populate with the result values.
+	 * @param <X> Type of the exceptions.
+	 * @param function The function.
+	 * @param values The iterator providing the argument values.
+	 * @param results The collection to populate with the result values.
+	 * @return The given result collection.
+	 * @throws X When some function evaluation fails.
+	 */
+	public static <T1, T2, C extends Collection<? super T2>, X extends Exception> C map(final Function<? super T1, ? extends T2, X> function, final Iterator<? extends T1> values, final C results)
+	throws X {
+		assert null != function;
+		assert null != values;
+		assert null != results;
+		
+		// Map.
+		while (values.hasNext()) {
+			results.add(function.evaluate(values.next()));
+		}
+		return results;
+	}
+	
+	/**
+	 * Transform the given bindings using the given function and populate the given map with the bindings of the argument keys and the corresponding result
+	 * values.
+	 * <p>
+	 * This method evaluates the function by passing the keys and values of the bindings respectively as first and second arguments.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V1> Type of the argument values.
+	 * @param <V2> Type of the result values.
+	 * @param <M> Type of the map to populate with the result bindings.
+	 * @param <X> Type of the exceptions.
+	 * @param function The function.
+	 * @param bindings The argument bindings.
+	 * @param results The map to populate with the result bindings.
+	 * @return The given result map.
+	 * @throws X When some function evaluation fails.
+	 */
+	public static <K, V1, V2, M extends Map<? super K, ? super V2>, X extends Exception> M map(final Function2<? super K, ? super V1, ? extends V2, X> function, final Map<? extends K, ? extends V1> bindings, final M results)
+	throws X {
+		assert null != function;
+		assert null != bindings;
+		assert null != results;
+		
+		// Map.
+		for (final Map.Entry<? extends K, ? extends V1> binding : bindings.entrySet()) {
+			final K key = binding.getKey();
+			results.put(key, function.evaluate(key, binding.getValue()));
+		}
+		return results;
+	}
+	
+	/**
+	 * Transform the given keys using the given function and populate the given map with the bindings of the keys and the result values.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <M> Type of the map to populate with the result bindings.
+	 * @param <X> Type of the exceptions.
+	 * @param function The function.
+	 * @param keys The argument keys.
+	 * @param results The map to populate with the result bindings.
+	 * @return The given result map.
+	 * @throws X When some function evaluation fails.
+	 */
+	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M mapKeys(final Function<? super K, ? extends V, X> function, final Set<? extends K> keys, final M results)
+	throws X {
+		assert null != function;
+		assert null != keys;
+		assert null != results;
+		
+		// Map the keys.
+		for (final K key : keys) {
+			results.put(key, function.evaluate(key));
+		}
+		return results;
+	}
+	
+	/**
+	 * Transform the given values using the given function and populate the given map with the bindings of the result keys and the argument values.
+	 * <p>
+	 * When the function evaluates to the same result key for different argument values, the last value is associated to the key in the result map.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <M> Type of the map to populate with the result bindings.
+	 * @param <X> Type of the exceptions.
+	 * @param function The function.
+	 * @param values The argument values.
+	 * @param results The map to populate with the result bindings.
+	 * @return The given result map.
+	 * @throws X When some function evaluation fails.
+	 */
+	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M mapValues(final Function<? super V, ? extends K, X> function, final Collection<? extends V> values, final M results)
+	throws X {
+		assert null != function;
+		assert null != values;
+		assert null != results;
+		
+		// Map the values.
+		for (final V value : values) {
+			results.put(function.evaluate(value), value);
+		}
+		return results;
+	}
+	
+	/**
+	 * Filter and transform the given values using the given function and populate the given collection with the result values.
+	 * 
+	 * @param <T1> Type of the argument values.
+	 * @param <T2> Type of the result values.
+	 * @param <C> Type of the collection to populate with the result values.
+	 * @param <X> Type of the exceptions.
+	 * @param function The function.
+	 * @param values The argument values.
+	 * @param results The collection to populate with the result values.
+	 * @return The given result collection.
+	 * @throws X When some function evaluation fails.
+	 */
+	public static <T1, T2, C extends Collection<? super T2>, X extends Exception> C mapFilter(final Function<? super T1, ? extends Maybe<? extends T2>, X> function, final Collection<? extends T1> values, final C results)
 	throws X {
 		assert null != function;
 		assert null != values;
@@ -415,19 +552,19 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Apply the given function to the values provided by the given iterator and populate the given result collection with the results.
+	 * Filter and transform the values provided by the given iterator using the given function and populate the given collection with the result values.
 	 * 
 	 * @param <T1> Type of the argument values.
 	 * @param <T2> Type of the result values.
-	 * @param <C> Type of the collection to populate.
+	 * @param <C> Type of the collection to populate with the result values.
 	 * @param <X> Type of the exceptions.
-	 * @param function Function to use.
-	 * @param values Iterator providing the argument values.
-	 * @param results The collection to populate with the results.
+	 * @param function The function.
+	 * @param values The iterator providing the argument values.
+	 * @param results The collection to populate with the result values.
 	 * @return The given result collection.
 	 * @throws X When some function evaluation fails.
 	 */
-	public static <T1, T2, C extends Collection<? super T2>, X extends Exception> C map(final Function<? super T1, ? extends Maybe<? extends T2>, X> function, final Iterator<? extends T1> values, final C results)
+	public static <T1, T2, C extends Collection<? super T2>, X extends Exception> C mapFilter(final Function<? super T1, ? extends Maybe<? extends T2>, X> function, final Iterator<? extends T1> values, final C results)
 	throws X {
 		assert null != function;
 		assert null != values;
@@ -444,23 +581,23 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Apply the given function to the given bindings and populate the given result map by associating the results to the keys of the corresponding argument
-	 * bindings.
+	 * Filter and transform the given bindings using the given function and populate the given map with the bindings of the argument keys and the corresponding
+	 * result values.
 	 * <p>
 	 * This method evaluates the function by passing the keys and values of the bindings respectively as first and second arguments.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V1> Type of the argument values.
 	 * @param <V2> Type of the result values.
-	 * @param <M> Type of the map to populate.
+	 * @param <M> Type of the map to populate with the result bindings.
 	 * @param <X> Type of the exceptions.
-	 * @param function Function to use.
-	 * @param bindings Argument bindings.
-	 * @param results The map to populate with the results.
+	 * @param function The function.
+	 * @param bindings The argument bindings.
+	 * @param results The map to populate with the result bindings.
 	 * @return The given result map.
 	 * @throws X When some function evaluation fails.
 	 */
-	public static <K, V1, V2, M extends Map<? super K, ? super V2>, X extends Exception> M map(final Function2<? super K, ? super V1, ? extends Maybe<? extends V2>, X> function, final Map<? extends K, ? extends V1> bindings, final M results)
+	public static <K, V1, V2, M extends Map<? super K, ? super V2>, X extends Exception> M mapFilter(final Function2<? super K, ? super V1, ? extends Maybe<? extends V2>, X> function, final Map<? extends K, ? extends V1> bindings, final M results)
 	throws X {
 		assert null != function;
 		assert null != bindings;
@@ -478,19 +615,19 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Apply the given function to the given keys and populate the given result map by associating the results to their argument keys.
+	 * Filter and transform the given keys using the given function and populate the given map with the bindings of the keys and the result values.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
-	 * @param <M> Type of the map to populate.
+	 * @param <M> Type of the map to populate with the result bindings.
 	 * @param <X> Type of the exceptions.
-	 * @param function Function to use.
-	 * @param keys Keys to map.
-	 * @param results The map to populate with the results.
+	 * @param function The function.
+	 * @param keys The argument keys.
+	 * @param results The map to populate with the result bindings.
 	 * @return The given result map.
 	 * @throws X When some function evaluation fails.
 	 */
-	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M mapKeys(final Function<? super K, ? extends Maybe<? extends V>, X> function, final Set<? extends K> keys, final M results)
+	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M mapFilterKeys(final Function<? super K, ? extends Maybe<? extends V>, X> function, final Set<? extends K> keys, final M results)
 	throws X {
 		assert null != function;
 		assert null != keys;
@@ -507,21 +644,21 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Apply the given function to the given values and populate the given result map by associating the argument values to their corresponding result keys.
+	 * Filter and transform the given values using the given function and populate the given map with the bindings of the result keys and the argument values.
 	 * <p>
-	 * When the function evaluates to the same key result for different argument values, the last value is associated to the key in the result map.
+	 * When the function evaluates to the same result key for different argument values, the last value is associated to the key in the result map.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
-	 * @param <M> Type of the map to populate.
+	 * @param <M> Type of the map to populate with the result bindings.
 	 * @param <X> Type of the exceptions.
-	 * @param function Function to use.
-	 * @param values Values to map.
-	 * @param results The map to populate with the results.
+	 * @param function The function.
+	 * @param values The argument values.
+	 * @param results The map to populate with the result bindings.
 	 * @return The given result map.
 	 * @throws X When some function evaluation fails.
 	 */
-	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M mapValues(final Function<? super V, ? extends Maybe<? extends K>, X> function, final Collection<? extends V> values, final M results)
+	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M mapFilterValues(final Function<? super V, ? extends Maybe<? extends K>, X> function, final Collection<? extends V> values, final M results)
 	throws X {
 		assert null != function;
 		assert null != values;
@@ -538,8 +675,37 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Apply the given function to the keys of the given bindings and populate the given result map by associating the values associated to the argument keys to
-	 * the corresponding result keys.
+	 * Transform the keys of the given bindings using the given function and populate the given map with the bindings of the result keys and the values
+	 * associated to the arguments keys.
+	 * 
+	 * @param <K1> Type of the argument keys.
+	 * @param <K2> Type of the result keys.
+	 * @param <V> Type of the values.
+	 * @param <M> Type of the map to populate with the result bindings.
+	 * @param <X> Type of the exceptions.
+	 * @param function The function .
+	 * @param bindings The argument bindings.
+	 * @param results The map to populate with the result bindings.
+	 * @return The given result map.
+	 * @throws X When some function evaluation fails.
+	 */
+	public static <K1, K2, V, M extends Map<? super K2, ? super V>, X extends Exception> M remap(final Function<? super K1, ? extends K2, X> function, final Map<? extends K1, ? extends V> bindings, final M results)
+	throws X {
+		assert null != function;
+		assert null != bindings;
+		assert null != results;
+		
+		// Remap.
+		for (final Map.Entry<? extends K1, ? extends V> entry : bindings.entrySet()) {
+			results.put(function.evaluate(entry.getKey()), entry.getValue());
+		}
+		return results;
+	}
+	
+	/**
+	 * Transform the given bindings using the given function and populate the given map with the bindings of the result keys and the argument values.
+	 * <p>
+	 * This method evaluates the function by passing the keys and values of the bindings respectively as first and second arguments.
 	 * 
 	 * @param <K1> Type of the argument keys.
 	 * @param <K2> Type of the result keys.
@@ -547,12 +713,41 @@ public class FunctionUtils {
 	 * @param <M> Type of the map to populate.
 	 * @param <X> Type of the exceptions.
 	 * @param function Function to use.
-	 * @param bindings Map to remap.
+	 * @param bindings Argument to remap.
 	 * @param results The map to populate with the results.
 	 * @return The given result map.
 	 * @throws X When some function evaluation fails.
 	 */
-	public static <K1, K2, V, M extends Map<? super K2, ? super V>, X extends Exception> M remap(final Function<? super K1, ? extends Maybe<? extends K2>, X> function, final Map<? extends K1, ? extends V> bindings, final M results)
+	public static <K1, K2, V, M extends Map<? super K2, ? super V>, X extends Exception> M remap(final Function2<? super K1, ? super V, ? extends K2, X> function, final Map<? extends K1, ? extends V> bindings, final M results)
+	throws X {
+		assert null != function;
+		assert null != bindings;
+		assert null != results;
+		
+		// Remap.
+		for (final Map.Entry<? extends K1, ? extends V> entry : bindings.entrySet()) {
+			final V value = entry.getValue();
+			results.put(function.evaluate(entry.getKey(), value), value);
+		}
+		return results;
+	}
+	
+	/**
+	 * Filter and transform the keys of the given bindings using the given function and populate the given map with the bindings of the result keys and the
+	 * values associated to the arguments keys.
+	 * 
+	 * @param <K1> Type of the argument keys.
+	 * @param <K2> Type of the result keys.
+	 * @param <V> Type of the values.
+	 * @param <M> Type of the map to populate with the result bindings.
+	 * @param <X> Type of the exceptions.
+	 * @param function The function .
+	 * @param bindings The argument bindings.
+	 * @param results The map to populate with the result bindings.
+	 * @return The given result map.
+	 * @throws X When some function evaluation fails.
+	 */
+	public static <K1, K2, V, M extends Map<? super K2, ? super V>, X extends Exception> M remapFilter(final Function<? super K1, ? extends Maybe<? extends K2>, X> function, final Map<? extends K1, ? extends V> bindings, final M results)
 	throws X {
 		assert null != function;
 		assert null != bindings;
@@ -569,8 +764,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Apply the given function to the keys of the given bindings and populate the given result map by associating the values associated to the argument keys to
-	 * the corresponding result keys.
+	 * Filter and transform the given bindings using the given function and populate the given map with the bindings of the result keys and the argument values.
 	 * <p>
 	 * This method evaluates the function by passing the keys and values of the bindings respectively as first and second arguments.
 	 * 
@@ -585,7 +779,7 @@ public class FunctionUtils {
 	 * @return The given result map.
 	 * @throws X When some function evaluation fails.
 	 */
-	public static <K1, K2, V, M extends Map<? super K2, ? super V>, X extends Exception> M remap(final Function2<? super K1, ? super V, ? extends Maybe<? extends K2>, X> function, final Map<? extends K1, ? extends V> bindings, final M results)
+	public static <K1, K2, V, M extends Map<? super K2, ? super V>, X extends Exception> M remapFilter(final Function2<? super K1, ? super V, ? extends Maybe<? extends K2>, X> function, final Map<? extends K1, ? extends V> bindings, final M results)
 	throws X {
 		assert null != function;
 		assert null != bindings;
