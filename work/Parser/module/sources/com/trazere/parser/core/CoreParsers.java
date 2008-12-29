@@ -27,11 +27,11 @@ import java.util.List;
  * DOCME
  */
 public class CoreParsers {
-	private static final EOFParser<?, ?> EOF = eof("end of file");
+	private static final EOFParser<?, ?> _EOF = eof("end of file");
 	
 	@SuppressWarnings("unchecked")
 	public static <Token, Result> EOFParser<Token, Result> eof() {
-		return (EOFParser<Token, Result>) EOF;
+		return (EOFParser<Token, Result>) _EOF;
 	}
 	
 	public static <Token, Result> EOFParser<Token, Result> eof(final String description) {

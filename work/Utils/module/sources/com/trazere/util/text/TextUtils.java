@@ -15,8 +15,13 @@
  */
 package com.trazere.util.text;
 
+import com.trazere.util.Counter;
 import com.trazere.util.lang.MutableBoolean;
+import com.trazere.util.lang.MutableInt;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The <code>TextUtils</code> class provides various helpers regarding the manipulation of text.
@@ -41,42 +46,22 @@ public class TextUtils {
 	}
 	
 	/**
-	 * Strip the given string, that is converting the empty string to <code>null</code>.
+	 * Filter the given string using the given predicate.
 	 * 
-	 * @param s String to strip.
-	 * @return <code>null</code> when the given string is empty, the given string otherwise.
+	 * @param <X> Type of the exceptions.
+	 * @param s The string.
+	 * @param predicate The predicate.
+	 * @return <code>true</code> when all characters of the string are accepted by the predicate.
+	 * @throws X When some predicate evaluation fails.
 	 */
-	public static String strip(final String s) {
+	public static <X extends Exception> boolean filter(final String s, final CharPredicate<X> predicate)
+	throws X {
 		assert null != s;
-		
-		// Strip.
-		return s.length() > 0 ? s : null;
-	}
-	
-	/**
-	 * Unstrip the given string, that is converting <code>null</code> to the empty string.
-	 * 
-	 * @param s String to unstrip
-	 * @return The empty string when the given string is <code>null</code>, the given string otherwise.
-	 */
-	public static String unstrip(final String s) {
-		return null != s ? s : "";
-	}
-	
-	/**
-	 * Filter the given string using the given filter.
-	 * 
-	 * @param s String to filter.
-	 * @param filter Filter to use.
-	 * @return <code>true</code> when filter accepts the string, <code>false</code> otherwise.
-	 */
-	public static boolean filter(final String s, final CharFilter filter) {
-		assert null != s;
-		assert null != filter;
+		assert null != predicate;
 		
 		// Filter.
 		for (int index = 0; index < s.length(); index += 1) {
-			if (!filter.filter(s.charAt(index))) {
+			if (!predicate.evaluate(s.charAt(index))) {
 				return false;
 			}
 		}
@@ -106,6 +91,29 @@ public class TextUtils {
 			}
 		}
 		return results;
+	}
+	
+	/**
+	 * Count the number of occurences of the given substring in the given string.
+	 * <p>
+	 * The occurences may overlap.
+	 * 
+	 * @param string The string.
+	 * @param sub The substring.
+	 * @return The number of occurences.
+	 */
+	public static int occurences(final String string, final String sub) {
+		assert null != string;
+		assert null != sub;
+		
+		// Count.
+		final Counter count = new Counter();
+		final MutableInt index = new MutableInt(string.indexOf(sub));
+		while (index.get() >= 0) {
+			count.inc();
+			index.set(string.indexOf(sub, index.get() + 1));
+		}
+		return count.get();
 	}
 	
 	/**
@@ -144,6 +152,43 @@ public class TextUtils {
 		}
 		
 		return builder;
+	}
+	
+	/**
+	 * Capitalize the given string.
+	 * 
+	 * @param s The string to capitalize.
+	 * @return The capitalized string.
+	 */
+	public static String capitalize(final String s) {
+		if (s.length() > 0) {
+			return s.substring(0, 1).toUpperCase() + s.substring(1);
+		} else {
+			return s;
+		}
+	}
+	
+	/**
+	 * Strip the given string, that is converting the empty string to <code>null</code>.
+	 * 
+	 * @param s String to strip.
+	 * @return <code>null</code> when the given string is empty, the given string otherwise.
+	 */
+	public static String strip(final String s) {
+		assert null != s;
+		
+		// Strip.
+		return s.length() > 0 ? s : null;
+	}
+	
+	/**
+	 * Unstrip the given string, that is converting <code>null</code> to the empty string.
+	 * 
+	 * @param s String to unstrip
+	 * @return The empty string when the given string is <code>null</code>, the given string otherwise.
+	 */
+	public static String unstrip(final String s) {
+		return null != s ? s : "";
 	}
 	
 	/** Array of the hexadecimal digits characters (upper case). */
@@ -186,18 +231,48 @@ public class TextUtils {
 		return builder.toString();
 	}
 	
+	private static final Map<Character, String> _XML_ENTITIES;
+	static {
+		final Map<Character, String> entities = new HashMap<Character, String>();
+		entities.put('&', "amp");
+		//		entities.put('\'', "apos");
+		entities.put('>', "gt");
+		entities.put('<', "lt");
+		entities.put('"', "quot");
+		_XML_ENTITIES = Collections.unmodifiableMap(entities);
+	}
+	
 	/**
-	 * Capitalize the given string.
+	 * Escape the XML entities of the given string and append it to the given builder.
 	 * 
-	 * @param s The string to capitalize.
-	 * @return The capitalized string.
+	 * @param s The string.
+	 * @param result The builder to fill.
+	 * @return The given builder.
 	 */
-	public static String capitalize(final String s) {
-		if (s.length() > 0) {
-			return s.substring(0, 1).toUpperCase() + s.substring(1);
-		} else {
-			return s;
+	public static StringBuilder escapeXmlEntities(final String s, final StringBuilder result) {
+		assert null != s;
+		assert null != result;
+		
+		final int length = s.length();
+		for (int index = 0; index < length; index += 1) {
+			final Character c = s.charAt(index);
+			if (_XML_ENTITIES.containsKey(c)) {
+				result.append("&").append(_XML_ENTITIES.get(c)).append(";");
+			} else {
+				result.append(c);
+			}
 		}
+		return result;
+	}
+	
+	/**
+	 * Escape the XML entities of the given string.
+	 * 
+	 * @param s The string.
+	 * @return The escaped string.
+	 */
+	public static String escapeXmlEntities(final String s) {
+		return escapeXmlEntities(s, new StringBuilder()).toString();
 	}
 	
 	/**

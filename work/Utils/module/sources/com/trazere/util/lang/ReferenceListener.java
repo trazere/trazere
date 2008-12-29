@@ -13,17 +13,21 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.text;
+package com.trazere.util.lang;
+
+import com.trazere.util.type.Maybe;
 
 /**
- * The <code>CharFilter</code> interface defines character filters.
+ * The {@link ReferenceListener} interface defines listeners of references.
+ * 
+ * @param <T> Type of the observed values.
+ * @see ObservableReference
  */
-public interface CharFilter {
+public interface ReferenceListener<T> {
 	/**
-	 * Filter the given character.
+	 * Notify the receiver listener that the value of the observed reference has changed.
 	 * 
-	 * @param c Character to filter.
-	 * @return <code>true</code> is the character is accepted, <code>false</code> otherwise.
+	 * @param value The new value.
 	 */
-	public boolean filter(final char c);
+	public void updatedReference(final Maybe<? extends T> value);
 }

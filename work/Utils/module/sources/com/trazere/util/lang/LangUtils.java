@@ -48,8 +48,21 @@ public class LangUtils {
 	 * @see Comparable#compareTo(Object)
 	 */
 	public static <T extends Object> boolean equals(final T object1, final T object2) {
-		// Compare.
 		return (null == object1 && null == object2) || (null != object1 && null != object2 && object1.equals(object2));
+	}
+	
+	/**
+	 * Build a natural value comparator.
+	 * 
+	 * @param <T> Type of the value.
+	 * @return The build comparator.
+	 */
+	public static <T extends Comparable<T>> Comparator<T> comparator() {
+		return new Comparator<T>() {
+			public int compare(final T object1, final T object2) {
+				return object1.compareTo(object2);
+			}
+		};
 	}
 	
 	/**
@@ -64,7 +77,6 @@ public class LangUtils {
 	 * @see Comparable#compareTo(Object)
 	 */
 	public static <T extends Comparable<T>> int compare(final T object1, final T object2) {
-		// Compare.
 		if (null == object1) {
 			return null == object2 ? 0 : -1;
 		} else {
@@ -93,6 +105,25 @@ public class LangUtils {
 		} else {
 			return null == object2 ? 1 : comparator.compare(object1, object2);
 		}
+	}
+	
+	/**
+	 * Build a comparator based on the given comparator which supports comparisons of <code>null</code> values.
+	 * <p>
+	 * <code>null</code> values are considered as less than non <code>null</code> values.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param comparator
+	 * @return The build comparator.
+	 */
+	public static <T> Comparator<T> comparator(final Comparator<T> comparator) {
+		assert null != comparator;
+		
+		return new Comparator<T>() {
+			public int compare(final T object1, final T object2) {
+				return LangUtils.compare(object1, object2, comparator);
+			}
+		};
 	}
 	
 	private LangUtils() {
