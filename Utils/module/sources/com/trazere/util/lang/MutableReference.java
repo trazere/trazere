@@ -27,7 +27,7 @@ import com.trazere.util.type.Maybe.Some;
  * @param <T> Type of the referenced values.
  */
 public class MutableReference<T>
-implements Describable {
+implements Reference<T>, Describable {
 	/** Value. */
 	protected Maybe<T> _value;
 	

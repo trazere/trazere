@@ -20,9 +20,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-// TODO: add a argument for the comparator to use
-// TODO: getValue should return a Maybe
-
 /**
  * The {@link ViewComparator} abstract class is a comparator working according some value computed from the compared objects. It applies some kind of view over
  * the compared objects.
@@ -33,27 +30,31 @@ import java.util.Map;
  * @param <T> Type of the compared objets.
  * @param <V> Type of the values to compore.
  */
-public abstract class ViewComparator<T, V extends Comparable<V>>
+public abstract class ViewComparator<T, V>
 implements Comparator<T> {
 	/**
 	 * Build a comparation using the function.
 	 * 
 	 * @param <T> Type of the compared objets.
 	 * @param <V> Type of the values to compore.
-	 * @param function Function to use to compute the view.
+	 * @param function The function computing the view.
+	 * @param comparator The comparator to use.
 	 * @param cache Flag indicating wether the cache if enabled or not.
 	 * @return The built iterator.
 	 */
-	public static <T, V extends Comparable<V>> ViewComparator<T, V> build(final Function<? super T, ? extends V, ? extends RuntimeException> function, final boolean cache) {
+	public static <T, V> ViewComparator<T, V> build(final Function<? super T, ? extends V, ? extends RuntimeException> function, final Comparator<? super V> comparator, final boolean cache) {
 		assert null != function;
 		
-		return new ViewComparator<T, V>(cache) {
+		return new ViewComparator<T, V>(comparator, cache) {
 			@Override
 			protected V computeValue(final T object) {
 				return function.evaluate(object);
 			}
 		};
 	}
+	
+	/** Comparator to use. */
+	protected final Comparator<? super V> _comparator;
 	
 	/** Flag indicating wether the cache if enabled or not. */
 	protected final boolean _cache;
@@ -64,17 +65,21 @@ implements Comparator<T> {
 	/**
 	 * Instantiate a new comparator.
 	 * 
+	 * @param comparator The comparator to use. May be <code>null</code>.
 	 * @param cache Flag indicating wether the cache if enabled or not.
 	 */
-	public ViewComparator(final boolean cache) {
+	public ViewComparator(final Comparator<? super V> comparator, final boolean cache) {
+		assert null != comparator;
+		
 		// Initialization.
+		_comparator = comparator;
 		_cache = cache;
 	}
 	
 	public int compare(final T object1, final T object2) {
 		final V value1 = _cache ? getValue(object1) : computeValue(object1);
 		final V value2 = _cache ? getValue(object2) : computeValue(object2);
-		return LangUtils.compare(value1, value2);
+		return LangUtils.compare(value1, value2, _comparator);
 	}
 	
 	/**

@@ -19,8 +19,8 @@ import com.trazere.parser.Parser;
 import com.trazere.parser.ParserException;
 import com.trazere.parser.core.Combine3Parser;
 import com.trazere.parser.core.Fold1Parser;
-import com.trazere.util.text.CharFilter;
-import com.trazere.util.text.CharFilters;
+import com.trazere.util.text.CharPredicate;
+import com.trazere.util.text.CharPredicates;
 import com.trazere.util.type.Tuple2;
 
 /**
@@ -32,10 +32,10 @@ public class TextParsers {
 	}
 	
 	public static Parser<Character, Character> character(final char c, final String description) {
-		return character(CharFilters.build(c), description);
+		return character(CharPredicates.<ParserException>equal(c), description);
 	}
 	
-	public static Parser<Character, Character> character(final CharFilter filter, final String description) {
+	public static Parser<Character, Character> character(final CharPredicate<? extends ParserException> filter, final String description) {
 		return new FilterCharParser(filter, description);
 	}
 	
@@ -44,47 +44,47 @@ public class TextParsers {
 	}
 	
 	public static Parser<Character, Character> anyCharacter(final String description) {
-		return character(CharFilters.ALL, description);
+		return character(CharPredicates.<ParserException>all(), description);
 	}
 	
-	private static final Parser<Character, Character> SPACE = space("a space");
+	private static final Parser<Character, Character> _SPACE = space("a space");
 	
 	public static Parser<Character, Character> space() {
-		return SPACE;
+		return _SPACE;
 	}
 	
 	public static Parser<Character, Character> space(final String description) {
 		return character(' ', description);
 	}
 	
-	private static final Parser<Character, Character> DIGIT = digit("a digit");
+	private static final Parser<Character, Character> _DIGIT = digit("a digit");
 	
 	public static Parser<Character, Character> digit() {
-		return DIGIT;
+		return _DIGIT;
 	}
 	
 	public static Parser<Character, Character> digit(final String description) {
-		return character(CharFilters.DIGIT, description);
+		return character(CharPredicates.<ParserException>digit(), description);
 	}
 	
-	private static final Parser<Character, Character> LETTER = letter("a letter");
+	private static final Parser<Character, Character> _LETTER = letter("a letter");
 	
 	public static Parser<Character, Character> letter() {
-		return LETTER;
+		return _LETTER;
 	}
 	
 	public static Parser<Character, Character> letter(final String description) {
-		return character(CharFilters.LETTER, description);
+		return character(CharPredicates.<ParserException>letter(), description);
 	}
 	
-	private static final Parser<Character, Character> ALPHANUMERIC = alphanumeric("an alphanumeric");
+	private static final Parser<Character, Character> _ALPHANUMERIC = alphanumeric("an alphanumeric");
 	
 	public static Parser<Character, Character> alphanumeric() {
-		return ALPHANUMERIC;
+		return _ALPHANUMERIC;
 	}
 	
 	public static Parser<Character, Character> alphanumeric(final String description) {
-		return character(CharFilters.ALPHANUMERIC, description);
+		return character(CharPredicates.<ParserException>alphanumeric(), description);
 	}
 	
 	public static Parser<Character, String> string(final String string) {
@@ -95,7 +95,7 @@ public class TextParsers {
 		return new StringParser(string, description);
 	}
 	
-	public static Parser<Character, String> string(final CharFilter filter, final boolean empty, final String description) {
+	public static Parser<Character, String> string(final CharPredicate<? extends ParserException> filter, final boolean empty, final String description) {
 		return new FilterStringParser(filter, empty, description);
 	}
 	
@@ -103,14 +103,14 @@ public class TextParsers {
 		return new CharacterStringParser(characterParser, empty, description);
 	}
 	
-	private static final Parser<Character, Integer> INTEGER = integer("an integer");
+	private static final Parser<Character, Integer> _INTEGER = integer("an integer");
 	
 	public static Parser<Character, Integer> integer() {
-		return INTEGER;
+		return _INTEGER;
 	}
 	
 	public static Parser<Character, Integer> integer(final String description) {
-		return new Fold1Parser<Character, Character, Integer>(DIGIT, Integer.valueOf(0), description) {
+		return new Fold1Parser<Character, Character, Integer>(_DIGIT, Integer.valueOf(0), description) {
 			@Override
 			protected Integer fold(final Integer previousValue, final Character subResult)
 			throws ParserException {
@@ -120,10 +120,10 @@ public class TextParsers {
 		};
 	}
 	
-	private static final Parser<Character, Double> DECIMAL = decimal("a decimal");
+	private static final Parser<Character, Double> _DECIMAL = decimal("a decimal");
 	
 	public static Parser<Character, Double> decimal() {
-		return DECIMAL;
+		return _DECIMAL;
 	}
 	
 	public static Parser<Character, Double> decimal(final String description) {
@@ -150,14 +150,14 @@ public class TextParsers {
 		};
 	}
 	
-	private static final Parser<Character, String> WORD = word("a word");
+	private static final Parser<Character, String> _WORD = word("a word");
 	
 	public static Parser<Character, String> word() {
-		return WORD;
+		return _WORD;
 	}
 	
 	public static Parser<Character, String> word(final String description) {
-		return string(CharFilters.LETTER, false, description);
+		return string(CharPredicates.<ParserException>letter(), false, description);
 	}
 	
 	private TextParsers() {

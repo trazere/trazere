@@ -19,13 +19,13 @@ import com.trazere.util.lang.LangUtils;
 import java.util.Collection;
 
 /**
- * The {@link Predicates} class provides various standard predicate functions.
+ * The {@link Predicates} class provides various common predicate functions.
  * 
  * @see Predicate
  * @see Predicate2
  */
 public class Predicates {
-	private static final Predicate<?, ?> ALL = new Predicate<Object, Exception>() {
+	private static final Predicate<?, ?> _ALL = new Predicate<Object, Exception>() {
 		public boolean evaluate(final Object value) {
 			return true;
 		}
@@ -40,10 +40,10 @@ public class Predicates {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T, X extends Exception> Predicate<T, X> all() {
-		return (Predicate<T, X>) ALL;
+		return (Predicate<T, X>) _ALL;
 	}
 	
-	private static final Predicate<?, ?> NONE = new Predicate<Object, Exception>() {
+	private static final Predicate<?, ?> _NONE = new Predicate<Object, Exception>() {
 		public boolean evaluate(final Object value) {
 			return false;
 		}
@@ -58,7 +58,7 @@ public class Predicates {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T, X extends Exception> Predicate<T, X> none() {
-		return (Predicate<T, X>) NONE;
+		return (Predicate<T, X>) _NONE;
 	}
 	
 	/**
@@ -125,7 +125,7 @@ public class Predicates {
 		};
 	}
 	
-	private static final Predicate2<?, ?, ?> ALL2 = new Predicate2<Object, Object, Exception>() {
+	private static final Predicate2<?, ?, ?> _ALL2 = new Predicate2<Object, Object, Exception>() {
 		public boolean evaluate(final Object value1, final Object value2) {
 			return true;
 		}
@@ -141,10 +141,10 @@ public class Predicates {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> all2() {
-		return (Predicate2<T1, T2, X>) ALL2;
+		return (Predicate2<T1, T2, X>) _ALL2;
 	}
 	
-	private static final Predicate2<?, ?, ?> NONE2 = new Predicate2<Object, Object, Exception>() {
+	private static final Predicate2<?, ?, ?> _NONE2 = new Predicate2<Object, Object, Exception>() {
 		public boolean evaluate(final Object value1, final Object value2) {
 			return false;
 		}
@@ -160,7 +160,7 @@ public class Predicates {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> none2() {
-		return (Predicate2<T1, T2, X>) NONE2;
+		return (Predicate2<T1, T2, X>) _NONE2;
 	}
 	
 	/**

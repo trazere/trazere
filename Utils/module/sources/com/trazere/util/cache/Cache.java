@@ -21,7 +21,7 @@ import java.util.Set;
 /**
  * The {@link Cache} interface defines caches.
  * <p>
- * A cache is a collection of values associated to unique keys which, unlike a regular map, can be flushed at any time according to some policy.
+ * Caches are collections of values identified by keys. Unlike regular maps, those bindings can be removed at any time according to the policy of the cache.
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.

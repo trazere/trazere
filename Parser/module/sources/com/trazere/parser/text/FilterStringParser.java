@@ -20,17 +20,17 @@ import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserContinuation;
 import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserState;
-import com.trazere.util.text.CharFilter;
+import com.trazere.util.text.CharPredicate;
 
 /**
  * DOCME
  */
 public class FilterStringParser
 extends AbstractParser<Character, String> {
-	protected final CharFilter _filter;
+	protected final CharPredicate<? extends ParserException> _filter;
 	protected final boolean _empty;
 	
-	public FilterStringParser(final CharFilter filter, final boolean empty, final String description) {
+	public FilterStringParser(final CharPredicate<? extends ParserException> filter, final boolean empty, final String description) {
 		super(description);
 		
 		// Checks.
@@ -57,7 +57,7 @@ extends AbstractParser<Character, String> {
 		return new ParserContinuation<Character>() {
 			public void token(final Character token, final ParserState<Character> state)
 			throws ParserException {
-				if (_filter.filter(token.charValue())) {
+				if (_filter.evaluate(token.charValue())) {
 					// Accumulate the result.
 					builder.append(token.charValue());
 					

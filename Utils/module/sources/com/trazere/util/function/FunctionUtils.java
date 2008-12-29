@@ -17,10 +17,8 @@ package com.trazere.util.function;
 
 import com.trazere.util.lang.MutableReference;
 import com.trazere.util.type.Maybe;
-import com.trazere.util.type.Tuple2;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -45,7 +43,7 @@ public class FunctionUtils {
 	 * @param values Values to filter.
 	 * @param results The collection to populate with the accepted values.
 	 * @return The given result collection.
-	 * @throws X When some filter evaluation fails.
+	 * @throws X When some predicate evaluation fails.
 	 */
 	public static <T, C extends Collection<? super T>, X extends Exception> C filter(final Predicate<? super T, X> predicate, final Collection<? extends T> values, final C results)
 	throws X {
@@ -60,6 +58,35 @@ public class FunctionUtils {
 			}
 		}
 		return results;
+	}
+	
+	/**
+	 * Filter the content of the given collection using the given predicate.
+	 * <p>
+	 * This method does modify the given collection.
+	 * 
+	 * @param <T> Type of the elements.
+	 * @param <C> Type of the collection.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate The predicate.
+	 * @param collection The collection.
+	 * @return The given modified collection.
+	 * @throws X When some predicate evaluation fails.
+	 */
+	public static <T, C extends Collection<T>, X extends Exception> C filter(final Predicate<? super T, X> predicate, final C collection)
+	throws X {
+		assert null != predicate;
+		assert null != collection;
+		
+		// Filter.
+		final Iterator<T> values_ = collection.iterator();
+		while (values_.hasNext()) {
+			final T value = values_.next();
+			if (!predicate.evaluate(value)) {
+				values_.remove();
+			}
+		}
+		return collection;
 	}
 	
 	/**
@@ -92,6 +119,36 @@ public class FunctionUtils {
 			}
 		}
 		return results;
+	}
+	
+	/**
+	 * Filter the content of the given map using the given predicate.
+	 * <p>
+	 * This method does modify the given map.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <M> Type of the map.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate The predicate.
+	 * @param map The map.
+	 * @return The given modified map.
+	 * @throws X When some predicate evaluation fails.
+	 */
+	public static <K, V, M extends Map<K, V>, X extends Exception> M filter(final Predicate2<? super K, ? super V, X> predicate, final M map)
+	throws X {
+		assert null != predicate;
+		assert null != map;
+		
+		// Filter.
+		final Iterator<Map.Entry<K, V>> entries = map.entrySet().iterator();
+		while (entries.hasNext()) {
+			final Map.Entry<K, V> entry = entries.next();
+			if (!predicate.evaluate(entry.getKey(), entry.getValue())) {
+				entries.remove();
+			}
+		}
+		return map;
 	}
 	
 	/**
@@ -885,55 +942,6 @@ public class FunctionUtils {
 			accumulator.set(function.evaluate(accumulator.get(), iterator.next()));
 		}
 		return accumulator.get();
-	}
-	
-	// DOCME
-	public static <T1, T2, L extends List<Tuple2<T1, T2>>> L zip(final Collection<T1> values1, final Collection<T2> values2, final L results) {
-		assert null != values1;
-		assert null != values2;
-		
-		// Zip.
-		return zip(values1.iterator(), values2.iterator(), results);
-	}
-	
-	// DOCME
-	public static <T1, T2, L extends List<Tuple2<T1, T2>>> L zip(final Iterator<T1> list1, final Iterator<T2> list2, final L results) {
-		assert null != list1;
-		assert null != list2;
-		assert null != results;
-		
-		// Zip.
-		while (list1.hasNext() && list2.hasNext()) {
-			results.add(Tuple2.build(list1.next(), list2.next()));
-		}
-		return results;
-	}
-	
-	// DOCME
-	public static <T1, T2, L1 extends List<T1>, L2 extends List<T2>> void unzip(final Collection<? extends Tuple2<T1, T2>> values, final L1 results1, final L2 results2) {
-		assert null != values;
-		assert null != results1;
-		assert null != results2;
-		
-		// Unzip.
-		for (final Tuple2<T1, T2> value : values) {
-			results1.add(value.getFirst());
-			results2.add(value.getSecond());
-		}
-	}
-	
-	// DOCME
-	public static <T1, T2, L1 extends List<T1>, L2 extends List<T2>> void unzip(final Iterator<? extends Tuple2<T1, T2>> values, final L1 results1, final L2 results2) {
-		assert null != values;
-		assert null != results1;
-		assert null != results2;
-		
-		// Unzip.
-		while (values.hasNext()) {
-			final Tuple2<T1, T2> value = values.next();
-			results1.add(value.getFirst());
-			results2.add(value.getSecond());
-		}
 	}
 	
 	private FunctionUtils() {

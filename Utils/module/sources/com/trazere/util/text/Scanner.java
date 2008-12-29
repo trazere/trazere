@@ -146,8 +146,8 @@ public class Scanner {
 	 */
 	public String scanChars(final String chars)
 	throws IOException {
-		final CharFilter filter = new CharFilter() {
-			public boolean filter(final char c) {
+		final CharPredicate<IOException> filter = new CharPredicate<IOException>() {
+			public boolean evaluate(final char c) {
 				return chars.indexOf(c) >= 0;
 			}
 		};
@@ -163,7 +163,7 @@ public class Scanner {
 	 * @return The sequence of scanned characters.
 	 * @throws IOException
 	 */
-	public String scanChars(final CharFilter filter)
+	public String scanChars(final CharPredicate<? extends IOException> filter)
 	throws IOException {
 		final StringBuffer buffer = new StringBuffer();
 		while (true) {
@@ -173,7 +173,7 @@ public class Scanner {
 			}
 			
 			final char c = (char) i;
-			if (filter.filter(c)) {
+			if (filter.evaluate(c)) {
 				_position += 1;
 				buffer.append(c);
 			} else {
@@ -283,8 +283,8 @@ public class Scanner {
 	 */
 	public String scanUpToAnyChar(final String chars)
 	throws IOException {
-		final CharFilter filter = new CharFilter() {
-			public boolean filter(final char c) {
+		final CharPredicate<IOException> filter = new CharPredicate<IOException>() {
+			public boolean evaluate(final char c) {
 				return chars.indexOf(c) >= 0;
 			}
 		};
@@ -301,7 +301,7 @@ public class Scanner {
 	 * @return The sequence of scanned characters.
 	 * @throws IOException
 	 */
-	public String scanUpToAnyChar(final CharFilter filter)
+	public String scanUpToAnyChar(final CharPredicate<IOException> filter)
 	throws IOException {
 		assert null != filter;
 		
@@ -314,7 +314,7 @@ public class Scanner {
 			}
 			
 			final char c = (char) i;
-			if (!filter.filter(c)) {
+			if (!filter.evaluate(c)) {
 				_position += 1;
 				buffer.append(c);
 			} else {
