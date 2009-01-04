@@ -15,7 +15,7 @@
  */
 package com.trazere.util.lang;
 
-import com.trazere.util.function.Function;
+import com.trazere.util.function.Function1;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +42,7 @@ implements Comparator<T> {
 	 * @param cache Flag indicating wether the cache if enabled or not.
 	 * @return The built iterator.
 	 */
-	public static <T, V> ViewComparator<T, V> build(final Function<? super T, ? extends V, ? extends RuntimeException> function, final Comparator<? super V> comparator, final boolean cache) {
+	public static <T, V> ViewComparator<T, V> build(final Function1<? super T, ? extends V, ? extends RuntimeException> function, final Comparator<? super V> comparator, final boolean cache) {
 		assert null != function;
 		
 		return new ViewComparator<T, V>(comparator, cache) {

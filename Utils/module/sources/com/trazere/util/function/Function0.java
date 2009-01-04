@@ -13,18 +13,21 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.text;
+package com.trazere.util.function;
 
 /**
- * The {@link Describable} interface defines descriptable elements.
+ * The {@link Function0} interface defines zero arguments functions.
  * 
- * @see TextUtils#computeDescription(Describable)
+ * @param <R> Type of the result values.
+ * @param <X> Type of the exceptions.
  */
-public interface Describable {
+public interface Function0<R, X extends Exception> {
 	/**
-	 * Complete the given description according to the receiver object.
+	 * Evaluate the receiver function.
 	 * 
-	 * @param description The description.
+	 * @return The result of the function evaluation.
+	 * @throws X When the function evaluation fails.
 	 */
-	public void fillDescription(final Description description);
+	public R evaluate()
+	throws X;
 }

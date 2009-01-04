@@ -15,6 +15,8 @@
  */
 package com.trazere.util.cache;
 
+import com.trazere.util.text.Description;
+
 /**
  * The {@link TimedCacheEntry} class represents cache entries which keep track of their creation date.
  * 
@@ -61,8 +63,8 @@ extends CacheEntry<K, V> {
 	}
 	
 	@Override
-	public void fillDescription(final StringBuilder builder) {
-		super.fillDescription(builder);
-		builder.append(" - Date = ").append(_date);
+	public void fillDescription(final Description description) {
+		super.fillDescription(description);
+		description.append("Date", _date);
 	}
 }

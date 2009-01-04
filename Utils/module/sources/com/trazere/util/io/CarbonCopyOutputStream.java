@@ -22,35 +22,24 @@ import java.io.OutputStream;
  * The {@link CarbonCopyOutputStream} class carbon copies the data written to a destination output stream to another output stream.
  */
 public class CarbonCopyOutputStream
-extends OutputStream {
-	/** Destination output stream receiving the data. */
-	protected final OutputStream _output;
-	
-	/** Copy output stream receiving the copy of the data. */
+extends DecoratorOutputStream {
+	/** The output stream receiving the copy of the data. */
 	protected final OutputStream _copy;
 	
 	/**
 	 * Instantiate a new stream with the given destination and copy output streams.
 	 * 
-	 * @param output Destination output stream receiving the data.
+	 * @param stream Destination output stream receiving the data.
 	 * @param copy Copy output stream receiving the copy of the data.
 	 */
-	public CarbonCopyOutputStream(final OutputStream output, final OutputStream copy) {
-		assert null != output;
+	public CarbonCopyOutputStream(final OutputStream stream, final OutputStream copy) {
+		super(stream);
+		
+		// Checks.
 		assert null != copy;
 		
 		// Initialization.
-		_output = output;
 		_copy = copy;
-	}
-	
-	/**
-	 * Get the destination output stream receiving the data.
-	 * 
-	 * @return The output stream.
-	 */
-	public OutputStream getOutput() {
-		return _output;
 	}
 	
 	/**
@@ -65,34 +54,28 @@ extends OutputStream {
 	@Override
 	public void write(final int b)
 	throws IOException {
-		_output.write(b);
+		super.write(b);
 		_copy.write(b);
 	}
 	
 	@Override
 	public void write(final byte[] b)
 	throws IOException {
-		_output.write(b);
+		super.write(b);
 		_copy.write(b);
 	}
 	
 	@Override
 	public void write(final byte[] b, final int off, final int len)
 	throws IOException {
-		_output.write(b, off, len);
+		super.write(b, off, len);
 		_copy.write(b, off, len);
 	}
 	
 	@Override
 	public void flush()
 	throws IOException {
-		_output.flush();
+		super.flush();
 		_copy.flush();
-	}
-	
-	@Override
-	public void close()
-	throws IOException {
-		_output.close();
 	}
 }

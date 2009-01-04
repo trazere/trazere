@@ -15,9 +15,9 @@
  */
 package com.trazere.util.task;
 
-import com.trazere.util.InternalException;
 import com.trazere.util.csv.CSVLine;
 import com.trazere.util.csv.CSVLineBuilder;
+import com.trazere.util.lang.InternalException;
 import com.trazere.util.record.DuplicateFieldException;
 import com.trazere.util.report.ReportException;
 import com.trazere.util.report.store.CSVReportStore;

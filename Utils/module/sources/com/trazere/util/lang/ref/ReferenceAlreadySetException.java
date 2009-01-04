@@ -13,23 +13,23 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.lang;
+package com.trazere.util.lang.ref;
 
 /**
- * {@link ReferenceNotSetException} exceptions are thrown when trying to reset some reference which has not been set.
+ * {@link ReferenceAlreadySetException} exceptions are thrown when trying to set some reference which has already been set.
  * <p>
  * These exceptions are runtime exceptions in order to reduce clutter when using computations which cannot fail.
  * 
  * @see MutableReference
  */
-public class ReferenceNotSetException
+public class ReferenceAlreadySetException
 extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * Instantiate a new exception.
 	 */
-	public ReferenceNotSetException() {
+	public ReferenceAlreadySetException() {
 		super();
 	}
 	
@@ -38,7 +38,7 @@ extends RuntimeException {
 	 * 
 	 * @param message Details about the exception.
 	 */
-	public ReferenceNotSetException(final String message) {
+	public ReferenceAlreadySetException(final String message) {
 		super(message);
 	}
 	
@@ -47,7 +47,7 @@ extends RuntimeException {
 	 * 
 	 * @param cause Cause of the exception.
 	 */
-	public ReferenceNotSetException(final Throwable cause) {
+	public ReferenceAlreadySetException(final Throwable cause) {
 		super(cause);
 	}
 	
@@ -57,7 +57,7 @@ extends RuntimeException {
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
 	 */
-	public ReferenceNotSetException(final String message, final Throwable cause) {
+	public ReferenceAlreadySetException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 }

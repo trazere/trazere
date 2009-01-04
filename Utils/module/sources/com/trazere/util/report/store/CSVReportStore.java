@@ -15,14 +15,14 @@
  */
 package com.trazere.util.report.store;
 
-import com.trazere.util.InternalException;
 import com.trazere.util.csv.CSVLine;
 import com.trazere.util.csv.CSVLineBuilder;
 import com.trazere.util.csv.CSVReader;
 import com.trazere.util.csv.CSVReaderOption;
 import com.trazere.util.csv.CSVWriter;
 import com.trazere.util.csv.CSVWriterOption;
-import com.trazere.util.function.Predicate;
+import com.trazere.util.function.Predicate1;
+import com.trazere.util.lang.InternalException;
 import com.trazere.util.record.DuplicateFieldException;
 import com.trazere.util.report.ReportEntry;
 import com.trazere.util.report.ReportException;
@@ -245,7 +245,7 @@ implements ReportStore<Entry> {
 		}
 	}
 	
-	public int countEntries(final Predicate<? super ReportStoreEntry<Entry>, ReportException> filter)
+	public int countEntries(final Predicate1<? super ReportStoreEntry<Entry>, ReportException> filter)
 	throws ReportException {
 		// Load the entries.
 		load();
@@ -254,7 +254,7 @@ implements ReportStore<Entry> {
 		return _entries.size();
 	}
 	
-	public List<ReportStoreEntry<Entry>> getEntries(final Predicate<? super ReportStoreEntry<Entry>, ReportException> filter, final int limit, final boolean fromEnd)
+	public List<ReportStoreEntry<Entry>> getEntries(final Predicate1<? super ReportStoreEntry<Entry>, ReportException> filter, final int limit, final boolean fromEnd)
 	throws ReportException {
 		// Load the entries.
 		load();

@@ -13,19 +13,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.configuration;
+package com.trazere.util.properties;
 
 /**
- * <code>ConfigurationException</code> exceptions are thrown when configuration related errors occur.
+ * {@link PropertiesException} exceptions are thrown when properties related errors occur.
  */
-public class ConfigurationException
+public class PropertiesException
 extends Exception {
 	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * Instantiate a new exception.
 	 */
-	public ConfigurationException() {
+	public PropertiesException() {
 		super();
 	}
 	
@@ -34,7 +34,7 @@ extends Exception {
 	 * 
 	 * @param message Details about the exception.
 	 */
-	public ConfigurationException(final String message) {
+	public PropertiesException(final String message) {
 		super(message);
 	}
 	
@@ -43,7 +43,7 @@ extends Exception {
 	 * 
 	 * @param cause Cause of the exception.
 	 */
-	public ConfigurationException(final Throwable cause) {
+	public PropertiesException(final Throwable cause) {
 		super(cause);
 	}
 	
@@ -53,7 +53,7 @@ extends Exception {
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
 	 */
-	public ConfigurationException(final String message, final Throwable cause) {
+	public PropertiesException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 }

@@ -13,28 +13,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.configuration;
+package com.trazere.util.properties;
 
 import com.trazere.util.io.Input;
-import com.trazere.util.text.TextUtils;
 import com.trazere.util.type.Tuple2;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
 /**
- * The <code>ConfigurationUtils</code> class provides various helpers regarding the configuration.
+ * The {@link PropertiesUtils} class provides various utilities regarding properties.
  */
-public class ConfigurationUtils {
-	/** Common delimiter of the property names. */
-	public static final String PROPERTY_NAME_SEPARATOR = ".";
-	
-	/** Common delimiter of the property values. */
-	public static final String PROPERTY_VALUE_DELIMITER = ",";
-	
+public class PropertiesUtils {
 	/**
 	 * Load and merge the property files provided by the given inputs.
 	 * <p>
@@ -42,11 +33,11 @@ public class ConfigurationUtils {
 	 * 
 	 * @param inputs Input of the property files to load paired with flags indicating wether they are optional.
 	 * @return The loaded properties.
-	 * @throws ConfigurationException When some property file is not optional and does not exist.
-	 * @throws ConfigurationException When some property file cannot be loaded.
+	 * @throws PropertiesException When some property file is not optional and does not exist.
+	 * @throws PropertiesException When some property file cannot be loaded.
 	 */
 	public static Properties loadProperties(final List<Tuple2<Input, Boolean>> inputs)
-	throws ConfigurationException {
+	throws PropertiesException {
 		return loadProperties(new Properties(), inputs);
 	}
 	
@@ -58,11 +49,11 @@ public class ConfigurationUtils {
 	 * @param properties Properties to fill.
 	 * @param inputs Inputs of the property files to load paired with flags indicating wether they are optional.
 	 * @return The given properties.
-	 * @throws ConfigurationException When some property file is not optional and does not exist.
-	 * @throws ConfigurationException When some property file cannot be loaded.
+	 * @throws PropertiesException When some property file is not optional and does not exist.
+	 * @throws PropertiesException When some property file cannot be loaded.
 	 */
 	public static Properties loadProperties(final Properties properties, final List<Tuple2<Input, Boolean>> inputs)
-	throws ConfigurationException {
+	throws PropertiesException {
 		assert null != properties;
 		assert null != inputs;
 		
@@ -82,11 +73,11 @@ public class ConfigurationUtils {
 	 * @param input Input of the property file to load.
 	 * @param optional Flag indicating wether the property file is optional.
 	 * @return The given properties.
-	 * @throws ConfigurationException When the property file is not optional and does not exist.
-	 * @throws ConfigurationException When the property file cannot be loaded.
+	 * @throws PropertiesException When the property file is not optional and does not exist.
+	 * @throws PropertiesException When the property file cannot be loaded.
 	 */
 	public static Properties loadProperties(final Properties properties, final Input input, final boolean optional)
-	throws ConfigurationException {
+	throws PropertiesException {
 		assert null != properties;
 		assert null != input;
 		
@@ -103,7 +94,7 @@ public class ConfigurationUtils {
 			
 			return properties;
 		} catch (final IOException exception) {
-			throw new ConfigurationException("Failed loading properties from " + input, exception);
+			throw new PropertiesException("Failed loading properties from " + input, exception);
 		}
 	}
 	
@@ -149,21 +140,6 @@ public class ConfigurationUtils {
 	}
 	
 	/**
-	 * Get the property with the given name from the given properties. The given default value is returned if the property does not exist.
-	 * 
-	 * @param properties Properties to read.
-	 * @param name Name of the property to read.
-	 * @param defaultValue Default value when the property does not exist. May be <code>null</code>.
-	 * @return The value.
-	 */
-	public static String getProperty(final ReloadableProperties properties, final String name, final String defaultValue) {
-		assert null != properties;
-		
-		// Get the property.
-		return getProperty(properties.getProperties(), name, defaultValue);
-	}
-	
-	/**
 	 * Get the boolean property with the given name from the given properties. The given default value is returned if the property does not exist.
 	 * 
 	 * @param properties Properties to read.
@@ -185,31 +161,16 @@ public class ConfigurationUtils {
 	}
 	
 	/**
-	 * Get the boolean property with the given name from the given properties. The the given default value is returned if the property does not exist.
-	 * 
-	 * @param properties Properties to read.
-	 * @param name Name of the property to read.
-	 * @param defaultValue Default value when the property does not exist.
-	 * @return The value.
-	 */
-	public static boolean getBooleanProperty(final ReloadableProperties properties, final String name, final boolean defaultValue) {
-		assert null != properties;
-		
-		// Get the property.
-		return getBooleanProperty(properties.getProperties(), name, defaultValue);
-	}
-	
-	/**
 	 * Get the integer property with the given name from the given properties. The given default value is returned if the property does not exist.
 	 * 
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value.
-	 * @throws ConfigurationException When the value of the property is invalid.
+	 * @throws PropertiesException When the value of the property is invalid.
 	 */
 	public static int getIntProperty(final Properties properties, final String name, final int defaultValue)
-	throws ConfigurationException {
+	throws PropertiesException {
 		assert null != properties;
 		assert null != name;
 		
@@ -219,28 +180,11 @@ public class ConfigurationUtils {
 			try {
 				return Integer.parseInt(value);
 			} catch (final NumberFormatException exception) {
-				throw new ConfigurationException("Invalid int value " + value + " for property " + name);
+				throw new PropertiesException("Invalid int value " + value + " for property " + name);
 			}
 		} else {
 			return defaultValue;
 		}
-	}
-	
-	/**
-	 * Get the integer property with the given name from the given properties. The the given default value is returned if the property does not exist.
-	 * 
-	 * @param properties Properties to read.
-	 * @param name Name of the property to read.
-	 * @param defaultValue Default value when the property does not exist.
-	 * @return The value.
-	 * @throws ConfigurationException When the value of the property is invalid.
-	 */
-	public static int getIntProperty(final ReloadableProperties properties, final String name, final int defaultValue)
-	throws ConfigurationException {
-		assert null != properties;
-		
-		// Get the property.
-		return getIntProperty(properties.getProperties(), name, defaultValue);
 	}
 	
 	/**
@@ -249,10 +193,10 @@ public class ConfigurationUtils {
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @return The value.
-	 * @throws ConfigurationException When the property does not exist.
+	 * @throws PropertiesException When the property does not exist.
 	 */
 	public static String getMandatoryProperty(final Properties properties, final String name)
-	throws ConfigurationException {
+	throws PropertiesException {
 		assert null != properties;
 		assert null != name;
 		
@@ -261,24 +205,8 @@ public class ConfigurationUtils {
 		if (null != value) {
 			return value;
 		} else {
-			throw new ConfigurationException("Missing property " + name);
+			throw new PropertiesException("Missing property " + name);
 		}
-	}
-	
-	/**
-	 * Get the mandatory property with the given name from the given properties. An exception is raised if the property does not exist.
-	 * 
-	 * @param properties Properties to read.
-	 * @param name Name of the property to read.
-	 * @return The value.
-	 * @throws ConfigurationException When the property does not exist.
-	 */
-	public static String getMandatoryProperty(final ReloadableProperties properties, final String name)
-	throws ConfigurationException {
-		assert null != properties;
-		
-		// Get.
-		return getMandatoryProperty(properties.getProperties(), name);
 	}
 	
 	/**
@@ -287,10 +215,10 @@ public class ConfigurationUtils {
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @return The value.
-	 * @throws ConfigurationException When the property does not exist.
+	 * @throws PropertiesException When the property does not exist.
 	 */
 	public static boolean getMandatoryBooleanProperty(final Properties properties, final String name)
-	throws ConfigurationException {
+	throws PropertiesException {
 		assert null != properties;
 		assert null != name;
 		
@@ -299,25 +227,8 @@ public class ConfigurationUtils {
 		if (null != value) {
 			return Boolean.parseBoolean(value);
 		} else {
-			throw new ConfigurationException("Missing property " + name);
+			throw new PropertiesException("Missing property " + name);
 		}
-	}
-	
-	/**
-	 * Get the mandatory boolean property with the given name from the given properties. An exception is raised if the property does not exist.
-	 * 
-	 * @param properties Properties to read.
-	 * @param name Name of the property to read.
-	 * @return The value.
-	 * @throws ConfigurationException When the property does not exist.
-	 * @throws ConfigurationException When the value of the property is invalid.
-	 */
-	public static boolean getMandatoryBooleanProperty(final ReloadableProperties properties, final String name)
-	throws ConfigurationException {
-		assert null != properties;
-		
-		// Get.
-		return getMandatoryBooleanProperty(properties.getProperties(), name);
 	}
 	
 	/**
@@ -326,11 +237,11 @@ public class ConfigurationUtils {
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @return The value.
-	 * @throws ConfigurationException When the property does not exist.
-	 * @throws ConfigurationException When the value of the property is invalid.
+	 * @throws PropertiesException When the property does not exist.
+	 * @throws PropertiesException When the value of the property is invalid.
 	 */
 	public static int getMandatoryIntProperty(final Properties properties, final String name)
-	throws ConfigurationException {
+	throws PropertiesException {
 		assert null != properties;
 		assert null != name;
 		
@@ -340,48 +251,14 @@ public class ConfigurationUtils {
 			try {
 				return Integer.parseInt(value);
 			} catch (final NumberFormatException exception) {
-				throw new ConfigurationException("Invalid int value " + value + " for property " + name);
+				throw new PropertiesException("Invalid int value " + value + " for property " + name);
 			}
 		} else {
-			throw new ConfigurationException("Missing property " + name);
+			throw new PropertiesException("Missing property " + name);
 		}
 	}
 	
-	/**
-	 * Get the mandatory integer property with the given name from the given properties. An exception is raised if the property does not exist.
-	 * 
-	 * @param properties Properties to read.
-	 * @param name Name of the property to read.
-	 * @return The value.
-	 * @throws ConfigurationException When the property does not exist.
-	 * @throws ConfigurationException When the value of the property is invalid.
-	 */
-	public static int getMandatoryIntProperty(final ReloadableProperties properties, final String name)
-	throws ConfigurationException {
-		assert null != properties;
-		
-		// Get.
-		return getMandatoryIntProperty(properties.getProperties(), name);
-	}
-	
-	/**
-	 * Split the given property value according to the given delimiter.
-	 * <p>
-	 * An empty property results in no components. The components are trimmed and the empty components are included in the results.
-	 * 
-	 * @param delimiter Delimiter string.
-	 * @param value Value to split.
-	 * @return The value components.
-	 */
-	public static List<String> splitPropertyValue(final String delimiter, final String value) {
-		if (value.length() > 0) {
-			return TextUtils.split(value, delimiter, true, false, new ArrayList<String>());
-		} else {
-			return Collections.emptyList();
-		}
-	}
-	
-	private ConfigurationUtils() {
+	private PropertiesUtils() {
 		// Prevent instantiation.
 	}
 }

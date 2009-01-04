@@ -17,6 +17,7 @@ package com.trazere.util.record;
 
 import com.trazere.util.lang.LangUtils;
 import com.trazere.util.text.Describable;
+import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
 import java.util.Comparator;
 
@@ -74,7 +75,7 @@ implements Comparator<R>, Describable {
 		return TextUtils.computeDescription(this);
 	}
 	
-	public void fillDescription(final StringBuilder builder) {
-		builder.append(" - Key = ").append(_key);
+	public void fillDescription(final Description description) {
+		description.append("Key", _key);
 	}
 }

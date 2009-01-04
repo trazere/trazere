@@ -13,21 +13,23 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util;
+package com.trazere.util.lang.ref;
 
 /**
- * {@link InternalException} exceptions are thrown when internal errors occur.
+ * {@link ReferenceNotSetException} exceptions are thrown when trying to reset some reference which has not been set.
  * <p>
- * These exceptions aim to indicate problems in the code (like situations supposed to be impossible) rather than runtime issues.
+ * These exceptions are runtime exceptions in order to reduce clutter when using computations which cannot fail.
+ * 
+ * @see MutableReference
  */
-public class InternalException
+public class ReferenceNotSetException
 extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * Instantiate a new exception.
 	 */
-	public InternalException() {
+	public ReferenceNotSetException() {
 		super();
 	}
 	
@@ -36,7 +38,7 @@ extends RuntimeException {
 	 * 
 	 * @param message Details about the exception.
 	 */
-	public InternalException(final String message) {
+	public ReferenceNotSetException(final String message) {
 		super(message);
 	}
 	
@@ -45,7 +47,7 @@ extends RuntimeException {
 	 * 
 	 * @param cause Cause of the exception.
 	 */
-	public InternalException(final Throwable cause) {
+	public ReferenceNotSetException(final Throwable cause) {
 		super(cause);
 	}
 	
@@ -55,7 +57,7 @@ extends RuntimeException {
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
 	 */
-	public InternalException(final String message, final Throwable cause) {
+	public ReferenceNotSetException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 }

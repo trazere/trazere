@@ -13,18 +13,22 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.text;
+package com.trazere.util.function;
 
 /**
- * The {@link Describable} interface defines descriptable elements.
+ * The {@link Predicate1} interface defines one argument predicate functions.
  * 
- * @see TextUtils#computeDescription(Describable)
+ * @param <T> Type of the argument values.
+ * @param <X> Type of the exceptions.
  */
-public interface Describable {
+public interface Predicate1<T, X extends Exception> {
 	/**
-	 * Complete the given description according to the receiver object.
+	 * Evaluate the receiver predicate with the given argument value.
 	 * 
-	 * @param description The description.
+	 * @param value Argument value.
+	 * @return The result of the predicate evaluation.
+	 * @throws X When the predicate evaluation fails.
 	 */
-	public void fillDescription(final Description description);
+	public boolean evaluate(final T value)
+	throws X;
 }

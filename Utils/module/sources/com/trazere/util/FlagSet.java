@@ -19,6 +19,7 @@ package com.trazere.util;
 
 import com.trazere.util.collection.CollectionUtils;
 import com.trazere.util.text.Describable;
+import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,8 +59,8 @@ implements Describable {
 	/**
 	 * Instantiate a new flag set with the given mask representation.
 	 * <p>
-	 * The representation is a list of comma (<tt>,</tt>) delimited flags. Required flags must be prefixed with a plus (<tt>+</tt>). Forbidden flags
-	 * must be prefixed with a minus (<tt>-</tt>). Active flags are prefixed with neither.
+	 * The representation is a list of comma (<tt>,</tt>) delimited flags. Required flags must be prefixed with a plus (<tt>+</tt>). Forbidden flags must be
+	 * prefixed with a minus (<tt>-</tt>). Active flags are prefixed with neither.
 	 * 
 	 * @param representation Representation of the mask.
 	 */
@@ -70,8 +71,8 @@ implements Describable {
 	/**
 	 * Instiantiate a new flag set with the given mask mask representation and delimiter.
 	 * <p>
-	 * The representation is a list flags delimited by the given delimiter. Required flags must be prefixed with a plus (<tt>+</tt>). Forbidden flags must
-	 * be prefixed with a minus (<tt>-</tt>). Active flags are prefixed with neither.
+	 * The representation is a list flags delimited by the given delimiter. Required flags must be prefixed with a plus (<tt>+</tt>). Forbidden flags must be
+	 * prefixed with a minus (<tt>-</tt>). Active flags are prefixed with neither.
 	 * 
 	 * @param representation Representation of the mask.
 	 * @param delimeter Delimiter of the flags.
@@ -83,8 +84,8 @@ implements Describable {
 	/**
 	 * Instantiate a new flag set with the given flags.
 	 * <p>
-	 * Required flags must be prefixed with a plus (<tt>+</tt>). Forbidden flags must be prefixed with a minus (<tt>-</tt>). Active flags are prefixed
-	 * with neither.
+	 * Required flags must be prefixed with a plus (<tt>+</tt>). Forbidden flags must be prefixed with a minus (<tt>-</tt>). Active flags are prefixed with
+	 * neither.
 	 * 
 	 * @param flags Flags composing the mask.
 	 */
@@ -177,15 +178,15 @@ implements Describable {
 		return TextUtils.computeDescription(this);
 	}
 	
-	public void fillDescription(final StringBuilder builder) {
+	public void fillDescription(final Description description) {
 		if (!_required.isEmpty()) {
-			builder.append(" - Required = ").append(TextUtils.join(_required, ","));
+			description.append("Required", TextUtils.join(_required, ","));
 		}
 		if (!_enabled.isEmpty()) {
-			builder.append(" - Enabled = ").append(TextUtils.join(_enabled, ","));
+			description.append("Enabled", TextUtils.join(_enabled, ","));
 		}
 		if (!_forbidden.isEmpty()) {
-			builder.append(" - Forbidden = ").append(TextUtils.join(_forbidden, ","));
+			description.append("Forbidden", TextUtils.join(_forbidden, ","));
 		}
 	}
 }

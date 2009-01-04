@@ -21,6 +21,7 @@ import com.trazere.util.record.IncompatibleFieldException;
 import com.trazere.util.record.Record;
 import com.trazere.util.record.RecordException;
 import com.trazere.util.record.RecordSignatureBuilder;
+import com.trazere.util.text.Description;
 
 // TODO: signature is incomplete when the parameter is optional !
 
@@ -141,9 +142,9 @@ extends AbstractValueReader<T> {
 	}
 	
 	@Override
-	public void fillDescription(final StringBuilder builder) {
-		builder.append(" - Name = ").append(_name);
-		super.fillDescription(builder);
-		builder.append(" - Optional = ").append(_optional);
+	public void fillDescription(final Description description) {
+		description.append("Name", _name);
+		super.fillDescription(description);
+		description.append("Optional", _optional);
 	}
 }

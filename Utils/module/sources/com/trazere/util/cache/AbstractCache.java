@@ -17,6 +17,7 @@ package com.trazere.util.cache;
 
 import com.trazere.util.function.Predicate2;
 import com.trazere.util.text.Describable;
+import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
 import java.util.Collections;
 import java.util.HashMap;
@@ -133,7 +134,7 @@ implements Cache<K, V>, Describable {
 		return TextUtils.computeDescription(this);
 	}
 	
-	public void fillDescription(final StringBuilder builder) {
-		builder.append(" - Entries = ").append(_entries.values());
+	public void fillDescription(final Description description) {
+		description.append("Entries", _entries.values());
 	}
 }

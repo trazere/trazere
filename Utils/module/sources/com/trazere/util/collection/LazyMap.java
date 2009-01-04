@@ -15,7 +15,7 @@
  */
 package com.trazere.util.collection;
 
-import com.trazere.util.function.Function;
+import com.trazere.util.function.Function1;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -33,7 +33,7 @@ import java.util.Map.Entry;
  * @param <X> Type of the exceptions.
  */
 public abstract class LazyMap<K, V, X extends Exception>
-implements Function<K, V, X> {
+implements Function1<K, V, X> {
 	/**
 	 * Build a lazy map using the given function.
 	 * 
@@ -43,7 +43,7 @@ implements Function<K, V, X> {
 	 * @param function Function computing the values of the map.
 	 * @return The built lazy map.
 	 */
-	public static <K, V, X extends Exception> LazyMap<K, V, X> lazyMap(final Function<K, V, X> function) {
+	public static <K, V, X extends Exception> LazyMap<K, V, X> build(final Function1<K, V, X> function) {
 		assert null != function;
 		
 		// Build.

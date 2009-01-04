@@ -15,7 +15,7 @@
  */
 package com.trazere.util.csv;
 
-import com.trazere.util.InternalException;
+import com.trazere.util.lang.InternalException;
 import com.trazere.util.record.MissingFieldException;
 import java.io.IOException;
 import java.io.Writer;
@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * The <code>CSVWriter</code> class provides a tool to write CSV files.
+ * The {@link CSVWriter} class provides support for writing CSV files.
  */
 public class CSVWriter {
 	/** Writer receiving the CSV output. */

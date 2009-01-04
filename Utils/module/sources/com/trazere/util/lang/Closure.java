@@ -16,6 +16,7 @@
 package com.trazere.util.lang;
 
 import com.trazere.util.text.Describable;
+import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
 import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Maybe.None;
@@ -51,8 +52,9 @@ implements Describable {
 			}
 			
 			@Override
-			public void fillDescription(final StringBuilder builder) {
-				builder.append(" - Value = ").append(value);
+			public void fillDescription(final Description description) {
+				super.fillDescription(description);
+				description.append("Value", value);
 			}
 		};
 	}
@@ -74,8 +76,9 @@ implements Describable {
 			}
 			
 			@Override
-			public void fillDescription(final StringBuilder builder) {
-				builder.append(" - Factory = ").append(factory);
+			public void fillDescription(final Description description) {
+				super.fillDescription(description);
+				description.append("Factory", factory);
 			}
 		};
 	}
@@ -141,7 +144,7 @@ implements Describable {
 		return _value.isSome() ? String.valueOf(_value.asSome().getValue()) : TextUtils.computeDescription(this);
 	}
 	
-	public void fillDescription(final StringBuilder builder) {
+	public void fillDescription(final Description description) {
 		// Nothing to do.
 	}
 }

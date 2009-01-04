@@ -19,6 +19,7 @@ import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserState;
+import com.trazere.util.lang.ref.MutableReference;
 
 /**
  * DOCME
@@ -28,20 +29,17 @@ import com.trazere.parser.ParserState;
  */
 public class ParserReference<Token, Result>
 implements Parser<Token, Result> {
-	protected Parser<Token, Result> _parser = null;
+	protected MutableReference<Parser<Token, Result>> _parser = new MutableReference<Parser<Token, Result>>();
 	
 	public void set(final Parser<Token, Result> parser) {
 		assert null != parser;
 		
 		// Set.
-		_parser = parser;
+		_parser.set(parser);
 	}
 	
 	protected Parser<Token, Result> get() {
-		if (null == _parser) {
-			throw new IllegalStateException("Reference not set");
-		}
-		return _parser;
+		return _parser.get();
 	}
 	
 	public String getDescription() {

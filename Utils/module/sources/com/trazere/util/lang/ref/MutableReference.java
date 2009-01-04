@@ -13,9 +13,12 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.lang;
+package com.trazere.util.lang.ref;
 
+import com.trazere.util.lang.HashCode;
+import com.trazere.util.lang.LangUtils;
 import com.trazere.util.text.Describable;
+import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
 import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Maybe.None;
@@ -192,11 +195,11 @@ implements Reference<T>, Describable {
 		return TextUtils.computeDescription(this);
 	}
 	
-	public void fillDescription(final StringBuilder builder) {
+	public void fillDescription(final Description description) {
 		if (_value.isSome()) {
-			builder.append(" - Value = ").append(_value.asSome().getValue());
+			description.append("Value", _value.asSome().getValue());
 		} else {
-			builder.append(" - Empty");
+			description.append("Empty");
 		}
 	}
 }

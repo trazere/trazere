@@ -15,11 +15,10 @@
  */
 package com.trazere.util.value;
 
-import com.trazere.util.record.IncompatibleFieldException;
+import com.trazere.util.function.ParameterFunction;
 import com.trazere.util.record.Record;
 import com.trazere.util.record.RecordBuilder;
 import com.trazere.util.record.RecordSignature;
-import com.trazere.util.record.RecordSignatureBuilder;
 
 /**
  * The {@link RecordReader} interface defines record reading functions.
@@ -27,28 +26,8 @@ import com.trazere.util.record.RecordSignatureBuilder;
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  */
-public interface RecordReader<K, V> {
-	/**
-	 * Get the requirements of the receiver reader over its parameters.
-	 * 
-	 * @return The signature of the requirements.
-	 * @throws ValueException When the requirements cannot be computed.
-	 */
-	public RecordSignature<String, Object> getRequirements()
-	throws ValueException;
-	
-	/**
-	 * Unify the requirements of the receiver reader within the given builder.
-	 * 
-	 * @param <B> Type of the signature builder.
-	 * @param builder The builder within which the requirements should be unified.
-	 * @return The given signature builder.
-	 * @throws ValueException When the requirements cannot be computed.
-	 * @throws IncompatibleFieldException When the unification fails.
-	 */
-	public <B extends RecordSignatureBuilder<String, Object, ?>> B unifyRequirements(final B builder)
-	throws ValueException, IncompatibleFieldException;
-	
+public interface RecordReader<K, V>
+extends ParameterFunction<String, Object, Record<K, V>, ValueException> {
 	/**
 	 * Get the signature of the records produced by the receiver reader.
 	 * 

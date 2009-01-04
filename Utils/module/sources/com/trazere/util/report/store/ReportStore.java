@@ -15,7 +15,7 @@
  */
 package com.trazere.util.report.store;
 
-import com.trazere.util.function.Predicate;
+import com.trazere.util.function.Predicate1;
 import com.trazere.util.report.ReportEntry;
 import com.trazere.util.report.ReportException;
 import com.trazere.util.report.ReportListener;
@@ -36,7 +36,7 @@ extends ReportListener<Entry> {
 	 * @return The number of entries.
 	 * @throws ReportException
 	 */
-	public int countEntries(final Predicate<? super ReportStoreEntry<Entry>, ReportException> filter)
+	public int countEntries(final Predicate1<? super ReportStoreEntry<Entry>, ReportException> filter)
 	throws ReportException;
 	
 	/**
@@ -49,6 +49,6 @@ extends ReportListener<Entry> {
 	 * @return The entries.
 	 * @throws ReportException
 	 */
-	public List<ReportStoreEntry<Entry>> getEntries(final Predicate<? super ReportStoreEntry<Entry>, ReportException> filter, final int limit, final boolean fromEnd)
+	public List<ReportStoreEntry<Entry>> getEntries(final Predicate1<? super ReportStoreEntry<Entry>, ReportException> filter, final int limit, final boolean fromEnd)
 	throws ReportException;
 }

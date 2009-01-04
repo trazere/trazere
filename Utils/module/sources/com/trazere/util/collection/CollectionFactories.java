@@ -28,7 +28,7 @@ import java.util.TreeSet;
  * @see CollectionFactory
  */
 public class CollectionFactories {
-	private static final CollectionFactory<?, ?> ARRAYLIST = new CollectionFactory<Object, ArrayList<Object>>() {
+	private static final CollectionFactory<?, ?> _ARRAYLIST = new CollectionFactory<Object, ArrayList<Object>>() {
 		public ArrayList<Object> build() {
 			return new ArrayList<Object>();
 		}
@@ -49,10 +49,10 @@ public class CollectionFactories {
 	 * @return The factory.
 	 */
 	public static <T> CollectionFactory<T, ArrayList<T>> arrayList() {
-		return LangUtils.cast(ARRAYLIST);
+		return LangUtils.cast(_ARRAYLIST);
 	}
 	
-	private static final CollectionFactory<?, ?> HASHSET = new CollectionFactory<Object, HashSet<Object>>() {
+	private static final CollectionFactory<?, ?> _HASHSET = new CollectionFactory<Object, HashSet<Object>>() {
 		public HashSet<Object> build() {
 			return new HashSet<Object>();
 		}
@@ -73,10 +73,10 @@ public class CollectionFactories {
 	 * @return The factory.
 	 */
 	public static <T> CollectionFactory<T, HashSet<T>> hashSet() {
-		return LangUtils.cast(HASHSET);
+		return LangUtils.cast(_HASHSET);
 	}
 	
-	private static final CollectionFactory<?, ?> LINKEDLIST = new CollectionFactory<Object, LinkedList<Object>>() {
+	private static final CollectionFactory<?, ?> _LINKEDLIST = new CollectionFactory<Object, LinkedList<Object>>() {
 		public LinkedList<Object> build() {
 			return new LinkedList<Object>();
 		}
@@ -97,10 +97,10 @@ public class CollectionFactories {
 	 * @return The factory.
 	 */
 	public static <T> CollectionFactory<T, LinkedList<T>> linkedList() {
-		return LangUtils.cast(LINKEDLIST);
+		return LangUtils.cast(_LINKEDLIST);
 	}
 	
-	private static final CollectionFactory<?, ?> TREESET = new CollectionFactory<Object, TreeSet<Object>>() {
+	private static final CollectionFactory<?, ?> _TREESET = new CollectionFactory<Object, TreeSet<Object>>() {
 		public TreeSet<Object> build() {
 			return new TreeSet<Object>();
 		}
@@ -121,7 +121,7 @@ public class CollectionFactories {
 	 * @return The factory.
 	 */
 	public static <T> CollectionFactory<T, TreeSet<T>> treeSet() {
-		return LangUtils.cast(TREESET);
+		return LangUtils.cast(_TREESET);
 	}
 	
 	private CollectionFactories() {

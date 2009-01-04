@@ -15,7 +15,7 @@
  */
 package com.trazere.util.report.store;
 
-import com.trazere.util.function.Predicate;
+import com.trazere.util.function.Predicate1;
 import com.trazere.util.record.RecordException;
 import com.trazere.util.report.ReportEntry;
 import java.util.ArrayList;
@@ -42,8 +42,8 @@ public class ReportStoreUtils {
 	 * @param codes Codes of the entries to accept. May be <code>null</code> to accept all codes.
 	 * @return The filter.
 	 */
-	public static <Category, Code extends Enum<?>, Entry extends ReportEntry<Category, Code>> Predicate<ReportStoreEntry<Entry>, RecordException> buildFilter(final Date startDate, final Date endDate, final Set<Category> categories, final Set<Code> codes) {
-		return new Predicate<ReportStoreEntry<Entry>, RecordException>() {
+	public static <Category, Code extends Enum<?>, Entry extends ReportEntry<Category, Code>> Predicate1<ReportStoreEntry<Entry>, RecordException> buildFilter(final Date startDate, final Date endDate, final Set<Category> categories, final Set<Code> codes) {
+		return new Predicate1<ReportStoreEntry<Entry>, RecordException>() {
 			public boolean evaluate(final ReportStoreEntry<Entry> entry) {
 				// Start date.
 				if (null != startDate && entry.getDate().before(startDate)) {
@@ -83,7 +83,7 @@ public class ReportStoreUtils {
 	 * @return The filtered entries.
 	 * @throws X When some filter application fails.
 	 */
-	public static <Entry extends ReportEntry<?, ?>, X extends Exception> List<ReportStoreEntry<Entry>> filterEntries(final List<ReportStoreEntry<Entry>> entries, final Predicate<? super ReportStoreEntry<Entry>, X> filter, final int limit, final boolean fromEnd)
+	public static <Entry extends ReportEntry<?, ?>, X extends Exception> List<ReportStoreEntry<Entry>> filterEntries(final List<ReportStoreEntry<Entry>> entries, final Predicate1<? super ReportStoreEntry<Entry>, X> filter, final int limit, final boolean fromEnd)
 	throws X {
 		// Filtered entries.
 		if (null != filter) {
