@@ -16,6 +16,7 @@
 package com.trazere.util.lang;
 
 import com.trazere.util.text.Describable;
+import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
 
 /**
@@ -49,6 +50,17 @@ implements Describable {
 	 */
 	public HashCode append(final boolean value) {
 		_hashCode = _hashCode * 31 + (value ? 1 : 0);
+		return this;
+	}
+	
+	/**
+	 * Append the given byte value to the computation of the receiver hash code.
+	 * 
+	 * @param value Value to append.
+	 * @return The receiver hash code.
+	 */
+	public HashCode append(final byte value) {
+		_hashCode = _hashCode * 31 + value;
 		return this;
 	}
 	
@@ -100,7 +112,7 @@ implements Describable {
 		return TextUtils.computeDescription(this);
 	}
 	
-	public void fillDescription(final StringBuilder builder) {
-		builder.append(" - Hash code = ").append(_hashCode);
+	public void fillDescription(final Description description) {
+		description.append("Hash code", _hashCode);
 	}
 }

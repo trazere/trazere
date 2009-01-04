@@ -36,7 +36,7 @@ import java.util.Map;
  * @param <V> Type of the values.
  */
 public class SimpleRecordReader<K, V>
-implements RecordReader<K, V> {
+extends AbstractRecordReader<K, V> {
 	/** Field readers. */
 	protected final Map<K, ValueReader<? extends V>> _fields;
 	
@@ -52,6 +52,7 @@ implements RecordReader<K, V> {
 		_fields = Collections.unmodifiableMap(fields);
 	}
 	
+	@Override
 	public RecordSignature<String, Object> getRequirements()
 	throws ValueException {
 		try {
@@ -90,6 +91,7 @@ implements RecordReader<K, V> {
 		}
 	}
 	
+	@Override
 	public Record<K, V> read(final Record<String, Object> parameters)
 	throws ValueException {
 		if (_fields.isEmpty()) {

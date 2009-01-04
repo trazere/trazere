@@ -16,6 +16,7 @@
 package com.trazere.util.function;
 
 import com.trazere.util.collection.CollectionUtils;
+import com.trazere.util.type.Either;
 import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Tuple2;
 import java.util.Map;
@@ -23,11 +24,11 @@ import java.util.Map;
 /**
  * The {@link Functions} class provides various standard functions.
  * 
- * @see Function
+ * @see Function1
  * @see Function2
  */
 public class Functions {
-	private static final Function<?, ?, ?> _IDENTITY = new Function<Object, Object, RuntimeException>() {
+	private static final Function1<?, ?, ?> _IDENTITY = new Function1<Object, Object, RuntimeException>() {
 		public Object evaluate(final Object value) {
 			return value;
 		}
@@ -41,8 +42,8 @@ public class Functions {
 	 * @return The built function.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T, X extends Exception> Function<T, T, X> identity() {
-		return (Function<T, T, X>) _IDENTITY;
+	public static <T, X extends Exception> Function1<T, T, X> identity() {
+		return (Function1<T, T, X>) _IDENTITY;
 	}
 	
 	/**
@@ -56,12 +57,12 @@ public class Functions {
 	 * @param g The inner function.
 	 * @return The built function.
 	 */
-	public static <T1, T2, T3, X extends Exception> Function<T1, T3, X> compose(final Function<? super T2, T3, ? extends X> f, final Function<T1, ? extends T2, ? extends X> g) {
+	public static <T1, T2, T3, X extends Exception> Function1<T1, T3, X> compose(final Function1<? super T2, T3, ? extends X> f, final Function1<T1, ? extends T2, ? extends X> g) {
 		assert null != f;
 		assert null != g;
 		
 		// Build.
-		return new Function<T1, T3, X>() {
+		return new Function1<T1, T3, X>() {
 			public T3 evaluate(final T1 value)
 			throws X {
 				return f.evaluate(g.evaluate(value));
@@ -78,8 +79,8 @@ public class Functions {
 	 * @param result Value value.
 	 * @return The built function.
 	 */
-	public static <T, R, X extends Exception> Function<T, R, X> constant(final R result) {
-		return new Function<T, R, X>() {
+	public static <T, R, X extends Exception> Function1<T, R, X> constant(final R result) {
+		return new Function1<T, R, X>() {
 			public R evaluate(final T value) {
 				return result;
 			}
@@ -94,10 +95,10 @@ public class Functions {
 	 * @param predicate The predicate.
 	 * @return The built function.
 	 */
-	public static final <T, X extends Exception> Function<T, Boolean, X> predicate(final Predicate<T, ? extends X> predicate) {
+	public static final <T, X extends Exception> Function1<T, Boolean, X> predicate(final Predicate1<T, ? extends X> predicate) {
 		assert null != predicate;
 		
-		return new Function<T, Boolean, X>() {
+		return new Function1<T, Boolean, X>() {
 			public Boolean evaluate(final T value)
 			throws X {
 				return predicate.evaluate(value);
@@ -113,10 +114,10 @@ public class Functions {
 	 * @param predicate The predicate.
 	 * @return The built function.
 	 */
-	public static final <T, X extends Exception> Function<T, Maybe<T>, X> maybePredicate(final Predicate<T, ? extends X> predicate) {
+	public static final <T, X extends Exception> Function1<T, Maybe<T>, X> maybePredicate(final Predicate1<T, ? extends X> predicate) {
 		assert null != predicate;
 		
-		return new Function<T, Maybe<T>, X>() {
+		return new Function1<T, Maybe<T>, X>() {
 			public Maybe<T> evaluate(final T value)
 			throws X {
 				if (predicate.evaluate(value)) {
@@ -139,11 +140,11 @@ public class Functions {
 	 * @param map The map.
 	 * @return The built function.
 	 */
-	public static <K, V, X extends Exception> Function<K, V, X> map(final Map<K, V> map) {
+	public static <K, V, X extends Exception> Function1<K, V, X> map(final Map<K, V> map) {
 		assert null != map;
 		
 		// Build the function.
-		return new Function<K, V, X>() {
+		return new Function1<K, V, X>() {
 			public V evaluate(final K key) {
 				return map.get(key);
 			}
@@ -162,11 +163,11 @@ public class Functions {
 	 * @param defaultValue The default value.
 	 * @return The built function.
 	 */
-	public static <K, V, X extends Exception> Function<K, V, X> map(final Map<K, V> map, final V defaultValue) {
+	public static <K, V, X extends Exception> Function1<K, V, X> map(final Map<K, V> map, final V defaultValue) {
 		assert null != map;
 		
 		// Build the function.
-		return new Function<K, V, X>() {
+		return new Function1<K, V, X>() {
 			public V evaluate(final K key) {
 				return CollectionUtils.get(map, key, defaultValue);
 			}
@@ -185,11 +186,11 @@ public class Functions {
 	 * @param map Map defining the function to build.
 	 * @return The built function.
 	 */
-	public static <T, R, X extends Exception> Function<T, Maybe<R>, X> maybeMap(final Map<T, R> map) {
+	public static <T, R, X extends Exception> Function1<T, Maybe<R>, X> maybeMap(final Map<T, R> map) {
 		assert null != map;
 		
 		// Build the function.
-		return new Function<T, Maybe<R>, X>() {
+		return new Function1<T, Maybe<R>, X>() {
 			public Maybe<R> evaluate(final T key) {
 				if (map.containsKey(key)) {
 					return Maybe.some(map.get(key));
@@ -200,27 +201,59 @@ public class Functions {
 		};
 	}
 	
-	private static final Function<?, ?, RuntimeException> _SOME = new Function<Object, Maybe<Object>, RuntimeException>() {
-		public Maybe<Object> evaluate(final Object value) {
-			return Maybe.some(value);
-		}
-	};
-	
 	/**
-	 * Build a function wrapping the arguments in {@link Maybe.Some} instances.
+	 * Build a function wrapping its argument in a {@link Maybe.Some} instance.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T, X extends Exception> Function<T, Maybe<T>, X> some() {
-		return (Function<T, Maybe<T>, X>) _SOME;
+	public static <T, X extends Exception> Function1<T, Maybe<T>, X> makeSome() {
+		return (Function1<T, Maybe<T>, X>) _MAKE_SOME;
 	}
 	
-	private static final Function<?, ?, RuntimeException> _FIRST = new Function<Tuple2<Object, Object>, Object, RuntimeException>() {
-		public Object evaluate(final Tuple2<Object, Object> value) {
-			return value.getFirst();
+	private static final Function1<?, ?, RuntimeException> _MAKE_SOME = new Function1<Object, Maybe<Object>, RuntimeException>() {
+		public Maybe<Object> evaluate(final Object value) {
+			return Maybe.some(value);
+		}
+	};
+	
+	/**
+	 * Build a function wrapping its argument in a {@link Either.Left} instance.
+	 * 
+	 * @param <L> Type of the left values.
+	 * @param <R> Type of the right values.
+	 * @param <X> The of the exceptions.
+	 * @return The built function.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <L, R, X extends Exception> Function1<L, Either<L, R>, X> makeLeft() {
+		return (Function1<L, Either<L, R>, X>) _MAKE_LEFT;
+	}
+	
+	private static final Function1<?, ?, RuntimeException> _MAKE_LEFT = new Function1<Object, Either<?, ?>, RuntimeException>() {
+		public Either<?, ?> evaluate(final Object value) {
+			return Either.left(value);
+		}
+	};
+	
+	/**
+	 * Build a function wrapping its argument in a {@link Either.Left} instance.
+	 * 
+	 * @param <L> Type of the left values.
+	 * @param <R> Type of the right values.
+	 * @param <X> The of the exceptions.
+	 * @return The built function.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <L, R, X extends Exception> Function1<R, Either<L, R>, X> makeRight() {
+		return (Function1<R, Either<L, R>, X>) _MAKE_RIGHT;
+	}
+	
+	private static final Function1<?, ?, RuntimeException> _MAKE_RIGHT = new Function1<Object, Either<?, ?>, RuntimeException>() {
+		public Either<?, ?> evaluate(final Object value) {
+			return Either.right(value);
 		}
 	};
 	
@@ -233,13 +266,13 @@ public class Functions {
 	 * @return The built function.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T1, T2, X extends Exception> Function<Tuple2<T1, T2>, T1, X> first() {
-		return (Function<Tuple2<T1, T2>, T1, X>) _FIRST;
+	public static <T1, T2, X extends Exception> Function1<Tuple2<T1, T2>, T1, X> first() {
+		return (Function1<Tuple2<T1, T2>, T1, X>) _FIRST;
 	}
 	
-	private static final Function<?, ?, RuntimeException> _SECOND = new Function<Tuple2<Object, Object>, Object, RuntimeException>() {
+	private static final Function1<?, ?, RuntimeException> _FIRST = new Function1<Tuple2<Object, Object>, Object, RuntimeException>() {
 		public Object evaluate(final Tuple2<Object, Object> value) {
-			return value.getSecond();
+			return value.getFirst();
 		}
 	};
 	
@@ -252,9 +285,15 @@ public class Functions {
 	 * @return The built function.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T1, T2, X extends Exception> Function<Tuple2<T1, T2>, T2, X> second() {
-		return (Function<Tuple2<T1, T2>, T2, X>) _SECOND;
+	public static <T1, T2, X extends Exception> Function1<Tuple2<T1, T2>, T2, X> second() {
+		return (Function1<Tuple2<T1, T2>, T2, X>) _SECOND;
 	}
+	
+	private static final Function1<?, ?, RuntimeException> _SECOND = new Function1<Tuple2<Object, Object>, Object, RuntimeException>() {
+		public Object evaluate(final Tuple2<Object, Object> value) {
+			return value.getSecond();
+		}
+	};
 	
 	private Functions() {
 		// Prevent instantiation.

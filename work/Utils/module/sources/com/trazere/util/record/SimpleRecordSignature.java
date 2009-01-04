@@ -17,6 +17,7 @@ package com.trazere.util.record;
 
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.text.Describable;
+import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
 import java.util.Collection;
 import java.util.Collections;
@@ -169,9 +170,9 @@ implements RecordSignature<K, V>, Describable {
 		return TextUtils.computeDescription(this);
 	}
 	
-	public void fillDescription(final StringBuilder builder) {
+	public void fillDescription(final Description description) {
 		for (final FieldSignature<K, ? extends V> field : _fields.values()) {
-			builder.append(" - ").append(field.getKey()).append(" = ").append(field);
+			description.append(field.getKey().toString(), field);
 		}
 	}
 }

@@ -21,6 +21,7 @@ import com.trazere.util.record.Record;
 import com.trazere.util.record.RecordSignature;
 import com.trazere.util.record.RecordSignatureBuilder;
 import com.trazere.util.record.SimpleRecordSignature;
+import com.trazere.util.text.Description;
 
 /**
  * The {@link ConstantValueReader} class reads constant values.
@@ -90,8 +91,8 @@ extends AbstractValueReader<T> {
 	}
 	
 	@Override
-	public void fillDescription(final StringBuilder builder) {
-		super.fillDescription(builder);
-		builder.append(" - Value = ").append(_value);
+	public void fillDescription(final Description description) {
+		super.fillDescription(description);
+		description.append("Value", _value);
 	}
 }

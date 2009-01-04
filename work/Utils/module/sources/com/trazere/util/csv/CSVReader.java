@@ -15,7 +15,7 @@
  */
 package com.trazere.util.csv;
 
-import com.trazere.util.InternalException;
+import com.trazere.util.lang.InternalException;
 import com.trazere.util.record.DuplicateFieldException;
 import com.trazere.util.text.Scanner;
 import java.io.EOFException;

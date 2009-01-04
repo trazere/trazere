@@ -16,7 +16,7 @@
 package com.trazere.util.function;
 
 /**
- * The {@link Procedure} interface defines two arguments procedures (two arguments functions which return no results).
+ * The {@link Function2} interface defines two arguments functions.
  * 
  * @param <T1> Type of the first argument values.
  * @param <T2> Type of the second argument values.

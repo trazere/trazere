@@ -16,19 +16,18 @@
 package com.trazere.util.function;
 
 /**
- * The {@link Predicate} interface defines one argument predicate functions.
+ * The {@link Procedure1} interface defines one argument procedures (one argument functions which return no results).
  * 
  * @param <T> Type of the argument values.
  * @param <X> Type of the exceptions.
  */
-public interface Predicate<T, X extends Exception> {
+public interface Procedure1<T, X extends Exception> {
 	/**
-	 * Evaluate the receiver predicate with the given argument value.
+	 * Execute the receiver procedure with the given argument value.
 	 * 
 	 * @param value Argument value.
-	 * @return The result of the predicate evaluation.
-	 * @throws X When the predicate evaluation fails.
+	 * @throws X When the procedure execution fails.
 	 */
-	public boolean evaluate(final T value)
+	public void execute(final T value)
 	throws X;
 }

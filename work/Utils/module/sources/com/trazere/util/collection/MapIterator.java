@@ -15,7 +15,7 @@
  */
 package com.trazere.util.collection;
 
-import com.trazere.util.function.Function;
+import com.trazere.util.function.Function1;
 import java.util.Iterator;
 
 /**
@@ -35,7 +35,7 @@ implements Iterator<R> {
 	 * @param function Function to use to transform the elements.
 	 * @return The built iterator.
 	 */
-	public static <T, R> MapIterator<T, R> build(final Iterator<T> feed, final Function<? super T, ? extends R, ? extends RuntimeException> function) {
+	public static <T, R> MapIterator<T, R> build(final Iterator<T> feed, final Function1<? super T, ? extends R, ? extends RuntimeException> function) {
 		assert null != function;
 		
 		return new MapIterator<T, R>(feed) {

@@ -16,6 +16,7 @@
 package com.trazere.util.record;
 
 import com.trazere.util.text.Describable;
+import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
 import java.util.Collections;
 import java.util.HashMap;
@@ -182,9 +183,9 @@ implements RecordBuilder<K, V, R>, Describable {
 		return TextUtils.computeDescription(this);
 	}
 	
-	public void fillDescription(final StringBuilder builder) {
+	public void fillDescription(final Description description) {
 		for (final Map.Entry<K, V> entry : _fields.entrySet()) {
-			builder.append(" - ").append(entry.getKey()).append(" = ").append(entry.getValue());
+			description.append(entry.getKey().toString(), entry.getValue());
 		}
 	}
 }

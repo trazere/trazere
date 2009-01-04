@@ -15,9 +15,9 @@
  */
 package com.trazere.util.collection;
 
-import com.trazere.util.function.Predicate;
+import com.trazere.util.function.Predicate1;
 import com.trazere.util.lang.MutableBoolean;
-import com.trazere.util.lang.MutableReference;
+import com.trazere.util.lang.ref.MutableReference;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -36,7 +36,7 @@ implements Iterator<T> {
 	 * @param predicate Predicate to use.
 	 * @return The built iterator.
 	 */
-	public static <T> FilterIterator<T> build(final Iterator<T> feed, final Predicate<? super T, ? extends RuntimeException> predicate) {
+	public static <T> FilterIterator<T> build(final Iterator<T> feed, final Predicate1<? super T, ? extends RuntimeException> predicate) {
 		assert null != predicate;
 		
 		return new FilterIterator<T>(feed) {

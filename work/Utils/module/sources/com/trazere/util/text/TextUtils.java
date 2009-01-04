@@ -295,18 +295,15 @@ public class TextUtils {
 	 * <p>
 	 * This method aims to be used in {@link Object#toString()} implementations.
 	 * 
-	 * @param object Object whose description should be computed.
+	 * @param object The object.
 	 * @return The description.
 	 */
 	public static String computeDescription(final Describable object) {
 		assert null != object;
 		
-		// Compute.
-		final StringBuilder builder = new StringBuilder();
-		builder.append("[").append(TextUtils.computeClassName(object.getClass()));
-		object.fillDescription(builder);
-		builder.append("]");
-		return builder.toString();
+		final Description description = new Description(object);
+		object.fillDescription(description);
+		return description.toString();
 	}
 	
 	private TextUtils() {

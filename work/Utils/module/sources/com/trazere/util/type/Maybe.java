@@ -15,10 +15,11 @@
  */
 package com.trazere.util.type;
 
-import com.trazere.util.function.Function;
+import com.trazere.util.function.Function1;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.LangUtils;
 import com.trazere.util.text.Describable;
+import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
 
 /**
@@ -111,15 +112,15 @@ implements Describable {
 		}
 		
 		@Override
-		public <Result, X extends Exception> Maybe<Result> lift(final Function<? super Value, Result, X> function) {
+		public <Result, X extends Exception> Maybe<Result> lift(final Function1<? super Value, Result, X> function) {
 			assert null != function;
 			
 			// Lift.
 			return none();
 		}
 		
-		public void fillDescription(final StringBuilder builder) {
-			builder.append(" - None");
+		public void fillDescription(final Description description) {
+			description.append("None");
 		}
 		
 		@Override
@@ -201,7 +202,7 @@ implements Describable {
 		}
 		
 		@Override
-		public <Result, X extends Exception> Maybe<Result> lift(final Function<? super Value, Result, X> function)
+		public <Result, X extends Exception> Maybe<Result> lift(final Function1<? super Value, Result, X> function)
 		throws X {
 			assert null != function;
 			
@@ -228,8 +229,8 @@ implements Describable {
 			}
 		}
 		
-		public void fillDescription(final StringBuilder builder) {
-			builder.append(" - Some = ").append(_value);
+		public void fillDescription(final Description description) {
+			description.append("Some", _value);
 		}
 	}
 	
@@ -365,7 +366,7 @@ implements Describable {
 	 * @return xxx
 	 * @throws X
 	 */
-	public abstract <Result, X extends Exception> Maybe<Result> lift(final Function<? super Value, Result, X> function)
+	public abstract <Result, X extends Exception> Maybe<Result> lift(final Function1<? super Value, Result, X> function)
 	throws X;
 	
 	@Override

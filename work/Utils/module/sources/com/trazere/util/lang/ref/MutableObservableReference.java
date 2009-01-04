@@ -13,8 +13,9 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.lang;
+package com.trazere.util.lang.ref;
 
+import com.trazere.util.lang.LangUtils;
 import com.trazere.util.type.Maybe;
 import java.util.ArrayList;
 import java.util.List;

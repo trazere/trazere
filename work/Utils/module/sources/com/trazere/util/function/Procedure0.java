@@ -13,21 +13,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.lang;
-
-import com.trazere.util.type.Maybe;
+package com.trazere.util.function;
 
 /**
- * The {@link ReferenceListener} interface defines listeners of references.
+ * The {@link Procedure0} interface defines zero arguments procedures (zero arguments functions which return no results).
  * 
- * @param <T> Type of the observed values.
- * @see ObservableReference
+ * @param <X> Type of the exceptions.
  */
-public interface ReferenceListener<T> {
+public interface Procedure0<X extends Exception> {
 	/**
-	 * Notify the receiver listener that the value of the observed reference has changed.
+	 * Execute the receiver procedure.
 	 * 
-	 * @param value The new value.
+	 * @throws X When the procedure execution fails.
 	 */
-	public void updatedReference(final Maybe<? extends T> value);
+	public void execute()
+	throws X;
 }

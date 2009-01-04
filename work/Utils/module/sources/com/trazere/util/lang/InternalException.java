@@ -16,20 +16,18 @@
 package com.trazere.util.lang;
 
 /**
- * {@link ReferenceAlreadySetException} exceptions are thrown when trying to set some reference which has already been set.
+ * {@link InternalException} exceptions are thrown when internal errors occur.
  * <p>
- * These exceptions are runtime exceptions in order to reduce clutter when using computations which cannot fail.
- * 
- * @see MutableReference
+ * These exceptions aim to indicate problems in the code (like situations supposed to be impossible) rather than runtime issues.
  */
-public class ReferenceAlreadySetException
+public class InternalException
 extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * Instantiate a new exception.
 	 */
-	public ReferenceAlreadySetException() {
+	public InternalException() {
 		super();
 	}
 	
@@ -38,7 +36,7 @@ extends RuntimeException {
 	 * 
 	 * @param message Details about the exception.
 	 */
-	public ReferenceAlreadySetException(final String message) {
+	public InternalException(final String message) {
 		super(message);
 	}
 	
@@ -47,7 +45,7 @@ extends RuntimeException {
 	 * 
 	 * @param cause Cause of the exception.
 	 */
-	public ReferenceAlreadySetException(final Throwable cause) {
+	public InternalException(final Throwable cause) {
 		super(cause);
 	}
 	
@@ -57,7 +55,7 @@ extends RuntimeException {
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
 	 */
-	public ReferenceAlreadySetException(final String message, final Throwable cause) {
+	public InternalException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 }

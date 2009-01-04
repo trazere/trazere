@@ -107,25 +107,6 @@ public class LangUtils {
 		}
 	}
 	
-	/**
-	 * Build a comparator based on the given comparator which supports comparisons of <code>null</code> values.
-	 * <p>
-	 * <code>null</code> values are considered as less than non <code>null</code> values.
-	 * 
-	 * @param <T> Type of the value.
-	 * @param comparator
-	 * @return The build comparator.
-	 */
-	public static <T> Comparator<T> comparator(final Comparator<T> comparator) {
-		assert null != comparator;
-		
-		return new Comparator<T>() {
-			public int compare(final T object1, final T object2) {
-				return LangUtils.compare(object1, object2, comparator);
-			}
-		};
-	}
-	
 	private LangUtils() {
 		// Prevent instantiation.
 	}

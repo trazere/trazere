@@ -15,7 +15,7 @@
  */
 package com.trazere.parser;
 
-import com.trazere.util.lang.MutableReference;
+import com.trazere.util.lang.ref.MutableReference;
 import com.trazere.util.type.Either;
 import com.trazere.util.type.Maybe;
 import java.util.ArrayList;

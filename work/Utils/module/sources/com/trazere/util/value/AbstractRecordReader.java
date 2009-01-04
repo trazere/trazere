@@ -18,37 +18,17 @@ package com.trazere.util.value;
 import com.trazere.util.record.IncompatibleFieldException;
 import com.trazere.util.record.Record;
 import com.trazere.util.record.RecordSignature;
+import com.trazere.util.record.SimpleRecordBuilder;
 import com.trazere.util.record.SimpleRecordSignatureBuilder;
-import com.trazere.util.text.Describable;
-import com.trazere.util.text.Description;
-import com.trazere.util.text.TextUtils;
 
 /**
- * The {@link AbstractValueReader} abstract class implements skeletons of {@link ValueReader value readers}.
+ * The {@link AbstractRecordReader} abstract class implements skeletons of {@link RecordReader record readers}.
  * 
- * @param <T> Type of the values.
+ * @param <K> Type of the keys.
+ * @param <V> Type of the values.
  */
-public abstract class AbstractValueReader<T>
-implements ValueReader<T>, Describable {
-	/** Type of the values. */
-	protected final Class<T> _type;
-	
-	/**
-	 * Instanciate a new reader with the given type.
-	 * 
-	 * @param type Type of the values.
-	 */
-	protected AbstractValueReader(final Class<T> type) {
-		assert null != type;
-		
-		// Initialization.
-		_type = type;
-	}
-	
-	public Class<T> getType() {
-		return _type;
-	}
-	
+public abstract class AbstractRecordReader<K, V>
+implements RecordReader<K, V> {
 	public RecordSignature<String, Object> getRequirements()
 	throws ValueException {
 		try {
@@ -58,17 +38,13 @@ implements ValueReader<T>, Describable {
 		}
 	}
 	
-	public T evaluate(final Record<String, Object> parameters)
+	public Record<K, V> read(final Record<String, Object> parameters)
+	throws ValueException {
+		return read(parameters, new SimpleRecordBuilder<K, V>()).build();
+	}
+	
+	public Record<K, V> evaluate(final Record<String, Object> parameters)
 	throws ValueException {
 		return read(parameters);
-	}
-	
-	@Override
-	public String toString() {
-		return TextUtils.computeDescription(this);
-	}
-	
-	public void fillDescription(final Description description) {
-		description.append("Type", _type.getName());
 	}
 }

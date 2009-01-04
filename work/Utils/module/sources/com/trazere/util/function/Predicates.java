@@ -21,16 +21,10 @@ import java.util.Collection;
 /**
  * The {@link Predicates} class provides various common predicate functions.
  * 
- * @see Predicate
+ * @see Predicate1
  * @see Predicate2
  */
 public class Predicates {
-	private static final Predicate<?, ?> _ALL = new Predicate<Object, Exception>() {
-		public boolean evaluate(final Object value) {
-			return true;
-		}
-	};
-	
 	/**
 	 * Build a predicate which evaluates to <code>true</code> for all values.
 	 * 
@@ -39,13 +33,13 @@ public class Predicates {
 	 * @return The built predicate.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T, X extends Exception> Predicate<T, X> all() {
-		return (Predicate<T, X>) _ALL;
+	public static <T, X extends Exception> Predicate1<T, X> all() {
+		return (Predicate1<T, X>) _ALL;
 	}
 	
-	private static final Predicate<?, ?> _NONE = new Predicate<Object, Exception>() {
+	private static final Predicate1<?, ?> _ALL = new Predicate1<Object, Exception>() {
 		public boolean evaluate(final Object value) {
-			return false;
+			return true;
 		}
 	};
 	
@@ -57,9 +51,15 @@ public class Predicates {
 	 * @return The built predicate.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T, X extends Exception> Predicate<T, X> none() {
-		return (Predicate<T, X>) _NONE;
+	public static <T, X extends Exception> Predicate1<T, X> none() {
+		return (Predicate1<T, X>) _NONE;
 	}
+	
+	private static final Predicate1<?, ?> _NONE = new Predicate1<Object, Exception>() {
+		public boolean evaluate(final Object value) {
+			return false;
+		}
+	};
 	
 	/**
 	 * Build a predicate corresponding to the inverse of the given predicate.
@@ -69,11 +69,11 @@ public class Predicates {
 	 * @param predicate The predicate.
 	 * @return The built predicate.
 	 */
-	public static <T, X extends Exception> Predicate<T, X> not(final Predicate<T, X> predicate) {
+	public static <T, X extends Exception> Predicate1<T, X> not(final Predicate1<T, X> predicate) {
 		assert null != predicate;
 		
 		// Build.
-		return new Predicate<T, X>() {
+		return new Predicate1<T, X>() {
 			public boolean evaluate(final T value)
 			throws X {
 				return !predicate.evaluate(value);
@@ -90,12 +90,12 @@ public class Predicates {
 	 * @param predicate2 The second predicate.
 	 * @return The built predicate.
 	 */
-	public static <T, X extends Exception> Predicate<T, X> and(final Predicate<? super T, ? extends X> predicate1, final Predicate<? super T, ? extends X> predicate2) {
+	public static <T, X extends Exception> Predicate1<T, X> and(final Predicate1<? super T, ? extends X> predicate1, final Predicate1<? super T, ? extends X> predicate2) {
 		assert null != predicate1;
 		assert null != predicate2;
 		
 		// Build.
-		return new Predicate<T, X>() {
+		return new Predicate1<T, X>() {
 			public boolean evaluate(final T value)
 			throws X {
 				return predicate1.evaluate(value) && predicate2.evaluate(value);
@@ -112,24 +112,18 @@ public class Predicates {
 	 * @param predicate2 The second predicate.
 	 * @return The built predicate.
 	 */
-	public static <T, X extends Exception> Predicate<T, X> or(final Predicate<? super T, ? extends X> predicate1, final Predicate<? super T, ? extends X> predicate2) {
+	public static <T, X extends Exception> Predicate1<T, X> or(final Predicate1<? super T, ? extends X> predicate1, final Predicate1<? super T, ? extends X> predicate2) {
 		assert null != predicate1;
 		assert null != predicate2;
 		
 		// Build.
-		return new Predicate<T, X>() {
+		return new Predicate1<T, X>() {
 			public boolean evaluate(final T value)
 			throws X {
 				return predicate1.evaluate(value) || predicate2.evaluate(value);
 			}
 		};
 	}
-	
-	private static final Predicate2<?, ?, ?> _ALL2 = new Predicate2<Object, Object, Exception>() {
-		public boolean evaluate(final Object value1, final Object value2) {
-			return true;
-		}
-	};
 	
 	/**
 	 * Build a two arguments predicate which evaluates to <code>true</code> for all pairs of values.
@@ -144,9 +138,9 @@ public class Predicates {
 		return (Predicate2<T1, T2, X>) _ALL2;
 	}
 	
-	private static final Predicate2<?, ?, ?> _NONE2 = new Predicate2<Object, Object, Exception>() {
+	private static final Predicate2<?, ?, ?> _ALL2 = new Predicate2<Object, Object, Exception>() {
 		public boolean evaluate(final Object value1, final Object value2) {
-			return false;
+			return true;
 		}
 	};
 	
@@ -163,6 +157,12 @@ public class Predicates {
 		return (Predicate2<T1, T2, X>) _NONE2;
 	}
 	
+	private static final Predicate2<?, ?, ?> _NONE2 = new Predicate2<Object, Object, Exception>() {
+		public boolean evaluate(final Object value1, final Object value2) {
+			return false;
+		}
+	};
+	
 	/**
 	 * Build a predicate which evaluates to <code>true</code> for the given value.
 	 * 
@@ -171,8 +171,8 @@ public class Predicates {
 	 * @param value The value. May be <code>null</code>.
 	 * @return The built predicate.
 	 */
-	public static <T, X extends Exception> Predicate<T, X> equal(final T value) {
-		return new Predicate<T, X>() {
+	public static <T, X extends Exception> Predicate1<T, X> equal(final T value) {
+		return new Predicate1<T, X>() {
 			public boolean evaluate(final T value_) {
 				return LangUtils.equals(value, value_);
 			}
@@ -187,10 +187,10 @@ public class Predicates {
 	 * @param values Values defining the predicate.
 	 * @return The built predicate.
 	 */
-	public static <T, X extends Exception> Predicate<T, X> any(final Collection<T> values) {
+	public static <T, X extends Exception> Predicate1<T, X> any(final Collection<T> values) {
 		assert null != values;
 		
-		return new Predicate<T, X>() {
+		return new Predicate1<T, X>() {
 			public boolean evaluate(final T value) {
 				return values.contains(value);
 			}
@@ -234,6 +234,45 @@ public class Predicates {
 			}
 		};
 	}
+	
+	/**
+	 * Build a predicate which evaluates to <code>true</code> for empty string.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @return The built predicate.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <X extends Exception> Predicate1<String, X> emptyString() {
+		return (Predicate1<String, X>) _EMPTY_STRING;
+	}
+	
+	private static Predicate1<String, ?> _EMPTY_STRING = new Predicate1<String, RuntimeException>() {
+		public boolean evaluate(final String value) {
+			assert null != value;
+			
+			return 0 == value.length();
+		}
+	};
+	
+	/**
+	 * Build a predicate which evaluates to <code>true</code> for empty collections.
+	 * 
+	 * @param <C> Type of the collections.
+	 * @param <X> Type of the exceptions.
+	 * @return The built predicate.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <C extends Collection<?>, X extends Exception> Predicate1<C, X> empty() {
+		return (Predicate1<C, X>) _EMPTY;
+	}
+	
+	private static Predicate1<Collection<?>, ?> _EMPTY = new Predicate1<Collection<?>, RuntimeException>() {
+		public boolean evaluate(final Collection<?> collection) {
+			assert null != collection;
+			
+			return collection.isEmpty();
+		}
+	};
 	
 	private Predicates() {
 		// Prevent instantiation.

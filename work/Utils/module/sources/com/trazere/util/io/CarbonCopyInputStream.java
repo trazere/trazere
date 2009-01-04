@@ -23,35 +23,24 @@ import java.io.OutputStream;
  * The {@link CarbonCopyInputStream} class carbon copies the data read from a source input stream to an output stream.
  */
 public class CarbonCopyInputStream
-extends InputStream {
-	/** Source input stream providing for the data. */
-	protected final InputStream _input;
-	
-	/** Copy output stream receiving the copy of the data. */
+extends DecoratorInputStream {
+	/** Output stream receiving the copy of the data. */
 	protected final OutputStream _copy;
 	
 	/**
 	 * Instantiate a new stream with the given source input stream and copy output stream.
 	 * 
-	 * @param input Source input stream providing the data.
-	 * @param copy Copy output stream receiving the copy of the data.
+	 * @param stream The input stream providing the data.
+	 * @param copy The output stream receiving the copy of the data.
 	 */
-	public CarbonCopyInputStream(final InputStream input, final OutputStream copy) {
-		assert null != input;
+	public CarbonCopyInputStream(final InputStream stream, final OutputStream copy) {
+		super(stream);
+		
+		// Checks.
 		assert null != copy;
 		
 		// Initialization.
-		_input = input;
 		_copy = copy;
-	}
-	
-	/**
-	 * Get the source input stream providing for the data.
-	 * 
-	 * @return The input stream.
-	 */
-	public InputStream getInput() {
-		return _input;
 	}
 	
 	/**
@@ -64,31 +53,9 @@ extends InputStream {
 	}
 	
 	@Override
-	public int available()
-	throws IOException {
-		return _input.available();
-	}
-	
-	@Override
-	public boolean markSupported() {
-		return _input.markSupported();
-	}
-	
-	@Override
-	public void mark(final int readlimit) {
-		_input.mark(readlimit);
-	}
-	
-	@Override
-	public synchronized void reset()
-	throws IOException {
-		_input.reset();
-	}
-	
-	@Override
 	public int read()
 	throws IOException {
-		final int b = _input.read();
+		final int b = super.read();
 		if (-1 != b) {
 			_copy.write(b);
 		}
@@ -98,7 +65,7 @@ extends InputStream {
 	@Override
 	public int read(final byte[] b)
 	throws IOException {
-		final int n = _input.read(b);
+		final int n = super.read(b);
 		if (n > 0) {
 			_copy.write(b, 0, n);
 		}
@@ -108,22 +75,10 @@ extends InputStream {
 	@Override
 	public int read(final byte[] b, final int off, final int len)
 	throws IOException {
-		final int n = _input.read(b, off, len);
+		final int n = super.read(b, off, len);
 		if (n > 0) {
 			_copy.write(b, off, n);
 		}
 		return n;
-	}
-	
-	@Override
-	public long skip(final long n)
-	throws IOException {
-		return _input.skip(n);
-	}
-	
-	@Override
-	public void close()
-	throws IOException {
-		_input.close();
 	}
 }

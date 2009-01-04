@@ -18,6 +18,7 @@ package com.trazere.util.type;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.LangUtils;
 import com.trazere.util.text.Describable;
+import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
 
 /**
@@ -150,8 +151,8 @@ implements Describable {
 			}
 		}
 		
-		public void fillDescription(final StringBuilder builder) {
-			builder.append(" - Left = ").append(_left);
+		public void fillDescription(final Description description) {
+			description.append("Left", _left);
 		}
 	}
 	
@@ -235,8 +236,8 @@ implements Describable {
 			}
 		}
 		
-		public void fillDescription(final StringBuilder builder) {
-			builder.append(" - Right = ").append(_right);
+		public void fillDescription(final Description description) {
+			description.append("Right", _right);
 		}
 	}
 	

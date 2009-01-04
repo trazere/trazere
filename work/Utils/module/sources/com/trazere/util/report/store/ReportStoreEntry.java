@@ -19,6 +19,7 @@ import com.trazere.util.lang.HashCode;
 import com.trazere.util.report.ReportEntry;
 import com.trazere.util.report.ReportLevel;
 import com.trazere.util.text.Describable;
+import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
 import java.util.Date;
 
@@ -111,9 +112,9 @@ implements Describable {
 		return TextUtils.computeDescription(this);
 	}
 	
-	public void fillDescription(final StringBuilder builder) {
-		builder.append(" - Level = ").append(_level);
-		builder.append(" - Date = ").append(_date);
-		builder.append(" - Entry = ").append(_entry);
+	public void fillDescription(final Description description) {
+		description.append("Level", _level);
+		description.append("Date", _date);
+		description.append("Entry", _entry);
 	}
 }

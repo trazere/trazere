@@ -13,26 +13,23 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.lang;
+package com.trazere.util.function;
 
 /**
- * The {@link ObservableReference} interface defines references whose value can be observed.
+ * The {@link Function1} interface defines one argument functions.
  * 
- * @param <T> Type of the referenced value.
+ * @param <T> Type of the argument values.
+ * @param <R> Type of the result values.
+ * @param <X> Type of the exceptions.
  */
-public interface ObservableReference<T>
-extends Reference<T> {
+public interface Function1<T, R, X extends Exception> {
 	/**
-	 * Add the given listener to the receiver reference.
+	 * Evaluate the receiver function with the given argument value.
 	 * 
-	 * @param listener The listener.
+	 * @param value Argument value.
+	 * @return The result of the function evaluation.
+	 * @throws X When the function evaluation fails.
 	 */
-	public void addListener(final ReferenceListener<? super T> listener);
-	
-	/**
-	 * Remove the given listener from the receiver reference.
-	 * 
-	 * @param listener The listener.
-	 */
-	public void removeListener(final ReferenceListener<? super T> listener);
+	public R evaluate(final T value)
+	throws X;
 }

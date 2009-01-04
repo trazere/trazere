@@ -18,6 +18,7 @@ package com.trazere.util.record;
 import com.trazere.util.collection.CollectionUtils;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.text.Describable;
+import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
 import java.util.Collection;
 import java.util.Collections;
@@ -257,9 +258,9 @@ implements Record<K, V>, Describable {
 		return TextUtils.computeDescription(this);
 	}
 	
-	public void fillDescription(final StringBuilder builder) {
+	public void fillDescription(final Description description) {
 		for (final Map.Entry<K, V> entry : _fields.entrySet()) {
-			builder.append(" - ").append(entry.getKey()).append(" = ").append(entry.getValue());
+			description.append(entry.getKey().toString(), entry.getValue());
 		}
 	}
 }

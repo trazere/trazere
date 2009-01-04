@@ -17,6 +17,7 @@ package com.trazere.util.record;
 
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.text.Describable;
+import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
 
 /**
@@ -106,8 +107,8 @@ implements Describable {
 		return TextUtils.computeDescription(this);
 	}
 	
-	public void fillDescription(final StringBuilder builder) {
-		builder.append(" - Key = ").append(_key);
-		builder.append(" - Type = ").append(_type);
+	public void fillDescription(final Description description) {
+		description.append("Key", _key);
+		description.append("Type", _type);
 	}
 }

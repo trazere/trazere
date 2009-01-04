@@ -15,6 +15,9 @@
  */
 package com.trazere.util.csv;
 
+/**
+ * The {@link CSVWriterOption} enumeration represents options of {@link CSVWriter CSV writters}.
+ */
 public enum CSVWriterOption {
 	// Nothing.
 }

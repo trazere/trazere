@@ -16,6 +16,7 @@
 package com.trazere.util.cache;
 
 import com.trazere.util.text.Describable;
+import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
 
 /**
@@ -69,8 +70,8 @@ implements Describable {
 		return TextUtils.computeDescription(this);
 	}
 	
-	public void fillDescription(final StringBuilder builder) {
-		builder.append(" - Key = ").append(_key);
-		builder.append(" - Value = ").append(_value);
+	public void fillDescription(final Description description) {
+		description.append("Key", _key);
+		description.append("Value", _value);
 	}
 }

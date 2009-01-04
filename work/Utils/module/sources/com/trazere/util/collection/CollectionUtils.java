@@ -15,7 +15,7 @@
  */
 package com.trazere.util.collection;
 
-import com.trazere.util.function.Function;
+import com.trazere.util.function.Function1;
 import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Tuple2;
 import java.util.ArrayList;
@@ -503,7 +503,7 @@ public class CollectionUtils {
 	 * @throws CollectionException When there is a cycle in the dependencies.
 	 * @throws X When some dependency computation fails.
 	 */
-	public static <T, L extends List<? super T>, X extends Exception> L topologicalSort(final Collection<? extends T> values, final Function<? super T, ? extends Collection<? extends T>, X> dependencyFunction, final L results)
+	public static <T, L extends List<? super T>, X extends Exception> L topologicalSort(final Collection<? extends T> values, final Function1<? super T, ? extends Collection<? extends T>, X> dependencyFunction, final L results)
 	throws CollectionException, X {
 		assert null != values;
 		assert null != dependencyFunction;
