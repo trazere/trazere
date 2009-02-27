@@ -381,7 +381,7 @@ public class CollectionUtils {
 	 * @param defaultValue The default value. May be <code>null</code>.
 	 * @return The value identified by the key if any, or the default value.
 	 */
-	public static <K, V> V get(final Map<K, V> map, final K key, final V defaultValue) {
+	public static <K, V> V get(final Map<? super K, ? extends V> map, final K key, final V defaultValue) {
 		assert null != map;
 		
 		// Get.

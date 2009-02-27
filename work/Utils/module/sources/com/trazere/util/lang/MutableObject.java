@@ -20,38 +20,40 @@ import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
 
 /**
- * The {@link MutableBoolean} class represents mutable boolean values.
+ * The {@link MutableObject} class represents mutable object values.
+ * 
+ * @param <T> Type of the value.
  */
-public class MutableBoolean
+public class MutableObject<T>
 implements Describable {
-	/** The value. */
-	protected boolean _value;
+	/** The value. May be <code>null</code>. */
+	protected T _value;
 	
 	/**
-	 * Instantiate a new mutable boolean with the given value.
+	 * Instantiate a new mutable object with the given value.
 	 * 
-	 * @param value The initial value.
+	 * @param value The initial value. May be <code>null</code>.
 	 */
-	public MutableBoolean(final boolean value) {
+	public MutableObject(final T value) {
 		// Initialization.
 		_value = value;
 	}
 	
 	/**
-	 * Set the receiver mutable boolean to the given value.
+	 * Set the receiver mutable object to the given value.
 	 * 
-	 * @param value The value.
+	 * @param value The value. May be <code>null</code>.
 	 */
-	public void set(final boolean value) {
+	public void set(final T value) {
 		_value = value;
 	}
 	
 	/**
-	 * Get the value set in the receiver mutable boolean.
+	 * Get the value set in the receiver mutable object.
 	 * 
-	 * @return The value.
+	 * @return The value. May be <code>null</code>.
 	 */
-	public boolean get() {
+	public T get() {
 		return _value;
 	}
 	

@@ -37,6 +37,22 @@ public class LangUtils {
 	}
 	
 	/**
+	 * Cast the given object to some subtype.
+	 * <p>
+	 * This methods aims to be called where regular downcasts would be used in order to track them in the code. It is a little safer than {@link #cast(Object)}
+	 * because the result type can statically be constrained by the argument type but should still be used as seldom as possible.
+	 * 
+	 * @param <T> Original type of the object.
+	 * @param <R> Resulting type of the object.
+	 * @param object Object to cast.
+	 * @return The casted object.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T, R extends T> R downcast(final T object) {
+		return (R) object;
+	}
+	
+	/**
 	 * Test for equality of the given objects.
 	 * <p>
 	 * This method supports <code>null</code> values.
@@ -48,7 +64,7 @@ public class LangUtils {
 	 * @see Comparable#compareTo(Object)
 	 */
 	public static <T extends Object> boolean equals(final T object1, final T object2) {
-		return (null == object1 && null == object2) || (null != object1 && null != object2 && object1.equals(object2));
+		return (object1 == object2) || (null != object1 && object1.equals(object2));
 	}
 	
 	/**

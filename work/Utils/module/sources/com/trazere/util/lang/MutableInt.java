@@ -20,17 +20,17 @@ import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
 
 /**
- * The {@link MutableInt} class represents mutable integer value.
+ * The {@link MutableInt} class represents mutable integer values.
  */
 public class MutableInt
 implements Describable {
-	/** Value. */
+	/** The value. */
 	protected int _value;
 	
 	/**
 	 * Instantiate a new mutable integer with the given value.
 	 * 
-	 * @param value Initial value.
+	 * @param value The initial value.
 	 */
 	public MutableInt(final int value) {
 		// Initialization.
@@ -38,20 +38,18 @@ implements Describable {
 	}
 	
 	/**
-	 * Set the receiver mutable to the given value.
+	 * Set the receiver mutable integer to the given value.
 	 * 
-	 * @param value Value to set.
+	 * @param value The value.
 	 */
 	public void set(final int value) {
 		_value = value;
 	}
 	
 	/**
-	 * Get the value set in the receiver mutable.
-	 * <p>
-	 * The reference must be set.
+	 * Get the value set in the receiver mutable integer.
 	 * 
-	 * @return The set value.
+	 * @return The value.
 	 */
 	public int get() {
 		return _value;

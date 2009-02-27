@@ -16,6 +16,7 @@
 package com.trazere.util.function;
 
 import com.trazere.util.collection.CollectionUtils;
+import com.trazere.util.lang.Factory;
 import com.trazere.util.type.Either;
 import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Tuple2;
@@ -71,7 +72,23 @@ public class Functions {
 	}
 	
 	/**
-	 * Build a function which evaluates to the given value for all values.
+	 * Build a zero argument function which always evaluates to the given value.
+	 * 
+	 * @param <R> Type of the result values.
+	 * @param <X> Type of the exceptions.
+	 * @param result Value value.
+	 * @return The built function.
+	 */
+	public static <R, X extends Exception> Function0<R, X> constant0(final R result) {
+		return new Function0<R, X>() {
+			public R evaluate() {
+				return result;
+			}
+		};
+	}
+	
+	/**
+	 * Build a one argument function which always evaluates to the given value.
 	 * 
 	 * @param <T> Type of the argument values.
 	 * @param <R> Type of the result values.
@@ -79,7 +96,7 @@ public class Functions {
 	 * @param result Value value.
 	 * @return The built function.
 	 */
-	public static <T, R, X extends Exception> Function1<T, R, X> constant(final R result) {
+	public static <T, R, X extends Exception> Function1<T, R, X> constant1(final R result) {
 		return new Function1<T, R, X>() {
 			public R evaluate(final T value) {
 				return result;
@@ -95,7 +112,7 @@ public class Functions {
 	 * @param predicate The predicate.
 	 * @return The built function.
 	 */
-	public static final <T, X extends Exception> Function1<T, Boolean, X> predicate(final Predicate1<T, ? extends X> predicate) {
+	public static final <T, X extends Exception> Function1<T, Boolean, X> predicate(final Predicate1<? super T, ? extends X> predicate) {
 		assert null != predicate;
 		
 		return new Function1<T, Boolean, X>() {
@@ -114,7 +131,7 @@ public class Functions {
 	 * @param predicate The predicate.
 	 * @return The built function.
 	 */
-	public static final <T, X extends Exception> Function1<T, Maybe<T>, X> maybePredicate(final Predicate1<T, ? extends X> predicate) {
+	public static final <T, X extends Exception> Function1<T, Maybe<T>, X> maybePredicate(final Predicate1<? super T, ? extends X> predicate) {
 		assert null != predicate;
 		
 		return new Function1<T, Maybe<T>, X>() {
@@ -130,6 +147,25 @@ public class Functions {
 	}
 	
 	/**
+	 * Build a function corresponding to the given factory.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @param factory The predicate.
+	 * @return The built function.
+	 */
+	public static final <T, X extends Exception> Function0<T, X> factory(final Factory<? extends T, ? extends X> factory) {
+		assert null != factory;
+		
+		return new Function0<T, X>() {
+			public T evaluate()
+			throws X {
+				return factory.build();
+			}
+		};
+	}
+	
+	/**
 	 * Build a function corresponding to the given map.
 	 * <p>
 	 * The built function evaluates to the values associated to the keys in the map and to <code>null</code> for the other keys.
@@ -140,7 +176,7 @@ public class Functions {
 	 * @param map The map.
 	 * @return The built function.
 	 */
-	public static <K, V, X extends Exception> Function1<K, V, X> map(final Map<K, V> map) {
+	public static <K, V, X extends Exception> Function1<K, V, X> map(final Map<? super K, ? extends V> map) {
 		assert null != map;
 		
 		// Build the function.
@@ -163,7 +199,7 @@ public class Functions {
 	 * @param defaultValue The default value.
 	 * @return The built function.
 	 */
-	public static <K, V, X extends Exception> Function1<K, V, X> map(final Map<K, V> map, final V defaultValue) {
+	public static <K, V, X extends Exception> Function1<K, V, X> map(final Map<? super K, ? extends V> map, final V defaultValue) {
 		assert null != map;
 		
 		// Build the function.
@@ -186,14 +222,14 @@ public class Functions {
 	 * @param map Map defining the function to build.
 	 * @return The built function.
 	 */
-	public static <T, R, X extends Exception> Function1<T, Maybe<R>, X> maybeMap(final Map<T, R> map) {
+	public static <T, R, X extends Exception> Function1<T, Maybe<R>, X> maybeMap(final Map<? super T, ? extends R> map) {
 		assert null != map;
 		
 		// Build the function.
 		return new Function1<T, Maybe<R>, X>() {
 			public Maybe<R> evaluate(final T key) {
 				if (map.containsKey(key)) {
-					return Maybe.some(map.get(key));
+					return Maybe.<R>some(map.get(key));
 				} else {
 					return Maybe.none();
 				}

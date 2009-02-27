@@ -20,17 +20,17 @@ import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
 
 /**
- * The {@link MutableChar} class represents mutable char value.
+ * The {@link MutableChar} class represents mutable char values.
  */
 public class MutableChar
 implements Describable {
-	/** Value. */
+	/** The value. */
 	protected char _value;
 	
 	/**
 	 * Instantiate a new mutable char with the given value.
 	 * 
-	 * @param value Initial value.
+	 * @param value The initial value.
 	 */
 	public MutableChar(final char value) {
 		// Initialization.
@@ -38,20 +38,18 @@ implements Describable {
 	}
 	
 	/**
-	 * Set the receiver mutable to the given value.
+	 * Set the receiver mutable char to the given value.
 	 * 
-	 * @param value Value to set.
+	 * @param value The value.
 	 */
 	public void set(final char value) {
 		_value = value;
 	}
 	
 	/**
-	 * Get the value set in the receiver mutable.
-	 * <p>
-	 * The reference must be set.
+	 * Get the value set in the receiver mutable char.
 	 * 
-	 * @return The set value.
+	 * @return The value.
 	 */
 	public char get() {
 		return _value;

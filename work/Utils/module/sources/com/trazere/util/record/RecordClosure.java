@@ -16,6 +16,7 @@
 package com.trazere.util.record;
 
 import com.trazere.util.lang.Closure;
+import com.trazere.util.lang.ResetableClosure;
 import com.trazere.util.text.Description;
 import com.trazere.util.value.RecordReader;
 import com.trazere.util.value.ValueException;
@@ -28,7 +29,7 @@ import com.trazere.util.value.ValueException;
  * @see Record
  */
 public abstract class RecordClosure<K, V>
-extends Closure<Record<K, V>, RecordException> {
+extends ResetableClosure<Record<K, V>, RecordException> {
 	private static final RecordClosure<?, ?> _EMPTY = build(SimpleRecord.<String, Object>build());
 	
 	/**

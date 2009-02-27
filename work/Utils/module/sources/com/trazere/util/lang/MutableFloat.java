@@ -20,17 +20,17 @@ import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
 
 /**
- * The {@link MutableFloat} class represents mutable float value.
+ * The {@link MutableFloat} class represents mutable float values.
  */
 public class MutableFloat
 implements Describable {
-	/** Value. */
+	/** The value. */
 	protected float _value;
 	
 	/**
 	 * Instantiate a new mutable float with the given value.
 	 * 
-	 * @param value Initial value.
+	 * @param value The initial value.
 	 */
 	public MutableFloat(final float value) {
 		// Initialization.
@@ -38,20 +38,18 @@ implements Describable {
 	}
 	
 	/**
-	 * Set the receiver mutable to the given value.
+	 * Set the receiver mutable float to the given value.
 	 * 
-	 * @param value Value to set.
+	 * @param value The value.
 	 */
 	public void set(final float value) {
 		_value = value;
 	}
 	
 	/**
-	 * Get the value set in the receiver mutable.
-	 * <p>
-	 * The reference must be set.
+	 * Get the value set in the receiver mutable float.
 	 * 
-	 * @return The set value.
+	 * @return The value.
 	 */
 	public float get() {
 		return _value;
