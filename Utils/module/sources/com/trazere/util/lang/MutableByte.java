@@ -20,17 +20,17 @@ import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
 
 /**
- * The {@link MutableByte} class represents mutable byte value.
+ * The {@link MutableByte} class represents mutable byte values.
  */
 public class MutableByte
 implements Describable {
-	/** Value. */
+	/** The value. */
 	protected byte _value;
 	
 	/**
 	 * Instantiate a new mutable byte with the given value.
 	 * 
-	 * @param value Initial value.
+	 * @param value The initial value.
 	 */
 	public MutableByte(final byte value) {
 		// Initialization.
@@ -38,20 +38,18 @@ implements Describable {
 	}
 	
 	/**
-	 * Set the receiver mutable to the given value.
+	 * Set the receiver mutable byte to the given value.
 	 * 
-	 * @param value Value to set.
+	 * @param value The value.
 	 */
 	public void set(final byte value) {
 		_value = value;
 	}
 	
 	/**
-	 * Get the value set in the receiver mutable.
-	 * <p>
-	 * The reference must be set.
+	 * Get the value set in the receiver mutable byte.
 	 * 
-	 * @return The set value.
+	 * @return The value.
 	 */
 	public byte get() {
 		return _value;

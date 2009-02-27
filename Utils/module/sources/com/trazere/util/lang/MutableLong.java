@@ -20,17 +20,17 @@ import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
 
 /**
- * The {@link MutableLong} class represents mutable long value.
+ * The {@link MutableLong} class represents mutable long values.
  */
 public class MutableLong
 implements Describable {
-	/** Value. */
+	/** The value. */
 	protected long _value;
 	
 	/**
 	 * Instantiate a new mutable long with the given value.
 	 * 
-	 * @param value Initial value.
+	 * @param value The initial value.
 	 */
 	public MutableLong(final long value) {
 		// Initialization.
@@ -38,20 +38,18 @@ implements Describable {
 	}
 	
 	/**
-	 * Set the receiver mutable to the given value.
+	 * Set the receiver mutable long to the given value.
 	 * 
-	 * @param value Value to set.
+	 * @param value The value.
 	 */
 	public void set(final long value) {
 		_value = value;
 	}
 	
 	/**
-	 * Get the value set in the receiver mutable.
-	 * <p>
-	 * The reference must be set.
+	 * Get the value set in the receiver mutable long.
 	 * 
-	 * @return The set value.
+	 * @return The value.
 	 */
 	public long get() {
 		return _value;

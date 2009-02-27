@@ -20,17 +20,17 @@ import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
 
 /**
- * The {@link MutableDouble} class represents mutable double value.
+ * The {@link MutableDouble} class represents mutable double values.
  */
 public class MutableDouble
 implements Describable {
-	/** Value. */
+	/** The value. */
 	protected double _value;
 	
 	/**
 	 * Instantiate a new mutable double with the given value.
 	 * 
-	 * @param value Initial value.
+	 * @param value The initial value.
 	 */
 	public MutableDouble(final double value) {
 		// Initialization.
@@ -38,20 +38,18 @@ implements Describable {
 	}
 	
 	/**
-	 * Set the receiver mutable to the given value.
+	 * Set the receiver mutable double to the given value.
 	 * 
-	 * @param value Value to set.
+	 * @param value The value.
 	 */
 	public void set(final double value) {
 		_value = value;
 	}
 	
 	/**
-	 * Get the value set in the receiver mutable.
-	 * <p>
-	 * The reference must be set.
+	 * Get the value set in the receiver mutable double.
 	 * 
-	 * @return The set value.
+	 * @return The value.
 	 */
 	public double get() {
 		return _value;
