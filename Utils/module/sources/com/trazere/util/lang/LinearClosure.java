@@ -24,25 +24,13 @@ import com.trazere.util.type.Maybe;
 /**
  * The {@link LinearClosure} class represents closures which are evaluated only once.
  * <p>
- * Once computed, values of the linear closure are memoized and the computation context is released.
+ * Once computed, values of the linear closures are memoized and the computation context is released.
  * 
  * @param <T> Type of the value.
  * @param <X> Type of the exceptions.
  */
 public class LinearClosure<T, X extends Exception>
 implements Closure<T, X> {
-	/**
-	 * Build a closure evaluating to the given value.
-	 * 
-	 * @param <T> Type of the value.
-	 * @param <X> Type of the exceptions.
-	 * @param value The value. May be <code>null</code>.
-	 * @return The closure.
-	 */
-	public static <T, X extends Exception> LinearClosure<T, X> build(final T value) {
-		return new LinearClosure<T, X>(Functions.<T, X>constant0(value));
-	}
-	
 	/**
 	 * Build a closure evaluating to the result of the given factory.
 	 * 
@@ -52,7 +40,7 @@ implements Closure<T, X> {
 	 * @return The closure.
 	 */
 	public static <T, X extends Exception> LinearClosure<T, X> build(final Factory<? extends T, ? extends X> factory) {
-		return new LinearClosure<T, X>(Functions.factory(factory));
+		return new LinearClosure<T, X>(Functions.lift0(factory));
 	}
 	
 	/**

@@ -31,11 +31,59 @@ import com.trazere.util.text.Description;
  * When the parameter read by this reader is mandatory, it has a single requirement corresponding to the parameter. When the parameter is optional, the reader
  * has no requirements and produce a null value when the parameter is missing.
  * 
- * @param <T> Type of the values.
+ * @param <T> Type of the value.
  */
 public class ParameterValueReader<T>
 extends AbstractValueReader<T> {
-	/** Name of the parameter to read. */
+	/**
+	 * Build a new parameter reader with the given parameter name and type.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param name The name of the parameter to read.
+	 * @param type The type of the value.
+	 * @return The built reader.
+	 */
+	public static <T> ParameterValueReader<T> build(final String name, final Class<T> type) {
+		return new ParameterValueReader<T>(name, type);
+	}
+	
+	/**
+	 * Build a new parameter reader with the given parameter name and type.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param signature The signature of the parameter.
+	 * @return The built reader.
+	 */
+	public static <T> ParameterValueReader<T> build(final FieldSignature<String, T> signature) {
+		return new ParameterValueReader<T>(signature);
+	}
+	
+	/**
+	 * Build a new parameter reader with the given parameter name and type.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param name The name of the parameter to read.
+	 * @param type The type of the value.
+	 * @param optional Flag indicating wether the parameter is optional or mandatory.
+	 * @return The built reader.
+	 */
+	public static <T> ParameterValueReader<T> build(final String name, final Class<T> type, final boolean optional) {
+		return new ParameterValueReader<T>(name, type, optional);
+	}
+	
+	/**
+	 * Build a new parameter reader with the given parameter name and type.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param signature The signature of the parameter.
+	 * @param optional Flag indicating wether the parameter is optional or mandatory.
+	 * @return The built reader.
+	 */
+	public static <T> ParameterValueReader<T> build(final FieldSignature<String, T> signature, final boolean optional) {
+		return new ParameterValueReader<T>(signature, optional);
+	}
+	
+	/** The name of the parameter to read. */
 	protected final String _name;
 	
 	/** Flag indicating wether the parameter is optional or mandatory. */
@@ -44,8 +92,8 @@ extends AbstractValueReader<T> {
 	/**
 	 * Instantiate a new mandatory parameter reader with the given parameter name and type.
 	 * 
-	 * @param name Name of the parameter to read.
-	 * @param type Type of the value.
+	 * @param name The name of the parameter to read.
+	 * @param type The type of the value.
 	 */
 	public ParameterValueReader(final String name, final Class<T> type) {
 		this(name, type, false);
@@ -54,7 +102,7 @@ extends AbstractValueReader<T> {
 	/**
 	 * Instanciate a new mandatory parameter reader with the given field signature.
 	 * 
-	 * @param signature Signature of the parameter.
+	 * @param signature The signature of the parameter.
 	 */
 	public ParameterValueReader(final FieldSignature<String, T> signature) {
 		this(signature.getKey(), signature.getType(), false);
@@ -63,8 +111,8 @@ extends AbstractValueReader<T> {
 	/**
 	 * Instantiate a new reader with the given parameter name and type and flag.
 	 * 
-	 * @param name Name of the parameter to read.
-	 * @param type Type of the value.
+	 * @param name The name of the parameter to read.
+	 * @param type The type of the value.
 	 * @param optional Flag indicating wether the parameter is optional or mandatory.
 	 */
 	public ParameterValueReader(final String name, final Class<T> type, final boolean optional) {
@@ -79,9 +127,9 @@ extends AbstractValueReader<T> {
 	}
 	
 	/**
-	 * Instanciate a new mandatory parameter reader with the given field signature.
+	 * Instanciate a new parameter reader with the given field signature.
 	 * 
-	 * @param signature Signature of the parameter.
+	 * @param signature The signature of the parameter.
 	 * @param optional Flag indicating wether the parameter is optional or mandatory.
 	 */
 	public ParameterValueReader(final FieldSignature<String, T> signature, final boolean optional) {

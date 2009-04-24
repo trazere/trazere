@@ -80,6 +80,24 @@ implements Function1<K, V, X> {
 	}
 	
 	/**
+     * Test wether the receiver map is empty.
+     * 
+     * @return <code>true</code> if the map is empty, <code>false</code> otherwise.
+     */
+    public boolean isEmpty() {
+    	return _entries.isEmpty();
+    }
+
+	/**
+     * Get the number of entries in the receiver map.
+     * 
+     * @return The number of entries.
+     */
+    public int size() {
+    	return _entries.size();
+    }
+
+	/**
 	 * Associate the given value to the given key in the receiver map.
 	 * 
 	 * @param key Key which the value should be associated to. May be <code>null</code>.
@@ -91,23 +109,22 @@ implements Function1<K, V, X> {
 	}
 	
 	/**
-	 * Test wether the receiver map is empty.
-	 * 
-	 * @return <code>true</code> if the map is empty, <code>false</code> otherwise.
-	 */
-	public boolean isEmpty() {
-		return _entries.isEmpty();
-	}
-	
+     * Remove the association of the given key.
+     * 
+     * @param key Key whose association should be removed. May be <code>null</code>.
+     * @return The value associated to the key or <code>null</code>.
+     */
+    public V remove(final K key) {
+    	return _entries.remove(key);
+    }
+
 	/**
-	 * Get the number of entries in the receiver map.
-	 * 
-	 * @return The number of entries.
-	 */
-	public int size() {
-		return _entries.size();
-	}
-	
+     * Clear the receiver map.
+     */
+    public void clear() {
+    	_entries.clear();
+    }
+
 	/**
 	 * Get the value associated to the given key in the receiver map.
 	 * <p>
@@ -142,47 +159,49 @@ implements Function1<K, V, X> {
 	throws X;
 	
 	/**
-	 * Get the keys of the receiver map.
+     * Test wether a value is associated to the given key in the receiver map.
+     * 
+     * @param key Key which the value is associated to. May be <code>null</code>.
+     * @return <code>true</code> when some value is associated to the given key, <code>false</code> otherwise.
+     */
+    public boolean containsKey(final K key) {
+    	return _entries.containsKey(key);
+    }
+
+	/**
+     * Get a view of the keys of the receiver map.
+     * 
+     * @return An unmodifiable set of the keys.
+     */
+    public Set<K> keySet() {
+    	return Collections.unmodifiableSet(_entries.keySet());
+    }
+
+	/**
+     * Get a view of the values of the receiver map.
+     * 
+     * @return An unmodifiable collection of the values.
+     */
+    public Collection<V> values() {
+    	return Collections.unmodifiableCollection(_entries.values());
+    }
+
+	/**
+	 * Get a view of the receiver map.
 	 * 
-	 * @return An unmodifiable set of the keys.
+	 * @return An unmodifiable map.
 	 */
-	public Set<K> keySet() {
-		return Collections.unmodifiableSet(_entries.keySet());
+	public Map<K, V> asMap() {
+		return Collections.unmodifiableMap(_entries);
 	}
 	
 	/**
-	 * Get the values of the receiver map.
-	 * 
-	 * @return An unmodifiable collection of the values.
-	 */
-	public Collection<V> values() {
-		return Collections.unmodifiableCollection(_entries.values());
-	}
-	
-	/**
-	 * Get the entries of the receiver map.
+	 * Get a view of the entries of the receiver map.
 	 * 
 	 * @return An unmodifiable set of the entries.
 	 */
 	public Set<Entry<K, V>> entrySet() {
 		return Collections.unmodifiableSet(_entries.entrySet());
-	}
-	
-	/**
-	 * Remove the association of the given key.
-	 * 
-	 * @param key Key whose association should be removed. May be <code>null</code>.
-	 * @return The value associated to the key or <code>null</code>.
-	 */
-	public V remove(final K key) {
-		return _entries.remove(key);
-	}
-	
-	/**
-	 * Clear the receiver map.
-	 */
-	public void clear() {
-		_entries.clear();
 	}
 	
 	public V evaluate(final K key)

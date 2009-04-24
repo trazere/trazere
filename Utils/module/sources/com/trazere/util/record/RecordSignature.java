@@ -80,4 +80,16 @@ public interface RecordSignature<K, V> {
 	 */
 	public boolean accepts(final Record<? super K, ? extends V> record)
 	throws RecordException;
+	
+	/**
+	 * Check wether the given signature is accepted by the receiver record signature.
+	 * <p>
+	 * Signatures are accepted when then contain a field signature compatible with every field signature of the receiver record signature.
+	 * 
+	 * @param signature Signature to test.
+	 * @return <code>true</code> when the signature is accepted, <code>false</code> otherwise.
+	 * @throws RecordException When the signature cannot be tested.
+	 */
+	public boolean accepts(final RecordSignature<? super K, ? extends V> signature)
+	throws RecordException;
 }

@@ -137,9 +137,22 @@ implements RecordSignature<K, V>, Describable {
 	throws RecordException {
 		assert null != record;
 		
-		for (final Map.Entry<K, FieldSignature<K, ? extends V>> signatureEntry : _fields.entrySet()) {
-			final K key = signatureEntry.getKey();
-			if (!record.contains(key) || !signatureEntry.getValue().getType().isInstance(record.get(signatureEntry.getKey()))) {
+		for (final Map.Entry<K, FieldSignature<K, ? extends V>> requirement : _fields.entrySet()) {
+			final K key = requirement.getKey();
+			if (!record.contains(key) || !requirement.getValue().getType().isInstance(record.get(key))) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public boolean accepts(final RecordSignature<? super K, ? extends V> signature)
+	throws RecordException {
+		assert null != signature;
+		
+		for (final Map.Entry<K, FieldSignature<K, ? extends V>> requirement : _fields.entrySet()) {
+			final K key = requirement.getKey();
+			if (!signature.contains(key) || !requirement.getValue().getType().isAssignableFrom(signature.get(key).getType())) {
 				return false;
 			}
 		}
