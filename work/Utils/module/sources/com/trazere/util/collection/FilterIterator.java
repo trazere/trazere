@@ -69,36 +69,37 @@ implements Iterator<T> {
 	}
 	
 	public boolean hasNext() {
-		lookAhead();
-		
-		return !_next.isSet();
+		return lookAhead();
 	}
 	
 	public T next() {
-		lookAhead();
-		
-		if (_next.isSet()) {
+		if (lookAhead()) {
 			final T next = _next.get();
 			_next.reset();
 			_lookAhead.set(false);
-			
 			return next;
 		} else {
 			throw new NoSuchElementException();
 		}
 	}
 	
-	private void lookAhead() {
-		while (!_lookAhead.get()) {
-			if (_feed.hasNext()) {
-				final T next = _feed.next();
-				if (filter(next)) {
-					_next.update(next);
+	private boolean lookAhead() {
+		if (_lookAhead.get()) {
+			return _next.isSet();
+		} else {
+			while (true) {
+				if (_feed.hasNext()) {
+					final T next = _feed.next();
+					if (filter(next)) {
+						_next.update(next);
+						_lookAhead.set(true);
+						return true;
+					}
+				} else {
+					_next.reset();
 					_lookAhead.set(true);
+					return false;
 				}
-			} else {
-				_next.reset();
-				_lookAhead.set(true);
 			}
 		}
 	}
