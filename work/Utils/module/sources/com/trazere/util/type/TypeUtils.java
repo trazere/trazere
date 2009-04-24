@@ -12,7 +12,7 @@ public class TypeUtils {
 	 * @param defaultValue The default value. May be <code>null</code>.
 	 * @return The value. May be <code>null</code>.
 	 */
-	public static <T> T get(final Maybe<T> value, final T defaultValue) {
+	public static <T> T get(final Maybe<? extends T> value, final T defaultValue) {
 		assert null != value;
 		
 		// Get.

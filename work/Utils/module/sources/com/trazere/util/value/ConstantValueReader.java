@@ -28,17 +28,29 @@ import com.trazere.util.text.Description;
  * <p>
  * This reader does not use the parameters it is given. It has therefore no requirements over them.
  * 
- * @param <T> Type of the values.
+ * @param <T> Type of the value.
  */
 public class ConstantValueReader<T>
 extends AbstractValueReader<T> {
-	/** Produced value. May be <code>null</code>. */
+	/**
+	 * Build a new reader producing the given value.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param value The produced value. May be <code>null</code>.
+	 * @param type Type of the produced value.
+	 * @return The built reader.
+	 */
+	public static <T> ConstantValueReader<T> build(final T value, final Class<T> type) {
+		return new ConstantValueReader<T>(value, type);
+	}
+	
+	/** The produced value. May be <code>null</code>. */
 	protected final T _value;
 	
 	/**
 	 * Instanciate a new reader producing the given value.
 	 * 
-	 * @param value Produced value. May be <code>null</code>.
+	 * @param value The produced value. May be <code>null</code>.
 	 * @param type Type of the produced value.
 	 */
 	public ConstantValueReader(final T value, final Class<T> type) {

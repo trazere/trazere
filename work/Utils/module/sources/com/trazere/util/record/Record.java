@@ -39,7 +39,7 @@ public interface Record<K, V> {
 	public boolean isEmpty();
 	
 	/**
-	 * Test wether some field if identified by the given key in the receiver record or not.
+	 * Test wether some field is identified by the given key in the receiver record or not.
 	 * 
 	 * @param key Key of the field to test.
 	 * @return <code>true</code> when some field is identified by the given key, <code>false</code> otherwise.
