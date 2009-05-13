@@ -70,9 +70,9 @@ public interface RecordSignature<K, V> {
 	throws RecordException;
 	
 	/**
-	 * Check wether the given record is accepted by the receiver record signature.
+	 * Check wether the receiver record signature accepts the given record.
 	 * <p>
-	 * Records are accepted when then contain a field compatible with every field signature of the receiver record signature.
+	 * Records are accepted when they contain compatible fields for every field signature of the receiver record signature.
 	 * 
 	 * @param record Record to test.
 	 * @return <code>true</code> when the record is accepted, <code>false</code> otherwise.
@@ -82,9 +82,9 @@ public interface RecordSignature<K, V> {
 	throws RecordException;
 	
 	/**
-	 * Check wether the given signature is accepted by the receiver record signature.
+	 * Check wether the receiver record signature accepts the given record signature.
 	 * <p>
-	 * Signatures are accepted when then contain a field signature compatible with every field signature of the receiver record signature.
+	 * Signatures are accepted when they contain compatible field signatures for every field signature of the receiver record signature.
 	 * 
 	 * @param signature Signature to test.
 	 * @return <code>true</code> when the signature is accepted, <code>false</code> otherwise.

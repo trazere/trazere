@@ -147,16 +147,10 @@ extends AbstractValueReader<T> {
 	
 	public <B extends RecordSignatureBuilder<String, Object, ?>> B unifyRequirements(final B builder)
 	throws ValueException, IncompatibleFieldException {
-		try {
-			if (!_optional) {
-				builder.unify(new FieldSignature<String, T>(_name, _type));
-			}
-			return builder;
-		} catch (final IncompatibleFieldException exception) {
-			throw exception;
-		} catch (final RecordException exception) {
-			throw new ValueException(exception);
+		if (!_optional) {
+			unify(_name, _type, builder);
 		}
+		return builder;
 	}
 	
 	public T read(final Record<String, Object> parameters)

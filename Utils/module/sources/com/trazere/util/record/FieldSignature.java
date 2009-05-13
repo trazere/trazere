@@ -82,6 +82,28 @@ implements Describable {
 		return _type;
 	}
 	
+	/**
+	 * Check wether the receiver field signature accepts the given value.
+	 * 
+	 * @param value The value. May be <code>null</code>.
+	 * @return <code>true</code> when the value is accepted, <code>false</code> otherwise.
+	 */
+	public boolean accepts(final Object value) {
+		return null == value || _type.isAssignableFrom(value.getClass());
+	}
+	
+	/**
+	 * Check wether the receiver field signature accepts a value of the given type.
+	 * 
+	 * @param type The type.
+	 * @return <code>true</code> when the type is accepted, <code>false</code> otherwise.
+	 */
+	public boolean accepts(final Class<?> type) {
+		assert null != type;
+		
+		return _type.isAssignableFrom(type);
+	}
+	
 	@Override
 	public int hashCode() {
 		final HashCode hashCode = new HashCode(this);
