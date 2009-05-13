@@ -17,7 +17,9 @@ package com.trazere.util.value;
 
 import com.trazere.util.record.IncompatibleFieldException;
 import com.trazere.util.record.Record;
+import com.trazere.util.record.RecordException;
 import com.trazere.util.record.RecordSignature;
+import com.trazere.util.record.RecordSignatureBuilder;
 import com.trazere.util.record.SimpleRecordSignatureBuilder;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.Description;
@@ -55,6 +57,20 @@ implements ValueReader<T>, Describable {
 			return unifyRequirements(new SimpleRecordSignatureBuilder<String, Object>()).build();
 		} catch (final IncompatibleFieldException exception) {
 			throw new ValueException("Internal error", exception);
+		}
+	}
+	
+	public static <B extends RecordSignatureBuilder<String, Object, ?>> B unify(final String key, final Class<? extends Object> type, final B builder)
+	throws ValueException, IncompatibleFieldException {
+		assert null != builder;
+		
+		try {
+			builder.unify(key, type);
+			return builder;
+		} catch (final IncompatibleFieldException exception) {
+			throw exception;
+		} catch (final RecordException exception) {
+			throw new ValueException(exception);
 		}
 	}
 	

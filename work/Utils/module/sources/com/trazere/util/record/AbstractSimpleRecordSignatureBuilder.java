@@ -70,6 +70,19 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 		_fields = new HashMap<K, FieldSignature<K, ? extends V>>(signature.asMap());
 	}
 	
+	public void add(final K key, final Class<? extends V> type)
+	throws RecordException {
+		assert null != key;
+		assert null != type;
+		
+		// Add the field signature.
+		if (!_fields.containsKey(key)) {
+			_fields.put(key, FieldSignature.build(key, type));
+		} else {
+			throw new DuplicateFieldException("Field \"" + key + "\" already signed in builder " + this);
+		}
+	}
+	
 	public void add(final FieldSignature<K, ? extends V> signature)
 	throws DuplicateFieldException {
 		assert null != signature;
@@ -79,7 +92,7 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 		if (!_fields.containsKey(key)) {
 			_fields.put(key, signature);
 		} else {
-			throw new DuplicateFieldException("Field signature \"" + key + "\" already exists in builder " + this);
+			throw new DuplicateFieldException("Field \"" + key + "\" already signed in builder " + this);
 		}
 	}
 	
@@ -87,13 +100,13 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 	throws DuplicateFieldException {
 		assert null != fields;
 		
-		// Add the parameter signatures.
+		// Add the field signatures.
 		for (final FieldSignature<K, ? extends V> field : fields) {
 			final K key = field.getKey();
 			if (!_fields.containsKey(key)) {
 				_fields.put(key, field);
 			} else {
-				throw new DuplicateFieldException("Field signature \"" + key + "\" already exists in builder " + this);
+				throw new DuplicateFieldException("Field \"" + key + "\" already signed in builder " + this);
 			}
 		}
 	}
@@ -102,15 +115,35 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 	throws RecordException {
 		assert null != signature;
 		
-		// Add the parameter signatures.
+		// Add the field signatures.
 		addAll(signature.asMap().values());
+	}
+	
+	public void unify(final K key, final Class<? extends V> type)
+	throws RecordException {
+		assert null != key;
+		assert null != type;
+		
+		// Unify the field signature.
+		if (_fields.containsKey(key)) {
+			final Class<? extends V> currentType = _fields.get(key).getType();
+			if (!type.isAssignableFrom(currentType)) {
+				if (currentType.isAssignableFrom(type)) {
+					_fields.put(key, FieldSignature.build(key, type));
+				} else {
+					throw new IncompatibleFieldException("Cannot unify field + \"" + key + "\" of type " + type + " with type " + currentType + " in builder " + this);
+				}
+			}
+		} else {
+			_fields.put(key, FieldSignature.build(key, type));
+		}
 	}
 	
 	public void unify(final FieldSignature<K, ? extends V> field)
 	throws IncompatibleFieldException {
 		assert null != field;
 		
-		// Unify the parameter signature.
+		// Unify the field signature.
 		final K key = field.getKey();
 		if (_fields.containsKey(key)) {
 			final Class<? extends V> type = field.getType();
@@ -119,7 +152,7 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 				if (currentType.isAssignableFrom(type)) {
 					_fields.put(key, field);
 				} else {
-					throw new IncompatibleFieldException("Cannot unify field signature " + field + " with type " + currentType + " in builder " + this);
+					throw new IncompatibleFieldException("Cannot unify field + \"" + key + "\" of type " + type + " with type " + currentType + " in builder " + this);
 				}
 			}
 		} else {
@@ -131,7 +164,7 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 	throws IncompatibleFieldException {
 		assert null != fields;
 		
-		// Unify the parameter signatures.
+		// Unify the field signatures.
 		for (final FieldSignature<K, ? extends V> field : fields) {
 			final K key = field.getKey();
 			if (_fields.containsKey(key)) {
@@ -141,7 +174,7 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 					if (currentType.isAssignableFrom(type)) {
 						_fields.put(key, field);
 					} else {
-						throw new IncompatibleFieldException("Cannot unify field signature " + field + " with type " + currentType + " in builder " + this);
+						throw new IncompatibleFieldException("Cannot unify field + \"" + key + "\" of type " + type + " with type " + currentType + " in builder " + this);
 					}
 				}
 			} else {
@@ -154,7 +187,7 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 	throws RecordException {
 		assert null != signature;
 		
-		// Unify the parameter signatures.
+		// Unify the field signatures.
 		unifyAll(signature.asMap().values());
 	}
 	
@@ -177,7 +210,7 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 	throws MissingFieldException {
 		assert null != key;
 		
-		// Remove the parameter signature.
+		// Remove the field signature.
 		if (_fields.containsKey(key)) {
 			_fields.remove(key);
 		} else {

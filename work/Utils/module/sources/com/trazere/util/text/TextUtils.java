@@ -243,6 +243,18 @@ public class TextUtils {
 	}
 	
 	/**
+	 * Build a regular expression corresponding to the given string.
+	 * 
+	 * @param s The string.
+	 * @return The regular expression.
+	 */
+	public static String regexp(final String s) {
+		assert null != s;
+		
+		return s.replaceAll("[^\\w]", "\\\\$0"); // Escape all special chars
+	}
+	
+	/**
 	 * Escape the XML entities of the given string and append it to the given builder.
 	 * 
 	 * @param s The string.

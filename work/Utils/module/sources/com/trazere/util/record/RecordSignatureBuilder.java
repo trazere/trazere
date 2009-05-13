@@ -28,6 +28,19 @@ import java.util.Set;
  */
 public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	/**
+	 * Add the field signature corresponding to the given key and type to the receiver record signature builder.
+	 * <p>
+	 * The corresponding field must not be signed in the receiver record signature builder.
+	 * 
+	 * @param key The key of the field.
+	 * @param type The type of the values.
+	 * @throws DuplicateFieldException When the field is already signed.
+	 * @throws RecordException When the field signature cannot by added.
+	 */
+	public void add(final K key, final Class<? extends V> type)
+	throws RecordException;
+	
+	/**
 	 * Add the given field signature to the receiver record signature builder.
 	 * <p>
 	 * The corresponding field must not be signed in the receiver record signature builder.
@@ -61,6 +74,19 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * @throws RecordException When the field signatures cannot by added.
 	 */
 	public void addAll(final RecordSignature<K, ? extends V> signature)
+	throws RecordException;
+	
+	/**
+	 * Unify the signature of the field corresponding to the given key and type within the receiver record signature builder.
+	 * <p>
+	 * The corresponding field must either not be signed or be signed with a compatible type in the receiver record signature builder.
+	 * 
+	 * @param key The key of the field.
+	 * @param type The type of the values.
+	 * @throws IncompatibleFieldException When the given and current signature of the field are not compatible.
+	 * @throws RecordException When the field signature cannot be unified.
+	 */
+	public void unify(final K key, final Class<? extends V> type)
 	throws RecordException;
 	
 	/**

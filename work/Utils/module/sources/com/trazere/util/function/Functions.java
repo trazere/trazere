@@ -540,6 +540,62 @@ public class Functions {
 		}
 	};
 	
+	private static final Function1<?, ?, ?> _EVALUATE0 = new Function1<Function0<Object, RuntimeException>, Object, RuntimeException>() {
+		public Object evaluate(final Function0<Object, RuntimeException> function) {
+			return function.evaluate();
+		}
+	};
+	
+	/**
+	 * Build a function which takes a zero arguments function as argument and evalutes to its result.
+	 * 
+	 * @param <R> Type of the result values.
+	 * @param <X> Type of the exceptions.
+	 * @return The built function.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <R, X extends Exception> Function1<Function0<? extends R, ? extends X>, R, X> evaluate0() {
+		return (Function1<Function0<? extends R, ? extends X>, R, X>) _EVALUATE0;
+	}
+	
+	/**
+	 * Build a function which takes a one argument function as argument and evalutes to its result for the given value.
+	 * 
+	 * @param <T> Type of the argument values.
+	 * @param <R> Type of the result values.
+	 * @param <X> Type of the exceptions.
+	 * @param value The argument value. May be <code>null</code>.
+	 * @return The built function.
+	 */
+	public static <T, R, X extends Exception> Function1<Function1<? super T, ? extends R, ? extends X>, R, X> evaluate1(final T value) {
+		return new Function1<Function1<? super T, ? extends R, ? extends X>, R, X>() {
+			public R evaluate(final Function1<? super T, ? extends R, ? extends X> function)
+			throws X {
+				return function.evaluate(value);
+			}
+		};
+	}
+	
+	/**
+	 * Build a function which takes a two arguments function as argument and evalutes to its result for the given values.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <R> Type of the result values.
+	 * @param <X> Type of the exceptions.
+	 * @param value1 The first argument value. May be <code>null</code>.
+	 * @param value2 The second argument value. May be <code>null</code>.
+	 * @return The built function.
+	 */
+	public static <T1, T2, R, X extends Exception> Function1<Function2<? super T1, ? super T2, ? extends R, ? extends X>, R, X> evaluate2(final T1 value1, final T2 value2) {
+		return new Function1<Function2<? super T1, ? super T2, ? extends R, ? extends X>, R, X>() {
+			public R evaluate(final Function2<? super T1, ? super T2, ? extends R, ? extends X> function)
+			throws X {
+				return function.evaluate(value1, value2);
+			}
+		};
+	}
+	
 	private Functions() {
 		// Prevent instantiation.
 	}
