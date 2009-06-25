@@ -111,7 +111,7 @@ implements ReportEntry<String, TaskStatus> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final TaskReportEntry entry = (TaskReportEntry) object;
-			return _name.equals(entry._name) && _status == _status && LangUtils.equals(_comment, entry._comment);
+			return _name.equals(entry._name) && _status == entry._status && LangUtils.equals(_comment, entry._comment);
 		} else {
 			return false;
 		}
