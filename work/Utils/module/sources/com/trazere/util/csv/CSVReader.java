@@ -22,7 +22,6 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Iterator;
@@ -98,16 +97,13 @@ public class CSVReader {
 		_delimiter = delimiter;
 		_delimiterChar = delimiter.charAt(0);
 		_specialChars = _delimiterChar + "\"\n\r";
-		_options = Collections.unmodifiableSet(EnumSet.copyOf((Collection<CSVReaderOption>) options)); // FIXME: useless cast, eclipse bug workaround
-		
-		final List<String> headers = new ArrayList<String>();
-		_headers = Collections.unmodifiableList(headers);
+		_options = Collections.unmodifiableSet(EnumSet.copyOf(options));
 		
 		// Read the headers from the input.
-		final List<String> headers_ = readLine();
-		if (null != headers_) {
+		final List<String> headers = readLine();
+		if (null != headers) {
 			_nextEntryLine += 1;
-			headers.addAll(headers_);
+			_headers = Collections.unmodifiableList(new ArrayList<String>(headers));
 		} else {
 			throw new EOFException("Missing header line");
 		}
@@ -203,13 +199,15 @@ public class CSVReader {
 						final Iterator<String> values = line.iterator();
 						while (headers.hasNext() && values.hasNext()) {
 							final String header = headers.next();
-							final String value = values.next();
-							final String trimmedValue = _options.contains(CSVReaderOption.TRIM_FIELDS) ? value.trim() : value;
-							final String stripedValue = trimmedValue.length() > 0 || !_options.contains(CSVReaderOption.STRIP_EMPTY_FIELDS) ? trimmedValue : null;
-							try {
-								builder.add(header, stripedValue);
-							} catch (final DuplicateFieldException exception) {
-								throw new InternalException(exception);
+							if (header.length() > 0 && !builder.contains(header)) {
+								final String value = values.next();
+								final String trimmedValue = _options.contains(CSVReaderOption.TRIM_FIELDS) ? value.trim() : value;
+								final String stripedValue = trimmedValue.length() > 0 || !_options.contains(CSVReaderOption.STRIP_EMPTY_FIELDS) ? trimmedValue : null;
+								try {
+									builder.add(header, stripedValue);
+								} catch (final DuplicateFieldException exception) {
+									throw new InternalException(exception);
+								}
 							}
 						}
 						_nextEntry = builder.build();

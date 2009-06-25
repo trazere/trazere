@@ -15,6 +15,7 @@
  */
 package com.trazere.util.value;
 
+import com.trazere.util.record.FieldSignature;
 import java.util.Map;
 import java.util.Set;
 
@@ -34,6 +35,17 @@ public interface RecordReaderBuilder<K, V, R extends RecordReader<K, V>> {
 	 * @throws ValueException When some field is already identified by the given key.
 	 */
 	public void add(final K key, final ValueReader<? extends V> value)
+	throws ValueException;
+	
+	/**
+	 * Add a field identified by the given key with the given value reader.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param field Signature of the field to add.
+	 * @param value Reader of the field to add.
+	 * @throws ValueException When some field is already identified by the given key.
+	 */
+	public <T extends V> void add(final FieldSignature<K, T> field, final ValueReader<? extends T> value)
 	throws ValueException;
 	
 	/**

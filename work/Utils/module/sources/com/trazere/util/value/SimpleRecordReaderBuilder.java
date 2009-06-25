@@ -15,6 +15,7 @@
  */
 package com.trazere.util.value;
 
+import com.trazere.util.record.FieldSignature;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -77,6 +78,14 @@ implements RecordReaderBuilder<K, V, SimpleRecordReader<K, V>> {
 		} else {
 			throw new ValueException("Field \"" + key + "\" already exists in builder " + this);
 		}
+	}
+	
+	public <T extends V> void add(final FieldSignature<K, T> field, final ValueReader<? extends T> value)
+	throws ValueException {
+		assert null != field;
+		
+		// Add the field.
+		add(field.getKey(), value);
 	}
 	
 	public void addAll(final Map<? extends K, ? extends ValueReader<? extends V>> fields)

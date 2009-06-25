@@ -96,6 +96,14 @@ implements RecordBuilder<K, V, R>, Describable {
 		}
 	}
 	
+	public <T extends V> void add(final FieldSignature<K, T> field, final T value)
+	throws RecordException {
+		assert null != field;
+		
+		// Add the field.
+		add(field.getKey(), value);
+	}
+	
 	public void addAll(final Map<? extends K, ? extends V> fields)
 	throws DuplicateFieldException {
 		assert null != fields;
@@ -130,6 +138,13 @@ implements RecordBuilder<K, V, R>, Describable {
 		return _fields.containsKey(key);
 	}
 	
+	public boolean contains(final FieldSignature<K, ?> field) {
+		assert null != field;
+		
+		// Test.
+		return contains(field.getKey());
+	}
+	
 	public Set<K> getKeys() {
 		return Collections.unmodifiableSet(_fields.keySet());
 	}
@@ -144,6 +159,14 @@ implements RecordBuilder<K, V, R>, Describable {
 		} else {
 			throw new MissingFieldException("Field \"" + key + "\" does not exist in builder " + this);
 		}
+	}
+	
+	public void remove(final FieldSignature<K, ?> field)
+	throws RecordException {
+		assert null != field;
+		
+		// Remote the field.
+		remove(field.getKey());
 	}
 	
 	public void clear() {
