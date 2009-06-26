@@ -138,7 +138,7 @@ implements RecordBuilder<K, V, R>, Describable {
 		return _fields.containsKey(key);
 	}
 	
-	public boolean contains(final FieldSignature<K, ?> field) {
+	public boolean contains(final FieldSignature<K, ? extends V> field) {
 		assert null != field;
 		
 		// Test.
@@ -161,7 +161,7 @@ implements RecordBuilder<K, V, R>, Describable {
 		}
 	}
 	
-	public void remove(final FieldSignature<K, ?> field)
+	public void remove(final FieldSignature<K, ? extends V> field)
 	throws RecordException {
 		assert null != field;
 		

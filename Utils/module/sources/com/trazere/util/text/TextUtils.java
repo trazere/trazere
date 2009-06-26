@@ -16,11 +16,15 @@
 package com.trazere.util.text;
 
 import com.trazere.util.Counter;
+import com.trazere.util.function.Function1;
+import com.trazere.util.function.Functions;
+import com.trazere.util.function.Procedure2;
 import com.trazere.util.lang.MutableBoolean;
 import com.trazere.util.lang.MutableInt;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -117,38 +121,95 @@ public class TextUtils {
 	}
 	
 	/**
-	 * Join the given string token using the given delimiter.
+	 * Join the given string tokens using the given delimiter.
 	 * 
-	 * @param tokens The token to join.
+	 * @param tokens The tokens.
 	 * @param delimiter The delimiter.
 	 * @return The resulting string.
 	 */
-	public static String join(final Collection<?> tokens, final String delimiter) {
+	public static String join(final Collection<String> tokens, final String delimiter) {
 		return join(tokens, delimiter, new StringBuilder()).toString();
 	}
 	
 	/**
-	 * Join the given string token using the given delimiter.
+	 * Join the given string tokens using the given delimiter.
 	 * 
-	 * @param tokens The token to join.
+	 * @param tokens The tokens.
 	 * @param delimiter The delimiter.
 	 * @param builder The string build to fill.
 	 * @return The given string builder.
 	 */
-	public static StringBuilder join(final Collection<?> tokens, final String delimiter, final StringBuilder builder) {
+	public static StringBuilder join(final Collection<String> tokens, final String delimiter, final StringBuilder builder) {
 		assert null != tokens;
+		
+		return join(tokens.iterator(), delimiter, builder);
+	}
+	
+	/**
+	 * Join the given string tokens using the given delimiter.
+	 * 
+	 * @param tokens The tokens.
+	 * @param delimiter The delimiter.
+	 * @param builder The string build to fill.
+	 * @return The given string builder.
+	 */
+	public static StringBuilder join(final Iterator<String> tokens, final String delimiter, final StringBuilder builder) {
+		return join(tokens, Functions.<String, RuntimeException>identity(), delimiter, builder);
+	}
+	
+	/**
+	 * Join the given string tokens using the given delimiter and renderer.
+	 * 
+	 * @param <T> Type of the tokens.
+	 * @param <X> Type of the exceptions.
+	 * @param tokens The tokens.
+	 * @param renderer The token renderer.
+	 * @param delimiter The delimiter.
+	 * @param builder The string build to fill.
+	 * @return The given string builder.
+	 * @throws X
+	 */
+	public static <T, X extends Exception> StringBuilder join(final Iterator<T> tokens, final Function1<? super T, String, X> renderer, final String delimiter, final StringBuilder builder)
+	throws X {
+		assert null != renderer;
+		
+		return join(tokens, new Procedure2<StringBuilder, T, X>() {
+			public void execute(final StringBuilder builder_, final T token)
+			throws X {
+				builder_.append(renderer.evaluate(token));
+			}
+		}, delimiter, builder);
+	}
+	
+	/**
+	 * Join the given string tokens using the given delimiter and renderer.
+	 * 
+	 * @param <T> Type of the tokens.
+	 * @param <X> Type of the exceptions.
+	 * @param tokens The tokens.
+	 * @param renderer The token renderer.
+	 * @param delimiter The delimiter.
+	 * @param builder The string build to fill.
+	 * @return The given string builder.
+	 * @throws X
+	 */
+	public static <T, X extends Exception> StringBuilder join(final Iterator<T> tokens, final Procedure2<StringBuilder, ? super T, X> renderer, final String delimiter, final StringBuilder builder)
+	throws X {
+		assert null != tokens;
+		assert null != renderer;
 		assert null != delimiter;
 		assert null != builder;
 		
 		// Join the strings.
 		final MutableBoolean first = new MutableBoolean(true);
-		for (final Object token : tokens) {
+		while (tokens.hasNext()) {
+			final T token = tokens.next();
 			if (!first.get()) {
 				builder.append(delimiter);
 			} else {
 				first.set(false);
 			}
-			builder.append(token);
+			renderer.execute(builder, token);
 		}
 		
 		return builder;

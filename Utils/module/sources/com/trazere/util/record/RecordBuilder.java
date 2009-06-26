@@ -99,7 +99,7 @@ public interface RecordBuilder<K, V, R extends Record<K, V>> {
 	 * @param field The signature of the field.
 	 * @return <code>true</code> when some field is identified by the key of the given signature, <code>false</code> otherwise.
 	 */
-	public boolean contains(final FieldSignature<K, ?> field);
+	public boolean contains(final FieldSignature<K, ? extends V> field);
 	
 	/**
 	 * Get the keys identifying the fields of the receiver record builder.
@@ -129,7 +129,7 @@ public interface RecordBuilder<K, V, R extends Record<K, V>> {
 	 * @throws MissingFieldException When no fields are identified by the key of the given signature.
 	 * @throws RecordException When the field cannot be removed.
 	 */
-	public void remove(final FieldSignature<K, ?> field)
+	public void remove(final FieldSignature<K, ? extends V> field)
 	throws RecordException;
 	
 	/**
