@@ -105,7 +105,7 @@ implements ObservableReference<T> {
 	}
 	
 	@Override
-	public void update(final Maybe<T> value) {
+	public void update(final Maybe<? extends T> value) {
 		// Update.
 		final Maybe<T> oldValue = _value;
 		super.update(value);

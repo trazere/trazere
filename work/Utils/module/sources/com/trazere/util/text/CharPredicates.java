@@ -21,12 +21,6 @@ package com.trazere.util.text;
  * @see CharPredicate
  */
 public class CharPredicates {
-	private static final CharPredicate<?> _ALL = new CharPredicate<RuntimeException>() {
-		public boolean evaluate(final char c) {
-			return true;
-		}
-	};
-	
 	/**
 	 * Build a predicate which evaluates to <code>true</code> for all characters.
 	 * 
@@ -38,9 +32,9 @@ public class CharPredicates {
 		return (CharPredicate<X>) _ALL;
 	}
 	
-	private static final CharPredicate<?> _NONE = new CharPredicate<RuntimeException>() {
+	private static final CharPredicate<?> _ALL = new CharPredicate<RuntimeException>() {
 		public boolean evaluate(final char c) {
-			return false;
+			return true;
 		}
 	};
 	
@@ -55,9 +49,27 @@ public class CharPredicates {
 		return (CharPredicate<X>) _NONE;
 	}
 	
-	private static final CharPredicate<?> _DIGIT = new CharPredicate<RuntimeException>() {
+	private static final CharPredicate<?> _NONE = new CharPredicate<RuntimeException>() {
 		public boolean evaluate(final char c) {
-			return Character.isDigit(c);
+			return false;
+		}
+	};
+	
+	/**
+	 * Build a predicate which evaluates to <code>true</code> for whitespace characters.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @return The built predicate.
+	 * @see Character#isWhitespace(char)
+	 */
+	@SuppressWarnings("unchecked")
+	public static <X extends Exception> CharPredicate<X> whitespace() {
+		return (CharPredicate<X>) _WHITESPACE;
+	}
+	
+	private static final CharPredicate<?> _WHITESPACE = new CharPredicate<RuntimeException>() {
+		public boolean evaluate(final char c) {
+			return Character.isWhitespace(c);
 		}
 	};
 	
@@ -134,9 +146,9 @@ public class CharPredicates {
 		return (CharPredicate<X>) _DIGIT;
 	}
 	
-	private static final CharPredicate<?> _LETTER = new CharPredicate<RuntimeException>() {
+	private static final CharPredicate<?> _DIGIT = new CharPredicate<RuntimeException>() {
 		public boolean evaluate(final char c) {
-			return Character.isLetter(c);
+			return Character.isDigit(c);
 		}
 	};
 	
@@ -152,9 +164,9 @@ public class CharPredicates {
 		return (CharPredicate<X>) _LETTER;
 	}
 	
-	private static final CharPredicate<?> _ALPHANUMERIC = new CharPredicate<RuntimeException>() {
+	private static final CharPredicate<?> _LETTER = new CharPredicate<RuntimeException>() {
 		public boolean evaluate(final char c) {
-			return Character.isLetterOrDigit(c) || '_' == c;
+			return Character.isLetter(c);
 		}
 	};
 	
@@ -169,6 +181,12 @@ public class CharPredicates {
 	public static <X extends Exception> CharPredicate<X> alphanumeric() {
 		return (CharPredicate<X>) _ALPHANUMERIC;
 	}
+	
+	private static final CharPredicate<?> _ALPHANUMERIC = new CharPredicate<RuntimeException>() {
+		public boolean evaluate(final char c) {
+			return Character.isLetterOrDigit(c) || '_' == c;
+		}
+	};
 	
 	/**
 	 * Build a predicate which evaluate to <code>true</code> for the given character.

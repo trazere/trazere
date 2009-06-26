@@ -16,7 +16,9 @@
 package com.trazere.util.function;
 
 import com.trazere.util.lang.LangUtils;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * The {@link Predicates} class provides various common predicate functions.
@@ -126,44 +128,6 @@ public class Predicates {
 	}
 	
 	/**
-	 * Build a two arguments predicate which evaluates to <code>true</code> for all pairs of values.
-	 * 
-	 * @param <T1> Type of the first argument values.
-	 * @param <T2> Type of the second argument values.
-	 * @param <X> Type of the exceptions.
-	 * @return The built predicate.
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> all2() {
-		return (Predicate2<T1, T2, X>) _ALL2;
-	}
-	
-	private static final Predicate2<?, ?, ?> _ALL2 = new Predicate2<Object, Object, Exception>() {
-		public boolean evaluate(final Object value1, final Object value2) {
-			return true;
-		}
-	};
-	
-	/**
-	 * Build a two arguments predicate which evaluates to <code>false</code> for all pairs of values.
-	 * 
-	 * @param <T1> Type of the first argument values.
-	 * @param <T2> Type of the second argument values.
-	 * @param <X> Type of the exceptions.
-	 * @return The built predicate.
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> none2() {
-		return (Predicate2<T1, T2, X>) _NONE2;
-	}
-	
-	private static final Predicate2<?, ?, ?> _NONE2 = new Predicate2<Object, Object, Exception>() {
-		public boolean evaluate(final Object value1, final Object value2) {
-			return false;
-		}
-	};
-	
-	/**
 	 * Build a predicate which evaluates to <code>true</code> for the given value.
 	 * 
 	 * @param <T> Type of the argument values.
@@ -177,6 +141,20 @@ public class Predicates {
 				return LangUtils.equals(value, value_);
 			}
 		};
+	}
+	
+	/**
+	 * Build a predicate which evaluates to <code>true</code> for any given values.
+	 * 
+	 * @param <T> Type of the argument values.
+	 * @param <X> Type of the exceptions.
+	 * @param values Values defining the predicate.
+	 * @return The built predicate.
+	 */
+	public static <T, X extends Exception> Predicate1<T, X> any(final T... values) {
+		assert null != values;
+		
+		return any(new HashSet<T>(Arrays.asList(values)));
 	}
 	
 	/**
@@ -271,6 +249,44 @@ public class Predicates {
 			assert null != collection;
 			
 			return collection.isEmpty();
+		}
+	};
+	
+	/**
+	 * Build a two arguments predicate which evaluates to <code>true</code> for all pairs of values.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <X> Type of the exceptions.
+	 * @return The built predicate.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> all2() {
+		return (Predicate2<T1, T2, X>) _ALL2;
+	}
+	
+	private static final Predicate2<?, ?, ?> _ALL2 = new Predicate2<Object, Object, Exception>() {
+		public boolean evaluate(final Object value1, final Object value2) {
+			return true;
+		}
+	};
+	
+	/**
+	 * Build a two arguments predicate which evaluates to <code>false</code> for all pairs of values.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <X> Type of the exceptions.
+	 * @return The built predicate.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> none2() {
+		return (Predicate2<T1, T2, X>) _NONE2;
+	}
+	
+	private static final Predicate2<?, ?, ?> _NONE2 = new Predicate2<Object, Object, Exception>() {
+		public boolean evaluate(final Object value1, final Object value2) {
+			return false;
 		}
 	};
 	

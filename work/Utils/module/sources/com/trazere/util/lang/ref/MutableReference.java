@@ -138,11 +138,15 @@ implements Reference<T>, Describable {
 	 * 
 	 * @param value Value to set.
 	 */
-	public void update(final Maybe<T> value) {
+	public void update(final Maybe<? extends T> value) {
 		assert null != value;
 		
 		// Update.
-		_value = value;
+		if (value.isSome()) {
+			update(value.asSome().getValue());
+		} else {
+			reset();
+		}
 	}
 	
 	/**
