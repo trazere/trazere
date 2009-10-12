@@ -15,8 +15,9 @@
  */
 package com.trazere.util.function;
 
+import com.trazere.util.accumulator.Accumulator;
+import com.trazere.util.accumulator.Accumulators;
 import com.trazere.util.collection.Multimap;
-import com.trazere.util.lang.ref.MutableReference;
 import com.trazere.util.type.Maybe;
 import java.util.Collection;
 import java.util.Iterator;
@@ -949,30 +950,52 @@ public class FunctionUtils {
 		}
 	}
 	
-	// DOCME
-	public static <T, A, X extends Exception> A fold(final Function2<? super A, ? super T, ? extends A, X> function, final A initialAccumulator, final Collection<T> values)
+	/**
+	 * Left fold the given collection of values using the given operator and initial argument.
+	 * 
+	 * @param <R> Type of the result.
+	 * @param <V> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @param operator The operator.
+	 * @param initialAccumulator The initial argument. May be <code>null</code>.
+	 * @param values The values.
+	 * @return The result of the fold. May be <code>null</code>.
+	 * @throws X When a operator evaluation fails.
+	 */
+	public static <R, V, X extends Exception> R fold(final Function2<? super R, ? super V, ? extends R, X> operator, final R initialAccumulator, final Collection<V> values)
 	throws X {
-		assert null != function;
+		assert null != operator;
 		assert null != values;
 		
 		// Fold.
-		final MutableReference<A> accumulator = new MutableReference<A>(initialAccumulator);
-		for (final T value : values) {
-			accumulator.update(function.evaluate(accumulator.get(), value));
+		final Accumulator<R, V, X> accumulator = Accumulators.function(operator, initialAccumulator);
+		for (final V value : values) {
+			accumulator.accumulate(value);
 		}
 		return accumulator.get();
 	}
 	
-	// DOCME
-	public static <T, A, X extends Exception> A fold(final Function2<? super A, ? super T, ? extends A, X> function, final A initialAccumulator, final Iterator<T> iterator)
+	/**
+	 * Left fold the given values provided by the given iterator using the given operator and initial argument.
+	 * 
+	 * @param <R> Type of the result.
+	 * @param <V> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @param operator The operator.
+	 * @param initialAccumulator The initial argument. May be <code>null</code>.
+	 * @param values The iterator providing the values.
+	 * @return The result of the fold. May be <code>null</code>.
+	 * @throws X When a operator evaluation fails.
+	 */
+	public static <R, V, X extends Exception> R fold(final Function2<? super R, ? super V, ? extends R, X> operator, final R initialAccumulator, final Iterator<V> values)
 	throws X {
-		assert null != function;
-		assert null != iterator;
+		assert null != operator;
+		assert null != values;
 		
 		// Fold.
-		final MutableReference<A> accumulator = new MutableReference<A>(initialAccumulator);
-		while (iterator.hasNext()) {
-			accumulator.set(function.evaluate(accumulator.get(), iterator.next()));
+		final Accumulator<R, V, X> accumulator = Accumulators.function(operator, initialAccumulator);
+		while (values.hasNext()) {
+			accumulator.accumulate(values.next());
 		}
 		return accumulator.get();
 	}

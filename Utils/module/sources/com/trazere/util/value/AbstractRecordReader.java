@@ -15,13 +15,9 @@
  */
 package com.trazere.util.value;
 
-import com.trazere.util.record.IncompatibleFieldException;
+import com.trazere.util.function.AbstractParametrable;
 import com.trazere.util.record.Record;
-import com.trazere.util.record.RecordException;
-import com.trazere.util.record.RecordSignature;
-import com.trazere.util.record.RecordSignatureBuilder;
 import com.trazere.util.record.SimpleRecordBuilder;
-import com.trazere.util.record.SimpleRecordSignatureBuilder;
 
 /**
  * The {@link AbstractRecordReader} abstract class implements skeletons of {@link RecordReader record readers}.
@@ -30,30 +26,8 @@ import com.trazere.util.record.SimpleRecordSignatureBuilder;
  * @param <V> Type of the values.
  */
 public abstract class AbstractRecordReader<K, V>
+extends AbstractParametrable<String, Object, ValueException>
 implements RecordReader<K, V> {
-	public RecordSignature<String, Object> getRequirements()
-	throws ValueException {
-		try {
-			return unifyRequirements(new SimpleRecordSignatureBuilder<String, Object>()).build();
-		} catch (final IncompatibleFieldException exception) {
-			throw new ValueException("Internal error", exception);
-		}
-	}
-	
-	public static <B extends RecordSignatureBuilder<String, Object, ?>> B unify(final String key, final Class<? extends Object> type, final B builder)
-	throws ValueException, IncompatibleFieldException {
-		assert null != builder;
-		
-		try {
-			builder.unify(key, type);
-			return builder;
-		} catch (final IncompatibleFieldException exception) {
-			throw exception;
-		} catch (final RecordException exception) {
-			throw new ValueException(exception);
-		}
-	}
-	
 	public Record<K, V> read(final Record<String, Object> parameters)
 	throws ValueException {
 		return read(parameters, new SimpleRecordBuilder<K, V>()).build();
@@ -73,5 +47,10 @@ implements RecordReader<K, V> {
 			builder.add(key, get(key).compose(reader));
 		}
 		return builder.build();
+	}
+	
+	@Override
+	protected ValueException wrapException(final Throwable throwable) {
+		return new ValueException(throwable);
 	}
 }

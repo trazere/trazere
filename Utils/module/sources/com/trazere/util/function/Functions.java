@@ -28,7 +28,7 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * The {@link Functions} class provides various standard functions.
+ * The {@link Functions} class provides various common functions.
  * 
  * @see Function1
  * @see Function2
