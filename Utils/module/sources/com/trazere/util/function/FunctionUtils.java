@@ -445,6 +445,29 @@ public class FunctionUtils {
 	}
 	
 	/**
+	 * Find the first of the given values accepted by the given predicate.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate The predicate.
+	 * @param values The values.
+	 * @return The found value.
+	 * @throws X When some predicate evaluation fails.
+	 */
+	public static <T, X extends Exception> Maybe<T> findFirst(final Predicate1<? super T, ? extends X> predicate, final Collection<T> values)
+	throws X {
+		assert null != predicate;
+		assert null != values;
+		
+		for (final T value : values) {
+			if (predicate.evaluate(value)) {
+				return Maybe.some(value);
+			}
+		}
+		return Maybe.none();
+	}
+	
+	/**
 	 * Transform the given values using the given function and populate the given collection with the result values.
 	 * 
 	 * @param <T1> Type of the argument values.
@@ -626,7 +649,7 @@ public class FunctionUtils {
 	 * @return The given result collection.
 	 * @throws X When some function evaluation fails.
 	 */
-	public static <T1, T2, C extends Collection<? super T2>, X extends Exception> C mapFilter(final Function1<? super T1, ? extends Maybe<T2>, X> function, final Collection<T1> values, final C results)
+	public static <T1, T2, C extends Collection<? super T2>, X extends Exception> C mapFilter(final Function1<? super T1, ? extends Maybe<? extends T2>, X> function, final Collection<T1> values, final C results)
 	throws X {
 		assert null != function;
 		assert null != values;
@@ -634,7 +657,7 @@ public class FunctionUtils {
 		
 		// Map.
 		for (final T1 value : values) {
-			final Maybe<T2> result = function.evaluate(value);
+			final Maybe<? extends T2> result = function.evaluate(value);
 			if (result.isSome()) {
 				results.add(result.asSome().getValue());
 			}
@@ -655,7 +678,7 @@ public class FunctionUtils {
 	 * @return The given result collection.
 	 * @throws X When some function evaluation fails.
 	 */
-	public static <T1, T2, C extends Collection<? super T2>, X extends Exception> C mapFilter(final Function1<? super T1, ? extends Maybe<T2>, X> function, final Iterator<T1> values, final C results)
+	public static <T1, T2, C extends Collection<? super T2>, X extends Exception> C mapFilter(final Function1<? super T1, ? extends Maybe<? extends T2>, X> function, final Iterator<T1> values, final C results)
 	throws X {
 		assert null != function;
 		assert null != values;
@@ -663,7 +686,7 @@ public class FunctionUtils {
 		
 		// Map.
 		while (values.hasNext()) {
-			final Maybe<T2> result = function.evaluate(values.next());
+			final Maybe<? extends T2> result = function.evaluate(values.next());
 			if (result.isSome()) {
 				results.add(result.asSome().getValue());
 			}
@@ -688,7 +711,7 @@ public class FunctionUtils {
 	 * @return The given result map.
 	 * @throws X When some function evaluation fails.
 	 */
-	public static <K, V1, V2, M extends Map<? super K, ? super V2>, X extends Exception> M mapFilter(final Function2<? super K, ? super V1, ? extends Maybe<V2>, X> function, final Map<K, V1> bindings, final M results)
+	public static <K, V1, V2, M extends Map<? super K, ? super V2>, X extends Exception> M mapFilter(final Function2<? super K, ? super V1, ? extends Maybe<? extends V2>, X> function, final Map<K, V1> bindings, final M results)
 	throws X {
 		assert null != function;
 		assert null != bindings;
@@ -697,7 +720,7 @@ public class FunctionUtils {
 		// Map.
 		for (final Map.Entry<K, V1> binding : bindings.entrySet()) {
 			final K key = binding.getKey();
-			final Maybe<V2> result = function.evaluate(key, binding.getValue());
+			final Maybe<? extends V2> result = function.evaluate(key, binding.getValue());
 			if (result.isSome()) {
 				results.put(key, result.asSome().getValue());
 			}
@@ -718,7 +741,7 @@ public class FunctionUtils {
 	 * @return The given result map.
 	 * @throws X When some function evaluation fails.
 	 */
-	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M mapFilterKeys(final Function1<? super K, ? extends Maybe<V>, X> function, final Set<K> keys, final M results)
+	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M mapFilterKeys(final Function1<? super K, ? extends Maybe<? extends V>, X> function, final Set<K> keys, final M results)
 	throws X {
 		assert null != function;
 		assert null != keys;
@@ -726,7 +749,7 @@ public class FunctionUtils {
 		
 		// Map the keys.
 		for (final K key : keys) {
-			final Maybe<V> value = function.evaluate(key);
+			final Maybe<? extends V> value = function.evaluate(key);
 			if (value.isSome()) {
 				results.put(key, value.asSome().getValue());
 			}
@@ -749,7 +772,7 @@ public class FunctionUtils {
 	 * @return The given result map.
 	 * @throws X When some function evaluation fails.
 	 */
-	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M mapFilterValues(final Function1<? super V, ? extends Maybe<K>, X> function, final Collection<V> values, final M results)
+	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M mapFilterValues(final Function1<? super V, ? extends Maybe<? extends K>, X> function, final Collection<V> values, final M results)
 	throws X {
 		assert null != function;
 		assert null != values;
@@ -757,7 +780,7 @@ public class FunctionUtils {
 		
 		// Map the values.
 		for (final V value : values) {
-			final Maybe<K> key = function.evaluate(value);
+			final Maybe<? extends K> key = function.evaluate(value);
 			if (key.isSome()) {
 				results.put(key.asSome().getValue(), value);
 			}
@@ -838,7 +861,7 @@ public class FunctionUtils {
 	 * @return The given result map.
 	 * @throws X When some function evaluation fails.
 	 */
-	public static <K1, K2, V, M extends Map<? super K2, ? super V>, X extends Exception> M remapFilter(final Function1<? super K1, ? extends Maybe<K2>, X> function, final Map<K1, V> bindings, final M results)
+	public static <K1, K2, V, M extends Map<? super K2, ? super V>, X extends Exception> M remapFilter(final Function1<? super K1, ? extends Maybe<? extends K2>, X> function, final Map<K1, V> bindings, final M results)
 	throws X {
 		assert null != function;
 		assert null != bindings;
@@ -846,7 +869,7 @@ public class FunctionUtils {
 		
 		// Remap.
 		for (final Map.Entry<K1, V> entry : bindings.entrySet()) {
-			final Maybe<K2> newKey = function.evaluate(entry.getKey());
+			final Maybe<? extends K2> newKey = function.evaluate(entry.getKey());
 			if (newKey.isSome()) {
 				results.put(newKey.asSome().getValue(), entry.getValue());
 			}
@@ -870,7 +893,7 @@ public class FunctionUtils {
 	 * @return The given result map.
 	 * @throws X When some function evaluation fails.
 	 */
-	public static <K1, K2, V, M extends Map<? super K2, ? super V>, X extends Exception> M remapFilter(final Function2<? super K1, ? super V, ? extends Maybe<K2>, X> function, final Map<K1, V> bindings, final M results)
+	public static <K1, K2, V, M extends Map<? super K2, ? super V>, X extends Exception> M remapFilter(final Function2<? super K1, ? super V, ? extends Maybe<? extends K2>, X> function, final Map<K1, V> bindings, final M results)
 	throws X {
 		assert null != function;
 		assert null != bindings;
@@ -879,7 +902,7 @@ public class FunctionUtils {
 		// Remap.
 		for (final Map.Entry<K1, V> entry : bindings.entrySet()) {
 			final V value = entry.getValue();
-			final Maybe<K2> newKey = function.evaluate(entry.getKey(), value);
+			final Maybe<? extends K2> newKey = function.evaluate(entry.getKey(), value);
 			if (newKey.isSome()) {
 				results.put(newKey.asSome().getValue(), value);
 			}
