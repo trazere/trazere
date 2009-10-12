@@ -16,7 +16,7 @@
 package com.trazere.util.function;
 
 /**
- * The {@link Procedures} class provides various standard procedures.
+ * The {@link Procedures} class provides various common procedures.
  * 
  * @see Procedure0
  * @see Procedure1
