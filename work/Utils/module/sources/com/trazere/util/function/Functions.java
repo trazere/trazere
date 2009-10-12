@@ -273,6 +273,24 @@ public class Functions {
 	}
 	
 	/**
+	 * Build a function returning the string representation of the values.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @return The built function.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T, X extends Exception> Function1<T, String, X> toString() {
+		return (Function1<T, String, X>) _TO_STRING;
+	}
+	
+	private static final Function1<?, String, ?> _TO_STRING = new Function1<Object, String, RuntimeException>() {
+		public String evaluate(final Object value) {
+			return value.toString();
+		}
+	};
+	
+	/**
 	 * Build a function corresponding to the given map.
 	 * <p>
 	 * The built function evaluates to the values associated to the keys in the map and to <code>null</code> for the other keys.

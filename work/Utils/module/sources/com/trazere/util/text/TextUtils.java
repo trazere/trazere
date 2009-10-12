@@ -146,7 +146,18 @@ public class TextUtils {
 	}
 	
 	/**
-	 * Join the given string tokens using the given delimiter.
+	 * Join the string tokens provided by the given iterator using the given delimiter.
+	 * 
+	 * @param tokens The tokens.
+	 * @param delimiter The delimiter.
+	 * @return The resulting string.
+	 */
+	public static String join(final Iterator<String> tokens, final String delimiter) {
+		return join(tokens, delimiter, new StringBuilder()).toString();
+	}
+	
+	/**
+	 * Join the string tokens provided by the given iterator using the given delimiter.
 	 * 
 	 * @param tokens The tokens.
 	 * @param delimiter The delimiter.
@@ -158,7 +169,42 @@ public class TextUtils {
 	}
 	
 	/**
-	 * Join the given string tokens using the given delimiter and renderer.
+	 * Join the given string tokens using the given renderer and delimiter.
+	 * 
+	 * @param <T> Type of the tokens.
+	 * @param <X> Type of the exceptions.
+	 * @param tokens The tokens.
+	 * @param renderer The token renderer.
+	 * @param delimiter The delimiter.
+	 * @return The resulting string.
+	 * @throws X
+	 */
+	public static <T, X extends Exception> String join(final Collection<T> tokens, final Function1<? super T, String, X> renderer, final String delimiter)
+	throws X {
+		return join(tokens, renderer, delimiter, new StringBuilder()).toString();
+	}
+	
+	/**
+	 * Join the given string tokens using the given renderer and delimiter.
+	 * 
+	 * @param <T> Type of the tokens.
+	 * @param <X> Type of the exceptions.
+	 * @param tokens The tokens.
+	 * @param renderer The token renderer.
+	 * @param delimiter The delimiter.
+	 * @param builder The string build to fill.
+	 * @return The given string builder.
+	 * @throws X
+	 */
+	public static <T, X extends Exception> StringBuilder join(final Collection<T> tokens, final Function1<? super T, String, X> renderer, final String delimiter, final StringBuilder builder)
+	throws X {
+		assert null != tokens;
+		
+		return join(tokens.iterator(), renderer, delimiter, builder);
+	}
+	
+	/**
+	 * Join the string tokens provided by the given iterator using the given renderer and delimiter.
 	 * 
 	 * @param <T> Type of the tokens.
 	 * @param <X> Type of the exceptions.
@@ -182,7 +228,7 @@ public class TextUtils {
 	}
 	
 	/**
-	 * Join the given string tokens using the given delimiter and renderer.
+	 * Join the string tokens provided by the given iterator using the given renderer and delimiter.
 	 * 
 	 * @param <T> Type of the tokens.
 	 * @param <X> Type of the exceptions.
