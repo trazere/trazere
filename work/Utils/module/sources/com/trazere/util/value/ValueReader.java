@@ -41,4 +41,14 @@ extends ParameterFunction<String, Object, T, ValueException> {
 	 */
 	public T read(final Record<String, Object> parameters)
 	throws ValueException;
+	
+	/**
+	 * Compose the receiver value reader and the given record reader.
+	 * 
+	 * @param reader The record reader.
+	 * @return The composed value reader.
+	 * @throws ValueException When the value reader cannot be composed.
+	 */
+	public ValueReader<? extends T> compose(final RecordReader<String, Object> reader)
+	throws ValueException;
 }
