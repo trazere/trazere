@@ -28,6 +28,7 @@ import com.trazere.util.record.SimpleRecordSignature;
 import com.trazere.util.record.SimpleRecordSignatureBuilder;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * The {@link SimpleRecordReader} class implements simple record readers.
@@ -76,6 +77,39 @@ extends AbstractRecordReader<K, V> {
 			factory.unifyRequirements(builder);
 		}
 		return builder;
+	}
+	
+	public boolean contains(final K key) {
+		assert null != key;
+		
+		return _fields.containsKey(key);
+	}
+	
+	public Set<K> getKeys() {
+		return _fields.keySet();
+	}
+	
+	public ValueReader<? extends V> get(final K key)
+	throws ValueException {
+		assert null != key;
+		
+		// Get.
+		if (_fields.containsKey(key)) {
+			return _fields.get(key);
+		} else {
+			throw new ValueException("Missing reader for field \"" + key + "\" in record reader " + this);
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <T extends V> ValueReader<? extends T> getTyped(final K key, final Class<T> type)
+	throws ValueException {
+		final ValueReader<? extends V> valueReader = get(key);
+		if (type.isAssignableFrom(valueReader.getType())) {
+			return (ValueReader<? extends T>) valueReader;
+		} else {
+			throw new ValueException("Value reader of field " + key + " is not compatible with type " + type + " in record reader " + this);
+		}
 	}
 	
 	public RecordSignature<K, V> getSignature()

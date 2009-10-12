@@ -82,6 +82,10 @@ extends AbstractValueReader<T> {
 		return _value;
 	}
 	
+	public ValueReader<T> compose(final RecordReader<String, Object> reader) {
+		return this;
+	}
+	
 	@Override
 	public int hashCode() {
 		final HashCode result = new HashCode(this);

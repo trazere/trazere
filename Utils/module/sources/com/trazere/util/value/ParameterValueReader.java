@@ -162,6 +162,17 @@ extends AbstractValueReader<T> {
 		}
 	}
 	
+	public ValueReader<? extends T> compose(final RecordReader<String, Object> reader)
+	throws ValueException {
+		assert null != reader;
+		
+		if (!_optional || reader.contains(_name)) {
+			return reader.getTyped(_name, _type);
+		} else {
+			return ConstantValueReader.build(null, _type);
+		}
+	}
+	
 	@Override
 	public int hashCode() {
 		final HashCode result = new HashCode(this);

@@ -63,4 +63,15 @@ implements RecordReader<K, V> {
 	throws ValueException {
 		return read(parameters);
 	}
+	
+	public RecordReader<K, V> compose(final RecordReader<String, Object> reader)
+	throws ValueException {
+		assert null != reader;
+		
+		final SimpleRecordReaderBuilder<K, V> builder = new SimpleRecordReaderBuilder<K, V>();
+		for (final K key : getKeys()) {
+			builder.add(key, get(key).compose(reader));
+		}
+		return builder.build();
+	}
 }
