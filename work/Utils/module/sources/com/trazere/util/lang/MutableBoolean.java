@@ -38,6 +38,15 @@ implements Describable {
 	}
 	
 	/**
+	 * Get the value set in the receiver mutable boolean.
+	 * 
+	 * @return The value.
+	 */
+	public boolean get() {
+		return _value;
+	}
+	
+	/**
 	 * Set the receiver mutable boolean to the given value.
 	 * 
 	 * @param value The value.
@@ -47,12 +56,28 @@ implements Describable {
 	}
 	
 	/**
-	 * Get the value set in the receiver mutable boolean.
-	 * 
-	 * @return The value.
+	 * Inverse the value of the receiver mutable boolean.
 	 */
-	public boolean get() {
-		return _value;
+	public void not() {
+		_value = !_value;
+	}
+	
+	/**
+	 * Update the value of the receiver mutable boolean by conjunction with the given value.
+	 * 
+	 * @param value The value.
+	 */
+	public void and(final boolean value) {
+		_value = _value && value;
+	}
+	
+	/**
+	 * Update the value of the receiver mutable boolean by disjunction with the given value.
+	 * 
+	 * @param value The value.
+	 */
+	public void or(final boolean value) {
+		_value = _value || value;
 	}
 	
 	@Override
