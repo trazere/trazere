@@ -38,6 +38,15 @@ implements Describable {
 	}
 	
 	/**
+	 * Get the value set in the receiver mutable long.
+	 * 
+	 * @return The value.
+	 */
+	public long get() {
+		return _value;
+	}
+	
+	/**
 	 * Set the receiver mutable long to the given value.
 	 * 
 	 * @param value The value.
@@ -47,12 +56,64 @@ implements Describable {
 	}
 	
 	/**
-	 * Get the value set in the receiver mutable long.
-	 * 
-	 * @return The value.
+	 * Update the receiver mutable long by negating its value.
 	 */
-	public long get() {
-		return _value;
+	public void neg() {
+		_value = -_value;
+	}
+	
+	/**
+	 * Update the receiver mutable long by adding the given value.
+	 * 
+	 * @param value The value
+	 */
+	public void add(final long value) {
+		_value = _value + value;
+	}
+	
+	/**
+	 * Update the receiver mutable long by substracting the given value.
+	 * 
+	 * @param value The value
+	 */
+	public void sub(final long value) {
+		_value = _value - value;
+	}
+	
+	/**
+	 * Update the receiver mutable long by multiplying with the given value.
+	 * 
+	 * @param value The value
+	 */
+	public void mul(final long value) {
+		_value = _value * value;
+	}
+	
+	/**
+	 * Update the receiver mutable long by dividing by the given value.
+	 * 
+	 * @param value The value
+	 */
+	public void div(final long value) {
+		_value = _value / value;
+	}
+	
+	/**
+	 * Update the receiver mutable long by shifting it to the left by the given number of position.
+	 * 
+	 * @param position The value
+	 */
+	public void shiftl(final long position) {
+		_value = _value << position;
+	}
+	
+	/**
+	 * Update the receiver mutable long by shifting it to the right by the given number of position.
+	 * 
+	 * @param position The value
+	 */
+	public void shiftr(final long position) {
+		_value = _value >> position;
 	}
 	
 	@Override

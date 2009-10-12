@@ -55,6 +55,29 @@ public class Functions {
 	/**
 	 * Build a function corresponding to the composition of the given functions (f . g).
 	 * 
+	 * @param <T1> Type of the argument values of the outer function.
+	 * @param <T2> Type of the results.
+	 * @param <X> Type of the exceptions.
+	 * @param f The outer function.
+	 * @param g The inner function.
+	 * @return The built function.
+	 */
+	public static <T1, T2, X extends Exception> Function0<T2, X> compose(final Function1<? super T1, ? extends T2, ? extends X> f, final Function0<? extends T1, ? extends X> g) {
+		assert null != f;
+		assert null != g;
+		
+		// Build.
+		return new Function0<T2, X>() {
+			public T2 evaluate()
+			throws X {
+				return f.evaluate(g.evaluate());
+			}
+		};
+	}
+	
+	/**
+	 * Build a function corresponding to the composition of the given functions (f . g).
+	 * 
 	 * @param <T1> Type of the argument values of the inner function.
 	 * @param <T2> Type of the argument values of the outer function.
 	 * @param <T3> Type of the results.

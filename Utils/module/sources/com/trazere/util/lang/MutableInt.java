@@ -38,6 +38,15 @@ implements Describable {
 	}
 	
 	/**
+	 * Get the value set in the receiver mutable integer.
+	 * 
+	 * @return The value.
+	 */
+	public int get() {
+		return _value;
+	}
+	
+	/**
 	 * Set the receiver mutable integer to the given value.
 	 * 
 	 * @param value The value.
@@ -47,12 +56,64 @@ implements Describable {
 	}
 	
 	/**
-	 * Get the value set in the receiver mutable integer.
-	 * 
-	 * @return The value.
+	 * Update the receiver mutable integer by negating its value.
 	 */
-	public int get() {
-		return _value;
+	public void neg() {
+		_value = -_value;
+	}
+	
+	/**
+	 * Update the receiver mutable integer by adding the given value.
+	 * 
+	 * @param value The value
+	 */
+	public void add(final int value) {
+		_value = _value + value;
+	}
+	
+	/**
+	 * Update the receiver mutable integer by substracting the given value.
+	 * 
+	 * @param value The value
+	 */
+	public void sub(final int value) {
+		_value = _value - value;
+	}
+	
+	/**
+	 * Update the receiver mutable integer by multiplying with the given value.
+	 * 
+	 * @param value The value
+	 */
+	public void mul(final int value) {
+		_value = _value * value;
+	}
+	
+	/**
+	 * Update the receiver mutable integer by dividing by the given value.
+	 * 
+	 * @param value The value
+	 */
+	public void div(final int value) {
+		_value = _value / value;
+	}
+	
+	/**
+	 * Update the receiver mutable integer by shifting it to the left by the given number of position.
+	 * 
+	 * @param position The value
+	 */
+	public void shiftl(final int position) {
+		_value = _value << position;
+	}
+	
+	/**
+	 * Update the receiver mutable integer by shifting it to the right by the given number of position.
+	 * 
+	 * @param position The value
+	 */
+	public void shiftr(final int position) {
+		_value = _value >> position;
 	}
 	
 	@Override

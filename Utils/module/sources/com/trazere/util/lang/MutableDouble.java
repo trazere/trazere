@@ -38,6 +38,15 @@ implements Describable {
 	}
 	
 	/**
+	 * Get the value set in the receiver mutable double.
+	 * 
+	 * @return The value.
+	 */
+	public double get() {
+		return _value;
+	}
+	
+	/**
 	 * Set the receiver mutable double to the given value.
 	 * 
 	 * @param value The value.
@@ -47,12 +56,46 @@ implements Describable {
 	}
 	
 	/**
-	 * Get the value set in the receiver mutable double.
-	 * 
-	 * @return The value.
+	 * Update the receiver mutable double by negating its value.
 	 */
-	public double get() {
-		return _value;
+	public void neg() {
+		_value = -_value;
+	}
+	
+	/**
+	 * Update the receiver mutable double by adding the given value.
+	 * 
+	 * @param value The value
+	 */
+	public void add(final double value) {
+		_value = _value + value;
+	}
+	
+	/**
+	 * Update the receiver mutable double by substracting the given value.
+	 * 
+	 * @param value The value
+	 */
+	public void sub(final double value) {
+		_value = _value - value;
+	}
+	
+	/**
+	 * Update the receiver mutable double by multiplying with the given value.
+	 * 
+	 * @param value The value
+	 */
+	public void mul(final double value) {
+		_value = _value * value;
+	}
+	
+	/**
+	 * Update the receiver mutable double by dividing by the given value.
+	 * 
+	 * @param value The value
+	 */
+	public void div(final double value) {
+		_value = _value / value;
 	}
 	
 	@Override

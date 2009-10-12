@@ -38,6 +38,15 @@ implements Describable {
 	}
 	
 	/**
+	 * Get the value set in the receiver mutable float.
+	 * 
+	 * @return The value.
+	 */
+	public float get() {
+		return _value;
+	}
+	
+	/**
 	 * Set the receiver mutable float to the given value.
 	 * 
 	 * @param value The value.
@@ -47,12 +56,46 @@ implements Describable {
 	}
 	
 	/**
-	 * Get the value set in the receiver mutable float.
-	 * 
-	 * @return The value.
+	 * Update the receiver mutable float by negating its value.
 	 */
-	public float get() {
-		return _value;
+	public void neg() {
+		_value = -_value;
+	}
+	
+	/**
+	 * Update the receiver mutable float by adding the given value.
+	 * 
+	 * @param value The value
+	 */
+	public void add(final float value) {
+		_value = _value + value;
+	}
+	
+	/**
+	 * Update the receiver mutable float by substracting the given value.
+	 * 
+	 * @param value The value
+	 */
+	public void sub(final float value) {
+		_value = _value - value;
+	}
+	
+	/**
+	 * Update the receiver mutable float by multiplying with the given value.
+	 * 
+	 * @param value The value
+	 */
+	public void mul(final float value) {
+		_value = _value * value;
+	}
+	
+	/**
+	 * Update the receiver mutable float by dividing by the given value.
+	 * 
+	 * @param value The value
+	 */
+	public void div(final float value) {
+		_value = _value / value;
 	}
 	
 	@Override

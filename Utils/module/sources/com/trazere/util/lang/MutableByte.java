@@ -38,21 +38,21 @@ implements Describable {
 	}
 	
 	/**
-	 * Set the receiver mutable byte to the given value.
-	 * 
-	 * @param value The value.
-	 */
-	public void set(final byte value) {
-		_value = value;
-	}
-	
-	/**
 	 * Get the value set in the receiver mutable byte.
 	 * 
 	 * @return The value.
 	 */
 	public byte get() {
 		return _value;
+	}
+	
+	/**
+	 * Set the receiver mutable byte to the given value.
+	 * 
+	 * @param value The value.
+	 */
+	public void set(final byte value) {
+		_value = value;
 	}
 	
 	@Override

@@ -5,6 +5,97 @@ package com.trazere.util.type;
  */
 public class TypeUtils {
 	/**
+	 * Get the boolean value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
+	 * 
+	 * @param value The value.
+	 * @param defaultValue The default value. May be <code>null</code>.
+	 * @return The value. May be <code>null</code>.
+	 */
+	public static boolean get(final Maybe<Boolean> value, final boolean defaultValue) {
+		assert null != value;
+		
+		return value.isSome() ? value.asSome().getValue().booleanValue() : defaultValue;
+	}
+	
+	/**
+	 * Get the byte value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
+	 * 
+	 * @param value The value.
+	 * @param defaultValue The default value. May be <code>null</code>.
+	 * @return The value. May be <code>null</code>.
+	 */
+	public static int get(final Maybe<Byte> value, final byte defaultValue) {
+		assert null != value;
+		
+		return value.isSome() ? value.asSome().getValue().byteValue() : defaultValue;
+	}
+	
+	/**
+	 * Get the integer value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
+	 * 
+	 * @param value The value.
+	 * @param defaultValue The default value. May be <code>null</code>.
+	 * @return The value. May be <code>null</code>.
+	 */
+	public static int get(final Maybe<Integer> value, final int defaultValue) {
+		assert null != value;
+		
+		return value.isSome() ? value.asSome().getValue().intValue() : defaultValue;
+	}
+	
+	/**
+	 * Get the long value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
+	 * 
+	 * @param value The value.
+	 * @param defaultValue The default value. May be <code>null</code>.
+	 * @return The value. May be <code>null</code>.
+	 */
+	public static long get(final Maybe<Long> value, final long defaultValue) {
+		assert null != value;
+		
+		return value.isSome() ? value.asSome().getValue().longValue() : defaultValue;
+	}
+	
+	/**
+	 * Get the float value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
+	 * 
+	 * @param value The value.
+	 * @param defaultValue The default value. May be <code>null</code>.
+	 * @return The value. May be <code>null</code>.
+	 */
+	public static float get(final Maybe<Float> value, final float defaultValue) {
+		assert null != value;
+		
+		return value.isSome() ? value.asSome().getValue().floatValue() : defaultValue;
+	}
+	
+	/**
+	 * Get the double value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
+	 * 
+	 * @param value The value.
+	 * @param defaultValue The default value. May be <code>null</code>.
+	 * @return The value. May be <code>null</code>.
+	 */
+	public static double get(final Maybe<Double> value, final double defaultValue) {
+		assert null != value;
+		
+		return value.isSome() ? value.asSome().getValue().doubleValue() : defaultValue;
+	}
+	
+	/**
+	 * Get the character value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
+	 * 
+	 * @param value The value.
+	 * @param defaultValue The default value. May be <code>null</code>.
+	 * @return The value. May be <code>null</code>.
+	 */
+	public static char get(final Maybe<Character> value, final char defaultValue) {
+		assert null != value;
+		
+		return value.isSome() ? value.asSome().getValue().charValue() : defaultValue;
+	}
+	
+	/**
 	 * Get the value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
 	 * 
 	 * @param <T> Type of the value.

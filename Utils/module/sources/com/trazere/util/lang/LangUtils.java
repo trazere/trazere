@@ -22,6 +22,20 @@ import java.util.Comparator;
  */
 public class LangUtils {
 	/**
+	 * Get the class the given object.
+	 * 
+	 * @param <T> Type of the object.
+	 * @param object The object.
+	 * @return The class.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> Class<? extends T> getClass(final T object) {
+		assert null != object;
+		
+		return (Class<? extends T>) object.getClass();
+	}
+	
+	/**
 	 * Cast the given object to any type.
 	 * <p>
 	 * This methods aims to work around various limitations of the Java type system where regular casts cannot be used. It performs no verifications whatsoever
@@ -50,6 +64,95 @@ public class LangUtils {
 	@SuppressWarnings("unchecked")
 	public static <T, R extends T> R downcast(final T object) {
 		return (R) object;
+	}
+	
+	/**
+	 * Get the value of the given boolean wrapper.
+	 * 
+	 * @param value The wrapper. May be <code>null</code>.
+	 * @param defaultValue The default value.
+	 * @return The value of the wrapper or the default value when it is <code>null</code>.
+	 */
+	public static boolean getBoolean(final Boolean value, final boolean defaultValue) {
+		return null != value ? value.booleanValue() : defaultValue;
+	}
+	
+	/**
+	 * Get the value of the given byte wrapper.
+	 * 
+	 * @param value The wrapper. May be <code>null</code>.
+	 * @param defaultValue The default value.
+	 * @return The value of the wrapper or the default value when it is <code>null</code>.
+	 */
+	public static int getByte(final Byte value, final byte defaultValue) {
+		return null != value ? value.byteValue() : defaultValue;
+	}
+	
+	/**
+	 * Get the value of the given integer wrapper.
+	 * 
+	 * @param value The wrapper. May be <code>null</code>.
+	 * @param defaultValue The default value.
+	 * @return The value of the wrapper or the default value when it is <code>null</code>.
+	 */
+	public static int getInt(final Integer value, final int defaultValue) {
+		return null != value ? value.intValue() : defaultValue;
+	}
+	
+	/**
+	 * Get the value of the given long wrapper.
+	 * 
+	 * @param value The wrapper. May be <code>null</code>.
+	 * @param defaultValue The default value.
+	 * @return The value of the wrapper or the default value when it is <code>null</code>.
+	 */
+	public static long getLong(final Long value, final long defaultValue) {
+		return null != value ? value.longValue() : defaultValue;
+	}
+	
+	/**
+	 * Get the value of the given float wrapper.
+	 * 
+	 * @param value The wrapper. May be <code>null</code>.
+	 * @param defaultValue The default value.
+	 * @return The value of the wrapper or the default value when it is <code>null</code>.
+	 */
+	public static float getFloat(final Float value, final float defaultValue) {
+		return null != value ? value.floatValue() : defaultValue;
+	}
+	
+	/**
+	 * Get the value of the given double wrapper.
+	 * 
+	 * @param value The wrapper. May be <code>null</code>.
+	 * @param defaultValue The default value.
+	 * @return The value of the wrapper or the default value when it is <code>null</code>.
+	 */
+	public static double getDouble(final Double value, final double defaultValue) {
+		return null != value ? value.doubleValue() : defaultValue;
+	}
+	
+	/**
+	 * Get the value of the given character wrapper.
+	 * 
+	 * @param value The wrapper. May be <code>null</code>.
+	 * @param defaultValue The default value.
+	 * @return The value of the wrapper or the default value when it is <code>null</code>.
+	 */
+	public static char getChar(final Character value, final char defaultValue) {
+		return null != value ? value.charValue() : defaultValue;
+	}
+	
+	/**
+	 * Get the value of the given object.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param value The object. May be <code>null</code>.
+	 * @param defaultValue The default value. May be <code>null</code>.
+	 * @return The object or the default value when it is <code>null</code>. May be <code>null</code>.
+	 */
+	public static <T> T getObject(final T value, final T defaultValue) {
+		return null != value ? value : defaultValue;
 	}
 	
 	/**

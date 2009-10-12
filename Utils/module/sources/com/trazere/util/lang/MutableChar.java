@@ -38,21 +38,21 @@ implements Describable {
 	}
 	
 	/**
-	 * Set the receiver mutable char to the given value.
-	 * 
-	 * @param value The value.
-	 */
-	public void set(final char value) {
-		_value = value;
-	}
-	
-	/**
 	 * Get the value set in the receiver mutable char.
 	 * 
 	 * @return The value.
 	 */
 	public char get() {
 		return _value;
+	}
+	
+	/**
+	 * Set the receiver mutable char to the given value.
+	 * 
+	 * @param value The value.
+	 */
+	public void set(final char value) {
+		_value = value;
 	}
 	
 	@Override
