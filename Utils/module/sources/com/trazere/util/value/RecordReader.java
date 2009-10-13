@@ -59,18 +59,6 @@ extends ParameterFunction<String, Object, Record<K, V>, ValueException> {
 	throws ValueException;
 	
 	/**
-	 * Get the value reader of the field produced by the receiver reader identified by the given key according to the given type.
-	 * 
-	 * @param <T> Type of the value.
-	 * @param key Key of the field.
-	 * @param type Type of the value.
-	 * @return The value reader of the field.
-	 * @throws ValueException When the field reader cannot be got.
-	 */
-	public <T extends V> ValueReader<? extends T> getTyped(final K key, final Class<T> type)
-	throws ValueException;
-	
-	/**
 	 * Get the signature of the records produced by the receiver reader.
 	 * 
 	 * @return The signature of the record.
