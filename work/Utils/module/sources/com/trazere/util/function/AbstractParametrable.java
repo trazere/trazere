@@ -93,5 +93,11 @@ implements Parametrable<K, V, X> {
 		}
 	}
 	
+	/**
+	 * Wrap the given throwable in an exception thrown by the receiver element.
+	 * 
+	 * @param throwable The throwable.
+	 * @return The built exception.
+	 */
 	protected abstract X wrapException(final Throwable throwable);
 }

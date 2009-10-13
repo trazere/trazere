@@ -16,6 +16,7 @@
 package com.trazere.util.accumulator;
 
 import com.trazere.util.function.Function2;
+import com.trazere.util.lang.LangUtils;
 
 /**
  * The {@link Accumulators} class provides various common accumulators.
@@ -53,9 +54,8 @@ public class Accumulators {
 	public static <X extends Exception> Accumulator<Boolean, Boolean, X> and(final boolean initialValue) {
 		return new AbstractAccumulator<Boolean, Boolean, X>(initialValue) {
 			@Override
-			protected Boolean compute(final Boolean accumulator, final Boolean value)
-			throws X {
-				return (null != accumulator && accumulator.booleanValue()) && (null != value && value.booleanValue());
+			protected Boolean compute(final Boolean accumulator, final Boolean value) {
+				return LangUtils.getBoolean(accumulator, false) && LangUtils.getBoolean(value, false);
 			}
 		};
 	}
@@ -70,9 +70,8 @@ public class Accumulators {
 	public static <X extends Exception> Accumulator<Boolean, Boolean, X> or(final boolean initialValue) {
 		return new AbstractAccumulator<Boolean, Boolean, X>(initialValue) {
 			@Override
-			protected Boolean compute(final Boolean accumulator, final Boolean value)
-			throws X {
-				return (null != accumulator && accumulator.booleanValue()) || (null != value && value.booleanValue());
+			protected Boolean compute(final Boolean accumulator, final Boolean value) {
+				return LangUtils.getBoolean(accumulator, false) || LangUtils.getBoolean(value, false);
 			}
 		};
 	}

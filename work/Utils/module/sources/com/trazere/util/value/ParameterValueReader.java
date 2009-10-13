@@ -162,15 +162,45 @@ extends AbstractValueReader<T> {
 		}
 	}
 	
-	public ValueReader<? extends T> compose(final RecordReader<String, Object> reader)
+	@SuppressWarnings("unchecked")
+	public ValueReader<T> compose(final RecordReader<String, Object> reader)
 	throws ValueException {
 		assert null != reader;
 		
 		if (!_optional || reader.contains(_name)) {
-			return reader.getTyped(_name, _type);
+			final ValueReader<? extends Object> valueReader = reader.get(_name);
+			final Class<? extends Object> type = valueReader.getType();
+			if (_type.equals(type)) {
+				return (ValueReader<T>) valueReader;
+			} else if (_type.isAssignableFrom(valueReader.getType())) {
+				return adapt((ValueReader<? extends T>) valueReader);
+			} else {
+				throw new ValueException("Value reader of field " + _name + " is not compatible with type " + _type + " in record reader " + reader);
+			}
 		} else {
 			return ConstantValueReader.build(null, _type);
 		}
+	}
+	
+	private ValueReader<T> adapt(final ValueReader<? extends T> valueReader) {
+		assert null != valueReader;
+		
+		return new AbstractValueReader<T>(_type) {
+			public <B extends RecordSignatureBuilder<String, Object, ?>> B unifyRequirements(final B builder)
+			throws ValueException, IncompatibleFieldException {
+				return valueReader.unifyRequirements(builder);
+			}
+			
+			public T read(final Record<String, Object> parameters)
+			throws ValueException {
+				return valueReader.read(parameters);
+			}
+			
+			public ValueReader<T> compose(final RecordReader<String, Object> reader)
+			throws ValueException {
+				return adapt(valueReader.compose(reader));
+			}
+		};
 	}
 	
 	@Override

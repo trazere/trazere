@@ -101,17 +101,6 @@ extends AbstractRecordReader<K, V> {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
-	public <T extends V> ValueReader<? extends T> getTyped(final K key, final Class<T> type)
-	throws ValueException {
-		final ValueReader<? extends V> valueReader = get(key);
-		if (type.isAssignableFrom(valueReader.getType())) {
-			return (ValueReader<? extends T>) valueReader;
-		} else {
-			throw new ValueException("Value reader of field " + key + " is not compatible with type " + type + " in record reader " + this);
-		}
-	}
-	
 	public RecordSignature<K, V> getSignature()
 	throws ValueException {
 		try {
