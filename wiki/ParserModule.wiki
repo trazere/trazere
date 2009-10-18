@@ -1,0 +1,5 @@
+#summary Information about the "Parser" module.
+
+= Introduction =
+
+The `Parser` module provides a combinator based parser library.
