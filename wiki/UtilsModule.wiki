@@ -1,0 +1,5 @@
+#summary Information about the `Utils` module.
+
+= Introduction =
+
+The `Utils` module provides general purpose utilities.
