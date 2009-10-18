@@ -1,4 +1,4 @@
-#summary Information about the `Utils` module.
+#summary Information about the "Utils" module.
 
 = Introduction =
 
