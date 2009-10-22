@@ -50,7 +50,7 @@ implements Iterator<T> {
 	/** Element feed. */
 	private final Iterator<T> _feed;
 	
-	/** Flag indicating wether the next element has been retrieved from the feed. */
+	/** Flag indicating whether the next element has been retrieved from the feed. */
 	private final MutableBoolean _lookAhead = new MutableBoolean(false);
 	
 	/** Next element from the feed. */

@@ -80,7 +80,7 @@ implements Function1<K, V, X> {
 	}
 	
 	/**
-     * Test wether the receiver map is empty.
+     * Test whether the receiver map is empty.
      * 
      * @return <code>true</code> if the map is empty, <code>false</code> otherwise.
      */
@@ -159,7 +159,7 @@ implements Function1<K, V, X> {
 	throws X;
 	
 	/**
-     * Test wether a value is associated to the given key in the receiver map.
+     * Test whether a value is associated to the given key in the receiver map.
      * 
      * @param key Key which the value is associated to. May be <code>null</code>.
      * @return <code>true</code> when some value is associated to the given key, <code>false</code> otherwise.

@@ -75,7 +75,7 @@ public class Scanner {
 	}
 	
 	/**
-	 * Test wether the end-of-file has been reached.
+	 * Test whether the end-of-file has been reached.
 	 * 
 	 * @return <code>true</code> if the eof has been reached, <code>false</code> if characters are still available.
 	 * @throws IOException

@@ -20,7 +20,7 @@ package com.trazere.util.trigger;
  */
 public interface Trigger {
 	/**
-	 * Indicate wether the receiver trigger is set.
+	 * Indicate whether the receiver trigger is set.
 	 * 
 	 * @return <code>true</code> when the trigger is set, <code>false</code> otherwise.
 	 */

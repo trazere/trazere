@@ -58,10 +58,10 @@ public class CSVReader {
 	/** Read options. */
 	protected final Set<CSVReaderOption> _options;
 	
-	/** Flag indicating wether the input reader has been exhausted or not. */
+	/** Flag indicating whether the input reader has been exhausted or not. */
 	protected boolean _eof = false;
 	
-	/** Flag indicating wether the next entry has been fetched or not. */
+	/** Flag indicating whether the next entry has been fetched or not. */
 	protected boolean _lookAhead = false;
 	
 	/** Next CSV line. */
@@ -161,7 +161,7 @@ public class CSVReader {
 	}
 	
 	/**
-	 * Test wether another CSV entry is available from the input.
+	 * Test whether another CSV entry is available from the input.
 	 * <p>
 	 * This methods does not garantee that the entry will be valid, only that it is available so that the {@link #next()} method can be called.
 	 * 

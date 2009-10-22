@@ -30,7 +30,7 @@ import java.util.Set;
 public interface RecordReader<K, V>
 extends ParameterFunction<String, Object, Record<K, V>, ValueException> {
 	/**
-	 * Test wether some field is identified by the given key in the records produced by the receiver reader or not.
+	 * Test whether some field is identified by the given key in the records produced by the receiver reader or not.
 	 * 
 	 * @param key Key of the field to test.
 	 * @return <code>true</code> when some field is identified by the given key, <code>false</code> otherwise.

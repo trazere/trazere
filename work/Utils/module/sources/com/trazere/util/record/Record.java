@@ -32,14 +32,14 @@ import java.util.Set;
  */
 public interface Record<K, V> {
 	/**
-	 * Test wether the receiver record is empty or not.
+	 * Test whether the receiver record is empty or not.
 	 * 
 	 * @return <code>true</code> when empty, <code>false</code> otherwise.
 	 */
 	public boolean isEmpty();
 	
 	/**
-	 * Test wether some field is identified by the given key in the receiver record or not.
+	 * Test whether some field is identified by the given key in the receiver record or not.
 	 * 
 	 * @param key Key of the field to test.
 	 * @return <code>true</code> when some field is identified by the given key, <code>false</code> otherwise.

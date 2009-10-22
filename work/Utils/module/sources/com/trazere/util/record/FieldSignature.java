@@ -83,7 +83,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Check wether the receiver field signature accepts the given value.
+	 * Check whether the receiver field signature accepts the given value.
 	 * 
 	 * @param value The value. May be <code>null</code>.
 	 * @return <code>true</code> when the value is accepted, <code>false</code> otherwise.
@@ -93,7 +93,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Check wether the receiver field signature accepts a value of the given type.
+	 * Check whether the receiver field signature accepts a value of the given type.
 	 * 
 	 * @param type The type.
 	 * @return <code>true</code> when the type is accepted, <code>false</code> otherwise.

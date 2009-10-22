@@ -63,7 +63,7 @@ implements Reference<T>, Describable {
 	}
 	
 	/**
-	 * Test wether the receiver reference is set.
+	 * Test whether the receiver reference is set.
 	 * 
 	 * @return <code>true</code> when the reference is set, <code>false</code> otherwise.
 	 */

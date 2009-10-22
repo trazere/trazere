@@ -79,14 +79,14 @@ public interface RecordBuilder<K, V, R extends Record<K, V>> {
 	throws RecordException;
 	
 	/**
-	 * Test wether the receiver record builder is empty or not.
+	 * Test whether the receiver record builder is empty or not.
 	 * 
 	 * @return <code>true</code> when empty, <code>false</code> otherwise.
 	 */
 	public boolean isEmpty();
 	
 	/**
-	 * Test wether some field is identified by the given key in the receiver record builder or not.
+	 * Test whether some field is identified by the given key in the receiver record builder or not.
 	 * 
 	 * @param key The key of the field.
 	 * @return <code>true</code> when some field is identified by the given key, <code>false</code> otherwise.
@@ -94,7 +94,7 @@ public interface RecordBuilder<K, V, R extends Record<K, V>> {
 	public boolean contains(final K key);
 	
 	/**
-	 * Test wether some field is identified by the key of the given signature in the receiver record builder or not.
+	 * Test whether some field is identified by the key of the given signature in the receiver record builder or not.
 	 * 
 	 * @param field The signature of the field.
 	 * @return <code>true</code> when some field is identified by the key of the given signature, <code>false</code> otherwise.

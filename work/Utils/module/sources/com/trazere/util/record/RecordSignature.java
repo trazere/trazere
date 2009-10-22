@@ -28,14 +28,14 @@ import java.util.Set;
  */
 public interface RecordSignature<K, V> {
 	/**
-	 * Test wether the receiver record signature is empty or not.
+	 * Test whether the receiver record signature is empty or not.
 	 * 
 	 * @return <code>true</code> when empty, <code>false</code> otherwise.
 	 */
 	public boolean isEmpty();
 	
 	/**
-	 * Test wether the field identified by the given key is signed in the receiver record signature or not.
+	 * Test whether the field identified by the given key is signed in the receiver record signature or not.
 	 * 
 	 * @param key Key of the field to test.
 	 * @return <code>true</code> when the field is signed, <code>false</code> otherwise.
@@ -70,7 +70,7 @@ public interface RecordSignature<K, V> {
 	throws RecordException;
 	
 	/**
-	 * Check wether the receiver record signature accepts the given record.
+	 * Check whether the receiver record signature accepts the given record.
 	 * <p>
 	 * Records are accepted when they contain compatible fields for every field signature of the receiver record signature.
 	 * 
@@ -82,7 +82,7 @@ public interface RecordSignature<K, V> {
 	throws RecordException;
 	
 	/**
-	 * Check wether the receiver record signature accepts the given record signature.
+	 * Check whether the receiver record signature accepts the given record signature.
 	 * <p>
 	 * Signatures are accepted when they contain compatible field signatures for every field signature of the receiver record signature.
 	 * 
