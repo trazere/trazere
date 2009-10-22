@@ -61,7 +61,7 @@ public interface RecordReaderBuilder<K, V, R extends RecordReader<K, V>> {
 	throws ValueException;
 	
 	/**
-	 * Test wether some field is identified by the given key in the receiver record reader builder or not.
+	 * Test whether some field is identified by the given key in the receiver record reader builder or not.
 	 * 
 	 * @param key Key of the field.
 	 * @return <code>true</code> when some field is identified by the given key, <code>false</code> otherwise.

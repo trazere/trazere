@@ -606,7 +606,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Test wether the given collections intersect. The collections instersect when they have some common value.
+	 * Test whether the given collections intersect. The collections instersect when they have some common value.
 	 * <p>
 	 * This method iterates over the first collection and tests the presence of the values within the second collection. Therefore, providing a smaller first
 	 * collection and a second collection with a faster test method is more efficient.

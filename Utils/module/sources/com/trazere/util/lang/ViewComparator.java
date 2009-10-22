@@ -39,7 +39,7 @@ implements Comparator<T> {
 	 * @param <V> Type of the values to compore.
 	 * @param function The function computing the view.
 	 * @param comparator The comparator to use.
-	 * @param cache Flag indicating wether the cache if enabled or not.
+	 * @param cache Flag indicating whether the cache if enabled or not.
 	 * @return The built iterator.
 	 */
 	public static <T, V> ViewComparator<T, V> build(final Function1<? super T, ? extends V, ? extends RuntimeException> function, final Comparator<? super V> comparator, final boolean cache) {
@@ -56,7 +56,7 @@ implements Comparator<T> {
 	/** Comparator to use. */
 	protected final Comparator<? super V> _comparator;
 	
-	/** Flag indicating wether the cache if enabled or not. */
+	/** Flag indicating whether the cache if enabled or not. */
 	protected final boolean _cache;
 	
 	/** Cached values identified by the objects they where computed from. */
@@ -66,7 +66,7 @@ implements Comparator<T> {
 	 * Instantiate a new comparator.
 	 * 
 	 * @param comparator The comparator to use. May be <code>null</code>.
-	 * @param cache Flag indicating wether the cache if enabled or not.
+	 * @param cache Flag indicating whether the cache if enabled or not.
 	 */
 	public ViewComparator(final Comparator<? super V> comparator, final boolean cache) {
 		assert null != comparator;

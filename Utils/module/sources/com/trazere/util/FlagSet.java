@@ -151,7 +151,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Test wether the given flags is accepted by the mask of the receiver set.
+	 * Test whether the given flags is accepted by the mask of the receiver set.
 	 * 
 	 * @param flags Flags to test.
 	 * @return <code>true</code> when the flags are accepted, <code>false</code> otherwise.
@@ -161,7 +161,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Test wether the given flags is accepted by the mask of the receiver set.
+	 * Test whether the given flags is accepted by the mask of the receiver set.
 	 * 
 	 * @param flags Flags to test.
 	 * @return <code>true</code> when the flags are accepted, <code>false</code> otherwise.

@@ -91,7 +91,7 @@ public class Counter {
 	}
 	
 	/**
-	 * Indicates wether the value of the receiver counter is the start value.
+	 * Indicates whether the value of the receiver counter is the start value.
 	 * 
 	 * @return <code>true</code> when the value if the start value, <code>false</code> otherwise.
 	 */

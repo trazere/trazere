@@ -126,14 +126,14 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	throws RecordException;
 	
 	/**
-	 * Test wether the receiver record signature builder is empty or not.
+	 * Test whether the receiver record signature builder is empty or not.
 	 * 
 	 * @return <code>true</code> when empty, <code>false</code> otherwise.
 	 */
 	public boolean isEmpty();
 	
 	/**
-	 * Test wether the field identified by the given key is signed in the receiver record signature builder.
+	 * Test whether the field identified by the given key is signed in the receiver record signature builder.
 	 * 
 	 * @param key Key of the field.
 	 * @return <code>true</code> when the field is signed, <code>false</code> otherwise.

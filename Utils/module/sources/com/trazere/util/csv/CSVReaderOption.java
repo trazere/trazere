@@ -19,15 +19,15 @@ package com.trazere.util.csv;
  * The {@link CSVReaderOption} enumeration represents options of {@link CSVReader CSV readers}.
  */
 public enum CSVReaderOption {
-	/** Option indicating wether the fields should be trimed or not. */
+	/** Option indicating whether the fields should be trimed or not. */
 	TRIM_FIELDS,
 	
-	/** Option indicating wether the empty fields should be striped or not. */
+	/** Option indicating whether the empty fields should be striped or not. */
 	STRIP_EMPTY_FIELDS,
 	
-	/** Option indicating wether the cardinality of the data line should be checked or not. */
+	/** Option indicating whether the cardinality of the data line should be checked or not. */
 	CHECK_CARDINALITY,
 	
-	/** Option indicating wether the invalid CSV lines should be skipped or not. */
+	/** Option indicating whether the invalid CSV lines should be skipped or not. */
 	SKIP_INVALID_LINES,
 }

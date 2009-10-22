@@ -78,8 +78,8 @@ public class TextUtils {
 	 * @param <C> Type of the collection filled with the results.
 	 * @param string String to split.
 	 * @param delimiter Delimiter string.
-	 * @param trim Flag indicating wether the empty tokens are trimmed.
-	 * @param ignoreEmpty Flag indicating wether the empty tokens are ignored.
+	 * @param trim Flag indicating whether the empty tokens are trimmed.
+	 * @param ignoreEmpty Flag indicating whether the empty tokens are ignored.
 	 * @param results Collection to fill with the tokens.
 	 * @return The given result collection.
 	 */

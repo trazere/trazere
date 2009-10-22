@@ -38,7 +38,7 @@ public interface Cache<K, V> {
 	public void fill(final K key, final V value);
 	
 	/**
-	 * Test wether a value is associated to the given key in the receiver cache.
+	 * Test whether a value is associated to the given key in the receiver cache.
 	 * 
 	 * @param key Key to test.
 	 * @return <code>true</code> when a value is associated to the key, <code>false</code> otherwise.

@@ -266,7 +266,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Test wether the receiver instance has been built using the <code>Left</code> constructor.
+	 * Test whether the receiver instance has been built using the <code>Left</code> constructor.
 	 * 
 	 * @return <code>true</code> when the instance has been built with the <code>Left</code> constructor, <code>false</code> otherwise.
 	 */
@@ -282,7 +282,7 @@ implements Describable {
 	throws InvalidConstructorException;
 	
 	/**
-	 * Test wether the receiver instance has been built using the <code>Right</code> constructor.
+	 * Test whether the receiver instance has been built using the <code>Right</code> constructor.
 	 * 
 	 * @return <code>true</code> when the instance has been built with the <code>Right</code> constructor, <code>false</code> otherwise.
 	 */

@@ -31,7 +31,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * Later inputs in the list are having priority over the previous ones.
 	 * 
-	 * @param inputs Input of the property files to load paired with flags indicating wether they are optional.
+	 * @param inputs Input of the property files to load paired with flags indicating whether they are optional.
 	 * @return The loaded properties.
 	 * @throws PropertiesException When some property file is not optional and does not exist.
 	 * @throws PropertiesException When some property file cannot be loaded.
@@ -47,7 +47,7 @@ public class PropertiesUtils {
 	 * The loaded properties override the given properties. Later inputs in the list are having priority over the previous ones.
 	 * 
 	 * @param properties Properties to fill.
-	 * @param inputs Inputs of the property files to load paired with flags indicating wether they are optional.
+	 * @param inputs Inputs of the property files to load paired with flags indicating whether they are optional.
 	 * @return The given properties.
 	 * @throws PropertiesException When some property file is not optional and does not exist.
 	 * @throws PropertiesException When some property file cannot be loaded.
@@ -71,7 +71,7 @@ public class PropertiesUtils {
 	 * 
 	 * @param properties Properties to populate.
 	 * @param input Input of the property file to load.
-	 * @param optional Flag indicating wether the property file is optional.
+	 * @param optional Flag indicating whether the property file is optional.
 	 * @return The given properties.
 	 * @throws PropertiesException When the property file is not optional and does not exist.
 	 * @throws PropertiesException When the property file cannot be loaded.

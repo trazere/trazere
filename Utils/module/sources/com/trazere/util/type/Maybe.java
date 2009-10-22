@@ -305,7 +305,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Test wether the receiver instance has been built using the <code>None</code> constructor.
+	 * Test whether the receiver instance has been built using the <code>None</code> constructor.
 	 * 
 	 * @return <code>true</code> when the instance has been built with the <code>None</code> constructor, <code>false</code> otherwise.
 	 */
@@ -321,7 +321,7 @@ implements Describable {
 	throws InvalidConstructorException;
 	
 	/**
-	 * Test wether the receiver instance has been built using the <code>Some</code> constructor.
+	 * Test whether the receiver instance has been built using the <code>Some</code> constructor.
 	 * 
 	 * @return <code>true</code> when the instance has been built with the <code>Some</code> constructor, <code>false</code> otherwise.
 	 */

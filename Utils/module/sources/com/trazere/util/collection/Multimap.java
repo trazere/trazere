@@ -66,7 +66,7 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	public boolean putAll(final Multimap<? extends K, ? extends V, ?> multimap);
 	
 	/**
-	 * Indicate wether the receiver multimap is empty or not.
+	 * Indicate whether the receiver multimap is empty or not.
 	 * 
 	 * @return <code>true</code> if the multi is empty, <code>false</code> otherwise.
 	 */
@@ -80,7 +80,7 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	public Set<K> keySet();
 	
 	/**
-	 * Test wether some values are associated to the given key in the receiver multimap.
+	 * Test whether some values are associated to the given key in the receiver multimap.
 	 * 
 	 * @param key The key. May or may not be <code>null</code> according the implementation.
 	 * @return <code>true</code> when some values are associated to the key, <code>false</code> otherwise.
@@ -88,7 +88,7 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	public boolean containsKey(final K key);
 	
 	/**
-	 * Test wether the given value is associated to the given key in the receiver multimap.
+	 * Test whether the given value is associated to the given key in the receiver multimap.
 	 * 
 	 * @param key The key. May or may not be <code>null</code> according the implementation.
 	 * @param value The value. May or may not be <code>null</code> according the implementation.
