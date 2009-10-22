@@ -157,8 +157,8 @@ public class Functions {
 	 * @param <T> Type of the argument values.
 	 * @param <R> Type of the result values.
 	 * @param <X> Type of the exceptions.
-	 * @param function The wrapped function.
-	 * @return
+	 * @param function The lifted function.
+	 * @return The built function.
 	 */
 	public static <T, R, X extends Exception> Function1<T, R, X> lift1(final Function0<? extends R, ? extends X> function) {
 		assert null != function;
@@ -177,8 +177,8 @@ public class Functions {
 	 * @param <T> Type of the argument values.
 	 * @param <R> Type of the result values.
 	 * @param <X> Type of the exceptions.
-	 * @param factory The wrapped factory.
-	 * @return
+	 * @param factory The lifted factory.
+	 * @return The built function.
 	 */
 	public static <T, R, X extends Exception> Function1<T, R, X> lift1(final Factory<? extends R, ? extends X> factory) {
 		assert null != factory;
@@ -217,8 +217,8 @@ public class Functions {
 	 * @param <T2> Type of the second argument values.
 	 * @param <R> Type of the result values.
 	 * @param <X> Type of the exceptions.
-	 * @param function The wrapped function.
-	 * @return
+	 * @param function The lifted function.
+	 * @return The built function.
 	 */
 	public static <T1, T2, R, X extends Exception> Function2<T1, T2, R, X> lift2(final Function0<? extends R, ? extends X> function) {
 		assert null != function;
@@ -238,8 +238,8 @@ public class Functions {
 	 * @param <T2> Type of the second argument values.
 	 * @param <R> Type of the result values.
 	 * @param <X> Type of the exceptions.
-	 * @param function The wrapped function.
-	 * @return
+	 * @param function The lifted function.
+	 * @return The built function.
 	 */
 	public static <T1, T2, R, X extends Exception> Function2<T1, T2, R, X> lift2(final Function1<? super T1, ? extends R, ? extends X> function) {
 		assert null != function;

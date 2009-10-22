@@ -44,7 +44,7 @@ extends ReportListener<Entry> {
 	 * 
 	 * @param filter Filter of entries. May be <code>null</code> to accept all entries.
 	 * @param limit Maximum number of retrieved entries. May be negative to disable the limit.
-	 * @param fromEnd Flag indicating wether the entries should be extracted from the beginning or the end of the store. This flag changes nothing when the
+	 * @param fromEnd Flag indicating whether the entries should be extracted from the beginning or the end of the store. This flag changes nothing when the
 	 *        maximum number of retrieved entries is not limited.
 	 * @return The entries.
 	 * @throws ReportException

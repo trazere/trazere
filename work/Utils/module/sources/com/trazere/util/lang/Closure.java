@@ -40,7 +40,7 @@ extends Function0<T, X> {
 	throws X;
 	
 	/**
-	 * Indicate wether the receiver closure has been evaluated.
+	 * Indicate whether the receiver closure has been evaluated.
 	 * 
 	 * @return <code>true</code> if the closure has been evaluated, <code>false</code> otherwise.
 	 */

@@ -25,7 +25,7 @@ import java.io.InputStream;
  */
 public interface Input {
 	/**
-	 * Indicated wether the underlying data exist so that the stream can be opened.
+	 * Indicated whether the underlying data exist so that the stream can be opened.
 	 * 
 	 * @return <code>true</code> when the data exist, <code>false</code> otherwise.
 	 * @throws IOException When the test cannot be done.

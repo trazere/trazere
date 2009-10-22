@@ -31,7 +31,7 @@ public class TaskListeners {
 	 * Build a task listener which logs the task executions using the given log.
 	 * 
 	 * @param log The log to use.
-	 * @param trace Flag indicated wether the exception trace should be logged or not.
+	 * @param trace Flag indicated whether the exception trace should be logged or not.
 	 * @return The built listener.
 	 */
 	public static TaskListener log(final Log log, final boolean trace) {

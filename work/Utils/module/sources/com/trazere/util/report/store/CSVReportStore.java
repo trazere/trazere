@@ -179,7 +179,7 @@ implements ReportStore<Entry> {
 	}
 	
 	/**
-	 * Test wether the CSV file of the receiver store is currently opened for writing.
+	 * Test whether the CSV file of the receiver store is currently opened for writing.
 	 * 
 	 * @return <code>true</code> when the file of opened for writing, <code>false</code> otherwise.
 	 */
@@ -264,7 +264,7 @@ implements ReportStore<Entry> {
 	}
 	
 	/**
-	 * Test wether the file of the receiver store has been loaded (cached).
+	 * Test whether the file of the receiver store has been loaded (cached).
 	 * 
 	 * @return <code>true</code> when the file is loaded, <code>false</code> otherwise.
 	 */

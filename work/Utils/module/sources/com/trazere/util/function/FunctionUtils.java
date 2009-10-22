@@ -295,7 +295,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Test wether any given value is accepted by the given predicate.
+	 * Test whether any given value is accepted by the given predicate.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param <X> Type of the exceptions.
@@ -319,7 +319,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Test wether any value provided by the given iterator is accepted by the given predicate.
+	 * Test whether any value provided by the given iterator is accepted by the given predicate.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param <X> Type of the exceptions.
@@ -343,7 +343,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Test wether any given binding is accepted by the given predicate.
+	 * Test whether any given binding is accepted by the given predicate.
 	 * <p>
 	 * This method evaluates the predicate by passing the keys and values of the bindings respectively as first and second arguments.
 	 * 
@@ -370,7 +370,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Test wether all given values are accepted by the given predicate.
+	 * Test whether all given values are accepted by the given predicate.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param <X> Type of the exceptions.
@@ -394,7 +394,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Test wether all values provided by the given iterator are accepted by the given predicate.
+	 * Test whether all values provided by the given iterator are accepted by the given predicate.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param <X> Type of the exceptions.
@@ -418,7 +418,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Test wether all given bindings are accepted by the given predicate.
+	 * Test whether all given bindings are accepted by the given predicate.
 	 * <p>
 	 * This method evaluates the predicate by passing the keys and values of the bindings respectively as first and second arguments.
 	 * 
