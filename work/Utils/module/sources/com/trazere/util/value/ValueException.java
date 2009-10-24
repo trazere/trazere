@@ -15,12 +15,33 @@
  */
 package com.trazere.util.value;
 
+import com.trazere.util.lang.ThrowableFactory;
+
 /**
  * {@link ValueException} exceptions are thrown when value related errors occur.
  */
 public class ValueException
 extends Exception {
 	private static final long serialVersionUID = 1L;
+	
+	/** Factory of {@link ValueException}. */
+	public static final ThrowableFactory<ValueException> FACTORY = new ThrowableFactory<ValueException>() {
+		public ValueException build() {
+			return new ValueException();
+		}
+		
+		public ValueException build(final String message) {
+			return new ValueException(message);
+		}
+		
+		public ValueException build(final Throwable cause) {
+			return new ValueException(cause);
+		}
+		
+		public ValueException build(final String message, final Throwable cause) {
+			return new ValueException(message, cause);
+		}
+	};
 	
 	/**
 	 * Instantiate a new exception.

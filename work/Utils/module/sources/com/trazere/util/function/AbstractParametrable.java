@@ -15,6 +15,7 @@
  */
 package com.trazere.util.function;
 
+import com.trazere.util.lang.ThrowableFactory;
 import com.trazere.util.record.FieldSignature;
 import com.trazere.util.record.IncompatibleFieldException;
 import com.trazere.util.record.RecordException;
@@ -31,12 +32,27 @@ import com.trazere.util.record.SimpleRecordSignatureBuilder;
  */
 public abstract class AbstractParametrable<K, V, X extends Exception>
 implements Parametrable<K, V, X> {
+	/** The factory of the exceptions. */
+	protected final ThrowableFactory<X> _exceptionFactory;
+	
+	/**
+	 * Instantiate a new parametrable.
+	 * 
+	 * @param exceptionFactory The factory of the exceptions.
+	 */
+	public AbstractParametrable(final ThrowableFactory<X> exceptionFactory) {
+		assert null != exceptionFactory;
+		
+		// Initialization.
+		_exceptionFactory = exceptionFactory;
+	}
+	
 	public RecordSignature<K, V> getRequirements()
 	throws X {
 		try {
 			return unifyRequirements(new SimpleRecordSignatureBuilder<K, V>()).build();
 		} catch (final IncompatibleFieldException exception) {
-			throw wrapException(exception);
+			throw _exceptionFactory.build(exception);
 		}
 	}
 	
@@ -63,7 +79,7 @@ implements Parametrable<K, V, X> {
 		} catch (final IncompatibleFieldException exception) {
 			throw exception;
 		} catch (final RecordException exception) {
-			throw wrapException(exception);
+			throw _exceptionFactory.build(exception);
 		}
 	}
 	
@@ -89,15 +105,7 @@ implements Parametrable<K, V, X> {
 		} catch (final IncompatibleFieldException exception) {
 			throw exception;
 		} catch (final RecordException exception) {
-			throw wrapException(exception);
+			throw _exceptionFactory.build(exception);
 		}
 	}
-	
-	/**
-	 * Wrap the given throwable in an exception thrown by the receiver element.
-	 * 
-	 * @param throwable The throwable.
-	 * @return The built exception.
-	 */
-	protected abstract X wrapException(final Throwable throwable);
 }
