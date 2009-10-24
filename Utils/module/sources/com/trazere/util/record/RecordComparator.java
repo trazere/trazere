@@ -15,13 +15,11 @@
  */
 package com.trazere.util.record;
 
-import com.trazere.util.lang.LangUtils;
+import com.trazere.util.lang.ViewComparator;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
 import java.util.Comparator;
-
-// TODO: should extend ViewComparator
 
 /**
  * The {@link RecordComparator} class represents comparators of records based on the value of a single field.
@@ -31,12 +29,10 @@ import java.util.Comparator;
  * @param <R> Type of the records.
  */
 public class RecordComparator<K, V, R extends Record<? super K, ? extends V>>
-implements Comparator<R>, Describable {
+extends ViewComparator<R, V>
+implements Describable {
 	/** Key identifying the field used for comparison. */
 	protected final K _key;
-	
-	/** Comparator of the values of the field. */
-	protected final Comparator<V> _comparator;
 	
 	/**
 	 * Instantiate a new record comparator.
@@ -45,12 +41,13 @@ implements Comparator<R>, Describable {
 	 * @param comparator Comparator of the values of the field.
 	 */
 	public RecordComparator(final K key, final Comparator<V> comparator) {
+		super(comparator);
+		
+		// Checks.
 		assert null != key;
-		assert null != comparator;
 		
 		// Initialization.
 		_key = key;
-		_comparator = comparator;
 	}
 	
 	/**
@@ -62,11 +59,14 @@ implements Comparator<R>, Describable {
 		return _key;
 	}
 	
-	public int compare(final R record1, final R record2) {
+	@Override
+	protected V computeValue(final R record) {
+		assert null != record;
+		
 		try {
-			return LangUtils.compare(record1.get(_key), record2.get(_key), _comparator);
+			return record.get(_key);
 		} catch (final RecordException exception) {
-			throw new RuntimeException("Failed reading records " + record1 + " and " + record2, exception);
+			throw new RuntimeException("Failed reading record " + record, exception);
 		}
 	}
 	
