@@ -29,34 +29,38 @@ import com.trazere.util.text.TextUtils;
 public abstract class AbstractValueReader<T>
 extends AbstractParametrable<String, Object, ValueException>
 implements ValueReader<T>, Describable {
-	/** Type of the values. */
-	protected final Class<T> _type;
-	
 	/**
 	 * Instanciate a new reader with the given type.
 	 * 
 	 * @param type Type of the values.
 	 */
 	protected AbstractValueReader(final Class<T> type) {
+		super(ValueException.FACTORY);
+		
+		// Checks.
 		assert null != type;
 		
 		// Initialization.
 		_type = type;
 	}
 	
+	// Type.
+	
+	/** Type of the values. */
+	protected final Class<T> _type;
+	
 	public Class<T> getType() {
 		return _type;
 	}
+	
+	// Function.
 	
 	public T evaluate(final Record<String, Object> parameters)
 	throws ValueException {
 		return read(parameters);
 	}
 	
-	@Override
-	protected ValueException wrapException(final Throwable throwable) {
-		return new ValueException(throwable);
-	}
+	// Object.
 	
 	@Override
 	public String toString() {
