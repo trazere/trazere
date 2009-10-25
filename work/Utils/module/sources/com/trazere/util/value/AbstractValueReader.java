@@ -16,6 +16,7 @@
 package com.trazere.util.value;
 
 import com.trazere.util.function.AbstractParametrable;
+import com.trazere.util.lang.ThrowableFactory;
 import com.trazere.util.record.Record;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.Description;
@@ -35,9 +36,6 @@ implements ValueReader<T>, Describable {
 	 * @param type Type of the values.
 	 */
 	protected AbstractValueReader(final Class<T> type) {
-		super(ValueException.FACTORY);
-		
-		// Checks.
 		assert null != type;
 		
 		// Initialization.
@@ -58,6 +56,11 @@ implements ValueReader<T>, Describable {
 	public T evaluate(final Record<String, Object> parameters)
 	throws ValueException {
 		return read(parameters);
+	}
+	
+	@Override
+	protected ThrowableFactory<ValueException> getThrowableFactory() {
+		return ValueException.FACTORY;
 	}
 	
 	// Object.
