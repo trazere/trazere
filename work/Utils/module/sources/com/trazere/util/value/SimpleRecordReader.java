@@ -79,6 +79,10 @@ extends AbstractRecordReader<K, V> {
 		return builder;
 	}
 	
+	public boolean isEmpty() {
+		return _fields.isEmpty();
+	}
+	
 	public boolean contains(final K key) {
 		assert null != key;
 		

@@ -94,7 +94,7 @@ public interface RecordBuilder<K, V, R extends Record<K, V>> {
 	public boolean contains(final K key);
 	
 	/**
-	 * Test whether some field is identified by the key of the given signature in the receiver record builder or not.
+	 * Test whether some field is identified by the key and has the type of the given signature in the receiver record builder or not.
 	 * 
 	 * @param field The signature of the field.
 	 * @return <code>true</code> when some field is identified by the key of the given signature, <code>false</code> otherwise.
