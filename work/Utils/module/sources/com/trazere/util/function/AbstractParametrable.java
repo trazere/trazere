@@ -32,27 +32,12 @@ import com.trazere.util.record.SimpleRecordSignatureBuilder;
  */
 public abstract class AbstractParametrable<K, V, X extends Exception>
 implements Parametrable<K, V, X> {
-	/** The factory of the exceptions. */
-	protected final ThrowableFactory<X> _exceptionFactory;
-	
-	/**
-	 * Instantiate a new parametrable.
-	 * 
-	 * @param exceptionFactory The factory of the exceptions.
-	 */
-	public AbstractParametrable(final ThrowableFactory<X> exceptionFactory) {
-		assert null != exceptionFactory;
-		
-		// Initialization.
-		_exceptionFactory = exceptionFactory;
-	}
-	
 	public RecordSignature<K, V> getRequirements()
 	throws X {
 		try {
 			return unifyRequirements(new SimpleRecordSignatureBuilder<K, V>()).build();
 		} catch (final IncompatibleFieldException exception) {
-			throw _exceptionFactory.build(exception);
+			throw getThrowableFactory().build(exception);
 		}
 	}
 	
@@ -61,25 +46,22 @@ implements Parametrable<K, V, X> {
 	 * <p>
 	 * The corresponding field must either not be signed or be signed with a compatible type in the given record signature builder.
 	 * 
-	 * @param <B> Type of the signature builder.
 	 * @param key The key of the field.
 	 * @param type The type of the values.
 	 * @param builder The signature builder.
-	 * @return The given signature builder.
 	 * @throws IncompatibleFieldException When the given and current signature of the field are not compatible.
 	 * @throws X When the field signature cannot be unified.
 	 */
-	public <B extends RecordSignatureBuilder<String, Object, ?>> B unify(final String key, final Class<? extends Object> type, final B builder)
+	public void unify(final String key, final Class<? extends Object> type, final RecordSignatureBuilder<String, Object, ?> builder)
 	throws X, IncompatibleFieldException {
 		assert null != builder;
 		
 		try {
 			builder.unify(key, type);
-			return builder;
 		} catch (final IncompatibleFieldException exception) {
 			throw exception;
 		} catch (final RecordException exception) {
-			throw _exceptionFactory.build(exception);
+			throw getThrowableFactory().build(exception);
 		}
 	}
 	
@@ -88,24 +70,28 @@ implements Parametrable<K, V, X> {
 	 * <p>
 	 * The corresponding field must either not be signed or be signed with a compatible type in the given record signature builder.
 	 * 
-	 * @param <B> Type of the signature builder.
 	 * @param field Field signature to unify.
 	 * @param builder The signature builder.
-	 * @return The given signature builder.
 	 * @throws IncompatibleFieldException When the given and current signature of the field are not compatible.
 	 * @throws X When the field signature cannot be unified.
 	 */
-	public <B extends RecordSignatureBuilder<String, Object, ?>> B unify(final FieldSignature<String, ? extends Object> field, final B builder)
+	public void unify(final FieldSignature<String, ? extends Object> field, final RecordSignatureBuilder<String, Object, ?> builder)
 	throws X, IncompatibleFieldException {
 		assert null != builder;
 		
 		try {
 			builder.unify(field);
-			return builder;
 		} catch (final IncompatibleFieldException exception) {
 			throw exception;
 		} catch (final RecordException exception) {
-			throw _exceptionFactory.build(exception);
+			throw getThrowableFactory().build(exception);
 		}
 	}
+	
+	/**
+	 * Get the exception factory to use.
+	 * 
+	 * @return The exception factory.
+	 */
+	protected abstract ThrowableFactory<X> getThrowableFactory();
 }
