@@ -142,7 +142,8 @@ implements RecordBuilder<K, V, R>, Describable {
 		assert null != field;
 		
 		// Test.
-		return contains(field.getKey());
+		final K key = field.getKey();
+		return _fields.containsKey(key) && field.getType().isInstance(_fields.get(key));
 	}
 	
 	public Set<K> getKeys() {

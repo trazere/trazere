@@ -30,6 +30,15 @@ import java.util.Set;
 public interface RecordReader<K, V>
 extends ParameterFunction<String, Object, Record<K, V>, ValueException> {
 	/**
+	 * Test whether the records produced by the receiver reader are empty or not.
+	 * 
+	 * @return <code>true</code> when empty, <code>false</code> otherwise.
+	 * @throws ValueException When the emptyness connot by computed.
+	 */
+	public boolean isEmpty()
+	throws ValueException;
+	
+	/**
 	 * Test whether some field is identified by the given key in the records produced by the receiver reader or not.
 	 * 
 	 * @param key Key of the field to test.
