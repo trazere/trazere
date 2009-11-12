@@ -55,6 +55,10 @@ implements Cache<K, V>, Describable {
 		return _entries.containsKey(key);
 	}
 	
+	public int size() {
+		return _entries.size();
+	}
+	
 	public Set<K> getKeys() {
 		return Collections.unmodifiableSet(_entries.keySet());
 	}
