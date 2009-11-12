@@ -44,7 +44,7 @@ implements Parametrable<K, V, X> {
 	/**
 	 * Unify the signature of the field corresponding to the given key and type within the given record signature builder.
 	 * <p>
-	 * The corresponding field must either not be signed or be signed with a compatible type in the given record signature builder.
+	 * The unified field must either not be signed or be signed with a compatible type in the given record signature builder.
 	 * 
 	 * @param key The key of the field.
 	 * @param type The type of the values.
@@ -68,7 +68,7 @@ implements Parametrable<K, V, X> {
 	/**
 	 * Unify the given field signature within the given record signature builder.
 	 * <p>
-	 * The corresponding field must either not be signed or be signed with a compatible type in the given record signature builder.
+	 * The unified field must either not be signed or be signed with a compatible type in the given record signature builder.
 	 * 
 	 * @param field Field signature to unify.
 	 * @param builder The signature builder.
@@ -81,6 +81,53 @@ implements Parametrable<K, V, X> {
 		
 		try {
 			builder.unify(field);
+		} catch (final IncompatibleFieldException exception) {
+			throw exception;
+		} catch (final RecordException exception) {
+			throw getThrowableFactory().build(exception);
+		}
+	}
+	
+	/**
+	 * Unify the fields of the given signature record within the given record signature builder.
+	 * <p>
+	 * The unified fields must either not be signed or be signed with a compatible type in the given record signature builder.
+	 * 
+	 * @param record The record signature.
+	 * @param builder The signature builder.
+	 * @throws IncompatibleFieldException When the given and current signature of the field are not compatible.
+	 * @throws X When the field signature cannot be unified.
+	 */
+	public void unifyAll(final RecordSignature<String, ? extends Object> record, final RecordSignatureBuilder<String, Object, ?> builder)
+	throws X, IncompatibleFieldException {
+		assert null != builder;
+		
+		try {
+			builder.unifyAll(record);
+		} catch (final IncompatibleFieldException exception) {
+			throw exception;
+		} catch (final RecordException exception) {
+			throw getThrowableFactory().build(exception);
+		}
+	}
+	
+	/**
+	 * Unify the fields of the given signature record accepted by the given filter within the given record signature builder.
+	 * <p>
+	 * The unified fields must either not be signed or be signed with a compatible type in the given record signature builder.
+	 * 
+	 * @param filter The filter.
+	 * @param record The record signature.
+	 * @param builder The signature builder.
+	 * @throws IncompatibleFieldException When the given and current signature of the field are not compatible.
+	 * @throws X When the field signature cannot be unified.
+	 */
+	public void unifyAll(final Predicate1<? super FieldSignature<String, ? extends Object>, ? extends RecordException> filter, final RecordSignature<String, ? extends Object> record, final RecordSignatureBuilder<String, Object, ?> builder)
+	throws X, IncompatibleFieldException {
+		assert null != builder;
+		
+		try {
+			builder.unifyAll(filter, record);
 		} catch (final IncompatibleFieldException exception) {
 			throw exception;
 		} catch (final RecordException exception) {
