@@ -15,6 +15,7 @@
  */
 package com.trazere.util.record;
 
+import com.trazere.util.function.Predicate1;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
@@ -166,20 +167,7 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 		
 		// Unify the field signatures.
 		for (final FieldSignature<K, ? extends V> field : fields) {
-			final K key = field.getKey();
-			if (_fields.containsKey(key)) {
-				final Class<? extends V> type = field.getType();
-				final Class<? extends V> currentType = _fields.get(key).getType();
-				if (!type.isAssignableFrom(currentType)) {
-					if (currentType.isAssignableFrom(type)) {
-						_fields.put(key, field);
-					} else {
-						throw new IncompatibleFieldException("Cannot unify field + \"" + key + "\" of type " + type + " with type " + currentType + " in builder " + this);
-					}
-				}
-			} else {
-				_fields.put(key, field);
-			}
+			unify(field);
 		}
 	}
 	
@@ -188,7 +176,23 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 		assert null != signature;
 		
 		// Unify the field signatures.
-		unifyAll(signature.asMap().values());
+		for (final K key : signature.getKeys()) {
+			unify(signature.get(key));
+		}
+	}
+	
+	public void unifyAll(final Predicate1<? super FieldSignature<K, ? extends V>, ? extends RecordException> filter, final RecordSignature<K, ? extends V> signature)
+	throws RecordException {
+		assert null != filter;
+		assert null != signature;
+		
+		// Unify the field signatures.
+		for (final K key : signature.getKeys()) {
+			final FieldSignature<K, ? extends V> fieldSignature = signature.get(key);
+			if (filter.evaluate(fieldSignature)) {
+				unify(signature.get(key));
+			}
+		}
 	}
 	
 	public boolean isEmpty() {
