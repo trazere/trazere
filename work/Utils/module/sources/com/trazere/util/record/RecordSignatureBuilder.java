@@ -15,6 +15,7 @@
  */
 package com.trazere.util.record;
 
+import com.trazere.util.function.Predicate1;
 import java.util.Collection;
 import java.util.Set;
 
@@ -30,7 +31,7 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	/**
 	 * Add the field signature corresponding to the given key and type to the receiver record signature builder.
 	 * <p>
-	 * The corresponding field must not be signed in the receiver record signature builder.
+	 * The added field must not be signed in the receiver record signature builder.
 	 * 
 	 * @param key The key of the field.
 	 * @param type The type of the values.
@@ -43,7 +44,7 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	/**
 	 * Add the given field signature to the receiver record signature builder.
 	 * <p>
-	 * The corresponding field must not be signed in the receiver record signature builder.
+	 * The added field must not be signed in the receiver record signature builder.
 	 * 
 	 * @param field Field signature to add.
 	 * @throws DuplicateFieldException When the field is already signed.
@@ -55,7 +56,7 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	/**
 	 * Add the given field signatures to the receiver record signature builder.
 	 * <p>
-	 * The corresponding fields must not be signed in the receiver record signature builder.
+	 * The added fields must not be signed in the receiver record signature builder.
 	 * 
 	 * @param fields Field signatures to add.
 	 * @throws DuplicateFieldException When some field is already signed.
@@ -67,7 +68,7 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	/**
 	 * Add the field signatures of the given record signature to the receiver record signature builder.
 	 * <p>
-	 * The fields signed in the record signature must not be signed in the receiver record signature builder.
+	 * The added fields must not be signed in the receiver record signature builder.
 	 * 
 	 * @param signature Record signature containing the field signatures to add.
 	 * @throws DuplicateFieldException When some field is already signed.
@@ -79,7 +80,7 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	/**
 	 * Unify the signature of the field corresponding to the given key and type within the receiver record signature builder.
 	 * <p>
-	 * The corresponding field must either not be signed or be signed with a compatible type in the receiver record signature builder.
+	 * The unified field must either not be signed or be signed with a compatible type in the receiver record signature builder.
 	 * 
 	 * @param key The key of the field.
 	 * @param type The type of the values.
@@ -92,7 +93,7 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	/**
 	 * Unify the given field signature within the receiver record signature builder.
 	 * <p>
-	 * The corresponding field must either not be signed or be signed with a compatible type in the receiver record signature builder.
+	 * The unified field must either not be signed or be signed with a compatible type in the receiver record signature builder.
 	 * 
 	 * @param field Field signature to unify.
 	 * @throws IncompatibleFieldException When the given and current signature of the field are not compatible.
@@ -104,7 +105,7 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	/**
 	 * Unify the given field signatures within the receiver record signature builder.
 	 * <p>
-	 * The corresponding fields must either not be signed or be signed with compatible types in the receiver record signature builder.
+	 * The unified fields must either not be signed or be signed with compatible types in the receiver record signature builder.
 	 * 
 	 * @param fields Field signatures to unify.
 	 * @throws IncompatibleFieldException When the given and current signature of some field are not compatible.
@@ -116,13 +117,26 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	/**
 	 * Unify the field signatures of the given record signature within the receiver record signature builder.
 	 * <p>
-	 * The fields signed in the given record signature must either not be signed or be signed with compatible types in the receiver record signature builder.
+	 * The unified fields must either not be signed or be signed with compatible types in the receiver record signature builder.
 	 * 
 	 * @param signature Record signature to unify.
 	 * @throws IncompatibleFieldException When the given and current signature of some field are not compatible.
 	 * @throws RecordException When the field signatures cannot be unified.
 	 */
 	public void unifyAll(final RecordSignature<K, ? extends V> signature)
+	throws RecordException;
+	
+	/**
+	 * Unify the field signatures of the given record signature accepted by the given filter within the receiver record signature builder.
+	 * <p>
+	 * The unified fields must either not be signed or be signed with compatible types in the receiver record signature builder.
+	 * 
+	 * @param filter The filter.
+	 * @param signature Record signature to unify.
+	 * @throws IncompatibleFieldException When the given and current signature of some field are not compatible.
+	 * @throws RecordException When the field signatures cannot be unified.
+	 */
+	public void unifyAll(final Predicate1<? super FieldSignature<K, ? extends V>, ? extends RecordException> filter, final RecordSignature<K, ? extends V> signature)
 	throws RecordException;
 	
 	/**

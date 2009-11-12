@@ -218,7 +218,7 @@ implements Record<K, V>, Describable {
 		return getTyped(signature.getKey(), signature.getType());
 	}
 	
-	public <T extends V> T getTyped(final com.trazere.util.record.FieldSignature<? extends K, T> signature, final T defaultValue)
+	public <T extends V> T getTyped(final FieldSignature<? extends K, T> signature, final T defaultValue)
 	throws IncompatibleFieldException {
 		assert null != signature;
 		
