@@ -33,6 +33,13 @@ extends ParameterFunction<String, Object, T, ValueException> {
 	public Class<T> getType();
 	
 	/**
+	 * Indicates whether the values produced by the receiver reader of can be <code>null</code> or not.
+	 * 
+	 * @return <code>true</code> when the values can be <code>null</code>, <code>false</code> otherwise.
+	 */
+	public boolean isNullable();
+	
+	/**
 	 * Read the value defined by the receiver reader using the given parameters.
 	 * 
 	 * @param parameters Parameters to use.

@@ -71,44 +71,34 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 		_fields = new HashMap<K, FieldSignature<K, ? extends V>>(signature.asMap());
 	}
 	
-	public void add(final K key, final Class<? extends V> type)
+	public void add(final K key, final Class<? extends V> type, final boolean nullable)
 	throws RecordException {
 		assert null != key;
 		assert null != type;
 		
 		// Add the field signature.
 		if (!_fields.containsKey(key)) {
-			_fields.put(key, FieldSignature.build(key, type));
+			_fields.put(key, FieldSignature.build(key, type, nullable));
 		} else {
 			throw new DuplicateFieldException("Field \"" + key + "\" already signed in builder " + this);
 		}
 	}
 	
 	public void add(final FieldSignature<K, ? extends V> signature)
-	throws DuplicateFieldException {
+	throws RecordException {
 		assert null != signature;
 		
 		// Add the field signature.
-		final K key = signature.getKey();
-		if (!_fields.containsKey(key)) {
-			_fields.put(key, signature);
-		} else {
-			throw new DuplicateFieldException("Field \"" + key + "\" already signed in builder " + this);
-		}
+		add(signature.getKey(), signature.getType(), signature.isNullable());
 	}
 	
 	public void addAll(final Collection<? extends FieldSignature<K, ? extends V>> fields)
-	throws DuplicateFieldException {
+	throws RecordException {
 		assert null != fields;
 		
 		// Add the field signatures.
 		for (final FieldSignature<K, ? extends V> field : fields) {
-			final K key = field.getKey();
-			if (!_fields.containsKey(key)) {
-				_fields.put(key, field);
-			} else {
-				throw new DuplicateFieldException("Field \"" + key + "\" already signed in builder " + this);
-			}
+			add(field);
 		}
 	}
 	
@@ -117,52 +107,55 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 		assert null != signature;
 		
 		// Add the field signatures.
-		addAll(signature.asMap().values());
+		for (final K key : signature.getKeys()) {
+			add(signature.get(key));
+		}
 	}
 	
-	public void unify(final K key, final Class<? extends V> type)
+	public void unify(final K key, final Class<? extends V> type, final boolean nullable)
 	throws RecordException {
 		assert null != key;
 		assert null != type;
 		
 		// Unify the field signature.
-		if (_fields.containsKey(key)) {
-			final Class<? extends V> currentType = _fields.get(key).getType();
-			if (!type.isAssignableFrom(currentType)) {
-				if (currentType.isAssignableFrom(type)) {
-					_fields.put(key, FieldSignature.build(key, type));
-				} else {
-					throw new IncompatibleFieldException("Cannot unify field + \"" + key + "\" of type " + type + " with type " + currentType + " in builder " + this);
-				}
-			}
-		} else {
-			_fields.put(key, FieldSignature.build(key, type));
-		}
+		unify(FieldSignature.build(key, type, nullable));
 	}
 	
 	public void unify(final FieldSignature<K, ? extends V> field)
-	throws IncompatibleFieldException {
+	throws RecordException {
 		assert null != field;
 		
 		// Unify the field signature.
 		final K key = field.getKey();
+		final FieldSignature<K, ? extends V> unifiedField;
 		if (_fields.containsKey(key)) {
+			final FieldSignature<K, ? extends V> currentField = _fields.get(key);
+			
+			// Unify the type.
 			final Class<? extends V> type = field.getType();
-			final Class<? extends V> currentType = _fields.get(key).getType();
-			if (!type.isAssignableFrom(currentType)) {
-				if (currentType.isAssignableFrom(type)) {
-					_fields.put(key, field);
-				} else {
-					throw new IncompatibleFieldException("Cannot unify field + \"" + key + "\" of type " + type + " with type " + currentType + " in builder " + this);
-				}
+			final Class<? extends V> currentType = currentField.getType();
+			final Class<? extends V> unifiedType;
+			if (type.isAssignableFrom(currentType)) {
+				unifiedType = currentType;
+			} else if (currentType.isAssignableFrom(type)) {
+				unifiedType = type;
+			} else {
+				throw new IncompatibleFieldException("Cannot unify field + \"" + key + "\" of type \"" + type + "\" with type \"" + currentType + "\" in builder " + this);
 			}
+			
+			// Unify the nullability.
+			final boolean unifiedNullable = field.isNullable() && currentField.isNullable();
+			
+			// Build the unified field.
+			unifiedField = FieldSignature.build(key, unifiedType, unifiedNullable);
 		} else {
-			_fields.put(key, field);
+			unifiedField = field;
 		}
+		_fields.put(key, unifiedField);
 	}
 	
 	public void unifyAll(final Collection<? extends FieldSignature<K, ? extends V>> fields)
-	throws IncompatibleFieldException {
+	throws RecordException {
 		assert null != fields;
 		
 		// Unify the field signatures.

@@ -54,7 +54,7 @@ extends AbstractValueReader<T> {
 	 * @param type Type of the produced value.
 	 */
 	public ConstantValueReader(final T value, final Class<T> type) {
-		super(type);
+		super(type, null == value);
 		
 		// Initialization.
 		_value = value;

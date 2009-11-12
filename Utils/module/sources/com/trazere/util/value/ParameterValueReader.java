@@ -23,8 +23,6 @@ import com.trazere.util.record.RecordException;
 import com.trazere.util.record.RecordSignatureBuilder;
 import com.trazere.util.text.Description;
 
-// TODO: signature is incomplete when the parameter is optional !
-
 /**
  * The {@link ParameterValueReader} class reads values from the parameters.
  * <p>
@@ -44,7 +42,20 @@ extends AbstractValueReader<T> {
 	 * @return The built reader.
 	 */
 	public static <T> ParameterValueReader<T> build(final String name, final Class<T> type) {
-		return new ParameterValueReader<T>(name, type);
+		return new ParameterValueReader<T>(name, type, true);
+	}
+	
+	/**
+	 * Build a new parameter reader with the given parameter name and type.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param name The name of the parameter to read.
+	 * @param type The type of the value.
+	 * @param nullable The flag indicating whether the value of the parameter can be <code>null</code> or not.
+	 * @return The built reader.
+	 */
+	public static <T> ParameterValueReader<T> build(final String name, final Class<T> type, final boolean nullable) {
+		return new ParameterValueReader<T>(name, type, nullable);
 	}
 	
 	/**
@@ -58,82 +69,33 @@ extends AbstractValueReader<T> {
 		return new ParameterValueReader<T>(signature);
 	}
 	
-	/**
-	 * Build a new parameter reader with the given parameter name and type.
-	 * 
-	 * @param <T> Type of the value.
-	 * @param name The name of the parameter to read.
-	 * @param type The type of the value.
-	 * @param optional Flag indicating whether the parameter is optional or mandatory.
-	 * @return The built reader.
-	 */
-	public static <T> ParameterValueReader<T> build(final String name, final Class<T> type, final boolean optional) {
-		return new ParameterValueReader<T>(name, type, optional);
-	}
-	
-	/**
-	 * Build a new parameter reader with the given parameter name and type.
-	 * 
-	 * @param <T> Type of the value.
-	 * @param signature The signature of the parameter.
-	 * @param optional Flag indicating whether the parameter is optional or mandatory.
-	 * @return The built reader.
-	 */
-	public static <T> ParameterValueReader<T> build(final FieldSignature<String, T> signature, final boolean optional) {
-		return new ParameterValueReader<T>(signature, optional);
-	}
-	
 	/** The name of the parameter to read. */
 	protected final String _name;
-	
-	/** Flag indicating whether the parameter is optional or mandatory. */
-	protected final boolean _optional;
-	
-	/**
-	 * Instantiate a new mandatory parameter reader with the given parameter name and type.
-	 * 
-	 * @param name The name of the parameter to read.
-	 * @param type The type of the value.
-	 */
-	public ParameterValueReader(final String name, final Class<T> type) {
-		this(name, type, false);
-	}
-	
-	/**
-	 * Instanciate a new mandatory parameter reader with the given field signature.
-	 * 
-	 * @param signature The signature of the parameter.
-	 */
-	public ParameterValueReader(final FieldSignature<String, T> signature) {
-		this(signature.getKey(), signature.getType(), false);
-	}
 	
 	/**
 	 * Instantiate a new reader with the given parameter name and type and flag.
 	 * 
 	 * @param name The name of the parameter to read.
 	 * @param type The type of the value.
-	 * @param optional Flag indicating whether the parameter is optional or mandatory.
+	 * @param nullable The flag indicating whether the value of the parameter can be <code>null</code> or not.
 	 */
-	public ParameterValueReader(final String name, final Class<T> type, final boolean optional) {
-		super(type);
+	public ParameterValueReader(final String name, final Class<T> type, final boolean nullable) {
+		super(type, nullable);
 		
 		// Checks.
 		assert null != name;
 		
-		// Initialization. 
+		// Initialization.
 		_name = name;
-		_optional = optional;
 	}
 	
 	/**
 	 * Instanciate a new parameter reader with the given field signature.
 	 * 
 	 * @param signature The signature of the parameter.
-	 * @param optional Flag indicating whether the parameter is optional or mandatory.
 	 */
-	public ParameterValueReader(final FieldSignature<String, T> signature, final boolean optional) {
-		this(signature.getKey(), signature.getType(), optional);
+	public ParameterValueReader(final FieldSignature<String, T> signature) {
+		this(signature.getKey(), signature.getType(), signature.isNullable());
 	}
 	
 	/**
@@ -147,16 +109,14 @@ extends AbstractValueReader<T> {
 	
 	public <B extends RecordSignatureBuilder<String, Object, ?>> B unifyRequirements(final B builder)
 	throws ValueException, IncompatibleFieldException {
-		if (!_optional) {
-			unify(_name, _type, builder);
-		}
+		unify(_name, _type, _nullable, builder);
 		return builder;
 	}
 	
 	public T read(final Record<String, Object> parameters)
 	throws ValueException {
 		try {
-			return _optional ? parameters.getTyped(_name, _type, null) : parameters.getTyped(_name, _type);
+			return parameters.getTyped(_name, _type);
 		} catch (final RecordException exception) {
 			throw new ValueException(exception);
 		}
@@ -167,25 +127,29 @@ extends AbstractValueReader<T> {
 	throws ValueException {
 		assert null != reader;
 		
-		if (!_optional || reader.contains(_name)) {
-			final ValueReader<? extends Object> valueReader = reader.get(_name);
-			final Class<? extends Object> type = valueReader.getType();
-			if (_type.equals(type)) {
-				return (ValueReader<T>) valueReader;
-			} else if (_type.isAssignableFrom(valueReader.getType())) {
-				return adapt((ValueReader<? extends T>) valueReader);
-			} else {
-				throw new ValueException("Value reader of field " + _name + " is not compatible with type " + _type + " in record reader " + reader);
-			}
+		// Get the value reader which produces the parameter to read.
+		final ValueReader<? extends Object> valueReader = reader.get(_name);
+		
+		// Check the nullability.
+		if (!_nullable && valueReader.isNullable()) {
+			throw new ValueException("Value reader of field \"" + _name + "\" should not be nullable in record reader " + reader);
+		}
+		
+		// Check the type.
+		final Class<? extends Object> type = valueReader.getType();
+		if (_type.equals(type)) {
+			return (ValueReader<T>) valueReader;
+		} else if (_type.isAssignableFrom(valueReader.getType())) {
+			return adapt((ValueReader<? extends T>) valueReader);
 		} else {
-			return ConstantValueReader.build(null, _type);
+			throw new ValueException("Value reader of field \"" + _name + "\" is not compatible with type \"" + _type + "\" in record reader " + reader);
 		}
 	}
 	
 	private ValueReader<T> adapt(final ValueReader<? extends T> valueReader) {
 		assert null != valueReader;
 		
-		return new AbstractValueReader<T>(_type) {
+		return new AbstractValueReader<T>(_type, _nullable) {
 			public <B extends RecordSignatureBuilder<String, Object, ?>> B unifyRequirements(final B builder)
 			throws ValueException, IncompatibleFieldException {
 				return valueReader.unifyRequirements(builder);
@@ -208,7 +172,7 @@ extends AbstractValueReader<T> {
 		final HashCode result = new HashCode(this);
 		result.append(_type);
 		result.append(_name);
-		result.append(_optional);
+		result.append(_nullable);
 		return result.get();
 	}
 	
@@ -218,7 +182,7 @@ extends AbstractValueReader<T> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final ParameterValueReader<?> reader = (ParameterValueReader<?>) object;
-			return _type.equals(reader._type) && _name.equals(reader._name) && _optional == reader._optional;
+			return _type.equals(reader._type) && _name.equals(reader._name) && _nullable == reader._nullable;
 		} else {
 			return false;
 		}
@@ -228,6 +192,6 @@ extends AbstractValueReader<T> {
 	public void fillDescription(final Description description) {
 		description.append("Name", _name);
 		super.fillDescription(description);
-		description.append("Optional", _optional);
+		description.append("Optional", _nullable);
 	}
 }

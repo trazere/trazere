@@ -31,15 +31,17 @@ public abstract class AbstractValueReader<T>
 extends AbstractParametrable<String, Object, ValueException>
 implements ValueReader<T>, Describable {
 	/**
-	 * Instanciate a new reader with the given type.
+	 * Instanciate a new reader with the given type and nullablity.
 	 * 
-	 * @param type Type of the values.
+	 * @param type The type of the values.
+	 * @param nullable The flag indicating whether the values can be <code>null</code> or not.
 	 */
-	protected AbstractValueReader(final Class<T> type) {
+	protected AbstractValueReader(final Class<T> type, final boolean nullable) {
 		assert null != type;
 		
 		// Initialization.
 		_type = type;
+		_nullable = nullable;
 	}
 	
 	// Type.
@@ -49,6 +51,15 @@ implements ValueReader<T>, Describable {
 	
 	public Class<T> getType() {
 		return _type;
+	}
+	
+	// Nullabity.
+	
+	/** The flag indicating whether the values can be <code>null</code> or not. */
+	protected final boolean _nullable;
+	
+	public boolean isNullable() {
+		return _nullable;
 	}
 	
 	// Function.
