@@ -338,17 +338,6 @@ public class TextUtils {
 		return builder.toString();
 	}
 	
-	private static final Map<Character, String> _XML_ENTITIES;
-	static {
-		final Map<Character, String> entities = new HashMap<Character, String>();
-		entities.put('&', "amp");
-		//		entities.put('\'', "apos");
-		entities.put('>', "gt");
-		entities.put('<', "lt");
-		entities.put('"', "quot");
-		_XML_ENTITIES = Collections.unmodifiableMap(entities);
-	}
-	
 	/**
 	 * Build a regular expression corresponding to the given string.
 	 * 
@@ -382,6 +371,17 @@ public class TextUtils {
 			}
 		}
 		return result;
+	}
+	
+	private static final Map<Character, String> _XML_ENTITIES;
+	static {
+		final Map<Character, String> entities = new HashMap<Character, String>();
+		entities.put('&', "amp");
+		//		entities.put('\'', "apos");
+		entities.put('>', "gt");
+		entities.put('<', "lt");
+		entities.put('"', "quot");
+		_XML_ENTITIES = Collections.unmodifiableMap(entities);
 	}
 	
 	/**
