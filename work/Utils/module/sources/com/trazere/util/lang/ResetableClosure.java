@@ -15,6 +15,7 @@
  */
 package com.trazere.util.lang;
 
+import com.trazere.util.Releasable;
 import com.trazere.util.function.Function0;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.Description;
@@ -33,7 +34,7 @@ import com.trazere.util.type.Maybe.Some;
  * @param <X> Type of the exceptions.
  */
 public abstract class ResetableClosure<T, X extends Exception>
-implements Closure<T, X>, Describable {
+implements Closure<T, X>, Releasable<RuntimeException>, Describable {
 	/**
 	 * Build a closure evaluating to the given value.
 	 * 
@@ -146,6 +147,10 @@ implements Closure<T, X>, Describable {
 	 */
 	public Maybe<T> asMaybe() {
 		return _value;
+	}
+	
+	public void release() {
+		reset();
 	}
 	
 	@Override
