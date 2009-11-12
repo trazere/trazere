@@ -15,6 +15,7 @@
  */
 package com.trazere.util.lang.ref;
 
+import com.trazere.util.Releasable;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.LangUtils;
 import com.trazere.util.text.Describable;
@@ -30,7 +31,7 @@ import com.trazere.util.type.Maybe.Some;
  * @param <T> Type of the referenced values.
  */
 public class MutableReference<T>
-implements Reference<T>, Describable {
+implements Reference<T>, Releasable<RuntimeException>, Describable {
 	/** Value. */
 	protected Maybe<T> _value;
 	
@@ -173,6 +174,10 @@ implements Reference<T>, Describable {
 	 */
 	public Maybe<T> asMaybe() {
 		return _value;
+	}
+	
+	public void release() {
+		reset();
 	}
 	
 	@Override
