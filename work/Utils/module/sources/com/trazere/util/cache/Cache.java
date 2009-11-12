@@ -46,6 +46,13 @@ public interface Cache<K, V> {
 	public boolean contains(final K key);
 	
 	/**
+	 * Get the size of the receiver cache.
+	 * 
+	 * @return The number of entries.
+	 */
+	public int size();
+	
+	/**
 	 * Get all keys which values are associated to in the receiver cache.
 	 * 
 	 * @return The keys.
