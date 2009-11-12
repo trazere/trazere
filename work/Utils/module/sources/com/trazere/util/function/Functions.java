@@ -581,12 +581,6 @@ public class Functions {
 		}
 	};
 	
-	private static final Function1<?, ?, ?> _EVALUATE0 = new Function1<Function0<Object, RuntimeException>, Object, RuntimeException>() {
-		public Object evaluate(final Function0<Object, RuntimeException> function) {
-			return function.evaluate();
-		}
-	};
-	
 	/**
 	 * Build a function which takes a zero arguments function as argument and evalutes to its result.
 	 * 
@@ -598,6 +592,12 @@ public class Functions {
 	public static <R, X extends Exception> Function1<Function0<? extends R, ? extends X>, R, X> evaluate0() {
 		return (Function1<Function0<? extends R, ? extends X>, R, X>) _EVALUATE0;
 	}
+	
+	private static final Function1<?, ?, ?> _EVALUATE0 = new Function1<Function0<Object, RuntimeException>, Object, RuntimeException>() {
+		public Object evaluate(final Function0<Object, RuntimeException> function) {
+			return function.evaluate();
+		}
+	};
 	
 	/**
 	 * Build a function which takes a one argument function as argument and evalutes to its result for the given value.
