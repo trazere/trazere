@@ -152,7 +152,7 @@ implements Record<K, V>, Describable {
 	}
 	
 	public V get(final K key)
-	throws MissingFieldException {
+	throws RecordException {
 		assert null != key;
 		
 		// Get.
@@ -171,7 +171,7 @@ implements Record<K, V>, Describable {
 	}
 	
 	public <T extends V> T getTyped(final K key, final Class<T> type)
-	throws MissingFieldException, IncompatibleFieldException {
+	throws RecordException {
 		assert null != key;
 		assert null != type;
 		
@@ -183,7 +183,7 @@ implements Record<K, V>, Describable {
 			} else if (type.isInstance(value)) {
 				return type.cast(value);
 			} else {
-				throw new IncompatibleFieldException("Field " + key + " is not compatible with type " + type + " in record " + this);
+				throw new IncompatibleFieldException("Field \"" + key + "\" is not compatible with type \"" + type + "\" in record " + this);
 			}
 		} else {
 			throw new MissingFieldException("Missing field \"" + key + "\" in record " + this);
@@ -191,7 +191,7 @@ implements Record<K, V>, Describable {
 	}
 	
 	public <T extends V> T getTyped(final K key, final Class<T> type, final T defaultValue)
-	throws IncompatibleFieldException {
+	throws RecordException {
 		assert null != key;
 		assert null != type;
 		
@@ -203,7 +203,7 @@ implements Record<K, V>, Describable {
 			} else if (type.isInstance(value)) {
 				return type.cast(value);
 			} else {
-				throw new IncompatibleFieldException("Field " + key + " is not compatible with type " + type + " in record " + this);
+				throw new IncompatibleFieldException("Field \"" + key + "\" is not compatible with type \"" + type + "\" in record " + this);
 			}
 		} else {
 			return defaultValue;
@@ -211,19 +211,29 @@ implements Record<K, V>, Describable {
 	}
 	
 	public <T extends V> T getTyped(final FieldSignature<? extends K, T> signature)
-	throws MissingFieldException, IncompatibleFieldException {
+	throws RecordException {
 		assert null != signature;
 		
 		// Get.
-		return getTyped(signature.getKey(), signature.getType());
+		final T value = getTyped(signature.getKey(), signature.getType());
+		if (null != value || signature.isNullable()) {
+			return value;
+		} else {
+			throw new NullFieldException("Field \"" + signature.getKey() + "\" has null value in record " + this);
+		}
 	}
 	
 	public <T extends V> T getTyped(final FieldSignature<? extends K, T> signature, final T defaultValue)
-	throws IncompatibleFieldException {
+	throws RecordException {
 		assert null != signature;
 		
 		// Get.
-		return getTyped(signature.getKey(), signature.getType(), defaultValue);
+		final T value = getTyped(signature.getKey(), signature.getType(), defaultValue);
+		if (null != value || signature.isNullable()) {
+			return value;
+		} else {
+			throw new NullFieldException("Field \"" + signature.getKey() + "\" has null value in record " + this);
+		}
 	}
 	
 	public Collection<V> getValues() {

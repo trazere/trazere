@@ -101,7 +101,11 @@ implements RecordBuilder<K, V, R>, Describable {
 		assert null != field;
 		
 		// Add the field.
-		add(field.getKey(), value);
+		if (null != value || field.isNullable()) {
+			add(field.getKey(), value);
+		} else {
+			throw new NullFieldException("The value of field \"" + field.getKey() + "\" cannot be null");
+		}
 	}
 	
 	public void addAll(final Map<? extends K, ? extends V> fields)
@@ -110,12 +114,7 @@ implements RecordBuilder<K, V, R>, Describable {
 		
 		// Add the fields.
 		for (final Map.Entry<? extends K, ? extends V> entry : fields.entrySet()) {
-			final K key = entry.getKey();
-			if (!_fields.containsKey(key)) {
-				_fields.put(key, entry.getValue());
-			} else {
-				throw new DuplicateFieldException("Field \"" + key + "\" already exists in builder " + this);
-			}
+			add(entry.getKey(), entry.getValue());
 		}
 	}
 	
@@ -143,7 +142,7 @@ implements RecordBuilder<K, V, R>, Describable {
 		
 		// Test.
 		final K key = field.getKey();
-		return _fields.containsKey(key) && field.getType().isInstance(_fields.get(key));
+		return _fields.containsKey(key) && field.getType().isInstance(_fields.get(key)) && (field.isNullable() || null != _fields.get(key));
 	}
 	
 	public Set<K> getKeys() {
@@ -160,14 +159,6 @@ implements RecordBuilder<K, V, R>, Describable {
 		} else {
 			throw new MissingFieldException("Field \"" + key + "\" does not exist in builder " + this);
 		}
-	}
-	
-	public void remove(final FieldSignature<K, ? extends V> field)
-	throws RecordException {
-		assert null != field;
-		
-		// Remote the field.
-		remove(field.getKey());
 	}
 	
 	public void clear() {

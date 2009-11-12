@@ -48,16 +48,17 @@ implements Parametrable<K, V, X> {
 	 * 
 	 * @param key The key of the field.
 	 * @param type The type of the values.
+	 * @param nullable The flag indicating whether the values can be <code>null</code> or not.
 	 * @param builder The signature builder.
 	 * @throws IncompatibleFieldException When the given and current signature of the field are not compatible.
 	 * @throws X When the field signature cannot be unified.
 	 */
-	public void unify(final String key, final Class<? extends Object> type, final RecordSignatureBuilder<String, Object, ?> builder)
+	public void unify(final String key, final Class<? extends Object> type, final boolean nullable, final RecordSignatureBuilder<String, Object, ?> builder)
 	throws X, IncompatibleFieldException {
 		assert null != builder;
 		
 		try {
-			builder.unify(key, type);
+			builder.unify(key, type, nullable);
 		} catch (final IncompatibleFieldException exception) {
 			throw exception;
 		} catch (final RecordException exception) {
