@@ -35,33 +35,62 @@ implements Describable {
 	 * 
 	 * @param <K> Type of the key.
 	 * @param <V> Type of the values.
-	 * @param key Key of the field.
-	 * @param type Type of the value of the field.
+	 * @param key The key of the field.
+	 * @param type The type of the value of the field.
 	 * @return The built signature.
 	 */
-	public static <K, V> FieldSignature<K, V> build(final K key, final Class<V> type) {
+	public static <K, V> FieldSignature<K, V> buildd(final K key, final Class<V> type) {
 		return new FieldSignature<K, V>(key, type);
 	}
 	
-	/** Key of the field. */
+	/**
+	 * Build a new field signature with the given key and type.
+	 * 
+	 * @param <K> Type of the key.
+	 * @param <V> Type of the values.
+	 * @param key The key of the field.
+	 * @param type The type of the value of the field.
+	 * @param nullable The flag indicating whether the value of the field can be <code>null</code> or not.
+	 * @return The built signature.
+	 */
+	public static <K, V> FieldSignature<K, V> build(final K key, final Class<V> type, final boolean nullable) {
+		return new FieldSignature<K, V>(key, type, nullable);
+	}
+	
+	/** The key of the field. */
 	private final K _key;
 	
-	/** Type of the value of the field. */
+	/** The type of the value of the field. */
 	private final Class<V> _type;
+	
+	/** The flag indicating whether the value of the field can be <code>null</code> or not. */
+	private final boolean _nullable;
 	
 	/**
 	 * Instantiate a new record field signature with the given key and type.
 	 * 
-	 * @param key Key of the field.
-	 * @param type Type of the value of the field.
+	 * @param key The key of the field.
+	 * @param type The type of the value of the field.
 	 */
 	public FieldSignature(final K key, final Class<V> type) {
+		this(key, type, true);
+	}
+	
+	/**
+	 * Instantiate a new record field signature with the given key, type and nullability.
+	 * 
+	 * @param key The key of the field.
+	 * @param type The type of the value of the field.
+	 * @param nullable The flag indicating whether the value of the field can be <code>null</code> or not.
+	 */
+	public FieldSignature(final K key, final Class<V> type, final boolean nullable) {
 		assert null != key;
 		assert null != type;
 		
 		// Initialization.
 		_key = key;
 		_type = type;
+		_nullable = nullable;
 	}
 	
 	/**
@@ -83,25 +112,39 @@ implements Describable {
 	}
 	
 	/**
+	 * Indicates whether the value of the field can be <code>null</code> or not.
+	 * 
+	 * @return <code>true</code> when the value of the field can be <code>null</code>, <code>false</code> otherwise.
+	 */
+	public boolean isNullable() {
+		return _nullable;
+	}
+	
+	/**
 	 * Check whether the receiver field signature accepts the given value.
 	 * 
 	 * @param value The value. May be <code>null</code>.
 	 * @return <code>true</code> when the value is accepted, <code>false</code> otherwise.
 	 */
-	public boolean accepts(final Object value) {
-		return null == value || _type.isAssignableFrom(value.getClass());
+	public boolean acceptsValue(final Object value) {
+		if (null == value) {
+			return _nullable;
+		} else {
+			return _type.isAssignableFrom(value.getClass());
+		}
 	}
 	
 	/**
-	 * Check whether the receiver field signature accepts a value of the given type.
+	 * Check whether the receiver field signature accepts a value with the given type and nullability.
 	 * 
 	 * @param type The type.
+	 * @param nullable The flag indicating whether the value of the field can be <code>null</code> or not.
 	 * @return <code>true</code> when the type is accepted, <code>false</code> otherwise.
 	 */
-	public boolean accepts(final Class<?> type) {
+	public boolean accepts(final Class<?> type, final boolean nullable) {
 		assert null != type;
 		
-		return _type.isAssignableFrom(type);
+		return _type.isAssignableFrom(type) && (_nullable || !nullable);
 	}
 	
 	@Override
@@ -109,6 +152,7 @@ implements Describable {
 		final HashCode hashCode = new HashCode(this);
 		hashCode.append(_key);
 		hashCode.append(_type);
+		hashCode.append(_nullable);
 		return hashCode.get();
 	}
 	
@@ -118,7 +162,7 @@ implements Describable {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final FieldSignature<?, ?> signature = (FieldSignature<?, ?>) object;
-			return _key.equals(signature._key) && _type.equals(signature._type);
+			return _key.equals(signature._key) && _type.equals(signature._type) && _nullable == signature._nullable;
 		} else {
 			return false;
 		}
@@ -132,5 +176,6 @@ implements Describable {
 	public void fillDescription(final Description description) {
 		description.append("Key", _key);
 		description.append("Type", _type);
+		description.append("Nullable", _nullable);
 	}
 }

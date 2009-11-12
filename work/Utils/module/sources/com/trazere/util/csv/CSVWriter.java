@@ -17,6 +17,7 @@ package com.trazere.util.csv;
 
 import com.trazere.util.lang.InternalException;
 import com.trazere.util.record.MissingFieldException;
+import com.trazere.util.record.RecordException;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -138,6 +139,8 @@ public class CSVWriter {
 					value = line.get(header);
 				} catch (final MissingFieldException exception) {
 					throw new InternalException(exception);
+				} catch (final RecordException exception) {
+					throw (IOException) new IOException().initCause(exception);
 				}
 				if (null != value) {
 					_writer.write(escapeValue(value));

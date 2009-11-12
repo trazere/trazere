@@ -121,18 +121,6 @@ public interface RecordBuilder<K, V, R extends Record<K, V>> {
 	throws RecordException;
 	
 	/**
-	 * Remove the field identified by the given signature from the receiver record builder.
-	 * <p>
-	 * Some field must by identified be the key of the given signature in the receiver record builder.
-	 * 
-	 * @param field The signature of the field to remove.
-	 * @throws MissingFieldException When no fields are identified by the key of the given signature.
-	 * @throws RecordException When the field cannot be removed.
-	 */
-	public void remove(final FieldSignature<K, ? extends V> field)
-	throws RecordException;
-	
-	/**
 	 * Remove all fields from the receiver record builder.
 	 * 
 	 * @throws RecordException When the record builder cannot be cleared.

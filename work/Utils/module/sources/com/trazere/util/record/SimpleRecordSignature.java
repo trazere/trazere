@@ -139,7 +139,7 @@ implements RecordSignature<K, V>, Describable {
 		
 		for (final Map.Entry<K, FieldSignature<K, ? extends V>> requirement : _fields.entrySet()) {
 			final K key = requirement.getKey();
-			if (!record.contains(key) || !requirement.getValue().accepts(record.get(key))) {
+			if (!record.contains(key) || !requirement.getValue().acceptsValue(record.get(key))) {
 				return false;
 			}
 		}
@@ -152,8 +152,13 @@ implements RecordSignature<K, V>, Describable {
 		
 		for (final Map.Entry<K, FieldSignature<K, ? extends V>> requirement : _fields.entrySet()) {
 			final K key = requirement.getKey();
-			if (!signature.contains(key) || !requirement.getValue().accepts(signature.get(key).getType())) {
+			if (!signature.contains(key)) {
 				return false;
+			} else {
+				final FieldSignature<? super K, ?> fieldSignature = signature.get(key);
+				if (!requirement.getValue().accepts(fieldSignature.getType(), fieldSignature.isNullable())) {
+					return false;
+				}
 			}
 		}
 		return true;

@@ -35,10 +35,11 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * 
 	 * @param key The key of the field.
 	 * @param type The type of the values.
+	 * @param nullable The flag indicating whether the values can be <code>null</code> or not.
 	 * @throws DuplicateFieldException When the field is already signed.
 	 * @throws RecordException When the field signature cannot by added.
 	 */
-	public void add(final K key, final Class<? extends V> type)
+	public void add(final K key, final Class<? extends V> type, final boolean nullable)
 	throws RecordException;
 	
 	/**
@@ -84,10 +85,11 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * 
 	 * @param key The key of the field.
 	 * @param type The type of the values.
+	 * @param nullable The flag indicating whether the values can be <code>null</code> or not.
 	 * @throws IncompatibleFieldException When the given and current signature of the field are not compatible.
 	 * @throws RecordException When the field signature cannot be unified.
 	 */
-	public void unify(final K key, final Class<? extends V> type)
+	public void unify(final K key, final Class<? extends V> type, final boolean nullable)
 	throws RecordException;
 	
 	/**
