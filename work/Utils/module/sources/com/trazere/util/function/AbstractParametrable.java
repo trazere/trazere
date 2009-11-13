@@ -113,30 +113,6 @@ implements Parametrable<K, V, X> {
 	}
 	
 	/**
-	 * Unify the fields of the given signature record accepted by the given filter within the given record signature builder.
-	 * <p>
-	 * The unified fields must either not be signed or be signed with a compatible type in the given record signature builder.
-	 * 
-	 * @param filter The filter.
-	 * @param record The record signature.
-	 * @param builder The signature builder.
-	 * @throws IncompatibleFieldException When the given and current signature of the field are not compatible.
-	 * @throws X When the field signature cannot be unified.
-	 */
-	public void unifyAll(final Predicate1<? super FieldSignature<String, ? extends Object>, ? extends RecordException> filter, final RecordSignature<String, ? extends Object> record, final RecordSignatureBuilder<String, Object, ?> builder)
-	throws X, IncompatibleFieldException {
-		assert null != builder;
-		
-		try {
-			builder.unifyAll(filter, record);
-		} catch (final IncompatibleFieldException exception) {
-			throw exception;
-		} catch (final RecordException exception) {
-			throw getThrowableFactory().build(exception);
-		}
-	}
-	
-	/**
 	 * Get the exception factory to use.
 	 * 
 	 * @return The exception factory.
