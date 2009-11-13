@@ -39,7 +39,7 @@ implements Describable {
 	 * @param type The type of the value of the field.
 	 * @return The built signature.
 	 */
-	public static <K, V> FieldSignature<K, V> buildd(final K key, final Class<V> type) {
+	public static <K, V> FieldSignature<K, V> build(final K key, final Class<V> type) {
 		return new FieldSignature<K, V>(key, type);
 	}
 	
