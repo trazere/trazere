@@ -16,7 +16,6 @@
 package com.trazere.util.value;
 
 import com.trazere.util.function.AbstractParametrable;
-import com.trazere.util.lang.ThrowableFactory;
 import com.trazere.util.record.Record;
 import com.trazere.util.record.SimpleRecordBuilder;
 
@@ -27,7 +26,7 @@ import com.trazere.util.record.SimpleRecordBuilder;
  * @param <V> Type of the values.
  */
 public abstract class AbstractRecordReader<K, V>
-extends AbstractParametrable<String, Object, ValueException>
+extends AbstractParametrable<String, Object>
 implements RecordReader<K, V> {
 	public Record<K, V> read(final Record<String, Object> parameters)
 	throws ValueException {
@@ -48,10 +47,5 @@ implements RecordReader<K, V> {
 			builder.add(key, get(key).compose(reader));
 		}
 		return builder.build();
-	}
-	
-	@Override
-	protected ThrowableFactory<ValueException> getThrowableFactory() {
-		return ValueException.FACTORY;
 	}
 }

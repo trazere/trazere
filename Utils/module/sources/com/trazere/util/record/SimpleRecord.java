@@ -148,7 +148,7 @@ implements Record<K, V>, Describable {
 	}
 	
 	public Set<K> getKeys() {
-		return Collections.unmodifiableSet(_fields.keySet());
+		return _fields.keySet();
 	}
 	
 	public V get(final K key)
@@ -237,7 +237,7 @@ implements Record<K, V>, Describable {
 	}
 	
 	public Collection<V> getValues() {
-		return Collections.unmodifiableCollection(_fields.values());
+		return _fields.values();
 	}
 	
 	public Map<K, V> asMap() {

@@ -11,6 +11,6 @@ import com.trazere.util.record.Record;
  * @param <X> Type of the exceptions.
  */
 public interface ParameterFunction<K, V, T, X extends Exception>
-extends Function1<Record<K, V>, T, X>, Parametrable<K, V, X> {
+extends Function1<Record<K, V>, T, X>, Parametrable<K, V> {
 	// Just typing.
 }
