@@ -112,10 +112,9 @@ implements Describable {
 		}
 		
 		@Override
-		public <Result, X extends Exception> Maybe<Result> lift(final Function1<? super Value, Result, X> function) {
+		public <Result, X extends Exception> Maybe<Result> map(final Function1<? super Value, Result, X> function) {
 			assert null != function;
 			
-			// Lift.
 			return none();
 		}
 		
@@ -202,7 +201,7 @@ implements Describable {
 		}
 		
 		@Override
-		public <Result, X extends Exception> Maybe<Result> lift(final Function1<? super Value, Result, X> function)
+		public <Result, X extends Exception> Maybe<Result> map(final Function1<? super Value, Result, X> function)
 		throws X {
 			assert null != function;
 			
@@ -366,7 +365,7 @@ implements Describable {
 	 * @return xxx
 	 * @throws X
 	 */
-	public abstract <Result, X extends Exception> Maybe<Result> lift(final Function1<? super Value, Result, X> function)
+	public abstract <Result, X extends Exception> Maybe<Result> map(final Function1<? super Value, Result, X> function)
 	throws X;
 	
 	@Override
