@@ -69,6 +69,7 @@ public interface RecordSignature<K, V> {
 	public Map<K, FieldSignature<K, ? extends V>> asMap()
 	throws RecordException;
 	
+	// TODO: should return a reason in case of failure
 	/**
 	 * Check whether the receiver record signature accepts the given record.
 	 * <p>
@@ -81,6 +82,7 @@ public interface RecordSignature<K, V> {
 	public boolean accepts(final Record<? super K, ? extends V> record)
 	throws RecordException;
 	
+	// TODO: should return a reason in case of failure
 	/**
 	 * Check whether the receiver record signature accepts the given record signature.
 	 * <p>

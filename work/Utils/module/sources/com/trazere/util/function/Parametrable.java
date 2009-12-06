@@ -16,6 +16,7 @@
 package com.trazere.util.function;
 
 import com.trazere.util.record.IncompatibleFieldException;
+import com.trazere.util.record.RecordException;
 import com.trazere.util.record.RecordSignature;
 import com.trazere.util.record.RecordSignatureBuilder;
 
@@ -24,17 +25,16 @@ import com.trazere.util.record.RecordSignatureBuilder;
  * 
  * @param <K> Type of the keys of the parameters.
  * @param <V> Type of the values of the parameters.
- * @param <X> Type of the exceptions.
  */
-public interface Parametrable<K, V, X extends Exception> {
+public interface Parametrable<K, V> {
 	/**
 	 * Get the requirements of the receiver parametrable over its parameters.
 	 * 
 	 * @return The signature of the requirements.
-	 * @throws X When the requirements cannot be computed.
+	 * @throws RecordException When the requirements cannot be computed.
 	 */
 	public RecordSignature<K, V> getRequirements()
-	throws X;
+	throws RecordException;
 	
 	/**
 	 * Unify the requirements of the receiver parametrable over its parameters within the given builder.
@@ -42,9 +42,9 @@ public interface Parametrable<K, V, X extends Exception> {
 	 * @param <B> Type of the signature builder.
 	 * @param builder The builder within which the requirements should be unified.
 	 * @return The given signature builder.
-	 * @throws X When the requirements cannot be computed.
 	 * @throws IncompatibleFieldException When the unification fails.
+	 * @throws RecordException When the requirements cannot be computed.
 	 */
 	public <B extends RecordSignatureBuilder<K, V, ?>> B unifyRequirements(final B builder)
-	throws X, IncompatibleFieldException;
+	throws RecordException;
 }
