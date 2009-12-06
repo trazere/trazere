@@ -120,6 +120,7 @@ implements Describable {
 		return _nullable;
 	}
 	
+	// TODO: should return a reason in case of failure
 	/**
 	 * Check whether the receiver field signature accepts the given value.
 	 * 
@@ -134,6 +135,7 @@ implements Describable {
 		}
 	}
 	
+	// TODO: should return a reason in case of failure
 	/**
 	 * Check whether the receiver field signature accepts a value with the given type and nullability.
 	 * 
