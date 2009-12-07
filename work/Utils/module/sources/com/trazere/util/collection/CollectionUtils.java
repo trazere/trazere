@@ -341,6 +341,32 @@ public class CollectionUtils {
 	}
 	
 	/**
+	 * Get the element of the given list corresponding to the given index.
+	 * 
+	 * @param <T> Type of the elements.
+	 * @param list The list.
+	 * @param index The index.
+	 * @return The first element.
+	 */
+	public static <T> Maybe<T> get(final List<T> list, final int index) {
+		assert null != list;
+		
+		// Get.
+		return index < list.size() ? Maybe.some(list.get(index)) : Maybe.<T>none();
+	}
+	
+	/**
+	 * Get the first element of the given list.
+	 * 
+	 * @param <T> Type of the elements.
+	 * @param list The list.
+	 * @return The first element.
+	 */
+	public static <T> Maybe<T> first(final List<T> list) {
+		return get(list, 0);
+	}
+	
+	/**
 	 * Get the last element of the given list.
 	 * 
 	 * @param <T> Type of the elements.
@@ -348,11 +374,47 @@ public class CollectionUtils {
 	 * @return The last element.
 	 */
 	public static <T> Maybe<T> last(final List<T> list) {
-		assert null != list;
+		return get(list, list.size() - 1);
+	}
+	
+	/**
+	 * Add the given value to the given collection.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param collection The collection.
+	 * @param value The value.
+	 */
+	public static <T> void add(final Collection<? super T> collection, final Maybe<? extends T> value) {
+		assert null != collection;
+		assert null != value;
 		
-		// Get.
-		final int size = list.size();
-		return size > 0 ? Maybe.some(list.get(size - 1)) : Maybe.<T>none();
+		// Add.
+		if (value.isSome()) {
+			collection.add(value.asSome().getValue());
+		}
+	}
+	
+	/**
+	 * Remove an element from the given collection.
+	 * <p>
+	 * This method does modify the given collection.
+	 * 
+	 * @param <T> Type of the elements.
+	 * @param collection The collection.
+	 * @return The removed element.
+	 */
+	public static <T> Maybe<T> removeAny(final Collection<? extends T> collection) {
+		assert null != collection;
+		
+		// Remove.
+		final Iterator<? extends T> iterator = collection.iterator();
+		if (iterator.hasNext()) {
+			final T object = iterator.next();
+			iterator.remove();
+			return Maybe.some(object);
+		} else {
+			return Maybe.none();
+		}
 	}
 	
 	/**
@@ -364,11 +426,11 @@ public class CollectionUtils {
 	 * @param key The key. May be <code>null</code>.
 	 * @return The value identified by the key.
 	 */
-	public static <K, V> Maybe<V> get(final Map<K, V> map, final K key) {
+	public static <K, V> Maybe<V> get(final Map<? super K, ? extends V> map, final K key) {
 		assert null != map;
 		
 		// Get.
-		return map.containsKey(key) ? Maybe.some(map.get(key)) : Maybe.<V>none();
+		return map.containsKey(key) ? Maybe.<V>some(map.get(key)) : Maybe.<V>none();
 	}
 	
 	/**
@@ -389,42 +451,21 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Add the given value to the given collection.
+	 * Add the given binding to the given map.
 	 * 
-	 * @param <T> Type of the values.
-	 * @param collection The collection.
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param map The map.
+	 * @param key The key. May be <code>null</code>.
 	 * @param value The value.
 	 */
-	public static <T> void add(final Collection<? super T> collection, final Maybe<T> value) {
-		assert null != collection;
+	public static <K, V> void put(final Map<? super K, ? super V> map, final K key, final Maybe<? extends V> value) {
+		assert null != map;
 		assert null != value;
 		
 		// Add.
 		if (value.isSome()) {
-			collection.add(value.asSome().getValue());
-		}
-	}
-	
-	/**
-	 * Remove an element from the given collection.
-	 * <p>
-	 * This method does modify the given collection.
-	 * 
-	 * @param <T> Type of the elements.
-	 * @param collection The collection.
-	 * @return The removed element.
-	 */
-	public static <T> Maybe<T> removeAny(final Collection<T> collection) {
-		assert null != collection;
-		
-		// Remove.
-		final Iterator<T> iterator = collection.iterator();
-		if (iterator.hasNext()) {
-			final T object = iterator.next();
-			iterator.remove();
-			return Maybe.some(object);
-		} else {
-			return Maybe.none();
+			map.put(key, value.asSome().getValue());
 		}
 	}
 	
@@ -456,7 +497,7 @@ public class CollectionUtils {
 	 * @param list The list.
 	 * @return The given modified list.
 	 */
-	public static <T extends Comparable<T>, L extends List<T>> L sort(final L list) {
+	public static <T extends Comparable<? super T>, L extends List<T>> L sort(final L list) {
 		assert null != list;
 		
 		// Sort.
