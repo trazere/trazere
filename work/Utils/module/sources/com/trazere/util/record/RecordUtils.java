@@ -15,8 +15,11 @@
  */
 package com.trazere.util.record;
 
+import com.trazere.util.function.Predicate1;
+import com.trazere.util.function.Predicates;
 import com.trazere.util.lang.MultipleComparator;
 import com.trazere.util.lang.ReverseComparator;
+import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Tuple2;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
 /**
  * The {@link RecordUtils} class provides various utilities regarding record manipulatation.
@@ -48,7 +52,6 @@ public class RecordUtils {
 		assert null != builder;
 		assert null != keys;
 		
-		// Fill.
 		for (final K key : keys) {
 			builder.add(key, value);
 		}
@@ -71,7 +74,6 @@ public class RecordUtils {
 		assert null != builder;
 		assert null != keys;
 		
-		// Fill.
 		for (final K key : keys) {
 			if (!builder.contains(key)) {
 				builder.add(key, value);
@@ -87,12 +89,12 @@ public class RecordUtils {
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param record Record to read.
-	 * @param keys Key of the fields to keep.
+	 * @param keys Predicates filtering the keys of the fields to keep.
 	 * @return The sub record.
 	 * @throws MissingFieldException When no fields are identified by any given key in the the given record.
 	 * @throws RecordException When the fields cannot be read.
 	 */
-	public static <K, V> SimpleRecord<K, V> sub(final Record<? super K, ? extends V> record, final Set<? extends K> keys)
+	public static <K, V> SimpleRecord<K, V> sub(final Record<K, V> record, final Predicate1<? super K, ? extends RecordException> keys)
 	throws RecordException {
 		return sub(record, keys, SimpleRecordFactory.<K, V>factory());
 	}
@@ -106,28 +108,26 @@ public class RecordUtils {
 	 * @param <V> Type of the values.
 	 * @param <R> Type of the sub record.
 	 * @param record Record to read.
-	 * @param keys Key of the fields to keep.
+	 * @param keys Predicates filtering the keys of the fields to keep.
 	 * @param factory Record factory to use.
 	 * @return The sub record.
 	 * @throws MissingFieldException When no fields are identified by any given key in the the given record.
 	 * @throws RecordException When the fields cannot be read.
 	 */
-	public static <K, V, R extends Record<K, V>> R sub(final Record<? super K, ? extends V> record, final Set<? extends K> keys, final RecordFactory<K, V, R> factory)
+	public static <K, V, R extends Record<K, V>> R sub(final Record<K, V> record, final Predicate1<? super K, ? extends RecordException> keys, final RecordFactory<K, V, R> factory)
 	throws RecordException {
 		assert null != record;
 		assert null != keys;
 		assert null != factory;
 		
-		// Build the sub record.
-		if (keys.isEmpty()) {
-			return factory.build();
-		} else {
-			final Map<K, V> fields = new HashMap<K, V>();
-			for (final K key : keys) {
-				fields.put(key, record.get(key));
+		final Map<K, V> fields = new HashMap<K, V>();
+		for (final Entry<K, ? extends V> entry : record.asMap().entrySet()) {
+			final K key = entry.getKey();
+			if (keys.evaluate(key)) {
+				fields.put(key, entry.getValue());
 			}
-			return factory.build(fields);
 		}
+		return factory.build(fields);
 	}
 	
 	/**
@@ -139,7 +139,7 @@ public class RecordUtils {
 	 * @param <V> Type of the values.
 	 * @param <B> Type of the record builder.
 	 * @param record Record to read.
-	 * @param keys Key of the fields to copy.
+	 * @param keys Predicates filtering the keys of the fields to copy.
 	 * @param builder Record builder to populate.
 	 * @return The given record builder.
 	 * @throws MissingFieldException When no fields are identified by any given key in the the given record.
@@ -147,15 +147,17 @@ public class RecordUtils {
 	 * @throws RecordException When the fields cannot be read.
 	 * @throws RecordException When the fields cannot be added.
 	 */
-	public static <K, V, B extends RecordBuilder<? super K, ? super V, ?>> B sub(final Record<? super K, ? extends V> record, final Set<? extends K> keys, final B builder)
+	public static <K, V, B extends RecordBuilder<? super K, ? super V, ?>> B sub(final Record<K, V> record, final Predicate1<? super K, ? extends RecordException> keys, final B builder)
 	throws RecordException {
 		assert null != record;
 		assert null != keys;
 		assert null != builder;
 		
-		// Fill the builder.
-		for (final K key : keys) {
-			builder.add(key, record.get(key));
+		for (final Map.Entry<K, ? extends V> entry : record.asMap().entrySet()) {
+			final K key = entry.getKey();
+			if (keys.evaluate(key)) {
+				builder.add(key, entry.getValue());
+			}
 		}
 		return builder;
 	}
@@ -166,13 +168,13 @@ public class RecordUtils {
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param record Record to read.
-	 * @param keys Key of the fields to drop.
+	 * @param keys Predicates filtering the keys of the fields to drop.
 	 * @return The sub record.
 	 * @throws RecordException When the fields cannot be read.
 	 */
-	public static <K, V> SimpleRecord<K, V> drop(final Record<K, ? extends V> record, final Set<? extends K> keys)
+	public static <K, V> SimpleRecord<K, V> drop(final Record<K, V> record, final Predicate1<? super K, ? extends RecordException> keys)
 	throws RecordException {
-		return drop(record, keys, SimpleRecordFactory.<K, V>factory());
+		return sub(record, Predicates.not(keys));
 	}
 	
 	/**
@@ -182,30 +184,14 @@ public class RecordUtils {
 	 * @param <V> Type of the values.
 	 * @param <R> Type of the sub record.
 	 * @param record Record to read.
-	 * @param keys Key of the fields to drop.
+	 * @param keys Predicates filtering the keys of the fields to drop.
 	 * @param factory Record factory to use.
 	 * @return The sub record.
 	 * @throws RecordException When the fields cannot be read.
 	 */
-	public static <K, V, R extends Record<K, V>> R drop(final Record<K, ? extends V> record, final Set<? extends K> keys, final RecordFactory<K, V, R> factory)
+	public static <K, V, R extends Record<K, V>> R drop(final Record<K, V> record, final Predicate1<? super K, ? extends RecordException> keys, final RecordFactory<K, V, R> factory)
 	throws RecordException {
-		assert null != record;
-		assert null != keys;
-		assert null != factory;
-		
-		// Build the sub record.
-		if (keys.isEmpty()) {
-			return factory.build(record);
-		} else {
-			final Map<K, V> fields = new HashMap<K, V>();
-			for (final Map.Entry<K, ? extends V> entry : record.asMap().entrySet()) {
-				final K key = entry.getKey();
-				if (!keys.contains(key)) {
-					fields.put(key, entry.getValue());
-				}
-			}
-			return factory.build(fields);
-		}
+		return sub(record, Predicates.not(keys), factory);
 	}
 	
 	/**
@@ -215,28 +201,16 @@ public class RecordUtils {
 	 * @param <V> Type of the values.
 	 * @param <B> Type of the record builder.
 	 * @param record Record to read.
-	 * @param keys Key of the fields to drop.
+	 * @param keys Predicates filtering the keys of the fields to drop.
 	 * @param builder Record builder to populate.
 	 * @return The given record builder.
 	 * @throws DuplicateFieldException When some fields are identified by the keys of kept fields in the given builder.
 	 * @throws RecordException When the fields cannot be read.
 	 * @throws RecordException When the fields cannot be added.
 	 */
-	public static <K, V, B extends RecordBuilder<K, ? super V, ?>> B drop(final Record<K, ? extends V> record, final Set<? extends K> keys, final B builder)
+	public static <K, V, B extends RecordBuilder<K, ? super V, ?>> B drop(final Record<K, ? extends V> record, final Predicate1<? super K, ? extends RecordException> keys, final B builder)
 	throws RecordException {
-		assert null != record;
-		assert null != keys;
-		assert null != builder;
-		
-		// Fill the builder.
-		for (final Map.Entry<K, ? extends V> entry : record.asMap().entrySet()) {
-			final K key = entry.getKey();
-			if (!keys.contains(key)) {
-				builder.add(key, entry.getValue());
-			}
-		}
-		
-		return builder;
+		return sub(record, Predicates.not(keys), builder);
 	}
 	
 	/**
@@ -278,12 +252,14 @@ public class RecordUtils {
 		assert null != record2;
 		assert null != factory;
 		
-		// Compute the fields.
+		// Copy the fields of the first record.
 		final Map<K, V> fields = new HashMap<K, V>(record1.asMap());
+		
+		// Copy the fields of the second record.
 		for (final Map.Entry<? extends K, ? extends V> entry : record2.asMap().entrySet()) {
 			final K key = entry.getKey();
 			if (fields.containsKey(key)) {
-				throw new DuplicateFieldException("Field \"" + key + "\" exist in both record " + record1 + " and " + record2);
+				throw new DuplicateFieldException("Field \"" + key + "\" exist in both records " + record1 + " and " + record2);
 			}
 			fields.put(key, entry.getValue());
 		}
@@ -318,14 +294,15 @@ public class RecordUtils {
 		assert null != record2;
 		assert null != builder;
 		
-		// Populate the builder.
+		// Copy the first record.
 		builder.addAll(record1);
 		
+		// Copy the second record.
 		final Set<? extends K> keys1 = record1.getKeys();
 		for (final Map.Entry<? extends K, ? extends V> entry : record2.asMap().entrySet()) {
 			final K key = entry.getKey();
 			if (keys1.contains(key)) {
-				throw new DuplicateFieldException("Field \"" + key + "\" exist in both record " + record1 + " and " + record2);
+				throw new DuplicateFieldException("Field \"" + key + "\" exist in both records " + record1 + " and " + record2);
 			}
 			builder.add(key, entry.getValue());
 		}
@@ -379,6 +356,69 @@ public class RecordUtils {
 			comparators.add(ReverseComparator.build(new RecordComparator<K, V, R>(criteria.getFirst(), comparator), criteria.getSecond().booleanValue()));
 		}
 		return new MultipleComparator<R>(comparators);
+	}
+	
+	/**
+	 * Get the value of the field of the receiver record identified by the given key.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param record The record.
+	 * @param key The key of the field.
+	 * @return The value of the field.
+	 * @throws RecordException When the field cannot be got.  
+	 */
+	public static <K, V> Maybe<V> get(final Record<K, ? extends V> record, final K key)
+	throws RecordException {
+		assert null != record;
+		
+		if (record.contains(key)) {
+			return Maybe.<V>some(record.get(key));
+		} else {
+			return Maybe.none();
+		}
+	}
+	
+	/**
+	 * Get the value of the field of the receiver record identified by the given signature.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param record The record.
+	 * @param signature The signature of the field.
+	 * @return The value of the field.
+	 * @throws RecordException When the field cannot be got.  
+	 */
+	public static <K, V> Maybe<V> getTyped(final Record<K, ? super V> record, final FieldSignature<? extends K, ? extends V> signature)
+	throws RecordException {
+		assert null != record;
+		
+		if (record.contains(signature.getKey())) {
+			return Maybe.<V>some(record.getTyped(signature));
+		} else {
+			return Maybe.none();
+		}
+	}
+	
+	/**
+	 * Get the signature of the field identified by the given key of the given record signature.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param signature The record signature.
+	 * @param key The key of the field.
+	 * @return The signature of the field.
+	 * @throws RecordException When the field signature cannot be got.
+	 */
+	public static <K, V> Maybe<FieldSignature<K, ? extends V>> get(final RecordSignature<K, V> signature, final K key)
+	throws RecordException {
+		assert null != signature;
+		
+		if (signature.contains(key)) {
+			return Maybe.<FieldSignature<K, ? extends V>>some(signature.get(key));
+		} else {
+			return Maybe.none();
+		}
 	}
 	
 	private RecordUtils() {
