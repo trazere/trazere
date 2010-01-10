@@ -55,28 +55,32 @@ implements ReportListener<Entry> {
 		assert null != entry;
 		
 		// Render the message.
-		final String message_ = ReportUtils.render(entry);
+		final String message = ReportUtils.render(entry);
 		
 		// Log.
 		switch (level) {
 			case NOTICE: {
-				_log.info(message_);
+				_log.info(message);
 				break;
 			}
 			case WARNING: {
-				_log.warn(message_);
+				_log.warn(message);
 				break;
 			}
 			case ERROR: {
-				_log.error(message_);
+				_log.error(message);
 				break;
 			}
 			default: {
-				LOG.warn("Invalid report level " + level + " for entry " + message_);
-				_log.error(message_);
+				LOG.warn("Invalid report level " + level + " for entry " + entry);
+				_log.error(message);
 				break;
 			}
 		}
+	}
+	
+	protected String computeMessage(final Entry entry) {
+		return ReportUtils.render(entry);
 	}
 	
 	public void sleep()

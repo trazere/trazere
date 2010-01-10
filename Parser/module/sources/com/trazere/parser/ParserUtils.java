@@ -15,6 +15,7 @@
  */
 package com.trazere.parser;
 
+import com.trazere.parser.core.CoreParsers;
 import com.trazere.util.lang.ref.MutableReference;
 import com.trazere.util.type.Either;
 import com.trazere.util.type.Maybe;
@@ -189,6 +190,27 @@ public class ParserUtils {
 			builder.append(failure.getParser().getDescription()).append(" at ").append(failure.getPosition().getDescription());
 		}
 		return builder.toString();
+	}
+	
+	public static <T> T parse(final Parser<Character, ? extends T> parser, final String representation)
+	throws ParserException {
+		assert null != parser;
+		assert null != representation;
+		
+		final Parser<Character, T> parser_ = CoreParsers.first(parser, CoreParsers.<Character, Object>eof(), null);
+		final Either<List<T>, List<ParserFailure<Character>>> results = ParserUtils.parseSuccessesOrFailures(parser_, new StringParserSource(representation));
+		if (results.isLeft()) {
+			final List<T> successes = results.asLeft().getLeft();
+			if (successes.isEmpty()) {
+				throw new ParserException("Invalid representation \"" + representation + "\"");
+			} else if (1 == successes.size()) {
+				return successes.get(0);
+			} else {
+				throw new ParserException("Ambiguous representation \"" + representation + "\"");
+			}
+		} else {
+			throw new ParserException("Invalid representation \"" + representation + "\", excepted " + renderFailures(results.asRight().getRight()));
+		}
 	}
 	
 	private ParserUtils() {

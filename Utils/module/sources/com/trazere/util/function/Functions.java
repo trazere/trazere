@@ -133,6 +133,24 @@ public class Functions {
 	}
 	
 	/**
+	 * Build a two arguments function which always evaluates to the given value.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <R> Type of the result values.
+	 * @param <X> Type of the exceptions.
+	 * @param result Result value. May be <code>null</code>.
+	 * @return The built function.
+	 */
+	public static <T1, T2, R, X extends Exception> Function2<T1, T2, R, X> constant2(final R result) {
+		return new Function2<T1, T2, R, X>() {
+			public R evaluate(final T1 value1, final T2 value2) {
+				return result;
+			}
+		};
+	}
+	
+	/**
 	 * Build a function corresponding to the given factory.
 	 * 
 	 * @param <T> Type of the values.
