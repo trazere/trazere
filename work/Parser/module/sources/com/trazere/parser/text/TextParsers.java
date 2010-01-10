@@ -74,7 +74,7 @@ public class TextParsers {
 	private static final Parser<Character, Character> _SPACE = space("a space");
 	
 	public static Parser<Character, String> whitespace(final String description) {
-		return TextParsers.string(CharPredicates.<ParserException>whitespace(), true, description);
+		return TextParsers.string(CharPredicates.<ParserException>whitespace(), false, description);
 	}
 	
 	public static Parser<Character, String> whitespace() {

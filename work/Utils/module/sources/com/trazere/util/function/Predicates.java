@@ -165,7 +165,7 @@ public class Predicates {
 	 * @param values Values defining the predicate.
 	 * @return The built predicate.
 	 */
-	public static <T, X extends Exception> Predicate1<T, X> any(final Collection<T> values) {
+	public static <T, X extends Exception> Predicate1<T, X> any(final Collection<? extends T> values) {
 		assert null != values;
 		
 		return new Predicate1<T, X>() {
