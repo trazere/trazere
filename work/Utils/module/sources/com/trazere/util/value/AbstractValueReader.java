@@ -32,24 +32,24 @@ implements ValueReader<T>, Describable {
 	/**
 	 * Instanciate a new reader with the given type and nullablity.
 	 * 
-	 * @param type The type of the values.
+	 * @param valueClass The type of the values.
 	 * @param nullable The flag indicating whether the values can be <code>null</code> or not.
 	 */
-	protected AbstractValueReader(final Class<T> type, final boolean nullable) {
-		assert null != type;
+	protected AbstractValueReader(final Class<T> valueClass, final boolean nullable) {
+		assert null != valueClass;
 		
 		// Initialization.
-		_type = type;
+		_valueClass = valueClass;
 		_nullable = nullable;
 	}
 	
-	// Type.
+	// Type parameters.
 	
 	/** Type of the values. */
-	protected final Class<T> _type;
+	protected final Class<T> _valueClass;
 	
-	public Class<T> getType() {
-		return _type;
+	public Class<T> getValueClass() {
+		return _valueClass;
 	}
 	
 	// Nullabity.
@@ -76,6 +76,7 @@ implements ValueReader<T>, Describable {
 	}
 	
 	public void fillDescription(final Description description) {
-		description.append("Type", _type.getName());
+		description.append("Type", _valueClass.getName());
+		description.append("Nullable", _nullable);
 	}
 }

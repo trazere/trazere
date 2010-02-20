@@ -27,7 +27,7 @@ public interface ValueSerializer<T, X extends Exception> {
 	 * 
 	 * @return The Java type of the values.
 	 */
-	public Class<T> getType();
+	public Class<T> getValueClass();
 	
 	/**
 	 * Serialize the given value to its corresponding string representation.

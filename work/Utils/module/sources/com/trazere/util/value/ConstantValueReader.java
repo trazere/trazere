@@ -89,7 +89,7 @@ extends AbstractValueReader<T> {
 	@Override
 	public int hashCode() {
 		final HashCode result = new HashCode(this);
-		result.append(_type);
+		result.append(_valueClass);
 		result.append(_value);
 		return result.get();
 	}
@@ -100,7 +100,7 @@ extends AbstractValueReader<T> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final ConstantValueReader<?> reader = (ConstantValueReader<?>) object;
-			return _type.equals(reader._type) && LangUtils.equals(_value, reader._value);
+			return _valueClass.equals(reader._valueClass) && LangUtils.equals(_value, reader._value);
 		} else {
 			return false;
 		}
