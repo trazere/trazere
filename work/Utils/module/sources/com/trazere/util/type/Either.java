@@ -15,6 +15,7 @@
  */
 package com.trazere.util.type;
 
+import com.trazere.util.function.Function1;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.LangUtils;
 import com.trazere.util.text.Describable;
@@ -27,10 +28,10 @@ import com.trazere.util.text.TextUtils;
  * <li>The <code>Left</code> constructor builds instances which encode the first alternative and wrap the corresponding values.
  * <li>The <code>Right</code> constructor builds instances which encode the second alternative and wrap the corresponding values.
  * 
- * @param <LeftValue> Type of the left value.
- * @param <RightValue> Type of the right value.
+ * @param <L> Type of the left value.
+ * @param <R> Type of the right value.
  */
-public abstract class Either<LeftValue, RightValue>
+public abstract class Either<L, R>
 implements Describable {
 	/**
 	 * The {@link Constructor} enumeration represents the constructors of the algebraic data type.
@@ -41,53 +42,55 @@ implements Describable {
 	}
 	
 	/**
-	 * The {@link Either.Matcher} interface defines functions on unwrapped {@link Either} instances.
+	 * The {@link Either.Matcher} interface defines matching functions.
 	 * 
-	 * @param <LeftValue> Type of the left value.
-	 * @param <RightValue> Type of the right value.
-	 * @param <Result> Type of the result.
+	 * @param <L> Type of the left value.
+	 * @param <R> Type of the right value.
+	 * @param <RT> Type of the result.
 	 * @param <X> Type of the exceptions.
 	 * @see Either#match(Matcher)
 	 */
-	public static interface Matcher<LeftValue, RightValue, Result, X extends Exception> {
+	public interface Matcher<L, R, RT, X extends Exception> {
 		/**
-		 * Apply the receiver function to the given <code>Left</code> instance.
+		 * Match the given <code>Left</code> instance.
 		 * 
-		 * @param left Argument instance of the function.
-		 * @return The result of the function application.
-		 * @throws X When the computation fails.
+		 * @param left The instance.
+		 * @return The result of the function evaluation.
+		 * @throws X When the evaluation fails.
 		 */
-		public Result left(final Left<LeftValue, RightValue> left)
+		public RT left(final Left<? extends L, ? extends R> left)
 		throws X;
 		
 		/**
-		 * Apply the receiver function to the given <code>Right</code> instance.
+		 * Match the given <code>Right</code> instance.
 		 * 
-		 * @param right Argument instance of the function.
-		 * @return The result of the function application.
-		 * @throws X When the computation fails.
+		 * @param right The instance.
+		 * @return The result of the function evaluation.
+		 * @throws X When the evaluation fails.
 		 */
-		public Result right(final Right<LeftValue, RightValue> right)
+		public RT right(final Right<? extends L, ? extends R> right)
 		throws X;
 	}
 	
 	/**
 	 * The {@link Either.Left} class represents the instances built using the <code>Left</code> constructor.
 	 * 
-	 * @param <LeftValue> Type of the left value.
-	 * @param <RightValue> Type of the right value.
+	 * @param <L> Type of the left value.
+	 * @param <R> Type of the right value.
 	 */
-	public final static class Left<LeftValue, RightValue>
-	extends Either<LeftValue, RightValue> {
-		protected LeftValue _left;
+	public final static class Left<L, R>
+	extends Either<L, R> {
+		@Override
+		public Constructor getConstructor() {
+			return Constructor.LEFT;
+		}
 		
 		/**
 		 * Build a new instance wrapping the given left value.
 		 * 
-		 * @param left Left value to wrap. May be <code>null</code>.
+		 * @param left The left value. May be <code>null</code>.
 		 */
-		public Left(final LeftValue left) {
-			// Initialization.
+		public Left(final L left) {
 			_left = left;
 		}
 		
@@ -97,39 +100,42 @@ implements Describable {
 		}
 		
 		@Override
-		public Left<LeftValue, RightValue> asLeft() {
+		public Left<L, R> asLeft() {
 			return this;
 		}
 		
-		@Override
-		public boolean isRight() {
-			return false;
-		}
-		
-		@Override
-		public Right<LeftValue, RightValue> asRight()
-		throws InvalidConstructorException {
-			throw new InvalidConstructorException("Cannot cast instance " + this);
-		}
-		
-		@Override
-		public Constructor getConstructor() {
-			return Constructor.LEFT;
-		}
+		/** The wrapped left value. May be <code>null</code>. */
+		private final L _left;
 		
 		/**
 		 * Get the left value wrapped in the receiver instance.
 		 * 
-		 * @return The wrapped value. May be <code>null</code>.
+		 * @return The wrapped left value. May be <code>null</code>.
 		 */
-		public LeftValue getLeft() {
+		public L getLeft() {
 			return _left;
 		}
 		
 		@Override
-		public <Result, X extends Exception> Result match(final Matcher<LeftValue, RightValue, Result, X> matcher)
+		public <RT, X extends Exception> RT match(final Matcher<? super L, ? super R, RT, X> matcher)
 		throws X {
+			assert null != matcher;
+			
 			return matcher.left(this);
+		}
+		
+		@Override
+		public <RL, X extends Exception> Either<RL, R> mapLeft(final Function1<? super L, ? extends RL, X> function)
+		throws X {
+			assert null != function;
+			
+			return Either.<RL, R>left(function.evaluate(_left));
+		}
+		
+		@SuppressWarnings("unchecked")
+		@Override
+		public <RR, X extends Exception> Either<L, RR> mapRight(final Function1<? super R, ? extends RR, X> function) {
+			return (Either<L, RR>) this;
 		}
 		
 		@Override
@@ -159,32 +165,23 @@ implements Describable {
 	/**
 	 * The {@link Either.Right} class represents the instances built using the <code>Right</code> constructor.
 	 * 
-	 * @param <LeftValue> Type of the left value.
-	 * @param <RightValue> Type of the right value.
+	 * @param <L> Type of the left value.
+	 * @param <R> Type of the right value.
 	 */
-	public final static class Right<LeftValue, RightValue>
-	extends Either<LeftValue, RightValue> {
-		protected final RightValue _right;
-		
+	public final static class Right<L, R>
+	extends Either<L, R> {
 		/**
 		 * Build a new instance wrapping the given right value.
 		 * 
-		 * @param right Right value to wrap. May be <code>null</code>.
+		 * @param right The value to wrap. May be <code>null</code>.
 		 */
-		public Right(final RightValue right) {
-			// Initialization.
+		public Right(final R right) {
 			_right = right;
 		}
 		
 		@Override
-		public boolean isLeft() {
-			return false;
-		}
-		
-		@Override
-		public Left<LeftValue, RightValue> asLeft()
-		throws InvalidConstructorException {
-			throw new InvalidConstructorException("Cannot cast instance " + this);
+		public Constructor getConstructor() {
+			return Constructor.RIGHT;
 		}
 		
 		@Override
@@ -193,28 +190,42 @@ implements Describable {
 		}
 		
 		@Override
-		public Right<LeftValue, RightValue> asRight() {
+		public Right<L, R> asRight() {
 			return this;
 		}
 		
-		@Override
-		public Constructor getConstructor() {
-			return Constructor.RIGHT;
-		}
+		/** The wrapped right value. May be <code>null</code>. */
+		private final R _right;
 		
 		/**
 		 * Get the right value wrapped in the receiver instance.
 		 * 
 		 * @return The wrapped value. May be <code>null</code>.
 		 */
-		public RightValue getRight() {
+		public R getRight() {
 			return _right;
 		}
 		
 		@Override
-		public <Result, X extends Exception> Result match(final Matcher<LeftValue, RightValue, Result, X> matcher)
+		public <Result, X extends Exception> Result match(final Matcher<? super L, ? super R, Result, X> matcher)
 		throws X {
+			assert null != matcher;
+			
 			return matcher.right(this);
+		}
+		
+		@SuppressWarnings("unchecked")
+		@Override
+		public <RL, X extends Exception> Either<RL, R> mapLeft(final Function1<? super L, ? extends RL, X> function) {
+			return (Either<RL, R>) this;
+		}
+		
+		@Override
+		public <RR, X extends Exception> Either<L, RR> mapRight(final Function1<? super R, ? extends RR, X> function)
+		throws X {
+			assert null != function;
+			
+			return Either.<L, RR>right(function.evaluate(_right));
 		}
 		
 		@Override
@@ -246,12 +257,31 @@ implements Describable {
 	 * 
 	 * @param <LeftValue> Type of the left value.
 	 * @param <RightValue> Type of the right value.
-	 * @param left Left value to wrap. May be <code>null</code>.
-	 * @return The instance.
+	 * @param left The left value to wrap. May be <code>null</code>.
+	 * @return The built instance.
 	 */
 	public static <LeftValue, RightValue> Either<LeftValue, RightValue> left(final LeftValue left) {
 		return new Left<LeftValue, RightValue>(left);
 	}
+	
+	/**
+	 * Build a function which builds {@link Either.Left} instances.
+	 * 
+	 * @param <L> Type of the left values.
+	 * @param <R> Type of the right values.
+	 * @param <X> The of the exceptions.
+	 * @return The built function.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <L, R, X extends Exception> Function1<L, Either<L, R>, X> leftFunction() {
+		return (Function1<L, Either<L, R>, X>) _LEFT_FUNCTION;
+	}
+	
+	private static final Function1<?, ?, ?> _LEFT_FUNCTION = new Function1<Object, Either<?, ?>, RuntimeException>() {
+		public Either<?, ?> evaluate(final Object value) {
+			return Either.left(value);
+		}
+	};
 	
 	/**
 	 * Build an instance using the <code>Left</code> constructor wrapping the given value.
@@ -259,43 +289,30 @@ implements Describable {
 	 * @param <LeftValue> Type of the left value.
 	 * @param <RightValue> Type of the right value.
 	 * @param right Right value to wrap. May be <code>null</code>.
-	 * @return The instance.
+	 * @return The built instance.
 	 */
 	public static <LeftValue, RightValue> Either<LeftValue, RightValue> right(final RightValue right) {
 		return new Right<LeftValue, RightValue>(right);
 	}
 	
 	/**
-	 * Test whether the receiver instance has been built using the <code>Left</code> constructor.
+	 * Build a function which builds {@link Either.Right} instances.
 	 * 
-	 * @return <code>true</code> when the instance has been built with the <code>Left</code> constructor, <code>false</code> otherwise.
+	 * @param <L> Type of the left values.
+	 * @param <R> Type of the right values.
+	 * @param <X> The of the exceptions.
+	 * @return The built function.
 	 */
-	public abstract boolean isLeft();
+	@SuppressWarnings("unchecked")
+	public static <L, R, X extends Exception> Function1<R, Either<L, R>, X> rightFunction() {
+		return (Function1<R, Either<L, R>, X>) _RIGHT_FUNCTION;
+	}
 	
-	/**
-	 * Cast the receiver instance as a {@link Left} instance.
-	 * 
-	 * @return The instance.
-	 * @throws InvalidConstructorException when the receiver instance has not been built with the <code>Left</code> constructor.
-	 */
-	public abstract Left<LeftValue, RightValue> asLeft()
-	throws InvalidConstructorException;
-	
-	/**
-	 * Test whether the receiver instance has been built using the <code>Right</code> constructor.
-	 * 
-	 * @return <code>true</code> when the instance has been built with the <code>Right</code> constructor, <code>false</code> otherwise.
-	 */
-	public abstract boolean isRight();
-	
-	/**
-	 * Cast the receiver instance as a {@link Right} instance.
-	 * 
-	 * @return The instance.
-	 * @throws InvalidConstructorException when the receiver instance has not been built with the <code>Right</code> constructor.
-	 */
-	public abstract Right<LeftValue, RightValue> asRight()
-	throws InvalidConstructorException;
+	private static final Function1<?, ?, ?> _RIGHT_FUNCTION = new Function1<Object, Either<?, ?>, RuntimeException>() {
+		public Either<?, ?> evaluate(final Object value) {
+			return Either.right(value);
+		}
+	};
 	
 	/**
 	 * Get the constructor of the receiver instance.
@@ -305,17 +322,81 @@ implements Describable {
 	public abstract Constructor getConstructor();
 	
 	/**
-	 * Apply the given matcher function to the receiver instance.
-	 * <p>
-	 * This method implements some kind of simple pattern matching.
+	 * Test whether the receiver instance has been built using the <code>Left</code> constructor.
 	 * 
-	 * @param <Result> Type of the result.
+	 * @return <code>true</code> when the instance has been built with the <code>Left</code> constructor, <code>false</code> otherwise.
+	 */
+	public boolean isLeft() {
+		return false;
+	}
+	
+	/**
+	 * Cast the receiver instance as a {@link Left} instance.
+	 * 
+	 * @return The instance.
+	 * @throws InvalidConstructorException when the receiver instance has not been built with the <code>Left</code> constructor.
+	 */
+	public Left<L, R> asLeft()
+	throws InvalidConstructorException {
+		throw new InvalidConstructorException(this + " is not a Left");
+	}
+	
+	/**
+	 * Test whether the receiver instance has been built using the <code>Right</code> constructor.
+	 * 
+	 * @return <code>true</code> when the instance has been built with the <code>Right</code> constructor, <code>false</code> otherwise.
+	 */
+	public boolean isRight() {
+		return false;
+	}
+	
+	/**
+	 * Cast the receiver instance as a {@link Right} instance.
+	 * 
+	 * @return The instance.
+	 * @throws InvalidConstructorException when the receiver instance has not been built with the <code>Right</code> constructor.
+	 */
+	public Right<L, R> asRight()
+	throws InvalidConstructorException {
+		throw new InvalidConstructorException(this + " is not a Right");
+	}
+	
+	/**
+	 * Match the receiver instance according to the given matching function.
+	 * <p>
+	 * This method implements some kind of basic pattern matching.
+	 * 
+	 * @param <RT> Type of the result.
 	 * @param <X> Type of the exceptions.
-	 * @param matcher Matcher to use.
-	 * @return The result of the function application.
+	 * @param matcher The matching function.
+	 * @return The result of the match.
 	 * @throws X When the match fails.
 	 */
-	public abstract <Result, X extends Exception> Result match(final Matcher<LeftValue, RightValue, Result, X> matcher)
+	public abstract <RT, X extends Exception> RT match(final Matcher<? super L, ? super R, RT, X> matcher)
+	throws X;
+	
+	/**
+	 * Map the left value wrapped by the receiver instance.
+	 * 
+	 * @param <RL> Type of the mapped left value.
+	 * @param <X> Type of the exceptions.
+	 * @param function The mapping function.
+	 * @return An instance containing the mapped value.
+	 * @throws X When the mapping fails.
+	 */
+	public abstract <RL, X extends Exception> Either<RL, R> mapLeft(final Function1<? super L, ? extends RL, X> function)
+	throws X;
+	
+	/**
+	 * Map the left value wrapped by the receiver instance.
+	 * 
+	 * @param <RR> Type of the mapped right value.
+	 * @param <X> Type of the exceptions.
+	 * @param function The mapping function.
+	 * @return An instance containing the mapped value.
+	 * @throws X When the mapping fails.
+	 */
+	public abstract <RR, X extends Exception> Either<L, RR> mapRight(final Function1<? super R, ? extends RR, X> function)
 	throws X;
 	
 	@Override

@@ -18,7 +18,6 @@ package com.trazere.util.function;
 import com.trazere.util.collection.CollectionUtils;
 import com.trazere.util.collection.Multimap;
 import com.trazere.util.lang.Factory;
-import com.trazere.util.type.Either;
 import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Tuple2;
 import com.trazere.util.type.Tuple3;
@@ -422,62 +421,6 @@ public class Functions {
 			}
 		};
 	}
-	
-	/**
-	 * Build a function wrapping its argument in a {@link Maybe.Some} instance.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param <X> Type of the exceptions.
-	 * @return The built function.
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T, X extends Exception> Function1<T, Maybe<T>, X> makeSome() {
-		return (Function1<T, Maybe<T>, X>) _MAKE_SOME;
-	}
-	
-	private static final Function1<?, ?, ?> _MAKE_SOME = new Function1<Object, Maybe<Object>, RuntimeException>() {
-		public Maybe<Object> evaluate(final Object value) {
-			return Maybe.some(value);
-		}
-	};
-	
-	/**
-	 * Build a function wrapping its argument in a {@link Either.Left} instance.
-	 * 
-	 * @param <L> Type of the left values.
-	 * @param <R> Type of the right values.
-	 * @param <X> The of the exceptions.
-	 * @return The built function.
-	 */
-	@SuppressWarnings("unchecked")
-	public static <L, R, X extends Exception> Function1<L, Either<L, R>, X> makeLeft() {
-		return (Function1<L, Either<L, R>, X>) _MAKE_LEFT;
-	}
-	
-	private static final Function1<?, ?, ?> _MAKE_LEFT = new Function1<Object, Either<?, ?>, RuntimeException>() {
-		public Either<?, ?> evaluate(final Object value) {
-			return Either.left(value);
-		}
-	};
-	
-	/**
-	 * Build a function wrapping its argument in a {@link Either.Left} instance.
-	 * 
-	 * @param <L> Type of the left values.
-	 * @param <R> Type of the right values.
-	 * @param <X> The of the exceptions.
-	 * @return The built function.
-	 */
-	@SuppressWarnings("unchecked")
-	public static <L, R, X extends Exception> Function1<R, Either<L, R>, X> makeRight() {
-		return (Function1<R, Either<L, R>, X>) _MAKE_RIGHT;
-	}
-	
-	private static final Function1<?, ?, ?> _MAKE_RIGHT = new Function1<Object, Either<?, ?>, RuntimeException>() {
-		public Either<?, ?> evaluate(final Object value) {
-			return Either.right(value);
-		}
-	};
 	
 	/**
 	 * Build a function wrapping its arguments in a {@link Tuple2} instance.
