@@ -15,6 +15,8 @@
  */
 package com.trazere.util.identifier;
 
+import com.trazere.util.function.Function1;
+
 /**
  * The {@link Identifier} class represents typed unique values.
  * <p>
@@ -38,6 +40,28 @@ public class Identifier<T> {
 	public T getValue() {
 		return _value;
 	}
+	
+	/**
+	 * Build a function which gets the value of identifiers.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @return The built function.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T, X extends Exception> Function1<Identifier, T, X> getValueFunction() {
+		return (Function1<Identifier, T, X>) _GET_VALUE_FUNCTION;
+	}
+	
+	private static final Function1<?, ?, ?> _GET_VALUE_FUNCTION = new Function1<Identifier<Object>, Object, RuntimeException>() {
+		public Object evaluate(final Identifier<Object> identifier) {
+			assert null != identifier;
+			
+			return identifier.getValue();
+		}
+	};
+	
+	// Object.
 	
 	@Override
 	public String toString() {
