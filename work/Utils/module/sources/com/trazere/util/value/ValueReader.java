@@ -30,7 +30,7 @@ extends ParameterFunction<String, Object, T, ValueException> {
 	 * 
 	 * @return The Java type of the values.
 	 */
-	public Class<T> getType();
+	public Class<T> getValueClass();
 	
 	/**
 	 * Indicates whether the values produced by the receiver reader of can be <code>null</code> or not.

@@ -30,22 +30,22 @@ implements ValueSerializer<T, X>, Describable {
 	/**
 	 * Instantiate a new serializer with the given type.
 	 * 
-	 * @param type Type of the values.
+	 * @param valueClass Type of the values.
 	 */
-	public AbstractValueSerializer(final Class<T> type) {
-		assert null != type;
+	public AbstractValueSerializer(final Class<T> valueClass) {
+		assert null != valueClass;
 		
 		// Initialization.
-		_type = type;
+		_valueClass = valueClass;
 	}
 	
-	// Type.
+	// Type parameters.
 	
 	/** Type of the values. */
-	protected final Class<T> _type;
+	protected final Class<T> _valueClass;
 	
-	public Class<T> getType() {
-		return _type;
+	public Class<T> getValueClass() {
+		return _valueClass;
 	}
 	
 	// Object.
@@ -56,6 +56,6 @@ implements ValueSerializer<T, X>, Describable {
 	}
 	
 	public void fillDescription(final Description description) {
-		description.append("Type", _type.getName());
+		description.append("Type", _valueClass.getName());
 	}
 }

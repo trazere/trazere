@@ -20,6 +20,8 @@ import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Maybe.None;
 import com.trazere.util.type.Maybe.Some;
 
+// TODO: move to function package ?
+
 /**
  * The {@link Closure} interface represents closures.
  * <p>
