@@ -15,22 +15,64 @@
  */
 package com.trazere.util.text;
 
+import com.trazere.util.lang.MutableBoolean;
 import com.trazere.util.type.Maybe;
 
+/**
+ * The {@link Description} class helps to compute descriptions of objects.
+ * <p>
+ * This class works as an accumulator of named properties, each instance can only be used to compute a single description.
+ */
 public class Description {
-	private final StringBuilder _builder = new StringBuilder();
-	
-	public Description(final Object object) {
+	public static Description buildObjectDescription(final Object object) {
 		assert null != object;
 		
-		// Compute.
-		_builder.append("[").append(TextUtils.computeClassName(object.getClass()));
+		return new Description(TextUtils.computeClassName(object.getClass()));
+	}
+	
+	private final StringBuilder _builder;
+	private final MutableBoolean _first;
+	
+	public Description() {
+		// Initialization.
+		_builder = new StringBuilder("[");
+		_first = new MutableBoolean(true);
+	}
+	
+	public Description(final String head) {
+		assert null != head;
+		
+		// Initialization.
+		_builder = new StringBuilder("[");
+		_builder.append(head);
+		_first = new MutableBoolean(false);
+	}
+	
+	public Description(final StringBuilder builder, final boolean first) {
+		assert null != builder;
+		
+		// Initialization.
+		_builder = builder;
+		_first = new MutableBoolean(first);
 	}
 	
 	public Description append(final String name) {
 		assert null != name;
 		
-		_builder.append(" - ").append(name);
+		if (_first.get()) {
+			_first.set(false);
+		} else {
+			_builder.append(" - ");
+		}
+		_builder.append(name);
+		
+		return this;
+	}
+	
+	public Description append(final String name, final Object value) {
+		append(name);
+		_builder.append(" = ").append(value);
+		
 		return this;
 	}
 	
@@ -60,12 +102,6 @@ public class Description {
 	
 	public Description append(final String name, final char value) {
 		return append(name, Character.valueOf(value));
-	}
-	
-	public Description append(final String name, final Object value) {
-		append(name);
-		_builder.append(" = ").append(value);
-		return this;
 	}
 	
 	public Description append(final String name, final Maybe<?> value) {

@@ -94,7 +94,7 @@ implements Closure<T, X> {
 		if (_value.isRight()) {
 			return String.valueOf(_value.asRight().getRight());
 		} else {
-			final Description description = new Description(this);
+			final Description description = Description.buildObjectDescription(this);
 			description.append("Function", _value.asLeft().getLeft());
 			return description.toString();
 		}
