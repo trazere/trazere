@@ -15,6 +15,8 @@
  */
 package com.trazere.util.type;
 
+import java.util.Comparator;
+
 /**
  * The {@link TypeUtils} class provides various helpers regarding the types.
  */
@@ -121,8 +123,31 @@ public class TypeUtils {
 	public static <T> T get(final Maybe<? extends T> value, final T defaultValue) {
 		assert null != value;
 		
-		// Get.
 		return value.isSome() ? value.asSome().getValue() : defaultValue;
+	}
+	
+	/**
+	 * Compare the values wrapped in the given maybe instances using the given comparator.
+	 * <p>
+	 * <code>None</code> instances are considered as less than <code>Some</code> instances.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param comparator The comparator.
+	 * @param value1 The first instance.
+	 * @param value2 The second instance.
+	 * @return The result of the comparison as defined by the {@link Comparator#compare(Object, Object)} method.
+	 * @see Comparable#compareTo(Object)
+	 */
+	public static <T> int compare(final Comparator<T> comparator, final Maybe<? extends T> value1, final Maybe<? extends T> value2) {
+		assert null != comparator;
+		assert null != value1;
+		assert null != value2;
+		
+		if (value1.isNone()) {
+			return value2.isNone() ? 0 : -1;
+		} else {
+			return value2.isNone() ? 1 : comparator.compare(value1.asSome().getValue(), value2.asSome().getValue());
+		}
 	}
 	
 	private TypeUtils() {
