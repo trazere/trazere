@@ -420,7 +420,7 @@ public class TextUtils {
 	public static String computeDescription(final Describable object) {
 		assert null != object;
 		
-		final Description description = new Description(object);
+		final Description description = Description.buildObjectDescription(object);
 		object.fillDescription(description);
 		return description.toString();
 	}
