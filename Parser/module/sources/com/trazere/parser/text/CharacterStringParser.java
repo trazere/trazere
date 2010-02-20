@@ -21,6 +21,7 @@ import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserHandler;
 import com.trazere.parser.ParserState;
+import com.trazere.util.lang.MutableBoolean;
 
 /**
  * DOCME
@@ -57,13 +58,13 @@ extends AbstractParser<Character, String> {
 	
 	protected ParserHandler<Character, Character> buildMoreHandler(final ParserClosure<Character, String> closure, final StringBuilder result) {
 		return new ParserHandler<Character, Character>() {
-			private boolean _done = false;
+			private final MutableBoolean _done = new MutableBoolean(false);
 			
 			public void result(final Character character, final ParserState<Character> state)
 			throws ParserException {
 				// Check that this is the first result.
-				if (!_done) {
-					_done = true;
+				if (!_done.get()) {
+					_done.set(true);
 					
 					// Accumulate.
 					result.append(character.charValue());
