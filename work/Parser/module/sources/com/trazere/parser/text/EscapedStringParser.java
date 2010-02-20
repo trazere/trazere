@@ -29,8 +29,9 @@ public class EscapedStringParser
 extends AbstractParser<Character, String> {
 	protected final CharPredicate<? extends ParserException> _filter;
 	protected final CharPredicate<? extends ParserException> _escapeFilter;
+	protected final boolean _empty;
 	
-	public EscapedStringParser(final CharPredicate<? extends ParserException> filter, final CharPredicate<? extends ParserException> escapeFilter, final String description) {
+	public EscapedStringParser(final CharPredicate<? extends ParserException> filter, final CharPredicate<? extends ParserException> escapeFilter, final boolean empty, final String description) {
 		super(description);
 		
 		// Checks.
@@ -40,13 +41,16 @@ extends AbstractParser<Character, String> {
 		// Initialization.
 		_filter = filter;
 		_escapeFilter = escapeFilter;
+		_empty = empty;
 	}
 	
 	public void run(final ParserClosure<Character, String> closure, final ParserState<Character> state)
 	throws ParserException {
 		// Zero.
 		final StringBuilder result = new StringBuilder();
-		closure.success(result.toString(), state);
+		if (_empty) {
+			closure.success(result.toString(), state);
+		}
 		
 		// More.
 		state.read(buildContinuation(closure, result));
