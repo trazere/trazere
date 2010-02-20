@@ -16,6 +16,7 @@
 package com.trazere.util.collection;
 
 import com.trazere.util.function.Function1;
+import com.trazere.util.lang.MutableObject;
 import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Tuple2;
 import java.util.ArrayList;
@@ -97,7 +98,6 @@ public class CollectionUtils {
 	public static <T> List<T> listN(final T... values) {
 		assert null != values;
 		
-		// Build the list.
 		final List<T> list = new ArrayList<T>(values.length);
 		for (final T value : values) {
 			list.add(value);
@@ -117,7 +117,6 @@ public class CollectionUtils {
 	public static <T> List<T> list(final Maybe<T> value) {
 		assert null != value;
 		
-		// Build the list.
 		final List<T> list = new ArrayList<T>();
 		if (value.isSome()) {
 			list.add(value.asSome().getValue());
@@ -188,7 +187,6 @@ public class CollectionUtils {
 	public static <T> Set<T> setN(final T... values) {
 		assert null != values;
 		
-		// Build the set.
 		final Set<T> set = new HashSet<T>(values.length);
 		for (final T value : values) {
 			set.add(value);
@@ -208,7 +206,6 @@ public class CollectionUtils {
 	public static <T> Set<T> set(final Maybe<T> value) {
 		assert null != value;
 		
-		// Build the set.
 		final Set<T> set = new HashSet<T>();
 		if (value.isSome()) {
 			set.add(value.asSome().getValue());
@@ -288,7 +285,6 @@ public class CollectionUtils {
 	public static <T> Iterator<T> iterator(final T... values) {
 		assert null != values;
 		
-		// Build the iterator.
 		return new Iterator<T>() {
 			protected int _index = 0;
 			
@@ -310,18 +306,29 @@ public class CollectionUtils {
 	}
 	
 	/**
+	 * Get the next value from the given iterator.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param values The values.
+	 * @return The next value.
+	 */
+	public static <T> Maybe<T> next(final Iterator<? extends T> values) {
+		assert null != values;
+		
+		return values.hasNext() ? Maybe.<T>some(values.next()) : Maybe.<T>none();
+	}
+	
+	/**
 	 * Get an element from the given collection.
 	 * 
 	 * @param <T> Type of the elements.
 	 * @param collection The collection.
 	 * @return Any element of the collection.
 	 */
-	public static <T> Maybe<T> any(final Collection<T> collection) {
+	public static <T> Maybe<T> any(final Collection<? extends T> collection) {
 		assert null != collection;
 		
-		// Get.
-		final Iterator<T> iterator = collection.iterator();
-		return iterator.hasNext() ? Maybe.some(iterator.next()) : Maybe.<T>none();
+		return next(collection.iterator());
 	}
 	
 	/**
@@ -335,9 +342,49 @@ public class CollectionUtils {
 	public static <K, V> Maybe<Map.Entry<K, V>> any(final Map<K, V> map) {
 		assert null != map;
 		
-		// Get.
-		final Iterator<Map.Entry<K, V>> iterator = map.entrySet().iterator();
-		return iterator.hasNext() ? Maybe.some(iterator.next()) : Maybe.<Map.Entry<K, V>>none();
+		return next(map.entrySet().iterator());
+	}
+	
+	/**
+	 * Get the least given value according to the given comparator.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param comparator The comparator.
+	 * @param values The values.
+	 * @return The least value.
+	 */
+	public static <T> Maybe<T> least(final Comparator<? super T> comparator, final Collection<? extends T> values) {
+		assert null != values;
+		
+		return least(comparator, values.iterator());
+	}
+	
+	/**
+	 * Get the least given value according to the given comparator.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param comparator The comparator.
+	 * @param values The values.
+	 * @return The least value.
+	 */
+	public static <T> Maybe<T> least(final Comparator<? super T> comparator, final Iterator<? extends T> values) {
+		assert null != comparator;
+		assert null != values;
+		
+		// Get the first value.
+		if (!values.hasNext()) {
+			return Maybe.none();
+		}
+		
+		// Get the least value.
+		final MutableObject<T> least = new MutableObject<T>(values.next());
+		while (values.hasNext()) {
+			final T value = values.next();
+			if (comparator.compare(value, least.get()) < 1) {
+				least.set(value);
+			}
+		}
+		return Maybe.some(least.get());
 	}
 	
 	/**
@@ -351,7 +398,6 @@ public class CollectionUtils {
 	public static <T> Maybe<T> get(final List<T> list, final int index) {
 		assert null != list;
 		
-		// Get.
 		return index < list.size() ? Maybe.some(list.get(index)) : Maybe.<T>none();
 	}
 	
@@ -388,7 +434,6 @@ public class CollectionUtils {
 		assert null != collection;
 		assert null != value;
 		
-		// Add.
 		if (value.isSome()) {
 			collection.add(value.asSome().getValue());
 		}
@@ -406,7 +451,6 @@ public class CollectionUtils {
 	public static <T> Maybe<T> removeAny(final Collection<? extends T> collection) {
 		assert null != collection;
 		
-		// Remove.
 		final Iterator<? extends T> iterator = collection.iterator();
 		if (iterator.hasNext()) {
 			final T object = iterator.next();
@@ -429,7 +473,6 @@ public class CollectionUtils {
 	public static <K, V> Maybe<V> get(final Map<? super K, ? extends V> map, final K key) {
 		assert null != map;
 		
-		// Get.
 		return map.containsKey(key) ? Maybe.<V>some(map.get(key)) : Maybe.<V>none();
 	}
 	
@@ -446,7 +489,6 @@ public class CollectionUtils {
 	public static <K, V> V get(final Map<? super K, ? extends V> map, final K key, final V defaultValue) {
 		assert null != map;
 		
-		// Get.
 		return map.containsKey(key) ? map.get(key) : defaultValue;
 	}
 	
@@ -463,7 +505,6 @@ public class CollectionUtils {
 		assert null != map;
 		assert null != value;
 		
-		// Add.
 		if (value.isSome()) {
 			map.put(key, value.asSome().getValue());
 		}
@@ -482,7 +523,6 @@ public class CollectionUtils {
 	public static <T, L extends List<T>> L reverse(final L list) {
 		assert null != list;
 		
-		// Build the list.
 		Collections.reverse(list);
 		return list;
 	}
@@ -500,7 +540,6 @@ public class CollectionUtils {
 	public static <T extends Comparable<? super T>, L extends List<T>> L sort(final L list) {
 		assert null != list;
 		
-		// Sort.
 		Collections.sort(list);
 		return list;
 	}
@@ -520,7 +559,6 @@ public class CollectionUtils {
 		assert null != list;
 		assert null != comparator;
 		
-		// Sort.
 		Collections.sort(list, comparator);
 		return list;
 	}
@@ -616,7 +654,6 @@ public class CollectionUtils {
 		assert null != collection2;
 		assert null != results;
 		
-		// Compute the union.
 		results.addAll(collection1);
 		results.addAll(collection2);
 		return results;
@@ -640,7 +677,6 @@ public class CollectionUtils {
 		assert null != map2;
 		assert null != results;
 		
-		// Compute the union.
 		results.putAll(map2);
 		results.putAll(map1);
 		return results;
@@ -661,7 +697,6 @@ public class CollectionUtils {
 		assert null != collection1;
 		assert null != collection2;
 		
-		// Test.
 		for (final T value : collection1) {
 			if (collection2.contains(value)) {
 				return true;
@@ -688,7 +723,6 @@ public class CollectionUtils {
 		assert null != collection2;
 		assert null != results;
 		
-		// Compute the intersection.
 		for (final T value : collection1) {
 			if (collection2.contains(value)) {
 				results.add(value);
@@ -715,7 +749,6 @@ public class CollectionUtils {
 		assert null != collection2;
 		assert null != results;
 		
-		// Compute the exclusion.
 		for (final T value : collection1) {
 			if (!collection2.contains(value)) {
 				results.add(value);
@@ -739,7 +772,6 @@ public class CollectionUtils {
 		assert null != map;
 		assert null != keys;
 		
-		// Fill.
 		for (final K key : keys) {
 			map.put(key, value);
 		}
@@ -762,7 +794,6 @@ public class CollectionUtils {
 		assert null != keys;
 		assert null != results;
 		
-		// Compute the sub map.
 		for (final K key : keys) {
 			if (map.containsKey(key)) {
 				final V value = map.get(key);
@@ -788,7 +819,6 @@ public class CollectionUtils {
 		assert null != keys;
 		assert null != results;
 		
-		// Compute the exclusion map.
 		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
 			final K key = entry.getKey();
 			if (!keys.contains(key)) {
@@ -816,7 +846,6 @@ public class CollectionUtils {
 		assert null != list1;
 		assert null != list2;
 		
-		// Zip.
 		return zip(list1.iterator(), list2.iterator(), results);
 	}
 	
@@ -839,7 +868,6 @@ public class CollectionUtils {
 		assert null != iterator2;
 		assert null != results;
 		
-		// Zip.
 		while (iterator1.hasNext() && iterator2.hasNext()) {
 			results.add(new Tuple2<T1, T2>(iterator1.next(), iterator2.next()));
 		}
@@ -860,7 +888,6 @@ public class CollectionUtils {
 		assert null != results1;
 		assert null != results2;
 		
-		// Unzip.
 		unzip(pairs.iterator(), results1, results2);
 	}
 	
@@ -878,7 +905,6 @@ public class CollectionUtils {
 		assert null != results1;
 		assert null != results2;
 		
-		// Unzip.
 		while (pairs.hasNext()) {
 			final Tuple2<T1, T2> value = pairs.next();
 			results1.add(value.getFirst());
@@ -900,7 +926,6 @@ public class CollectionUtils {
 		assert null != map;
 		assert null != results;
 		
-		// Get.
 		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
 			results.add(new Tuple2<K, V>(entry.getKey(), entry.getValue()));
 		}
