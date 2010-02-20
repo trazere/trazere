@@ -63,6 +63,10 @@ public class TextParsers {
 		return new CharacterStringParser(characterParser, empty, description);
 	}
 	
+	public static Parser<Character, String> escapedString(final CharPredicate<? extends ParserException> filter, final CharPredicate<? extends ParserException> escapeFilter, final boolean empty, final String description) {
+		return new EscapedStringParser(filter, escapeFilter, empty, description);
+	}
+	
 	public static Parser<Character, Character> space(final String description) {
 		return character(' ', description);
 	}
