@@ -108,14 +108,14 @@ extends AbstractValueReader<T> {
 	
 	public <B extends RecordSignatureBuilder<String, Object, ?>> B unifyRequirements(final B builder)
 	throws RecordException {
-		builder.unify(_name, _type, _nullable);
+		builder.unify(_name, _valueClass, _nullable);
 		return builder;
 	}
 	
 	public T read(final Record<String, Object> parameters)
 	throws ValueException {
 		try {
-			return parameters.getTyped(_name, _type);
+			return parameters.getTyped(_name, _valueClass);
 		} catch (final RecordException exception) {
 			throw new ValueException(exception);
 		}
@@ -135,20 +135,20 @@ extends AbstractValueReader<T> {
 		}
 		
 		// Check the type.
-		final Class<? extends Object> type = valueReader.getType();
-		if (_type.equals(type)) {
+		final Class<? extends Object> valueClass = valueReader.getValueClass();
+		if (_valueClass.equals(valueClass)) {
 			return (ValueReader<T>) valueReader;
-		} else if (_type.isAssignableFrom(valueReader.getType())) {
+		} else if (_valueClass.isAssignableFrom(valueClass)) {
 			return adapt((ValueReader<? extends T>) valueReader);
 		} else {
-			throw new ValueException("Value reader of field \"" + _name + "\" is not compatible with type \"" + _type + "\" in record reader " + reader);
+			throw new ValueException("Value reader of field \"" + _name + "\" is not compatible with type \"" + _valueClass + "\" in record reader " + reader);
 		}
 	}
 	
 	private ValueReader<T> adapt(final ValueReader<? extends T> valueReader) {
 		assert null != valueReader;
 		
-		return new AbstractValueReader<T>(_type, _nullable) {
+		return new AbstractValueReader<T>(_valueClass, _nullable) {
 			public <B extends RecordSignatureBuilder<String, Object, ?>> B unifyRequirements(final B builder)
 			throws RecordException {
 				return valueReader.unifyRequirements(builder);
@@ -169,8 +169,8 @@ extends AbstractValueReader<T> {
 	@Override
 	public int hashCode() {
 		final HashCode result = new HashCode(this);
-		result.append(_type);
 		result.append(_name);
+		result.append(_valueClass);
 		result.append(_nullable);
 		return result.get();
 	}
@@ -181,7 +181,7 @@ extends AbstractValueReader<T> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final ParameterValueReader<?> reader = (ParameterValueReader<?>) object;
-			return _type.equals(reader._type) && _name.equals(reader._name) && _nullable == reader._nullable;
+			return _name.equals(reader._name) && _valueClass.equals(reader._valueClass) && _nullable == reader._nullable;
 		} else {
 			return false;
 		}
@@ -191,6 +191,5 @@ extends AbstractValueReader<T> {
 	public void fillDescription(final Description description) {
 		description.append("Name", _name);
 		super.fillDescription(description);
-		description.append("Optional", _nullable);
 	}
 }

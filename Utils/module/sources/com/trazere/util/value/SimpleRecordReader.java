@@ -103,7 +103,7 @@ extends AbstractRecordReader<K, V> {
 		try {
 			final RecordSignatureBuilder<K, V, ?> builder = new SimpleRecordSignatureBuilder<K, V>();
 			for (final Map.Entry<K, ValueReader<? extends V>> entry : _fields.entrySet()) {
-				builder.add(FieldSignature.build(entry.getKey(), entry.getValue().getType(), entry.getValue().isNullable()));
+				builder.add(FieldSignature.build(entry.getKey(), entry.getValue().getValueClass(), entry.getValue().isNullable()));
 			}
 			return builder.build();
 		} catch (final RecordException exception) {

@@ -18,7 +18,7 @@ package com.trazere.util.type;
 import java.util.Comparator;
 
 /**
- * The {@link TypeUtils} class provides various helpers regarding the types.
+ * The {@link TypeUtils} class provides various helpers regarding types.
  */
 public class TypeUtils {
 	/**
