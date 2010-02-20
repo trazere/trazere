@@ -15,6 +15,7 @@
  */
 package com.trazere.util.function;
 
+import com.trazere.util.Counter;
 import com.trazere.util.accumulator.Accumulator;
 import com.trazere.util.accumulator.Accumulators;
 import com.trazere.util.collection.Multimap;
@@ -36,6 +37,206 @@ import java.util.Set;
  */
 public class FunctionUtils {
 	/**
+	 * Test whether any given value is accepted by the given predicate.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate Predicate to use.
+	 * @param values Values to test.
+	 * @return <code>true</code> if any value is accepted, <code>false</code> if all values are rejected.
+	 * @throws X When some predicate evaluation fails.
+	 */
+	public static <T, X extends Exception> boolean isAny(final Predicate1<? super T, X> predicate, final Collection<T> values)
+	throws X {
+		assert null != values;
+		
+		return isAny(predicate, values.iterator());
+	}
+	
+	/**
+	 * Test whether any value provided by the given iterator is accepted by the given predicate.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate Predicate to use.
+	 * @param values Iterator providing the values to test.
+	 * @return <code>true</code> if any value is accepted, <code>false</code> if all values are rejected.
+	 * @throws X When some predicate evaluation fails.
+	 */
+	public static <T, X extends Exception> boolean isAny(final Predicate1<? super T, X> predicate, final Iterator<T> values)
+	throws X {
+		assert null != predicate;
+		assert null != values;
+		
+		while (values.hasNext()) {
+			if (predicate.evaluate(values.next())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Test whether any given binding is accepted by the given predicate.
+	 * <p>
+	 * This method evaluates the predicate by passing the keys and values of the bindings respectively as first and second arguments.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate Predicate to use.
+	 * @param bindings Bindings to test.
+	 * @return <code>true</code> if any binding is accepted, <code>false</code> if all bindings are rejected.
+	 * @throws X When some predicate evaluation fails.
+	 */
+	public static <K, V, X extends Exception> boolean isAny(final Predicate2<? super K, ? super V, X> predicate, final Map<K, V> bindings)
+	throws X {
+		assert null != predicate;
+		assert null != bindings;
+		
+		for (final Map.Entry<K, V> binding : bindings.entrySet()) {
+			if (predicate.evaluate(binding.getKey(), binding.getValue())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Test whether all given values are accepted by the given predicate.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate Predicate to use.
+	 * @param values Values to test.
+	 * @return <code>true</code> if all values are accepted, <code>false</code> if any value is rejected.
+	 * @throws X When some predicate evaluation fails.
+	 */
+	public static <T, X extends Exception> boolean areAll(final Predicate1<? super T, X> predicate, final Collection<T> values)
+	throws X {
+		assert null != values;
+		
+		return areAll(predicate, values.iterator());
+	}
+	
+	/**
+	 * Test whether all values provided by the given iterator are accepted by the given predicate.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate Predicate to use.
+	 * @param values Iterator providing the values to test.
+	 * @return <code>true</code> if all values are accepted, <code>false</code> if any value is rejected.
+	 * @throws X When some predicate evaluation fails.
+	 */
+	public static <T, X extends Exception> boolean areAll(final Predicate1<? super T, X> predicate, final Iterator<T> values)
+	throws X {
+		assert null != predicate;
+		assert null != values;
+		
+		while (values.hasNext()) {
+			if (!predicate.evaluate(values.next())) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * Test whether all given bindings are accepted by the given predicate.
+	 * <p>
+	 * This method evaluates the predicate by passing the keys and values of the bindings respectively as first and second arguments.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate Predicate to use.
+	 * @param bindings Bindings to test.
+	 * @return <code>true</code> if all bindings are accepted, <code>false</code> if any binding is rejected.
+	 * @throws X When some predicate evaluation fails.
+	 */
+	public static <K, V, X extends Exception> boolean areAll(final Predicate2<? super K, ? super V, X> predicate, final Map<K, V> bindings)
+	throws X {
+		assert null != predicate;
+		assert null != bindings;
+		
+		for (final Map.Entry<K, V> binding : bindings.entrySet()) {
+			if (!predicate.evaluate(binding.getKey(), binding.getValue())) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * Count the given values accepted by the given predicate.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate Predicate to use.
+	 * @param values Values to count.
+	 * @return The number of accepted values.
+	 * @throws X When some predicate evaluation fails.
+	 */
+	public static <T, X extends Exception> int count(final Predicate1<? super T, X> predicate, final Collection<T> values)
+	throws X {
+		assert null != values;
+		
+		return count(predicate, values.iterator());
+	}
+	
+	/**
+	 * Count the values provided by the given iterator accepted by the given predicate.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate Predicate to use.
+	 * @param values Iterator providing the values to count.
+	 * @return The number of accepted values.
+	 * @throws X When some predicate evaluation fails.
+	 */
+	public static <T, X extends Exception> int count(final Predicate1<? super T, X> predicate, final Iterator<T> values)
+	throws X {
+		assert null != predicate;
+		assert null != values;
+		
+		final Counter count = new Counter();
+		while (values.hasNext()) {
+			if (predicate.evaluate(values.next())) {
+				count.inc();
+			}
+		}
+		return count.get();
+	}
+	
+	/**
+	 * Count the given bindings accepted by the given predicate.
+	 * <p>
+	 * This method evaluates the predicate by passing the keys and values of the bindings respectively as first and second arguments.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate Predicate to use.
+	 * @param bindings Bindings to count.
+	 * @return The number of accepted bindings.
+	 * @throws X When some predicate evaluation fails.
+	 */
+	public static <K, V, X extends Exception> int count(final Predicate2<? super K, ? super V, X> predicate, final Map<K, V> bindings)
+	throws X {
+		assert null != predicate;
+		assert null != bindings;
+		
+		final Counter count = new Counter();
+		for (final Map.Entry<K, V> binding : bindings.entrySet()) {
+			if (predicate.evaluate(binding.getKey(), binding.getValue())) {
+				count.inc();
+			}
+		}
+		return count.get();
+	}
+	
+	/**
 	 * Filter the given values using the given predicate and populate the given result collection with them.
 	 * 
 	 * @param <T> Type of the values to filter.
@@ -50,11 +251,30 @@ public class FunctionUtils {
 	public static <T, C extends Collection<? super T>, X extends Exception> C filter(final Predicate1<? super T, X> predicate, final Collection<T> values, final C results)
 	throws X {
 		assert null != values;
+		
+		return filter(predicate, values.iterator(), results);
+	}
+	
+	/**
+	 * Filter the given values using the given predicate and populate the given result collection with them.
+	 * 
+	 * @param <T> Type of the values to filter.
+	 * @param <C> Type of the collection to populate.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate Predicate to use.
+	 * @param values Values to filter.
+	 * @param results The collection to populate with the accepted values.
+	 * @return The given result collection.
+	 * @throws X When some predicate evaluation fails.
+	 */
+	public static <T, C extends Collection<? super T>, X extends Exception> C filter(final Predicate1<? super T, X> predicate, final Iterator<T> values, final C results)
+	throws X {
 		assert null != predicate;
+		assert null != values;
 		assert null != results;
 		
-		// Filter.
-		for (final T value : values) {
+		while (values.hasNext()) {
+			final T value = values.next();
 			if (predicate.evaluate(value)) {
 				results.add(value);
 			}
@@ -80,7 +300,6 @@ public class FunctionUtils {
 		assert null != predicate;
 		assert null != collection;
 		
-		// Filter.
 		final Iterator<T> values_ = collection.iterator();
 		while (values_.hasNext()) {
 			final T value = values_.next();
@@ -112,7 +331,6 @@ public class FunctionUtils {
 		assert null != bindings;
 		assert null != results;
 		
-		// Filter.
 		for (final Map.Entry<K, V> entry : bindings.entrySet()) {
 			final K key = entry.getKey();
 			final V value = entry.getValue();
@@ -142,7 +360,6 @@ public class FunctionUtils {
 		assert null != predicate;
 		assert null != map;
 		
-		// Filter.
 		final Iterator<Map.Entry<K, V>> entries = map.entrySet().iterator();
 		while (entries.hasNext()) {
 			final Map.Entry<K, V> entry = entries.next();
@@ -174,7 +391,6 @@ public class FunctionUtils {
 		assert null != bindings;
 		assert null != results;
 		
-		// Filter.
 		for (final Map.Entry<K, V> entry : bindings.entrySet()) {
 			final K key = entry.getKey();
 			if (predicate.evaluate(key, entry.getValue())) {
@@ -205,7 +421,6 @@ public class FunctionUtils {
 		assert null != bindings;
 		assert null != results;
 		
-		// Filter.
 		for (final Map.Entry<K, V> entry : bindings.entrySet()) {
 			final K key = entry.getKey();
 			final V value = entry.getValue();
@@ -217,235 +432,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Count the given values accepted by the given predicate.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param <X> Type of the exceptions.
-	 * @param predicate Predicate to use.
-	 * @param values Values to count.
-	 * @return The number of accepted values.
-	 * @throws X When some predicate evaluation fails.
-	 */
-	public static <T, X extends Exception> int count(final Predicate1<? super T, X> predicate, final Collection<T> values)
-	throws X {
-		assert null != predicate;
-		assert null != values;
-		
-		// Count.
-		int count = 0;
-		for (final T value : values) {
-			if (predicate.evaluate(value)) {
-				count += 1;
-			}
-		}
-		return count;
-	}
-	
-	/**
-	 * Count the values provided by the given iterator accepted by the given predicate.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param <X> Type of the exceptions.
-	 * @param predicate Predicate to use.
-	 * @param values Iterator providing the values to count.
-	 * @return The number of accepted values.
-	 * @throws X When some predicate evaluation fails.
-	 */
-	public static <T, X extends Exception> int count(final Predicate1<? super T, X> predicate, final Iterator<T> values)
-	throws X {
-		assert null != predicate;
-		assert null != values;
-		
-		// Count.
-		int count = 0;
-		while (values.hasNext()) {
-			if (predicate.evaluate(values.next())) {
-				count += 1;
-			}
-		}
-		return count;
-	}
-	
-	/**
-	 * Count the given bindings accepted by the given predicate.
-	 * <p>
-	 * This method evaluates the predicate by passing the keys and values of the bindings respectively as first and second arguments.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <X> Type of the exceptions.
-	 * @param predicate Predicate to use.
-	 * @param bindings Bindings to count.
-	 * @return The number of accepted bindings.
-	 * @throws X When some predicate evaluation fails.
-	 */
-	public static <K, V, X extends Exception> int count(final Predicate2<? super K, ? super V, X> predicate, final Map<K, V> bindings)
-	throws X {
-		assert null != predicate;
-		assert null != bindings;
-		
-		// Count.
-		int count = 0;
-		for (final Map.Entry<K, V> binding : bindings.entrySet()) {
-			if (predicate.evaluate(binding.getKey(), binding.getValue())) {
-				count += 1;
-			}
-		}
-		return count;
-	}
-	
-	/**
-	 * Test whether any given value is accepted by the given predicate.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param <X> Type of the exceptions.
-	 * @param predicate Predicate to use.
-	 * @param values Values to test.
-	 * @return <code>true</code> if any value is accepted, <code>false</code> if all values are rejected.
-	 * @throws X When some predicate evaluation fails.
-	 */
-	public static <T, X extends Exception> boolean isAny(final Predicate1<? super T, X> predicate, final Collection<T> values)
-	throws X {
-		assert null != predicate;
-		assert null != values;
-		
-		// Test.
-		for (final T value : values) {
-			if (predicate.evaluate(value)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	/**
-	 * Test whether any value provided by the given iterator is accepted by the given predicate.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param <X> Type of the exceptions.
-	 * @param predicate Predicate to use.
-	 * @param values Iterator providing the values to test.
-	 * @return <code>true</code> if any value is accepted, <code>false</code> if all values are rejected.
-	 * @throws X When some predicate evaluation fails.
-	 */
-	public static <T, X extends Exception> boolean isAny(final Predicate1<? super T, X> predicate, final Iterator<T> values)
-	throws X {
-		assert null != predicate;
-		assert null != values;
-		
-		// Test.
-		while (values.hasNext()) {
-			if (predicate.evaluate(values.next())) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	/**
-	 * Test whether any given binding is accepted by the given predicate.
-	 * <p>
-	 * This method evaluates the predicate by passing the keys and values of the bindings respectively as first and second arguments.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <X> Type of the exceptions.
-	 * @param predicate Predicate to use.
-	 * @param bindings Bindings to test.
-	 * @return <code>true</code> if any binding is accepted, <code>false</code> if all bindings are rejected.
-	 * @throws X When some predicate evaluation fails.
-	 */
-	public static <K, V, X extends Exception> boolean isAny(final Predicate2<? super K, ? super V, X> predicate, final Map<K, V> bindings)
-	throws X {
-		assert null != predicate;
-		assert null != bindings;
-		
-		// Test.
-		for (final Map.Entry<K, V> binding : bindings.entrySet()) {
-			if (predicate.evaluate(binding.getKey(), binding.getValue())) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	/**
-	 * Test whether all given values are accepted by the given predicate.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param <X> Type of the exceptions.
-	 * @param predicate Predicate to use.
-	 * @param values Values to test.
-	 * @return <code>true</code> if all values are accepted, <code>false</code> if any value is rejected.
-	 * @throws X When some predicate evaluation fails.
-	 */
-	public static <T, X extends Exception> boolean areAll(final Predicate1<? super T, X> predicate, final Collection<T> values)
-	throws X {
-		assert null != predicate;
-		assert null != values;
-		
-		// Test.
-		for (final T value : values) {
-			if (!predicate.evaluate(value)) {
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	/**
-	 * Test whether all values provided by the given iterator are accepted by the given predicate.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param <X> Type of the exceptions.
-	 * @param predicate Predicate to use.
-	 * @param values Iterator providing the values to test.
-	 * @return <code>true</code> if all values are accepted, <code>false</code> if any value is rejected.
-	 * @throws X When some predicate evaluation fails.
-	 */
-	public static <T, X extends Exception> boolean areAll(final Predicate1<? super T, X> predicate, final Iterator<T> values)
-	throws X {
-		assert null != predicate;
-		assert null != values;
-		
-		// Test.
-		while (values.hasNext()) {
-			if (!predicate.evaluate(values.next())) {
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	/**
-	 * Test whether all given bindings are accepted by the given predicate.
-	 * <p>
-	 * This method evaluates the predicate by passing the keys and values of the bindings respectively as first and second arguments.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <X> Type of the exceptions.
-	 * @param predicate Predicate to use.
-	 * @param bindings Bindings to test.
-	 * @return <code>true</code> if all bindings are accepted, <code>false</code> if any binding is rejected.
-	 * @throws X When some predicate evaluation fails.
-	 */
-	public static <K, V, X extends Exception> boolean areAll(final Predicate2<? super K, ? super V, X> predicate, final Map<K, V> bindings)
-	throws X {
-		assert null != predicate;
-		assert null != bindings;
-		
-		// Test.
-		for (final Map.Entry<K, V> binding : bindings.entrySet()) {
-			if (!predicate.evaluate(binding.getKey(), binding.getValue())) {
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	/**
-	 * Find the first of the given values accepted by the given predicate.
+	 * Get the first given values accepted by the given predicate.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param <X> Type of the exceptions.
@@ -454,17 +441,78 @@ public class FunctionUtils {
 	 * @return The found value.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <T, X extends Exception> Maybe<T> findFirst(final Predicate1<? super T, ? extends X> predicate, final Collection<T> values)
+	public static <T, X extends Exception> Maybe<T> first(final Predicate1<? super T, X> predicate, final Collection<T> values)
+	throws X {
+		assert null != values;
+		
+		return first(predicate, values.iterator());
+	}
+	
+	/**
+	 * Get the first given values accepted by the given predicate.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate The predicate.
+	 * @param values The values.
+	 * @return The found value.
+	 * @throws X When some predicate evaluation fails.
+	 */
+	public static <T, X extends Exception> Maybe<T> first(final Predicate1<? super T, X> predicate, final Iterator<T> values)
 	throws X {
 		assert null != predicate;
 		assert null != values;
 		
-		for (final T value : values) {
+		while (values.hasNext()) {
+			final T value = values.next();
 			if (predicate.evaluate(value)) {
 				return Maybe.some(value);
 			}
 		}
 		return Maybe.none();
+	}
+	
+	/**
+	 * Left fold the given collection of values using the given operator and initial argument.
+	 * 
+	 * @param <R> Type of the result.
+	 * @param <V> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @param operator The operator.
+	 * @param initialAccumulator The initial argument. May be <code>null</code>.
+	 * @param values The values.
+	 * @return The result of the fold. May be <code>null</code>.
+	 * @throws X When a operator evaluation fails.
+	 */
+	public static <R, V, X extends Exception> R fold(final Function2<? super R, ? super V, ? extends R, X> operator, final R initialAccumulator, final Collection<V> values)
+	throws X {
+		assert null != values;
+		
+		return fold(operator, initialAccumulator, values.iterator());
+	}
+	
+	/**
+	 * Left fold the given values provided by the given iterator using the given operator and initial argument.
+	 * 
+	 * @param <R> Type of the result.
+	 * @param <V> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @param operator The operator.
+	 * @param initialAccumulator The initial argument. May be <code>null</code>.
+	 * @param values The iterator providing the values.
+	 * @return The result of the fold. May be <code>null</code>.
+	 * @throws X When a operator evaluation fails.
+	 */
+	public static <R, V, X extends Exception> R fold(final Function2<? super R, ? super V, ? extends R, X> operator, final R initialAccumulator, final Iterator<V> values)
+	throws X {
+		assert null != operator;
+		assert null != values;
+		
+		final Accumulator<R, V, X> accumulator = Accumulators.function(operator, initialAccumulator);
+		while (values.hasNext()) {
+			accumulator.accumulate(values.next());
+		}
+		return accumulator.get();
 	}
 	
 	/**
@@ -482,15 +530,9 @@ public class FunctionUtils {
 	 */
 	public static <T1, T2, C extends Collection<? super T2>, X extends Exception> C map(final Function1<? super T1, T2, X> function, final Collection<T1> values, final C results)
 	throws X {
-		assert null != function;
 		assert null != values;
-		assert null != results;
 		
-		// Map.
-		for (final T1 value : values) {
-			results.add(function.evaluate(value));
-		}
-		return results;
+		return map(function, values.iterator(), results);
 	}
 	
 	/**
@@ -512,7 +554,6 @@ public class FunctionUtils {
 		assert null != values;
 		assert null != results;
 		
-		// Map.
 		while (values.hasNext()) {
 			results.add(function.evaluate(values.next()));
 		}
@@ -542,7 +583,6 @@ public class FunctionUtils {
 		assert null != bindings;
 		assert null != results;
 		
-		// Map.
 		for (final Map.Entry<K, V1> binding : bindings.entrySet()) {
 			final K key = binding.getKey();
 			results.put(key, function.evaluate(key, binding.getValue()));
@@ -573,7 +613,6 @@ public class FunctionUtils {
 		assert null != bindings;
 		assert null != results;
 		
-		// Map.
 		for (final K key : bindings.keySet()) {
 			for (final V1 value : bindings.get(key)) {
 				results.put(key, function.evaluate(key, value));
@@ -601,7 +640,6 @@ public class FunctionUtils {
 		assert null != keys;
 		assert null != results;
 		
-		// Map the keys.
 		for (final K key : keys) {
 			results.put(key, function.evaluate(key));
 		}
@@ -629,7 +667,6 @@ public class FunctionUtils {
 		assert null != values;
 		assert null != results;
 		
-		// Map the values.
 		for (final V value : values) {
 			results.put(function.evaluate(value), value);
 		}
@@ -651,18 +688,9 @@ public class FunctionUtils {
 	 */
 	public static <T1, T2, C extends Collection<? super T2>, X extends Exception> C mapFilter(final Function1<? super T1, ? extends Maybe<? extends T2>, X> function, final Collection<T1> values, final C results)
 	throws X {
-		assert null != function;
 		assert null != values;
-		assert null != results;
 		
-		// Map.
-		for (final T1 value : values) {
-			final Maybe<? extends T2> result = function.evaluate(value);
-			if (result.isSome()) {
-				results.add(result.asSome().getValue());
-			}
-		}
-		return results;
+		return mapFilter(function, values.iterator(), results);
 	}
 	
 	/**
@@ -684,7 +712,6 @@ public class FunctionUtils {
 		assert null != values;
 		assert null != results;
 		
-		// Map.
 		while (values.hasNext()) {
 			final Maybe<? extends T2> result = function.evaluate(values.next());
 			if (result.isSome()) {
@@ -717,7 +744,6 @@ public class FunctionUtils {
 		assert null != bindings;
 		assert null != results;
 		
-		// Map.
 		for (final Map.Entry<K, V1> binding : bindings.entrySet()) {
 			final K key = binding.getKey();
 			final Maybe<? extends V2> result = function.evaluate(key, binding.getValue());
@@ -747,7 +773,6 @@ public class FunctionUtils {
 		assert null != keys;
 		assert null != results;
 		
-		// Map the keys.
 		for (final K key : keys) {
 			final Maybe<? extends V> value = function.evaluate(key);
 			if (value.isSome()) {
@@ -778,7 +803,6 @@ public class FunctionUtils {
 		assert null != values;
 		assert null != results;
 		
-		// Map the values.
 		for (final V value : values) {
 			final Maybe<? extends K> key = function.evaluate(value);
 			if (key.isSome()) {
@@ -809,7 +833,6 @@ public class FunctionUtils {
 		assert null != bindings;
 		assert null != results;
 		
-		// Remap.
 		for (final Map.Entry<K1, V> entry : bindings.entrySet()) {
 			results.put(function.evaluate(entry.getKey()), entry.getValue());
 		}
@@ -838,7 +861,6 @@ public class FunctionUtils {
 		assert null != bindings;
 		assert null != results;
 		
-		// Remap.
 		for (final Map.Entry<K1, V> entry : bindings.entrySet()) {
 			final V value = entry.getValue();
 			results.put(function.evaluate(entry.getKey(), value), value);
@@ -867,7 +889,6 @@ public class FunctionUtils {
 		assert null != bindings;
 		assert null != results;
 		
-		// Remap.
 		for (final Map.Entry<K1, V> entry : bindings.entrySet()) {
 			final Maybe<? extends K2> newKey = function.evaluate(entry.getKey());
 			if (newKey.isSome()) {
@@ -899,7 +920,6 @@ public class FunctionUtils {
 		assert null != bindings;
 		assert null != results;
 		
-		// Remap.
 		for (final Map.Entry<K1, V> entry : bindings.entrySet()) {
 			final V value = entry.getValue();
 			final Maybe<? extends K2> newKey = function.evaluate(entry.getKey(), value);
@@ -921,13 +941,9 @@ public class FunctionUtils {
 	 */
 	public static <T, X extends Exception> void execute(final Procedure1<? super T, X> procedure, final Collection<T> values)
 	throws X {
-		assert null != procedure;
 		assert null != values;
 		
-		// Apply.
-		for (final T value : values) {
-			procedure.execute(value);
-		}
+		execute(procedure, values.iterator());
 	}
 	
 	/**
@@ -944,7 +960,6 @@ public class FunctionUtils {
 		assert null != procedure;
 		assert null != values;
 		
-		// Apply.
 		while (values.hasNext()) {
 			procedure.execute(values.next());
 		}
@@ -967,60 +982,9 @@ public class FunctionUtils {
 		assert null != procedure;
 		assert null != bindings;
 		
-		// Apply.
 		for (final Map.Entry<K, V> binding : bindings.entrySet()) {
 			procedure.execute(binding.getKey(), binding.getValue());
 		}
-	}
-	
-	/**
-	 * Left fold the given collection of values using the given operator and initial argument.
-	 * 
-	 * @param <R> Type of the result.
-	 * @param <V> Type of the values.
-	 * @param <X> Type of the exceptions.
-	 * @param operator The operator.
-	 * @param initialAccumulator The initial argument. May be <code>null</code>.
-	 * @param values The values.
-	 * @return The result of the fold. May be <code>null</code>.
-	 * @throws X When a operator evaluation fails.
-	 */
-	public static <R, V, X extends Exception> R fold(final Function2<? super R, ? super V, ? extends R, X> operator, final R initialAccumulator, final Collection<V> values)
-	throws X {
-		assert null != operator;
-		assert null != values;
-		
-		// Fold.
-		final Accumulator<R, V, X> accumulator = Accumulators.function(operator, initialAccumulator);
-		for (final V value : values) {
-			accumulator.accumulate(value);
-		}
-		return accumulator.get();
-	}
-	
-	/**
-	 * Left fold the given values provided by the given iterator using the given operator and initial argument.
-	 * 
-	 * @param <R> Type of the result.
-	 * @param <V> Type of the values.
-	 * @param <X> Type of the exceptions.
-	 * @param operator The operator.
-	 * @param initialAccumulator The initial argument. May be <code>null</code>.
-	 * @param values The iterator providing the values.
-	 * @return The result of the fold. May be <code>null</code>.
-	 * @throws X When a operator evaluation fails.
-	 */
-	public static <R, V, X extends Exception> R fold(final Function2<? super R, ? super V, ? extends R, X> operator, final R initialAccumulator, final Iterator<V> values)
-	throws X {
-		assert null != operator;
-		assert null != values;
-		
-		// Fold.
-		final Accumulator<R, V, X> accumulator = Accumulators.function(operator, initialAccumulator);
-		while (values.hasNext()) {
-			accumulator.accumulate(values.next());
-		}
-		return accumulator.get();
 	}
 	
 	private FunctionUtils() {

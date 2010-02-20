@@ -204,21 +204,20 @@ public class LangUtils {
 	}
 	
 	/**
-	 * Compare the given objets using the given comparator.
+	 * Compare the given values using the given comparator.
 	 * <p>
 	 * This method supports comparisons of <code>null</code> values. <code>null</code> values are considered as less than non <code>null</code> values.
 	 * 
 	 * @param <T> Type of the values.
-	 * @param object1 First value to compare. May be <code>null</code>.
-	 * @param object2 Second value to compare. May be <code>null</code>.
-	 * @param comparator Comparator to use.
+	 * @param object1 The first value. May be <code>null</code>.
+	 * @param object2 The second value. May be <code>null</code>.
+	 * @param comparator The comparator.
 	 * @return The result of the comparison as defined by the {@link Comparator#compare(Object, Object)} method.
 	 * @see Comparable#compareTo(Object)
 	 */
 	public static <T> int compare(final T object1, final T object2, final Comparator<T> comparator) {
 		assert null != comparator;
 		
-		// Compare.
 		if (null == object1) {
 			return null == object2 ? 0 : -1;
 		} else {

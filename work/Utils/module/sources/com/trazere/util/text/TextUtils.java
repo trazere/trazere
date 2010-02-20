@@ -403,7 +403,6 @@ public class TextUtils {
 	public static String computeClassName(final Class<?> class_) {
 		assert null != class_;
 		
-		// Compute.
 		final String fullName = class_.getName();
 		final int index = fullName.lastIndexOf('.');
 		return index > 0 ? fullName.substring(index + 1) : fullName;

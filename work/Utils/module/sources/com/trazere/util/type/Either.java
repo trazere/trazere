@@ -80,11 +80,6 @@ implements Describable {
 	 */
 	public final static class Left<L, R>
 	extends Either<L, R> {
-		@Override
-		public Constructor getConstructor() {
-			return Constructor.LEFT;
-		}
-		
 		/**
 		 * Build a new instance wrapping the given left value.
 		 * 
@@ -92,6 +87,11 @@ implements Describable {
 		 */
 		public Left(final L left) {
 			_left = left;
+		}
+		
+		@Override
+		public Constructor getConstructor() {
+			return Constructor.LEFT;
 		}
 		
 		@Override
