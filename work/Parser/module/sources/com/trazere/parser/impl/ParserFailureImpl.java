@@ -13,7 +13,11 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.parser;
+package com.trazere.parser.impl;
+
+import com.trazere.parser.Parser;
+import com.trazere.parser.ParserFailure;
+import com.trazere.parser.ParserPosition;
 
 /**
  * DOCME
@@ -22,9 +26,6 @@ package com.trazere.parser;
  */
 public class ParserFailureImpl<Token>
 implements ParserFailure<Token> {
-	protected final Parser<Token, ?> _parser;
-	protected final ParserPosition<Token> _position;
-	
 	public ParserFailureImpl(final Parser<Token, ?> parser, final ParserPosition<Token> position) {
 		assert null != parser;
 		assert null != position;
@@ -34,9 +35,13 @@ implements ParserFailure<Token> {
 		_position = position;
 	}
 	
+	protected final Parser<Token, ?> _parser;
+	
 	public Parser<Token, ?> getParser() {
 		return _parser;
 	}
+	
+	protected final ParserPosition<Token> _position;
 	
 	public ParserPosition<Token> getPosition() {
 		return _position;

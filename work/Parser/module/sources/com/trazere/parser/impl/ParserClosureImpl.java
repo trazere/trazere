@@ -13,26 +13,27 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.parser;
+package com.trazere.parser.impl;
 
+import com.trazere.parser.Parser;
+import com.trazere.parser.ParserClosure;
+import com.trazere.parser.ParserException;
+import com.trazere.parser.ParserHandler;
+import com.trazere.parser.ParserPosition;
+import com.trazere.parser.ParserState;
 import java.util.ArrayList;
 import java.util.Collection;
 
-// TODO: make a sub class for isValidFailure()
-
 /**
  * DOCME
+ * <p>
+ * The handlers are stored in the closures to so that cleaning is automatic.
  * 
  * @param <Token>
  * @param <Result>
  */
 public abstract class ParserClosureImpl<Token, Result>
 implements ParserClosure<Token, Result> {
-	protected final Parser<Token, Result> _parser;
-	protected final ParserPosition<Token> _position;
-	protected final Collection<ParserHandler<Token, ? super Result>> _handlers = new ArrayList<ParserHandler<Token, ? super Result>>();
-	protected final Collection<Result> _results = new ArrayList<Result>();
-	
 	public ParserClosureImpl(final Parser<Token, Result> parser, final ParserPosition<Token> position) {
 		assert null != parser;
 		assert null != position;
@@ -42,13 +43,20 @@ implements ParserClosure<Token, Result> {
 		_position = position;
 	}
 	
+	protected final Parser<Token, Result> _parser;
+	
 	public Parser<Token, Result> getParser() {
 		return _parser;
 	}
 	
+	protected final ParserPosition<Token> _position;
+	
 	public ParserPosition<Token> getPosition() {
 		return _position;
 	}
+	
+	protected final Collection<ParserHandler<Token, ? super Result>> _handlers = new ArrayList<ParserHandler<Token, ? super Result>>();
+	protected final Collection<Result> _results = new ArrayList<Result>();
 	
 	public void handle(final ParserHandler<Token, ? super Result> handler, final ParserState<Token> state)
 	throws ParserException {
@@ -78,6 +86,4 @@ implements ParserClosure<Token, Result> {
 			handler.result(result, state);
 		}
 	}
-	
-	public abstract boolean isValidFailure();
 }
