@@ -13,7 +13,9 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.parser;
+package com.trazere.parser.util;
+
+import com.trazere.parser.ParserPosition;
 
 public class IndexParserPosition<Token>
 implements ParserPosition<Token> {

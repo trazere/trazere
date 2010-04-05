@@ -13,10 +13,18 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.parser;
+package com.trazere.parser.util;
 
+import com.trazere.parser.Parser;
+import com.trazere.parser.ParserException;
+import com.trazere.parser.ParserFailure;
+import com.trazere.parser.ParserPosition;
+import com.trazere.parser.ParserSource;
 import com.trazere.parser.core.CoreParsers;
+import com.trazere.parser.impl.ParserFailureImpl;
+import com.trazere.util.function.Procedure2;
 import com.trazere.util.lang.ref.MutableReference;
+import com.trazere.util.text.TextUtils;
 import com.trazere.util.type.Either;
 import com.trazere.util.type.Maybe;
 import java.util.ArrayList;
@@ -26,9 +34,6 @@ import java.util.List;
  * DOCME
  */
 public class ParserUtils {
-	protected static final SuccessParserEngine SUCCESS_ENGINE = new SuccessParserEngine();
-	protected static final FailureParserEngine FAILURE_ENGINE = new FailureParserEngine();
-	
 	public static <Token, Result> List<Result> parseSuccesses(final Parser<Token, Result> parser, final ParserSource<Token> source)
 	throws ParserException {
 		return parseSuccesses(parser, source, new IndexParserPosition<Token>());
@@ -36,9 +41,16 @@ public class ParserUtils {
 	
 	public static <Token, Result> List<Result> parseSuccesses(final Parser<Token, Result> parser, final ParserSource<Token> source, final ParserPosition<Token> position)
 	throws ParserException {
+		return parseSuccesses(parser, source, position, SuccessParserEngine.INSTANCE);
+	}
+	
+	public static <Token, Result> List<Result> parseSuccesses(final Parser<Token, Result> parser, final ParserSource<Token> source, final ParserPosition<Token> position, final SuccessParserEngine engine)
+	throws ParserException {
+		assert null != engine;
+		
 		// Parse.
 		final List<Result> successes = new ArrayList<Result>();
-		SUCCESS_ENGINE.parse(parser, source, position, new SuccessParserEngine.Handler<Token, Result>() {
+		engine.parse(parser, source, position, new SuccessParserEngine.Handler<Token, Result>() {
 			public void success(final Result result, final ParserPosition<Token> resultPosition) {
 				successes.add(result);
 			}
@@ -55,10 +67,17 @@ public class ParserUtils {
 	
 	public static <Token, Result> Either<List<Result>, List<ParserFailure<Token>>> parseSuccessesOrFailures(final Parser<Token, Result> parser, final ParserSource<Token> source, final ParserPosition<Token> position)
 	throws ParserException {
+		return parseSuccessesOrFailures(parser, source, position, FailureParserEngine.INSTANCE);
+	}
+	
+	public static <Token, Result> Either<List<Result>, List<ParserFailure<Token>>> parseSuccessesOrFailures(final Parser<Token, Result> parser, final ParserSource<Token> source, final ParserPosition<Token> position, final FailureParserEngine engine)
+	throws ParserException {
+		assert null != engine;
+		
 		// Parse.
 		final List<Result> successes = new ArrayList<Result>();
 		final List<ParserFailure<Token>> failures = new ArrayList<ParserFailure<Token>>();
-		FAILURE_ENGINE.parse(parser, source, position, new FailureParserEngine.Handler<Token, Result>() {
+		engine.parse(parser, source, position, new FailureParserEngine.Handler<Token, Result>() {
 			public void success(final Result result, final ParserPosition<Token> resultPosition) {
 				successes.add(result);
 			}
@@ -75,7 +94,7 @@ public class ParserUtils {
 		} else if (successes.isEmpty() && !failures.isEmpty()) {
 			return Either.<List<Result>, List<ParserFailure<Token>>>right(failures);
 		} else {
-			throw new ParserException("Incompatibles successes or failures !");
+			throw new ParserException("Incompatible successes or failures !");
 		}
 	}
 	
@@ -86,9 +105,16 @@ public class ParserUtils {
 	
 	public static <Token, Result> Maybe<Result> parseLongestSuccess(final Parser<Token, Result> parser, final ParserSource<Token> source, final ParserPosition<Token> position)
 	throws ParserException {
+		return parseLongestSuccess(parser, source, position, SuccessParserEngine.INSTANCE);
+	}
+	
+	public static <Token, Result> Maybe<Result> parseLongestSuccess(final Parser<Token, Result> parser, final ParserSource<Token> source, final ParserPosition<Token> position, final SuccessParserEngine engine)
+	throws ParserException {
+		assert null != engine;
+		
 		// Parse.
 		final MutableReference<Result> successReference = new MutableReference<Result>();
-		SUCCESS_ENGINE.parse(parser, source, position, new SuccessParserEngine.Handler<Token, Result>() {
+		engine.parse(parser, source, position, new SuccessParserEngine.Handler<Token, Result>() {
 			private final MutableReference<ParserPosition<Token>> _position = new MutableReference<ParserPosition<Token>>();
 			
 			public void success(final Result result, final ParserPosition<Token> resultPosition) {
@@ -110,10 +136,17 @@ public class ParserUtils {
 	
 	public static <Token, Result> Either<Result, List<ParserFailure<Token>>> parseLongestSuccessOrFailures(final Parser<Token, Result> parser, final ParserSource<Token> source, final ParserPosition<Token> position)
 	throws ParserException {
+		return parseLongestSuccessOrFailures(parser, source, position, FailureParserEngine.INSTANCE);
+	}
+	
+	public static <Token, Result> Either<Result, List<ParserFailure<Token>>> parseLongestSuccessOrFailures(final Parser<Token, Result> parser, final ParserSource<Token> source, final ParserPosition<Token> position, final FailureParserEngine engine)
+	throws ParserException {
+		assert null != engine;
+		
 		// Parse.
 		final MutableReference<Result> successReference = new MutableReference<Result>();
 		final List<ParserFailure<Token>> failures = new ArrayList<ParserFailure<Token>>();
-		FAILURE_ENGINE.parse(parser, source, position, new FailureParserEngine.Handler<Token, Result>() {
+		engine.parse(parser, source, position, new FailureParserEngine.Handler<Token, Result>() {
 			private final MutableReference<ParserPosition<Token>> _position = new MutableReference<ParserPosition<Token>>();
 			
 			public void success(final Result result, final ParserPosition<Token> resultPosition) {
@@ -144,10 +177,17 @@ public class ParserUtils {
 	
 	public static <Token, Result> Either<Result, ParserFailure<Token>> parseLongestSuccessOrLongestFailure(final Parser<Token, Result> parser, final ParserSource<Token> source, final ParserPosition<Token> position)
 	throws ParserException {
+		return parseLongestSuccessOrLongestFailure(parser, source, position, FailureParserEngine.INSTANCE);
+	}
+	
+	public static <Token, Result> Either<Result, ParserFailure<Token>> parseLongestSuccessOrLongestFailure(final Parser<Token, Result> parser, final ParserSource<Token> source, final ParserPosition<Token> position, final FailureParserEngine engine)
+	throws ParserException {
+		assert null != engine;
+		
 		// Parse.
 		final MutableReference<Result> successReference = new MutableReference<Result>();
 		final MutableReference<ParserFailure<Token>> failureReference = new MutableReference<ParserFailure<Token>>();
-		FAILURE_ENGINE.parse(parser, source, position, new FailureParserEngine.Handler<Token, Result>() {
+		engine.parse(parser, source, position, new FailureParserEngine.Handler<Token, Result>() {
 			private final MutableReference<ParserPosition<Token>> _successPosition = new MutableReference<ParserPosition<Token>>();
 			private final MutableReference<ParserPosition<Token>> _failurePosition = new MutableReference<ParserPosition<Token>>();
 			
@@ -173,23 +213,8 @@ public class ParserUtils {
 		} else if (failureReference.isSet()) {
 			return Either.<Result, ParserFailure<Token>>right(failureReference.get());
 		} else {
-			throw new ParserException("Incompatibles successes or failures !");
+			throw new ParserException("Incompatible successes or failures !");
 		}
-	}
-	
-	public static <Token> String renderFailures(final List<ParserFailure<Token>> failures) {
-		assert null != failures;
-		
-		// Render.
-		final StringBuilder builder = new StringBuilder();
-		final boolean first = true;
-		for (final ParserFailure<Token> failure : failures) {
-			if (first) {
-				builder.append(", or ");
-			}
-			builder.append(failure.getParser().getDescription()).append(" at ").append(failure.getPosition().getDescription());
-		}
-		return builder.toString();
 	}
 	
 	public static <T> T parse(final Parser<Character, ? extends T> parser, final String representation)
@@ -212,6 +237,20 @@ public class ParserUtils {
 			throw new ParserException("Invalid representation \"" + representation + "\", excepted " + renderFailures(results.asRight().getRight()));
 		}
 	}
+	
+	public static <Token> String renderFailures(final List<ParserFailure<Token>> failures) {
+		return renderFailures(failures, new StringBuilder()).toString();
+	}
+	
+	public static <Token> StringBuilder renderFailures(final List<ParserFailure<Token>> failures, final StringBuilder builder) {
+		return TextUtils.join(failures.iterator(), _RENDER_FAILURE, ", or ", builder);
+	}
+	
+	private static final Procedure2<StringBuilder, ParserFailure<?>, RuntimeException> _RENDER_FAILURE = new Procedure2<StringBuilder, ParserFailure<?>, RuntimeException>() {
+		public void execute(final StringBuilder builder, final ParserFailure<?> failure) {
+			builder.append(failure.getParser().getDescription()).append(" at ").append(failure.getPosition().getDescription());
+		}
+	};
 	
 	private ParserUtils() {
 		// Prevent instantiation.

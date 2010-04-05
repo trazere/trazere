@@ -13,7 +13,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.parser;
+package com.trazere.parser.util;
+
+import com.trazere.parser.ParserException;
+import com.trazere.parser.ParserSource;
 
 /**
  * DOCME
