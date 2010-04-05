@@ -13,12 +13,24 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.parser;
+package com.trazere.parser.util;
 
+import com.trazere.parser.Parser;
+import com.trazere.parser.ParserClosure;
+import com.trazere.parser.ParserContinuation;
+import com.trazere.parser.ParserException;
+import com.trazere.parser.ParserHandler;
+import com.trazere.parser.ParserPosition;
+import com.trazere.parser.ParserSource;
+import com.trazere.parser.ParserState;
+import com.trazere.parser.impl.ParserClosureImpl;
+import com.trazere.parser.impl.ParserStateImpl;
 import com.trazere.util.type.Maybe;
 import java.util.List;
 
 public class SuccessParserEngine {
+	public static final SuccessParserEngine INSTANCE = new SuccessParserEngine();
+	
 	public interface Handler<Token, Result> {
 		public void success(final Result result, final ParserPosition<Token> position)
 		throws ParserException;
@@ -63,20 +75,29 @@ public class SuccessParserEngine {
 	}
 	
 	protected <Token> ParserStateImpl<Token> buildState(final ParserPosition<Token> position) {
-		return new ParserStateImpl<Token>(position) {
-			@Override
-			protected <Result> ParserClosureImpl<Token, Result> buildClosure(final Parser<Token, Result> parser, final Maybe<ParserClosure<Token, ?>> parent) {
-				return new ParserClosureImpl<Token, Result>(parser, position) {
-					public void failure(final ParserState<Token> state) {
-						// Nothing to do.
-					}
-					
-					@Override
-					public boolean isValidFailure() {
-						return false;
-					}
-				};
-			}
-		};
+		return new SuccessParserState<Token>(position);
+	}
+	
+	protected static class SuccessParserState<Token>
+	extends ParserStateImpl<Token> {
+		public SuccessParserState(final ParserPosition<Token> position) {
+			super(position);
+		}
+		
+		@Override
+		protected <Result> ParserClosureImpl<Token, Result> buildClosure(final Parser<Token, Result> parser, final Maybe<ParserClosure<Token, ?>> parent) {
+			return new SuccessParserClosure<Token, Result>(parser, _position);
+		}
+	}
+	
+	protected static class SuccessParserClosure<Token, Result>
+	extends ParserClosureImpl<Token, Result> {
+		public SuccessParserClosure(final Parser<Token, Result> parser, final ParserPosition<Token> position) {
+			super(parser, position);
+		}
+		
+		public void failure(final ParserState<Token> state) {
+			// Nothing to do.
+		}
 	}
 }

@@ -16,16 +16,15 @@
 package com.trazere.parser;
 
 /**
- * DOCME
- * <p>
- * Handlers must be stored in closure to so that cleaning is automatic.
+ * The {@link ParserClosure} interfaces represents parser evaluation instances.
  * 
  * @param <Token>
  * @param <Result>
  */
-public interface ParserClosure<Token, Result>
-extends ParserFailure<Token> {
-	public Parser<Token, Result> getParser();
+public interface ParserClosure<Token, Result> {
+	public Parser<Token, ?> getParser();
+	
+	public ParserPosition<Token> getPosition();
 	
 	public void success(final Result result, final ParserState<Token> state)
 	throws ParserException;

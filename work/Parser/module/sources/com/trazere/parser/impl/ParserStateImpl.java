@@ -13,8 +13,15 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.parser;
+package com.trazere.parser.impl;
 
+import com.trazere.parser.Parser;
+import com.trazere.parser.ParserClosure;
+import com.trazere.parser.ParserContinuation;
+import com.trazere.parser.ParserException;
+import com.trazere.parser.ParserHandler;
+import com.trazere.parser.ParserPosition;
+import com.trazere.parser.ParserState;
 import com.trazere.util.type.Maybe;
 import java.util.ArrayList;
 import java.util.Collections;
