@@ -15,12 +15,33 @@
  */
 package com.trazere.util.collection;
 
+import com.trazere.util.lang.ThrowableFactory;
+
 /**
  * {@link CollectionException} exceptions are thrown when collection related errors occur.
  */
 public class CollectionException
 extends Exception {
 	private static final long serialVersionUID = 1L;
+	
+	/** Factory of {@link CollectionException}. */
+	public static final ThrowableFactory<CollectionException> EXCEPTION_FACTORY = new ThrowableFactory<CollectionException>() {
+		public CollectionException build() {
+			return new CollectionException();
+		}
+		
+		public CollectionException build(final String message) {
+			return new CollectionException(message);
+		}
+		
+		public CollectionException build(final Throwable cause) {
+			return new CollectionException(cause);
+		}
+		
+		public CollectionException build(final String message, final Throwable cause) {
+			return new CollectionException(message, cause);
+		}
+	};
 	
 	/**
 	 * Instantiate a new exception.

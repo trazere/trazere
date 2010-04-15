@@ -66,6 +66,25 @@ public class LangUtils {
 		return (R) object;
 	}
 	
+	/** Factory of {@link Exception}. */
+	public static final ThrowableFactory<Exception> EXCEPTION_FACTORY = new ThrowableFactory<Exception>() {
+		public Exception build() {
+			return new Exception();
+		}
+		
+		public Exception build(final String message) {
+			return new Exception(message);
+		}
+		
+		public Exception build(final Throwable cause) {
+			return new Exception(cause);
+		}
+		
+		public Exception build(final String message, final Throwable cause) {
+			return new Exception(message, cause);
+		}
+	};
+	
 	/**
 	 * Get the value of the given boolean wrapper.
 	 * 

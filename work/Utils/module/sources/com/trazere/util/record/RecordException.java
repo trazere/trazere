@@ -15,12 +15,33 @@
  */
 package com.trazere.util.record;
 
+import com.trazere.util.lang.ThrowableFactory;
+
 /**
  * {@link RecordException} exceptions are thrown when record related errors occur.
  */
 public class RecordException
 extends Exception {
 	private static final long serialVersionUID = 1L;
+	
+	/** Factory of {@link RecordException}. */
+	public static final ThrowableFactory<RecordException> EXCEPTION_FACTORY = new ThrowableFactory<RecordException>() {
+		public RecordException build() {
+			return new RecordException();
+		}
+		
+		public RecordException build(final String message) {
+			return new RecordException(message);
+		}
+		
+		public RecordException build(final Throwable cause) {
+			return new RecordException(cause);
+		}
+		
+		public RecordException build(final String message, final Throwable cause) {
+			return new RecordException(message, cause);
+		}
+	};
 	
 	/**
 	 * Instantiate a new exception.
