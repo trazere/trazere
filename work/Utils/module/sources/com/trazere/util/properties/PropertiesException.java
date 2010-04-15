@@ -15,12 +15,33 @@
  */
 package com.trazere.util.properties;
 
+import com.trazere.util.lang.ThrowableFactory;
+
 /**
  * {@link PropertiesException} exceptions are thrown when properties related errors occur.
  */
 public class PropertiesException
 extends Exception {
 	private static final long serialVersionUID = 1L;
+	
+	/** Factory of {@link PropertiesException}. */
+	public static final ThrowableFactory<PropertiesException> EXCEPTION_FACTORY = new ThrowableFactory<PropertiesException>() {
+		public PropertiesException build() {
+			return new PropertiesException();
+		}
+		
+		public PropertiesException build(final String message) {
+			return new PropertiesException(message);
+		}
+		
+		public PropertiesException build(final Throwable cause) {
+			return new PropertiesException(cause);
+		}
+		
+		public PropertiesException build(final String message, final Throwable cause) {
+			return new PropertiesException(message, cause);
+		}
+	};
 	
 	/**
 	 * Instantiate a new exception.
