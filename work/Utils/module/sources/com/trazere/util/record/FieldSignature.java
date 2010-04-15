@@ -15,6 +15,8 @@
  */
 package com.trazere.util.record;
 
+import com.trazere.util.function.Function1;
+import com.trazere.util.function.Predicate1;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.Description;
@@ -103,6 +105,26 @@ implements Describable {
 	}
 	
 	/**
+	 * Build a function which gets the key of field signatures.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <X> Type of the exceptions.
+	 * @return The built function.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <K, X extends Exception> Function1<FieldSignature<K, ?>, K, X> getKeyFunction() {
+		return (Function1<FieldSignature<K, ?>, K, X>) _GET_KEY_FUNCTION;
+	}
+	
+	private static final Function1<?, ?, ?> _GET_KEY_FUNCTION = new Function1<FieldSignature<Object, ?>, Object, RuntimeException>() {
+		public Object evaluate(final FieldSignature<Object, ?> field) {
+			assert null != field;
+			
+			return field.getKey();
+		}
+	};
+	
+	/**
 	 * Get the type of the values of the record field described by the receiver signature.
 	 * 
 	 * @return The Java class of the type.
@@ -112,6 +134,26 @@ implements Describable {
 	}
 	
 	/**
+	 * Build a function which gets the type of field signatures.
+	 * 
+	 * @param <V> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @return The built function.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <V, X extends Exception> Function1<FieldSignature<?, V>, Class<V>, X> getTypeFunction() {
+		return (Function1<FieldSignature<?, V>, Class<V>, X>) _GET_TYPE_FUNCTION;
+	}
+	
+	private static final Function1<?, ?, ?> _GET_TYPE_FUNCTION = new Function1<FieldSignature<?, Object>, Class<Object>, RuntimeException>() {
+		public Class<Object> evaluate(final FieldSignature<?, Object> field) {
+			assert null != field;
+			
+			return field.getType();
+		}
+	};
+	
+	/**
 	 * Indicates whether the value of the field can be <code>null</code> or not.
 	 * 
 	 * @return <code>true</code> when the value of the field can be <code>null</code>, <code>false</code> otherwise.
@@ -119,6 +161,25 @@ implements Describable {
 	public boolean isNullable() {
 		return _nullable;
 	}
+	
+	/**
+	 * Build a predicate function which indicates the nullable of field signatures.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @return The built function.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <X extends Exception> Predicate1<FieldSignature<?, ?>, X> getNullableFunction() {
+		return (Predicate1<FieldSignature<?, ?>, X>) _GET_NULLABLE_FUNCTION;
+	}
+	
+	private static final Predicate1<FieldSignature<?, ?>, RuntimeException> _GET_NULLABLE_FUNCTION = new Predicate1<FieldSignature<?, ?>, RuntimeException>() {
+		public boolean evaluate(final FieldSignature<?, ?> field) {
+			assert null != field;
+			
+			return field.isNullable();
+		}
+	};
 	
 	// TODO: should return a reason in case of failure
 	/**
