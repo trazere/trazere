@@ -15,6 +15,8 @@
  */
 package com.trazere.util.type;
 
+import com.trazere.util.text.TextUtils;
+
 /**
  * {@link InvalidConstructorException} exceptions are thrown when trying to cast some instance of some algebraic data type according to a wrong constructor.
  * <p>
@@ -24,38 +26,14 @@ public class InvalidConstructorException
 extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 	
-	/**
-	 * Instantiate a new exception.
-	 */
-	public InvalidConstructorException() {
-		super();
+	public static <T> InvalidConstructorException build(final T object, final Class<? extends T> type) {
+		assert null != object;
+		assert null != type;
+		
+		return new InvalidConstructorException(object + " is not a " + TextUtils.computeClassName(type));
 	}
 	
-	/**
-	 * Instantiate a new exception using the given message.
-	 * 
-	 * @param message Details about the exception.
-	 */
-	public InvalidConstructorException(final String message) {
+	private InvalidConstructorException(final String message) {
 		super(message);
-	}
-	
-	/**
-	 * Instantiate a new exception using the given cause.
-	 * 
-	 * @param cause Cause of the exception.
-	 */
-	public InvalidConstructorException(final Throwable cause) {
-		super(cause);
-	}
-	
-	/**
-	 * Instantiate a new exception using the given message and cause.
-	 * 
-	 * @param message Details about the exception.
-	 * @param cause Cause of the exception.
-	 */
-	public InvalidConstructorException(final String message, final Throwable cause) {
-		super(message, cause);
 	}
 }
