@@ -18,6 +18,8 @@ package com.trazere.util.record;
 import java.util.Map;
 import java.util.Set;
 
+// TODO: add some getMaybe
+
 /**
  * The {@link RecordSignature} interface defines signatures of {@link Record records}.
  * <p>
