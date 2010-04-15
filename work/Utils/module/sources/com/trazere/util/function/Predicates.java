@@ -128,6 +128,28 @@ public class Predicates {
 	}
 	
 	/**
+	 * Build a predicate corresponding to the composition of the given predicate and function (f . g).
+	 * 
+	 * @param <T1> Type of the argument values of the (outer) predicate.
+	 * @param <T2> Type of the argument values of the (inner) function.
+	 * @param <X> Type of the exceptions.
+	 * @param g The (outer) predicate.
+	 * @param f The (inner) function.
+	 * @return The built function.
+	 */
+	public static <T1, T2, X extends Exception> Predicate1<T1, X> compose(final Predicate1<? super T2, ? extends X> g, final Function1<T1, ? extends T2, ? extends X> f) {
+		assert null != g;
+		assert null != f;
+		
+		return new Predicate1<T1, X>() {
+			public boolean evaluate(final T1 value)
+			throws X {
+				return g.evaluate(f.evaluate(value));
+			}
+		};
+	}
+	
+	/**
 	 * Build a predicate which evaluates to <code>true</code> for the given value.
 	 * 
 	 * @param <T> Type of the argument values.
