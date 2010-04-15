@@ -638,6 +638,84 @@ public class CollectionUtils {
 	}
 	
 	/**
+	 * Sort the given values topologically and populate the given list with the sorted regions.
+	 * <p>
+	 * A region is a set of values which have no dependencies on each other. They however do have dependencies on some values of the previous region.
+	 * <p>
+	 * The dependencies between the values are computed using the given function. This function must compute the values whose the argument value depends on. The
+	 * computed values must belong to the values to sort.
+	 * <p>
+	 * This method places the dependencies before the value which depend on them. The sort is stable and fails when the dependencies form a cyclic graph.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <L> Type of the result list.
+	 * @param <X> Type of the exceptions.
+	 * @param values The values.
+	 * @param dependencyFunction The function computing the dependencies.
+	 * @param results The list to populate with the results.
+	 * @return The given result list.
+	 * @throws CollectionException When some computed dependency value does not belong to the values to sort.
+	 * @throws CollectionException When there is a cycle in the dependencies.
+	 * @throws X When some dependency computation fails.
+	 */
+	public static <T, L extends List<? super List<T>>, X extends Exception> L regionTopologicalSort(final Collection<? extends T> values, final Function1<? super T, ? extends Collection<? extends T>, X> dependencyFunction, final L results)
+	throws CollectionException, X {
+		assert null != values;
+		assert null != dependencyFunction;
+		assert null != results;
+		
+		// Compute the dependencies.
+		final Collection<Tuple2<T, T>> dependencies = new ArrayList<Tuple2<T, T>>();
+		for (final T value : values) {
+			for (final T dependencyValue : dependencyFunction.evaluate(value)) {
+				if (values.contains(dependencyValue)) {
+					dependencies.add(new Tuple2<T, T>(value, dependencyValue));
+				} else {
+					throw new CollectionException("Invalid dependency " + dependencyValue + " for value " + value);
+				}
+			}
+		}
+		
+		// Sort the values.
+		final Collection<T> pendingValues = new ArrayList<T>(values);
+		while (!pendingValues.isEmpty()) {
+			// Find the leaves.
+			final Set<T> leafValues = new HashSet<T>(pendingValues);
+			for (final Tuple2<T, T> dependency : dependencies) {
+				leafValues.remove(dependency.getFirst());
+			}
+			
+			if (leafValues.isEmpty()) {
+				throw new CollectionException("Cyclic dependencies for values " + pendingValues);
+			}
+			
+			// Add the leaves to the result.
+			final List<T> region = new ArrayList<T>(leafValues.size());
+			// Pending values are iterated instead of leaf values to keep the sort stable.
+			final Iterator<T> pendingValuesIt = pendingValues.iterator();
+			while (pendingValuesIt.hasNext()) {
+				final T value = pendingValuesIt.next();
+				if (leafValues.contains(value)) {
+					region.add(value);
+					pendingValuesIt.remove();
+				}
+			}
+			results.add(region);
+			
+			// Clean the dependencies.
+			final Iterator<Tuple2<T, T>> dependenciesIt = dependencies.iterator();
+			while (dependenciesIt.hasNext()) {
+				final Tuple2<T, T> dependency = dependenciesIt.next();
+				if (leafValues.contains(dependency.getSecond())) {
+					dependenciesIt.remove();
+				}
+			}
+		}
+		
+		return results;
+	}
+	
+	/**
 	 * Compute the union of the given collections and populate the given result collection with it.
 	 * <p>
 	 * When the populated collection is ordered, the items of the first given collection precede the items of the second one.

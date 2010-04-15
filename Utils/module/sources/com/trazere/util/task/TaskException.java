@@ -15,12 +15,33 @@
  */
 package com.trazere.util.task;
 
+import com.trazere.util.lang.ThrowableFactory;
+
 /**
  * {@link TaskException} exceptions are thrown when task related errors occur.
  */
 public class TaskException
 extends Exception {
 	private static final long serialVersionUID = 1L;
+	
+	/** Factory of {@link TaskException}. */
+	public static final ThrowableFactory<TaskException> EXCEPTION_FACTORY = new ThrowableFactory<TaskException>() {
+		public TaskException build() {
+			return new TaskException();
+		}
+		
+		public TaskException build(final String message) {
+			return new TaskException(message);
+		}
+		
+		public TaskException build(final Throwable cause) {
+			return new TaskException(cause);
+		}
+		
+		public TaskException build(final String message, final Throwable cause) {
+			return new TaskException(message, cause);
+		}
+	};
 	
 	/**
 	 * Instantiate a new exception.
