@@ -338,7 +338,7 @@ implements Describable {
 	 */
 	public Left<L, R> asLeft()
 	throws InvalidConstructorException {
-		throw new InvalidConstructorException(this + " is not a Left");
+		throw InvalidConstructorException.build(this, Left.class);
 	}
 	
 	/**
@@ -358,7 +358,7 @@ implements Describable {
 	 */
 	public Right<L, R> asRight()
 	throws InvalidConstructorException {
-		throw new InvalidConstructorException(this + " is not a Right");
+		throw InvalidConstructorException.build(this, Right.class);
 	}
 	
 	/**

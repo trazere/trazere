@@ -352,7 +352,7 @@ implements Describable {
 	 */
 	public None<T> asNone()
 	throws InvalidConstructorException {
-		throw new InvalidConstructorException(this + " is not a None");
+		throw InvalidConstructorException.build(this, None.class);
 	}
 	
 	/**
@@ -372,7 +372,7 @@ implements Describable {
 	 */
 	public Some<T> asSome()
 	throws InvalidConstructorException {
-		throw new InvalidConstructorException(this + " is not a Some");
+		throw InvalidConstructorException.build(this, Some.class);
 	}
 	
 	/**
