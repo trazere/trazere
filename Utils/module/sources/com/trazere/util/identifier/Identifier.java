@@ -44,13 +44,14 @@ public class Identifier<T> {
 	/**
 	 * Build a function which gets the value of identifiers.
 	 * 
+	 * @param <I> Type of the identifiers.
 	 * @param <T> Type of the values.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T, X extends Exception> Function1<Identifier, T, X> getValueFunction() {
-		return (Function1<Identifier, T, X>) _GET_VALUE_FUNCTION;
+	public static <I extends Identifier<T>, T, X extends Exception> Function1<I, T, X> getValueFunction() {
+		return (Function1<I, T, X>) _GET_VALUE_FUNCTION;
 	}
 	
 	private static final Function1<?, ?, ?> _GET_VALUE_FUNCTION = new Function1<Identifier<Object>, Object, RuntimeException>() {
