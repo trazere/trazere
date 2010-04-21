@@ -25,7 +25,7 @@ extends Exception {
 	private static final long serialVersionUID = 1L;
 	
 	/** Factory of {@link PropertiesException}. */
-	public static final ThrowableFactory<PropertiesException> EXCEPTION_FACTORY = new ThrowableFactory<PropertiesException>() {
+	public static final ThrowableFactory<PropertiesException> FACTORY = new ThrowableFactory<PropertiesException>() {
 		public PropertiesException build() {
 			return new PropertiesException();
 		}

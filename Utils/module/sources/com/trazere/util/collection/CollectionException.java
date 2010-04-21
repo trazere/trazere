@@ -25,7 +25,7 @@ extends Exception {
 	private static final long serialVersionUID = 1L;
 	
 	/** Factory of {@link CollectionException}. */
-	public static final ThrowableFactory<CollectionException> EXCEPTION_FACTORY = new ThrowableFactory<CollectionException>() {
+	public static final ThrowableFactory<CollectionException> FACTORY = new ThrowableFactory<CollectionException>() {
 		public CollectionException build() {
 			return new CollectionException();
 		}

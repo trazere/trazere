@@ -25,7 +25,7 @@ extends Exception {
 	private static final long serialVersionUID = 1L;
 	
 	/** Factory of {@link TaskException}. */
-	public static final ThrowableFactory<TaskException> EXCEPTION_FACTORY = new ThrowableFactory<TaskException>() {
+	public static final ThrowableFactory<TaskException> FACTORY = new ThrowableFactory<TaskException>() {
 		public TaskException build() {
 			return new TaskException();
 		}

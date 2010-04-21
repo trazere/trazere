@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.Stack;
 
 /**
  * The {@link CollectionUtils} class provides various helpers regarding collections and maps.
@@ -574,64 +575,38 @@ public class CollectionUtils {
 	 * @param <T> Type of the values.
 	 * @param <L> Type of the result list.
 	 * @param <X> Type of the exceptions.
-	 * @param values The values.
 	 * @param dependencyFunction The function computing the dependencies.
+	 * @param close Flag indicating whether a transitive closure should be performed or if the given values are supposed are supposed to closed.
+	 * @param values The values.
 	 * @param results The list to populate with the results.
 	 * @return The given result list.
 	 * @throws CollectionException When some computed dependency value does not belong to the values to sort.
 	 * @throws CollectionException When there is a cycle in the dependencies.
 	 * @throws X When some dependency computation fails.
 	 */
-	public static <T, L extends List<? super T>, X extends Exception> L topologicalSort(final Collection<? extends T> values, final Function1<? super T, ? extends Collection<? extends T>, X> dependencyFunction, final L results)
+	public static <T, L extends List<? super T>, X extends Exception> L topologicalSort(final Function1<? super T, ? extends Collection<? extends T>, X> dependencyFunction, final boolean close, final Collection<? extends T> values, final L results)
 	throws CollectionException, X {
 		assert null != values;
 		assert null != dependencyFunction;
 		assert null != results;
 		
 		// Compute the dependencies.
-		final Collection<Tuple2<T, T>> dependencies = new ArrayList<Tuple2<T, T>>();
-		for (final T value : values) {
-			for (final T dependencyValue : dependencyFunction.evaluate(value)) {
-				if (values.contains(dependencyValue)) {
-					dependencies.add(new Tuple2<T, T>(value, dependencyValue));
-				} else {
-					throw new CollectionException("Invalid dependency " + dependencyValue + " for value " + value);
-				}
-			}
-		}
+		final Collection<Tuple2<T, T>> dependencies = computeTopologicalSortDependencies(dependencyFunction, close, values, new ArrayList<Tuple2<T, T>>());
 		
 		// Sort the values.
-		final Collection<T> pendingValues = new ArrayList<T>(values);
+		final List<T> pendingValues = new ArrayList<T>(values);
 		while (!pendingValues.isEmpty()) {
 			// Find the leaves.
-			final Set<T> leafValues = new HashSet<T>(pendingValues);
-			for (final Tuple2<T, T> dependency : dependencies) {
-				leafValues.remove(dependency.getFirst());
-			}
-			
+			final Set<T> leafValues = findTopologicalSortLeaves(pendingValues, dependencies);
 			if (leafValues.isEmpty()) {
-				throw new CollectionException("Cyclic dependencies for values " + pendingValues);
+				throw new CollectionException("Cyclic or external dependencies for values " + pendingValues);
 			}
 			
 			// Add the leaves to the result.
-			// Pending values are iterated instead of leaf values to keep the sort stable.
-			final Iterator<T> pendingValuesIt = pendingValues.iterator();
-			while (pendingValuesIt.hasNext()) {
-				final T value = pendingValuesIt.next();
-				if (leafValues.contains(value)) {
-					results.add(value);
-					pendingValuesIt.remove();
-				}
-			}
+			extractTopologicalSortLeaves(leafValues, pendingValues, results);
 			
 			// Clean the dependencies.
-			final Iterator<Tuple2<T, T>> dependenciesIt = dependencies.iterator();
-			while (dependenciesIt.hasNext()) {
-				final Tuple2<T, T> dependency = dependenciesIt.next();
-				if (leafValues.contains(dependency.getSecond())) {
-					dependenciesIt.remove();
-				}
-			}
+			cleanTopologicalSortDependencies(dependencies, leafValues);
 		}
 		
 		return results;
@@ -650,69 +625,106 @@ public class CollectionUtils {
 	 * @param <T> Type of the values.
 	 * @param <L> Type of the result list.
 	 * @param <X> Type of the exceptions.
-	 * @param values The values.
 	 * @param dependencyFunction The function computing the dependencies.
+	 * @param close Flag indicating whether a transitive closure should be performed or if the given values are supposed are supposed to closed.
+	 * @param values The values.
 	 * @param results The list to populate with the results.
 	 * @return The given result list.
 	 * @throws CollectionException When some computed dependency value does not belong to the values to sort.
 	 * @throws CollectionException When there is a cycle in the dependencies.
 	 * @throws X When some dependency computation fails.
 	 */
-	public static <T, L extends List<? super List<T>>, X extends Exception> L regionTopologicalSort(final Collection<? extends T> values, final Function1<? super T, ? extends Collection<? extends T>, X> dependencyFunction, final L results)
+	public static <T, L extends List<? super List<T>>, X extends Exception> L regionTopologicalSort(final Function1<? super T, ? extends Collection<? extends T>, X> dependencyFunction, final boolean close, final Collection<? extends T> values, final L results)
 	throws CollectionException, X {
 		assert null != values;
 		assert null != dependencyFunction;
 		assert null != results;
 		
 		// Compute the dependencies.
-		final Collection<Tuple2<T, T>> dependencies = new ArrayList<Tuple2<T, T>>();
-		for (final T value : values) {
-			for (final T dependencyValue : dependencyFunction.evaluate(value)) {
-				if (values.contains(dependencyValue)) {
-					dependencies.add(new Tuple2<T, T>(value, dependencyValue));
-				} else {
-					throw new CollectionException("Invalid dependency " + dependencyValue + " for value " + value);
-				}
-			}
-		}
+		final Collection<Tuple2<T, T>> dependencies = computeTopologicalSortDependencies(dependencyFunction, close, values, new ArrayList<Tuple2<T, T>>());
 		
 		// Sort the values.
-		final Collection<T> pendingValues = new ArrayList<T>(values);
+		final List<T> pendingValues = new ArrayList<T>(values);
 		while (!pendingValues.isEmpty()) {
 			// Find the leaves.
-			final Set<T> leafValues = new HashSet<T>(pendingValues);
-			for (final Tuple2<T, T> dependency : dependencies) {
-				leafValues.remove(dependency.getFirst());
-			}
-			
+			final Set<T> leafValues = findTopologicalSortLeaves(pendingValues, dependencies);
 			if (leafValues.isEmpty()) {
 				throw new CollectionException("Cyclic dependencies for values " + pendingValues);
 			}
 			
 			// Add the leaves to the result.
-			final List<T> region = new ArrayList<T>(leafValues.size());
-			// Pending values are iterated instead of leaf values to keep the sort stable.
-			final Iterator<T> pendingValuesIt = pendingValues.iterator();
-			while (pendingValuesIt.hasNext()) {
-				final T value = pendingValuesIt.next();
-				if (leafValues.contains(value)) {
-					region.add(value);
-					pendingValuesIt.remove();
-				}
-			}
-			results.add(region);
+			results.add(extractTopologicalSortLeaves(leafValues, pendingValues, new ArrayList<T>(leafValues.size())));
 			
 			// Clean the dependencies.
-			final Iterator<Tuple2<T, T>> dependenciesIt = dependencies.iterator();
-			while (dependenciesIt.hasNext()) {
-				final Tuple2<T, T> dependency = dependenciesIt.next();
-				if (leafValues.contains(dependency.getSecond())) {
-					dependenciesIt.remove();
-				}
-			}
+			cleanTopologicalSortDependencies(dependencies, leafValues);
 		}
 		
 		return results;
+	}
+	
+	private static <T, C extends Collection<? super Tuple2<T, T>>, X extends Exception> C computeTopologicalSortDependencies(final Function1<? super T, ? extends Collection<? extends T>, X> dependencyFunction, final boolean close, final Collection<? extends T> values, final C dependencies)
+	throws X {
+		assert null != dependencyFunction;
+		assert null != values;
+		assert null != dependencies;
+		
+		final Stack<T> pendingValues = new Stack<T>();
+		pendingValues.addAll(values);
+		
+		final Set<T> visitedValues = new HashSet<T>();
+		while (!pendingValues.isEmpty()) {
+			final T value = pendingValues.pop();
+			if (visitedValues.add(value)) {
+				for (final T dependencyValue : dependencyFunction.evaluate(value)) {
+					dependencies.add(new Tuple2<T, T>(value, dependencyValue));
+					if (close) {
+						pendingValues.add(dependencyValue);
+					}
+				}
+			}
+		}
+		return dependencies;
+	}
+	
+	private static <T> Set<T> findTopologicalSortLeaves(final Collection<T> values, final Collection<? extends Tuple2<T, T>> dependencies) {
+		assert null != values;
+		assert null != dependencies;
+		
+		final Set<T> leafValues = new HashSet<T>(values);
+		for (final Tuple2<T, T> dependency : dependencies) {
+			leafValues.remove(dependency.getFirst());
+		}
+		return leafValues;
+	}
+	
+	private static <T, C extends Collection<? super T>> C extractTopologicalSortLeaves(final Set<T> leafValues, final List<T> pendingValues, final C results) {
+		assert null != leafValues;
+		assert null != pendingValues;
+		assert null != results;
+		
+		// Note: Pending values are iterated instead of leaf values to keep the sort stable and to handle duplicate values.
+		final Iterator<T> pendingValuesIt = pendingValues.iterator();
+		while (pendingValuesIt.hasNext()) {
+			final T value = pendingValuesIt.next();
+			if (leafValues.contains(value)) {
+				results.add(value);
+				pendingValuesIt.remove();
+			}
+		}
+		return results;
+	}
+	
+	private static <T> void cleanTopologicalSortDependencies(final Collection<? extends Tuple2<T, T>> dependencies, final Set<T> leafValues) {
+		assert null != dependencies;
+		assert null != leafValues;
+		
+		final Iterator<? extends Tuple2<T, T>> dependenciesIt = dependencies.iterator();
+		while (dependenciesIt.hasNext()) {
+			final Tuple2<T, T> dependency = dependenciesIt.next();
+			if (leafValues.contains(dependency.getSecond())) {
+				dependenciesIt.remove();
+			}
+		}
 	}
 	
 	/**
