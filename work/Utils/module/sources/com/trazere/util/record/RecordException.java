@@ -25,7 +25,7 @@ extends Exception {
 	private static final long serialVersionUID = 1L;
 	
 	/** Factory of {@link RecordException}. */
-	public static final ThrowableFactory<RecordException> EXCEPTION_FACTORY = new ThrowableFactory<RecordException>() {
+	public static final ThrowableFactory<RecordException> FACTORY = new ThrowableFactory<RecordException>() {
 		public RecordException build() {
 			return new RecordException();
 		}

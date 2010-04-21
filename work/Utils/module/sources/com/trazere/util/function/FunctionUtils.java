@@ -813,6 +813,51 @@ public class FunctionUtils {
 	}
 	
 	/**
+	 * Transform the given values using the given function, flatten them and populate the given collection with the result values.
+	 * 
+	 * @param <T1> Type of the argument values.
+	 * @param <T2> Type of the result values.
+	 * @param <C> Type of the collection to populate with the result values.
+	 * @param <X> Type of the exceptions.
+	 * @param function The function.
+	 * @param values The argument values.
+	 * @param results The collection to populate with the result values.
+	 * @return The given result collection.
+	 * @throws X When some function evaluation fails.
+	 */
+	public static <T1, T2, C extends Collection<? super T2>, X extends Exception> C flatMap(final Function1<? super T1, ? extends Collection<T2>, X> function, final Collection<T1> values, final C results)
+	throws X {
+		assert null != values;
+		
+		return flatMap(function, values.iterator(), results);
+	}
+	
+	/**
+	 * Transform the values provided by the given iterator using the given function, flatten them and populate the given collection with the result values.
+	 * 
+	 * @param <T1> Type of the argument values.
+	 * @param <T2> Type of the result values.
+	 * @param <C> Type of the collection to populate with the result values.
+	 * @param <X> Type of the exceptions.
+	 * @param function The function.
+	 * @param values The iterator providing the argument values.
+	 * @param results The collection to populate with the result values.
+	 * @return The given result collection.
+	 * @throws X When some function evaluation fails.
+	 */
+	public static <T1, T2, C extends Collection<? super T2>, X extends Exception> C flatMap(final Function1<? super T1, ? extends Collection<T2>, X> function, final Iterator<T1> values, final C results)
+	throws X {
+		assert null != function;
+		assert null != values;
+		assert null != results;
+		
+		while (values.hasNext()) {
+			results.addAll(function.evaluate(values.next()));
+		}
+		return results;
+	}
+	
+	/**
 	 * Transform the keys of the given bindings using the given function and populate the given map with the bindings of the result keys and the values
 	 * associated to the arguments keys.
 	 * 
