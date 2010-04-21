@@ -26,11 +26,12 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Queue;
 import java.util.Set;
-import java.util.Stack;
 
 /**
  * The {@link CollectionUtils} class provides various helpers regarding collections and maps.
@@ -591,10 +592,10 @@ public class CollectionUtils {
 		assert null != results;
 		
 		// Compute the dependencies.
-		final Collection<Tuple2<T, T>> dependencies = computeTopologicalSortDependencies(dependencyFunction, close, values, new ArrayList<Tuple2<T, T>>());
+		final List<T> pendingValues = new ArrayList<T>(values.size());
+		final Collection<Tuple2<T, T>> dependencies = computeTopologicalSortDependencies(dependencyFunction, close, values, pendingValues, new ArrayList<Tuple2<T, T>>());
 		
 		// Sort the values.
-		final List<T> pendingValues = new ArrayList<T>(values);
 		while (!pendingValues.isEmpty()) {
 			// Find the leaves.
 			final Set<T> leafValues = findTopologicalSortLeaves(pendingValues, dependencies);
@@ -641,10 +642,10 @@ public class CollectionUtils {
 		assert null != results;
 		
 		// Compute the dependencies.
-		final Collection<Tuple2<T, T>> dependencies = computeTopologicalSortDependencies(dependencyFunction, close, values, new ArrayList<Tuple2<T, T>>());
+		final List<T> pendingValues = new ArrayList<T>(values.size());
+		final Collection<Tuple2<T, T>> dependencies = computeTopologicalSortDependencies(dependencyFunction, close, values, pendingValues, new ArrayList<Tuple2<T, T>>());
 		
 		// Sort the values.
-		final List<T> pendingValues = new ArrayList<T>(values);
 		while (!pendingValues.isEmpty()) {
 			// Find the leaves.
 			final Set<T> leafValues = findTopologicalSortLeaves(pendingValues, dependencies);
@@ -662,24 +663,51 @@ public class CollectionUtils {
 		return results;
 	}
 	
-	private static <T, C extends Collection<? super Tuple2<T, T>>, X extends Exception> C computeTopologicalSortDependencies(final Function1<? super T, ? extends Collection<? extends T>, X> dependencyFunction, final boolean close, final Collection<? extends T> values, final C dependencies)
+	private static <T, C extends Collection<? super Tuple2<T, T>>, X extends Exception> C computeTopologicalSortDependencies(final Function1<? super T, ? extends Collection<? extends T>, X> dependencyFunction, final boolean close, final Collection<? extends T> values, final Collection<T> closedValues, final C dependencies)
+	throws X {
+		assert null != values;
+		assert null != closedValues;
+		
+		if (close) {
+			return computeClosedTopologicalSortDependencies(dependencyFunction, values, closedValues, dependencies);
+		} else {
+			closedValues.addAll(values);
+			return computeTopologicalSortDependencies(dependencyFunction, values, dependencies);
+		}
+	}
+	
+	private static <T, C extends Collection<? super Tuple2<T, T>>, X extends Exception> C computeTopologicalSortDependencies(final Function1<? super T, ? extends Collection<? extends T>, X> dependencyFunction, final Collection<? extends T> values, final C dependencies)
 	throws X {
 		assert null != dependencyFunction;
 		assert null != values;
 		assert null != dependencies;
 		
-		final Stack<T> pendingValues = new Stack<T>();
-		pendingValues.addAll(values);
+		for (final T value : values) {
+			for (final T dependencyValue : dependencyFunction.evaluate(value)) {
+				dependencies.add(new Tuple2<T, T>(value, dependencyValue));
+			}
+		}
+		return dependencies;
+	}
+	
+	private static <T, C extends Collection<? super Tuple2<T, T>>, X extends Exception> C computeClosedTopologicalSortDependencies(final Function1<? super T, ? extends Collection<? extends T>, X> dependencyFunction, final Collection<? extends T> values, final Collection<T> closedValues, final C dependencies)
+	throws X {
+		assert null != dependencyFunction;
+		assert null != values;
+		assert null != dependencies;
 		
+		final Queue<T> pendingValues = new LinkedList<T>(values);
 		final Set<T> visitedValues = new HashSet<T>();
 		while (!pendingValues.isEmpty()) {
-			final T value = pendingValues.pop();
+			final T value = pendingValues.poll();
 			if (visitedValues.add(value)) {
+				// Add the value.
+				closedValues.add(value);
+				
+				// Add the dependencies.
 				for (final T dependencyValue : dependencyFunction.evaluate(value)) {
 					dependencies.add(new Tuple2<T, T>(value, dependencyValue));
-					if (close) {
-						pendingValues.add(dependencyValue);
-					}
+					pendingValues.add(dependencyValue); // Note: must queued in order to keep the closed value stable
 				}
 			}
 		}
