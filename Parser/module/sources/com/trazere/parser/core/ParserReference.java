@@ -31,11 +31,11 @@ public class ParserReference<Token, Result>
 implements Parser<Token, Result> {
 	protected MutableReference<Parser<Token, Result>> _parser = new MutableReference<Parser<Token, Result>>();
 	
-	public void set(final Parser<Token, Result> parser) {
+	public <P extends Parser<Token, Result>> P set(final P parser) {
 		assert null != parser;
 		
-		// Set.
 		_parser.set(parser);
+		return parser;
 	}
 	
 	protected Parser<Token, Result> get() {
