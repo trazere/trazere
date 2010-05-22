@@ -24,10 +24,10 @@ package com.trazere.util.function;
  */
 public class Procedures {
 	/**
-	 * Build a zero arguments procedure which does nothing.
+	 * Builds a zero arguments procedure which does nothing.
 	 * 
 	 * @param <X> Type of the exceptions.
-	 * @return The procedure.
+	 * @return The built procedure.
 	 */
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> Procedure0<X> nop0() {
@@ -41,11 +41,11 @@ public class Procedures {
 	};
 	
 	/**
-	 * Build a one argument procedure which does nothing.
+	 * Builds a one argument procedure which does nothing.
 	 * 
 	 * @param <T> Type of the argument values.
 	 * @param <X> Type of the exceptions.
-	 * @return The procedure.
+	 * @return The built procedure.
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T, X extends Exception> Procedure1<T, X> nop1() {
@@ -59,12 +59,12 @@ public class Procedures {
 	};
 	
 	/**
-	 * Build a two arguments procedure which does nothing.
+	 * Builds a two arguments procedure which does nothing.
 	 * 
 	 * @param <T1> Type of the first argument values.
 	 * @param <T2> Type of the second argument values.
 	 * @param <X> Type of the exceptions.
-	 * @return The procedure.
+	 * @return The built procedure.
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T1, T2, X extends Exception> Procedure2<T1, T2, X> nop2() {
