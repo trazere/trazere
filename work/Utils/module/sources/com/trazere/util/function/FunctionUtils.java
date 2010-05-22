@@ -508,9 +508,9 @@ public class FunctionUtils {
 		assert null != operator;
 		assert null != values;
 		
-		final Accumulator<R, V, X> accumulator = Accumulators.function(operator, initialAccumulator);
+		final Accumulator<R, V, X> accumulator = Accumulators.fold(operator, initialAccumulator);
 		while (values.hasNext()) {
-			accumulator.accumulate(values.next());
+			accumulator.add(values.next());
 		}
 		return accumulator.get();
 	}

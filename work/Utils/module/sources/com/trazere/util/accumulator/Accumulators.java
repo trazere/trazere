@@ -17,13 +17,85 @@ package com.trazere.util.accumulator;
 
 import com.trazere.util.function.Function2;
 import com.trazere.util.lang.LangUtils;
+import com.trazere.util.lang.ref.MutableReference;
+import java.util.Collection;
 
 /**
  * The {@link Accumulators} class provides various common accumulators.
  */
 public class Accumulators {
 	/**
-	 * Build an accumulator using the given function and initial value.
+	 * Builds an accumulator which discards the accumulated values.
+	 * 
+	 * @param <V> Type of the accumulated values.
+	 * @param <X> Type of the exceptions.
+	 * @return The built accumulator.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <V, X extends Exception> Accumulator<Void, V, X> discard() {
+		return (Accumulator<Void, V, X>) _DISCARD;
+	}
+	
+	private static final Accumulator<Void, ?, ?> _DISCARD = new AbstractAccumulator<Void, Object, RuntimeException>() {
+		public Void get() {
+			return null;
+		}
+		
+		public void add(final Object value) {
+			// Nothing to do.
+		}
+	};
+	
+	/**
+	 * Builds an accumulator which populates the given collection.
+	 * 
+	 * @param <T> Type of the accumulated values.
+	 * @param <C> Type of the collection.
+	 * @param <X> Type of the exceptions.
+	 * @param collection The collection to populate.
+	 * @return The built accumulator.
+	 */
+	public static <T, C extends Collection<? super T>, X extends Exception> Accumulator<C, T, X> collection(final C collection) {
+		assert null != collection;
+		
+		return new AbstractAccumulator<C, T, X>() {
+			public C get() {
+				return collection;
+			}
+			
+			public void add(final T value)
+			throws X {
+				collection.add(value);
+			}
+		};
+	}
+	
+	/**
+	 * Builds an accumulator which updates the given reference.
+	 * 
+	 * @param <T> Type of the accumulated values.
+	 * @param <R> Type of the reference.
+	 * @param <X> Type of the exceptions.
+	 * @param reference The reference to set.
+	 * @return The built accumulator.
+	 */
+	public static <T, R extends MutableReference<T>, X extends Exception> Accumulator<R, T, X> reference(final R reference) {
+		assert null != reference;
+		
+		return new AbstractAccumulator<R, T, X>() {
+			public R get() {
+				return reference;
+			}
+			
+			public void add(final T value)
+			throws X {
+				reference.update(value);
+			}
+		};
+	}
+	
+	/**
+	 * Builds an accumulator which left folds the accumulated values using the given function and initial value.
 	 * 
 	 * @param <T> Type of the accumulated values.
 	 * @param <V> Type of the accumulation arguments.
@@ -32,12 +104,12 @@ public class Accumulators {
 	 * @param initialValue The initial value.
 	 * @return The built accumulator.
 	 */
-	public static <T, V, X extends Exception> Accumulator<T, V, X> function(final Function2<? super T, ? super V, ? extends T, ? extends X> function, final T initialValue) {
+	public static <T, V, X extends Exception> Accumulator<T, V, X> fold(final Function2<? super T, ? super V, ? extends T, ? extends X> function, final T initialValue) {
 		assert null != function;
 		
-		return new AbstractAccumulator<T, V, X>(initialValue) {
+		return new AbstractFoldAccumulator<T, V, X>(initialValue) {
 			@Override
-			protected T compute(final T accumulator, final V value)
+			protected T fold(final T accumulator, final V value)
 			throws X {
 				return function.evaluate(accumulator, value);
 			}
@@ -45,32 +117,32 @@ public class Accumulators {
 	}
 	
 	/**
-	 * Build a logical accumulator corresponding to a conjonction.
+	 * Builds a logical accumulator corresponding to a conjonction.
 	 * 
 	 * @param <X> Type of the exceptions.
 	 * @param initialValue The initial value.
 	 * @return The built accumulator.
 	 */
 	public static <X extends Exception> Accumulator<Boolean, Boolean, X> and(final boolean initialValue) {
-		return new AbstractAccumulator<Boolean, Boolean, X>(initialValue) {
+		return new AbstractFoldAccumulator<Boolean, Boolean, X>(initialValue) {
 			@Override
-			protected Boolean compute(final Boolean accumulator, final Boolean value) {
+			protected Boolean fold(final Boolean accumulator, final Boolean value) {
 				return LangUtils.getBoolean(accumulator, false) && LangUtils.getBoolean(value, false);
 			}
 		};
 	}
 	
 	/**
-	 * Build a logical accumulator corresponding to a disjunction.
+	 * Builds a logical accumulator corresponding to a disjunction.
 	 * 
 	 * @param <X> Type of the exceptions.
 	 * @param initialValue The initial value.
 	 * @return The built accumulator.
 	 */
 	public static <X extends Exception> Accumulator<Boolean, Boolean, X> or(final boolean initialValue) {
-		return new AbstractAccumulator<Boolean, Boolean, X>(initialValue) {
+		return new AbstractFoldAccumulator<Boolean, Boolean, X>(initialValue) {
 			@Override
-			protected Boolean compute(final Boolean accumulator, final Boolean value) {
+			protected Boolean fold(final Boolean accumulator, final Boolean value) {
 				return LangUtils.getBoolean(accumulator, false) || LangUtils.getBoolean(value, false);
 			}
 		};
