@@ -24,10 +24,10 @@ package com.trazere.util.function;
  */
 public interface Procedure2<T1, T2, X extends Exception> {
 	/**
-	 * Execute the receiver procedure with the given argument values.
+	 * Executes the receiver procedure with the given argument values.
 	 * 
-	 * @param value1 First argument value.
-	 * @param value2 Second argument value.
+	 * @param value1 The first argument value.
+	 * @param value2 The second argument value.
 	 * @throws X When the procedure execution fails.
 	 */
 	public void execute(final T1 value1, final T2 value2)

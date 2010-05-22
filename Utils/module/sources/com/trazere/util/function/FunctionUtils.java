@@ -37,12 +37,12 @@ import java.util.Set;
  */
 public class FunctionUtils {
 	/**
-	 * Test whether any given value is accepted by the given predicate.
+	 * Tests whether any given value is accepted by the given predicate.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param <X> Type of the exceptions.
-	 * @param predicate Predicate to use.
-	 * @param values Values to test.
+	 * @param predicate The predicate.
+	 * @param values The values to test.
 	 * @return <code>true</code> if any value is accepted, <code>false</code> if all values are rejected.
 	 * @throws X When some predicate evaluation fails.
 	 */
@@ -54,12 +54,12 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Test whether any value provided by the given iterator is accepted by the given predicate.
+	 * Tests whether any value provided by the given iterator is accepted by the given predicate.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param <X> Type of the exceptions.
-	 * @param predicate Predicate to use.
-	 * @param values Iterator providing the values to test.
+	 * @param predicate The predicate.
+	 * @param values The iterator providing the values to test.
 	 * @return <code>true</code> if any value is accepted, <code>false</code> if all values are rejected.
 	 * @throws X When some predicate evaluation fails.
 	 */
@@ -77,15 +77,15 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Test whether any given binding is accepted by the given predicate.
+	 * Tests whether any given binding is accepted by the given predicate.
 	 * <p>
 	 * This method evaluates the predicate by passing the keys and values of the bindings respectively as first and second arguments.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param <X> Type of the exceptions.
-	 * @param predicate Predicate to use.
-	 * @param bindings Bindings to test.
+	 * @param predicate The predicate.
+	 * @param bindings The bindings to test.
 	 * @return <code>true</code> if any binding is accepted, <code>false</code> if all bindings are rejected.
 	 * @throws X When some predicate evaluation fails.
 	 */
@@ -103,12 +103,12 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Test whether all given values are accepted by the given predicate.
+	 * Tests whether all given values are accepted by the given predicate.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param <X> Type of the exceptions.
-	 * @param predicate Predicate to use.
-	 * @param values Values to test.
+	 * @param predicate The predicate.
+	 * @param values The values to test.
 	 * @return <code>true</code> if all values are accepted, <code>false</code> if any value is rejected.
 	 * @throws X When some predicate evaluation fails.
 	 */
@@ -120,12 +120,12 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Test whether all values provided by the given iterator are accepted by the given predicate.
+	 * Tests whether all values provided by the given iterator are accepted by the given predicate.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param <X> Type of the exceptions.
-	 * @param predicate Predicate to use.
-	 * @param values Iterator providing the values to test.
+	 * @param predicate The predicate.
+	 * @param values The iterator providing the values to test.
 	 * @return <code>true</code> if all values are accepted, <code>false</code> if any value is rejected.
 	 * @throws X When some predicate evaluation fails.
 	 */
@@ -143,15 +143,15 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Test whether all given bindings are accepted by the given predicate.
+	 * Tests whether all given bindings are accepted by the given predicate.
 	 * <p>
 	 * This method evaluates the predicate by passing the keys and values of the bindings respectively as first and second arguments.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param <X> Type of the exceptions.
-	 * @param predicate Predicate to use.
-	 * @param bindings Bindings to test.
+	 * @param predicate The predicate.
+	 * @param bindings The bindings to test.
 	 * @return <code>true</code> if all bindings are accepted, <code>false</code> if any binding is rejected.
 	 * @throws X When some predicate evaluation fails.
 	 */
@@ -169,12 +169,12 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Count the given values accepted by the given predicate.
+	 * Counts the given values accepted by the given predicate.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param <X> Type of the exceptions.
-	 * @param predicate Predicate to use.
-	 * @param values Values to count.
+	 * @param predicate The predicate.
+	 * @param values The values to count.
 	 * @return The number of accepted values.
 	 * @throws X When some predicate evaluation fails.
 	 */
@@ -186,12 +186,12 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Count the values provided by the given iterator accepted by the given predicate.
+	 * Counts the values provided by the given iterator accepted by the given predicate.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param <X> Type of the exceptions.
-	 * @param predicate Predicate to use.
-	 * @param values Iterator providing the values to count.
+	 * @param predicate The predicate.
+	 * @param values The iterator providing the values to count.
 	 * @return The number of accepted values.
 	 * @throws X When some predicate evaluation fails.
 	 */
@@ -210,15 +210,15 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Count the given bindings accepted by the given predicate.
+	 * Counts the given bindings accepted by the given predicate.
 	 * <p>
 	 * This method evaluates the predicate by passing the keys and values of the bindings respectively as first and second arguments.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param <X> Type of the exceptions.
-	 * @param predicate Predicate to use.
-	 * @param bindings Bindings to count.
+	 * @param predicate The predicate.
+	 * @param bindings The bindings to count.
 	 * @return The number of accepted bindings.
 	 * @throws X When some predicate evaluation fails.
 	 */
@@ -237,13 +237,13 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Filter the given values using the given predicate and populate the given result collection with them.
+	 * Filters the given values using the given predicate and populates the given result collection with them.
 	 * 
 	 * @param <T> Type of the values to filter.
 	 * @param <C> Type of the collection to populate.
 	 * @param <X> Type of the exceptions.
-	 * @param predicate Predicate to use.
-	 * @param values Values to filter.
+	 * @param predicate The predicate.
+	 * @param values The values to filter.
 	 * @param results The collection to populate with the accepted values.
 	 * @return The given result collection.
 	 * @throws X When some predicate evaluation fails.
@@ -256,13 +256,13 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Filter the given values using the given predicate and populate the given result collection with them.
+	 * Filters the given values using the given predicate and populates the given result collection with them.
 	 * 
 	 * @param <T> Type of the values to filter.
 	 * @param <C> Type of the collection to populate.
 	 * @param <X> Type of the exceptions.
-	 * @param predicate Predicate to use.
-	 * @param values Values to filter.
+	 * @param predicate The predicate.
+	 * @param values The values to filter.
 	 * @param results The collection to populate with the accepted values.
 	 * @return The given result collection.
 	 * @throws X When some predicate evaluation fails.
@@ -283,7 +283,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Filter the content of the given collection using the given predicate.
+	 * Filters the content of the given collection using the given predicate.
 	 * <p>
 	 * This method does modify the given collection.
 	 * 
@@ -292,7 +292,7 @@ public class FunctionUtils {
 	 * @param <X> Type of the exceptions.
 	 * @param predicate The predicate.
 	 * @param collection The collection.
-	 * @return The given modified collection.
+	 * @return The given collection.
 	 * @throws X When some predicate evaluation fails.
 	 */
 	public static <T, C extends Collection<T>, X extends Exception> C filter(final Predicate1<? super T, X> predicate, final C collection)
@@ -311,7 +311,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Filter the given bindings using the given predicate and populate the given result map with them.
+	 * Filters the given bindings using the given predicate and populates the given result map with them.
 	 * <p>
 	 * This method evaluates the predicate by passing the keys and values of the bindings respectively as first and second arguments.
 	 * 
@@ -319,8 +319,8 @@ public class FunctionUtils {
 	 * @param <V> Type of the values.
 	 * @param <M> Type of the map to populate.
 	 * @param <X> Type of the exceptions.
-	 * @param predicate Predicate to use.
-	 * @param bindings Bindings to filter.
+	 * @param predicate The predicate.
+	 * @param bindings The bindings to filter.
 	 * @param results The map to populate with the accepted bindings.
 	 * @return The given result map.
 	 * @throws X When some predicate evaluation fails.
@@ -342,7 +342,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Filter the content of the given map using the given predicate.
+	 * Filters the content of the given map using the given predicate.
 	 * <p>
 	 * This method does modify the given map.
 	 * 
@@ -352,7 +352,7 @@ public class FunctionUtils {
 	 * @param <X> Type of the exceptions.
 	 * @param predicate The predicate.
 	 * @param map The map.
-	 * @return The given modified map.
+	 * @return The given map.
 	 * @throws X When some predicate evaluation fails.
 	 */
 	public static <K, V, M extends Map<K, V>, X extends Exception> M filter(final Predicate2<? super K, ? super V, X> predicate, final M map)
@@ -371,21 +371,21 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Filter the given bindings using the given predicate and populate the given result set with their keys.
+	 * Filters the given bindings using the given predicate and populates the given result collection with their keys.
 	 * <p>
 	 * This method evaluates the predicate by passing the keys and values of the bindings respectively as first and second arguments.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
-	 * @param <S> Type of the set to populate.
+	 * @param <C> Type of the set to populate.
 	 * @param <X> Type of the exceptions.
-	 * @param predicate Predicate to use.
-	 * @param bindings Bindings to filter.
+	 * @param predicate The predicate.
+	 * @param bindings The bindings to filter.
 	 * @param results The set to populate with the keys of the accepted bindings.
 	 * @return The given result set.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <K, V, S extends Set<? super K>, X extends Exception> S filterKeys(final Predicate2<? super K, ? super V, X> predicate, final Map<K, V> bindings, final S results)
+	public static <K, V, C extends Collection<? super K>, X extends Exception> C filterKeys(final Predicate2<? super K, ? super V, X> predicate, final Map<K, V> bindings, final C results)
 	throws X {
 		assert null != predicate;
 		assert null != bindings;
@@ -401,7 +401,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Filter the given bindings using the given predicate and populate the given result set with their values.
+	 * Filters the given bindings using the given predicate and populates the given result set with their values.
 	 * <p>
 	 * This method evaluates the predicate by passing the keys and values of the bindings respectively as first and second arguments.
 	 * 
@@ -409,8 +409,8 @@ public class FunctionUtils {
 	 * @param <V> Type of the values.
 	 * @param <C> Type of the collection to populate.
 	 * @param <X> Type of the exceptions.
-	 * @param predicate Predicate to use.
-	 * @param bindings Bindings to filter.
+	 * @param predicate The predicate.
+	 * @param bindings The bindings to filter.
 	 * @param results The collection to populate with the results.
 	 * @return The given result collection.
 	 * @throws X When some predicate evaluation fails.
@@ -432,13 +432,13 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Get the first given values accepted by the given predicate.
+	 * Gets the first given values accepted by the given predicate.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param <X> Type of the exceptions.
 	 * @param predicate The predicate.
 	 * @param values The values.
-	 * @return The found value.
+	 * @return The first accepted value.
 	 * @throws X When some predicate evaluation fails.
 	 */
 	public static <T, X extends Exception> Maybe<T> first(final Predicate1<? super T, X> predicate, final Collection<T> values)
@@ -449,13 +449,13 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Get the first given values accepted by the given predicate.
+	 * Gets the first value provided by the given iterator accepted by the given predicate.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param <X> Type of the exceptions.
 	 * @param predicate The predicate.
-	 * @param values The values.
-	 * @return The found value.
+	 * @param values The iterator providing the values.
+	 * @return The first accepted value.
 	 * @throws X When some predicate evaluation fails.
 	 */
 	public static <T, X extends Exception> Maybe<T> first(final Predicate1<? super T, X> predicate, final Iterator<T> values)
@@ -473,7 +473,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Left fold the given collection of values using the given operator and initial argument.
+	 * Left folds the given values using the given operator and initial argument.
 	 * 
 	 * @param <R> Type of the result.
 	 * @param <V> Type of the values.
@@ -492,7 +492,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Left fold the given values provided by the given iterator using the given operator and initial argument.
+	 * Left folds the values provided by the given iterator using the given operator and initial argument.
 	 * 
 	 * @param <R> Type of the result.
 	 * @param <V> Type of the values.
@@ -516,7 +516,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Transform the given values using the given function and populate the given collection with the result values.
+	 * Transforms the given values using the given function and populates the given collection with the result values.
 	 * 
 	 * @param <T1> Type of the argument values.
 	 * @param <T2> Type of the result values.
@@ -536,7 +536,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Transform the values provided by the given iterator using the given function and populate the given collection with the result values.
+	 * Transforms the values provided by the given iterator using the given function and populates the given collection with the result values.
 	 * 
 	 * @param <T1> Type of the argument values.
 	 * @param <T2> Type of the result values.
@@ -561,7 +561,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Transform the given bindings using the given function and populate the given map with the bindings of the argument keys and the corresponding result
+	 * Transforms the given bindings using the given function and populates the given map with the bindings of the argument keys and the corresponding result
 	 * values.
 	 * <p>
 	 * This method evaluates the function by passing the keys and values of the bindings respectively as first and second arguments.
@@ -591,7 +591,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Transform the given bindings using the given function and populate the given multi-map with the bindings of the argument keys and the corresponding
+	 * Transforms the given bindings using the given function and populates the given multi-map with the bindings of the argument keys and the corresponding
 	 * result values.
 	 * <p>
 	 * This method evaluates the function by passing the keys and values of the bindings respectively as first and second arguments.
@@ -622,7 +622,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Transform the given keys using the given function and populate the given map with the bindings of the keys and the result values.
+	 * Transforms the given keys using the given function and populates the given map with the bindings of the keys and the result values.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -647,7 +647,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Transform the given values using the given function and populate the given map with the bindings of the result keys and the argument values.
+	 * Transforms the given values using the given function and populates the given map with the bindings of the result keys and the argument values.
 	 * <p>
 	 * When the function evaluates to the same result key for different argument values, the last value is associated to the key in the result map.
 	 * 
@@ -674,7 +674,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Filter and transform the given values using the given function and populate the given collection with the result values.
+	 * Filters and transforms the given values using the given function and populates the given collection with the result values.
 	 * 
 	 * @param <T1> Type of the argument values.
 	 * @param <T2> Type of the result values.
@@ -694,7 +694,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Filter and transform the values provided by the given iterator using the given function and populate the given collection with the result values.
+	 * Filters and transforms the values provided by the given iterator using the given function and populates the given collection with the result values.
 	 * 
 	 * @param <T1> Type of the argument values.
 	 * @param <T2> Type of the result values.
@@ -722,8 +722,8 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Filter and transform the given bindings using the given function and populate the given map with the bindings of the argument keys and the corresponding
-	 * result values.
+	 * Filters and transforms the given bindings using the given function and populates the given map with the bindings of the argument keys and the
+	 * corresponding result values.
 	 * <p>
 	 * This method evaluates the function by passing the keys and values of the bindings respectively as first and second arguments.
 	 * 
@@ -755,7 +755,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Filter and transform the given keys using the given function and populate the given map with the bindings of the keys and the result values.
+	 * Filters and transforms the given keys using the given function and populates the given map with the bindings of the keys and the result values.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -783,7 +783,8 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Filter and transform the given values using the given function and populate the given map with the bindings of the result keys and the argument values.
+	 * Filters and transforms the given values using the given function and populates the given map with the bindings of the result keys and the argument
+	 * values.
 	 * <p>
 	 * When the function evaluates to the same result key for different argument values, the last value is associated to the key in the result map.
 	 * 
@@ -813,7 +814,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Transform the given values using the given function, flatten them and populate the given collection with the result values.
+	 * Transforms the given values using the given function, flattens them and populates the given collection with the result values.
 	 * 
 	 * @param <T1> Type of the argument values.
 	 * @param <T2> Type of the result values.
@@ -833,7 +834,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Transform the values provided by the given iterator using the given function, flatten them and populate the given collection with the result values.
+	 * Transforms the values provided by the given iterator using the given function, flattens them and populates the given collection with the result values.
 	 * 
 	 * @param <T1> Type of the argument values.
 	 * @param <T2> Type of the result values.
@@ -858,7 +859,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Transform the keys of the given bindings using the given function and populate the given map with the bindings of the result keys and the values
+	 * Transforms the keys of the given bindings using the given function and populates the given map with the bindings of the result keys and the values
 	 * associated to the arguments keys.
 	 * 
 	 * @param <K1> Type of the argument keys.
@@ -885,7 +886,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Transform the given bindings using the given function and populate the given map with the bindings of the result keys and the argument values.
+	 * Transforms the given bindings using the given function and populates the given map with the bindings of the result keys and the argument values.
 	 * <p>
 	 * This method evaluates the function by passing the keys and values of the bindings respectively as first and second arguments.
 	 * 
@@ -895,7 +896,7 @@ public class FunctionUtils {
 	 * @param <M> Type of the map to populate.
 	 * @param <X> Type of the exceptions.
 	 * @param function Function to use.
-	 * @param bindings Argument to remap.
+	 * @param bindings The argument bindings.
 	 * @param results The map to populate with the results.
 	 * @return The given result map.
 	 * @throws X When some function evaluation fails.
@@ -914,7 +915,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Filter and transform the keys of the given bindings using the given function and populate the given map with the bindings of the result keys and the
+	 * Filters and transforms the keys of the given bindings using the given function and populates the given map with the bindings of the result keys and the
 	 * values associated to the arguments keys.
 	 * 
 	 * @param <K1> Type of the argument keys.
@@ -944,7 +945,8 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Filter and transform the given bindings using the given function and populate the given map with the bindings of the result keys and the argument values.
+	 * Filters and transforms the given bindings using the given function and populates the given map with the bindings of the result keys and the argument
+	 * values.
 	 * <p>
 	 * This method evaluates the function by passing the keys and values of the bindings respectively as first and second arguments.
 	 * 
@@ -954,7 +956,7 @@ public class FunctionUtils {
 	 * @param <M> Type of the map to populate.
 	 * @param <X> Type of the exceptions.
 	 * @param function Function to use.
-	 * @param bindings Argument to remap.
+	 * @param bindings The argument bindings.
 	 * @param results The map to populate with the results.
 	 * @return The given result map.
 	 * @throws X When some function evaluation fails.
@@ -976,12 +978,12 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Execute the given procedure with the given values.
+	 * Executes the given procedure with the given values.
 	 * 
 	 * @param <T> Type of the argument values.
 	 * @param <X> Type of the exceptions.
-	 * @param procedure Procedure to execute.
-	 * @param values Argument values.
+	 * @param procedure The procedure.
+	 * @param values The argument values.
 	 * @throws X When some procedure execution fails.
 	 */
 	public static <T, X extends Exception> void execute(final Procedure1<? super T, X> procedure, final Collection<T> values)
@@ -992,12 +994,12 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Execute the given procedure with the values provided by the given iterator.
+	 * Executes the given procedure with the values provided by the given iterator.
 	 * 
 	 * @param <T> Type of the argument values.
 	 * @param <X> Type of the exceptions.
-	 * @param procedure Procedure to execute.
-	 * @param values Iterator providing the argument values.
+	 * @param procedure The procedure.
+	 * @param values The iterator providing the argument values.
 	 * @throws X When some procedure execution fails.
 	 */
 	public static <T, X extends Exception> void execute(final Procedure1<? super T, X> procedure, final Iterator<T> values)
@@ -1011,15 +1013,15 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Execute the given procedure with the given bindings.
+	 * Executes the given procedure with the given bindings.
 	 * <p>
 	 * This method executes the procedure by passing the keys and values of the bindings respectively as first and second arguments.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param <X> Type of the exceptions.
-	 * @param procedure Procedure to apply.
-	 * @param bindings Argument bindings.
+	 * @param procedure The procedure.
+	 * @param bindings The argument bindings.
 	 * @throws X When some procedure execution fails.
 	 */
 	public static <K, V, X extends Exception> void apply(final Procedure2<? super K, ? super V, X> procedure, final Map<K, V> bindings)

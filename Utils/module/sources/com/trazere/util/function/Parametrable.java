@@ -28,7 +28,7 @@ import com.trazere.util.record.RecordSignatureBuilder;
  */
 public interface Parametrable<K, V> {
 	/**
-	 * Get the requirements of the receiver parametrable over its parameters.
+	 * Gets the requirements of the receiver parametrable over its parameters.
 	 * 
 	 * @return The signature of the requirements.
 	 * @throws RecordException When the requirements cannot be computed.
@@ -37,7 +37,7 @@ public interface Parametrable<K, V> {
 	throws RecordException;
 	
 	/**
-	 * Unify the requirements of the receiver parametrable over its parameters within the given builder.
+	 * Unifies the requirements of the receiver parametrable over its parameters within the given builder.
 	 * 
 	 * @param <B> Type of the signature builder.
 	 * @param builder The builder within which the requirements should be unified.

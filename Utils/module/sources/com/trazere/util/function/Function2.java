@@ -25,10 +25,10 @@ package com.trazere.util.function;
  */
 public interface Function2<T1, T2, R, X extends Exception> {
 	/**
-	 * Evaluate the receiver function with the given argument values.
+	 * Evaluates the receiver function with the given argument values.
 	 * 
-	 * @param value1 First argument value.
-	 * @param value2 Second argument value.
+	 * @param value1 The first argument value.
+	 * @param value2 The second argument value.
 	 * @return The result of the function evaluation.
 	 * @throws X When the function evaluation fails.
 	 */

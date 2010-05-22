@@ -23,7 +23,7 @@ package com.trazere.util.function;
  */
 public interface Function0<R, X extends Exception> {
 	/**
-	 * Evaluate the receiver function.
+	 * Evaluates the receiver function.
 	 * 
 	 * @return The result of the function evaluation.
 	 * @throws X When the function evaluation fails.

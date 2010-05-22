@@ -27,5 +27,5 @@ import com.trazere.util.record.Record;
  */
 public interface ParameterFunction<K, V, T, X extends Exception>
 extends Function1<Record<K, V>, T, X>, Parametrable<K, V> {
-	// Just typing.
+	// Nothing to do.
 }

@@ -22,7 +22,7 @@ package com.trazere.util.function;
  */
 public interface Procedure0<X extends Exception> {
 	/**
-	 * Execute the receiver procedure.
+	 * Executes the receiver procedure.
 	 * 
 	 * @throws X When the procedure execution fails.
 	 */

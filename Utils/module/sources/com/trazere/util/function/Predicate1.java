@@ -23,9 +23,9 @@ package com.trazere.util.function;
  */
 public interface Predicate1<T, X extends Exception> {
 	/**
-	 * Evaluate the receiver predicate with the given argument value.
+	 * Evaluates the receiver predicate with the given argument value.
 	 * 
-	 * @param value Argument value.
+	 * @param value The argument value.
 	 * @return The result of the predicate evaluation.
 	 * @throws X When the predicate evaluation fails.
 	 */
