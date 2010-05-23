@@ -77,6 +77,76 @@ public class TextUtils {
 	}
 	
 	/**
+	 * Trims the heading and trailing characters of the given string accepted by the given predicates.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @param predicate The predicate.
+	 * @param s The string to trim.
+	 * @return The trimmed string.
+	 * @throws X When some predicate evaluation fails.
+	 */
+	public static <X extends Exception> String trim(final CharPredicate<X> predicate, final String s)
+	throws X {
+		assert null != predicate;
+		assert null != s;
+		
+		final int length = s.length();
+		int start = 0;
+		while (start < length && predicate.evaluate(s.charAt(start))) {
+			start += 1;
+		}
+		int stop = length;
+		while (stop > start && predicate.evaluate(s.charAt(stop - 1))) {
+			stop -= 1;
+		}
+		return start > 0 || stop < length ? s.substring(start, stop) : s;
+	}
+	
+	/**
+	 * Trims the heading characters of the given string accepted by the given predicates.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @param predicate The predicate.
+	 * @param s The string to trim.
+	 * @return The trimmed string.
+	 * @throws X When some predicate evaluation fails.
+	 */
+	public static <X extends Exception> String trimHeading(final CharPredicate<X> predicate, final String s)
+	throws X {
+		assert null != predicate;
+		assert null != s;
+		
+		final int length = s.length();
+		int index = 0;
+		while (index < length && predicate.evaluate(s.charAt(index))) {
+			index += 1;
+		}
+		return index > 0 ? s.substring(index) : s;
+	}
+	
+	/**
+	 * Trims the trailing characters of the given string accepted by the given predicates.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @param predicate The predicate.
+	 * @param s The string to trim.
+	 * @return The trimmed string.
+	 * @throws X When some predicate evaluation fails.
+	 */
+	public static <X extends Exception> String trimTrailing(final CharPredicate<X> predicate, final String s)
+	throws X {
+		assert null != predicate;
+		assert null != s;
+		
+		final int length = s.length();
+		int index = length;
+		while (index > 0 && predicate.evaluate(s.charAt(index - 1))) {
+			index -= 1;
+		}
+		return index < length ? s.substring(0, index) : s;
+	}
+	
+	/**
 	 * Splits the given string according to the given delimiter.
 	 * 
 	 * @param <C> Type of the collection filled with the results.
