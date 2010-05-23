@@ -27,6 +27,7 @@ import com.trazere.util.record.DuplicateFieldException;
 import com.trazere.util.report.ReportEntry;
 import com.trazere.util.report.ReportException;
 import com.trazere.util.report.ReportLevel;
+import com.trazere.util.text.TextUtils;
 import com.trazere.util.type.Maybe;
 import java.io.EOFException;
 import java.io.File;
@@ -34,7 +35,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -142,7 +142,7 @@ implements ReportStore<Entry> {
 		// Build the line.
 		final CSVLineBuilder builder = new CSVLineBuilder();
 		try {
-			builder.add(getDateHeader(), getDateFormat().format(date));
+			builder.add(getDateHeader(), TextUtils.formatDate(getDateFormat(), date));
 			builder.add(getLevelHeader(), level.toString());
 		} catch (final DuplicateFieldException exception) {
 			throw new InternalException(exception);
@@ -306,13 +306,12 @@ implements ReportStore<Entry> {
 								continue;
 							}
 							
-							final Date date;
-							try {
-								date = getDateFormat().parse(dateField);
-							} catch (final ParseException exception) {
+							final Maybe<Date> maybeDate = TextUtils.parseDate(getDateFormat(), dateField);
+							if (maybeDate.isNone()) {
 								LOG.warn("Ignoring invalid entry at line " + reader.getLine() + " from report file at path " + _path + " (invalid date)");
 								continue;
 							}
+							final Date date = maybeDate.asSome().getValue();
 							
 							// Read the level.
 							final String levelField = line.get(getLevelHeader(), null);
