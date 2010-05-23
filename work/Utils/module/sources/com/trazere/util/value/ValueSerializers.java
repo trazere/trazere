@@ -18,8 +18,9 @@ package com.trazere.util.value;
 import com.trazere.util.function.Function1;
 import com.trazere.util.lang.ThrowableFactory;
 import com.trazere.util.text.Description;
+import com.trazere.util.text.TextUtils;
+import com.trazere.util.type.Maybe;
 import java.text.NumberFormat;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -66,23 +67,16 @@ public class ValueSerializers {
 		
 		return new AbstractValueSerializer<Date, X>(Date.class) {
 			public String serialize(final Date value) {
-				assert null != value;
-				
-				return format.format(value);
+				return TextUtils.formatDate(format, value);
 			}
 			
 			public Date deserialize(final String representation)
 			throws X {
-				assert null != representation;
-				
-				synchronized (format) {
-					final ParsePosition position = new ParsePosition(0);
-					final Date date = format.parse(representation, position);
-					if (position.getIndex() == representation.length()) {
-						return date;
-					} else {
-						throw exceptionFactory.build("Invalid date \"" + representation + "\" (" + format.format(new Date()) + ").");
-					}
+				final Maybe<Date> date = TextUtils.parseDate(format, representation);
+				if (date.isSome()) {
+					return date.asSome().getValue();
+				} else {
+					throw exceptionFactory.build("Invalid date \"" + representation + "\" (" + TextUtils.formatDate(format, new Date()) + ").");
 				}
 			}
 			
@@ -95,42 +89,33 @@ public class ValueSerializers {
 	}
 	
 	/**
-	 * Build a serializer of numbers according to the given converter and format.
+	 * Build a serializer of numbers according to the given extractor and format.
 	 * 
 	 * @param <T> Type of the numbers.
 	 * @param <X> Type of the exceptions.
 	 * @param type The Java type of the values.
-	 * @param converter The converter.
+	 * @param extractor The extractor.
 	 * @param format The format of the dates.
 	 * @param exceptionFactory The exception factory to use.
 	 * @return The built serializer.
 	 */
-	public static <T extends Number, X extends Exception> ValueSerializer<T, X> buildNumber(final Class<T> type, final Function1<Number, T, RuntimeException> converter, final NumberFormat format, final ThrowableFactory<X> exceptionFactory) {
-		assert null != converter;
+	public static <T extends Number, X extends Exception> ValueSerializer<T, X> buildNumber(final Class<T> type, final Function1<Number, T, RuntimeException> extractor, final NumberFormat format, final ThrowableFactory<X> exceptionFactory) {
+		assert null != extractor;
 		assert null != format;
 		assert null != exceptionFactory;
 		
 		return new AbstractValueSerializer<T, X>(type) {
 			public String serialize(final T value) {
-				assert null != value;
-				
-				synchronized (format) {
-					return format.format(value);
-				}
+				return TextUtils.formatNumber(format, value);
 			}
 			
 			public T deserialize(final String representation)
 			throws X {
-				assert null != representation;
-				
-				synchronized (format) {
-					final ParsePosition position = new ParsePosition(0);
-					final Number number = format.parse(representation, position);
-					if (position.getIndex() == representation.length()) {
-						return converter.evaluate(number);
-					} else {
-						throw exceptionFactory.build("Invalid number \"" + representation + "\" (" + format.format(123.456) + ").");
-					}
+				final Maybe<T> value = TextUtils.parseNumber(format, extractor, representation);
+				if (value.isSome()) {
+					return value.asSome().getValue();
+				} else {
+					throw exceptionFactory.build("Invalid number \"" + representation + "\" (" + TextUtils.formatNumber(format, 123.456) + ").");
 				}
 			}
 			
