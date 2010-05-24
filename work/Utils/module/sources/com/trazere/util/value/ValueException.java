@@ -15,6 +15,7 @@
  */
 package com.trazere.util.value;
 
+import com.trazere.util.lang.AbstractThrowableFactory;
 import com.trazere.util.lang.ThrowableFactory;
 
 /**
@@ -25,7 +26,7 @@ extends Exception {
 	private static final long serialVersionUID = 1L;
 	
 	/** Factory of {@link ValueException}. */
-	public static final ThrowableFactory<ValueException> FACTORY = new ThrowableFactory<ValueException>() {
+	public static final ThrowableFactory<ValueException> FACTORY = new AbstractThrowableFactory<ValueException>() {
 		public ValueException build() {
 			return new ValueException();
 		}
