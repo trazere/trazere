@@ -15,6 +15,7 @@
  */
 package com.trazere.util.record;
 
+import com.trazere.util.lang.AbstractThrowableFactory;
 import com.trazere.util.lang.ThrowableFactory;
 
 /**
@@ -25,7 +26,7 @@ extends Exception {
 	private static final long serialVersionUID = 1L;
 	
 	/** Factory of {@link RecordException}. */
-	public static final ThrowableFactory<RecordException> FACTORY = new ThrowableFactory<RecordException>() {
+	public static final ThrowableFactory<RecordException> FACTORY = new AbstractThrowableFactory<RecordException>() {
 		public RecordException build() {
 			return new RecordException();
 		}

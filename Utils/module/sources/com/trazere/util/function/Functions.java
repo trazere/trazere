@@ -17,7 +17,6 @@ package com.trazere.util.function;
 
 import com.trazere.util.collection.CollectionUtils;
 import com.trazere.util.collection.Multimap;
-import com.trazere.util.lang.Factory;
 import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Tuple2;
 import com.trazere.util.type.Tuple3;
@@ -162,45 +161,6 @@ public class Functions {
 		return new Function3<T1, T2, T3, R, X>() {
 			public R evaluate(final T1 value1, final T2 value2, final T3 value3) {
 				return result;
-			}
-		};
-	}
-	
-	/**
-	 * Builds a zero arguments function which lifts the given factory.
-	 * 
-	 * @param <R> Type of the result values.
-	 * @param <X> Type of the exceptions.
-	 * @param factory The lifted factory.
-	 * @return The built function.
-	 */
-	public static final <R, X extends Exception> Function0<R, X> lift0(final Factory<? extends R, ? extends X> factory) {
-		assert null != factory;
-		
-		return new Function0<R, X>() {
-			public R evaluate()
-			throws X {
-				return factory.build();
-			}
-		};
-	}
-	
-	/**
-	 * Builds a one argument function which lifts the given factory.
-	 * 
-	 * @param <T> Type of the argument values.
-	 * @param <R> Type of the result values.
-	 * @param <X> Type of the exceptions.
-	 * @param factory The lifted factory.
-	 * @return The built function.
-	 */
-	public static final <T, R, X extends Exception> Function1<T, R, X> lift1(final Factory<? extends R, ? extends X> factory) {
-		assert null != factory;
-		
-		return new Function1<T, R, X>() {
-			public R evaluate(final T value)
-			throws X {
-				return factory.build();
 			}
 		};
 	}

@@ -15,6 +15,7 @@
  */
 package com.trazere.util.collection;
 
+import com.trazere.util.lang.AbstractThrowableFactory;
 import com.trazere.util.lang.ThrowableFactory;
 
 /**
@@ -25,7 +26,7 @@ extends Exception {
 	private static final long serialVersionUID = 1L;
 	
 	/** Factory of {@link CollectionException}. */
-	public static final ThrowableFactory<CollectionException> FACTORY = new ThrowableFactory<CollectionException>() {
+	public static final ThrowableFactory<CollectionException> FACTORY = new AbstractThrowableFactory<CollectionException>() {
 		public CollectionException build() {
 			return new CollectionException();
 		}

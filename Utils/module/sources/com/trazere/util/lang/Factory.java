@@ -15,13 +15,16 @@
  */
 package com.trazere.util.lang;
 
+import com.trazere.util.function.Function0;
+
 /**
  * The {@link Factory} interface defines generic factories.
  * 
  * @param <T> Type of the built values.
  * @param <X> Type of the exceptions.
  */
-public interface Factory<T, X extends Exception> {
+public interface Factory<T, X extends Exception>
+extends Function0<T, X> {
 	/**
 	 * Execute the receiver factory to build a new value.
 	 * 

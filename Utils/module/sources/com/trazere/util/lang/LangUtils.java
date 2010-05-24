@@ -67,7 +67,7 @@ public class LangUtils {
 	}
 	
 	/** Factory of {@link Exception}. */
-	public static final ThrowableFactory<Exception> EXCEPTION_FACTORY = new ThrowableFactory<Exception>() {
+	public static final ThrowableFactory<Exception> EXCEPTION_FACTORY = new AbstractThrowableFactory<Exception>() {
 		public Exception build() {
 			return new Exception();
 		}
