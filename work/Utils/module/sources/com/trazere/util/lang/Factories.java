@@ -32,9 +32,15 @@ public class Factories {
 	 * @return The built factory.
 	 */
 	public static <T, X extends Exception> Factory<T, X> value(final T value) {
-		return new Factory<T, X>() {
+		return new AbstractFactory<T, X>() {
 			public T build() {
 				return value;
+			}
+			
+			// HACK: moved here from AbstractFactory to work aroud a bug of javac (http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6199662)
+			public T evaluate()
+			throws X {
+				return build();
 			}
 		};
 	}
@@ -50,10 +56,16 @@ public class Factories {
 	public static <T, X extends Exception> Factory<T, X> function(final Function0<T, X> function) {
 		assert null != function;
 		
-		return new Factory<T, X>() {
+		return new AbstractFactory<T, X>() {
 			public T build()
 			throws X {
 				return function.evaluate();
+			}
+			
+			// HACK: moved here from AbstractFactory to work aroud a bug of javac (http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6199662)
+			public T evaluate()
+			throws X {
+				return build();
 			}
 		};
 	}

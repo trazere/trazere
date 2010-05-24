@@ -16,7 +16,6 @@
 package com.trazere.util.lang;
 
 import com.trazere.util.function.Function0;
-import com.trazere.util.function.Functions;
 import com.trazere.util.text.Description;
 import com.trazere.util.type.Either;
 import com.trazere.util.type.Maybe;
@@ -31,18 +30,6 @@ import com.trazere.util.type.Maybe;
  */
 public class LinearClosure<T, X extends Exception>
 implements Closure<T, X> {
-	/**
-	 * Build a closure evaluating to the result of the given factory.
-	 * 
-	 * @param <T> Type of the value.
-	 * @param <X> Type of the exceptions.
-	 * @param factory The factory which builds the value.
-	 * @return The closure.
-	 */
-	public static <T, X extends Exception> LinearClosure<T, X> build(final Factory<? extends T, ? extends X> factory) {
-		return new LinearClosure<T, X>(Functions.lift0(factory));
-	}
-	
 	/**
 	 * Build a closure evaluating to the result of the given function.
 	 * 

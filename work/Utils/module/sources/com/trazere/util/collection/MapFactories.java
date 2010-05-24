@@ -26,7 +26,7 @@ import java.util.TreeMap;
  * @see MapFactory
  */
 public class MapFactories {
-	private static final MapFactory<?, ?, ?> _HASHMAP = new MapFactory<Object, Object, HashMap<Object, Object>>() {
+	private static final MapFactory<?, ?, ?> _HASHMAP = new AbstractMapFactory<Object, Object, HashMap<Object, Object>>() {
 		public HashMap<Object, Object> build() {
 			return new HashMap<Object, Object>();
 		}
@@ -51,7 +51,7 @@ public class MapFactories {
 		return LangUtils.cast(_HASHMAP);
 	}
 	
-	private static final MapFactory<?, ?, ?> _TREEMAP = new MapFactory<Object, Object, TreeMap<Object, Object>>() {
+	private static final MapFactory<?, ?, ?> _TREEMAP = new AbstractMapFactory<Object, Object, TreeMap<Object, Object>>() {
 		public TreeMap<Object, Object> build() {
 			return new TreeMap<Object, Object>();
 		}

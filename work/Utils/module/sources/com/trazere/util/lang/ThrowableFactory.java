@@ -18,7 +18,7 @@ package com.trazere.util.lang;
 /**
  * The {@link ThrowableFactory} interface defines factories of {@link Throwable throwable objects}.
  * 
- * @param <T> Type of the wrapper throwables.
+ * @param <T> Type of the throwables.
  */
 public interface ThrowableFactory<T extends Throwable>
 extends Factory<T, RuntimeException> {

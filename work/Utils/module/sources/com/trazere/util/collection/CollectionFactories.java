@@ -28,7 +28,7 @@ import java.util.TreeSet;
  * @see CollectionFactory
  */
 public class CollectionFactories {
-	private static final CollectionFactory<?, ?> _ARRAYLIST = new CollectionFactory<Object, ArrayList<Object>>() {
+	private static final CollectionFactory<?, ?> _ARRAYLIST = new AbstractCollectionFactory<Object, ArrayList<Object>>() {
 		public ArrayList<Object> build() {
 			return new ArrayList<Object>();
 		}
@@ -52,7 +52,7 @@ public class CollectionFactories {
 		return LangUtils.cast(_ARRAYLIST);
 	}
 	
-	private static final CollectionFactory<?, ?> _HASHSET = new CollectionFactory<Object, HashSet<Object>>() {
+	private static final CollectionFactory<?, ?> _HASHSET = new AbstractCollectionFactory<Object, HashSet<Object>>() {
 		public HashSet<Object> build() {
 			return new HashSet<Object>();
 		}
@@ -76,7 +76,7 @@ public class CollectionFactories {
 		return LangUtils.cast(_HASHSET);
 	}
 	
-	private static final CollectionFactory<?, ?> _LINKEDLIST = new CollectionFactory<Object, LinkedList<Object>>() {
+	private static final CollectionFactory<?, ?> _LINKEDLIST = new AbstractCollectionFactory<Object, LinkedList<Object>>() {
 		public LinkedList<Object> build() {
 			return new LinkedList<Object>();
 		}
@@ -100,7 +100,7 @@ public class CollectionFactories {
 		return LangUtils.cast(_LINKEDLIST);
 	}
 	
-	private static final CollectionFactory<?, ?> _TREESET = new CollectionFactory<Object, TreeSet<Object>>() {
+	private static final CollectionFactory<?, ?> _TREESET = new AbstractCollectionFactory<Object, TreeSet<Object>>() {
 		public TreeSet<Object> build() {
 			return new TreeSet<Object>();
 		}

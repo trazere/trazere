@@ -59,30 +59,6 @@ implements Closure<T, X>, Releasable<RuntimeException>, Describable {
 	}
 	
 	/**
-	 * Build a closure evaluating to the result of the given factory.
-	 * 
-	 * @param <T> Type of the value.
-	 * @param <X> Type of the exceptions.
-	 * @param factory The factory which builds the value.
-	 * @return The closure.
-	 */
-	public static <T, X extends Exception> ResetableClosure<T, X> build(final Factory<? extends T, ? extends X> factory) {
-		return new ResetableClosure<T, X>() {
-			@Override
-			protected T compute()
-			throws X {
-				return factory.build();
-			}
-			
-			@Override
-			public void fillDescription(final Description description) {
-				super.fillDescription(description);
-				description.append("Factory", factory);
-			}
-		};
-	}
-	
-	/**
 	 * Build a closure evaluating to the result of the given function.
 	 * 
 	 * @param <T> Type of the value.
@@ -101,7 +77,7 @@ implements Closure<T, X>, Releasable<RuntimeException>, Describable {
 			@Override
 			public void fillDescription(final Description description) {
 				super.fillDescription(description);
-				description.append("Factory", function);
+				description.append("Function", function);
 			}
 		};
 	}
