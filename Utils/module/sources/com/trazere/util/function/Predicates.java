@@ -125,7 +125,7 @@ public class Predicates {
 	}
 	
 	/**
-	 * Builds a predicate corresponding to the composition of the given predicate and function (f . g).
+	 * Builds a predicate corresponding to the composition of the given predicate and function (g . f).
 	 * 
 	 * @param <T1> Type of the argument values of the (outer) predicate.
 	 * @param <T2> Type of the argument values of the (inner) function.
