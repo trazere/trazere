@@ -16,6 +16,7 @@
 package com.trazere.util.type;
 
 import com.trazere.util.function.Function1;
+import com.trazere.util.function.Functions;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.LangUtils;
 import com.trazere.util.text.Describable;
@@ -52,7 +53,7 @@ implements Describable {
 	 */
 	public interface Matcher<T, R, X extends Exception> {
 		/**
-		 * Match the given <code>None</code> instance.
+		 * Matches the given <code>None</code> instance.
 		 * 
 		 * @param none The instance.
 		 * @return The result of the function evaluation.
@@ -62,7 +63,7 @@ implements Describable {
 		throws X;
 		
 		/**
-		 * Match the given <code>Some</code> instance.
+		 * Matches the given <code>Some</code> instance.
 		 * 
 		 * @param some The instance.
 		 * @return The result of the function evaluation.
@@ -102,10 +103,14 @@ implements Describable {
 			return matcher.none(this);
 		}
 		
-		@SuppressWarnings("unchecked")
 		@Override
 		public <R, X extends Exception> Maybe<R> map(final Function1<? super T, ? extends R, X> function) {
-			return (Maybe<R>) this;
+			return none();
+		}
+		
+		@Override
+		public <R, X extends Exception> Maybe<R> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, X> function) {
+			return none();
 		}
 		
 		@Override
@@ -138,7 +143,7 @@ implements Describable {
 	public static final class Some<T>
 	extends Maybe<T> {
 		/**
-		 * Build a new instance wrapping the given value.
+		 * Instantiates a new instance wrapping the given value.
 		 * 
 		 * @param value The value. May be <code>null</code>.
 		 */
@@ -165,7 +170,7 @@ implements Describable {
 		private final T _value;
 		
 		/**
-		 * Get the value wrapped in the receiver instance.
+		 * Gets the value wrapped in the receiver instance.
 		 * 
 		 * @return The wrapped value. May be <code>null</code>.
 		 */
@@ -185,6 +190,12 @@ implements Describable {
 			assert null != function;
 			
 			return Maybe.<R>some(function.evaluate(_value));
+		}
+		
+		@Override
+		public <R, X extends Exception> Maybe<R> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, X> function)
+		throws X {
+			return function.evaluate(_value).map(Functions.<R, RuntimeException>identity());
 		}
 		
 		@Override
@@ -212,7 +223,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Build an instance using the <code>None</code> constructor.
+	 * Builds an instance using the <code>None</code> constructor.
 	 * 
 	 * @param <Value> Type of the value.
 	 * @return The built instance.
@@ -225,10 +236,10 @@ implements Describable {
 	private static final None<?> _NONE = new None<Object>();
 	
 	/**
-	 * Build an instance using the <code>Some</code> constructor wrapping the given value.
+	 * Builds an instance using the <code>Some</code> constructor wrapping the given value.
 	 * 
 	 * @param <Value> Type of the value.
-	 * @param value Value to wrap. May be <code>null</code>.
+	 * @param value The value to wrap. May be <code>null</code>.
 	 * @return The built instance.
 	 */
 	public static <Value> Some<Value> some(final Value value) {
@@ -236,7 +247,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Build a function which builds {@link Maybe.Some} instances.
+	 * Builds a function which builds {@link Maybe.Some} instances.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param <X> Type of the exceptions.
@@ -254,7 +265,7 @@ implements Describable {
 	};
 	
 	/**
-	 * Wrap the given value into an instance.
+	 * Wraps the given value into an instance.
 	 * <p>
 	 * This method wraps <code>null</code> values using the <code>None</code> constructor and non <code>null</code> values using the <code>Some</code>
 	 * constructor.
@@ -262,7 +273,7 @@ implements Describable {
 	 * This method aims to simplify the interoperability with legacy Java code.
 	 * 
 	 * @param <T> Type of the value.
-	 * @param value Value to wrap. May be <code>null</code>.
+	 * @param value The value to wrap. May be <code>null</code>.
 	 * @return The instance.
 	 */
 	public static <T> Maybe<T> fromValue(final T value) {
@@ -274,7 +285,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Build a function which wraps values to instances.
+	 * Builds a function which wraps values to instances.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param <X> Type of the exceptions.
@@ -293,7 +304,7 @@ implements Describable {
 	};
 	
 	/**
-	 * Unwrap the value contained in an instance.
+	 * Unwraps the value contained in an instance.
 	 * <p>
 	 * This method returns <code>null</code> for the <code>None</code> instances and the wrapped value for the <code>Some</code> instances.
 	 * <p>
@@ -310,7 +321,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Build a function which unwraps values from instances.
+	 * Builds a function which unwraps values from instances.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param <X> Type of the exceptions.
@@ -329,14 +340,14 @@ implements Describable {
 	};
 	
 	/**
-	 * Get the constructor of the receiver instance.
+	 * Gets the constructor of the receiver instance.
 	 * 
 	 * @return The constructor.
 	 */
 	public abstract Constructor getConstructor();
 	
 	/**
-	 * Test whether the receiver instance has been built using the {@link None} constructor.
+	 * Tests whether the receiver instance has been built using the {@link None} constructor.
 	 * 
 	 * @return <code>true</code> when the instance has been built with the <code>None</code> constructor, <code>false</code> otherwise.
 	 */
@@ -345,9 +356,9 @@ implements Describable {
 	}
 	
 	/**
-	 * Cast the receiver instance as a {@link None} instance.
+	 * Get a view of the receiver instance as a {@link None} instance.
 	 * 
-	 * @return The instance.
+	 * @return The view.
 	 * @throws InvalidConstructorException when the receiver instance has not been built with the <code>None</code> constructor.
 	 */
 	public None<T> asNone()
@@ -356,7 +367,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Test whether the receiver instance has been built using the <code>Some</code> constructor.
+	 * Tests whether the receiver instance has been built using the <code>Some</code> constructor.
 	 * 
 	 * @return <code>true</code> when the instance has been built with the <code>Some</code> constructor, <code>false</code> otherwise.
 	 */
@@ -365,9 +376,9 @@ implements Describable {
 	}
 	
 	/**
-	 * Cast the receiver instance as a {@link Some} instance.
+	 * Get a view of the receiver instance as a {@link Some} instance.
 	 * 
-	 * @return The instance.
+	 * @return The view.
 	 * @throws InvalidConstructorException when the receiver instance has not been built with the <code>Some</code> constructor.
 	 */
 	public Some<T> asSome()
@@ -376,7 +387,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Match the receiver instance according to the given matching function.
+	 * Matches the receiver instance according to the given matching function.
 	 * <p>
 	 * This method implements some kind of basic pattern matching.
 	 * 
@@ -390,7 +401,7 @@ implements Describable {
 	throws X;
 	
 	/**
-	 * Map the value wrapped by the receiver instance.
+	 * Maps the value wrapped by the receiver instance.
 	 * 
 	 * @param <R> Type of the mapped value.
 	 * @param <X> Type of the exceptions.
@@ -399,6 +410,18 @@ implements Describable {
 	 * @throws X When the mapping fails.
 	 */
 	public abstract <R, X extends Exception> Maybe<R> map(final Function1<? super T, ? extends R, X> function)
+	throws X;
+	
+	/**
+	 * Filters and maps the value wrapped by the receiver instance.
+	 * 
+	 * @param <R> Type of the mapped value.
+	 * @param <X> Type of the exceptions.
+	 * @param function The mapping function.
+	 * @return An instance containing the mapped value.
+	 * @throws X When the mapping fails.
+	 */
+	public abstract <R, X extends Exception> Maybe<R> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, X> function)
 	throws X;
 	
 	@Override
