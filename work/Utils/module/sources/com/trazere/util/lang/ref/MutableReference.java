@@ -22,8 +22,6 @@ import com.trazere.util.text.Describable;
 import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
 import com.trazere.util.type.Maybe;
-import com.trazere.util.type.Maybe.None;
-import com.trazere.util.type.Maybe.Some;
 
 /**
  * The {@link MutableReference} class represents mutable refererences.
@@ -32,29 +30,29 @@ import com.trazere.util.type.Maybe.Some;
  */
 public class MutableReference<T>
 implements Reference<T>, Releasable<RuntimeException>, Describable {
-	/** Value. */
+	/** The value. */
 	protected Maybe<T> _value;
 	
 	/**
-	 * Instantiate an unset reference.
+	 * Instantiates an unset reference.
 	 */
 	public MutableReference() {
 		this(Maybe.<T>none());
 	}
 	
 	/**
-	 * Instantiate a reference set with the given value.
+	 * Instantiates a reference set to the given value.
 	 * 
-	 * @param value Value to set. May be <code>null</code>.
+	 * @param value The value. May be <code>null</code>.
 	 */
 	public MutableReference(final T value) {
 		this(Maybe.some(value));
 	}
 	
 	/**
-	 * Instantiate a reference with the given value.
+	 * Instantiates a reference set to the given value.
 	 * 
-	 * @param value Initial value.
+	 * @param value The value.
 	 */
 	public MutableReference(final Maybe<T> value) {
 		assert null != value;
@@ -64,7 +62,7 @@ implements Reference<T>, Releasable<RuntimeException>, Describable {
 	}
 	
 	/**
-	 * Test whether the receiver reference is set.
+	 * Tests whether the receiver reference is set.
 	 * 
 	 * @return <code>true</code> when the reference is set, <code>false</code> otherwise.
 	 */
@@ -73,14 +71,16 @@ implements Reference<T>, Releasable<RuntimeException>, Describable {
 	}
 	
 	/**
-	 * Set the receiver reference to the given value.
+	 * Sets the receiver reference to the given value.
 	 * <p>
 	 * The reference must not be set.
 	 * 
-	 * @param value Value to set. May be <code>null</code>.
-	 * @throws ReferenceAlreadySetException When the reference has already been set.
+	 * @param <V> Type of the value.
+	 * @param value The value. May be <code>null</code>.
+	 * @return The given value. May be <code>null</code>.
+	 * @throws ReferenceAlreadySetException When the reference was already set.
 	 */
-	public void set(final T value)
+	public <V extends T> V set(final V value)
 	throws ReferenceAlreadySetException {
 		// Check that the reference is not set.
 		if (_value.isSome()) {
@@ -88,32 +88,35 @@ implements Reference<T>, Releasable<RuntimeException>, Describable {
 		}
 		
 		// Set the value.
-		_value = Maybe.some(value);
+		_value = Maybe.<T>some(value);
+		
+		return value;
 	}
 	
 	/**
-	 * Set or reset the receiver reference according to the given value.
+	 * Sets the receiver reference according to the given value.
 	 * <p>
 	 * The reference must not be set when a value is given.
 	 * 
-	 * @param value Value to set. May be <code>null</code>.
+	 * @param <V> Type of the value.
+	 * @param value The value.
+	 * @return The given value.
 	 * @throws ReferenceAlreadySetException When the reference has already been set.
 	 */
-	public void set(final Maybe<T> value)
+	public <V extends T> Maybe<V> set(final Maybe<V> value)
 	throws ReferenceAlreadySetException {
 		assert null != value;
 		
-		// Check that the reference is not set.
-		if (value.isSome() && _value.isSome()) {
-			throw new ReferenceAlreadySetException("Reference already set to " + _value.asSome().getValue());
+		// Set.
+		if (value.isSome()) {
+			set(value.asSome().getValue());
 		}
 		
-		// Update the value.
-		_value = value;
+		return value;
 	}
 	
 	/**
-	 * Reset the receiver reference.
+	 * Resets the receiver reference.
 	 * 
 	 * @throws ReferenceNotSetException When the reference has not been set.
 	 */
@@ -122,24 +125,30 @@ implements Reference<T>, Releasable<RuntimeException>, Describable {
 	}
 	
 	/**
-	 * Update the receiver reference to the given value.
+	 * Updates the receiver reference to the given value.
 	 * <p>
 	 * The reference may already be set.
 	 * 
-	 * @param value Value to set. May be <code>null</code>.
+	 * @param <V> Type of the value.
+	 * @param value The value. May be <code>null</code>.
+	 * @return The given value. May be <code>null</code>.
 	 */
-	public void update(final T value) {
-		_value = Maybe.some(value);
+	public <V extends T> V update(final V value) {
+		_value = Maybe.<T>some(value);
+		
+		return value;
 	}
 	
 	/**
-	 * Set or reset the receiver reference according to the given value.
+	 * Updates or resets the receiver reference according to the given value.
 	 * <p>
 	 * The reference may already be set.
 	 * 
-	 * @param value Value to set.
+	 * @param <V> Type of the value.
+	 * @param value The value.
+	 * @return The given value.
 	 */
-	public void update(final Maybe<? extends T> value) {
+	public <V extends T> Maybe<V> update(final Maybe<V> value) {
 		assert null != value;
 		
 		// Update.
@@ -148,16 +157,10 @@ implements Reference<T>, Releasable<RuntimeException>, Describable {
 		} else {
 			reset();
 		}
+		
+		return value;
 	}
 	
-	/**
-	 * Get the value set in the receiver reference.
-	 * <p>
-	 * The reference must be set.
-	 * 
-	 * @return The set value.
-	 * @throws ReferenceNotSetException When the reference has not been set.
-	 */
 	public T get()
 	throws ReferenceNotSetException {
 		if (_value.isSome()) {
@@ -167,11 +170,6 @@ implements Reference<T>, Releasable<RuntimeException>, Describable {
 		}
 	}
 	
-	/**
-	 * Get a view of the value set in the receiver reference as an instance of {@link Maybe}.
-	 * 
-	 * @return The set value wrapped in {@link Some}, or {@link None} when the reference has not been set.
-	 */
 	public Maybe<T> asMaybe() {
 		return _value;
 	}
@@ -207,8 +205,6 @@ implements Reference<T>, Releasable<RuntimeException>, Describable {
 	public void fillDescription(final Description description) {
 		if (_value.isSome()) {
 			description.append("Value", _value.asSome().getValue());
-		} else {
-			description.append("Empty");
 		}
 	}
 }
