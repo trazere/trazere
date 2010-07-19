@@ -16,7 +16,10 @@
 package com.trazere.parser.core;
 
 import com.trazere.parser.Parser;
+import com.trazere.parser.ParserException;
 import com.trazere.util.collection.CollectionUtils;
+import com.trazere.util.function.Function1;
+import com.trazere.util.type.Either;
 import com.trazere.util.type.Tuple2;
 import com.trazere.util.type.Tuple3;
 import com.trazere.util.type.Tuple4;
@@ -43,6 +46,18 @@ public class CoreParsers {
 			@Override
 			protected Result combine(final SubResult subResult1) {
 				return result;
+			}
+		};
+	}
+	
+	public static <Token, SubResult, Result> Parser<Token, Result> map(final Parser<Token, ? extends SubResult> subParser, final Function1<? super SubResult, ? extends Result, ? extends ParserException> function, final String description) {
+		assert null != function;
+		
+		return new Combine1Parser<Token, SubResult, Result>(subParser, description) {
+			@Override
+			protected Result combine(final SubResult subResult)
+			throws ParserException {
+				return function.evaluate(subResult);
 			}
 		};
 	}
@@ -118,18 +133,6 @@ public class CoreParsers {
 	
 	public static <Token, Result> Parser<Token, List<Result>> intersperseN(final Parser<Token, ? extends Result> valueParser, final Parser<Token, ?> delimiterParser, final String description) {
 		return new IntersperseNParser<Token, Result>(valueParser, delimiterParser, description);
-	}
-	
-	public static <Token, Result> ChoiceParser<Token, Result> choice(final Parser<Token, ? extends Result> subParser1, final Parser<Token, ? extends Result> subParser2, final String description) {
-		return choice(CollectionUtils.<Parser<Token, ? extends Result>>list(subParser1, subParser2), description);
-	}
-	
-	public static <Token, Result> ChoiceParser<Token, Result> choice(final Parser<Token, ? extends Result> subParser1, final Parser<Token, ? extends Result> subParser2, final Parser<Token, ? extends Result> subParser3, final String description) {
-		return choice(CollectionUtils.<Parser<Token, ? extends Result>>list(subParser1, subParser2, subParser3), description);
-	}
-	
-	public static <Token, Result> ChoiceParser<Token, Result> choice(final List<? extends Parser<Token, ? extends Result>> subParsers, final String description) {
-		return new ChoiceParser<Token, Result>(subParsers, description);
 	}
 	
 	public static <Token, SubResult1, SubResult2> Parser<Token, SubResult1> first(final Parser<Token, ? extends SubResult1> subParser1, final Parser<Token, ? extends SubResult2> subParser2, final String description) {
@@ -256,6 +259,27 @@ public class CoreParsers {
 				return subResult5;
 			}
 		};
+	}
+	
+	public static <Token, Result> ChoiceParser<Token, Result> choice(final Parser<Token, ? extends Result> subParser1, final Parser<Token, ? extends Result> subParser2, final String description) {
+		return choice(CollectionUtils.<Parser<Token, ? extends Result>>list(subParser1, subParser2), description);
+	}
+	
+	public static <Token, Result> ChoiceParser<Token, Result> choice(final Parser<Token, ? extends Result> subParser1, final Parser<Token, ? extends Result> subParser2, final Parser<Token, ? extends Result> subParser3, final String description) {
+		return choice(CollectionUtils.<Parser<Token, ? extends Result>>list(subParser1, subParser2, subParser3), description);
+	}
+	
+	public static <Token, Result> ChoiceParser<Token, Result> choice(final List<? extends Parser<Token, ? extends Result>> subParsers, final String description) {
+		return new ChoiceParser<Token, Result>(subParsers, description);
+	}
+	
+	public static <Token, R1, R2> Parser<Token, Either<R1, R2>> either(final Parser<Token, ? extends R1> leftParser, final Parser<Token, ? extends R2> rightParser, final String description) {
+		assert null != leftParser;
+		assert null != rightParser;
+		
+		final Parser<Token, Either<R1, R2>> leftParser_ = map(leftParser, Either.<R1, R2, ParserException>leftFunction(), null);
+		final Parser<Token, Either<R1, R2>> rightParser_ = map(rightParser, Either.<R1, R2, ParserException>rightFunction(), null);
+		return CoreParsers.choice(leftParser_, rightParser_, description);
 	}
 	
 	private CoreParsers() {
