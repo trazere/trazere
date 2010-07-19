@@ -28,92 +28,100 @@ import java.util.List;
 public class MutableObservableReference<T>
 extends MutableReference<T>
 implements ObservableReference<T> {
-	/** Listeners of the reference. */
+	/** The listeners of the reference. */
 	protected final List<ReferenceListener<? super T>> _listeners = new ArrayList<ReferenceListener<? super T>>();
 	
 	/**
-	 * Instantiate an unset reference.
+	 * Instantiates an unset reference.
 	 */
 	public MutableObservableReference() {
 		super();
 	}
 	
 	/**
-	 * Instantiate a reference set with the given value.
+	 * Instantiates a reference set to the given value.
 	 * 
-	 * @param value Value to set. May be <code>null</code>.
+	 * @param value The value. May be <code>null</code>.
 	 */
 	public MutableObservableReference(final T value) {
 		super(value);
 	}
 	
 	/**
-	 * Instantiate a reference with the given value.
+	 * Instantiates a reference set to the given value.
 	 * 
-	 * @param value Initial value.
+	 * @param value The value.
 	 */
 	public MutableObservableReference(final Maybe<T> value) {
 		super(value);
 	}
 	
 	@Override
-	public void set(final T value)
+	public <V extends T> V set(final V value)
 	throws ReferenceAlreadySetException {
 		// Set.
-		super.set(value);
+		final V result = super.set(value);
 		
 		// Notify.
 		if (!_listeners.isEmpty()) {
 			notifyUpdated();
 		}
+		
+		return result;
 	}
 	
 	@Override
-	public void set(final Maybe<T> value)
+	public <V extends T> Maybe<V> set(final Maybe<V> value)
 	throws ReferenceAlreadySetException {
 		// Set.
-		super.set(value);
+		final Maybe<V> result = super.set(value);
 		
 		// Notify.
 		if (!_listeners.isEmpty() && value.isSome()) {
 			notifyUpdated();
 		}
+		
+		return result;
 	}
 	
 	@Override
 	public void reset() {
 		// Reset.
-		final Maybe<T> oldValue = _value;
+		final Maybe<T> currentValue = _value;
 		super.reset();
 		
 		// Notify.
-		if (!_listeners.isEmpty() && oldValue.isSome()) {
+		if (!_listeners.isEmpty() && currentValue.isSome()) {
 			notifyUpdated();
 		}
 	}
 	
 	@Override
-	public void update(final T value) {
+	public <V extends T> V update(final V value) {
 		// Update.
-		final Maybe<T> oldValue = _value;
-		super.update(value);
+		final Maybe<T> currentValue = _value;
+		final V result = super.update(value);
 		
 		// Notify.
-		if (!_listeners.isEmpty() && (oldValue.isNone() || !LangUtils.equals(oldValue.asSome().getValue(), value))) {
+		if (!_listeners.isEmpty() && (currentValue.isNone() || !LangUtils.equals(currentValue.asSome().getValue(), value))) {
 			notifyUpdated();
 		}
+		
+		return result;
 	}
 	
 	@Override
-	public void update(final Maybe<? extends T> value) {
+	public <V extends T> Maybe<V> update(final Maybe<V> value) {
 		// Update.
-		final Maybe<T> oldValue = _value;
-		super.update(value);
+		final Maybe<T> currentValue = _value;
+		final Maybe<V> result = super.update(value);
 		
 		// Notify.
-		if (!_listeners.isEmpty() && !oldValue.equals(value)) {
+		if (!_listeners.isEmpty() && !currentValue.equals(value)) {
 			notifyUpdated();
 		}
+		
+		return result;
 	}
 	
 	public void addListener(final ReferenceListener<? super T> observer) {
