@@ -29,6 +29,24 @@ import java.util.List;
 public class CoreParsers {
 	private static final EOFParser<?, ?> _EOF = eof("end of file");
 	
+	public static <Token, Result> Parser<Token, Result> identity(final Parser<Token, Result> parser, final String description) {
+		return new Combine1Parser<Token, Result, Result>(parser, description) {
+			@Override
+			protected Result combine(final Result result) {
+				return result;
+			}
+		};
+	}
+	
+	public static <Token, SubResult, Result> Parser<Token, Result> lift(final Parser<Token, ? extends SubResult> subParser, final Result result, final String description) {
+		return new Combine1Parser<Token, SubResult, Result>(subParser, description) {
+			@Override
+			protected Result combine(final SubResult subResult1) {
+				return result;
+			}
+		};
+	}
+	
 	@SuppressWarnings("unchecked")
 	public static <Token, Result> EOFParser<Token, Result> eof() {
 		return (EOFParser<Token, Result>) _EOF;
@@ -112,15 +130,6 @@ public class CoreParsers {
 	
 	public static <Token, Result> ChoiceParser<Token, Result> choice(final List<? extends Parser<Token, ? extends Result>> subParsers, final String description) {
 		return new ChoiceParser<Token, Result>(subParsers, description);
-	}
-	
-	public static <Token, SubResult, Result> Parser<Token, Result> lift(final Parser<Token, ? extends SubResult> subParser, final Result result, final String description) {
-		return new Combine1Parser<Token, SubResult, Result>(subParser, description) {
-			@Override
-			protected Result combine(final SubResult subResult1) {
-				return result;
-			}
-		};
 	}
 	
 	public static <Token, SubResult1, SubResult2> Parser<Token, SubResult1> first(final Parser<Token, ? extends SubResult1> subParser1, final Parser<Token, ? extends SubResult2> subParser2, final String description) {
