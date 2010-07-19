@@ -15,6 +15,7 @@
  */
 package com.trazere.util.record;
 
+import com.trazere.util.type.Maybe;
 import java.util.Map;
 import java.util.Set;
 
@@ -60,6 +61,17 @@ public interface RecordSignature<K, V> {
 	 * @throws RecordException When the field signature cannot be got.
 	 */
 	public FieldSignature<K, ? extends V> get(final K key)
+	throws RecordException;
+	
+	/**
+	 * Get the signature of the field identified by the given key of the receiver record signature.
+	 * 
+	 * @param key Key of the field.
+	 * @return The signature of the field.
+	 * @throws MissingFieldException When the field identified by the given key is not signed.
+	 * @throws RecordException When the field signature cannot be got.
+	 */
+	public Maybe<FieldSignature<K, ? extends V>> getMaybe(final K key)
 	throws RecordException;
 	
 	/**

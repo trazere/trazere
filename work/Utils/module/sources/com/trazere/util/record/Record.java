@@ -15,6 +15,7 @@
  */
 package com.trazere.util.record;
 
+import com.trazere.util.type.Maybe;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
@@ -76,6 +77,16 @@ public interface Record<K, V> {
 	throws RecordException;
 	
 	/**
+	 * Get the value of the field of the receiver record identified by the given key.
+	 * 
+	 * @param key Key of the field.
+	 * @return The value of the field.
+	 * @throws RecordException When the field cannot be got.
+	 */
+	public Maybe<V> getMaybe(final K key)
+	throws RecordException;
+	
+	/**
 	 * Get the value of the field of the receiver record identified by the given key according to the given type.
 	 * 
 	 * @param <T> Type of the value.
@@ -104,6 +115,19 @@ public interface Record<K, V> {
 	throws RecordException;
 	
 	/**
+	 * Get the value of the field of the receiver record identified by the given key according to the given type.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param key Key of the field.
+	 * @param type Type of the value.
+	 * @return The value of the field.
+	 * @throws IncompatibleFieldException When the value of the field is not compatible with the given type.
+	 * @throws RecordException When the field cannot be got.
+	 */
+	public <T extends V> Maybe<T> getTypedMaybe(final K key, final Class<T> type)
+	throws RecordException;
+	
+	/**
 	 * Get the value of the field of the receiver record identified by the given signature.
 	 * 
 	 * @param <T> Type of the value.
@@ -127,6 +151,18 @@ public interface Record<K, V> {
 	 * @throws RecordException When the field cannot be got.
 	 */
 	public <T extends V> T getTyped(final FieldSignature<? extends K, T> signature, final T defaultValue)
+	throws RecordException;
+	
+	/**
+	 * Get the value of the field of the receiver record identified by the given signature.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param signature Signature of the field.
+	 * @return The value of the field.
+	 * @throws IncompatibleFieldException When the value of the field is not compatible with the given type.
+	 * @throws RecordException When the field cannot be got.
+	 */
+	public <T extends V> Maybe<T> getTypedMaybe(final FieldSignature<? extends K, T> signature)
 	throws RecordException;
 	
 	/**

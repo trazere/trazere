@@ -15,10 +15,12 @@
  */
 package com.trazere.util.record;
 
+import com.trazere.util.collection.CollectionUtils;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
+import com.trazere.util.type.Maybe;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -127,6 +129,13 @@ implements RecordSignature<K, V>, Describable {
 		} else {
 			throw new MissingFieldException("Missing field \"" + key + "\" in record signature " + this);
 		}
+	}
+	
+	public Maybe<FieldSignature<K, ? extends V>> getMaybe(final K key)
+	throws RecordException {
+		assert null != key;
+		
+		return CollectionUtils.get(_fields, key);
 	}
 	
 	public Map<K, FieldSignature<K, ? extends V>> asMap() {
