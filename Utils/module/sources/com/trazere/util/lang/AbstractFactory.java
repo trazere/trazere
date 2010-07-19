@@ -10,9 +10,8 @@ public abstract class AbstractFactory<T, X extends Exception>
 implements Factory<T, X> {
 	// Function.
 	
-	// HACK: moved in the sub classes to work aroud a bug of javac (http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6199662)
-	//	public T evaluate()
-	//	throws X {
-	//		return build();
-	//	}
+	public T evaluate()
+	throws X {
+		return build();
+	}
 }
