@@ -17,6 +17,8 @@ package com.trazere.util.function;
 
 import com.trazere.util.collection.CollectionUtils;
 import com.trazere.util.collection.Multimap;
+import com.trazere.util.record.Record;
+import com.trazere.util.record.RecordException;
 import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Tuple2;
 import com.trazere.util.type.Tuple3;
@@ -376,8 +378,8 @@ public class Functions {
 	 * <p>
 	 * The built function evaluates to the values associated to the keys in the map and to <code>null</code> for the other keys.
 	 * 
-	 * @param <K> Type of the keys of the map (the argument values).
-	 * @param <V> Type of the values of the map (the result values).
+	 * @param <K> Type of the argument (the keys of the map).
+	 * @param <V> Type of the results (the values values).
 	 * @param <X> Type of the exceptions.
 	 * @param map The map.
 	 * @return The built function.
@@ -397,11 +399,11 @@ public class Functions {
 	 * <p>
 	 * The built function evaluates to the values associated to the keys in the map and to the default value for the other keys.
 	 * 
-	 * @param <K> Type of the keys of the map (the argument values).
-	 * @param <V> Type of the values of the map (the result values).
+	 * @param <K> Type of the argument (the keys of the map).
+	 * @param <V> Type of the results (the values values).
 	 * @param <X> Type of the exceptions.
 	 * @param map The map.
-	 * @param defaultValue The default value.
+	 * @param defaultValue The default value. May be <code>null</code>.
 	 * @return The built function.
 	 */
 	public static <K, V, X extends Exception> Function1<K, V, X> map(final Map<? super K, ? extends V> map, final V defaultValue) {
@@ -420,17 +422,17 @@ public class Functions {
 	 * The built function evaluates to the values associated to the keys in the map wrapped into a {@link Maybe maybe} instance to reflect the domain of the
 	 * map.
 	 * 
-	 * @param <T> Type of the keys of the map (the argument values).
-	 * @param <R> Type of the values of the map (the result values).
+	 * @param <K> Type of the argument (the keys of the map).
+	 * @param <V> Type of the results (the values values).
 	 * @param <X> Type of the exceptions.
 	 * @param map The map.
 	 * @return The built function.
 	 */
-	public static <T, R, X extends Exception> Function1<T, Maybe<R>, X> maybeMap(final Map<? super T, ? extends R> map) {
+	public static <K, V, X extends Exception> Function1<K, Maybe<V>, X> maybeMap(final Map<? super K, ? extends V> map) {
 		assert null != map;
 		
-		return new Function1<T, Maybe<R>, X>() {
-			public Maybe<R> evaluate(final T key) {
+		return new Function1<K, Maybe<V>, X>() {
+			public Maybe<V> evaluate(final K key) {
 				return CollectionUtils.get(map, key);
 			}
 		};
@@ -439,8 +441,8 @@ public class Functions {
 	/**
 	 * Builds a function corresponding to the given multimap.
 	 * 
-	 * @param <K> Type of the keys (the argument values).
-	 * @param <C> Type of the collections of values (the result values).
+	 * @param <K> Type of the arguments (the keys of the multimap).
+	 * @param <C> Type of the results (the collections of the multimap).
 	 * @param <X> Type of the exceptions.
 	 * @param map The multimap.
 	 * @return The built function.
@@ -451,6 +453,50 @@ public class Functions {
 		return new Function1<K, C, X>() {
 			public C evaluate(final K key) {
 				return map.get(key);
+			}
+		};
+	}
+	
+	/**
+	 * Builds a function corresponding to the given record.
+	 * <p>
+	 * The built function evaluates to the values associated to the keys in the record and fails for the other keys.
+	 * 
+	 * @param <K> Type of the argument (the keys of the record).
+	 * @param <V> Type of the results (the values record).
+	 * @param record The record.
+	 * @return The built function.
+	 */
+	public static <K, V> Function1<K, V, RecordException> record(final Record<? super K, ? extends V> record) {
+		assert null != record;
+		
+		return new Function1<K, V, RecordException>() {
+			public V evaluate(final K key)
+			throws RecordException {
+				return record.get(key);
+			}
+		};
+	}
+	
+	/**
+	 * Builds a function corresponding to the given record.
+	 * <p>
+	 * The built function evaluates to the values associated to the keys in the record and to the default value for the other keys.
+	 * 
+	 * @param <K> Type of the argument (the keys of the record).
+	 * @param <V> Type of the results (the values record).
+	 * @param <V2> Type of the values of the record.
+	 * @param record The record.
+	 * @param defaultValue The default value. May be <code>null</code>.
+	 * @return The built function.
+	 */
+	public static <K, V, V2 extends V> Function1<K, V, RecordException> record(final Record<? super K, V2> record, final V2 defaultValue) {
+		assert null != record;
+		
+		return new Function1<K, V, RecordException>() {
+			public V evaluate(final K key)
+			throws RecordException {
+				return record.get(key, defaultValue);
 			}
 		};
 	}
