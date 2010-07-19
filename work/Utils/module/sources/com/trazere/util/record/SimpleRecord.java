@@ -20,6 +20,7 @@ import com.trazere.util.lang.HashCode;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
+import com.trazere.util.type.Maybe;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -170,6 +171,14 @@ implements Record<K, V>, Describable {
 		return _fields.containsKey(key) ? _fields.get(key) : defaultValue;
 	}
 	
+	public Maybe<V> getMaybe(final K key)
+	throws RecordException {
+		assert null != key;
+		
+		// Get.
+		return CollectionUtils.get(_fields, key);
+	}
+	
 	public <T extends V> T getTyped(final K key, final Class<T> type)
 	throws RecordException {
 		assert null != key;
@@ -210,6 +219,23 @@ implements Record<K, V>, Describable {
 		}
 	}
 	
+	public <T extends V> Maybe<T> getTypedMaybe(final K key, final Class<T> type)
+	throws RecordException {
+		// Get.
+		if (_fields.containsKey(key)) {
+			final V value = _fields.get(key);
+			if (null == value) {
+				return null;
+			} else if (type.isInstance(value)) {
+				return Maybe.some(type.cast(value));
+			} else {
+				throw new IncompatibleFieldException("Field \"" + key + "\" is not compatible with type \"" + type + "\" in record " + this);
+			}
+		} else {
+			return Maybe.none();
+		}
+	}
+	
 	public <T extends V> T getTyped(final FieldSignature<? extends K, T> signature)
 	throws RecordException {
 		assert null != signature;
@@ -230,6 +256,19 @@ implements Record<K, V>, Describable {
 		// Get.
 		final T value = getTyped(signature.getKey(), signature.getType(), defaultValue);
 		if (null != value || signature.isNullable()) {
+			return value;
+		} else {
+			throw new NullFieldException("Field \"" + signature.getKey() + "\" has null value in record " + this);
+		}
+	}
+	
+	public <T extends V> Maybe<T> getTypedMaybe(final FieldSignature<? extends K, T> signature)
+	throws RecordException {
+		assert null != signature;
+		
+		// Get.
+		final Maybe<T> value = getTypedMaybe(signature.getKey(), signature.getType());
+		if (value.isNone() || null != value.asSome().getValue() || signature.isNullable()) {
 			return value;
 		} else {
 			throw new NullFieldException("Field \"" + signature.getKey() + "\" has null value in record " + this);
