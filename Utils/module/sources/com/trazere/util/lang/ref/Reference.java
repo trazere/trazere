@@ -26,14 +26,14 @@ import com.trazere.util.type.Maybe.Some;
  */
 public interface Reference<T> {
 	/**
-	 * Test whether the receiver reference is set.
+	 * Tests whether the receiver reference is set.
 	 * 
 	 * @return <code>true</code> when the reference is set, <code>false</code> otherwise.
 	 */
 	public boolean isSet();
 	
 	/**
-	 * Get the value set in the receiver reference.
+	 * Gets the value set in the receiver reference.
 	 * <p>
 	 * The reference must be set.
 	 * 
@@ -44,7 +44,7 @@ public interface Reference<T> {
 	throws ReferenceNotSetException;
 	
 	/**
-	 * Get a view of the value set in the receiver reference as an instance of {@link Maybe}.
+	 * Gets a view of the value set in the receiver reference as an instance of {@link Maybe}.
 	 * 
 	 * @return The set value wrapped in {@link Some}, or {@link None} when the reference has not been set.
 	 */

@@ -23,14 +23,14 @@ package com.trazere.util.lang.ref;
 public interface ObservableReference<T>
 extends Reference<T> {
 	/**
-	 * Add the given listener to the receiver reference.
+	 * Adds the given listener to the receiver reference.
 	 * 
 	 * @param listener The listener.
 	 */
 	public void addListener(final ReferenceListener<? super T> listener);
 	
 	/**
-	 * Remove the given listener from the receiver reference.
+	 * Removes the given listener from the receiver reference.
 	 * 
 	 * @param listener The listener.
 	 */

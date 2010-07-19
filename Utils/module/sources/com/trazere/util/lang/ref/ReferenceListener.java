@@ -25,7 +25,7 @@ import com.trazere.util.type.Maybe;
  */
 public interface ReferenceListener<T> {
 	/**
-	 * Notify the receiver listener that the value of the observed reference has changed.
+	 * Notifies the receiver listener that the value of the observed reference has changed.
 	 * 
 	 * @param value The new value.
 	 */
