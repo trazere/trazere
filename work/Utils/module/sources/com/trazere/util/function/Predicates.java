@@ -195,6 +195,24 @@ public class Predicates {
 	}
 	
 	/**
+	 * Builds a predicate which evaluates to <code>true</code> when the argument collection contains the given value.
+	 * 
+	 * @param <T> Type of the argument values.
+	 * @param <C> Type of the collections.
+	 * @param <X> Type of the exceptions.
+	 * @param value The value. May be <code>null</code>.
+	 * @return The built predicate.
+	 */
+	public static <T, C extends Collection<? super T>, X extends Exception> Predicate1<C, X> contains(final T value) {
+		return new Predicate1<C, X>() {
+			public boolean evaluate(final C collection)
+			throws X {
+				return collection.contains(value);
+			}
+		};
+	}
+	
+	/**
 	 * Builds a predicate which evaluates to <code>true</code> for empty strings.
 	 * 
 	 * @param <X> Type of the exceptions.
