@@ -19,24 +19,20 @@ import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.LangUtils;
 
 /**
- * The {@link Tuple2} class represents the 2-tuple (pair) data type which stores a sequence of 2 values.
+ * The {@link Tuple1} class represents the 1-tuple data type which stores a sequence of 1 values.
  * 
  * @param <T1> Type of the first value.
- * @param <T2> Type of the second value.
  */
-public class Tuple2<T1, T2>
-extends Tuple1<T1> {
+public class Tuple1<T1> {
 	/**
-	 * Build a tuple with the given values.
+	 * Build a tuple with the given value.
 	 * 
 	 * @param <T1> Type of the first value.
-	 * @param <T2> Type of the second value.
 	 * @param first First value. May be <code>null</code>.
-	 * @param second Second value. May be <code>null</code>.
 	 * @return The tuple.
 	 */
-	public static <T1, T2> Tuple2<T1, T2> build(final T1 first, final T2 second) {
-		return new Tuple2<T1, T2>(first, second);
+	public static <T1> Tuple1<T1> build(final T1 first) {
+		return new Tuple1<T1>(first);
 	}
 	
 	/**
@@ -45,51 +41,45 @@ extends Tuple1<T1> {
 	 * The comparison is performed by comparing the respective values of the tuples in sequence.
 	 * 
 	 * @param <T1> Type of the first values.
-	 * @param <T2> Type of the second values.
 	 * @param tuple1 First tuple.
 	 * @param tuple2 Second tuple.
 	 * @return The result of the comparison as defined by the {@link Comparable#compareTo(Object)} method.
 	 * @see Comparable#compareTo(Object)
 	 */
-	public static <T1 extends Comparable<T1>, T2 extends Comparable<T2>> int compare(final Tuple2<T1, T2> tuple1, final Tuple2<T1, T2> tuple2) {
+	public static <T1 extends Comparable<T1>> int compare(final Tuple1<T1> tuple1, final Tuple1<T1> tuple2) {
 		assert null != tuple1;
 		assert null != tuple2;
 		
 		// Compare.
-		final int comp1 = LangUtils.compare(tuple1._first, tuple2._first);
-		return 0 != comp1 ? comp1 : LangUtils.compare(tuple1._second, tuple2._second);
+		return LangUtils.compare(tuple1._first, tuple2._first);
 	}
 	
-	/** Second value. May be <code>null</code>. */
-	protected final T2 _second;
+	/** First value. May be <code>null</code>. */
+	protected final T1 _first;
 	
 	/**
 	 * Build a new instance with the given values.
 	 * 
 	 * @param first First value. May be <code>null</code>.
-	 * @param second Second value. May be <code>null</code>.
 	 */
-	public Tuple2(final T1 first, final T2 second) {
-		super(first);
-		
+	public Tuple1(final T1 first) {
 		// Initialization.
-		_second = second;
+		_first = first;
 	}
 	
 	/**
-	 * Get the second value of the receiver tuple.
+	 * Get the first value of the receiver tuple.
 	 * 
 	 * @return The value. May be <code>null</code>.
 	 */
-	public T2 getSecond() {
-		return _second;
+	public T1 getFirst() {
+		return _first;
 	}
 	
 	@Override
 	public int hashCode() {
 		final HashCode hashCode = new HashCode(this);
 		hashCode.append(_first);
-		hashCode.append(_second);
 		return hashCode.get();
 	}
 	
@@ -98,8 +88,8 @@ extends Tuple1<T1> {
 		if (this == object) {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
-			final Tuple2<?, ?> tuple = (Tuple2<?, ?>) object;
-			return LangUtils.equals(_first, tuple._first) && LangUtils.equals(_second, tuple._second);
+			final Tuple1<?> tuple = (Tuple1<?>) object;
+			return LangUtils.equals(_first, tuple._first);
 		} else {
 			return false;
 		}
@@ -107,6 +97,6 @@ extends Tuple1<T1> {
 	
 	@Override
 	public String toString() {
-		return "(" + _first + "," + _second + ")";
+		return "(" + _first + ")";
 	}
 }
