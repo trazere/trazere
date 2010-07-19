@@ -22,7 +22,7 @@ import java.util.Comparator;
  */
 public class LangUtils {
 	/**
-	 * Get the class the given object.
+	 * Gets the Java class the given object.
 	 * 
 	 * @param <T> Type of the object.
 	 * @param object The object.
@@ -36,14 +36,14 @@ public class LangUtils {
 	}
 	
 	/**
-	 * Cast the given object to any type.
+	 * Casts the given object to the given type.
 	 * <p>
 	 * This methods aims to work around various limitations of the Java type system where regular casts cannot be used. It performs no verifications whatsoever
 	 * and should be used as seldom as possible because it is inherently unsafe.
 	 * 
-	 * @param <R> Resulting type of the object.
-	 * @param object Object to cast.
-	 * @return The casted object.
+	 * @param <R> Target type.
+	 * @param object The object. May be <code>null</code>.
+	 * @return The casted object. May be <code>null</code>.
 	 */
 	@SuppressWarnings("unchecked")
 	public static <R> R cast(final Object object) {
@@ -51,15 +51,15 @@ public class LangUtils {
 	}
 	
 	/**
-	 * Cast the given object to some subtype.
+	 * Casts the given object to some subtype.
 	 * <p>
 	 * This methods aims to be called where regular downcasts would be used in order to track them in the code. It is a little safer than {@link #cast(Object)}
 	 * because the result type can statically be constrained by the argument type but should still be used as seldom as possible.
 	 * 
-	 * @param <T> Original type of the object.
-	 * @param <R> Resulting type of the object.
-	 * @param object Object to cast.
-	 * @return The casted object.
+	 * @param <T> Original type.
+	 * @param <R> Target type.
+	 * @param object The object. May be <code>null</code>.
+	 * @return The casted object. May be <code>null</code>.
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T, R extends T> R downcast(final T object) {
@@ -86,7 +86,7 @@ public class LangUtils {
 	};
 	
 	/**
-	 * Get the value of the given boolean wrapper.
+	 * Gets the value of the given boolean wrapper.
 	 * 
 	 * @param value The wrapper. May be <code>null</code>.
 	 * @param defaultValue The default value.
@@ -97,7 +97,7 @@ public class LangUtils {
 	}
 	
 	/**
-	 * Get the value of the given byte wrapper.
+	 * Gets the value of the given byte wrapper.
 	 * 
 	 * @param value The wrapper. May be <code>null</code>.
 	 * @param defaultValue The default value.
@@ -108,7 +108,7 @@ public class LangUtils {
 	}
 	
 	/**
-	 * Get the value of the given integer wrapper.
+	 * Gets the value of the given integer wrapper.
 	 * 
 	 * @param value The wrapper. May be <code>null</code>.
 	 * @param defaultValue The default value.
@@ -119,7 +119,7 @@ public class LangUtils {
 	}
 	
 	/**
-	 * Get the value of the given long wrapper.
+	 * Gets the value of the given long wrapper.
 	 * 
 	 * @param value The wrapper. May be <code>null</code>.
 	 * @param defaultValue The default value.
@@ -130,7 +130,7 @@ public class LangUtils {
 	}
 	
 	/**
-	 * Get the value of the given float wrapper.
+	 * Gets the value of the given float wrapper.
 	 * 
 	 * @param value The wrapper. May be <code>null</code>.
 	 * @param defaultValue The default value.
@@ -141,7 +141,7 @@ public class LangUtils {
 	}
 	
 	/**
-	 * Get the value of the given double wrapper.
+	 * Gets the value of the given double wrapper.
 	 * 
 	 * @param value The wrapper. May be <code>null</code>.
 	 * @param defaultValue The default value.
@@ -152,7 +152,7 @@ public class LangUtils {
 	}
 	
 	/**
-	 * Get the value of the given character wrapper.
+	 * Gets the value of the given character wrapper.
 	 * 
 	 * @param value The wrapper. May be <code>null</code>.
 	 * @param defaultValue The default value.
@@ -163,7 +163,7 @@ public class LangUtils {
 	}
 	
 	/**
-	 * Get the value of the given object.
+	 * Gets the value of the given object.
 	 * 
 	 * @param <T> Type of the value.
 	 * @param value The object. May be <code>null</code>.
@@ -175,13 +175,13 @@ public class LangUtils {
 	}
 	
 	/**
-	 * Test for equality of the given objects.
+	 * Tests for equality of the given values.
 	 * <p>
-	 * This method supports <code>null</code> values.
+	 * This method supports comparison of <code>null</code> values.
 	 * 
 	 * @param <T> Type of the values.
-	 * @param object1 First value to compare. May be <code>null</code>.
-	 * @param object2 Second value to compare. May be <code>null</code>.
+	 * @param object1 The first value. May be <code>null</code>.
+	 * @param object2 The second value. May be <code>null</code>.
 	 * @return <code>true</code> if the values are both <code>null</code> or both not <code>null</code> and equal.
 	 * @see Comparable#compareTo(Object)
 	 */
@@ -190,10 +190,10 @@ public class LangUtils {
 	}
 	
 	/**
-	 * Build a natural value comparator.
+	 * Builds a natural value comparator.
 	 * 
 	 * @param <T> Type of the value.
-	 * @return The build comparator.
+	 * @return The built comparator.
 	 */
 	public static <T extends Comparable<T>> Comparator<T> comparator() {
 		return new Comparator<T>() {
@@ -204,13 +204,13 @@ public class LangUtils {
 	}
 	
 	/**
-	 * Compare the given comparable objets.
+	 * Compares the given comparable values.
 	 * <p>
-	 * This method supports comparisons of <code>null</code> values. <code>null</code> values are considered as less than non <code>null</code> values.
+	 * This method supports comparison of <code>null</code> values. <code>null</code> values are considered as less than non <code>null</code> values.
 	 * 
 	 * @param <T> Type of the values.
-	 * @param object1 First value to compare. May be <code>null</code>.
-	 * @param object2 Second value to compare. May be <code>null</code>.
+	 * @param object1 The first value. May be <code>null</code>.
+	 * @param object2 The second value. May be <code>null</code>.
 	 * @return The result of the comparison as defined by the {@link Comparable#compareTo(Object)} method.
 	 * @see Comparable#compareTo(Object)
 	 */
@@ -223,9 +223,9 @@ public class LangUtils {
 	}
 	
 	/**
-	 * Compare the given values using the given comparator.
+	 * Compares the given values using the given comparator.
 	 * <p>
-	 * This method supports comparisons of <code>null</code> values. <code>null</code> values are considered as less than non <code>null</code> values.
+	 * This method supports comparison of <code>null</code> values. <code>null</code> values are considered as less than non <code>null</code> values.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param object1 The first value. May be <code>null</code>.
@@ -242,6 +242,36 @@ public class LangUtils {
 		} else {
 			return null == object2 ? 1 : comparator.compare(object1, object2);
 		}
+	}
+	
+	/**
+	 * Gets the least of the given values according to the given comparator.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param comparator The comparator.
+	 * @param value1 The first value.
+	 * @param value2 The second value.
+	 * @return The least value.
+	 */
+	public static <T> T min(final Comparator<? super T> comparator, final T value1, final T value2) {
+		assert null != comparator;
+		
+		return comparator.compare(value1, value2) <= 0 ? value1 : value2;
+	}
+	
+	/**
+	 * Gets the greatest of the given values according to the given comparator.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param comparator The comparator.
+	 * @param value1 The first value.
+	 * @param value2 The second value.
+	 * @return The greatest value.
+	 */
+	public static <T> T max(final Comparator<? super T> comparator, final T value1, final T value2) {
+		assert null != comparator;
+		
+		return comparator.compare(value1, value2) >= 0 ? value1 : value2;
 	}
 	
 	private LangUtils() {
