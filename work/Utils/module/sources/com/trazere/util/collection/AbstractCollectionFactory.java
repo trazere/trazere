@@ -13,9 +13,4 @@ public abstract class AbstractCollectionFactory<T, C extends Collection<? super 
 extends AbstractFactory<C, RuntimeException>
 implements CollectionFactory<T, C> {
 	// Nothing to do.
-	
-	// HACK: moved here from AbstractFactory to work aroud a bug of javac (http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6199662)
-	public C evaluate() {
-		return build();
-	}
 }
