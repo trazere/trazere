@@ -32,7 +32,7 @@ public class TextParsers {
 	}
 	
 	public static Parser<Character, Character> character(final char c) {
-		return character(c, "char \'" + c + "\'");
+		return character(c, "\'" + c + "\'");
 	}
 	
 	public static Parser<Character, Character> character(final CharPredicate<? extends ParserException> filter, final String description) {
@@ -52,7 +52,7 @@ public class TextParsers {
 	}
 	
 	public static Parser<Character, String> string(final String string) {
-		return string(string, "string \'" + string + "\'");
+		return string(string, "\'" + string + "\'");
 	}
 	
 	public static Parser<Character, String> string(final CharPredicate<? extends ParserException> filter, final boolean empty, final String description) {
