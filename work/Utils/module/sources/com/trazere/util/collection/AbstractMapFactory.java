@@ -14,9 +14,4 @@ public abstract class AbstractMapFactory<K, V, M extends Map<? super K, ? super 
 extends AbstractFactory<M, RuntimeException>
 implements MapFactory<K, V, M> {
 	// Nothing to do.
-	
-	// HACK: moved here from AbstractFactory to work aroud a bug of javac (http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6199662)
-	public M evaluate() {
-		return build();
-	}
 }

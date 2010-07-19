@@ -36,12 +36,6 @@ public class Factories {
 			public T build() {
 				return value;
 			}
-			
-			// HACK: moved here from AbstractFactory to work aroud a bug of javac (http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6199662)
-			public T evaluate()
-			throws X {
-				return build();
-			}
 		};
 	}
 	
@@ -60,12 +54,6 @@ public class Factories {
 			public T build()
 			throws X {
 				return function.evaluate();
-			}
-			
-			// HACK: moved here from AbstractFactory to work aroud a bug of javac (http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6199662)
-			public T evaluate()
-			throws X {
-				return build();
 			}
 		};
 	}
