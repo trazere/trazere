@@ -51,46 +51,46 @@ public class Functions {
 	};
 	
 	/**
-	 * Builds a function corresponding to the composition of the given functions (f . g).
+	 * Builds a function corresponding to the composition of the given functions (g . f).
 	 * 
 	 * @param <T1> Type of the argument values of the outer function.
 	 * @param <T2> Type of the results.
 	 * @param <X> Type of the exceptions.
-	 * @param f The outer function.
-	 * @param g The inner function.
+	 * @param g The outer function.
+	 * @param f The inner function.
 	 * @return The built function.
 	 */
-	public static <T1, T2, X extends Exception> Function0<T2, X> compose(final Function1<? super T1, ? extends T2, ? extends X> f, final Function0<? extends T1, ? extends X> g) {
-		assert null != f;
+	public static <T1, T2, X extends Exception> Function0<T2, X> compose(final Function1<? super T1, ? extends T2, ? extends X> g, final Function0<? extends T1, ? extends X> f) {
 		assert null != g;
+		assert null != f;
 		
 		return new Function0<T2, X>() {
 			public T2 evaluate()
 			throws X {
-				return f.evaluate(g.evaluate());
+				return g.evaluate(f.evaluate());
 			}
 		};
 	}
 	
 	/**
-	 * Builds a function corresponding to the composition of the given functions (f . g).
+	 * Builds a function corresponding to the composition of the given functions (g . f).
 	 * 
 	 * @param <T1> Type of the argument values of the inner function.
 	 * @param <T2> Type of the argument values of the outer function.
 	 * @param <T3> Type of the results.
 	 * @param <X> Type of the exceptions.
-	 * @param f The outer function.
-	 * @param g The inner function.
+	 * @param g The outer function.
+	 * @param f The inner function.
 	 * @return The built function.
 	 */
-	public static <T1, T2, T3, X extends Exception> Function1<T1, T3, X> compose(final Function1<? super T2, ? extends T3, ? extends X> f, final Function1<T1, ? extends T2, ? extends X> g) {
-		assert null != f;
+	public static <T1, T2, T3, X extends Exception> Function1<T1, T3, X> compose(final Function1<? super T2, ? extends T3, ? extends X> g, final Function1<T1, ? extends T2, ? extends X> f) {
 		assert null != g;
+		assert null != f;
 		
 		return new Function1<T1, T3, X>() {
 			public T3 evaluate(final T1 value)
 			throws X {
-				return f.evaluate(g.evaluate(value));
+				return g.evaluate(f.evaluate(value));
 			}
 		};
 	}
@@ -361,7 +361,7 @@ public class Functions {
 	 * @return The built function.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T, X extends Exception> Function1<T, String, X> toString() {
+	public static <T, X extends Exception> Function1<T, String, X> toString_() {
 		return (Function1<T, String, X>) _TO_STRING;
 	}
 	

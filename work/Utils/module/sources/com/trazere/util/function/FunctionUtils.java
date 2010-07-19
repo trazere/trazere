@@ -826,7 +826,7 @@ public class FunctionUtils {
 	 * @return The given result collection.
 	 * @throws X When some function evaluation fails.
 	 */
-	public static <T1, T2, C extends Collection<? super T2>, X extends Exception> C flatMap(final Function1<? super T1, ? extends Collection<T2>, X> function, final Collection<T1> values, final C results)
+	public static <T1, T2, C extends Collection<? super T2>, X extends Exception> C flatMap(final Function1<? super T1, ? extends Collection<? extends T2>, X> function, final Collection<T1> values, final C results)
 	throws X {
 		assert null != values;
 		
@@ -846,7 +846,7 @@ public class FunctionUtils {
 	 * @return The given result collection.
 	 * @throws X When some function evaluation fails.
 	 */
-	public static <T1, T2, C extends Collection<? super T2>, X extends Exception> C flatMap(final Function1<? super T1, ? extends Collection<T2>, X> function, final Iterator<T1> values, final C results)
+	public static <T1, T2, C extends Collection<? super T2>, X extends Exception> C flatMap(final Function1<? super T1, ? extends Collection<? extends T2>, X> function, final Iterator<T1> values, final C results)
 	throws X {
 		assert null != function;
 		assert null != values;
