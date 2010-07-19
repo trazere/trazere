@@ -445,14 +445,13 @@ public class TextUtils {
 		assert null != result;
 		
 		final int length = s.length();
-		for (final Counter index = new Counter(); index.get() < length; index.inc()) {
-			final Character c = s.charAt(index.get());
+		for (int index = 0; index < length; index += 1) {
+			final char c = s.charAt(index);
 			if (_XML_ENTITIES.containsKey(c)) {
 				result.append("&").append(_XML_ENTITIES.get(c)).append(";");
 			} else {
 				result.append(c);
 			}
-			
 		}
 		return result;
 	}
@@ -466,6 +465,61 @@ public class TextUtils {
 		entities.put('<', "lt");
 		entities.put('"', "quot");
 		_XML_ENTITIES = Collections.unmodifiableMap(entities);
+	}
+	
+	/**
+	 * Unescapes the XML entities of the given string.
+	 * 
+	 * @param s The string.
+	 * @return The escaped string.
+	 */
+	public static String unescapeXmlEntities(final String s) {
+		return unescapeXmlEntities(s, new StringBuilder()).toString();
+	}
+	
+	/**
+	 * Unescapes the XML entities of the given string and appends it to the given builder.
+	 * 
+	 * @param s The string.
+	 * @param result The builder to fill.
+	 * @return The given builder.
+	 */
+	public static StringBuilder unescapeXmlEntities(final String s, final StringBuilder result) {
+		assert null != s;
+		assert null != result;
+		
+		final int length = s.length();
+		for (int index = 0; index < length; index += 1) {
+			final char c = s.charAt(index);
+			if (c == '&') {
+				final int comaIndex = s.indexOf(';', index + 1);
+				if (comaIndex >= 0) {
+					final String entity = s.substring(index + 1, comaIndex);
+					if (_XML_CHARACTERS.containsKey(entity)) {
+						result.append(_XML_CHARACTERS.get(entity).charValue());
+						index = comaIndex;
+					} else {
+						result.append(c);
+					}
+				} else {
+					result.append(c);
+				}
+			} else {
+				result.append(c);
+			}
+		}
+		return result;
+	}
+	
+	private static final Map<String, Character> _XML_CHARACTERS;
+	static {
+		final Map<String, Character> chars = new HashMap<String, Character>();
+		chars.put("amp", '&');
+		//		entities.put("apos", '\'');
+		chars.put("gt", '>');
+		chars.put("lt", '<');
+		chars.put("quot", '"');
+		_XML_CHARACTERS = chars;
 	}
 	
 	/**
