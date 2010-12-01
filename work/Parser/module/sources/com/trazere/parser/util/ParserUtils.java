@@ -234,7 +234,7 @@ public class ParserUtils {
 				throw new ParserException("Ambiguous representation \"" + representation + "\"");
 			}
 		} else {
-			throw new ParserException("Invalid representation \"" + representation + "\", excepted " + renderFailures(results.asRight().getRight()));
+			throw new ParserException("Invalid representation \"" + representation + "\" : expected " + renderFailures(results.asRight().getRight()));
 		}
 	}
 	

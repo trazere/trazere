@@ -66,8 +66,8 @@ extends AbstractRecordReader<K, V> {
 	
 	public <B extends RecordSignatureBuilder<String, Object, ?>> B unifyRequirements(final B builder)
 	throws RecordException {
-		for (final ValueReader<? extends V> factory : _fields.values()) {
-			factory.unifyRequirements(builder);
+		for (final ValueReader<? extends V> field : _fields.values()) {
+			field.unifyRequirements(builder);
 		}
 		return builder;
 	}

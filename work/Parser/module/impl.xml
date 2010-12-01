@@ -58,7 +58,6 @@
 	<target name="parser.buildJar" depends="parser.compileSources">
 		<mkdir dir="${parser.build}" />
 		<jar destfile="${parser.build.jar}">
-			<fileset dir="${parser.sources}" includes="**/*.java" />
 			<fileset dir="${parser.build.classes}" includes="**/*.class" />
 		</jar>
 	</target>
