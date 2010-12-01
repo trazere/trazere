@@ -30,7 +30,7 @@ implements Describable {
 	protected T _value;
 	
 	/**
-	 * Instantiate a new mutable object with the given value.
+	 * Instantiates a new mutable object with the given value.
 	 * 
 	 * @param value The initial value. May be <code>null</code>.
 	 */
@@ -40,16 +40,19 @@ implements Describable {
 	}
 	
 	/**
-	 * Set the receiver mutable object to the given value.
+	 * Sets the value of the receiver mutable object to the given value.
 	 * 
+	 * @param <V> Type of the value.
 	 * @param value The value. May be <code>null</code>.
+	 * @return The given value. May be <code>null</code>.
 	 */
-	public void set(final T value) {
+	public <V extends T> V set(final V value) {
 		_value = value;
+		return value;
 	}
 	
 	/**
-	 * Get the value set in the receiver mutable object.
+	 * Gets the value of the receiver mutable object.
 	 * 
 	 * @return The value. May be <code>null</code>.
 	 */

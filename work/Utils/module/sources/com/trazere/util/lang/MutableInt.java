@@ -28,7 +28,7 @@ implements Describable {
 	protected int _value;
 	
 	/**
-	 * Instantiate a new mutable integer with the given value.
+	 * Instantiates a new mutable integer with the given value.
 	 * 
 	 * @param value The initial value.
 	 */
@@ -38,7 +38,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Get the value set in the receiver mutable integer.
+	 * Gets the value of the receiver mutable integer.
 	 * 
 	 * @return The value.
 	 */
@@ -47,73 +47,101 @@ implements Describable {
 	}
 	
 	/**
-	 * Set the receiver mutable integer to the given value.
+	 * Sets the value of the receiver mutable integer to the given value.
 	 * 
 	 * @param value The value.
+	 * @return The given value.
 	 */
-	public void set(final int value) {
+	public int set(final int value) {
 		_value = value;
+		return value;
 	}
 	
 	/**
-	 * Update the receiver mutable integer by negating its value.
+	 * Negates the value of the receiver mutable integer.
+	 * 
+	 * @return The resulting value.
 	 */
-	public void neg() {
+	public int neg() {
 		_value = -_value;
+		return _value;
 	}
 	
 	/**
-	 * Update the receiver mutable integer by adding the given value.
+	 * Adds the given value to the value of the receiver mutable integer.
 	 * 
 	 * @param value The value
+	 * @return The resulting value.
 	 */
-	public void add(final int value) {
+	public int add(final int value) {
 		_value = _value + value;
+		return _value;
 	}
 	
 	/**
-	 * Update the receiver mutable integer by substracting the given value.
+	 * Substracts the given value from the value of the receiver mutable integer.
 	 * 
 	 * @param value The value
+	 * @return The resulting value.
 	 */
-	public void sub(final int value) {
+	public int sub(final int value) {
 		_value = _value - value;
+		return _value;
 	}
 	
 	/**
-	 * Update the receiver mutable integer by multiplying with the given value.
+	 * Multiplies the value of the receiver mutable integer by the given value.
 	 * 
 	 * @param value The value
+	 * @return The resulting value.
 	 */
-	public void mul(final int value) {
+	public int mul(final int value) {
 		_value = _value * value;
+		return _value;
 	}
 	
 	/**
-	 * Update the receiver mutable integer by dividing by the given value.
+	 * Divides the value of the receiver mutable integer by the given value.
 	 * 
 	 * @param value The value
+	 * @return The resulting value.
 	 */
-	public void div(final int value) {
+	public int div(final int value) {
 		_value = _value / value;
+		return _value;
 	}
 	
 	/**
-	 * Update the receiver mutable integer by shifting it to the left by the given number of position.
+	 * Updates the value of the receiver mutable integer with the reminder of the division by the given value.
+	 * 
+	 * @param value The value
+	 * @return The resulting value.
+	 */
+	public int mod(final int value) {
+		_value = _value % value;
+		return _value;
+	}
+	
+	/**
+	 * Shifts the value of the receiver mutable integer to the left by the given number of bits.
 	 * 
 	 * @param position The value
+	 * @return The resulting value.
 	 */
-	public void shiftl(final int position) {
+	public int shiftl(final int position) {
 		_value = _value << position;
+		return _value;
 	}
 	
 	/**
-	 * Update the receiver mutable integer by shifting it to the right by the given number of position.
+	 * Shifts the value of the receiver mutable integer to the right by the given number of bits.
 	 * 
 	 * @param position The value
+	 * @return The resulting value.
 	 */
-	public void shiftr(final int position) {
+	public int shiftr(final int position) {
 		_value = _value >> position;
+		return _value;
 	}
 	
 	@Override

@@ -28,7 +28,7 @@ implements Describable {
 	protected float _value;
 	
 	/**
-	 * Instantiate a new mutable float with the given value.
+	 * Instantiates a new mutable float with the given value.
 	 * 
 	 * @param value The initial value.
 	 */
@@ -38,7 +38,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Get the value set in the receiver mutable float.
+	 * Gets the value of the receiver mutable float.
 	 * 
 	 * @return The value.
 	 */
@@ -47,55 +47,68 @@ implements Describable {
 	}
 	
 	/**
-	 * Set the receiver mutable float to the given value.
+	 * Sets the value of the receiver mutable boolean to the given value.
 	 * 
 	 * @param value The value.
+	 * @return The given value.
 	 */
-	public void set(final float value) {
+	public float set(final float value) {
 		_value = value;
+		return value;
 	}
 	
 	/**
-	 * Update the receiver mutable float by negating its value.
+	 * Negates the value of the receiver mutable float.
+	 * 
+	 * @return The resulting value.
 	 */
-	public void neg() {
+	public float neg() {
 		_value = -_value;
+		return _value;
 	}
 	
 	/**
-	 * Update the receiver mutable float by adding the given value.
+	 * Adds the given value to the value of the receiver mutable float.
 	 * 
 	 * @param value The value
+	 * @return The resulting value.
 	 */
-	public void add(final float value) {
+	public float add(final float value) {
 		_value = _value + value;
+		return _value;
 	}
 	
 	/**
-	 * Update the receiver mutable float by substracting the given value.
+	 * Substracts the given value from the value of the receiver mutable float.
 	 * 
 	 * @param value The value
+	 * @return The resulting value.
 	 */
-	public void sub(final float value) {
+	public float sub(final float value) {
 		_value = _value - value;
+		return _value;
 	}
 	
 	/**
-	 * Update the receiver mutable float by multiplying with the given value.
+	 * Multiplies the value of the receiver mutable float by the given value.
 	 * 
 	 * @param value The value
+	 * @return The resulting value.
 	 */
-	public void mul(final float value) {
+	public float mul(final float value) {
 		_value = _value * value;
+		return _value;
 	}
 	
 	/**
-	 * Update the receiver mutable float by dividing by the given value.
+	 * Divides the value of the receiver mutable float by the given value.
 	 * 
 	 * @param value The value
+	 * @return The resulting value.
 	 */
-	public void div(final float value) {
+	public float div(final float value) {
 		_value = _value / value;
+		return _value;
 	}
 	
 	@Override

@@ -28,7 +28,7 @@ implements Describable {
 	protected double _value;
 	
 	/**
-	 * Instantiate a new mutable double with the given value.
+	 * Instantiates a new mutable double with the given value.
 	 * 
 	 * @param value The initial value.
 	 */
@@ -38,7 +38,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Get the value set in the receiver mutable double.
+	 * Gets the value of the receiver mutable double.
 	 * 
 	 * @return The value.
 	 */
@@ -47,55 +47,68 @@ implements Describable {
 	}
 	
 	/**
-	 * Set the receiver mutable double to the given value.
+	 * Sets the value of the receiver mutable boolean to the given value.
 	 * 
 	 * @param value The value.
+	 * @return The given value.
 	 */
-	public void set(final double value) {
+	public double set(final double value) {
 		_value = value;
+		return value;
 	}
 	
 	/**
-	 * Update the receiver mutable double by negating its value.
+	 * Negates the value of the receiver mutable double.
+	 * 
+	 * @return The resulting value.
 	 */
-	public void neg() {
+	public double neg() {
 		_value = -_value;
+		return _value;
 	}
 	
 	/**
-	 * Update the receiver mutable double by adding the given value.
+	 * Adds the given value to the value of the receiver mutable double.
 	 * 
 	 * @param value The value
+	 * @return The resulting value.
 	 */
-	public void add(final double value) {
+	public double add(final double value) {
 		_value = _value + value;
+		return _value;
 	}
 	
 	/**
-	 * Update the receiver mutable double by substracting the given value.
+	 * Substracts the given value from the value of the receiver mutable double.
 	 * 
 	 * @param value The value
+	 * @return The resulting value.
 	 */
-	public void sub(final double value) {
+	public double sub(final double value) {
 		_value = _value - value;
+		return _value;
 	}
 	
 	/**
-	 * Update the receiver mutable double by multiplying with the given value.
+	 * Multiplies the value of the receiver mutable double by the given value.
 	 * 
 	 * @param value The value
+	 * @return The resulting value.
 	 */
-	public void mul(final double value) {
+	public double mul(final double value) {
 		_value = _value * value;
+		return _value;
 	}
 	
 	/**
-	 * Update the receiver mutable double by dividing by the given value.
+	 * Divides the value of the receiver mutable double by the given value.
 	 * 
 	 * @param value The value
+	 * @return The resulting value.
 	 */
-	public void div(final double value) {
+	public double div(final double value) {
 		_value = _value / value;
+		return _value;
 	}
 	
 	@Override
