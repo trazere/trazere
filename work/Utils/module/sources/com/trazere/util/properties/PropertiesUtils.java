@@ -23,11 +23,11 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- * The {@link PropertiesUtils} class provides various utilities regarding properties.
+ * The {@link PropertiesUtils} class provides various utilities regarding the manipulation of properties.
  */
 public class PropertiesUtils {
 	/**
-	 * Load and merge the property files provided by the given inputs.
+	 * Loads and merges the property files provided by the given inputs.
 	 * <p>
 	 * Later inputs in the list are having priority over the previous ones.
 	 * 
@@ -42,7 +42,7 @@ public class PropertiesUtils {
 	}
 	
 	/**
-	 * Populate the given properties with the contents of the given property file inputs.
+	 * Populates the given properties with the contents of the given property file inputs.
 	 * <p>
 	 * The loaded properties override the given properties. Later inputs in the list are having priority over the previous ones.
 	 * 
@@ -57,7 +57,6 @@ public class PropertiesUtils {
 		assert null != properties;
 		assert null != inputs;
 		
-		// Load the properties.
 		for (final Tuple2<Input, Boolean> file : inputs) {
 			loadProperties(properties, file.getFirst(), file.getSecond().booleanValue());
 		}
@@ -65,7 +64,7 @@ public class PropertiesUtils {
 	}
 	
 	/**
-	 * Populate the given properties with the content of the given property file input.
+	 * Populates the given properties with the content of the given property file input.
 	 * <p>
 	 * The loaded properties override the given properties.
 	 * 
@@ -83,7 +82,6 @@ public class PropertiesUtils {
 		
 		try {
 			if (!optional || input.exists()) {
-				// Load the properties.
 				final InputStream stream = input.open();
 				try {
 					properties.load(stream);
@@ -91,7 +89,6 @@ public class PropertiesUtils {
 					stream.close();
 				}
 			}
-			
 			return properties;
 		} catch (final IOException exception) {
 			throw new PropertiesException("Failed loading properties from " + input, exception);
@@ -99,7 +96,7 @@ public class PropertiesUtils {
 	}
 	
 	/**
-	 * Compute the name of a configuration property using the given delimiter and parts.
+	 * Computes the name of a configuration property using the given delimiter and parts.
 	 * 
 	 * @param delimiter Delimiter.
 	 * @param parts Parts.
@@ -109,7 +106,6 @@ public class PropertiesUtils {
 		assert null != delimiter;
 		assert null != parts;
 		
-		// Compute.
 		final StringBuilder builder = new StringBuilder();
 		boolean first = true;
 		for (final String part : parts) {
@@ -123,7 +119,7 @@ public class PropertiesUtils {
 	}
 	
 	/**
-	 * Get the property with the given name from the given properties. The the given default value is returned if the property does not exist.
+	 * Gets the property with the given name from the given properties. The the given default value is returned if the property does not exist.
 	 * 
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
@@ -134,13 +130,12 @@ public class PropertiesUtils {
 		assert null != properties;
 		assert null != name;
 		
-		// Get the property.
 		final String value = properties.getProperty(name);
 		return null != value ? value : defaultValue;
 	}
 	
 	/**
-	 * Get the boolean property with the given name from the given properties. The given default value is returned if the property does not exist.
+	 * Gets the boolean property with the given name from the given properties. The given default value is returned if the property does not exist.
 	 * 
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
@@ -151,17 +146,16 @@ public class PropertiesUtils {
 		assert null != properties;
 		assert null != name;
 		
-		// Get the property.
-		final String value = properties.getProperty(name);
-		if (null != value) {
-			return Boolean.parseBoolean(value);
+		final String representation = properties.getProperty(name);
+		if (null != representation) {
+			return Boolean.parseBoolean(representation);
 		} else {
 			return defaultValue;
 		}
 	}
 	
 	/**
-	 * Get the integer property with the given name from the given properties. The given default value is returned if the property does not exist.
+	 * Gets the integer property with the given name from the given properties. The given default value is returned if the property does not exist.
 	 * 
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
@@ -174,13 +168,12 @@ public class PropertiesUtils {
 		assert null != properties;
 		assert null != name;
 		
-		// Get the property.
-		final String value = properties.getProperty(name);
-		if (null != value) {
+		final String representation = properties.getProperty(name);
+		if (null != representation) {
 			try {
-				return Integer.parseInt(value);
+				return Integer.parseInt(representation);
 			} catch (final NumberFormatException exception) {
-				throw new PropertiesException("Invalid int value " + value + " for property " + name);
+				throw new PropertiesException("Invalid int value \"" + representation + "\" for property \"" + name + "\"");
 			}
 		} else {
 			return defaultValue;
@@ -188,7 +181,85 @@ public class PropertiesUtils {
 	}
 	
 	/**
-	 * Get the mandatory property with the given name from the given properties. An exception is raised if the property does not exist.
+	 * Gets the long integer property with the given name from the given properties. The given default value is returned if the property does not exist.
+	 * 
+	 * @param properties Properties to read.
+	 * @param name Name of the property to read.
+	 * @param defaultValue Default value when the property does not exist.
+	 * @return The value.
+	 * @throws PropertiesException When the value of the property is invalid.
+	 */
+	public static long getLongProperty(final Properties properties, final String name, final long defaultValue)
+	throws PropertiesException {
+		assert null != properties;
+		assert null != name;
+		
+		final String representation = properties.getProperty(name);
+		if (null != representation) {
+			try {
+				return Long.parseLong(representation);
+			} catch (final NumberFormatException exception) {
+				throw new PropertiesException("Invalid long value \"" + representation + "\" for property \"" + name + "\"");
+			}
+		} else {
+			return defaultValue;
+		}
+	}
+	
+	/**
+	 * Gets the float property with the given name from the given properties. The given default value is returned if the property does not exist.
+	 * 
+	 * @param properties Properties to read.
+	 * @param name Name of the property to read.
+	 * @param defaultValue Default value when the property does not exist.
+	 * @return The value.
+	 * @throws PropertiesException When the value of the property is invalid.
+	 */
+	public static float getFloatProperty(final Properties properties, final String name, final float defaultValue)
+	throws PropertiesException {
+		assert null != properties;
+		assert null != name;
+		
+		final String representation = properties.getProperty(name);
+		if (null != representation) {
+			try {
+				return Float.parseFloat(representation);
+			} catch (final NumberFormatException exception) {
+				throw new PropertiesException("Invalid float value \"" + representation + "\" for property \"" + name + "\"");
+			}
+		} else {
+			return defaultValue;
+		}
+	}
+	
+	/**
+	 * Gets the double property with the given name from the given properties. The given default value is returned if the property does not exist.
+	 * 
+	 * @param properties Properties to read.
+	 * @param name Name of the property to read.
+	 * @param defaultValue Default value when the property does not exist.
+	 * @return The value.
+	 * @throws PropertiesException When the value of the property is invalid.
+	 */
+	public static double getDoubleProperty(final Properties properties, final String name, final double defaultValue)
+	throws PropertiesException {
+		assert null != properties;
+		assert null != name;
+		
+		final String representation = properties.getProperty(name);
+		if (null != representation) {
+			try {
+				return Double.parseDouble(representation);
+			} catch (final NumberFormatException exception) {
+				throw new PropertiesException("Invalid double value \"" + representation + "\" for property \"" + name + "\"");
+			}
+		} else {
+			return defaultValue;
+		}
+	}
+	
+	/**
+	 * Gets the mandatory property with the given name from the given properties. An exception is raised if the property does not exist.
 	 * 
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
@@ -200,17 +271,16 @@ public class PropertiesUtils {
 		assert null != properties;
 		assert null != name;
 		
-		// Get the property.
 		final String value = properties.getProperty(name);
 		if (null != value) {
 			return value;
 		} else {
-			throw new PropertiesException("Missing property " + name);
+			throw new PropertiesException("Missing property \"" + name + "\"");
 		}
 	}
 	
 	/**
-	 * Get the mandatory boolean property with the given name from the given properties. An exception is raised if the property does not exist.
+	 * Gets the mandatory boolean property with the given name from the given properties. An exception is raised if the property does not exist.
 	 * 
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
@@ -222,17 +292,16 @@ public class PropertiesUtils {
 		assert null != properties;
 		assert null != name;
 		
-		// Get the property.
-		final String value = properties.getProperty(name);
-		if (null != value) {
-			return Boolean.parseBoolean(value);
+		final String representation = properties.getProperty(name);
+		if (null != representation) {
+			return Boolean.parseBoolean(representation);
 		} else {
-			throw new PropertiesException("Missing property " + name);
+			throw new PropertiesException("Missing property \"" + name + "\"");
 		}
 	}
 	
 	/**
-	 * Get the mandatory integer property with the given name from the given properties. An exception is raised if the property does not exist.
+	 * Gets the mandatory integer property with the given name from the given properties. An exception is raised if the property does not exist.
 	 * 
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
@@ -245,16 +314,93 @@ public class PropertiesUtils {
 		assert null != properties;
 		assert null != name;
 		
-		// Get the property.
-		final String value = properties.getProperty(name);
-		if (null != value) {
+		final String representation = properties.getProperty(name);
+		if (null != representation) {
 			try {
-				return Integer.parseInt(value);
+				return Integer.parseInt(representation);
 			} catch (final NumberFormatException exception) {
-				throw new PropertiesException("Invalid int value " + value + " for property " + name);
+				throw new PropertiesException("Invalid int value \"" + representation + "\" for property \"" + name + "\"");
 			}
 		} else {
-			throw new PropertiesException("Missing property " + name);
+			throw new PropertiesException("Missing property \"" + name + "\"");
+		}
+	}
+	
+	/**
+	 * Gets the mandatory long integer property with the given name from the given properties. An exception is raised if the property does not exist.
+	 * 
+	 * @param properties Properties to read.
+	 * @param name Name of the property to read.
+	 * @return The value.
+	 * @throws PropertiesException When the property does not exist.
+	 * @throws PropertiesException When the value of the property is invalid.
+	 */
+	public static long getMandatoryLongProperty(final Properties properties, final String name)
+	throws PropertiesException {
+		assert null != properties;
+		assert null != name;
+		
+		final String representation = properties.getProperty(name);
+		if (null != representation) {
+			try {
+				return Long.parseLong(representation);
+			} catch (final NumberFormatException exception) {
+				throw new PropertiesException("Invalid long value \"" + representation + "\" for property \"" + name + "\"");
+			}
+		} else {
+			throw new PropertiesException("Missing property \"" + name + "\"");
+		}
+	}
+	
+	/**
+	 * Gets the mandatory float property with the given name from the given properties. An exception is raised if the property does not exist.
+	 * 
+	 * @param properties Properties to read.
+	 * @param name Name of the property to read.
+	 * @return The value.
+	 * @throws PropertiesException When the property does not exist.
+	 * @throws PropertiesException When the value of the property is invalid.
+	 */
+	public static float getMandatoryFloatProperty(final Properties properties, final String name)
+	throws PropertiesException {
+		assert null != properties;
+		assert null != name;
+		
+		final String representation = properties.getProperty(name);
+		if (null != representation) {
+			try {
+				return Float.parseFloat(representation);
+			} catch (final NumberFormatException exception) {
+				throw new PropertiesException("Invalid float value \"" + representation + "\" for property \"" + name + "\"");
+			}
+		} else {
+			throw new PropertiesException("Missing property \"" + name + "\"");
+		}
+	}
+	
+	/**
+	 * Gets the mandatory double property with the given name from the given properties. An exception is raised if the property does not exist.
+	 * 
+	 * @param properties Properties to read.
+	 * @param name Name of the property to read.
+	 * @return The value.
+	 * @throws PropertiesException When the property does not exist.
+	 * @throws PropertiesException When the value of the property is invalid.
+	 */
+	public static double getMandatoryDoubleProperty(final Properties properties, final String name)
+	throws PropertiesException {
+		assert null != properties;
+		assert null != name;
+		
+		final String representation = properties.getProperty(name);
+		if (null != representation) {
+			try {
+				return Double.parseDouble(representation);
+			} catch (final NumberFormatException exception) {
+				throw new PropertiesException("Invalid double value \"" + representation + "\" for property \"" + name + "\"");
+			}
+		} else {
+			throw new PropertiesException("Missing property \"" + name + "\"");
 		}
 	}
 	

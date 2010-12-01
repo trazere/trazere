@@ -810,7 +810,7 @@ public class FunctionUtils {
 	 * @return The given result map.
 	 * @throws X When some function evaluation fails.
 	 */
-	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M mapFilterKeys(final Function1<? super K, ? extends Maybe<? extends V>, X> function, final Set<K> keys, final M results)
+	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M mapFilterKeys(final Function1<? super K, ? extends Maybe<? extends V>, X> function, final Collection<K> keys, final M results)
 	throws X {
 		assert null != function;
 		assert null != keys;
