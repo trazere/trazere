@@ -171,8 +171,7 @@ implements Record<K, V>, Describable {
 		return _fields.containsKey(key) ? _fields.get(key) : defaultValue;
 	}
 	
-	public Maybe<V> getMaybe(final K key)
-	throws RecordException {
+	public Maybe<V> getMaybe(final K key) {
 		assert null != key;
 		
 		// Get.
