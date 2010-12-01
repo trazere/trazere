@@ -43,6 +43,8 @@ extends AbstractParser<Token, Result> {
 		_subParser1 = subParser1;
 	}
 	
+	// Parser.
+	
 	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
 	throws ParserException {
 		// Part 1.
@@ -61,4 +63,26 @@ extends AbstractParser<Token, Result> {
 	
 	protected abstract Result combine(final SubResult1 subResult1)
 	throws ParserException;
+	
+	// Object.
+	
+	//	@Override
+	//	public int hashCode() {
+	//		final HashCode result = new HashCode(this);
+	//		result.append(_description);
+	//		result.append(_subParser1);
+	//		return result.get();
+	//	}
+	//	
+	//	@Override
+	//	public boolean equals(final Object object) {
+	//		if (this == object) {
+	//			return true;
+	//		} else if (null != object && getClass().equals(object.getClass())) {
+	//			final Combine1Parser<?, ?, ?> parser = (Combine1Parser<?, ?, ?>) object;
+	//			return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1);
+	//		} else {
+	//			return false;
+	//		}
+	//	}
 }

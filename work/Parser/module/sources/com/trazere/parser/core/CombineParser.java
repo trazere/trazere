@@ -46,6 +46,8 @@ extends AbstractParser<Token, Result> {
 		_subParsers = Collections.unmodifiableList(subParsers);
 	}
 	
+	// Parser.
+	
 	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
 	throws ParserException {
 		// Start.
@@ -77,4 +79,26 @@ extends AbstractParser<Token, Result> {
 	
 	protected abstract Result combine(final List<SubResult> subResults)
 	throws ParserException;
+	
+	// Object.
+	
+	//	@Override
+	//	public int hashCode() {
+	//		final HashCode result = new HashCode(this);
+	//		result.append(_description);
+	//		result.append(_subParsers);
+	//		return result.get();
+	//	}
+	//	
+	//	@Override
+	//	public boolean equals(final Object object) {
+	//		if (this == object) {
+	//			return true;
+	//		} else if (null != object && getClass().equals(object.getClass())) {
+	//			final CombineParser<?, ?, ?> parser = (CombineParser<?, ?, ?>) object;
+	//			return LangUtils.equals(_description, parser._description) && _subParsers.equals(parser._subParsers);
+	//		} else {
+	//			return false;
+	//		}
+	//	}
 }

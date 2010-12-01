@@ -20,6 +20,8 @@ import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserContinuation;
 import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserState;
+import com.trazere.util.lang.HashCode;
+import com.trazere.util.lang.LangUtils;
 import com.trazere.util.text.CharPredicate;
 
 /**
@@ -43,6 +45,8 @@ extends AbstractParser<Character, String> {
 		_escapeFilter = escapeFilter;
 		_empty = empty;
 	}
+	
+	// Parser.
 	
 	public void run(final ParserClosure<Character, String> closure, final ParserState<Character> state)
 	throws ParserException {
@@ -107,5 +111,29 @@ extends AbstractParser<Character, String> {
 				closure.failure(state);
 			}
 		};
+	}
+	
+	// Object.
+	
+	@Override
+	public int hashCode() {
+		final HashCode result = new HashCode(this);
+		result.append(_description);
+		result.append(_filter);
+		result.append(_escapeFilter);
+		result.append(_empty);
+		return result.get();
+	}
+	
+	@Override
+	public boolean equals(final Object object) {
+		if (this == object) {
+			return true;
+		} else if (null != object && getClass().equals(object.getClass())) {
+			final EscapedStringParser parser = (EscapedStringParser) object;
+			return LangUtils.equals(_description, parser._description) && _filter.equals(parser._filter) && _escapeFilter.equals(parser._escapeFilter) && _empty == parser._empty;
+		} else {
+			return false;
+		}
 	}
 }

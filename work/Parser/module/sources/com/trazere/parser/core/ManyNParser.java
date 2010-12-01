@@ -21,6 +21,8 @@ import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserHandler;
 import com.trazere.parser.ParserState;
+import com.trazere.util.lang.HashCode;
+import com.trazere.util.lang.LangUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -44,6 +46,8 @@ extends AbstractParser<Token, List<Result>> {
 		// Initialization.
 		_subParser = subParser;
 	}
+	
+	// Parser.
 	
 	public void run(final ParserClosure<Token, List<Result>> closure, final ParserState<Token> state)
 	throws ParserException {
@@ -78,5 +82,27 @@ extends AbstractParser<Token, List<Result>> {
 				state.parse(_subParser, buildMoreHandler(closure, results), closure);
 			}
 		};
+	}
+	
+	// Object.
+	
+	@Override
+	public int hashCode() {
+		final HashCode result = new HashCode(this);
+		result.append(_description);
+		result.append(_subParser);
+		return result.get();
+	}
+	
+	@Override
+	public boolean equals(final Object object) {
+		if (this == object) {
+			return true;
+		} else if (null != object && getClass().equals(object.getClass())) {
+			final ManyNParser<?, ?> parser = (ManyNParser<?, ?>) object;
+			return LangUtils.equals(_description, parser._description) && _subParser.equals(parser._subParser);
+		} else {
+			return false;
+		}
 	}
 }

@@ -45,6 +45,8 @@ extends AbstractParser<Token, Result> {
 		_initialValue = initialValue;
 	}
 	
+	// Parser.
+	
 	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
 	throws ParserException {
 		// Zero.
@@ -70,4 +72,27 @@ extends AbstractParser<Token, Result> {
 	
 	protected abstract Result fold(final Result previousValue, final SubResult subResult)
 	throws ParserException;
+	
+	// Object.
+	
+	//	@Override
+	//	public int hashCode() {
+	//		final HashCode result = new HashCode(this);
+	//		result.append(_description);
+	//		result.append(_subParser);
+	//		result.append(_initialValue);
+	//		return result.get();
+	//	}
+	//	
+	//	@Override
+	//	public boolean equals(final Object object) {
+	//		if (this == object) {
+	//			return true;
+	//		} else if (null != object && getClass().equals(object.getClass())) {
+	//			final FoldParser<?, ?, ?> parser = (FoldParser<?, ?, ?>) object;
+	//			return LangUtils.equals(_description, parser._description) && _subParser.equals(parser._subParser) && LangUtils.equals(_initialValue, parser._initialValue);
+	//		} else {
+	//			return false;
+	//		}
+	//	}
 }
