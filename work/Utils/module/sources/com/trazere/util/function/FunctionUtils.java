@@ -473,6 +473,49 @@ public class FunctionUtils {
 	}
 	
 	/**
+	 * Gets the first given values accepted by the given extraction function.
+	 * 
+	 * @param <T> Type of the argument values.
+	 * @param <R> Type of the result value.
+	 * @param <X> Type of the exceptions.
+	 * @param function The extraction function.
+	 * @param values The values.
+	 * @return The first accepted value.
+	 * @throws X When some predicate evaluation fails.
+	 */
+	public static <T, R, X extends Exception> Maybe<R> first(final Function1<? super T, ? extends Maybe<R>, X> function, final Collection<T> values)
+	throws X {
+		assert null != values;
+		
+		return first(function, values.iterator());
+	}
+	
+	/**
+	 * Gets the first given values accepted by the given extraction function.
+	 * 
+	 * @param <T> Type of the argument values.
+	 * @param <R> Type of the result value.
+	 * @param <X> Type of the exceptions.
+	 * @param function The extraction function.
+	 * @param values The iterator providing the values.
+	 * @return The first accepted value.
+	 * @throws X When some predicate evaluation fails.
+	 */
+	public static <T, R, X extends Exception> Maybe<R> first(final Function1<? super T, ? extends Maybe<R>, X> function, final Iterator<T> values)
+	throws X {
+		assert null != function;
+		assert null != values;
+		
+		while (values.hasNext()) {
+			final Maybe<R> value = function.evaluate(values.next());
+			if (value.isSome()) {
+				return value;
+			}
+		}
+		return Maybe.none();
+	}
+	
+	/**
 	 * Left folds the given values using the given operator and initial argument.
 	 * 
 	 * @param <R> Type of the result.
