@@ -18,31 +18,45 @@ package com.trazere.util.identifier;
 import com.trazere.util.function.Function1;
 
 /**
- * The {@link Identifier} class represents typed unique values.
+ * The {@link Identifier} class represents typed identification values.
  * <p>
  * Usually, basic types like strings and integers are used as identifiers because they can be easily instanciated. This class aims at providing a typed
  * alternative so that identifiers of different classes cannot be mixed with each other.
  * <p>
- * Moreover, the identifiers are designed to be compared physically, the underlying value is only used for rendering.
+ * Identifiers rely on physically egality, the underlying values are used for informational purpose.
  * 
- * @param <T> Type of the underlying value.
+ * @param <V> Type of the underlying values.
+ * @see IdentifierBase
  */
-public class Identifier<T> {
-	private final T _value;
-	
-	protected Identifier(final T value) {
+public class Identifier<V> {
+	/**
+	 * Instantiates an identifier with the given value.
+	 * 
+	 * @param value The value.
+	 */
+	protected Identifier(final V value) {
 		assert null != value;
 		
 		// Initialization.
 		_value = value;
 	}
 	
-	public T getValue() {
+	// Value.
+	
+	/** Value. */
+	protected final V _value;
+	
+	/**
+	 * Gets the value of the receiver identifier.
+	 * 
+	 * @return The value.
+	 */
+	public V getValue() {
 		return _value;
 	}
 	
 	/**
-	 * Build a function which gets the value of identifiers.
+	 * Builds a function which gets the value of identifiers.
 	 * 
 	 * @param <I> Type of the identifiers.
 	 * @param <T> Type of the values.
