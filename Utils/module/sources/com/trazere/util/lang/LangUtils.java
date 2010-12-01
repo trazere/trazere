@@ -15,6 +15,7 @@
  */
 package com.trazere.util.lang;
 
+import com.trazere.util.type.Maybe;
 import java.util.Comparator;
 
 /**
@@ -66,24 +67,25 @@ public class LangUtils {
 		return (R) object;
 	}
 	
-	/** Factory of {@link Exception}. */
-	public static final ThrowableFactory<Exception> EXCEPTION_FACTORY = new AbstractThrowableFactory<Exception>() {
-		public Exception build() {
-			return new Exception();
-		}
+	/**
+	 * Matches the given object according to the given type.
+	 * <p>
+	 * This methods tests that the given object is not <code>null</code> and is assignable to the given type.
+	 * 
+	 * @param <T> Type of the match.
+	 * @param object The object. May be <code>null</code>.
+	 * @param type The type.
+	 * @return The given matched object.
+	 */
+	public static <T> Maybe<T> match(final Object object, final Class<T> type) {
+		assert null != type;
 		
-		public Exception build(final String message) {
-			return new Exception(message);
+		if (null != object && type.isInstance(object)) {
+			return Maybe.some(type.cast(object));
+		} else {
+			return Maybe.none();
 		}
-		
-		public Exception build(final Throwable cause) {
-			return new Exception(cause);
-		}
-		
-		public Exception build(final String message, final Throwable cause) {
-			return new Exception(message, cause);
-		}
-	};
+	}
 	
 	/**
 	 * Gets the value of the given boolean wrapper.
@@ -186,7 +188,7 @@ public class LangUtils {
 	 * @see Comparable#compareTo(Object)
 	 */
 	public static <T extends Object> boolean equals(final T object1, final T object2) {
-		return (object1 == object2) || (null != object1 && object1.equals(object2));
+		return object1 == object2 || null != object1 && object1.equals(object2);
 	}
 	
 	/**
