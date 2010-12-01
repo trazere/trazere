@@ -48,6 +48,19 @@ public class TypeUtils {
 	}
 	
 	/**
+	 * Get the short value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
+	 * 
+	 * @param value The value.
+	 * @param defaultValue The default value. May be <code>null</code>.
+	 * @return The value. May be <code>null</code>.
+	 */
+	public static int get(final Maybe<Short> value, final short defaultValue) {
+		assert null != value;
+		
+		return value.isSome() ? value.asSome().getValue().shortValue() : defaultValue;
+	}
+	
+	/**
 	 * Get the integer value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
 	 * 
 	 * @param value The value.

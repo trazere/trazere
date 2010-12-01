@@ -94,7 +94,7 @@ public class LangUtils {
 	 * @param defaultValue The default value.
 	 * @return The value of the wrapper or the default value when it is <code>null</code>.
 	 */
-	public static boolean getBoolean(final Boolean value, final boolean defaultValue) {
+	public static boolean get(final Boolean value, final boolean defaultValue) {
 		return null != value ? value.booleanValue() : defaultValue;
 	}
 	
@@ -105,8 +105,19 @@ public class LangUtils {
 	 * @param defaultValue The default value.
 	 * @return The value of the wrapper or the default value when it is <code>null</code>.
 	 */
-	public static int getByte(final Byte value, final byte defaultValue) {
+	public static int get(final Byte value, final byte defaultValue) {
 		return null != value ? value.byteValue() : defaultValue;
+	}
+	
+	/**
+	 * Gets the value of the given short wrapper.
+	 * 
+	 * @param value The wrapper. May be <code>null</code>.
+	 * @param defaultValue The default value.
+	 * @return The value of the wrapper or the default value when it is <code>null</code>.
+	 */
+	public static int get(final Short value, final short defaultValue) {
+		return null != value ? value.shortValue() : defaultValue;
 	}
 	
 	/**
@@ -116,7 +127,7 @@ public class LangUtils {
 	 * @param defaultValue The default value.
 	 * @return The value of the wrapper or the default value when it is <code>null</code>.
 	 */
-	public static int getInt(final Integer value, final int defaultValue) {
+	public static int get(final Integer value, final int defaultValue) {
 		return null != value ? value.intValue() : defaultValue;
 	}
 	
@@ -127,7 +138,7 @@ public class LangUtils {
 	 * @param defaultValue The default value.
 	 * @return The value of the wrapper or the default value when it is <code>null</code>.
 	 */
-	public static long getLong(final Long value, final long defaultValue) {
+	public static long get(final Long value, final long defaultValue) {
 		return null != value ? value.longValue() : defaultValue;
 	}
 	
@@ -138,7 +149,7 @@ public class LangUtils {
 	 * @param defaultValue The default value.
 	 * @return The value of the wrapper or the default value when it is <code>null</code>.
 	 */
-	public static float getFloat(final Float value, final float defaultValue) {
+	public static float get(final Float value, final float defaultValue) {
 		return null != value ? value.floatValue() : defaultValue;
 	}
 	
@@ -149,7 +160,7 @@ public class LangUtils {
 	 * @param defaultValue The default value.
 	 * @return The value of the wrapper or the default value when it is <code>null</code>.
 	 */
-	public static double getDouble(final Double value, final double defaultValue) {
+	public static double get(final Double value, final double defaultValue) {
 		return null != value ? value.doubleValue() : defaultValue;
 	}
 	
@@ -160,7 +171,7 @@ public class LangUtils {
 	 * @param defaultValue The default value.
 	 * @return The value of the wrapper or the default value when it is <code>null</code>.
 	 */
-	public static char getChar(final Character value, final char defaultValue) {
+	public static char get(final Character value, final char defaultValue) {
 		return null != value ? value.charValue() : defaultValue;
 	}
 	
@@ -172,7 +183,7 @@ public class LangUtils {
 	 * @param defaultValue The default value. May be <code>null</code>.
 	 * @return The object or the default value when it is <code>null</code>. May be <code>null</code>.
 	 */
-	public static <T> T getObject(final T value, final T defaultValue) {
+	public static <T> T get(final T value, final T defaultValue) {
 		return null != value ? value : defaultValue;
 	}
 	

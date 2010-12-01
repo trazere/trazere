@@ -20,7 +20,7 @@ import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
 
 /**
- * The {@link MutableLong} class represents mutable long values.
+ * The {@link MutableLong} class represents mutable long integer values.
  */
 public class MutableLong
 implements Describable {
@@ -28,7 +28,7 @@ implements Describable {
 	protected long _value;
 	
 	/**
-	 * Instantiate a new mutable long with the given value.
+	 * Instantiates a new mutable long with the given value.
 	 * 
 	 * @param value The initial value.
 	 */
@@ -38,7 +38,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Get the value set in the receiver mutable long.
+	 * Gets the value of the receiver mutable long integer.
 	 * 
 	 * @return The value.
 	 */
@@ -47,73 +47,101 @@ implements Describable {
 	}
 	
 	/**
-	 * Set the receiver mutable long to the given value.
+	 * Sets the value of the receiver mutable long integer to the given value.
 	 * 
 	 * @param value The value.
+	 * @return The given value.
 	 */
-	public void set(final long value) {
+	public long set(final long value) {
 		_value = value;
+		return value;
 	}
 	
 	/**
-	 * Update the receiver mutable long by negating its value.
+	 * Negates the value of the receiver mutable long integer.
+	 * 
+	 * @return The resulting value.
 	 */
-	public void neg() {
+	public long neg() {
 		_value = -_value;
+		return _value;
 	}
 	
 	/**
-	 * Update the receiver mutable long by adding the given value.
+	 * Adds the given value to the value of the receiver mutable long integer.
 	 * 
 	 * @param value The value
+	 * @return The resulting value.
 	 */
-	public void add(final long value) {
+	public long add(final long value) {
 		_value = _value + value;
+		return _value;
 	}
 	
 	/**
-	 * Update the receiver mutable long by substracting the given value.
+	 * Substracts the given value from the value of the receiver mutable long integer.
 	 * 
 	 * @param value The value
+	 * @return The resulting value.
 	 */
-	public void sub(final long value) {
+	public long sub(final long value) {
 		_value = _value - value;
+		return _value;
 	}
 	
 	/**
-	 * Update the receiver mutable long by multiplying with the given value.
+	 * Multiplies the value of the receiver mutable long integer by the given value.
 	 * 
 	 * @param value The value
+	 * @return The resulting value.
 	 */
-	public void mul(final long value) {
+	public long mul(final long value) {
 		_value = _value * value;
+		return _value;
 	}
 	
 	/**
-	 * Update the receiver mutable long by dividing by the given value.
+	 * Divides the value of the receiver mutable long integer by the given value.
 	 * 
 	 * @param value The value
+	 * @return The resulting value.
 	 */
-	public void div(final long value) {
+	public long div(final long value) {
 		_value = _value / value;
+		return _value;
 	}
 	
 	/**
-	 * Update the receiver mutable long by shifting it to the left by the given number of position.
+	 * Updates the value of the receiver mutable long integer with the reminder of the division by the given value.
+	 * 
+	 * @param value The value
+	 * @return The resulting value.
+	 */
+	public long mod(final long value) {
+		_value = _value % value;
+		return _value;
+	}
+	
+	/**
+	 * Shifts the value of the receiver mutable long integer to the left by the given number of bits.
 	 * 
 	 * @param position The value
+	 * @return The resulting value.
 	 */
-	public void shiftl(final long position) {
+	public long shiftl(final int position) {
 		_value = _value << position;
+		return _value;
 	}
 	
 	/**
-	 * Update the receiver mutable long by shifting it to the right by the given number of position.
+	 * Shifts the value of the receiver mutable long integer to the right by the given number of bits.
 	 * 
 	 * @param position The value
+	 * @return The resulting value.
 	 */
-	public void shiftr(final long position) {
+	public long shiftr(final int position) {
 		_value = _value >> position;
+		return _value;
 	}
 	
 	@Override
