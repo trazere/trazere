@@ -15,34 +15,98 @@
  */
 package com.trazere.util.type;
 
+import com.trazere.util.function.Function1;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.LangUtils;
 
 /**
- * The {@link Tuple1} class represents the 1-tuple data type which stores a sequence of 1 values.
+ * The {@link Tuple1} class represents a 1-tuple data type which stores sequences of 1 value.
  * 
  * @param <T1> Type of the first value.
  */
 public class Tuple1<T1> {
 	/**
-	 * Build a tuple with the given value.
+	 * Builds a tuple with the given value.
 	 * 
 	 * @param <T1> Type of the first value.
-	 * @param first First value. May be <code>null</code>.
-	 * @return The tuple.
+	 * @param first The first value. May be <code>null</code>.
+	 * @return The built tuple.
 	 */
 	public static <T1> Tuple1<T1> build(final T1 first) {
 		return new Tuple1<T1>(first);
 	}
 	
 	/**
-	 * Compare the given tuples.
+	 * Builds a function which wraps its arguments in {@link Tuple1} instances (currying).
+	 * 
+	 * @param <T1> Type of the first value.
+	 * @param <X> Type of the exceptions.
+	 * @return The built function.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T1, X extends Exception> Function1<T1, Tuple1<T1>, X> buildFunction() {
+		return (Function1<T1, Tuple1<T1>, X>) _BUILD_FUNCTION;
+	}
+	
+	private static final Function1<?, ?, ?> _BUILD_FUNCTION = new Function1<Object, Tuple1<Object>, RuntimeException>() {
+		public Tuple1<Object> evaluate(final Object first) {
+			return Tuple1.build(first);
+		}
+	};
+	
+	/**
+	 * Instantiates a new instance with the given value.
+	 * 
+	 * @param first First value. May be <code>null</code>.
+	 */
+	public Tuple1(final T1 first) {
+		// Initialization.
+		_first = first;
+	}
+	
+	// First.
+	
+	/** First value. May be <code>null</code>. */
+	protected final T1 _first;
+	
+	/**
+	 * Gets the first value of the receiver tuple.
+	 * 
+	 * @return The value. May be <code>null</code>.
+	 */
+	public T1 getFirst() {
+		return _first;
+	}
+	
+	/**
+	 * Builds a function which gets the first value of the argument tuples.
+	 * 
+	 * @param <T1> Type of the first values of the tuples.
+	 * @param <T2> Type of the second values of the tuples.
+	 * @param <X> Type of the exceptions.
+	 * @return The built function.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T1, T2, X extends Exception> Function1<Tuple2<? extends T1, ? extends T2>, T1, X> getFirstFunction() {
+		return (Function1<Tuple2<? extends T1, ? extends T2>, T1, X>) _GET_FIRST_FUNCTION;
+	}
+	
+	private static final Function1<?, ?, ?> _GET_FIRST_FUNCTION = new Function1<Tuple2<Object, Object>, Object, RuntimeException>() {
+		public Object evaluate(final Tuple2<Object, Object> tuple) {
+			return tuple.getFirst();
+		}
+	};
+	
+	// Comparison.
+	
+	/**
+	 * Compares the given tuples.
 	 * <p>
 	 * The comparison is performed by comparing the respective values of the tuples in sequence.
 	 * 
 	 * @param <T1> Type of the first values.
-	 * @param tuple1 First tuple.
-	 * @param tuple2 Second tuple.
+	 * @param tuple1 The first tuple.
+	 * @param tuple2 The second tuple.
 	 * @return The result of the comparison as defined by the {@link Comparable#compareTo(Object)} method.
 	 * @see Comparable#compareTo(Object)
 	 */
@@ -54,27 +118,7 @@ public class Tuple1<T1> {
 		return LangUtils.compare(tuple1._first, tuple2._first);
 	}
 	
-	/** First value. May be <code>null</code>. */
-	protected final T1 _first;
-	
-	/**
-	 * Build a new instance with the given values.
-	 * 
-	 * @param first First value. May be <code>null</code>.
-	 */
-	public Tuple1(final T1 first) {
-		// Initialization.
-		_first = first;
-	}
-	
-	/**
-	 * Get the first value of the receiver tuple.
-	 * 
-	 * @return The value. May be <code>null</code>.
-	 */
-	public T1 getFirst() {
-		return _first;
-	}
+	// Object.
 	
 	@Override
 	public int hashCode() {

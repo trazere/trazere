@@ -15,11 +15,12 @@
  */
 package com.trazere.util.type;
 
+import com.trazere.util.function.Function1;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.LangUtils;
 
 /**
- * The {@link Tuple5} class represents the 5-tuple (quintuplet) data type which stores a sequence of 5 values.
+ * The {@link Tuple5} class represents a 5-tuple (quintuplet) data type which stores sequences of 5 values.
  * 
  * @param <T1> Type of the first value.
  * @param <T2> Type of the second value.
@@ -30,26 +31,80 @@ import com.trazere.util.lang.LangUtils;
 public class Tuple5<T1, T2, T3, T4, T5>
 extends Tuple4<T1, T2, T3, T4> {
 	/**
-	 * Build a tuple with the given values.
+	 * Builds a tuple with the given values.
 	 * 
 	 * @param <T1> Type of the first value.
 	 * @param <T2> Type of the second value.
 	 * @param <T3> Type of the third value.
 	 * @param <T4> Type of the fourth value.
 	 * @param <T5> Type of the fifth value.
-	 * @param first First value. May be <code>null</code>.
-	 * @param second Second value. May be <code>null</code>.
-	 * @param third Third value. May be <code>null</code>.
-	 * @param fourth Fourth value. May be <code>null</code>.
-	 * @param fifth Fifth value. May be <code>null</code>.
-	 * @return The tuple.
+	 * @param first The first value. May be <code>null</code>.
+	 * @param second The second value. May be <code>null</code>.
+	 * @param third The third value. May be <code>null</code>.
+	 * @param fourth The fourth value. May be <code>null</code>.
+	 * @param fifth The tifth value. May be <code>null</code>.
+	 * @return The built tuple.
 	 */
 	public static <T1, T2, T3, T4, T5> Tuple5<T1, T2, T3, T4, T5> build(final T1 first, final T2 second, final T3 third, final T4 fourth, final T5 fifth) {
 		return new Tuple5<T1, T2, T3, T4, T5>(first, second, third, fourth, fifth);
 	}
 	
 	/**
-	 * Compare the given tuples.
+	 * Instantiates a new instance with the given values.
+	 * 
+	 * @param first The first value. May be <code>null</code>.
+	 * @param second The second value. May be <code>null</code>.
+	 * @param third The third value. May be <code>null</code>.
+	 * @param fourth The fourth value. May be <code>null</code>.
+	 * @param fifth The tifth value. May be <code>null</code>.
+	 */
+	public Tuple5(final T1 first, final T2 second, final T3 third, final T4 fourth, final T5 fifth) {
+		super(first, second, third, fourth);
+		
+		// Initialization.
+		_fifth = fifth;
+	}
+	
+	// Fifth.
+	
+	/** Fifth value. May be <code>null</code>. */
+	protected final T5 _fifth;
+	
+	/**
+	 * Gets the fifth value of the receiver tuple.
+	 * 
+	 * @return The value. May be <code>null</code>.
+	 */
+	public T5 getFifth() {
+		return _fifth;
+	}
+	
+	/**
+	 * Builds a function which gets the fifth value of the argument tuples.
+	 * 
+	 * @param <T1> Type of the first values of the tuples.
+	 * @param <T2> Type of the second values of the tuples.
+	 * @param <T3> Type of the third values of the tuples.
+	 * @param <T4> Type of the fourth values of the tuples.
+	 * @param <T5> Type of the fifth values of the tuples.
+	 * @param <X> Type of the exceptions.
+	 * @return The built function.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T1, T2, T3, T4, T5, X extends Exception> Function1<Tuple5<? extends T1, ? extends T2, ? extends T3, ? extends T4, ? extends T5>, T5, X> getFifthFunction() {
+		return (Function1<Tuple5<? extends T1, ? extends T2, ? extends T3, ? extends T4, ? extends T5>, T5, X>) _GET_FIFTH_FUNCTION;
+	}
+	
+	private static final Function1<?, ?, ?> _GET_FIFTH_FUNCTION = new Function1<Tuple5<Object, Object, Object, Object, Object>, Object, RuntimeException>() {
+		public Object evaluate(final Tuple5<Object, Object, Object, Object, Object> value) {
+			return value.getFifth();
+		}
+	};
+	
+	// Comparison.
+	
+	/**
+	 * Compares the given tuples.
 	 * <p>
 	 * The comparison is performed by comparing the respective values of the tuples in sequence.
 	 * 
@@ -58,8 +113,8 @@ extends Tuple4<T1, T2, T3, T4> {
 	 * @param <T3> Type of the third values.
 	 * @param <T4> Type of the fourth value.
 	 * @param <T5> Type of the fifth value.
-	 * @param tuple1 First tuple.
-	 * @param tuple2 Second tuple.
+	 * @param tuple1 The first tuple.
+	 * @param tuple2 The second tuple.
 	 * @return The result of the comparison as defined by the {@link Comparable#compareTo(Object)} method.
 	 * @see Comparable#compareTo(Object)
 	 */
@@ -72,33 +127,7 @@ extends Tuple4<T1, T2, T3, T4> {
 		return 0 != comp ? comp : LangUtils.compare(tuple1._fifth, tuple2._fifth);
 	}
 	
-	/** Fifth value. May be <code>null</code>. */
-	protected final T5 _fifth;
-	
-	/**
-	 * Build a new instance with the given values.
-	 * 
-	 * @param first First value. May be <code>null</code>.
-	 * @param second Second value. May be <code>null</code>.
-	 * @param third Third value. May be <code>null</code>.
-	 * @param fourth Fourth value. May be <code>null</code>.
-	 * @param fifth Fifth value. May be <code>null</code>.
-	 */
-	public Tuple5(final T1 first, final T2 second, final T3 third, final T4 fourth, final T5 fifth) {
-		super(first, second, third, fourth);
-		
-		// Initialization.
-		_fifth = fifth;
-	}
-	
-	/**
-	 * Get the fifth value of the receiver tuple.
-	 * 
-	 * @return The value. May be <code>null</code>.
-	 */
-	public T5 getFifth() {
-		return _fifth;
-	}
+	// Object.
 	
 	@Override
 	public int hashCode() {

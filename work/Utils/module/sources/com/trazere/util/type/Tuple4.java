@@ -15,11 +15,12 @@
  */
 package com.trazere.util.type;
 
+import com.trazere.util.function.Function1;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.LangUtils;
 
 /**
- * The {@link Tuple4} class represents the 4-tuple (quadruplet) data type which stores a sequence of 4 values.
+ * The {@link Tuple4} class represents a 4-tuple (quadruplet) data type which stores sequences of 4 values.
  * 
  * @param <T1> Type of the first value.
  * @param <T2> Type of the second value.
@@ -29,50 +30,24 @@ import com.trazere.util.lang.LangUtils;
 public class Tuple4<T1, T2, T3, T4>
 extends Tuple3<T1, T2, T3> {
 	/**
-	 * Build a tuple with the given values.
+	 * Builds a tuple with the given values.
 	 * 
 	 * @param <T1> Type of the first value.
 	 * @param <T2> Type of the second value.
 	 * @param <T3> Type of the third value.
 	 * @param <T4> Type of the fourth value.
-	 * @param first First value. May be <code>null</code>.
-	 * @param second Second value. May be <code>null</code>.
-	 * @param third Third value. May be <code>null</code>.
-	 * @param fourth Fourth value. May be <code>null</code>.
-	 * @return The tuple.
+	 * @param first The first value. May be <code>null</code>.
+	 * @param second The second value. May be <code>null</code>.
+	 * @param third The third value. May be <code>null</code>.
+	 * @param fourth The fourth value. May be <code>null</code>.
+	 * @return The built tuple.
 	 */
 	public static <T1, T2, T3, T4> Tuple4<T1, T2, T3, T4> build(final T1 first, final T2 second, final T3 third, final T4 fourth) {
 		return new Tuple4<T1, T2, T3, T4>(first, second, third, fourth);
 	}
 	
 	/**
-	 * Compare the given tuples.
-	 * <p>
-	 * The comparison is performed by comparing the respective values of the tuples in sequence.
-	 * 
-	 * @param <T1> Type of the first values.
-	 * @param <T2> Type of the second values.
-	 * @param <T3> Type of the third values.
-	 * @param <T4> Type of the fourth value.
-	 * @param tuple1 First tuple.
-	 * @param tuple2 Second tuple.
-	 * @return The result of the comparison as defined by the {@link Comparable#compareTo(Object)} method.
-	 * @see Comparable#compareTo(Object)
-	 */
-	public static <T1 extends Comparable<T1>, T2 extends Comparable<T2>, T3 extends Comparable<T3>, T4 extends Comparable<T4>> int compare(final Tuple4<T1, T2, T3, T4> tuple1, final Tuple4<T1, T2, T3, T4> tuple2) {
-		assert null != tuple1;
-		assert null != tuple2;
-		
-		// Compare.
-		final int comp = Tuple3.compare(tuple1, tuple2);
-		return 0 != comp ? comp : LangUtils.compare(tuple1._fourth, tuple2._fourth);
-	}
-	
-	/** Fourth value. May be <code>null</code>. */
-	protected final T4 _fourth;
-	
-	/**
-	 * Build a new instance with the given values.
+	 * Instantiates a new instance with the given values.
 	 * 
 	 * @param first First value. May be <code>null</code>.
 	 * @param second Second value. May be <code>null</code>.
@@ -86,14 +61,67 @@ extends Tuple3<T1, T2, T3> {
 		_fourth = fourth;
 	}
 	
+	// Fourth.
+	
+	/** Fourth value. May be <code>null</code>. */
+	protected final T4 _fourth;
+	
 	/**
-	 * Get the fourth value of the receiver tuple.
+	 * Gets the fourth value of the receiver tuple.
 	 * 
 	 * @return The value. May be <code>null</code>.
 	 */
 	public T4 getFourth() {
 		return _fourth;
 	}
+	
+	/**
+	 * Builds a function which gets the fourth value of the argument tuples.
+	 * 
+	 * @param <T1> Type of the first values of the tuples.
+	 * @param <T2> Type of the second values of the tuples.
+	 * @param <T3> Type of the third values of the tuples.
+	 * @param <T4> Type of the fourth values of the tuples.
+	 * @param <X> Type of the exceptions.
+	 * @return The built function.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T1, T2, T3, T4, X extends Exception> Function1<Tuple4<? extends T1, ? extends T2, ? extends T3, ? extends T4>, T4, X> getFourthFunction() {
+		return (Function1<Tuple4<? extends T1, ? extends T2, ? extends T3, ? extends T4>, T4, X>) _GET_FOURTH_FUNCTION;
+	}
+	
+	private static final Function1<?, ?, ?> _GET_FOURTH_FUNCTION = new Function1<Tuple4<Object, Object, Object, Object>, Object, RuntimeException>() {
+		public Object evaluate(final Tuple4<Object, Object, Object, Object> value) {
+			return value.getFourth();
+		}
+	};
+	
+	// Comparison.
+	
+	/**
+	 * Compares the given tuples.
+	 * <p>
+	 * The comparison is performed by comparing the respective values of the tuples in sequence.
+	 * 
+	 * @param <T1> Type of the first values.
+	 * @param <T2> Type of the second values.
+	 * @param <T3> Type of the third values.
+	 * @param <T4> Type of the fourth value.
+	 * @param tuple1 The first tuple.
+	 * @param tuple2 The second tuple.
+	 * @return The result of the comparison as defined by the {@link Comparable#compareTo(Object)} method.
+	 * @see Comparable#compareTo(Object)
+	 */
+	public static <T1 extends Comparable<T1>, T2 extends Comparable<T2>, T3 extends Comparable<T3>, T4 extends Comparable<T4>> int compare(final Tuple4<T1, T2, T3, T4> tuple1, final Tuple4<T1, T2, T3, T4> tuple2) {
+		assert null != tuple1;
+		assert null != tuple2;
+		
+		// Compare.
+		final int comp = Tuple3.compare(tuple1, tuple2);
+		return 0 != comp ? comp : LangUtils.compare(tuple1._fourth, tuple2._fourth);
+	}
+	
+	// Object.
 	
 	@Override
 	public int hashCode() {
