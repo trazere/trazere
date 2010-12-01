@@ -15,10 +15,13 @@
  */
 package com.trazere.util.lang.ref;
 
+import com.trazere.util.function.Predicate1;
 import com.trazere.util.lang.LangUtils;
+import com.trazere.util.observer.LiveObserver;
+import com.trazere.util.observer.Observer;
+import com.trazere.util.observer.ObserverSubscription;
+import com.trazere.util.observer.SimpleObservable;
 import com.trazere.util.type.Maybe;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The {@link MutableReference} class represents mutable, observable refererences.
@@ -28,9 +31,6 @@ import java.util.List;
 public class MutableObservableReference<T>
 extends MutableReference<T>
 implements ObservableReference<T> {
-	/** The listeners of the reference. */
-	protected final List<ReferenceListener<? super T>> _listeners = new ArrayList<ReferenceListener<? super T>>();
-	
 	/**
 	 * Instantiates an unset reference.
 	 */
@@ -56,6 +56,8 @@ implements ObservableReference<T> {
 		super(value);
 	}
 	
+	// Value.
+	
 	@Override
 	public <V extends T> V set(final V value)
 	throws ReferenceAlreadySetException {
@@ -63,9 +65,7 @@ implements ObservableReference<T> {
 		final V result = super.set(value);
 		
 		// Notify.
-		if (!_listeners.isEmpty()) {
-			notifyUpdated();
-		}
+		_observable.raise(_value);
 		
 		return result;
 	}
@@ -77,8 +77,8 @@ implements ObservableReference<T> {
 		final Maybe<V> result = super.set(value);
 		
 		// Notify.
-		if (!_listeners.isEmpty() && value.isSome()) {
-			notifyUpdated();
+		if (value.isSome()) {
+			_observable.raise(_value);
 		}
 		
 		return result;
@@ -91,8 +91,8 @@ implements ObservableReference<T> {
 		super.reset();
 		
 		// Notify.
-		if (!_listeners.isEmpty() && currentValue.isSome()) {
-			notifyUpdated();
+		if (currentValue.isSome()) {
+			_observable.raise(_value);
 		}
 	}
 	
@@ -103,8 +103,8 @@ implements ObservableReference<T> {
 		final V result = super.update(value);
 		
 		// Notify.
-		if (!_listeners.isEmpty() && (currentValue.isNone() || !LangUtils.equals(currentValue.asSome().getValue(), value))) {
-			notifyUpdated();
+		if (currentValue.isNone() || !LangUtils.equals(currentValue.asSome().getValue(), value)) {
+			_observable.raise(_value);
 		}
 		
 		return result;
@@ -117,28 +117,30 @@ implements ObservableReference<T> {
 		final Maybe<V> result = super.update(value);
 		
 		// Notify.
-		if (!_listeners.isEmpty() && !currentValue.equals(value)) {
-			notifyUpdated();
+		if (!currentValue.equals(value)) {
+			_observable.raise(_value);
 		}
 		
 		return result;
 	}
 	
-	public void addListener(final ReferenceListener<? super T> observer) {
-		assert null != observer;
-		
-		_listeners.add(observer);
+	// Observer.
+	
+	protected final SimpleObservable<Maybe<T>> _observable = new SimpleObservable<Maybe<T>>();
+	
+	public ObserverSubscription subscribe(final LiveObserver<? super Maybe<T>> observer) {
+		return _observable.subscribe(observer);
 	}
 	
-	public void removeListener(final ReferenceListener<? super T> observer) {
-		assert null != observer;
-		
-		_listeners.remove(observer);
+	public ObserverSubscription subscribe(final Observer<? super Maybe<T>> observer) {
+		return _observable.subscribe(observer);
 	}
 	
-	protected void notifyUpdated() {
-		for (final ReferenceListener<? super T> listener : new ArrayList<ReferenceListener<? super T>>(_listeners)) {
-			listener.updatedReference(_value);
-		}
+	public ObserverSubscription subscribeOnce(final Observer<? super Maybe<T>> observer) {
+		return _observable.subscribeOnce(observer);
+	}
+	
+	public ObserverSubscription subscribeWhile(final Observer<? super Maybe<T>> observer, final Predicate1<? super Maybe<T>, RuntimeException> condition) {
+		return _observable.subscribeWhile(observer, condition);
 	}
 }

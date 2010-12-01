@@ -15,24 +15,15 @@
  */
 package com.trazere.util.lang.ref;
 
+import com.trazere.util.observer.Observable;
+import com.trazere.util.type.Maybe;
+
 /**
  * The {@link ObservableReference} interface defines references whose value can be observed.
  * 
  * @param <T> Type of the referenced value.
  */
 public interface ObservableReference<T>
-extends Reference<T> {
-	/**
-	 * Adds the given listener to the receiver reference.
-	 * 
-	 * @param listener The listener.
-	 */
-	public void addListener(final ReferenceListener<? super T> listener);
-	
-	/**
-	 * Removes the given listener from the receiver reference.
-	 * 
-	 * @param listener The listener.
-	 */
-	public void removeListener(final ReferenceListener<? super T> listener);
+extends Reference<T>, Observable<Maybe<T>> {
+	// Nothing to do.
 }
