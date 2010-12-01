@@ -20,6 +20,8 @@ import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserContinuation;
 import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserState;
+import com.trazere.util.lang.HashCode;
+import com.trazere.util.lang.LangUtils;
 
 /**
  * DOCME
@@ -37,6 +39,8 @@ extends AbstractParser<Character, String> {
 		// Initialization.
 		_string = string;
 	}
+	
+	// Parser.
 	
 	public void run(final ParserClosure<Character, String> closure, final ParserState<Character> state)
 	throws ParserException {
@@ -74,5 +78,27 @@ extends AbstractParser<Character, String> {
 				closure.failure(state);
 			}
 		};
+	}
+	
+	// Object.
+	
+	@Override
+	public int hashCode() {
+		final HashCode result = new HashCode(this);
+		result.append(_description);
+		result.append(_string);
+		return result.get();
+	}
+	
+	@Override
+	public boolean equals(final Object object) {
+		if (this == object) {
+			return true;
+		} else if (null != object && getClass().equals(object.getClass())) {
+			final StringParser parser = (StringParser) object;
+			return LangUtils.equals(_description, parser._description) && _string.equals(parser._string);
+		} else {
+			return false;
+		}
 	}
 }
