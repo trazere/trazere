@@ -19,6 +19,7 @@ import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserState;
+import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.ref.MutableReference;
 
 /**
@@ -29,6 +30,8 @@ import com.trazere.util.lang.ref.MutableReference;
  */
 public class ParserReference<Token, Result>
 implements Parser<Token, Result> {
+	// Parser.
+	
 	protected MutableReference<Parser<Token, Result>> _parser = new MutableReference<Parser<Token, Result>>();
 	
 	public <P extends Parser<Token, Result>> P set(final P parser) {
@@ -49,5 +52,29 @@ implements Parser<Token, Result> {
 	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
 	throws ParserException {
 		get().run(closure, state);
+	}
+	
+	// Object.
+	
+	@Override
+	public int hashCode() {
+		final HashCode result = new HashCode(this);
+		result.append(_parser.get());
+		return result.get();
+	}
+	
+	@Override
+	public boolean equals(final Object object) {
+		if (this == object) {
+			return true;
+		} else if (null != object && getClass().equals(object.getClass())) {
+			final ParserReference<?, ?> parser = (ParserReference<?, ?>) object;
+			return _parser.get().equals(parser._parser.get());
+		} else if (null != object && getClass().equals(_parser.get().getClass())) {
+			final Parser<?, ?> parser = (Parser<?, ?>) object;
+			return _parser.get().equals(parser);
+		} else {
+			return false;
+		}
 	}
 }

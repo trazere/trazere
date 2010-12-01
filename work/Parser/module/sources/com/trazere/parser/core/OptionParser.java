@@ -21,6 +21,8 @@ import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserHandler;
 import com.trazere.parser.ParserState;
+import com.trazere.util.lang.HashCode;
+import com.trazere.util.lang.LangUtils;
 import com.trazere.util.type.Maybe;
 
 /**
@@ -43,6 +45,8 @@ extends AbstractParser<Token, Maybe<Result>> {
 		_subParser = subParser;
 	}
 	
+	// Parser.
+	
 	public void run(final ParserClosure<Token, Maybe<Result>> closure, final ParserState<Token> state)
 	throws ParserException {
 		// Zero.
@@ -60,5 +64,27 @@ extends AbstractParser<Token, Maybe<Result>> {
 				closure.success(Maybe.some(result), state);
 			}
 		};
+	}
+	
+	// Object.
+	
+	@Override
+	public int hashCode() {
+		final HashCode result = new HashCode(this);
+		result.append(_description);
+		result.append(_subParser);
+		return result.get();
+	}
+	
+	@Override
+	public boolean equals(final Object object) {
+		if (this == object) {
+			return true;
+		} else if (null != object && getClass().equals(object.getClass())) {
+			final OptionParser<?, ?> parser = (OptionParser<?, ?>) object;
+			return LangUtils.equals(_description, parser._description) && _subParser.equals(parser._subParser);
+		} else {
+			return false;
+		}
 	}
 }

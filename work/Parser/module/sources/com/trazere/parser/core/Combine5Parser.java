@@ -59,6 +59,8 @@ extends AbstractParser<Token, Result> {
 		_subParser5 = subParser5;
 	}
 	
+	// Parser.
+	
 	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
 	throws ParserException {
 		// Part 1.
@@ -117,4 +119,30 @@ extends AbstractParser<Token, Result> {
 	
 	protected abstract Result combine(final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3, final SubResult4 subResult4, final SubResult5 subResult5)
 	throws ParserException;
+	
+	// Object.
+	
+	//	@Override
+	//	public int hashCode() {
+	//		final HashCode result = new HashCode(this);
+	//		result.append(_description);
+	//		result.append(_subParser1);
+	//		result.append(_subParser2);
+	//		result.append(_subParser3);
+	//		result.append(_subParser4);
+	//		result.append(_subParser5);
+	//		return result.get();
+	//	}
+	//	
+	//	@Override
+	//	public boolean equals(final Object object) {
+	//		if (this == object) {
+	//			return true;
+	//		} else if (null != object && getClass().equals(object.getClass())) {
+	//			final Combine5Parser<?, ?, ?, ?, ?, ?, ?> parser = (Combine5Parser<?, ?, ?, ?, ?, ?, ?>) object;
+	//			return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5);
+	//		} else {
+	//			return false;
+	//		}
+	//	}
 }
