@@ -15,11 +15,13 @@
  */
 package com.trazere.util.type;
 
+import com.trazere.util.function.Function1;
+import com.trazere.util.function.Function2;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.LangUtils;
 
 /**
- * The {@link Tuple2} class represents the 2-tuple (pair) data type which stores a sequence of 2 values.
+ * The {@link Tuple2} class represents a 2-tuple (pair) data types which stores sequences of 2 values.
  * 
  * @param <T1> Type of the first value.
  * @param <T2> Type of the second value.
@@ -27,27 +29,94 @@ import com.trazere.util.lang.LangUtils;
 public class Tuple2<T1, T2>
 extends Tuple1<T1> {
 	/**
-	 * Build a tuple with the given values.
+	 * Builds a tuple with the given values.
 	 * 
 	 * @param <T1> Type of the first value.
 	 * @param <T2> Type of the second value.
-	 * @param first First value. May be <code>null</code>.
-	 * @param second Second value. May be <code>null</code>.
-	 * @return The tuple.
+	 * @param first The first value. May be <code>null</code>.
+	 * @param second The second value. May be <code>null</code>.
+	 * @return The built tuple.
 	 */
 	public static <T1, T2> Tuple2<T1, T2> build(final T1 first, final T2 second) {
 		return new Tuple2<T1, T2>(first, second);
 	}
 	
 	/**
-	 * Compare the given tuples.
+	 * Builds a function which wraps its arguments in {@link Tuple2} instances (currying).
+	 * 
+	 * @param <T1> Type of the first value.
+	 * @param <T2> Type of the second value.
+	 * @param <X> Type of the exceptions.
+	 * @return The built function.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T1, T2, X extends Exception> Function2<T1, T2, Tuple2<T1, T2>, X> buildFunction() {
+		return (Function2<T1, T2, Tuple2<T1, T2>, X>) _BUILD_FUNCTION;
+	}
+	
+	private static final Function2<?, ?, ?, ?> _BUILD_FUNCTION = new Function2<Object, Object, Tuple2<Object, Object>, RuntimeException>() {
+		public Tuple2<Object, Object> evaluate(final Object first, final Object second) {
+			return Tuple2.build(first, second);
+		}
+	};
+	
+	/**
+	 * Instantiates a new instance with the given values.
+	 * 
+	 * @param first First value. May be <code>null</code>.
+	 * @param second Second value. May be <code>null</code>.
+	 */
+	public Tuple2(final T1 first, final T2 second) {
+		super(first);
+		
+		// Initialization.
+		_second = second;
+	}
+	
+	// Second.
+	
+	/** Second value. May be <code>null</code>. */
+	protected final T2 _second;
+	
+	/**
+	 * Gets the second value of the receiver tuple.
+	 * 
+	 * @return The value. May be <code>null</code>.
+	 */
+	public T2 getSecond() {
+		return _second;
+	}
+	
+	/**
+	 * Builds a function which gets the second value of the argument tuples.
+	 * 
+	 * @param <T1> Type of the first values of the tuples.
+	 * @param <T2> Type of the second values of the tuples.
+	 * @param <X> Type of the exceptions.
+	 * @return The built function.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T1, T2, X extends Exception> Function1<Tuple2<? extends T1, ? extends T2>, T2, X> getSecondFunction() {
+		return (Function1<Tuple2<? extends T1, ? extends T2>, T2, X>) _GET_SECOND_FUNCTION;
+	}
+	
+	private static final Function1<?, ?, ?> _GET_SECOND_FUNCTION = new Function1<Tuple2<Object, Object>, Object, RuntimeException>() {
+		public Object evaluate(final Tuple2<Object, Object> tuple) {
+			return tuple.getSecond();
+		}
+	};
+	
+	// Comparison.
+	
+	/**
+	 * Compares the given tuples.
 	 * <p>
 	 * The comparison is performed by comparing the respective values of the tuples in sequence.
 	 * 
 	 * @param <T1> Type of the first values.
 	 * @param <T2> Type of the second values.
-	 * @param tuple1 First tuple.
-	 * @param tuple2 Second tuple.
+	 * @param tuple1 The first tuple.
+	 * @param tuple2 The second tuple.
 	 * @return The result of the comparison as defined by the {@link Comparable#compareTo(Object)} method.
 	 * @see Comparable#compareTo(Object)
 	 */
@@ -60,30 +129,7 @@ extends Tuple1<T1> {
 		return 0 != comp1 ? comp1 : LangUtils.compare(tuple1._second, tuple2._second);
 	}
 	
-	/** Second value. May be <code>null</code>. */
-	protected final T2 _second;
-	
-	/**
-	 * Build a new instance with the given values.
-	 * 
-	 * @param first First value. May be <code>null</code>.
-	 * @param second Second value. May be <code>null</code>.
-	 */
-	public Tuple2(final T1 first, final T2 second) {
-		super(first);
-		
-		// Initialization.
-		_second = second;
-	}
-	
-	/**
-	 * Get the second value of the receiver tuple.
-	 * 
-	 * @return The value. May be <code>null</code>.
-	 */
-	public T2 getSecond() {
-		return _second;
-	}
+	// Object.
 	
 	@Override
 	public int hashCode() {
