@@ -112,6 +112,7 @@ public class TypeUtils {
 		return value.isSome() ? value.asSome().getValue().charValue() : defaultValue;
 	}
 	
+	// TODO: move as a member of Maybe
 	/**
 	 * Get the value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
 	 * 

@@ -147,8 +147,8 @@ implements RecordSignature<K, V>, Describable {
 		assert null != record;
 		
 		for (final Map.Entry<K, FieldSignature<K, ? extends V>> requirement : _fields.entrySet()) {
-			final K key = requirement.getKey();
-			if (!record.contains(key) || !requirement.getValue().acceptsValue(record.get(key))) {
+			final Maybe<? extends V> value = record.getMaybe(requirement.getKey());
+			if (value.isNone() || !requirement.getValue().acceptsValue(value.asSome().getValue())) {
 				return false;
 			}
 		}

@@ -15,9 +15,9 @@
  */
 package com.trazere.util.csv;
 
-import com.trazere.util.lang.InternalException;
-import com.trazere.util.record.MissingFieldException;
+import com.trazere.util.lang.MutableBoolean;
 import com.trazere.util.record.RecordException;
+import com.trazere.util.type.Maybe;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -123,33 +123,31 @@ public class CSVWriter {
 	 */
 	public void writeLine(final CSVLine line)
 	throws IOException {
-		boolean first = true;
-		for (final String header : _headers) {
-			// Delimiter.
-			if (!first) {
-				_writer.write(_delimiter);
-			} else {
-				first = false;
+		try {
+			final MutableBoolean first = new MutableBoolean(true);
+			for (final String header : _headers) {
+				// Delimiter.
+				if (!first.get()) {
+					_writer.write(_delimiter);
+				} else {
+					first.set(false);
+				}
+				
+				// Value.
+				final Maybe<String> maybeValue = line.getMaybe(header);
+				if (maybeValue.isSome()) {
+					final String value = maybeValue.asSome().getValue();
+					if (null != value) {
+						_writer.write(escapeValue(value));
+					}
+				}
 			}
 			
-			// Value.
-			if (line.contains(header)) {
-				final String value;
-				try {
-					value = line.get(header);
-				} catch (final MissingFieldException exception) {
-					throw new InternalException(exception);
-				} catch (final RecordException exception) {
-					throw (IOException) new IOException().initCause(exception);
-				}
-				if (null != value) {
-					_writer.write(escapeValue(value));
-				}
-			}
+			// New line.
+			_writer.write("\n");
+		} catch (final RecordException exception) {
+			throw (IOException) new IOException().initCause(exception);
 		}
-		
-		// New line.
-		_writer.write("\n");
 	}
 	
 	/**
