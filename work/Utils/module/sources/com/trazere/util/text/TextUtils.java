@@ -26,14 +26,11 @@ import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 /**
- * The <code>TextUtils</code> class provides various helpers regarding the manipulation of text.
+ * The {@link TextUtils} class provides various helpers regarding the manipulation of text.
  */
 public class TextUtils {
 	/**
@@ -405,7 +402,7 @@ public class TextUtils {
 		final StringBuilder builder = new StringBuilder();
 		for (int i = 0; i < bytes.length; i += 1) {
 			final byte b = bytes[i];
-			builder.append(HEX_DIGITS[(b >> 4) & 0xF]);
+			builder.append(HEX_DIGITS[b >> 4 & 0xF]);
 			builder.append(HEX_DIGITS[b & 0xF]);
 		}
 		return builder.toString();
@@ -421,105 +418,6 @@ public class TextUtils {
 		assert null != s;
 		
 		return s.replaceAll("[^\\w]", "\\\\$0"); // Escape all special chars
-	}
-	
-	/**
-	 * Escapes the XML entities of the given string.
-	 * 
-	 * @param s The string.
-	 * @return The escaped string.
-	 */
-	public static String escapeXmlEntities(final String s) {
-		return escapeXmlEntities(s, new StringBuilder()).toString();
-	}
-	
-	/**
-	 * Escapes the XML entities of the given string and appends it to the given builder.
-	 * 
-	 * @param s The string.
-	 * @param result The builder to fill.
-	 * @return The given builder.
-	 */
-	public static StringBuilder escapeXmlEntities(final String s, final StringBuilder result) {
-		assert null != s;
-		assert null != result;
-		
-		final int length = s.length();
-		for (int index = 0; index < length; index += 1) {
-			final char c = s.charAt(index);
-			if (_XML_ENTITIES.containsKey(c)) {
-				result.append("&").append(_XML_ENTITIES.get(c)).append(";");
-			} else {
-				result.append(c);
-			}
-		}
-		return result;
-	}
-	
-	private static final Map<Character, String> _XML_ENTITIES;
-	static {
-		final Map<Character, String> entities = new HashMap<Character, String>();
-		entities.put('&', "amp");
-		//		entities.put('\'', "apos");
-		entities.put('>', "gt");
-		entities.put('<', "lt");
-		entities.put('"', "quot");
-		_XML_ENTITIES = Collections.unmodifiableMap(entities);
-	}
-	
-	/**
-	 * Unescapes the XML entities of the given string.
-	 * 
-	 * @param s The string.
-	 * @return The escaped string.
-	 */
-	public static String unescapeXmlEntities(final String s) {
-		return unescapeXmlEntities(s, new StringBuilder()).toString();
-	}
-	
-	/**
-	 * Unescapes the XML entities of the given string and appends it to the given builder.
-	 * 
-	 * @param s The string.
-	 * @param result The builder to fill.
-	 * @return The given builder.
-	 */
-	public static StringBuilder unescapeXmlEntities(final String s, final StringBuilder result) {
-		assert null != s;
-		assert null != result;
-		
-		final int length = s.length();
-		for (int index = 0; index < length; index += 1) {
-			final char c = s.charAt(index);
-			if (c == '&') {
-				final int comaIndex = s.indexOf(';', index + 1);
-				if (comaIndex >= 0) {
-					final String entity = s.substring(index + 1, comaIndex);
-					if (_XML_CHARACTERS.containsKey(entity)) {
-						result.append(_XML_CHARACTERS.get(entity).charValue());
-						index = comaIndex;
-					} else {
-						result.append(c);
-					}
-				} else {
-					result.append(c);
-				}
-			} else {
-				result.append(c);
-			}
-		}
-		return result;
-	}
-	
-	private static final Map<String, Character> _XML_CHARACTERS;
-	static {
-		final Map<String, Character> chars = new HashMap<String, Character>();
-		chars.put("amp", '&');
-		//		entities.put("apos", '\'');
-		chars.put("gt", '>');
-		chars.put("lt", '<');
-		chars.put("quot", '"');
-		_XML_CHARACTERS = chars;
 	}
 	
 	/**

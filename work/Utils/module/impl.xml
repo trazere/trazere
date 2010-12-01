@@ -45,7 +45,9 @@
 		<javac destdir="${utils.build.classes}" source="${trazere.java.version}" debug="${trazere.java.debug}" target="${trazere.java.version}" failonerror="true" encoding="${trazere.java.encoding}">
 			<src location="${utils.sources}" />
 			<classpath>
+				<path refid="tools.ant.classpath" />
 				<path refid="tools.commons-logging.classpath" />
+				<path refid="tools.sjsxp.classpath" />
 			</classpath>
 		</javac>
 	</target>
