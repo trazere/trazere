@@ -403,7 +403,7 @@ implements Describable {
 	/**
 	 * Maps the value wrapped by the receiver instance.
 	 * 
-	 * @param <R> Type of the mapped value.
+	 * @param <R> Type of the result value.
 	 * @param <X> Type of the exceptions.
 	 * @param function The mapping function.
 	 * @return An instance containing the mapped value.
@@ -411,6 +411,28 @@ implements Describable {
 	 */
 	public abstract <R, X extends Exception> Maybe<R> map(final Function1<? super T, ? extends R, X> function)
 	throws X;
+	
+	/**
+	 * Builds a function which maps the values wrapped in the argument instances using the given function.
+	 * 
+	 * @param <T> Type of the argument values.
+	 * @param <R> Type of the result values.
+	 * @param <X> Type of the exceptions.
+	 * @param function The function.
+	 * @return The built function.
+	 */
+	public static <T, R, X extends Exception> Function1<Maybe<? extends T>, Maybe<R>, X> mapFunction(final Function1<? super T, ? extends R, ? extends X> function) {
+		assert null != function;
+		
+		return new Function1<Maybe<? extends T>, Maybe<R>, X>() {
+			public Maybe<R> evaluate(final Maybe<? extends T> value)
+			throws X {
+				assert null != value;
+				
+				return value.map(function);
+			}
+		};
+	}
 	
 	/**
 	 * Filters and maps the value wrapped by the receiver instance.
@@ -423,6 +445,28 @@ implements Describable {
 	 */
 	public abstract <R, X extends Exception> Maybe<R> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, X> function)
 	throws X;
+	
+	/**
+	 * Builds a function which filters and maps the values wrapped in the argument instances using the given function.
+	 * 
+	 * @param <T> Type of the argument values.
+	 * @param <R> Type of the result values.
+	 * @param <X> Type of the exceptions.
+	 * @param function The function.
+	 * @return The built function.
+	 */
+	public static <T, R, X extends Exception> Function1<Maybe<? extends T>, Maybe<R>, X> mapFilterFunction(final Function1<? super T, ? extends Maybe<? extends R>, ? extends X> function) {
+		assert null != function;
+		
+		return new Function1<Maybe<? extends T>, Maybe<R>, X>() {
+			public Maybe<R> evaluate(final Maybe<? extends T> value)
+			throws X {
+				assert null != value;
+				
+				return value.mapFilter(function);
+			}
+		};
+	}
 	
 	@Override
 	public final String toString() {

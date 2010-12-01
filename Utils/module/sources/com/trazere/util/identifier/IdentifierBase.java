@@ -61,7 +61,7 @@ public abstract class IdentifierBase<V, I extends Identifier<V>> {
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
 	 */
-	public <X extends Exception> Function1<V, I, X> getFromValueFunction() {
+	public <X extends Exception> Function1<V, I, X> fromValueFunction() {
 		return new Function1<V, I, X>() {
 			public I evaluate(final V value) {
 				return fromValue(value);

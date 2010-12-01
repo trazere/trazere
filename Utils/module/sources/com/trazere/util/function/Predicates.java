@@ -134,7 +134,7 @@ public class Predicates {
 	 * @param f The (inner) function.
 	 * @return The built function.
 	 */
-	public static <T1, T2, X extends Exception> Predicate1<T1, X> compose(final Predicate1<? super T2, ? extends X> g, final Function1<T1, ? extends T2, ? extends X> f) {
+	public static <T1, T2, X extends Exception> Predicate1<T1, X> compose(final Predicate1<? super T2, ? extends X> g, final Function1<? super T1, ? extends T2, ? extends X> f) {
 		assert null != g;
 		assert null != f;
 		

@@ -79,13 +79,13 @@ public class Functions {
 	 * 
 	 * @param <T1> Type of the argument values of the inner function.
 	 * @param <T2> Type of the argument values of the outer function.
-	 * @param <T3> Type of the results.
+	 * @param <T3> Type of the result values.
 	 * @param <X> Type of the exceptions.
 	 * @param g The outer function.
 	 * @param f The inner function.
 	 * @return The built function.
 	 */
-	public static <T1, T2, T3, X extends Exception> Function1<T1, T3, X> compose(final Function1<? super T2, ? extends T3, ? extends X> g, final Function1<T1, ? extends T2, ? extends X> f) {
+	public static <T1, T2, T3, X extends Exception> Function1<T1, T3, X> compose(final Function1<? super T2, ? extends T3, ? extends X> g, final Function1<? super T1, ? extends T2, ? extends X> f) {
 		assert null != g;
 		assert null != f;
 		
