@@ -30,9 +30,6 @@ import com.trazere.util.type.Maybe;
  */
 public class MutableReference<T>
 implements Reference<T>, Releasable<RuntimeException>, Describable {
-	/** The value. */
-	protected Maybe<T> _value;
-	
 	/**
 	 * Instantiates an unset reference.
 	 */
@@ -60,6 +57,11 @@ implements Reference<T>, Releasable<RuntimeException>, Describable {
 		// Initialization.
 		_value = value;
 	}
+	
+	// Value.
+	
+	/** The value. */
+	protected Maybe<T> _value;
 	
 	/**
 	 * Tests whether the receiver reference is set.
@@ -121,7 +123,13 @@ implements Reference<T>, Releasable<RuntimeException>, Describable {
 	 * @throws ReferenceNotSetException When the reference has not been set.
 	 */
 	public void reset() {
-		_value = Maybe.none();
+		if (_value.isSome()) {
+			// Dispose.
+			dispose(_value.asSome().getValue());
+			
+			// Reset.
+			_value = Maybe.none();
+		}
 	}
 	
 	/**
@@ -134,6 +142,12 @@ implements Reference<T>, Releasable<RuntimeException>, Describable {
 	 * @return The given value. May be <code>null</code>.
 	 */
 	public <V extends T> V update(final V value) {
+		// Dispose.
+		if (_value.isSome()) {
+			dispose(_value.asSome().getValue());
+		}
+		
+		// Set.
 		_value = Maybe.<T>some(value);
 		
 		return value;
@@ -151,7 +165,6 @@ implements Reference<T>, Releasable<RuntimeException>, Describable {
 	public <V extends T> Maybe<V> update(final Maybe<V> value) {
 		assert null != value;
 		
-		// Update.
 		if (value.isSome()) {
 			update(value.asSome().getValue());
 		} else {
@@ -159,6 +172,17 @@ implements Reference<T>, Releasable<RuntimeException>, Describable {
 		}
 		
 		return value;
+	}
+	
+	/**
+	 * Disposes the given current value of the receiver reference.
+	 * <p>
+	 * This methods is called when the receiver set reference is reset or updated. The defaut implementation does nothing.
+	 * 
+	 * @param value The value. May be <code>null</code>.
+	 */
+	protected void dispose(final T value) {
+		// Nothing to do.
 	}
 	
 	public T get()
@@ -174,9 +198,13 @@ implements Reference<T>, Releasable<RuntimeException>, Describable {
 		return _value;
 	}
 	
+	// Releasable.
+	
 	public void release() {
 		reset();
 	}
+	
+	// Object.
 	
 	@Override
 	public int hashCode() {

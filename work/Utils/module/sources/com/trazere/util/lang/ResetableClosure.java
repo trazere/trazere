@@ -17,6 +17,7 @@ package com.trazere.util.lang;
 
 import com.trazere.util.Releasable;
 import com.trazere.util.function.Function0;
+import com.trazere.util.lang.ref.MutableReference;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
@@ -36,7 +37,7 @@ import com.trazere.util.type.Maybe.Some;
 public abstract class ResetableClosure<T, X extends Exception>
 implements Closure<T, X>, Releasable<RuntimeException>, Describable {
 	/**
-	 * Build a closure evaluating to the given value.
+	 * Builds a closure evaluating to the given value.
 	 * 
 	 * @param <T> Type of the value.
 	 * @param <X> Type of the exceptions.
@@ -59,7 +60,7 @@ implements Closure<T, X>, Releasable<RuntimeException>, Describable {
 	}
 	
 	/**
-	 * Build a closure evaluating to the result of the given function.
+	 * Builds a closure evaluating to the result of the given function.
 	 * 
 	 * @param <T> Type of the value.
 	 * @param <X> Type of the exceptions.
@@ -82,22 +83,27 @@ implements Closure<T, X>, Releasable<RuntimeException>, Describable {
 		};
 	}
 	
+	// Closure.
+	
 	/** The value. */
-	protected Maybe<T> _value = Maybe.none();
+	protected final MutableReference<T> _value = new MutableReference<T>() {
+		@Override
+		protected void dispose(final T value) {
+			ResetableClosure.this.dispose(value);
+		}
+	};
 	
 	public T evaluate()
 	throws X {
-		if (_value.isSome()) {
-			return _value.asSome().getValue();
+		if (_value.isSet()) {
+			return _value.get();
 		} else {
-			final T value = compute();
-			_value = Maybe.some(value);
-			return value;
+			return _value.set(compute());
 		}
 	}
 	
 	/**
-	 * Compute the value of the receiver closure.
+	 * Computes the value of the receiver closure.
 	 * 
 	 * @return The computed value. May be <code>null</code>.
 	 * @throws X When the computation fails.
@@ -105,15 +111,26 @@ implements Closure<T, X>, Releasable<RuntimeException>, Describable {
 	protected abstract T compute()
 	throws X;
 	
+	/**
+	 * Disposes the given current value of the receiver closure.
+	 * <p>
+	 * This methods is called when the receiver evaluated closure is reset. The defaut implementation does nothing.
+	 * 
+	 * @param value The value. May be <code>null</code>.
+	 */
+	protected void dispose(final T value) {
+		// Nothing to do.
+	}
+	
 	public boolean isEvaluated() {
-		return _value.isSome();
+		return _value.isSet();
 	}
 	
 	/**
 	 * Reset the value memoized in the receiver closure. The value will be computed (again) during the next call to {@link #evaluate()}.
 	 */
 	public void reset() {
-		_value = Maybe.none();
+		_value.reset();
 	}
 	
 	/**
@@ -122,16 +139,20 @@ implements Closure<T, X>, Releasable<RuntimeException>, Describable {
 	 * @return The computed value wrapped in {@link Some}, or {@link None} when the value has not been computed yet.
 	 */
 	public Maybe<T> asMaybe() {
-		return _value;
+		return _value.asMaybe();
 	}
+	
+	// Releasable.
 	
 	public void release() {
 		reset();
 	}
 	
+	// Object.
+	
 	@Override
 	public String toString() {
-		return _value.isSome() ? String.valueOf(_value.asSome().getValue()) : TextUtils.computeDescription(this);
+		return _value.isSet() ? String.valueOf(_value.get()) : TextUtils.computeDescription(this);
 	}
 	
 	public void fillDescription(final Description description) {
