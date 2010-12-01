@@ -17,6 +17,7 @@ package com.trazere.util.collection;
 
 import com.trazere.util.function.Function1;
 import com.trazere.util.lang.MutableObject;
+import com.trazere.util.lang.ThrowableFactory;
 import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Tuple2;
 import java.util.ArrayList;
@@ -34,11 +35,11 @@ import java.util.Queue;
 import java.util.Set;
 
 /**
- * The {@link CollectionUtils} class provides various helpers regarding collections and maps.
+ * The {@link CollectionUtils} class provides various utilities regarding the manipulation of collections and maps.
  */
 public class CollectionUtils {
 	/**
-	 * Build a new list containing the given value.
+	 * Builds a new list containing the given value.
 	 * <p>
 	 * This method instantiates an {@link ArrayList}.
 	 * 
@@ -53,7 +54,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Build a new list containing the given values.
+	 * Builds a new list containing the given values.
 	 * <p>
 	 * This method instantiates an {@link ArrayList}.
 	 * 
@@ -70,7 +71,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Build a new list containing the given values.
+	 * Builds a new list containing the given values.
 	 * <p>
 	 * This method instantiates an {@link ArrayList}.
 	 * 
@@ -89,7 +90,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Build a new list containing the given values.
+	 * Builds a new list containing the given values.
 	 * <p>
 	 * This method instantiates an {@link ArrayList}.
 	 * 
@@ -108,7 +109,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Build a new list containing the given value.
+	 * Builds a new list containing the given value.
 	 * <p>
 	 * This method instantiates an {@link ArrayList}.
 	 * 
@@ -127,7 +128,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Build a set containing the given value.
+	 * Builds a set containing the given value.
 	 * <p>
 	 * This method instantiates a {@link HashSet}.
 	 * 
@@ -142,7 +143,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Build a set containing the given values.
+	 * Builds a set containing the given values.
 	 * <p>
 	 * This method instantiates a {@link HashSet}.
 	 * 
@@ -159,7 +160,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Build a set containing the given values.
+	 * Builds a set containing the given values.
 	 * <p>
 	 * This method instantiates a {@link HashSet}.
 	 * 
@@ -178,7 +179,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Build a set containing the given values.
+	 * Builds a set containing the given values.
 	 * <p>
 	 * This method instantiates a {@link HashSet}.
 	 * 
@@ -197,7 +198,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Build a set containing the given value.
+	 * Builds a set containing the given value.
 	 * <p>
 	 * This method instantiates a {@link HashSet}.
 	 * 
@@ -216,7 +217,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Build a map containing the binding of the given key and value.
+	 * Builds a map containing the binding of the given key and value.
 	 * <p>
 	 * This method instantiates a {@link HashMap}.
 	 * 
@@ -233,7 +234,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Build a map containing the bindings of the given keys and values.
+	 * Builds a map containing the bindings of the given keys and values.
 	 * <p>
 	 * This method instantiates a {@link HashMap}.
 	 * 
@@ -252,6 +253,17 @@ public class CollectionUtils {
 		return result;
 	}
 	
+	/**
+	 * Builds an iterator over no values.
+	 * 
+	 * @param <T> Type of the the values.
+	 * @return The built iterator.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> Iterator<T> iterator() {
+		return (Iterator<T>) _EMPTY_ITERATOR;
+	}
+	
 	private static final Iterator<?> _EMPTY_ITERATOR = new Iterator<Object>() {
 		public boolean hasNext() {
 			return false;
@@ -267,18 +279,7 @@ public class CollectionUtils {
 	};
 	
 	/**
-	 * Build an iterator over no values.
-	 * 
-	 * @param <T> Type of the the values.
-	 * @return The built iterator.
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T> Iterator<T> iterator() {
-		return (Iterator<T>) _EMPTY_ITERATOR;
-	}
-	
-	/**
-	 * Build an iterator over the given values.
+	 * Builds an iterator over the given values.
 	 * 
 	 * @param <T> Type of the the values.
 	 * @param values The values.
@@ -308,7 +309,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Get the next value from the given iterator.
+	 * Gets the next value from the given iterator.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param values The values.
@@ -321,7 +322,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Get an element from the given collection.
+	 * Gets an element from the given collection.
 	 * 
 	 * @param <T> Type of the elements.
 	 * @param collection The collection.
@@ -334,7 +335,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Get a binding from the given map.
+	 * Gets a binding from the given map.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -348,7 +349,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Get the least given value according to the given comparator.
+	 * Gets the least given value according to the given comparator.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param comparator The comparator.
@@ -362,7 +363,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Get the least given value according to the given comparator.
+	 * Gets the least given value according to the given comparator.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param comparator The comparator.
@@ -390,7 +391,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Get the element of the given list corresponding to the given index.
+	 * Gets the element of the given list corresponding to the given index.
 	 * 
 	 * @param <T> Type of the elements.
 	 * @param list The list.
@@ -404,7 +405,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Get the first element of the given list.
+	 * Gets the first element of the given list.
 	 * 
 	 * @param <T> Type of the elements.
 	 * @param list The list.
@@ -415,7 +416,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Get the last element of the given list.
+	 * Gets the last element of the given list.
 	 * 
 	 * @param <T> Type of the elements.
 	 * @param list The list.
@@ -426,7 +427,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Add the given value to the given collection.
+	 * Adds the given value to the given collection.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param collection The collection.
@@ -442,7 +443,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Remove an element from the given collection.
+	 * Removes an element from the given collection.
 	 * <p>
 	 * This method does modify the given collection.
 	 * 
@@ -464,7 +465,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Get the value identified by the given key in the given map.
+	 * Gets the value identified by the given key in the given map.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -479,7 +480,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Get the value identified by the given key in the given map.
+	 * Gets the value identified by the given key in the given map.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -495,7 +496,32 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Add the given binding to the given map.
+	 * Gets the value identified by the given key in the given map.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @param map The map.
+	 * @param key The key. May be <code>null</code>.
+	 * @param throwableFactory The throwable factory.
+	 * @return The value identified by the key if any, or the default value.
+	 * @throws X When no values is identified by the given key in the map.
+	 */
+	public static <K, V, X extends Exception> V get(final Map<? super K, ? extends V> map, final K key, final ThrowableFactory<X> throwableFactory)
+	throws X {
+		assert null != map;
+		assert null != key;
+		assert null != throwableFactory;
+		
+		if (map.containsKey(key)) {
+			return map.get(key);
+		} else {
+			throw throwableFactory.build("Missing value for key \"" + key + "\"");
+		}
+	}
+	
+	/**
+	 * Adds the given binding to the given map.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -513,7 +539,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Reverse the given list.
+	 * Reverses the given list.
 	 * <p>
 	 * This method does modify the given list.
 	 * 
@@ -530,7 +556,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Sort the given list using the given comparator.
+	 * Sorts the given list using the given comparator.
 	 * <p>
 	 * This method does modify the given list.
 	 * 
@@ -547,7 +573,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Sort the given list using the given comparator.
+	 * Sorts the given list using the given comparator.
 	 * <p>
 	 * This method does modify the given list.
 	 * 
@@ -566,7 +592,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Sort the given values topologically and populate the given list with the sorted values.
+	 * Sorts the given values topologically and populates the given list with the sorted values.
 	 * <p>
 	 * The dependencies between the values are computed using the given function. This function must compute the values whose the argument value depends on. The
 	 * computed values must belong to the values to sort.
@@ -614,7 +640,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Sort the given values topologically and populate the given list with the sorted regions.
+	 * Sorts the given values topologically and populates the given list with the sorted regions.
 	 * <p>
 	 * A region is a set of values which have no dependencies on each other. They however do have dependencies on some values of the previous region.
 	 * <p>
@@ -756,7 +782,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Compute the union of the given collections and populate the given result collection with it.
+	 * Computes the union of the given collections and populates the given result collection with it.
 	 * <p>
 	 * When the populated collection is ordered, the items of the first given collection precede the items of the second one.
 	 * 
@@ -778,7 +804,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Compute the union of the given maps and populate the given result map with it.
+	 * Computes the union of the given maps and populates the given result map with it.
 	 * <p>
 	 * The values of the first map have precedence over the values of the second map when their domains intersect.
 	 * 
@@ -801,7 +827,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Test whether the given collections intersect. The collections instersect when they have some common value.
+	 * Tests whether the given collections intersect. The collections instersect when they have some common value.
 	 * <p>
 	 * This method iterates over the first collection and tests the presence of the values within the second collection. Therefore, providing a smaller first
 	 * collection and a second collection with a faster test method is more efficient.
@@ -824,7 +850,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Compute the intersection of the given collections and populate the given result collection with it.
+	 * Computes the intersection of the given collections and populates the given result collection with it.
 	 * <p>
 	 * This method iterates over the first collection and tests the presence of the values within the second collection. Therefore, providing a smaller first
 	 * collection and a second collection with a faster test method is more efficient.
@@ -850,7 +876,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Compute the exclusion of given collections (first minus second) and populate the given result collection with it.
+	 * Computes the exclusion of given collections (first minus second) and populates the given result collection with it.
 	 * <p>
 	 * This method iterates over the first collection and tests the presence of the values within the second collection. Therefore, providing a smaller first
 	 * collection and a second collection with a faster test method is more efficient.
@@ -876,7 +902,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Fill the given map with bindings of the given value identified by the given keys.
+	 * Fills the given map with bindings of the given value identified by the given keys.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -897,7 +923,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Get the bindings of the given map identified by the given keys and populate the given result map with them.
+	 * Gets the bindings of the given map identified by the given keys and populates the given result map with them.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -922,7 +948,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Get the bindings of the given map not identified by the given keys and populate the given result map with them.
+	 * Gets the bindings of the given map not identified by the given keys and populates the given result map with them.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -947,7 +973,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Group the elements of the given lists and populate the given result list with the pairs.
+	 * Groups the elements of the given lists and populates the given result list with the pairs.
 	 * <p>
 	 * The pairs are formed with respect of the positions of the values in the lists. The extra values of the longest list are dropped when the lists don't have
 	 * the same length.
@@ -968,7 +994,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Group the elements provided by the given iterators and populate the given result list with the pairs.
+	 * Groups the elements provided by the given iterators and populates the given result list with the pairs.
 	 * <p>
 	 * The pairs are formed with respect of the order of the iterators. The extra values of the longest iterator are dropped when the given iterators don't
 	 * provide the same number of elements.
@@ -993,7 +1019,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Decompose the pairs of the given collection and populate the given collections with the first and second values.
+	 * Decomposes the pairs of the given collection and populates the given collections with the first and second values.
 	 * 
 	 * @param <T1> Type of the first values.
 	 * @param <T2> Type of the second values.
@@ -1010,7 +1036,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Decompose the pairs provided by the given iterator and populate the given collections with the first and second values.
+	 * Decomposes the pairs provided by the given iterator and populates the given collections with the first and second values.
 	 * 
 	 * @param <T1> Type of the first values.
 	 * @param <T2> Type of the second values.
@@ -1031,7 +1057,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Extract the bindings of the given map and populate the given collection with them.
+	 * Extracts the bindings of the given map and populates the given collection with them.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.

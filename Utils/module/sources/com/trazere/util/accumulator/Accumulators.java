@@ -127,7 +127,7 @@ public class Accumulators {
 		return new AbstractFoldAccumulator<Boolean, Boolean, X>(initialValue) {
 			@Override
 			protected Boolean fold(final Boolean accumulator, final Boolean value) {
-				return LangUtils.getBoolean(accumulator, false) && LangUtils.getBoolean(value, false);
+				return LangUtils.get(accumulator, false) && LangUtils.get(value, false);
 			}
 		};
 	}
@@ -143,7 +143,7 @@ public class Accumulators {
 		return new AbstractFoldAccumulator<Boolean, Boolean, X>(initialValue) {
 			@Override
 			protected Boolean fold(final Boolean accumulator, final Boolean value) {
-				return LangUtils.getBoolean(accumulator, false) || LangUtils.getBoolean(value, false);
+				return LangUtils.get(accumulator, false) || LangUtils.get(value, false);
 			}
 		};
 	}
