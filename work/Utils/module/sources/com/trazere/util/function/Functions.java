@@ -17,6 +17,7 @@ package com.trazere.util.function;
 
 import com.trazere.util.collection.CollectionUtils;
 import com.trazere.util.collection.Multimap;
+import com.trazere.util.lang.ThrowableFactory;
 import com.trazere.util.record.Record;
 import com.trazere.util.record.RecordException;
 import com.trazere.util.type.Maybe;
@@ -408,6 +409,30 @@ public class Functions {
 		return new Function1<K, V, X>() {
 			public V evaluate(final K key) {
 				return CollectionUtils.get(map, key, defaultValue);
+			}
+		};
+	}
+	
+	/**
+	 * Builds a function corresponding to the given map.
+	 * <p>
+	 * The built function evaluates to the values associated to the keys in the map and throws an exception the other keys.
+	 * 
+	 * @param <K> Type of the argument (the keys of the map).
+	 * @param <V> Type of the results (the values values).
+	 * @param <X> Type of the exceptions.
+	 * @param map The map.
+	 * @param throwableFactory The throwable factory.
+	 * @return The built function.
+	 */
+	public static <K, V, X extends Exception> Function1<K, V, X> map(final Map<? super K, ? extends V> map, final ThrowableFactory<X> throwableFactory) {
+		assert null != map;
+		assert null != throwableFactory;
+		
+		return new Function1<K, V, X>() {
+			public V evaluate(final K key)
+			throws X {
+				return CollectionUtils.get(map, key, throwableFactory);
 			}
 		};
 	}
