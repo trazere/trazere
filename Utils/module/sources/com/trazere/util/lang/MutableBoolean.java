@@ -28,7 +28,7 @@ implements Describable {
 	protected boolean _value;
 	
 	/**
-	 * Instantiate a new mutable boolean with the given value.
+	 * Instantiates a new mutable boolean with the given value.
 	 * 
 	 * @param value The initial value.
 	 */
@@ -38,7 +38,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Get the value set in the receiver mutable boolean.
+	 * Gets the value of the receiver mutable boolean.
 	 * 
 	 * @return The value.
 	 */
@@ -47,37 +47,46 @@ implements Describable {
 	}
 	
 	/**
-	 * Set the receiver mutable boolean to the given value.
+	 * Sets the value of the receiver mutable boolean to the given value.
 	 * 
 	 * @param value The value.
+	 * @return The given value.
 	 */
-	public void set(final boolean value) {
+	public boolean set(final boolean value) {
 		_value = value;
+		return value;
 	}
 	
 	/**
-	 * Inverse the value of the receiver mutable boolean.
+	 * Inverses the value of the receiver mutable boolean.
+	 * 
+	 * @return The resulting value.
 	 */
-	public void not() {
+	public boolean not() {
 		_value = !_value;
+		return _value;
 	}
 	
 	/**
-	 * Update the value of the receiver mutable boolean by conjunction with the given value.
+	 * Updates the value of the receiver mutable boolean by conjunction with the given value.
 	 * 
 	 * @param value The value.
+	 * @return The resulting value.
 	 */
-	public void and(final boolean value) {
+	public boolean and(final boolean value) {
 		_value = _value && value;
+		return _value;
 	}
 	
 	/**
-	 * Update the value of the receiver mutable boolean by disjunction with the given value.
+	 * Updates the value of the receiver mutable boolean by disjunction with the given value.
 	 * 
 	 * @param value The value.
+	 * @return The resulting value.
 	 */
-	public void or(final boolean value) {
+	public boolean or(final boolean value) {
 		_value = _value || value;
+		return _value;
 	}
 	
 	@Override

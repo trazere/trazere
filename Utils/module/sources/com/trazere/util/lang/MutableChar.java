@@ -28,7 +28,7 @@ implements Describable {
 	protected char _value;
 	
 	/**
-	 * Instantiate a new mutable char with the given value.
+	 * Instantiates a new mutable char with the given value.
 	 * 
 	 * @param value The initial value.
 	 */
@@ -38,7 +38,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Get the value set in the receiver mutable char.
+	 * Gets the value of the receiver mutable char.
 	 * 
 	 * @return The value.
 	 */
@@ -47,12 +47,14 @@ implements Describable {
 	}
 	
 	/**
-	 * Set the receiver mutable char to the given value.
+	 * Sets the value of the receiver mutable boolean to the given value.
 	 * 
 	 * @param value The value.
+	 * @return The given value.
 	 */
-	public void set(final char value) {
+	public char set(final char value) {
 		_value = value;
+		return value;
 	}
 	
 	@Override

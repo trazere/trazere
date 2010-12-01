@@ -20,29 +20,29 @@ import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
 
 /**
- * The {@link MutableByte} class represents mutable byte values.
+ * The {@link MutableShort} class represents mutable short values.
  */
-public class MutableByte
+public class MutableShort
 implements Describable {
 	/** The value. */
-	protected byte _value;
+	protected short _value;
 	
 	/**
-	 * Instantiates a new mutable byte with the given value.
+	 * Instantiates a new mutable short with the given value.
 	 * 
 	 * @param value The initial value.
 	 */
-	public MutableByte(final byte value) {
+	public MutableShort(final short value) {
 		// Initialization.
 		_value = value;
 	}
 	
 	/**
-	 * Gets the value of the receiver mutable byte.
+	 * Gets the value of the receiver mutable short.
 	 * 
 	 * @return The value.
 	 */
-	public byte get() {
+	public short get() {
 		return _value;
 	}
 	
@@ -52,7 +52,7 @@ implements Describable {
 	 * @param value The value.
 	 * @return The given value.
 	 */
-	public byte set(final byte value) {
+	public short set(final short value) {
 		_value = value;
 		return value;
 	}
