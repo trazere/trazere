@@ -15,47 +15,57 @@
  */
 package com.trazere.util.identifier;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.trazere.util.collection.LazyMap;
+import com.trazere.util.function.Function1;
 
 /**
- * The {@link IdentifierBase} abstract class helps to build identifiers from their value.
+ * The {@link IdentifierBase} abstract class represents repositories of identifiers which help to build them from their values.
  * <p>
- * This class normalizes the built identifiers according to their value so that they can be compared physically.
+ * The built identifiers are normalized according to the egality of their values so that they can be compared physically.
  * 
- * @param <T> Type of the values of the identifier.
+ * @param <V> Type of the values of the identifier.
  * @param <I> Type of the identifiers.
  */
-public abstract class IdentifierBase<T, I extends Identifier<T>> {
+public abstract class IdentifierBase<V, I extends Identifier<V>> {
 	/** Identifiers identified by their values. */
-	private final Map<T, I> _identifiers = new HashMap<T, I>();
-	
-	/**
-	 * Get the identifier corresponding to the given value.
-	 * 
-	 * @param value Value of the identifier.
-	 * @return The identifier.
-	 */
-	public final I fromValue(final T value) {
-		assert null != value;
-		
-		// Look in the cache.
-		if (_identifiers.containsKey(value)) {
-			return _identifiers.get(value);
+	private final LazyMap<V, I, RuntimeException> _identifiers = new LazyMap<V, I, RuntimeException>() {
+		@Override
+		protected I compute(final V value) {
+			return IdentifierBase.this.build(value);
 		}
-		
-		// Build the identifier.
-		final I identifier = build(value);
-		_identifiers.put(value, identifier);
-		
-		return identifier;
-	}
+	};
 	
 	/**
-	 * Build the identifier with the given value.
+	 * Builds the identifier with the given value.
 	 * 
 	 * @param value The value.
 	 * @return The built identifier.
 	 */
-	protected abstract I build(final T value);
+	protected abstract I build(final V value);
+	
+	/**
+	 * Gets the identifier corresponding to the given value.
+	 * 
+	 * @param value The value.
+	 * @return The identifier.
+	 */
+	public final I fromValue(final V value) {
+		assert null != value;
+		
+		return _identifiers.get(value);
+	}
+	
+	/**
+	 * Gets a function which gets the identifiers of the receiver base from their values.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @return The built function.
+	 */
+	public <X extends Exception> Function1<V, I, X> getFromValueFunction() {
+		return new Function1<V, I, X>() {
+			public I evaluate(final V value) {
+				return fromValue(value);
+			}
+		};
+	}
 }
