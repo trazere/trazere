@@ -59,7 +59,6 @@
 	<target name="utils.buildJar" depends="utils.compileSources">
 		<mkdir dir="${utils.build}" />
 		<jar destfile="${utils.build.jar}">
-			<fileset dir="${utils.sources}" includes="**/*.java" />
 			<fileset dir="${utils.build.classes}" includes="**/*.class" />
 		</jar>
 	</target>
