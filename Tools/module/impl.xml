@@ -33,4 +33,16 @@
 			<include name="commons-logging.jar" />
 		</fileset>
 	</path>
+
+	<!-- SJSXP -->
+	<property name="tools.sjsxp" location="${tools.module}/sjsxp-1.0.1" />
+	<path id="tools.sjsxp.classpath">
+		<fileset id="tools.sjsxp.endorsed.jars" dir="${tools.sjsxp}">
+			<include name="jsr173_1.0_api.jar" />
+			<include name="sjsxp.jar" />
+		</fileset>
+	</path>
+	<union id="tools.sjsxp.endorsed.libs">
+		<resources refid="tools.sjsxp.endorsed.jars" />
+	</union>
 </project>
