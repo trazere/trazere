@@ -15,8 +15,8 @@
  */
 package com.trazere.util.closure;
 
-import com.trazere.util.Releasable;
 import com.trazere.util.function.Function0;
+import com.trazere.util.lang.Releasable;
 import com.trazere.util.reference.MutableReference;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.Description;
