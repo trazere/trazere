@@ -17,7 +17,7 @@ package com.trazere.util.accumulator;
 
 import com.trazere.util.function.Function2;
 import com.trazere.util.lang.LangUtils;
-import com.trazere.util.lang.ref.MutableReference;
+import com.trazere.util.reference.MutableReference;
 import java.util.Collection;
 
 /**

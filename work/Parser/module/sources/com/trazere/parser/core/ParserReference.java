@@ -20,7 +20,7 @@ import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserState;
 import com.trazere.util.lang.HashCode;
-import com.trazere.util.lang.ref.MutableReference;
+import com.trazere.util.reference.MutableReference;
 
 /**
  * DOCME

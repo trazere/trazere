@@ -17,7 +17,7 @@ package com.trazere.util.collection;
 
 import com.trazere.util.function.Predicate1;
 import com.trazere.util.lang.MutableBoolean;
-import com.trazere.util.lang.ref.MutableReference;
+import com.trazere.util.reference.MutableReference;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 

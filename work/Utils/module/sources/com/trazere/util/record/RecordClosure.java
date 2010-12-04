@@ -15,8 +15,8 @@
  */
 package com.trazere.util.record;
 
-import com.trazere.util.lang.Closure;
-import com.trazere.util.lang.ResetableClosure;
+import com.trazere.util.closure.Closure;
+import com.trazere.util.closure.ResetableClosure;
 import com.trazere.util.text.Description;
 import com.trazere.util.value.RecordReader;
 import com.trazere.util.value.ValueException;
