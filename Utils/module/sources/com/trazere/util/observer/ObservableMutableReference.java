@@ -13,14 +13,12 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.lang.ref;
+package com.trazere.util.observer;
 
 import com.trazere.util.function.Predicate1;
 import com.trazere.util.lang.LangUtils;
-import com.trazere.util.observer.LiveObserver;
-import com.trazere.util.observer.Observer;
-import com.trazere.util.observer.ObserverSubscription;
-import com.trazere.util.observer.SimpleObservable;
+import com.trazere.util.reference.MutableReference;
+import com.trazere.util.reference.ReferenceAlreadySetException;
 import com.trazere.util.type.Maybe;
 
 /**
@@ -28,13 +26,13 @@ import com.trazere.util.type.Maybe;
  * 
  * @param <T> Type of the referenced values.
  */
-public class MutableObservableReference<T>
+public class ObservableMutableReference<T>
 extends MutableReference<T>
 implements ObservableReference<T> {
 	/**
 	 * Instantiates an unset reference.
 	 */
-	public MutableObservableReference() {
+	public ObservableMutableReference() {
 		super();
 	}
 	
@@ -43,7 +41,7 @@ implements ObservableReference<T> {
 	 * 
 	 * @param value The value. May be <code>null</code>.
 	 */
-	public MutableObservableReference(final T value) {
+	public ObservableMutableReference(final T value) {
 		super(value);
 	}
 	
@@ -52,7 +50,7 @@ implements ObservableReference<T> {
 	 * 
 	 * @param value The value.
 	 */
-	public MutableObservableReference(final Maybe<T> value) {
+	public ObservableMutableReference(final Maybe<T> value) {
 		super(value);
 	}
 	
