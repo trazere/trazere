@@ -13,9 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util;
-
-// TODO: move in another package
+package com.trazere.util.lang;
 
 /**
  * The {@link Releasable} interface defines items which can be released.
@@ -23,6 +21,11 @@ package com.trazere.util;
  * @param <X> Type of the exceptions.
  */
 public interface Releasable<X extends Exception> {
+	/**
+	 * Releases the receiver releasable.
+	 * 
+	 * @throws X When the release fails.
+	 */
 	public void release()
 	throws X;
 }

@@ -15,9 +15,9 @@
  */
 package com.trazere.util.reference;
 
-import com.trazere.util.Releasable;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.LangUtils;
+import com.trazere.util.lang.Releasable;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
