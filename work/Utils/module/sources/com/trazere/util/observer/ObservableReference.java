@@ -13,9 +13,9 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.lang.ref;
+package com.trazere.util.observer;
 
-import com.trazere.util.observer.Observable;
+import com.trazere.util.reference.Reference;
 import com.trazere.util.type.Maybe;
 
 /**

@@ -19,9 +19,9 @@ import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserState;
+import com.trazere.util.closure.Closure;
+import com.trazere.util.closure.ResetableClosure;
 import com.trazere.util.function.Function0;
-import com.trazere.util.lang.Closure;
-import com.trazere.util.lang.ResetableClosure;
 
 /**
  * DOCME

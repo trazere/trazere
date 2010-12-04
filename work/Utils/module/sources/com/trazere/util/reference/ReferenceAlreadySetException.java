@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.lang.ref;
+package com.trazere.util.reference;
 
 /**
  * {@link ReferenceAlreadySetException} exceptions are thrown when trying to set some reference which has already been set.

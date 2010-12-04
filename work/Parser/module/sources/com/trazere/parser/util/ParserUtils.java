@@ -23,7 +23,7 @@ import com.trazere.parser.ParserSource;
 import com.trazere.parser.core.CoreParsers;
 import com.trazere.parser.impl.ParserFailureImpl;
 import com.trazere.util.function.Procedure2;
-import com.trazere.util.lang.ref.MutableReference;
+import com.trazere.util.reference.MutableReference;
 import com.trazere.util.text.TextUtils;
 import com.trazere.util.type.Either;
 import com.trazere.util.type.Maybe;

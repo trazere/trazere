@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.lang.ref;
+package com.trazere.util.reference;
 
 /**
  * {@link ReferenceNotSetException} exceptions are thrown when trying to reset some reference which has not been set.
