@@ -82,17 +82,16 @@ public class Tuple1<T1> {
 	 * Builds a function which gets the first value of the argument tuples.
 	 * 
 	 * @param <T1> Type of the first values of the tuples.
-	 * @param <T2> Type of the second values of the tuples.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T1, T2, X extends Exception> Function1<Tuple2<? extends T1, ? extends T2>, T1, X> getFirstFunction() {
-		return (Function1<Tuple2<? extends T1, ? extends T2>, T1, X>) _GET_FIRST_FUNCTION;
+	public static <T1, X extends Exception> Function1<Tuple1<? extends T1>, T1, X> getFirstFunction() {
+		return (Function1<Tuple1<? extends T1>, T1, X>) _GET_FIRST_FUNCTION;
 	}
 	
-	private static final Function1<?, ?, ?> _GET_FIRST_FUNCTION = new Function1<Tuple2<Object, Object>, Object, RuntimeException>() {
-		public Object evaluate(final Tuple2<Object, Object> tuple) {
+	private static final Function1<?, ?, ?> _GET_FIRST_FUNCTION = new Function1<Tuple1<Object>, Object, RuntimeException>() {
+		public Object evaluate(final Tuple1<Object> tuple) {
 			return tuple.getFirst();
 		}
 	};
