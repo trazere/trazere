@@ -7,9 +7,9 @@ import com.trazere.util.function.Predicate1;
  * <p>
  * {@link Observer Observers} can be subscribed to observables in order to listen to the raised events.
  * <p>
- * <b>Important:</b> In order to simplify their life cycle, the subscriptions are automatically canceled when the corresponding {@link ObserverSubscription
- * subscriptions} are garbaged collected. As the observables do not keep strong references to the subscription objects, it is the responsability of the caller
- * to reference them as long as necessary.
+ * <b>Important:</b> In order to simplify their life cycle, the subscriptions are automatically canceled when the observers are garbaged collected. As the
+ * observables do not keep strong references to the observers, it is the responsability of the caller to reference them (or their corresponding
+ * {@link ObserverSubscription subscription}) as long as necessary.
  * 
  * @param <T> Type of the event values.
  * @see Observer

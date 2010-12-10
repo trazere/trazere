@@ -1,6 +1,8 @@
 package com.trazere.util.observer;
 
+import com.trazere.util.function.FunctionUtils;
 import com.trazere.util.function.Predicate1;
+import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +14,6 @@ import java.util.List;
  */
 public abstract class AbstractObservable<T>
 implements Observable<T> {
-	/** Weak references to the observers. */
-	protected final List<WeakReference<LiveObserver<? super T>>> _observerReferences = new ArrayList<WeakReference<LiveObserver<? super T>>>();
-	
 	/**
 	 * The {@link Subscription} class represents the subscriptions of the observers.
 	 * <p>
@@ -22,19 +21,16 @@ implements Observable<T> {
 	 * garbage collection when the subscriber only keeps a reference to the subscription.
 	 */
 	protected class Subscription
-	implements ObserverSubscription {
-		protected final LiveObserver<? super T> _observer;
-		
+	extends AbstractObserverSubscription {
 		/**
 		 * Instantiates a new subscription for the given observer.
 		 * 
 		 * @param observer The observer.
 		 */
 		public Subscription(final LiveObserver<? super T> observer) {
-			assert null != observer;
+			super(observer);
 			
 			// Initialization.
-			_observer = observer;
 			_reference = new WeakReference<LiveObserver<? super T>>(observer);
 		}
 		
@@ -61,7 +57,7 @@ implements Observable<T> {
 		assert null != observer;
 		
 		final Subscription subscription = new Subscription(observer);
-		_observerReferences.add(subscription.getReference());
+		subscribe(subscription.getReference());
 		return subscription;
 	}
 	
@@ -103,6 +99,50 @@ implements Observable<T> {
 		});
 	}
 	
+	/** Weak references to the observers. */
+	protected final List<WeakReference<LiveObserver<? super T>>> _observers = new ArrayList<WeakReference<LiveObserver<? super T>>>();
+	
+	/**
+	 * Indicates whether the receiver observable is being observed.
+	 * 
+	 * @return <code>true</code> when the observable is observed by at least one observer, <code>false</code> otherwise.
+	 */
+	public boolean isObserved() {
+		return FunctionUtils.isAny(_LIVE_REF, _observers);
+	}
+	
+	private static final Predicate1<Reference<?>, RuntimeException> _LIVE_REF = new Predicate1<Reference<?>, RuntimeException>() {
+		public boolean evaluate(final Reference<?> reference) {
+			return null != reference.get();
+		}
+	};
+	
+	/**
+	 * Subscribes the observer corresponding to the given soft reference to the receiver observable.
+	 * <p>
+	 * This method is called every time a single observer is being subscribed.
+	 * 
+	 * @param observer The reference to the observer.
+	 */
+	protected void subscribe(final WeakReference<LiveObserver<? super T>> observer) {
+		assert null != observer;
+		
+		_observers.add(observer);
+	}
+	
+	/**
+	 * Unsubscribes the observer corresponding to the given soft reference from the receiver observable.
+	 * <p>
+	 * This method is called every time a single observer is being unsubscribed (either implicitely or explicitely).
+	 * 
+	 * @param observer The reference to the observer.
+	 */
+	protected void unsubscribe(final WeakReference<LiveObserver<? super T>> observer) {
+		assert null != observer;
+		
+		_observers.remove(observer);
+	}
+	
 	/**
 	 * Raises a event with the given value for the receiver observable.
 	 * 
@@ -110,7 +150,7 @@ implements Observable<T> {
 	 */
 	protected void raise(final T value) {
 		// Note: copy the references to prevent concurrent modifications.
-		for (final WeakReference<LiveObserver<? super T>> reference : new ArrayList<WeakReference<LiveObserver<? super T>>>(_observerReferences)) {
+		for (final WeakReference<LiveObserver<? super T>> reference : new ArrayList<WeakReference<LiveObserver<? super T>>>(_observers)) {
 			final LiveObserver<? super T> observer = reference.get();
 			if (null != observer) {
 				if (!observer.process(value)) {
@@ -120,16 +160,5 @@ implements Observable<T> {
 				unsubscribe(reference);
 			}
 		}
-	}
-	
-	/**
-	 * Unsubscribes the observer corresponding to the given soft reference.
-	 * 
-	 * @param reference The reference.
-	 */
-	protected void unsubscribe(final WeakReference<LiveObserver<? super T>> reference) {
-		assert null != reference;
-		
-		_observerReferences.remove(reference);
 	}
 }

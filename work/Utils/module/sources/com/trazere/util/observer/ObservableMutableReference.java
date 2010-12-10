@@ -69,20 +69,6 @@ implements ObservableReference<T> {
 	}
 	
 	@Override
-	public <V extends T> Maybe<V> set(final Maybe<V> value)
-	throws ReferenceAlreadySetException {
-		// Set.
-		final Maybe<V> result = super.set(value);
-		
-		// Notify.
-		if (value.isSome()) {
-			_observable.raise(_value);
-		}
-		
-		return result;
-	}
-	
-	@Override
 	public void reset() {
 		// Reset.
 		final Maybe<T> currentValue = _value;
@@ -102,20 +88,6 @@ implements ObservableReference<T> {
 		
 		// Notify.
 		if (currentValue.isNone() || !LangUtils.equals(currentValue.asSome().getValue(), value)) {
-			_observable.raise(_value);
-		}
-		
-		return result;
-	}
-	
-	@Override
-	public <V extends T> Maybe<V> update(final Maybe<V> value) {
-		// Update.
-		final Maybe<T> currentValue = _value;
-		final Maybe<V> result = super.update(value);
-		
-		// Notify.
-		if (!currentValue.equals(value)) {
 			_observable.raise(_value);
 		}
 		
