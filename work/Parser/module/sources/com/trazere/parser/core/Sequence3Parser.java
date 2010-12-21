@@ -27,20 +27,28 @@ import com.trazere.parser.ParserState;
  * 
  * @param <Token>
  * @param <SubResult1>
+ * @param <SubResult2>
+ * @param <SubResult3>
  * @param <Result>
  */
-public abstract class Combine1Parser<Token, SubResult1, Result>
+public abstract class Sequence3Parser<Token, SubResult1, SubResult2, SubResult3, Result>
 extends AbstractParser<Token, Result> {
 	protected final Parser<Token, ? extends SubResult1> _subParser1;
+	protected final Parser<Token, ? extends SubResult2> _subParser2;
+	protected final Parser<Token, ? extends SubResult3> _subParser3;
 	
-	public Combine1Parser(final Parser<Token, ? extends SubResult1> subParser1, final String description) {
+	public Sequence3Parser(final Parser<Token, ? extends SubResult1> subParser1, final Parser<Token, ? extends SubResult2> subParser2, final Parser<Token, ? extends SubResult3> subParser3, final String description) {
 		super(description);
 		
 		// Checks.
 		assert null != subParser1;
+		assert null != subParser2;
+		assert null != subParser3;
 		
 		// Initialization.
 		_subParser1 = subParser1;
+		_subParser2 = subParser2;
+		_subParser3 = subParser3;
 	}
 	
 	// Parser.
@@ -55,34 +63,32 @@ extends AbstractParser<Token, Result> {
 		return new ParserHandler<Token, SubResult1>() {
 			public void result(final SubResult1 subResult1, final ParserState<Token> state)
 			throws ParserException {
-				// Success.
-				closure.success(combine(subResult1), state);
+				// Part 2.
+				state.parse(_subParser2, buildHandler2(closure, subResult1), closure);
 			}
 		};
 	}
 	
-	protected abstract Result combine(final SubResult1 subResult1)
+	protected ParserHandler<Token, SubResult2> buildHandler2(final ParserClosure<Token, Result> closure, final SubResult1 subResult1) {
+		return new ParserHandler<Token, SubResult2>() {
+			public void result(final SubResult2 subResult2, final ParserState<Token> state)
+			throws ParserException {
+				// Part 3.
+				state.parse(_subParser3, buildHandler3(closure, subResult1, subResult2), closure);
+			}
+		};
+	}
+	
+	protected ParserHandler<Token, SubResult3> buildHandler3(final ParserClosure<Token, Result> closure, final SubResult1 subResult1, final SubResult2 subResult2) {
+		return new ParserHandler<Token, SubResult3>() {
+			public void result(final SubResult3 subResult3, final ParserState<Token> state)
+			throws ParserException {
+				// Success.
+				closure.success(combine(subResult1, subResult2, subResult3), state);
+			}
+		};
+	}
+	
+	protected abstract Result combine(final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3)
 	throws ParserException;
-	
-	// Object.
-	
-	//	@Override
-	//	public int hashCode() {
-	//		final HashCode result = new HashCode(this);
-	//		result.append(_description);
-	//		result.append(_subParser1);
-	//		return result.get();
-	//	}
-	//	
-	//	@Override
-	//	public boolean equals(final Object object) {
-	//		if (this == object) {
-	//			return true;
-	//		} else if (null != object && getClass().equals(object.getClass())) {
-	//			final Combine1Parser<?, ?, ?> parser = (Combine1Parser<?, ?, ?>) object;
-	//			return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1);
-	//		} else {
-	//			return false;
-	//		}
-	//	}
 }

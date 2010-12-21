@@ -30,18 +30,16 @@ import com.trazere.parser.ParserState;
  * @param <SubResult2>
  * @param <SubResult3>
  * @param <SubResult4>
- * @param <SubResult5>
  * @param <Result>
  */
-public abstract class Combine5Parser<Token, SubResult1, SubResult2, SubResult3, SubResult4, SubResult5, Result>
+public abstract class Sequence4Parser<Token, SubResult1, SubResult2, SubResult3, SubResult4, Result>
 extends AbstractParser<Token, Result> {
 	protected final Parser<Token, ? extends SubResult1> _subParser1;
 	protected final Parser<Token, ? extends SubResult2> _subParser2;
 	protected final Parser<Token, ? extends SubResult3> _subParser3;
 	protected final Parser<Token, ? extends SubResult4> _subParser4;
-	protected final Parser<Token, ? extends SubResult5> _subParser5;
 	
-	public Combine5Parser(final Parser<Token, ? extends SubResult1> subParser1, final Parser<Token, ? extends SubResult2> subParser2, final Parser<Token, ? extends SubResult3> subParser3, final Parser<Token, ? extends SubResult4> subParser4, final Parser<Token, ? extends SubResult5> subParser5, final String description) {
+	public Sequence4Parser(final Parser<Token, ? extends SubResult1> subParser1, final Parser<Token, ? extends SubResult2> subParser2, final Parser<Token, ? extends SubResult3> subParser3, final Parser<Token, ? extends SubResult4> subParser4, final String description) {
 		super(description);
 		
 		// Checks.
@@ -49,14 +47,12 @@ extends AbstractParser<Token, Result> {
 		assert null != subParser2;
 		assert null != subParser3;
 		assert null != subParser4;
-		assert null != subParser5;
 		
 		// Initialization.
 		_subParser1 = subParser1;
 		_subParser2 = subParser2;
 		_subParser3 = subParser3;
 		_subParser4 = subParser4;
-		_subParser5 = subParser5;
 	}
 	
 	// Parser.
@@ -101,48 +97,12 @@ extends AbstractParser<Token, Result> {
 		return new ParserHandler<Token, SubResult4>() {
 			public void result(final SubResult4 subResult4, final ParserState<Token> state)
 			throws ParserException {
-				// Part 5.
-				state.parse(_subParser5, buildHandler5(closure, subResult1, subResult2, subResult3, subResult4), closure);
-			}
-		};
-	}
-	
-	protected ParserHandler<Token, SubResult5> buildHandler5(final ParserClosure<Token, Result> closure, final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3, final SubResult4 subResult4) {
-		return new ParserHandler<Token, SubResult5>() {
-			public void result(final SubResult5 subResult5, final ParserState<Token> state)
-			throws ParserException {
 				// Success.
-				closure.success(combine(subResult1, subResult2, subResult3, subResult4, subResult5), state);
+				closure.success(combine(subResult1, subResult2, subResult3, subResult4), state);
 			}
 		};
 	}
 	
-	protected abstract Result combine(final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3, final SubResult4 subResult4, final SubResult5 subResult5)
+	protected abstract Result combine(final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3, final SubResult4 subResult4)
 	throws ParserException;
-	
-	// Object.
-	
-	//	@Override
-	//	public int hashCode() {
-	//		final HashCode result = new HashCode(this);
-	//		result.append(_description);
-	//		result.append(_subParser1);
-	//		result.append(_subParser2);
-	//		result.append(_subParser3);
-	//		result.append(_subParser4);
-	//		result.append(_subParser5);
-	//		return result.get();
-	//	}
-	//	
-	//	@Override
-	//	public boolean equals(final Object object) {
-	//		if (this == object) {
-	//			return true;
-	//		} else if (null != object && getClass().equals(object.getClass())) {
-	//			final Combine5Parser<?, ?, ?, ?, ?, ?, ?> parser = (Combine5Parser<?, ?, ?, ?, ?, ?, ?>) object;
-	//			return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5);
-	//		} else {
-	//			return false;
-	//		}
-	//	}
 }
