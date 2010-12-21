@@ -10,9 +10,9 @@ import java.util.Observable;
  */
 public interface Observer<T> {
 	/**
-	 * Notifies the receiver observer of an event.
+	 * Notifies the receiver observer with the given event.
 	 * 
-	 * @param value The value corresponding to the observed event.
+	 * @param value The event value. May be <code>null</code>.
 	 */
-	public void process(final T value);
+	public void notify(final T value);
 }

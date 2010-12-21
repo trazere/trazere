@@ -13,7 +13,7 @@ extends AbstractObservable<T> {
 	}
 	
 	@Override
-	public void raise(final T value) {
-		super.raise(value);
+	public void notify(final T value) {
+		super.notify(value);
 	}
 }

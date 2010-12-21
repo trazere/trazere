@@ -65,8 +65,8 @@ implements Observable<T> {
 		assert null != observer;
 		
 		return subscribe(new LiveObserver<T>() {
-			public boolean process(final T value) {
-				observer.process(value);
+			public boolean notify(final T value) {
+				observer.notify(value);
 				return true;
 			}
 		});
@@ -76,8 +76,8 @@ implements Observable<T> {
 		assert null != observer;
 		
 		return subscribe(new LiveObserver<T>() {
-			public boolean process(final T value) {
-				observer.process(value);
+			public boolean notify(final T value) {
+				observer.notify(value);
 				return false;
 			}
 		});
@@ -88,9 +88,9 @@ implements Observable<T> {
 		assert null != condition;
 		
 		return subscribe(new LiveObserver<T>() {
-			public boolean process(final T value) {
+			public boolean notify(final T value) {
 				if (condition.evaluate(value)) {
-					observer.process(value);
+					observer.notify(value);
 					return true;
 				} else {
 					return false;
@@ -144,16 +144,16 @@ implements Observable<T> {
 	}
 	
 	/**
-	 * Raises a event with the given value for the receiver observable.
+	 * Notifies the observers of the receiver observable with the given event.
 	 * 
-	 * @param value The value of the event. May be <code>null</code>.
+	 * @param value The event value. May be <code>null</code>.
 	 */
-	protected void raise(final T value) {
+	protected void notify(final T value) {
 		// Note: copy the references to prevent concurrent modifications.
 		for (final WeakReference<LiveObserver<? super T>> reference : new ArrayList<WeakReference<LiveObserver<? super T>>>(_observers)) {
 			final LiveObserver<? super T> observer = reference.get();
 			if (null != observer) {
-				if (!observer.process(value)) {
+				if (!observer.notify(value)) {
 					unsubscribe(reference);
 				}
 			} else {
