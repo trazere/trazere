@@ -8,7 +8,7 @@ package com.trazere.util.observer;
  */
 public interface ObserverSubscription {
 	/**
-	 * Unsubscribes the observer from the observable corresponding to the receiver subscription.
+	 * Cancels the receiver subscription.
 	 */
 	public void unsubscribe();
 }

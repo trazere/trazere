@@ -17,10 +17,10 @@ import com.trazere.util.function.Predicate1;
  */
 public interface Observable<T> {
 	/**
-	 * Subcribes the given observer to the receiver observable.
+	 * Subscribes the given observer to the receiver observable.
 	 * 
 	 * @param observer The observer.
-	 * @return The corresponding registration.
+	 * @return The corresponding subcription.
 	 */
 	public ObserverSubscription subscribe(final LiveObserver<? super T> observer);
 	
@@ -28,24 +28,24 @@ public interface Observable<T> {
 	 * Subcribes the given observer to the receiver observable for all events.
 	 * 
 	 * @param observer The observer.
-	 * @return The corresponding registration.
+	 * @return The corresponding subcription.
 	 */
 	public ObserverSubscription subscribe(final Observer<? super T> observer);
 	
 	/**
-	 * Subcribes the given observer to the receiver observable to listen to a single event.
+	 * Subscribes the given observer to the receiver observable for a single event.
 	 * 
 	 * @param observer The observer.
-	 * @return The corresponding registration.
+	 * @return The corresponding subcription.
 	 */
 	public ObserverSubscription subscribeOnce(final Observer<? super T> observer);
 	
 	/**
-	 * Subcribes the given observer to the receiver observable to listen to the events while the given condition holds.
+	 * Subscribes the given observer to the receiver observable for the events as long as the given condition holds.
 	 * 
 	 * @param observer The observer.
 	 * @param condition The condition.
-	 * @return The corresponding registration.
+	 * @return The corresponding subcription.
 	 */
 	public ObserverSubscription subscribeWhile(final Observer<? super T> observer, final Predicate1<? super T, RuntimeException> condition);
 }
