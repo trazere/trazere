@@ -32,9 +32,10 @@ import com.trazere.parser.ParserState;
  * @param <SubResult4>
  * @param <SubResult5>
  * @param <SubResult6>
+ * @param <SubResult7>
  * @param <Result>
  */
-public abstract class Combine6Parser<Token, SubResult1, SubResult2, SubResult3, SubResult4, SubResult5, SubResult6, Result>
+public abstract class Sequence7Parser<Token, SubResult1, SubResult2, SubResult3, SubResult4, SubResult5, SubResult6, SubResult7, Result>
 extends AbstractParser<Token, Result> {
 	protected final Parser<Token, ? extends SubResult1> _subParser1;
 	protected final Parser<Token, ? extends SubResult2> _subParser2;
@@ -42,8 +43,9 @@ extends AbstractParser<Token, Result> {
 	protected final Parser<Token, ? extends SubResult4> _subParser4;
 	protected final Parser<Token, ? extends SubResult5> _subParser5;
 	protected final Parser<Token, ? extends SubResult6> _subParser6;
+	protected final Parser<Token, ? extends SubResult7> _subParser7;
 	
-	public Combine6Parser(final Parser<Token, ? extends SubResult1> subParser1, final Parser<Token, ? extends SubResult2> subParser2, final Parser<Token, ? extends SubResult3> subParser3, final Parser<Token, ? extends SubResult4> subParser4, final Parser<Token, ? extends SubResult5> subParser5, final Parser<Token, ? extends SubResult6> subParser6, final String description) {
+	public Sequence7Parser(final Parser<Token, ? extends SubResult1> subParser1, final Parser<Token, ? extends SubResult2> subParser2, final Parser<Token, ? extends SubResult3> subParser3, final Parser<Token, ? extends SubResult4> subParser4, final Parser<Token, ? extends SubResult5> subParser5, final Parser<Token, ? extends SubResult6> subParser6, final Parser<Token, ? extends SubResult7> subParser7, final String description) {
 		super(description);
 		
 		// Checks.
@@ -53,6 +55,7 @@ extends AbstractParser<Token, Result> {
 		assert null != subParser4;
 		assert null != subParser5;
 		assert null != subParser6;
+		assert null != subParser7;
 		
 		// Initialization.
 		_subParser1 = subParser1;
@@ -61,6 +64,7 @@ extends AbstractParser<Token, Result> {
 		_subParser4 = subParser4;
 		_subParser5 = subParser5;
 		_subParser6 = subParser6;
+		_subParser7 = subParser7;
 	}
 	
 	// Parser.
@@ -125,13 +129,23 @@ extends AbstractParser<Token, Result> {
 		return new ParserHandler<Token, SubResult6>() {
 			public void result(final SubResult6 subResult6, final ParserState<Token> state)
 			throws ParserException {
-				// Success.
-				closure.success(combine(subResult1, subResult2, subResult3, subResult4, subResult5, subResult6), state);
+				// Part 7.
+				state.parse(_subParser7, buildHandler7(closure, subResult1, subResult2, subResult3, subResult4, subResult5, subResult6), closure);
 			}
 		};
 	}
 	
-	protected abstract Result combine(final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3, final SubResult4 subResult4, final SubResult5 subResult5, final SubResult6 subResult6)
+	protected ParserHandler<Token, SubResult7> buildHandler7(final ParserClosure<Token, Result> closure, final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3, final SubResult4 subResult4, final SubResult5 subResult5, final SubResult6 subResult6) {
+		return new ParserHandler<Token, SubResult7>() {
+			public void result(final SubResult7 subResult7, final ParserState<Token> state)
+			throws ParserException {
+				// Success.
+				closure.success(combine(subResult1, subResult2, subResult3, subResult4, subResult5, subResult6, subResult7), state);
+			}
+		};
+	}
+	
+	protected abstract Result combine(final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3, final SubResult4 subResult4, final SubResult5 subResult5, final SubResult6 subResult6, final SubResult7 subResult7)
 	throws ParserException;
 	
 	// Object.
@@ -146,6 +160,7 @@ extends AbstractParser<Token, Result> {
 	//		result.append(_subParser4);
 	//		result.append(_subParser5);
 	//		result.append(_subParser6);
+	//		result.append(_subParser7);
 	//		return result.get();
 	//	}
 	//	
@@ -154,8 +169,8 @@ extends AbstractParser<Token, Result> {
 	//		if (this == object) {
 	//			return true;
 	//		} else if (null != object && getClass().equals(object.getClass())) {
-	//			final Combine6Parser<?, ?, ?, ?, ?, ?, ?, ?> parser = (Combine6Parser<?, ?, ?, ?, ?, ?, ?, ?>) object;
-	//			return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5) && _subParser6.equals(parser._subParser6);
+	//			final Combine7Parser<?, ?, ?, ?, ?, ?, ?, ?, ?> parser = (Combine7Parser<?, ?, ?, ?, ?, ?, ?, ?, ?>) object;
+	//			return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5) && _subParser6.equals(parser._subParser6) && _subParser7.equals(parser._subParser7);
 	//		} else {
 	//			return false;
 	//		}

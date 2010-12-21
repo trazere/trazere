@@ -17,8 +17,11 @@ package com.trazere.parser.text;
 
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserException;
-import com.trazere.parser.core.Combine3Parser;
-import com.trazere.parser.core.Fold1Parser;
+import com.trazere.parser.core.CoreParsers;
+import com.trazere.parser.core.Sequence3Parser;
+import com.trazere.util.function.Function2;
+import com.trazere.util.lang.HashCode;
+import com.trazere.util.lang.LangUtils;
 import com.trazere.util.text.CharPredicate;
 import com.trazere.util.text.CharPredicates;
 import com.trazere.util.type.Tuple2;
@@ -118,15 +121,15 @@ public class TextParsers {
 	private static final Parser<Character, Character> _ALPHANUMERIC = alphanumeric("an alphanumeric");
 	
 	public static Parser<Character, Integer> integer(final String description) {
-		return new Fold1Parser<Character, Character, Integer>(_DIGIT, Integer.valueOf(0), description) {
-			@Override
-			protected Integer fold(final Integer previousValue, final Character subResult)
-			throws ParserException {
-				final int digit = Character.digit(subResult.charValue(), 10);
-				return Integer.valueOf(previousValue.intValue() * 10 + digit);
-			}
-		};
+		return CoreParsers.fold1(_DIGIT, _FOLD_INTEGER, Integer.valueOf(0), description);
 	}
+	
+	private static final Function2<Integer, Character, Integer, ParserException> _FOLD_INTEGER = new Function2<Integer, Character, Integer, ParserException>() {
+		public Integer evaluate(final Integer previousValue, final Character subResult) {
+			final int digit = Character.digit(subResult.charValue(), 10);
+			return Integer.valueOf(previousValue.intValue() * 10 + digit);
+		}
+	};
 	
 	public static Parser<Character, Integer> integer() {
 		return _INTEGER;
@@ -135,28 +138,62 @@ public class TextParsers {
 	private static final Parser<Character, Integer> _INTEGER = integer("an integer");
 	
 	public static Parser<Character, Double> decimal(final String description) {
-		final Parser<Character, Double> integerPartParser = new Fold1Parser<Character, Character, Double>(TextParsers.digit(), Double.valueOf(0), null) {
-			@Override
-			protected Double fold(final Double previousValue, final Character subResult) {
-				final int digit = Character.digit(subResult.charValue(), 10);
-				return Double.valueOf(previousValue.intValue() * 10 + digit);
+		final Parser<Character, Double> integerPartParser = CoreParsers.fold1(TextParsers.digit(), _FOLD_DECIMAL_INTEGER_PART, Double.valueOf(0), null);
+		final Parser<Character, Tuple2<Double, Double>> decimalPartParser = CoreParsers.fold1(TextParsers.digit(), _FOLD_DECIMAL_DECIMAL_PART, Tuple2.build(0.1, 0.0), null);
+		final class DecimalParser
+		extends Sequence3Parser<Character, Double, Character, Tuple2<Double, Double>, Double> {
+			public DecimalParser() {
+				super(integerPartParser, TextParsers.character('.'), decimalPartParser, description);
 			}
-		};
-		final Parser<Character, Tuple2<Double, Double>> decimalPartParser = new Fold1Parser<Character, Character, Tuple2<Double, Double>>(TextParsers.digit(), Tuple2.build(0.1, 0.0), null) {
-			@Override
-			protected Tuple2<Double, Double> fold(final Tuple2<Double, Double> previousValue, final Character subResult) {
-				final int digit = Character.digit(subResult.charValue(), 10);
-				final double factor = previousValue.getFirst().doubleValue();
-				return Tuple2.build(factor / 10, previousValue.getSecond().doubleValue() + (factor * digit));
-			}
-		};
-		return new Combine3Parser<Character, Double, Character, Tuple2<Double, Double>, Double>(integerPartParser, TextParsers.character('.'), decimalPartParser, description) {
+			
+			// Parser.
+			
 			@Override
 			protected Double combine(final Double subResult1, final Character subResult2, final Tuple2<Double, Double> subResult3) {
 				return subResult1.doubleValue() + subResult3.getSecond().doubleValue();
 			}
-		};
+			
+			// Object.
+			
+			@Override
+			public int hashCode() {
+				final HashCode result = new HashCode(this);
+				result.append(_description);
+				result.append(_subParser1);
+				result.append(_subParser2);
+				result.append(_subParser3);
+				return result.get();
+			}
+			
+			@Override
+			public boolean equals(final Object object) {
+				if (this == object) {
+					return true;
+				} else if (null != object && getClass().equals(object.getClass())) {
+					final DecimalParser parser = (DecimalParser) object;
+					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3);
+				} else {
+					return false;
+				}
+			}
+		}
+		return new DecimalParser();
 	}
+	
+	private static final Function2<Double, Character, Double, ParserException> _FOLD_DECIMAL_INTEGER_PART = new Function2<Double, Character, Double, ParserException>() {
+		public Double evaluate(final Double previousValue, final Character subResult) {
+			final int digit = Character.digit(subResult.charValue(), 10);
+			return Double.valueOf(previousValue.doubleValue() * 10 + digit);
+		}
+	};
+	
+	private static final Function2<Tuple2<Double, Double>, Character, Tuple2<Double, Double>, ParserException> _FOLD_DECIMAL_DECIMAL_PART = new Function2<Tuple2<Double, Double>, Character, Tuple2<Double, Double>, ParserException>() {
+		public Tuple2<Double, Double> evaluate(final Tuple2<Double, Double> previousValue, final Character subResult) {
+			final int digit = Character.digit(subResult.charValue(), 10);
+			final double factor = previousValue.getFirst().doubleValue();
+			return Tuple2.build(factor / 10, previousValue.getSecond().doubleValue() + (factor * digit));
+		}
+	};
 	
 	public static Parser<Character, Double> decimal() {
 		return _DECIMAL;

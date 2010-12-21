@@ -32,11 +32,11 @@ import java.util.List;
  * @param <SubResult>
  * @param <Result>
  */
-public abstract class CombineParser<Token, SubResult, Result>
+public abstract class SequenceParser<Token, SubResult, Result>
 extends AbstractParser<Token, Result> {
 	protected final List<Parser<Token, ? extends SubResult>> _subParsers;
 	
-	public CombineParser(final List<Parser<Token, ? extends SubResult>> subParsers, final String description) {
+	public SequenceParser(final List<Parser<Token, ? extends SubResult>> subParsers, final String description) {
 		super(description);
 		
 		// Checks.

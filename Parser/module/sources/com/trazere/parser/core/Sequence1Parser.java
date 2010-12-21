@@ -26,50 +26,41 @@ import com.trazere.parser.ParserState;
  * DOCME
  * 
  * @param <Token>
- * @param <SubResult>
+ * @param <SubResult1>
  * @param <Result>
  */
-public abstract class FoldParser<Token, SubResult, Result>
+public abstract class Sequence1Parser<Token, SubResult1, Result>
 extends AbstractParser<Token, Result> {
-	protected final Parser<Token, ? extends SubResult> _subParser;
-	protected final Result _initialValue;
+	protected final Parser<Token, ? extends SubResult1> _subParser1;
 	
-	public FoldParser(final Parser<Token, ? extends SubResult> subParser, final Result initialValue, final String description) {
+	public Sequence1Parser(final Parser<Token, ? extends SubResult1> subParser1, final String description) {
 		super(description);
 		
 		// Checks.
-		assert null != subParser;
+		assert null != subParser1;
 		
 		// Initialization.
-		_subParser = subParser;
-		_initialValue = initialValue;
+		_subParser1 = subParser1;
 	}
 	
 	// Parser.
 	
 	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
 	throws ParserException {
-		// Zero.
-		closure.success(_initialValue, state);
-		
-		// More.
-		state.parse(_subParser, buildMoreHandler(closure, _initialValue), closure);
+		// Part 1.
+		state.parse(_subParser1, buildHandler1(closure), closure);
 	}
 	
-	protected ParserHandler<Token, SubResult> buildMoreHandler(final ParserClosure<Token, Result> closure, final Result previousValue) {
-		return new ParserHandler<Token, SubResult>() {
-			public void result(final SubResult subResult, final ParserState<Token> state)
+	protected ParserHandler<Token, SubResult1> buildHandler1(final ParserClosure<Token, Result> closure) {
+		return new ParserHandler<Token, SubResult1>() {
+			public void result(final SubResult1 subResult1, final ParserState<Token> state)
 			throws ParserException {
-				// Fold the result.
-				final Result value = fold(previousValue, subResult);
-				closure.success(value, state);
-				
-				// More.
-				state.parse(_subParser, buildMoreHandler(closure, value), closure);
+				// Success.
+				closure.success(combine(subResult1), state);
 			}
 		};
 	}
 	
-	protected abstract Result fold(final Result previousValue, final SubResult subResult)
+	protected abstract Result combine(final SubResult1 subResult1)
 	throws ParserException;
 }

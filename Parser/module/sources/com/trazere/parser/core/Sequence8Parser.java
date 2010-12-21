@@ -33,9 +33,10 @@ import com.trazere.parser.ParserState;
  * @param <SubResult5>
  * @param <SubResult6>
  * @param <SubResult7>
+ * @param <SubResult8>
  * @param <Result>
  */
-public abstract class Combine7Parser<Token, SubResult1, SubResult2, SubResult3, SubResult4, SubResult5, SubResult6, SubResult7, Result>
+public abstract class Sequence8Parser<Token, SubResult1, SubResult2, SubResult3, SubResult4, SubResult5, SubResult6, SubResult7, SubResult8, Result>
 extends AbstractParser<Token, Result> {
 	protected final Parser<Token, ? extends SubResult1> _subParser1;
 	protected final Parser<Token, ? extends SubResult2> _subParser2;
@@ -44,8 +45,9 @@ extends AbstractParser<Token, Result> {
 	protected final Parser<Token, ? extends SubResult5> _subParser5;
 	protected final Parser<Token, ? extends SubResult6> _subParser6;
 	protected final Parser<Token, ? extends SubResult7> _subParser7;
+	protected final Parser<Token, ? extends SubResult8> _subParser8;
 	
-	public Combine7Parser(final Parser<Token, ? extends SubResult1> subParser1, final Parser<Token, ? extends SubResult2> subParser2, final Parser<Token, ? extends SubResult3> subParser3, final Parser<Token, ? extends SubResult4> subParser4, final Parser<Token, ? extends SubResult5> subParser5, final Parser<Token, ? extends SubResult6> subParser6, final Parser<Token, ? extends SubResult7> subParser7, final String description) {
+	public Sequence8Parser(final Parser<Token, ? extends SubResult1> subParser1, final Parser<Token, ? extends SubResult2> subParser2, final Parser<Token, ? extends SubResult3> subParser3, final Parser<Token, ? extends SubResult4> subParser4, final Parser<Token, ? extends SubResult5> subParser5, final Parser<Token, ? extends SubResult6> subParser6, final Parser<Token, ? extends SubResult7> subParser7, final Parser<Token, ? extends SubResult8> subParser8, final String description) {
 		super(description);
 		
 		// Checks.
@@ -56,6 +58,7 @@ extends AbstractParser<Token, Result> {
 		assert null != subParser5;
 		assert null != subParser6;
 		assert null != subParser7;
+		assert null != subParser8;
 		
 		// Initialization.
 		_subParser1 = subParser1;
@@ -65,6 +68,7 @@ extends AbstractParser<Token, Result> {
 		_subParser5 = subParser5;
 		_subParser6 = subParser6;
 		_subParser7 = subParser7;
+		_subParser8 = subParser8;
 	}
 	
 	// Parser.
@@ -139,13 +143,23 @@ extends AbstractParser<Token, Result> {
 		return new ParserHandler<Token, SubResult7>() {
 			public void result(final SubResult7 subResult7, final ParserState<Token> state)
 			throws ParserException {
-				// Success.
-				closure.success(combine(subResult1, subResult2, subResult3, subResult4, subResult5, subResult6, subResult7), state);
+				// Part 8.
+				state.parse(_subParser8, buildHandler8(closure, subResult1, subResult2, subResult3, subResult4, subResult5, subResult6, subResult7), closure);
 			}
 		};
 	}
 	
-	protected abstract Result combine(final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3, final SubResult4 subResult4, final SubResult5 subResult5, final SubResult6 subResult6, final SubResult7 subResult7)
+	protected ParserHandler<Token, SubResult8> buildHandler8(final ParserClosure<Token, Result> closure, final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3, final SubResult4 subResult4, final SubResult5 subResult5, final SubResult6 subResult6, final SubResult7 subResult7) {
+		return new ParserHandler<Token, SubResult8>() {
+			public void result(final SubResult8 subResult8, final ParserState<Token> state)
+			throws ParserException {
+				// Success.
+				closure.success(combine(subResult1, subResult2, subResult3, subResult4, subResult5, subResult6, subResult7, subResult8), state);
+			}
+		};
+	}
+	
+	protected abstract Result combine(final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3, final SubResult4 subResult4, final SubResult5 subResult5, final SubResult6 subResult6, final SubResult7 subResult7, final SubResult8 subResult8)
 	throws ParserException;
 	
 	// Object.
@@ -161,6 +175,7 @@ extends AbstractParser<Token, Result> {
 	//		result.append(_subParser5);
 	//		result.append(_subParser6);
 	//		result.append(_subParser7);
+	//		result.append(_subParser8);
 	//		return result.get();
 	//	}
 	//	
@@ -169,8 +184,8 @@ extends AbstractParser<Token, Result> {
 	//		if (this == object) {
 	//			return true;
 	//		} else if (null != object && getClass().equals(object.getClass())) {
-	//			final Combine7Parser<?, ?, ?, ?, ?, ?, ?, ?, ?> parser = (Combine7Parser<?, ?, ?, ?, ?, ?, ?, ?, ?>) object;
-	//			return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5) && _subParser6.equals(parser._subParser6) && _subParser7.equals(parser._subParser7);
+	//			final Combine8Parser<?, ?, ?, ?, ?, ?, ?, ?, ?, ?> parser = (Combine8Parser<?, ?, ?, ?, ?, ?, ?, ?, ?, ?>) object;
+	//			return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5) && _subParser6.equals(parser._subParser6) && _subParser7.equals(parser._subParser7) && _subParser8.equals(parser._subParser8);
 	//		} else {
 	//			return false;
 	//		}
