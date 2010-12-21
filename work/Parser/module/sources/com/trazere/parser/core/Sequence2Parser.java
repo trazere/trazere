@@ -30,12 +30,12 @@ import com.trazere.parser.ParserState;
  * @param <SubResult2>
  * @param <Result>
  */
-public abstract class Combine2Parser<Token, SubResult1, SubResult2, Result>
+public abstract class Sequence2Parser<Token, SubResult1, SubResult2, Result>
 extends AbstractParser<Token, Result> {
 	protected final Parser<Token, ? extends SubResult1> _subParser1;
 	protected final Parser<Token, ? extends SubResult2> _subParser2;
 	
-	public Combine2Parser(final Parser<Token, ? extends SubResult1> subParser1, final Parser<Token, ? extends SubResult2> subParser2, final String description) {
+	public Sequence2Parser(final Parser<Token, ? extends SubResult1> subParser1, final Parser<Token, ? extends SubResult2> subParser2, final String description) {
 		super(description);
 		
 		// Checks.
@@ -77,27 +77,4 @@ extends AbstractParser<Token, Result> {
 	
 	protected abstract Result combine(final SubResult1 subResult1, final SubResult2 subResult2)
 	throws ParserException;
-	
-	// Object.
-	
-	//	@Override
-	//	public int hashCode() {
-	//		final HashCode result = new HashCode(this);
-	//		result.append(_description);
-	//		result.append(_subParser1);
-	//		result.append(_subParser2);
-	//		return result.get();
-	//	}
-	//	
-	//	@Override
-	//	public boolean equals(final Object object) {
-	//		if (this == object) {
-	//			return true;
-	//		} else if (null != object && getClass().equals(object.getClass())) {
-	//			final Combine2Parser<?, ?, ?, ?> parser = (Combine2Parser<?, ?, ?, ?>) object;
-	//			return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2);
-	//		} else {
-	//			return false;
-	//		}
-	//	}
 }

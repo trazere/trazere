@@ -33,12 +33,12 @@ import java.util.List;
  * @param <Token>
  * @param <Result>
  */
-public class IntersperseNParser<Token, Result>
+public class SeparatorNParser<Token, Result>
 extends AbstractParser<Token, List<Result>> {
 	protected final Parser<Token, ? extends Result> _valueParser;
 	protected final Parser<Token, ?> _delimiterParser;
 	
-	public IntersperseNParser(final Parser<Token, ? extends Result> valueParser, final Parser<Token, ?> delimiterParser, final String description) {
+	public SeparatorNParser(final Parser<Token, ? extends Result> valueParser, final Parser<Token, ?> delimiterParser, final String description) {
 		super(description);
 		
 		// Checks.
@@ -103,7 +103,7 @@ extends AbstractParser<Token, List<Result>> {
 		if (this == object) {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
-			final IntersperseNParser<?, ?> parser = (IntersperseNParser<?, ?>) object;
+			final SeparatorNParser<?, ?> parser = (SeparatorNParser<?, ?>) object;
 			return LangUtils.equals(_description, parser._description) && _valueParser.equals(parser._valueParser) && _delimiterParser.equals(parser._delimiterParser);
 		} else {
 			return false;
