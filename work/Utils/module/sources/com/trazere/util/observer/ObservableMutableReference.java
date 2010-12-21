@@ -63,7 +63,7 @@ implements ObservableReference<T> {
 		final V result = super.set(value);
 		
 		// Notify.
-		_observable.raise(_value);
+		_observable.notify(_value);
 		
 		return result;
 	}
@@ -76,7 +76,7 @@ implements ObservableReference<T> {
 		
 		// Notify.
 		if (currentValue.isSome()) {
-			_observable.raise(_value);
+			_observable.notify(_value);
 		}
 	}
 	
@@ -88,7 +88,7 @@ implements ObservableReference<T> {
 		
 		// Notify.
 		if (currentValue.isNone() || !LangUtils.equals(currentValue.asSome().getValue(), value)) {
-			_observable.raise(_value);
+			_observable.notify(_value);
 		}
 		
 		return result;

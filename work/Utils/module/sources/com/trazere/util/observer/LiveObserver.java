@@ -11,10 +11,10 @@ import java.util.Observable;
  */
 public interface LiveObserver<T> {
 	/**
-	 * Notifies the receiver observer of an event.
+	 * Notifies the receiver observer with the given event.
 	 * 
-	 * @param value The value corresponding to the observed event.
-	 * @return <code>true</code> to preserve the subscription, <code>false</code> to unsubscribe the observer.
+	 * @param value The event value. May be <code>null</code>.
+	 * @return <code>true</code> to preserve the subscription, <code>false</code> to cancel it.
 	 */
-	public boolean process(final T value);
+	public boolean notify(final T value);
 }
