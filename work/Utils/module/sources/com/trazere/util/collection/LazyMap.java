@@ -16,17 +16,18 @@
 package com.trazere.util.collection;
 
 import com.trazere.util.function.Function1;
+import com.trazere.util.function.FunctionUtils;
+import com.trazere.util.function.Predicate2;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 /**
  * The {@link LazyMap} class represents maps which can lazily fill themselves upon access.
  * <p>
- * The backing map supports <code>null</code> keys and values.
+ * <code>null</code> keys and values are accepted.
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
@@ -35,12 +36,12 @@ import java.util.Set;
 public abstract class LazyMap<K, V, X extends Exception>
 implements Function1<K, V, X> {
 	/**
-	 * Build a lazy map using the given function.
+	 * Builds a lazy map using the given function to compute the values.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param <X> Type of the exceptions.
-	 * @param function Function computing the values of the map.
+	 * @param function The function.
 	 * @return The built lazy map.
 	 */
 	public static <K, V, X extends Exception> LazyMap<K, V, X> build(final Function1<K, V, X> function) {
@@ -57,88 +58,101 @@ implements Function1<K, V, X> {
 	}
 	
 	/** Entries. */
-	protected final Map<K, V> _entries;
+	protected final Map<K, V> _mappings;
 	
 	/**
-	 * Build a new empty lazy map.
+	 * Instantiates a new empty lazy map.
 	 */
 	public LazyMap() {
 		// Initialization.
-		_entries = new HashMap<K, V>();
+		_mappings = new HashMap<K, V>();
 	}
 	
 	/**
-	 * Build a new lazy map containing the given entries.
+	 * Instantiates a new lazy map containing the given mappings.
 	 * 
-	 * @param entries Entries of the map.
+	 * @param mappings Entries of the map.
 	 */
-	public LazyMap(final Map<? extends K, ? extends V> entries) {
-		assert null != entries;
+	public LazyMap(final Map<? extends K, ? extends V> mappings) {
+		assert null != mappings;
 		
 		// Initialization.
-		_entries = new HashMap<K, V>(entries);
+		_mappings = new HashMap<K, V>(mappings);
 	}
 	
 	/**
-     * Test whether the receiver map is empty.
-     * 
-     * @return <code>true</code> if the map is empty, <code>false</code> otherwise.
-     */
-    public boolean isEmpty() {
-    	return _entries.isEmpty();
-    }
-
-	/**
-     * Get the number of entries in the receiver map.
-     * 
-     * @return The number of entries.
-     */
-    public int size() {
-    	return _entries.size();
-    }
-
-	/**
-	 * Associate the given value to the given key in the receiver map.
+	 * Tests whether the receiver map is empty.
 	 * 
-	 * @param key Key which the value should be associated to. May be <code>null</code>.
-	 * @param value Value to associate to the key. May be <code>null</code>.
-	 * @return The value previously associated to the key, or <code>null</code>.
+	 * @return <code>true</code> if the map is empty, <code>false</code> otherwise.
 	 */
-	public V put(final K key, final V value) {
-		return _entries.put(key, value);
+	public boolean isEmpty() {
+		return _mappings.isEmpty();
 	}
 	
 	/**
-     * Remove the association of the given key.
-     * 
-     * @param key Key whose association should be removed. May be <code>null</code>.
-     * @return The value associated to the key or <code>null</code>.
-     */
-    public V remove(final K key) {
-    	return _entries.remove(key);
-    }
-
-	/**
-     * Clear the receiver map.
-     */
-    public void clear() {
-    	_entries.clear();
-    }
-
-	/**
-	 * Get the value associated to the given key in the receiver map.
-	 * <p>
-	 * When no values are associated to the given key, this method tries to compute to value for the key and implicif
+	 * Tests whether the receiver map contains a mapping for the given key.
 	 * 
 	 * @param key Key which the value is associated to. May be <code>null</code>.
-	 * @return The value.
+	 * @return <code>true</code> when some value is associated to the given key, <code>false</code> otherwise.
+	 */
+	public boolean containsKey(final K key) {
+		return _mappings.containsKey(key);
+	}
+	
+	/**
+	 * Gets a view of the keys of the receiver map.
+	 * 
+	 * @return An unmodifiable set of the keys.
+	 */
+	public Set<K> keySet() {
+		return Collections.unmodifiableSet(_mappings.keySet());
+	}
+	
+	/**
+	 * Gets the number of mappings in the receiver map.
+	 * 
+	 * @return The number of mappings.
+	 */
+	public int size() {
+		return _mappings.size();
+	}
+	
+	/**
+	 * Maps the given value to the given key in the receiver map.
+	 * 
+	 * @param key The key. May be <code>null</code>.
+	 * @param value The value. May be <code>null</code>.
+	 * @return The value previously mapped to the key, or <code>null</code> when no values were mapped to the key.
+	 */
+	public V put(final K key, final V value) {
+		return _mappings.put(key, value);
+	}
+	
+	/**
+	 * Copies the given mappings into the receiver map.
+	 * 
+	 * @param mappings The mappings.
+	 */
+	public void putAll(final Map<? extends K, ? extends V> mappings) {
+		assert null != mappings;
+		
+		_mappings.putAll(mappings);
+	}
+	
+	/**
+	 * Gets the value mapped to the given key in the receiver map.
+	 * <p>
+	 * The value is implicitely computed using the {@link #compute(Object)} method and added into the map when no values are mapped to the given key.
+	 * 
+	 * @param key The key. May be <code>null</code>.
+	 * @return The value. May ne <code>null</code>.
 	 * @throws X When the value cannot be computed.
 	 */
 	public V get(final K key)
 	throws X {
 		// Check the entries.
-		if (_entries.containsKey(key)) {
-			return _entries.get(key);
+		if (_mappings.containsKey(key)) {
+			return _mappings.get(key);
 		}
 		
 		// Compute the value.
@@ -149,9 +163,9 @@ implements Function1<K, V, X> {
 	}
 	
 	/**
-	 * Compute the value to associate to the given key.
+	 * Computes the value to corresponding to the given key.
 	 * 
-	 * @param key Key whose value should be computed. May be <code>null</code>.
+	 * @param key The key. May be <code>null</code>.
 	 * @return The computed value. May be <code>null</code>.
 	 * @throws X When the value cannot be computed.
 	 */
@@ -159,49 +173,50 @@ implements Function1<K, V, X> {
 	throws X;
 	
 	/**
-     * Test whether a value is associated to the given key in the receiver map.
-     * 
-     * @param key Key which the value is associated to. May be <code>null</code>.
-     * @return <code>true</code> when some value is associated to the given key, <code>false</code> otherwise.
-     */
-    public boolean containsKey(final K key) {
-    	return _entries.containsKey(key);
-    }
-
+	 * Gets a view of the values of the receiver map.
+	 * 
+	 * @return An unmodifiable collection of the values.
+	 */
+	public Collection<V> values() {
+		return Collections.unmodifiableCollection(_mappings.values());
+	}
+	
 	/**
-     * Get a view of the keys of the receiver map.
-     * 
-     * @return An unmodifiable set of the keys.
-     */
-    public Set<K> keySet() {
-    	return Collections.unmodifiableSet(_entries.keySet());
-    }
-
-	/**
-     * Get a view of the values of the receiver map.
-     * 
-     * @return An unmodifiable collection of the values.
-     */
-    public Collection<V> values() {
-    	return Collections.unmodifiableCollection(_entries.values());
-    }
-
-	/**
-	 * Get a view of the receiver map.
+	 * Gets a view of the receiver map.
 	 * 
 	 * @return An unmodifiable map.
 	 */
 	public Map<K, V> asMap() {
-		return Collections.unmodifiableMap(_entries);
+		return Collections.unmodifiableMap(_mappings);
 	}
 	
 	/**
-	 * Get a view of the entries of the receiver map.
+	 * Removes the mapping for the given key.
 	 * 
-	 * @return An unmodifiable set of the entries.
+	 * @param key The key. May be <code>null</code>.
+	 * @return The value mapped to the key, or <code>null</code> when no values were mapped to the key.
 	 */
-	public Set<Entry<K, V>> entrySet() {
-		return Collections.unmodifiableSet(_entries.entrySet());
+	public V remove(final K key) {
+		return _mappings.remove(key);
+	}
+	
+	/**
+	 * Retains the mappings of the receiver map according to the given predicate.
+	 * 
+	 * @param <PX> Type of the exceptions.
+	 * @param predicate The predicate.
+	 * @throws PX
+	 */
+	public <PX extends Exception> void retain(final Predicate2<? super K, ? super V, PX> predicate)
+	throws PX {
+		FunctionUtils.retain(predicate, _mappings);
+	}
+	
+	/**
+	 * Clears the receiver map.
+	 */
+	public void clear() {
+		_mappings.clear();
 	}
 	
 	public V evaluate(final K key)
@@ -211,6 +226,6 @@ implements Function1<K, V, X> {
 	
 	@Override
 	public String toString() {
-		return _entries.toString();
+		return _mappings.toString();
 	}
 }
