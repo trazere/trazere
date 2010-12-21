@@ -283,34 +283,6 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Filters the content of the given collection using the given predicate.
-	 * <p>
-	 * This method does modify the given collection.
-	 * 
-	 * @param <T> Type of the elements.
-	 * @param <C> Type of the collection.
-	 * @param <X> Type of the exceptions.
-	 * @param predicate The predicate.
-	 * @param collection The collection.
-	 * @return The given collection.
-	 * @throws X When some predicate evaluation fails.
-	 */
-	public static <T, C extends Collection<T>, X extends Exception> C filter(final Predicate1<? super T, X> predicate, final C collection)
-	throws X {
-		assert null != predicate;
-		assert null != collection;
-		
-		final Iterator<T> values_ = collection.iterator();
-		while (values_.hasNext()) {
-			final T value = values_.next();
-			if (!predicate.evaluate(value)) {
-				values_.remove();
-			}
-		}
-		return collection;
-	}
-	
-	/**
 	 * Filters the given bindings using the given predicate and populates the given result map with them.
 	 * <p>
 	 * This method evaluates the predicate by passing the keys and values of the bindings respectively as first and second arguments.
@@ -339,35 +311,6 @@ public class FunctionUtils {
 			}
 		}
 		return results;
-	}
-	
-	/**
-	 * Filters the content of the given map using the given predicate.
-	 * <p>
-	 * This method does modify the given map.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <M> Type of the map.
-	 * @param <X> Type of the exceptions.
-	 * @param predicate The predicate.
-	 * @param map The map.
-	 * @return The given map.
-	 * @throws X When some predicate evaluation fails.
-	 */
-	public static <K, V, M extends Map<K, V>, X extends Exception> M filter(final Predicate2<? super K, ? super V, X> predicate, final M map)
-	throws X {
-		assert null != predicate;
-		assert null != map;
-		
-		final Iterator<Map.Entry<K, V>> entries = map.entrySet().iterator();
-		while (entries.hasNext()) {
-			final Map.Entry<K, V> entry = entries.next();
-			if (!predicate.evaluate(entry.getKey(), entry.getValue())) {
-				entries.remove();
-			}
-		}
-		return map;
 	}
 	
 	/**
@@ -429,6 +372,63 @@ public class FunctionUtils {
 			}
 		}
 		return results;
+	}
+	
+	/**
+	 * Filters the content of the given collection using the given predicate.
+	 * <p>
+	 * This method does modify the given collection.
+	 * 
+	 * @param <T> Type of the elements.
+	 * @param <C> Type of the collection.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate The predicate.
+	 * @param collection The collection.
+	 * @return The given collection.
+	 * @throws X When some predicate evaluation fails.
+	 */
+	public static <T, C extends Collection<T>, X extends Exception> C retain(final Predicate1<? super T, X> predicate, final C collection)
+	throws X {
+		assert null != predicate;
+		assert null != collection;
+		
+		final Iterator<T> values_ = collection.iterator();
+		while (values_.hasNext()) {
+			final T value = values_.next();
+			if (!predicate.evaluate(value)) {
+				values_.remove();
+			}
+		}
+		return collection;
+	}
+	
+	/**
+	 * Filters the content of the given map using the given predicate.
+	 * <p>
+	 * This method does modify the given map.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <M> Type of the map.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate The predicate.
+	 * @param map The map.
+	 * @return The given map.
+	 * @throws X When some predicate evaluation fails.
+	 */
+	public static <K, V, M extends Map<K, V>, X extends Exception> M retain(final Predicate2<? super K, ? super V, X> predicate, final M map)
+	throws X {
+		assert null != predicate;
+		assert null != map;
+		
+		final Iterator<Map.Entry<K, V>> entries = map.entrySet().iterator();
+		while (entries.hasNext()) {
+			final Map.Entry<K, V> entry = entries.next();
+			if (!predicate.evaluate(entry.getKey(), entry.getValue())) {
+				entries.remove();
+			}
+		}
+		return map;
 	}
 	
 	/**
