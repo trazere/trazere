@@ -13,14 +13,9 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util;
-
-// TODO: move in another package
+package com.trazere.util.text;
 
 import com.trazere.util.collection.CollectionUtils;
-import com.trazere.util.text.Describable;
-import com.trazere.util.text.Description;
-import com.trazere.util.text.TextUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -28,6 +23,9 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+// TODO: rename to FlagPredicate
+// TODO: implements Predicate
 
 /**
  * The {@link FlagSet} class represents masks which can filter sets of flags.
@@ -47,47 +45,47 @@ import java.util.Set;
  */
 public class FlagSet
 implements Describable {
-	/** Required flags. */
+	/** The required flags. */
 	protected final Set<String> _required;
 	
-	/** Enabled flags. */
+	/** The enabled flags. */
 	protected final Set<String> _enabled;
 	
-	/** Forbidden flags. */
+	/** The forbidden flags. */
 	protected final Set<String> _forbidden;
 	
 	/**
-	 * Instantiate a new flag set with the given mask representation.
+	 * Instantiates a new flag set with the given mask representation.
 	 * <p>
 	 * The representation is a list of comma (<tt>,</tt>) delimited flags. Required flags must be prefixed with a plus (<tt>+</tt>). Forbidden flags must be
 	 * prefixed with a minus (<tt>-</tt>). Active flags are prefixed with neither.
 	 * 
-	 * @param representation Representation of the mask.
+	 * @param representation The representation of the mask.
 	 */
 	public FlagSet(final String representation) {
 		this(representation, ",");
 	}
 	
 	/**
-	 * Instiantiate a new flag set with the given mask mask representation and delimiter.
+	 * Instantiates a new flag set with the given mask mask representation and delimiter.
 	 * <p>
 	 * The representation is a list flags delimited by the given delimiter. Required flags must be prefixed with a plus (<tt>+</tt>). Forbidden flags must be
 	 * prefixed with a minus (<tt>-</tt>). Active flags are prefixed with neither.
 	 * 
-	 * @param representation Representation of the mask.
-	 * @param delimeter Delimiter of the flags.
+	 * @param representation The representation of the mask.
+	 * @param delimeter The delimiter of the flags.
 	 */
 	public FlagSet(final String representation, final String delimeter) {
 		this(TextUtils.split(representation, delimeter, false, true, new ArrayList<String>()));
 	}
 	
 	/**
-	 * Instantiate a new flag set with the given flags.
+	 * Instantiates a new flag set with the given flags.
 	 * <p>
 	 * Required flags must be prefixed with a plus (<tt>+</tt>). Forbidden flags must be prefixed with a minus (<tt>-</tt>). Active flags are prefixed with
 	 * neither.
 	 * 
-	 * @param flags Flags composing the mask.
+	 * @param flags The flags composing the mask.
 	 */
 	public FlagSet(final List<String> flags) {
 		assert null != flags;
@@ -124,7 +122,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Get the required flags of the receiver set.
+	 * Gets the required flags of the receiver set.
 	 * 
 	 * @return The required flags.
 	 */
@@ -133,7 +131,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Get the enabled flags of the receiver set.
+	 * Gets the enabled flags of the receiver set.
 	 * 
 	 * @return The enabled flags.
 	 */
@@ -142,7 +140,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Get the forbidden flags of the receiver set.
+	 * Gets the forbidden flags of the receiver set.
 	 * 
 	 * @return The forbidden flags.
 	 */
@@ -151,17 +149,17 @@ implements Describable {
 	}
 	
 	/**
-	 * Test whether the given flags is accepted by the mask of the receiver set.
+	 * Tests whether the given flags are accepted by the mask of the receiver set.
 	 * 
 	 * @param flags Flags to test.
 	 * @return <code>true</code> when the flags are accepted, <code>false</code> otherwise.
 	 */
 	public boolean test(final Collection<String> flags) {
-		return flags.containsAll(_required) && (CollectionUtils.intersects(flags, _enabled) || (_enabled.isEmpty() && !_required.isEmpty())) && !CollectionUtils.intersects(flags, _forbidden);
+		return flags.containsAll(_required) && (CollectionUtils.intersects(flags, _enabled) || _enabled.isEmpty() && !_required.isEmpty()) && !CollectionUtils.intersects(flags, _forbidden);
 	}
 	
 	/**
-	 * Test whether the given flags is accepted by the mask of the receiver set.
+	 * Tests whether the given flags are accepted by the mask of the receiver set.
 	 * 
 	 * @param flags Flags to test.
 	 * @return <code>true</code> when the flags are accepted, <code>false</code> otherwise.

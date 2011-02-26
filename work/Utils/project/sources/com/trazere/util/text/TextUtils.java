@@ -15,10 +15,10 @@
  */
 package com.trazere.util.text;
 
-import com.trazere.util.Counter;
 import com.trazere.util.function.Function1;
 import com.trazere.util.function.Functions;
 import com.trazere.util.function.Procedure2;
+import com.trazere.util.lang.Counter;
 import com.trazere.util.lang.MutableBoolean;
 import com.trazere.util.lang.MutableInt;
 import com.trazere.util.type.Maybe;

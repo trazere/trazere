@@ -15,7 +15,7 @@
  */
 package com.trazere.util.xml;
 
-import com.trazere.util.Decorator;
+import com.trazere.util.lang.Decorator;
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;

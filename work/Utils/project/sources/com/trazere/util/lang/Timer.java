@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util;
+package com.trazere.util.lang;
 
 /**
  * The {@link Timer} class allows to measure time.
@@ -32,14 +32,14 @@ public class Timer {
 	private final long _start;
 	
 	/**
-	 * Instantiate a new timer.
+	 * Instantiates a new timer.
 	 */
 	public Timer() {
 		_start = System.currentTimeMillis();
 	}
 	
 	/**
-	 * Get the elapsed time since the creation of the receiver timer.
+	 * Gets the elapsed time since the creation of the receiver timer.
 	 * 
 	 * @return The elapsed number of milliseconds.
 	 * @see System#currentTimeMillis()
