@@ -1,17 +1,17 @@
-#!/bin/sh -e
+#!/bin/bash
 
 # OS specific support.
 cygwin=false
-case "`uname`" in
+case "$(uname)" in
     CYGWIN*) cygwin=true ;;
 esac
 
-# Run the Ant script.
-SPINOZA_HOME="`pwd`"
-
-ENDORSED_SPINOZA_HOME="$SPINOZA_HOME"
+# Compute the project home.
+PROJECT_HOME=$(pwd)
 if $cygwin
 then
-    ENDORSED_SPINOZA_HOME=`cygpath -m "$ENDORSED_SPINOZA_HOME"`
+    PROJECT_HOME=$(cygpath -m "$PROJECT_HOME")
 fi
-export ANT_OPTS="-Xmx1024m -Djava.endorsed.dirs=$ENDORSED_SPINOZA_HOME/endorsed"
+
+# Set the Ant options.
+export ANT_OPTS="-Xmx1024m -Djava.endorsed.dirs=$PROJECT_HOME/endorsed"
