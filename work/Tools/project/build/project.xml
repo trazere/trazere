@@ -18,7 +18,7 @@
 	<import file="env.xml" />
 
 	<!-- Ant -->
-	<property name="tools.ant" location="${tools}/ant-1.7.0" />
+	<property name="tools.ant" location="${tools}/ant-1.8.2" />
 	<union id="tools.ant.libs">
 		<union id="tools.ant.deps" />
 		<fileset id="tools.ant.jars" dir="${tools.ant}">
