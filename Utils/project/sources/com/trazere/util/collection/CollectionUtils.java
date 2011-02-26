@@ -401,7 +401,7 @@ public class CollectionUtils {
 	public static <T> Maybe<T> get(final List<T> list, final int index) {
 		assert null != list;
 		
-		return index < list.size() ? Maybe.some(list.get(index)) : Maybe.<T>none();
+		return index >= list.size() ? Maybe.some(list.get(index)) : Maybe.<T>none();
 	}
 	
 	/**
