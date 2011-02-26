@@ -14,24 +14,36 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<project name="parser.impl">
-	<!-- Imports -->
-	<import file="../../module/env.xml" />
-	<import file="${utils.ant.impl}" />
+<project>
+	<import file="env.xml" />
+	<import file="${utils.project}" />
 
 	<!-- Declarations -->
-	<property name="parser.sources" location="${parser.module}/sources" />
+	<property name="parser.sources" location="${parser}/sources" />
 
-	<property name="parser.build" location="${parser.module}/build" />
-	<property name="parser.build.classes" location="${parser.build}/classes" />
-	<property name="parser.build.jar" location="${parser.build}/parser.jar" />
+	<property name="parser.target" location="${parser}/build/target" />
+	<property name="parser.target.classes" location="${parser.target}/classes" />
+	<property name="parser.target.jar" location="${parser.target}/trazere-parser.jar" />
 
-	<property name="parser.dist" location="${parser.module}/dist" />
+	<property name="parser.dist" location="${parser}/dist" />
 	<property name="parser.dist.lib" value="${parser.dist}/lib" />
+
+	<union id="parser.libs">
+		<union id="parser.deps">
+			<resources refid="tools.commons-logging.libs" />
+			<resources refid="utils.libs" />
+		</union>
+		<union id="parser.jars">
+			<fileset file="${parser.target.jar}" />
+		</union>
+	</union>
+	<path id="parser.classpath">
+		<pathelement location="${parser.target.classes}" />
+	</path>
 
 	<!-- Clean -->
 	<target name="parser.clean" depends="utils.clean">
-		<delete dir="${parser.build}" />
+		<delete dir="${parser.target}" />
 	</target>
 
 	<!-- Clean the distribution -->
@@ -40,13 +52,13 @@
 	</target>
 
 	<!-- Compile the sources -->
-	<target name="parser.compileSources" depends="utils.buildJar">
-		<mkdir dir="${parser.build.classes}" />
-		<javac destdir="${parser.build.classes}" source="${trazere.java.version}" debug="${trazere.java.debug}" target="${trazere.java.version}" failonerror="true" encoding="${trazere.java.encoding}">
+	<target name="parser.compileSources" depends="utils.compileSources">
+		<mkdir dir="${parser.target.classes}" />
+		<javac destdir="${parser.target.classes}" source="${trazere.java.version}" encoding="${trazere.java.encoding}" target="${trazere.java.version}" debug="${trazere.java.debug}" includeantruntime="false" failonerror="true">
 			<src location="${parser.sources}" />
 			<classpath>
-				<pathelement location="${utils.build.jar}" />
 				<path refid="tools.commons-logging.classpath" />
+				<path refid="utils.classpath" />
 			</classpath>
 		</javac>
 	</target>
@@ -56,9 +68,10 @@
 
 	<!-- Build the JAR -->
 	<target name="parser.buildJar" depends="parser.compileSources">
-		<mkdir dir="${parser.build}" />
-		<jar destfile="${parser.build.jar}">
-			<fileset dir="${parser.build.classes}" includes="**/*.class" />
+		<mkdir dir="${parser.target}" />
+		<jar destfile="${parser.target.jar}">
+			<fileset dir="${parser.target.classes}" includes="**/*.class" />
+			<fileset dir="${parser.sources}" excludes="**/*.java" />
 		</jar>
 	</target>
 
@@ -68,6 +81,8 @@
 
 		<!-- Jars -->
 		<mkdir dir="${parser.dist.lib}" />
-		<copy tofile="${parser.dist.lib}/trazere-parser.jar" file="${parser.build.jar}" />
+		<copy todir="${parser.dist.lib}">
+			<resources refid="parser.jars" />
+		</copy>
 	</target>
 </project>

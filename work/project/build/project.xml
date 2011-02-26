@@ -14,24 +14,20 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<project name="trazere.impl">
-	<!-- Imports -->
+<project>
 	<import file="env.xml" />
-	<import file="${parser.ant.impl}" />
+	<import file="${parser.project}" />
+	<import file="${utils.project}" />
 
 	<!-- Declarations -->
-	<property name="trazere.resources" location="${trazere.module}/resources" />
+	<property name="trazere.resources" location="${trazere}/resources" />
 
-	<property name="trazere.build" location="${trazere.module}/build" />
-
-	<property name="trazere.dist" location="${trazere.module}/dist" />
+	<property name="trazere.dist" location="${trazere}/dist" />
 	<property name="trazere.dist.binary" location="${trazere.dist}/trazere-${trazere.version}" />
 	<property name="trazere.dist.zip" location="${trazere.dist}/trazere-${trazere.version}.zip" />
 
 	<!-- Clean -->
-	<target name="trazere.clean" depends="parser.clean, utils.clean">
-		<delete dir="${trazere.build}" />
-	</target>
+	<target name="trazere.clean" depends="parser.clean, utils.clean" />
 
 	<!-- Clean the distribution -->
 	<target name="trazere.distclean">

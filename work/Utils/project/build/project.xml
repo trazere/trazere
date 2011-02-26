@@ -14,24 +14,37 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<project name="utils.impl">
-	<!-- Imports -->
-	<import file="../../module/env.xml" />
-	<import file="${tools.ant.impl}" />
+<project>
+	<import file="env.xml" />
+	<import file="${tools.project}" />
 
 	<!-- Declarations -->
-	<property name="utils.sources" location="${utils.module}/sources" />
+	<property name="utils.sources" location="${utils}/sources" />
 
-	<property name="utils.build" location="${utils.module}/build" />
-	<property name="utils.build.classes" location="${utils.build}/classes" />
-	<property name="utils.build.jar" location="${utils.build}/utils.jar" />
+	<property name="utils.target" location="${utils}/build/target" />
+	<property name="utils.target.classes" location="${utils.target}/classes" />
+	<property name="utils.target.jar" location="${utils.target}/trazere-utils.jar" />
 
-	<property name="utils.dist" location="${utils.module}/dist" />
+	<property name="utils.dist" location="${utils}/dist" />
 	<property name="utils.dist.lib" value="${utils.dist}/lib" />
+
+	<union id="utils.libs">
+		<union id="utils.deps">
+			<resources refid="tools.ant.libs" />
+			<resources refid="tools.commons-logging.libs" />
+			<resources refid="tools.sjsxp.libs" />
+		</union>
+		<union id="utils.jars">
+			<fileset file="${utils.target.jar}" />
+		</union>
+	</union>
+	<path id="utils.classpath">
+		<pathelement location="${utils.target.classes}" />
+	</path>
 
 	<!-- Clean -->
 	<target name="utils.clean">
-		<delete dir="${utils.build}" />
+		<delete dir="${utils.target}" />
 	</target>
 
 	<!-- Clean the distribution -->
@@ -41,8 +54,8 @@
 
 	<!-- Compile the sources -->
 	<target name="utils.compileSources">
-		<mkdir dir="${utils.build.classes}" />
-		<javac destdir="${utils.build.classes}" source="${trazere.java.version}" debug="${trazere.java.debug}" target="${trazere.java.version}" failonerror="true" encoding="${trazere.java.encoding}">
+		<mkdir dir="${utils.target.classes}" />
+		<javac destdir="${utils.target.classes}" source="${trazere.java.version}" encoding="${trazere.java.encoding}" target="${trazere.java.version}" debug="${trazere.java.debug}" includeantruntime="false" failonerror="true">
 			<src location="${utils.sources}" />
 			<classpath>
 				<path refid="tools.ant.classpath" />
@@ -57,9 +70,10 @@
 
 	<!-- Build the JAR -->
 	<target name="utils.buildJar" depends="utils.compileSources">
-		<mkdir dir="${utils.build}" />
-		<jar destfile="${utils.build.jar}">
-			<fileset dir="${utils.build.classes}" includes="**/*.class" />
+		<mkdir dir="${utils.target}" />
+		<jar destfile="${utils.target.jar}">
+			<fileset dir="${utils.target.classes}" includes="**/*.class" />
+			<fileset dir="${utils.sources}" excludes="**/*.java" />
 		</jar>
 	</target>
 
@@ -69,7 +83,9 @@
 
 		<!-- Jars -->
 		<mkdir dir="${utils.dist.lib}" />
-		<copy tofile="${utils.dist.lib}/trazere-utils.jar" file="${utils.build.jar}" />
+		<copy todir="${utils.dist.lib}">
+			<resources refid="utils.jars" />
+		</copy>
 	</target>
 
 	<!-- Build the bootstrap JAR -->
@@ -80,7 +96,7 @@
 		<mkdir dir="${utils.dist}" />
 		<jar destfile="${utils.dist.bootstrap_jar}">
 			<fileset dir="${utils.sources}" includes="com/trazere/util/TargetTask.java" />
-			<fileset dir="${utils.build.classes}" includes="com/trazere/util/TargetTask.class" />
+			<fileset dir="${utils.target.classes}" includes="com/trazere/util/TargetTask.class" />
 		</jar>
 	</target>
 	-->
