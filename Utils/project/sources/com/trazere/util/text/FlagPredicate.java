@@ -16,6 +16,7 @@
 package com.trazere.util.text;
 
 import com.trazere.util.collection.CollectionUtils;
+import com.trazere.util.function.Predicate1;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -24,27 +25,26 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-// TODO: rename to FlagPredicate
 // TODO: implements Predicate
 
 /**
- * The {@link FlagSet} class represents masks which can filter sets of flags.
+ * The {@link FlagPredicate} class represents predicates over sets of flags.
  * <p>
- * Each mask is composed of three groups of flags:
+ * Each predicates is defined by three groups of flags:
  * <ul>
  * <li>the required flags,
  * <li>the enabled flags,
  * <li>the forbidden flags.
  * </ul>
- * A set of flags is accepted by a given mask when all following conditions are fulfiled:
+ * A set of flags is accepted by a predicate when all following conditions are fulfiled:
  * <ul>
  * <li>the set must contain every required flag,
- * <li>the set must contain at least one enabled flag, or no flags are enabled but some are required,
+ * <li>the set must contain at least one enabled flag, or some flags are required when no flags are enabled,
  * <li>the set must contain no forbidden flags.
  * </ul>
  */
-public class FlagSet
-implements Describable {
+public class FlagPredicate
+implements Predicate1<Collection<String>, RuntimeException>, Describable {
 	/** The required flags. */
 	protected final Set<String> _required;
 	
@@ -62,7 +62,7 @@ implements Describable {
 	 * 
 	 * @param representation The representation of the mask.
 	 */
-	public FlagSet(final String representation) {
+	public FlagPredicate(final String representation) {
 		this(representation, ",");
 	}
 	
@@ -75,7 +75,7 @@ implements Describable {
 	 * @param representation The representation of the mask.
 	 * @param delimeter The delimiter of the flags.
 	 */
-	public FlagSet(final String representation, final String delimeter) {
+	public FlagPredicate(final String representation, final String delimeter) {
 		this(TextUtils.split(representation, delimeter, false, true, new ArrayList<String>()));
 	}
 	
@@ -87,7 +87,7 @@ implements Describable {
 	 * 
 	 * @param flags The flags composing the mask.
 	 */
-	public FlagSet(final List<String> flags) {
+	public FlagPredicate(final List<String> flags) {
 		assert null != flags;
 		
 		// Compute the flags.
@@ -169,6 +169,10 @@ implements Describable {
 		
 		// Test.
 		return test(Arrays.asList(flags));
+	}
+	
+	public boolean evaluate(final Collection<String> flags) {
+		return test(flags);
 	}
 	
 	@Override
