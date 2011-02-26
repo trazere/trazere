@@ -13,12 +13,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util;
-
-// TODO: move in another package
+package com.trazere.util.lang;
 
 /**
- * The {@link Counter} class represents integer counters.
+ * The {@link Counter} class represents counters.
  */
 public class Counter {
 	/** Start value of the counter. */
@@ -31,17 +29,17 @@ public class Counter {
 	protected int _value;
 	
 	/**
-	 * Instantiate a new counter starting at <code>0</code> and incrementing by <code>1</code>.
+	 * Instantiates a new counter starting at <code>0</code> and incrementing by <code>1</code>.
 	 */
 	public Counter() {
 		this(0, 1);
 	}
 	
 	/**
-	 * Instantiate a new counter starting at the given value and incrementing by the given increment.
+	 * Instantiates a new counter.
 	 * 
-	 * @param start Start value of the counter.
-	 * @param increment Increment of the counter.
+	 * @param start The start value.
+	 * @param increment The increment.
 	 */
 	public Counter(final int start, final int increment) {
 		_start = start;
@@ -50,7 +48,7 @@ public class Counter {
 	}
 	
 	/**
-	 * Get the start value of the receiver counter.
+	 * Gets the start value of the receiver counter.
 	 * 
 	 * @return The start value.
 	 */
@@ -59,7 +57,7 @@ public class Counter {
 	}
 	
 	/**
-	 * Get the increment of the receiver counter.
+	 * Gets the increment of the receiver counter.
 	 * 
 	 * @return The increment.
 	 */
@@ -68,21 +66,7 @@ public class Counter {
 	}
 	
 	/**
-	 * Reset the receiver counter to its start value.
-	 */
-	public void reset() {
-		_value = _start;
-	}
-	
-	/**
-	 * Increment the receiver counter.
-	 */
-	public void inc() {
-		_value += _increment;
-	}
-	
-	/**
-	 * Get the current value of the given counter.
+	 * Gets the current value of the given counter.
 	 * 
 	 * @return The current value.
 	 */
@@ -93,9 +77,31 @@ public class Counter {
 	/**
 	 * Indicates whether the value of the receiver counter is the start value.
 	 * 
-	 * @return <code>true</code> when the value if the start value, <code>false</code> otherwise.
+	 * @return <code>true</code> when the value is the start value, <code>false</code> otherwise.
 	 */
 	public boolean isStart() {
 		return _start == _value;
+	}
+	
+	/**
+	 * Resets the receiver counter to its start value.
+	 */
+	public void reset() {
+		_value = _start;
+	}
+	
+	/**
+	 * Increments the receiver counter.
+	 * 
+	 * @return The incremented value.
+	 */
+	public int inc() {
+		_value += _increment;
+		return _value;
+	}
+	
+	@Override
+	public String toString() {
+		return String.valueOf(_value);
 	}
 }

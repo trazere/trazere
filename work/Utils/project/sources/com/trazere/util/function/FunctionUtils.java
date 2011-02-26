@@ -15,10 +15,10 @@
  */
 package com.trazere.util.function;
 
-import com.trazere.util.Counter;
 import com.trazere.util.accumulator.Accumulator;
 import com.trazere.util.accumulator.Accumulators;
 import com.trazere.util.collection.Multimap;
+import com.trazere.util.lang.Counter;
 import com.trazere.util.type.Maybe;
 import java.util.Collection;
 import java.util.Iterator;

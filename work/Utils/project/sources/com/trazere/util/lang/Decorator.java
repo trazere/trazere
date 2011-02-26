@@ -13,21 +13,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util;
-
-// TODO: move in another package
+package com.trazere.util.lang;
 
 /**
  * The {@link Decorator} abstract class provides a skeleton to implement decorators.
  * 
- * @param <T>
+ * @param <T> Type of the decorated object.
  */
 public abstract class Decorator<T> {
 	/** The decorated object. */
 	protected final T _decorated;
 	
 	/**
-	 * Instantiate a new decorator.
+	 * Instantiates a new decorator.
 	 * 
 	 * @param decorated The decorated object.
 	 */
