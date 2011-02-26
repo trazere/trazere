@@ -30,7 +30,7 @@
 
 	<union id="parser.libs">
 		<union id="parser.deps">
-			<resources refid="tools.commons-logging.libs" />
+			<resources refid="tools.slf4j.libs" />
 			<resources refid="utils.libs" />
 		</union>
 		<union id="parser.jars">
@@ -57,7 +57,7 @@
 		<javac destdir="${parser.target.classes}" source="${trazere.java.version}" encoding="${trazere.java.encoding}" target="${trazere.java.version}" debug="${trazere.java.debug}" includeantruntime="false" failonerror="true">
 			<src location="${parser.sources}" />
 			<classpath>
-				<path refid="tools.commons-logging.classpath" />
+				<path refid="tools.slf4j.classpath" />
 				<path refid="utils.classpath" />
 			</classpath>
 		</javac>

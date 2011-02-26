@@ -40,8 +40,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.List;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The {@link CSVReportStore} abstract class represents report stores relying on CSV files.
@@ -50,7 +50,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public abstract class CSVReportStore<Entry extends ReportEntry<?, ?>>
 implements ReportStore<Entry> {
-	private static final Log LOG = LogFactory.getLog(CSVReportStore.class);
+	private static final Logger _LOGGER = LoggerFactory.getLogger(CSVReportStore.class);
 	
 	/** Default delimiter of the CSV fields. */
 	public static final String DELIMITER = ";";
@@ -203,7 +203,7 @@ implements ReportStore<Entry> {
 				_writer = getWriter(currentHeaders, true);
 			} else {
 				// Build the writer for a new report.
-				LOG.info("Creating report file at path " + _path);
+				_LOGGER.info("Creating report file at path " + _path);
 				_writer = getWriter(headers, false);
 				_entries = new ArrayList<ReportStoreEntry<Entry>>();
 			}
@@ -302,13 +302,13 @@ implements ReportStore<Entry> {
 							// Read the date.
 							final String dateField = line.get(getDateHeader(), null);
 							if (null == dateField) {
-								LOG.warn("Ignoring invalid entry at line " + reader.getLine() + " from report file at path " + _path + " (missing date)");
+								_LOGGER.warn("Ignoring invalid entry at line " + reader.getLine() + " from report file at path " + _path + " (missing date)");
 								continue;
 							}
 							
 							final Maybe<Date> maybeDate = TextUtils.parseDate(getDateFormat(), dateField);
 							if (maybeDate.isNone()) {
-								LOG.warn("Ignoring invalid entry at line " + reader.getLine() + " from report file at path " + _path + " (invalid date)");
+								_LOGGER.warn("Ignoring invalid entry at line " + reader.getLine() + " from report file at path " + _path + " (invalid date)");
 								continue;
 							}
 							final Date date = maybeDate.asSome().getValue();
@@ -316,7 +316,7 @@ implements ReportStore<Entry> {
 							// Read the level.
 							final String levelField = line.get(getLevelHeader(), null);
 							if (null == levelField) {
-								LOG.warn("Ignoring invalid entry at line " + reader.getLine() + " from report file at path " + _path + " (missing level)");
+								_LOGGER.warn("Ignoring invalid entry at line " + reader.getLine() + " from report file at path " + _path + " (missing level)");
 								continue;
 							}
 							
@@ -324,14 +324,14 @@ implements ReportStore<Entry> {
 							try {
 								level = ReportLevel.valueOf(levelField);
 							} catch (final IllegalArgumentException exception) {
-								LOG.warn("Ignoring invalid entry at line " + reader.getLine() + " from report file at path " + _path + " (invalid level)");
+								_LOGGER.warn("Ignoring invalid entry at line " + reader.getLine() + " from report file at path " + _path + " (invalid level)");
 								continue;
 							}
 							
 							// Read the entry.
 							final Maybe<Entry> entry = buildEntry(line);
 							if (entry.isNone()) {
-								LOG.warn("Ignoring invalid entry at line " + reader.getLine() + " from report file at path " + _path + " (invalid entry)");
+								_LOGGER.warn("Ignoring invalid entry at line " + reader.getLine() + " from report file at path " + _path + " (invalid entry)");
 								continue;
 							}
 							
@@ -379,7 +379,7 @@ implements ReportStore<Entry> {
 				final List<String> currentHeaders = csvReader.getHeaders();
 				if (!currentHeaders.containsAll(headers)) {
 					// Invalid headers.
-					LOG.warn("Ignoring report at path " + _path + " with incompatible headers " + currentHeaders);
+					_LOGGER.warn("Ignoring report at path " + _path + " with incompatible headers " + currentHeaders);
 					
 					csvReader.close();
 					return Maybe.none();
@@ -388,7 +388,7 @@ implements ReportStore<Entry> {
 				return Maybe.some(csvReader);
 			} catch (final EOFException exception) {
 				// Invalid report.
-				LOG.warn("Ignoring invalid report at path " + _path);
+				_LOGGER.warn("Ignoring invalid report at path " + _path);
 				
 				reader.close();
 				return Maybe.none();
@@ -398,7 +398,7 @@ implements ReportStore<Entry> {
 			}
 		} else {
 			// Missing report.
-			LOG.warn("Ignoring missing report at path " + _path);
+			_LOGGER.warn("Ignoring missing report at path " + _path);
 			
 			return Maybe.none();
 		}

@@ -31,8 +31,8 @@
 	<union id="utils.libs">
 		<union id="utils.deps">
 			<resources refid="tools.ant.libs" />
-			<resources refid="tools.commons-logging.libs" />
 			<resources refid="tools.sjsxp.libs" />
+			<resources refid="tools.slf4j.libs" />
 		</union>
 		<union id="utils.jars">
 			<fileset file="${utils.target.jar}" />
@@ -59,7 +59,7 @@
 			<src location="${utils.sources}" />
 			<classpath>
 				<path refid="tools.ant.classpath" />
-				<path refid="tools.commons-logging.classpath" />
+				<path refid="tools.slf4j.classpath" />
 				<path refid="tools.sjsxp.classpath" />
 			</classpath>
 		</javac>
