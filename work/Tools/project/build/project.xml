@@ -29,18 +29,6 @@
 		<resources refid="tools.ant.jars" />
 	</path>
 
-	<!-- Commons logging -->
-	<property name="tools.commons-logging" location="${tools}/commons-logging-1.1.1" />
-	<union id="tools.commons-logging.libs">
-		<union id="tools.commons-logging.deps" />
-		<fileset id="tools.commons-logging.jars" dir="${tools.commons-logging}">
-			<include name="commons-logging.jar" />
-		</fileset>
-	</union>
-	<path id="tools.commons-logging.classpath">
-		<resources refid="tools.commons-logging.jars" />
-	</path>
-
 	<!-- SJSXP -->
 	<property name="tools.sjsxp" location="${tools}/sjsxp-1.0.1" />
 	<union id="tools.sjsxp.libs">
@@ -53,5 +41,17 @@
 	<union id="tools.sjsxp.endorsed.libs" />
 	<path id="tools.sjsxp.classpath">
 		<resources refid="tools.sjsxp.endorsed.jars" />
+	</path>
+
+	<!-- SLF4J -->
+	<property name="tools.slf4j" location="${tools}/slf4j-1.6.1" />
+	<union id="tools.slf4j.libs">
+		<union id="tools.slf4j.deps" />
+		<fileset id="tools.slf4j.jars" dir="${tools.slf4j}">
+			<include name="slf4j-api.jar" />
+		</fileset>
+	</union>
+	<path id="tools.slf4j.classpath">
+		<resources refid="tools.slf4j.jars" />
 	</path>
 </project>

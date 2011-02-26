@@ -18,53 +18,53 @@ package com.trazere.util.task;
 import com.trazere.util.report.ReportException;
 import com.trazere.util.report.ReportLevel;
 import com.trazere.util.report.ReportListener;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The {@link TaskListeners} class provides various task listeners.
  */
 public class TaskListeners {
-	private static final Log LOG = LogFactory.getLog(TaskListener.class);
+	private static final Logger _LOGGER = LoggerFactory.getLogger(TaskListener.class);
 	
 	/**
 	 * Build a task listener which logs the task executions using the given log.
 	 * 
-	 * @param log The log to use.
+	 * @param logger The logger to use.
 	 * @param trace Flag indicated whether the exception trace should be logged or not.
 	 * @return The built listener.
 	 */
-	public static TaskListener log(final Log log, final boolean trace) {
-		assert null != log;
+	public static TaskListener log(final Logger logger, final boolean trace) {
+		assert null != logger;
 		
 		// Build.
 		return new TaskListener() {
 			public void taskStarted(final Task task) {
-				log.info("*** " + task.getName() + " ***");
+				logger.info("*** " + task.getName() + " ***");
 			}
 			
 			public void taskSucceeded(final Task task) {
-				log.info("*** " + task.getName() + " [OK] ***");
+				logger.info("*** " + task.getName() + " [OK] ***");
 			}
 			
 			public void taskFailed(final Task task, final TaskException exception) {
 				if (trace) {
-					log.info("*** " + task.getName() + " [FAILED] ***", exception);
+					logger.info("*** " + task.getName() + " [FAILED] ***", exception);
 				} else {
-					log.info("*** " + task.getName() + " [FAILED] ***");
+					logger.info("*** " + task.getName() + " [FAILED] ***");
 				}
 			}
 			
 			public void taskFailed(final Task task, final RuntimeException exception) {
 				if (trace) {
-					log.info("*** " + task.getName() + " [FAILED] ***", exception);
+					logger.info("*** " + task.getName() + " [FAILED] ***", exception);
 				} else {
-					log.info("*** " + task.getName() + " [FAILED] ***");
+					logger.info("*** " + task.getName() + " [FAILED] ***");
 				}
 			}
 			
 			public void taskEnded(final Task task) {
-				log.info("");
+				logger.info("");
 			}
 		};
 	}
@@ -89,7 +89,7 @@ public class TaskListeners {
 					reportListener.report(ReportLevel.NOTICE, new TaskReportEntry(task.getName(), TaskStatus.SUCCEEDED, null));
 					reportListener.sleep();
 				} catch (final ReportException exception) {
-					LOG.info("Failed reporting execution of task " + task.getName(), exception);
+					_LOGGER.info("Failed reporting execution of task " + task.getName(), exception);
 				}
 			}
 			
@@ -98,7 +98,7 @@ public class TaskListeners {
 					reportListener.report(ReportLevel.ERROR, new TaskReportEntry(task.getName(), TaskStatus.FAILED, exception.getMessage()));
 					reportListener.sleep();
 				} catch (final ReportException exception1) {
-					LOG.info("Failed reporting execution of task " + task.getName(), exception1);
+					_LOGGER.info("Failed reporting execution of task " + task.getName(), exception1);
 				}
 			}
 			
@@ -107,7 +107,7 @@ public class TaskListeners {
 					reportListener.report(ReportLevel.WARNING, new TaskReportEntry(task.getName(), TaskStatus.FAILED, exception.getMessage()));
 					reportListener.sleep();
 				} catch (final ReportException exception1) {
-					LOG.info("Failed reporting execution of task " + task.getName(), exception1);
+					_LOGGER.info("Failed reporting execution of task " + task.getName(), exception1);
 				}
 			}
 			

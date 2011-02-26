@@ -15,8 +15,8 @@
  */
 package com.trazere.util.report;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The <code>LogReportListener</code> class represents report listeners which forward the entries to a logger.
@@ -25,21 +25,21 @@ import org.apache.commons.logging.LogFactory;
  */
 public class LogReportListener<Entry extends ReportEntry<?, ?>>
 implements ReportListener<Entry> {
-	private static final Log LOG = LogFactory.getLog(LogReportListener.class);
+	private static final Logger _LOGGER = LoggerFactory.getLogger(LogReportListener.class);
 	
 	/** Logger to use. */
-	protected final Log _log;
+	protected final Logger _logger;
 	
 	/**
 	 * Instantiate a new listener with the given logger.
 	 * 
-	 * @param log Logger to use.
+	 * @param logger Logger to use.
 	 */
-	public LogReportListener(final Log log) {
-		assert null != log;
+	public LogReportListener(final Logger logger) {
+		assert null != logger;
 		
 		// Initialization.
-		_log = log;
+		_logger = logger;
 	}
 	
 	/**
@@ -47,8 +47,8 @@ implements ReportListener<Entry> {
 	 * 
 	 * @return The logger.
 	 */
-	public Log getLog() {
-		return _log;
+	public Logger getLogger() {
+		return _logger;
 	}
 	
 	public void report(final ReportLevel level, final Entry entry) {
@@ -60,20 +60,20 @@ implements ReportListener<Entry> {
 		// Log.
 		switch (level) {
 			case NOTICE: {
-				_log.info(message);
+				_logger.info(message);
 				break;
 			}
 			case WARNING: {
-				_log.warn(message);
+				_logger.warn(message);
 				break;
 			}
 			case ERROR: {
-				_log.error(message);
+				_logger.error(message);
 				break;
 			}
 			default: {
-				LOG.warn("Invalid report level " + level + " for entry " + entry);
-				_log.error(message);
+				_LOGGER.warn("Invalid report level " + level + " for entry " + entry);
+				_logger.error(message);
 				break;
 			}
 		}
