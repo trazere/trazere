@@ -20,11 +20,12 @@ import com.trazere.util.function.Function1;
 /**
  * The {@link ObjectTypeMap} interface defines maps from Java class hierarchies to values.
  * 
+ * @param <T> Upper bound type.
  * @param <V> Type of the values.
  * @param <X> Type of the exceptions.
  */
-public interface ObjectTypeMap<V, X extends Exception>
-extends Function1<Class<?>, V, X> {
+public interface ObjectTypeMap<T, V, X extends Exception>
+extends Function1<Class<? extends T>, V, X> {
 	/**
 	 * Gets the value associated to the given type.
 	 * 
@@ -32,6 +33,6 @@ extends Function1<Class<?>, V, X> {
 	 * @return The value. May be <code>null</code>.
 	 * @throws X When the value cannot be got.
 	 */
-	public V get(final Class<?> type)
+	public V get(final Class<? extends T> type)
 	throws X;
 }

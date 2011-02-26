@@ -27,9 +27,9 @@ import java.util.Collection;
  * @param <X> Type of the exceptions.
  */
 public abstract class AbstractLazyTypeMap<T, V, X extends Exception>
-extends LazyMap<T, Maybe<V>, X> {
+extends LazyMap<T, Maybe<? extends V>, X> {
 	/** The type upper bound. */
-	protected final Maybe<T> _upperBound;
+	protected final Maybe<? extends T> _upperBound;
 	
 	/** The default value. */
 	protected final Maybe<V> _defaultValue;
@@ -56,7 +56,7 @@ extends LazyMap<T, Maybe<V>, X> {
 	 * @param upperBound The upper bound.
 	 * @param defaultValue The default value.
 	 */
-	public AbstractLazyTypeMap(final Maybe<T> upperBound, final Maybe<V> defaultValue) {
+	public AbstractLazyTypeMap(final Maybe<? extends T> upperBound, final Maybe<V> defaultValue) {
 		// Checks.
 		assert null != upperBound;
 		assert null != defaultValue;
@@ -94,7 +94,7 @@ extends LazyMap<T, Maybe<V>, X> {
 	 */
 	public V getStrict(final T type, final ThrowableFactory<? extends X> throwableFactory)
 	throws X {
-		final Maybe<V> result = get(type);
+		final Maybe<? extends V> result = get(type);
 		if (result.isSome()) {
 			return result.asSome().getValue();
 		} else {
@@ -103,19 +103,19 @@ extends LazyMap<T, Maybe<V>, X> {
 	}
 	
 	@Override
-	protected Maybe<V> compute(final T type)
+	protected Maybe<? extends V> compute(final T type)
 	throws X {
 		// Test the upper bound.
 		if (_upperBound.isSome() && !isSubTypeOf(type, _upperBound.asSome().getValue())) {
 			return _defaultValue;
 		} else {
-			final Maybe<V> computedValue = computeDiscrete(type);
+			final Maybe<? extends V> computedValue = computeDiscrete(type);
 			if (computedValue.isSome()) {
 				return computedValue;
 			} else {
 				// Fetch the value attached to the super types.
 				for (final T superType : getSuperTypes(type)) {
-					final Maybe<V> superValue = get(superType);
+					final Maybe<? extends V> superValue = get(superType);
 					if (superValue.isSome()) {
 						return superValue;
 					}
@@ -134,6 +134,6 @@ extends LazyMap<T, Maybe<V>, X> {
 	 * @return The computed value. May be <code>null</code>.
 	 * @throws X When the value cannot be computed.
 	 */
-	protected abstract Maybe<V> computeDiscrete(final T type)
+	protected abstract Maybe<? extends V> computeDiscrete(final T type)
 	throws X;
 }
