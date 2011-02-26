@@ -131,13 +131,13 @@ extends Tuple4<T1, T2, T3, T4> {
 	
 	@Override
 	public int hashCode() {
-		final HashCode hashCode = new HashCode(this);
-		hashCode.append(_first);
-		hashCode.append(_second);
-		hashCode.append(_third);
-		hashCode.append(_fourth);
-		hashCode.append(_fifth);
-		return hashCode.get();
+		final HashCode result = new HashCode(this);
+		result.append(_first);
+		result.append(_second);
+		result.append(_third);
+		result.append(_fourth);
+		result.append(_fifth);
+		return result.get();
 	}
 	
 	@Override

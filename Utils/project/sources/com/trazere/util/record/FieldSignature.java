@@ -212,11 +212,11 @@ implements Describable {
 	
 	@Override
 	public int hashCode() {
-		final HashCode hashCode = new HashCode(this);
-		hashCode.append(_key);
-		hashCode.append(_type);
-		hashCode.append(_nullable);
-		return hashCode.get();
+		final HashCode result = new HashCode(this);
+		result.append(_key);
+		result.append(_type);
+		result.append(_nullable);
+		return result.get();
 	}
 	
 	@Override

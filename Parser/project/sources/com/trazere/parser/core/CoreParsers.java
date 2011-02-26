@@ -23,10 +23,13 @@ import com.trazere.util.function.Function2;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.LangUtils;
 import com.trazere.util.type.Either;
+import com.trazere.util.type.Maybe;
+import com.trazere.util.type.Tuple1;
 import com.trazere.util.type.Tuple2;
 import com.trazere.util.type.Tuple3;
 import com.trazere.util.type.Tuple4;
 import com.trazere.util.type.Tuple5;
+import com.trazere.util.type.TypeUtils;
 import java.util.List;
 
 /**
@@ -116,6 +119,49 @@ public class CoreParsers {
 		return new LiftParser();
 	}
 	
+	public static <Token, Result> Parser<Token, Result> default_(final Parser<Token, Maybe<Result>> subParser, final Result defaultResult, final String description) {
+		final class DefaultParser
+		extends Sequence1Parser<Token, Maybe<Result>, Result> {
+			public DefaultParser() {
+				super(subParser, description);
+			}
+			
+			// Parser.
+			
+			private final Result _defaultResult = defaultResult;
+			
+			@Override
+			protected Result combine(final Maybe<Result> subResult1)
+			throws ParserException {
+				return TypeUtils.get(subResult1, _defaultResult);
+			}
+			
+			// Object.
+			
+			@Override
+			public int hashCode() {
+				final HashCode result = new HashCode(this);
+				result.append(_description);
+				result.append(_subParser1);
+				result.append(_defaultResult);
+				return result.get();
+			}
+			
+			@Override
+			public boolean equals(final Object object) {
+				if (this == object) {
+					return true;
+				} else if (null != object && getClass().equals(object.getClass())) {
+					final DefaultParser parser = (DefaultParser) object;
+					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && LangUtils.equals(_defaultResult, parser._defaultResult);
+				} else {
+					return false;
+				}
+			}
+		}
+		return new DefaultParser();
+	}
+	
 	public static <Token, SubResult, Result> Parser<Token, Result> map(final Parser<Token, ? extends SubResult> subParser, final Function1<? super SubResult, ? extends Result, ? extends ParserException> function, final String description) {
 		assert null != function;
 		
@@ -139,11 +185,11 @@ public class CoreParsers {
 			
 			@Override
 			public int hashCode() {
-				final HashCode hashCode = new HashCode(this);
-				hashCode.append(_description);
-				hashCode.append(_subParser1);
-				hashCode.append(_function);
-				return hashCode.get();
+				final HashCode result = new HashCode(this);
+				result.append(_description);
+				result.append(_subParser1);
+				result.append(_function);
+				return result.get();
 			}
 			
 			@Override
@@ -209,12 +255,12 @@ public class CoreParsers {
 			
 			@Override
 			public int hashCode() {
-				final HashCode hashCode = new HashCode(this);
-				hashCode.append(_description);
-				hashCode.append(_subParser);
-				hashCode.append(_initialValue);
-				hashCode.append(_function);
-				return hashCode.get();
+				final HashCode result = new HashCode(this);
+				result.append(_description);
+				result.append(_subParser);
+				result.append(_initialValue);
+				result.append(_function);
+				return result.get();
 			}
 			
 			@Override
@@ -255,12 +301,12 @@ public class CoreParsers {
 			
 			@Override
 			public int hashCode() {
-				final HashCode hashCode = new HashCode(this);
-				hashCode.append(_description);
-				hashCode.append(_subParser);
-				hashCode.append(_initialValue);
-				hashCode.append(_function);
-				return hashCode.get();
+				final HashCode result = new HashCode(this);
+				result.append(_description);
+				result.append(_subParser);
+				result.append(_initialValue);
+				result.append(_function);
+				return result.get();
 			}
 			
 			@Override
@@ -276,6 +322,45 @@ public class CoreParsers {
 			}
 		}
 		return new FoldParser_();
+	}
+	
+	public static <Token, SubResult1> Parser<Token, Tuple1<SubResult1>> sequence(final Parser<Token, ? extends SubResult1> subParser1, final String description) {
+		final class SequenceParser
+		extends Sequence1Parser<Token, SubResult1, Tuple1<SubResult1>> {
+			public SequenceParser() {
+				super(subParser1, description);
+			}
+			
+			// Parser.
+			
+			@Override
+			protected Tuple1<SubResult1> combine(final SubResult1 subResult1) {
+				return Tuple1.build(subResult1);
+			}
+			
+			// Object.
+			
+			@Override
+			public int hashCode() {
+				final HashCode result = new HashCode(this);
+				result.append(_description);
+				result.append(_subParser1);
+				return result.get();
+			}
+			
+			@Override
+			public boolean equals(final Object object) {
+				if (this == object) {
+					return true;
+				} else if (null != object && getClass().equals(object.getClass())) {
+					final SequenceParser parser = (SequenceParser) object;
+					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1);
+				} else {
+					return false;
+				}
+			}
+		}
+		return new SequenceParser();
 	}
 	
 	public static <Token, SubResult1, SubResult2> Parser<Token, Tuple2<SubResult1, SubResult2>> sequence(final Parser<Token, ? extends SubResult1> subParser1, final Parser<Token, ? extends SubResult2> subParser2, final String description) {

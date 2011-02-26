@@ -57,9 +57,9 @@ implements Comparator<T> {
 	
 	@Override
 	public int hashCode() {
-		final HashCode hashCode = new HashCode(this);
-		hashCode.append(_comparators);
-		return hashCode.get();
+		final HashCode result = new HashCode(this);
+		result.append(_comparators);
+		return result.get();
 	}
 	
 	@Override
