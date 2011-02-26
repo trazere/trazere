@@ -14,12 +14,9 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<project name="tools" default="usage">
-	<!-- Imports -->
-	<import file="impl.xml" />
-
-	<!-- Usage -->
-	<target name="usage">
-		<echo>TODO</echo>
-	</target>
+<project name="utils">
+	<!-- Project -->
+	<dirname property="utils" file="${ant.file.utils}/.." />
+	<property name="utils.module" location="${utils}/.." />
+	<property name="utils.project" location="${utils}/build/project.xml" />
 </project>

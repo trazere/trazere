@@ -14,9 +14,8 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<project name="trazere" default="usage">
-	<!-- Imports -->
-	<import file="impl.xml" />
+<project default="usage">
+	<import file="build/project.xml" />
 
 	<!-- Usage -->
 	<target name="usage">
@@ -24,29 +23,16 @@
 	</target>
 
 	<!-- Clean -->
-	<target name="clean" description="Clean" depends="trazere.clean" />
+	<target name="clean" description="Clean" depends="parser.clean" />
 
 	<!-- Clean the distribution -->
-	<target name="distclean" description="Clean the distribution" depends="trazere.distclean" />
+	<target name="distclean" description="Clean the distribution" depends="parser.distclean" />
 
 	<!-- Compile -->
-	<target name="compile" description="Compile" depends="trazere.compile" />
+	<target name="compile" description="Compile" depends="parser.compile" />
 
 	<!-- Build the distribution -->
 	<target name="build" description="Build the distribution">
-		<antcall target="trazere.build" inheritall="false">
-			<param name="parser.dist" location="${trazere.dist.binary}" />
-			<param name="utils.dist" location="${trazere.dist.binary}" />
-		</antcall>
-	</target>
-
-	<!-- Environment -->
-	<target name="environment" description="Display the environment">
-		<echoproperties />
-	</target>
-
-	<!-- Xalan -->
-	<target name="xalan" description="Display the Xalan version">
-		<java classname="org.apache.xalan.xslt.EnvironmentCheck" failonerror="true" />
+		<antcall target="parser.build" inheritall="false" />
 	</target>
 </project>
