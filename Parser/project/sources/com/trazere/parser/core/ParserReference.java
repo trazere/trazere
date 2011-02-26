@@ -19,8 +19,9 @@ import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserState;
-import com.trazere.util.lang.HashCode;
 import com.trazere.util.reference.MutableReference;
+
+// TODO: improve parser comparison to handle recursive parsers
 
 /**
  * DOCME
@@ -54,27 +55,27 @@ implements Parser<Token, Result> {
 		get().run(closure, state);
 	}
 	
-	// Object.
-	
-	@Override
-	public int hashCode() {
-		final HashCode result = new HashCode(this);
-		result.append(_parser.get());
-		return result.get();
-	}
-	
-	@Override
-	public boolean equals(final Object object) {
-		if (this == object) {
-			return true;
-		} else if (null != object && getClass().equals(object.getClass())) {
-			final ParserReference<?, ?> parser = (ParserReference<?, ?>) object;
-			return _parser.get().equals(parser._parser.get());
-		} else if (null != object && getClass().equals(_parser.get().getClass())) {
-			final Parser<?, ?> parser = (Parser<?, ?>) object;
-			return _parser.get().equals(parser);
-		} else {
-			return false;
-		}
-	}
+	//	// Object.
+	//	
+	//	@Override
+	//	public int hashCode() {
+	//		final HashCode result = new HashCode(this);
+	//		result.append(_parser.get());
+	//		return result.get();
+	//	}
+	//	
+	//	@Override
+	//	public boolean equals(final Object object) {
+	//		if (this == object) {
+	//			return true;
+	//		} else if (null != object && getClass().equals(object.getClass())) {
+	//			final ParserReference<?, ?> parser = (ParserReference<?, ?>) object;
+	//			return _parser.get().equals(parser._parser.get());
+	//		} else if (null != object && getClass().equals(_parser.get().getClass())) {
+	//			final Parser<?, ?> parser = (Parser<?, ?>) object;
+	//			return _parser.get().equals(parser);
+	//		} else {
+	//			return false;
+	//		}
+	//	}
 }
