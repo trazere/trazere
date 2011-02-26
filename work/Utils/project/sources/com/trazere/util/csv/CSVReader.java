@@ -27,8 +27,8 @@ import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The {@link CSVReader} class provides support for reading CSV files.
@@ -44,7 +44,7 @@ import org.apache.commons.logging.LogFactory;
  * @see CSVLine
  */
 public class CSVReader {
-	private static final Log LOG = LogFactory.getLog(CSVReader.class);
+	private static final Logger _LOGGER = LoggerFactory.getLogger(CSVReader.class);
 	
 	/** Scanner of the CSV input. */
 	protected final Scanner _scanner;
@@ -184,14 +184,14 @@ public class CSVReader {
 			
 			do {
 				// Read the next line.
-				LOG.debug("Fetching line (" + (_nextEntryLine + 1) + ")");
+				_LOGGER.debug("Fetching line (" + (_nextEntryLine + 1) + ")");
 				final List<String> line = readLine();
 				if (null != line) {
 					_nextEntryLine += 1;
 					
 					// Test the cardinality.
-					if (_options.contains(CSVReaderOption.CHECK_CARDINALITY) && (_headers.size() != line.size())) {
-						LOG.warn("Cardinality check failed for line: " + line);
+					if (_options.contains(CSVReaderOption.CHECK_CARDINALITY) && _headers.size() != line.size()) {
+						_LOGGER.warn("Cardinality check failed for line: " + line);
 					} else {
 						// Build the entry.
 						final CSVLineBuilder builder = new CSVLineBuilder();
