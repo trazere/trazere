@@ -63,11 +63,11 @@ implements ReportEntry<Category, Code> {
 	
 	@Override
 	public int hashCode() {
-		final HashCode hashCode = new HashCode(this);
-		hashCode.append(_category);
-		hashCode.append(_code);
-		hashCode.append(_message);
-		return hashCode.get();
+		final HashCode result = new HashCode(this);
+		result.append(_category);
+		result.append(_code);
+		result.append(_message);
+		return result.get();
 	}
 	
 	@Override

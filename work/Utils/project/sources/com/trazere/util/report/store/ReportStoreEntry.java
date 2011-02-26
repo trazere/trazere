@@ -88,11 +88,11 @@ implements Describable {
 	
 	@Override
 	public int hashCode() {
-		final HashCode hashCode = new HashCode(this);
-		hashCode.append(_date);
-		hashCode.append(_level);
-		hashCode.append(_entry);
-		return hashCode.get();
+		final HashCode result = new HashCode(this);
+		result.append(_date);
+		result.append(_level);
+		result.append(_entry);
+		return result.get();
 	}
 	
 	@Override

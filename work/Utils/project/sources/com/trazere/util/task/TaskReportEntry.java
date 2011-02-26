@@ -98,11 +98,11 @@ implements ReportEntry<String, TaskStatus> {
 	
 	@Override
 	public int hashCode() {
-		final HashCode hashCode = new HashCode(this);
-		hashCode.append(_name);
-		hashCode.append(_status);
-		hashCode.append(_comment);
-		return hashCode.get();
+		final HashCode result = new HashCode(this);
+		result.append(_name);
+		result.append(_status);
+		result.append(_comment);
+		return result.get();
 	}
 	
 	@Override
