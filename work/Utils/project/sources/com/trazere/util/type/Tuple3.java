@@ -140,11 +140,11 @@ extends Tuple2<T1, T2> {
 	
 	@Override
 	public int hashCode() {
-		final HashCode hashCode = new HashCode(this);
-		hashCode.append(_first);
-		hashCode.append(_second);
-		hashCode.append(_third);
-		return hashCode.get();
+		final HashCode result = new HashCode(this);
+		result.append(_first);
+		result.append(_second);
+		result.append(_third);
+		return result.get();
 	}
 	
 	@Override

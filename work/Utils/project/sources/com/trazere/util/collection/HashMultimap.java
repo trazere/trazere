@@ -230,9 +230,9 @@ implements Multimap<K, V, C> {
 	
 	@Override
 	public int hashCode() {
-		final HashCode hashCode = new HashCode(this);
-		hashCode.append(_collections);
-		return hashCode.get();
+		final HashCode result = new HashCode(this);
+		result.append(_collections);
+		return result.get();
 	}
 	
 	@Override

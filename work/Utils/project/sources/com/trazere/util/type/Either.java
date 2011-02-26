@@ -140,9 +140,9 @@ implements Describable {
 		
 		@Override
 		public int hashCode() {
-			final HashCode hashCode = new HashCode(this);
-			hashCode.append(_left);
-			return hashCode.get();
+			final HashCode result = new HashCode(this);
+			result.append(_left);
+			return result.get();
 		}
 		
 		@Override
@@ -230,9 +230,9 @@ implements Describable {
 		
 		@Override
 		public int hashCode() {
-			final HashCode hashCode = new HashCode(this);
-			hashCode.append(_right);
-			return hashCode.get();
+			final HashCode result = new HashCode(this);
+			result.append(_right);
+			return result.get();
 		}
 		
 		@Override

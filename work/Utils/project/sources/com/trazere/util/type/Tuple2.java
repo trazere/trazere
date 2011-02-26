@@ -133,10 +133,10 @@ extends Tuple1<T1> {
 	
 	@Override
 	public int hashCode() {
-		final HashCode hashCode = new HashCode(this);
-		hashCode.append(_first);
-		hashCode.append(_second);
-		return hashCode.get();
+		final HashCode result = new HashCode(this);
+		result.append(_first);
+		result.append(_second);
+		return result.get();
 	}
 	
 	@Override

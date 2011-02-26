@@ -66,14 +66,14 @@ implements Comparator<T> {
 	}
 	
 	public int compare(final T object1, final T object2) {
-		return -(_comparator.compare(object1, object2));
+		return -_comparator.compare(object1, object2);
 	}
 	
 	@Override
 	public int hashCode() {
-		final HashCode hashCode = new HashCode(this);
-		hashCode.append(_comparator);
-		return hashCode.get();
+		final HashCode result = new HashCode(this);
+		result.append(_comparator);
+		return result.get();
 	}
 	
 	@Override
