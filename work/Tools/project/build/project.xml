@@ -14,35 +14,44 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<project name="tools.impl">
-	<!-- Imports -->
-	<import file="../../module/env.xml" />
+<project>
+	<import file="env.xml" />
 
 	<!-- Ant -->
-	<property name="tools.ant" location="${tools.module}/ant-1.7.0" />
-	<path id="tools.ant.classpath">
+	<property name="tools.ant" location="${tools}/ant-1.7.0" />
+	<union id="tools.ant.libs">
+		<union id="tools.ant.deps" />
 		<fileset id="tools.ant.jars" dir="${tools.ant}">
 			<include name="ant.jar" />
 		</fileset>
+	</union>
+	<path id="tools.ant.classpath">
+		<resources refid="tools.ant.jars" />
 	</path>
 
 	<!-- Commons logging -->
-	<property name="tools.commons-logging" location="${tools.module}/commons-logging-1.1.1" />
-	<path id="tools.commons-logging.classpath">
+	<property name="tools.commons-logging" location="${tools}/commons-logging-1.1.1" />
+	<union id="tools.commons-logging.libs">
+		<union id="tools.commons-logging.deps" />
 		<fileset id="tools.commons-logging.jars" dir="${tools.commons-logging}">
 			<include name="commons-logging.jar" />
 		</fileset>
+	</union>
+	<path id="tools.commons-logging.classpath">
+		<resources refid="tools.commons-logging.jars" />
 	</path>
 
 	<!-- SJSXP -->
-	<property name="tools.sjsxp" location="${tools.module}/sjsxp-1.0.1" />
-	<path id="tools.sjsxp.classpath">
+	<property name="tools.sjsxp" location="${tools}/sjsxp-1.0.1" />
+	<union id="tools.sjsxp.libs">
+		<union id="tools.sjsxp.deps" />
 		<fileset id="tools.sjsxp.endorsed.jars" dir="${tools.sjsxp}">
 			<include name="jsr173_1.0_api.jar" />
 			<include name="sjsxp.jar" />
 		</fileset>
-	</path>
-	<union id="tools.sjsxp.endorsed.libs">
-		<resources refid="tools.sjsxp.endorsed.jars" />
 	</union>
+	<union id="tools.sjsxp.endorsed.libs" />
+	<path id="tools.sjsxp.classpath">
+		<resources refid="tools.sjsxp.endorsed.jars" />
+	</path>
 </project>
