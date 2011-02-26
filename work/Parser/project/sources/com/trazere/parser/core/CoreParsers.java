@@ -29,188 +29,34 @@ import com.trazere.util.type.Tuple2;
 import com.trazere.util.type.Tuple3;
 import com.trazere.util.type.Tuple4;
 import com.trazere.util.type.Tuple5;
-import com.trazere.util.type.TypeUtils;
 import java.util.List;
 
 /**
  * DOCME
  */
 public class CoreParsers {
-	private static final EOFParser<?, ?> _EOF = eof("end of file");
-	
 	public static <Token, Result> Parser<Token, Result> identity(final Parser<Token, Result> subParser, final String description) {
-		final class IdentityParser
-		extends Sequence1Parser<Token, Result, Result> {
-			public IdentityParser() {
-				super(subParser, description);
-			}
-			
-			// Parser.
-			
-			@Override
-			protected Result combine(final Result result) {
-				return result;
-			}
-			
-			// Object.
-			
-			@Override
-			public int hashCode() {
-				final HashCode result = new HashCode(this);
-				result.append(_description);
-				result.append(_subParser1);
-				return result.get();
-			}
-			
-			@Override
-			public boolean equals(final Object object) {
-				if (this == object) {
-					return true;
-				} else if (null != object && getClass().equals(object.getClass())) {
-					final IdentityParser parser = (IdentityParser) object;
-					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1);
-				} else {
-					return false;
-				}
-			}
-		}
-		return new IdentityParser();
+		return new IdentityParser<Token, Result>(subParser, description);
 	}
 	
 	public static <Token, SubResult, Result> Parser<Token, Result> lift(final Parser<Token, ? extends SubResult> subParser, final Result result, final String description) {
-		final class LiftParser
-		extends Sequence1Parser<Token, SubResult, Result> {
-			public LiftParser() {
-				super(subParser, description);
-			}
-			
-			// Parser.
-			
-			private final Result _result = result;
-			
-			@Override
-			protected Result combine(final SubResult subResult1) {
-				return _result;
-			}
-			
-			// Object.
-			
-			@Override
-			public int hashCode() {
-				final HashCode hashCode = new HashCode(this);
-				hashCode.append(_description);
-				hashCode.append(_subParser1);
-				hashCode.append(_result);
-				return hashCode.get();
-			}
-			
-			@Override
-			public boolean equals(final Object object) {
-				if (this == object) {
-					return true;
-				} else if (null != object && getClass().equals(object.getClass())) {
-					final LiftParser parser = (LiftParser) object;
-					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && LangUtils.equals(_result, parser._result);
-				} else {
-					return false;
-				}
-			}
-		}
-		return new LiftParser();
+		return new LiftParser<Token, SubResult, Result>(subParser, result, description);
 	}
 	
 	public static <Token, Result> Parser<Token, Result> default_(final Parser<Token, Maybe<Result>> subParser, final Result defaultResult, final String description) {
-		final class DefaultParser
-		extends Sequence1Parser<Token, Maybe<Result>, Result> {
-			public DefaultParser() {
-				super(subParser, description);
-			}
-			
-			// Parser.
-			
-			private final Result _defaultResult = defaultResult;
-			
-			@Override
-			protected Result combine(final Maybe<Result> subResult1)
-			throws ParserException {
-				return TypeUtils.get(subResult1, _defaultResult);
-			}
-			
-			// Object.
-			
-			@Override
-			public int hashCode() {
-				final HashCode result = new HashCode(this);
-				result.append(_description);
-				result.append(_subParser1);
-				result.append(_defaultResult);
-				return result.get();
-			}
-			
-			@Override
-			public boolean equals(final Object object) {
-				if (this == object) {
-					return true;
-				} else if (null != object && getClass().equals(object.getClass())) {
-					final DefaultParser parser = (DefaultParser) object;
-					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && LangUtils.equals(_defaultResult, parser._defaultResult);
-				} else {
-					return false;
-				}
-			}
-		}
-		return new DefaultParser();
+		return new DefaultParser<Token, Result>(subParser, defaultResult, description);
 	}
 	
 	public static <Token, SubResult, Result> Parser<Token, Result> map(final Parser<Token, ? extends SubResult> subParser, final Function1<? super SubResult, ? extends Result, ? extends ParserException> function, final String description) {
-		assert null != function;
-		
-		final class MapParser
-		extends Sequence1Parser<Token, SubResult, Result> {
-			public MapParser() {
-				super(subParser, description);
-			}
-			
-			// Parser.
-			
-			private final Function1<? super SubResult, ? extends Result, ? extends ParserException> _function = function;
-			
-			@Override
-			protected Result combine(final SubResult subResult)
-			throws ParserException {
-				return _function.evaluate(subResult);
-			}
-			
-			// Object.
-			
-			@Override
-			public int hashCode() {
-				final HashCode result = new HashCode(this);
-				result.append(_description);
-				result.append(_subParser1);
-				result.append(_function);
-				return result.get();
-			}
-			
-			@Override
-			public boolean equals(final Object object) {
-				if (this == object) {
-					return true;
-				} else if (null != object && getClass().equals(object.getClass())) {
-					final MapParser parser = (MapParser) object;
-					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _function.equals(parser._function);
-				} else {
-					return false;
-				}
-			}
-		}
-		return new MapParser();
+		return new MapParser<Token, SubResult, Result>(subParser, function, description);
 	}
 	
 	@SuppressWarnings("unchecked")
 	public static <Token, Result> EOFParser<Token, Result> eof() {
 		return (EOFParser<Token, Result>) _EOF;
 	}
+	
+	private static final EOFParser<?, ?> _EOF = eof("end of file");
 	
 	public static <Token, Result> EOFParser<Token, Result> eof(final String description) {
 		return new EOFParser<Token, Result>(description);
@@ -235,9 +81,9 @@ public class CoreParsers {
 	public static <Token, SubResult, Result> FoldParser<Token, SubResult, Result> fold(final Parser<Token, ? extends SubResult> subParser, final Function2<? super Result, ? super SubResult, ? extends Result, ? extends ParserException> function, final Result initialValue, final String description) {
 		assert null != function;
 		
-		final class FoldParser_
-		extends FoldParser<Token, SubResult, Result> {
-			public FoldParser_() {
+		final class FoldParser
+		extends com.trazere.parser.core.FoldParser<Token, SubResult, Result> {
+			public FoldParser() {
 				super(subParser, initialValue, description);
 			}
 			
@@ -268,22 +114,22 @@ public class CoreParsers {
 				if (this == object) {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
-					final FoldParser_ parser = (FoldParser_) object;
+					final FoldParser parser = (FoldParser) object;
 					return LangUtils.equals(_description, parser._description) && _subParser.equals(parser._subParser) && LangUtils.equals(_initialValue, parser._initialValue) && _function.equals(parser._function);
 				} else {
 					return false;
 				}
 			}
 		}
-		return new FoldParser_();
+		return new FoldParser();
 	}
 	
 	public static <Token, SubResult, Result> Fold1Parser<Token, SubResult, Result> fold1(final Parser<Token, ? extends SubResult> subParser, final Function2<? super Result, ? super SubResult, ? extends Result, ? extends ParserException> function, final Result initialValue, final String description) {
 		assert null != function;
 		
-		final class FoldParser_
+		final class FoldParser
 		extends Fold1Parser<Token, SubResult, Result> {
-			public FoldParser_() {
+			public FoldParser() {
 				super(subParser, initialValue, description);
 			}
 			
@@ -314,14 +160,14 @@ public class CoreParsers {
 				if (this == object) {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
-					final FoldParser_ parser = (FoldParser_) object;
+					final FoldParser parser = (FoldParser) object;
 					return LangUtils.equals(_description, parser._description) && _subParser.equals(parser._subParser) && LangUtils.equals(_initialValue, parser._initialValue) && _function.equals(parser._function);
 				} else {
 					return false;
 				}
 			}
 		}
-		return new FoldParser_();
+		return new FoldParser();
 	}
 	
 	public static <Token, SubResult1> Parser<Token, Tuple1<SubResult1>> sequence(final Parser<Token, ? extends SubResult1> subParser1, final String description) {
