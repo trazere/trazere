@@ -24,6 +24,7 @@
 
 	<property name="trazere.dist" location="${trazere}/dist" />
 	<property name="trazere.dist.binary" location="${trazere.dist}/trazere-${trazere.version}" />
+	<property name="trazere.dist.tgz" location="${trazere.dist}/trazere-${trazere.version}.tar.gz" />
 	<property name="trazere.dist.zip" location="${trazere.dist}/trazere-${trazere.version}.zip" />
 
 	<!-- Clean -->
@@ -50,8 +51,13 @@
 		</copy>
 	</target>
 
-	<!-- Build the ZIP -->
-	<target name="trazere.buildZip" depends="trazere.build">
-		<zip destfile="${trazere.dist.zip}" basedir="${trazere.dist.binary}" encoding="iso-8859-1" />
+	<!-- Build the archives -->
+	<target name="trazere.buildArchives" depends="trazere.build">
+		<tar destfile="${trazere.dist.tgz}" basedir="${trazere.dist}" compression="gzip">
+			<include name="trazere-${trazere.version}/**/*" />
+		</tar>
+		<zip destfile="${trazere.dist.zip}" basedir="${trazere.dist}" encoding="iso-8859-1">
+			<include name="trazere-${trazere.version}/**/*" />
+		</zip>
 	</target>
 </project>
