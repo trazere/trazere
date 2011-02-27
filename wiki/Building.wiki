@@ -1,4 +1,5 @@
 #summary Building the distribution.
+#labels Phase-Deploy
 
 This page documents the build process of the distribution from the source code.
 
@@ -6,18 +7,18 @@ This page documents the build process of the distribution from the source code.
 
 The following tools are required:
  * [http://java.sun.com/javase/downloads/index.jsp JDK 1.5] or later.
- * [http://ant.apache.org/bindownload.cgi Ant 1.7.0] or later.
+ * [http://ant.apache.org/bindownload.cgi Ant 1.8.0] or later.
 
 = Configuration =
 
 The following environment variables must be set.
 
 || *Variable* || *Description* ||
-|| `JAVA_HOME` || Installation path of the JDK. ||
+|| `ANT_HOME` || Installation path of Ant. ||
 
 = Building =
 
-Execute the following command in the `module` folder to build the distribution:
+Execute the following command in the root `project` folder to build the distribution:
 
 UNIX:
 {{{
@@ -29,7 +30,7 @@ Windows:
 build.bat build
 }}}
 
-The distribution is generated in the folder `module/dist/trazere-x.x.x` corresponding to the version number of the sources.
+The distribution is generated in the folder `project/dist/trazere-x.x.x` corresponding to the version number of the sources.
 
 = Cleaning =
 
@@ -37,7 +38,7 @@ The building process generates lots of files scattered within the source tree.
 
 == Intermediate files ==
 
-Execute the following command in the `module` folder to clean the intermediate files (the distribution is not affected):
+Execute the following command in the root `project` folder to clean the intermediate files (the distribution is not affected):
 
 UNIX:
 {{{
@@ -51,7 +52,7 @@ build.bat clean
 
 == Distribution ==
 
-Execute the following command in the `module` folder to clean the distribution (the intermediate files are not affected):
+Execute the following command in the root `project` folder to clean the distribution (the intermediate files are not affected):
 
 UNIX:
 {{{
