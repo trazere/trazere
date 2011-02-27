@@ -31,7 +31,7 @@ import java.util.Set;
  * @param <X> Type of the exceptions.
  */
 public abstract class LazyObjectTypeMap<T, V, X extends Exception>
-extends AbstractLazyTypeMap<Class<? extends T>, V, X>
+extends LazyTypeMap<Class<? extends T>, V, X>
 implements ObjectTypeMap<T, Maybe<? extends V>, X> {
 	/**
 	 * Builds a new type map with no upper bounds and defaut values using the given function.
@@ -54,7 +54,7 @@ implements ObjectTypeMap<T, Maybe<? extends V>, X> {
 	 * @param defaultValue The default value.
 	 * @return The built map.
 	 */
-	public static <V, X extends Exception> LazyObjectTypeMap<Object, V, X> build(final Function1<? super Class<?>, ? extends Maybe<? extends V>, ? extends X> function, final Maybe<V> defaultValue) {
+	public static <V, X extends Exception> LazyObjectTypeMap<Object, V, X> build(final Function1<? super Class<?>, ? extends Maybe<? extends V>, ? extends X> function, final Maybe<? extends V> defaultValue) {
 		return build(function, Object.class, defaultValue);
 	}
 	
@@ -83,7 +83,7 @@ implements ObjectTypeMap<T, Maybe<? extends V>, X> {
 	 * @param defaultValue The default value.
 	 * @return The built map.
 	 */
-	public static <T, V, X extends Exception> LazyObjectTypeMap<T, V, X> build(final Function1<? super Class<? extends T>, ? extends Maybe<? extends V>, ? extends X> function, final Class<T> upperBound, final Maybe<V> defaultValue) {
+	public static <T, V, X extends Exception> LazyObjectTypeMap<T, V, X> build(final Function1<? super Class<? extends T>, ? extends Maybe<? extends V>, ? extends X> function, final Class<T> upperBound, final Maybe<? extends V> defaultValue) {
 		return new LazyObjectTypeMap<T, V, X>(upperBound, defaultValue) {
 			@Override
 			protected Maybe<? extends V> computeDiscrete(final Class<? extends T> type)
@@ -108,7 +108,7 @@ implements ObjectTypeMap<T, Maybe<? extends V>, X> {
 	 * @param upperBound The upper bound.
 	 * @param defaultValue The default value.
 	 */
-	public LazyObjectTypeMap(final Class<T> upperBound, final Maybe<V> defaultValue) {
+	public LazyObjectTypeMap(final Class<T> upperBound, final Maybe<? extends V> defaultValue) {
 		super(Maybe.some(upperBound), defaultValue);
 	}
 	
