@@ -20,23 +20,27 @@ import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
 
 /**
- * The {@link AbstractValueSerializer} abstract class implements skeletons of {@link ValueSerializer value serializers}.
+ * The {@link BaseValueSerializer} abstract class implements skeletons of {@link ValueSerializer value serializers}.
  * 
  * @param <T> Type of the values.
+ * @param <R> Type of the representations.
  * @param <X> Type of the exceptions.
  */
-public abstract class AbstractValueSerializer<T, X extends Exception>
-implements ValueSerializer<T, X>, Describable {
+public abstract class BaseValueSerializer<T, R, X extends Exception>
+implements ValueSerializer<T, R, X>, Describable {
 	/**
-	 * Instantiate a new serializer with the given type.
+	 * Instantiates a new serializer.
 	 * 
-	 * @param valueClass Type of the values.
+	 * @param valueClass The type of the values.
+	 * @param representationClass The type of the representations.
 	 */
-	public AbstractValueSerializer(final Class<T> valueClass) {
+	public BaseValueSerializer(final Class<T> valueClass, final Class<R> representationClass) {
 		assert null != valueClass;
+		assert null != representationClass;
 		
 		// Initialization.
 		_valueClass = valueClass;
+		_representationClass = representationClass;
 	}
 	
 	// Type parameters.
@@ -48,6 +52,13 @@ implements ValueSerializer<T, X>, Describable {
 		return _valueClass;
 	}
 	
+	/** Type of the representations. */
+	protected final Class<R> _representationClass;
+	
+	public Class<R> getRepresentationClass() {
+		return _representationClass;
+	}
+	
 	// Object.
 	
 	@Override
@@ -57,5 +68,6 @@ implements ValueSerializer<T, X>, Describable {
 	
 	public void fillDescription(final Description description) {
 		description.append("Type", _valueClass.getName());
+		description.append("Representation", _representationClass.getName());
 	}
 }

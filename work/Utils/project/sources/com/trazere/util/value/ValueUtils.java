@@ -50,6 +50,7 @@ public class ValueUtils {
 	 * Check the type of the values of the given value serializer.
 	 * 
 	 * @param <T> Type of the values.
+	 * @param <R> Type of the representations.
 	 * @param <X> Type of the exceptions.
 	 * @param serializer The value serializer.
 	 * @param valueClass The excepted type of values.
@@ -57,7 +58,7 @@ public class ValueUtils {
 	 * @throws ValueException When the value type of the value serializer is not compatible with the excepted type.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T, X extends Exception> ValueSerializer<T, X> typeCheck(final ValueSerializer<?, X> serializer, final Class<T> valueClass)
+	public static <T, R, X extends Exception> ValueSerializer<T, R, X> typeCheckValue(final ValueSerializer<?, R, X> serializer, final Class<T> valueClass)
 	throws ValueException {
 		assert null != serializer;
 		assert null != valueClass;
@@ -65,7 +66,7 @@ public class ValueUtils {
 		if (!serializer.getValueClass().equals(valueClass)) {
 			throw new ValueException("Incompatible value type " + serializer.getValueClass().getName() + " with type " + valueClass.getName());
 		} else {
-			return (ValueSerializer<T, X>) serializer;
+			return (ValueSerializer<T, R, X>) serializer;
 		}
 	}
 	
