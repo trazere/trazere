@@ -20,24 +20,24 @@ import com.trazere.util.type.Maybe;
 import java.util.Collection;
 
 /**
- * The {@link AbstractLazyTypeMap} abstract class represents lazy maps from type hierarchies to values.
+ * The {@link LazyTypeMap} abstract class represents lazy maps from type hierarchies to values.
  * 
  * @param <T> Type of the types.
  * @param <V> Type of the values.
  * @param <X> Type of the exceptions.
  */
-public abstract class AbstractLazyTypeMap<T, V, X extends Exception>
+public abstract class LazyTypeMap<T, V, X extends Exception>
 extends LazyMap<T, Maybe<? extends V>, X> {
 	/** The type upper bound. */
 	protected final Maybe<? extends T> _upperBound;
 	
 	/** The default value. */
-	protected final Maybe<V> _defaultValue;
+	protected final Maybe<? extends V> _defaultValue;
 	
 	/**
 	 * Instantiates a new type map with no upper bounds and defaut values.
 	 */
-	public AbstractLazyTypeMap() {
+	public LazyTypeMap() {
 		this(Maybe.<V>none());
 	}
 	
@@ -46,7 +46,7 @@ extends LazyMap<T, Maybe<? extends V>, X> {
 	 * 
 	 * @param defaultValue The default value.
 	 */
-	public AbstractLazyTypeMap(final Maybe<V> defaultValue) {
+	public LazyTypeMap(final Maybe<? extends V> defaultValue) {
 		this(Maybe.<T>none(), defaultValue);
 	}
 	
@@ -56,7 +56,7 @@ extends LazyMap<T, Maybe<? extends V>, X> {
 	 * @param upperBound The upper bound.
 	 * @param defaultValue The default value.
 	 */
-	public AbstractLazyTypeMap(final Maybe<? extends T> upperBound, final Maybe<V> defaultValue) {
+	public LazyTypeMap(final Maybe<? extends T> upperBound, final Maybe<? extends V> defaultValue) {
 		// Checks.
 		assert null != upperBound;
 		assert null != defaultValue;
