@@ -39,6 +39,14 @@
 		</antcall>
 	</target>
 
+	<!-- Build the distribution archives -->
+	<target name="buildArchives" description="Build the distribution archives">
+		<antcall target="trazere.buildArchives" inheritall="false">
+			<param name="parser.dist" location="${trazere.dist.binary}" />
+			<param name="utils.dist" location="${trazere.dist.binary}" />
+		</antcall>
+	</target>
+
 	<!-- Environment -->
 	<target name="environment" description="Display the environment">
 		<echoproperties />
