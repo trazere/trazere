@@ -35,10 +35,10 @@ public class ValueSerializers {
 	 * @param exceptionFactory The exception factory to use.
 	 * @return The built serializer.
 	 */
-	public static <X extends Exception> ValueSerializer<Boolean, X> buildBoolean(final ThrowableFactory<X> exceptionFactory) {
+	public static <X extends Exception> ValueSerializer<Boolean, String, X> buildBoolean(final ThrowableFactory<X> exceptionFactory) {
 		assert null != exceptionFactory;
 		
-		return new AbstractValueSerializer<Boolean, X>(Boolean.class) {
+		return new BaseValueSerializer<Boolean, String, X>(Boolean.class, String.class) {
 			public String serialize(final Boolean value) {
 				assert null != value;
 				
@@ -61,11 +61,11 @@ public class ValueSerializers {
 	 * @param exceptionFactory The exception factory to use.
 	 * @return The built serializer.
 	 */
-	public static <X extends Exception> ValueSerializer<Date, X> buildDate(final SimpleDateFormat format, final ThrowableFactory<X> exceptionFactory) {
+	public static <X extends Exception> ValueSerializer<Date, String, X> buildDate(final SimpleDateFormat format, final ThrowableFactory<X> exceptionFactory) {
 		assert null != format;
 		assert null != exceptionFactory;
 		
-		return new AbstractValueSerializer<Date, X>(Date.class) {
+		return new BaseValueSerializer<Date, String, X>(Date.class, String.class) {
 			public String serialize(final Date value) {
 				return TextUtils.formatDate(format, value);
 			}
@@ -99,12 +99,12 @@ public class ValueSerializers {
 	 * @param exceptionFactory The exception factory to use.
 	 * @return The built serializer.
 	 */
-	public static <T extends Number, X extends Exception> ValueSerializer<T, X> buildNumber(final Class<T> type, final Function1<Number, T, RuntimeException> extractor, final NumberFormat format, final ThrowableFactory<X> exceptionFactory) {
+	public static <T extends Number, X extends Exception> ValueSerializer<T, String, X> buildNumber(final Class<T> type, final Function1<Number, T, RuntimeException> extractor, final NumberFormat format, final ThrowableFactory<X> exceptionFactory) {
 		assert null != extractor;
 		assert null != format;
 		assert null != exceptionFactory;
 		
-		return new AbstractValueSerializer<T, X>(type) {
+		return new BaseValueSerializer<T, String, X>(type, String.class) {
 			public String serialize(final T value) {
 				return TextUtils.formatNumber(format, value);
 			}
@@ -134,10 +134,10 @@ public class ValueSerializers {
 	 * @param exceptionFactory The exception factory to use.
 	 * @return The built serializer.
 	 */
-	public static <X extends Exception> ValueSerializer<String, X> buildString(final ThrowableFactory<X> exceptionFactory) {
+	public static <X extends Exception> ValueSerializer<String, String, X> buildString(final ThrowableFactory<X> exceptionFactory) {
 		assert null != exceptionFactory;
 		
-		return new AbstractValueSerializer<String, X>(String.class) {
+		return new BaseValueSerializer<String, String, X>(String.class, String.class) {
 			public String serialize(final String value) {
 				assert null != value;
 				
@@ -161,13 +161,13 @@ public class ValueSerializers {
 	 * @param exceptionFactory The exception factory to use.
 	 * @return The built serializer.
 	 */
-	public static <X extends Exception> ValueSerializer<String, X> buildString(final int minLength, final int maxLength, final ThrowableFactory<X> exceptionFactory) {
+	public static <X extends Exception> ValueSerializer<String, String, X> buildString(final int minLength, final int maxLength, final ThrowableFactory<X> exceptionFactory) {
 		assert minLength >= 0;
 		assert maxLength >= 0;
 		assert minLength <= maxLength;
 		assert null != exceptionFactory;
 		
-		return new AbstractValueSerializer<String, X>(String.class) {
+		return new BaseValueSerializer<String, String, X>(String.class, String.class) {
 			public String serialize(final String value)
 			throws X {
 				assert null != value;
