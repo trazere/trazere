@@ -15,38 +15,70 @@
  */
 package com.trazere.util.lang;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 /**
- * The {@link MultipleComparator} class is a comparator combinator which compares according to multiple criterion.
+ * The {@link MultipleComparator} class provides comparators which compare according to multiple criterion.
  * <p>
- * The comparator applies the given comparators in order until one of them orders the given objects.
+ * The comparator applies the its criterion in order until one of them orders the given objects.
  * 
  * @param <T> Type of the compared objects.
  */
 public class MultipleComparator<T>
 implements Comparator<T> {
-	/** Comparators to apply ordered by priority. */
-	protected final Comparator<T>[] _comparators;
+	/**
+	 * Builds a new comparator with the given comparators.
+	 * 
+	 * @param <T> Type of the compared objects.
+	 * @param comparators The comparators ordered by priority.
+	 * @return The built comparator.
+	 */
+	public static <T> MultipleComparator<T> build(final List<? extends Comparator<? super T>> comparators) {
+		return new MultipleComparator<T>(comparators);
+	}
 	
 	/**
-	 * Instantiate a new multiple criterion comparator with the given comparators.
+	 * Builds a new comparator with the given comparators.
 	 * 
-	 * @param comparators Comparators to apply ordered by priority.
+	 * @param <T> Type of the compared objects.
+	 * @param comparators The comparators ordered by priority.
+	 * @return The built comparator.
 	 */
-	public MultipleComparator(final List<? extends Comparator<T>> comparators) {
+	public static <T> MultipleComparator<T> build(final Comparator<? super T>... comparators) {
+		return new MultipleComparator<T>(comparators);
+	}
+	
+	/**
+	 * Instantiates a new comparator with the given comparators.
+	 * 
+	 * @param comparators The comparators ordered by priority.
+	 */
+	public MultipleComparator(final List<? extends Comparator<? super T>> comparators) {
 		assert null != comparators;
 		
 		// Initialization.
-		@SuppressWarnings("unchecked")
-		final Comparator<T>[] comparators_ = new Comparator[comparators.size()];
-		comparators.toArray(comparators_);
-		_comparators = comparators_;
+		_comparators = Collections.unmodifiableList(comparators);
 	}
 	
+	/**
+	 * Instantiates a new comparator with the given comparators.
+	 * 
+	 * @param comparators The comparators ordered by priority.
+	 */
+	public MultipleComparator(final Comparator<? super T>... comparators) {
+		this(Arrays.asList(comparators));
+	}
+	
+	// Comparator.
+	
+	/** The comparators ordered by priority. */
+	protected final List<? extends Comparator<? super T>> _comparators;
+	
 	public int compare(final T object1, final T object2) {
-		for (final Comparator<T> comparator : _comparators) {
+		for (final Comparator<? super T> comparator : _comparators) {
 			final int result = comparator.compare(object1, object2);
 			if (0 != result) {
 				return result;
@@ -54,6 +86,8 @@ implements Comparator<T> {
 		}
 		return 0;
 	}
+	
+	// Object.
 	
 	@Override
 	public int hashCode() {
