@@ -203,20 +203,6 @@ public class LangUtils {
 	}
 	
 	/**
-	 * Builds a natural value comparator.
-	 * 
-	 * @param <T> Type of the value.
-	 * @return The built comparator.
-	 */
-	public static <T extends Comparable<T>> Comparator<T> comparator() {
-		return new Comparator<T>() {
-			public int compare(final T object1, final T object2) {
-				return object1.compareTo(object2);
-			}
-		};
-	}
-	
-	/**
 	 * Compares the given comparable values.
 	 * <p>
 	 * This method supports comparison of <code>null</code> values. <code>null</code> values are considered as less than non <code>null</code> values.
@@ -241,13 +227,13 @@ public class LangUtils {
 	 * This method supports comparison of <code>null</code> values. <code>null</code> values are considered as less than non <code>null</code> values.
 	 * 
 	 * @param <T> Type of the values.
+	 * @param comparator The comparator.
 	 * @param object1 The first value. May be <code>null</code>.
 	 * @param object2 The second value. May be <code>null</code>.
-	 * @param comparator The comparator.
 	 * @return The result of the comparison as defined by the {@link Comparator#compare(Object, Object)} method.
 	 * @see Comparable#compareTo(Object)
 	 */
-	public static <T> int compare(final T object1, final T object2, final Comparator<T> comparator) {
+	public static <T> int compare(final Comparator<T> comparator, final T object1, final T object2) {
 		assert null != comparator;
 		
 		if (null == object1) {
