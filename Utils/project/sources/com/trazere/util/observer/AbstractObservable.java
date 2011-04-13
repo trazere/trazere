@@ -17,7 +17,6 @@ package com.trazere.util.observer;
 
 import com.trazere.util.function.FunctionUtils;
 import com.trazere.util.function.Predicate1;
-import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,107 +29,41 @@ import java.util.List;
 public abstract class AbstractObservable<T>
 implements Observable<T> {
 	/**
-	 * The {@link Subscription} class represents the subscriptions of the observers.
+	 * The {@link AbstractObservable.LiveObserver} class represents the observers subscribed to the observables.
 	 * <p>
-	 * The instances provide a weak reference to the observer to be used by the outer observable, but also keep a strong reference to it in order to prevent its
-	 * garbage collection when the subscriber only keeps a reference to the subscription.
+	 * The instances keep a weak reference to the real observer in order to allow and handle their garbage collection. They also provide control over the life
+	 * span of the subscription.
 	 */
-	protected class Subscription
-	extends AbstractObserverSubscription {
-		/**
-		 * Instantiates a new subscription for the given observer.
-		 * 
-		 * @param observer The observer.
-		 */
-		public Subscription(final LiveObserver<? super T> observer) {
-			super(observer);
+	protected abstract class LiveObserver {
+		public LiveObserver(final Observer<? super T> observer) {
+			assert null != observer;
 			
 			// Initialization.
-			_reference = new WeakReference<LiveObserver<? super T>>(observer);
+			_observer = new WeakReference<Observer<? super T>>(observer);
 		}
 		
-		// Reference.
+		// Observer.
 		
-		/** Weak reference to the observer. */
-		protected final WeakReference<LiveObserver<? super T>> _reference;
+		protected final WeakReference<Observer<? super T>> _observer;
 		
-		/**
-		 * Get the weak reference to the observer of the receiver subscription.
-		 * 
-		 * @return The reference.
-		 */
-		public WeakReference<LiveObserver<? super T>> getReference() {
-			return _reference;
+		public boolean isAlive() {
+			return null != _observer.get();
 		}
 		
-		public void unsubscribe() {
-			AbstractObservable.this.unsubscribe(_reference);
-		}
-	}
-	
-	public ObserverSubscription subscribe(final LiveObserver<? super T> observer) {
-		assert null != observer;
-		
-		final Subscription subscription = new Subscription(observer);
-		subscribe(subscription.getReference());
-		return subscription;
-	}
-	
-	public ObserverSubscription subscribe(final Observer<? super T> observer) {
-		assert null != observer;
-		
-		return subscribe(new LiveObserver<T>() {
-			public boolean notify(final T value) {
-				observer.notify(value);
-				return true;
-			}
-		});
-	}
-	
-	public ObserverSubscription subscribeOnce(final Observer<? super T> observer) {
-		assert null != observer;
-		
-		return subscribe(new LiveObserver<T>() {
-			public boolean notify(final T value) {
-				observer.notify(value);
+		public boolean notify(final T value) {
+			final Observer<? super T> observer = _observer.get();
+			if (null != observer) {
+				return notify(observer, value);
+			} else {
 				return false;
 			}
-		});
-	}
-	
-	public ObserverSubscription subscribeWhile(final Observer<? super T> observer, final Predicate1<? super T, RuntimeException> condition) {
-		assert null != observer;
-		assert null != condition;
-		
-		return subscribe(new LiveObserver<T>() {
-			public boolean notify(final T value) {
-				if (condition.evaluate(value)) {
-					observer.notify(value);
-					return true;
-				} else {
-					return false;
-				}
-			}
-		});
-	}
-	
-	/** Weak references to the observers. */
-	protected final List<WeakReference<LiveObserver<? super T>>> _observers = new ArrayList<WeakReference<LiveObserver<? super T>>>();
-	
-	/**
-	 * Indicates whether the receiver observable is being observed.
-	 * 
-	 * @return <code>true</code> when the observable is observed by at least one observer, <code>false</code> otherwise.
-	 */
-	public boolean isObserved() {
-		return FunctionUtils.isAny(_LIVE_REF, _observers);
-	}
-	
-	private static final Predicate1<Reference<?>, RuntimeException> _LIVE_REF = new Predicate1<Reference<?>, RuntimeException>() {
-		public boolean evaluate(final Reference<?> reference) {
-			return null != reference.get();
 		}
-	};
+		
+		protected abstract boolean notify(final Observer<? super T> observer, final T value);
+	}
+	
+	/** Subscribed observers. */
+	protected final List<LiveObserver> _observers = new ArrayList<LiveObserver>();
 	
 	/**
 	 * Subscribes the observer corresponding to the given soft reference to the receiver observable.
@@ -139,7 +72,7 @@ implements Observable<T> {
 	 * 
 	 * @param observer The reference to the observer.
 	 */
-	protected void subscribe(final WeakReference<LiveObserver<? super T>> observer) {
+	protected void subscribe(final LiveObserver observer) {
 		assert null != observer;
 		
 		_observers.add(observer);
@@ -152,11 +85,109 @@ implements Observable<T> {
 	 * 
 	 * @param observer The reference to the observer.
 	 */
-	protected void unsubscribe(final WeakReference<LiveObserver<? super T>> observer) {
+	protected void unsubscribe(final LiveObserver observer) {
 		assert null != observer;
 		
 		_observers.remove(observer);
 	}
+	
+	/**
+	 * The {@link Subscription} class represents the subscriptions of the observers.
+	 */
+	protected class Subscription
+	extends AbstractObserverSubscription {
+		/**
+		 * Instantiates a new subscription for the given observer and preservation condition.
+		 * 
+		 * @param observer The observer.
+		 * @param liveObserver The subscribed observer.
+		 */
+		public Subscription(final Observer<? super T> observer, final LiveObserver liveObserver) {
+			super(observer);
+			
+			// Checks.
+			assert null != liveObserver;
+			
+			// Initialization.
+			_subscribedObserver = liveObserver;
+		}
+		
+		// Subscription.
+		
+		/** Subscribed observer. */
+		protected final LiveObserver _subscribedObserver;
+		
+		public void unsubscribe() {
+			AbstractObservable.this.unsubscribe(_subscribedObserver);
+		}
+	}
+	
+	protected ObserverSubscription subscribe(final Observer<? super T> observer, final LiveObserver liveObserver) {
+		assert null != observer;
+		assert null != liveObserver;
+		
+		// Subscribe.
+		subscribe(liveObserver);
+		
+		// Build the subscription.
+		return new Subscription(observer, liveObserver);
+	}
+	
+	public ObserverSubscription subscribe(final Observer<? super T> observer) {
+		assert null != observer;
+		
+		return subscribe(observer, new LiveObserver(observer) {
+			@Override
+			protected boolean notify(final Observer<? super T> observer_, final T value) {
+				observer_.notify();
+				return true;
+			}
+		});
+	}
+	
+	public ObserverSubscription subscribeOnce(final Observer<? super T> observer) {
+		assert null != observer;
+		
+		return subscribe(observer, new LiveObserver(observer) {
+			@Override
+			protected boolean notify(final Observer<? super T> observer_, final T value) {
+				observer_.notify();
+				return false;
+			}
+		});
+	}
+	
+	public ObserverSubscription subscribeWhile(final Observer<? super T> observer, final Predicate1<? super T, RuntimeException> condition) {
+		assert null != observer;
+		assert null != condition;
+		
+		return subscribe(observer, new LiveObserver(observer) {
+			@Override
+			protected boolean notify(final Observer<? super T> observer_, final T value) {
+				if (condition.evaluate(value)) {
+					observer_.notify(value);
+					return true;
+				} else {
+					return false;
+				}
+			}
+		});
+	}
+	
+	/**
+	 * Indicates whether the receiver observable is being observed.
+	 * 
+	 * @return <code>true</code> when the observable is observed by at least one observer, <code>false</code> otherwise.
+	 */
+	public boolean isObserved() {
+		return FunctionUtils.isAny(_LIVE_OBSERVER_FILTER, _observers);
+	}
+	
+	private static final Predicate1<AbstractObservable<?>.LiveObserver, RuntimeException> _LIVE_OBSERVER_FILTER = new Predicate1<AbstractObservable<?>.LiveObserver, RuntimeException>() {
+		public boolean evaluate(final AbstractObservable<?>.LiveObserver observer) {
+			return observer.isAlive();
+		}
+	};
 	
 	/**
 	 * Notifies the observers of the receiver observable with the given event.
@@ -164,15 +195,10 @@ implements Observable<T> {
 	 * @param value The event value. May be <code>null</code>.
 	 */
 	protected void notify(final T value) {
-		// Note: copy the references to prevent concurrent modifications.
-		for (final WeakReference<LiveObserver<? super T>> reference : new ArrayList<WeakReference<LiveObserver<? super T>>>(_observers)) {
-			final LiveObserver<? super T> observer = reference.get();
-			if (null != observer) {
-				if (!observer.notify(value)) {
-					unsubscribe(reference);
-				}
-			} else {
-				unsubscribe(reference);
+		// Note: copy the observers to prevent concurrent modifications.
+		for (final LiveObserver observer : new ArrayList<LiveObserver>(_observers)) {
+			if (!observer.notify(value)) {
+				unsubscribe(observer);
 			}
 		}
 	}

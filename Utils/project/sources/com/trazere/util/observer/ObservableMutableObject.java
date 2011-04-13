@@ -39,10 +39,6 @@ implements Observable<T> {
 	
 	protected final SimpleObservable<T> _observable = new SimpleObservable<T>();
 	
-	public ObserverSubscription subscribe(final LiveObserver<? super T> observer) {
-		return _observable.subscribe(observer);
-	}
-	
 	public ObserverSubscription subscribe(final Observer<? super T> observer) {
 		return _observable.subscribe(observer);
 	}

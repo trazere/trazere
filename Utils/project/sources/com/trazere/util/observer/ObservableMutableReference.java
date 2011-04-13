@@ -98,10 +98,6 @@ implements ObservableReference<T> {
 	
 	protected final SimpleObservable<Maybe<T>> _observable = new SimpleObservable<Maybe<T>>();
 	
-	public ObserverSubscription subscribe(final LiveObserver<? super Maybe<T>> observer) {
-		return _observable.subscribe(observer);
-	}
-	
 	public ObserverSubscription subscribe(final Observer<? super Maybe<T>> observer) {
 		return _observable.subscribe(observer);
 	}
