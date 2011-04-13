@@ -59,6 +59,7 @@
 			<src location="${utils.sources}" />
 			<classpath>
 				<path refid="tools.ant.classpath" />
+				<path refid="tools.jaxb.classpath" />
 				<path refid="tools.slf4j.classpath" />
 				<path refid="tools.sjsxp.classpath" />
 			</classpath>
