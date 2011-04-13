@@ -52,92 +52,116 @@ public class TextUtils {
 	}
 	
 	/**
-	 * Filters the given string using the given predicate.
+	 * Tests whether the given string contains some character accepted by the given filter.
 	 * 
 	 * @param <X> Type of the exceptions.
-	 * @param s The string to filter.
-	 * @param predicate The predicate.
-	 * @return <code>true</code> when all characters of the string are accepted by the predicate.
-	 * @throws X When some predicate evaluation fails.
+	 * @param filter The filter.
+	 * @param s The string.
+	 * @return <code>true</code> when the string contains some character accepted by the filter.
+	 * @throws X When some filter evaluation fails.
 	 */
-	public static <X extends Exception> boolean filter(final String s, final CharPredicate<X> predicate)
+	public static <X extends Exception> boolean contains(final CharPredicate<X> filter, final String s)
 	throws X {
+		assert null != filter;
 		assert null != s;
-		assert null != predicate;
 		
 		for (int index = 0; index < s.length(); index += 1) {
-			if (!predicate.evaluate(s.charAt(index))) {
-				return false;
+			if (filter.evaluate(s.charAt(index))) {
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 	
 	/**
-	 * Trims the heading and trailing characters of the given string accepted by the given predicates.
+	 * Filters the given string using the given filter.
 	 * 
 	 * @param <X> Type of the exceptions.
-	 * @param predicate The predicate.
+	 * @param filter The filter.
+	 * @param s The string.
+	 * @return The filtered string.
+	 * @throws X When some filter evaluation fails.
+	 */
+	public static <X extends Exception> String filter(final CharPredicate<X> filter, final String s)
+	throws X {
+		assert null != filter;
+		assert null != s;
+		
+		final StringBuilder result = new StringBuilder();
+		for (int index = 0; index < s.length(); index += 1) {
+			final char c = s.charAt(index);
+			if (filter.evaluate(c)) {
+				result.append(c);
+			}
+		}
+		return result.toString();
+	}
+	
+	/**
+	 * Trims the heading and trailing characters of the given string accepted by the given filter.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @param filter The filter.
 	 * @param s The string to trim.
 	 * @return The trimmed string.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <X extends Exception> String trim(final CharPredicate<X> predicate, final String s)
+	public static <X extends Exception> String trim(final CharPredicate<X> filter, final String s)
 	throws X {
-		assert null != predicate;
+		assert null != filter;
 		assert null != s;
 		
 		final int length = s.length();
 		int start = 0;
-		while (start < length && predicate.evaluate(s.charAt(start))) {
+		while (start < length && filter.evaluate(s.charAt(start))) {
 			start += 1;
 		}
 		int stop = length;
-		while (stop > start && predicate.evaluate(s.charAt(stop - 1))) {
+		while (stop > start && filter.evaluate(s.charAt(stop - 1))) {
 			stop -= 1;
 		}
 		return start > 0 || stop < length ? s.substring(start, stop) : s;
 	}
 	
 	/**
-	 * Trims the heading characters of the given string accepted by the given predicates.
+	 * Trims the heading characters of the given string accepted by the given filter.
 	 * 
 	 * @param <X> Type of the exceptions.
-	 * @param predicate The predicate.
+	 * @param filter The filter.
 	 * @param s The string to trim.
 	 * @return The trimmed string.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <X extends Exception> String trimHeading(final CharPredicate<X> predicate, final String s)
+	public static <X extends Exception> String trimHeading(final CharPredicate<X> filter, final String s)
 	throws X {
-		assert null != predicate;
+		assert null != filter;
 		assert null != s;
 		
 		final int length = s.length();
 		int index = 0;
-		while (index < length && predicate.evaluate(s.charAt(index))) {
+		while (index < length && filter.evaluate(s.charAt(index))) {
 			index += 1;
 		}
 		return index > 0 ? s.substring(index) : s;
 	}
 	
 	/**
-	 * Trims the trailing characters of the given string accepted by the given predicates.
+	 * Trims the trailing characters of the given string accepted by the given filter.
 	 * 
 	 * @param <X> Type of the exceptions.
-	 * @param predicate The predicate.
+	 * @param filter The filter.
 	 * @param s The string to trim.
 	 * @return The trimmed string.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <X extends Exception> String trimTrailing(final CharPredicate<X> predicate, final String s)
+	public static <X extends Exception> String trimTrailing(final CharPredicate<X> filter, final String s)
 	throws X {
-		assert null != predicate;
+		assert null != filter;
 		assert null != s;
 		
 		final int length = s.length();
 		int index = length;
-		while (index > 0 && predicate.evaluate(s.charAt(index - 1))) {
+		while (index > 0 && filter.evaluate(s.charAt(index - 1))) {
 			index -= 1;
 		}
 		return index < length ? s.substring(0, index) : s;
