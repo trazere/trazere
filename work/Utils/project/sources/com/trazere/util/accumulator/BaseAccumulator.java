@@ -13,20 +13,21 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.collection;
-
-import com.trazere.util.lang.AbstractFactory;
-import java.util.Map;
+package com.trazere.util.accumulator;
 
 /**
- * The {@link AbstractMapFactory} class implements skeletons of {@link MapFactory map factories}.
+ * The {@link BaseAccumulator} abstract class provides a skeleton implementation of {@link Accumulator accumulators}.
  * 
- * @param <K> Type of the keys.
- * @param <V> Type of the values.
- * @param <M> Type of the maps.
+ * @param <T> Type of the accumulated values.
+ * @param <V> Type of the accumulation arguments.
+ * @param <X> Type of the exceptions.
  */
-public abstract class AbstractMapFactory<K, V, M extends Map<? super K, ? super V>>
-extends AbstractFactory<M, RuntimeException>
-implements MapFactory<K, V, M> {
-	// Nothing to do.
+public abstract class BaseAccumulator<T, V, X extends Exception>
+implements Accumulator<T, V, X> {
+	// Procedure.
+	
+	public void execute(final V value)
+	throws X {
+		add(value);
+	}
 }

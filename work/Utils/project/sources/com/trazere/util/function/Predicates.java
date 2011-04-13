@@ -430,6 +430,6 @@ public class Predicates {
 	}
 	
 	private Predicates() {
-		// Prevent instantiation.
+		// Prevents instantiation.
 	}
 }

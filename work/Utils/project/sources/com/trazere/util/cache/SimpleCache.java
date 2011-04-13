@@ -22,7 +22,7 @@ package com.trazere.util.cache;
  * @param <V> Type of the values.
  */
 public class SimpleCache<K, V>
-extends AbstractCache<K, V, CacheEntry<K, V>> {
+extends BaseCache<K, V, CacheEntry<K, V>> {
 	@Override
 	protected CacheEntry<K, V> buildEntry(final K key, final V value) {
 		return new CacheEntry<K, V>(key, value);

@@ -31,7 +31,7 @@ import com.trazere.util.text.Description;
  * @param <T> Type of the value.
  */
 public class ConstantValueReader<T>
-extends AbstractValueReader<T> {
+extends BaseValueReader<T> {
 	/**
 	 * Build a new reader producing the given value.
 	 * 

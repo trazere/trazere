@@ -405,6 +405,6 @@ public class PropertiesUtils {
 	}
 	
 	private PropertiesUtils() {
-		// Prevent instantiation.
+		// Prevents instantiation.
 	}
 }

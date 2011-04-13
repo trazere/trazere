@@ -165,6 +165,6 @@ public class TypeUtils {
 	}
 	
 	private TypeUtils() {
-		// Prevent instantiation.
+		// Prevents instantiation.
 	}
 }

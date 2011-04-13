@@ -30,13 +30,13 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * The {@link SimpleRecordReader} class implements simple record readers.
+ * The {@link SimpleRecordReader} class implements simple {@link RecordReader record readers}.
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  */
 public class SimpleRecordReader<K, V>
-extends AbstractRecordReader<K, V> {
+extends BaseRecordReader<K, V> {
 	/** Field readers. */
 	protected final Map<K, ValueReader<? extends V>> _fields;
 	

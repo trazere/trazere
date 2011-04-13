@@ -20,7 +20,7 @@ package com.trazere.util.lang;
  */
 public class ThrowableFactories {
 	/** Factory of {@link Exception} instances. */
-	public static final ThrowableFactory<Exception> EXCEPTION = new AbstractThrowableFactory<Exception>() {
+	public static final ThrowableFactory<Exception> EXCEPTION = new BaseThrowableFactory<Exception>() {
 		public Exception build() {
 			return new Exception();
 		}
@@ -39,7 +39,7 @@ public class ThrowableFactories {
 	};
 	
 	/** Factory of {@link RuntimeException} instances. */
-	public static final ThrowableFactory<RuntimeException> RUNTIME_EXCEPTION = new AbstractThrowableFactory<RuntimeException>() {
+	public static final ThrowableFactory<RuntimeException> RUNTIME_EXCEPTION = new BaseThrowableFactory<RuntimeException>() {
 		public RuntimeException build() {
 			return new RuntimeException();
 		}
@@ -58,6 +58,6 @@ public class ThrowableFactories {
 	};
 	
 	private ThrowableFactories() {
-		// Prevent instantiation.
+		// Prevents instantiation.
 	}
 }

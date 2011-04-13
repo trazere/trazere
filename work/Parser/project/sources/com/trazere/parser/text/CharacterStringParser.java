@@ -15,7 +15,7 @@
  */
 package com.trazere.parser.text;
 
-import com.trazere.parser.AbstractParser;
+import com.trazere.parser.BaseParser;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
@@ -31,7 +31,7 @@ import com.trazere.util.lang.MutableBoolean;
  * NOTE: the character parser must return at most one result per token !!
  */
 public class CharacterStringParser
-extends AbstractParser<Character, String> {
+extends BaseParser<Character, String> {
 	protected final Parser<Character, Character> _characterParser;
 	protected final boolean _empty;
 	

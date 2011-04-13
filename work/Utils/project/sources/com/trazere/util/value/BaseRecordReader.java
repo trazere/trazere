@@ -15,18 +15,18 @@
  */
 package com.trazere.util.value;
 
-import com.trazere.util.function.AbstractParametrable;
+import com.trazere.util.function.BaseParametrable;
 import com.trazere.util.record.Record;
 import com.trazere.util.record.SimpleRecordBuilder;
 
 /**
- * The {@link AbstractRecordReader} abstract class implements skeletons of {@link RecordReader record readers}.
+ * The {@link BaseRecordReader} abstract class provides a skeleton implementation of {@link RecordReader record readers}.
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  */
-public abstract class AbstractRecordReader<K, V>
-extends AbstractParametrable<String, Object>
+public abstract class BaseRecordReader<K, V>
+extends BaseParametrable<String, Object>
 implements RecordReader<K, V> {
 	public Record<K, V> read(final Record<String, Object> parameters)
 	throws ValueException {

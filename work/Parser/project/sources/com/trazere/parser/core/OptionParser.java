@@ -15,7 +15,7 @@
  */
 package com.trazere.parser.core;
 
-import com.trazere.parser.AbstractParser;
+import com.trazere.parser.BaseParser;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
@@ -32,7 +32,7 @@ import com.trazere.util.type.Maybe;
  * @param <Result>
  */
 public class OptionParser<Token, Result>
-extends AbstractParser<Token, Maybe<Result>> {
+extends BaseParser<Token, Maybe<Result>> {
 	protected final Parser<Token, Result> _subParser;
 	
 	public OptionParser(final Parser<Token, Result> subParser, final String description) {

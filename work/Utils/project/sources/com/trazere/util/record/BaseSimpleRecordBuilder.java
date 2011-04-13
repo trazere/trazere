@@ -24,13 +24,13 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * The {@link AbstractSimpleRecordBuilder} abstract class implements skeletons of builders of {@link Record records}.
+ * The {@link BaseSimpleRecordBuilder} abstract class provides a skeleton implementation of {@link RecordBuilder builders of records}.
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  * @param <R> Type of the records.
  */
-public abstract class AbstractSimpleRecordBuilder<K, V, R extends Record<K, V>>
+public abstract class BaseSimpleRecordBuilder<K, V, R extends Record<K, V>>
 implements RecordBuilder<K, V, R>, Describable {
 	/** Values of the fields identified by their keys. */
 	protected final Map<K, V> _fields;
@@ -38,7 +38,7 @@ implements RecordBuilder<K, V, R>, Describable {
 	/**
 	 * Instantiate a new empty record builder.
 	 */
-	public AbstractSimpleRecordBuilder() {
+	public BaseSimpleRecordBuilder() {
 		// Initialization.
 		_fields = new HashMap<K, V>();
 	}
@@ -48,7 +48,7 @@ implements RecordBuilder<K, V, R>, Describable {
 	 * 
 	 * @param fields Values of the initial fields identified by their keys.
 	 */
-	public AbstractSimpleRecordBuilder(final Map<? extends K, ? extends V> fields) {
+	public BaseSimpleRecordBuilder(final Map<? extends K, ? extends V> fields) {
 		assert null != fields;
 		
 		// Initialization.
@@ -61,7 +61,7 @@ implements RecordBuilder<K, V, R>, Describable {
 	 * @param record Record containing the initial fields of the new record builder.
 	 * @throws RecordException When the given record cannot be read.
 	 */
-	public AbstractSimpleRecordBuilder(final Record<? extends K, ? extends V> record)
+	public BaseSimpleRecordBuilder(final Record<? extends K, ? extends V> record)
 	throws RecordException {
 		assert null != record;
 		
@@ -75,7 +75,7 @@ implements RecordBuilder<K, V, R>, Describable {
 	 * @param builder Record builder containing the initial fields of the new record builder.
 	 * @throws RecordException When the given record builder cannot populate the new record builder.
 	 */
-	public AbstractSimpleRecordBuilder(final RecordBuilder<? extends K, ? extends V, ?> builder)
+	public BaseSimpleRecordBuilder(final RecordBuilder<? extends K, ? extends V, ?> builder)
 	throws RecordException {
 		assert null != builder;
 		

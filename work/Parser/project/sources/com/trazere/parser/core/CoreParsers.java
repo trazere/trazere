@@ -995,6 +995,6 @@ public class CoreParsers {
 	}
 	
 	private CoreParsers() {
-		// Prevent instantiation.
+		// Prevents instantiation.
 	}
 }

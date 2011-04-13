@@ -13,19 +13,15 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.collection;
-
-import com.trazere.util.lang.AbstractFactory;
-import java.util.Collection;
+package com.trazere.util.lang;
 
 /**
- * The {@link AbstractCollectionFactory} class implements skeleton of {@link CollectionFactory collection factories}.
+ * The {@link BaseThrowableFactory} abstract class provides a skeleton implementation of {@link ThrowableFactory throwable factories}.
  * 
- * @param <T> Type of the elements.
- * @param <C> Type of the collections.
+ * @param <T> Type of the throwables.
  */
-public abstract class AbstractCollectionFactory<T, C extends Collection<? super T>>
-extends AbstractFactory<C, RuntimeException>
-implements CollectionFactory<T, C> {
+public abstract class BaseThrowableFactory<T extends Throwable>
+extends BaseFactory<T, RuntimeException>
+implements ThrowableFactory<T> {
 	// Nothing to do.
 }

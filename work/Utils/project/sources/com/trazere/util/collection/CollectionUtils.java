@@ -1116,6 +1116,6 @@ public class CollectionUtils {
 	}
 	
 	private CollectionUtils() {
-		// Prevent instantiation.
+		// Prevents instantiation.
 	}
 }

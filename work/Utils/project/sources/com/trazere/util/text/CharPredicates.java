@@ -222,6 +222,6 @@ public class CharPredicates {
 	}
 	
 	private CharPredicates() {
-		// Prevent instantiation.
+		// Prevents instantiation.
 	}
 }

@@ -18,14 +18,14 @@ package com.trazere.util.accumulator;
 import com.trazere.util.lang.MutableObject;
 
 /**
- * The {@link AbstractFoldAccumulator} abstract class implements skeletons of {@link Accumulator accumulators}.
+ * The {@link FoldAccumulator} abstract class implements {@link Accumulator accumulators} based on some folding operation.
  * 
  * @param <T> Type of the accumulated values.
  * @param <V> Type of the accumulation arguments.
  * @param <X> Type of the exceptions.
  */
-public abstract class AbstractFoldAccumulator<T, V, X extends Exception>
-extends AbstractAccumulator<T, V, X> {
+public abstract class FoldAccumulator<T, V, X extends Exception>
+extends BaseAccumulator<T, V, X> {
 	/** The current value. */
 	private final MutableObject<T> _value;
 	
@@ -34,7 +34,7 @@ extends AbstractAccumulator<T, V, X> {
 	 * 
 	 * @param initialValue The initial value. Maybe be <code>null</code>.
 	 */
-	public AbstractFoldAccumulator(final T initialValue) {
+	public FoldAccumulator(final T initialValue) {
 		// Initialization.
 		_value = new MutableObject<T>(initialValue);
 	}

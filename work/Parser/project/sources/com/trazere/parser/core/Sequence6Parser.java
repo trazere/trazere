@@ -15,7 +15,7 @@
  */
 package com.trazere.parser.core;
 
-import com.trazere.parser.AbstractParser;
+import com.trazere.parser.BaseParser;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
@@ -35,7 +35,7 @@ import com.trazere.parser.ParserState;
  * @param <Result>
  */
 public abstract class Sequence6Parser<Token, SubResult1, SubResult2, SubResult3, SubResult4, SubResult5, SubResult6, Result>
-extends AbstractParser<Token, Result> {
+extends BaseParser<Token, Result> {
 	protected final Parser<Token, ? extends SubResult1> _subParser1;
 	protected final Parser<Token, ? extends SubResult2> _subParser2;
 	protected final Parser<Token, ? extends SubResult3> _subParser3;

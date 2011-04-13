@@ -74,6 +74,6 @@ public class IOUtils {
 	}
 	
 	private IOUtils() {
-		// Prevent instantiation.
+		// Prevents instantiation.
 	}
 }

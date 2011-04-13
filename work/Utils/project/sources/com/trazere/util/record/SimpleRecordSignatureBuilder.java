@@ -26,7 +26,7 @@ import java.util.Map;
  * @see SimpleRecordSignature
  */
 public class SimpleRecordSignatureBuilder<K, V>
-extends AbstractSimpleRecordSignatureBuilder<K, V, SimpleRecordSignature<K, V>> {
+extends BaseSimpleRecordSignatureBuilder<K, V, SimpleRecordSignature<K, V>> {
 	/**
 	 * Instantiate a new empty builder.
 	 */

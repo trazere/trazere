@@ -15,7 +15,7 @@
  */
 package com.trazere.parser.text;
 
-import com.trazere.parser.AbstractParser;
+import com.trazere.parser.BaseParser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserContinuation;
 import com.trazere.parser.ParserException;
@@ -28,7 +28,7 @@ import com.trazere.util.text.CharPredicate;
  * DOCME
  */
 public class FilterStringParser
-extends AbstractParser<Character, String> {
+extends BaseParser<Character, String> {
 	protected final CharPredicate<? extends ParserException> _filter;
 	protected final boolean _empty;
 	

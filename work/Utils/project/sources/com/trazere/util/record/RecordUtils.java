@@ -422,6 +422,6 @@ public class RecordUtils {
 	}
 	
 	private RecordUtils() {
-		// Prevent instantiation.
+		// Prevents instantiation.
 	}
 }

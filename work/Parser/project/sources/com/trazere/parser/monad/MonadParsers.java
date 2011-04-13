@@ -28,6 +28,6 @@ public class MonadParsers {
 	}
 	
 	private MonadParsers() {
-		// Prevent instantiation.
+		// Prevents instantiation.
 	}
 }
