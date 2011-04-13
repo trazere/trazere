@@ -19,11 +19,11 @@ import java.util.Collection;
 import java.util.Collections;
 
 /**
- * The {@link AbstractTask} abstract class provide a task basic implementation which supports notification about the executions.
+ * The {@link BaseTask} abstract class provides a skeleton implementation of {@link Task tasks}.
  * 
  * @see TaskListener
  */
-public abstract class AbstractTask
+public abstract class BaseTask
 implements Task {
 	/** Name of the task. */
 	protected final String _name;
@@ -33,7 +33,7 @@ implements Task {
 	 * 
 	 * @param name Name of the task.
 	 */
-	public AbstractTask(final String name) {
+	public BaseTask(final String name) {
 		assert null != name;
 		
 		// Initialize instance.

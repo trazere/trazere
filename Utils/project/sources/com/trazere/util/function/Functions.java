@@ -579,6 +579,6 @@ public class Functions {
 	}
 	
 	private Functions() {
-		// Prevent instantiation.
+		// Prevents instantiation.
 	}
 }

@@ -15,7 +15,7 @@
  */
 package com.trazere.parser.core;
 
-import com.trazere.parser.AbstractParser;
+import com.trazere.parser.BaseParser;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
@@ -34,7 +34,7 @@ import java.util.List;
  * @param <Result>
  */
 public class Many1Parser<Token, Result>
-extends AbstractParser<Token, List<Result>> {
+extends BaseParser<Token, List<Result>> {
 	protected final Parser<Token, ? extends Result> _subParser;
 	
 	public Many1Parser(final Parser<Token, ? extends Result> subParser, final String description) {

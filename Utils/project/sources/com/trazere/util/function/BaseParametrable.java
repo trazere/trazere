@@ -20,12 +20,12 @@ import com.trazere.util.record.RecordSignature;
 import com.trazere.util.record.SimpleRecordSignatureBuilder;
 
 /**
- * The {@link AbstractParametrable} abstract class provides a skeleton for {@link Parametrable parametrable elements}.
+ * The {@link BaseParametrable} abstract class provides a skeleton implementation of {@link Parametrable parametrables}.
  * 
  * @param <K> Type of the keys of the parameters.
  * @param <V> Type of the values of the parameters.
  */
-public abstract class AbstractParametrable<K, V>
+public abstract class BaseParametrable<K, V>
 implements Parametrable<K, V> {
 	public RecordSignature<K, V> getRequirements()
 	throws RecordException {

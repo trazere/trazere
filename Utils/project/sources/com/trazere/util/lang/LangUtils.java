@@ -274,6 +274,6 @@ public class LangUtils {
 	}
 	
 	private LangUtils() {
-		// Prevent instantiation.
+		// Prevents instantiation.
 	}
 }

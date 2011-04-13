@@ -32,7 +32,7 @@ public class Factories {
 	 * @return The built factory.
 	 */
 	public static <T, X extends Exception> Factory<T, X> value(final T value) {
-		return new AbstractFactory<T, X>() {
+		return new BaseFactory<T, X>() {
 			public T build() {
 				return value;
 			}
@@ -50,7 +50,7 @@ public class Factories {
 	public static <T, X extends Exception> Factory<T, X> function(final Function0<T, X> function) {
 		assert null != function;
 		
-		return new AbstractFactory<T, X>() {
+		return new BaseFactory<T, X>() {
 			public T build()
 			throws X {
 				return function.evaluate();
@@ -59,6 +59,6 @@ public class Factories {
 	}
 	
 	private Factories() {
-		// Prevent instantiation.
+		// Prevents instantiation.
 	}
 }

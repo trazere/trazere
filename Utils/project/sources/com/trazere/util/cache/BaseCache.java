@@ -26,13 +26,13 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * The {@link AbstractCache} abstract class implements skeletons of {@link Cache caches}.
+ * The {@link BaseCache} abstract class provides a skeleton implementation of {@link Cache caches}.
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  * @param <E> Type of the entries.
  */
-public abstract class AbstractCache<K, V, E extends CacheEntry<K, V>>
+public abstract class BaseCache<K, V, E extends CacheEntry<K, V>>
 implements Cache<K, V>, Describable {
 	/** Cache entries identified by key. */
 	protected final Map<K, E> _entries = new HashMap<K, E>();

@@ -15,7 +15,7 @@
  */
 package com.trazere.parser.core;
 
-import com.trazere.parser.AbstractParser;
+import com.trazere.parser.BaseParser;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
@@ -33,7 +33,7 @@ import java.util.List;
  * @param <Result>
  */
 public class ChoiceParser<Token, Result>
-extends AbstractParser<Token, Result> {
+extends BaseParser<Token, Result> {
 	protected final List<? extends Parser<Token, ? extends Result>> _subParsers;
 	
 	public ChoiceParser(final List<? extends Parser<Token, ? extends Result>> subParsers, final String description) {

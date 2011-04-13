@@ -253,6 +253,6 @@ public class ParserUtils {
 	};
 	
 	private ParserUtils() {
-		// Prevent instantiation.
+		// Prevents instantiation.
 	}
 }

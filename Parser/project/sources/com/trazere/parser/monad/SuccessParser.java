@@ -15,7 +15,7 @@
  */
 package com.trazere.parser.monad;
 
-import com.trazere.parser.AbstractParser;
+import com.trazere.parser.BaseParser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserState;
@@ -29,7 +29,7 @@ import com.trazere.util.lang.LangUtils;
  * @param <Result>
  */
 public class SuccessParser<Token, Result>
-extends AbstractParser<Token, Result> {
+extends BaseParser<Token, Result> {
 	protected final Result _result;
 	
 	public SuccessParser(final Result result, final String description) {

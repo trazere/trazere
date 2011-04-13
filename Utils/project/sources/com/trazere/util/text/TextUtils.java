@@ -617,6 +617,6 @@ public class TextUtils {
 	}
 	
 	private TextUtils() {
-		// Prevent instantiation.
+		// Prevents instantiation.
 	}
 }

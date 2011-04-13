@@ -13,24 +13,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.parser;
+package com.trazere.util.collection;
+
+import com.trazere.util.lang.BaseFactory;
+import java.util.Collection;
 
 /**
- * DOCME
+ * The {@link BaseCollectionFactory} abstract class provides a skeleton implementation of {@link CollectionFactory collection factories}.
  * 
- * @param <Token>
- * @param <Result>
+ * @param <T> Type of the elements.
+ * @param <C> Type of the collections.
  */
-public abstract class AbstractParser<Token, Result>
-implements Parser<Token, Result> {
-	protected final String _description;
-	
-	public AbstractParser(final String description) {
-		// Initialization.
-		_description = description;
-	}
-	
-	public String getDescription() {
-		return _description;
-	}
+public abstract class BaseCollectionFactory<T, C extends Collection<? super T>>
+extends BaseFactory<C, RuntimeException>
+implements CollectionFactory<T, C> {
+	// Nothing to do.
 }

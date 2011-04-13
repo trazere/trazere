@@ -13,20 +13,24 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.lang;
+package com.trazere.parser;
 
 /**
- * The {@link AbstractFactory} class implements skeletons of {@link Factory factories}.
+ * DOCME
  * 
- * @param <T> Type of the built values.
- * @param <X> Type of the exceptions.
+ * @param <Token>
+ * @param <Result>
  */
-public abstract class AbstractFactory<T, X extends Exception>
-implements Factory<T, X> {
-	// Function.
+public abstract class BaseParser<Token, Result>
+implements Parser<Token, Result> {
+	protected final String _description;
 	
-	public T evaluate()
-	throws X {
-		return build();
+	public BaseParser(final String description) {
+		// Initialization.
+		_description = description;
+	}
+	
+	public String getDescription() {
+		return _description;
 	}
 }

@@ -132,6 +132,6 @@ public class Procedures {
 	}
 	
 	private Procedures() {
-		// Prevent instantiation.
+		// Prevents instantiation.
 	}
 }

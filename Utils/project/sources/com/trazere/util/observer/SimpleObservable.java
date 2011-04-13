@@ -16,12 +16,12 @@
 package com.trazere.util.observer;
 
 /**
- * The {@link SimpleObservable} class represents observable sources whose events can be raised externally.
+ * The {@link SimpleObservable} class implements observable sources whose events can be raised externally.
  * 
  * @param <T> Type of the event values.
  */
 public class SimpleObservable<T>
-extends AbstractObservable<T> {
+extends BaseObservable<T> {
 	@Override
 	public boolean isObserved() {
 		return super.isObserved();

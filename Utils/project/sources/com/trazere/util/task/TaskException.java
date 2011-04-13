@@ -15,7 +15,7 @@
  */
 package com.trazere.util.task;
 
-import com.trazere.util.lang.AbstractThrowableFactory;
+import com.trazere.util.lang.BaseThrowableFactory;
 import com.trazere.util.lang.ThrowableFactory;
 
 /**
@@ -26,7 +26,7 @@ extends Exception {
 	private static final long serialVersionUID = 1L;
 	
 	/** Factory of {@link TaskException}. */
-	public static final ThrowableFactory<TaskException> FACTORY = new AbstractThrowableFactory<TaskException>() {
+	public static final ThrowableFactory<TaskException> FACTORY = new BaseThrowableFactory<TaskException>() {
 		public TaskException build() {
 			return new TaskException();
 		}

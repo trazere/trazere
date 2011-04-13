@@ -26,7 +26,7 @@ import java.util.Map;
  * @see SimpleRecord
  */
 public class SimpleRecordBuilder<K, V>
-extends AbstractSimpleRecordBuilder<K, V, SimpleRecord<K, V>> {
+extends BaseSimpleRecordBuilder<K, V, SimpleRecord<K, V>> {
 	/**
 	 * Instantiate a new empty record builder.
 	 */

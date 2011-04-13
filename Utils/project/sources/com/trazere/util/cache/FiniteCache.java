@@ -29,7 +29,7 @@ import java.util.LinkedList;
  * @param <V> Type of the values.
  */
 public class FiniteCache<K, V>
-extends AbstractCache<K, V, TimedCacheEntry<K, V>> {
+extends BaseCache<K, V, TimedCacheEntry<K, V>> {
 	/** Default capacity of the finite cache. */
 	public static final int UNLIMITED_CAPACITY = 0;
 	

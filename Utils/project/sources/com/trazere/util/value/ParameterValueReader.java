@@ -31,7 +31,7 @@ import com.trazere.util.text.Description;
  * @param <T> Type of the value.
  */
 public class ParameterValueReader<T>
-extends AbstractValueReader<T> {
+extends BaseValueReader<T> {
 	/**
 	 * Build a new parameter reader with the given parameter name and type.
 	 * 
@@ -148,7 +148,7 @@ extends AbstractValueReader<T> {
 	private ValueReader<T> adapt(final ValueReader<? extends T> valueReader) {
 		assert null != valueReader;
 		
-		return new AbstractValueReader<T>(_valueClass, _nullable) {
+		return new BaseValueReader<T>(_valueClass, _nullable) {
 			public <B extends RecordSignatureBuilder<String, Object, ?>> B unifyRequirements(final B builder)
 			throws RecordException {
 				return valueReader.unifyRequirements(builder);

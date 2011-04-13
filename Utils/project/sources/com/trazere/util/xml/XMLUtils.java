@@ -123,6 +123,6 @@ public class XMLUtils {
 	}
 	
 	private XMLUtils() {
-		// Prevent instantiation.
+		// Prevents instantiation.
 	}
 }

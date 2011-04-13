@@ -85,7 +85,7 @@ public class ValueUtils {
 		assert null != valueReader;
 		assert null != function;
 		
-		return new AbstractValueReader<R>(type, nullable) {
+		return new BaseValueReader<R>(type, nullable) {
 			public <B extends RecordSignatureBuilder<String, Object, ?>> B unifyRequirements(final B builder)
 			throws RecordException {
 				valueReader.unifyRequirements(builder);
@@ -130,6 +130,6 @@ public class ValueUtils {
 	}
 	
 	private ValueUtils() {
-		// Prevent instantiation.
+		// Prevents instantiation.
 	}
 }

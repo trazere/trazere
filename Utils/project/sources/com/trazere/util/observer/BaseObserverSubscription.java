@@ -16,19 +16,19 @@
 package com.trazere.util.observer;
 
 /**
- * The {@link AbstractObserverSubscription} abstract class provides a skeleton implementation of {@link ObserverSubscription observer subcriptions}.
+ * The {@link BaseObserverSubscription} abstract class provides a skeleton implementation of {@link ObserverSubscription observer subcriptions}.
  * <p>
  * This class keeps a strong reference to the observer corresponding to the subscription. That way, the subscribers which keep a reference to their
  * subscriptions don't have keep another reference to the observers in order to prevent their garbage collection.
  */
-public abstract class AbstractObserverSubscription
+public abstract class BaseObserverSubscription
 implements ObserverSubscription {
 	/**
 	 * Instantiates a new subscription for the given observer.
 	 * 
 	 * @param observer The observer.
 	 */
-	public AbstractObserverSubscription(final Observer<?> observer) {
+	public BaseObserverSubscription(final Observer<?> observer) {
 		assert null != observer;
 		
 		// Initialization.

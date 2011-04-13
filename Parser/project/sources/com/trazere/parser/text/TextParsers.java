@@ -212,6 +212,6 @@ public class TextParsers {
 	private static final Parser<Character, String> _WORD = word("a word");
 	
 	private TextParsers() {
-		// Prevent instantiation.
+		// Prevents instantiation.
 	}
 }

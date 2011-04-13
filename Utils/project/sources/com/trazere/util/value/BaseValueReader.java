@@ -15,19 +15,19 @@
  */
 package com.trazere.util.value;
 
-import com.trazere.util.function.AbstractParametrable;
+import com.trazere.util.function.BaseParametrable;
 import com.trazere.util.record.Record;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
 
 /**
- * The {@link AbstractValueReader} abstract class implements skeletons of {@link ValueReader value readers}.
+ * The {@link BaseValueReader} abstract class provides a skeleton implementation of {@link ValueReader value readers}.
  * 
  * @param <T> Type of the values.
  */
-public abstract class AbstractValueReader<T>
-extends AbstractParametrable<String, Object>
+public abstract class BaseValueReader<T>
+extends BaseParametrable<String, Object>
 implements ValueReader<T>, Describable {
 	/**
 	 * Instanciate a new reader with the given type and nullablity.
@@ -35,7 +35,7 @@ implements ValueReader<T>, Describable {
 	 * @param valueClass The type of the values.
 	 * @param nullable The flag indicating whether the values can be <code>null</code> or not.
 	 */
-	protected AbstractValueReader(final Class<T> valueClass, final boolean nullable) {
+	protected BaseValueReader(final Class<T> valueClass, final boolean nullable) {
 		assert null != valueClass;
 		
 		// Initialization.
