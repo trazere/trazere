@@ -195,6 +195,24 @@ public class Predicates {
 	}
 	
 	/**
+	 * Builds a predicate which matchs the given type.
+	 * 
+	 * @param <T> Type of the argument values.
+	 * @param <X> Type of the exceptions.
+	 * @param type The type to match.
+	 * @return The built predicate.
+	 */
+	public static <T, X extends Exception> Predicate1<T, X> match(final Class<? extends T> type) {
+		assert null != type;
+		
+		return new Predicate1<T, X>() {
+			public boolean evaluate(final T value) {
+				return null != value && type.isInstance(value);
+			}
+		};
+	}
+	
+	/**
 	 * Builds a predicate which evaluates to <code>true</code> when the argument collection contains the given value.
 	 * 
 	 * @param <T> Type of the argument values.
