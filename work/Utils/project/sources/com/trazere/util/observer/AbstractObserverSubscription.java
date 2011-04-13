@@ -28,7 +28,7 @@ implements ObserverSubscription {
 	 * 
 	 * @param observer The observer.
 	 */
-	public AbstractObserverSubscription(final LiveObserver<?> observer) {
+	public AbstractObserverSubscription(final Observer<?> observer) {
 		assert null != observer;
 		
 		// Initialization.
@@ -38,14 +38,14 @@ implements ObserverSubscription {
 	// Observer.
 	
 	/** Observer. */
-	protected final LiveObserver<?> _observer;
+	protected final Observer<?> _observer;
 	
 	/**
 	 * Gets the observer corresponding to the receiver subscription.
 	 * 
 	 * @return The observer.
 	 */
-	public LiveObserver<?> getObserver() {
+	public Observer<?> getObserver() {
 		return _observer;
 	}
 }
