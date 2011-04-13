@@ -6,5 +6,6 @@
 	<classpathentry kind="lib" path="/Trazere - Tools/sjsxp-1.0.1/sjsxp.jar"/>
 	<classpathentry kind="lib" path="/Trazere - Tools/slf4j-1.6.1/slf4j-api.jar"/>
 	<classpathentry kind="src" path="sources"/>
+	<classpathentry kind="lib" path="/Trazere - Tools/jaxb-2.1.11/jaxb-api.jar"/>
 	<classpathentry kind="output" path="build/target/classes"/>
 </classpath>
