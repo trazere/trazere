@@ -322,6 +322,25 @@ public class CollectionUtils {
 	}
 	
 	/**
+	 * Drains the elements from the given iterator and populate the given collection with them.
+	 * 
+	 * @param <T> Type of the elements.
+	 * @param <R> Type of the result collection.
+	 * @param values The iterator.
+	 * @param results The collection to populate with the elements.
+	 * @return The result collection.
+	 */
+	public static <T, R extends Collection<? super T>> R drain(final Iterator<T> values, final R results) {
+		assert null != values;
+		assert null != results;
+		
+		while (values.hasNext()) {
+			results.add(values.next());
+		}
+		return results;
+	}
+	
+	/**
 	 * Gets an element from the given collection.
 	 * 
 	 * @param <T> Type of the elements.
