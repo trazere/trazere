@@ -361,6 +361,22 @@ public class CollectionUtils {
 	}
 	
 	/**
+	 * Gets the next value from the given iterator.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @param values The values.
+	 * @return The next value.
+	 * @throws X When the retrieval of the next value fails.
+	 */
+	public static <T, X extends Exception> Maybe<T> next(final CheckedIterator<? extends T, X> values)
+	throws X {
+		assert null != values;
+		
+		return values.hasNext() ? Maybe.<T>some(values.next()) : Maybe.<T>none();
+	}
+	
+	/**
 	 * Gets an element from the given collection.
 	 * 
 	 * @param <T> Type of the elements.

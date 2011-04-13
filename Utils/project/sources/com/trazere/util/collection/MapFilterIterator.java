@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2011 Julien Dufour
+ *  Copyright 2006-2010 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -20,36 +20,36 @@ import com.trazere.util.type.Maybe;
 import java.util.Iterator;
 
 /**
- * The {@link MapIterator} abstract class provides iterator combinators which transform their values.
+ * The {@link MapFilterIterator} abstract class provides iterator combinators which transform and filter their values.
  * 
  * @param <T> Type of the values of the feed.
  * @param <R> Type of the extracted values.
  */
-public abstract class MapIterator<T, R>
-extends CheckedMapIterator<T, R, RuntimeException>
+public abstract class MapFilterIterator<T, R>
+extends CheckedMapFilterIterator<T, R, RuntimeException>
 implements Iterator<R> {
 	/**
-	 * Builds an iterator using the given feed and function.
+	 * Builds an iterator using the given feed and extractor.
 	 * 
 	 * @param <T> Type of the values of the feeds.
 	 * @param <R> Type of the produced values.
 	 * @param feed The feed.
-	 * @param function The function.
+	 * @param extractor The extractor.
 	 * @return The built iterator.
 	 */
-	public static <T, R> MapIterator<T, R> build(final Iterator<? extends T> feed, final Function1<? super T, ? extends R, ? extends RuntimeException> function) {
+	public static <T, R> MapFilterIterator<T, R> build(final Iterator<? extends T> feed, final Function1<? super T, ? extends Maybe<? extends R>, ? extends RuntimeException> extractor) {
 		assert null != feed;
-		assert null != function;
+		assert null != extractor;
 		
-		return new MapIterator<T, R>() {
+		return new MapFilterIterator<T, R>() {
 			@Override
 			protected Maybe<T> pull() {
 				return CollectionUtils.next(feed);
 			}
 			
 			@Override
-			protected R map(final T value) {
-				return function.evaluate(value);
+			public Maybe<? extends R> extract(final T value) {
+				return extractor.evaluate(value);
 			}
 		};
 	}
