@@ -15,7 +15,7 @@
  */
 package com.trazere.parser.text;
 
-import com.trazere.parser.AbstractParser;
+import com.trazere.parser.BaseParser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserContinuation;
 import com.trazere.parser.ParserException;
@@ -27,7 +27,7 @@ import com.trazere.util.lang.LangUtils;
  * DOCME
  */
 public class StringParser
-extends AbstractParser<Character, String> {
+extends BaseParser<Character, String> {
 	protected final String _string;
 	
 	public StringParser(final String string, final String description) {

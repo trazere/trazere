@@ -26,13 +26,14 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * The {@link AbstractSimpleRecordSignatureBuilder} abstract class implements skeletons of builders of {@link RecordSignature record signatures}.
+ * The {@link BaseSimpleRecordSignatureBuilder} abstract class provides a skeleton implementation of {@link RecordSignatureBuilder builders of record
+ * signatures}.
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  * @param <R> Type of the records.
  */
-public abstract class AbstractSimpleRecordSignatureBuilder<K, V, R extends SimpleRecordSignature<K, V>>
+public abstract class BaseSimpleRecordSignatureBuilder<K, V, R extends SimpleRecordSignature<K, V>>
 implements RecordSignatureBuilder<K, V, R>, Describable {
 	/** Signatures of the fields identified by their keys. */
 	final Map<K, FieldSignature<K, ? extends V>> _fields;
@@ -40,7 +41,7 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 	/**
 	 * Instantiate a new empty builder.
 	 */
-	public AbstractSimpleRecordSignatureBuilder() {
+	public BaseSimpleRecordSignatureBuilder() {
 		// Initialization.
 		_fields = new HashMap<K, FieldSignature<K, ? extends V>>();
 	}
@@ -50,7 +51,7 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 	 * 
 	 * @param fields Initial field signatures identified by their keys.
 	 */
-	public AbstractSimpleRecordSignatureBuilder(final Map<K, ? extends FieldSignature<K, ? extends V>> fields) {
+	public BaseSimpleRecordSignatureBuilder(final Map<K, ? extends FieldSignature<K, ? extends V>> fields) {
 		assert null != fields;
 		
 		// Initialization.
@@ -63,7 +64,7 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 	 * @param signature Record signature containing the initial field signatures.
 	 * @throws RecordException When the record signature cannot be read.
 	 */
-	public AbstractSimpleRecordSignatureBuilder(final RecordSignature<K, ? extends V> signature)
+	public BaseSimpleRecordSignatureBuilder(final RecordSignature<K, ? extends V> signature)
 	throws RecordException {
 		assert null != signature;
 		

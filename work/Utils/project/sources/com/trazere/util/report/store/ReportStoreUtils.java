@@ -130,6 +130,6 @@ public class ReportStoreUtils {
 	}
 	
 	private ReportStoreUtils() {
-		// Prevent instantiation.
+		// Prevents instantiation.
 	}
 }

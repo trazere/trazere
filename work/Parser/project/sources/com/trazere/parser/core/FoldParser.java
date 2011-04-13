@@ -15,7 +15,7 @@
  */
 package com.trazere.parser.core;
 
-import com.trazere.parser.AbstractParser;
+import com.trazere.parser.BaseParser;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
@@ -30,7 +30,7 @@ import com.trazere.parser.ParserState;
  * @param <Result>
  */
 public abstract class FoldParser<Token, SubResult, Result>
-extends AbstractParser<Token, Result> {
+extends BaseParser<Token, Result> {
 	protected final Parser<Token, ? extends SubResult> _subParser;
 	protected final Result _initialValue;
 	

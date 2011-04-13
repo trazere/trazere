@@ -97,6 +97,6 @@ public class Extractors {
 	}
 	
 	private Extractors() {
-		// Prevent instantiation.
+		// Prevents instantiation.
 	}
 }

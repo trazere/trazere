@@ -16,12 +16,17 @@
 package com.trazere.util.lang;
 
 /**
- * The {@link AbstractThrowableFactory} class implements skeletons of {@link ThrowableFactory throwable factories}.
+ * The {@link BaseFactory} abstract class provides a skeleton implementation of {@link Factory factories}.
  * 
- * @param <T> Type of the throwables.
+ * @param <T> Type of the built values.
+ * @param <X> Type of the exceptions.
  */
-public abstract class AbstractThrowableFactory<T extends Throwable>
-extends AbstractFactory<T, RuntimeException>
-implements ThrowableFactory<T> {
-	// Nothing to do.
+public abstract class BaseFactory<T, X extends Exception>
+implements Factory<T, X> {
+	// Function.
+	
+	public T evaluate()
+	throws X {
+		return build();
+	}
 }

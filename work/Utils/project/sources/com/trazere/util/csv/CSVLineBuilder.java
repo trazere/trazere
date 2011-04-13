@@ -15,7 +15,7 @@
  */
 package com.trazere.util.csv;
 
-import com.trazere.util.record.AbstractSimpleRecordBuilder;
+import com.trazere.util.record.BaseSimpleRecordBuilder;
 import com.trazere.util.record.Record;
 import com.trazere.util.record.RecordBuilder;
 import com.trazere.util.record.RecordException;
@@ -26,7 +26,7 @@ import java.util.Map;
  * The {@link CSVLineBuilder} class implements builders of {@link CSVLine CSV lines}.
  */
 public class CSVLineBuilder
-extends AbstractSimpleRecordBuilder<String, String, CSVLine> {
+extends BaseSimpleRecordBuilder<String, String, CSVLine> {
 	/**
 	 * Instantiate a new empty CSV line builder.
 	 */

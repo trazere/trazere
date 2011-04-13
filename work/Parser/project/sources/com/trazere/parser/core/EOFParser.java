@@ -15,7 +15,7 @@
  */
 package com.trazere.parser.core;
 
-import com.trazere.parser.AbstractParser;
+import com.trazere.parser.BaseParser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserContinuation;
 import com.trazere.parser.ParserException;
@@ -30,7 +30,7 @@ import com.trazere.util.lang.LangUtils;
  * @param <Result>
  */
 public class EOFParser<Token, Result>
-extends AbstractParser<Token, Result> {
+extends BaseParser<Token, Result> {
 	public EOFParser(final String description) {
 		super(description);
 	}

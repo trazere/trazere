@@ -22,14 +22,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The {@link AbstractObservable} class provides a skeleton implementation of {@link Observable observable sources}.
+ * The {@link BaseObservable} class provides a skeleton implementation of {@link Observable observable event sources}.
  * 
  * @param <T> Type of the event values.
  */
-public abstract class AbstractObservable<T>
+public abstract class BaseObservable<T>
 implements Observable<T> {
 	/**
-	 * The {@link AbstractObservable.LiveObserver} class represents the observers subscribed to the observables.
+	 * The {@link BaseObservable.LiveObserver} class represents the observers subscribed to the observables.
 	 * <p>
 	 * The instances keep a weak reference to the real observer in order to allow and handle their garbage collection. They also provide control over the life
 	 * span of the subscription.
@@ -95,7 +95,7 @@ implements Observable<T> {
 	 * The {@link Subscription} class represents the subscriptions of the observers.
 	 */
 	protected class Subscription
-	extends AbstractObserverSubscription {
+	extends BaseObserverSubscription {
 		/**
 		 * Instantiates a new subscription for the given observer and preservation condition.
 		 * 
@@ -118,7 +118,7 @@ implements Observable<T> {
 		protected final LiveObserver _subscribedObserver;
 		
 		public void unsubscribe() {
-			AbstractObservable.this.unsubscribe(_subscribedObserver);
+			BaseObservable.this.unsubscribe(_subscribedObserver);
 		}
 	}
 	
@@ -183,8 +183,8 @@ implements Observable<T> {
 		return FunctionUtils.isAny(_LIVE_OBSERVER_FILTER, _observers);
 	}
 	
-	private static final Predicate1<AbstractObservable<?>.LiveObserver, RuntimeException> _LIVE_OBSERVER_FILTER = new Predicate1<AbstractObservable<?>.LiveObserver, RuntimeException>() {
-		public boolean evaluate(final AbstractObservable<?>.LiveObserver observer) {
+	private static final Predicate1<BaseObservable<?>.LiveObserver, RuntimeException> _LIVE_OBSERVER_FILTER = new Predicate1<BaseObservable<?>.LiveObserver, RuntimeException>() {
+		public boolean evaluate(final BaseObservable<?>.LiveObserver observer) {
 			return observer.isAlive();
 		}
 	};

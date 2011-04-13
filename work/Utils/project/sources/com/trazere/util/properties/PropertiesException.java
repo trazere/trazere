@@ -15,7 +15,7 @@
  */
 package com.trazere.util.properties;
 
-import com.trazere.util.lang.AbstractThrowableFactory;
+import com.trazere.util.lang.BaseThrowableFactory;
 import com.trazere.util.lang.ThrowableFactory;
 
 /**
@@ -26,7 +26,7 @@ extends Exception {
 	private static final long serialVersionUID = 1L;
 	
 	/** Factory of {@link PropertiesException}. */
-	public static final ThrowableFactory<PropertiesException> FACTORY = new AbstractThrowableFactory<PropertiesException>() {
+	public static final ThrowableFactory<PropertiesException> FACTORY = new BaseThrowableFactory<PropertiesException>() {
 		public PropertiesException build() {
 			return new PropertiesException();
 		}

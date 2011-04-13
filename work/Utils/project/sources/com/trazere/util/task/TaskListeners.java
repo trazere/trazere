@@ -118,6 +118,6 @@ public class TaskListeners {
 	}
 	
 	private TaskListeners() {
-		// Prevent instantiation.
+		// Prevents instantiation.
 	}
 }

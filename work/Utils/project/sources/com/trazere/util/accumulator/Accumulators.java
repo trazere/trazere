@@ -36,7 +36,7 @@ public class Accumulators {
 		return (Accumulator<Void, V, X>) _DISCARD;
 	}
 	
-	private static final Accumulator<Void, ?, ?> _DISCARD = new AbstractAccumulator<Void, Object, RuntimeException>() {
+	private static final Accumulator<Void, ?, ?> _DISCARD = new BaseAccumulator<Void, Object, RuntimeException>() {
 		public Void get() {
 			return null;
 		}
@@ -58,7 +58,7 @@ public class Accumulators {
 	public static <T, C extends Collection<? super T>, X extends Exception> Accumulator<C, T, X> collection(final C collection) {
 		assert null != collection;
 		
-		return new AbstractAccumulator<C, T, X>() {
+		return new BaseAccumulator<C, T, X>() {
 			public C get() {
 				return collection;
 			}
@@ -82,7 +82,7 @@ public class Accumulators {
 	public static <T, R extends MutableReference<T>, X extends Exception> Accumulator<R, T, X> reference(final R reference) {
 		assert null != reference;
 		
-		return new AbstractAccumulator<R, T, X>() {
+		return new BaseAccumulator<R, T, X>() {
 			public R get() {
 				return reference;
 			}
@@ -107,7 +107,7 @@ public class Accumulators {
 	public static <T, V, X extends Exception> Accumulator<T, V, X> fold(final Function2<? super T, ? super V, ? extends T, ? extends X> function, final T initialValue) {
 		assert null != function;
 		
-		return new AbstractFoldAccumulator<T, V, X>(initialValue) {
+		return new FoldAccumulator<T, V, X>(initialValue) {
 			@Override
 			protected T fold(final T accumulator, final V value)
 			throws X {
@@ -124,7 +124,7 @@ public class Accumulators {
 	 * @return The built accumulator.
 	 */
 	public static <X extends Exception> Accumulator<Boolean, Boolean, X> and(final boolean initialValue) {
-		return new AbstractFoldAccumulator<Boolean, Boolean, X>(initialValue) {
+		return new FoldAccumulator<Boolean, Boolean, X>(initialValue) {
 			@Override
 			protected Boolean fold(final Boolean accumulator, final Boolean value) {
 				return LangUtils.get(accumulator, false) && LangUtils.get(value, false);
@@ -140,7 +140,7 @@ public class Accumulators {
 	 * @return The built accumulator.
 	 */
 	public static <X extends Exception> Accumulator<Boolean, Boolean, X> or(final boolean initialValue) {
-		return new AbstractFoldAccumulator<Boolean, Boolean, X>(initialValue) {
+		return new FoldAccumulator<Boolean, Boolean, X>(initialValue) {
 			@Override
 			protected Boolean fold(final Boolean accumulator, final Boolean value) {
 				return LangUtils.get(accumulator, false) || LangUtils.get(value, false);
@@ -149,6 +149,6 @@ public class Accumulators {
 	}
 	
 	private Accumulators() {
-		// Prevent instantiation.
+		// Prevents instantiation.
 	}
 }
