@@ -77,6 +77,60 @@ public class Procedures {
 		}
 	};
 	
+	/**
+	 * Builds a procedure which executes its zero arguments procedure arguments.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @return The built procedure.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <X extends Exception> Procedure1<Procedure0<? extends X>, X> execute0() {
+		return (Procedure1<Procedure0<? extends X>, X>) _EXECUTE0;
+	}
+	
+	private static final Procedure1<? extends Procedure0<?>, ?> _EXECUTE0 = new Procedure1<Procedure0<?>, Exception>() {
+		public void execute(final Procedure0<? extends Exception> procedure)
+		throws Exception {
+			procedure.execute();
+		}
+	};
+	
+	/**
+	 * Builds a procedure which executes ite one argument procedure arguments with the given value.
+	 * 
+	 * @param <T> Type of the argument values.
+	 * @param <X> Type of the exceptions.
+	 * @param value The argument value. May be <code>null</code>.
+	 * @return The built procedure.
+	 */
+	public static <T, X extends Exception> Procedure1<Procedure1<? super T, ? extends X>, X> execute1(final T value) {
+		return new Procedure1<Procedure1<? super T, ? extends X>, X>() {
+			public void execute(final Procedure1<? super T, ? extends X> procedure)
+			throws X {
+				procedure.execute(value);
+			}
+		};
+	}
+	
+	/**
+	 * Builds a procedure which executes ite two arguments procedure arguments with the given values.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the secord argument values.
+	 * @param <X> Type of the exceptions.
+	 * @param value1 The first argument value. May be <code>null</code>.
+	 * @param value2 The second argument value. May be <code>null</code>.
+	 * @return The built procedure.
+	 */
+	public static <T1, T2, X extends Exception> Procedure1<Procedure2<? super T1, ? super T2, ? extends X>, X> execute2(final T1 value1, final T2 value2) {
+		return new Procedure1<Procedure2<? super T1, ? super T2, ? extends X>, X>() {
+			public void execute(final Procedure2<? super T1, ? super T2, ? extends X> procedure)
+			throws X {
+				procedure.execute(value1, value2);
+			}
+		};
+	}
+	
 	private Procedures() {
 		// Prevent instantiation.
 	}
