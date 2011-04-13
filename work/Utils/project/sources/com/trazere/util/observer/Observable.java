@@ -32,14 +32,6 @@ import com.trazere.util.function.Predicate1;
  */
 public interface Observable<T> {
 	/**
-	 * Subscribes the given observer to the receiver observable.
-	 * 
-	 * @param observer The observer.
-	 * @return The corresponding subcription.
-	 */
-	public ObserverSubscription subscribe(final LiveObserver<? super T> observer);
-	
-	/**
 	 * Subcribes the given observer to the receiver observable for all events.
 	 * 
 	 * @param observer The observer.
