@@ -28,6 +28,11 @@ extends BaseObservable<T> {
 	}
 	
 	@Override
+	public void unsubscribeAll() {
+		super.unsubscribeAll();
+	}
+	
+	@Override
 	public void notify(final T value) {
 		super.notify(value);
 	}

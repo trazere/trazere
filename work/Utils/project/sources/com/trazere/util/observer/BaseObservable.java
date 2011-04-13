@@ -66,11 +66,26 @@ implements Observable<T> {
 	protected final List<LiveObserver> _observers = new ArrayList<LiveObserver>();
 	
 	/**
-	 * Subscribes the observer corresponding to the given soft reference to the receiver observable.
-	 * <p>
-	 * This method is called every time a single observer is being subscribed.
+	 * Indicates whether the receiver observable is being observed.
 	 * 
-	 * @param observer The reference to the observer.
+	 * @return <code>true</code> when the observable is observed by at least one observer, <code>false</code> otherwise.
+	 */
+	public boolean isObserved() {
+		return FunctionUtils.isAny(_LIVE_OBSERVER_FILTER, _observers);
+	}
+	
+	private static final Predicate1<BaseObservable<?>.LiveObserver, RuntimeException> _LIVE_OBSERVER_FILTER = new Predicate1<BaseObservable<?>.LiveObserver, RuntimeException>() {
+		public boolean evaluate(final BaseObservable<?>.LiveObserver observer) {
+			return observer.isAlive();
+		}
+	};
+	
+	/**
+	 * Subscribes the given observer to the receiver observable.
+	 * <p>
+	 * This method is called every time a observer is being subscribed.
+	 * 
+	 * @param observer The observer.
 	 */
 	protected void subscribe(final LiveObserver observer) {
 		assert null != observer;
@@ -79,16 +94,25 @@ implements Observable<T> {
 	}
 	
 	/**
-	 * Unsubscribes the observer corresponding to the given soft reference from the receiver observable.
+	 * Unsubscribes the given observer from the receiver observable.
 	 * <p>
-	 * This method is called every time a single observer is being unsubscribed (either implicitely or explicitely).
+	 * This method is called every time a observer is being unsubscribed (either implicitely or explicitely).
 	 * 
-	 * @param observer The reference to the observer.
+	 * @param observer The observer.
 	 */
 	protected void unsubscribe(final LiveObserver observer) {
 		assert null != observer;
 		
 		_observers.remove(observer);
+	}
+	
+	/**
+	 * Unsubscribes all observers at once.
+	 * <p>
+	 * Note: the {@link #unsubscribe(LiveObserver)} method is not called when calling this method.
+	 */
+	protected void unsubscribeAll() {
+		_observers.clear();
 	}
 	
 	/**
@@ -173,21 +197,6 @@ implements Observable<T> {
 			}
 		});
 	}
-	
-	/**
-	 * Indicates whether the receiver observable is being observed.
-	 * 
-	 * @return <code>true</code> when the observable is observed by at least one observer, <code>false</code> otherwise.
-	 */
-	public boolean isObserved() {
-		return FunctionUtils.isAny(_LIVE_OBSERVER_FILTER, _observers);
-	}
-	
-	private static final Predicate1<BaseObservable<?>.LiveObserver, RuntimeException> _LIVE_OBSERVER_FILTER = new Predicate1<BaseObservable<?>.LiveObserver, RuntimeException>() {
-		public boolean evaluate(final BaseObservable<?>.LiveObserver observer) {
-			return observer.isAlive();
-		}
-	};
 	
 	/**
 	 * Notifies the observers of the receiver observable with the given event.
