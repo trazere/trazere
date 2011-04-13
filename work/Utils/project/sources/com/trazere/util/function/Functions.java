@@ -534,14 +534,14 @@ public class Functions {
 		return (Function1<Function0<? extends R, ? extends X>, R, X>) _EVALUATE0;
 	}
 	
-	private static final Function1<?, ?, ?> _EVALUATE0 = new Function1<Function0<Object, RuntimeException>, Object, RuntimeException>() {
+	private static final Function1<? extends Function0<?, ?>, ?, ?> _EVALUATE0 = new Function1<Function0<Object, RuntimeException>, Object, RuntimeException>() {
 		public Object evaluate(final Function0<Object, RuntimeException> function) {
 			return function.evaluate();
 		}
 	};
 	
 	/**
-	 * Builds a function which evaluates to the result of the evaluation of its one argument function arguments for the given value.
+	 * Builds a function which evaluates to the result of the evaluation of its one argument function arguments with the given value.
 	 * 
 	 * @param <T> Type of the argument values.
 	 * @param <R> Type of the result values.
@@ -559,7 +559,7 @@ public class Functions {
 	}
 	
 	/**
-	 * Builds a function which evaluates to the result of the evaluation of its two arguments function arguments for the given values.
+	 * Builds a function which evaluates to the result of the evaluation of its two arguments function arguments with the given values.
 	 * 
 	 * @param <T1> Type of the first argument values.
 	 * @param <T2> Type of the second argument values.
