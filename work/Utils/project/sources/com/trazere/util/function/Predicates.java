@@ -15,7 +15,9 @@
  */
 package com.trazere.util.function;
 
+import com.trazere.util.collection.CollectionUtils;
 import com.trazere.util.lang.LangUtils;
+import com.trazere.util.type.TypeUtils;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -104,6 +106,35 @@ public class Predicates {
 	}
 	
 	/**
+	 * Builds a predicate corresponding to the conjonction of the given predicates.
+	 * 
+	 * @param <T> Type of the argument values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicates The predicates.
+	 * @return The built predicate.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T, X extends Exception> Predicate1<T, X> and(final Collection<? extends Predicate1<? super T, ? extends X>> predicates) {
+		assert null != predicates;
+		
+		if (predicates.size() < 2) {
+			return (Predicate1<T, X>) TypeUtils.get(CollectionUtils.any(predicates), Predicates.<T, X>all());
+		} else {
+			return new Predicate1<T, X>() {
+				public boolean evaluate(final T value)
+				throws X {
+					for (final Predicate1<? super T, ? extends X> predicate : predicates) {
+						if (!predicate.evaluate(value)) {
+							return false;
+						}
+					}
+					return true;
+				}
+			};
+		}
+	}
+	
+	/**
 	 * Builds a predicate corresponding to the disjunction of the given predicates.
 	 * 
 	 * @param <T> Type of the argument values.
@@ -122,6 +153,35 @@ public class Predicates {
 				return predicate1.evaluate(value) || predicate2.evaluate(value);
 			}
 		};
+	}
+	
+	/**
+	 * Builds a predicate corresponding to the disjunction of the given predicates.
+	 * 
+	 * @param <T> Type of the argument values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicates The predicates.
+	 * @return The built predicate.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T, X extends Exception> Predicate1<T, X> or(final Collection<? extends Predicate1<? super T, ? extends X>> predicates) {
+		assert null != predicates;
+		
+		if (predicates.size() < 2) {
+			return (Predicate1<T, X>) TypeUtils.get(CollectionUtils.any(predicates), Predicates.<T, X>none());
+		} else {
+			return new Predicate1<T, X>() {
+				public boolean evaluate(final T value)
+				throws X {
+					for (final Predicate1<? super T, ? extends X> predicate : predicates) {
+						if (predicate.evaluate(value)) {
+							return true;
+						}
+					}
+					return false;
+				}
+			};
+		}
 	}
 	
 	/**
@@ -316,7 +376,7 @@ public class Predicates {
 	 * @param predicate The predicate.
 	 * @return The built predicate.
 	 */
-	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> not(final Predicate2<? super T1, ? super T2, ? extends X> predicate) {
+	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> not2(final Predicate2<? super T1, ? super T2, ? extends X> predicate) {
 		assert null != predicate;
 		
 		return new Predicate2<T1, T2, X>() {
@@ -337,7 +397,7 @@ public class Predicates {
 	 * @param predicate2 The second predicate.
 	 * @return The built predicate.
 	 */
-	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> and(final Predicate2<? super T1, ? super T2, ? extends X> predicate1, final Predicate2<? super T1, ? super T2, ? extends X> predicate2) {
+	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> and2(final Predicate2<? super T1, ? super T2, ? extends X> predicate1, final Predicate2<? super T1, ? super T2, ? extends X> predicate2) {
 		assert null != predicate1;
 		assert null != predicate2;
 		
@@ -350,6 +410,36 @@ public class Predicates {
 	}
 	
 	/**
+	 * Builds a predicate corresponding to the conjonction of the given predicates.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicates The predicates.
+	 * @return The built predicate.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> and2(final Collection<? extends Predicate2<? super T1, ? super T2, ? extends X>> predicates) {
+		assert null != predicates;
+		
+		if (predicates.size() < 2) {
+			return (Predicate2<T1, T2, X>) TypeUtils.get(CollectionUtils.any(predicates), Predicates.<T1, T2, X>none2());
+		} else {
+			return new Predicate2<T1, T2, X>() {
+				public boolean evaluate(final T1 value1, final T2 value2)
+				throws X {
+					for (final Predicate2<? super T1, ? super T2, ? extends X> predicate : predicates) {
+						if (!predicate.evaluate(value1, value2)) {
+							return false;
+						}
+					}
+					return true;
+				}
+			};
+		}
+	}
+	
+	/**
 	 * Builds a predicate corresponding to the disjunction of the given predicates.
 	 * 
 	 * @param <T1> Type of the first argument values.
@@ -359,7 +449,7 @@ public class Predicates {
 	 * @param predicate2 The second predicate.
 	 * @return The built predicate.
 	 */
-	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> or(final Predicate2<? super T1, ? super T2, ? extends X> predicate1, final Predicate2<? super T1, ? super T2, ? extends X> predicate2) {
+	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> or2(final Predicate2<? super T1, ? super T2, ? extends X> predicate1, final Predicate2<? super T1, ? super T2, ? extends X> predicate2) {
 		assert null != predicate1;
 		assert null != predicate2;
 		
@@ -369,6 +459,36 @@ public class Predicates {
 				return predicate1.evaluate(value1, value2) || predicate2.evaluate(value1, value2);
 			}
 		};
+	}
+	
+	/**
+	 * Builds a predicate corresponding to the disjunction of the given predicates.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicates The predicates.
+	 * @return The built predicate.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> or2(final Collection<? extends Predicate2<? super T1, ? super T2, ? extends X>> predicates) {
+		assert null != predicates;
+		
+		if (predicates.size() < 2) {
+			return (Predicate2<T1, T2, X>) TypeUtils.get(CollectionUtils.any(predicates), Predicates.<T1, T2, X>none2());
+		} else {
+			return new Predicate2<T1, T2, X>() {
+				public boolean evaluate(final T1 value1, final T2 value2)
+				throws X {
+					for (final Predicate2<? super T1, ? super T2, ? extends X> predicate : predicates) {
+						if (predicate.evaluate(value1, value2)) {
+							return true;
+						}
+					}
+					return false;
+				}
+			};
+		}
 	}
 	
 	/**
