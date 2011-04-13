@@ -29,16 +29,74 @@
 		<resources refid="tools.ant.jars" />
 	</path>
 
+	<!-- JAF -->
+	<property name="tools.jaf" location="${tools}/jaf-1.1.1" />
+	<union id="tools.jaf.libs">
+		<union id="tools.jaf.deps" />
+		<fileset id="tools.jaf.jars" dir="${tools.jaf}">
+			<include name="activation.jar" />
+		</fileset>
+	</union>
+	<path id="tools.jaf.classpath">
+		<resources refid="tools.jaf.jars" />
+	</path>
+
+	<!-- JAXB -->
+	<property name="tools.jaxb" location="${tools}/jaxb-2.1.11" />
+	<union id="tools.jaxb.endorsed.libs">
+		<union id="tools.jaxb.endorsed.deps">
+			<resources refid="tools.jaf.libs" />
+			<resources refid="tools.sjsxp.endorsed.libs" />
+		</union>
+		<fileset id="tools.jaxb.endorsed.jars" dir="${tools.jaxb}">
+			<include name="jaxb-api.jar" />
+		</fileset>
+	</union>
+	<union id="tools.jaxb.libs">
+		<union id="tools.jaxb.deps">
+			<resources refid="tools.jaxp.libs" />
+		</union>
+		<fileset id="tools.jaxb.jars" dir="${tools.jaxb}">
+			<include name="jaxb-impl.jar" />
+			<include name="jaxb1-impl.jar" />
+		</fileset>
+	</union>
+	<path id="tools.jaxb.classpath">
+		<resources refid="tools.jaxb.endorsed.jars" />
+		<resources refid="tools.jaxb.jars" />
+	</path>
+
+	<!-- JAXP -->
+	<property name="tools.jaxp" location="${tools}/jaxp-1.4.2" />
+	<union id="tools.jaxp.endorsed.libs">
+		<union id="tools.jaxp.endorsed.deps" />
+		<fileset id="tools.jaxp.endorsed.jars" dir="${tools.jaxp}">
+			<include name="jaxp-api.jar" />
+		</fileset>
+	</union>
+	<union id="tools.jaxp.libs">
+		<union id="tools.jaxp.deps" />
+		<fileset id="tools.jaxp.jars" dir="${tools.jaxp}">
+			<include name="jaxp-ri.jar" />
+		</fileset>
+	</union>
+	<path id="tools.jaxp.classpath">
+		<resources refid="tools.jaxp.endorsed.jars" />
+		<resources refid="tools.jaxp.jars" />
+	</path>
+
 	<!-- SJSXP -->
 	<property name="tools.sjsxp" location="${tools}/sjsxp-1.0.1" />
-	<union id="tools.sjsxp.libs">
-		<union id="tools.sjsxp.deps" />
+	<union id="tools.sjsxp.endorsed.libs">
+		<union id="tools.sjsxp.endorsed.deps" />
 		<fileset id="tools.sjsxp.endorsed.jars" dir="${tools.sjsxp}">
 			<include name="jsr173_1.0_api.jar" />
 			<include name="sjsxp.jar" />
 		</fileset>
 	</union>
-	<union id="tools.sjsxp.endorsed.libs" />
+	<union id="tools.sjsxp.libs">
+		<union id="tools.sjsxp.deps" />
+	</union>
 	<path id="tools.sjsxp.classpath">
 		<resources refid="tools.sjsxp.endorsed.jars" />
 	</path>
