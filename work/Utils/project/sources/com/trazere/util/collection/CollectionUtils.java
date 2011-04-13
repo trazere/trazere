@@ -254,6 +254,26 @@ public class CollectionUtils {
 	}
 	
 	/**
+	 * Builds a map containing the given bindings.
+	 * <p>
+	 * This method instantiates a {@link HashMap}.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param bindings The bindings.
+	 * @return The built map.
+	 */
+	public static <K, V> Map<K, V> map(final Collection<? extends Tuple2<? extends K, ? extends V>> bindings) {
+		assert null != bindings;
+		
+		final Map<K, V> results = new HashMap<K, V>(bindings.size());
+		for (final Tuple2<? extends K, ? extends V> binding : bindings) {
+			results.put(binding.getFirst(), binding.getSecond());
+		}
+		return results;
+	}
+	
+	/**
 	 * Builds an iterator over no values.
 	 * 
 	 * @param <T> Type of the the values.
