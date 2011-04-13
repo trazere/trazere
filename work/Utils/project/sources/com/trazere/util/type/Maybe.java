@@ -17,6 +17,7 @@ package com.trazere.util.type;
 
 import com.trazere.util.function.Function1;
 import com.trazere.util.function.Functions;
+import com.trazere.util.function.Predicate1;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.LangUtils;
 import com.trazere.util.text.Describable;
@@ -109,6 +110,11 @@ implements Describable {
 		}
 		
 		@Override
+		public <X extends Exception> Maybe<T> filter(final Predicate1<? super T, X> predicate) {
+			return none();
+		}
+		
+		@Override
 		public <R, X extends Exception> Maybe<R> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, X> function) {
 			return none();
 		}
@@ -190,6 +196,14 @@ implements Describable {
 			assert null != function;
 			
 			return Maybe.<R>some(function.evaluate(_value));
+		}
+		
+		@Override
+		public <X extends Exception> Maybe<T> filter(final Predicate1<? super T, X> predicate)
+		throws X {
+			assert null != predicate;
+			
+			return predicate.evaluate(_value) ? this : Maybe.<T>none();
 		}
 		
 		@Override
@@ -401,11 +415,11 @@ implements Describable {
 	throws X;
 	
 	/**
-	 * Maps the value wrapped by the receiver instance.
+	 * Maps the value wrapped by the receiver instance using the given function.
 	 * 
 	 * @param <R> Type of the result value.
 	 * @param <X> Type of the exceptions.
-	 * @param function The mapping function.
+	 * @param function The function.
 	 * @return An instance containing the mapped value.
 	 * @throws X When the mapping fails.
 	 */
@@ -435,7 +449,39 @@ implements Describable {
 	}
 	
 	/**
-	 * Filters and maps the value wrapped by the receiver instance.
+	 * Filters the value wrapped by the receiver instance using the given predicate.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @param predicate The predicate.
+	 * @return An instance containing the filtered value.
+	 * @throws X When the filtering fails.
+	 */
+	public abstract <X extends Exception> Maybe<T> filter(final Predicate1<? super T, X> predicate)
+	throws X;
+	
+	/**
+	 * Builds a function which filters the values wrapped in the argument instances using the given predicate.
+	 * 
+	 * @param <T> Type of the argument values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate The predicate.
+	 * @return The built function.
+	 */
+	public static <T, X extends Exception> Function1<Maybe<? extends T>, Maybe<? extends T>, X> filterFunction(final Predicate1<? super T, ? extends X> predicate) {
+		assert null != predicate;
+		
+		return new Function1<Maybe<? extends T>, Maybe<? extends T>, X>() {
+			public Maybe<? extends T> evaluate(final Maybe<? extends T> value)
+			throws X {
+				assert null != value;
+				
+				return value.filter(predicate);
+			}
+		};
+	}
+	
+	/**
+	 * Maps and filters the value wrapped by the receiver instance.
 	 * 
 	 * @param <R> Type of the mapped value.
 	 * @param <X> Type of the exceptions.
@@ -447,7 +493,7 @@ implements Describable {
 	throws X;
 	
 	/**
-	 * Builds a function which filters and maps the values wrapped in the argument instances using the given function.
+	 * Builds a function which maps and filters the values wrapped in the argument instances using the given function.
 	 * 
 	 * @param <T> Type of the argument values.
 	 * @param <R> Type of the result values.
