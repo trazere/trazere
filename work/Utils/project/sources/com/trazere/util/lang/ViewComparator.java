@@ -85,7 +85,7 @@ implements Comparator<T> {
 	}
 	
 	public int compare(final T object1, final T object2) {
-		return LangUtils.compare(computeValue(object1), computeValue(object2), _comparator);
+		return LangUtils.compare(_comparator, computeValue(object1), computeValue(object2));
 	}
 	
 	/**

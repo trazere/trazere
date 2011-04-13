@@ -21,7 +21,7 @@ import java.util.Comparator;
  * The {@link NullComparator} class adds support for comparison of <code>null</code> values to other comparators.
  * 
  * @param <T> Type of the compared objets.
- * @see LangUtils#compare(Object, Object, Comparator)
+ * @see LangUtils#compare(Comparator, Object, Object)
  */
 public class NullComparator<T>
 implements Comparator<T> {
@@ -52,6 +52,6 @@ implements Comparator<T> {
 	}
 	
 	public int compare(final T object1, final T object2) {
-		return LangUtils.compare(object1, object2, _comparator);
+		return LangUtils.compare(_comparator, object1, object2);
 	}
 }
