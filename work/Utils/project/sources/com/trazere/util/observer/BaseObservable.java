@@ -163,7 +163,7 @@ implements Observable<T> {
 		return subscribe(observer, new LiveObserver(observer) {
 			@Override
 			protected boolean notify(final Observer<? super T> observer_, final T value) {
-				observer_.notify();
+				observer_.notify(value);
 				return true;
 			}
 		});
@@ -175,7 +175,7 @@ implements Observable<T> {
 		return subscribe(observer, new LiveObserver(observer) {
 			@Override
 			protected boolean notify(final Observer<? super T> observer_, final T value) {
-				observer_.notify();
+				observer_.notify(value);
 				return false;
 			}
 		});
