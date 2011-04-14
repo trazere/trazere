@@ -25,6 +25,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+// TODO: rename to BaseRecordSignatureBuilder ?
+
 /**
  * The {@link BaseSimpleRecordSignatureBuilder} abstract class provides a skeleton implementation of {@link RecordSignatureBuilder builders of record
  * signatures}.
