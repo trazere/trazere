@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+// TODO: rename to BaseRecordBuilder ?
+
 /**
  * The {@link BaseSimpleRecordBuilder} abstract class provides a skeleton implementation of {@link RecordBuilder builders of records}.
  * 
