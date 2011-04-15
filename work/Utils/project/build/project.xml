@@ -31,6 +31,7 @@
 	<union id="utils.libs">
 		<union id="utils.deps">
 			<resources refid="tools.ant.libs" />
+			<resources refid="tools.jaxb.libs" />
 			<resources refid="tools.sjsxp.libs" />
 			<resources refid="tools.slf4j.libs" />
 		</union>
