@@ -453,10 +453,10 @@ public class CollectionUtils {
 	 * @param index The index.
 	 * @return The first element.
 	 */
-	public static <T> Maybe<T> get(final List<T> list, final int index) {
+	public static <T> Maybe<T> get(final List<? extends T> list, final int index) {
 		assert null != list;
 		
-		return index >= list.size() ? Maybe.some(list.get(index)) : Maybe.<T>none();
+		return index < list.size() ? Maybe.<T>some(list.get(index)) : Maybe.<T>none();
 	}
 	
 	/**
@@ -466,7 +466,7 @@ public class CollectionUtils {
 	 * @param list The list.
 	 * @return The first element.
 	 */
-	public static <T> Maybe<T> first(final List<T> list) {
+	public static <T> Maybe<T> first(final List<? extends T> list) {
 		return get(list, 0);
 	}
 	
@@ -477,8 +477,9 @@ public class CollectionUtils {
 	 * @param list The list.
 	 * @return The last element.
 	 */
-	public static <T> Maybe<T> last(final List<T> list) {
-		return get(list, list.size() - 1);
+	public static <T> Maybe<T> last(final List<? extends T> list) {
+		final int size = list.size();
+		return size > 0 ? Maybe.<T>some(list.get(size - 1)) : Maybe.<T>none();
 	}
 	
 	/**
