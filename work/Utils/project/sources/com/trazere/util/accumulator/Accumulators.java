@@ -17,6 +17,8 @@ package com.trazere.util.accumulator;
 
 import com.trazere.util.function.Function2;
 import com.trazere.util.lang.LangUtils;
+import com.trazere.util.lang.MutableInt;
+import com.trazere.util.lang.MutableLong;
 import com.trazere.util.reference.MutableReference;
 import java.util.Collection;
 
@@ -144,6 +146,52 @@ public class Accumulators {
 			@Override
 			protected Boolean fold(final Boolean accumulator, final Boolean value) {
 				return LangUtils.get(accumulator, false) || LangUtils.get(value, false);
+			}
+		};
+	}
+	
+	/**
+	 * Builds an arithmetic accumulator corresponding to a sum.
+	 * 
+	 * @param initial The initial value.
+	 * @return The built accumulator.
+	 */
+	public static <X extends Exception> Accumulator<Integer, Integer, X> sum(final int initial) {
+		return new BaseAccumulator<Integer, Integer, X>() {
+			private final MutableInt _value = new MutableInt(initial);
+			
+			public Integer get() {
+				return _value.get();
+			}
+			
+			public void add(final Integer value)
+			throws X {
+				assert null != value;
+				
+				_value.add(value.intValue());
+			}
+		};
+	}
+	
+	/**
+	 * Builds an arithmetic accumulator corresponding to a sum.
+	 * 
+	 * @param initial The initial value.
+	 * @return The built accumulator.
+	 */
+	public static <X extends Exception> Accumulator<Long, Long, X> sum(final long initial) {
+		return new BaseAccumulator<Long, Long, X>() {
+			private final MutableLong _value = new MutableLong(initial);
+			
+			public Long get() {
+				return _value.get();
+			}
+			
+			public void add(final Long value)
+			throws X {
+				assert null != value;
+				
+				_value.add(value.longValue());
 			}
 		};
 	}
