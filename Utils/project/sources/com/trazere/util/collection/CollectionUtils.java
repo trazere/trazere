@@ -16,6 +16,7 @@
 package com.trazere.util.collection;
 
 import com.trazere.util.function.Function1;
+import com.trazere.util.lang.Counter;
 import com.trazere.util.lang.MutableObject;
 import com.trazere.util.lang.ThrowableFactory;
 import com.trazere.util.type.Maybe;
@@ -342,7 +343,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Drains the elements from the given iterator and populate the given collection with them.
+	 * Drains all elements from the given iterator and populates the given collection with them.
 	 * 
 	 * @param <T> Type of the elements.
 	 * @param <R> Type of the result collection.
@@ -356,6 +357,28 @@ public class CollectionUtils {
 		
 		while (values.hasNext()) {
 			results.add(values.next());
+		}
+		return results;
+	}
+	
+	/**
+	 * Drains n elements from the given iterator and populates the given collection with them.
+	 * 
+	 * @param <T> Type of the elements.
+	 * @param <R> Type of the result collection.
+	 * @param n The number of elements to drain.
+	 * @param values The iterator.
+	 * @param results The collection to populate with the elements.
+	 * @return The result collection.
+	 */
+	public static <T, R extends Collection<? super T>> R drain(final int n, final Iterator<T> values, final R results) {
+		assert null != values;
+		assert null != results;
+		
+		final Counter counter = new Counter();
+		while (values.hasNext() && counter.get() < n) {
+			results.add(values.next());
+			counter.inc();
 		}
 		return results;
 	}
@@ -1024,6 +1047,49 @@ public class CollectionUtils {
 			if (!keys.contains(key)) {
 				results.put(key, entry.getValue());
 			}
+		}
+		return results;
+	}
+	
+	/**
+	 * Flattens the values of the given collection of collections and populates the given collections with them.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <R> Type of the result collection.
+	 * @param collections The collection of collections.
+	 * @param results The collection to populate with the results.
+	 * @return The given result collection.
+	 */
+	public static <T, R extends Collection<? super T>> R flatten(final Collection<? extends Collection<? extends T>> collections, final R results) {
+		assert null != collections;
+		assert null != results;
+		
+		for (final Collection<? extends T> collection : collections) {
+			results.addAll(collection);
+		}
+		return results;
+	}
+	
+	/**
+	 * Groups the given values by batches of the given size and populates the given collections with the batches.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <C> Type of the batch collections.
+	 * @param <R> Type of the result collection.
+	 * @param factory The collection factory of the batches.
+	 * @param size The maximum size of each batch.
+	 * @param values The values.
+	 * @param results The collection to populates with the results.
+	 * @return The given result collection.
+	 */
+	public static <T, C extends Collection<? super T>, R extends Collection<? super C>> R group(final CollectionFactory<T, C> factory, final int size, final Collection<T> values, final R results) {
+		assert null != factory;
+		assert null != values;
+		assert null != results;
+		
+		final Iterator<T> valuesIt = values.iterator();
+		while (valuesIt.hasNext()) {
+			results.add(drain(size, valuesIt, factory.build(size)));
 		}
 		return results;
 	}
