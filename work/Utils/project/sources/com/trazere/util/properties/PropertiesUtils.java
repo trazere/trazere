@@ -17,6 +17,7 @@ package com.trazere.util.properties;
 
 import com.trazere.util.function.Function0;
 import com.trazere.util.function.Function1;
+import com.trazere.util.function.Functions;
 import com.trazere.util.io.Input;
 import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Tuple2;
@@ -295,16 +296,31 @@ public class PropertiesUtils {
 	};
 	
 	/**
-	 * Gets the value of the property with the given name from the given properties. The given default value is returned when the property does not exist.
+	 * Gets the value of the property with the given name from the given properties. The given default value is returned when the property does not exist. x
 	 * 
 	 * @param properties The properties to read.
 	 * @param name The name of the property.
 	 * @param defaultValue The default value.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the default value cannot be evaluated.
 	 */
-	public static String getStringProperty(final Properties properties, final String name, final Function0<String, ? extends PropertiesException> defaultValue)
-	throws PropertiesException {
+	public static String getStringProperty(final Properties properties, final String name, final String defaultValue) {
+		assert null != defaultValue;
+		
+		return getStringProperty(properties, name, Functions.<String, RuntimeException>constant0(defaultValue));
+	}
+	
+	/**
+	 * Gets the value of the property with the given name from the given properties. The given default value is returned when the property does not exist. x
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @param properties The properties to read.
+	 * @param name The name of the property.
+	 * @param defaultValue The default value.
+	 * @return The value of the property.
+	 * @throws X When the default value cannot be evaluated.
+	 */
+	public static <X extends Exception> String getStringProperty(final Properties properties, final String name, final Function0<String, X> defaultValue)
+	throws X {
 		assert null != defaultValue;
 		
 		final Maybe<String> value = getStringProperty(properties, name);
@@ -319,10 +335,24 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @param defaultValue The default value.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the default value cannot be evaluated.
 	 */
-	public static boolean getBooleanProperty(final Properties properties, final String name, final Function0<Boolean, ? extends PropertiesException> defaultValue)
-	throws PropertiesException {
+	public static boolean getBooleanProperty(final Properties properties, final String name, final boolean defaultValue) {
+		return getBooleanProperty(properties, name, Functions.<Boolean, RuntimeException>constant0(defaultValue));
+	}
+	
+	/**
+	 * Gets the value of the boolean property with the given name from the given properties. The given default value is returned when the property does not
+	 * exist.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @param properties The properties to read.
+	 * @param name The name of the property.
+	 * @param defaultValue The default value.
+	 * @return The value of the property.
+	 * @throws X When the default value cannot be evaluated.
+	 */
+	public static <X extends Exception> boolean getBooleanProperty(final Properties properties, final String name, final Function0<Boolean, X> defaultValue)
+	throws X {
 		assert null != defaultValue;
 		
 		final Maybe<Boolean> value = getBooleanProperty(properties, name);
@@ -338,10 +368,26 @@ public class PropertiesUtils {
 	 * @param defaultValue The default value.
 	 * @return The value of the property.
 	 * @throws PropertiesException When the value of the property is invalid.
-	 * @throws PropertiesException When the default value cannot be evaluated.
 	 */
-	public static int getIntegerProperty(final Properties properties, final String name, final Function0<Integer, ? extends PropertiesException> defaultValue)
+	public static int getIntegerProperty(final Properties properties, final String name, final int defaultValue)
 	throws PropertiesException {
+		return getIntegerProperty(properties, name, Functions.<Integer, RuntimeException>constant0(defaultValue));
+	}
+	
+	/**
+	 * Gets the value of the integer property with the given name from the given properties. The given default value is returned when the property does not
+	 * exist.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @param properties The properties to read.
+	 * @param name The name of the property.
+	 * @param defaultValue The default value.
+	 * @return The value of the property.
+	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws X When the default value cannot be evaluated.
+	 */
+	public static <X extends Exception> int getIntegerProperty(final Properties properties, final String name, final Function0<Integer, X> defaultValue)
+	throws PropertiesException, X {
 		assert null != defaultValue;
 		
 		final Maybe<Integer> value = getIntegerProperty(properties, name);
@@ -356,10 +402,25 @@ public class PropertiesUtils {
 	 * @param defaultValue The default value.
 	 * @return The value of the property.
 	 * @throws PropertiesException When the value of the property is invalid.
-	 * @throws PropertiesException When the default value cannot be evaluated.
 	 */
-	public static long getLongProperty(final Properties properties, final String name, final Function0<Long, ? extends PropertiesException> defaultValue)
+	public static long getLongProperty(final Properties properties, final String name, final long defaultValue)
 	throws PropertiesException {
+		return getLongProperty(properties, name, Functions.<Long, RuntimeException>constant0(defaultValue));
+	}
+	
+	/**
+	 * Gets the value of the long property with the given name from the given properties. The given default value is returned when the property does not exist.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @param properties The properties to read.
+	 * @param name The name of the property.
+	 * @param defaultValue The default value.
+	 * @return The value of the property.
+	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws X When the default value cannot be evaluated.
+	 */
+	public static <X extends Exception> long getLongProperty(final Properties properties, final String name, final Function0<Long, X> defaultValue)
+	throws PropertiesException, X {
 		assert null != defaultValue;
 		
 		final Maybe<Long> value = getLongProperty(properties, name);
@@ -374,10 +435,25 @@ public class PropertiesUtils {
 	 * @param defaultValue The default value.
 	 * @return The value of the property.
 	 * @throws PropertiesException When the value of the property is invalid.
-	 * @throws PropertiesException When the default value cannot be evaluated.
 	 */
-	public static float getFloatProperty(final Properties properties, final String name, final Function0<Float, ? extends PropertiesException> defaultValue)
+	public static float getFloatProperty(final Properties properties, final String name, final float defaultValue)
 	throws PropertiesException {
+		return getFloatProperty(properties, name, Functions.<Float, RuntimeException>constant0(defaultValue));
+	}
+	
+	/**
+	 * Gets the value of the float property with the given name from the given properties. The given default value is returned when the property does not exist.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @param properties The properties to read.
+	 * @param name The name of the property.
+	 * @param defaultValue The default value.
+	 * @return The value of the property.
+	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws X When the default value cannot be evaluated.
+	 */
+	public static <X extends Exception> float getFloatProperty(final Properties properties, final String name, final Function0<Float, X> defaultValue)
+	throws PropertiesException, X {
 		assert null != defaultValue;
 		
 		final Maybe<Float> value = getFloatProperty(properties, name);
@@ -393,10 +469,26 @@ public class PropertiesUtils {
 	 * @param defaultValue The default value.
 	 * @return The value of the property.
 	 * @throws PropertiesException When the value of the property is invalid.
-	 * @throws PropertiesException When the default value cannot be evaluated.
 	 */
-	public static double getDoubleProperty(final Properties properties, final String name, final Function0<Double, ? extends PropertiesException> defaultValue)
+	public static double getDoubleProperty(final Properties properties, final String name, final double defaultValue)
 	throws PropertiesException {
+		return getDoubleProperty(properties, name, Functions.<Double, RuntimeException>constant0(defaultValue));
+	}
+	
+	/**
+	 * Gets the value of the double property with the given name from the given properties. The given default value is returned when the property does not
+	 * exist.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @param properties The properties to read.
+	 * @param name The name of the property.
+	 * @param defaultValue The default value.
+	 * @return The value of the property.
+	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws X When the default value cannot be evaluated.
+	 */
+	public static <X extends Exception> double getDoubleProperty(final Properties properties, final String name, final Function0<Double, X> defaultValue)
+	throws PropertiesException, X {
 		assert null != defaultValue;
 		
 		final Maybe<Double> value = getDoubleProperty(properties, name);
@@ -410,10 +502,25 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @param defaultValue The default value.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the default value cannot be evaluated.
 	 */
-	public static File getFileProperty(final Properties properties, final String name, final Function0<File, ? extends PropertiesException> defaultValue)
-	throws PropertiesException {
+	public static File getFileProperty(final Properties properties, final String name, final File defaultValue) {
+		assert null != defaultValue;
+		
+		return getFileProperty(properties, name, Functions.<File, RuntimeException>constant0(defaultValue));
+	}
+	
+	/**
+	 * Gets the value of the file property with the given name from the given properties. The given default value is returned when the property does not exist.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @param properties The properties to read.
+	 * @param name The name of the property.
+	 * @param defaultValue The default value.
+	 * @return The value of the property.
+	 * @throws X When the default value cannot be evaluated.
+	 */
+	public static <X extends Exception> File getFileProperty(final Properties properties, final String name, final Function0<File, X> defaultValue)
+	throws X {
 		assert null != defaultValue;
 		
 		final Maybe<File> value = getFileProperty(properties, name);
