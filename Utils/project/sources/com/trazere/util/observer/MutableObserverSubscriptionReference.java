@@ -15,15 +15,17 @@
  */
 package com.trazere.util.observer;
 
-import com.trazere.util.reference.Reference;
-import com.trazere.util.type.Maybe;
+import com.trazere.util.reference.MutableReference;
 
 /**
- * The {@link ObservableReference} interface defines references whose value can be observed.
- * 
- * @param <T> Type of the referenced value.
+ * The {@link MutableObserverSubscriptionReference} class represents mutable references of {@link ObserverSubscription observer subscriptions}.
+ * <p>
+ * The subscriptions are automatically cancelled when the reference is modified.
  */
-public interface ObservableReference<T>
-extends Reference<T>, ObservableValue<Maybe<T>> {
-	// Nothing to do.
+public class MutableObserverSubscriptionReference
+extends MutableReference<ObserverSubscription> {
+	@Override
+	protected void dispose(final ObserverSubscription subscription) {
+		subscription.unsubscribe();
+	}
 }
