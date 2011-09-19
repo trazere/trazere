@@ -16,7 +16,9 @@
 package com.trazere.util.observer;
 
 import com.trazere.util.function.Predicate1;
+import com.trazere.util.lang.LangUtils;
 import com.trazere.util.lang.MutableObject;
+import com.trazere.util.type.Tuple2;
 
 /**
  * The {@link ObservableMutableObject} class represents mutable object values whose changes can be observed.
@@ -25,7 +27,7 @@ import com.trazere.util.lang.MutableObject;
  */
 public class ObservableMutableObject<T>
 extends MutableObject<T>
-implements Observable<T> {
+implements ObservableValue<T> {
 	/**
 	 * Instantiates a new observable object with the given initial value.
 	 * 
@@ -35,9 +37,29 @@ implements Observable<T> {
 		super(value);
 	}
 	
+	// Value.
+	
+	@Override
+	public <V extends T> V set(final V value) {
+		// Update.
+		final T currentValue = _value;
+		final V result = super.set(value);
+		
+		// Notify.
+		if (!LangUtils.equals(currentValue, value)) {
+			_observable.notify(_value);
+		}
+		
+		return result;
+	}
+	
 	// Observer.
 	
-	protected final SimpleObservable<T> _observable = new SimpleObservable<T>();
+	protected final SimpleObservable<T> _observable = buildObservable();
+	
+	protected SimpleObservable<T> buildObservable() {
+		return new SimpleObservable<T>();
+	}
 	
 	public ObserverSubscription subscribe(final Observer<? super T> observer) {
 		return _observable.subscribe(observer);
@@ -49,5 +71,25 @@ implements Observable<T> {
 	
 	public ObserverSubscription subscribeWhile(final Observer<? super T> observer, final Predicate1<? super T, RuntimeException> condition) {
 		return _observable.subscribeWhile(observer, condition);
+	}
+	
+	public ObserverSubscription subscribeAndNotify(final Observer<? super T> observer) {
+		assert null != observer;
+		
+		final ObserverSubscription subscription = subscribe(observer);
+		observer.notify(get());
+		return subscription;
+	}
+	
+	public Tuple2<T, ObserverSubscription> subscribeToValue(final Observer<? super T> observer) {
+		return Tuple2.build(get(), subscribe(observer));
+	}
+	
+	public Tuple2<T, ObserverSubscription> subscribeOnceToValue(final Observer<? super T> observer) {
+		return Tuple2.build(get(), subscribeOnce(observer));
+	}
+	
+	public Tuple2<T, ObserverSubscription> subscribeWhileToValue(final Observer<? super T> observer, final Predicate1<? super T, RuntimeException> condition) {
+		return Tuple2.build(get(), subscribeWhile(observer, condition));
 	}
 }

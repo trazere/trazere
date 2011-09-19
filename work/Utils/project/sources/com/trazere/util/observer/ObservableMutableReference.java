@@ -20,6 +20,7 @@ import com.trazere.util.lang.LangUtils;
 import com.trazere.util.reference.MutableReference;
 import com.trazere.util.reference.ReferenceAlreadySetException;
 import com.trazere.util.type.Maybe;
+import com.trazere.util.type.Tuple2;
 
 /**
  * The {@link MutableReference} class represents mutable, observable refererences.
@@ -96,7 +97,11 @@ implements ObservableReference<T> {
 	
 	// Observer.
 	
-	protected final SimpleObservable<Maybe<T>> _observable = new SimpleObservable<Maybe<T>>();
+	protected final SimpleObservable<Maybe<T>> _observable = buildObservable();
+	
+	protected SimpleObservable<Maybe<T>> buildObservable() {
+		return new SimpleObservable<Maybe<T>>();
+	}
 	
 	public ObserverSubscription subscribe(final Observer<? super Maybe<T>> observer) {
 		return _observable.subscribe(observer);
@@ -108,5 +113,25 @@ implements ObservableReference<T> {
 	
 	public ObserverSubscription subscribeWhile(final Observer<? super Maybe<T>> observer, final Predicate1<? super Maybe<T>, RuntimeException> condition) {
 		return _observable.subscribeWhile(observer, condition);
+	}
+	
+	public ObserverSubscription subscribeAndNotify(final Observer<? super Maybe<T>> observer) {
+		assert null != observer;
+		
+		final ObserverSubscription subscription = subscribe(observer);
+		observer.notify(asMaybe());
+		return subscription;
+	}
+	
+	public Tuple2<Maybe<T>, ObserverSubscription> subscribeToValue(final Observer<? super Maybe<T>> observer) {
+		return Tuple2.build(asMaybe(), subscribe(observer));
+	}
+	
+	public Tuple2<Maybe<T>, ObserverSubscription> subscribeOnceToValue(final Observer<? super Maybe<T>> observer) {
+		return Tuple2.build(asMaybe(), subscribeOnce(observer));
+	}
+	
+	public Tuple2<Maybe<T>, ObserverSubscription> subscribeWhileToValue(final Observer<? super Maybe<T>> observer, final Predicate1<? super Maybe<T>, RuntimeException> condition) {
+		return Tuple2.build(asMaybe(), subscribeWhile(observer, condition));
 	}
 }
