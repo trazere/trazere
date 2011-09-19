@@ -19,12 +19,16 @@ import com.trazere.parser.Parser;
 import com.trazere.parser.ParserException;
 import com.trazere.parser.core.CoreParsers;
 import com.trazere.parser.core.Sequence3Parser;
+import com.trazere.util.function.Function1;
 import com.trazere.util.function.Function2;
+import com.trazere.util.function.FunctionUtils;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.LangUtils;
 import com.trazere.util.text.CharPredicate;
 import com.trazere.util.text.CharPredicates;
 import com.trazere.util.type.Tuple2;
+import java.util.ArrayList;
+import java.util.EnumSet;
 
 /**
  * DOCME
@@ -210,6 +214,19 @@ public class TextParsers {
 	}
 	
 	private static final Parser<Character, String> _WORD = word("a word");
+	
+	public static final <E extends Enum<E>, X extends Exception> Parser<Character, E> enumeration(final Class<E> type, final Function1<E, String, X> renderer, final String description)
+	throws X {
+		assert null != type;
+		assert null != renderer;
+		
+		return CoreParsers.choice(FunctionUtils.map(new Function1<E, Parser<Character, E>, X>() {
+			public Parser<Character, E> evaluate(final E value)
+			throws X {
+				return CoreParsers.lift(string(renderer.evaluate(value)), value, description);
+			}
+		}, EnumSet.allOf(type), new ArrayList<Parser<Character, E>>()), description);
+	}
 	
 	private TextParsers() {
 		// Prevents instantiation.
