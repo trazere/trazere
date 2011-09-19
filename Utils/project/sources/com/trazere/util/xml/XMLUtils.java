@@ -15,6 +15,7 @@
  */
 package com.trazere.util.xml;
 
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -121,6 +122,10 @@ public class XMLUtils {
 		chars.put("quot", '"');
 		_CHARACTERS = chars;
 	}
+	
+	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'Z");
+	public static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+	public static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm:ss.SSSZ");
 	
 	private XMLUtils() {
 		// Prevents instantiation.
