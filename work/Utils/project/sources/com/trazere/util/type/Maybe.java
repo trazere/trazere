@@ -15,6 +15,7 @@
  */
 package com.trazere.util.type;
 
+import com.trazere.util.collection.CollectionUtils;
 import com.trazere.util.function.Function1;
 import com.trazere.util.function.Functions;
 import com.trazere.util.function.Predicate1;
@@ -23,6 +24,7 @@ import com.trazere.util.lang.LangUtils;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
+import java.util.Iterator;
 
 /**
  * The {@link Maybe} class represents an algebraic data type which wraps an optional value.
@@ -35,7 +37,7 @@ import com.trazere.util.text.TextUtils;
  * @param <T> Type of the value.
  */
 public abstract class Maybe<T>
-implements Describable {
+implements Iterable<T>, Describable {
 	/**
 	 * The {@link Constructor} enumeration represents the constructors of the algebraic data type.
 	 */
@@ -117,6 +119,10 @@ implements Describable {
 		@Override
 		public <R, X extends Exception> Maybe<R> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, X> function) {
 			return none();
+		}
+		
+		public Iterator<T> iterator() {
+			return CollectionUtils.iterator();
 		}
 		
 		@Override
@@ -210,6 +216,11 @@ implements Describable {
 		public <R, X extends Exception> Maybe<R> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, X> function)
 		throws X {
 			return function.evaluate(_value).map(Functions.<R, RuntimeException>identity());
+		}
+		
+		@SuppressWarnings("unchecked")
+		public Iterator<T> iterator() {
+			return CollectionUtils.iterator(_value);
 		}
 		
 		@Override
