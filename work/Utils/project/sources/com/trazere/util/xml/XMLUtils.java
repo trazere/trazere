@@ -123,7 +123,7 @@ public class XMLUtils {
 		_CHARACTERS = chars;
 	}
 	
-	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'Z");
+	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-ddZ");
 	public static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 	public static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm:ss.SSSZ");
 	
