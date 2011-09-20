@@ -153,6 +153,7 @@ public class Accumulators {
 	/**
 	 * Builds an arithmetic accumulator corresponding to a sum.
 	 * 
+	 * @param <X> Type of the exceptions.
 	 * @param initial The initial value.
 	 * @return The built accumulator.
 	 */
@@ -176,6 +177,7 @@ public class Accumulators {
 	/**
 	 * Builds an arithmetic accumulator corresponding to a sum.
 	 * 
+	 * @param <X> Type of the exceptions.
 	 * @param initial The initial value.
 	 * @return The built accumulator.
 	 */

@@ -20,7 +20,7 @@ package com.trazere.util.closure;
  */
 public class ClosureUtils {
 	/**
-	 * Evaluates the given closure while synchronizing it.
+	 * Evaluates the given closure in a thread safe way.
 	 * 
 	 * @param <T> Type of the value.
 	 * @param <X> Type of the exceptions.
@@ -34,6 +34,19 @@ public class ClosureUtils {
 		
 		synchronized (closure) {
 			return closure.evaluate();
+		}
+	}
+	
+	/**
+	 * Resets the given closure in a thread safe way.
+	 * 
+	 * @param closure The closure.
+	 */
+	public static void synchronizedReset(final ResetableClosure<?, ?> closure) {
+		assert null != closure;
+		
+		synchronized (closure) {
+			closure.reset();
 		}
 	}
 	
