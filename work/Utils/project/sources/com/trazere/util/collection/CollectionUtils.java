@@ -544,13 +544,13 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Gets the value identified by the given key in the given map.
+	 * Gets the value associated to the given key in the given map.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param map The map.
 	 * @param key The key. May be <code>null</code>.
-	 * @return The value identified by the key.
+	 * @return The associated value.
 	 */
 	public static <K, V> Maybe<V> get(final Map<? super K, ? extends V> map, final K key) {
 		assert null != map;
@@ -559,14 +559,14 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Gets the value identified by the given key in the given map.
+	 * Gets the value associated to the given key in the given map.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param map The map.
 	 * @param key The key. May be <code>null</code>.
 	 * @param defaultValue The default value. May be <code>null</code>.
-	 * @return The value identified by the key if any, or the default value.
+	 * @return The associated value if any, or the default value. May be <code>null</code>.
 	 */
 	public static <K, V> V get(final Map<? super K, ? extends V> map, final K key, final V defaultValue) {
 		assert null != map;
@@ -575,7 +575,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Gets the value identified by the given key in the given map.
+	 * Gets the value associated to the given key in the given map.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -583,13 +583,12 @@ public class CollectionUtils {
 	 * @param map The map.
 	 * @param key The key. May be <code>null</code>.
 	 * @param throwableFactory The throwable factory.
-	 * @return The value identified by the key if any, or the default value.
+	 * @return The associated value. May be <code>null</code>.
 	 * @throws X When no values is identified by the given key in the map.
 	 */
 	public static <K, V, X extends Exception> V get(final Map<? super K, ? extends V> map, final K key, final ThrowableFactory<X> throwableFactory)
 	throws X {
 		assert null != map;
-		assert null != key;
 		assert null != throwableFactory;
 		
 		if (map.containsKey(key)) {
@@ -600,7 +599,25 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Adds the given binding to the given map.
+	 * Associates the given value to the given key in the given map.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param map The map.
+	 * @param key The key. May be <code>null</code>.
+	 * @param value The value. May be <code>null</code>.
+	 * @return The presiously associated value.
+	 */
+	public static <K, V> Maybe<V> put(final Map<? super K, V> map, final K key, final V value) {
+		assert null != map;
+		
+		final Maybe<V> currentValue = get(map, key);
+		map.put(key, value);
+		return currentValue;
+	}
+	
+	/**
+	 * Associates the given value to the given key in the given map.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -608,12 +625,32 @@ public class CollectionUtils {
 	 * @param key The key. May be <code>null</code>.
 	 * @param value The value.
 	 */
-	public static <K, V> void put(final Map<? super K, ? super V> map, final K key, final Maybe<? extends V> value) {
+	public static <K, V> void put(final Map<? super K, V> map, final K key, final Maybe<? extends V> value) {
 		assert null != map;
 		assert null != value;
 		
 		if (value.isSome()) {
 			map.put(key, value.asSome().getValue());
+		}
+	}
+	
+	/**
+	 * Removes the value associated to the given key from the given map.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param map The map.
+	 * @param key The key. May be <code>null</code>.
+	 * @return
+	 */
+	public static <K, V> Maybe<V> remove(final Map<? super K, ? extends V> map, final K key) {
+		assert null != map;
+		assert null != key;
+		
+		if (map.containsKey(key)) {
+			return Maybe.<V>some(map.remove(key));
+		} else {
+			return Maybe.none();
 		}
 	}
 	
@@ -981,7 +1018,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Fills the given map with bindings of the given value identified by the given keys.
+	 * Fills the given map with the bindings corresponding to the given value associated to the given keys.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -1002,7 +1039,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Gets the bindings of the given map identified by the given keys and populates the given result map with them.
+	 * Gets the bindings of the given map associated to the given keys and populates the given result map with them.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -1027,7 +1064,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Gets the bindings of the given map not identified by the given keys and populates the given result map with them.
+	 * Gets the bindings of the given map not associated to the given keys and populates the given result map with them.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.

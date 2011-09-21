@@ -16,6 +16,7 @@
 package com.trazere.util.cache;
 
 import com.trazere.util.function.Predicate2;
+import com.trazere.util.type.Maybe;
 import java.util.Set;
 
 /**
@@ -28,73 +29,74 @@ import java.util.Set;
  */
 public interface Cache<K, V> {
 	/**
-	 * Fill the receiver cache with the given value associating it to the given key.
-	 * <p>
-	 * The possible previous associated value is discarded.
+	 * Tests whether a value is associated to the given key in the receiver cache.
 	 * 
-	 * @param key Key.
-	 * @param value Value. May be <code>null</code>.
-	 */
-	public void fill(final K key, final V value);
-	
-	/**
-	 * Test whether a value is associated to the given key in the receiver cache.
-	 * 
-	 * @param key Key to test.
+	 * @param key The key.
 	 * @return <code>true</code> when a value is associated to the key, <code>false</code> otherwise.
 	 */
 	public boolean contains(final K key);
 	
 	/**
-	 * Get the size of the receiver cache.
+	 * Gets the size of the receiver cache.
 	 * 
 	 * @return The number of entries.
 	 */
 	public int size();
 	
 	/**
-	 * Get all keys which values are associated to in the receiver cache.
+	 * Gets all keys which values are associated to in the receiver cache.
 	 * 
 	 * @return The keys.
 	 */
 	public Set<K> getKeys();
 	
 	/**
-	 * Get the value associated to the given key in the receiver cache.
+	 * Fills the receiver cache with the given value associating it to the given key.
+	 * <p>
+	 * The possible previous associated value is discarded.
+	 * 
+	 * @param key The key.
+	 * @param value The value. May be <code>null</code>.
+	 * @return The previously associated value.
+	 */
+	public Maybe<V> fill(final K key, final V value);
+	
+	/**
+	 * Gets the value associated to the given key in the receiver cache.
 	 * 
 	 * @param key Key.
-	 * @return The associated value, or <code>null</code> when no values is associated to the key.
+	 * @return The associated value.
 	 */
-	public V get(final K key);
+	public Maybe<V> get(final K key);
 	
 	/**
-	 * Clear the receiver cache from the possible value associated to the given key.
+	 * Clears the value associated to the given key in the receiver cache.
 	 * 
-	 * @param key Key to clear.
-	 * @return The clear value, or <code>null</code> when no values was associated to the key.
+	 * @param key The key.
+	 * @return The cleared value.
 	 */
-	public V clear(final K key);
+	public Maybe<V> clear(final K key);
 	
 	/**
-	 * Clear the receiver cache according to the given key/value pair filter.
+	 * Clears the values accepted by the given key/value filter in the receiver cache.
 	 * 
 	 * @param <X> Type of the exceptions.
-	 * @param filter Filter of the key/value associations to clear.
+	 * @param filter The filter.
 	 * @throws X When some filter evaluation fails.
 	 */
 	public <X extends Exception> void clear(final Predicate2<? super K, ? super V, X> filter)
 	throws X;
 	
 	/**
-	 * Clear the receiver cache from all values.
+	 * Clears the receiver cache.
 	 */
 	public void clear();
 	
 	/**
-	 * Clean the receiver cache up.
+	 * Cleans the receiver cache up.
 	 * <p>
-	 * This methods removes the unnecessary values from the cache according to its policy. This maintenance is automatically performed when the cache is
-	 * modified, but calling this method manually may still useful with various policies (those depending on time for instance).
+	 * This methods removes the unnecessary values from the cache according to its internal policy. This maintenance is automatically performed when the cache
+	 * is modified, but calling this method manually may still useful with various policies (those depending on time for instance).
 	 */
 	public void cleanup();
 }
