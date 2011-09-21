@@ -15,13 +15,17 @@
  */
 package com.trazere.util.cache;
 
+import com.trazere.util.collection.CollectionUtils;
+import com.trazere.util.function.FunctionUtils;
+import com.trazere.util.function.Predicate1;
 import com.trazere.util.function.Predicate2;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
+import com.trazere.util.type.Maybe;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -34,19 +38,8 @@ import java.util.Set;
  */
 public abstract class BaseCache<K, V, E extends CacheEntry<K, V>>
 implements Cache<K, V>, Describable {
-	/** Cache entries identified by key. */
+	/** Cache entries identified by their keys. */
 	protected final Map<K, E> _entries = new HashMap<K, E>();
-	
-	public void fill(final K key, final V value) {
-		assert null != key;
-		
-		// Add the entry.
-		final E entry = buildEntry(key, value);
-		final E currentEntry = _entries.put(entry.getKey(), entry);
-		
-		clearedEntry(currentEntry);
-		addedEntry(entry);
-	}
 	
 	public boolean contains(final K key) {
 		assert null != key;
@@ -63,75 +56,101 @@ implements Cache<K, V>, Describable {
 		return Collections.unmodifiableSet(_entries.keySet());
 	}
 	
-	public V get(final K key) {
+	public Maybe<V> fill(final K key, final V value) {
 		assert null != key;
 		
-		// Get.
-		final E entry = _entries.get(key);
-		return null != entry ? entry.getValue() : null;
+		// Fill the cache.
+		final E entry = buildEntry(key, value);
+		final Maybe<E> previousEntry = putEntry(entry);
+		
+		// Clean the cache up.
+		cleanup();
+		
+		return previousEntry.map(CacheEntry.<V, RuntimeException>getValueFunction());
 	}
 	
-	public V clear(final K key) {
-		assert null != key;
-		
-		// Clear.
-		final E entry = _entries.remove(key);
-		if (null != entry) {
-			clearedEntry(entry);
-			return entry.getValue();
-		} else {
-			return null;
-		}
+	/**
+	 * Builds a new cache entry with the given key and value.
+	 * 
+	 * @param key The key.
+	 * @param value The value. May be <code>null</code>.
+	 * @return The built cache entry.
+	 */
+	protected abstract E buildEntry(final K key, final V value);
+	
+	public Maybe<V> get(final K key) {
+		final Maybe<E> entry = getEntry(key);
+		return entry.map(CacheEntry.<V, RuntimeException>getValueFunction());
+	}
+	
+	public Maybe<V> clear(final K key) {
+		final Maybe<E> entry = removeEntry(key);
+		return entry.map(CacheEntry.<V, RuntimeException>getValueFunction());
 	}
 	
 	public <X extends Exception> void clear(final Predicate2<? super K, ? super V, X> filter)
 	throws X {
 		assert null != filter;
 		
-		// Filter.
-		final Iterator<Map.Entry<K, E>> entries = _entries.entrySet().iterator();
-		while (entries.hasNext()) {
-			final Map.Entry<K, E> entryEntry = entries.next();
-			final E entry = entryEntry.getValue();
-			if (filter.evaluate(entryEntry.getKey(), entry.getValue())) {
-				entries.remove();
-				clearedEntry(entry);
+		final Predicate1<E, X> filter_ = new Predicate1<E, X>() {
+			public boolean evaluate(final E entry)
+			throws X {
+				return filter.evaluate(entry.getKey(), entry.getValue());
 			}
+		};
+		for (final E entry : FunctionUtils.filter(filter_, _entries.values(), new HashSet<E>())) {
+			removeEntry(entry.getKey());
 		}
 	}
 	
 	public void clear() {
 		_entries.clear();
-		clearedCache();
+	}
+	
+	public void cleanup() {
+		// Nothing to do.
 	}
 	
 	/**
-	 * Build a new cache entry with the given key and value.
+	 * Gets the entry associated to the given key from the receiver cache.
+	 * <p>
+	 * This method can overridden to handle entry accesses.
 	 * 
-	 * @param key Key.
-	 * @param value Value. May be <code>null</code>.
-	 * @return The built cache entry.
+	 * @param key The key. May be <code>null</code>.
+	 * @return The entry.
 	 */
-	protected abstract E buildEntry(final K key, final V value);
+	protected Maybe<E> getEntry(final K key) {
+		return CollectionUtils.get(_entries, key);
+	}
 	
 	/**
-	 * Notify that the given entry was added to the receiver cache.
+	 * Fills the receiver cache with the given entry.
+	 * <p>
+	 * This method is called whenever an entry is added to the cache.
 	 * 
-	 * @param entry The entry which was added.
+	 * @param entry The entry.
+	 * @return The previously associated entry.
 	 */
-	protected abstract void addedEntry(final E entry);
+	protected Maybe<E> putEntry(final E entry) {
+		assert null != entry;
+		
+		return CollectionUtils.put(_entries, entry.getKey(), entry);
+	}
 	
 	/**
-	 * Notify that the given entry was removed from the receiver cache.
+	 * Clears the entry associated to the given key from the receiver cache.
+	 * <p>
+	 * This method is called whenever an entry is removed from the cache, unless the entry is replaced by a call to {@link #putEntry(CacheEntry)} or
+	 * {@link #clear()} is called.
 	 * 
-	 * @param entry The entry which was removed.
+	 * @param key The key. May be <code>null</code>.
+	 * @return The entry.
 	 */
-	protected abstract void clearedEntry(final E entry);
+	protected Maybe<E> removeEntry(final K key) {
+		return CollectionUtils.remove(_entries, key);
+	}
 	
-	/**
-	 * Notify that the all entries were removed from the receiver cache.
-	 */
-	protected abstract void clearedCache();
+	// Object.
 	
 	@Override
 	public final String toString() {

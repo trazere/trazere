@@ -15,6 +15,7 @@
  */
 package com.trazere.util.cache;
 
+import com.trazere.util.function.Function1;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
@@ -27,17 +28,11 @@ import com.trazere.util.text.TextUtils;
  */
 public class CacheEntry<K, V>
 implements Describable {
-	/** Key of the entry. */
-	protected final K _key;
-	
-	/** Value of the entry. May be <code>null</code>. */
-	protected final V _value;
-	
 	/**
-	 * Instantiate a new entry with the given key and value.
+	 * Instantiates a new entry.
 	 * 
-	 * @param key Key of the entry. May be <code>null</code>.
-	 * @param value Value of the entry. May be <code>null</code>.
+	 * @param key The key.
+	 * @param value The value. May be <code>null</code>.
 	 */
 	public CacheEntry(final K key, final V value) {
 		assert null != key;
@@ -47,8 +42,13 @@ implements Describable {
 		_value = value;
 	}
 	
+	// Key.
+	
+	/** Key of the entry. */
+	protected final K _key;
+	
 	/**
-	 * Get the key of the receiver entry.
+	 * Gets the key of the receiver entry.
 	 * 
 	 * @return The key.
 	 */
@@ -57,13 +57,60 @@ implements Describable {
 	}
 	
 	/**
-	 * Get the value of the entry.
+	 * Builds a function which gets the key of cache entries.
 	 * 
-	 * @return The value . May be <code>null</code>.
+	 * @param <K> Type of the key.
+	 * @param <X> Type of the exceptions.
+	 * @return The built function.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <K, X extends Exception> Function1<CacheEntry<? extends K, ?>, K, X> getKeyFunction() {
+		return (Function1<CacheEntry<? extends K, ?>, K, X>) _GET_KEY_FUNCTION;
+	}
+	
+	private static final Function1<? extends CacheEntry<?, ?>, ?, ?> _GET_KEY_FUNCTION = new Function1<CacheEntry<?, ?>, Object, RuntimeException>() {
+		public Object evaluate(final CacheEntry<?, ?> entry) {
+			assert null != entry;
+			
+			return entry.getKey();
+		}
+	};
+	
+	// Value.
+	
+	/** Value of the entry. May be <code>null</code>. */
+	protected final V _value;
+	
+	/**
+	 * Gets the value of the receiver entry.
+	 * 
+	 * @return The value. May be <code>null</code>.
 	 */
 	public V getValue() {
 		return _value;
 	}
+	
+	/**
+	 * Builds a function which gets the value of cache entries.
+	 * 
+	 * @param <V> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @return The built function.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <V, X extends Exception> Function1<CacheEntry<?, ? extends V>, V, X> getValueFunction() {
+		return (Function1<CacheEntry<?, ? extends V>, V, X>) _GET_VALUE_FUNCTION;
+	}
+	
+	private static final Function1<? extends CacheEntry<?, ?>, ?, ?> _GET_VALUE_FUNCTION = new Function1<CacheEntry<?, ?>, Object, RuntimeException>() {
+		public Object evaluate(final CacheEntry<?, ?> entry) {
+			assert null != entry;
+			
+			return entry.getValue();
+		}
+	};
+	
+	// Object.
 	
 	@Override
 	public final String toString() {
