@@ -27,23 +27,4 @@ extends BaseCache<K, V, CacheEntry<K, V>> {
 	protected CacheEntry<K, V> buildEntry(final K key, final V value) {
 		return new CacheEntry<K, V>(key, value);
 	}
-	
-	@Override
-	protected void addedEntry(final CacheEntry<K, V> entry) {
-		// Nothing to do.
-	}
-	
-	@Override
-	protected void clearedEntry(final CacheEntry<K, V> entry) {
-		// Nothing to do.
-	}
-	
-	@Override
-	protected void clearedCache() {
-		// Nothing to do.
-	}
-	
-	public void cleanup() {
-		// Nothing to do.
-	}
 }

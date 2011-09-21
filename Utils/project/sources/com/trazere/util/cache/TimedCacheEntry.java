@@ -25,25 +25,22 @@ import com.trazere.util.text.Description;
  */
 public class TimedCacheEntry<K, V>
 extends CacheEntry<K, V> {
-	/** Creation date of the entry. */
-	protected final long _date;
-	
 	/**
-	 * Instantiate a new entry with the given key and value, and set its creation date to now.
+	 * Instantiates a new entry with the current creation date.
 	 * 
-	 * @param key Key of the entry.
-	 * @param value Value of the entry. May be <code>null</code>.
+	 * @param key The key.
+	 * @param value The value. May be <code>null</code>.
 	 */
-	protected TimedCacheEntry(final K key, final V value) {
+	public TimedCacheEntry(final K key, final V value) {
 		this(key, value, System.currentTimeMillis());
 	}
 	
 	/**
-	 * Instantiate a new entry with the given key, value and timestamp.
+	 * Instantiates a new entry.
 	 * 
-	 * @param key Key of the entry.
-	 * @param value Value of the entry. May be <code>null</code>.
-	 * @param date Creation date of the entry.
+	 * @param key The key.
+	 * @param value The value. May be <code>null</code>.
+	 * @param date The creation date.
 	 */
 	protected TimedCacheEntry(final K key, final V value, final long date) {
 		super(key, value);
@@ -52,8 +49,13 @@ extends CacheEntry<K, V> {
 		_date = date;
 	}
 	
+	// Date.
+	
+	/** Creation date of the entry. */
+	protected final long _date;
+	
 	/**
-	 * Get the creation date of the receiver entry.
+	 * Gets the creation date of the receiver entry.
 	 * 
 	 * @return The creation date in milliseconds.
 	 * @see System#currentTimeMillis()
@@ -61,6 +63,8 @@ extends CacheEntry<K, V> {
 	public long getDate() {
 		return _date;
 	}
+	
+	// Object.
 	
 	@Override
 	public void fillDescription(final Description description) {
