@@ -13,12 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.function;
-
-import com.trazere.util.record.IncompatibleFieldException;
-import com.trazere.util.record.RecordException;
-import com.trazere.util.record.RecordSignature;
-import com.trazere.util.record.RecordSignatureBuilder;
+package com.trazere.util.record;
 
 /**
  * The {@link Parametrable} interface defines elements which put requirements over some record of parameters.
