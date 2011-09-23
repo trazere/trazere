@@ -52,7 +52,7 @@ public class TextUtils {
 	}
 	
 	/**
-	 * Tests whether the given string contains some character accepted by the given filter.
+	 * Tests whether the given string contains some characters accepted by the given filter.
 	 * 
 	 * @param <X> Type of the exceptions.
 	 * @param filter The filter.
@@ -71,6 +71,28 @@ public class TextUtils {
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * Tests whether the all characters of the string contains matches the given filter.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @param filter The filter.
+	 * @param s The string.
+	 * @return <code>true</code> when the string contains some character accepted by the filter.
+	 * @throws X When some filter evaluation fails.
+	 */
+	public static <X extends Exception> boolean matches(final CharPredicate<X> filter, final String s)
+	throws X {
+		assert null != filter;
+		assert null != s;
+		
+		for (int index = 0; index < s.length(); index += 1) {
+			if (!filter.evaluate(s.charAt(index))) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	/**
