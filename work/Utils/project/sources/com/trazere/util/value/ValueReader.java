@@ -15,7 +15,7 @@
  */
 package com.trazere.util.value;
 
-import com.trazere.util.function.ParameterFunction;
+import com.trazere.util.record.ParameterFunction;
 import com.trazere.util.record.Record;
 
 /**

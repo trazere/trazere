@@ -15,6 +15,7 @@
  */
 package com.trazere.util.record;
 
+import com.trazere.util.function.Function1;
 import com.trazere.util.function.Predicate1;
 import com.trazere.util.function.Predicates;
 import com.trazere.util.lang.MultipleComparator;
@@ -418,6 +419,59 @@ public class RecordUtils {
 			return Maybe.<FieldSignature<K, ? extends V>>some(signature.get(key));
 		} else {
 			return Maybe.none();
+		}
+	}
+	
+	/**
+	 * Unifies the requirements of the given parametrable accepted by the given filter into the given record signature builder.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <X> Type of the filter exceptions.
+	 * @param parametrable The parametrable.
+	 * @param filter The filter.
+	 * @param builder The record signature builder.
+	 * @throws RecordException When the unification of some requirement fails.
+	 * @throws X When some filter evaluation fails.
+	 */
+	public static <K, V, X extends Exception> void unifyRequirements(final Parametrable<K, V> parametrable, final Predicate1<? super K, X> filter, final RecordSignatureBuilder<K, V, ?> builder)
+	throws RecordException, X {
+		assert null != parametrable;
+		assert null != filter;
+		assert null != builder;
+		
+		final RecordSignature<K, V> requirements = parametrable.getRequirements();
+		for (final FieldSignature<K, ? extends V> requirement : requirements.asMap().values()) {
+			if (filter.evaluate(requirement.getKey())) {
+				builder.unify(requirement);
+			}
+		}
+	}
+	
+	/**
+	 * Extracs the requirements of the given parametrable using the given extractor and unifies them into the given record signature builder.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <X> Type of the filter exceptions.
+	 * @param parametrable The parametrable.
+	 * @param extractor The extractor.
+	 * @param builder The record signature builder.
+	 * @throws RecordException When the unification of some requirement fails.
+	 * @throws X When some extractor evaluation fails.
+	 */
+	public static <K, V, X extends Exception> void unifyRequirements(final Parametrable<K, V> parametrable, final Function1<? super FieldSignature<K, ? extends V>, ? extends Maybe<? extends FieldSignature<K, ? extends V>>, X> extractor, final RecordSignatureBuilder<K, V, ?> builder)
+	throws RecordException, X {
+		assert null != parametrable;
+		assert null != extractor;
+		assert null != builder;
+		
+		final RecordSignature<K, V> requirements = parametrable.getRequirements();
+		for (final FieldSignature<K, ? extends V> requirement : requirements.asMap().values()) {
+			final Maybe<? extends FieldSignature<K, ? extends V>> extractedRequirement = extractor.evaluate(requirement);
+			if (extractedRequirement.isSome()) {
+				builder.unify(extractedRequirement.asSome().getValue());
+			}
 		}
 	}
 	

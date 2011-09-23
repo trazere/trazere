@@ -15,7 +15,7 @@
  */
 package com.trazere.util.value;
 
-import com.trazere.util.function.BaseParametrable;
+import com.trazere.util.record.BaseParametrable;
 import com.trazere.util.record.Record;
 import com.trazere.util.record.SimpleRecordBuilder;
 

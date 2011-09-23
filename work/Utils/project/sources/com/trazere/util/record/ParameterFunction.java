@@ -13,22 +13,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.function;
+package com.trazere.util.record;
 
-import com.trazere.util.record.RecordException;
-import com.trazere.util.record.RecordSignature;
-import com.trazere.util.record.SimpleRecordSignatureBuilder;
+import com.trazere.util.function.Function1;
 
 /**
- * The {@link BaseParametrable} abstract class provides a skeleton implementation of {@link Parametrable parametrables}.
+ * The {@link Parametrable} interface defines functions which take a record of parameters as argument.
  * 
  * @param <K> Type of the keys of the parameters.
  * @param <V> Type of the values of the parameters.
+ * @param <T> Type of the result values.
+ * @param <X> Type of the exceptions.
  */
-public abstract class BaseParametrable<K, V>
-implements Parametrable<K, V> {
-	public RecordSignature<K, V> getRequirements()
-	throws RecordException {
-		return unifyRequirements(new SimpleRecordSignatureBuilder<K, V>()).build();
-	}
+public interface ParameterFunction<K, V, T, X extends Exception>
+extends Function1<Record<K, V>, T, X>, Parametrable<K, V> {
+	// Nothing to do.
 }
