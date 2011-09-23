@@ -15,7 +15,7 @@
  */
 package com.trazere.util.cache;
 
-import com.trazere.util.function.Predicate2;
+import com.trazere.util.function.Predicate1;
 import com.trazere.util.type.Maybe;
 import java.util.Set;
 
@@ -37,18 +37,18 @@ public interface Cache<K, V> {
 	public boolean contains(final K key);
 	
 	/**
-	 * Gets the size of the receiver cache.
-	 * 
-	 * @return The number of entries.
-	 */
-	public int size();
-	
-	/**
 	 * Gets all keys which values are associated to in the receiver cache.
 	 * 
 	 * @return The keys.
 	 */
 	public Set<K> getKeys();
+	
+	/**
+	 * Gets the size of the receiver cache.
+	 * 
+	 * @return The number of entries.
+	 */
+	public int size();
 	
 	/**
 	 * Fills the receiver cache with the given value associating it to the given key.
@@ -64,7 +64,7 @@ public interface Cache<K, V> {
 	/**
 	 * Gets the value associated to the given key in the receiver cache.
 	 * 
-	 * @param key Key.
+	 * @param key The key.
 	 * @return The associated value.
 	 */
 	public Maybe<V> get(final K key);
@@ -78,25 +78,17 @@ public interface Cache<K, V> {
 	public Maybe<V> clear(final K key);
 	
 	/**
-	 * Clears the values accepted by the given key/value filter in the receiver cache.
+	 * Clears the values accepted by the given key filter in the receiver cache.
 	 * 
 	 * @param <X> Type of the exceptions.
 	 * @param filter The filter.
 	 * @throws X When some filter evaluation fails.
 	 */
-	public <X extends Exception> void clear(final Predicate2<? super K, ? super V, X> filter)
+	public <X extends Exception> void clear(final Predicate1<? super K, X> filter)
 	throws X;
 	
 	/**
 	 * Clears the receiver cache.
 	 */
 	public void clear();
-	
-	/**
-	 * Cleans the receiver cache up.
-	 * <p>
-	 * This methods removes the unnecessary values from the cache according to its internal policy. This maintenance is automatically performed when the cache
-	 * is modified, but calling this method manually may still useful with various policies (those depending on time for instance).
-	 */
-	public void cleanup();
 }
