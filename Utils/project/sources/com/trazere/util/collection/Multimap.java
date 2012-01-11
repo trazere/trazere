@@ -36,7 +36,7 @@ import java.util.Set;
  */
 public interface Multimap<K, V, C extends Collection<V>> {
 	/**
-	 * Associate the given value to the given key in the receiver multimap.
+	 * Associates the given value to the given key in the receiver multimap.
 	 * <p>
 	 * The previous associations to the key are preserved.
 	 * 
@@ -47,7 +47,7 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	public boolean put(final K key, final V value);
 	
 	/**
-	 * Associate the given values to the given key in the receiver multimap.
+	 * Associates the given values to the given key in the receiver multimap.
 	 * <p>
 	 * The previous associations to the key are preserved.
 	 * 
@@ -58,7 +58,7 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	public boolean putAll(final K key, final Collection<? extends V> values);
 	
 	/**
-	 * Copy all the association of the given multimap into the receiver multimap.
+	 * Copies all the association of the given multimap into the receiver multimap.
 	 * 
 	 * @param multimap The multimap to copy.
 	 * @return <code>true</code> when the multimap has changed, <code>false</code> otherwise.
@@ -66,21 +66,28 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	public boolean putAll(final Multimap<? extends K, ? extends V, ?> multimap);
 	
 	/**
-	 * Indicate whether the receiver multimap is empty or not.
+	 * Indicates whether the receiver multimap is empty or not.
 	 * 
 	 * @return <code>true</code> if the multi is empty, <code>false</code> otherwise.
 	 */
 	public boolean isEmpty();
 	
 	/**
-	 * Get the keys associated to some values in the receiver multimap.
+	 * Gets the number of associations of the receiver multimap.
+	 * 
+	 * @return The size.
+	 */
+	public int size();
+	
+	/**
+	 * Gets the keys associated to some values in the receiver multimap.
 	 * 
 	 * @return The keys.
 	 */
 	public Set<K> keySet();
 	
 	/**
-	 * Test whether some values are associated to the given key in the receiver multimap.
+	 * Tests whether some values are associated to the given key in the receiver multimap.
 	 * 
 	 * @param key The key. May or may not be <code>null</code> according the implementation.
 	 * @return <code>true</code> when some values are associated to the key, <code>false</code> otherwise.
@@ -88,7 +95,7 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	public boolean containsKey(final K key);
 	
 	/**
-	 * Test whether the given value is associated to the given key in the receiver multimap.
+	 * Tests whether the given value is associated to the given key in the receiver multimap.
 	 * 
 	 * @param key The key. May or may not be <code>null</code> according the implementation.
 	 * @param value The value. May or may not be <code>null</code> according the implementation.
@@ -97,7 +104,7 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	public boolean containsValue(final K key, final V value);
 	
 	/**
-	 * Get the values associated to the given key in the receiver multimap.
+	 * Gets the values associated to the given key in the receiver multimap.
 	 * 
 	 * @param key The key. May or may not be <code>null</code> according the implementation.
 	 * @return The associated values.
@@ -105,12 +112,12 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	public C get(final K key);
 	
 	/**
-	 * Clear the receiver multimap.
+	 * Clears the receiver multimap.
 	 */
 	public void clear();
 	
 	/**
-	 * Remove all values associated to the given key in the receiver multimap.
+	 * Removes all values associated to the given key in the receiver multimap.
 	 * 
 	 * @param key The key. May or may not be <code>null</code> according the implementation.
 	 * @return The removed values.
@@ -118,7 +125,7 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	public C remove(final K key);
 	
 	/**
-	 * Remove the association of the given value to the given key in the receiver multimap.
+	 * Removes the association of the given value to the given key in the receiver multimap.
 	 * 
 	 * @param key The key. May or may not be <code>null</code> according the implementation.
 	 * @param value The value. May or may not be <code>null</code> according the implementation.
@@ -127,7 +134,7 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	public boolean remove(final K key, final V value);
 	
 	/**
-	 * Remove the associations of the given values to the given key in the receiver multimap.
+	 * Removes the associations of the given values to the given key in the receiver multimap.
 	 * 
 	 * @param key The key. May or may not be <code>null</code> according the implementation.
 	 * @param values The values. May or may not contain <code>null</code> according the implementation.
