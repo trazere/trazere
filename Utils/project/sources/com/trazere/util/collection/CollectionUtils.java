@@ -17,7 +17,6 @@ package com.trazere.util.collection;
 
 import com.trazere.util.function.Function1;
 import com.trazere.util.lang.Counter;
-import com.trazere.util.lang.MutableObject;
 import com.trazere.util.lang.ThrowableFactory;
 import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Tuple2;
@@ -424,48 +423,6 @@ public class CollectionUtils {
 		assert null != map;
 		
 		return next(map.entrySet().iterator());
-	}
-	
-	/**
-	 * Gets the least given value according to the given comparator.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param comparator The comparator.
-	 * @param values The values.
-	 * @return The least value.
-	 */
-	public static <T> Maybe<T> least(final Comparator<? super T> comparator, final Collection<? extends T> values) {
-		assert null != values;
-		
-		return least(comparator, values.iterator());
-	}
-	
-	/**
-	 * Gets the least given value according to the given comparator.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param comparator The comparator.
-	 * @param values The values.
-	 * @return The least value.
-	 */
-	public static <T> Maybe<T> least(final Comparator<? super T> comparator, final Iterator<? extends T> values) {
-		assert null != comparator;
-		assert null != values;
-		
-		// Get the first value.
-		if (!values.hasNext()) {
-			return Maybe.none();
-		}
-		
-		// Get the least value.
-		final MutableObject<T> least = new MutableObject<T>(values.next());
-		while (values.hasNext()) {
-			final T value = values.next();
-			if (comparator.compare(value, least.get()) < 1) {
-				least.set(value);
-			}
-		}
-		return Maybe.some(least.get());
 	}
 	
 	/**
