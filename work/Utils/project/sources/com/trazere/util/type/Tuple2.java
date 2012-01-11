@@ -90,14 +90,13 @@ extends Tuple1<T1> {
 	/**
 	 * Builds a function which gets the second value of the argument tuples.
 	 * 
-	 * @param <T1> Type of the first values of the tuples.
 	 * @param <T2> Type of the second values of the tuples.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T1, T2, X extends Exception> Function1<Tuple2<? extends T1, ? extends T2>, T2, X> getSecondFunction() {
-		return (Function1<Tuple2<? extends T1, ? extends T2>, T2, X>) _GET_SECOND_FUNCTION;
+	public static <T2, X extends Exception> Function1<Tuple2<?, ? extends T2>, T2, X> getSecondFunction() {
+		return (Function1<Tuple2<?, ? extends T2>, T2, X>) _GET_SECOND_FUNCTION;
 	}
 	
 	private static final Function1<?, ?, ?> _GET_SECOND_FUNCTION = new Function1<Tuple2<Object, Object>, Object, RuntimeException>() {
