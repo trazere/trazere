@@ -15,6 +15,8 @@
  */
 package com.trazere.util.io;
 
+import com.trazere.util.function.Function1;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -25,6 +27,23 @@ import java.io.Writer;
  * DOCME
  */
 public class IOUtils {
+	/**
+	 * Builds a function which builds files.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @return The built function.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <X extends Exception> Function1<String, File, X> buildFileFunction() {
+		return (Function1<String, File, X>) _BUILD_FILE_FUNCTION;
+	}
+	
+	private static Function1<String, File, ?> _BUILD_FILE_FUNCTION = new Function1<String, File, RuntimeException>() {
+		public File evaluate(final String path) {
+			return new File(path);
+		}
+	};
+	
 	/**
 	 * Read the data from the given input stream and write it to the given output stream.
 	 * 
