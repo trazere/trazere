@@ -17,7 +17,9 @@ package com.trazere.util.lang;
 
 import com.trazere.util.function.Function1;
 import com.trazere.util.type.Maybe;
+import java.util.Collection;
 import java.util.Comparator;
+import java.util.Iterator;
 
 /**
  * The {@link LangUtils} class provides various helpers regarding the manipulation of objets.
@@ -404,10 +406,52 @@ public class LangUtils {
 	 * @param value2 The second value.
 	 * @return The least value.
 	 */
-	public static <T> T min(final Comparator<? super T> comparator, final T value1, final T value2) {
+	public static <T> T least(final Comparator<? super T> comparator, final T value1, final T value2) {
 		assert null != comparator;
 		
 		return comparator.compare(value1, value2) <= 0 ? value1 : value2;
+	}
+	
+	/**
+	 * Gets the least given value according to the given comparator.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param comparator The comparator.
+	 * @param values The values.
+	 * @return The least value.
+	 */
+	public static <T> Maybe<T> least(final Comparator<? super T> comparator, final Collection<? extends T> values) {
+		assert null != values;
+		
+		return least(comparator, values.iterator());
+	}
+	
+	/**
+	 * Gets the least given value according to the given comparator.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param comparator The comparator.
+	 * @param values The values.
+	 * @return The least value.
+	 */
+	public static <T> Maybe<T> least(final Comparator<? super T> comparator, final Iterator<? extends T> values) {
+		assert null != comparator;
+		assert null != values;
+		
+		// Get the first value.
+		if (!values.hasNext()) {
+			return Maybe.none();
+		}
+		
+		// Get the least value.
+		final MutableObject<T> least = new MutableObject<T>(values.next());
+		while (values.hasNext()) {
+			final T value = values.next();
+			if (comparator.compare(value, least.get()) < 1) {
+				least.set(value);
+			}
+		}
+		return Maybe.some(least.get());
 	}
 	
 	/**
@@ -419,10 +463,52 @@ public class LangUtils {
 	 * @param value2 The second value.
 	 * @return The greatest value.
 	 */
-	public static <T> T max(final Comparator<? super T> comparator, final T value1, final T value2) {
+	public static <T> T greatest(final Comparator<? super T> comparator, final T value1, final T value2) {
 		assert null != comparator;
 		
 		return comparator.compare(value1, value2) >= 0 ? value1 : value2;
+	}
+	
+	/**
+	 * Gets the greatest given value according to the given comparator.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param comparator The comparator.
+	 * @param values The values.
+	 * @return The greatest value.
+	 */
+	public static <T> Maybe<T> greatest(final Comparator<? super T> comparator, final Collection<? extends T> values) {
+		assert null != values;
+		
+		return greatest(comparator, values.iterator());
+	}
+	
+	/**
+	 * Gets the greatest given value according to the given comparator.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param comparator The comparator.
+	 * @param values The values.
+	 * @return The greatest value.
+	 */
+	public static <T> Maybe<T> greatest(final Comparator<? super T> comparator, final Iterator<? extends T> values) {
+		assert null != comparator;
+		assert null != values;
+		
+		// Get the first value.
+		if (!values.hasNext()) {
+			return Maybe.none();
+		}
+		
+		// Get the greatest value.
+		final MutableObject<T> greatest = new MutableObject<T>(values.next());
+		while (values.hasNext()) {
+			final T value = values.next();
+			if (comparator.compare(value, greatest.get()) > 1) {
+				greatest.set(value);
+			}
+		}
+		return Maybe.some(greatest.get());
 	}
 	
 	private LangUtils() {
