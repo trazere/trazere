@@ -86,18 +86,13 @@ extends Tuple5<T1, T2, T3, T4, T5> {
 	/**
 	 * Builds a function which gets the sixth value of the argument tuples.
 	 * 
-	 * @param <T1> Type of the first values of the tuples.
-	 * @param <T2> Type of the second values of the tuples.
-	 * @param <T3> Type of the third values of the tuples.
-	 * @param <T4> Type of the fourth values of the tuples.
-	 * @param <T5> Type of the fifth values of the tuples.
 	 * @param <T6> Type of the sixth value of the tuples.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T1, T2, T3, T4, T5, T6, X extends Exception> Function1<Tuple6<? extends T1, ? extends T2, ? extends T3, ? extends T4, ? extends T5, ? extends T6>, T6, X> getSixthFunction() {
-		return (Function1<Tuple6<? extends T1, ? extends T2, ? extends T3, ? extends T4, ? extends T5, ? extends T6>, T6, X>) _GET_SIXTH_FUNCTION;
+	public static <T6, X extends Exception> Function1<Tuple6<?, ?, ?, ?, ?, ? extends T6>, T6, X> getSixthFunction() {
+		return (Function1<Tuple6<?, ?, ?, ?, ?, ? extends T6>, T6, X>) _GET_SIXTH_FUNCTION;
 	}
 	
 	private static final Function1<?, ?, ?> _GET_SIXTH_FUNCTION = new Function1<Tuple6<Object, Object, Object, Object, Object, Object>, Object, RuntimeException>() {
