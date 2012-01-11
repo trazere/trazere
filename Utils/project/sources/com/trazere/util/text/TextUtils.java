@@ -377,6 +377,46 @@ public class TextUtils {
 	}
 	
 	/**
+	 * Builds a function which converts strings to lower case.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @return The built function.
+	 * @see String#toLowerCase()
+	 */
+	@SuppressWarnings("unchecked")
+	public static <X extends Exception> Function1<String, String, X> toLowerCaseFunction() {
+		return (Function1<String, String, X>) _TO_LOWER_CASE_FUNCTION;
+	}
+	
+	private static final Function1<String, String, ?> _TO_LOWER_CASE_FUNCTION = new Function1<String, String, RuntimeException>() {
+		public String evaluate(final String value) {
+			assert null != value;
+			
+			return value.toLowerCase();
+		}
+	};
+	
+	/**
+	 * Builds a function which converts strings to upper case.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @return The built function.
+	 * @see String#toUpperCase()
+	 */
+	@SuppressWarnings("unchecked")
+	public static <X extends Exception> Function1<String, String, X> toUpperCaseFunction() {
+		return (Function1<String, String, X>) _TO_UPPER_CASE_FUNCTION;
+	}
+	
+	private static final Function1<String, String, ?> _TO_UPPER_CASE_FUNCTION = new Function1<String, String, RuntimeException>() {
+		public String evaluate(final String value) {
+			assert null != value;
+			
+			return value.toUpperCase();
+		}
+	};
+	
+	/**
 	 * Capitalizes the given string.
 	 * 
 	 * @param s The string to capitalize.
@@ -393,6 +433,25 @@ public class TextUtils {
 	}
 	
 	/**
+	 * Builds a function which capitalizes strings.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @return The built function.
+	 * @see #capitalize(String)
+	 */
+	@SuppressWarnings("unchecked")
+	public static <X extends Exception> Function1<String, String, X> capitalizeFunction() {
+		return (Function1<String, String, X>) _CAPITALIZE_FUNCTION;
+	}
+	
+	private static final Function1<String, String, ?> _CAPITALIZE_FUNCTION = new Function1<String, String, RuntimeException>() {
+		public String evaluate(final String s) {
+			return capitalize(s);
+		}
+	};
+	
+	// TODO: kill
+	/**
 	 * Converts empty strings to <code>null</code> strings.
 	 * 
 	 * @param s The string to strip.
@@ -404,6 +463,7 @@ public class TextUtils {
 		return s.length() > 0 ? s : null;
 	}
 	
+	// TODO: kill ?
 	/**
 	 * Converts <code>null</code> strings to empty strings.
 	 * 
