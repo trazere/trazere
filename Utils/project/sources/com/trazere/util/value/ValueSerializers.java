@@ -20,8 +20,8 @@ import com.trazere.util.lang.ThrowableFactory;
 import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
 import com.trazere.util.type.Maybe;
+import java.text.DateFormat;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -61,7 +61,7 @@ public class ValueSerializers {
 	 * @param exceptionFactory The exception factory to use.
 	 * @return The built serializer.
 	 */
-	public static <X extends Exception> ValueSerializer<Date, String, X> buildDate(final SimpleDateFormat format, final ThrowableFactory<X> exceptionFactory) {
+	public static <X extends Exception> ValueSerializer<Date, String, X> buildDate(final DateFormat format, final ThrowableFactory<X> exceptionFactory) {
 		assert null != format;
 		assert null != exceptionFactory;
 		
