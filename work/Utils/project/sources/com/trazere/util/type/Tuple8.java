@@ -94,21 +94,13 @@ extends Tuple7<T1, T2, T3, T4, T5, T6, T7> {
 	/**
 	 * Builds a function which gets the eighth value of the argument tuples.
 	 * 
-	 * @param <T1> Type of the first values of the tuples.
-	 * @param <T2> Type of the second values of the tuples.
-	 * @param <T3> Type of the third values of the tuples.
-	 * @param <T4> Type of the fourth values of the tuples.
-	 * @param <T5> Type of the fifth values of the tuples.
-	 * @param <T6> Type of the sixth value of the tuples.
-	 * @param <T7> Type of the seventh value of the tuples.
 	 * @param <T8> Type of the eighth value of the tuples.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
 	 */
-	// TODO: remove useless type arguments in trazere
 	@SuppressWarnings("unchecked")
-	public static <T1, T2, T3, T4, T5, T6, T7, T8, X extends Exception> Function1<Tuple8<? extends T1, ? extends T2, ? extends T3, ? extends T4, ? extends T5, ? extends T6, ? extends T7, ? extends T8>, T8, X> getEighthFunction() {
-		return (Function1<Tuple8<? extends T1, ? extends T2, ? extends T3, ? extends T4, ? extends T5, ? extends T6, ? extends T7, ? extends T8>, T8, X>) _GET_EIGHTH_FUNCTION;
+	public static <T8, X extends Exception> Function1<Tuple8<?, ?, ?, ?, ?, ?, ?, ? extends T8>, T8, X> getEighthFunction() {
+		return (Function1<Tuple8<?, ?, ?, ?, ?, ?, ?, ? extends T8>, T8, X>) _GET_EIGHTH_FUNCTION;
 	}
 	
 	private static final Function1<?, ?, ?> _GET_EIGHTH_FUNCTION = new Function1<Tuple8<Object, Object, Object, Object, Object, Object, Object, Object>, Object, RuntimeException>() {

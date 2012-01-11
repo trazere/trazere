@@ -82,17 +82,13 @@ extends Tuple4<T1, T2, T3, T4> {
 	/**
 	 * Builds a function which gets the fifth value of the argument tuples.
 	 * 
-	 * @param <T1> Type of the first values of the tuples.
-	 * @param <T2> Type of the second values of the tuples.
-	 * @param <T3> Type of the third values of the tuples.
-	 * @param <T4> Type of the fourth values of the tuples.
 	 * @param <T5> Type of the fifth values of the tuples.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T1, T2, T3, T4, T5, X extends Exception> Function1<Tuple5<? extends T1, ? extends T2, ? extends T3, ? extends T4, ? extends T5>, T5, X> getFifthFunction() {
-		return (Function1<Tuple5<? extends T1, ? extends T2, ? extends T3, ? extends T4, ? extends T5>, T5, X>) _GET_FIFTH_FUNCTION;
+	public static <T5, X extends Exception> Function1<Tuple5<?, ?, ?, ?, ? extends T5>, T5, X> getFifthFunction() {
+		return (Function1<Tuple5<?, ?, ?, ?, ? extends T5>, T5, X>) _GET_FIFTH_FUNCTION;
 	}
 	
 	private static final Function1<?, ?, ?> _GET_FIFTH_FUNCTION = new Function1<Tuple5<Object, Object, Object, Object, Object>, Object, RuntimeException>() {
