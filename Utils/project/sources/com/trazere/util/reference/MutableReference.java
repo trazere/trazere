@@ -17,7 +17,6 @@ package com.trazere.util.reference;
 
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.LangUtils;
-import com.trazere.util.lang.Releasable;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
@@ -29,7 +28,7 @@ import com.trazere.util.type.Maybe;
  * @param <T> Type of the referenced values.
  */
 public class MutableReference<T>
-implements Reference<T>, Releasable<RuntimeException>, Describable {
+implements ReleasableReference<T, RuntimeException>, Describable {
 	/**
 	 * Instantiates an unset reference.
 	 */
