@@ -5,13 +5,16 @@
 What is it?
 -----------
 
-TODO
+This project aims at providing various generic tools:
+
+- a set of general purpose utilities,
+- a combinator based parsing library.
 
 
 Licensing
 ---------
 
-  Copyright 2006-2011 Julien Dufour
+  Copyright 2006-2012 Julien Dufour
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
