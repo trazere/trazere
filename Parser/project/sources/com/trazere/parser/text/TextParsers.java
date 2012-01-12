@@ -27,6 +27,8 @@ import com.trazere.util.lang.LangUtils;
 import com.trazere.util.text.CharPredicate;
 import com.trazere.util.text.CharPredicates;
 import com.trazere.util.type.Tuple2;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.EnumSet;
 
@@ -124,37 +126,107 @@ public class TextParsers {
 	
 	private static final Parser<Character, Character> _ALPHANUMERIC = alphanumeric("an alphanumeric");
 	
-	public static Parser<Character, Integer> integer(final String description) {
-		return CoreParsers.fold1(_DIGIT, _FOLD_INTEGER, Integer.valueOf(0), description);
+	public static Parser<Character, BigInteger> integer(final String description) {
+		return CoreParsers.fold1(_DIGIT, _FOLD_INTEGER, BigInteger.ZERO, description);
 	}
 	
-	private static final Function2<Integer, Character, Integer, ParserException> _FOLD_INTEGER = new Function2<Integer, Character, Integer, ParserException>() {
-		public Integer evaluate(final Integer previousValue, final Character subResult) {
+	private static final Function2<BigInteger, Character, BigInteger, ParserException> _FOLD_INTEGER = new Function2<BigInteger, Character, BigInteger, ParserException>() {
+		public BigInteger evaluate(final BigInteger previousValue, final Character subResult) {
 			final int digit = Character.digit(subResult.charValue(), 10);
-			return Integer.valueOf(previousValue.intValue() * 10 + digit);
+			return previousValue.multiply(BigInteger.TEN).add(BigInteger.valueOf(digit));
 		}
 	};
 	
-	public static Parser<Character, Integer> integer() {
+	public static Parser<Character, BigInteger> integer() {
 		return _INTEGER;
 	}
 	
-	private static final Parser<Character, Integer> _INTEGER = integer("an integer");
+	private static final Parser<Character, BigInteger> _INTEGER = integer("an integer");
 	
-	public static Parser<Character, Double> decimal(final String description) {
-		final Parser<Character, Double> integerPartParser = CoreParsers.fold1(TextParsers.digit(), _FOLD_DECIMAL_INTEGER_PART, Double.valueOf(0), null);
-		final Parser<Character, Tuple2<Double, Double>> decimalPartParser = CoreParsers.fold1(TextParsers.digit(), _FOLD_DECIMAL_DECIMAL_PART, Tuple2.build(0.1, 0.0), null);
+	public static <N extends Number> Parser<Character, N> integer(final IntegerExtractor<N> extractor, final String description) {
+		return CoreParsers.map(integer(), extractor, description);
+	}
+	
+	private static abstract class IntegerExtractor<N extends Number>
+	implements Function1<BigInteger, N, ParserException> {
+		public abstract N extract(final BigInteger value)
+		throws ParserException;
+		
+		public N evaluate(final BigInteger value)
+		throws ParserException {
+			return extract(value);
+		}
+	}
+	
+	public static final IntegerExtractor<Byte> BYTE_INTEGER_EXTRACTOR = new IntegerExtractor<Byte>() {
+		@Override
+		public Byte extract(final BigInteger value)
+		throws ParserException {
+			assert null != value;
+			
+			if (value.bitLength() < Byte.SIZE) {
+				return value.byteValue();
+			} else {
+				throw new ParserException("Overflow");
+			}
+		}
+	};
+	
+	public static final IntegerExtractor<Short> SHORT_INTEGER_EXTRACTOR = new IntegerExtractor<Short>() {
+		@Override
+		public Short extract(final BigInteger value)
+		throws ParserException {
+			assert null != value;
+			
+			if (value.bitLength() < Short.SIZE) {
+				return value.shortValue();
+			} else {
+				throw new ParserException("Overflow");
+			}
+		}
+	};
+	
+	public static final IntegerExtractor<Integer> INTEGER_INTEGER_EXTRACTOR = new IntegerExtractor<Integer>() {
+		@Override
+		public Integer extract(final BigInteger value)
+		throws ParserException {
+			assert null != value;
+			
+			if (value.bitLength() < Integer.SIZE) {
+				return value.intValue();
+			} else {
+				throw new ParserException("Overflow");
+			}
+		}
+	};
+	
+	public static final IntegerExtractor<Long> LONG_INTEGER_EXTRACTOR = new IntegerExtractor<Long>() {
+		@Override
+		public Long extract(final BigInteger value)
+		throws ParserException {
+			assert null != value;
+			
+			if (value.bitLength() < Long.SIZE) {
+				return value.longValue();
+			} else {
+				throw new ParserException("Overflow");
+			}
+		}
+	};
+	
+	public static Parser<Character, BigDecimal> decimal(final String description) {
+		final Parser<Character, Tuple2<BigDecimal, BigDecimal>> decimalPartParser = CoreParsers.fold1(TextParsers.digit(), _FOLD_DECIMAL_PART, Tuple2.build(BigDecimal.ONE, BigDecimal.ZERO), null);
 		final class DecimalParser
-		extends Sequence3Parser<Character, Double, Character, Tuple2<Double, Double>, Double> {
+		extends Sequence3Parser<Character, BigInteger, Character, Tuple2<BigDecimal, BigDecimal>, BigDecimal> {
 			public DecimalParser() {
-				super(integerPartParser, TextParsers.character('.'), decimalPartParser, description);
+				super(integer(), TextParsers.character('.'), decimalPartParser, description);
 			}
 			
 			// Parser.
 			
 			@Override
-			protected Double combine(final Double subResult1, final Character subResult2, final Tuple2<Double, Double> subResult3) {
-				return subResult1.doubleValue() + subResult3.getSecond().doubleValue();
+			protected BigDecimal combine(final BigInteger integerPart, final Character comma, final Tuple2<BigDecimal, BigDecimal> decimalPart) {
+				return new BigDecimal(integerPart).add(decimalPart.getSecond());
 			}
 			
 			// Object.
@@ -184,26 +256,118 @@ public class TextParsers {
 		return new DecimalParser();
 	}
 	
-	private static final Function2<Double, Character, Double, ParserException> _FOLD_DECIMAL_INTEGER_PART = new Function2<Double, Character, Double, ParserException>() {
-		public Double evaluate(final Double previousValue, final Character subResult) {
+	private static final Function2<Tuple2<BigDecimal, BigDecimal>, Character, Tuple2<BigDecimal, BigDecimal>, ParserException> _FOLD_DECIMAL_PART = new Function2<Tuple2<BigDecimal, BigDecimal>, Character, Tuple2<BigDecimal, BigDecimal>, ParserException>() {
+		public Tuple2<BigDecimal, BigDecimal> evaluate(final Tuple2<BigDecimal, BigDecimal> previousValue, final Character subResult) {
 			final int digit = Character.digit(subResult.charValue(), 10);
-			return Double.valueOf(previousValue.doubleValue() * 10 + digit);
+			final BigDecimal factor = previousValue.getFirst().divide(BigDecimal.TEN);
+			return Tuple2.build(factor, previousValue.getSecond().add(factor.multiply(BigDecimal.valueOf(digit))));
 		}
 	};
 	
-	private static final Function2<Tuple2<Double, Double>, Character, Tuple2<Double, Double>, ParserException> _FOLD_DECIMAL_DECIMAL_PART = new Function2<Tuple2<Double, Double>, Character, Tuple2<Double, Double>, ParserException>() {
-		public Tuple2<Double, Double> evaluate(final Tuple2<Double, Double> previousValue, final Character subResult) {
-			final int digit = Character.digit(subResult.charValue(), 10);
-			final double factor = previousValue.getFirst().doubleValue();
-			return Tuple2.build(factor / 10, previousValue.getSecond().doubleValue() + (factor * digit));
-		}
-	};
-	
-	public static Parser<Character, Double> decimal() {
+	public static Parser<Character, BigDecimal> decimal() {
 		return _DECIMAL;
 	}
 	
-	private static final Parser<Character, Double> _DECIMAL = decimal("a decimal");
+	private static final Parser<Character, BigDecimal> _DECIMAL = decimal("a decimal");
+	
+	public static <N extends Number> Parser<Character, N> decimal(final DecimalExtractor<N> extractor, final String description) {
+		return CoreParsers.map(decimal(), extractor, description);
+	}
+	
+	private static abstract class DecimalExtractor<N extends Number>
+	implements Function1<BigDecimal, N, ParserException> {
+		public abstract N extract(final BigDecimal value)
+		throws ParserException;
+		
+		public N evaluate(final BigDecimal value)
+		throws ParserException {
+			return extract(value);
+		}
+	}
+	
+	public static final DecimalExtractor<Byte> BYTE_DECIMAL_EXTRACTOR = new DecimalExtractor<Byte>() {
+		@Override
+		public Byte extract(final BigDecimal value)
+		throws ParserException {
+			assert null != value;
+			
+			try {
+				return value.byteValueExact();
+			} catch (final ArithmeticException exception) {
+				throw new ParserException(exception);
+			}
+		}
+	};
+	
+	public static final DecimalExtractor<Short> SHORT_DECIMAL_EXTRACTOR = new DecimalExtractor<Short>() {
+		@Override
+		public Short extract(final BigDecimal value)
+		throws ParserException {
+			assert null != value;
+			
+			try {
+				return value.shortValueExact();
+			} catch (final ArithmeticException exception) {
+				throw new ParserException(exception);
+			}
+		}
+	};
+	
+	public static final DecimalExtractor<Integer> INTEGER_DECIMAL_EXTRACTOR = new DecimalExtractor<Integer>() {
+		@Override
+		public Integer extract(final BigDecimal value)
+		throws ParserException {
+			assert null != value;
+			
+			try {
+				return value.intValueExact();
+			} catch (final ArithmeticException exception) {
+				throw new ParserException(exception);
+			}
+		}
+	};
+	
+	public static final DecimalExtractor<Long> LONG_DECIMAL_EXTRACTOR = new DecimalExtractor<Long>() {
+		@Override
+		public Long extract(final BigDecimal value)
+		throws ParserException {
+			assert null != value;
+			
+			try {
+				return value.longValueExact();
+			} catch (final ArithmeticException exception) {
+				throw new ParserException(exception);
+			}
+		}
+	};
+	
+	public static final DecimalExtractor<Float> FLOAT_DECIMAL_EXTRACTOR = new DecimalExtractor<Float>() {
+		@Override
+		public Float extract(final BigDecimal value)
+		throws ParserException {
+			assert null != value;
+			
+			try {
+				return value.floatValue();
+			} catch (final NumberFormatException exception) {
+				throw new ParserException(exception);
+			}
+		}
+	};
+	
+	public static final DecimalExtractor<Double> DOUBLE_DECIMAL_EXTRACTOR = new DecimalExtractor<Double>() {
+		@Override
+		public Double extract(final BigDecimal value)
+		throws ParserException {
+			assert null != value;
+			
+			try {
+				return value.doubleValue();
+			} catch (final NumberFormatException exception) {
+				throw new ParserException(exception);
+			}
+		}
+	};
 	
 	public static Parser<Character, String> word(final String description) {
 		return string(CharPredicates.<ParserException>letter(), false, description);
