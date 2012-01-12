@@ -30,4 +30,25 @@ extends RuntimeException {
 	public WrappedException(final Throwable cause) {
 		super(cause);
 	}
+	
+	/**
+	 * Unwraps and throws the given wrapped exception.
+	 * 
+	 * @param <T> Type of the wrapped exception.
+	 * @param exception The exception.
+	 * @param type Type of the wrapped exception.
+	 * @throws T The unwrapped exception.
+	 * @throws WrappedException The wrapped exception when it does not have the given type.
+	 */
+	public static <T extends Throwable> void unwrapException(final WrappedException exception, final Class<T> type)
+	throws T, WrappedException {
+		assert null != exception;
+		
+		final Throwable cause = exception.getCause();
+		if (type.isInstance(cause)) {
+			throw type.cast(cause);
+		} else {
+			throw exception;
+		}
+	}
 }
