@@ -29,8 +29,13 @@ import com.trazere.util.lang.LangUtils;
 public class StringParser
 extends BaseParser<Character, String> {
 	protected final String _string;
+	protected final boolean _caseSentitive;
 	
 	public StringParser(final String string, final String description) {
+		this(string, true, description);
+	}
+	
+	public StringParser(final String string, final boolean caseSensitive, final String description) {
 		super(description);
 		
 		// Checks.
@@ -38,6 +43,7 @@ extends BaseParser<Character, String> {
 		
 		// Initialization.
 		_string = string;
+		_caseSentitive = caseSensitive;
 	}
 	
 	// Parser.
@@ -63,7 +69,19 @@ extends BaseParser<Character, String> {
 		return new ParserContinuation<Character>() {
 			public void token(final Character token, final ParserState<Character> state)
 			throws ParserException {
-				if (_string.charAt(index) == token.charValue()) {
+				// Get the next char.
+				final char stringChar;
+				final char tokenChar;
+				if (_caseSentitive) {
+					stringChar = _string.charAt(index);
+					tokenChar = token.charValue();
+				} else {
+					stringChar = Character.toLowerCase(_string.charAt(index));
+					tokenChar = Character.toLowerCase(token.charValue());
+				}
+				
+				// Compare the next char.
+				if (stringChar == tokenChar) {
 					// Continue.
 					run(closure, index + 1, state);
 				} else {
