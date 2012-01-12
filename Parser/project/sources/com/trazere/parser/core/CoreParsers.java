@@ -29,6 +29,9 @@ import com.trazere.util.type.Tuple2;
 import com.trazere.util.type.Tuple3;
 import com.trazere.util.type.Tuple4;
 import com.trazere.util.type.Tuple5;
+import com.trazere.util.type.Tuple6;
+import com.trazere.util.type.Tuple7;
+import com.trazere.util.type.Tuple8;
 import java.util.List;
 
 /**
@@ -367,6 +370,141 @@ public class CoreParsers {
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final SequenceParser parser = (SequenceParser) object;
 					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5);
+				} else {
+					return false;
+				}
+			}
+		}
+		return new SequenceParser();
+	}
+	
+	public static <Token, SubResult1, SubResult2, SubResult3, SubResult4, SubResult5, SubResult6> Parser<Token, Tuple6<SubResult1, SubResult2, SubResult3, SubResult4, SubResult5, SubResult6>> sequence(final Parser<Token, ? extends SubResult1> subParser1, final Parser<Token, ? extends SubResult2> subParser2, final Parser<Token, ? extends SubResult3> subParser3, final Parser<Token, ? extends SubResult4> subParser4, final Parser<Token, ? extends SubResult5> subParser5, final Parser<Token, ? extends SubResult6> subParser6, final String description) {
+		final class SequenceParser
+		extends Sequence6Parser<Token, SubResult1, SubResult2, SubResult3, SubResult4, SubResult5, SubResult6, Tuple6<SubResult1, SubResult2, SubResult3, SubResult4, SubResult5, SubResult6>> {
+			public SequenceParser() {
+				super(subParser1, subParser2, subParser3, subParser4, subParser5, subParser6, description);
+			}
+			
+			// Parser.
+			
+			@Override
+			protected Tuple6<SubResult1, SubResult2, SubResult3, SubResult4, SubResult5, SubResult6> combine(final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3, final SubResult4 subResult4, final SubResult5 subResult5, final SubResult6 subResult6) {
+				return Tuple6.build(subResult1, subResult2, subResult3, subResult4, subResult5, subResult6);
+			}
+			
+			// Object.
+			
+			@Override
+			public int hashCode() {
+				final HashCode result = new HashCode(this);
+				result.append(_description);
+				result.append(_subParser1);
+				result.append(_subParser2);
+				result.append(_subParser3);
+				result.append(_subParser4);
+				result.append(_subParser5);
+				result.append(_subParser6);
+				return result.get();
+			}
+			
+			@Override
+			public boolean equals(final Object object) {
+				if (this == object) {
+					return true;
+				} else if (null != object && getClass().equals(object.getClass())) {
+					final SequenceParser parser = (SequenceParser) object;
+					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5) && _subParser6.equals(parser._subParser6);
+				} else {
+					return false;
+				}
+			}
+		}
+		return new SequenceParser();
+	}
+	
+	public static <Token, SubResult1, SubResult2, SubResult3, SubResult4, SubResult5, SubResult6, SubResult7> Parser<Token, Tuple7<SubResult1, SubResult2, SubResult3, SubResult4, SubResult5, SubResult6, SubResult7>> sequence(final Parser<Token, ? extends SubResult1> subParser1, final Parser<Token, ? extends SubResult2> subParser2, final Parser<Token, ? extends SubResult3> subParser3, final Parser<Token, ? extends SubResult4> subParser4, final Parser<Token, ? extends SubResult5> subParser5, final Parser<Token, ? extends SubResult6> subParser6, final Parser<Token, ? extends SubResult7> subParser7, final String description) {
+		final class SequenceParser
+		extends Sequence7Parser<Token, SubResult1, SubResult2, SubResult3, SubResult4, SubResult5, SubResult6, SubResult7, Tuple7<SubResult1, SubResult2, SubResult3, SubResult4, SubResult5, SubResult6, SubResult7>> {
+			public SequenceParser() {
+				super(subParser1, subParser2, subParser3, subParser4, subParser5, subParser6, subParser7, description);
+			}
+			
+			// Parser.
+			
+			@Override
+			protected Tuple7<SubResult1, SubResult2, SubResult3, SubResult4, SubResult5, SubResult6, SubResult7> combine(final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3, final SubResult4 subResult4, final SubResult5 subResult5, final SubResult6 subResult6, final SubResult7 subResult7) {
+				return Tuple7.build(subResult1, subResult2, subResult3, subResult4, subResult5, subResult6, subResult7);
+			}
+			
+			// Object.
+			
+			@Override
+			public int hashCode() {
+				final HashCode result = new HashCode(this);
+				result.append(_description);
+				result.append(_subParser1);
+				result.append(_subParser2);
+				result.append(_subParser3);
+				result.append(_subParser4);
+				result.append(_subParser5);
+				result.append(_subParser6);
+				result.append(_subParser7);
+				return result.get();
+			}
+			
+			@Override
+			public boolean equals(final Object object) {
+				if (this == object) {
+					return true;
+				} else if (null != object && getClass().equals(object.getClass())) {
+					final SequenceParser parser = (SequenceParser) object;
+					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5) && _subParser6.equals(parser._subParser6) && _subParser7.equals(parser._subParser7);
+				} else {
+					return false;
+				}
+			}
+		}
+		return new SequenceParser();
+	}
+	
+	public static <Token, SubResult1, SubResult2, SubResult3, SubResult4, SubResult5, SubResult6, SubResult7, SubResult8> Parser<Token, Tuple8<SubResult1, SubResult2, SubResult3, SubResult4, SubResult5, SubResult6, SubResult7, SubResult8>> sequence(final Parser<Token, ? extends SubResult1> subParser1, final Parser<Token, ? extends SubResult2> subParser2, final Parser<Token, ? extends SubResult3> subParser3, final Parser<Token, ? extends SubResult4> subParser4, final Parser<Token, ? extends SubResult5> subParser5, final Parser<Token, ? extends SubResult6> subParser6, final Parser<Token, ? extends SubResult7> subParser7, final Parser<Token, ? extends SubResult8> subParser8, final String description) {
+		final class SequenceParser
+		extends Sequence8Parser<Token, SubResult1, SubResult2, SubResult3, SubResult4, SubResult5, SubResult6, SubResult7, SubResult8, Tuple8<SubResult1, SubResult2, SubResult3, SubResult4, SubResult5, SubResult6, SubResult7, SubResult8>> {
+			public SequenceParser() {
+				super(subParser1, subParser2, subParser3, subParser4, subParser5, subParser6, subParser7, subParser8, description);
+			}
+			
+			// Parser.
+			
+			@Override
+			protected Tuple8<SubResult1, SubResult2, SubResult3, SubResult4, SubResult5, SubResult6, SubResult7, SubResult8> combine(final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3, final SubResult4 subResult4, final SubResult5 subResult5, final SubResult6 subResult6, final SubResult7 subResult7, final SubResult8 subResult8) {
+				return Tuple8.build(subResult1, subResult2, subResult3, subResult4, subResult5, subResult6, subResult7, subResult8);
+			}
+			
+			// Object.
+			
+			@Override
+			public int hashCode() {
+				final HashCode result = new HashCode(this);
+				result.append(_description);
+				result.append(_subParser1);
+				result.append(_subParser2);
+				result.append(_subParser3);
+				result.append(_subParser4);
+				result.append(_subParser5);
+				result.append(_subParser6);
+				result.append(_subParser7);
+				result.append(_subParser8);
+				return result.get();
+			}
+			
+			@Override
+			public boolean equals(final Object object) {
+				if (this == object) {
+					return true;
+				} else if (null != object && getClass().equals(object.getClass())) {
+					final SequenceParser parser = (SequenceParser) object;
+					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5) && _subParser6.equals(parser._subParser6) && _subParser7.equals(parser._subParser7) && _subParser8.equals(parser._subParser8);
 				} else {
 					return false;
 				}
