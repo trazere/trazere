@@ -24,9 +24,11 @@
 	<property name="utils.target" location="${utils}/build/target" />
 	<property name="utils.target.classes" location="${utils.target}/classes" />
 	<property name="utils.target.jar" location="${utils.target}/trazere-utils.jar" />
+	<property name="utils.target.source_jar" location="${utils.target}/trazere-utils-sources.jar" />
 
 	<property name="utils.dist" location="${utils}/dist" />
 	<property name="utils.dist.lib" value="${utils.dist}/lib" />
+	<property name="utils.dist.sources" value="${utils.dist}/sources" />
 
 	<union id="utils.libs">
 		<union id="utils.deps">
@@ -79,14 +81,28 @@
 		</jar>
 	</target>
 
+	<!-- Build the source JAR -->
+	<target name="utils.buildSourceJar">
+		<mkdir dir="${utils.target}" />
+		<jar destfile="${utils.target.source_jar}">
+			<fileset dir="${utils.sources}" />
+		</jar>
+	</target>
+
 	<!-- Build the distribution -->
-	<target name="utils.build" depends="utils.buildJar">
+	<target name="utils.build" depends="utils.buildJar, utils.buildSourceJar">
 		<mkdir dir="${utils.dist}" />
 
 		<!-- Jars -->
 		<mkdir dir="${utils.dist.lib}" />
 		<copy todir="${utils.dist.lib}">
 			<resources refid="utils.jars" />
+		</copy>
+
+		<!-- Sources -->
+		<mkdir dir="${utils.dist.sources}" />
+		<copy todir="${utils.dist.sources}">
+			<fileset file="${utils.target.source_jar}" />
 		</copy>
 	</target>
 

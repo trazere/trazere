@@ -24,9 +24,11 @@
 	<property name="parser.target" location="${parser}/build/target" />
 	<property name="parser.target.classes" location="${parser.target}/classes" />
 	<property name="parser.target.jar" location="${parser.target}/trazere-parser.jar" />
+	<property name="parser.target.source_jar" location="${parser.target}/trazere-parser-sources.jar" />
 
 	<property name="parser.dist" location="${parser}/dist" />
 	<property name="parser.dist.lib" value="${parser.dist}/lib" />
+	<property name="parser.dist.sources" value="${parser.dist}/sources" />
 
 	<union id="parser.libs">
 		<union id="parser.deps">
@@ -75,14 +77,28 @@
 		</jar>
 	</target>
 
+	<!-- Build the source JAR -->
+	<target name="parser.buildSourceJar">
+		<mkdir dir="${parser.target}" />
+		<jar destfile="${parser.target.source_jar}">
+			<fileset dir="${parser.sources}" />
+		</jar>
+	</target>
+
 	<!-- Build the distribution -->
-	<target name="parser.build" depends="parser.buildJar">
+	<target name="parser.build" depends="parser.buildJar, parser.buildSourceJar">
 		<mkdir dir="${parser.dist}" />
 
 		<!-- Jars -->
 		<mkdir dir="${parser.dist.lib}" />
 		<copy todir="${parser.dist.lib}">
 			<resources refid="parser.jars" />
+		</copy>
+
+		<!-- Sources -->
+		<mkdir dir="${parser.dist.sources}" />
+		<copy todir="${parser.dist.sources}">
+			<fileset file="${parser.target.source_jar}" />
 		</copy>
 	</target>
 </project>
