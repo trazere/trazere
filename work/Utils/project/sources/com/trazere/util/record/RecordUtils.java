@@ -475,6 +475,80 @@ public class RecordUtils {
 		}
 	}
 	
+	/**
+	 * Typechecks the requirements of the given parametrable against the given signature.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param parametrable The parametrable.
+	 * @param signature The signature.
+	 * @throws RecordException When the typechecking fails.
+	 */
+	public static <K, V> void typeCheck(final Parametrable<K, V> parametrable, final RecordSignature<? super K, ? extends V> signature)
+	throws RecordException {
+		assert null != parametrable;
+		
+		typeCheck(parametrable.getRequirements(), signature);
+	}
+	
+	/**
+	 * Typechecks the given requirements against the given signature.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param requirements The requierements.
+	 * @param signature The signature.
+	 * @throws RecordException When the typechecking fails.
+	 */
+	public static <K, V> void typeCheck(final RecordSignature<K, V> requirements, final RecordSignature<? super K, ? extends V> signature)
+	throws RecordException {
+		typeCheck(requirements, signature, Predicates.<K, RecordException>all());
+	}
+	
+	/**
+	 * Typechecks the given requirements against the given signature.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param requirements The requierements.
+	 * @param signature The signature.
+	 * @param filter The filter of the requirements to typecheck.
+	 * @throws RecordException When the typechecking fails.
+	 */
+	public static <K, V> void typeCheck(final RecordSignature<K, V> requirements, final RecordSignature<? super K, ? extends V> signature, final Predicate1<? super K, ? extends RecordException> filter)
+	throws RecordException {
+		assert null != requirements;
+		assert null != signature;
+		assert null != filter;
+		
+		for (final FieldSignature<K, ? extends V> requirement : requirements.asMap().values()) {
+			if (filter.evaluate(requirement.getKey())) {
+				typeCheck(requirement, signature);
+			}
+		}
+	}
+	
+	/**
+	 * Typechecks the given requirement against the given signature.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param requirement The requierement.
+	 * @param signature The signature.
+	 * @throws RecordException When the typechecking fails.
+	 */
+	public static <K> void typeCheck(final FieldSignature<K, ?> requirement, final RecordSignature<? super K, ?> signature)
+	throws RecordException {
+		assert null != requirement;
+		assert null != signature;
+		
+		final K key = requirement.getKey();
+		if (!signature.contains(key)) {
+			throw new RecordException("Missing parameter \"" + key + "\" in parameters " + signature);
+		} else if (!requirement.accepts(signature.get(key).getType(), signature.get(key).isNullable())) {
+			throw new RecordException("Incompatible parameter \"" + key + "\" with requirement " + requirement + " in parameters " + signature);
+		}
+	}
+	
 	private RecordUtils() {
 		// Prevents instantiation.
 	}
