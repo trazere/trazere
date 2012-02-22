@@ -39,215 +39,6 @@ import java.util.Iterator;
 public abstract class Maybe<T>
 implements Iterable<T>, Describable {
 	/**
-	 * The {@link Constructor} enumeration represents the constructors of the algebraic data type.
-	 */
-	public static enum Constructor {
-		NONE,
-		SOME,
-	}
-	
-	/**
-	 * The {@link Maybe.Matcher} interface defines matching functions.
-	 * 
-	 * @param <T> Type of the value.
-	 * @param <R> Type of the result.
-	 * @param <X> Type of the exceptions.
-	 * @see Maybe#match(Matcher)
-	 */
-	public interface Matcher<T, R, X extends Exception> {
-		/**
-		 * Matches the given <code>None</code> instance.
-		 * 
-		 * @param none The instance.
-		 * @return The result of the function evaluation.
-		 * @throws X When the evaluation fails.
-		 */
-		public R none(final None<? extends T> none)
-		throws X;
-		
-		/**
-		 * Matches the given <code>Some</code> instance.
-		 * 
-		 * @param some The instance.
-		 * @return The result of the function evaluation.
-		 * @throws X When the evaluation fails.
-		 */
-		public R some(final Some<? extends T> some)
-		throws X;
-	}
-	
-	/**
-	 * The {@link Maybe.None} class represents the instances built using the <code>None</code> constructor.
-	 * 
-	 * @param <T> Type of the value.
-	 */
-	public static final class None<T>
-	extends Maybe<T> {
-		@Override
-		public Constructor getConstructor() {
-			return Constructor.NONE;
-		}
-		
-		@Override
-		public boolean isNone() {
-			return true;
-		}
-		
-		@Override
-		public None<T> asNone() {
-			return this;
-		}
-		
-		@Override
-		public <R, X extends Exception> R match(final Matcher<? super T, R, X> matcher)
-		throws X {
-			assert null != matcher;
-			
-			return matcher.none(this);
-		}
-		
-		@Override
-		public <R, X extends Exception> Maybe<R> map(final Function1<? super T, ? extends R, X> function) {
-			return none();
-		}
-		
-		@Override
-		public <X extends Exception> Maybe<T> filter(final Predicate1<? super T, X> predicate) {
-			return none();
-		}
-		
-		@Override
-		public <R, X extends Exception> Maybe<R> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, X> function) {
-			return none();
-		}
-		
-		public Iterator<T> iterator() {
-			return CollectionUtils.iterator();
-		}
-		
-		@Override
-		public int hashCode() {
-			final HashCode result = new HashCode(this);
-			return result.get();
-		}
-		
-		@Override
-		public boolean equals(final Object object) {
-			if (this == object) {
-				return true;
-			} else if (null != object && getClass().equals(object.getClass())) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-		
-		public void fillDescription(final Description description) {
-			// Nothing to do.
-		}
-	}
-	
-	/**
-	 * The {@link Maybe.Some} class represents the instances built using the <code>Some</code> constructor.
-	 * 
-	 * @param <T> Type of the value.
-	 */
-	public static final class Some<T>
-	extends Maybe<T> {
-		/**
-		 * Instantiates a new instance wrapping the given value.
-		 * 
-		 * @param value The value. May be <code>null</code>.
-		 */
-		public Some(final T value) {
-			_value = value;
-		}
-		
-		@Override
-		public Constructor getConstructor() {
-			return Constructor.SOME;
-		}
-		
-		@Override
-		public boolean isSome() {
-			return true;
-		}
-		
-		@Override
-		public Some<T> asSome() {
-			return this;
-		}
-		
-		/** The wrapped value. May be <code>null</code>. */
-		private final T _value;
-		
-		/**
-		 * Gets the value wrapped in the receiver instance.
-		 * 
-		 * @return The wrapped value. May be <code>null</code>.
-		 */
-		public T getValue() {
-			return _value;
-		}
-		
-		@Override
-		public <R, X extends Exception> R match(final Matcher<? super T, R, X> matcher)
-		throws X {
-			return matcher.some(this);
-		}
-		
-		@Override
-		public <R, X extends Exception> Maybe<R> map(final Function1<? super T, ? extends R, X> function)
-		throws X {
-			assert null != function;
-			
-			return Maybe.<R>some(function.evaluate(_value));
-		}
-		
-		@Override
-		public <X extends Exception> Maybe<T> filter(final Predicate1<? super T, X> predicate)
-		throws X {
-			assert null != predicate;
-			
-			return predicate.evaluate(_value) ? this : Maybe.<T>none();
-		}
-		
-		@Override
-		public <R, X extends Exception> Maybe<R> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, X> function)
-		throws X {
-			return function.evaluate(_value).map(Functions.<R, RuntimeException>identity());
-		}
-		
-		@SuppressWarnings("unchecked")
-		public Iterator<T> iterator() {
-			return CollectionUtils.iterator(_value);
-		}
-		
-		@Override
-		public int hashCode() {
-			final HashCode result = new HashCode(this);
-			result.append(_value);
-			return result.get();
-		}
-		
-		@Override
-		public boolean equals(final Object object) {
-			if (this == object) {
-				return true;
-			} else if (null != object && getClass().equals(object.getClass())) {
-				final Some<?> maybe = (Some<?>) object;
-				return LangUtils.equals(_value, maybe._value);
-			} else {
-				return false;
-			}
-		}
-		
-		public void fillDescription(final Description description) {
-			description.append("Value", _value);
-		}
-	}
-	
-	/**
 	 * Builds an instance using the <code>None</code> constructor.
 	 * 
 	 * @param <Value> Type of the value.
@@ -364,12 +155,107 @@ implements Iterable<T>, Describable {
 		}
 	};
 	
+	// Constructor.
+	
+	/**
+	 * The {@link Constructor} enumeration represents the constructors of the algebraic data type.
+	 */
+	public static enum Constructor {
+		NONE,
+		SOME,
+	}
+	
 	/**
 	 * Gets the constructor of the receiver instance.
 	 * 
 	 * @return The constructor.
 	 */
 	public abstract Constructor getConstructor();
+	
+	// None.
+	
+	/**
+	 * The {@link Maybe.None} class represents the instances built using the <code>None</code> constructor.
+	 * 
+	 * @param <T> Type of the value.
+	 */
+	public static final class None<T>
+	extends Maybe<T> {
+		// Constructor.
+		
+		@Override
+		public Constructor getConstructor() {
+			return Constructor.NONE;
+		}
+		
+		// None.
+		
+		@Override
+		public boolean isNone() {
+			return true;
+		}
+		
+		@Override
+		public None<T> asNone() {
+			return this;
+		}
+		
+		// Matching.
+		
+		@Override
+		public <R, X extends Exception> R match(final Matcher<? super T, R, X> matcher)
+		throws X {
+			assert null != matcher;
+			
+			return matcher.none(this);
+		}
+		
+		// Functions.
+		
+		@Override
+		public <R, X extends Exception> Maybe<R> map(final Function1<? super T, ? extends R, X> function) {
+			return none();
+		}
+		
+		@Override
+		public <X extends Exception> Maybe<T> filter(final Predicate1<? super T, X> predicate) {
+			return none();
+		}
+		
+		@Override
+		public <R, X extends Exception> Maybe<R> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, X> function) {
+			return none();
+		}
+		
+		// Iterable.
+		
+		public Iterator<T> iterator() {
+			return CollectionUtils.iterator();
+		}
+		
+		// Object.
+		
+		@Override
+		public int hashCode() {
+			final HashCode result = new HashCode(this);
+			return result.get();
+		}
+		
+		@Override
+		public boolean equals(final Object object) {
+			if (this == object) {
+				return true;
+			} else if (null != object && getClass().equals(object.getClass())) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		
+		public void fillDescription(final Description description) {
+			// Nothing to do.
+		}
+	}
 	
 	/**
 	 * Tests whether the receiver instance has been built using the {@link None} constructor.
@@ -381,7 +267,7 @@ implements Iterable<T>, Describable {
 	}
 	
 	/**
-	 * Get a view of the receiver instance as a {@link None} instance.
+	 * Gets a view of the receiver instance as a {@link None} instance.
 	 * 
 	 * @return The view.
 	 * @throws InvalidConstructorException when the receiver instance has not been built with the <code>None</code> constructor.
@@ -389,6 +275,120 @@ implements Iterable<T>, Describable {
 	public None<T> asNone()
 	throws InvalidConstructorException {
 		throw InvalidConstructorException.build(this, None.class);
+	}
+	
+	// Some.
+	
+	/**
+	 * The {@link Maybe.Some} class represents the instances built using the <code>Some</code> constructor.
+	 * 
+	 * @param <T> Type of the value.
+	 */
+	public static final class Some<T>
+	extends Maybe<T> {
+		/**
+		 * Instantiates a new instance wrapping the given value.
+		 * 
+		 * @param value The value. May be <code>null</code>.
+		 */
+		public Some(final T value) {
+			_value = value;
+		}
+		
+		// Constructor.
+		
+		@Override
+		public Constructor getConstructor() {
+			return Constructor.SOME;
+		}
+		
+		// Some.
+		
+		@Override
+		public boolean isSome() {
+			return true;
+		}
+		
+		@Override
+		public Some<T> asSome() {
+			return this;
+		}
+		
+		/** The wrapped value. May be <code>null</code>. */
+		private final T _value;
+		
+		/**
+		 * Gets the value wrapped in the receiver instance.
+		 * 
+		 * @return The wrapped value. May be <code>null</code>.
+		 */
+		public T getValue() {
+			return _value;
+		}
+		
+		// Matching.
+		
+		@Override
+		public <R, X extends Exception> R match(final Matcher<? super T, R, X> matcher)
+		throws X {
+			return matcher.some(this);
+		}
+		
+		// Functions.
+		
+		@Override
+		public <R, X extends Exception> Maybe<R> map(final Function1<? super T, ? extends R, X> function)
+		throws X {
+			assert null != function;
+			
+			return Maybe.<R>some(function.evaluate(_value));
+		}
+		
+		@Override
+		public <X extends Exception> Maybe<T> filter(final Predicate1<? super T, X> predicate)
+		throws X {
+			assert null != predicate;
+			
+			return predicate.evaluate(_value) ? this : Maybe.<T>none();
+		}
+		
+		@Override
+		public <R, X extends Exception> Maybe<R> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, X> function)
+		throws X {
+			return function.evaluate(_value).map(Functions.<R, RuntimeException>identity());
+		}
+		
+		// Iterable.
+		
+		@SuppressWarnings("unchecked")
+		public Iterator<T> iterator() {
+			return CollectionUtils.iterator(_value);
+		}
+		
+		// Object.
+		
+		@Override
+		public int hashCode() {
+			final HashCode result = new HashCode(this);
+			result.append(_value);
+			return result.get();
+		}
+		
+		@Override
+		public boolean equals(final Object object) {
+			if (this == object) {
+				return true;
+			} else if (null != object && getClass().equals(object.getClass())) {
+				final Some<?> maybe = (Some<?>) object;
+				return LangUtils.equals(_value, maybe._value);
+			} else {
+				return false;
+			}
+		}
+		
+		public void fillDescription(final Description description) {
+			description.append("Value", _value);
+		}
 	}
 	
 	/**
@@ -401,7 +401,7 @@ implements Iterable<T>, Describable {
 	}
 	
 	/**
-	 * Get a view of the receiver instance as a {@link Some} instance.
+	 * Gets a view of the receiver instance as a {@link Some} instance.
 	 * 
 	 * @return The view.
 	 * @throws InvalidConstructorException when the receiver instance has not been built with the <code>Some</code> constructor.
@@ -409,6 +409,38 @@ implements Iterable<T>, Describable {
 	public Some<T> asSome()
 	throws InvalidConstructorException {
 		throw InvalidConstructorException.build(this, Some.class);
+	}
+	
+	// Matching.
+	
+	/**
+	 * The {@link Maybe.Matcher} interface defines matching functions.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param <R> Type of the result.
+	 * @param <X> Type of the exceptions.
+	 * @see Maybe#match(Matcher)
+	 */
+	public interface Matcher<T, R, X extends Exception> {
+		/**
+		 * Matches the given <code>None</code> instance.
+		 * 
+		 * @param none The instance.
+		 * @return The result of the function evaluation.
+		 * @throws X When the evaluation fails.
+		 */
+		public R none(final None<? extends T> none)
+		throws X;
+		
+		/**
+		 * Matches the given <code>Some</code> instance.
+		 * 
+		 * @param some The instance.
+		 * @return The result of the function evaluation.
+		 * @throws X When the evaluation fails.
+		 */
+		public R some(final Some<? extends T> some)
+		throws X;
 	}
 	
 	/**
@@ -424,6 +456,8 @@ implements Iterable<T>, Describable {
 	 */
 	public abstract <R, X extends Exception> R match(final Matcher<? super T, R, X> matcher)
 	throws X;
+	
+	// Functions.
 	
 	/**
 	 * Maps the value wrapped by the receiver instance using the given function.
@@ -524,6 +558,8 @@ implements Iterable<T>, Describable {
 			}
 		};
 	}
+	
+	// Object.
 	
 	@Override
 	public final String toString() {
