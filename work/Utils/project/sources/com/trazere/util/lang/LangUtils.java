@@ -91,6 +91,30 @@ public class LangUtils {
 	}
 	
 	/**
+	 * Builds a function which matches objects according to the given type.
+	 * 
+	 * @param <L> Type of the lower bound.
+	 * @param <T> Type of the match.
+	 * @param <X> Type of the exceptions.
+	 * @param type The type.
+	 * @return The built function.
+	 * @see #match(Object, Class)
+	 */
+	public static <L, T extends L, X extends Exception> Function1<L, Maybe<T>, X> cast(final Class<T> type) {
+		assert null != type;
+		
+		return new Function1<L, Maybe<T>, X>() {
+			public Maybe<T> evaluate(final L value) {
+				if (null != value && type.isInstance(value)) {
+					return Maybe.some(type.cast(value));
+				} else {
+					return Maybe.none();
+				}
+			}
+		};
+	}
+	
+	/**
 	 * Gets the value of the given boolean wrapper.
 	 * 
 	 * @param value The wrapper. May be <code>null</code>.
