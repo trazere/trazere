@@ -440,7 +440,7 @@ public class CollectionUtils {
 	 * @return The next value.
 	 * @throws X When the retrieval of the next value fails.
 	 */
-	public static <T, X extends Exception> Maybe<T> next(final CheckedIterator<T, X> values)
+	public static <T, X extends Exception> Maybe<T> next(final CheckedIterator<? extends T, X> values)
 	throws X {
 		assert null != values;
 		
