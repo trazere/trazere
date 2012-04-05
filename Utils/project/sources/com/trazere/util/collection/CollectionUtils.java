@@ -350,7 +350,7 @@ public class CollectionUtils {
 	 * @param results The collection to populate with the elements.
 	 * @return The result collection.
 	 */
-	public static <T, R extends Collection<? super T>> R drain(final Iterator<T> values, final R results) {
+	public static <T, R extends Collection<? super T>> R drain(final Iterator<? extends T> values, final R results) {
 		assert null != values;
 		assert null != results;
 		
@@ -370,7 +370,7 @@ public class CollectionUtils {
 	 * @param results The collection to populate with the elements.
 	 * @return The result collection.
 	 */
-	public static <T, R extends Collection<? super T>> R drain(final int n, final Iterator<T> values, final R results) {
+	public static <T, R extends Collection<? super T>> R drain(final int n, final Iterator<? extends T> values, final R results) {
 		assert null != values;
 		assert null != results;
 		
@@ -383,6 +383,55 @@ public class CollectionUtils {
 	}
 	
 	/**
+	 * Builds a checked iterator over no values.
+	 * 
+	 * @param <T> Type of the the values.
+	 * @param <X> Type of the exceptions.
+	 * @return The built iterator.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T, X extends Exception> CheckedIterator<T, X> checkedIterator() {
+		return (CheckedIterator<T, X>) _EMPTY_CHECKED_ITERATOR;
+	}
+	
+	private static final CheckedIterator<?, ?> _EMPTY_CHECKED_ITERATOR = new CheckedIterator<Object, RuntimeException>() {
+		public boolean hasNext() {
+			return false;
+		}
+		
+		public Object next() {
+			throw new NoSuchElementException();
+		}
+	};
+	
+	/**
+	 * Builds a checked iterator over the given values.
+	 * 
+	 * @param <T> Type of the the values.
+	 * @param <X> Type of the exceptions.
+	 * @param values The values.
+	 * @return The built iterator.
+	 */
+	public static <T, X extends Exception> CheckedIterator<T, X> checkedIterator(final T... values) {
+		assert null != values;
+		
+		return new CheckedIterator<T, X>() {
+			protected int _index = 0;
+			
+			public boolean hasNext() {
+				return _index < values.length;
+			}
+			
+			public T next() {
+				final T value = values[_index];
+				_index += 1;
+				
+				return value;
+			}
+		};
+	}
+	
+	/**
 	 * Gets the next value from the given iterator.
 	 * 
 	 * @param <T> Type of the values.
@@ -391,11 +440,58 @@ public class CollectionUtils {
 	 * @return The next value.
 	 * @throws X When the retrieval of the next value fails.
 	 */
-	public static <T, X extends Exception> Maybe<T> next(final CheckedIterator<? extends T, X> values)
+	public static <T, X extends Exception> Maybe<T> next(final CheckedIterator<T, X> values)
 	throws X {
 		assert null != values;
 		
 		return values.hasNext() ? Maybe.<T>some(values.next()) : Maybe.<T>none();
+	}
+	
+	/**
+	 * Drains all elements from the given checked iterator and populates the given collection with them.
+	 * 
+	 * @param <T> Type of the elements.
+	 * @param <R> Type of the result collection.
+	 * @param <X> Type of the exceptions.
+	 * @param values The iterator.
+	 * @param results The collection to populate with the elements.
+	 * @return The result collection.
+	 * @throws X When the retrieval of some value fails.
+	 */
+	public static <T, R extends Collection<? super T>, X extends Exception> R drain(final CheckedIterator<? extends T, X> values, final R results)
+	throws X {
+		assert null != values;
+		assert null != results;
+		
+		while (values.hasNext()) {
+			results.add(values.next());
+		}
+		return results;
+	}
+	
+	/**
+	 * Drains n elements from the given iterator and populates the given collection with them.
+	 * 
+	 * @param <T> Type of the elements.
+	 * @param <R> Type of the result collection.
+	 * @param <X> Type of the exceptions.
+	 * @param n The number of elements to drain.
+	 * @param values The iterator.
+	 * @param results The collection to populate with the elements.
+	 * @return The result collection.
+	 * @throws X When the retrieval of some value fails.
+	 */
+	public static <T, R extends Collection<? super T>, X extends Exception> R drain(final int n, final CheckedIterator<? extends T, X> values, final R results)
+	throws X {
+		assert null != values;
+		assert null != results;
+		
+		final Counter counter = new Counter();
+		while (values.hasNext() && counter.get() < n) {
+			results.add(values.next());
+			counter.inc();
+		}
+		return results;
 	}
 	
 	/**
