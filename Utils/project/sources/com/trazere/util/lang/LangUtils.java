@@ -93,14 +93,14 @@ public class LangUtils {
 	/**
 	 * Builds a function which matches objects according to the given type.
 	 * 
-	 * @param <L> Type of the lower bound.
+	 * @param <L> Type of the arguments.
 	 * @param <T> Type of the match.
 	 * @param <X> Type of the exceptions.
 	 * @param type The type.
 	 * @return The built function.
 	 * @see #match(Object, Class)
 	 */
-	public static <L, T extends L, X extends Exception> Function1<L, Maybe<T>, X> cast(final Class<T> type) {
+	public static <L, T extends L, X extends Exception> Function1<L, Maybe<T>, X> matchFunction(final Class<T> type) {
 		assert null != type;
 		
 		return new Function1<L, Maybe<T>, X>() {
@@ -110,6 +110,54 @@ public class LangUtils {
 				} else {
 					return Maybe.none();
 				}
+			}
+		};
+	}
+	
+	/**
+	 * Matches the given object according to the given type.
+	 * <p>
+	 * This methods tests that the given object is not <code>null</code> and is assignable to the given type.
+	 * 
+	 * @param <T> Type of the match.
+	 * @param <X> Type of the exceptions.
+	 * @param object The object. May be <code>null</code>.
+	 * @param type The type.
+	 * @param throwableFactory The throwable factory to use.
+	 * @return The given matched object.
+	 * @throws X When the given object is not assignable to the given type.
+	 */
+	public static <T, X extends Exception> T match(final Object object, final Class<T> type, final ThrowableFactory<X> throwableFactory)
+	throws X {
+		assert null != type;
+		assert null != throwableFactory;
+		
+		if (null != object && type.isInstance(object)) {
+			return type.cast(object);
+		} else {
+			throw throwableFactory.build("Invalid value \"" + object + "\"");
+		}
+	}
+	
+	/**
+	 * Builds a function which matches objects according to the given type.
+	 * 
+	 * @param <L> Type of the arguments.
+	 * @param <T> Type of the match.
+	 * @param <X> Type of the exceptions.
+	 * @param type The type.
+	 * @param throwableFactory The throwable factory to use.
+	 * @return The built extractor.
+	 * @see #match(Object, Class, ThrowableFactory)
+	 */
+	public static <L, T extends L, X extends Exception> Function1<L, T, X> matchFunction(final Class<T> type, final ThrowableFactory<? extends X> throwableFactory) {
+		assert null != type;
+		assert null != throwableFactory;
+		
+		return new Function1<L, T, X>() {
+			public T evaluate(final L value)
+			throws X {
+				return match(value, type, throwableFactory);
 			}
 		};
 	}
