@@ -15,6 +15,9 @@
  */
 package com.trazere.util.lang;
 
+import com.trazere.util.function.Function1;
+import com.trazere.util.type.Maybe;
+
 /**
  * The {@link WrappedException} exceptions aim to wrap other exceptions to propagate them out of methods which throw nothing.
  */
@@ -32,23 +35,77 @@ extends RuntimeException {
 	}
 	
 	/**
-	 * Unwraps and throws the given wrapped exception.
+	 * Unwraps and throws the given wrapped exception using the given extractor.
+	 * <p>
+	 * This methods simply returns when the extractor returns no results.
 	 * 
 	 * @param <T> Type of the wrapped exception.
 	 * @param exception The exception.
-	 * @param type Type of the wrapped exception.
+	 * @param extractor The extractor.
 	 * @throws T The unwrapped exception.
-	 * @throws WrappedException The wrapped exception when it does not have the given type.
 	 */
-	public static <T extends Throwable> void unwrapException(final WrappedException exception, final Class<T> type)
+	public static <T extends Throwable> void unwrapException(final WrappedException exception, final Function1<? super Throwable, ? extends Maybe<? extends T>, ? extends RuntimeException> extractor)
+	throws T {
+		assert null != exception;
+		assert null != extractor;
+		
+		final Maybe<? extends T> cause = extractor.evaluate(exception.getCause());
+		if (cause.isSome()) {
+			throw cause.asSome().getValue();
+		}
+	}
+	
+	/**
+	 * Unwraps and throws the given wrapped exception using the given extractor, or rethrows the wrapped exception.
+	 * <p>
+	 * This methods always throws either the wrapped or unwrapped exception, it never returns.
+	 * 
+	 * @param <T> Type of the wrapped exception.
+	 * @param exception The exception.
+	 * @param extractor The extractor.
+	 * @throws T The unwrapped exception.
+	 * @throws WrappedException The wrapped exception when the extractor returns no results.
+	 */
+	public static <T extends Throwable> void unwrapExceptionOrRethrow(final WrappedException exception, final Function1<? super Throwable, ? extends Maybe<? extends T>, ? extends RuntimeException> extractor)
 	throws T, WrappedException {
 		assert null != exception;
 		
-		final Throwable cause = exception.getCause();
-		if (type.isInstance(cause)) {
-			throw type.cast(cause);
+		final Maybe<? extends T> cause = extractor.evaluate(exception.getCause());
+		if (cause.isSome()) {
+			throw cause.asSome().getValue();
 		} else {
 			throw exception;
 		}
+	}
+	
+	/**
+	 * Unwraps and throws the given wrapped exception if it has the given type.
+	 * <p>
+	 * This methods simply returns when the extractor returns no results.
+	 * 
+	 * @param <T> Type of the wrapped exception.
+	 * @param exception The exception.
+	 * @param type The wrapped exception type.
+	 * @throws T The unwrapped exception.
+	 */
+	public static <T extends Throwable> void unwrapException(final WrappedException exception, final Class<T> type)
+	throws T {
+		unwrapException(exception, LangUtils.<Throwable, T, RuntimeException>matchFunction(type));
+	}
+	
+	/**
+	 * Unwraps and throws the given wrapped exception if it has the given type, or rethrows the wrapped exception.
+	 * <p>
+	 * This methods always throws either the wrapped or unwrapped exception, it never returns.
+	 * 
+	 * @param <T> Type of the wrapped exception.
+	 * @param exception The exception.
+	 * @param type The wrapped exception type.
+	 * @throws T The unwrapped exception.
+	 * @throws WrappedException The wrapped exception when it does not have the given type.
+	 */
+	public static <T extends Throwable> void unwrapExceptionOrRethrow(final WrappedException exception, final Class<T> type)
+	throws T, WrappedException {
+		unwrapExceptionOrRethrow(exception, LangUtils.<Throwable, T, RuntimeException>matchFunction(type));
 	}
 }
