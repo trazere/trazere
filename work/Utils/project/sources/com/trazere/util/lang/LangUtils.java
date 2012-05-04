@@ -583,6 +583,28 @@ public class LangUtils {
 		return Maybe.some(greatest.get());
 	}
 	
+	/**
+	 * Puts the current thread to sleep for the given amount of time.
+	 * <p>
+	 * This method throws an exception when the sleep is interrupted.
+	 * 
+	 * @param <X> Type of the interruption exception.
+	 * @param timeout The timeout in milliseconds.
+	 * @param throwableFactory The exception factory for interruptions.
+	 * @throws X When the sleep is interrupted.
+	 * @see Thread#sleep(long)
+	 */
+	public static <X extends Exception> void sleep(final long timeout, final ThrowableFactory<X> throwableFactory)
+	throws X {
+		assert null != throwableFactory;
+		
+		try {
+			Thread.sleep(timeout);
+		} catch (final InterruptedException exception) {
+			throw throwableFactory.build(exception);
+		}
+	}
+	
 	private LangUtils() {
 		// Prevents instantiation.
 	}
