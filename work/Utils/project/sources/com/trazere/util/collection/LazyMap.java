@@ -18,6 +18,7 @@ package com.trazere.util.collection;
 import com.trazere.util.function.Function1;
 import com.trazere.util.function.FunctionUtils;
 import com.trazere.util.function.Predicate2;
+import com.trazere.util.type.Maybe;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -82,6 +83,8 @@ implements Function1<K, V, X> {
 	
 	/**
 	 * Tests whether the receiver map is empty.
+	 * <p>
+	 * The map is empty when no values have been computed or set for any key.
 	 * 
 	 * @return <code>true</code> if the map is empty, <code>false</code> otherwise.
 	 */
@@ -91,6 +94,8 @@ implements Function1<K, V, X> {
 	
 	/**
 	 * Tests whether the receiver map contains a mapping for the given key.
+	 * <p>
+	 * The map contains a mapping when a value has been computed or set for the key.
 	 * 
 	 * @param key Key which the value is associated to. May be <code>null</code>.
 	 * @return <code>true</code> when some value is associated to the given key, <code>false</code> otherwise.
@@ -110,6 +115,8 @@ implements Function1<K, V, X> {
 	
 	/**
 	 * Gets the number of mappings in the receiver map.
+	 * <p>
+	 * The number of mappings corresponding to the number of computed and set values.
 	 * 
 	 * @return The number of mappings.
 	 */
@@ -142,10 +149,22 @@ implements Function1<K, V, X> {
 	/**
 	 * Gets the value mapped to the given key in the receiver map.
 	 * <p>
+	 * The value is not computed when no values are mapped to the given key.
+	 * 
+	 * @param key The key. May be <code>null</code>.
+	 * @return The value or nothing when it has not been computed yet.
+	 */
+	public Maybe<V> probe(final K key) {
+		return CollectionUtils.get(_mappings, key);
+	}
+	
+	/**
+	 * Gets the value mapped to the given key in the receiver map.
+	 * <p>
 	 * The value is implicitely computed using the {@link #compute(Object)} method and added into the map when no values are mapped to the given key.
 	 * 
 	 * @param key The key. May be <code>null</code>.
-	 * @return The value. May ne <code>null</code>.
+	 * @return The value. May be <code>null</code>.
 	 * @throws X When the value cannot be computed.
 	 */
 	public V get(final K key)
