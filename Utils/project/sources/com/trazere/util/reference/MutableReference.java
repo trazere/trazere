@@ -15,8 +15,6 @@
  */
 package com.trazere.util.reference;
 
-import com.trazere.util.lang.HashCode;
-import com.trazere.util.lang.LangUtils;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
@@ -204,25 +202,6 @@ implements ReleasableReference<T, RuntimeException>, Describable {
 	}
 	
 	// Object.
-	
-	@Override
-	public int hashCode() {
-		final HashCode result = new HashCode(this);
-		result.append(_value);
-		return result.get();
-	}
-	
-	@Override
-	public boolean equals(final Object object) {
-		if (this == object) {
-			return true;
-		} else if (null != object && getClass().equals(object.getClass())) {
-			final MutableReference<?> reference = (MutableReference<?>) object;
-			return LangUtils.equals(_value, reference._value);
-		} else {
-			return false;
-		}
-	}
 	
 	@Override
 	public final String toString() {
