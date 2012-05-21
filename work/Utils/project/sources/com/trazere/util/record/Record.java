@@ -20,8 +20,6 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-// TODO: add some get :: K -> Maybe<V> method
-
 /**
  * The {@link Record} interface defines unmutable records.
  * <p>
