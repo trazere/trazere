@@ -19,8 +19,6 @@ import com.trazere.util.type.Maybe;
 import java.util.Map;
 import java.util.Set;
 
-// TODO: add some getMaybe
-
 /**
  * The {@link RecordSignature} interface defines signatures of {@link Record records}.
  * <p>

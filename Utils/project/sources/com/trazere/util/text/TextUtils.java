@@ -450,30 +450,6 @@ public class TextUtils {
 		}
 	};
 	
-	// TODO: kill
-	/**
-	 * Converts empty strings to <code>null</code> strings.
-	 * 
-	 * @param s The string to strip.
-	 * @return <code>null</code> when the given string is empty, the given string otherwise.
-	 */
-	public static String strip(final String s) {
-		assert null != s;
-		
-		return s.length() > 0 ? s : null;
-	}
-	
-	// TODO: kill ?
-	/**
-	 * Converts <code>null</code> strings to empty strings.
-	 * 
-	 * @param s The string to unstrip. May be <code>null</code>.
-	 * @return The empty string when the given string is <code>null</code>, the given string otherwise.
-	 */
-	public static String unstrip(final String s) {
-		return null != s ? s : "";
-	}
-	
 	/** Array of the hexadecimal digits characters (upper case). */
 	public static final char[] HEX_DIGITS = {
 	    '0',
