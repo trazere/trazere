@@ -23,7 +23,7 @@ import java.util.Set;
 /**
  * The {@link ReleasableReferenceUmbrella} class provides sub references to an underlying releasable reference.
  * <p>
- * This class some kind of reference counting mecanism over a releable value. The value is released when all references to it have been released.
+ * This class implements some kind of reference counting mecanism over a releable value. The value is released when all references to it have been released.
  * 
  * @param <T> Type of the referenced values.
  * @param <X> Type of the exceptions.
@@ -36,7 +36,8 @@ implements Releasable<X> {
 	/**
 	 * Instantiates a new reference umbrella with the given value.
 	 * <p>
-	 * The new umbrella implicitely references the value. The value will not be release until this base reference is released.
+	 * The new umbrella implicitely references the value. The value will not be release until this implicit reference is released using the {@link #release()}
+	 * method.
 	 * 
 	 * @param value The value.
 	 */
@@ -54,9 +55,9 @@ implements Releasable<X> {
 	protected final Set<Releasable<X>> _references = new HashSet<Releasable<X>>();
 	
 	/**
-	 * Gets a new reference over the value of the receiver umbrella.
+	 * Gets a new reference to the value of the receiver umbrella.
 	 * <p>
-	 * The value will not be release until the returned reference is released.
+	 * The value of the umbrella will not be release until the returned reference is released.
 	 * 
 	 * @return The reference.
 	 * @throws ReferenceNotSetException When the value has already been release.
@@ -100,7 +101,7 @@ implements Releasable<X> {
 	}
 	
 	/**
-	 * Removes the given reference to the value and release the value if needed.
+	 * Removes the given reference to the value and releases the value if needed.
 	 * 
 	 * @param reference The reference to remove.
 	 * @throws X When the release of the value fails.
@@ -117,7 +118,7 @@ implements Releasable<X> {
 	// Release.
 	
 	/**
-	 * Releases the base reference to the value of the receiver umbrella.
+	 * Releases the implicit reference to the value of the receiver umbrella.
 	 */
 	public void release()
 	throws X {
