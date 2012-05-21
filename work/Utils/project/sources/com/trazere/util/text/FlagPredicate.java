@@ -25,8 +25,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-// TODO: implements Predicate
-
 /**
  * The {@link FlagPredicate} class represents predicates over sets of flags.
  * <p>
