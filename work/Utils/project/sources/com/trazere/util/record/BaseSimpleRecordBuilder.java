@@ -151,15 +151,41 @@ implements RecordBuilder<K, V, R>, Describable {
 		return Collections.unmodifiableSet(_fields.keySet());
 	}
 	
-	public void remove(final K key)
-	throws MissingFieldException {
+	public boolean replace(final K key, final V value)
+	throws RecordException {
+		assert null != key;
+		
+		// Replace the field.
+		if (_fields.containsKey(key)) {
+			_fields.put(key, value);
+			return true;
+		} else {
+			_fields.put(key, value);
+			return false;
+		}
+	}
+	
+	public <T extends V> boolean replace(final FieldSignature<K, T> field, final T value)
+	throws RecordException {
+		assert null != field;
+		
+		// Replace the field.
+		if (null != value || field.isNullable()) {
+			return replace(field.getKey(), value);
+		} else {
+			throw new NullFieldException("The value of field \"" + field.getKey() + "\" cannot be null");
+		}
+	}
+	
+	public boolean remove(final K key) {
 		assert null != key;
 		
 		// Remove the field.
 		if (_fields.containsKey(key)) {
 			_fields.remove(key);
+			return true;
 		} else {
-			throw new MissingFieldException("Field \"" + key + "\" does not exist in builder " + this);
+			return false;
 		}
 	}
 	

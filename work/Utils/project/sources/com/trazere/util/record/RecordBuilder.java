@@ -109,15 +109,36 @@ public interface RecordBuilder<K, V, R extends Record<K, V>> {
 	public Set<K> getKeys();
 	
 	/**
+	 * Replace the value contained in the field identified by the given key in the receiver record builder.
+	 * 
+	 * @param key The key of the field to replace.
+	 * @param value The new value of the field.
+	 * @return <code>true</code> when some value was replaced, <code>false</code> when the field was added.
+	 * @throws RecordException When the field cannot be replaced or added.
+	 */
+	public boolean replace(final K key, final V value)
+	throws RecordException;
+	
+	/**
+	 * Replace the value contained in the field identified by the given key in the receiver record builder.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param field The signature of the field to replace.
+	 * @param value The new value of the field.
+	 * @return <code>true</code> when some value was replaced, <code>false</code> when the field was added.
+	 * @throws RecordException When the field cannot be replaced or added.
+	 */
+	public <T extends V> boolean replace(final FieldSignature<K, T> field, final T value)
+	throws RecordException;
+	
+	/**
 	 * Remove the field identified by the given key from the receiver record builder.
-	 * <p>
-	 * Some field must by identified be the given key in the receiver record builder.
 	 * 
 	 * @param key The key of the field to remove.
-	 * @throws MissingFieldException When no fields are identified by the given key.
+	 * @return <code>true</code> when some field was removed, <code>false</code> otherwise.
 	 * @throws RecordException When the field cannot be removed.
 	 */
-	public void remove(final K key)
+	public boolean remove(final K key)
 	throws RecordException;
 	
 	/**
