@@ -26,6 +26,7 @@ import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.LangUtils;
 import com.trazere.util.text.CharPredicate;
 import com.trazere.util.text.CharPredicates;
+import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Tuple2;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -144,73 +145,77 @@ public class TextParsers {
 	private static final Parser<Character, BigInteger> _INTEGER = integer("an integer");
 	
 	public static <N extends Number> Parser<Character, N> integer(final IntegerExtractor<N> extractor, final String description) {
-		return CoreParsers.map(integer(), extractor, description);
+		return CoreParsers.map(integer(), new Function1<BigInteger, N, ParserException>() {
+			public N evaluate(final BigInteger value)
+			throws ParserException {
+				final Maybe<N> result = extractor.extract(value);
+				if (result.isSome()) {
+					return result.asSome().getValue();
+				} else {
+					throw new ParserException("Failed extracting integer \"" + value + "\"");
+				}
+			}
+		}, description);
 	}
 	
-	// TODO: public
-	private static abstract class IntegerExtractor<N extends Number>
-	implements Function1<BigInteger, N, ParserException> {
-		public abstract N extract(final BigInteger value)
-		throws ParserException;
+	// TODO: generalize and move to lang
+	public static abstract class IntegerExtractor<N extends Number>
+	implements Function1<BigInteger, Maybe<N>, ParserException> {
+		public abstract Maybe<N> extract(final BigInteger value);
 		
-		public N evaluate(final BigInteger value)
-		throws ParserException {
+		public Maybe<N> evaluate(final BigInteger value) {
 			return extract(value);
 		}
 	}
 	
 	public static final IntegerExtractor<Byte> BYTE_INTEGER_EXTRACTOR = new IntegerExtractor<Byte>() {
 		@Override
-		public Byte extract(final BigInteger value)
-		throws ParserException {
+		public Maybe<Byte> extract(final BigInteger value) {
 			assert null != value;
 			
 			if (value.bitLength() < Byte.SIZE) {
-				return value.byteValue();
+				return Maybe.some(value.byteValue());
 			} else {
-				throw new ParserException("Overflow");
+				return Maybe.none();
 			}
 		}
 	};
 	
 	public static final IntegerExtractor<Short> SHORT_INTEGER_EXTRACTOR = new IntegerExtractor<Short>() {
 		@Override
-		public Short extract(final BigInteger value)
-		throws ParserException {
+		public Maybe<Short> extract(final BigInteger value) {
 			assert null != value;
 			
 			if (value.bitLength() < Short.SIZE) {
-				return value.shortValue();
+				return Maybe.some(value.shortValue());
 			} else {
-				throw new ParserException("Overflow");
+				return Maybe.none();
 			}
 		}
 	};
 	
 	public static final IntegerExtractor<Integer> INTEGER_INTEGER_EXTRACTOR = new IntegerExtractor<Integer>() {
 		@Override
-		public Integer extract(final BigInteger value)
-		throws ParserException {
+		public Maybe<Integer> extract(final BigInteger value) {
 			assert null != value;
 			
 			if (value.bitLength() < Integer.SIZE) {
-				return value.intValue();
+				return Maybe.some(value.intValue());
 			} else {
-				throw new ParserException("Overflow");
+				return Maybe.none();
 			}
 		}
 	};
 	
 	public static final IntegerExtractor<Long> LONG_INTEGER_EXTRACTOR = new IntegerExtractor<Long>() {
 		@Override
-		public Long extract(final BigInteger value)
-		throws ParserException {
+		public Maybe<Long> extract(final BigInteger value) {
 			assert null != value;
 			
 			if (value.bitLength() < Long.SIZE) {
-				return value.longValue();
+				return Maybe.some(value.longValue());
 			} else {
-				throw new ParserException("Overflow");
+				return Maybe.none();
 			}
 		}
 	};
