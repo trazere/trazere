@@ -589,7 +589,7 @@ public class TextUtils {
 		synchronized (format) {
 			final ParsePosition position = new ParsePosition(0);
 			final Number number = format.parse(representation, position);
-			if (position.getIndex() == representation.length()) {
+			if (null != number && position.getIndex() == representation.length()) {
 				return Maybe.some(converter.evaluate(number));
 			} else {
 				return Maybe.none();
@@ -672,7 +672,7 @@ public class TextUtils {
 		synchronized (format) {
 			final ParsePosition position = new ParsePosition(0);
 			final Date date = format.parse(representation, position);
-			if (position.getIndex() == representation.length()) {
+			if (null != date && position.getIndex() == representation.length()) {
 				return Maybe.some(date);
 			} else {
 				return Maybe.none();

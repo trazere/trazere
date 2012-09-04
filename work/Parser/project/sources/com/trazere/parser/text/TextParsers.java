@@ -147,6 +147,7 @@ public class TextParsers {
 		return CoreParsers.map(integer(), extractor, description);
 	}
 	
+	// TODO: public
 	private static abstract class IntegerExtractor<N extends Number>
 	implements Function1<BigInteger, N, ParserException> {
 		public abstract N extract(final BigInteger value)
