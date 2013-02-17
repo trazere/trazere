@@ -16,6 +16,7 @@
 -->
 <project>
 	<import file="env.xml" />
+	<import file="${ant.project}" />
 	<import file="${parser.project}" />
 	<import file="${utils.project}" />
 
@@ -28,7 +29,7 @@
 	<property name="root.dist.zip" location="${root.dist}/trazere-${trazere.version}.zip" />
 
 	<!-- Clean -->
-	<target name="root.clean" depends="parser.clean, utils.clean" />
+	<target name="root.clean" depends="ant.clean, parser.clean, utils.clean" />
 
 	<!-- Clean the distribution -->
 	<target name="root.distclean">
@@ -36,10 +37,10 @@
 	</target>
 
 	<!-- Compile -->
-	<target name="root.compile" depends="parser.compile, utils.compile" />
+	<target name="root.compile" depends="ant.compile, parser.compile, utils.compile" />
 
 	<!-- Build the distribution -->
-	<target name="root.build" depends="parser.build, utils.build">
+	<target name="root.build" depends="ant.build, parser.build, utils.build">
 		<mkdir dir="${root.dist.binary}" />
 
 		<!-- Distribution -->
