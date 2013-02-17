@@ -14,14 +14,9 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<project name="root">
+<project name="ant">
 	<!-- Project -->
-	<dirname property="root" file="${ant.file.root}/.." />
-	<property name="root.module" location="${root}/.." />
-	<property name="root.project" location="${root}/build/project.xml" />
-
-	<!-- Sub projects -->
-	<import file="${root.module}/Ant/project/build/modules.xml" />
-	<import file="${root.module}/Parser/project/build/modules.xml" />
-	<import file="${root.module}/Utils/project/build/modules.xml" />
+	<dirname property="ant" file="${ant.file.ant}/.." />
+	<property name="ant.module" location="${ant}/.." />
+	<property name="ant.project" location="${ant}/build/project.xml" />
 </project>

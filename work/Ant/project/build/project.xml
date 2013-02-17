@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2006-2012 Julien Dufour
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<project xmlns:ivy="antlib:org.apache.ivy.ant">
+	<import file="env.xml" />
+
+	<!-- Declarations -->
+	<property name="ant.sources" location="${ant}/sources" />
+
+	<property name="ant.build" location="${ant}/build" />
+	<property name="ant.build.ivy" location="${ant.build}/ivy.xml" />
+
+	<property name="ant.target" location="${ant.build}/target" />
+	<property name="ant.target.classes" location="${ant.target}/classes" />
+	<property name="ant.target.jar" location="${ant.target}/trazere-ant.jar" />
+	<property name="ant.target.source_jar" location="${ant.target}/trazere-ant-sources.jar" />
+
+	<property name="ant.dist" location="${ant}/dist" />
+	<property name="ant.dist.lib" value="${ant.dist}/lib" />
+	<property name="ant.dist.maven" value="${ant.dist}/maven" />
+	<property name="ant.dist.sources" value="${ant.dist}/sources" />
+
+	<path id="ant.classpath">
+		<pathelement location="${ant.target.classes}" />
+	</path>
+	<union id="ant.jars">
+		<fileset file="${ant.target.jar}" />
+	</union>
+
+	<!-- Clean -->
+	<target name="ant.clean">
+		<delete dir="${ant.target}" />
+	</target>
+
+	<!-- Clean the distribution -->
+	<target name="ant.distclean">
+		<delete dir="${ant.dist}" />
+	</target>
+
+	<!-- Setup the dependencies -->
+	<target name="ant.setupDependencies">
+		<ivy:resolve file="${ant.build.ivy}" log="download-only" />
+		<ivy:cachepath pathid="ant.dependencies.classpath" conf="compile" />
+	</target>
+
+	<!-- Compile the sources -->
+	<target name="ant.compileSources" depends="ant.setupDependencies">
+		<mkdir dir="${ant.target.classes}" />
+		<javac destdir="${ant.target.classes}" source="${trazere.java.version}" encoding="${trazere.java.encoding}" target="${trazere.java.version}" debug="${trazere.java.debug}" includeantruntime="false" failonerror="true">
+			<src location="${ant.sources}" />
+			<classpath>
+				<path refid="ant.dependencies.classpath" />
+			</classpath>
+		</javac>
+	</target>
+
+	<!-- Compile -->
+	<target name="ant.compile" depends="ant.compileSources" />
+
+	<!-- Build the JAR -->
+	<target name="ant.buildJar" depends="ant.compileSources">
+		<mkdir dir="${ant.target}" />
+		<jar destfile="${ant.target.jar}">
+			<fileset dir="${ant.target.classes}" includes="**/*.class" />
+			<fileset dir="${ant.sources}" excludes="**/*.java" />
+		</jar>
+	</target>
+
+	<!-- Build the source JAR -->
+	<target name="ant.buildSourceJar">
+		<mkdir dir="${ant.target}" />
+		<jar destfile="${ant.target.source_jar}">
+			<fileset dir="${ant.sources}" />
+		</jar>
+	</target>
+
+	<!-- Build the distribution -->
+	<target name="ant.build" depends="ant.buildJar, ant.buildSourceJar">
+		<mkdir dir="${ant.dist}" />
+
+		<!-- Libs -->
+		<mkdir dir="${ant.dist.lib}" />
+		<copy todir="${ant.dist.lib}">
+			<resources refid="ant.jars" />
+		</copy>
+
+		<!-- Sources -->
+		<mkdir dir="${ant.dist.sources}" />
+		<copy todir="${ant.dist.sources}">
+			<fileset file="${ant.target.source_jar}" />
+		</copy>
+
+		<!-- Maven -->
+		<mkdir dir="${ant.dist.maven}" />
+		<property name="ivy.pom.version" value="${trazere.version}" />
+		<ivy:makepom ivyfile="${ant.build.ivy}" pomfile="${ant.dist.maven}/trazere-ant.pom" conf="compile,runtime" />
+	</target>
+</project>

@@ -14,14 +14,25 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<project name="root">
-	<!-- Project -->
-	<dirname property="root" file="${ant.file.root}/.." />
-	<property name="root.module" location="${root}/.." />
-	<property name="root.project" location="${root}/build/project.xml" />
+<project default="usage">
+	<import file="build/project.xml" />
 
-	<!-- Sub projects -->
-	<import file="${root.module}/Ant/project/build/modules.xml" />
-	<import file="${root.module}/Parser/project/build/modules.xml" />
-	<import file="${root.module}/Utils/project/build/modules.xml" />
+	<!-- Usage -->
+	<target name="usage">
+		<echo>TODO</echo>
+	</target>
+
+	<!-- Clean -->
+	<target name="clean" description="Clean" depends="ant.clean" />
+
+	<!-- Clean the distribution -->
+	<target name="distclean" description="Clean the distribution" depends="ant.distclean" />
+
+	<!-- Compile -->
+	<target name="compile" description="Compile" depends="ant.compile" />
+
+	<!-- Build the distribution -->
+	<target name="build" description="Build the distribution">
+		<antcall target="ant.build" inheritall="false" />
+	</target>
 </project>
