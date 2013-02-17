@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
-	<classpathentry kind="lib" path="/Trazere - Tools/ant-1.8.2/ant.jar"/>
-	<classpathentry kind="lib" path="/Trazere - Tools/sjsxp-1.0.1/jsr173_1.0_api.jar"/>
-	<classpathentry kind="lib" path="/Trazere - Tools/sjsxp-1.0.1/sjsxp.jar"/>
-	<classpathentry kind="lib" path="/Trazere - Tools/slf4j-1.6.1/slf4j-api.jar"/>
 	<classpathentry kind="src" path="sources"/>
-	<classpathentry kind="lib" path="/Trazere - Tools/jaxb-2.1.11/jaxb-api.jar"/>
+	<classpathentry kind="con" path="org.apache.ivyde.eclipse.cpcontainer.IVYDE_CONTAINER/?project=Trazere+-+Utils&amp;ivyXmlPath=build%2Fivy.xml&amp;confs=compile"/>
 	<classpathentry kind="output" path="build/target/classes"/>
 </classpath>

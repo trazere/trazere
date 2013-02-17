@@ -23,27 +23,27 @@
 	</target>
 
 	<!-- Clean -->
-	<target name="clean" description="Clean" depends="trazere.clean" />
+	<target name="clean" description="Clean" depends="root.clean" />
 
 	<!-- Clean the distribution -->
-	<target name="distclean" description="Clean the distribution" depends="trazere.distclean" />
+	<target name="distclean" description="Clean the distribution" depends="root.distclean" />
 
 	<!-- Compile -->
-	<target name="compile" description="Compile" depends="trazere.compile" />
+	<target name="compile" description="Compile" depends="root.compile" />
 
 	<!-- Build the distribution -->
 	<target name="build" description="Build the distribution">
-		<antcall target="trazere.build" inheritall="false">
-			<param name="parser.dist" location="${trazere.dist.binary}" />
-			<param name="utils.dist" location="${trazere.dist.binary}" />
+		<antcall target="root.build" inheritall="false">
+			<param name="parser.dist" location="${root.dist.binary}" />
+			<param name="utils.dist" location="${root.dist.binary}" />
 		</antcall>
 	</target>
 
 	<!-- Build the distribution archives -->
 	<target name="buildArchives" description="Build the distribution archives">
-		<antcall target="trazere.buildArchives" inheritall="false">
-			<param name="parser.dist" location="${trazere.dist.binary}" />
-			<param name="utils.dist" location="${trazere.dist.binary}" />
+		<antcall target="root.buildArchives" inheritall="false">
+			<param name="parser.dist" location="${root.dist.binary}" />
+			<param name="utils.dist" location="${root.dist.binary}" />
 		</antcall>
 	</target>
 

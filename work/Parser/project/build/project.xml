@@ -14,34 +14,32 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<project>
+<project xmlns:ivy="antlib:org.apache.ivy.ant">
 	<import file="env.xml" />
 	<import file="${utils.project}" />
 
 	<!-- Declarations -->
 	<property name="parser.sources" location="${parser}/sources" />
 
-	<property name="parser.target" location="${parser}/build/target" />
+	<property name="parser.build" location="${parser}/build" />
+	<property name="parser.build.ivy" location="${parser.build}/ivy.xml" />
+
+	<property name="parser.target" location="${parser.build}/target" />
 	<property name="parser.target.classes" location="${parser.target}/classes" />
 	<property name="parser.target.jar" location="${parser.target}/trazere-parser.jar" />
 	<property name="parser.target.source_jar" location="${parser.target}/trazere-parser-sources.jar" />
 
 	<property name="parser.dist" location="${parser}/dist" />
 	<property name="parser.dist.lib" value="${parser.dist}/lib" />
+	<property name="parser.dist.maven" value="${parser.dist}/maven" />
 	<property name="parser.dist.sources" value="${parser.dist}/sources" />
 
-	<union id="parser.libs">
-		<union id="parser.deps">
-			<resources refid="tools.slf4j.libs" />
-			<resources refid="utils.libs" />
-		</union>
-		<union id="parser.jars">
-			<fileset file="${parser.target.jar}" />
-		</union>
-	</union>
 	<path id="parser.classpath">
 		<pathelement location="${parser.target.classes}" />
 	</path>
+	<union id="parser.jars">
+		<fileset file="${parser.target.jar}" />
+	</union>
 
 	<!-- Clean -->
 	<target name="parser.clean" depends="utils.clean">
@@ -53,13 +51,19 @@
 		<delete dir="${parser.dist}" />
 	</target>
 
+	<!-- Setup the dependencies -->
+	<target name="parser.setupDependencies">
+		<ivy:resolve file="${parser.build.ivy}" log="download-only" conf="compile" />
+		<ivy:cachepath pathid="parser.dependencies.classpath" conf="compile" />
+	</target>
+
 	<!-- Compile the sources -->
-	<target name="parser.compileSources" depends="utils.compileSources">
+	<target name="parser.compileSources" depends="parser.setupDependencies, utils.compileSources">
 		<mkdir dir="${parser.target.classes}" />
 		<javac destdir="${parser.target.classes}" source="${trazere.java.version}" encoding="${trazere.java.encoding}" target="${trazere.java.version}" debug="${trazere.java.debug}" includeantruntime="false" failonerror="true">
 			<src location="${parser.sources}" />
 			<classpath>
-				<path refid="tools.slf4j.classpath" />
+				<path refid="parser.dependencies.classpath" />
 				<path refid="utils.classpath" />
 			</classpath>
 		</javac>
@@ -100,5 +104,11 @@
 		<copy todir="${parser.dist.sources}">
 			<fileset file="${parser.target.source_jar}" />
 		</copy>
+
+		<!-- Maven -->
+		<property name="ivy.pom.version" value="${trazere.version}" />
+		<ivy:makepom ivyfile="${parser.build.ivy}" pomfile="${parser.dist.maven}/trazere-parser.pom" conf="compile,runtime">
+			<dependency artifact="utils" version="${trazere.version}" scope="compile" />
+		</ivy:makepom>
 	</target>
 </project>

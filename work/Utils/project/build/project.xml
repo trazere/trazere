@@ -14,36 +14,31 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<project>
+<project xmlns:ivy="antlib:org.apache.ivy.ant">
 	<import file="env.xml" />
-	<import file="${tools.project}" />
 
 	<!-- Declarations -->
 	<property name="utils.sources" location="${utils}/sources" />
 
-	<property name="utils.target" location="${utils}/build/target" />
+	<property name="utils.build" location="${utils}/build" />
+	<property name="utils.build.ivy" location="${utils.build}/ivy.xml" />
+
+	<property name="utils.target" location="${utils.build}/target" />
 	<property name="utils.target.classes" location="${utils.target}/classes" />
 	<property name="utils.target.jar" location="${utils.target}/trazere-utils.jar" />
 	<property name="utils.target.source_jar" location="${utils.target}/trazere-utils-sources.jar" />
 
 	<property name="utils.dist" location="${utils}/dist" />
 	<property name="utils.dist.lib" value="${utils.dist}/lib" />
+	<property name="utils.dist.maven" value="${utils.dist}/maven" />
 	<property name="utils.dist.sources" value="${utils.dist}/sources" />
 
-	<union id="utils.libs">
-		<union id="utils.deps">
-			<resources refid="tools.ant.libs" />
-			<resources refid="tools.jaxb.libs" />
-			<resources refid="tools.sjsxp.libs" />
-			<resources refid="tools.slf4j.libs" />
-		</union>
-		<union id="utils.jars">
-			<fileset file="${utils.target.jar}" />
-		</union>
-	</union>
 	<path id="utils.classpath">
 		<pathelement location="${utils.target.classes}" />
 	</path>
+	<union id="utils.jars">
+		<fileset file="${utils.target.jar}" />
+	</union>
 
 	<!-- Clean -->
 	<target name="utils.clean">
@@ -55,16 +50,19 @@
 		<delete dir="${utils.dist}" />
 	</target>
 
+	<!-- Setup the dependencies -->
+	<target name="utils.setupDependencies">
+		<ivy:resolve file="${utils.build.ivy}" log="download-only" />
+		<ivy:cachepath pathid="utils.dependencies.classpath" conf="compile" />
+	</target>
+
 	<!-- Compile the sources -->
-	<target name="utils.compileSources">
+	<target name="utils.compileSources" depends="utils.setupDependencies">
 		<mkdir dir="${utils.target.classes}" />
 		<javac destdir="${utils.target.classes}" source="${trazere.java.version}" encoding="${trazere.java.encoding}" target="${trazere.java.version}" debug="${trazere.java.debug}" includeantruntime="false" failonerror="true">
 			<src location="${utils.sources}" />
 			<classpath>
-				<path refid="tools.ant.classpath" />
-				<path refid="tools.jaxb.classpath" />
-				<path refid="tools.slf4j.classpath" />
-				<path refid="tools.sjsxp.classpath" />
+				<path refid="utils.dependencies.classpath" />
 			</classpath>
 		</javac>
 	</target>
@@ -93,7 +91,7 @@
 	<target name="utils.build" depends="utils.buildJar, utils.buildSourceJar">
 		<mkdir dir="${utils.dist}" />
 
-		<!-- Jars -->
+		<!-- Libs -->
 		<mkdir dir="${utils.dist.lib}" />
 		<copy todir="${utils.dist.lib}">
 			<resources refid="utils.jars" />
@@ -104,18 +102,10 @@
 		<copy todir="${utils.dist.sources}">
 			<fileset file="${utils.target.source_jar}" />
 		</copy>
-	</target>
 
-	<!-- Build the bootstrap JAR -->
-	<!--
-	<target name="utils.buildBootstrapJar" depends="utils.compileSources">
-		<echo>Building the bootstrap JAR</echo>
-
-		<mkdir dir="${utils.dist}" />
-		<jar destfile="${utils.dist.bootstrap_jar}">
-			<fileset dir="${utils.sources}" includes="com/trazere/util/TargetTask.java" />
-			<fileset dir="${utils.target.classes}" includes="com/trazere/util/TargetTask.class" />
-		</jar>
+		<!-- Maven -->
+		<mkdir dir="${utils.dist.maven}" />
+		<property name="ivy.pom.version" value="${trazere.version}" />
+		<ivy:makepom ivyfile="${utils.build.ivy}" pomfile="${utils.dist.maven}/trazere-utils.pom" conf="compile,runtime" />
 	</target>
-	-->
 </project>
