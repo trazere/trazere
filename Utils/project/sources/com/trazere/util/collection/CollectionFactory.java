@@ -26,6 +26,7 @@ import java.util.Collection;
  */
 public interface CollectionFactory<T, C extends Collection<? super T>>
 extends Factory<C, RuntimeException> {
+	@Override
 	public C build();
 	
 	public C build(final int capacity);

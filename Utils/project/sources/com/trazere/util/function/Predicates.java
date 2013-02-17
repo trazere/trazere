@@ -42,6 +42,7 @@ public class Predicates {
 	}
 	
 	private static final Predicate1<?, ?> _ALL = new Predicate1<Object, Exception>() {
+		@Override
 		public boolean evaluate(final Object value) {
 			return true;
 		}
@@ -60,6 +61,7 @@ public class Predicates {
 	}
 	
 	private static final Predicate1<?, ?> _NONE = new Predicate1<Object, Exception>() {
+		@Override
 		public boolean evaluate(final Object value) {
 			return false;
 		}
@@ -77,6 +79,7 @@ public class Predicates {
 		assert null != predicate;
 		
 		return new Predicate1<T, X>() {
+			@Override
 			public boolean evaluate(final T value)
 			throws X {
 				return !predicate.evaluate(value);
@@ -98,6 +101,7 @@ public class Predicates {
 		assert null != predicate2;
 		
 		return new Predicate1<T, X>() {
+			@Override
 			public boolean evaluate(final T value)
 			throws X {
 				return predicate1.evaluate(value) && predicate2.evaluate(value);
@@ -121,6 +125,7 @@ public class Predicates {
 			return (Predicate1<T, X>) TypeUtils.get(CollectionUtils.any(predicates), Predicates.<T, X>all());
 		} else {
 			return new Predicate1<T, X>() {
+				@Override
 				public boolean evaluate(final T value)
 				throws X {
 					for (final Predicate1<? super T, ? extends X> predicate : predicates) {
@@ -148,6 +153,7 @@ public class Predicates {
 		assert null != predicate2;
 		
 		return new Predicate1<T, X>() {
+			@Override
 			public boolean evaluate(final T value)
 			throws X {
 				return predicate1.evaluate(value) || predicate2.evaluate(value);
@@ -171,6 +177,7 @@ public class Predicates {
 			return (Predicate1<T, X>) TypeUtils.get(CollectionUtils.any(predicates), Predicates.<T, X>none());
 		} else {
 			return new Predicate1<T, X>() {
+				@Override
 				public boolean evaluate(final T value)
 				throws X {
 					for (final Predicate1<? super T, ? extends X> predicate : predicates) {
@@ -199,6 +206,7 @@ public class Predicates {
 		assert null != f;
 		
 		return new Predicate1<T1, X>() {
+			@Override
 			public boolean evaluate(final T1 value)
 			throws X {
 				return g.evaluate(f.evaluate(value));
@@ -216,6 +224,7 @@ public class Predicates {
 	 */
 	public static <T, X extends Exception> Predicate1<T, X> equal(final T value) {
 		return new Predicate1<T, X>() {
+			@Override
 			public boolean evaluate(final T value_) {
 				return LangUtils.equals(value, value_);
 			}
@@ -248,6 +257,7 @@ public class Predicates {
 		assert null != values;
 		
 		return new Predicate1<T, X>() {
+			@Override
 			public boolean evaluate(final T value) {
 				return values.contains(value);
 			}
@@ -266,6 +276,7 @@ public class Predicates {
 		assert null != type;
 		
 		return new Predicate1<T, X>() {
+			@Override
 			public boolean evaluate(final T value) {
 				return null != value && type.isInstance(value);
 			}
@@ -284,6 +295,7 @@ public class Predicates {
 	}
 	
 	private static final Predicate1<Boolean, ?> _IDENTITY = new Predicate1<Boolean, RuntimeException>() {
+		@Override
 		public boolean evaluate(final Boolean value) {
 			assert null != value;
 			
@@ -303,6 +315,7 @@ public class Predicates {
 	}
 	
 	private static Predicate1<String, ?> _EMPTY_STRING = new Predicate1<String, RuntimeException>() {
+		@Override
 		public boolean evaluate(final String value) {
 			assert null != value;
 			
@@ -323,6 +336,7 @@ public class Predicates {
 	}
 	
 	private static Predicate1<Collection<?>, ?> _EMPTY = new Predicate1<Collection<?>, RuntimeException>() {
+		@Override
 		public boolean evaluate(final Collection<?> collection) {
 			assert null != collection;
 			
@@ -341,6 +355,7 @@ public class Predicates {
 	 */
 	public static <T, C extends Collection<? super T>, X extends Exception> Predicate1<C, X> contains(final T value) {
 		return new Predicate1<C, X>() {
+			@Override
 			public boolean evaluate(final C collection)
 			throws X {
 				return collection.contains(value);
@@ -362,6 +377,7 @@ public class Predicates {
 	}
 	
 	private static final Predicate2<?, ?, ?> _ALL2 = new Predicate2<Object, Object, Exception>() {
+		@Override
 		public boolean evaluate(final Object value1, final Object value2) {
 			return true;
 		}
@@ -381,6 +397,7 @@ public class Predicates {
 	}
 	
 	private static final Predicate2<?, ?, ?> _NONE2 = new Predicate2<Object, Object, Exception>() {
+		@Override
 		public boolean evaluate(final Object value1, final Object value2) {
 			return false;
 		}
@@ -399,6 +416,7 @@ public class Predicates {
 		assert null != predicate;
 		
 		return new Predicate2<T1, T2, X>() {
+			@Override
 			public boolean evaluate(final T1 value1, final T2 value2)
 			throws X {
 				return !predicate.evaluate(value1, value2);
@@ -421,6 +439,7 @@ public class Predicates {
 		assert null != predicate2;
 		
 		return new Predicate2<T1, T2, X>() {
+			@Override
 			public boolean evaluate(final T1 value1, final T2 value2)
 			throws X {
 				return predicate1.evaluate(value1, value2) && predicate2.evaluate(value1, value2);
@@ -445,6 +464,7 @@ public class Predicates {
 			return (Predicate2<T1, T2, X>) TypeUtils.get(CollectionUtils.any(predicates), Predicates.<T1, T2, X>none2());
 		} else {
 			return new Predicate2<T1, T2, X>() {
+				@Override
 				public boolean evaluate(final T1 value1, final T2 value2)
 				throws X {
 					for (final Predicate2<? super T1, ? super T2, ? extends X> predicate : predicates) {
@@ -473,6 +493,7 @@ public class Predicates {
 		assert null != predicate2;
 		
 		return new Predicate2<T1, T2, X>() {
+			@Override
 			public boolean evaluate(final T1 value1, final T2 value2)
 			throws X {
 				return predicate1.evaluate(value1, value2) || predicate2.evaluate(value1, value2);
@@ -497,6 +518,7 @@ public class Predicates {
 			return (Predicate2<T1, T2, X>) TypeUtils.get(CollectionUtils.any(predicates), Predicates.<T1, T2, X>none2());
 		} else {
 			return new Predicate2<T1, T2, X>() {
+				@Override
 				public boolean evaluate(final T1 value1, final T2 value2)
 				throws X {
 					for (final Predicate2<? super T1, ? super T2, ? extends X> predicate : predicates) {
@@ -523,6 +545,7 @@ public class Predicates {
 		assert null != values;
 		
 		return new Predicate2<T1, T2, X>() {
+			@Override
 			public boolean evaluate(final T1 value1, final T2 value2) {
 				return values.contains(value1);
 			}
@@ -542,6 +565,7 @@ public class Predicates {
 		assert null != values;
 		
 		return new Predicate2<T1, T2, X>() {
+			@Override
 			public boolean evaluate(final T1 value1, final T2 value2) {
 				return values.contains(value2);
 			}
@@ -561,6 +585,7 @@ public class Predicates {
 		assert null != predicate;
 		
 		return new Predicate2<T1, T2, X>() {
+			@Override
 			public boolean evaluate(final T1 value1, final T2 value2)
 			throws X {
 				return predicate.evaluate(value1);

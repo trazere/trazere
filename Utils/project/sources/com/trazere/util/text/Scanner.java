@@ -147,6 +147,7 @@ public class Scanner {
 	public String scanChars(final String chars)
 	throws IOException {
 		final CharPredicate<IOException> filter = new CharPredicate<IOException>() {
+			@Override
 			public boolean evaluate(final char c) {
 				return chars.indexOf(c) >= 0;
 			}
@@ -284,6 +285,7 @@ public class Scanner {
 	public String scanUpToAnyChar(final String chars)
 	throws IOException {
 		final CharPredicate<IOException> filter = new CharPredicate<IOException>() {
+			@Override
 			public boolean evaluate(final char c) {
 				return chars.indexOf(c) >= 0;
 			}
@@ -366,15 +368,15 @@ public class Scanner {
 	}
 	
 	// public Integer scanInteger() {
-	//		
+	//
 	// }
-	//	
+	//
 	// public String scanPattern(final Pattern pattern) {
-	//		
+	//
 	// }
-	//	
+	//
 	// public String scanUpToPattern(final Pattern pattern) {
-	//		
+	//
 	// }
 	
 	/**

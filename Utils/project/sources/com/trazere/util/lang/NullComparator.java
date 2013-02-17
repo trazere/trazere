@@ -51,6 +51,7 @@ implements Comparator<T> {
 		_comparator = comparator;
 	}
 	
+	@Override
 	public int compare(final T object1, final T object2) {
 		return LangUtils.compare(_comparator, object1, object2);
 	}

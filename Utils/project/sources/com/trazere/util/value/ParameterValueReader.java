@@ -106,12 +106,14 @@ extends BaseValueReader<T> {
 		return _name;
 	}
 	
+	@Override
 	public <B extends RecordSignatureBuilder<String, Object, ?>> B unifyRequirements(final B builder)
 	throws RecordException {
 		builder.unify(_name, _valueClass, _nullable);
 		return builder;
 	}
 	
+	@Override
 	public T read(final Record<String, Object> parameters)
 	throws ValueException {
 		try {
@@ -121,6 +123,7 @@ extends BaseValueReader<T> {
 		}
 	}
 	
+	@Override
 	@SuppressWarnings("unchecked")
 	public ValueReader<T> compose(final RecordReader<String, Object> reader)
 	throws ValueException {
@@ -149,16 +152,19 @@ extends BaseValueReader<T> {
 		assert null != valueReader;
 		
 		return new BaseValueReader<T>(_valueClass, _nullable) {
+			@Override
 			public <B extends RecordSignatureBuilder<String, Object, ?>> B unifyRequirements(final B builder)
 			throws RecordException {
 				return valueReader.unifyRequirements(builder);
 			}
 			
+			@Override
 			public T read(final Record<String, Object> parameters)
 			throws ValueException {
 				return valueReader.read(parameters);
 			}
 			
+			@Override
 			public ValueReader<T> compose(final RecordReader<String, Object> reader)
 			throws ValueException {
 				return adapt(valueReader.compose(reader));

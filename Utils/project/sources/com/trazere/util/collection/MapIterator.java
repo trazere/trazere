@@ -56,6 +56,7 @@ implements Iterator<R> {
 	
 	// Iterator.
 	
+	@Override
 	public void remove() {
 		throw new UnsupportedOperationException();
 	}

@@ -48,6 +48,7 @@ extends BaseParser<Token, Result> {
 	
 	// Parser.
 	
+	@Override
 	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
 	throws ParserException {
 		// Start.
@@ -67,6 +68,7 @@ extends BaseParser<Token, Result> {
 	
 	protected ParserHandler<Token, SubResult> buildHandler(final ParserClosure<Token, Result> closure, final List<SubResult> previousSubResults) {
 		return new ParserHandler<Token, SubResult>() {
+			@Override
 			public void result(final SubResult subResult, final ParserState<Token> state)
 			throws ParserException {
 				// Accumulate the result.
@@ -82,23 +84,23 @@ extends BaseParser<Token, Result> {
 	
 	// Object.
 	
-	//	@Override
-	//	public int hashCode() {
-	//		final HashCode result = new HashCode(this);
-	//		result.append(_description);
-	//		result.append(_subParsers);
-	//		return result.get();
-	//	}
-	//	
-	//	@Override
-	//	public boolean equals(final Object object) {
-	//		if (this == object) {
-	//			return true;
-	//		} else if (null != object && getClass().equals(object.getClass())) {
-	//			final CombineParser<?, ?, ?> parser = (CombineParser<?, ?, ?>) object;
-	//			return LangUtils.equals(_description, parser._description) && _subParsers.equals(parser._subParsers);
-	//		} else {
-	//			return false;
-	//		}
-	//	}
+	// @Override
+	// public int hashCode() {
+	// final HashCode result = new HashCode(this);
+	// result.append(_description);
+	// result.append(_subParsers);
+	// return result.get();
+	// }
+	//
+	// @Override
+	// public boolean equals(final Object object) {
+	// if (this == object) {
+	// return true;
+	// } else if (null != object && getClass().equals(object.getClass())) {
+	// final CombineParser<?, ?, ?> parser = (CombineParser<?, ?, ?>) object;
+	// return LangUtils.equals(_description, parser._description) && _subParsers.equals(parser._subParsers);
+	// } else {
+	// return false;
+	// }
+	// }
 }

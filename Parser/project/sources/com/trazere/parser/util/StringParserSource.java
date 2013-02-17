@@ -33,11 +33,13 @@ implements ParserSource<Character> {
 		_string = string;
 	}
 	
+	@Override
 	public boolean hasNext()
 	throws ParserException {
 		return _position < _string.length();
 	}
 	
+	@Override
 	public Character next()
 	throws ParserException {
 		final char c = _string.charAt(_position);

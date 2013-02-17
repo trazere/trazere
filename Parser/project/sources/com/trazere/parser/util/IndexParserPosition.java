@@ -33,14 +33,17 @@ implements ParserPosition<Token> {
 		return _index;
 	}
 	
+	@Override
 	public String getDescription() {
 		return "index " + _index;
 	}
 	
+	@Override
 	public ParserPosition<Token> next(final Token token) {
 		return new IndexParserPosition<Token>(_index + 1);
 	}
 	
+	@Override
 	public int compareTo(final ParserPosition<Token> position) {
 		assert null != position;
 		

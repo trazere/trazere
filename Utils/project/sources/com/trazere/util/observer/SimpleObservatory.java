@@ -33,10 +33,12 @@ implements Observatory<S, E> {
 		}
 	};
 	
+	@Override
 	public Observable<E> observe(final S subject) {
 		assert null != subject;
 		
 		return new Observable<E>() {
+			@Override
 			public ObserverSubscription subscribe(final Observer<? super E> observer) {
 				final SimpleObservable<E> observable;
 				synchronized (_observables) {
@@ -47,6 +49,7 @@ implements Observatory<S, E> {
 				}
 			}
 			
+			@Override
 			public ObserverSubscription subscribeOnce(final Observer<? super E> observer) {
 				final SimpleObservable<E> observable;
 				synchronized (_observables) {
@@ -57,6 +60,7 @@ implements Observatory<S, E> {
 				}
 			}
 			
+			@Override
 			public ObserverSubscription subscribeWhile(final Observer<? super E> observer, final Predicate1<? super E, RuntimeException> condition) {
 				final SimpleObservable<E> observable;
 				synchronized (_observables) {
@@ -69,6 +73,7 @@ implements Observatory<S, E> {
 		};
 	}
 	
+	@Override
 	public void notify(final S subject, final E event) {
 		assert null != subject;
 		assert null != event;

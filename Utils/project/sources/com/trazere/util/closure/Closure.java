@@ -38,6 +38,7 @@ extends Function0<T, X> {
 	 * @return The value of the closure. May be <code>null</code>.
 	 * @throws X When the evaluation of the closure fails.
 	 */
+	@Override
 	public T evaluate()
 	throws X;
 	

@@ -47,6 +47,7 @@ extends BaseParser<Token, Maybe<Result>> {
 	
 	// Parser.
 	
+	@Override
 	public void run(final ParserClosure<Token, Maybe<Result>> closure, final ParserState<Token> state)
 	throws ParserException {
 		// Zero.
@@ -58,6 +59,7 @@ extends BaseParser<Token, Maybe<Result>> {
 	
 	protected ParserHandler<Token, Result> buildOneHandler(final ParserClosure<Token, Maybe<Result>> closure) {
 		return new ParserHandler<Token, Result>() {
+			@Override
 			public void result(final Result result, final ParserState<Token> state)
 			throws ParserException {
 				// Wrap the result.

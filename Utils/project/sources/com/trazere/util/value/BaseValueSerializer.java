@@ -48,6 +48,7 @@ implements ValueSerializer<T, R, X>, Describable {
 	/** Type of the values. */
 	protected final Class<T> _valueClass;
 	
+	@Override
 	public Class<T> getValueClass() {
 		return _valueClass;
 	}
@@ -55,6 +56,7 @@ implements ValueSerializer<T, R, X>, Describable {
 	/** Type of the representations. */
 	protected final Class<R> _representationClass;
 	
+	@Override
 	public Class<R> getRepresentationClass() {
 		return _representationClass;
 	}
@@ -66,6 +68,7 @@ implements ValueSerializer<T, R, X>, Describable {
 		return TextUtils.computeDescription(this);
 	}
 	
+	@Override
 	public void fillDescription(final Description description) {
 		description.append("Type", _valueClass.getName());
 		description.append("Representation", _representationClass.getName());

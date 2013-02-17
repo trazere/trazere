@@ -44,6 +44,7 @@ public class Functions {
 	}
 	
 	private static final Function1<?, ?, ?> _IDENTITY = new Function1<Object, Object, RuntimeException>() {
+		@Override
 		public Object evaluate(final Object value) {
 			return value;
 		}
@@ -64,6 +65,7 @@ public class Functions {
 		assert null != f;
 		
 		return new Function0<T2, X>() {
+			@Override
 			public T2 evaluate()
 			throws X {
 				return g.evaluate(f.evaluate());
@@ -87,6 +89,7 @@ public class Functions {
 		assert null != f;
 		
 		return new Function1<T1, T3, X>() {
+			@Override
 			public T3 evaluate(final T1 value)
 			throws X {
 				return g.evaluate(f.evaluate(value));
@@ -104,6 +107,7 @@ public class Functions {
 	 */
 	public static <R, X extends Exception> Function0<R, X> constant0(final R result) {
 		return new Function0<R, X>() {
+			@Override
 			public R evaluate() {
 				return result;
 			}
@@ -121,6 +125,7 @@ public class Functions {
 	 */
 	public static <T, R, X extends Exception> Function1<T, R, X> constant1(final R result) {
 		return new Function1<T, R, X>() {
+			@Override
 			public R evaluate(final T value) {
 				return result;
 			}
@@ -139,6 +144,7 @@ public class Functions {
 	 */
 	public static <T1, T2, R, X extends Exception> Function2<T1, T2, R, X> constant2(final R result) {
 		return new Function2<T1, T2, R, X>() {
+			@Override
 			public R evaluate(final T1 value1, final T2 value2) {
 				return result;
 			}
@@ -158,6 +164,7 @@ public class Functions {
 	 */
 	public static <T1, T2, T3, R, X extends Exception> Function3<T1, T2, T3, R, X> constant3(final R result) {
 		return new Function3<T1, T2, T3, R, X>() {
+			@Override
 			public R evaluate(final T1 value1, final T2 value2, final T3 value3) {
 				return result;
 			}
@@ -177,6 +184,7 @@ public class Functions {
 		assert null != function;
 		
 		return new Function1<T, R, X>() {
+			@Override
 			public R evaluate(final T value)
 			throws X {
 				return function.evaluate();
@@ -196,6 +204,7 @@ public class Functions {
 		assert null != predicate;
 		
 		return new Function1<T, Boolean, X>() {
+			@Override
 			public Boolean evaluate(final T value)
 			throws X {
 				return predicate.evaluate(value);
@@ -217,6 +226,7 @@ public class Functions {
 		assert null != function;
 		
 		return new Function2<T1, T2, R, X>() {
+			@Override
 			public R evaluate(final T1 value1, final T2 value2)
 			throws X {
 				return function.evaluate();
@@ -238,6 +248,7 @@ public class Functions {
 		assert null != function;
 		
 		return new Function2<T1, T2, R, X>() {
+			@Override
 			public R evaluate(final T1 value1, final T2 value2)
 			throws X {
 				return function.evaluate(value1);
@@ -258,6 +269,7 @@ public class Functions {
 		assert null != predicate;
 		
 		return new Function2<T1, T2, Boolean, X>() {
+			@Override
 			public Boolean evaluate(final T1 value1, final T2 value2)
 			throws X {
 				return predicate.evaluate(value1, value2);
@@ -280,6 +292,7 @@ public class Functions {
 		assert null != function;
 		
 		return new Function3<T1, T2, T3, R, X>() {
+			@Override
 			public R evaluate(final T1 value1, final T2 value2, final T3 value3)
 			throws X {
 				return function.evaluate();
@@ -302,6 +315,7 @@ public class Functions {
 		assert null != function;
 		
 		return new Function3<T1, T2, T3, R, X>() {
+			@Override
 			public R evaluate(final T1 value1, final T2 value2, final T3 value3)
 			throws X {
 				return function.evaluate(value1);
@@ -324,6 +338,7 @@ public class Functions {
 		assert null != function;
 		
 		return new Function3<T1, T2, T3, R, X>() {
+			@Override
 			public R evaluate(final T1 value1, final T2 value2, final T3 value3)
 			throws X {
 				return function.evaluate(value1, value2);
@@ -345,6 +360,7 @@ public class Functions {
 		assert null != predicate;
 		
 		return new Function3<T1, T2, T3, Boolean, X>() {
+			@Override
 			public Boolean evaluate(final T1 value1, final T2 value2, final T3 value3)
 			throws X {
 				return predicate.evaluate(value1, value2, value3);
@@ -367,6 +383,7 @@ public class Functions {
 		assert null != map;
 		
 		return new Function1<K, V, X>() {
+			@Override
 			public V evaluate(final K key) {
 				return map.get(key);
 			}
@@ -389,6 +406,7 @@ public class Functions {
 		assert null != map;
 		
 		return new Function1<K, V, X>() {
+			@Override
 			public V evaluate(final K key) {
 				return CollectionUtils.get(map, key, defaultValue);
 			}
@@ -412,6 +430,7 @@ public class Functions {
 		assert null != throwableFactory;
 		
 		return new Function1<K, V, X>() {
+			@Override
 			public V evaluate(final K key)
 			throws X {
 				return CollectionUtils.get(map, key, throwableFactory);
@@ -435,6 +454,7 @@ public class Functions {
 		assert null != map;
 		
 		return new Function1<K, Maybe<V>, X>() {
+			@Override
 			public Maybe<V> evaluate(final K key) {
 				return CollectionUtils.get(map, key);
 			}
@@ -454,6 +474,7 @@ public class Functions {
 		assert null != map;
 		
 		return new Function1<K, C, X>() {
+			@Override
 			public C evaluate(final K key) {
 				return map.get(key);
 			}
@@ -474,6 +495,7 @@ public class Functions {
 		assert null != record;
 		
 		return new Function1<K, V, RecordException>() {
+			@Override
 			public V evaluate(final K key)
 			throws RecordException {
 				return record.get(key);
@@ -497,6 +519,7 @@ public class Functions {
 		assert null != record;
 		
 		return new Function1<K, V, RecordException>() {
+			@Override
 			public V evaluate(final K key)
 			throws RecordException {
 				return record.get(key, defaultValue);
@@ -518,6 +541,7 @@ public class Functions {
 	}
 	
 	private static final Function1<? extends Function0<?, ?>, ?, ?> _EVALUATE0 = new Function1<Function0<Object, RuntimeException>, Object, RuntimeException>() {
+		@Override
 		public Object evaluate(final Function0<Object, RuntimeException> function) {
 			return function.evaluate();
 		}
@@ -535,6 +559,7 @@ public class Functions {
 	 */
 	public static <T, R, X extends Exception> Function1<Function1<? super T, ? extends R, ? extends X>, R, X> evaluate1(final T value) {
 		return new Function1<Function1<? super T, ? extends R, ? extends X>, R, X>() {
+			@Override
 			public R evaluate(final Function1<? super T, ? extends R, ? extends X> function)
 			throws X {
 				return function.evaluate(value);
@@ -556,6 +581,7 @@ public class Functions {
 	 */
 	public static <T1, T2, R, X extends Exception> Function1<Function2<? super T1, ? super T2, ? extends R, ? extends X>, R, X> evaluate2(final T1 value1, final T2 value2) {
 		return new Function1<Function2<? super T1, ? super T2, ? extends R, ? extends X>, R, X>() {
+			@Override
 			public R evaluate(final Function2<? super T1, ? super T2, ? extends R, ? extends X> function)
 			throws X {
 				return function.evaluate(value1, value2);

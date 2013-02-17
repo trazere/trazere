@@ -65,10 +65,12 @@ implements ParserState<Token> {
 		_position = position;
 	}
 	
+	@Override
 	public ParserPosition<Token> getPosition() {
 		return _position;
 	}
 	
+	@Override
 	public <Result> void parse(final Parser<Token, Result> parser, final ParserHandler<Token, ? super Result> handler, final ParserClosure<Token, ?> parent)
 	throws ParserException {
 		assert null != parent;
@@ -104,6 +106,7 @@ implements ParserState<Token> {
 	protected abstract <Result> ParserClosureImpl<Token, Result> buildClosure(final Parser<Token, Result> parser, final Maybe<ParserClosure<Token, ?>> parent)
 	throws ParserException;
 	
+	@Override
 	public void read(final ParserContinuation<Token> continuation)
 	throws ParserException {
 		assert null != continuation;

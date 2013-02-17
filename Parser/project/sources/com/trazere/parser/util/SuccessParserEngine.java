@@ -45,6 +45,7 @@ public class SuccessParserEngine {
 		// Initialization.
 		final ParserStateImpl<Token> rootState = buildState(position);
 		rootState.parse(parser, new ParserHandler<Token, Result>() {
+			@Override
 			public void result(final Result result, final ParserState<Token> state)
 			throws ParserException {
 				handler.success(result, state.getPosition());
@@ -96,6 +97,7 @@ public class SuccessParserEngine {
 			super(parser, position);
 		}
 		
+		@Override
 		public void failure(final ParserState<Token> state) {
 			// Nothing to do.
 		}

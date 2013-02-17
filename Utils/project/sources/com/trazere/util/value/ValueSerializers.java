@@ -39,12 +39,14 @@ public class ValueSerializers {
 		assert null != exceptionFactory;
 		
 		return new BaseValueSerializer<Boolean, String, X>(Boolean.class, String.class) {
+			@Override
 			public String serialize(final Boolean value) {
 				assert null != value;
 				
 				return value.toString();
 			}
 			
+			@Override
 			public Boolean deserialize(final String representation) {
 				assert null != representation;
 				
@@ -66,10 +68,12 @@ public class ValueSerializers {
 		assert null != exceptionFactory;
 		
 		return new BaseValueSerializer<Date, String, X>(Date.class, String.class) {
+			@Override
 			public String serialize(final Date value) {
 				return TextUtils.formatDate(format, value);
 			}
 			
+			@Override
 			public Date deserialize(final String representation)
 			throws X {
 				final Maybe<Date> date = TextUtils.parseDate(format, representation);
@@ -105,10 +109,12 @@ public class ValueSerializers {
 		assert null != exceptionFactory;
 		
 		return new BaseValueSerializer<T, String, X>(type, String.class) {
+			@Override
 			public String serialize(final T value) {
 				return TextUtils.formatNumber(format, value);
 			}
 			
+			@Override
 			public T deserialize(final String representation)
 			throws X {
 				final Maybe<T> value = TextUtils.parseNumber(format, extractor, representation);
@@ -138,12 +144,14 @@ public class ValueSerializers {
 		assert null != exceptionFactory;
 		
 		return new BaseValueSerializer<String, String, X>(String.class, String.class) {
+			@Override
 			public String serialize(final String value) {
 				assert null != value;
 				
 				return value;
 			}
 			
+			@Override
 			public String deserialize(final String representation) {
 				assert null != representation;
 				
@@ -168,6 +176,7 @@ public class ValueSerializers {
 		assert null != exceptionFactory;
 		
 		return new BaseValueSerializer<String, String, X>(String.class, String.class) {
+			@Override
 			public String serialize(final String value)
 			throws X {
 				assert null != value;
@@ -182,6 +191,7 @@ public class ValueSerializers {
 				}
 			}
 			
+			@Override
 			public String deserialize(final String representation) {
 				assert null != representation;
 				

@@ -27,18 +27,22 @@ extends Exception {
 	
 	/** Factory of {@link CollectionException}. */
 	public static final ThrowableFactory<CollectionException> FACTORY = new BaseThrowableFactory<CollectionException>() {
+		@Override
 		public CollectionException build() {
 			return new CollectionException();
 		}
 		
+		@Override
 		public CollectionException build(final String message) {
 			return new CollectionException(message);
 		}
 		
+		@Override
 		public CollectionException build(final Throwable cause) {
 			return new CollectionException(cause);
 		}
 		
+		@Override
 		public CollectionException build(final String message, final Throwable cause) {
 			return new CollectionException(message, cause);
 		}

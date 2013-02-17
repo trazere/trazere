@@ -65,6 +65,7 @@ extends BaseSimpleRecordBuilder<String, String, CSVLine> {
 		super(builder);
 	}
 	
+	@Override
 	public CSVLine build() {
 		return new CSVLine(new HashMap<String, String>(_fields));
 	}

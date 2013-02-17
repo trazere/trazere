@@ -117,6 +117,7 @@ implements Describable {
 	}
 	
 	private static final Function1<?, ?, ?> _GET_KEY_FUNCTION = new Function1<FieldSignature<Object, ?>, Object, RuntimeException>() {
+		@Override
 		public Object evaluate(final FieldSignature<Object, ?> field) {
 			assert null != field;
 			
@@ -146,6 +147,7 @@ implements Describable {
 	}
 	
 	private static final Function1<?, ?, ?> _GET_TYPE_FUNCTION = new Function1<FieldSignature<?, Object>, Class<Object>, RuntimeException>() {
+		@Override
 		public Class<Object> evaluate(final FieldSignature<?, Object> field) {
 			assert null != field;
 			
@@ -174,6 +176,7 @@ implements Describable {
 	}
 	
 	private static final Predicate1<FieldSignature<?, ?>, RuntimeException> _GET_NULLABLE_FUNCTION = new Predicate1<FieldSignature<?, ?>, RuntimeException>() {
+		@Override
 		public boolean evaluate(final FieldSignature<?, ?> field) {
 			assert null != field;
 			
@@ -236,6 +239,7 @@ implements Describable {
 		return TextUtils.computeDescription(this);
 	}
 	
+	@Override
 	public void fillDescription(final Description description) {
 		description.append("Key", _key);
 		description.append("Type", _type);

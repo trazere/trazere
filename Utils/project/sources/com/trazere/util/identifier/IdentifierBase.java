@@ -63,6 +63,7 @@ public abstract class IdentifierBase<V, I extends Identifier<V>> {
 	 */
 	public <X extends Exception> Function1<V, I, X> fromValueFunction() {
 		return new Function1<V, I, X>() {
+			@Override
 			public I evaluate(final V value) {
 				return fromValue(value);
 			}

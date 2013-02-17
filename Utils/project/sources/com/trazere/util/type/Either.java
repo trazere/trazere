@@ -59,6 +59,7 @@ implements Describable {
 	}
 	
 	private static final Function1<?, ?, ?> _LEFT_FUNCTION = new Function1<Object, Either<?, ?>, RuntimeException>() {
+		@Override
 		public Either<?, ?> evaluate(final Object value) {
 			return Either.left(value);
 		}
@@ -90,6 +91,7 @@ implements Describable {
 	}
 	
 	private static final Function1<?, ?, ?> _RIGHT_FUNCTION = new Function1<Object, Either<?, ?>, RuntimeException>() {
+		@Override
 		public Either<?, ?> evaluate(final Object value) {
 			return Either.right(value);
 		}
@@ -101,8 +103,7 @@ implements Describable {
 	 * The {@link Either.Constructor} enumeration represents the constructors of the algebraic data type.
 	 */
 	public static enum Constructor {
-		LEFT,
-		RIGHT,
+		LEFT, RIGHT,
 	}
 	
 	/**
@@ -209,6 +210,7 @@ implements Describable {
 			}
 		}
 		
+		@Override
 		public void fillDescription(final Description description) {
 			description.append("Left", _left);
 		}
@@ -247,6 +249,7 @@ implements Describable {
 	}
 	
 	private static final Function1<? extends Either<?, ?>, ? extends Maybe<?>, ?> _GET_LEFT_EXTRACTOR = new Function1<Either<Object, Object>, Maybe<Object>, RuntimeException>() {
+		@Override
 		public Maybe<Object> evaluate(final Either<Object, Object> instance) {
 			assert null != instance;
 			
@@ -351,6 +354,7 @@ implements Describable {
 			}
 		}
 		
+		@Override
 		public void fillDescription(final Description description) {
 			description.append("Right", _right);
 		}
@@ -389,6 +393,7 @@ implements Describable {
 	}
 	
 	private static final Function1<? extends Either<?, ?>, ? extends Maybe<?>, ?> _GET_RIGHT_EXTRACTOR = new Function1<Either<Object, Object>, Maybe<Object>, RuntimeException>() {
+		@Override
 		public Maybe<Object> evaluate(final Either<Object, Object> instance) {
 			assert null != instance;
 			

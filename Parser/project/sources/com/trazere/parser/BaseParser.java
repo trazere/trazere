@@ -30,6 +30,7 @@ implements Parser<Token, Result> {
 		_description = description;
 	}
 	
+	@Override
 	public String getDescription() {
 		return _description;
 	}

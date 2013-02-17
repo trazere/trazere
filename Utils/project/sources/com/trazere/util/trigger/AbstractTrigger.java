@@ -25,10 +25,12 @@ implements Trigger {
 	/** State of the trigger. */
 	private final MutableBoolean _state = new MutableBoolean(false);
 	
+	@Override
 	public boolean isSet() {
 		return _state.get();
 	}
 	
+	@Override
 	public boolean begin() {
 		final boolean set = doBegin();
 		if (set && !_state.get()) {
@@ -46,6 +48,7 @@ implements Trigger {
 	 */
 	protected abstract boolean doBegin();
 	
+	@Override
 	public boolean end() {
 		final boolean set = doEnd();
 		if (!set && _state.get()) {

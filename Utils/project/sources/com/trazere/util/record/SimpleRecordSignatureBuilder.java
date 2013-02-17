@@ -54,6 +54,7 @@ extends BaseSimpleRecordSignatureBuilder<K, V, SimpleRecordSignature<K, V>> {
 		super(signature);
 	}
 	
+	@Override
 	public SimpleRecordSignature<K, V> build() {
 		return new SimpleRecordSignature<K, V>(new HashMap<K, FieldSignature<K, ? extends V>>(_fields));
 	}

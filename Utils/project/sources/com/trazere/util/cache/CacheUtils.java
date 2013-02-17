@@ -37,23 +37,27 @@ public class CacheUtils {
 		assert null != policy2;
 		
 		return new CachePolicy<K>() {
+			@Override
 			public <C extends Collection<? super K>> C accessedEntry(final K key, final C dirtyEntries) {
 				policy1.accessedEntry(key, dirtyEntries);
 				policy2.accessedEntry(key, dirtyEntries);
 				return dirtyEntries;
 			}
 			
+			@Override
 			public <C extends Collection<? super K>> C updatedEntry(final K key, final C dirtyEntries) {
 				policy1.updatedEntry(key, dirtyEntries);
 				policy2.updatedEntry(key, dirtyEntries);
 				return dirtyEntries;
 			}
 			
+			@Override
 			public void removedEntry(final K key) {
 				policy1.removedEntry(key);
 				policy2.removedEntry(key);
 			}
 			
+			@Override
 			public void removedAllEntries() {
 				policy1.removedAllEntries();
 				policy2.removedAllEntries();
@@ -74,23 +78,27 @@ public class CacheUtils {
 		assert null != policy2;
 		
 		return new CachePolicy<K>() {
+			@Override
 			public <C extends Collection<? super K>> C accessedEntry(final K key, final C dirtyEntries) {
 				final Set<K> dirtyEntries1 = policy1.accessedEntry(key, new HashSet<K>());
 				final Set<K> dirtyEntries2 = policy2.accessedEntry(key, new HashSet<K>());
 				return CollectionUtils.intersection(dirtyEntries1, dirtyEntries2, dirtyEntries);
 			}
 			
+			@Override
 			public <C extends Collection<? super K>> C updatedEntry(final K key, final C dirtyEntries) {
 				final Set<K> dirtyEntries1 = policy1.updatedEntry(key, new HashSet<K>());
 				final Set<K> dirtyEntries2 = policy2.updatedEntry(key, new HashSet<K>());
 				return CollectionUtils.intersection(dirtyEntries1, dirtyEntries2, dirtyEntries);
 			}
 			
+			@Override
 			public void removedEntry(final K key) {
 				policy1.removedEntry(key);
 				policy2.removedEntry(key);
 			}
 			
+			@Override
 			public void removedAllEntries() {
 				policy1.removedAllEntries();
 				policy2.removedAllEntries();

@@ -35,6 +35,7 @@ public class Procedures {
 	}
 	
 	private static final Procedure0<?> _NOP0 = new Procedure0<RuntimeException>() {
+		@Override
 		public void execute() {
 			// Nothing to do.
 		}
@@ -53,6 +54,7 @@ public class Procedures {
 	}
 	
 	private static final Procedure1<?, ?> _NOP1 = new Procedure1<Object, RuntimeException>() {
+		@Override
 		public void execute(final Object value) {
 			// Nothing to do.
 		}
@@ -72,6 +74,7 @@ public class Procedures {
 	}
 	
 	private static final Procedure2<?, ?, ?> _NOP2 = new Procedure2<Object, Object, RuntimeException>() {
+		@Override
 		public void execute(final Object value1, final Object value2) {
 			// Nothing to do.
 		}
@@ -89,6 +92,7 @@ public class Procedures {
 	}
 	
 	private static final Procedure1<? extends Procedure0<?>, ?> _EXECUTE0 = new Procedure1<Procedure0<?>, Exception>() {
+		@Override
 		public void execute(final Procedure0<? extends Exception> procedure)
 		throws Exception {
 			procedure.execute();
@@ -105,6 +109,7 @@ public class Procedures {
 	 */
 	public static <T, X extends Exception> Procedure1<Procedure1<? super T, ? extends X>, X> execute1(final T value) {
 		return new Procedure1<Procedure1<? super T, ? extends X>, X>() {
+			@Override
 			public void execute(final Procedure1<? super T, ? extends X> procedure)
 			throws X {
 				procedure.execute(value);
@@ -124,6 +129,7 @@ public class Procedures {
 	 */
 	public static <T1, T2, X extends Exception> Procedure1<Procedure2<? super T1, ? super T2, ? extends X>, X> execute2(final T1 value1, final T2 value2) {
 		return new Procedure1<Procedure2<? super T1, ? super T2, ? extends X>, X>() {
+			@Override
 			public void execute(final Procedure2<? super T1, ? super T2, ? extends X> procedure)
 			throws X {
 				procedure.execute(value1, value2);

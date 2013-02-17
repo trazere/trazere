@@ -86,6 +86,7 @@ implements RecordBuilder<K, V, R>, Describable {
 		builder.populate(this);
 	}
 	
+	@Override
 	public void add(final K key, final V value)
 	throws DuplicateFieldException {
 		assert null != key;
@@ -98,6 +99,7 @@ implements RecordBuilder<K, V, R>, Describable {
 		}
 	}
 	
+	@Override
 	public <T extends V> void add(final FieldSignature<K, T> field, final T value)
 	throws RecordException {
 		assert null != field;
@@ -110,6 +112,7 @@ implements RecordBuilder<K, V, R>, Describable {
 		}
 	}
 	
+	@Override
 	public void addAll(final Map<? extends K, ? extends V> fields)
 	throws DuplicateFieldException {
 		assert null != fields;
@@ -120,6 +123,7 @@ implements RecordBuilder<K, V, R>, Describable {
 		}
 	}
 	
+	@Override
 	public void addAll(final Record<? extends K, ? extends V> record)
 	throws RecordException {
 		assert null != record;
@@ -128,10 +132,12 @@ implements RecordBuilder<K, V, R>, Describable {
 		addAll(record.asMap());
 	}
 	
+	@Override
 	public boolean isEmpty() {
 		return _fields.isEmpty();
 	}
 	
+	@Override
 	public boolean contains(final K key) {
 		assert null != key;
 		
@@ -139,6 +145,7 @@ implements RecordBuilder<K, V, R>, Describable {
 		return _fields.containsKey(key);
 	}
 	
+	@Override
 	public boolean contains(final FieldSignature<K, ? extends V> field) {
 		assert null != field;
 		
@@ -147,10 +154,12 @@ implements RecordBuilder<K, V, R>, Describable {
 		return _fields.containsKey(key) && field.getType().isInstance(_fields.get(key)) && (field.isNullable() || null != _fields.get(key));
 	}
 	
+	@Override
 	public Set<K> getKeys() {
 		return Collections.unmodifiableSet(_fields.keySet());
 	}
 	
+	@Override
 	public boolean replace(final K key, final V value)
 	throws RecordException {
 		assert null != key;
@@ -165,6 +174,7 @@ implements RecordBuilder<K, V, R>, Describable {
 		}
 	}
 	
+	@Override
 	public <T extends V> boolean replace(final FieldSignature<K, T> field, final T value)
 	throws RecordException {
 		assert null != field;
@@ -177,6 +187,7 @@ implements RecordBuilder<K, V, R>, Describable {
 		}
 	}
 	
+	@Override
 	public boolean remove(final K key) {
 		assert null != key;
 		
@@ -189,11 +200,13 @@ implements RecordBuilder<K, V, R>, Describable {
 		}
 	}
 	
+	@Override
 	public void clear() {
 		// Remove all fields.
 		_fields.clear();
 	}
 	
+	@Override
 	public <B extends RecordBuilder<? super K, ? super V, ?>> B populate(final B builder)
 	throws RecordException {
 		assert null != builder;
@@ -204,6 +217,7 @@ implements RecordBuilder<K, V, R>, Describable {
 		return builder;
 	}
 	
+	@Override
 	public <B extends RecordBuilder<? super K, ? super V, ?>> B populate(final B builder, final Set<? extends K> keys)
 	throws RecordException {
 		assert null != builder;
@@ -226,6 +240,7 @@ implements RecordBuilder<K, V, R>, Describable {
 		return TextUtils.computeDescription(this);
 	}
 	
+	@Override
 	public void fillDescription(final Description description) {
 		for (final Map.Entry<K, V> entry : _fields.entrySet()) {
 			description.append(entry.getKey().toString(), entry.getValue());

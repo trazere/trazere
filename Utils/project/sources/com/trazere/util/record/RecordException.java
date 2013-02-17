@@ -27,18 +27,22 @@ extends Exception {
 	
 	/** Factory of {@link RecordException}. */
 	public static final ThrowableFactory<RecordException> FACTORY = new BaseThrowableFactory<RecordException>() {
+		@Override
 		public RecordException build() {
 			return new RecordException();
 		}
 		
+		@Override
 		public RecordException build(final String message) {
 			return new RecordException(message);
 		}
 		
+		@Override
 		public RecordException build(final Throwable cause) {
 			return new RecordException(cause);
 		}
 		
+		@Override
 		public RecordException build(final String message, final Throwable cause) {
 			return new RecordException(message, cause);
 		}

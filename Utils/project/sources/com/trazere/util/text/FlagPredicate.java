@@ -169,6 +169,7 @@ implements Predicate1<Collection<String>, RuntimeException>, Describable {
 		return test(Arrays.asList(flags));
 	}
 	
+	@Override
 	public boolean evaluate(final Collection<String> flags) {
 		return test(flags);
 	}
@@ -178,6 +179,7 @@ implements Predicate1<Collection<String>, RuntimeException>, Describable {
 		return TextUtils.computeDescription(this);
 	}
 	
+	@Override
 	public void fillDescription(final Description description) {
 		if (!_required.isEmpty()) {
 			description.append("Required", TextUtils.join(_required, ","));

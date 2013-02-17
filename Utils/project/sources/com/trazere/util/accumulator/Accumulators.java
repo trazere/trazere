@@ -39,10 +39,12 @@ public class Accumulators {
 	}
 	
 	private static final Accumulator<Void, ?, ?> _DISCARD = new BaseAccumulator<Void, Object, RuntimeException>() {
+		@Override
 		public Void get() {
 			return null;
 		}
 		
+		@Override
 		public void add(final Object value) {
 			// Nothing to do.
 		}
@@ -61,10 +63,12 @@ public class Accumulators {
 		assert null != collection;
 		
 		return new BaseAccumulator<C, T, X>() {
+			@Override
 			public C get() {
 				return collection;
 			}
 			
+			@Override
 			public void add(final T value)
 			throws X {
 				collection.add(value);
@@ -85,10 +89,12 @@ public class Accumulators {
 		assert null != reference;
 		
 		return new BaseAccumulator<R, T, X>() {
+			@Override
 			public R get() {
 				return reference;
 			}
 			
+			@Override
 			public void add(final T value)
 			throws X {
 				reference.update(value);
@@ -161,10 +167,12 @@ public class Accumulators {
 		return new BaseAccumulator<Integer, Integer, X>() {
 			private final MutableInt _value = new MutableInt(initial);
 			
+			@Override
 			public Integer get() {
 				return _value.get();
 			}
 			
+			@Override
 			public void add(final Integer value)
 			throws X {
 				assert null != value;
@@ -185,10 +193,12 @@ public class Accumulators {
 		return new BaseAccumulator<Long, Long, X>() {
 			private final MutableLong _value = new MutableLong(initial);
 			
+			@Override
 			public Long get() {
 				return _value.get();
 			}
 			
+			@Override
 			public void add(final Long value)
 			throws X {
 				assert null != value;

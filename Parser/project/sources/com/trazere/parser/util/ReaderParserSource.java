@@ -36,12 +36,14 @@ implements ParserSource<Character> {
 		_reader = reader;
 	}
 	
+	@Override
 	public boolean hasNext()
 	throws ParserException {
 		lookAhead();
 		return -1 != _next;
 	}
 	
+	@Override
 	public Character next()
 	throws ParserException {
 		lookAhead();
