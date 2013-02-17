@@ -14,14 +14,13 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<project name="trazere">
+<project name="root">
 	<!-- Project -->
-	<dirname property="trazere" file="${ant.file.trazere}/.." />
-	<property name="trazere.module" location="${trazere}/.." />
-	<property name="trazere.project" location="${trazere}/build/project.xml" />
+	<dirname property="root" file="${ant.file.root}/.." />
+	<property name="root.module" location="${root}/.." />
+	<property name="root.project" location="${root}/build/project.xml" />
 
 	<!-- Sub projects -->
-	<import file="${trazere.module}/Parser/project/build/modules.xml" />
-	<import file="${trazere.module}/Tools/project/build/modules.xml" />
-	<import file="${trazere.module}/Utils/project/build/modules.xml" />
+	<import file="${root.module}/Parser/project/build/modules.xml" />
+	<import file="${root.module}/Utils/project/build/modules.xml" />
 </project>

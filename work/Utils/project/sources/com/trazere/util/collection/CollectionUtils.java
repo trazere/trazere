@@ -694,7 +694,7 @@ public class CollectionUtils {
 	 * @param <V> Type of the values.
 	 * @param map The map.
 	 * @param key The key. May be <code>null</code>.
-	 * @return
+	 * @return The removed value.
 	 */
 	public static <K, V> Maybe<V> remove(final Map<? super K, ? extends V> map, final K key) {
 		assert null != map;
