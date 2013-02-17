@@ -27,18 +27,22 @@ extends Exception {
 	
 	/** Factory of {@link PropertiesException}. */
 	public static final ThrowableFactory<PropertiesException> FACTORY = new BaseThrowableFactory<PropertiesException>() {
+		@Override
 		public PropertiesException build() {
 			return new PropertiesException();
 		}
 		
+		@Override
 		public PropertiesException build(final String message) {
 			return new PropertiesException(message);
 		}
 		
+		@Override
 		public PropertiesException build(final Throwable cause) {
 			return new PropertiesException(cause);
 		}
 		
+		@Override
 		public PropertiesException build(final String message, final Throwable cause) {
 			return new PropertiesException(message, cause);
 		}

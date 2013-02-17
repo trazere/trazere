@@ -47,6 +47,7 @@ extends BaseParser<Token, Result> {
 	
 	// Parser.
 	
+	@Override
 	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
 	throws ParserException {
 		// Zero.
@@ -58,6 +59,7 @@ extends BaseParser<Token, Result> {
 	
 	protected ParserHandler<Token, SubResult> buildMoreHandler(final ParserClosure<Token, Result> closure, final Result previousValue) {
 		return new ParserHandler<Token, SubResult>() {
+			@Override
 			public void result(final SubResult subResult, final ParserState<Token> state)
 			throws ParserException {
 				// Fold the result.

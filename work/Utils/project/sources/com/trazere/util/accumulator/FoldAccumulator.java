@@ -39,10 +39,12 @@ extends BaseAccumulator<T, V, X> {
 		_value = new MutableObject<T>(initialValue);
 	}
 	
+	@Override
 	public T get() {
 		return _value.get();
 	}
 	
+	@Override
 	public void add(final V value)
 	throws X {
 		_value.set(fold(_value.get(), value));

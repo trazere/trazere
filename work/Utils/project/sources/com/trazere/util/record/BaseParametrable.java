@@ -23,6 +23,7 @@ package com.trazere.util.record;
  */
 public abstract class BaseParametrable<K, V>
 implements Parametrable<K, V> {
+	@Override
 	public RecordSignature<K, V> getRequirements()
 	throws RecordException {
 		return unifyRequirements(new SimpleRecordSignatureBuilder<K, V>()).build();

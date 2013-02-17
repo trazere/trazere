@@ -45,6 +45,7 @@ extends BaseParser<Character, String> {
 	
 	// Parser.
 	
+	@Override
 	public void run(final ParserClosure<Character, String> closure, final ParserState<Character> state)
 	throws ParserException {
 		// Zero.
@@ -59,6 +60,7 @@ extends BaseParser<Character, String> {
 	
 	protected ParserContinuation<Character> buildContinuation(final ParserClosure<Character, String> closure, final StringBuilder builder) {
 		return new ParserContinuation<Character>() {
+			@Override
 			public void token(final Character token, final ParserState<Character> state)
 			throws ParserException {
 				if (_filter.evaluate(token.charValue())) {
@@ -76,6 +78,7 @@ extends BaseParser<Character, String> {
 				}
 			}
 			
+			@Override
 			public void eof(final ParserState<Character> state)
 			throws ParserException {
 				// Failure.

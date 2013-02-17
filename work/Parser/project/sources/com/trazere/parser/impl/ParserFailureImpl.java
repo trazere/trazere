@@ -37,12 +37,14 @@ implements ParserFailure<Token> {
 	
 	protected final Parser<Token, ?> _parser;
 	
+	@Override
 	public Parser<Token, ?> getParser() {
 		return _parser;
 	}
 	
 	protected final ParserPosition<Token> _position;
 	
+	@Override
 	public ParserPosition<Token> getPosition() {
 		return _position;
 	}

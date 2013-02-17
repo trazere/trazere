@@ -74,6 +74,7 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 		_fields = new HashMap<K, FieldSignature<K, ? extends V>>(signature.asMap());
 	}
 	
+	@Override
 	public void add(final K key, final Class<? extends V> type, final boolean nullable)
 	throws RecordException {
 		assert null != key;
@@ -87,6 +88,7 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 		}
 	}
 	
+	@Override
 	public void add(final FieldSignature<K, ? extends V> signature)
 	throws RecordException {
 		assert null != signature;
@@ -95,6 +97,7 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 		add(signature.getKey(), signature.getType(), signature.isNullable());
 	}
 	
+	@Override
 	public void addAll(final Collection<? extends FieldSignature<K, ? extends V>> fields)
 	throws RecordException {
 		assert null != fields;
@@ -105,6 +108,7 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 		}
 	}
 	
+	@Override
 	public void addAll(final RecordSignature<K, ? extends V> signature)
 	throws RecordException {
 		assert null != signature;
@@ -115,6 +119,7 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 		}
 	}
 	
+	@Override
 	public void unify(final K key, final Class<? extends V> type, final boolean nullable)
 	throws RecordException {
 		assert null != key;
@@ -124,6 +129,7 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 		unify(FieldSignature.build(key, type, nullable));
 	}
 	
+	@Override
 	public void unify(final FieldSignature<K, ? extends V> field)
 	throws RecordException {
 		assert null != field;
@@ -157,6 +163,7 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 		_fields.put(key, unifiedField);
 	}
 	
+	@Override
 	public void unifyAll(final Collection<? extends FieldSignature<K, ? extends V>> fields)
 	throws RecordException {
 		assert null != fields;
@@ -167,6 +174,7 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 		}
 	}
 	
+	@Override
 	public void unifyAll(final RecordSignature<K, ? extends V> signature)
 	throws RecordException {
 		assert null != signature;
@@ -177,6 +185,7 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 		}
 	}
 	
+	@Override
 	public void unifyAll(final Predicate1<? super FieldSignature<K, ? extends V>, ? extends RecordException> filter, final RecordSignature<K, ? extends V> signature)
 	throws RecordException {
 		assert null != filter;
@@ -191,10 +200,12 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 		}
 	}
 	
+	@Override
 	public boolean isEmpty() {
 		return _fields.isEmpty();
 	}
 	
+	@Override
 	public boolean contains(final K key) {
 		assert null != key;
 		
@@ -202,10 +213,12 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 		return _fields.containsKey(key);
 	}
 	
+	@Override
 	public Set<K> getKeys() {
 		return Collections.unmodifiableSet(_fields.keySet());
 	}
 	
+	@Override
 	public void remove(final K key)
 	throws MissingFieldException {
 		assert null != key;
@@ -218,6 +231,7 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 		}
 	}
 	
+	@Override
 	public void clear() {
 		_fields.clear();
 	}
@@ -227,6 +241,7 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 		return TextUtils.computeDescription(this);
 	}
 	
+	@Override
 	public void fillDescription(final Description description) {
 		for (final FieldSignature<K, ? extends V> field : _fields.values()) {
 			description.append(field.getKey().toString(), field);

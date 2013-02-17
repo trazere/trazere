@@ -132,6 +132,7 @@ public class TextParsers {
 	}
 	
 	private static final Function2<BigInteger, Character, BigInteger, ParserException> _FOLD_INTEGER = new Function2<BigInteger, Character, BigInteger, ParserException>() {
+		@Override
 		public BigInteger evaluate(final BigInteger previousValue, final Character subResult) {
 			final int digit = Character.digit(subResult.charValue(), 10);
 			return previousValue.multiply(BigInteger.TEN).add(BigInteger.valueOf(digit));
@@ -146,6 +147,7 @@ public class TextParsers {
 	
 	public static <N extends Number> Parser<Character, N> integer(final IntegerExtractor<N> extractor, final String description) {
 		return CoreParsers.map(integer(), new Function1<BigInteger, N, ParserException>() {
+			@Override
 			public N evaluate(final BigInteger value)
 			throws ParserException {
 				final Maybe<N> result = extractor.extract(value);
@@ -163,6 +165,7 @@ public class TextParsers {
 	implements Function1<BigInteger, Maybe<N>, ParserException> {
 		public abstract Maybe<N> extract(final BigInteger value);
 		
+		@Override
 		public Maybe<N> evaluate(final BigInteger value) {
 			return extract(value);
 		}
@@ -263,6 +266,7 @@ public class TextParsers {
 	}
 	
 	private static final Function2<Tuple2<BigDecimal, BigDecimal>, Character, Tuple2<BigDecimal, BigDecimal>, ParserException> _FOLD_DECIMAL_PART = new Function2<Tuple2<BigDecimal, BigDecimal>, Character, Tuple2<BigDecimal, BigDecimal>, ParserException>() {
+		@Override
 		public Tuple2<BigDecimal, BigDecimal> evaluate(final Tuple2<BigDecimal, BigDecimal> previousValue, final Character subResult) {
 			final int digit = Character.digit(subResult.charValue(), 10);
 			final BigDecimal factor = previousValue.getFirst().divide(BigDecimal.TEN);
@@ -285,6 +289,7 @@ public class TextParsers {
 		public abstract N extract(final BigDecimal value)
 		throws ParserException;
 		
+		@Override
 		public N evaluate(final BigDecimal value)
 		throws ParserException {
 			return extract(value);
@@ -391,6 +396,7 @@ public class TextParsers {
 		assert null != renderer;
 		
 		return CoreParsers.choice(FunctionUtils.map(new Function1<E, Parser<Character, E>, X>() {
+			@Override
 			public Parser<Character, E> evaluate(final E value)
 			throws X {
 				return CoreParsers.lift(string(renderer.evaluate(value)), value, description);

@@ -112,6 +112,7 @@ implements Describable {
 		return TextUtils.computeDescription(this);
 	}
 	
+	@Override
 	public void fillDescription(final Description description) {
 		description.append("Hash code", _hashCode);
 	}

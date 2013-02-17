@@ -54,6 +54,7 @@ implements Parser<Token, Result> {
 	protected abstract Parser<Token, Result> compute()
 	throws ParserException;
 	
+	@Override
 	public String getDescription() {
 		try {
 			return _parser.evaluate().getDescription();
@@ -62,6 +63,7 @@ implements Parser<Token, Result> {
 		}
 	}
 	
+	@Override
 	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
 	throws ParserException {
 		_parser.evaluate().run(closure, state);

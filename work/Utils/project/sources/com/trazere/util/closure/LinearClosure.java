@@ -57,6 +57,7 @@ implements Closure<T, X> {
 		_value = Either.<Function0<? extends T, ? extends X>, T>left(function);
 	}
 	
+	@Override
 	public T evaluate()
 	throws X {
 		if (_value.isRight()) {
@@ -68,13 +69,17 @@ implements Closure<T, X> {
 		}
 	}
 	
+	@Override
 	public boolean isEvaluated() {
 		return _value.isRight();
 	}
 	
+	@Override
 	public Maybe<T> asMaybe() {
 		return _value.isRight() ? Maybe.some(_value.asRight().getRight()) : Maybe.<T>none();
 	}
+	
+	// Object.
 	
 	@Override
 	public String toString() {

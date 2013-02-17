@@ -336,6 +336,7 @@ public class TextUtils {
 		assert null != renderer;
 		
 		return join(tokens, new Procedure2<StringBuilder, T, X>() {
+			@Override
 			public void execute(final StringBuilder builder_, final T token)
 			throws X {
 				builder_.append(renderer.evaluate(token));
@@ -389,6 +390,7 @@ public class TextUtils {
 	}
 	
 	private static final Function1<String, String, ?> _TO_LOWER_CASE_FUNCTION = new Function1<String, String, RuntimeException>() {
+		@Override
 		public String evaluate(final String value) {
 			assert null != value;
 			
@@ -409,6 +411,7 @@ public class TextUtils {
 	}
 	
 	private static final Function1<String, String, ?> _TO_UPPER_CASE_FUNCTION = new Function1<String, String, RuntimeException>() {
+		@Override
 		public String evaluate(final String value) {
 			assert null != value;
 			
@@ -445,30 +448,14 @@ public class TextUtils {
 	}
 	
 	private static final Function1<String, String, ?> _CAPITALIZE_FUNCTION = new Function1<String, String, RuntimeException>() {
+		@Override
 		public String evaluate(final String s) {
 			return capitalize(s);
 		}
 	};
 	
 	/** Array of the hexadecimal digits characters (upper case). */
-	public static final char[] HEX_DIGITS = {
-	    '0',
-	    '1',
-	    '2',
-	    '3',
-	    '4',
-	    '5',
-	    '6',
-	    '7',
-	    '8',
-	    '9',
-	    'A',
-	    'B',
-	    'C',
-	    'D',
-	    'E',
-	    'F'
-	};
+	public static final char[] HEX_DIGITS = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 	
 	/**
 	 * Computes the hexadecimal representation of the given array of bytes.
@@ -564,6 +551,7 @@ public class TextUtils {
 		assert null != format;
 		
 		return new Function1<T, String, X>() {
+			@Override
 			public String evaluate(final T number) {
 				return formatNumber(format, number);
 			}
@@ -612,6 +600,7 @@ public class TextUtils {
 		assert null != converter;
 		
 		return new Function1<String, Maybe<T>, X>() {
+			@Override
 			public Maybe<T> evaluate(final String representation) {
 				return parseNumber(format, converter, representation);
 			}
@@ -650,6 +639,7 @@ public class TextUtils {
 		assert null != format;
 		
 		return new Function1<T, String, X>() {
+			@Override
 			public String evaluate(final T date) {
 				return formatDate(format, date);
 			}
@@ -692,6 +682,7 @@ public class TextUtils {
 		assert null != format;
 		
 		return new Function1<String, Maybe<Date>, X>() {
+			@Override
 			public Maybe<Date> evaluate(final String representation) {
 				return parseDate(format, representation);
 			}

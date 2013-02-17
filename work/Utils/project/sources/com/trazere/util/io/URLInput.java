@@ -49,11 +49,13 @@ implements Input {
 		return _url;
 	}
 	
+	@Override
 	public boolean exists()
 	throws IOException {
 		return true;
 	}
 	
+	@Override
 	public InputStream open()
 	throws IOException {
 		return _url.openStream();

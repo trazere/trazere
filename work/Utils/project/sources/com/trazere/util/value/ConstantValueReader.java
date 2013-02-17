@@ -74,14 +74,17 @@ extends BaseValueReader<T> {
 		return SimpleRecordSignature.build();
 	}
 	
+	@Override
 	public <B extends RecordSignatureBuilder<String, Object, ?>> B unifyRequirements(final B builder) {
 		return builder;
 	}
 	
+	@Override
 	public T read(final Record<String, Object> parameters) {
 		return _value;
 	}
 	
+	@Override
 	public ValueReader<T> compose(final RecordReader<String, Object> reader) {
 		return this;
 	}

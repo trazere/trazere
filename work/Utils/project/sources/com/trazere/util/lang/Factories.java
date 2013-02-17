@@ -33,6 +33,7 @@ public class Factories {
 	 */
 	public static <T, X extends Exception> Factory<T, X> value(final T value) {
 		return new BaseFactory<T, X>() {
+			@Override
 			public T build() {
 				return value;
 			}
@@ -51,6 +52,7 @@ public class Factories {
 		assert null != function;
 		
 		return new BaseFactory<T, X>() {
+			@Override
 			public T build()
 			throws X {
 				return function.evaluate();

@@ -93,6 +93,7 @@ implements Closure<T, X>, Releasable<RuntimeException>, Describable {
 		}
 	};
 	
+	@Override
 	public T evaluate()
 	throws X {
 		if (_value.isSet()) {
@@ -122,6 +123,7 @@ implements Closure<T, X>, Releasable<RuntimeException>, Describable {
 		// Nothing to do.
 	}
 	
+	@Override
 	public boolean isEvaluated() {
 		return _value.isSet();
 	}
@@ -138,12 +140,14 @@ implements Closure<T, X>, Releasable<RuntimeException>, Describable {
 	 * 
 	 * @return The computed value wrapped in {@link Some}, or {@link None} when the value has not been computed yet.
 	 */
+	@Override
 	public Maybe<T> asMaybe() {
 		return _value.asMaybe();
 	}
 	
 	// Releasable.
 	
+	@Override
 	public void release() {
 		reset();
 	}
@@ -155,6 +159,7 @@ implements Closure<T, X>, Releasable<RuntimeException>, Describable {
 		return _value.isSet() ? String.valueOf(_value.get()) : TextUtils.computeDescription(this);
 	}
 	
+	@Override
 	public void fillDescription(final Description description) {
 		// Nothing to do.
 	}

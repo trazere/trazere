@@ -15,9 +15,6 @@
  */
 package com.trazere.util.closure;
 
-import com.trazere.util.text.Describable;
-import com.trazere.util.text.Description;
-import com.trazere.util.text.TextUtils;
 import com.trazere.util.type.Maybe;
 
 /**
@@ -27,7 +24,7 @@ import com.trazere.util.type.Maybe;
  * @param <X> Type of the exceptions.
  */
 public class ConstantClosure<T, X extends Exception>
-implements Closure<T, X>, Describable {
+implements Closure<T, X> {
 	/**
 	 * Build a closure evaluating to the given value.
 	 * 
@@ -52,24 +49,25 @@ implements Closure<T, X>, Describable {
 		_value = value;
 	}
 	
+	@Override
 	public T evaluate() {
 		return _value;
 	}
 	
+	@Override
 	public boolean isEvaluated() {
 		return true;
 	}
 	
+	@Override
 	public Maybe<T> asMaybe() {
 		return Maybe.some(_value);
 	}
 	
+	// Object.
+	
 	@Override
 	public String toString() {
-		return TextUtils.computeDescription(this);
-	}
-	
-	public void fillDescription(final Description description) {
-		description.append("Value", _value);
+		return String.valueOf(_value);
 	}
 }

@@ -27,18 +27,22 @@ extends Exception {
 	
 	/** Factory of {@link ValueException}. */
 	public static final ThrowableFactory<ValueException> FACTORY = new BaseThrowableFactory<ValueException>() {
+		@Override
 		public ValueException build() {
 			return new ValueException();
 		}
 		
+		@Override
 		public ValueException build(final String message) {
 			return new ValueException(message);
 		}
 		
+		@Override
 		public ValueException build(final Throwable cause) {
 			return new ValueException(cause);
 		}
 		
+		@Override
 		public ValueException build(final String message, final Throwable cause) {
 			return new ValueException(message, cause);
 		}

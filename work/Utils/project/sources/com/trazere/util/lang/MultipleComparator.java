@@ -77,6 +77,7 @@ implements Comparator<T> {
 	/** The comparators ordered by priority. */
 	protected final List<? extends Comparator<? super T>> _comparators;
 	
+	@Override
 	public int compare(final T object1, final T object2) {
 		for (final Comparator<? super T> comparator : _comparators) {
 			final int result = comparator.compare(object1, object2);

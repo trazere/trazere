@@ -104,6 +104,7 @@ public class LangUtils {
 		assert null != type;
 		
 		return new Function1<L, Maybe<T>, X>() {
+			@Override
 			public Maybe<T> evaluate(final L value) {
 				if (null != value && type.isInstance(value)) {
 					return Maybe.some(type.cast(value));
@@ -155,6 +156,7 @@ public class LangUtils {
 		assert null != throwableFactory;
 		
 		return new Function1<L, T, X>() {
+			@Override
 			public T evaluate(final L value)
 			throws X {
 				return match(value, type, throwableFactory);
@@ -290,6 +292,7 @@ public class LangUtils {
 	}
 	
 	private static final Function1<?, String, ?> _TO_STRING_FUNCTION = new Function1<Object, String, RuntimeException>() {
+		@Override
 		public String evaluate(final Object value) {
 			return value.toString();
 		}
@@ -307,6 +310,7 @@ public class LangUtils {
 	}
 	
 	private static final Function1<Boolean, Boolean, ?> _NOT_FUNCTION = new Function1<Boolean, Boolean, RuntimeException>() {
+		@Override
 		public Boolean evaluate(final Boolean value) {
 			assert null != value;
 			
@@ -328,6 +332,7 @@ public class LangUtils {
 	}
 	
 	private static final Function1<? extends Number, Short, ?> _BYTE_VALUE_FUNCTION = new Function1<Number, Short, RuntimeException>() {
+		@Override
 		public Short evaluate(final Number value) {
 			return value.shortValue();
 		}
@@ -347,6 +352,7 @@ public class LangUtils {
 	}
 	
 	private static final Function1<? extends Number, Short, ?> _SHORT_VALUE_FUNCTION = new Function1<Number, Short, RuntimeException>() {
+		@Override
 		public Short evaluate(final Number value) {
 			return value.shortValue();
 		}
@@ -366,6 +372,7 @@ public class LangUtils {
 	}
 	
 	private static final Function1<? extends Number, Integer, ?> _INT_VALUE_FUNCTION = new Function1<Number, Integer, RuntimeException>() {
+		@Override
 		public Integer evaluate(final Number value) {
 			return value.intValue();
 		}
@@ -385,6 +392,7 @@ public class LangUtils {
 	}
 	
 	private static final Function1<? extends Number, Long, ?> _LONG_VALUE_FUNCTION = new Function1<Number, Long, RuntimeException>() {
+		@Override
 		public Long evaluate(final Number value) {
 			return value.longValue();
 		}
@@ -404,6 +412,7 @@ public class LangUtils {
 	}
 	
 	private static final Function1<? extends Number, Float, ?> _FLOAT_VALUE_FUNCTION = new Function1<Number, Float, RuntimeException>() {
+		@Override
 		public Float evaluate(final Number value) {
 			return value.floatValue();
 		}
@@ -423,6 +432,7 @@ public class LangUtils {
 	}
 	
 	private static final Function1<? extends Number, Double, ?> _DOUBLE_VALUE_FUNCTION = new Function1<Number, Double, RuntimeException>() {
+		@Override
 		public Double evaluate(final Number value) {
 			return value.doubleValue();
 		}

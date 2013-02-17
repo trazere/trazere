@@ -52,6 +52,7 @@ public class FailureParserEngine {
 		final List<FailureParserClosure<Token, ?>> failures = new ArrayList<FailureParserClosure<Token, ?>>();
 		final ParserStateImpl<Token> rootState = buildState(position, failures);
 		rootState.parse(parser, new ParserHandler<Token, Result>() {
+			@Override
 			public void result(final Result result, final ParserState<Token> state)
 			throws ParserException {
 				handler.success(result, state.getPosition());
@@ -147,6 +148,7 @@ public class FailureParserEngine {
 			}
 		}
 		
+		@Override
 		public void failure(final ParserState<Token> state) {
 			// Add the failure.
 			if (isValidFailure()) {

@@ -75,6 +75,7 @@ implements Iterable<T>, Describable {
 	}
 	
 	private static final Function1<?, ?, ?> _SOME_FUNCTION = new Function1<Object, Maybe<Object>, RuntimeException>() {
+		@Override
 		public Maybe<Object> evaluate(final Object value) {
 			return some(value);
 		}
@@ -114,6 +115,7 @@ implements Iterable<T>, Describable {
 	}
 	
 	private static final Function1<?, ?, ?> _FROM_VALUE_FUNCTION = new Function1<Object, Maybe<Object>, RuntimeException>() {
+		@Override
 		public Maybe<Object> evaluate(final Object value) {
 			return fromValue(value);
 		}
@@ -150,6 +152,7 @@ implements Iterable<T>, Describable {
 	}
 	
 	private static final Function1<?, ?, ?> _TO_VALUE_FUNCTION = new Function1<Maybe<Object>, Object, RuntimeException>() {
+		@Override
 		public Object evaluate(final Maybe<Object> instance) {
 			return toValue(instance);
 		}
@@ -161,8 +164,7 @@ implements Iterable<T>, Describable {
 	 * The {@link Constructor} enumeration represents the constructors of the algebraic data type.
 	 */
 	public static enum Constructor {
-		NONE,
-		SOME,
+		NONE, SOME,
 	}
 	
 	/**
@@ -229,6 +231,7 @@ implements Iterable<T>, Describable {
 		
 		// Iterable.
 		
+		@Override
 		public Iterator<T> iterator() {
 			return CollectionUtils.iterator();
 		}
@@ -252,6 +255,7 @@ implements Iterable<T>, Describable {
 			}
 		}
 		
+		@Override
 		public void fillDescription(final Description description) {
 			// Nothing to do.
 		}
@@ -360,6 +364,7 @@ implements Iterable<T>, Describable {
 		
 		// Iterable.
 		
+		@Override
 		@SuppressWarnings("unchecked")
 		public Iterator<T> iterator() {
 			return CollectionUtils.iterator(_value);
@@ -386,6 +391,7 @@ implements Iterable<T>, Describable {
 			}
 		}
 		
+		@Override
 		public void fillDescription(final Description description) {
 			description.append("Value", _value);
 		}
@@ -484,6 +490,7 @@ implements Iterable<T>, Describable {
 		assert null != function;
 		
 		return new Function1<Maybe<? extends T>, Maybe<R>, X>() {
+			@Override
 			public Maybe<R> evaluate(final Maybe<? extends T> value)
 			throws X {
 				assert null != value;
@@ -516,6 +523,7 @@ implements Iterable<T>, Describable {
 		assert null != predicate;
 		
 		return new Function1<Maybe<? extends T>, Maybe<? extends T>, X>() {
+			@Override
 			public Maybe<? extends T> evaluate(final Maybe<? extends T> value)
 			throws X {
 				assert null != value;
@@ -550,6 +558,7 @@ implements Iterable<T>, Describable {
 		assert null != function;
 		
 		return new Function1<Maybe<? extends T>, Maybe<R>, X>() {
+			@Override
 			public Maybe<R> evaluate(final Maybe<? extends T> value)
 			throws X {
 				assert null != value;

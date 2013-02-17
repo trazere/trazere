@@ -49,6 +49,7 @@ public class Tuple1<T1> {
 	}
 	
 	private static final Function1<?, ?, ?> _BUILD_FUNCTION = new Function1<Object, Tuple1<Object>, RuntimeException>() {
+		@Override
 		public Tuple1<Object> evaluate(final Object first) {
 			return Tuple1.build(first);
 		}
@@ -91,6 +92,7 @@ public class Tuple1<T1> {
 	}
 	
 	private static final Function1<?, ?, ?> _GET_FIRST_FUNCTION = new Function1<Tuple1<Object>, Object, RuntimeException>() {
+		@Override
 		public Object evaluate(final Tuple1<Object> tuple) {
 			return tuple.getFirst();
 		}

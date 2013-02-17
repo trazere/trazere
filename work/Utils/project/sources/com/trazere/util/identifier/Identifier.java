@@ -69,6 +69,7 @@ public class Identifier<V> {
 	}
 	
 	private static final Function1<?, ?, ?> _GET_VALUE_FUNCTION = new Function1<Identifier<Object>, Object, RuntimeException>() {
+		@Override
 		public Object evaluate(final Identifier<Object> identifier) {
 			assert null != identifier;
 			

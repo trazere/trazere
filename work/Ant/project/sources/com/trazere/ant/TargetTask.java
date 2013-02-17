@@ -36,10 +36,11 @@ implements TaskContainer {
 		_target.setUnless(unless);
 	}
 	
-	//	public void setDepends(final String depends) {
-	//		_target.setDepends(depends);
-	//	}
+	// public void setDepends(final String depends) {
+	// _target.setDepends(depends);
+	// }
 	
+	@Override
 	public void addTask(final Task task) {
 		_target.addTask(task);
 	}

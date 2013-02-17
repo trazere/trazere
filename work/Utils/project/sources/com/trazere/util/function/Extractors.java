@@ -37,6 +37,7 @@ public class Extractors {
 	}
 	
 	private static final Function1<?, ?, ?> _IDENTITY = new Function1<Object, Object, RuntimeException>() {
+		@Override
 		public Object evaluate(final Object value) {
 			return Maybe.some(value);
 		}
@@ -71,6 +72,7 @@ public class Extractors {
 		assert null != type;
 		
 		return new Function1<T, Maybe<R>, X>() {
+			@Override
 			public Maybe<R> evaluate(final Object value) {
 				return LangUtils.match(value, type);
 			}
@@ -89,6 +91,7 @@ public class Extractors {
 		assert null != filter;
 		
 		return new Function1<T, Maybe<T>, X>() {
+			@Override
 			public Maybe<T> evaluate(final T value)
 			throws X {
 				return filter.evaluate(value) ? Maybe.some(value) : Maybe.<T>none();

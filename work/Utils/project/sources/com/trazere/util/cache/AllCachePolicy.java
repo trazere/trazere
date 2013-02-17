@@ -24,18 +24,22 @@ import java.util.Collection;
  */
 public class AllCachePolicy<K>
 implements CachePolicy<K> {
+	@Override
 	public <C extends Collection<? super K>> C accessedEntry(final K key, final C dirtyEntries) {
 		return dirtyEntries;
 	}
 	
+	@Override
 	public <C extends Collection<? super K>> C updatedEntry(final K key, final C dirtyEntries) {
 		return dirtyEntries;
 	}
 	
+	@Override
 	public void removedEntry(final K key) {
 		// Nothing to do.
 	}
 	
+	@Override
 	public void removedAllEntries() {
 		// Nothing to do.
 	}

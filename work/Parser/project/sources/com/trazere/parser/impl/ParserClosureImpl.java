@@ -45,12 +45,14 @@ implements ParserClosure<Token, Result> {
 	
 	protected final Parser<Token, Result> _parser;
 	
+	@Override
 	public Parser<Token, Result> getParser() {
 		return _parser;
 	}
 	
 	protected final ParserPosition<Token> _position;
 	
+	@Override
 	public ParserPosition<Token> getPosition() {
 		return _position;
 	}
@@ -73,6 +75,7 @@ implements ParserClosure<Token, Result> {
 		}
 	}
 	
+	@Override
 	public void success(final Result result, final ParserState<Token> state)
 	throws ParserException {
 		assert null != state;
