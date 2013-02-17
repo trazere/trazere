@@ -20,31 +20,31 @@
 	<import file="${utils.project}" />
 
 	<!-- Declarations -->
-	<property name="trazere.resources" location="${trazere}/resources" />
+	<property name="root.resources" location="${root}/resources" />
 
-	<property name="trazere.dist" location="${trazere}/dist" />
-	<property name="trazere.dist.binary" location="${trazere.dist}/trazere-${trazere.version}" />
-	<property name="trazere.dist.tgz" location="${trazere.dist}/trazere-${trazere.version}.tar.gz" />
-	<property name="trazere.dist.zip" location="${trazere.dist}/trazere-${trazere.version}.zip" />
+	<property name="root.dist" location="${root}/dist" />
+	<property name="root.dist.binary" location="${root.dist}/trazere-${trazere.version}" />
+	<property name="root.dist.tgz" location="${root.dist}/trazere-${trazere.version}.tar.gz" />
+	<property name="root.dist.zip" location="${root.dist}/trazere-${trazere.version}.zip" />
 
 	<!-- Clean -->
-	<target name="trazere.clean" depends="parser.clean, utils.clean" />
+	<target name="root.clean" depends="parser.clean, utils.clean" />
 
 	<!-- Clean the distribution -->
-	<target name="trazere.distclean">
-		<delete dir="${trazere.dist}" />
+	<target name="root.distclean">
+		<delete dir="${root.dist}" />
 	</target>
 
 	<!-- Compile -->
-	<target name="trazere.compile" depends="parser.compile, utils.compile" />
+	<target name="root.compile" depends="parser.compile, utils.compile" />
 
 	<!-- Build the distribution -->
-	<target name="trazere.build" depends="parser.build, utils.build">
-		<mkdir dir="${trazere.dist.binary}" />
+	<target name="root.build" depends="parser.build, utils.build">
+		<mkdir dir="${root.dist.binary}" />
 
 		<!-- Distribution -->
-		<copy todir="${trazere.dist.binary}">
-			<fileset dir="${trazere.resources}">
+		<copy todir="${root.dist.binary}">
+			<fileset dir="${root.resources}">
 				<include name="README.txt" />
 				<include name="LICENSE.txt" />
 			</fileset>
@@ -52,11 +52,11 @@
 	</target>
 
 	<!-- Build the archives -->
-	<target name="trazere.buildArchives" depends="trazere.build">
-		<tar destfile="${trazere.dist.tgz}" basedir="${trazere.dist}" compression="gzip">
+	<target name="root.buildArchives" depends="root.build">
+		<tar destfile="${root.dist.tgz}" basedir="${root.dist}" compression="gzip">
 			<include name="trazere-${trazere.version}/**/*" />
 		</tar>
-		<zip destfile="${trazere.dist.zip}" basedir="${trazere.dist}" encoding="iso-8859-1">
+		<zip destfile="${root.dist.zip}" basedir="${root.dist}" encoding="iso-8859-1">
 			<include name="trazere-${trazere.version}/**/*" />
 		</zip>
 	</target>

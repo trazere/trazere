@@ -700,7 +700,6 @@ public class PropertiesUtils {
 	 * @return The value.
 	 * @throws PropertiesException When the representation is invalid.
 	 */
-	@SuppressWarnings("unused")
 	public static boolean readBoolean(final String representation)
 	throws PropertiesException {
 		assert null != representation;
@@ -828,7 +827,6 @@ public class PropertiesUtils {
 	 * @return The value.
 	 * @throws PropertiesException When the representation is invalid.
 	 */
-	@SuppressWarnings("unused")
 	public static File readFile(final String representation)
 	throws PropertiesException {
 		assert null != representation;
