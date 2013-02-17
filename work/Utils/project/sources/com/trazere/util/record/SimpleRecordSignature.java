@@ -104,10 +104,12 @@ implements RecordSignature<K, V>, Describable {
 		_fields = Collections.unmodifiableMap(signatures);
 	}
 	
+	@Override
 	public boolean isEmpty() {
 		return _fields.isEmpty();
 	}
 	
+	@Override
 	public boolean contains(final K key) {
 		assert null != key;
 		
@@ -115,10 +117,12 @@ implements RecordSignature<K, V>, Describable {
 		return _fields.containsKey(key);
 	}
 	
+	@Override
 	public Set<K> getKeys() {
 		return _fields.keySet();
 	}
 	
+	@Override
 	public FieldSignature<K, ? extends V> get(final K key)
 	throws MissingFieldException {
 		assert null != key;
@@ -131,6 +135,7 @@ implements RecordSignature<K, V>, Describable {
 		}
 	}
 	
+	@Override
 	public Maybe<FieldSignature<K, ? extends V>> getMaybe(final K key)
 	throws RecordException {
 		assert null != key;
@@ -138,10 +143,12 @@ implements RecordSignature<K, V>, Describable {
 		return CollectionUtils.get(_fields, key);
 	}
 	
+	@Override
 	public Map<K, FieldSignature<K, ? extends V>> asMap() {
 		return _fields;
 	}
 	
+	@Override
 	public boolean accepts(final Record<? super K, ? extends V> record)
 	throws RecordException {
 		assert null != record;
@@ -155,6 +162,7 @@ implements RecordSignature<K, V>, Describable {
 		return true;
 	}
 	
+	@Override
 	public boolean accepts(final RecordSignature<? super K, ? extends V> signature)
 	throws RecordException {
 		assert null != signature;
@@ -197,6 +205,7 @@ implements RecordSignature<K, V>, Describable {
 		return TextUtils.computeDescription(this);
 	}
 	
+	@Override
 	public void fillDescription(final Description description) {
 		for (final FieldSignature<K, ? extends V> field : _fields.values()) {
 			description.append(field.getKey().toString(), field);

@@ -42,14 +42,17 @@ implements RecordFactory<K, V, SimpleRecord<K, V>> {
 		return (SimpleRecordFactory<K, V>) _FACTORY;
 	}
 	
+	@Override
 	public SimpleRecord<K, V> build() {
 		return SimpleRecord.build();
 	}
 	
+	@Override
 	public SimpleRecord<K, V> build(final Map<? extends K, ? extends V> fields) {
 		return SimpleRecord.build(fields);
 	}
 	
+	@Override
 	public SimpleRecord<K, V> build(final Record<? extends K, ? extends V> record)
 	throws RecordException {
 		return SimpleRecord.build(record);

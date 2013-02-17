@@ -27,6 +27,7 @@ extends Factory<T, RuntimeException> {
 	 * 
 	 * @return The built throwable.
 	 */
+	@Override
 	public T build();
 	
 	/**

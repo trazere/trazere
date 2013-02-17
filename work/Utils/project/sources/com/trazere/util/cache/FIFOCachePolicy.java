@@ -55,10 +55,12 @@ implements CachePolicy<K> {
 	
 	protected final LinkedList<K> _uses = new LinkedList<K>();
 	
+	@Override
 	public <C extends Collection<? super K>> C accessedEntry(final K key, final C dirtyEntries) {
 		return dirtyEntries;
 	}
 	
+	@Override
 	public <C extends Collection<? super K>> C updatedEntry(final K key, final C dirtyEntries) {
 		assert null != key;
 		
@@ -71,12 +73,14 @@ implements CachePolicy<K> {
 		return findDirtyEntries(dirtyEntries);
 	}
 	
+	@Override
 	public void removedEntry(final K key) {
 		assert null != key;
 		
 		_uses.remove(key);
 	}
 	
+	@Override
 	public void removedAllEntries() {
 		_uses.clear();
 	}

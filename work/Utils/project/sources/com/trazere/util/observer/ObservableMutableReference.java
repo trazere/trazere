@@ -103,18 +103,22 @@ implements ObservableReference<T> {
 		return new SimpleObservable<Maybe<T>>();
 	}
 	
+	@Override
 	public ObserverSubscription subscribe(final Observer<? super Maybe<T>> observer) {
 		return _observable.subscribe(observer);
 	}
 	
+	@Override
 	public ObserverSubscription subscribeOnce(final Observer<? super Maybe<T>> observer) {
 		return _observable.subscribeOnce(observer);
 	}
 	
+	@Override
 	public ObserverSubscription subscribeWhile(final Observer<? super Maybe<T>> observer, final Predicate1<? super Maybe<T>, RuntimeException> condition) {
 		return _observable.subscribeWhile(observer, condition);
 	}
 	
+	@Override
 	public ObserverSubscription subscribeAndNotify(final Observer<? super Maybe<T>> observer) {
 		assert null != observer;
 		
@@ -123,14 +127,17 @@ implements ObservableReference<T> {
 		return subscription;
 	}
 	
+	@Override
 	public Tuple2<Maybe<T>, ObserverSubscription> subscribeToValue(final Observer<? super Maybe<T>> observer) {
 		return Tuple2.build(asMaybe(), subscribe(observer));
 	}
 	
+	@Override
 	public Tuple2<Maybe<T>, ObserverSubscription> subscribeOnceToValue(final Observer<? super Maybe<T>> observer) {
 		return Tuple2.build(asMaybe(), subscribeOnce(observer));
 	}
 	
+	@Override
 	public Tuple2<Maybe<T>, ObserverSubscription> subscribeWhileToValue(final Observer<? super Maybe<T>> observer, final Predicate1<? super Maybe<T>, RuntimeException> condition) {
 		return Tuple2.build(asMaybe(), subscribeWhile(observer, condition));
 	}

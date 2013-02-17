@@ -35,12 +35,14 @@ implements ParserToken<R, V, X> {
 	
 	private final R _representation;
 	
+	@Override
 	public R getRepresentation() {
 		return _representation;
 	}
 	
 	// Parse.
 	
+	@Override
 	public V parse()
 	throws X {
 		return parse(_representation);
@@ -51,6 +53,7 @@ implements ParserToken<R, V, X> {
 	
 	// Function.
 	
+	@Override
 	public V evaluate()
 	throws X {
 		return parse();

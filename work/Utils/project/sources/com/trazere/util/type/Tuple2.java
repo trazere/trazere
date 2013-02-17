@@ -55,6 +55,7 @@ extends Tuple1<T1> {
 	}
 	
 	private static final Function2<?, ?, ?, ?> _BUILD_FUNCTION = new Function2<Object, Object, Tuple2<Object, Object>, RuntimeException>() {
+		@Override
 		public Tuple2<Object, Object> evaluate(final Object first, final Object second) {
 			return Tuple2.build(first, second);
 		}
@@ -100,6 +101,7 @@ extends Tuple1<T1> {
 	}
 	
 	private static final Function1<?, ?, ?> _GET_SECOND_FUNCTION = new Function1<Tuple2<Object, Object>, Object, RuntimeException>() {
+		@Override
 		public Object evaluate(final Tuple2<Object, Object> tuple) {
 			return tuple.getSecond();
 		}

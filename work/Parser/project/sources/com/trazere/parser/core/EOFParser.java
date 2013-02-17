@@ -37,6 +37,7 @@ extends BaseParser<Token, Result> {
 	
 	// Parser.
 	
+	@Override
 	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
 	throws ParserException {
 		state.read(buildContinuation(closure));
@@ -44,12 +45,14 @@ extends BaseParser<Token, Result> {
 	
 	protected ParserContinuation<Token> buildContinuation(final ParserClosure<Token, Result> closure) {
 		return new ParserContinuation<Token>() {
+			@Override
 			public void token(final Token token, final ParserState<Token> state)
 			throws ParserException {
 				// Failure.
 				closure.failure(state);
 			}
 			
+			@Override
 			public void eof(final ParserState<Token> state)
 			throws ParserException {
 				// Success.

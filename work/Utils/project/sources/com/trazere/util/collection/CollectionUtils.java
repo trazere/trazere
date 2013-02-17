@@ -285,14 +285,17 @@ public class CollectionUtils {
 	}
 	
 	private static final Iterator<?> _EMPTY_ITERATOR = new Iterator<Object>() {
+		@Override
 		public boolean hasNext() {
 			return false;
 		}
 		
+		@Override
 		public Object next() {
 			throw new NoSuchElementException();
 		}
 		
+		@Override
 		public void remove() {
 			throw new UnsupportedOperationException();
 		}
@@ -311,10 +314,12 @@ public class CollectionUtils {
 		return new Iterator<T>() {
 			protected int _index = 0;
 			
+			@Override
 			public boolean hasNext() {
 				return _index < values.length;
 			}
 			
+			@Override
 			public T next() {
 				final T value = values[_index];
 				_index += 1;
@@ -322,6 +327,7 @@ public class CollectionUtils {
 				return value;
 			}
 			
+			@Override
 			public void remove() {
 				throw new UnsupportedOperationException();
 			}
@@ -395,10 +401,12 @@ public class CollectionUtils {
 	}
 	
 	private static final CheckedIterator<?, ?> _EMPTY_CHECKED_ITERATOR = new CheckedIterator<Object, RuntimeException>() {
+		@Override
 		public boolean hasNext() {
 			return false;
 		}
 		
+		@Override
 		public Object next() {
 			throw new NoSuchElementException();
 		}
@@ -418,10 +426,12 @@ public class CollectionUtils {
 		return new CheckedIterator<T, X>() {
 			protected int _index = 0;
 			
+			@Override
 			public boolean hasNext() {
 				return _index < values.length;
 			}
 			
+			@Override
 			public T next() {
 				final T value = values[_index];
 				_index += 1;

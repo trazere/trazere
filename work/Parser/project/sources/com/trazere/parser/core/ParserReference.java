@@ -46,36 +46,38 @@ implements Parser<Token, Result> {
 		return _parser.get();
 	}
 	
+	@Override
 	public String getDescription() {
 		return get().getDescription();
 	}
 	
+	@Override
 	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
 	throws ParserException {
 		get().run(closure, state);
 	}
 	
-	//	// Object.
-	//	
-	//	@Override
-	//	public int hashCode() {
-	//		final HashCode result = new HashCode(this);
-	//		result.append(_parser.get());
-	//		return result.get();
-	//	}
-	//	
-	//	@Override
-	//	public boolean equals(final Object object) {
-	//		if (this == object) {
-	//			return true;
-	//		} else if (null != object && getClass().equals(object.getClass())) {
-	//			final ParserReference<?, ?> parser = (ParserReference<?, ?>) object;
-	//			return _parser.get().equals(parser._parser.get());
-	//		} else if (null != object && getClass().equals(_parser.get().getClass())) {
-	//			final Parser<?, ?> parser = (Parser<?, ?>) object;
-	//			return _parser.get().equals(parser);
-	//		} else {
-	//			return false;
-	//		}
-	//	}
+	// // Object.
+	//
+	// @Override
+	// public int hashCode() {
+	// final HashCode result = new HashCode(this);
+	// result.append(_parser.get());
+	// return result.get();
+	// }
+	//
+	// @Override
+	// public boolean equals(final Object object) {
+	// if (this == object) {
+	// return true;
+	// } else if (null != object && getClass().equals(object.getClass())) {
+	// final ParserReference<?, ?> parser = (ParserReference<?, ?>) object;
+	// return _parser.get().equals(parser._parser.get());
+	// } else if (null != object && getClass().equals(_parser.get().getClass())) {
+	// final Parser<?, ?> parser = (Parser<?, ?>) object;
+	// return _parser.get().equals(parser);
+	// } else {
+	// return false;
+	// }
+	// }
 }

@@ -92,6 +92,7 @@ extends Tuple4<T1, T2, T3, T4> {
 	}
 	
 	private static final Function1<?, ?, ?> _GET_FIFTH_FUNCTION = new Function1<Tuple5<Object, Object, Object, Object, Object>, Object, RuntimeException>() {
+		@Override
 		public Object evaluate(final Tuple5<Object, Object, Object, Object, Object> value) {
 			return value.getFifth();
 		}

@@ -61,6 +61,7 @@ extends BaseParser<Token, Result> {
 	
 	// Parser.
 	
+	@Override
 	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
 	throws ParserException {
 		// Part 1.
@@ -69,6 +70,7 @@ extends BaseParser<Token, Result> {
 	
 	protected ParserHandler<Token, SubResult1> buildHandler1(final ParserClosure<Token, Result> closure) {
 		return new ParserHandler<Token, SubResult1>() {
+			@Override
 			public void result(final SubResult1 subResult1, final ParserState<Token> state)
 			throws ParserException {
 				// Part 2.
@@ -79,6 +81,7 @@ extends BaseParser<Token, Result> {
 	
 	protected ParserHandler<Token, SubResult2> buildHandler2(final ParserClosure<Token, Result> closure, final SubResult1 subResult1) {
 		return new ParserHandler<Token, SubResult2>() {
+			@Override
 			public void result(final SubResult2 subResult2, final ParserState<Token> state)
 			throws ParserException {
 				// Part 3.
@@ -89,6 +92,7 @@ extends BaseParser<Token, Result> {
 	
 	protected ParserHandler<Token, SubResult3> buildHandler3(final ParserClosure<Token, Result> closure, final SubResult1 subResult1, final SubResult2 subResult2) {
 		return new ParserHandler<Token, SubResult3>() {
+			@Override
 			public void result(final SubResult3 subResult3, final ParserState<Token> state)
 			throws ParserException {
 				// Part 4.
@@ -99,6 +103,7 @@ extends BaseParser<Token, Result> {
 	
 	protected ParserHandler<Token, SubResult4> buildHandler4(final ParserClosure<Token, Result> closure, final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3) {
 		return new ParserHandler<Token, SubResult4>() {
+			@Override
 			public void result(final SubResult4 subResult4, final ParserState<Token> state)
 			throws ParserException {
 				// Part 5.
@@ -109,6 +114,7 @@ extends BaseParser<Token, Result> {
 	
 	protected ParserHandler<Token, SubResult5> buildHandler5(final ParserClosure<Token, Result> closure, final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3, final SubResult4 subResult4) {
 		return new ParserHandler<Token, SubResult5>() {
+			@Override
 			public void result(final SubResult5 subResult5, final ParserState<Token> state)
 			throws ParserException {
 				// Success.

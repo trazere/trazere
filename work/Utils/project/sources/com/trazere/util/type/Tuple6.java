@@ -96,6 +96,7 @@ extends Tuple5<T1, T2, T3, T4, T5> {
 	}
 	
 	private static final Function1<?, ?, ?> _GET_SIXTH_FUNCTION = new Function1<Tuple6<Object, Object, Object, Object, Object, Object>, Object, RuntimeException>() {
+		@Override
 		public Object evaluate(final Tuple6<Object, Object, Object, Object, Object, Object> value) {
 			return value.getSixth();
 		}

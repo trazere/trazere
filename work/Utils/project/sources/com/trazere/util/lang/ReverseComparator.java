@@ -65,6 +65,7 @@ implements Comparator<T> {
 		return _comparator;
 	}
 	
+	@Override
 	public int compare(final T object1, final T object2) {
 		return -_comparator.compare(object1, object2);
 	}

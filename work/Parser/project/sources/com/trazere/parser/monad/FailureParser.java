@@ -36,6 +36,7 @@ extends BaseParser<Token, Result> {
 	
 	// Parser.
 	
+	@Override
 	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
 	throws ParserException {
 		// Failure.

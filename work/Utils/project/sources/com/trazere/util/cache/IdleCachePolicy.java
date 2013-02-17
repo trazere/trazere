@@ -57,6 +57,7 @@ implements CachePolicy<K> {
 	/** Access dates of the entries. */
 	protected final LinkedHashMap<K, Long> _dates = new LinkedHashMap<K, Long>();
 	
+	@Override
 	public <C extends Collection<? super K>> C accessedEntry(final K key, final C dirtyEntries) {
 		assert null != key;
 		
@@ -69,6 +70,7 @@ implements CachePolicy<K> {
 		return findDirtyEntries(dirtyEntries);
 	}
 	
+	@Override
 	public <C extends Collection<? super K>> C updatedEntry(final K key, final C dirtyEntries) {
 		assert null != key;
 		
@@ -81,12 +83,14 @@ implements CachePolicy<K> {
 		return findDirtyEntries(dirtyEntries);
 	}
 	
+	@Override
 	public void removedEntry(final K key) {
 		assert null != key;
 		
 		_dates.remove(key);
 	}
 	
+	@Override
 	public void removedAllEntries() {
 		_dates.clear();
 	}

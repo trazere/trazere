@@ -61,11 +61,13 @@ implements CheckedIterator<R, X> {
 	
 	// Iterator.
 	
+	@Override
 	public boolean hasNext()
 	throws X {
 		return lookAhead();
 	}
 	
+	@Override
 	public R next()
 	throws X {
 		if (lookAhead()) {

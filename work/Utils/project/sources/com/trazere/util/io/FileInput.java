@@ -50,11 +50,13 @@ implements Input {
 		return _file;
 	}
 	
+	@Override
 	public boolean exists()
 	throws IOException {
 		return _file.exists();
 	}
 	
+	@Override
 	public InputStream open()
 	throws IOException {
 		return new FileInputStream(_file);

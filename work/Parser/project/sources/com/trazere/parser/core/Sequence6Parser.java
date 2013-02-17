@@ -65,6 +65,7 @@ extends BaseParser<Token, Result> {
 	
 	// Parser.
 	
+	@Override
 	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
 	throws ParserException {
 		// Part 1.
@@ -73,6 +74,7 @@ extends BaseParser<Token, Result> {
 	
 	protected ParserHandler<Token, SubResult1> buildHandler1(final ParserClosure<Token, Result> closure) {
 		return new ParserHandler<Token, SubResult1>() {
+			@Override
 			public void result(final SubResult1 subResult1, final ParserState<Token> state)
 			throws ParserException {
 				// Part 2.
@@ -83,6 +85,7 @@ extends BaseParser<Token, Result> {
 	
 	protected ParserHandler<Token, SubResult2> buildHandler2(final ParserClosure<Token, Result> closure, final SubResult1 subResult1) {
 		return new ParserHandler<Token, SubResult2>() {
+			@Override
 			public void result(final SubResult2 subResult2, final ParserState<Token> state)
 			throws ParserException {
 				// Part 3.
@@ -93,6 +96,7 @@ extends BaseParser<Token, Result> {
 	
 	protected ParserHandler<Token, SubResult3> buildHandler3(final ParserClosure<Token, Result> closure, final SubResult1 subResult1, final SubResult2 subResult2) {
 		return new ParserHandler<Token, SubResult3>() {
+			@Override
 			public void result(final SubResult3 subResult3, final ParserState<Token> state)
 			throws ParserException {
 				// Part 4.
@@ -103,6 +107,7 @@ extends BaseParser<Token, Result> {
 	
 	protected ParserHandler<Token, SubResult4> buildHandler4(final ParserClosure<Token, Result> closure, final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3) {
 		return new ParserHandler<Token, SubResult4>() {
+			@Override
 			public void result(final SubResult4 subResult4, final ParserState<Token> state)
 			throws ParserException {
 				// Part 5.
@@ -113,6 +118,7 @@ extends BaseParser<Token, Result> {
 	
 	protected ParserHandler<Token, SubResult5> buildHandler5(final ParserClosure<Token, Result> closure, final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3, final SubResult4 subResult4) {
 		return new ParserHandler<Token, SubResult5>() {
+			@Override
 			public void result(final SubResult5 subResult5, final ParserState<Token> state)
 			throws ParserException {
 				// Part 6.
@@ -123,6 +129,7 @@ extends BaseParser<Token, Result> {
 	
 	protected ParserHandler<Token, SubResult6> buildHandler6(final ParserClosure<Token, Result> closure, final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3, final SubResult4 subResult4, final SubResult5 subResult5) {
 		return new ParserHandler<Token, SubResult6>() {
+			@Override
 			public void result(final SubResult6 subResult6, final ParserState<Token> state)
 			throws ParserException {
 				// Success.
@@ -136,28 +143,30 @@ extends BaseParser<Token, Result> {
 	
 	// Object.
 	
-	//	@Override
-	//	public int hashCode() {
-	//		final HashCode result = new HashCode(this);
-	//		result.append(_description);
-	//		result.append(_subParser1);
-	//		result.append(_subParser2);
-	//		result.append(_subParser3);
-	//		result.append(_subParser4);
-	//		result.append(_subParser5);
-	//		result.append(_subParser6);
-	//		return result.get();
-	//	}
-	//	
-	//	@Override
-	//	public boolean equals(final Object object) {
-	//		if (this == object) {
-	//			return true;
-	//		} else if (null != object && getClass().equals(object.getClass())) {
-	//			final Combine6Parser<?, ?, ?, ?, ?, ?, ?, ?> parser = (Combine6Parser<?, ?, ?, ?, ?, ?, ?, ?>) object;
-	//			return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5) && _subParser6.equals(parser._subParser6);
-	//		} else {
-	//			return false;
-	//		}
-	//	}
+	// @Override
+	// public int hashCode() {
+	// final HashCode result = new HashCode(this);
+	// result.append(_description);
+	// result.append(_subParser1);
+	// result.append(_subParser2);
+	// result.append(_subParser3);
+	// result.append(_subParser4);
+	// result.append(_subParser5);
+	// result.append(_subParser6);
+	// return result.get();
+	// }
+	//
+	// @Override
+	// public boolean equals(final Object object) {
+	// if (this == object) {
+	// return true;
+	// } else if (null != object && getClass().equals(object.getClass())) {
+	// final Combine6Parser<?, ?, ?, ?, ?, ?, ?, ?> parser = (Combine6Parser<?, ?, ?, ?, ?, ?, ?, ?>) object;
+	// return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) &&
+	// _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5) &&
+	// _subParser6.equals(parser._subParser6);
+	// } else {
+	// return false;
+	// }
+	// }
 }

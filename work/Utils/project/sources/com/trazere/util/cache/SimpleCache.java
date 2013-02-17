@@ -64,6 +64,7 @@ implements Cache<K, V>, Describable {
 	/** Cache entries identified by their keys. */
 	protected final Map<K, V> _entries = new HashMap<K, V>();
 	
+	@Override
 	public boolean contains(final K key) {
 		assert null != key;
 		
@@ -71,14 +72,17 @@ implements Cache<K, V>, Describable {
 		return _entries.containsKey(key);
 	}
 	
+	@Override
 	public Set<K> getKeys() {
 		return Collections.unmodifiableSet(_entries.keySet());
 	}
 	
+	@Override
 	public int size() {
 		return _entries.size();
 	}
 	
+	@Override
 	public Maybe<V> fill(final K key, final V value) {
 		assert null != key;
 		
@@ -99,6 +103,7 @@ implements Cache<K, V>, Describable {
 		return oldValue;
 	}
 	
+	@Override
 	public Maybe<V> get(final K key) {
 		assert null != key;
 		
@@ -116,6 +121,7 @@ implements Cache<K, V>, Describable {
 		return value;
 	}
 	
+	@Override
 	public Maybe<V> clear(final K key) {
 		assert null != key;
 		
@@ -132,6 +138,7 @@ implements Cache<K, V>, Describable {
 		return value;
 	}
 	
+	@Override
 	public <X extends Exception> void clear(final Predicate1<? super K, X> filter)
 	throws X {
 		assert null != filter;
@@ -153,6 +160,7 @@ implements Cache<K, V>, Describable {
 		}
 	}
 	
+	@Override
 	public void clear() {
 		// Dispose.
 		dispose(Collections.unmodifiableCollection(_entries.values()));
@@ -197,6 +205,7 @@ implements Cache<K, V>, Describable {
 		return TextUtils.computeDescription(this);
 	}
 	
+	@Override
 	public void fillDescription(final Description description) {
 		description.append("Policy", _policy);
 		description.append("Size", _entries.size());

@@ -28,16 +28,19 @@ import com.trazere.util.record.SimpleRecordBuilder;
 public abstract class BaseRecordReader<K, V>
 extends BaseParametrable<String, Object>
 implements RecordReader<K, V> {
+	@Override
 	public Record<K, V> read(final Record<String, Object> parameters)
 	throws ValueException {
 		return read(parameters, new SimpleRecordBuilder<K, V>()).build();
 	}
 	
+	@Override
 	public Record<K, V> evaluate(final Record<String, Object> parameters)
 	throws ValueException {
 		return read(parameters);
 	}
 	
+	@Override
 	public RecordReader<K, V> compose(final RecordReader<String, Object> reader)
 	throws ValueException {
 		assert null != reader;

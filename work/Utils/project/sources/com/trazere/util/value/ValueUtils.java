@@ -86,17 +86,20 @@ public class ValueUtils {
 		assert null != function;
 		
 		return new BaseValueReader<R>(type, nullable) {
+			@Override
 			public <B extends RecordSignatureBuilder<String, Object, ?>> B unifyRequirements(final B builder)
 			throws RecordException {
 				valueReader.unifyRequirements(builder);
 				return builder;
 			}
 			
+			@Override
 			public R read(final Record<String, Object> parameters)
 			throws ValueException {
 				return function.evaluate(valueReader.read(parameters));
 			}
 			
+			@Override
 			public ValueReader<R> compose(final RecordReader<String, Object> reader)
 			throws ValueException {
 				final ValueReader<T> valueReader_ = valueReader.compose(reader);

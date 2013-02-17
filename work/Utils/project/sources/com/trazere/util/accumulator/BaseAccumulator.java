@@ -26,6 +26,7 @@ public abstract class BaseAccumulator<T, V, X extends Exception>
 implements Accumulator<T, V, X> {
 	// Procedure.
 	
+	@Override
 	public void execute(final V value)
 	throws X {
 		add(value);

@@ -21,18 +21,22 @@ package com.trazere.util.lang;
 public class ThrowableFactories {
 	/** Factory of {@link Exception} instances. */
 	public static final ThrowableFactory<Exception> EXCEPTION = new BaseThrowableFactory<Exception>() {
+		@Override
 		public Exception build() {
 			return new Exception();
 		}
 		
+		@Override
 		public Exception build(final String message) {
 			return new Exception(message);
 		}
 		
+		@Override
 		public Exception build(final Throwable cause) {
 			return new Exception(cause);
 		}
 		
+		@Override
 		public Exception build(final String message, final Throwable cause) {
 			return new Exception(message, cause);
 		}
@@ -40,18 +44,22 @@ public class ThrowableFactories {
 	
 	/** Factory of {@link RuntimeException} instances. */
 	public static final ThrowableFactory<RuntimeException> RUNTIME_EXCEPTION = new BaseThrowableFactory<RuntimeException>() {
+		@Override
 		public RuntimeException build() {
 			return new RuntimeException();
 		}
 		
+		@Override
 		public RuntimeException build(final String message) {
 			return new RuntimeException(message);
 		}
 		
+		@Override
 		public RuntimeException build(final Throwable cause) {
 			return new RuntimeException(cause);
 		}
 		
+		@Override
 		public RuntimeException build(final String message, final Throwable cause) {
 			return new RuntimeException(message, cause);
 		}

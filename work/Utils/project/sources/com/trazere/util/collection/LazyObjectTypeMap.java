@@ -122,6 +122,7 @@ implements ObjectTypeMap<T, Maybe<? extends V>, X> {
 		// Filter according to the upper bound.
 		final Class<? extends T> upperBound = _upperBound.asSome().getValue();
 		final Function1<Class<?>, Maybe<Class<? extends T>>, RuntimeException> filter = new Function1<Class<?>, Maybe<Class<? extends T>>, RuntimeException>() {
+			@Override
 			@SuppressWarnings("unchecked")
 			public Maybe<Class<? extends T>> evaluate(final Class<?> superType) {
 				if (upperBound.isAssignableFrom(superType)) {

@@ -238,6 +238,7 @@ implements Function1<K, V, X> {
 		_mappings.clear();
 	}
 	
+	@Override
 	public V evaluate(final K key)
 	throws X {
 		return get(key);

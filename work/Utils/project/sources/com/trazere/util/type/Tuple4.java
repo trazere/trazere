@@ -88,6 +88,7 @@ extends Tuple3<T1, T2, T3> {
 	}
 	
 	private static final Function1<?, ?, ?> _GET_FOURTH_FUNCTION = new Function1<Tuple4<Object, Object, Object, Object>, Object, RuntimeException>() {
+		@Override
 		public Object evaluate(final Tuple4<Object, Object, Object, Object> value) {
 			return value.getFourth();
 		}

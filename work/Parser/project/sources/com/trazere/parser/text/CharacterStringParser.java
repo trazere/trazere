@@ -48,6 +48,7 @@ extends BaseParser<Character, String> {
 	
 	// Parser.
 	
+	@Override
 	public void run(final ParserClosure<Character, String> closure, final ParserState<Character> state)
 	throws ParserException {
 		// Zero.
@@ -64,6 +65,7 @@ extends BaseParser<Character, String> {
 		return new ParserHandler<Character, Character>() {
 			private final MutableBoolean _done = new MutableBoolean(false);
 			
+			@Override
 			public void result(final Character character, final ParserState<Character> state)
 			throws ParserException {
 				// Check that this is the first result.

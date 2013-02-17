@@ -65,6 +65,7 @@ implements ReleasableReference<T, RuntimeException>, Describable {
 	 * 
 	 * @return <code>true</code> when the reference is set, <code>false</code> otherwise.
 	 */
+	@Override
 	public boolean isSet() {
 		return _value.isSome();
 	}
@@ -182,6 +183,7 @@ implements ReleasableReference<T, RuntimeException>, Describable {
 		// Nothing to do.
 	}
 	
+	@Override
 	public T get()
 	throws ReferenceNotSetException {
 		if (_value.isSome()) {
@@ -191,12 +193,14 @@ implements ReleasableReference<T, RuntimeException>, Describable {
 		}
 	}
 	
+	@Override
 	public Maybe<T> asMaybe() {
 		return _value;
 	}
 	
 	// Releasable.
 	
+	@Override
 	public void release() {
 		reset();
 	}
@@ -208,6 +212,7 @@ implements ReleasableReference<T, RuntimeException>, Describable {
 		return TextUtils.computeDescription(this);
 	}
 	
+	@Override
 	public void fillDescription(final Description description) {
 		if (_value.isSome()) {
 			description.append("Value", _value.asSome().getValue());

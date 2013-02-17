@@ -33,6 +33,7 @@ public class Comparators {
 	 */
 	public static <T extends Comparable<T>> Comparator<T> comparable() {
 		return new Comparator<T>() {
+			@Override
 			public int compare(final T object1, final T object2) {
 				return LangUtils.compare(object1, object2);
 			}
@@ -50,6 +51,7 @@ public class Comparators {
 	}
 	
 	private static Comparator<String> _STRING_IGNORE_CASE = new Comparator<String>() {
+		@Override
 		public int compare(final String value1, final String value2) {
 			return TextUtils.compareIgnoreCase(value1, value2);
 		}
@@ -67,6 +69,7 @@ public class Comparators {
 		assert null != comparator;
 		
 		return new Comparator<Maybe<T>>() {
+			@Override
 			public int compare(final Maybe<T> value1, final Maybe<T> value2) {
 				return TypeUtils.compare(comparator, value1, value2);
 			}

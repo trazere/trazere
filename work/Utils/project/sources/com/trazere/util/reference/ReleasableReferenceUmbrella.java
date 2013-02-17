@@ -69,6 +69,7 @@ implements Releasable<X> {
 		
 		// Build the reference.
 		final ReleasableReference<T, X> reference = new ReleasableReference<T, X>() {
+			@Override
 			public T get()
 			throws ReferenceNotSetException {
 				if (isSet()) {
@@ -78,10 +79,12 @@ implements Releasable<X> {
 				}
 			}
 			
+			@Override
 			public boolean isSet() {
 				return _references.contains(this);
 			}
 			
+			@Override
 			public Maybe<T> asMaybe() {
 				if (isSet()) {
 					return Maybe.some(value);
@@ -90,6 +93,7 @@ implements Releasable<X> {
 				}
 			}
 			
+			@Override
 			public void release()
 			throws X {
 				removeReference(this);
@@ -120,6 +124,7 @@ implements Releasable<X> {
 	/**
 	 * Releases the implicit reference to the value of the receiver umbrella.
 	 */
+	@Override
 	public void release()
 	throws X {
 		removeReference(_value);

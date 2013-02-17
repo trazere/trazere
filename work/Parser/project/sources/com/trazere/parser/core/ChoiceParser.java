@@ -48,6 +48,7 @@ extends BaseParser<Token, Result> {
 	
 	// Parser.
 	
+	@Override
 	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
 	throws ParserException {
 		// Branches.
@@ -59,6 +60,7 @@ extends BaseParser<Token, Result> {
 	
 	protected ParserHandler<Token, Result> buildHandler(final ParserClosure<Token, Result> closure) {
 		return new ParserHandler<Token, Result>() {
+			@Override
 			public void result(final Result result, final ParserState<Token> state)
 			throws ParserException {
 				closure.success(result, state);

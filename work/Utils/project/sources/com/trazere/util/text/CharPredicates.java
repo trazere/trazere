@@ -33,6 +33,7 @@ public class CharPredicates {
 	}
 	
 	private static final CharPredicate<?> _ALL = new CharPredicate<RuntimeException>() {
+		@Override
 		public boolean evaluate(final char c) {
 			return true;
 		}
@@ -50,6 +51,7 @@ public class CharPredicates {
 	}
 	
 	private static final CharPredicate<?> _NONE = new CharPredicate<RuntimeException>() {
+		@Override
 		public boolean evaluate(final char c) {
 			return false;
 		}
@@ -68,6 +70,7 @@ public class CharPredicates {
 	}
 	
 	private static final CharPredicate<?> _WHITESPACE = new CharPredicate<RuntimeException>() {
+		@Override
 		public boolean evaluate(final char c) {
 			return Character.isWhitespace(c);
 		}
@@ -85,6 +88,7 @@ public class CharPredicates {
 		
 		// Build.
 		return new CharPredicate<X>() {
+			@Override
 			public boolean evaluate(final char c)
 			throws X {
 				return !predicate.evaluate(c);
@@ -106,6 +110,7 @@ public class CharPredicates {
 		
 		// Build.
 		return new CharPredicate<X>() {
+			@Override
 			public boolean evaluate(final char c)
 			throws X {
 				return predicate1.evaluate(c) && predicate2.evaluate(c);
@@ -127,6 +132,7 @@ public class CharPredicates {
 		
 		// Build.
 		return new CharPredicate<X>() {
+			@Override
 			public boolean evaluate(final char c)
 			throws X {
 				return predicate1.evaluate(c) || predicate2.evaluate(c);
@@ -147,6 +153,7 @@ public class CharPredicates {
 	}
 	
 	private static final CharPredicate<?> _DIGIT = new CharPredicate<RuntimeException>() {
+		@Override
 		public boolean evaluate(final char c) {
 			return Character.isDigit(c);
 		}
@@ -165,6 +172,7 @@ public class CharPredicates {
 	}
 	
 	private static final CharPredicate<?> _LETTER = new CharPredicate<RuntimeException>() {
+		@Override
 		public boolean evaluate(final char c) {
 			return Character.isLetter(c);
 		}
@@ -183,6 +191,7 @@ public class CharPredicates {
 	}
 	
 	private static final CharPredicate<?> _ALPHANUMERIC = new CharPredicate<RuntimeException>() {
+		@Override
 		public boolean evaluate(final char c) {
 			return Character.isLetterOrDigit(c) || '_' == c;
 		}
@@ -197,6 +206,7 @@ public class CharPredicates {
 	 */
 	public static <X extends Exception> CharPredicate<X> equal(final char c) {
 		return new CharPredicate<X>() {
+			@Override
 			public boolean evaluate(final char c_) {
 				return c == c_;
 			}
@@ -215,6 +225,7 @@ public class CharPredicates {
 		
 		// Build.
 		return new CharPredicate<X>() {
+			@Override
 			public boolean evaluate(final char c) {
 				return chars.indexOf(c) >= 0;
 			}

@@ -709,6 +709,7 @@ public class PropertiesUtils {
 	
 	/** Function which reads boolean property values. */
 	public static final Function1<String, Boolean, PropertiesException> READ_BOOLEAN_FUNCTION = new Function1<String, Boolean, PropertiesException>() {
+		@Override
 		public Boolean evaluate(final String representation) {
 			assert null != representation;
 			
@@ -736,6 +737,7 @@ public class PropertiesUtils {
 	
 	/** Function which reads integer property values. */
 	public static final Function1<String, Integer, PropertiesException> READ_INTEGER_FUNCTION = new Function1<String, Integer, PropertiesException>() {
+		@Override
 		public Integer evaluate(final String representation)
 		throws PropertiesException {
 			return readInteger(representation);
@@ -762,6 +764,7 @@ public class PropertiesUtils {
 	
 	/** Function which reads long property values. */
 	public static final Function1<String, Long, PropertiesException> READ_LONG_FUNCTION = new Function1<String, Long, PropertiesException>() {
+		@Override
 		public Long evaluate(final String representation)
 		throws PropertiesException {
 			return readLong(representation);
@@ -788,6 +791,7 @@ public class PropertiesUtils {
 	
 	/** Function which reads long property values. */
 	public static final Function1<String, Float, PropertiesException> READ_FLOAT_FUNCTION = new Function1<String, Float, PropertiesException>() {
+		@Override
 		public Float evaluate(final String representation)
 		throws PropertiesException {
 			return readFloat(representation);
@@ -814,6 +818,7 @@ public class PropertiesUtils {
 	
 	/** Function which reads double property values. */
 	public static final Function1<String, Double, PropertiesException> READ_DOUBLE_FUNCTION = new Function1<String, Double, PropertiesException>() {
+		@Override
 		public Double evaluate(final String representation)
 		throws PropertiesException {
 			return readDouble(representation);
@@ -836,6 +841,7 @@ public class PropertiesUtils {
 	
 	/** Function which reads file property values. */
 	public static final Function1<String, File, PropertiesException> READ_FILE_FUNCTION = new Function1<String, File, PropertiesException>() {
+		@Override
 		public File evaluate(final String representation)
 		throws PropertiesException {
 			return readFile(representation);
@@ -862,6 +868,7 @@ public class PropertiesUtils {
 	
 	/** Function which reads URI property values. */
 	public static final Function1<String, URI, PropertiesException> READ_URI_FUNCTION = new Function1<String, URI, PropertiesException>() {
+		@Override
 		public URI evaluate(final String representation)
 		throws PropertiesException {
 			return readUri(representation);

@@ -27,6 +27,7 @@ import java.util.Map;
  */
 public interface MapFactory<K, V, M extends Map<? super K, ? super V>>
 extends Factory<M, RuntimeException> {
+	@Override
 	public M build();
 	
 	public M build(final int capacity);

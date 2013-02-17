@@ -61,18 +61,22 @@ implements ObservableValue<T> {
 		return new SimpleObservable<T>();
 	}
 	
+	@Override
 	public ObserverSubscription subscribe(final Observer<? super T> observer) {
 		return _observable.subscribe(observer);
 	}
 	
+	@Override
 	public ObserverSubscription subscribeOnce(final Observer<? super T> observer) {
 		return _observable.subscribeOnce(observer);
 	}
 	
+	@Override
 	public ObserverSubscription subscribeWhile(final Observer<? super T> observer, final Predicate1<? super T, RuntimeException> condition) {
 		return _observable.subscribeWhile(observer, condition);
 	}
 	
+	@Override
 	public ObserverSubscription subscribeAndNotify(final Observer<? super T> observer) {
 		assert null != observer;
 		
@@ -81,14 +85,17 @@ implements ObservableValue<T> {
 		return subscription;
 	}
 	
+	@Override
 	public Tuple2<T, ObserverSubscription> subscribeToValue(final Observer<? super T> observer) {
 		return Tuple2.build(get(), subscribe(observer));
 	}
 	
+	@Override
 	public Tuple2<T, ObserverSubscription> subscribeOnceToValue(final Observer<? super T> observer) {
 		return Tuple2.build(get(), subscribeOnce(observer));
 	}
 	
+	@Override
 	public Tuple2<T, ObserverSubscription> subscribeWhileToValue(final Observer<? super T> observer, final Predicate1<? super T, RuntimeException> condition) {
 		return Tuple2.build(get(), subscribeWhile(observer, condition));
 	}
