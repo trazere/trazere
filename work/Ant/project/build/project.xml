@@ -18,18 +18,19 @@
 	<import file="env.xml" />
 
 	<!-- Declarations -->
-	<property name="ant.sources" location="${ant}/sources" />
-
 	<property name="ant.build" location="${ant}/build" />
 	<property name="ant.build.ivy" location="${ant.build}/ivy.xml" />
 
+	<property name="ant.sources" location="${ant}/sources" />
+
 	<property name="ant.target" location="${ant.build}/target" />
 	<property name="ant.target.classes" location="${ant.target}/classes" />
-	<property name="ant.target.jar" location="${ant.target}/trazere-ant.jar" />
-	<property name="ant.target.source_jar" location="${ant.target}/trazere-ant-sources.jar" />
+	<property name="ant.target.jar" location="${ant.target}/ant.jar" />
+	<property name="ant.target.libs" location="${ant.target}/libs" />
+	<property name="ant.target.source_jar" location="${ant.target}/ant-sources.jar" />
 
 	<property name="ant.dist" location="${ant}/dist" />
-	<property name="ant.dist.lib" value="${ant.dist}/lib" />
+	<property name="ant.dist.libs" value="${ant.dist}/libs" />
 	<property name="ant.dist.maven" value="${ant.dist}/maven" />
 	<property name="ant.dist.sources" value="${ant.dist}/sources" />
 
@@ -53,7 +54,11 @@
 	<!-- Setup the dependencies -->
 	<target name="ant.setupDependencies">
 		<ivy:resolve file="${ant.build.ivy}" log="download-only" />
-		<ivy:cachepath pathid="ant.dependencies.classpath" conf="compile" />
+		<ivy:retrieve pattern="${ant.target.libs}/[conf]/[organisation].[artifact](-[revision]).[ext]" />
+
+		<path id="ant.dependencies.compile.classpath">
+			<fileset id="ant.dependencies.compile.libs" dir="${ant.target.libs}/compile" />
+		</path>
 	</target>
 
 	<!-- Compile the sources -->
@@ -62,7 +67,7 @@
 		<javac destdir="${ant.target.classes}" source="${trazere.java.version}" encoding="${trazere.java.encoding}" target="${trazere.java.version}" debug="${trazere.java.debug}" includeantruntime="false" failonerror="true">
 			<src location="${ant.sources}" />
 			<classpath>
-				<path refid="ant.dependencies.classpath" />
+				<path refid="ant.dependencies.compile.classpath" />
 			</classpath>
 		</javac>
 	</target>
@@ -92,8 +97,8 @@
 		<mkdir dir="${ant.dist}" />
 
 		<!-- Libs -->
-		<mkdir dir="${ant.dist.lib}" />
-		<copy todir="${ant.dist.lib}">
+		<mkdir dir="${ant.dist.libs}" />
+		<copy todir="${ant.dist.libs}">
 			<resources refid="ant.jars" />
 		</copy>
 
@@ -106,6 +111,6 @@
 		<!-- Maven -->
 		<mkdir dir="${ant.dist.maven}" />
 		<property name="ivy.pom.version" value="${trazere.version}" />
-		<ivy:makepom ivyfile="${ant.build.ivy}" pomfile="${ant.dist.maven}/trazere-ant.pom" conf="compile,runtime" />
+		<ivy:makepom ivyfile="${ant.build.ivy}" pomfile="${ant.dist.maven}/ant.pom" conf="compile,runtime" />
 	</target>
 </project>

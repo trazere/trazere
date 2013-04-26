@@ -18,18 +18,19 @@
 	<import file="env.xml" />
 
 	<!-- Declarations -->
-	<property name="utils.sources" location="${utils}/sources" />
-
 	<property name="utils.build" location="${utils}/build" />
 	<property name="utils.build.ivy" location="${utils.build}/ivy.xml" />
 
+	<property name="utils.sources" location="${utils}/sources" />
+
 	<property name="utils.target" location="${utils.build}/target" />
 	<property name="utils.target.classes" location="${utils.target}/classes" />
-	<property name="utils.target.jar" location="${utils.target}/trazere-utils.jar" />
-	<property name="utils.target.source_jar" location="${utils.target}/trazere-utils-sources.jar" />
+	<property name="utils.target.jar" location="${utils.target}/utils.jar" />
+	<property name="utils.target.libs" location="${utils.target}/libs" />
+	<property name="utils.target.source_jar" location="${utils.target}/utils-sources.jar" />
 
 	<property name="utils.dist" location="${utils}/dist" />
-	<property name="utils.dist.lib" value="${utils.dist}/lib" />
+	<property name="utils.dist.libs" value="${utils.dist}/libs" />
 	<property name="utils.dist.maven" value="${utils.dist}/maven" />
 	<property name="utils.dist.sources" value="${utils.dist}/sources" />
 
@@ -53,7 +54,11 @@
 	<!-- Setup the dependencies -->
 	<target name="utils.setupDependencies">
 		<ivy:resolve file="${utils.build.ivy}" log="download-only" />
-		<ivy:cachepath pathid="utils.dependencies.classpath" conf="compile" />
+		<ivy:retrieve pattern="${utils.target.libs}/[conf]/[organisation].[artifact](-[revision]).[ext]" />
+
+		<path id="utils.dependencies.compile.classpath">
+			<fileset id="utils.dependencies.compile.libs" dir="${utils.target.libs}/compile" />
+		</path>
 	</target>
 
 	<!-- Compile the sources -->
@@ -62,7 +67,7 @@
 		<javac destdir="${utils.target.classes}" source="${trazere.java.version}" encoding="${trazere.java.encoding}" target="${trazere.java.version}" debug="${trazere.java.debug}" includeantruntime="false" failonerror="true">
 			<src location="${utils.sources}" />
 			<classpath>
-				<path refid="utils.dependencies.classpath" />
+				<path refid="utils.dependencies.compile.classpath" />
 			</classpath>
 		</javac>
 	</target>
@@ -92,8 +97,8 @@
 		<mkdir dir="${utils.dist}" />
 
 		<!-- Libs -->
-		<mkdir dir="${utils.dist.lib}" />
-		<copy todir="${utils.dist.lib}">
+		<mkdir dir="${utils.dist.libs}" />
+		<copy todir="${utils.dist.libs}">
 			<resources refid="utils.jars" />
 		</copy>
 
@@ -106,6 +111,6 @@
 		<!-- Maven -->
 		<mkdir dir="${utils.dist.maven}" />
 		<property name="ivy.pom.version" value="${trazere.version}" />
-		<ivy:makepom ivyfile="${utils.build.ivy}" pomfile="${utils.dist.maven}/trazere-utils.pom" conf="compile,runtime" />
+		<ivy:makepom ivyfile="${utils.build.ivy}" pomfile="${utils.dist.maven}/utils.pom" conf="compile,runtime" />
 	</target>
 </project>

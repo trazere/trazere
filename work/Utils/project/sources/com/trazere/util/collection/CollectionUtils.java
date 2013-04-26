@@ -1101,6 +1101,7 @@ public class CollectionUtils {
 		return map;
 	}
 	
+	// TODO: rename to retain
 	/**
 	 * Gets the bindings of the given map associated to the given keys and populates the given result map with them.
 	 * 
@@ -1126,6 +1127,7 @@ public class CollectionUtils {
 		return results;
 	}
 	
+	// TODO: rename to ???
 	/**
 	 * Gets the bindings of the given map not associated to the given keys and populates the given result map with them.
 	 * 
