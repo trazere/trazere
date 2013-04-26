@@ -17,8 +17,8 @@
 <ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
 	<info organisation="com.trazere" module="parser" />
 	<configurations defaultconf="compile" defaultconfmapping="*->default">
-    <conf name="compile" />
-    <conf name="runtime" extends="compile" />
+		<conf name="compile" />
+		<conf name="runtime" extends="compile" />
 	</configurations>
 	<dependencies>
 		<dependency org="org.slf4j" name="slf4j-api" rev="1.6.6" />
