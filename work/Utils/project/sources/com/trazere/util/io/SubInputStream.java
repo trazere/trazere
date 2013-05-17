@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * The {@link SubInputStream} class truncate some input stream to some maximal length.
+ * The {@link SubInputStream} class provide input stream combinators which truncate the content after some maximal length.
  */
 public class SubInputStream
 extends DecoratorInputStream {
@@ -28,7 +28,7 @@ extends DecoratorInputStream {
 	private final MutableLong _mark = new MutableLong(0);
 	
 	/**
-	 * Instantiate a new sub stream for the given stream and length.
+	 * Instantiates a new sub stream for the given stream and length.
 	 * 
 	 * @param stream The stream.
 	 * @param length The maximal length.
