@@ -225,7 +225,7 @@ public class ParserUtils {
 		}
 	}
 	
-	public static <T> T parse(final Parser<Character, ? extends T> parser, final String representation)
+	public static <T> Either<T, String> parse(final Parser<Character, ? extends T> parser, final String representation)
 	throws ParserException {
 		assert null != parser;
 		assert null != representation;
@@ -235,14 +235,14 @@ public class ParserUtils {
 		if (results.isLeft()) {
 			final List<T> successes = results.asLeft().getLeft();
 			if (successes.isEmpty()) {
-				throw new ParserException("Invalid representation \"" + representation + "\"");
+				return Either.right("Invalid representation \"" + representation + "\"");
 			} else if (1 == successes.size()) {
-				return successes.get(0);
+				return Either.left(successes.get(0));
 			} else {
-				throw new ParserException("Ambiguous representation \"" + representation + "\"");
+				return Either.right("Ambiguous representation \"" + representation + "\"");
 			}
 		} else {
-			throw new ParserException("Invalid representation \"" + representation + "\" : expected " + renderFailures(results.asRight().getRight()));
+			return Either.right("Invalid representation \"" + representation + "\" : expected " + ParserUtils.renderFailures(results.asRight().getRight()));
 		}
 	}
 	
