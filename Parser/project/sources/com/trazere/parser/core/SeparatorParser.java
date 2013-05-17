@@ -21,7 +21,6 @@ import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserHandler;
 import com.trazere.parser.ParserState;
-import com.trazere.util.collection.CollectionUtils;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.LangUtils;
 import java.util.ArrayList;
@@ -32,14 +31,20 @@ import java.util.List;
  * DOCME
  * 
  * @param <Token>
- * @param <Result>
+ * @param <Value>
  */
-public class SeparatorParser<Token, Result>
-extends BaseParser<Token, List<Result>> {
-	protected final Parser<Token, ? extends Result> _valueParser;
+public class SeparatorParser<Token, Value>
+extends BaseParser<Token, List<Value>> {
+	protected final Parser<Token, ? extends Value> _valueParser;
 	protected final Parser<Token, ?> _delimiterParser;
+	protected final int _min;
+	protected final int _max;
 	
-	public SeparatorParser(final Parser<Token, ? extends Result> valueParser, final Parser<Token, ?> delimiterParser, final String description) {
+	public SeparatorParser(final Parser<Token, ? extends Value> valueParser, final Parser<Token, ?> delimiterParser, final String description) {
+		this(valueParser, delimiterParser, 0, Integer.MAX_VALUE, description);
+	}
+	
+	public SeparatorParser(final Parser<Token, ? extends Value> valueParser, final Parser<Token, ?> delimiterParser, final int min, final int max, final String description) {
 		super(description);
 		
 		// Checks.
@@ -49,48 +54,42 @@ extends BaseParser<Token, List<Result>> {
 		// Initialization.
 		_valueParser = valueParser;
 		_delimiterParser = delimiterParser;
+		_min = min;
+		_max = max;
 	}
 	
 	// Parser.
 	
 	@Override
-	public void run(final ParserClosure<Token, List<Result>> closure, final ParserState<Token> state)
+	public void run(final ParserClosure<Token, List<Value>> closure, final ParserState<Token> state)
 	throws ParserException {
-		// Zero.
-		final List<Result> results = new ArrayList<Result>();
-		closure.success(Collections.unmodifiableList(results), state);
+		run(closure, 0, Collections.<Value>emptyList(), state);
+	}
+	
+	public void run(final ParserClosure<Token, List<Value>> closure, final int count, final List<Value> values, final ParserState<Token> state)
+	throws ParserException {
+		// Success.
+		if (count >= _min) {
+			closure.success(Collections.unmodifiableList(values), state);
+		}
 		
-		// One.
-		state.parse(_valueParser, buildOneHandler(closure), closure);
+		// More.
+		if (count < _max) {
+			state.parse(count > 0 ? CoreParsers.second(_delimiterParser, _valueParser, null) : _valueParser, buildMoreHandler(closure, count + 1, values), closure);
+		}
 	}
 	
-	protected ParserHandler<Token, Result> buildOneHandler(final ParserClosure<Token, List<Result>> closure) {
-		return new ParserHandler<Token, Result>() {
+	protected ParserHandler<Token, Value> buildMoreHandler(final ParserClosure<Token, List<Value>> closure, final int previousCount, final List<Value> previousValues) {
+		return new ParserHandler<Token, Value>() {
 			@Override
-			public void result(final Result result, final ParserState<Token> state)
+			public void result(final Value value, final ParserState<Token> state)
 			throws ParserException {
-				// Wrap the result.
-				final List<Result> results = CollectionUtils.list(result);
-				closure.success(Collections.unmodifiableList(results), state);
+				// Add the value.
+				final List<Value> values = new ArrayList<Value>(previousValues);
+				values.add(value);
 				
-				// More.
-				state.parse(CoreParsers.second(_delimiterParser, _valueParser, null), buildMoreHandler(closure, results), closure);
-			}
-		};
-	}
-	
-	protected ParserHandler<Token, Result> buildMoreHandler(final ParserClosure<Token, List<Result>> closure, final List<Result> previousResults) {
-		return new ParserHandler<Token, Result>() {
-			@Override
-			public void result(final Result result, final ParserState<Token> state)
-			throws ParserException {
-				// Wrap the result.
-				final List<Result> results = new ArrayList<Result>(previousResults);
-				results.add(result);
-				closure.success(Collections.unmodifiableList(results), state);
-				
-				// More.
-				state.parse(CoreParsers.second(_delimiterParser, _valueParser, null), buildMoreHandler(closure, results), closure);
+				// Continue.
+				run(closure, previousCount + 1, values, state);
 			}
 		};
 	}
@@ -103,6 +102,8 @@ extends BaseParser<Token, List<Result>> {
 		result.append(_description);
 		result.append(_valueParser);
 		result.append(_delimiterParser);
+		result.append(_min);
+		result.append(_max);
 		return result.get();
 	}
 	
@@ -112,7 +113,7 @@ extends BaseParser<Token, List<Result>> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final SeparatorParser<?, ?> parser = (SeparatorParser<?, ?>) object;
-			return LangUtils.equals(_description, parser._description) && _valueParser.equals(parser._valueParser) && _delimiterParser.equals(parser._delimiterParser);
+			return LangUtils.equals(_description, parser._description) && _valueParser.equals(parser._valueParser) && _delimiterParser.equals(parser._delimiterParser) && _min == parser._min && _max == parser._max;
 		} else {
 			return false;
 		}

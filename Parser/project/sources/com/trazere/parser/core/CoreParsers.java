@@ -69,35 +69,31 @@ public class CoreParsers {
 		return new OptionParser<Token, Result>(subParser, description);
 	}
 	
-	public static <Token, Result> ManyParser<Token, Result> many(final Parser<Token, Result> subParser, final String description) {
-		return new ManyParser<Token, Result>(subParser, description);
+	public static <Token, Value> ManyParser<Token, Value> many(final Parser<Token, Value> subParser, final String description) {
+		return new ManyParser<Token, Value>(subParser, description);
 	}
 	
-	public static <Token, Result> Many1Parser<Token, Result> many1(final Parser<Token, Result> subParser, final String description) {
-		return new Many1Parser<Token, Result>(subParser, description);
+	public static <Token, Value> ManyParser<Token, Value> many1(final Parser<Token, Value> subParser, final String description) {
+		return new ManyParser<Token, Value>(subParser, 1, Integer.MAX_VALUE, description);
 	}
 	
-	public static <Token, Result> ManyNParser<Token, Result> manyN(final Parser<Token, Result> subParser, final String description) {
-		return new ManyNParser<Token, Result>(subParser, description);
-	}
-	
-	public static <Token, SubResult, Result> FoldParser<Token, SubResult, Result> fold(final Parser<Token, ? extends SubResult> subParser, final Function2<? super Result, ? super SubResult, ? extends Result, ? extends ParserException> function, final Result initialValue, final String description) {
+	public static <Token, Value, Result> FoldParser<Token, Value, Result> fold(final Parser<Token, ? extends Value> valueParser, final Function2<? super Result, ? super Value, ? extends Result, ? extends ParserException> function, final int min, final int max, final Result initialValue, final String description) {
 		assert null != function;
 		
 		final class FoldParser
-		extends com.trazere.parser.core.FoldParser<Token, SubResult, Result> {
+		extends com.trazere.parser.core.FoldParser<Token, Value, Result> {
 			public FoldParser() {
-				super(subParser, initialValue, description);
+				super(valueParser, min, max, initialValue, description);
 			}
 			
 			// Parser.
 			
-			private final Function2<? super Result, ? super SubResult, ? extends Result, ? extends ParserException> _function = function;
+			private final Function2<? super Result, ? super Value, ? extends Result, ? extends ParserException> _function = function;
 			
 			@Override
-			protected Result fold(final Result previousValue, final SubResult subResult)
+			protected Result fold(final Result previousResult, final Value value)
 			throws ParserException {
-				return _function.evaluate(previousValue, subResult);
+				return _function.evaluate(previousResult, value);
 			}
 			
 			// Object.
@@ -106,8 +102,10 @@ public class CoreParsers {
 			public int hashCode() {
 				final HashCode result = new HashCode(this);
 				result.append(_description);
-				result.append(_subParser);
-				result.append(_initialValue);
+				result.append(_valueParser);
+				result.append(_min);
+				result.append(_max);
+				result.append(_initialResult);
 				result.append(_function);
 				return result.get();
 			}
@@ -118,7 +116,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final FoldParser parser = (FoldParser) object;
-					return LangUtils.equals(_description, parser._description) && _subParser.equals(parser._subParser) && LangUtils.equals(_initialValue, parser._initialValue) && _function.equals(parser._function);
+					return LangUtils.equals(_description, parser._description) && _valueParser.equals(parser._valueParser) && _min == parser._min && _max == parser._max && LangUtils.equals(_initialResult, parser._initialResult) && _function.equals(parser._function);
 				} else {
 					return false;
 				}
@@ -127,50 +125,12 @@ public class CoreParsers {
 		return new FoldParser();
 	}
 	
-	public static <Token, SubResult, Result> Fold1Parser<Token, SubResult, Result> fold1(final Parser<Token, ? extends SubResult> subParser, final Function2<? super Result, ? super SubResult, ? extends Result, ? extends ParserException> function, final Result initialValue, final String description) {
-		assert null != function;
-		
-		final class FoldParser
-		extends Fold1Parser<Token, SubResult, Result> {
-			public FoldParser() {
-				super(subParser, initialValue, description);
-			}
-			
-			// Parser.
-			
-			private final Function2<? super Result, ? super SubResult, ? extends Result, ? extends ParserException> _function = function;
-			
-			@Override
-			protected Result fold(final Result previousValue, final SubResult subResult)
-			throws ParserException {
-				return _function.evaluate(previousValue, subResult);
-			}
-			
-			// Object.
-			
-			@Override
-			public int hashCode() {
-				final HashCode result = new HashCode(this);
-				result.append(_description);
-				result.append(_subParser);
-				result.append(_initialValue);
-				result.append(_function);
-				return result.get();
-			}
-			
-			@Override
-			public boolean equals(final Object object) {
-				if (this == object) {
-					return true;
-				} else if (null != object && getClass().equals(object.getClass())) {
-					final FoldParser parser = (FoldParser) object;
-					return LangUtils.equals(_description, parser._description) && _subParser.equals(parser._subParser) && LangUtils.equals(_initialValue, parser._initialValue) && _function.equals(parser._function);
-				} else {
-					return false;
-				}
-			}
-		}
-		return new FoldParser();
+	public static <Token, Value, Result> FoldParser<Token, Value, Result> fold(final Parser<Token, ? extends Value> subParser, final Function2<? super Result, ? super Value, ? extends Result, ? extends ParserException> function, final Result initialValue, final String description) {
+		return fold(subParser, function, 0, Integer.MAX_VALUE, initialValue, description);
+	}
+	
+	public static <Token, Value, Result> FoldParser<Token, Value, Result> fold1(final Parser<Token, ? extends Value> subParser, final Function2<? super Result, ? super Value, ? extends Result, ? extends ParserException> function, final Result initialValue, final String description) {
+		return fold(subParser, function, 1, Integer.MAX_VALUE, initialValue, description);
 	}
 	
 	public static <Token, SubResult1> Parser<Token, Tuple1<SubResult1>> sequence(final Parser<Token, ? extends SubResult1> subParser1, final String description) {
@@ -513,16 +473,20 @@ public class CoreParsers {
 		return new SequenceParser();
 	}
 	
-	public static <Token, Result> Parser<Token, List<Result>> separator(final Parser<Token, ? extends Result> valueParser, final Parser<Token, ?> delimiterParser, final String description) {
-		return new SeparatorParser<Token, Result>(valueParser, delimiterParser, description);
+	public static <Token, Value> Parser<Token, List<Value>> separator(final Parser<Token, ? extends Value> valueParser, final Parser<Token, ?> delimiterParser, final String description) {
+		return new SeparatorParser<Token, Value>(valueParser, delimiterParser, description);
 	}
 	
-	public static <Token, Result> Parser<Token, List<Result>> separator1(final Parser<Token, ? extends Result> valueParser, final Parser<Token, ?> delimiterParser, final String description) {
-		return new Separator1Parser<Token, Result>(valueParser, delimiterParser, description);
+	public static <Token, Value> Parser<Token, List<Value>> separator1(final Parser<Token, ? extends Value> valueParser, final Parser<Token, ?> delimiterParser, final String description) {
+		return new SeparatorParser<Token, Value>(valueParser, delimiterParser, 1, Integer.MAX_VALUE, description);
 	}
 	
-	public static <Token, Result> Parser<Token, List<Result>> separatorN(final Parser<Token, ? extends Result> valueParser, final Parser<Token, ?> delimiterParser, final String description) {
-		return new SeparatorNParser<Token, Result>(valueParser, delimiterParser, description);
+	public static <Token, Value> Parser<Token, List<Value>> intersperse(final Parser<Token, ? extends Value> valueParser, final Parser<Token, ? extends Value> delimiterParser, final String description) {
+		return new IntersperseParser<Token, Value>(valueParser, delimiterParser, description);
+	}
+	
+	public static <Token, Value> Parser<Token, List<Value>> intersperse1(final Parser<Token, ? extends Value> valueParser, final Parser<Token, ? extends Value> delimiterParser, final String description) {
+		return new IntersperseParser<Token, Value>(valueParser, delimiterParser, 1, Integer.MAX_VALUE, description);
 	}
 	
 	public static <Token, SubResult1, SubResult2> Parser<Token, SubResult1> first(final Parser<Token, ? extends SubResult1> subParser1, final Parser<Token, ? extends SubResult2> subParser2, final String description) {
