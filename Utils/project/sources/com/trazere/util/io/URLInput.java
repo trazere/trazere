@@ -82,6 +82,6 @@ implements Input {
 	
 	@Override
 	public String toString() {
-		return _url.toString();
+		return "@" + _url;
 	}
 }

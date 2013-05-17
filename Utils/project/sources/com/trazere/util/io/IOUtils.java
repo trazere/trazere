@@ -16,12 +16,19 @@
 package com.trazere.util.io;
 
 import com.trazere.util.function.Function1;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 /**
  * DOCME
@@ -46,7 +53,7 @@ public class IOUtils {
 	};
 	
 	/**
-	 * Read the data from the given input stream and write it to the given output stream.
+	 * Reads the data from the given input stream and write it to the given output stream.
 	 * 
 	 * @param input Input stream to read.
 	 * @param output Output stream to write into.
@@ -70,7 +77,7 @@ public class IOUtils {
 	}
 	
 	/**
-	 * Read the text from the given reader and write it to the given writer.
+	 * Reads the text from the given reader and write it to the given writer.
 	 * 
 	 * @param reader Reader to read from.
 	 * @param writer Writer to write into.
@@ -92,6 +99,59 @@ public class IOUtils {
 			}
 		}
 	}
+	
+	/**
+	 * Maps the contents of the given XML input with an XSLT transformation.
+	 * 
+	 * @param input The input providing the content to map.
+	 * @param transformation The input providing the contents of the XSLT.
+	 * @return The built input.
+	 */
+	public static Input transform(final Input input, final Input transformation) {
+		assert null != input;
+		assert null != transformation;
+		
+		return new Input() {
+			@Override
+			public boolean exists()
+			throws IOException {
+				return input.exists();
+			}
+			
+			@Override
+			public InputStream open()
+			throws IOException {
+				try {
+					if (transformation.exists()) {
+						// Transform the input.
+						final ByteArrayOutputStream resultStream = new ByteArrayOutputStream();
+						final InputStream inputStream = input.open();
+						try {
+							final InputStream transformationStream = transformation.open();
+							try {
+								final Transformer transformer = _transformerFactory.newTransformer(new StreamSource(transformationStream));
+								transformer.transform(new StreamSource(inputStream), new StreamResult(resultStream));
+							} finally {
+								transformationStream.close();
+							}
+						} finally {
+							inputStream.close();
+						}
+						
+						// Build the result.
+						return new ByteArrayInputStream(resultStream.toByteArray());
+					} else {
+						// Open the input.
+						return input.open();
+					}
+				} catch (final TransformerException exception) {
+					throw new IOException("Failed loading configuration " + input, exception);
+				}
+			}
+		};
+	}
+	
+	private static final TransformerFactory _transformerFactory = TransformerFactory.newInstance();
 	
 	private IOUtils() {
 		// Prevents instantiation.
