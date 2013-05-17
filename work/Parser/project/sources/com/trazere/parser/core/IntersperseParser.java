@@ -21,8 +21,10 @@ import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserHandler;
 import com.trazere.parser.ParserState;
+import com.trazere.util.collection.CollectionUtils;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.LangUtils;
+import com.trazere.util.type.Tuple2;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,24 +35,27 @@ import java.util.List;
  * @param <Token>
  * @param <Value>
  */
-public class ManyParser<Token, Value>
+public class IntersperseParser<Token, Value>
 extends BaseParser<Token, List<Value>> {
-	protected final Parser<Token, Value> _valueParser;
+	protected final Parser<Token, ? extends Value> _valueParser;
+	protected final Parser<Token, ? extends Value> _delimiterParser;
 	protected final int _min;
 	protected final int _max;
 	
-	public ManyParser(final Parser<Token, Value> valueParser, final String description) {
-		this(valueParser, 0, Integer.MAX_VALUE, description);
+	public IntersperseParser(final Parser<Token, ? extends Value> valueParser, final Parser<Token, ? extends Value> delimiterParser, final String description) {
+		this(valueParser, delimiterParser, 0, Integer.MAX_VALUE, description);
 	}
 	
-	public ManyParser(final Parser<Token, Value> valueParser, final int min, final int max, final String description) {
+	public IntersperseParser(final Parser<Token, ? extends Value> valueParser, final Parser<Token, ? extends Value> delimiterParser, final int min, final int max, final String description) {
 		super(description);
 		
 		// Checks.
 		assert null != valueParser;
+		assert null != delimiterParser;
 		
 		// Initialization.
 		_valueParser = valueParser;
+		_delimiterParser = delimiterParser;
 		_min = min;
 		_max = max;
 	}
@@ -60,7 +65,15 @@ extends BaseParser<Token, List<Value>> {
 	@Override
 	public void run(final ParserClosure<Token, List<Value>> closure, final ParserState<Token> state)
 	throws ParserException {
-		run(closure, 0, Collections.<Value>emptyList(), state);
+		// Success.
+		if (_min <= 0) {
+			closure.success(Collections.<Value>emptyList(), state);
+		}
+		
+		// More.
+		if (_max > 0) {
+			state.parse(_valueParser, buildFirstHandler(closure), closure);
+		}
 	}
 	
 	public void run(final ParserClosure<Token, List<Value>> closure, final int count, final List<Value> values, final ParserState<Token> state)
@@ -72,18 +85,33 @@ extends BaseParser<Token, List<Value>> {
 		
 		// More.
 		if (count < _max) {
-			state.parse(_valueParser, buildMoreHandler(closure, count, values), closure);
+			state.parse(CoreParsers.<Token, Value, Value>sequence(_delimiterParser, _valueParser, null), buildMoreHandler(closure, count, values), closure);
 		}
 	}
 	
-	protected ParserHandler<Token, Value> buildMoreHandler(final ParserClosure<Token, List<Value>> closure, final int previousCount, final List<Value> previousValues) {
+	protected ParserHandler<Token, Value> buildFirstHandler(final ParserClosure<Token, List<Value>> closure) {
 		return new ParserHandler<Token, Value>() {
 			@Override
 			public void result(final Value value, final ParserState<Token> state)
 			throws ParserException {
 				// Add the value.
+				final List<Value> values = CollectionUtils.list(value);
+				
+				// Continue.
+				run(closure, 1, values, state);
+			}
+		};
+	}
+	
+	protected ParserHandler<Token, Tuple2<Value, Value>> buildMoreHandler(final ParserClosure<Token, List<Value>> closure, final int previousCount, final List<Value> previousValues) {
+		return new ParserHandler<Token, Tuple2<Value, Value>>() {
+			@Override
+			public void result(final Tuple2<Value, Value> value, final ParserState<Token> state)
+			throws ParserException {
+				// Add the values.
 				final List<Value> values = new ArrayList<Value>(previousValues);
-				values.add(value);
+				values.add(value.getFirst());
+				values.add(value.getSecond());
 				
 				// Continue.
 				run(closure, previousCount + 1, values, state);
@@ -98,6 +126,7 @@ extends BaseParser<Token, List<Value>> {
 		final HashCode result = new HashCode(this);
 		result.append(_description);
 		result.append(_valueParser);
+		result.append(_delimiterParser);
 		result.append(_min);
 		result.append(_max);
 		return result.get();
@@ -108,8 +137,8 @@ extends BaseParser<Token, List<Value>> {
 		if (this == object) {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
-			final ManyParser<?, ?> parser = (ManyParser<?, ?>) object;
-			return LangUtils.equals(_description, parser._description) && _valueParser.equals(parser._valueParser) && _min == parser._min && _max == parser._max;
+			final IntersperseParser<?, ?> parser = (IntersperseParser<?, ?>) object;
+			return LangUtils.equals(_description, parser._description) && _valueParser.equals(parser._valueParser) && _delimiterParser.equals(parser._delimiterParser) && _min == parser._min && _max == parser._max;
 		} else {
 			return false;
 		}

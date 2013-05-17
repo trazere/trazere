@@ -26,23 +26,31 @@ import com.trazere.parser.ParserState;
  * DOCME
  * 
  * @param <Token>
- * @param <SubResult>
+ * @param <Value>
  * @param <Result>
  */
-public abstract class FoldParser<Token, SubResult, Result>
+public abstract class FoldParser<Token, Value, Result>
 extends BaseParser<Token, Result> {
-	protected final Parser<Token, ? extends SubResult> _subParser;
-	protected final Result _initialValue;
+	protected final Parser<Token, ? extends Value> _valueParser;
+	protected final int _min;
+	protected final int _max;
+	protected final Result _initialResult;
 	
-	public FoldParser(final Parser<Token, ? extends SubResult> subParser, final Result initialValue, final String description) {
+	public FoldParser(final Parser<Token, ? extends Value> valueParser, final Result initialValue, final String description) {
+		this(valueParser, 0, Integer.MAX_VALUE, initialValue, description);
+	}
+	
+	public FoldParser(final Parser<Token, ? extends Value> valueParser, final int min, final int max, final Result initialResult, final String description) {
 		super(description);
 		
 		// Checks.
-		assert null != subParser;
+		assert null != valueParser;
 		
 		// Initialization.
-		_subParser = subParser;
-		_initialValue = initialValue;
+		_valueParser = valueParser;
+		_min = min;
+		_max = max;
+		_initialResult = initialResult;
 	}
 	
 	// Parser.
@@ -50,28 +58,36 @@ extends BaseParser<Token, Result> {
 	@Override
 	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
 	throws ParserException {
-		// Zero.
-		closure.success(_initialValue, state);
-		
-		// More.
-		state.parse(_subParser, buildMoreHandler(closure, _initialValue), closure);
+		run(closure, 0, _initialResult, state);
 	}
 	
-	protected ParserHandler<Token, SubResult> buildMoreHandler(final ParserClosure<Token, Result> closure, final Result previousValue) {
-		return new ParserHandler<Token, SubResult>() {
+	private void run(final ParserClosure<Token, Result> closure, final int count, final Result result, final ParserState<Token> state)
+	throws ParserException {
+		// Success.
+		if (count >= _min) {
+			closure.success(result, state);
+		}
+		
+		// More.
+		if (count < _max) {
+			state.parse(_valueParser, buildMoreHandler(closure, count, result), closure);
+		}
+	}
+	
+	protected ParserHandler<Token, Value> buildMoreHandler(final ParserClosure<Token, Result> closure, final int previousCount, final Result previousResult) {
+		return new ParserHandler<Token, Value>() {
 			@Override
-			public void result(final SubResult subResult, final ParserState<Token> state)
+			public void result(final Value value, final ParserState<Token> state)
 			throws ParserException {
 				// Fold the result.
-				final Result value = fold(previousValue, subResult);
-				closure.success(value, state);
+				final Result result = fold(previousResult, value);
 				
-				// More.
-				state.parse(_subParser, buildMoreHandler(closure, value), closure);
+				// Continue.
+				run(closure, previousCount + 1, result, state);
 			}
 		};
 	}
 	
-	protected abstract Result fold(final Result previousValue, final SubResult subResult)
+	protected abstract Result fold(final Result previousResult, final Value value)
 	throws ParserException;
 }
