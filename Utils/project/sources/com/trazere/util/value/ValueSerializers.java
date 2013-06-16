@@ -93,18 +93,18 @@ public class ValueSerializers {
 	}
 	
 	/**
-	 * Build a serializer of numbers according to the given extractor and format.
+	 * Build a serializer of numbers according to the given converter and format.
 	 * 
 	 * @param <T> Type of the numbers.
 	 * @param <X> Type of the exceptions.
 	 * @param type The Java type of the values.
-	 * @param extractor The extractor.
+	 * @param converter The converter.
 	 * @param format The format of the dates.
 	 * @param exceptionFactory The exception factory to use.
 	 * @return The built serializer.
 	 */
-	public static <T extends Number, X extends Exception> ValueSerializer<T, String, X> buildNumber(final Class<T> type, final Function1<Number, T, RuntimeException> extractor, final NumberFormat format, final ThrowableFactory<X> exceptionFactory) {
-		assert null != extractor;
+	public static <T extends Number, X extends Exception> ValueSerializer<T, String, X> buildNumber(final Class<T> type, final Function1<Number, T, RuntimeException> converter, final NumberFormat format, final ThrowableFactory<X> exceptionFactory) {
+		assert null != converter;
 		assert null != format;
 		assert null != exceptionFactory;
 		
@@ -117,7 +117,7 @@ public class ValueSerializers {
 			@Override
 			public T deserialize(final String representation)
 			throws X {
-				final Maybe<T> value = TextUtils.parseNumber(format, extractor, representation);
+				final Maybe<T> value = TextUtils.parseNumber(format, converter, representation);
 				if (value.isSome()) {
 					return value.asSome().getValue();
 				} else {

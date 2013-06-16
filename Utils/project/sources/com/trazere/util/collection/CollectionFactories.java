@@ -23,7 +23,7 @@ import java.util.LinkedList;
 import java.util.TreeSet;
 
 /**
- * The {@link CollectionFactories} class provides various collection factories.
+ * The {@link CollectionFactories} class provides various factories of collection factories.
  * 
  * @see CollectionFactory
  */

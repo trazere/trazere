@@ -15,7 +15,6 @@
  */
 package com.trazere.util.collection;
 
-import com.trazere.util.function.Function1;
 import com.trazere.util.lang.MutableBoolean;
 import com.trazere.util.reference.MutableReference;
 import com.trazere.util.type.Maybe;
@@ -30,35 +29,6 @@ import java.util.NoSuchElementException;
  */
 public abstract class CheckedMapFilterIterator<T, R, X extends Exception>
 implements CheckedIterator<R, X> {
-	/**
-	 * Builds an iterator using the given feed and extractor.
-	 * 
-	 * @param <T> Type of the values of the feeds.
-	 * @param <R> Type of the produced values.
-	 * @param <X> Type of the exceptions.
-	 * @param feed The feed.
-	 * @param extractor The extractor.
-	 * @return The built iterator.
-	 */
-	public static <T, R, X extends Exception> CheckedMapFilterIterator<T, R, X> build(final CheckedIterator<? extends T, ? extends X> feed, final Function1<? super T, ? extends Maybe<? extends R>, ? extends X> extractor) {
-		assert null != feed;
-		assert null != extractor;
-		
-		return new CheckedMapFilterIterator<T, R, X>() {
-			@Override
-			protected Maybe<T> pull()
-			throws X {
-				return CollectionUtils.next(feed);
-			}
-			
-			@Override
-			public Maybe<? extends R> extract(final T value)
-			throws X {
-				return extractor.evaluate(value);
-			}
-		};
-	}
-	
 	// Iterator.
 	
 	@Override
@@ -92,9 +62,9 @@ implements CheckedIterator<R, X> {
 			return _next.isSet();
 		} else {
 			while (true) {
-				final Maybe<T> feedNext = pull();
-				if (feedNext.isSome()) {
-					final Maybe<? extends R> next = extract(feedNext.asSome().getValue());
+				final Maybe<T> rawNext = pull();
+				if (rawNext.isSome()) {
+					final Maybe<? extends R> next = extract(rawNext.asSome().getValue());
 					if (next.isSome()) {
 						_next.update(next);
 						_lookAhead.set(true);

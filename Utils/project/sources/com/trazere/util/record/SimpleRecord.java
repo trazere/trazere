@@ -16,6 +16,7 @@
 package com.trazere.util.record;
 
 import com.trazere.util.collection.CollectionUtils;
+import com.trazere.util.collection.Maps;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.Description;
@@ -65,7 +66,7 @@ implements Record<K, V>, Describable {
 		assert null != key;
 		
 		// Build.
-		return new SimpleRecord<K, V>(CollectionUtils.map(key, value));
+		return new SimpleRecord<K, V>(Maps.fromBinding(key, value));
 	}
 	
 	/**

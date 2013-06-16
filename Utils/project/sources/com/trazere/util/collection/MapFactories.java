@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * The {@link MapFactories} class provides various map factories.
+ * The {@link MapFactories} class provides various factories of map factories.
  * 
  * @see MapFactory
  */

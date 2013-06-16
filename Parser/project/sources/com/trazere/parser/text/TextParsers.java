@@ -38,7 +38,7 @@ import java.util.EnumSet;
  */
 public class TextParsers {
 	public static Parser<Character, Character> character(final char c, final String description) {
-		return character(CharPredicates.<ParserException>equal(c), description);
+		return character(CharPredicates.<ParserException>equals(c), description);
 	}
 	
 	public static Parser<Character, Character> character(final char c) {

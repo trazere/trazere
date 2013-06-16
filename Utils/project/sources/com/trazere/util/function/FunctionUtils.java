@@ -18,18 +18,16 @@ package com.trazere.util.function;
 import com.trazere.util.accumulator.Accumulator;
 import com.trazere.util.accumulator.Accumulators;
 import com.trazere.util.collection.CheckedIterator;
-import com.trazere.util.collection.CollectionUtils;
+import com.trazere.util.collection.CheckedIterators;
 import com.trazere.util.collection.Multimap;
 import com.trazere.util.feed.Feed;
-import com.trazere.util.feed.FeedUtils;
-import com.trazere.util.feed.MemoizedFeed;
 import com.trazere.util.lang.Counter;
+import com.trazere.util.lang.InternalException;
 import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Tuple2;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Set;
 
 // TODO: use accumulators for results
@@ -57,9 +55,7 @@ public class FunctionUtils {
 	 */
 	public static <V, X extends Exception> boolean isAny(final Predicate1<? super V, X> predicate, final Collection<V> values)
 	throws X {
-		assert null != values;
-		
-		return isAny(predicate, values.iterator());
+		return isAny(predicate, CheckedIterators.<V, InternalException>fromCollection(values));
 	}
 	
 	/**
@@ -74,7 +70,7 @@ public class FunctionUtils {
 	 */
 	public static <V, X extends Exception> boolean isAny(final Predicate1<? super V, X> predicate, final Iterator<V> values)
 	throws X {
-		return isAny(predicate, CollectionUtils.<V, RuntimeException>checkedIterator(values));
+		return isAny(predicate, CheckedIterators.<V, InternalException>fromIterator(values));
 	}
 	
 	/**
@@ -116,7 +112,7 @@ public class FunctionUtils {
 	 */
 	public static <V, X extends Exception, VX extends Exception> boolean isAny(final Predicate1<? super V, X> predicate, final Feed<V, VX> values)
 	throws X, VX {
-		return isAny(predicate, FeedUtils.iterator(values));
+		return isAny(predicate, CheckedIterators.fromFeed(values));
 	}
 	
 	/**
@@ -161,7 +157,7 @@ public class FunctionUtils {
 	throws X {
 		assert null != values;
 		
-		return areAll(predicate, values.iterator());
+		return areAll(predicate, CheckedIterators.<V, InternalException>fromCollection(values));
 	}
 	
 	/**
@@ -176,7 +172,7 @@ public class FunctionUtils {
 	 */
 	public static <V, X extends Exception> boolean areAll(final Predicate1<? super V, X> predicate, final Iterator<V> values)
 	throws X {
-		return areAll(predicate, CollectionUtils.<V, RuntimeException>checkedIterator(values));
+		return areAll(predicate, CheckedIterators.<V, InternalException>fromIterator(values));
 	}
 	
 	/**
@@ -218,7 +214,7 @@ public class FunctionUtils {
 	 */
 	public static <V, X extends Exception, VX extends Exception> boolean areAll(final Predicate1<? super V, X> predicate, final Feed<V, VX> values)
 	throws X, VX {
-		return areAll(predicate, FeedUtils.iterator(values));
+		return areAll(predicate, CheckedIterators.fromFeed(values));
 	}
 	
 	/**
@@ -263,7 +259,7 @@ public class FunctionUtils {
 	throws X {
 		assert null != values;
 		
-		return first(predicate, values.iterator());
+		return first(predicate, CheckedIterators.<V, InternalException>fromCollection(values));
 	}
 	
 	/**
@@ -278,7 +274,7 @@ public class FunctionUtils {
 	 */
 	public static <V, X extends Exception> Maybe<V> first(final Predicate1<? super V, X> predicate, final Iterator<V> values)
 	throws X {
-		return first(predicate, CollectionUtils.<V, RuntimeException>checkedIterator(values));
+		return first(predicate, CheckedIterators.<V, InternalException>fromIterator(values));
 	}
 	
 	/**
@@ -321,7 +317,7 @@ public class FunctionUtils {
 	 */
 	public static <V, X extends Exception, VX extends Exception> Maybe<V> first(final Predicate1<? super V, X> predicate, final Feed<V, VX> values)
 	throws X, VX {
-		return first(predicate, FeedUtils.iterator(values));
+		return first(predicate, CheckedIterators.fromFeed(values));
 	}
 	
 	/**
@@ -369,7 +365,7 @@ public class FunctionUtils {
 	throws X {
 		assert null != values;
 		
-		return first(function, values.iterator());
+		return first(function, CheckedIterators.<V, InternalException>fromCollection(values));
 	}
 	
 	/**
@@ -385,7 +381,7 @@ public class FunctionUtils {
 	 */
 	public static <V, RV, X extends Exception> Maybe<RV> first(final Function1<? super V, ? extends Maybe<RV>, X> function, final Iterator<V> values)
 	throws X {
-		return first(function, CollectionUtils.<V, RuntimeException>checkedIterator(values));
+		return first(function, CheckedIterators.<V, InternalException>fromIterator(values));
 	}
 	
 	/**
@@ -430,7 +426,7 @@ public class FunctionUtils {
 	 */
 	public static <V, RV, X extends Exception, VX extends Exception> Maybe<RV> first(final Function1<? super V, ? extends Maybe<RV>, X> function, final Feed<V, VX> values)
 	throws X, VX {
-		return first(function, FeedUtils.iterator(values));
+		return first(function, CheckedIterators.fromFeed(values));
 	}
 	
 	/**
@@ -449,7 +445,7 @@ public class FunctionUtils {
 	throws X {
 		assert null != values;
 		
-		return fold(operator, initialAccumulator, values.iterator());
+		return fold(operator, initialAccumulator, CheckedIterators.<V, InternalException>fromCollection(values));
 	}
 	
 	/**
@@ -466,7 +462,7 @@ public class FunctionUtils {
 	 */
 	public static <R, V, X extends Exception> R fold(final Function2<? super R, ? super V, ? extends R, X> operator, final R initialAccumulator, final Iterator<V> values)
 	throws X {
-		return fold(operator, initialAccumulator, CollectionUtils.<V, RuntimeException>checkedIterator(values));
+		return fold(operator, initialAccumulator, CheckedIterators.<V, InternalException>fromIterator(values));
 	}
 	
 	/**
@@ -511,7 +507,7 @@ public class FunctionUtils {
 	 */
 	public static <R, V, X extends Exception, VX extends Exception> R fold(final Function2<? super R, ? super V, ? extends R, X> operator, final R initialAccumulator, final Feed<V, VX> values)
 	throws X, VX {
-		return fold(operator, initialAccumulator, FeedUtils.iterator(values));
+		return fold(operator, initialAccumulator, CheckedIterators.fromFeed(values));
 	}
 	
 	/**
@@ -528,7 +524,7 @@ public class FunctionUtils {
 	throws X {
 		assert null != values;
 		
-		return count(predicate, values.iterator());
+		return count(predicate, CheckedIterators.<V, InternalException>fromCollection(values));
 	}
 	
 	/**
@@ -543,7 +539,7 @@ public class FunctionUtils {
 	 */
 	public static <V, X extends Exception> int count(final Predicate1<? super V, X> predicate, final Iterator<V> values)
 	throws X {
-		return count(predicate, CollectionUtils.<V, RuntimeException>checkedIterator(values));
+		return count(predicate, CheckedIterators.<V, InternalException>fromIterator(values));
 	}
 	
 	/**
@@ -586,7 +582,7 @@ public class FunctionUtils {
 	 */
 	public static <V, X extends Exception, VX extends Exception> int count(final Predicate1<? super V, X> predicate, final Feed<V, VX> values)
 	throws X, VX {
-		return count(predicate, FeedUtils.iterator(values));
+		return count(predicate, CheckedIterators.fromFeed(values));
 	}
 	
 	/**
@@ -634,9 +630,10 @@ public class FunctionUtils {
 	throws X {
 		assert null != values;
 		
-		return filter(predicate, values.iterator(), results);
+		return filter(predicate, CheckedIterators.<V, InternalException>fromCollection(values), results);
 	}
 	
+	// TODO: kill, use iterator filter + drain
 	/**
 	 * Filters the given values provided by the given iterator using the given predicate and populates the given result collection with accepted values.
 	 * 
@@ -651,9 +648,10 @@ public class FunctionUtils {
 	 */
 	public static <V, C extends Collection<? super V>, X extends Exception> C filter(final Predicate1<? super V, X> predicate, final Iterator<V> values, final C results)
 	throws X {
-		return filter(predicate, CollectionUtils.<V, RuntimeException>checkedIterator(values), results);
+		return filter(predicate, CheckedIterators.<V, InternalException>fromIterator(values), results);
 	}
 	
+	// TODO: kill, use iterator filter + drain
 	/**
 	 * Filters the given values provided by the given iterator using the given predicate and populates the given result collection with accepted values.
 	 * 
@@ -681,39 +679,6 @@ public class FunctionUtils {
 			}
 		}
 		return results;
-	}
-	
-	/**
-	 * Filters the given feed using the given predicate.
-	 * 
-	 * @param <V> Type of the values to filter.
-	 * @param <X> Type of the exceptions.
-	 * @param predicate The predicate.
-	 * @param feed The feed to filter.
-	 * @return The feed over the filtered elements.
-	 */
-	public static <V, X extends Exception> Feed<V, X> filter(final Predicate1<? super V, ? extends X> predicate, final Feed<? extends V, ? extends X> feed) {
-		assert null != predicate;
-		assert null != feed;
-		
-		return new MemoizedFeed<V, X>() {
-			// Function.
-			
-			@Override
-			protected Maybe<Tuple2<V, Feed<V, X>>> compute()
-			throws X {
-				Feed<? extends V, ? extends X> tail = feed;
-				while (!tail.isEmpty()) {
-					final V head = tail.getHead();
-					if (predicate.evaluate(head)) {
-						return Maybe.some(Tuple2.build(head, filter(predicate, tail.getTail())));
-					} else {
-						tail = tail.getTail();
-					}
-				}
-				return Maybe.none();
-			}
-		};
 	}
 	
 	/**
@@ -810,6 +775,7 @@ public class FunctionUtils {
 		return results;
 	}
 	
+	// TODO: kill, use filter + Predicates.not
 	/**
 	 * Filters the content of the given collection using the given predicate.
 	 * <p>
@@ -838,6 +804,7 @@ public class FunctionUtils {
 		return collection;
 	}
 	
+	// TODO: kill, use filter + Predicates.not
 	/**
 	 * Filters the content of the given map using the given predicate.
 	 * <p>
@@ -884,9 +851,10 @@ public class FunctionUtils {
 	throws X {
 		assert null != values;
 		
-		return map(function, values.iterator(), results);
+		return map(function, CheckedIterators.<V, InternalException>fromCollection(values), results);
 	}
 	
+	// TODO: kill, use iterator filter + drain
 	/**
 	 * Transforms the values provided by the given iterator using the given function and populates the given collection with the result values.
 	 * 
@@ -902,9 +870,10 @@ public class FunctionUtils {
 	 */
 	public static <V, RV, C extends Collection<? super RV>, X extends Exception> C map(final Function1<? super V, RV, X> function, final Iterator<V> values, final C results)
 	throws X {
-		return map(function, CollectionUtils.<V, RuntimeException>checkedIterator(values), results);
+		return map(function, CheckedIterators.<V, InternalException>fromIterator(values), results);
 	}
 	
+	// TODO: kill, use iterator filter + drain
 	/**
 	 * Transforms the values provided by the given iterator using the given function and populates the given collection with the result values.
 	 * 
@@ -930,57 +899,6 @@ public class FunctionUtils {
 			results.add(function.evaluate(values.next()));
 		}
 		return results;
-	}
-	
-	/**
-	 * Transforms the given feed using the given function.
-	 * 
-	 * @param <V> Type of the argument elements.
-	 * @param <RV> Type of the result elements.
-	 * @param <X> Type of the exceptions.
-	 * @param function The function.
-	 * @param feed The argument feed.
-	 * @return The feed over the transformed elements.
-	 */
-	public static <V, RV, X extends Exception> Feed<RV, X> map(final Function1<? super V, ? extends RV, ? extends X> function, final Feed<? extends V, ? extends X> feed) {
-		assert null != function;
-		assert null != feed;
-		
-		return new Feed<RV, X>() {
-			// Feed.
-			
-			@Override
-			public boolean isEmpty()
-			throws X {
-				return feed.isEmpty();
-			}
-			
-			@Override
-			public RV getHead()
-			throws NoSuchElementException, X {
-				return function.evaluate(feed.getHead());
-			}
-			
-			@Override
-			public Feed<RV, X> getTail()
-			throws NoSuchElementException, X {
-				return map(function, feed.getTail());
-			}
-			
-			// Function.
-			
-			@Override
-			public Maybe<Tuple2<RV, Feed<RV, X>>> evaluate()
-			throws X {
-				final Maybe<? extends Tuple2<? extends V, ? extends Feed<? extends V, ? extends X>>> maybeValue = feed.evaluate();
-				if (maybeValue.isSome()) {
-					final Tuple2<? extends V, ? extends Feed<? extends V, ? extends X>> value = maybeValue.asSome().getValue();
-					return Maybe.some(Tuple2.<RV, Feed<RV, X>>build(function.evaluate(value.getFirst()), map(function, value.getSecond())));
-				} else {
-					return Maybe.none();
-				}
-			}
-		};
 	}
 	
 	/**
@@ -1045,58 +963,6 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Transforms the given keys using the given function and populates the given map with the bindings of the keys and the result values.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <M> Type of the map to populate with the result bindings.
-	 * @param <X> Type of the exceptions.
-	 * @param function The function.
-	 * @param keys The argument keys.
-	 * @param results The map to populate with the result bindings.
-	 * @return The given result map.
-	 * @throws X When some function evaluation fails.
-	 */
-	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M mapKeys(final Function1<? super K, V, X> function, final Set<K> keys, final M results)
-	throws X {
-		assert null != function;
-		assert null != keys;
-		assert null != results;
-		
-		for (final K key : keys) {
-			results.put(key, function.evaluate(key));
-		}
-		return results;
-	}
-	
-	/**
-	 * Transforms the given values using the given function and populates the given map with the bindings of the result keys and the argument values.
-	 * <p>
-	 * When the function evaluates to the same result key for different argument values, the last value is associated to the key in the result map.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <M> Type of the map to populate with the result bindings.
-	 * @param <X> Type of the exceptions.
-	 * @param function The function.
-	 * @param values The argument values.
-	 * @param results The map to populate with the result bindings.
-	 * @return The given result map.
-	 * @throws X When some function evaluation fails.
-	 */
-	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M mapValues(final Function1<? super V, K, X> function, final Collection<V> values, final M results)
-	throws X {
-		assert null != function;
-		assert null != values;
-		assert null != results;
-		
-		for (final V value : values) {
-			results.put(function.evaluate(value), value);
-		}
-		return results;
-	}
-	
-	/**
 	 * Filters and transforms the given values using the given function and populates the given collection with the accepted results.
 	 * 
 	 * @param <V> Type of the argument values.
@@ -1113,9 +979,10 @@ public class FunctionUtils {
 	throws X {
 		assert null != values;
 		
-		return mapFilter(function, values.iterator(), results);
+		return mapFilter(function, CheckedIterators.<V, InternalException>fromCollection(values), results);
 	}
 	
+	// TODO: kill, use iterator filter + drain
 	/**
 	 * Filters and transforms the values provided by the given iterator using the given function and populates the given collection with the accepted results.
 	 * 
@@ -1131,9 +998,10 @@ public class FunctionUtils {
 	 */
 	public static <V, RV, C extends Collection<? super RV>, X extends Exception> C mapFilter(final Function1<? super V, ? extends Maybe<? extends RV>, X> function, final Iterator<V> values, final C results)
 	throws X {
-		return mapFilter(function, CollectionUtils.<V, RuntimeException>checkedIterator(values), results);
+		return mapFilter(function, CheckedIterators.<V, InternalException>fromIterator(values), results);
 	}
 	
+	// TODO: kill, use iterator filter + drain
 	/**
 	 * Filters and transforms the values provided by the given iterator using the given function and populates the given collection with the accepted results.
 	 * 
@@ -1162,40 +1030,6 @@ public class FunctionUtils {
 			}
 		}
 		return results;
-	}
-	
-	/**
-	 * Filters and transforms the given feed using the given function.
-	 * 
-	 * @param <V> Type of the argument elements.
-	 * @param <RV> Type of the result elements.
-	 * @param <X> Type of the exceptions.
-	 * @param function The function.
-	 * @param feed The feed.
-	 * @return The feed over the filtered and transformed elements.
-	 */
-	public static <V, RV, X extends Exception> Feed<RV, X> mapFilter(final Function1<? super V, ? extends Maybe<? extends RV>, ? extends X> function, final Feed<? extends V, ? extends X> feed) {
-		assert null != function;
-		assert null != feed;
-		
-		return new MemoizedFeed<RV, X>() {
-			// Function.
-			
-			@Override
-			protected Maybe<Tuple2<RV, Feed<RV, X>>> compute()
-			throws X {
-				Feed<? extends V, ? extends X> tail = feed;
-				while (!tail.isEmpty()) {
-					final Maybe<? extends RV> head = function.evaluate(tail.getHead());
-					if (head.isSome()) {
-						return Maybe.some(Tuple2.<RV, Feed<RV, X>>build(head.asSome().getValue(), mapFilter(function, tail.getTail())));
-					} else {
-						tail = tail.getTail();
-					}
-				}
-				return Maybe.none();
-			}
-		};
 	}
 	
 	/**
@@ -1231,67 +1065,6 @@ public class FunctionUtils {
 		return results;
 	}
 	
-	// TOOD: rename to something else, does not match semantics of filterKeys
-	/**
-	 * Filters and transforms the given keys using the given function and populates the given map with the bindings of the accepted keys and the result values.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <M> Type of the map to populate with the result bindings.
-	 * @param <X> Type of the exceptions.
-	 * @param function The function.
-	 * @param keys The argument keys.
-	 * @param results The map to populate with the result bindings.
-	 * @return The given result map.
-	 * @throws X When some function evaluation fails.
-	 */
-	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M mapFilterKeys(final Function1<? super K, ? extends Maybe<? extends V>, X> function, final Collection<K> keys, final M results)
-	throws X {
-		assert null != function;
-		assert null != keys;
-		assert null != results;
-		
-		for (final K key : keys) {
-			final Maybe<? extends V> value = function.evaluate(key);
-			if (value.isSome()) {
-				results.put(key, value.asSome().getValue());
-			}
-		}
-		return results;
-	}
-	
-	// TOOD: rename to something else, does not match semantics of filterValues
-	/**
-	 * Filters and transforms the given values using the given function and populates the given map with the bindings of the result keys and the accepted
-	 * argument values.
-	 * <p>
-	 * When the function evaluates to the same result key for different argument values, the last value is associated to the key in the result map.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <M> Type of the map to populate with the result bindings.
-	 * @param <X> Type of the exceptions.
-	 * @param function The function.
-	 * @param values The argument values.
-	 * @param results The map to populate with the result bindings.
-	 * @return The given result map.
-	 * @throws X When some function evaluation fails.
-	 */
-	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M mapFilterValues(final Function1<? super V, ? extends Maybe<? extends K>, X> function, final Collection<V> values, final M results)
-	throws X {
-		assert null != function;
-		assert null != values;
-		assert null != results;
-		
-		for (final V value : values) {
-			final Maybe<? extends K> key = function.evaluate(value);
-			if (key.isSome()) {
-				results.put(key.asSome().getValue(), value);
-			}
-		}
-		return results;
-	}
-	
 	/**
 	 * Transforms the given values using the given function, flattens them and populates the given collection with the result values.
 	 * 
@@ -1309,7 +1082,7 @@ public class FunctionUtils {
 	throws X {
 		assert null != values;
 		
-		return flatMap(function, values.iterator(), results);
+		return flatMap(function, CheckedIterators.<V, InternalException>fromCollection(values), results);
 	}
 	
 	/**
@@ -1327,7 +1100,7 @@ public class FunctionUtils {
 	 */
 	public static <V, RV, C extends Collection<? super RV>, X extends Exception> C flatMap(final Function1<? super V, ? extends Collection<? extends RV>, X> function, final Iterator<V> values, final C results)
 	throws X {
-		return flatMap(function, CollectionUtils.<V, RuntimeException>checkedIterator(values), results);
+		return flatMap(function, CheckedIterators.<V, InternalException>fromIterator(values), results);
 	}
 	
 	/**
@@ -1358,6 +1131,118 @@ public class FunctionUtils {
 	}
 	
 	// TODO: flatMap for Feed
+	
+	/**
+	 * Projects the given keys using the given function and populates the given map with the bindings of the keys and the projected values.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <M> Type of the map to populate with the result bindings.
+	 * @param <X> Type of the exceptions.
+	 * @param function The function.
+	 * @param keys The argument keys.
+	 * @param results The map to populate with the result bindings.
+	 * @return The given result map.
+	 * @throws X When some function evaluation fails.
+	 */
+	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M projectKeys(final Function1<? super K, V, X> function, final Set<K> keys, final M results)
+	throws X {
+		assert null != function;
+		assert null != keys;
+		assert null != results;
+		
+		for (final K key : keys) {
+			results.put(key, function.evaluate(key));
+		}
+		return results;
+	}
+	
+	/**
+	 * Projects the given values using the given function and populates the given map with the bindings of the projected keys and the values.
+	 * <p>
+	 * When the function evaluates to the same result key for different argument values, the last value is associated to the key in the result map.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <M> Type of the map to populate with the result bindings.
+	 * @param <X> Type of the exceptions.
+	 * @param function The function.
+	 * @param values The argument values.
+	 * @param results The map to populate with the result bindings.
+	 * @return The given result map.
+	 * @throws X When some function evaluation fails.
+	 */
+	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M projectValues(final Function1<? super V, K, X> function, final Collection<V> values, final M results)
+	throws X {
+		assert null != function;
+		assert null != values;
+		assert null != results;
+		
+		for (final V value : values) {
+			results.put(function.evaluate(value), value);
+		}
+		return results;
+	}
+	
+	/**
+	 * Filters and projects the given keys using the given extractor and populates the given map with the bindings of the accepted keys and the projected
+	 * values.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <M> Type of the map to populate with the result bindings.
+	 * @param <X> Type of the exceptions.
+	 * @param extractor The extractor.
+	 * @param keys The argument keys.
+	 * @param results The map to populate with the result bindings.
+	 * @return The given result map.
+	 * @throws X When some function evaluation fails.
+	 */
+	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M projectFilterKeys(final Function1<? super K, ? extends Maybe<? extends V>, X> extractor, final Collection<K> keys, final M results)
+	throws X {
+		assert null != extractor;
+		assert null != keys;
+		assert null != results;
+		
+		for (final K key : keys) {
+			final Maybe<? extends V> value = extractor.evaluate(key);
+			if (value.isSome()) {
+				results.put(key, value.asSome().getValue());
+			}
+		}
+		return results;
+	}
+	
+	/**
+	 * Filters and projects the given values using the given extractor and populates the given map with the bindings of the projected keys and the accepted
+	 * values.
+	 * <p>
+	 * When the function evaluates to the same result key for different argument values, the last value is associated to the key in the result map.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <M> Type of the map to populate with the result bindings.
+	 * @param <X> Type of the exceptions.
+	 * @param extractor The extractor.
+	 * @param values The argument values.
+	 * @param results The map to populate with the result bindings.
+	 * @return The given result map.
+	 * @throws X When some function evaluation fails.
+	 */
+	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M projectFilterValues(final Function1<? super V, ? extends Maybe<? extends K>, X> extractor, final Collection<V> values, final M results)
+	throws X {
+		assert null != extractor;
+		assert null != values;
+		assert null != results;
+		
+		for (final V value : values) {
+			final Maybe<? extends K> key = extractor.evaluate(value);
+			if (key.isSome()) {
+				results.put(key.asSome().getValue(), value);
+			}
+		}
+		return results;
+	}
 	
 	/**
 	 * Transforms the keys of the given bindings using the given function and populates the given map with the bindings of the result keys and the values
@@ -1491,7 +1376,7 @@ public class FunctionUtils {
 	throws X {
 		assert null != values;
 		
-		execute(procedure, values.iterator());
+		execute(procedure, CheckedIterators.<V, InternalException>fromCollection(values));
 	}
 	
 	/**
@@ -1505,7 +1390,7 @@ public class FunctionUtils {
 	 */
 	public static <V, X extends Exception> void execute(final Procedure1<? super V, X> procedure, final Iterator<V> values)
 	throws X {
-		execute(procedure, CollectionUtils.<V, RuntimeException>checkedIterator(values));
+		execute(procedure, CheckedIterators.<V, InternalException>fromIterator(values));
 	}
 	
 	/**
@@ -1542,7 +1427,7 @@ public class FunctionUtils {
 	 */
 	public static <V, X extends Exception, VX extends Exception> void execute(final Procedure1<? super V, X> procedure, final Feed<V, VX> values)
 	throws X, VX {
-		execute(procedure, FeedUtils.iterator(values));
+		execute(procedure, CheckedIterators.fromFeed(values));
 	}
 	
 	/**
