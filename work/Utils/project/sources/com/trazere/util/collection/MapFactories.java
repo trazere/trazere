@@ -21,11 +21,22 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * The {@link MapFactories} class provides various standard map factories.
+ * The {@link MapFactories} class provides various map factories.
  * 
  * @see MapFactory
  */
 public class MapFactories {
+	/**
+	 * Builds a map factory which produces {@link HashMap}s.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @return The factory.
+	 */
+	public static <K, V> MapFactory<K, V, HashMap<K, V>> hashMap() {
+		return LangUtils.cast(_HASHMAP);
+	}
+	
 	private static final MapFactory<?, ?, ?> _HASHMAP = new BaseMapFactory<Object, Object, HashMap<Object, Object>>() {
 		@Override
 		public HashMap<Object, Object> build() {
@@ -44,14 +55,14 @@ public class MapFactories {
 	};
 	
 	/**
-	 * Build a map factory which produces {@link HashMap}s.
+	 * Builds a map factory which produces {@link TreeMap}s.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @return The factory.
 	 */
-	public static <K, V> MapFactory<K, V, HashMap<K, V>> hashMap() {
-		return LangUtils.cast(_HASHMAP);
+	public static <K, V> MapFactory<K, V, TreeMap<K, V>> treeMap() {
+		return LangUtils.cast(_TREEMAP);
 	}
 	
 	private static final MapFactory<?, ?, ?> _TREEMAP = new BaseMapFactory<Object, Object, TreeMap<Object, Object>>() {
@@ -70,17 +81,6 @@ public class MapFactories {
 			return new TreeMap<Object, Object>(bindings);
 		}
 	};
-	
-	/**
-	 * Build a map factory which produces {@link TreeMap}s.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @return The factory.
-	 */
-	public static <K, V> MapFactory<K, V, TreeMap<K, V>> treeMap() {
-		return LangUtils.cast(_TREEMAP);
-	}
 	
 	private MapFactories() {
 		// Prevents instantiation.
