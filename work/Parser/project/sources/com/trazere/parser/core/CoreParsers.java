@@ -17,7 +17,7 @@ package com.trazere.parser.core;
 
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserException;
-import com.trazere.util.collection.CollectionUtils;
+import com.trazere.util.collection.Lists;
 import com.trazere.util.function.Function1;
 import com.trazere.util.function.Function2;
 import com.trazere.util.lang.HashCode;
@@ -1076,11 +1076,11 @@ public class CoreParsers {
 	}
 	
 	public static <Token, Result> ChoiceParser<Token, Result> choice(final Parser<Token, ? extends Result> subParser1, final Parser<Token, ? extends Result> subParser2, final String description) {
-		return choice(CollectionUtils.<Parser<Token, ? extends Result>>list(subParser1, subParser2), description);
+		return choice(Lists.<Parser<Token, ? extends Result>>fromValues(subParser1, subParser2), description);
 	}
 	
 	public static <Token, Result> ChoiceParser<Token, Result> choice(final Parser<Token, ? extends Result> subParser1, final Parser<Token, ? extends Result> subParser2, final Parser<Token, ? extends Result> subParser3, final String description) {
-		return choice(CollectionUtils.<Parser<Token, ? extends Result>>list(subParser1, subParser2, subParser3), description);
+		return choice(Lists.<Parser<Token, ? extends Result>>fromValues(subParser1, subParser2, subParser3), description);
 	}
 	
 	public static <Token, Result> ChoiceParser<Token, Result> choice(final List<? extends Parser<Token, ? extends Result>> subParsers, final String description) {

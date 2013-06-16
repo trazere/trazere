@@ -15,8 +15,6 @@
  */
 package com.trazere.util.collection;
 
-import com.trazere.util.function.Predicate1;
-import com.trazere.util.type.Maybe;
 import java.util.Iterator;
 
 /**
@@ -27,30 +25,6 @@ import java.util.Iterator;
 public abstract class FilterIterator<T>
 extends CheckedFilterIterator<T, RuntimeException>
 implements Iterator<T> {
-	/**
-	 * Builds an iterator using the given feed and predicate.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param feed The element feed.
-	 * @param predicate The predicate to use.
-	 * @return The built iterator.
-	 */
-	public static <T> FilterIterator<T> build(final Iterator<? extends T> feed, final Predicate1<? super T, ? extends RuntimeException> predicate) {
-		assert null != predicate;
-		
-		return new FilterIterator<T>() {
-			@Override
-			protected Maybe<T> pull() {
-				return CollectionUtils.next(feed);
-			}
-			
-			@Override
-			public boolean filter(final T value) {
-				return predicate.evaluate(value);
-			}
-		};
-	}
-	
 	// Iterator.
 	
 	@Override

@@ -15,43 +15,75 @@
  */
 package com.trazere.util.feed;
 
-import com.trazere.util.collection.CheckedIterator;
-import java.util.NoSuchElementException;
+import com.trazere.util.collection.CheckedIterators;
+import com.trazere.util.collection.CollectionUtils;
+import com.trazere.util.type.Maybe;
+import java.util.Collection;
 
 /**
  * DOCME
  */
 public class FeedUtils {
-	// TODO: move to CheckedIterators
+	// TODO: rename to pull or head
 	/**
-	 * Builds an iterator over the given feed.
+	 * Gets the next value from the given feed.
 	 * 
-	 * @param <T> Type of the elements.
+	 * @param <T> Type of the values.
 	 * @param <X> Type of the exceptions.
 	 * @param feed The feed.
-	 * @return The built iterator.
+	 * @return The next value.
+	 * @throws X When the retrieval of the next value fails.
 	 */
-	public static <T, X extends Exception> CheckedIterator<T, X> iterator(final Feed<T, X> feed) {
+	public static <T, X extends Exception> Maybe<T> next(final Feed<? extends T, X> feed)
+	throws X {
 		assert null != feed;
 		
-		return new CheckedIterator<T, X>() {
-			private Feed<T, X> _tail = feed;
-			
-			@Override
-			public boolean hasNext()
-			throws X {
-				return !_tail.isEmpty();
-			}
-			
-			@Override
-			public T next()
-			throws NoSuchElementException, X {
-				final T value = _tail.getHead();
-				_tail = _tail.getTail();
-				return value;
-			}
-		};
+		return !feed.isEmpty() ? Maybe.<T>some(feed.getHead()) : Maybe.<T>none();
 	}
+	
+	/**
+	 * Drains all elements from the given checked iterator and populates the given collection with them.
+	 * 
+	 * @param <T> Type of the elements.
+	 * @param <C> Type of the result collection.
+	 * @param <X> Type of the exceptions.
+	 * @param feed The feed.
+	 * @param results The collection to populate with the elements.
+	 * @return The result collection.
+	 * @throws X When the retrieval of some value fails.
+	 */
+	public static <T, C extends Collection<? super T>, X extends Exception> C drain(final Feed<? extends T, X> feed, final C results)
+	throws X {
+		assert null != feed;
+		assert null != results;
+		
+		return CollectionUtils.drain(CheckedIterators.fromFeed(feed), results);
+	}
+	
+	// TODO: rename to take
+	/**
+	 * Drains n elements from the given iterator and populates the given collection with them.
+	 * 
+	 * @param <T> Type of the elements.
+	 * @param <C> Type of the result collection.
+	 * @param <X> Type of the exceptions.
+	 * @param n The number of elements to drain.
+	 * @param feed The feed.
+	 * @param results The collection to populate with the elements.
+	 * @return The result collection.
+	 * @throws X When the retrieval of some value fails.
+	 */
+	public static <T, C extends Collection<? super T>, X extends Exception> C drain(final int n, final Feed<? extends T, X> feed, final C results)
+	throws X {
+		assert null != feed;
+		assert null != results;
+		
+		return CollectionUtils.drain(n, CheckedIterators.fromFeed(feed), results);
+	}
+	
+	// TODO: add takeWhile
+	// TODO: add drop
+	// TODO: add dropWhile
 	
 	private FeedUtils() {
 		// Prevent instantiation.

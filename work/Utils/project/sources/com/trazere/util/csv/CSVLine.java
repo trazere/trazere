@@ -15,7 +15,7 @@
  */
 package com.trazere.util.csv;
 
-import com.trazere.util.collection.CollectionUtils;
+import com.trazere.util.collection.Maps;
 import com.trazere.util.record.SimpleRecord;
 import java.util.Collections;
 import java.util.Map;
@@ -41,7 +41,7 @@ extends SimpleRecord<String, String> {
 		assert null != header;
 		
 		// Build.
-		return new CSVLine(CollectionUtils.map(header, value));
+		return new CSVLine(Maps.fromBinding(header, value));
 	}
 	
 	/**
@@ -58,7 +58,7 @@ extends SimpleRecord<String, String> {
 		assert null != header2;
 		
 		// Build.
-		return new CSVLine(CollectionUtils.map(header1, value1, header2, value2));
+		return new CSVLine(Maps.fromBindings(header1, value1, header2, value2));
 	}
 	
 	/**

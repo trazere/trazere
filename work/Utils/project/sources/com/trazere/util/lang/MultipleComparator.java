@@ -29,6 +29,7 @@ import java.util.List;
  */
 public class MultipleComparator<T>
 implements Comparator<T> {
+	// TODO: rename and move to Comparators
 	/**
 	 * Builds a new comparator with the given comparators.
 	 * 

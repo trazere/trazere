@@ -24,13 +24,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Queue;
 import java.util.Set;
 
@@ -40,340 +38,30 @@ import java.util.Set;
  * The {@link CollectionUtils} class provides various utilities regarding the manipulation of collections and maps.
  */
 public class CollectionUtils {
-	// TODO: move to Lists
+	// TODO: rename to pull or head
 	/**
-	 * Builds a new list containing the given value.
-	 * <p>
-	 * This method instantiates an {@link ArrayList}.
-	 * 
-	 * @param <T> Type of the the value.
-	 * @param value The value. May be <code>null</code>.
-	 * @return The built list.
-	 */
-	public static <T> List<T> list(final T value) {
-		final List<T> list = new ArrayList<T>(1);
-		list.add(value);
-		return list;
-	}
-	
-	// TODO: move to Lists
-	/**
-	 * Builds a new list containing the given values.
-	 * <p>
-	 * This method instantiates an {@link ArrayList}.
-	 * 
-	 * @param <T> Type of the the values.
-	 * @param value1 The first value. May be <code>null</code>.
-	 * @param value2 The second value. May be <code>null</code>.
-	 * @return The built list.
-	 */
-	public static <T> List<T> list(final T value1, final T value2) {
-		final List<T> list = new ArrayList<T>(2);
-		list.add(value1);
-		list.add(value2);
-		return list;
-	}
-	
-	// TODO: move to Lists
-	/**
-	 * Builds a new list containing the given values.
-	 * <p>
-	 * This method instantiates an {@link ArrayList}.
-	 * 
-	 * @param <T> Type of the the values.
-	 * @param value1 The first value. May be <code>null</code>.
-	 * @param value2 The second value. May be <code>null</code>.
-	 * @param value3 The third value. May be <code>null</code>.
-	 * @return The built list.
-	 */
-	public static <T> List<T> list(final T value1, final T value2, final T value3) {
-		final List<T> list = new ArrayList<T>(3);
-		list.add(value1);
-		list.add(value2);
-		list.add(value3);
-		return list;
-	}
-	
-	// TODO: move to Lists
-	/**
-	 * Builds a new list containing the given values.
-	 * <p>
-	 * This method instantiates an {@link ArrayList}.
-	 * 
-	 * @param <T> Type of the the values.
-	 * @param values The values. May be <code>null</code>.
-	 * @return The built list.
-	 */
-	public static <T> List<T> listN(final T... values) {
-		assert null != values;
-		
-		final List<T> list = new ArrayList<T>(values.length);
-		for (final T value : values) {
-			list.add(value);
-		}
-		return list;
-	}
-	
-	// TODO: move to Lists
-	/**
-	 * Builds a new list containing the given value.
-	 * <p>
-	 * This method instantiates an {@link ArrayList}.
-	 * 
-	 * @param <T> Type of the the value.
-	 * @param value The value.
-	 * @return The built list.
-	 */
-	public static <T> List<T> list(final Maybe<T> value) {
-		assert null != value;
-		
-		final List<T> list = new ArrayList<T>();
-		if (value.isSome()) {
-			list.add(value.asSome().getValue());
-		}
-		return list;
-	}
-	
-	// TODO: move to Sets
-	/**
-	 * Builds a set containing the given value.
-	 * <p>
-	 * This method instantiates a {@link HashSet}.
-	 * 
-	 * @param <T> Type of the the value.
-	 * @param value The value. May be <code>null</code>.
-	 * @return The built set.
-	 */
-	public static <T> Set<T> set(final T value) {
-		final Set<T> set = new HashSet<T>(1);
-		set.add(value);
-		return set;
-	}
-	
-	// TODO: move to Sets
-	/**
-	 * Builds a set containing the given values.
-	 * <p>
-	 * This method instantiates a {@link HashSet}.
-	 * 
-	 * @param <T> Type of the the values.
-	 * @param value1 The first value. May be <code>null</code>.
-	 * @param value2 The second value. May be <code>null</code>.
-	 * @return The built set.
-	 */
-	public static <T> Set<T> set(final T value1, final T value2) {
-		final Set<T> set = new HashSet<T>(2);
-		set.add(value1);
-		set.add(value2);
-		return set;
-	}
-	
-	// TODO: move to Sets
-	/**
-	 * Builds a set containing the given values.
-	 * <p>
-	 * This method instantiates a {@link HashSet}.
-	 * 
-	 * @param <T> Type of the the values.
-	 * @param value1 The first value. May be <code>null</code>.
-	 * @param value2 The second value. May be <code>null</code>.
-	 * @param value3 The third value. May be <code>null</code>.
-	 * @return The built set.
-	 */
-	public static <T> Set<T> set(final T value1, final T value2, final T value3) {
-		final Set<T> set = new HashSet<T>(3);
-		set.add(value1);
-		set.add(value2);
-		set.add(value3);
-		return set;
-	}
-	
-	// TODO: move to Sets
-	/**
-	 * Builds a set containing the given values.
-	 * <p>
-	 * This method instantiates a {@link HashSet}.
-	 * 
-	 * @param <T> Type of the the values.
-	 * @param values The values. May be <code>null</code>.
-	 * @return The built set.
-	 */
-	public static <T> Set<T> setN(final T... values) {
-		assert null != values;
-		
-		final Set<T> set = new HashSet<T>(values.length);
-		for (final T value : values) {
-			set.add(value);
-		}
-		return set;
-	}
-	
-	// TODO: move to Sets
-	/**
-	 * Builds a set containing the given value.
-	 * <p>
-	 * This method instantiates a {@link HashSet}.
-	 * 
-	 * @param <T> Type of the the value.
-	 * @param value The value.
-	 * @return The built set.
-	 */
-	public static <T> Set<T> set(final Maybe<T> value) {
-		assert null != value;
-		
-		final Set<T> set = new HashSet<T>();
-		if (value.isSome()) {
-			set.add(value.asSome().getValue());
-		}
-		return set;
-	}
-	
-	// TODO: move to Maps
-	/**
-	 * Builds a map containing the binding of the given key and value.
-	 * <p>
-	 * This method instantiates a {@link HashMap}.
-	 * 
-	 * @param <K> Type of the key.
-	 * @param <V> Type of the value.
-	 * @param key The key. May be <code>null</code>.
-	 * @param value The value. May be <code>null</code>.
-	 * @return The built map.
-	 */
-	public static <K, V> Map<K, V> map(final K key, final V value) {
-		final Map<K, V> result = new HashMap<K, V>();
-		result.put(key, value);
-		return result;
-	}
-	
-	// TODO: move to Maps
-	/**
-	 * Builds a map containing the bindings of the given keys and values.
-	 * <p>
-	 * This method instantiates a {@link HashMap}.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param key1 The first key. May be <code>null</code>.
-	 * @param value1 The first value. May be <code>null</code>.
-	 * @param key2 The second key. May be <code>null</code>.
-	 * @param value2 The second value. May be <code>null</code>.
-	 * @return The built map.
-	 */
-	public static <K, V> Map<K, V> map(final K key1, final V value1, final K key2, final V value2) {
-		final Map<K, V> result = new HashMap<K, V>();
-		result.put(key2, value2);
-		result.put(key1, value1);
-		return result;
-	}
-	
-	// TODO: move to Maps
-	/**
-	 * Builds a map containing the given bindings.
-	 * <p>
-	 * This method instantiates a {@link HashMap}.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param bindings The bindings.
-	 * @return The built map.
-	 */
-	public static <K, V> Map<K, V> map(final Collection<? extends Tuple2<? extends K, ? extends V>> bindings) {
-		assert null != bindings;
-		
-		final Map<K, V> results = new HashMap<K, V>(bindings.size());
-		for (final Tuple2<? extends K, ? extends V> binding : bindings) {
-			results.put(binding.getFirst(), binding.getSecond());
-		}
-		return results;
-	}
-	
-	// TODO: move to Iterators
-	/**
-	 * Builds an iterator over no values.
-	 * 
-	 * @param <T> Type of the the values.
-	 * @return The built iterator.
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T> Iterator<T> iterator() {
-		return (Iterator<T>) _EMPTY_ITERATOR;
-	}
-	
-	private static final Iterator<?> _EMPTY_ITERATOR = new Iterator<Object>() {
-		@Override
-		public boolean hasNext() {
-			return false;
-		}
-		
-		@Override
-		public Object next() {
-			throw new NoSuchElementException();
-		}
-		
-		@Override
-		public void remove() {
-			throw new UnsupportedOperationException();
-		}
-	};
-	
-	// TODO: move to Iterators
-	/**
-	 * Builds an iterator over the given values.
-	 * 
-	 * @param <T> Type of the the values.
-	 * @param values The values.
-	 * @return The built iterator.
-	 */
-	public static <T> Iterator<T> iterator(final T... values) {
-		assert null != values;
-		
-		return new Iterator<T>() {
-			protected int _index = 0;
-			
-			@Override
-			public boolean hasNext() {
-				return _index < values.length;
-			}
-			
-			@Override
-			public T next() {
-				final T value = values[_index];
-				_index += 1;
-				
-				return value;
-			}
-			
-			@Override
-			public void remove() {
-				throw new UnsupportedOperationException();
-			}
-		};
-	}
-	
-	/**
-	 * Gets the next value from the given iterator.
+	 * Gets the next value provided by the given iterator.
 	 * 
 	 * @param <T> Type of the values.
-	 * @param values The values.
+	 * @param iterator The iterator.
 	 * @return The next value.
 	 */
-	public static <T> Maybe<T> next(final Iterator<? extends T> values) {
-		assert null != values;
+	public static <T> Maybe<T> next(final Iterator<? extends T> iterator) {
+		assert null != iterator;
 		
-		return values.hasNext() ? Maybe.<T>some(values.next()) : Maybe.<T>none();
+		return iterator.hasNext() ? Maybe.<T>some(iterator.next()) : Maybe.<T>none();
 	}
 	
 	/**
-	 * Drains all elements from the given iterator and populates the given collection with them.
+	 * Drains all values provided by the the given iterator and populates the given collection with them.
 	 * 
-	 * @param <T> Type of the elements.
-	 * @param <R> Type of the result collection.
+	 * @param <T> Type of the values.
+	 * @param <C> Type of the result collection.
 	 * @param values The iterator.
-	 * @param results The collection to populate with the elements.
+	 * @param results The collection to populate with the values.
 	 * @return The result collection.
 	 */
-	public static <T, R extends Collection<? super T>> R drain(final Iterator<? extends T> values, final R results) {
+	public static <T, C extends Collection<? super T>> C drain(final Iterator<? extends T> values, final C results) {
 		assert null != values;
 		assert null != results;
 		
@@ -383,14 +71,15 @@ public class CollectionUtils {
 		return results;
 	}
 	
+	// TODO: rename to take
 	/**
-	 * Drains n elements from the given iterator and populates the given collection with them.
+	 * Drains the next n values provided by the given iterator and populates the given collection with them.
 	 * 
-	 * @param <T> Type of the elements.
+	 * @param <T> Type of the values.
 	 * @param <R> Type of the result collection.
-	 * @param n The number of elements to drain.
+	 * @param n The number of values to drain.
 	 * @param values The iterator.
-	 * @param results The collection to populate with the elements.
+	 * @param results The collection to populate with the values.
 	 * @return The result collection.
 	 */
 	public static <T, R extends Collection<? super T>> R drain(final int n, final Iterator<? extends T> values, final R results) {
@@ -405,125 +94,35 @@ public class CollectionUtils {
 		return results;
 	}
 	
-	// TODO: move to CheckedIterators
-	/**
-	 * Builds a checked iterator over no values.
-	 * 
-	 * @param <T> Type of the the values.
-	 * @param <X> Type of the exceptions.
-	 * @return The built iterator.
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T, X extends Exception> CheckedIterator<T, X> checkedIterator() {
-		return (CheckedIterator<T, X>) _EMPTY_CHECKED_ITERATOR;
-	}
+	// TODO: add takeWhile
+	// TODO: add drop
+	// TODO: add dropWhile
 	
-	private static final CheckedIterator<?, ?> _EMPTY_CHECKED_ITERATOR = new CheckedIterator<Object, RuntimeException>() {
-		@Override
-		public boolean hasNext() {
-			return false;
-		}
-		
-		@Override
-		public Object next() {
-			throw new NoSuchElementException();
-		}
-	};
-	
-	// TODO: move to CheckedIterators
+	// TODO: rename to pull or head
 	/**
-	 * Builds a checked iterator over the given values.
-	 * 
-	 * @param <T> Type of the the values.
-	 * @param <X> Type of the exceptions.
-	 * @param values The values.
-	 * @return The built iterator.
-	 */
-	public static <T, X extends Exception> CheckedIterator<T, X> checkedIterator(final T... values) {
-		assert null != values;
-		
-		return new CheckedIterator<T, X>() {
-			protected int _index = 0;
-			
-			@Override
-			public boolean hasNext() {
-				return _index < values.length;
-			}
-			
-			@Override
-			public T next() {
-				final T value = values[_index];
-				_index += 1;
-				
-				return value;
-			}
-		};
-	}
-	
-	// TODO: move to CheckedIterators
-	/**
-	 * Builds a checked iterator over the given values.
-	 * 
-	 * @param <T> Type of the the values.
-	 * @param <X> Type of the exceptions.
-	 * @param values The values.
-	 * @return The built iterator.
-	 */
-	public static <T, X extends Exception> CheckedIterator<T, X> checkedIterator(final Collection<? extends T> values) {
-		assert null != values;
-		
-		return checkedIterator(values.iterator());
-	}
-	
-	// TODO: move to CheckedIterators
-	/**
-	 * Builds a checked iterator over the given iterator.
-	 * 
-	 * @param <T> Type of the the values.
-	 * @param <X> Type of the exceptions.
-	 * @param values The iterator providing the values.
-	 * @return The built iterator.
-	 */
-	public static <T, X extends Exception> CheckedIterator<T, X> checkedIterator(final Iterator<? extends T> values) {
-		assert null != values;
-		
-		return new CheckedIterator<T, X>() {
-			@Override
-			public boolean hasNext() {
-				return values.hasNext();
-			}
-			
-			@Override
-			public T next() {
-				return values.next();
-			}
-		};
-	}
-	
-	/**
-	 * Gets the next value from the given iterator.
+	 * Gets the next value provided by the given iterator.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param <X> Type of the exceptions.
-	 * @param values The values.
+	 * @param iterator The iterator.
 	 * @return The next value.
 	 * @throws X When the retrieval of the next value fails.
 	 */
-	public static <T, X extends Exception> Maybe<T> next(final CheckedIterator<? extends T, X> values)
+	public static <T, X extends Exception> Maybe<T> next(final CheckedIterator<? extends T, X> iterator)
 	throws X {
-		assert null != values;
+		assert null != iterator;
 		
-		return values.hasNext() ? Maybe.<T>some(values.next()) : Maybe.<T>none();
+		return iterator.hasNext() ? Maybe.<T>some(iterator.next()) : Maybe.<T>none();
 	}
 	
 	/**
-	 * Drains all elements from the given checked iterator and populates the given collection with them.
+	 * Drains all values from the given checked iterator and populates the given collection with them.
 	 * 
-	 * @param <T> Type of the elements.
+	 * @param <T> Type of the values.
 	 * @param <R> Type of the result collection.
 	 * @param <X> Type of the exceptions.
 	 * @param values The iterator.
-	 * @param results The collection to populate with the elements.
+	 * @param results The collection to populate with the values.
 	 * @return The result collection.
 	 * @throws X When the retrieval of some value fails.
 	 */
@@ -538,30 +137,35 @@ public class CollectionUtils {
 		return results;
 	}
 	
+	// TODO: rename to take
 	/**
-	 * Drains n elements from the given iterator and populates the given collection with them.
+	 * Drains n values from the given iterator and populates the given collection with them.
 	 * 
-	 * @param <T> Type of the elements.
+	 * @param <T> Type of the values.
 	 * @param <R> Type of the result collection.
 	 * @param <X> Type of the exceptions.
-	 * @param n The number of elements to drain.
-	 * @param values The iterator.
-	 * @param results The collection to populate with the elements.
+	 * @param n The number of values to drain.
+	 * @param iterator The iterator.
+	 * @param results The collection to populate with the values.
 	 * @return The result collection.
 	 * @throws X When the retrieval of some value fails.
 	 */
-	public static <T, R extends Collection<? super T>, X extends Exception> R drain(final int n, final CheckedIterator<? extends T, X> values, final R results)
+	public static <T, R extends Collection<? super T>, X extends Exception> R drain(final int n, final CheckedIterator<? extends T, X> iterator, final R results)
 	throws X {
-		assert null != values;
+		assert null != iterator;
 		assert null != results;
 		
 		final Counter counter = new Counter();
-		while (values.hasNext() && counter.get() < n) {
-			results.add(values.next());
+		while (iterator.hasNext() && counter.get() < n) {
+			results.add(iterator.next());
 			counter.inc();
 		}
 		return results;
 	}
+	
+	// TODO: add takeWhile
+	// TODO: add drop
+	// TODO: add dropWhile
 	
 	/**
 	 * Gets an element from the given collection.

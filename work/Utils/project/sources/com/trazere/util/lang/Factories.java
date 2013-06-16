@@ -18,20 +18,20 @@ package com.trazere.util.lang;
 import com.trazere.util.function.Function0;
 
 /**
- * The {@link Factories} class provides various factories.
+ * The {@link Factories} class provides factories of factories.
  * 
  * @see Factory
  */
 public class Factories {
 	/**
-	 * Build a factory producing the given value.
+	 * Builds a factory producing the given value.
 	 * 
 	 * @param <T> Type of the value.
 	 * @param <X> Type of the exceptions.
 	 * @param value The value. May be <code>null</code>.
 	 * @return The built factory.
 	 */
-	public static <T, X extends Exception> Factory<T, X> value(final T value) {
+	public static <T, X extends Exception> Factory<T, X> fromValue(final T value) {
 		return new BaseFactory<T, X>() {
 			@Override
 			public T build() {
@@ -41,14 +41,14 @@ public class Factories {
 	}
 	
 	/**
-	 * Build a factory producing values return by given zero arguments function.
+	 * Build a factory producing values returned by given zero arguments function.
 	 * 
 	 * @param <T> Type of the value.
 	 * @param <X> Type of the exceptions.
 	 * @param function The function.
 	 * @return The built factory.
 	 */
-	public static <T, X extends Exception> Factory<T, X> function(final Function0<T, X> function) {
+	public static <T, X extends Exception> Factory<T, X> fromFunction(final Function0<T, X> function) {
 		assert null != function;
 		
 		return new BaseFactory<T, X>() {

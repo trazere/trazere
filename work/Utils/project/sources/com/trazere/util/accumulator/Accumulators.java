@@ -27,31 +27,56 @@ import java.util.Collection;
  */
 public class Accumulators {
 	/**
-	 * Builds an accumulator which discards the accumulated values.
+	 * Builds an accumulator that ignores the accumulated values.
 	 * 
-	 * @param <V> Type of the accumulated values.
+	 * @param <T> Type of the accumulated values.
+	 * @param <V> Type of the accumulation arguments.
 	 * @param <X> Type of the exceptions.
+	 * @param result
 	 * @return The built accumulator.
 	 */
-	@SuppressWarnings("unchecked")
-	public static <V, X extends Exception> Accumulator<Void, V, X> discard() {
-		return (Accumulator<Void, V, X>) _DISCARD;
+	public static <T, V, X extends Exception> Accumulator<T, V, X> constant(final T result) {
+		return new BaseAccumulator<T, V, X>() {
+			@Override
+			public T get() {
+				return result;
+			}
+			
+			@Override
+			public void add(final V value) {
+				// Nothing to do.
+			}
+		};
 	}
 	
-	private static final Accumulator<Void, ?, ?> _DISCARD = new BaseAccumulator<Void, Object, RuntimeException>() {
-		@Override
-		public Void get() {
-			return null;
-		}
-		
-		@Override
-		public void add(final Object value) {
-			// Nothing to do.
-		}
-	};
-	
 	/**
-	 * Builds an accumulator which populates the given collection.
+	 * Builds an accumulator that updates the given reference.
+	 * 
+	 * @param <T> Type of the accumulated values.
+	 * @param <R> Type of the reference.
+	 * @param <X> Type of the exceptions.
+	 * @param reference The reference to set.
+	 * @return The built accumulator.
+	 */
+	public static <T, R extends MutableReference<T>, X extends Exception> Accumulator<R, T, X> reference(final R reference) {
+		assert null != reference;
+		
+		return new BaseAccumulator<R, T, X>() {
+			@Override
+			public R get() {
+				return reference;
+			}
+			
+			@Override
+			public void add(final T value)
+			throws X {
+				reference.update(value);
+			}
+		};
+	}
+
+	/**
+	 * Builds an accumulator that populates the given collection.
 	 * 
 	 * @param <T> Type of the accumulated values.
 	 * @param <C> Type of the collection.
@@ -77,33 +102,7 @@ public class Accumulators {
 	}
 	
 	/**
-	 * Builds an accumulator which updates the given reference.
-	 * 
-	 * @param <T> Type of the accumulated values.
-	 * @param <R> Type of the reference.
-	 * @param <X> Type of the exceptions.
-	 * @param reference The reference to set.
-	 * @return The built accumulator.
-	 */
-	public static <T, R extends MutableReference<T>, X extends Exception> Accumulator<R, T, X> reference(final R reference) {
-		assert null != reference;
-		
-		return new BaseAccumulator<R, T, X>() {
-			@Override
-			public R get() {
-				return reference;
-			}
-			
-			@Override
-			public void add(final T value)
-			throws X {
-				reference.update(value);
-			}
-		};
-	}
-	
-	/**
-	 * Builds an accumulator which left folds the accumulated values using the given function and initial value.
+	 * Builds an accumulator that left folds the accumulated values using the given function and initial value.
 	 * 
 	 * @param <T> Type of the accumulated values.
 	 * @param <V> Type of the accumulation arguments.

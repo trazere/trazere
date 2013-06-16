@@ -21,7 +21,7 @@ import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserHandler;
 import com.trazere.parser.ParserState;
-import com.trazere.util.collection.CollectionUtils;
+import com.trazere.util.collection.Lists;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.LangUtils;
 import com.trazere.util.type.Tuple2;
@@ -95,7 +95,7 @@ extends BaseParser<Token, List<Value>> {
 			public void result(final Value value, final ParserState<Token> state)
 			throws ParserException {
 				// Add the value.
-				final List<Value> values = CollectionUtils.list(value);
+				final List<Value> values = Lists.fromValue(value);
 				
 				// Continue.
 				run(closure, 1, values, state);

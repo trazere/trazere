@@ -25,7 +25,7 @@ import java.util.Comparator;
  */
 public class Comparators {
 	/**
-	 * Builds a comparator wich uses the natural order of comparable values and handle <code>null</code> values.
+	 * Builds a comparator that uses the natural order of comparable values and handle <code>null</code> values.
 	 * 
 	 * @param <T> Type of the values.
 	 * @return The built comparator.
@@ -40,8 +40,9 @@ public class Comparators {
 		};
 	}
 	
+	// TODO: move to TextUtils
 	/**
-	 * Builds a comparator of string which ignores and handle <code>null</code> values.
+	 * Builds a comparator of string that ignores and handle <code>null</code> values.
 	 * 
 	 * @return The built comparator.
 	 * @see TextUtils#compareIgnoreCase(String, String)

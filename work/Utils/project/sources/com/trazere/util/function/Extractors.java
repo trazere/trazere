@@ -15,13 +15,17 @@
  */
 package com.trazere.util.function;
 
+import com.trazere.util.collection.CollectionUtils;
 import com.trazere.util.lang.LangUtils;
 import com.trazere.util.type.Maybe;
+import java.util.Map;
 
 /**
  * The {@link Extractors} class provides various extractors.
  * <p>
- * An extractor is function which combine a map and a filter operation.
+ * An extractor is function that combines a map and a filter operation.
+ * 
+ * @see Function1
  */
 public class Extractors {
 	/**
@@ -58,8 +62,12 @@ public class Extractors {
 		return Functions.compose(Maybe.mapFilterFunction(g), f);
 	}
 	
+	// TODO: add filter(Predicate1, Extractor): Extractor
+	// TODO: add map(Function1, Extractor): Extractor
+	
+	// TODO: move to LangUtils ?
 	/**
-	 * Builds an extractor which matches the values according to the given type.
+	 * Builds an extractor that matches the values according to the given type.
 	 * 
 	 * @param <T> Type of the argument values.
 	 * @param <R> Type of the result values.
@@ -80,14 +88,14 @@ public class Extractors {
 	}
 	
 	/**
-	 * Builds an extractor which filters the values according to the given filter predicate.
+	 * Builds an identity extractor that filters the values according to the given filter predicate.
 	 * 
 	 * @param <T> Type of the argument values.
-	 * @param <X> Type of the result values.
+	 * @param <X> Type of the exceptions.
 	 * @param filter The filter.
 	 * @return The built extractor.
 	 */
-	public static <T, X extends Exception> Function1<T, Maybe<T>, X> predicate(final Predicate1<? super T, ? extends X> filter) {
+	public static <T, X extends Exception> Function1<T, Maybe<T>, X> fromPredicate(final Predicate1<? super T, ? extends X> filter) {
 		assert null != filter;
 		
 		return new Function1<T, Maybe<T>, X>() {
@@ -95,6 +103,50 @@ public class Extractors {
 			public Maybe<T> evaluate(final T value)
 			throws X {
 				return filter.evaluate(value) ? Maybe.some(value) : Maybe.<T>none();
+			}
+		};
+	}
+	
+	/**
+	 * Builds an extractor from the given function.
+	 * 
+	 * @param <V> Type of the argument values.
+	 * @param <R> Type of the result values.
+	 * @param <X> Type of the exceptions.
+	 * @param function The function.
+	 * @return The built extractor.
+	 */
+	public static <V, R, X extends Exception> Function1<V, Maybe<R>, X> fromFunction(final Function1<? super V, ? extends R, ? extends X> function) {
+		assert null != function;
+		
+		return new Function1<V, Maybe<R>, X>() {
+			@Override
+			public Maybe<R> evaluate(final V value)
+			throws X {
+				return Maybe.<R>some(function.evaluate(value));
+			}
+		};
+	}
+	
+	/**
+	 * Builds an extractor corresponding to the given map.
+	 * <p>
+	 * The built function evaluates to the values associated to the keys in the map wrapped into a {@link Maybe maybe} instance to reflect the domain of the
+	 * map.
+	 * 
+	 * @param <K> Type of the argument (the keys of the map).
+	 * @param <V> Type of the results (the values values).
+	 * @param <X> Type of the exceptions.
+	 * @param map The map.
+	 * @return The built function.
+	 */
+	public static <K, V, X extends Exception> Function1<K, Maybe<V>, X> fromMap(final Map<? super K, ? extends V> map) {
+		assert null != map;
+		
+		return new Function1<K, Maybe<V>, X>() {
+			@Override
+			public Maybe<V> evaluate(final K key) {
+				return CollectionUtils.get(map, key);
 			}
 		};
 	}

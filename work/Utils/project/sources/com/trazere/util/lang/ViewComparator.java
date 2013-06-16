@@ -19,6 +19,8 @@ import com.trazere.util.collection.LazyMap;
 import com.trazere.util.function.Function1;
 import java.util.Comparator;
 
+// TODO: rename to MapComparator
+
 /**
  * The {@link ViewComparator} abstract class is a comparator working according some value computed from the compared objects. It applies some kind of view over
  * the compared objects.
@@ -31,6 +33,7 @@ import java.util.Comparator;
  */
 public abstract class ViewComparator<T, V>
 implements Comparator<T> {
+	// TODO: rename to map and move to Comparators
 	/**
 	 * Build a comparation using the function.
 	 * 
@@ -51,6 +54,7 @@ implements Comparator<T> {
 		};
 	}
 	
+	// TODO: replace by a cache factory and move to Comparators
 	/**
 	 * Build a comparation using the function.
 	 * 

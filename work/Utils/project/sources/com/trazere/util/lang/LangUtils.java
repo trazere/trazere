@@ -164,6 +164,7 @@ public class LangUtils {
 		};
 	}
 	
+	// TODO: rename to safeBooleanValue or safeUnbox
 	/**
 	 * Gets the value of the given boolean wrapper.
 	 * 
@@ -175,6 +176,7 @@ public class LangUtils {
 		return null != value ? value.booleanValue() : defaultValue;
 	}
 	
+	// TODO: rename to safeByteValue or safeUnbox
 	/**
 	 * Gets the value of the given byte wrapper.
 	 * 
@@ -186,6 +188,7 @@ public class LangUtils {
 		return null != value ? value.byteValue() : defaultValue;
 	}
 	
+	// TODO: rename to safeShortValue or safeUnbox
 	/**
 	 * Gets the value of the given short wrapper.
 	 * 
@@ -197,6 +200,7 @@ public class LangUtils {
 		return null != value ? value.shortValue() : defaultValue;
 	}
 	
+	// TODO: rename to safeIntValue or safeUnbox
 	/**
 	 * Gets the value of the given integer wrapper.
 	 * 
@@ -208,6 +212,7 @@ public class LangUtils {
 		return null != value ? value.intValue() : defaultValue;
 	}
 	
+	// TODO: rename to safeLongValue or safeUnbox
 	/**
 	 * Gets the value of the given long wrapper.
 	 * 
@@ -219,6 +224,7 @@ public class LangUtils {
 		return null != value ? value.longValue() : defaultValue;
 	}
 	
+	// TODO: rename to safeFloatValue or safeUnbox
 	/**
 	 * Gets the value of the given float wrapper.
 	 * 
@@ -230,6 +236,7 @@ public class LangUtils {
 		return null != value ? value.floatValue() : defaultValue;
 	}
 	
+	// TODO: rename to safeDoubleValue or safeUnbox
 	/**
 	 * Gets the value of the given double wrapper.
 	 * 
@@ -241,6 +248,7 @@ public class LangUtils {
 		return null != value ? value.doubleValue() : defaultValue;
 	}
 	
+	// TODO: rename to safeCharValue or safeUnbox
 	/**
 	 * Gets the value of the given character wrapper.
 	 * 
@@ -252,6 +260,7 @@ public class LangUtils {
 		return null != value ? value.charValue() : defaultValue;
 	}
 	
+	// TODO: rename to ???
 	/**
 	 * Gets the value of the given object.
 	 * 
@@ -264,6 +273,7 @@ public class LangUtils {
 		return null != value ? value : defaultValue;
 	}
 	
+	// TODO: rename to safeEquals
 	/**
 	 * Tests for equality of the given values.
 	 * <p>
@@ -438,6 +448,7 @@ public class LangUtils {
 		}
 	};
 	
+	// TODO: rename to safeCompare
 	/**
 	 * Compares the given comparable values.
 	 * <p>
@@ -457,6 +468,7 @@ public class LangUtils {
 		}
 	}
 	
+	// TODO: rename to safeCompare
 	/**
 	 * Compares the given values using the given comparator.
 	 * <p>

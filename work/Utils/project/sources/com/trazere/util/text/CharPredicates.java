@@ -22,7 +22,7 @@ package com.trazere.util.text;
  */
 public class CharPredicates {
 	/**
-	 * Build a predicate which evaluates to <code>true</code> for all characters.
+	 * Builds a predicate that evaluates to <code>true</code> for all characters.
 	 * 
 	 * @param <X> Type of the exceptions.
 	 * @return The built predicate.
@@ -32,15 +32,10 @@ public class CharPredicates {
 		return (CharPredicate<X>) _ALL;
 	}
 	
-	private static final CharPredicate<?> _ALL = new CharPredicate<RuntimeException>() {
-		@Override
-		public boolean evaluate(final char c) {
-			return true;
-		}
-	};
+	private static final CharPredicate<?> _ALL = CharPredicates.<RuntimeException>constant(true);
 	
 	/**
-	 * Build a predicate which evaluates to <code>false</code> for all characters.
+	 * Builds a predicate that evaluates to <code>false</code> for all characters.
 	 * 
 	 * @param <X> Type of the exceptions.
 	 * @return The built predicate.
@@ -50,15 +45,26 @@ public class CharPredicates {
 		return (CharPredicate<X>) _NONE;
 	}
 	
-	private static final CharPredicate<?> _NONE = new CharPredicate<RuntimeException>() {
-		@Override
-		public boolean evaluate(final char c) {
-			return false;
-		}
-	};
+	private static final CharPredicate<?> _NONE = CharPredicates.<RuntimeException>constant(false);
 	
 	/**
-	 * Build a predicate which evaluates to <code>true</code> for whitespace characters.
+	 * Builds a predicate that evaluates to the given result for all characters.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @param result The result.
+	 * @return The built predicate.
+	 */
+	public static <X extends Exception> CharPredicate<X> constant(final boolean result) {
+		return new CharPredicate<X>() {
+			@Override
+			public boolean evaluate(final char c) {
+				return result;
+			}
+		};
+	}
+	
+	/**
+	 * Builds a predicate that evaluates to <code>true</code> for whitespace characters.
 	 * 
 	 * @param <X> Type of the exceptions.
 	 * @return The built predicate.
@@ -77,7 +83,7 @@ public class CharPredicates {
 	};
 	
 	/**
-	 * Build a predicate corresponding to the inverse of the given predicate.
+	 * Builds a predicate corresponding to the inverse of the given predicate.
 	 * 
 	 * @param <X> Type of the exceptions.
 	 * @param predicate The predicate.
@@ -97,7 +103,7 @@ public class CharPredicates {
 	}
 	
 	/**
-	 * Build a predicate corresponding to the conjonction of the given predicates.
+	 * Builds a predicate corresponding to the conjonction of the given predicates.
 	 * 
 	 * @param <X> Type of the exceptions.
 	 * @param predicate1 The first predicate.
@@ -119,7 +125,7 @@ public class CharPredicates {
 	}
 	
 	/**
-	 * Build a predicate corresponding to the disjunction of the given predicates.
+	 * Builds a predicate corresponding to the disjunction of the given predicates.
 	 * 
 	 * @param <X> Type of the exceptions.
 	 * @param predicate1 The first predicate.
@@ -141,7 +147,7 @@ public class CharPredicates {
 	}
 	
 	/**
-	 * Build a predicate which evaluates to <code>true</code> for digit characters.
+	 * Builds a predicate that evaluates to <code>true</code> for digit characters.
 	 * 
 	 * @param <X> Type of the exceptions.
 	 * @return The built predicate.
@@ -160,7 +166,7 @@ public class CharPredicates {
 	};
 	
 	/**
-	 * Build a predicate which evaluates to <code>true</code> for letter characters.
+	 * Builds a predicate that evaluates to <code>true</code> for letter characters.
 	 * 
 	 * @param <X> Type of the exceptions.
 	 * @return The built predicate.
@@ -179,7 +185,7 @@ public class CharPredicates {
 	};
 	
 	/**
-	 * Build a predicate which evaluates to <code>true</code> for alphanumeric and <code>'_'</code> characters.
+	 * Builds a predicate that evaluates to <code>true</code> for alphanumeric and <code>'_'</code> characters.
 	 * 
 	 * @param <X> Type of the exceptions.
 	 * @return The built predicate.
@@ -198,13 +204,13 @@ public class CharPredicates {
 	};
 	
 	/**
-	 * Build a predicate which evaluate to <code>true</code> for the given character.
+	 * Builds a predicate that evaluate to <code>true</code> for the given character.
 	 * 
 	 * @param <X> Type of the exceptions.
 	 * @param c The character.
 	 * @return The built predicate.
 	 */
-	public static <X extends Exception> CharPredicate<X> equal(final char c) {
+	public static <X extends Exception> CharPredicate<X> equals(final char c) {
 		return new CharPredicate<X>() {
 			@Override
 			public boolean evaluate(final char c_) {
@@ -214,7 +220,7 @@ public class CharPredicates {
 	}
 	
 	/**
-	 * Build a predicate which evaluate to <code>true</code> for any character of the given string.
+	 * Builds a predicate that evaluate to <code>true</code> for any character of the given string.
 	 * 
 	 * @param <X> Type of the exceptions.
 	 * @param chars The characters.
