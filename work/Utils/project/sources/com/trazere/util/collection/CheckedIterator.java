@@ -43,5 +43,5 @@ public interface CheckedIterator<T, X extends Exception> {
 	 * @throws X When the retrieval of the next value fails.
 	 */
 	public T next()
-	throws X;
+	throws NoSuchElementException, X;
 }

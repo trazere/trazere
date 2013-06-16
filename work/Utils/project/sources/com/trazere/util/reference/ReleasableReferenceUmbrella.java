@@ -123,6 +123,8 @@ implements Releasable<X> {
 	
 	/**
 	 * Releases the implicit reference to the value of the receiver umbrella.
+	 * 
+	 * @throws X When the release fails.
 	 */
 	@Override
 	public void release()
