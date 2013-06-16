@@ -15,33 +15,32 @@
  */
 package com.trazere.util.accumulator;
 
-import com.trazere.util.function.Procedure1;
-
-// TODO: inverse T and V order
-// TODO: rename T to R
+import com.trazere.util.function.Procedure2;
 
 /**
- * The {@link Accumulator} interface defines left folding functions over an internal state.
+ * The {@link Accumulator2} interface defines left folding functions of pairs over an internal state.
  * 
- * @param <T> Type of the accumulated values.
- * @param <V> Type of the accumulation arguments.
+ * @param <T1> Type of the first values.
+ * @param <T2> Type of the second values.
+ * @param <S> Type of the result.
  * @param <X> Type of the exceptions.
  */
-public interface Accumulator<T, V, X extends Exception>
-extends Procedure1<V, X> {
+public interface Accumulator2<T1, T2, S, X extends Exception>
+extends Procedure2<T1, T2, X> {
 	/**
-	 * Get the current value of the receiver accumulator.
+	 * Get the current result of the receiver accumulator.
 	 * 
-	 * @return The value. May be <code>null</code>.
+	 * @return The result. May be <code>null</code>.
 	 */
-	public T get();
+	public S get();
 	
 	/**
-	 * Accumulate the given value into the receiver accumulator.
+	 * Accumulate the given pair of values into the receiver accumulator.
 	 * 
-	 * @param value The argument. May be <code>null</code>.
+	 * @param value1 The first value. May be <code>null</code>.
+	 * @param value2 The second value. May be <code>null</code>.
 	 * @throws X When the accumulation fails.
 	 */
-	public void add(final V value)
+	public void add(final T1 value1, T2 value2)
 	throws X;
 }
