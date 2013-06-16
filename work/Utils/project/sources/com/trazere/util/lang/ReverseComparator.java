@@ -24,6 +24,7 @@ import java.util.Comparator;
  */
 public class ReverseComparator<T>
 implements Comparator<T> {
+	// TODO: rename to reverse and move to Comparators
 	/**
 	 * Build a comparator from the given comparator which applies the given ordering.
 	 * <p>

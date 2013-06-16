@@ -20,12 +20,11 @@ import com.trazere.util.collection.Multimap;
 import com.trazere.util.lang.ThrowableFactory;
 import com.trazere.util.record.Record;
 import com.trazere.util.record.RecordException;
-import com.trazere.util.type.Maybe;
 import java.util.Collection;
 import java.util.Map;
 
 /**
- * The {@link Functions} class provides various common functions.
+ * The {@link Functions} class provides various factories of functions.
  * 
  * @see Function1
  * @see Function2
@@ -50,6 +49,7 @@ public class Functions {
 		}
 	};
 	
+	// TODO: rename to map
 	/**
 	 * Builds a function corresponding to the composition of the given functions (g . f).
 	 * 
@@ -98,7 +98,7 @@ public class Functions {
 	}
 	
 	/**
-	 * Builds a zero arguments function which always evaluates to the given value.
+	 * Builds a zero arguments function that always evaluates to the given value.
 	 * 
 	 * @param <R> Type of the result values.
 	 * @param <X> Type of the exceptions.
@@ -115,7 +115,7 @@ public class Functions {
 	}
 	
 	/**
-	 * Builds a one argument function which always evaluates to the given value.
+	 * Builds a one argument function that always evaluates to the given value.
 	 * 
 	 * @param <T> Type of the argument values.
 	 * @param <R> Type of the result value.
@@ -133,7 +133,7 @@ public class Functions {
 	}
 	
 	/**
-	 * Builds a two arguments function which always evaluates to the given value.
+	 * Builds a two arguments function that always evaluates to the given value.
 	 * 
 	 * @param <T1> Type of the first argument values.
 	 * @param <T2> Type of the second argument values.
@@ -152,7 +152,7 @@ public class Functions {
 	}
 	
 	/**
-	 * Builds a three arguments function which always evaluates to the given value.
+	 * Builds a three arguments function that always evaluates to the given value.
 	 * 
 	 * @param <T1> Type of the first argument values.
 	 * @param <T2> Type of the second argument values.
@@ -172,7 +172,7 @@ public class Functions {
 	}
 	
 	/**
-	 * Builds a one argument function which lifts the given zero arguments function.
+	 * Builds a one argument function that lifts the given zero arguments function.
 	 * 
 	 * @param <T> Type of the argument values.
 	 * @param <R> Type of the result values.
@@ -193,27 +193,7 @@ public class Functions {
 	}
 	
 	/**
-	 * Build a one argument function which lifts the given one argument predicate.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param <X> Type of the exceptions.
-	 * @param predicate The lifted predicate.
-	 * @return The built function.
-	 */
-	public static final <T, X extends Exception> Function1<T, Boolean, X> lift1(final Predicate1<? super T, ? extends X> predicate) {
-		assert null != predicate;
-		
-		return new Function1<T, Boolean, X>() {
-			@Override
-			public Boolean evaluate(final T value)
-			throws X {
-				return predicate.evaluate(value);
-			}
-		};
-	}
-	
-	/**
-	 * Builds a two arguments function which lifts the given zero arguments function.
+	 * Builds a two arguments function that lifts the given zero arguments function.
 	 * 
 	 * @param <T1> Type of the first argument values.
 	 * @param <T2> Type of the second argument values.
@@ -235,7 +215,7 @@ public class Functions {
 	}
 	
 	/**
-	 * Builds a two arguments function which lifts the given one argument function.
+	 * Builds a two arguments function that lifts the given one argument function.
 	 * 
 	 * @param <T1> Type of the first argument values.
 	 * @param <T2> Type of the second argument values.
@@ -257,28 +237,7 @@ public class Functions {
 	}
 	
 	/**
-	 * Builds a two arguments function which lifts the given two arguments predicate.
-	 * 
-	 * @param <T1> Type of the first argument values.
-	 * @param <T2> Type of the second argument values.
-	 * @param <X> Type of the exceptions.
-	 * @param predicate The lifted predicate.
-	 * @return The built function.
-	 */
-	public static final <T1, T2, X extends Exception> Function2<T1, T2, Boolean, X> lift2(final Predicate2<? super T1, ? super T2, ? extends X> predicate) {
-		assert null != predicate;
-		
-		return new Function2<T1, T2, Boolean, X>() {
-			@Override
-			public Boolean evaluate(final T1 value1, final T2 value2)
-			throws X {
-				return predicate.evaluate(value1, value2);
-			}
-		};
-	}
-	
-	/**
-	 * Builds a three arguments function which lifts the given zero arguments function.
+	 * Builds a three arguments function that lifts the given zero arguments function.
 	 * 
 	 * @param <T1> Type of the first argument values.
 	 * @param <T2> Type of the second argument values.
@@ -301,7 +260,7 @@ public class Functions {
 	}
 	
 	/**
-	 * Builds a three arguments function which lifts the given one argument function.
+	 * Builds a three arguments function that lifts the given one argument function.
 	 * 
 	 * @param <T1> Type of the first argument values.
 	 * @param <T2> Type of the second argument values.
@@ -324,7 +283,7 @@ public class Functions {
 	}
 	
 	/**
-	 * Builds a three argument function which lifts the given two arguments function.
+	 * Builds a three argument function that lifts the given two arguments function.
 	 * 
 	 * @param <T1> Type of the first argument values.
 	 * @param <T2> Type of the second argument values.
@@ -347,7 +306,48 @@ public class Functions {
 	}
 	
 	/**
-	 * Builds a three arguments function which lifts the given three arguments predicate.
+	 * Build a one argument function from the given one argument predicate.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate The lifted predicate.
+	 * @return The built function.
+	 */
+	public static final <T, X extends Exception> Function1<T, Boolean, X> fromPredicate(final Predicate1<? super T, ? extends X> predicate) {
+		assert null != predicate;
+		
+		return new Function1<T, Boolean, X>() {
+			@Override
+			public Boolean evaluate(final T value)
+			throws X {
+				return predicate.evaluate(value);
+			}
+		};
+	}
+	
+	/**
+	 * Builds a two arguments function from the given two arguments predicate.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate The lifted predicate.
+	 * @return The built function.
+	 */
+	public static final <T1, T2, X extends Exception> Function2<T1, T2, Boolean, X> fromPredicate(final Predicate2<? super T1, ? super T2, ? extends X> predicate) {
+		assert null != predicate;
+		
+		return new Function2<T1, T2, Boolean, X>() {
+			@Override
+			public Boolean evaluate(final T1 value1, final T2 value2)
+			throws X {
+				return predicate.evaluate(value1, value2);
+			}
+		};
+	}
+	
+	/**
+	 * Builds a three arguments function from the given three arguments predicate.
 	 * 
 	 * @param <T1> Type of the first argument values.
 	 * @param <T2> Type of the second argument values.
@@ -356,7 +356,7 @@ public class Functions {
 	 * @param predicate The lifted predicate.
 	 * @return The built function.
 	 */
-	public static final <T1, T2, T3, X extends Exception> Function3<T1, T2, T3, Boolean, X> lift3(final Predicate3<? super T1, ? super T2, ? super T3, ? extends X> predicate) {
+	public static final <T1, T2, T3, X extends Exception> Function3<T1, T2, T3, Boolean, X> fromPredicate(final Predicate3<? super T1, ? super T2, ? super T3, ? extends X> predicate) {
 		assert null != predicate;
 		
 		return new Function3<T1, T2, T3, Boolean, X>() {
@@ -374,12 +374,12 @@ public class Functions {
 	 * The built function evaluates to the values associated to the keys in the map and to <code>null</code> for the other keys.
 	 * 
 	 * @param <K> Type of the argument (the keys of the map).
-	 * @param <V> Type of the results (the values values).
+	 * @param <V> Type of the results (the values of the map).
 	 * @param <X> Type of the exceptions.
 	 * @param map The map.
 	 * @return The built function.
 	 */
-	public static <K, V, X extends Exception> Function1<K, V, X> map(final Map<? super K, ? extends V> map) {
+	public static <K, V, X extends Exception> Function1<K, V, X> fromMap(final Map<? super K, ? extends V> map) {
 		assert null != map;
 		
 		return new Function1<K, V, X>() {
@@ -396,13 +396,13 @@ public class Functions {
 	 * The built function evaluates to the values associated to the keys in the map and to the default value for the other keys.
 	 * 
 	 * @param <K> Type of the argument (the keys of the map).
-	 * @param <V> Type of the results (the values values).
+	 * @param <V> Type of the results (the values of the map).
 	 * @param <X> Type of the exceptions.
 	 * @param map The map.
 	 * @param defaultValue The default value. May be <code>null</code>.
 	 * @return The built function.
 	 */
-	public static <K, V, X extends Exception> Function1<K, V, X> map(final Map<? super K, ? extends V> map, final V defaultValue) {
+	public static <K, V, X extends Exception> Function1<K, V, X> fromMap(final Map<? super K, ? extends V> map, final V defaultValue) {
 		assert null != map;
 		
 		return new Function1<K, V, X>() {
@@ -416,16 +416,16 @@ public class Functions {
 	/**
 	 * Builds a function corresponding to the given map.
 	 * <p>
-	 * The built function evaluates to the values associated to the keys in the map and throws an exception the other keys.
+	 * The built function evaluates to the values associated to the keys in the map and throws an exception for the other keys.
 	 * 
 	 * @param <K> Type of the argument (the keys of the map).
-	 * @param <V> Type of the results (the values values).
+	 * @param <V> Type of the results (the values of the map).
 	 * @param <X> Type of the exceptions.
 	 * @param map The map.
 	 * @param throwableFactory The throwable factory.
 	 * @return The built function.
 	 */
-	public static <K, V, X extends Exception> Function1<K, V, X> map(final Map<? super K, ? extends V> map, final ThrowableFactory<X> throwableFactory) {
+	public static <K, V, X extends Exception> Function1<K, V, X> fromMap(final Map<? super K, ? extends V> map, final ThrowableFactory<X> throwableFactory) {
 		assert null != map;
 		assert null != throwableFactory;
 		
@@ -439,29 +439,6 @@ public class Functions {
 	}
 	
 	/**
-	 * Builds a function corresponding to the given map.
-	 * <p>
-	 * The built function evaluates to the values associated to the keys in the map wrapped into a {@link Maybe maybe} instance to reflect the domain of the
-	 * map.
-	 * 
-	 * @param <K> Type of the argument (the keys of the map).
-	 * @param <V> Type of the results (the values values).
-	 * @param <X> Type of the exceptions.
-	 * @param map The map.
-	 * @return The built function.
-	 */
-	public static <K, V, X extends Exception> Function1<K, Maybe<V>, X> maybeMap(final Map<? super K, ? extends V> map) {
-		assert null != map;
-		
-		return new Function1<K, Maybe<V>, X>() {
-			@Override
-			public Maybe<V> evaluate(final K key) {
-				return CollectionUtils.get(map, key);
-			}
-		};
-	}
-	
-	/**
 	 * Builds a function corresponding to the given multimap.
 	 * 
 	 * @param <K> Type of the arguments (the keys of the multimap).
@@ -470,7 +447,7 @@ public class Functions {
 	 * @param map The multimap.
 	 * @return The built function.
 	 */
-	public static <K, C extends Collection<?>, X extends Exception> Function1<K, C, X> multimap(final Multimap<? super K, ?, ? extends C> map) {
+	public static <K, C extends Collection<?>, X extends Exception> Function1<K, C, X> fromMultimap(final Multimap<? super K, ?, ? extends C> map) {
 		assert null != map;
 		
 		return new Function1<K, C, X>() {
@@ -487,11 +464,11 @@ public class Functions {
 	 * The built function evaluates to the values associated to the keys in the record and fails for the other keys.
 	 * 
 	 * @param <K> Type of the argument (the keys of the record).
-	 * @param <V> Type of the results (the values record).
+	 * @param <V> Type of the results (the values of the record).
 	 * @param record The record.
 	 * @return The built function.
 	 */
-	public static <K, V> Function1<K, V, RecordException> record(final Record<? super K, ? extends V> record) {
+	public static <K, V> Function1<K, V, RecordException> fromRecord(final Record<? super K, ? extends V> record) {
 		assert null != record;
 		
 		return new Function1<K, V, RecordException>() {
@@ -509,13 +486,13 @@ public class Functions {
 	 * The built function evaluates to the values associated to the keys in the record and to the default value for the other keys.
 	 * 
 	 * @param <K> Type of the argument (the keys of the record).
-	 * @param <V> Type of the results (the values record).
-	 * @param <V2> Type of the values of the record.
+	 * @param <V> Type of the results.
+	 * @param <RV> Type of the values of the record.
 	 * @param record The record.
 	 * @param defaultValue The default value. May be <code>null</code>.
 	 * @return The built function.
 	 */
-	public static <K, V, V2 extends V> Function1<K, V, RecordException> record(final Record<? super K, V2> record, final V2 defaultValue) {
+	public static <K, V, RV extends V> Function1<K, V, RecordException> fromRecord(final Record<? super K, RV> record, final RV defaultValue) {
 		assert null != record;
 		
 		return new Function1<K, V, RecordException>() {
@@ -527,9 +504,38 @@ public class Functions {
 		};
 	}
 	
+	/**
+	 * Builds a function corresponding to the given record.
+	 * <p>
+	 * The built function evaluates to the values associated to the keys in the record and throws an exception for the other keys.
+	 * 
+	 * @param <K> Type of the argument (the keys of the map).
+	 * @param <V> Type of the results (the values values).
+	 * @param <X> Type of the exceptions.
+	 * @param record The record.
+	 * @param throwableFactory The throwable factory.
+	 * @return The built function.
+	 */
+	public static <K, V, X extends Exception> Function1<K, V, X> fromRecord(final Record<? super K, ? extends V> record, final ThrowableFactory<X> throwableFactory) {
+		assert null != record;
+		assert null != throwableFactory;
+		
+		return new Function1<K, V, X>() {
+			@Override
+			public V evaluate(final K key)
+			throws X {
+				try {
+					return record.get(key);
+				} catch (final RecordException exception) {
+					throw throwableFactory.build(exception);
+				}
+			}
+		};
+	}
+	
 	// TODO: move to FunctionUtils ?
 	/**
-	 * Builds a function which evaluates to the result of the evaluation of its zero arguments function arguments.
+	 * Builds a function that evaluates to the result of the evaluation of its zero arguments function arguments.
 	 * 
 	 * @param <R> Type of the result values.
 	 * @param <X> Type of the exceptions.
@@ -549,7 +555,7 @@ public class Functions {
 	
 	// TODO: move to FunctionUtils ?
 	/**
-	 * Builds a function which evaluates to the result of the evaluation of its one argument function arguments with the given value.
+	 * Builds a function that evaluates to the result of the evaluation of its one argument function arguments with the given value.
 	 * 
 	 * @param <T> Type of the argument values.
 	 * @param <R> Type of the result values.
@@ -569,7 +575,7 @@ public class Functions {
 	
 	// TODO: move to FunctionUtils ?
 	/**
-	 * Builds a function which evaluates to the result of the evaluation of its two arguments function arguments with the given values.
+	 * Builds a function that evaluates to the result of the evaluation of its two arguments function arguments with the given values.
 	 * 
 	 * @param <T1> Type of the first argument values.
 	 * @param <T2> Type of the second argument values.

@@ -15,8 +15,6 @@
  */
 package com.trazere.util.collection;
 
-import com.trazere.util.function.Function1;
-import com.trazere.util.type.Maybe;
 import java.util.Iterator;
 
 /**
@@ -28,32 +26,6 @@ import java.util.Iterator;
 public abstract class MapFilterIterator<T, R>
 extends CheckedMapFilterIterator<T, R, RuntimeException>
 implements Iterator<R> {
-	/**
-	 * Builds an iterator using the given feed and extractor.
-	 * 
-	 * @param <T> Type of the values of the feeds.
-	 * @param <R> Type of the produced values.
-	 * @param feed The feed.
-	 * @param extractor The extractor.
-	 * @return The built iterator.
-	 */
-	public static <T, R> MapFilterIterator<T, R> build(final Iterator<? extends T> feed, final Function1<? super T, ? extends Maybe<? extends R>, ? extends RuntimeException> extractor) {
-		assert null != feed;
-		assert null != extractor;
-		
-		return new MapFilterIterator<T, R>() {
-			@Override
-			protected Maybe<T> pull() {
-				return CollectionUtils.next(feed);
-			}
-			
-			@Override
-			public Maybe<? extends R> extract(final T value) {
-				return extractor.evaluate(value);
-			}
-		};
-	}
-	
 	// Iterator.
 	
 	@Override

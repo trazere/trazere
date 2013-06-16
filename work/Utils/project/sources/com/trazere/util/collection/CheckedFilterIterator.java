@@ -15,7 +15,6 @@
  */
 package com.trazere.util.collection;
 
-import com.trazere.util.function.Predicate1;
 import com.trazere.util.type.Maybe;
 
 /**
@@ -26,33 +25,6 @@ import com.trazere.util.type.Maybe;
  */
 public abstract class CheckedFilterIterator<T, X extends Exception>
 extends CheckedMapFilterIterator<T, T, X> {
-	/**
-	 * Builds an iterator using the given feed and predicate.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param <X> Type of the exceptions.
-	 * @param feed The element feed.
-	 * @param predicate The predicate to use.
-	 * @return The built iterator.
-	 */
-	public static <T, X extends Exception> CheckedFilterIterator<T, X> build(final CheckedIterator<? extends T, ? extends X> feed, final Predicate1<? super T, ? extends X> predicate) {
-		assert null != predicate;
-		
-		return new CheckedFilterIterator<T, X>() {
-			@Override
-			protected Maybe<T> pull()
-			throws X {
-				return CollectionUtils.next(feed);
-			}
-			
-			@Override
-			public boolean filter(final T value)
-			throws X {
-				return predicate.evaluate(value);
-			}
-		};
-	}
-	
 	// Iterator.
 	
 	@Override

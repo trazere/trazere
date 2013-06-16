@@ -17,6 +17,8 @@ package com.trazere.util.lang;
 
 import java.util.Comparator;
 
+// TODO: rename to SafeComparator
+
 /**
  * The {@link NullComparator} class adds support for comparison of <code>null</code> values to other comparators.
  * 
@@ -25,6 +27,7 @@ import java.util.Comparator;
  */
 public class NullComparator<T>
 implements Comparator<T> {
+	// TODO: rename to safe and move to Comparators
 	/**
 	 * Build a comparator using the given comparator..
 	 * 

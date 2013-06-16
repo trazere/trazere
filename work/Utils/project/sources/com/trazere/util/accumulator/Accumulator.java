@@ -17,6 +17,9 @@ package com.trazere.util.accumulator;
 
 import com.trazere.util.function.Procedure1;
 
+// TODO: inverse T and V order
+// TODO: rename T to R
+
 /**
  * The {@link Accumulator} interface defines left folding functions over an internal state.
  * 

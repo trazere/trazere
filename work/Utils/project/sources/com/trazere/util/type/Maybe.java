@@ -15,7 +15,7 @@
  */
 package com.trazere.util.type;
 
-import com.trazere.util.collection.CollectionUtils;
+import com.trazere.util.collection.Iterators;
 import com.trazere.util.function.Function1;
 import com.trazere.util.function.Functions;
 import com.trazere.util.function.Predicate1;
@@ -164,7 +164,8 @@ implements Iterable<T>, Describable {
 	 * The {@link Constructor} enumeration represents the constructors of the algebraic data type.
 	 */
 	public static enum Constructor {
-		NONE, SOME,
+		NONE,
+		SOME,
 	}
 	
 	/**
@@ -233,7 +234,7 @@ implements Iterable<T>, Describable {
 		
 		@Override
 		public Iterator<T> iterator() {
-			return CollectionUtils.iterator();
+			return Iterators.empty();
 		}
 		
 		// Object.
@@ -365,9 +366,8 @@ implements Iterable<T>, Describable {
 		// Iterable.
 		
 		@Override
-		@SuppressWarnings("unchecked")
 		public Iterator<T> iterator() {
-			return CollectionUtils.iterator(_value);
+			return Iterators.fromValue(_value);
 		}
 		
 		// Object.

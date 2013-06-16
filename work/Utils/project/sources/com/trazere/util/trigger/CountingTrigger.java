@@ -16,10 +16,10 @@
 package com.trazere.util.trigger;
 
 /**
- * The {@link CountingTrigger} class represents simple triggers based on counting.
+ * The {@link CountingTrigger} class provides simple triggers based on counting.
  */
 public class CountingTrigger
-extends AbstractTrigger {
+extends BaseTrigger {
 	/** Value. */
 	protected int _value = 0;
 	
