@@ -16,19 +16,20 @@
 package com.trazere.util.accumulator;
 
 /**
- * The {@link BaseAccumulator} abstract class provides a skeleton implementation of {@link Accumulator accumulators}.
+ * The {@link BaseAccumulator2} abstract class provides a skeleton implementation of {@link Accumulator2 pair accumulators}.
  * 
- * @param <T> Type of the accumulated values.
- * @param <V> Type of the accumulation arguments.
+ * @param <T1> Type of the first values.
+ * @param <T2> Type of the second values.
+ * @param <S> Type of the states.
  * @param <X> Type of the exceptions.
  */
-public abstract class BaseAccumulator<T, V, X extends Exception>
-implements Accumulator<T, V, X> {
+public abstract class BaseAccumulator2<T1, T2, S, X extends Exception>
+implements Accumulator2<T1, T2, S, X> {
 	// Procedure.
 	
 	@Override
-	public void execute(final V value)
+	public void execute(final T1 value1, final T2 value2)
 	throws X {
-		add(value);
+		add(value1, value2);
 	}
 }
