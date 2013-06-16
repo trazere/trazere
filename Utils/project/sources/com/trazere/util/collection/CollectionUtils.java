@@ -34,10 +34,13 @@ import java.util.NoSuchElementException;
 import java.util.Queue;
 import java.util.Set;
 
+// TODO: use accumulators for results
+
 /**
  * The {@link CollectionUtils} class provides various utilities regarding the manipulation of collections and maps.
  */
 public class CollectionUtils {
+	// TODO: move to Lists
 	/**
 	 * Builds a new list containing the given value.
 	 * <p>
@@ -53,6 +56,7 @@ public class CollectionUtils {
 		return list;
 	}
 	
+	// TODO: move to Lists
 	/**
 	 * Builds a new list containing the given values.
 	 * <p>
@@ -70,6 +74,7 @@ public class CollectionUtils {
 		return list;
 	}
 	
+	// TODO: move to Lists
 	/**
 	 * Builds a new list containing the given values.
 	 * <p>
@@ -89,6 +94,7 @@ public class CollectionUtils {
 		return list;
 	}
 	
+	// TODO: move to Lists
 	/**
 	 * Builds a new list containing the given values.
 	 * <p>
@@ -108,6 +114,7 @@ public class CollectionUtils {
 		return list;
 	}
 	
+	// TODO: move to Lists
 	/**
 	 * Builds a new list containing the given value.
 	 * <p>
@@ -127,6 +134,7 @@ public class CollectionUtils {
 		return list;
 	}
 	
+	// TODO: move to Sets
 	/**
 	 * Builds a set containing the given value.
 	 * <p>
@@ -142,6 +150,7 @@ public class CollectionUtils {
 		return set;
 	}
 	
+	// TODO: move to Sets
 	/**
 	 * Builds a set containing the given values.
 	 * <p>
@@ -159,6 +168,7 @@ public class CollectionUtils {
 		return set;
 	}
 	
+	// TODO: move to Sets
 	/**
 	 * Builds a set containing the given values.
 	 * <p>
@@ -178,6 +188,7 @@ public class CollectionUtils {
 		return set;
 	}
 	
+	// TODO: move to Sets
 	/**
 	 * Builds a set containing the given values.
 	 * <p>
@@ -197,6 +208,7 @@ public class CollectionUtils {
 		return set;
 	}
 	
+	// TODO: move to Sets
 	/**
 	 * Builds a set containing the given value.
 	 * <p>
@@ -216,6 +228,7 @@ public class CollectionUtils {
 		return set;
 	}
 	
+	// TODO: move to Maps
 	/**
 	 * Builds a map containing the binding of the given key and value.
 	 * <p>
@@ -233,6 +246,7 @@ public class CollectionUtils {
 		return result;
 	}
 	
+	// TODO: move to Maps
 	/**
 	 * Builds a map containing the bindings of the given keys and values.
 	 * <p>
@@ -253,6 +267,7 @@ public class CollectionUtils {
 		return result;
 	}
 	
+	// TODO: move to Maps
 	/**
 	 * Builds a map containing the given bindings.
 	 * <p>
@@ -273,6 +288,7 @@ public class CollectionUtils {
 		return results;
 	}
 	
+	// TODO: move to Iterators
 	/**
 	 * Builds an iterator over no values.
 	 * 
@@ -301,6 +317,7 @@ public class CollectionUtils {
 		}
 	};
 	
+	// TODO: move to Iterators
 	/**
 	 * Builds an iterator over the given values.
 	 * 
@@ -388,6 +405,7 @@ public class CollectionUtils {
 		return results;
 	}
 	
+	// TODO: move to CheckedIterators
 	/**
 	 * Builds a checked iterator over no values.
 	 * 
@@ -412,6 +430,7 @@ public class CollectionUtils {
 		}
 	};
 	
+	// TODO: move to CheckedIterators
 	/**
 	 * Builds a checked iterator over the given values.
 	 * 
@@ -437,6 +456,46 @@ public class CollectionUtils {
 				_index += 1;
 				
 				return value;
+			}
+		};
+	}
+	
+	// TODO: move to CheckedIterators
+	/**
+	 * Builds a checked iterator over the given values.
+	 * 
+	 * @param <T> Type of the the values.
+	 * @param <X> Type of the exceptions.
+	 * @param values The values.
+	 * @return The built iterator.
+	 */
+	public static <T, X extends Exception> CheckedIterator<T, X> checkedIterator(final Collection<? extends T> values) {
+		assert null != values;
+		
+		return checkedIterator(values.iterator());
+	}
+	
+	// TODO: move to CheckedIterators
+	/**
+	 * Builds a checked iterator over the given iterator.
+	 * 
+	 * @param <T> Type of the the values.
+	 * @param <X> Type of the exceptions.
+	 * @param values The iterator providing the values.
+	 * @return The built iterator.
+	 */
+	public static <T, X extends Exception> CheckedIterator<T, X> checkedIterator(final Iterator<? extends T> values) {
+		assert null != values;
+		
+		return new CheckedIterator<T, X>() {
+			@Override
+			public boolean hasNext() {
+				return values.hasNext();
+			}
+			
+			@Override
+			public T next() {
+				return values.next();
 			}
 		};
 	}
@@ -1101,7 +1160,7 @@ public class CollectionUtils {
 		return map;
 	}
 	
-	// TODO: rename to retain
+	// TODO: rename to retain or filter
 	/**
 	 * Gets the bindings of the given map associated to the given keys and populates the given result map with them.
 	 * 
