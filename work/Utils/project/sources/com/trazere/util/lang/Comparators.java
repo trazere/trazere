@@ -24,6 +24,10 @@ import java.util.Comparator;
  * The {@link Comparators} class provides various standard comparators.
  */
 public class Comparators {
+	// TODO: comparable (unsafe)
+	// TODO: safe
+	
+	// TODO: rename to safeComparable
 	/**
 	 * Builds a comparator that uses the natural order of comparable values and handle <code>null</code> values.
 	 * 

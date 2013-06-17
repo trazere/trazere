@@ -140,7 +140,33 @@ public class FunctionUtils {
 		return false;
 	}
 	
-	// TODO: isAny for MultiMap
+	/**
+	 * Tests whether any given binding is accepted by the given predicate.
+	 * <p>
+	 * This method evaluates the predicate by passing the keys and values of the bindings respectively as first and second arguments.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate The predicate.
+	 * @param bindings The bindings to test.
+	 * @return <code>true</code> if any binding is accepted, <code>false</code> if all bindings are rejected.
+	 * @throws X When some predicate evaluation fails.
+	 */
+	public static <K, V, X extends Exception> boolean isAny(final Predicate2<? super K, ? super V, X> predicate, final Multimap<K, V, ?> bindings)
+	throws X {
+		assert null != predicate;
+		assert null != bindings;
+		
+		for (final K key : bindings.keySet()) {
+			for (final V value : bindings.get(key)) {
+				if (predicate.evaluate(key, value)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 	
 	/**
 	 * Tests whether all given values are accepted by the given predicate.
@@ -242,7 +268,33 @@ public class FunctionUtils {
 		return true;
 	}
 	
-	// TODO: areAll for MultiMap
+	/**
+	 * Tests whether all given bindings are accepted by the given predicate.
+	 * <p>
+	 * This method evaluates the predicate by passing the keys and values of the bindings respectively as first and second arguments.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate The predicate.
+	 * @param bindings The bindings to test.
+	 * @return <code>true</code> if all bindings are accepted, <code>false</code> if any binding is rejected.
+	 * @throws X When some predicate evaluation fails.
+	 */
+	public static <K, V, X extends Exception> boolean areAll(final Predicate2<? super K, ? super V, X> predicate, final Multimap<K, V, ?> bindings)
+	throws X {
+		assert null != predicate;
+		assert null != bindings;
+		
+		for (final K key : bindings.keySet()) {
+			for (final V value : bindings.get(key)) {
+				if (!predicate.evaluate(key, value)) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
 	
 	/**
 	 * Gets the first given values accepted by the given predicate.
@@ -347,7 +399,33 @@ public class FunctionUtils {
 		return Maybe.none();
 	}
 	
-	// TODO: first for MultiMap
+	/**
+	 * Gets the first given binding accepted by the given predicate.
+	 * <p>
+	 * This method evaluates the predicate by passing the keys and values of the bindings respectively as first and second arguments.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate The predicate.
+	 * @param bindings The bindings.
+	 * @return The first accepted binding.
+	 * @throws X When some predicate evaluation fails.
+	 */
+	public static <K, V, X extends Exception> Maybe<Tuple2<K, V>> first(final Predicate2<? super K, ? super V, X> predicate, final Multimap<K, V, ?> bindings)
+	throws X {
+		assert null != predicate;
+		assert null != bindings;
+		
+		for (final K key : bindings.keySet()) {
+			for (final V value : bindings.get(key)) {
+				if (predicate.evaluate(key, value)) {
+					return Maybe.some(Tuple2.build(key, value));
+				}
+			}
+		}
+		return Maybe.none();
+	}
 	
 	/**
 	 * Gets the first value extracted by the given function from the given values.
@@ -611,7 +689,34 @@ public class FunctionUtils {
 		return count.get();
 	}
 	
-	// TODO: count for MultiMap
+	/**
+	 * Counts the given bindings accepted by the given predicate.
+	 * <p>
+	 * This method evaluates the predicate by passing the keys and values of the bindings respectively as first and second arguments.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate The predicate.
+	 * @param bindings The bindings to count.
+	 * @return The number of accepted bindings.
+	 * @throws X When some predicate evaluation fails.
+	 */
+	public static <K, V, X extends Exception> int count(final Predicate2<? super K, ? super V, X> predicate, final Multimap<K, V, ?> bindings)
+	throws X {
+		assert null != predicate;
+		assert null != bindings;
+		
+		final Counter count = new Counter();
+		for (final K key : bindings.keySet()) {
+			for (final V value : bindings.get(key)) {
+				if (predicate.evaluate(key, value)) {
+					count.inc();
+				}
+			}
+		}
+		return count.get();
+	}
 	
 	/**
 	 * Filters the given values using the given predicate and populates the given result collection with the accepted values.
@@ -710,7 +815,58 @@ public class FunctionUtils {
 		return results;
 	}
 	
-	// TODO: filter for MultiMap
+	/**
+	 * Filters the given bindings using the given predicate and populates the given result map with accepted values.
+	 * <p>
+	 * This method evaluates the predicate by passing the keys and values of the bindings respectively as first and second arguments.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <M> Type of the map to populate.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate The predicate.
+	 * @param bindings The bindings to filter.
+	 * @param results The map to populate with the accepted bindings.
+	 * @return The given result map.
+	 * @throws X When some predicate evaluation fails.
+	 */
+	public static <K, V, M extends Multimap<? super K, ? super V, ?>, X extends Exception> M filter(final Predicate2<? super K, ? super V, X> predicate, final Multimap<K, V, ?> bindings, final M results)
+	throws X {
+		return filter(predicate, bindings, Accumulators.<K, V, M, InternalException>multimap(results)).get();
+	}
+	
+	/**
+	 * Filters the given bindings using the given predicate and populates the given accumulator with accepted values.
+	 * <p>
+	 * This method evaluates the predicate by passing the keys and values of the bindings respectively as first and second arguments.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <A> Type of the accumulator to populate.
+	 * @param <PX> Type of the predicate exceptions.
+	 * @param <AX> Type of the accumulator exceptions.
+	 * @param predicate The predicate.
+	 * @param bindings The bindings to filter.
+	 * @param results The map to populate with the accepted bindings.
+	 * @return The given accumulator.
+	 * @throws PX When some predicate evaluation fails.
+	 * @throws AX When some accumulation fails.
+	 */
+	public static <K, V, A extends Accumulator2<? super K, ? super V, ?, AX>, PX extends Exception, AX extends Exception> A filter(final Predicate2<? super K, ? super V, PX> predicate, final Multimap<K, V, ?> bindings, final A results)
+	throws PX, AX {
+		assert null != predicate;
+		assert null != bindings;
+		assert null != results;
+		
+		for (final K key : bindings.keySet()) {
+			for (final V value : bindings.get(key)) {
+				if (predicate.evaluate(key, value)) {
+					results.add(key, value);
+				}
+			}
+		}
+		return results;
+	}
 	
 	/**
 	 * Filters the given bindings using the given predicate and populates the given result collection with the accepted keys.
@@ -742,6 +898,8 @@ public class FunctionUtils {
 		return results;
 	}
 	
+	// TODO: filterKeys with accumulator
+	
 	/**
 	 * Filters the given bindings using the given predicate and populates the given result collection with the accepted values.
 	 * <p>
@@ -772,6 +930,8 @@ public class FunctionUtils {
 		}
 		return results;
 	}
+	
+	// TODO: filterValues with accumulator
 	
 	// TODO: kill, use filter + Predicates.not
 	/**
@@ -1090,6 +1250,64 @@ public class FunctionUtils {
 	}
 	
 	/**
+	 * Filters and transforms the given bindings using the given extractor and populates the given map with the bindings of the argument keys and the
+	 * corresponding accepted results.
+	 * <p>
+	 * This method evaluates the extractor by passing the keys and values of the bindings respectively as first and second arguments.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <RV> Type of the result values.
+	 * @param <M> Type of the map to populate with the result bindings.
+	 * @param <X> Type of the exceptions.
+	 * @param extractor The extractor.
+	 * @param bindings The bindings.
+	 * @param results The map to populate with the result bindings.
+	 * @return The given result map.
+	 * @throws X When some extractor evaluation fails.
+	 */
+	public static <K, V, RV, M extends Multimap<? super K, ? super RV, ?>, X extends Exception> M mapFilter(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, X> extractor, final Multimap<K, V, ?> bindings, final M results)
+	throws X {
+		return mapFilter(extractor, bindings, Accumulators.<K, RV, M, InternalException>multimap(results)).get();
+	}
+	
+	/**
+	 * Filters and transforms the given bindings using the given extractor and populates the given accumulator with the bindings of the argument keys and the
+	 * corresponding accepted results.
+	 * <p>
+	 * This method evaluates the extractor by passing the keys and values of the bindings respectively as first and second arguments.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <RV> Type of the result values.
+	 * @param <A> Type of the accumulator to populate with the result bindings.
+	 * @param <PX> Type of the predicate exceptions.
+	 * @param <AX> Type of the accumulator exceptions.
+	 * @param extractor The extractor.
+	 * @param bindings The bindings.
+	 * @param results The map to populate with the result bindings.
+	 * @return The given accumulator.
+	 * @throws PX When some extractor evaluation fails.
+	 * @throws AX When some accumulation fails.
+	 */
+	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, AX>, PX extends Exception, AX extends Exception> A mapFilter(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, PX> extractor, final Multimap<K, V, ?> bindings, final A results)
+	throws PX, AX {
+		assert null != extractor;
+		assert null != bindings;
+		assert null != results;
+		
+		for (final K key : bindings.keySet()) {
+			for (final V value : bindings.get(key)) {
+				final Maybe<? extends RV> result = extractor.evaluate(key, value);
+				if (result.isSome()) {
+					results.add(key, result.asSome().getValue());
+				}
+			}
+		}
+		return results;
+	}
+	
+	/**
 	 * Transforms the given values using the given function, flattens them and populates the given collection with the result values.
 	 * 
 	 * @param <V> Type of the argument values.
@@ -1305,6 +1523,8 @@ public class FunctionUtils {
 		return results;
 	}
 	
+	// TODO: remap with accumulator
+	
 	/**
 	 * Transforms the given bindings using the given function and populates the given map with the bindings of the result keys and the argument values.
 	 * <p>
@@ -1333,6 +1553,8 @@ public class FunctionUtils {
 		}
 		return results;
 	}
+	
+	// TODO: remap for multimap
 	
 	/**
 	 * Filters and transforms the keys of the given bindings using the given function and populates the given map with the bindings of the accepted result keys
@@ -1363,6 +1585,8 @@ public class FunctionUtils {
 		}
 		return results;
 	}
+	
+	// TODO: remapFilter with accumulator
 	
 	/**
 	 * Filters and transforms the given bindings using the given function and populates the given map with the bindings of the accepted result keys and the
@@ -1396,6 +1620,8 @@ public class FunctionUtils {
 		}
 		return results;
 	}
+	
+	// TODO: remapFilter for multimap
 	
 	/**
 	 * Executes the given procedure with the given values.
@@ -1483,6 +1709,30 @@ public class FunctionUtils {
 		
 		for (final Map.Entry<K, V> binding : bindings.entrySet()) {
 			procedure.execute(binding.getKey(), binding.getValue());
+		}
+	}
+	
+	/**
+	 * Executes the given procedure with the given bindings.
+	 * <p>
+	 * This method executes the procedure by passing the keys and values of the bindings respectively as first and second arguments.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @param procedure The procedure.
+	 * @param bindings The argument bindings.
+	 * @throws X When some procedure execution fails.
+	 */
+	public static <K, V, X extends Exception> void execute(final Procedure2<? super K, ? super V, X> procedure, final Multimap<K, V, ?> bindings)
+	throws X {
+		assert null != procedure;
+		assert null != bindings;
+		
+		for (final K key : bindings.keySet()) {
+			for (final V value : bindings.get(key)) {
+				procedure.execute(key, value);
+			}
 		}
 	}
 	
