@@ -133,7 +133,7 @@ extends Tuple2<T1, T2> {
 		
 		// Compare.
 		final int comp = Tuple2.compare(tuple1, tuple2);
-		return 0 != comp ? comp : LangUtils.compare(tuple1._third, tuple2._third);
+		return 0 != comp ? comp : LangUtils.safeCompare(tuple1._third, tuple2._third);
 	}
 	
 	// Object.

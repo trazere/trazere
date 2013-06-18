@@ -136,7 +136,7 @@ extends Tuple7<T1, T2, T3, T4, T5, T6, T7> {
 		
 		// Compare.
 		final int comp = Tuple7.compare(tuple1, tuple2);
-		return 0 != comp ? comp : LangUtils.compare(tuple1._eighth, tuple2._eighth);
+		return 0 != comp ? comp : LangUtils.safeCompare(tuple1._eighth, tuple2._eighth);
 	}
 	
 	// Object.
