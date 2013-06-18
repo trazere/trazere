@@ -448,7 +448,6 @@ public class LangUtils {
 		}
 	};
 	
-	// TODO: rename to safeCompare
 	/**
 	 * Compares the given comparable values.
 	 * <p>
@@ -460,7 +459,7 @@ public class LangUtils {
 	 * @return The result of the comparison as defined by the {@link Comparable#compareTo(Object)} method.
 	 * @see Comparable#compareTo(Object)
 	 */
-	public static <T extends Comparable<T>> int compare(final T object1, final T object2) {
+	public static <T extends Comparable<T>> int safeCompare(final T object1, final T object2) {
 		if (null == object1) {
 			return null == object2 ? 0 : -1;
 		} else {
@@ -468,7 +467,6 @@ public class LangUtils {
 		}
 	}
 	
-	// TODO: rename to safeCompare
 	/**
 	 * Compares the given values using the given comparator.
 	 * <p>
@@ -481,7 +479,7 @@ public class LangUtils {
 	 * @return The result of the comparison as defined by the {@link Comparator#compare(Object, Object)} method.
 	 * @see Comparable#compareTo(Object)
 	 */
-	public static <T> int compare(final Comparator<T> comparator, final T object1, final T object2) {
+	public static <T> int safeCompare(final Comparator<T> comparator, final T object1, final T object2) {
 		assert null != comparator;
 		
 		if (null == object1) {

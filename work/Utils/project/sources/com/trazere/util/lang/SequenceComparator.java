@@ -21,43 +21,20 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * The {@link MultipleComparator} class provides comparators which compare according to multiple criterion.
+ * The {@link SequenceComparator} class provides comparators according to a sequence of comparators.
  * <p>
- * The comparator applies the its criterion in order until one of them orders the given objects.
+ * The next comparator of the sequence refines the order of the previous one in case of equality.
  * 
- * @param <T> Type of the compared objects.
+ * @param <T> Type of the values.
  */
-public class MultipleComparator<T>
+public class SequenceComparator<T>
 implements Comparator<T> {
-	// TODO: rename and move to Comparators
-	/**
-	 * Builds a new comparator with the given comparators.
-	 * 
-	 * @param <T> Type of the compared objects.
-	 * @param comparators The comparators ordered by priority.
-	 * @return The built comparator.
-	 */
-	public static <T> MultipleComparator<T> build(final List<? extends Comparator<? super T>> comparators) {
-		return new MultipleComparator<T>(comparators);
-	}
-	
-	/**
-	 * Builds a new comparator with the given comparators.
-	 * 
-	 * @param <T> Type of the compared objects.
-	 * @param comparators The comparators ordered by priority.
-	 * @return The built comparator.
-	 */
-	public static <T> MultipleComparator<T> build(final Comparator<? super T>... comparators) {
-		return new MultipleComparator<T>(comparators);
-	}
-	
 	/**
 	 * Instantiates a new comparator with the given comparators.
 	 * 
-	 * @param comparators The comparators ordered by priority.
+	 * @param comparators The sequence of comparators.
 	 */
-	public MultipleComparator(final List<? extends Comparator<? super T>> comparators) {
+	public SequenceComparator(final List<? extends Comparator<? super T>> comparators) {
 		assert null != comparators;
 		
 		// Initialization.
@@ -67,9 +44,9 @@ implements Comparator<T> {
 	/**
 	 * Instantiates a new comparator with the given comparators.
 	 * 
-	 * @param comparators The comparators ordered by priority.
+	 * @param comparators The sequence of comparators.
 	 */
-	public MultipleComparator(final Comparator<? super T>... comparators) {
+	public SequenceComparator(final Comparator<? super T>... comparators) {
 		this(Arrays.asList(comparators));
 	}
 	
@@ -103,7 +80,7 @@ implements Comparator<T> {
 		if (this == object) {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
-			final MultipleComparator<?> comparator = (MultipleComparator<?>) object;
+			final SequenceComparator<?> comparator = (SequenceComparator<?>) object;
 			return _comparators.equals(comparator._comparators);
 		} else {
 			return false;

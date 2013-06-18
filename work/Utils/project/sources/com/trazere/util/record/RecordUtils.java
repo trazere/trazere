@@ -18,8 +18,8 @@ package com.trazere.util.record;
 import com.trazere.util.function.Function1;
 import com.trazere.util.function.Predicate1;
 import com.trazere.util.function.Predicates;
-import com.trazere.util.lang.MultipleComparator;
-import com.trazere.util.lang.ReverseComparator;
+import com.trazere.util.lang.InverseComparator;
+import com.trazere.util.lang.SequenceComparator;
 import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Tuple2;
 import java.util.ArrayList;
@@ -331,9 +331,9 @@ public class RecordUtils {
 		// Build the comparator.
 		final List<Comparator<R>> comparators = new ArrayList<Comparator<R>>();
 		for (final K criteria : criterion) {
-			comparators.add(ReverseComparator.build(new RecordComparator<K, V, R>(criteria, comparator), ascending));
+			comparators.add(InverseComparator.build(new RecordComparator<K, V, R>(criteria, comparator), ascending));
 		}
-		return new MultipleComparator<R>(comparators);
+		return new SequenceComparator<R>(comparators);
 	}
 	
 	/**
@@ -354,9 +354,9 @@ public class RecordUtils {
 		// Build the comparator.
 		final List<Comparator<R>> comparators = new ArrayList<Comparator<R>>();
 		for (final Tuple2<K, Boolean> criteria : criterion) {
-			comparators.add(ReverseComparator.build(new RecordComparator<K, V, R>(criteria.getFirst(), comparator), criteria.getSecond().booleanValue()));
+			comparators.add(InverseComparator.build(new RecordComparator<K, V, R>(criteria.getFirst(), comparator), criteria.getSecond().booleanValue()));
 		}
-		return new MultipleComparator<R>(comparators);
+		return new SequenceComparator<R>(comparators);
 	}
 	
 	/**

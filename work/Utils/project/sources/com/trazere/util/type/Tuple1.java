@@ -116,7 +116,7 @@ public class Tuple1<T1> {
 		assert null != tuple2;
 		
 		// Compare.
-		return LangUtils.compare(tuple1._first, tuple2._first);
+		return LangUtils.safeCompare(tuple1._first, tuple2._first);
 	}
 	
 	// Object.
