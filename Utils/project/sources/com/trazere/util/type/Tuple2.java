@@ -126,8 +126,8 @@ extends Tuple1<T1> {
 		assert null != tuple2;
 		
 		// Compare.
-		final int comp1 = LangUtils.compare(tuple1._first, tuple2._first);
-		return 0 != comp1 ? comp1 : LangUtils.compare(tuple1._second, tuple2._second);
+		final int comp1 = LangUtils.safeCompare(tuple1._first, tuple2._first);
+		return 0 != comp1 ? comp1 : LangUtils.safeCompare(tuple1._second, tuple2._second);
 	}
 	
 	// Object.

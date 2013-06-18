@@ -19,6 +19,7 @@ import com.trazere.util.function.Function1;
 import com.trazere.util.function.Functions;
 import com.trazere.util.function.Procedure2;
 import com.trazere.util.lang.Counter;
+import com.trazere.util.lang.LangUtils;
 import com.trazere.util.lang.MutableBoolean;
 import com.trazere.util.lang.MutableInt;
 import com.trazere.util.type.Maybe;
@@ -26,6 +27,7 @@ import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -43,13 +45,26 @@ public class TextUtils {
 	 * @return The result of the comparison as defined by the {@link String#compareToIgnoreCase(String)} method.
 	 * @see String#compareToIgnoreCase(String)
 	 */
-	public static int compareIgnoreCase(final String string1, final String string2) {
-		if (null == string1) {
-			return null == string2 ? 0 : -1;
-		} else {
-			return null == string2 ? 1 : string1.compareToIgnoreCase(string2);
-		}
+	public static int safeCompareIgnoreCase(final String string1, final String string2) {
+		return LangUtils.safeCompare(String.CASE_INSENSITIVE_ORDER, string1, string2);
 	}
+	
+	/**
+	 * Builds a comparator of string that ignores and handle <code>null</code> values.
+	 * 
+	 * @return The built comparator.
+	 * @see #safeCompareIgnoreCase(String, String)
+	 */
+	public static Comparator<String> safeIgnoreCaseComparator() {
+		return _SAFE_IGNORE_CASE_COMPARATOR;
+	}
+	
+	private static Comparator<String> _SAFE_IGNORE_CASE_COMPARATOR = new Comparator<String>() {
+		@Override
+		public int compare(final String value1, final String value2) {
+			return safeCompareIgnoreCase(value1, value2);
+		}
+	};
 	
 	/**
 	 * Tests whether the given string contains some characters accepted by the given filter.
@@ -455,7 +470,24 @@ public class TextUtils {
 	};
 	
 	/** Array of the hexadecimal digits characters (upper case). */
-	public static final char[] HEX_DIGITS = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+	public static final char[] HEX_DIGITS = {
+	    '0',
+	    '1',
+	    '2',
+	    '3',
+	    '4',
+	    '5',
+	    '6',
+	    '7',
+	    '8',
+	    '9',
+	    'A',
+	    'B',
+	    'C',
+	    'D',
+	    'E',
+	    'F'
+	};
 	
 	/**
 	 * Computes the hexadecimal representation of the given array of bytes.

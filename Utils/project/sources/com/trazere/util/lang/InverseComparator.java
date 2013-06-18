@@ -18,39 +18,46 @@ package com.trazere.util.lang;
 import java.util.Comparator;
 
 /**
- * The {@link ReverseComparator} class is a comparator combinator which reverses the comparison order of the combined comparator.
+ * The {@link InverseComparator} class provides comparators according to the inverse order of some other comparator.
  * 
- * @param <T> Type of the compared elements.
+ * @param <T> Type of the values.
  */
-public class ReverseComparator<T>
+public class InverseComparator<T>
 implements Comparator<T> {
-	// TODO: rename to reverse and move to Comparators
 	/**
-	 * Build a comparator from the given comparator which applies the given ordering.
-	 * <p>
-	 * This methods simply returns the given comparator for the ascending order.
+	 * Builds the inversed comparator of the given comparator.
 	 * 
-	 * @param <T> Type of the compared objets.
-	 * @param comparator Comparator to wrap.
-	 * @param ascending Flag indicating the comparison order. <code>true</code> for ascending order, <code>false</code> for descending order.
+	 * @param <T> Type of the values.
+	 * @param comparator The comparator to inverse.
+	 * @return The built comparator.
+	 */
+	public static <T> InverseComparator<T> build(final Comparator<? super T> comparator) {
+		return new InverseComparator<T>(comparator);
+	}
+	
+	/**
+	 * Builds a comparator according to the given comparator and ordering.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param comparator The comparator.
+	 * @param ascending Comparison order, <code>true</code> for ascending order, <code>false</code> for descending order.
 	 * @return The built comparator.
 	 */
 	public static <T> Comparator<T> build(final Comparator<T> comparator, final boolean ascending) {
 		assert null != comparator;
 		
-		// Build.
-		return ascending ? comparator : new ReverseComparator<T>(comparator);
+		return ascending ? comparator : build(comparator);
 	}
 	
-	/** Reversed comparator. */
-	protected final Comparator<T> _comparator;
+	/** The inversed comparator. */
+	protected final Comparator<? super T> _comparator;
 	
 	/**
-	 * Instantiate a new reverse comparator with the given comparator.
+	 * Instantiates a new inversed comparator.
 	 * 
-	 * @param comparator Reversed comparator.
+	 * @param comparator The comparator to inverse.
 	 */
-	public ReverseComparator(final Comparator<T> comparator) {
+	public InverseComparator(final Comparator<? super T> comparator) {
 		assert null != comparator;
 		
 		// Initialization.
@@ -58,11 +65,11 @@ implements Comparator<T> {
 	}
 	
 	/**
-	 * Get the comparator reversed by the receiver comparator.
+	 * Gets the inversed comparator.
 	 * 
-	 * @return The reversed comparator.
+	 * @return The inversed comparator.
 	 */
-	public Comparator<T> getComparator() {
+	public Comparator<? super T> getComparator() {
 		return _comparator;
 	}
 	
@@ -83,7 +90,7 @@ implements Comparator<T> {
 		if (this == object) {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
-			final ReverseComparator<?> comparator = (ReverseComparator<?>) object;
+			final InverseComparator<?> comparator = (InverseComparator<?>) object;
 			return _comparator.equals(comparator._comparator);
 		} else {
 			return false;

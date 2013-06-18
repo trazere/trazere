@@ -15,55 +15,77 @@
  */
 package com.trazere.util.lang;
 
-import com.trazere.util.text.TextUtils;
+import com.trazere.util.function.Function1;
 import com.trazere.util.type.Maybe;
+import com.trazere.util.type.Maybe.None;
+import com.trazere.util.type.Maybe.Some;
 import com.trazere.util.type.TypeUtils;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * The {@link Comparators} class provides various standard comparators.
  */
 public class Comparators {
-	// TODO: comparable (unsafe)
-	// TODO: safe
-	
-	// TODO: rename to safeComparable
 	/**
-	 * Builds a comparator that uses the natural order of comparable values and handle <code>null</code> values.
+	 * Builds a comparator according to the natural order of comparable values.
 	 * 
 	 * @param <T> Type of the values.
 	 * @return The built comparator.
-	 * @see LangUtils#compare(Comparable, Comparable)
+	 * @see Comparable#compareTo(Object)
 	 */
-	public static <T extends Comparable<T>> Comparator<T> comparable() {
+	public static <T extends Comparable<T>> Comparator<T> natural() {
 		return new Comparator<T>() {
 			@Override
 			public int compare(final T object1, final T object2) {
-				return LangUtils.compare(object1, object2);
+				assert null != object1;
+				
+				return object1.compareTo(object2);
 			}
 		};
 	}
 	
-	// TODO: move to TextUtils
 	/**
-	 * Builds a comparator of string that ignores and handle <code>null</code> values.
+	 * Builds a comparator that supports <code>null</code> values.
+	 * <p>
+	 * <code>null</code> values are less than non <code>null</code> values.
 	 * 
+	 * @param <T> Type of the values.
+	 * @param comparator The unsafe comparator.
 	 * @return The built comparator.
-	 * @see TextUtils#compareIgnoreCase(String, String)
+	 * @see LangUtils#safeCompare(Comparator, Object, Object)
 	 */
-	public static Comparator<String> stringIgnoreCase() {
-		return _STRING_IGNORE_CASE;
+	public static <T> Comparator<T> safe(final Comparator<? super T> comparator) {
+		assert null != comparator;
+		
+		return new Comparator<T>() {
+			@Override
+			public int compare(final T object1, final T object2) {
+				return LangUtils.safeCompare(comparator, object1, object2);
+			}
+		};
 	}
 	
-	private static Comparator<String> _STRING_IGNORE_CASE = new Comparator<String>() {
-		@Override
-		public int compare(final String value1, final String value2) {
-			return TextUtils.compareIgnoreCase(value1, value2);
-		}
-	};
+	/**
+	 * Builds a comparator according to the natural order of comparable values that supports <code>null</code> values.
+	 * 
+	 * @param <T> Type of the values.
+	 * @return The built comparator.
+	 * @see Comparable#compareTo(Object)
+	 */
+	public static <T extends Comparable<T>> Comparator<T> safeNatural() {
+		return new Comparator<T>() {
+			@Override
+			public int compare(final T object1, final T object2) {
+				return LangUtils.safeCompare(object1, object2);
+			}
+		};
+	}
 	
 	/**
-	 * Builds a comparator of instances of {@link Maybe} using the given comparator of the wrapped values.
+	 * Builds a comparator of {@link Maybe} instances according to the given order for values.
+	 * <p>
+	 * {@link None} instances are less than {@link Some} instances.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param comparator The comparator of the wrapped values.
@@ -77,6 +99,68 @@ public class Comparators {
 			@Override
 			public int compare(final Maybe<T> value1, final Maybe<T> value2) {
 				return TypeUtils.compare(comparator, value1, value2);
+			}
+		};
+	}
+	
+	/**
+	 * Builds a comparator according to the inverse order of the given comparator.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param comparator The inversed comparator.
+	 * @return The built comparator.
+	 * @see InverseComparator
+	 */
+	public static <T> Comparator<T> inverse(final Comparator<? super T> comparator) {
+		assert null != comparator;
+		
+		return new InverseComparator<T>(comparator);
+	}
+	
+	/**
+	 * Builds a comparator according to the given sequence of comparators
+	 * 
+	 * @param <T> Type of the values.
+	 * @param comparators The sequence of comparators.
+	 * @return The built comparator.
+	 * @see SequenceComparator
+	 */
+	public static <T> Comparator<T> sequence(final List<? extends Comparator<? super T>> comparators) {
+		assert null != comparators;
+		
+		return new SequenceComparator<T>(comparators);
+	}
+	
+	/**
+	 * Builds a comparator according to the given sequence of comparators
+	 * 
+	 * @param <T> Type of the values.
+	 * @param comparators The sequence of comparators.
+	 * @return The built comparator.
+	 * @see SequenceComparator
+	 */
+	public static <T> Comparator<T> sequence(final Comparator<? super T>... comparators) {
+		return new SequenceComparator<T>(comparators);
+	}
+	
+	/**
+	 * Transforms the given comparator using the given function.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <V> Type of the mapped values.
+	 * @param function The function.
+	 * @param comparator The comparator.
+	 * @return The built comparator.
+	 * @see MapComparator
+	 */
+	public static <T, V> Comparator<T> map(final Function1<? super T, ? extends V, ? extends RuntimeException> function, final Comparator<? super V> comparator) {
+		assert null != function;
+		assert null != comparator;
+		
+		return new MapComparator<T, V>(comparator) {
+			@Override
+			protected V mapValue(final T object) {
+				return function.evaluate(object);
 			}
 		};
 	}

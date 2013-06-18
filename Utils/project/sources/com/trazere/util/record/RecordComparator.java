@@ -15,7 +15,7 @@
  */
 package com.trazere.util.record;
 
-import com.trazere.util.lang.ViewComparator;
+import com.trazere.util.lang.MapComparator;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
@@ -29,7 +29,7 @@ import java.util.Comparator;
  * @param <R> Type of the records.
  */
 public class RecordComparator<K, V, R extends Record<? super K, ? extends V>>
-extends ViewComparator<R, V>
+extends MapComparator<R, V>
 implements Describable {
 	/** Key identifying the field used for comparison. */
 	protected final K _key;
@@ -60,7 +60,7 @@ implements Describable {
 	}
 	
 	@Override
-	protected V computeValue(final R record) {
+	protected V mapValue(final R record) {
 		assert null != record;
 		
 		try {
