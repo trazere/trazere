@@ -385,7 +385,7 @@ implements Iterable<T>, Describable {
 				return true;
 			} else if (null != object && getClass().equals(object.getClass())) {
 				final Some<?> maybe = (Some<?>) object;
-				return LangUtils.equals(_value, maybe._value);
+				return LangUtils.safeEquals(_value, maybe._value);
 			} else {
 				return false;
 			}

@@ -67,7 +67,7 @@ extends Sequence1Parser<Token, SubResult, Result> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final MapParser<?, ?, ?> parser = (MapParser<?, ?, ?>) object;
-			return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _function.equals(parser._function);
+			return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _function.equals(parser._function);
 		} else {
 			return false;
 		}

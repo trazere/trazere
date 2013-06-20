@@ -54,7 +54,7 @@ extends Sequence1Parser<Token, SubResult, Result> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final LiftParser<?, ?, ?> parser = (LiftParser<?, ?, ?>) object;
-			return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && LangUtils.equals(_result, parser._result);
+			return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && LangUtils.safeEquals(_result, parser._result);
 		} else {
 			return false;
 		}

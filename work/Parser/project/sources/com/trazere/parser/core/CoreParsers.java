@@ -116,7 +116,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final FoldParser parser = (FoldParser) object;
-					return LangUtils.equals(_description, parser._description) && _valueParser.equals(parser._valueParser) && _min == parser._min && _max == parser._max && LangUtils.equals(_initialResult, parser._initialResult) && _function.equals(parser._function);
+					return LangUtils.safeEquals(_description, parser._description) && _valueParser.equals(parser._valueParser) && _min == parser._min && _max == parser._max && LangUtils.safeEquals(_initialResult, parser._initialResult) && _function.equals(parser._function);
 				} else {
 					return false;
 				}
@@ -163,7 +163,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final SequenceParser parser = (SequenceParser) object;
-					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1);
+					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1);
 				} else {
 					return false;
 				}
@@ -203,7 +203,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final SequenceParser parser = (SequenceParser) object;
-					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2);
+					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2);
 				} else {
 					return false;
 				}
@@ -244,7 +244,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final SequenceParser parser = (SequenceParser) object;
-					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3);
+					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3);
 				} else {
 					return false;
 				}
@@ -286,7 +286,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final SequenceParser parser = (SequenceParser) object;
-					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4);
+					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4);
 				} else {
 					return false;
 				}
@@ -329,7 +329,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final SequenceParser parser = (SequenceParser) object;
-					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5);
+					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5);
 				} else {
 					return false;
 				}
@@ -373,7 +373,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final SequenceParser parser = (SequenceParser) object;
-					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5) && _subParser6.equals(parser._subParser6);
+					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5) && _subParser6.equals(parser._subParser6);
 				} else {
 					return false;
 				}
@@ -418,7 +418,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final SequenceParser parser = (SequenceParser) object;
-					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5) && _subParser6.equals(parser._subParser6) && _subParser7.equals(parser._subParser7);
+					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5) && _subParser6.equals(parser._subParser6) && _subParser7.equals(parser._subParser7);
 				} else {
 					return false;
 				}
@@ -464,7 +464,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final SequenceParser parser = (SequenceParser) object;
-					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5) && _subParser6.equals(parser._subParser6) && _subParser7.equals(parser._subParser7) && _subParser8.equals(parser._subParser8);
+					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5) && _subParser6.equals(parser._subParser6) && _subParser7.equals(parser._subParser7) && _subParser8.equals(parser._subParser8);
 				} else {
 					return false;
 				}
@@ -520,7 +520,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final FirstParser parser = (FirstParser) object;
-					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2);
+					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2);
 				} else {
 					return false;
 				}
@@ -561,7 +561,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final FirstParser parser = (FirstParser) object;
-					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3);
+					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3);
 				} else {
 					return false;
 				}
@@ -603,7 +603,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final FirstParser parser = (FirstParser) object;
-					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4);
+					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4);
 				} else {
 					return false;
 				}
@@ -646,7 +646,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final FirstParser parser = (FirstParser) object;
-					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5);
+					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5);
 				} else {
 					return false;
 				}
@@ -686,7 +686,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final SecondParser parser = (SecondParser) object;
-					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2);
+					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2);
 				} else {
 					return false;
 				}
@@ -727,7 +727,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final SecondParser parser = (SecondParser) object;
-					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3);
+					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3);
 				} else {
 					return false;
 				}
@@ -769,7 +769,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final SecondParser parser = (SecondParser) object;
-					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4);
+					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4);
 				} else {
 					return false;
 				}
@@ -812,7 +812,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final SecondParser parser = (SecondParser) object;
-					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5);
+					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5);
 				} else {
 					return false;
 				}
@@ -853,7 +853,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final ThirdParser parser = (ThirdParser) object;
-					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3);
+					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3);
 				} else {
 					return false;
 				}
@@ -895,7 +895,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final ThirdParser parser = (ThirdParser) object;
-					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4);
+					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4);
 				} else {
 					return false;
 				}
@@ -938,7 +938,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final ThirdParser parser = (ThirdParser) object;
-					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5);
+					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5);
 				} else {
 					return false;
 				}
@@ -980,7 +980,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final FourthParser parser = (FourthParser) object;
-					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4);
+					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4);
 				} else {
 					return false;
 				}
@@ -1023,7 +1023,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final FourthParser parser = (FourthParser) object;
-					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5);
+					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5);
 				} else {
 					return false;
 				}
@@ -1066,7 +1066,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final FifthParser parser = (FifthParser) object;
-					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5);
+					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5);
 				} else {
 					return false;
 				}

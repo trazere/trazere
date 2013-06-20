@@ -76,7 +76,7 @@ extends BaseParser<Token, Result> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final EOFParser<?, ?> parser = (EOFParser<?, ?>) object;
-			return LangUtils.equals(_description, parser._description);
+			return LangUtils.safeEquals(_description, parser._description);
 		} else {
 			return false;
 		}

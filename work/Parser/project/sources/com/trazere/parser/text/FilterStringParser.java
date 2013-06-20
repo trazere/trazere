@@ -104,7 +104,7 @@ extends BaseParser<Character, String> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final FilterStringParser parser = (FilterStringParser) object;
-			return LangUtils.equals(_description, parser._description) && _filter.equals(parser._filter) && _empty == parser._empty;
+			return LangUtils.safeEquals(_description, parser._description) && _filter.equals(parser._filter) && _empty == parser._empty;
 		} else {
 			return false;
 		}

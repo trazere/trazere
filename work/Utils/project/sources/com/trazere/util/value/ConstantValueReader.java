@@ -103,7 +103,7 @@ extends BaseValueReader<T> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final ConstantValueReader<?> reader = (ConstantValueReader<?>) object;
-			return _valueClass.equals(reader._valueClass) && LangUtils.equals(_value, reader._value);
+			return _valueClass.equals(reader._valueClass) && LangUtils.safeEquals(_value, reader._value);
 		} else {
 			return false;
 		}

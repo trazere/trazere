@@ -223,7 +223,6 @@ public class LangUtils {
 		return null != value ? value : defaultValue;
 	}
 	
-	// TODO: rename to safeEquals
 	/**
 	 * Tests for equality of the given values.
 	 * <p>
@@ -235,7 +234,7 @@ public class LangUtils {
 	 * @return <code>true</code> if the values are both <code>null</code> or both not <code>null</code> and equal.
 	 * @see Comparable#compareTo(Object)
 	 */
-	public static <T extends Object> boolean equals(final T object1, final T object2) {
+	public static <T extends Object> boolean safeEquals(final T object1, final T object2) {
 		return object1 == object2 || null != object1 && object1.equals(object2);
 	}
 	

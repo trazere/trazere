@@ -64,7 +64,7 @@ extends Sequence1Parser<Token, Maybe<Result>, Result> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final DefaultParser<?, ?> parser = (DefaultParser<?, ?>) object;
-			return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && LangUtils.equals(_defaultResult, parser._defaultResult);
+			return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && LangUtils.safeEquals(_defaultResult, parser._defaultResult);
 		} else {
 			return false;
 		}

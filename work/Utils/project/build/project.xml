@@ -84,7 +84,7 @@
 	<!-- Build the POM artifact -->
 	<target name="utils.buildPom">
 		<mkdir dir="${utils.target.artifacts}" />
-		<property name="ivy.pom.version" value="${scroll.version}" />
+		<property name="ivy.pom.version" value="${trazere.version}" />
 		<ivy:makepom ivyfile="${utils.build.ivy}" pomfile="${utils.target.artifacts.pom}" conf="compile,runtime">
 			<mapping conf="compile" scope="compile" />
 			<mapping conf="runtime" scope="runtime" />
@@ -102,7 +102,7 @@
 	<!-- Publish the artifacts -->
 	<target name="utils.publish" depends="utils.buildJar, utils.buildPom, utils.buildSource">
 		<ivy:resolve file="${utils.build.ivy}" log="download-only" />
-		<ivy:publish pubrevision="${scroll.version}" resolver="${ivy.publish.resolver}" overwrite="true" forcedeliver="true">
+		<ivy:publish pubrevision="${trazere.version}" resolver="${ivy.publish.resolver}" overwrite="true" forcedeliver="true">
 			<artifacts pattern="${utils.target.artifacts}/utils-[type].[ext]" />
 		</ivy:publish>
 	</target>

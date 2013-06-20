@@ -54,7 +54,7 @@ extends Sequence1Parser<Token, Result, Result> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final IdentityParser<?, ?> parser = (IdentityParser<?, ?>) object;
-			return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1);
+			return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1);
 		} else {
 			return false;
 		}

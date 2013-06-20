@@ -117,7 +117,7 @@ extends BaseParser<Character, String> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final StringParser parser = (StringParser) object;
-			return LangUtils.equals(_description, parser._description) && _string.equals(parser._string);
+			return LangUtils.safeEquals(_description, parser._description) && _string.equals(parser._string);
 		} else {
 			return false;
 		}
