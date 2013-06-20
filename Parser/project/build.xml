@@ -25,14 +25,9 @@
 	<!-- Clean -->
 	<target name="clean" description="Clean" depends="parser.clean" />
 
-	<!-- Clean the distribution -->
-	<target name="distclean" description="Clean the distribution" depends="parser.distclean" />
-
 	<!-- Compile -->
 	<target name="compile" description="Compile" depends="parser.compile" />
 
-	<!-- Build the distribution -->
-	<target name="build" description="Build the distribution">
-		<antcall target="parser.build" inheritall="false" />
-	</target>
+	<!-- Publish the artifacts -->
+	<target name="publish" description="Publish the artifacts" depends="parser.publish" />
 </project>

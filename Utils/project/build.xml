@@ -25,14 +25,9 @@
 	<!-- Clean -->
 	<target name="clean" description="Clean" depends="utils.clean" />
 
-	<!-- Clean the distribution -->
-	<target name="distclean" description="Clean the distribution" depends="utils.distclean" />
-
 	<!-- Compile -->
 	<target name="compile" description="Compile" depends="utils.compile" />
 
-	<!-- Build the distribution -->
-	<target name="build" description="Build the distribution">
-		<antcall target="utils.build" inheritall="false" />
-	</target>
+	<!-- Publish the artifacts -->
+	<target name="publish" description="Publish the artifacts" depends="utils.publish" />
 </project>

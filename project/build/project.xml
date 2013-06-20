@@ -25,6 +25,9 @@
 
 	<property name="root.dist" location="${root}/dist" />
 	<property name="root.dist.binary" location="${root.dist}/trazere-${trazere.version}" />
+	<property name="root.dist.binary.libs" value="${root.dist.binary}/libs" />
+	<property name="root.dist.binary.maven" value="${root.dist.binary}/maven" />
+	<property name="root.dist.binary.sources" value="${root.dist.binary}/sources" />
 	<property name="root.dist.tgz" location="${root.dist}/trazere-${trazere.version}.tar.gz" />
 	<property name="root.dist.zip" location="${root.dist}/trazere-${trazere.version}.zip" />
 
@@ -39,9 +42,39 @@
 	<!-- Compile -->
 	<target name="root.compile" depends="ant.compile, parser.compile, utils.compile" />
 
+	<!-- Publish the artifacts -->
+	<target name="root.publish" depends="ant.publish, parser.publish, utils.publish" />
+
 	<!-- Build the distribution -->
-	<target name="root.build" depends="ant.build, parser.build, utils.build">
+	<target name="root.build" depends="ant.buildJar, ant.buildPom, ant.buildSource, parser.buildJar, parser.buildPom, parser.buildSource, utils.buildJar, utils.buildPom, utils.buildSource">
 		<mkdir dir="${root.dist.binary}" />
+
+		<!-- Libs -->
+		<mkdir dir="${root.dist.binary.libs}" />
+		<copy todir="${root.dist.binary.libs}">
+			<fileset file="${ant.target.artifacts.jar}" />
+			<fileset file="${parser.target.artifacts.jar}" />
+			<fileset file="${utils.target.artifacts.jar}" />
+			<mapper type="glob" from="*-jar.jar" to="*.jar" />
+		</copy>
+
+		<!-- Sources -->
+		<mkdir dir="${root.dist.binary.sources}" />
+		<copy todir="${root.dist.binary.sources}">
+			<fileset file="${ant.target.artifacts.source}" />
+			<fileset file="${parser.target.artifacts.source}" />
+			<fileset file="${utils.target.artifacts.source}" />
+			<mapper type="glob" from="*-source.jar" to="*-sources.jar" />
+		</copy>
+
+		<!-- Maven -->
+		<mkdir dir="${root.dist.binary.maven}" />
+		<copy todir="${root.dist.binary.maven}">
+			<fileset file="${ant.target.artifacts.pom}" />
+			<fileset file="${parser.target.artifacts.pom}" />
+			<fileset file="${utils.target.artifacts.pom}" />
+			<mapper type="glob" from="*-pom.pom" to="*.pom" />
+		</copy>
 
 		<!-- Distribution -->
 		<copy todir="${root.dist.binary}">

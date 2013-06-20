@@ -24,47 +24,44 @@
 	<property name="ant.sources" location="${ant}/sources" />
 
 	<property name="ant.target" location="${ant.build}/target" />
+	<property name="ant.target.artifacts" location="${ant.target}/artifacts" />
+	<property name="ant.target.artifacts.jar" location="${ant.target.artifacts}/ant-jar.jar" />
+	<property name="ant.target.artifacts.pom" location="${ant.target.artifacts}/ant-pom.pom" />
+	<property name="ant.target.artifacts.source" location="${ant.target.artifacts}/ant-source.jar" />
 	<property name="ant.target.classes" location="${ant.target}/classes" />
-	<property name="ant.target.jar" location="${ant.target}/ant.jar" />
+	<property name="ant.target.dependencies" location="${ant.target}/dependencies" />
 	<property name="ant.target.libs" location="${ant.target}/libs" />
-	<property name="ant.target.source_jar" location="${ant.target}/ant-sources.jar" />
-
-	<property name="ant.dist" location="${ant}/dist" />
-	<property name="ant.dist.libs" value="${ant.dist}/libs" />
-	<property name="ant.dist.maven" value="${ant.dist}/maven" />
-	<property name="ant.dist.sources" value="${ant.dist}/sources" />
 
 	<path id="ant.classpath">
 		<pathelement location="${ant.target.classes}" />
 	</path>
-	<union id="ant.jars">
-		<fileset file="${ant.target.jar}" />
-	</union>
 
 	<!-- Clean -->
 	<target name="ant.clean">
 		<delete dir="${ant.target}" />
 	</target>
 
-	<!-- Clean the distribution -->
-	<target name="ant.distclean">
-		<delete dir="${ant.dist}" />
-	</target>
-
 	<!-- Setup the dependencies -->
 	<target name="ant.setupDependencies">
 		<ivy:resolve file="${ant.build.ivy}" log="download-only" />
-		<ivy:retrieve pattern="${ant.target.libs}/[conf]/[organisation].[artifact](-[revision]).[ext]" />
+		<ivy:retrieve pattern="${ant.target.libs}/${ivy.retrieve.pattern}" type="${ivy.retrieve.type}" />
 
+		<mkdir dir="${ant.target.libs}/compile" />
 		<path id="ant.dependencies.compile.classpath">
-			<fileset id="ant.dependencies.compile.libs" dir="${ant.target.libs}/compile" />
+			<fileset id="ant.dependencies.compile.jars" dir="${ant.target.libs}/compile" />
 		</path>
+	</target>
+
+	<!-- Report the dependencies -->
+	<target name="ant.reportDependencies">
+		<ivy:resolve file="${ant.build.ivy}" log="download-only" />
+		<ivy:report todir="${ant.target.dependencies}" />
 	</target>
 
 	<!-- Compile the sources -->
 	<target name="ant.compileSources" depends="ant.setupDependencies">
 		<mkdir dir="${ant.target.classes}" />
-		<javac destdir="${ant.target.classes}" source="${trazere.java.version}" encoding="${trazere.java.encoding}" target="${trazere.java.version}" debug="${trazere.java.debug}" includeantruntime="false" failonerror="true">
+		<javac destdir="${ant.target.classes}" source="${javac.source}" encoding="${javac.encoding}" target="${javac.target}" debug="${javac.debug}" includeantruntime="false" failonerror="true">
 			<src location="${ant.sources}" />
 			<classpath>
 				<path refid="ant.dependencies.compile.classpath" />
@@ -75,42 +72,38 @@
 	<!-- Compile -->
 	<target name="ant.compile" depends="ant.compileSources" />
 
-	<!-- Build the JAR -->
+	<!-- Build the JAR artifact -->
 	<target name="ant.buildJar" depends="ant.compileSources">
-		<mkdir dir="${ant.target}" />
-		<jar destfile="${ant.target.jar}">
+		<mkdir dir="${ant.target.artifacts}" />
+		<jar destfile="${ant.target.artifacts.jar}">
 			<fileset dir="${ant.target.classes}" includes="**/*.class" />
 			<fileset dir="${ant.sources}" excludes="**/*.java" />
 		</jar>
 	</target>
 
-	<!-- Build the source JAR -->
-	<target name="ant.buildSourceJar">
-		<mkdir dir="${ant.target}" />
-		<jar destfile="${ant.target.source_jar}">
+	<!-- Build the POM artifact -->
+	<target name="ant.buildPom">
+		<mkdir dir="${ant.target.artifacts}" />
+		<property name="ivy.pom.version" value="${scroll.version}" />
+		<ivy:makepom ivyfile="${ant.build.ivy}" pomfile="${ant.target.artifacts.pom}" conf="compile,runtime">
+			<mapping conf="compile" scope="compile" />
+			<mapping conf="runtime" scope="runtime" />
+		</ivy:makepom>
+	</target>
+
+	<!-- Build the source artifact -->
+	<target name="ant.buildSource">
+		<mkdir dir="${ant.target.artifacts}" />
+		<jar destfile="${ant.target.artifacts.source}">
 			<fileset dir="${ant.sources}" />
 		</jar>
 	</target>
 
-	<!-- Build the distribution -->
-	<target name="ant.build" depends="ant.buildJar, ant.buildSourceJar">
-		<mkdir dir="${ant.dist}" />
-
-		<!-- Libs -->
-		<mkdir dir="${ant.dist.libs}" />
-		<copy todir="${ant.dist.libs}">
-			<resources refid="ant.jars" />
-		</copy>
-
-		<!-- Sources -->
-		<mkdir dir="${ant.dist.sources}" />
-		<copy todir="${ant.dist.sources}">
-			<fileset file="${ant.target.source_jar}" />
-		</copy>
-
-		<!-- Maven -->
-		<mkdir dir="${ant.dist.maven}" />
-		<property name="ivy.pom.version" value="${trazere.version}" />
-		<ivy:makepom ivyfile="${ant.build.ivy}" pomfile="${ant.dist.maven}/ant.pom" conf="compile,runtime" />
+	<!-- Publish the artifacts -->
+	<target name="ant.publish" depends="ant.buildJar, ant.buildPom, ant.buildSource">
+		<ivy:resolve file="${ant.build.ivy}" log="download-only" />
+		<ivy:publish pubrevision="${scroll.version}" resolver="${ivy.publish.resolver}" overwrite="true" forcedeliver="true">
+			<artifacts pattern="${ant.target.artifacts}/ant-[type].[ext]" />
+		</ivy:publish>
 	</target>
 </project>

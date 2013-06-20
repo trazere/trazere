@@ -25,47 +25,44 @@
 	<property name="parser.sources" location="${parser}/sources" />
 
 	<property name="parser.target" location="${parser.build}/target" />
+	<property name="parser.target.artifacts" location="${parser.target}/artifacts" />
+	<property name="parser.target.artifacts.jar" location="${parser.target.artifacts}/parser-jar.jar" />
+	<property name="parser.target.artifacts.pom" location="${parser.target.artifacts}/parser-pom.pom" />
+	<property name="parser.target.artifacts.source" location="${parser.target.artifacts}/parser-source.jar" />
 	<property name="parser.target.classes" location="${parser.target}/classes" />
-	<property name="parser.target.jar" location="${parser.target}/parser.jar" />
+	<property name="parser.target.dependencies" location="${parser.target}/dependencies" />
 	<property name="parser.target.libs" location="${parser.target}/libs" />
-	<property name="parser.target.source_jar" location="${parser.target}/parser-sources.jar" />
-
-	<property name="parser.dist" location="${parser}/dist" />
-	<property name="parser.dist.libs" value="${parser.dist}/libs" />
-	<property name="parser.dist.maven" value="${parser.dist}/maven" />
-	<property name="parser.dist.sources" value="${parser.dist}/sources" />
 
 	<path id="parser.classpath">
 		<pathelement location="${parser.target.classes}" />
 	</path>
-	<union id="parser.jars">
-		<fileset file="${parser.target.jar}" />
-	</union>
 
 	<!-- Clean -->
 	<target name="parser.clean" depends="utils.clean">
 		<delete dir="${parser.target}" />
 	</target>
 
-	<!-- Clean the distribution -->
-	<target name="parser.distclean">
-		<delete dir="${parser.dist}" />
-	</target>
-
 	<!-- Setup the dependencies -->
 	<target name="parser.setupDependencies">
 		<ivy:resolve file="${parser.build.ivy}" log="download-only" />
-		<ivy:retrieve pattern="${parser.target.libs}/[conf]/[organisation].[artifact](-[revision]).[ext]" />
+		<ivy:retrieve pattern="${parser.target.libs}/${ivy.retrieve.pattern}" type="${ivy.retrieve.type}" />
 
+		<mkdir dir="${parser.target.libs}/compile" />
 		<path id="parser.dependencies.compile.classpath">
-			<fileset id="parser.dependencies.compile.libs" dir="${parser.target.libs}/compile" />
+			<fileset id="parser.dependencies.compile.jars" dir="${parser.target.libs}/compile" />
 		</path>
+	</target>
+
+	<!-- Report the dependencies -->
+	<target name="parser.reportDependencies">
+		<ivy:resolve file="${parser.build.ivy}" log="download-only" />
+		<ivy:report todir="${parser.target.dependencies}" />
 	</target>
 
 	<!-- Compile the sources -->
 	<target name="parser.compileSources" depends="parser.setupDependencies, utils.compileSources">
 		<mkdir dir="${parser.target.classes}" />
-		<javac destdir="${parser.target.classes}" source="${trazere.java.version}" encoding="${trazere.java.encoding}" target="${trazere.java.version}" debug="${trazere.java.debug}" includeantruntime="false" failonerror="true">
+		<javac destdir="${parser.target.classes}" source="${javac.source}" encoding="${javac.encoding}" target="${javac.target}" debug="${javac.debug}" includeantruntime="false" failonerror="true">
 			<src location="${parser.sources}" />
 			<classpath>
 				<path refid="parser.dependencies.compile.classpath" />
@@ -77,43 +74,38 @@
 	<!-- Compile -->
 	<target name="parser.compile" depends="parser.compileSources" />
 
-	<!-- Build the JAR -->
+	<!-- Build the JAR artifact -->
 	<target name="parser.buildJar" depends="parser.compileSources">
-		<mkdir dir="${parser.target}" />
-		<jar destfile="${parser.target.jar}">
+		<mkdir dir="${parser.target.artifacts}" />
+		<jar destfile="${parser.target.artifacts.jar}">
 			<fileset dir="${parser.target.classes}" includes="**/*.class" />
 			<fileset dir="${parser.sources}" excludes="**/*.java" />
 		</jar>
 	</target>
 
-	<!-- Build the source JAR -->
-	<target name="parser.buildSourceJar">
-		<mkdir dir="${parser.target}" />
-		<jar destfile="${parser.target.source_jar}">
+	<!-- Build the POM artifact -->
+	<target name="parser.buildPom">
+		<mkdir dir="${parser.target.artifacts}" />
+		<property name="ivy.pom.version" value="${scroll.version}" />
+		<ivy:makepom ivyfile="${parser.build.ivy}" pomfile="${parser.target.artifacts.pom}" conf="compile,runtime">
+			<mapping conf="compile" scope="compile" />
+			<mapping conf="runtime" scope="runtime" />
+		</ivy:makepom>
+	</target>
+
+	<!-- Build the source artifact -->
+	<target name="parser.buildSource">
+		<mkdir dir="${parser.target.artifacts}" />
+		<jar destfile="${parser.target.artifacts.source}">
 			<fileset dir="${parser.sources}" />
 		</jar>
 	</target>
 
-	<!-- Build the distribution -->
-	<target name="parser.build" depends="parser.buildJar, parser.buildSourceJar">
-		<mkdir dir="${parser.dist}" />
-
-		<!-- Jars -->
-		<mkdir dir="${parser.dist.libs}" />
-		<copy todir="${parser.dist.libs}">
-			<resources refid="parser.jars" />
-		</copy>
-
-		<!-- Sources -->
-		<mkdir dir="${parser.dist.sources}" />
-		<copy todir="${parser.dist.sources}">
-			<fileset file="${parser.target.source_jar}" />
-		</copy>
-
-		<!-- Maven -->
-		<property name="ivy.pom.version" value="${trazere.version}" />
-		<ivy:makepom ivyfile="${parser.build.ivy}" pomfile="${parser.dist.maven}/parser.pom" conf="compile,runtime">
-			<dependency artifact="utils" version="${trazere.version}" scope="compile" />
-		</ivy:makepom>
+	<!-- Publish the artifacts -->
+	<target name="parser.publish" depends="parser.buildJar, parser.buildPom, parser.buildSource">
+		<ivy:resolve file="${parser.build.ivy}" log="download-only" />
+		<ivy:publish pubrevision="${scroll.version}" resolver="${ivy.publish.resolver}" overwrite="true" forcedeliver="true">
+			<artifacts pattern="${parser.target.artifacts}/parser-[type].[ext]" />
+		</ivy:publish>
 	</target>
 </project>
