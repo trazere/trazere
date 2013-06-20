@@ -24,47 +24,44 @@
 	<property name="utils.sources" location="${utils}/sources" />
 
 	<property name="utils.target" location="${utils.build}/target" />
+	<property name="utils.target.artifacts" location="${utils.target}/artifacts" />
+	<property name="utils.target.artifacts.jar" location="${utils.target.artifacts}/utils-jar.jar" />
+	<property name="utils.target.artifacts.pom" location="${utils.target.artifacts}/utils-pom.pom" />
+	<property name="utils.target.artifacts.source" location="${utils.target.artifacts}/utils-source.jar" />
 	<property name="utils.target.classes" location="${utils.target}/classes" />
-	<property name="utils.target.jar" location="${utils.target}/utils.jar" />
+	<property name="utils.target.dependencies" location="${utils.target}/dependencies" />
 	<property name="utils.target.libs" location="${utils.target}/libs" />
-	<property name="utils.target.source_jar" location="${utils.target}/utils-sources.jar" />
-
-	<property name="utils.dist" location="${utils}/dist" />
-	<property name="utils.dist.libs" value="${utils.dist}/libs" />
-	<property name="utils.dist.maven" value="${utils.dist}/maven" />
-	<property name="utils.dist.sources" value="${utils.dist}/sources" />
 
 	<path id="utils.classpath">
 		<pathelement location="${utils.target.classes}" />
 	</path>
-	<union id="utils.jars">
-		<fileset file="${utils.target.jar}" />
-	</union>
 
 	<!-- Clean -->
 	<target name="utils.clean">
 		<delete dir="${utils.target}" />
 	</target>
 
-	<!-- Clean the distribution -->
-	<target name="utils.distclean">
-		<delete dir="${utils.dist}" />
-	</target>
-
 	<!-- Setup the dependencies -->
 	<target name="utils.setupDependencies">
 		<ivy:resolve file="${utils.build.ivy}" log="download-only" />
-		<ivy:retrieve pattern="${utils.target.libs}/[conf]/[organisation].[artifact](-[revision]).[ext]" />
+		<ivy:retrieve pattern="${utils.target.libs}/${ivy.retrieve.pattern}" type="${ivy.retrieve.type}" />
 
+		<mkdir dir="${utils.target.libs}/compile" />
 		<path id="utils.dependencies.compile.classpath">
 			<fileset id="utils.dependencies.compile.libs" dir="${utils.target.libs}/compile" />
 		</path>
 	</target>
 
+	<!-- Report the dependencies -->
+	<target name="utils.reportDependencies">
+		<ivy:resolve file="${utils.build.ivy}" log="download-only" />
+		<ivy:report todir="${utils.target.dependencies}" />
+	</target>
+
 	<!-- Compile the sources -->
 	<target name="utils.compileSources" depends="utils.setupDependencies">
 		<mkdir dir="${utils.target.classes}" />
-		<javac destdir="${utils.target.classes}" source="${trazere.java.version}" encoding="${trazere.java.encoding}" target="${trazere.java.version}" debug="${trazere.java.debug}" includeantruntime="false" failonerror="true">
+		<javac destdir="${utils.target.classes}" source="${javac.source}" encoding="${javac.encoding}" target="${javac.target}" debug="${javac.debug}" includeantruntime="false" failonerror="true">
 			<src location="${utils.sources}" />
 			<classpath>
 				<path refid="utils.dependencies.compile.classpath" />
@@ -75,42 +72,38 @@
 	<!-- Compile -->
 	<target name="utils.compile" depends="utils.compileSources" />
 
-	<!-- Build the JAR -->
+	<!-- Build the JAR artifact -->
 	<target name="utils.buildJar" depends="utils.compileSources">
-		<mkdir dir="${utils.target}" />
-		<jar destfile="${utils.target.jar}">
+		<mkdir dir="${utils.target.artifacts}" />
+		<jar destfile="${utils.target.artifacts.jar}">
 			<fileset dir="${utils.target.classes}" includes="**/*.class" />
 			<fileset dir="${utils.sources}" excludes="**/*.java" />
 		</jar>
 	</target>
 
-	<!-- Build the source JAR -->
-	<target name="utils.buildSourceJar">
-		<mkdir dir="${utils.target}" />
-		<jar destfile="${utils.target.source_jar}">
+	<!-- Build the POM artifact -->
+	<target name="utils.buildPom">
+		<mkdir dir="${utils.target.artifacts}" />
+		<property name="ivy.pom.version" value="${scroll.version}" />
+		<ivy:makepom ivyfile="${utils.build.ivy}" pomfile="${utils.target.artifacts.pom}" conf="compile,runtime">
+			<mapping conf="compile" scope="compile" />
+			<mapping conf="runtime" scope="runtime" />
+		</ivy:makepom>
+	</target>
+
+	<!-- Build the source artifact -->
+	<target name="utils.buildSource">
+		<mkdir dir="${utils.target.artifacts}" />
+		<jar destfile="${utils.target.artifacts.source}">
 			<fileset dir="${utils.sources}" />
 		</jar>
 	</target>
 
-	<!-- Build the distribution -->
-	<target name="utils.build" depends="utils.buildJar, utils.buildSourceJar">
-		<mkdir dir="${utils.dist}" />
-
-		<!-- Libs -->
-		<mkdir dir="${utils.dist.libs}" />
-		<copy todir="${utils.dist.libs}">
-			<resources refid="utils.jars" />
-		</copy>
-
-		<!-- Sources -->
-		<mkdir dir="${utils.dist.sources}" />
-		<copy todir="${utils.dist.sources}">
-			<fileset file="${utils.target.source_jar}" />
-		</copy>
-
-		<!-- Maven -->
-		<mkdir dir="${utils.dist.maven}" />
-		<property name="ivy.pom.version" value="${trazere.version}" />
-		<ivy:makepom ivyfile="${utils.build.ivy}" pomfile="${utils.dist.maven}/utils.pom" conf="compile,runtime" />
+	<!-- Publish the artifacts -->
+	<target name="utils.publish" depends="utils.buildJar, utils.buildPom, utils.buildSource">
+		<ivy:resolve file="${utils.build.ivy}" log="download-only" />
+		<ivy:publish pubrevision="${scroll.version}" resolver="${ivy.publish.resolver}" overwrite="true" forcedeliver="true">
+			<artifacts pattern="${utils.target.artifacts}/utils-[type].[ext]" />
+		</ivy:publish>
 	</target>
 </project>

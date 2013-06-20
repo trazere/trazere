@@ -16,11 +16,21 @@
 -->
 <ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
 	<info organisation="com.trazere" module="ant" />
-	<configurations defaultconf="compile" defaultconfmapping="*->default">
+
+	<configurations>
+		<conf name="default" extends="master, compile" />
 		<conf name="compile" />
 		<conf name="runtime" extends="compile" />
+		<conf name="master" />
 	</configurations>
-	<dependencies>
-		<dependency org="org.apache.ant" name="ant" rev="1.8.4" />
+
+	<publications defaultconf="master">
+		<artifact type="jar" ext="jar" />
+		<artifact type="pom" ext="pom" />
+		<artifact type="source" ext="jar" />
+	</publications>
+
+	<dependencies defaultconf="compile" defaultconfmapping="*->default">
+		<dependency org="org.apache.ant" name="ant" rev="${tools.version.org.apache.ant}" />
 	</dependencies>
 </ivy-module>

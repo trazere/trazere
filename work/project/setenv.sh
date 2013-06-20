@@ -28,4 +28,4 @@ then
 fi
 
 # Set the Ant options.
-export ANT_OPTS="-Xmx1024m -Djava.endorsed.dirs=$PROJECT_HOME/endorsed"
+export ANT_OPTS="-Xmx1024m -Djava.endorsed.dirs=$PROJECT_HOME/build/libs/endorsed"
