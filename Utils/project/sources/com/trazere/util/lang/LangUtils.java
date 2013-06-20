@@ -15,7 +15,6 @@
  */
 package com.trazere.util.lang;
 
-import com.trazere.util.function.Function1;
 import com.trazere.util.type.Maybe;
 import java.util.Collection;
 import java.util.Comparator;
@@ -91,31 +90,6 @@ public class LangUtils {
 	}
 	
 	/**
-	 * Builds a function which matches objects according to the given type.
-	 * 
-	 * @param <L> Type of the arguments.
-	 * @param <T> Type of the match.
-	 * @param <X> Type of the exceptions.
-	 * @param type The type.
-	 * @return The built function.
-	 * @see #match(Object, Class)
-	 */
-	public static <L, T extends L, X extends Exception> Function1<L, Maybe<T>, X> matchFunction(final Class<T> type) {
-		assert null != type;
-		
-		return new Function1<L, Maybe<T>, X>() {
-			@Override
-			public Maybe<T> evaluate(final L value) {
-				if (null != value && type.isInstance(value)) {
-					return Maybe.some(type.cast(value));
-				} else {
-					return Maybe.none();
-				}
-			}
-		};
-	}
-	
-	/**
 	 * Matches the given object according to the given type.
 	 * <p>
 	 * This methods tests that the given object is not <code>null</code> and is assignable to the given type.
@@ -138,30 +112,6 @@ public class LangUtils {
 		} else {
 			throw throwableFactory.build("Invalid value \"" + object + "\"");
 		}
-	}
-	
-	/**
-	 * Builds a function which matches objects according to the given type.
-	 * 
-	 * @param <L> Type of the arguments.
-	 * @param <T> Type of the match.
-	 * @param <X> Type of the exceptions.
-	 * @param type The type.
-	 * @param throwableFactory The throwable factory to use.
-	 * @return The built extractor.
-	 * @see #match(Object, Class, ThrowableFactory)
-	 */
-	public static <L, T extends L, X extends Exception> Function1<L, T, X> matchFunction(final Class<T> type, final ThrowableFactory<? extends X> throwableFactory) {
-		assert null != type;
-		assert null != throwableFactory;
-		
-		return new Function1<L, T, X>() {
-			@Override
-			public T evaluate(final L value)
-			throws X {
-				return match(value, type, throwableFactory);
-			}
-		};
 	}
 	
 	// TODO: rename to safeBooleanValue or safeUnbox
@@ -288,165 +238,6 @@ public class LangUtils {
 	public static <T extends Object> boolean equals(final T object1, final T object2) {
 		return object1 == object2 || null != object1 && object1.equals(object2);
 	}
-	
-	/**
-	 * Builds a function returning the string representation of the values.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param <X> Type of the exceptions.
-	 * @return The built function.
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T, X extends Exception> Function1<T, String, X> toStringFunction() {
-		return (Function1<T, String, X>) _TO_STRING_FUNCTION;
-	}
-	
-	private static final Function1<?, String, ?> _TO_STRING_FUNCTION = new Function1<Object, String, RuntimeException>() {
-		@Override
-		public String evaluate(final Object value) {
-			return value.toString();
-		}
-	};
-	
-	/**
-	 * Builds a functions which negates boolean values.
-	 * 
-	 * @param <X> Type of the exceptions.
-	 * @return The built function.
-	 */
-	@SuppressWarnings("unchecked")
-	public static <X extends Exception> Function1<Boolean, Boolean, X> notFunction() {
-		return (Function1<Boolean, Boolean, X>) _NOT_FUNCTION;
-	}
-	
-	private static final Function1<Boolean, Boolean, ?> _NOT_FUNCTION = new Function1<Boolean, Boolean, RuntimeException>() {
-		@Override
-		public Boolean evaluate(final Boolean value) {
-			assert null != value;
-			
-			return !value.booleanValue();
-		}
-	};
-	
-	/**
-	 * Builds a function which extracts the value of numbers as bytes.
-	 * 
-	 * @param <N> Type of the numbers.
-	 * @param <X> Type of the exceptions.
-	 * @return The built function.
-	 * @see Number#byteValue()
-	 */
-	@SuppressWarnings("unchecked")
-	public static <N extends Number, X extends Exception> Function1<N, Short, X> byteValueFunction() {
-		return (Function1<N, Short, X>) _BYTE_VALUE_FUNCTION;
-	}
-	
-	private static final Function1<? extends Number, Short, ?> _BYTE_VALUE_FUNCTION = new Function1<Number, Short, RuntimeException>() {
-		@Override
-		public Short evaluate(final Number value) {
-			return value.shortValue();
-		}
-	};
-	
-	/**
-	 * Builds a function which extracts the value of numbers as shorts.
-	 * 
-	 * @param <N> Type of the numbers.
-	 * @param <X> Type of the exceptions.
-	 * @return The built function.
-	 * @see Number#shortValue()
-	 */
-	@SuppressWarnings("unchecked")
-	public static <N extends Number, X extends Exception> Function1<N, Short, X> shortValueFunction() {
-		return (Function1<N, Short, X>) _SHORT_VALUE_FUNCTION;
-	}
-	
-	private static final Function1<? extends Number, Short, ?> _SHORT_VALUE_FUNCTION = new Function1<Number, Short, RuntimeException>() {
-		@Override
-		public Short evaluate(final Number value) {
-			return value.shortValue();
-		}
-	};
-	
-	/**
-	 * Builds a function which extracts the value of numbers as integers.
-	 * 
-	 * @param <N> Type of the numbers.
-	 * @param <X> Type of the exceptions.
-	 * @return The built function.
-	 * @see Number#intValue()
-	 */
-	@SuppressWarnings("unchecked")
-	public static <N extends Number, X extends Exception> Function1<N, Integer, X> intValueFunction() {
-		return (Function1<N, Integer, X>) _INT_VALUE_FUNCTION;
-	}
-	
-	private static final Function1<? extends Number, Integer, ?> _INT_VALUE_FUNCTION = new Function1<Number, Integer, RuntimeException>() {
-		@Override
-		public Integer evaluate(final Number value) {
-			return value.intValue();
-		}
-	};
-	
-	/**
-	 * Builds a function which extracts the value of numbers as long integers.
-	 * 
-	 * @param <N> Type of the numbers.
-	 * @param <X> Type of the exceptions.
-	 * @return The built function.
-	 * @see Number#longValue()
-	 */
-	@SuppressWarnings("unchecked")
-	public static <N extends Number, X extends Exception> Function1<N, Long, X> longValueFunction() {
-		return (Function1<N, Long, X>) _LONG_VALUE_FUNCTION;
-	}
-	
-	private static final Function1<? extends Number, Long, ?> _LONG_VALUE_FUNCTION = new Function1<Number, Long, RuntimeException>() {
-		@Override
-		public Long evaluate(final Number value) {
-			return value.longValue();
-		}
-	};
-	
-	/**
-	 * Builds a function which extracts the value of numbers as floats.
-	 * 
-	 * @param <N> Type of the numbers.
-	 * @param <X> Type of the exceptions.
-	 * @return The built function.
-	 * @see Number#floatValue()
-	 */
-	@SuppressWarnings("unchecked")
-	public static <N extends Number, X extends Exception> Function1<N, Float, X> floatValueFunction() {
-		return (Function1<N, Float, X>) _FLOAT_VALUE_FUNCTION;
-	}
-	
-	private static final Function1<? extends Number, Float, ?> _FLOAT_VALUE_FUNCTION = new Function1<Number, Float, RuntimeException>() {
-		@Override
-		public Float evaluate(final Number value) {
-			return value.floatValue();
-		}
-	};
-	
-	/**
-	 * Builds a function which extracts the value of numbers as doubles.
-	 * 
-	 * @param <N> Type of the numbers.
-	 * @param <X> Type of the exceptions.
-	 * @return The built function.
-	 * @see Number#doubleValue()
-	 */
-	@SuppressWarnings("unchecked")
-	public static <N extends Number, X extends Exception> Function1<N, Double, X> doubleValueFunction() {
-		return (Function1<N, Double, X>) _DOUBLE_VALUE_FUNCTION;
-	}
-	
-	private static final Function1<? extends Number, Double, ?> _DOUBLE_VALUE_FUNCTION = new Function1<Number, Double, RuntimeException>() {
-		@Override
-		public Double evaluate(final Number value) {
-			return value.doubleValue();
-		}
-	};
 	
 	/**
 	 * Compares the given comparable values.

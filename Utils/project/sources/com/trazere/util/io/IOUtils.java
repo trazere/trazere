@@ -34,6 +34,7 @@ import javax.xml.transform.stream.StreamSource;
  * DOCME
  */
 public class IOUtils {
+	// TODO: move to IOFunctions
 	/**
 	 * Builds a function which builds files.
 	 * 

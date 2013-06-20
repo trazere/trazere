@@ -15,12 +15,33 @@
  */
 package com.trazere.util.text;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * The {@link CharPredicates} class provides various common character predicate functions.
  * 
  * @see CharPredicate
  */
 public class CharPredicates {
+	/**
+	 * Builds a predicate that evaluates to the given result for all characters.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @param result The result.
+	 * @return The built predicate.
+	 */
+	public static <X extends Exception> CharPredicate<X> constant(final boolean result) {
+		return new CharPredicate<X>() {
+			@Override
+			public boolean evaluate(final char c) {
+				return result;
+			}
+		};
+	}
+	
 	/**
 	 * Builds a predicate that evaluates to <code>true</code> for all characters.
 	 * 
@@ -46,41 +67,6 @@ public class CharPredicates {
 	}
 	
 	private static final CharPredicate<?> _NONE = CharPredicates.<RuntimeException>constant(false);
-	
-	/**
-	 * Builds a predicate that evaluates to the given result for all characters.
-	 * 
-	 * @param <X> Type of the exceptions.
-	 * @param result The result.
-	 * @return The built predicate.
-	 */
-	public static <X extends Exception> CharPredicate<X> constant(final boolean result) {
-		return new CharPredicate<X>() {
-			@Override
-			public boolean evaluate(final char c) {
-				return result;
-			}
-		};
-	}
-	
-	/**
-	 * Builds a predicate that evaluates to <code>true</code> for whitespace characters.
-	 * 
-	 * @param <X> Type of the exceptions.
-	 * @return The built predicate.
-	 * @see Character#isWhitespace(char)
-	 */
-	@SuppressWarnings("unchecked")
-	public static <X extends Exception> CharPredicate<X> whitespace() {
-		return (CharPredicate<X>) _WHITESPACE;
-	}
-	
-	private static final CharPredicate<?> _WHITESPACE = new CharPredicate<RuntimeException>() {
-		@Override
-		public boolean evaluate(final char c) {
-			return Character.isWhitespace(c);
-		}
-	};
 	
 	/**
 	 * Builds a predicate corresponding to the inverse of the given predicate.
@@ -147,6 +133,107 @@ public class CharPredicates {
 	}
 	
 	/**
+     * Builds a predicate that evaluate to <code>true</code> for the given character.
+     * 
+     * @param <X> Type of the exceptions.
+     * @param value The character.
+     * @return The built predicate.
+     */
+    public static <X extends Exception> CharPredicate<X> value(final char value) {
+    	return new CharPredicate<X>() {
+    		@Override
+    		public boolean evaluate(final char c_) {
+    			return value == c_;
+    		}
+    	};
+    }
+
+	/**
+     * Builds a predicate that evaluates to <code>true</code> for any given characters.
+     * 
+     * @param <X> Type of the exceptions.
+     * @param values The characters.
+     * @return The built predicate.
+     */
+    public static <X extends Exception> CharPredicate<X> values(final char... values) {
+    	assert null != values;
+    	
+    	final Set<Character> values_ = new HashSet<Character>();
+    	for (final char value : values) {
+    		values_.add(value);
+    	}
+    	return values(values_);
+    }
+
+	/**
+     * Builds a predicate that evaluates to <code>true</code> for any given characters.
+     * 
+     * @param <X> Type of the exceptions.
+     * @param values The characters.
+     * @return The built predicate.
+     */
+    public static <X extends Exception> CharPredicate<X> values(final Character... values) {
+    	assert null != values;
+    	
+    	return values(new HashSet<Character>(Arrays.asList(values)));
+    }
+
+	/**
+     * Builds a predicate that evaluates to <code>true</code> for any given values.
+     * 
+     * @param <X> Type of the exceptions.
+     * @param values The characters.
+     * @return The built predicate.
+     */
+    public static <X extends Exception> CharPredicate<X> values(final Collection<Character> values) {
+    	assert null != values;
+    	
+    	return new CharPredicate<X>() {
+    		@Override
+    		public boolean evaluate(final char c) {
+    			return values.contains(c);
+    		}
+    	};
+    }
+
+	/**
+     * Builds a predicate that evaluate to <code>true</code> for any character of the given string.
+     * 
+     * @param <X> Type of the exceptions.
+     * @param chars The characters.
+     * @return The built predicate.
+     */
+    public static <X extends Exception> CharPredicate<X> values(final String chars) {
+    	assert null != chars;
+    	
+    	return new CharPredicate<X>() {
+    		@Override
+    		public boolean evaluate(final char c) {
+    			return chars.indexOf(c) >= 0;
+    		}
+    	};
+    }
+
+	/**
+	 * Builds a predicate that evaluates to <code>true</code> for whitespace characters.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @return The built predicate.
+	 * @see Character#isWhitespace(char)
+	 */
+	@SuppressWarnings("unchecked")
+	public static <X extends Exception> CharPredicate<X> isWhitespace() {
+		return (CharPredicate<X>) _WHITESPACE;
+	}
+	
+	private static final CharPredicate<?> _WHITESPACE = new CharPredicate<RuntimeException>() {
+		@Override
+		public boolean evaluate(final char c) {
+			return Character.isWhitespace(c);
+		}
+	};
+	
+	/**
 	 * Builds a predicate that evaluates to <code>true</code> for digit characters.
 	 * 
 	 * @param <X> Type of the exceptions.
@@ -154,7 +241,7 @@ public class CharPredicates {
 	 * @see Character#isDigit(char)
 	 */
 	@SuppressWarnings("unchecked")
-	public static <X extends Exception> CharPredicate<X> digit() {
+	public static <X extends Exception> CharPredicate<X> isDigit() {
 		return (CharPredicate<X>) _DIGIT;
 	}
 	
@@ -173,7 +260,7 @@ public class CharPredicates {
 	 * @see Character#isLetter(char)
 	 */
 	@SuppressWarnings("unchecked")
-	public static <X extends Exception> CharPredicate<X> letter() {
+	public static <X extends Exception> CharPredicate<X> isLetter() {
 		return (CharPredicate<X>) _LETTER;
 	}
 	
@@ -192,7 +279,7 @@ public class CharPredicates {
 	 * @see Character#isLetterOrDigit(char)
 	 */
 	@SuppressWarnings("unchecked")
-	public static <X extends Exception> CharPredicate<X> alphanumeric() {
+	public static <X extends Exception> CharPredicate<X> isAlphanumeric() {
 		return (CharPredicate<X>) _ALPHANUMERIC;
 	}
 	
@@ -202,41 +289,6 @@ public class CharPredicates {
 			return Character.isLetterOrDigit(c) || '_' == c;
 		}
 	};
-	
-	/**
-	 * Builds a predicate that evaluate to <code>true</code> for the given character.
-	 * 
-	 * @param <X> Type of the exceptions.
-	 * @param c The character.
-	 * @return The built predicate.
-	 */
-	public static <X extends Exception> CharPredicate<X> equals(final char c) {
-		return new CharPredicate<X>() {
-			@Override
-			public boolean evaluate(final char c_) {
-				return c == c_;
-			}
-		};
-	}
-	
-	/**
-	 * Builds a predicate that evaluate to <code>true</code> for any character of the given string.
-	 * 
-	 * @param <X> Type of the exceptions.
-	 * @param chars The characters.
-	 * @return The built predicate.
-	 */
-	public static <X extends Exception> CharPredicate<X> any(final String chars) {
-		assert null != chars;
-		
-		// Build.
-		return new CharPredicate<X>() {
-			@Override
-			public boolean evaluate(final char c) {
-				return chars.indexOf(c) >= 0;
-			}
-		};
-	}
 	
 	private CharPredicates() {
 		// Prevents instantiation.

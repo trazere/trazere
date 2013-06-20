@@ -16,12 +16,11 @@
 package com.trazere.util.function;
 
 import com.trazere.util.collection.CollectionUtils;
-import com.trazere.util.lang.LangUtils;
 import com.trazere.util.type.Maybe;
 import java.util.Map;
 
 /**
- * The {@link Extractors} class provides various extractors.
+ * The {@link Extractors} class provides various factories of extractors.
  * <p>
  * An extractor is function that combines a map and a filter operation.
  * 
@@ -64,28 +63,6 @@ public class Extractors {
 	
 	// TODO: add filter(Predicate1, Extractor): Extractor
 	// TODO: add map(Function1, Extractor): Extractor
-	
-	// TODO: move to LangUtils ?
-	/**
-	 * Builds an extractor that matches the values according to the given type.
-	 * 
-	 * @param <T> Type of the argument values.
-	 * @param <R> Type of the result values.
-	 * @param <X> Type of the exceptions.
-	 * @param type The type.
-	 * @return The built extractor.
-	 * @see LangUtils#match(Object, Class)
-	 */
-	public static <T, R extends T, X extends Exception> Function1<T, Maybe<R>, X> match(final Class<R> type) {
-		assert null != type;
-		
-		return new Function1<T, Maybe<R>, X>() {
-			@Override
-			public Maybe<R> evaluate(final Object value) {
-				return LangUtils.match(value, type);
-			}
-		};
-	}
 	
 	/**
 	 * Builds an identity extractor that filters the values according to the given filter predicate.
