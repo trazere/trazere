@@ -84,7 +84,7 @@ extends BaseParser<Token, Result> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final ChoiceParser<?, ?> parser = (ChoiceParser<?, ?>) object;
-			return LangUtils.equals(_description, parser._description) && _subParsers.equals(parser._subParsers);
+			return LangUtils.safeEquals(_description, parser._description) && _subParsers.equals(parser._subParsers);
 		} else {
 			return false;
 		}

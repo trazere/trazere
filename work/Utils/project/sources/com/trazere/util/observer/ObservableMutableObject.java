@@ -46,7 +46,7 @@ implements ObservableValue<T> {
 		final V result = super.set(value);
 		
 		// Notify.
-		if (!LangUtils.equals(currentValue, value)) {
+		if (!LangUtils.safeEquals(currentValue, value)) {
 			_observable.notify(_value);
 		}
 		

@@ -84,7 +84,7 @@ extends BaseParser<Token, Maybe<Result>> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final OptionParser<?, ?> parser = (OptionParser<?, ?>) object;
-			return LangUtils.equals(_description, parser._description) && _subParser.equals(parser._subParser);
+			return LangUtils.safeEquals(_description, parser._description) && _subParser.equals(parser._subParser);
 		} else {
 			return false;
 		}

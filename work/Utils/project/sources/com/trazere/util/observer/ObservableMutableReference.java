@@ -88,7 +88,7 @@ implements ObservableReference<T> {
 		final V result = super.update(value);
 		
 		// Notify.
-		if (currentValue.isNone() || !LangUtils.equals(currentValue.asSome().getValue(), value)) {
+		if (currentValue.isNone() || !LangUtils.safeEquals(currentValue.asSome().getValue(), value)) {
 			_observable.notify(_value);
 		}
 		

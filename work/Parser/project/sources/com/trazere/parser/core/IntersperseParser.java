@@ -138,7 +138,7 @@ extends BaseParser<Token, List<Value>> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final IntersperseParser<?, ?> parser = (IntersperseParser<?, ?>) object;
-			return LangUtils.equals(_description, parser._description) && _valueParser.equals(parser._valueParser) && _delimiterParser.equals(parser._delimiterParser) && _min == parser._min && _max == parser._max;
+			return LangUtils.safeEquals(_description, parser._description) && _valueParser.equals(parser._valueParser) && _delimiterParser.equals(parser._delimiterParser) && _min == parser._min && _max == parser._max;
 		} else {
 			return false;
 		}

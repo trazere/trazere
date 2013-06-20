@@ -64,7 +64,7 @@ extends BaseParser<Token, Result> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final SuccessParser<?, ?> parser = (SuccessParser<?, ?>) object;
-			return LangUtils.equals(_description, parser._description) && _result.equals(parser._result);
+			return LangUtils.safeEquals(_description, parser._description) && _result.equals(parser._result);
 		} else {
 			return false;
 		}

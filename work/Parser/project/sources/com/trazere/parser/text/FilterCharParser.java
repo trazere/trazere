@@ -89,7 +89,7 @@ extends BaseParser<Character, Character> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final FilterCharParser parser = (FilterCharParser) object;
-			return LangUtils.equals(_description, parser._description) && _filter.equals(parser._filter);
+			return LangUtils.safeEquals(_description, parser._description) && _filter.equals(parser._filter);
 		} else {
 			return false;
 		}

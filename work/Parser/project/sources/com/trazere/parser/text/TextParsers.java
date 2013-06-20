@@ -256,7 +256,7 @@ public class TextParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final DecimalParser parser = (DecimalParser) object;
-					return LangUtils.equals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3);
+					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3);
 				} else {
 					return false;
 				}
