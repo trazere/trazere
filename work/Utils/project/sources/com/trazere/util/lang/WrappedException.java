@@ -90,7 +90,7 @@ extends RuntimeException {
 	 */
 	public static <T extends Throwable> void unwrapException(final WrappedException exception, final Class<T> type)
 	throws T {
-		unwrapException(exception, LangUtils.<Throwable, T, RuntimeException>matchFunction(type));
+		unwrapException(exception, LangExtractors.<Throwable, T, RuntimeException>match(type));
 	}
 	
 	/**
@@ -106,6 +106,6 @@ extends RuntimeException {
 	 */
 	public static <T extends Throwable> void unwrapExceptionOrRethrow(final WrappedException exception, final Class<T> type)
 	throws T, WrappedException {
-		unwrapExceptionOrRethrow(exception, LangUtils.<Throwable, T, RuntimeException>matchFunction(type));
+		unwrapExceptionOrRethrow(exception, LangExtractors.<Throwable, T, RuntimeException>match(type));
 	}
 }

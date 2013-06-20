@@ -18,7 +18,7 @@ package com.trazere.util.cache;
 import java.util.Collection;
 
 /**
- * The {@link FIFOCachePolicy} class provides cache policies which keeps all entries.
+ * The {@link AllCachePolicy} class provides cache policies which keeps all entries.
  * 
  * @param <K> Type of the keys.
  */

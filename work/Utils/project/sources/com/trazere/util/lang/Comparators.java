@@ -82,6 +82,7 @@ public class Comparators {
 		};
 	}
 	
+	// TODO: move to type
 	/**
 	 * Builds a comparator of {@link Maybe} instances according to the given order for values.
 	 * <p>
@@ -146,20 +147,20 @@ public class Comparators {
 	/**
 	 * Transforms the given comparator using the given function.
 	 * 
-	 * @param <T> Type of the values.
-	 * @param <V> Type of the mapped values.
+	 * @param <T1> Type of the values.
+	 * @param <T2> Type of the mapped values.
 	 * @param function The function.
 	 * @param comparator The comparator.
 	 * @return The built comparator.
 	 * @see MapComparator
 	 */
-	public static <T, V> Comparator<T> map(final Function1<? super T, ? extends V, ? extends RuntimeException> function, final Comparator<? super V> comparator) {
+	public static <T1, T2> Comparator<T1> map(final Function1<? super T1, ? extends T2, ? extends RuntimeException> function, final Comparator<? super T2> comparator) {
 		assert null != function;
 		assert null != comparator;
 		
-		return new MapComparator<T, V>(comparator) {
+		return new MapComparator<T1, T2>(comparator) {
 			@Override
-			protected V mapValue(final T object) {
+			protected T2 mapValue(final T1 object) {
 				return function.evaluate(object);
 			}
 		};

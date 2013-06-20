@@ -27,7 +27,6 @@ import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -48,23 +47,6 @@ public class TextUtils {
 	public static int safeCompareIgnoreCase(final String string1, final String string2) {
 		return LangUtils.safeCompare(String.CASE_INSENSITIVE_ORDER, string1, string2);
 	}
-	
-	/**
-	 * Builds a comparator of string that ignores and handle <code>null</code> values.
-	 * 
-	 * @return The built comparator.
-	 * @see #safeCompareIgnoreCase(String, String)
-	 */
-	public static Comparator<String> safeIgnoreCaseComparator() {
-		return _SAFE_IGNORE_CASE_COMPARATOR;
-	}
-	
-	private static Comparator<String> _SAFE_IGNORE_CASE_COMPARATOR = new Comparator<String>() {
-		@Override
-		public int compare(final String value1, final String value2) {
-			return safeCompareIgnoreCase(value1, value2);
-		}
-	};
 	
 	/**
 	 * Tests whether the given string contains some characters accepted by the given filter.
@@ -393,48 +375,6 @@ public class TextUtils {
 	}
 	
 	/**
-	 * Builds a function which converts strings to lower case.
-	 * 
-	 * @param <X> Type of the exceptions.
-	 * @return The built function.
-	 * @see String#toLowerCase()
-	 */
-	@SuppressWarnings("unchecked")
-	public static <X extends Exception> Function1<String, String, X> toLowerCaseFunction() {
-		return (Function1<String, String, X>) _TO_LOWER_CASE_FUNCTION;
-	}
-	
-	private static final Function1<String, String, ?> _TO_LOWER_CASE_FUNCTION = new Function1<String, String, RuntimeException>() {
-		@Override
-		public String evaluate(final String value) {
-			assert null != value;
-			
-			return value.toLowerCase();
-		}
-	};
-	
-	/**
-	 * Builds a function which converts strings to upper case.
-	 * 
-	 * @param <X> Type of the exceptions.
-	 * @return The built function.
-	 * @see String#toUpperCase()
-	 */
-	@SuppressWarnings("unchecked")
-	public static <X extends Exception> Function1<String, String, X> toUpperCaseFunction() {
-		return (Function1<String, String, X>) _TO_UPPER_CASE_FUNCTION;
-	}
-	
-	private static final Function1<String, String, ?> _TO_UPPER_CASE_FUNCTION = new Function1<String, String, RuntimeException>() {
-		@Override
-		public String evaluate(final String value) {
-			assert null != value;
-			
-			return value.toUpperCase();
-		}
-	};
-	
-	/**
 	 * Capitalizes the given string.
 	 * 
 	 * @param s The string to capitalize.
@@ -449,25 +389,6 @@ public class TextUtils {
 			return s;
 		}
 	}
-	
-	/**
-	 * Builds a function which capitalizes strings.
-	 * 
-	 * @param <X> Type of the exceptions.
-	 * @return The built function.
-	 * @see #capitalize(String)
-	 */
-	@SuppressWarnings("unchecked")
-	public static <X extends Exception> Function1<String, String, X> capitalizeFunction() {
-		return (Function1<String, String, X>) _CAPITALIZE_FUNCTION;
-	}
-	
-	private static final Function1<String, String, ?> _CAPITALIZE_FUNCTION = new Function1<String, String, RuntimeException>() {
-		@Override
-		public String evaluate(final String s) {
-			return capitalize(s);
-		}
-	};
 	
 	/** Array of the hexadecimal digits characters (upper case). */
 	public static final char[] HEX_DIGITS = {
@@ -570,27 +491,6 @@ public class TextUtils {
 	}
 	
 	/**
-	 * Builds a number formatting function.
-	 * <p>
-	 * This method synchronizes the format.
-	 * 
-	 * @param <T> Type of the numbers.
-	 * @param <X> Type of the exception.
-	 * @param format The number format.
-	 * @return The built function.
-	 */
-	public static <T extends Number, X extends Exception> Function1<T, String, X> formatNumberFunction(final NumberFormat format) {
-		assert null != format;
-		
-		return new Function1<T, String, X>() {
-			@Override
-			public String evaluate(final T number) {
-				return formatNumber(format, number);
-			}
-		};
-	}
-	
-	/**
 	 * Parses the given number representation using the given format and extractor.
 	 * <p>
 	 * This method synchronizes the format.
@@ -618,28 +518,6 @@ public class TextUtils {
 	}
 	
 	/**
-	 * Builds a number parsing function.
-	 * 
-	 * @param <T> Type of the numbers to parse.
-	 * @param <X> Type of the exceptions.
-	 * @param format The number format.
-	 * @param converter The converter of the {@link Number} instance to the excepted type.
-	 * @return The built function.
-	 * @see #parseNumber(NumberFormat, Function1, String)
-	 */
-	public static <T extends Number, X extends Exception> Function1<String, Maybe<T>, X> parseNumberFunction(final NumberFormat format, final Function1<Number, T, RuntimeException> converter) {
-		assert null != format;
-		assert null != converter;
-		
-		return new Function1<String, Maybe<T>, X>() {
-			@Override
-			public Maybe<T> evaluate(final String representation) {
-				return parseNumber(format, converter, representation);
-			}
-		};
-	}
-	
-	/**
 	 * Formats the given date using the given format.
 	 * <p>
 	 * This method synchronizes the format.
@@ -655,27 +533,6 @@ public class TextUtils {
 		synchronized (format) {
 			return format.format(date);
 		}
-	}
-	
-	/**
-	 * Builds a date formatting function.
-	 * <p>
-	 * This method synchronizes the format.
-	 * 
-	 * @param <T> Type of the dates.
-	 * @param <X> Type of the exception.
-	 * @param format The date format.
-	 * @return The built function.
-	 */
-	public static <T extends Date, X extends Exception> Function1<T, String, X> formatDateFunction(final DateFormat format) {
-		assert null != format;
-		
-		return new Function1<T, String, X>() {
-			@Override
-			public String evaluate(final T date) {
-				return formatDate(format, date);
-			}
-		};
 	}
 	
 	/**
@@ -700,25 +557,6 @@ public class TextUtils {
 				return Maybe.none();
 			}
 		}
-	}
-	
-	/**
-	 * Builds a date parsing function.
-	 * 
-	 * @param <X> Type of the exceptions.
-	 * @param format The date format.
-	 * @return The built function.
-	 * @see #parseDate(DateFormat, String)
-	 */
-	public static <X extends Exception> Function1<String, Maybe<Date>, X> parseDateFunction(final DateFormat format) {
-		assert null != format;
-		
-		return new Function1<String, Maybe<Date>, X>() {
-			@Override
-			public Maybe<Date> evaluate(final String representation) {
-				return parseDate(format, representation);
-			}
-		};
 	}
 	
 	private TextUtils() {

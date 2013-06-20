@@ -21,11 +21,24 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * DOCME
+ * The {@link CachePolicies} class provides various factories of cache policies.
  */
-public class CacheUtils {
+public class CachePolicies {
 	/**
-	 * Builds a cache policy which combine the given cache policies by disjunction.
+	 * Builds a cache policy that keeps all entries.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @return The built policy.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <K> CachePolicy<K> all() {
+		return (CachePolicy<K>) _ALL;
+	}
+	
+	private static final CachePolicy<?> _ALL = new AllCachePolicy<Object>();
+	
+	/**
+	 * Builds a cache policy that combines the given cache policies by disjunction.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param policy1 The first policy.
@@ -66,7 +79,7 @@ public class CacheUtils {
 	}
 	
 	/**
-	 * Builds a cache policy which combine the given cache policies by conjuction.
+	 * Builds a cache policy that combines the given cache policies by conjuction.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param policy1 The first policy.
@@ -106,7 +119,7 @@ public class CacheUtils {
 		};
 	}
 	
-	private CacheUtils() {
+	private CachePolicies() {
 		// Prevents instantiation.
 	}
 }
