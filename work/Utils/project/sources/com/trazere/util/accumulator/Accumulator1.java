@@ -27,14 +27,14 @@ import com.trazere.util.function.Procedure1;
 public interface Accumulator1<T, S, X extends Exception>
 extends Procedure1<T, X> {
 	/**
-	 * Get the current state of the receiver accumulator.
+	 * Gets the current state of the receiver accumulator.
 	 * 
 	 * @return The state. May be <code>null</code>.
 	 */
 	public S get();
 	
 	/**
-	 * Accumulate the given value into the receiver accumulator.
+	 * Accumulates the given value into the receiver accumulator.
 	 * 
 	 * @param value The value. May be <code>null</code>.
 	 * @throws X When the accumulation fails.
