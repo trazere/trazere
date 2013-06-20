@@ -233,7 +233,7 @@ public class Predicates {
 		return new Predicate1<T, X>() {
 			@Override
 			public boolean evaluate(final T value_) {
-				return LangUtils.equals(value, value_);
+				return LangUtils.safeEquals(value, value_);
 			}
 		};
 	}

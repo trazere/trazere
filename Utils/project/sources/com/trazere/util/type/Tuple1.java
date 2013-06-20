@@ -134,7 +134,7 @@ public class Tuple1<T1> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final Tuple1<?> tuple = (Tuple1<?>) object;
-			return LangUtils.equals(_first, tuple._first);
+			return LangUtils.safeEquals(_first, tuple._first);
 		} else {
 			return false;
 		}

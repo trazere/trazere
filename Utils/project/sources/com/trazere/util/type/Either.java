@@ -103,7 +103,8 @@ implements Describable {
 	 * The {@link Either.Constructor} enumeration represents the constructors of the algebraic data type.
 	 */
 	public static enum Constructor {
-		LEFT, RIGHT,
+		LEFT,
+		RIGHT,
 	}
 	
 	/**
@@ -204,7 +205,7 @@ implements Describable {
 				return true;
 			} else if (null != object && getClass().equals(object.getClass())) {
 				final Left<?, ?> either = (Left<?, ?>) object;
-				return LangUtils.equals(_left, either._left);
+				return LangUtils.safeEquals(_left, either._left);
 			} else {
 				return false;
 			}
@@ -348,7 +349,7 @@ implements Describable {
 				return true;
 			} else if (null != object && getClass().equals(object.getClass())) {
 				final Right<?, ?> either = (Right<?, ?>) object;
-				return LangUtils.equals(_right, either._right);
+				return LangUtils.safeEquals(_right, either._right);
 			} else {
 				return false;
 			}

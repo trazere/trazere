@@ -137,7 +137,7 @@ extends Tuple3<T1, T2, T3> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final Tuple4<?, ?, ?, ?> tuple = (Tuple4<?, ?, ?, ?>) object;
-			return LangUtils.equals(_first, tuple._first) && LangUtils.equals(_second, tuple._second) && LangUtils.equals(_third, tuple._third) && LangUtils.equals(_fourth, tuple._fourth);
+			return LangUtils.safeEquals(_first, tuple._first) && LangUtils.safeEquals(_second, tuple._second) && LangUtils.safeEquals(_third, tuple._third) && LangUtils.safeEquals(_fourth, tuple._fourth);
 		} else {
 			return false;
 		}

@@ -161,7 +161,7 @@ extends Tuple7<T1, T2, T3, T4, T5, T6, T7> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final Tuple8<?, ?, ?, ?, ?, ?, ?, ?> tuple = (Tuple8<?, ?, ?, ?, ?, ?, ?, ?>) object;
-			return LangUtils.equals(_first, tuple._first) && LangUtils.equals(_second, tuple._second) && LangUtils.equals(_third, tuple._third) && LangUtils.equals(_fourth, tuple._fourth) && LangUtils.equals(_fifth, tuple._fifth) && LangUtils.equals(_sixth, tuple._sixth) && LangUtils.equals(_seventh, tuple._seventh) && LangUtils.equals(_eighth, tuple._eighth);
+			return LangUtils.safeEquals(_first, tuple._first) && LangUtils.safeEquals(_second, tuple._second) && LangUtils.safeEquals(_third, tuple._third) && LangUtils.safeEquals(_fourth, tuple._fourth) && LangUtils.safeEquals(_fifth, tuple._fifth) && LangUtils.safeEquals(_sixth, tuple._sixth) && LangUtils.safeEquals(_seventh, tuple._seventh) && LangUtils.safeEquals(_eighth, tuple._eighth);
 		} else {
 			return false;
 		}

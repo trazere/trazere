@@ -109,7 +109,7 @@ extends BaseParser<Token, List<Value>> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final ManyParser<?, ?> parser = (ManyParser<?, ?>) object;
-			return LangUtils.equals(_description, parser._description) && _valueParser.equals(parser._valueParser) && _min == parser._min && _max == parser._max;
+			return LangUtils.safeEquals(_description, parser._description) && _valueParser.equals(parser._valueParser) && _min == parser._min && _max == parser._max;
 		} else {
 			return false;
 		}

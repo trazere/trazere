@@ -136,7 +136,7 @@ extends BaseParser<Character, String> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final EscapedStringParser parser = (EscapedStringParser) object;
-			return LangUtils.equals(_description, parser._description) && _filter.equals(parser._filter) && _escapeFilter.equals(parser._escapeFilter) && _empty == parser._empty;
+			return LangUtils.safeEquals(_description, parser._description) && _filter.equals(parser._filter) && _escapeFilter.equals(parser._escapeFilter) && _empty == parser._empty;
 		} else {
 			return false;
 		}

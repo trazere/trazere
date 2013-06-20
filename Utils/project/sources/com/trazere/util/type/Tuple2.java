@@ -146,7 +146,7 @@ extends Tuple1<T1> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final Tuple2<?, ?> tuple = (Tuple2<?, ?>) object;
-			return LangUtils.equals(_first, tuple._first) && LangUtils.equals(_second, tuple._second);
+			return LangUtils.safeEquals(_first, tuple._first) && LangUtils.safeEquals(_second, tuple._second);
 		} else {
 			return false;
 		}

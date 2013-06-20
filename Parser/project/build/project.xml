@@ -86,7 +86,7 @@
 	<!-- Build the POM artifact -->
 	<target name="parser.buildPom">
 		<mkdir dir="${parser.target.artifacts}" />
-		<property name="ivy.pom.version" value="${scroll.version}" />
+		<property name="ivy.pom.version" value="${trazere.version}" />
 		<ivy:makepom ivyfile="${parser.build.ivy}" pomfile="${parser.target.artifacts.pom}" conf="compile,runtime">
 			<mapping conf="compile" scope="compile" />
 			<mapping conf="runtime" scope="runtime" />
@@ -104,7 +104,7 @@
 	<!-- Publish the artifacts -->
 	<target name="parser.publish" depends="parser.buildJar, parser.buildPom, parser.buildSource">
 		<ivy:resolve file="${parser.build.ivy}" log="download-only" />
-		<ivy:publish pubrevision="${scroll.version}" resolver="${ivy.publish.resolver}" overwrite="true" forcedeliver="true">
+		<ivy:publish pubrevision="${trazere.version}" resolver="${ivy.publish.resolver}" overwrite="true" forcedeliver="true">
 			<artifacts pattern="${parser.target.artifacts}/parser-[type].[ext]" />
 		</ivy:publish>
 	</target>
