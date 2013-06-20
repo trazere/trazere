@@ -33,20 +33,12 @@
 
 	<!-- Build the distribution -->
 	<target name="build" description="Build the distribution">
-		<antcall target="root.build" inheritall="false">
-			<param name="ant.dist" location="${root.dist.binary}" />
-			<param name="parser.dist" location="${root.dist.binary}" />
-			<param name="utils.dist" location="${root.dist.binary}" />
-		</antcall>
+		<antcall target="root.build" inheritall="false" />
 	</target>
 
 	<!-- Build the distribution archives -->
 	<target name="buildArchives" description="Build the distribution archives">
-		<antcall target="root.buildArchives" inheritall="false">
-			<param name="ant.dist" location="${root.dist.binary}" />
-			<param name="parser.dist" location="${root.dist.binary}" />
-			<param name="utils.dist" location="${root.dist.binary}" />
-		</antcall>
+		<antcall target="root.buildArchives" inheritall="false" />
 	</target>
 
 	<!-- Environment -->

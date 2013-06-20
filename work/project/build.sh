@@ -35,5 +35,5 @@ then
 fi
 
 # Run the Ant script.
-export ANT_OPTS="-Xmx1024m -Djava.endorsed.dirs=$PROJECT_HOME/endorsed"
+export ANT_OPTS="-Xmx1024m -Djava.endorsed.dirs=$PROJECT_HOME/build/libs/endorsed"
 exec "$ANT_HOME/bin/ant" "$@"

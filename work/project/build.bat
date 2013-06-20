@@ -26,7 +26,7 @@ goto end
 :endAntHome
 
 REM Run the Ant script.
-set ANT_OPTS=-Xmx1024m -Djava.endorsed.dirs=%PROJECT_HOME%\endorsed
+set ANT_OPTS=-Xmx1024m -Djava.endorsed.dirs=%PROJECT_HOME%\build\libs\endorsed
 call "%ANT_HOME%\bin\ant.bat" %*
 
 :end
