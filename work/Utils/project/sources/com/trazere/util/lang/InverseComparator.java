@@ -46,7 +46,11 @@ implements Comparator<T> {
 	public static <T> Comparator<T> build(final Comparator<T> comparator, final boolean ascending) {
 		assert null != comparator;
 		
-		return ascending ? comparator : build(comparator);
+		if (ascending) {
+			return comparator;
+		} else {
+			return build(comparator);
+		}
 	}
 	
 	/** The inversed comparator. */
