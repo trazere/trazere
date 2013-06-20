@@ -20,7 +20,7 @@ import com.trazere.util.lang.HashCode;
 /**
  * The {@link LenientIdentifier} class represents identifiers which need not to be normalized according to their values.
  * <p>
- * Egality of lenient identifiers relies on the logical egality of their underlying values.
+ * Equality of lenient identifiers relies on the logical equality of their underlying values.
  * 
  * @param <V> Type of the underlying values.
  * @see IdentifierBase

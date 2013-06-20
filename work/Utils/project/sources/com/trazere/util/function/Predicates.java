@@ -23,12 +23,29 @@ import java.util.Collection;
 import java.util.HashSet;
 
 /**
- * The {@link Predicates} class provides various common predicate functions.
+ * The {@link Predicates} class provides various factories of predicates.
  * 
  * @see Predicate1
  * @see Predicate2
  */
 public class Predicates {
+	/**
+	 * Builds a predicate that evaluates to the given result for all values.
+	 * 
+	 * @param <T> Type of the argument values.
+	 * @param <X> Type of the exceptions.
+	 * @param result The result.
+	 * @return The built predicate.
+	 */
+	public static <T, X extends Exception> Predicate1<T, X> constant(final boolean result) {
+		return new Predicate1<T, X>() {
+			@Override
+			public boolean evaluate(final T value) {
+				return result;
+			}
+		};
+	}
+	
 	/**
 	 * Builds a predicate that evaluates to <code>true</code> for all values.
 	 * 
@@ -56,23 +73,6 @@ public class Predicates {
 	}
 	
 	private static final Predicate1<?, ?> _NONE = Predicates.<Object, RuntimeException>constant(false);
-	
-	/**
-	 * Builds a predicate that evaluates to the given result for all values.
-	 * 
-	 * @param <T> Type of the argument values.
-	 * @param <X> Type of the exceptions.
-	 * @param result The result.
-	 * @return The built predicate.
-	 */
-	public static <T, X extends Exception> Predicate1<T, X> constant(final boolean result) {
-		return new Predicate1<T, X>() {
-			@Override
-			public boolean evaluate(final T value) {
-				return result;
-			}
-		};
-	}
 	
 	/**
 	 * Builds a predicate corresponding to the inverse of the given predicate.
@@ -201,8 +201,8 @@ public class Predicates {
 	/**
 	 * Transforms the given predicate using the given function.
 	 * 
-	 * @param <T1> Type of the argument values of the (outer) predicate.
-	 * @param <T2> Type of the argument values of the (inner) function.
+	 * @param <T1> Type of the values.
+	 * @param <T2> Type of the mapped values.
 	 * @param <X> Type of the exceptions.
 	 * @param function The (inner) function.
 	 * @param predicate The (outer) predicate.
@@ -221,7 +221,6 @@ public class Predicates {
 		};
 	}
 	
-	// TODO: move to LangUtils ?
 	/**
 	 * Builds a predicate that evaluates to <code>true</code> for the given value.
 	 * 
@@ -230,7 +229,7 @@ public class Predicates {
 	 * @param value The value. May be <code>null</code>.
 	 * @return The built predicate.
 	 */
-	public static <T, X extends Exception> Predicate1<T, X> equals(final T value) {
+	public static <T, X extends Exception> Predicate1<T, X> value(final T value) {
 		return new Predicate1<T, X>() {
 			@Override
 			public boolean evaluate(final T value_) {
@@ -247,10 +246,10 @@ public class Predicates {
 	 * @param values The values.
 	 * @return The built predicate.
 	 */
-	public static <T, X extends Exception> Predicate1<T, X> any(final T... values) {
+	public static <T, X extends Exception> Predicate1<T, X> values(final T... values) {
 		assert null != values;
 		
-		return any(new HashSet<T>(Arrays.asList(values)));
+		return values(new HashSet<T>(Arrays.asList(values)));
 	}
 	
 	/**
@@ -261,33 +260,13 @@ public class Predicates {
 	 * @param values The values.
 	 * @return The built predicate.
 	 */
-	public static <T, X extends Exception> Predicate1<T, X> any(final Collection<? extends T> values) {
+	public static <T, X extends Exception> Predicate1<T, X> values(final Collection<? extends T> values) {
 		assert null != values;
 		
 		return new Predicate1<T, X>() {
 			@Override
 			public boolean evaluate(final T value) {
 				return values.contains(value);
-			}
-		};
-	}
-	
-	// TODO: move to LangUtils ?
-	/**
-	 * Builds a predicate that matchs the given type.
-	 * 
-	 * @param <T> Type of the argument values.
-	 * @param <X> Type of the exceptions.
-	 * @param type The type to match.
-	 * @return The built predicate.
-	 */
-	public static <T, X extends Exception> Predicate1<T, X> matches(final Class<? extends T> type) {
-		assert null != type;
-		
-		return new Predicate1<T, X>() {
-			@Override
-			public boolean evaluate(final T value) {
-				return null != value && type.isInstance(value);
 			}
 		};
 	}
@@ -312,67 +291,20 @@ public class Predicates {
 		}
 	};
 	
-	// TODO: move to TextUtils ?
 	/**
-	 * Builds a predicate that evaluates to <code>true</code> for empty strings.
+	 * Builds a two arguments predicate that evaluates to the given result for all values.
 	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
 	 * @param <X> Type of the exceptions.
+	 * @param result The result.
 	 * @return The built predicate.
 	 */
-	@SuppressWarnings("unchecked")
-	public static <X extends Exception> Predicate1<String, X> isEmptyString() {
-		return (Predicate1<String, X>) _IS_EMPTY_STRING;
-	}
-	
-	private static Predicate1<String, ?> _IS_EMPTY_STRING = new Predicate1<String, RuntimeException>() {
-		@Override
-		public boolean evaluate(final String value) {
-			assert null != value;
-			
-			return 0 == value.length();
-		}
-	};
-	
-	// TODO: move to CollectionUtils ?
-	/**
-	 * Builds a predicate that evaluates to <code>true</code> for empty collections.
-	 * 
-	 * @param <C> Type of the collections.
-	 * @param <X> Type of the exceptions.
-	 * @return The built predicate.
-	 */
-	@SuppressWarnings("unchecked")
-	public static <C extends Collection<?>, X extends Exception> Predicate1<C, X> isEmpty() {
-		return (Predicate1<C, X>) _IS_EMPTY;
-	}
-	
-	private static Predicate1<Collection<?>, ?> _IS_EMPTY = new Predicate1<Collection<?>, RuntimeException>() {
-		@Override
-		public boolean evaluate(final Collection<?> collection) {
-			assert null != collection;
-			
-			return collection.isEmpty();
-		}
-	};
-	
-	// TODO: move to CollectionUtils ?
-	/**
-	 * Builds a predicate that evaluates to <code>true</code> when the argument collection contains the given value.
-	 * 
-	 * @param <T> Type of the argument values.
-	 * @param <C> Type of the collections.
-	 * @param <X> Type of the exceptions.
-	 * @param value The value. May be <code>null</code>.
-	 * @return The built predicate.
-	 */
-	public static <T, C extends Collection<? super T>, X extends Exception> Predicate1<C, X> contains(final T value) {
-		return new Predicate1<C, X>() {
+	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> constant2(final boolean result) {
+		return new Predicate2<T1, T2, X>() {
 			@Override
-			public boolean evaluate(final C collection)
-			throws X {
-				assert null != collection;
-				
-				return collection.contains(value);
+			public boolean evaluate(final T1 value1, final T2 value2) {
+				return result;
 			}
 		};
 	}
@@ -406,24 +338,6 @@ public class Predicates {
 	}
 	
 	private static final Predicate2<?, ?, ?> _NONE2 = Predicates.<Object, Object, RuntimeException>constant2(false);
-	
-	/**
-	 * Builds a two arguments predicate that evaluates to the given result for all values.
-	 * 
-	 * @param <T1> Type of the first argument values.
-	 * @param <T2> Type of the second argument values.
-	 * @param <X> Type of the exceptions.
-	 * @param result The result.
-	 * @return The built predicate.
-	 */
-	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> constant2(final boolean result) {
-		return new Predicate2<T1, T2, X>() {
-			@Override
-			public boolean evaluate(final T1 value1, final T2 value2) {
-				return result;
-			}
-		};
-	}
 	
 	/**
 	 * Builds a predicate corresponding to the inverse of the given predicate.
@@ -555,52 +469,12 @@ public class Predicates {
 	}
 	
 	/**
-	 * Builds a two arguments predicate that evaluates to <code>true</code> for all pairs whose first value belongs to the given values.
+	 * Builds a two arguments predicate that lifts the given one argument predicate on the first value.
 	 * 
 	 * @param <T1> Type of the first argument values.
 	 * @param <T2> Type of the second argument values.
 	 * @param <X> Type of the exceptions.
-	 * @param values The values.
-	 * @return The built predicate.
-	 */
-	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> any2First(final Collection<? extends T1> values) {
-		assert null != values;
-		
-		return new Predicate2<T1, T2, X>() {
-			@Override
-			public boolean evaluate(final T1 value1, final T2 value2) {
-				return values.contains(value1);
-			}
-		};
-	}
-	
-	/**
-	 * Builds a two arguments predicate that evaluates to <code>true</code> for all pairs whose second value belongs to the given values.
-	 * 
-	 * @param <T1> Type of the first argument values.
-	 * @param <T2> Type of the second argument values.
-	 * @param <X> Type of the exceptions.
-	 * @param values The values.
-	 * @return The built predicate.
-	 */
-	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> any2Second(final Collection<? extends T2> values) {
-		assert null != values;
-		
-		return new Predicate2<T1, T2, X>() {
-			@Override
-			public boolean evaluate(final T1 value1, final T2 value2) {
-				return values.contains(value2);
-			}
-		};
-	}
-	
-	/**
-	 * Builds a two arguments predicate that lifts the given one argument predicate.
-	 * 
-	 * @param <T1> Type of the first argument values.
-	 * @param <T2> Type of the second argument values.
-	 * @param <X> Type of the exceptions.
-	 * @param predicate The lifted predicate.
+	 * @param predicate The lifted predicate for the first values.
 	 * @return The built predicate.
 	 */
 	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> lift2(final Predicate1<? super T1, ? extends X> predicate) {
@@ -611,6 +485,27 @@ public class Predicates {
 			public boolean evaluate(final T1 value1, final T2 value2)
 			throws X {
 				return predicate.evaluate(value1);
+			}
+		};
+	}
+	
+	/**
+	 * Builds a two arguments predicate that lifts the given one argument predicate on the second value.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate The lifted predicate for the second values.
+	 * @return The built predicate.
+	 */
+	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> lift2Second(final Predicate1<? super T2, ? extends X> predicate) {
+		assert null != predicate;
+		
+		return new Predicate2<T1, T2, X>() {
+			@Override
+			public boolean evaluate(final T1 value1, final T2 value2)
+			throws X {
+				return predicate.evaluate(value2);
 			}
 		};
 	}

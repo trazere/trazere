@@ -98,7 +98,7 @@ implements Cache<K, V>, Describable {
 		final Set<K> dirtyKeys = _policy.updatedEntry(key, new HashSet<K>());
 		
 		// Clean the cache up.
-		clear(Predicates.<K, RuntimeException>any(dirtyKeys));
+		clear(Predicates.<K, RuntimeException>values(dirtyKeys));
 		
 		return oldValue;
 	}
@@ -115,7 +115,7 @@ implements Cache<K, V>, Describable {
 			final Set<K> dirtyKeys = _policy.accessedEntry(key, new HashSet<K>());
 			
 			// Clean the cache up.
-			clear(Predicates.<K, RuntimeException>any(dirtyKeys));
+			clear(Predicates.<K, RuntimeException>values(dirtyKeys));
 		}
 		
 		return value;

@@ -38,7 +38,7 @@ import java.util.EnumSet;
  */
 public class TextParsers {
 	public static Parser<Character, Character> character(final char c, final String description) {
-		return character(CharPredicates.<ParserException>equals(c), description);
+		return character(CharPredicates.<ParserException>value(c), description);
 	}
 	
 	public static Parser<Character, Character> character(final char c) {
@@ -88,7 +88,7 @@ public class TextParsers {
 	private static final Parser<Character, Character> _SPACE = space("a space");
 	
 	public static Parser<Character, String> whitespace(final String description) {
-		return TextParsers.string(CharPredicates.<ParserException>whitespace(), false, description);
+		return TextParsers.string(CharPredicates.<ParserException>isWhitespace(), false, description);
 	}
 	
 	public static Parser<Character, String> whitespace() {
@@ -98,7 +98,7 @@ public class TextParsers {
 	private static final Parser<Character, String> _WHITESPACE = whitespace("some whitespace");
 	
 	public static Parser<Character, Character> digit(final String description) {
-		return character(CharPredicates.<ParserException>digit(), description);
+		return character(CharPredicates.<ParserException>isDigit(), description);
 	}
 	
 	public static Parser<Character, Character> digit() {
@@ -108,7 +108,7 @@ public class TextParsers {
 	private static final Parser<Character, Character> _DIGIT = digit("a digit");
 	
 	public static Parser<Character, Character> letter(final String description) {
-		return character(CharPredicates.<ParserException>letter(), description);
+		return character(CharPredicates.<ParserException>isLetter(), description);
 	}
 	
 	public static Parser<Character, Character> letter() {
@@ -118,7 +118,7 @@ public class TextParsers {
 	private static final Parser<Character, Character> _LETTER = letter("a letter");
 	
 	public static Parser<Character, Character> alphanumeric(final String description) {
-		return character(CharPredicates.<ParserException>alphanumeric(), description);
+		return character(CharPredicates.<ParserException>isAlphanumeric(), description);
 	}
 	
 	public static Parser<Character, Character> alphanumeric() {
@@ -381,7 +381,7 @@ public class TextParsers {
 	};
 	
 	public static Parser<Character, String> word(final String description) {
-		return string(CharPredicates.<ParserException>letter(), false, description);
+		return string(CharPredicates.<ParserException>isLetter(), false, description);
 	}
 	
 	public static Parser<Character, String> word() {

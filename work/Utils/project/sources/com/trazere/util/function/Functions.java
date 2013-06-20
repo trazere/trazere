@@ -49,30 +49,6 @@ public class Functions {
 		}
 	};
 	
-	// TODO: rename to map
-	/**
-	 * Builds a function corresponding to the composition of the given functions (g . f).
-	 * 
-	 * @param <T1> Type of the argument values of the outer function.
-	 * @param <T2> Type of the results.
-	 * @param <X> Type of the exceptions.
-	 * @param g The outer function.
-	 * @param f The inner function.
-	 * @return The built function.
-	 */
-	public static <T1, T2, X extends Exception> Function0<T2, X> compose(final Function1<? super T1, ? extends T2, ? extends X> g, final Function0<? extends T1, ? extends X> f) {
-		assert null != g;
-		assert null != f;
-		
-		return new Function0<T2, X>() {
-			@Override
-			public T2 evaluate()
-			throws X {
-				return g.evaluate(f.evaluate());
-			}
-		};
-	}
-	
 	/**
 	 * Builds a function corresponding to the composition of the given functions (g . f).
 	 * 
@@ -98,23 +74,6 @@ public class Functions {
 	}
 	
 	/**
-	 * Builds a zero arguments function that always evaluates to the given value.
-	 * 
-	 * @param <R> Type of the result values.
-	 * @param <X> Type of the exceptions.
-	 * @param result The result value. May be <code>null</code>.
-	 * @return The built function.
-	 */
-	public static <R, X extends Exception> Function0<R, X> constant0(final R result) {
-		return new Function0<R, X>() {
-			@Override
-			public R evaluate() {
-				return result;
-			}
-		};
-	}
-	
-	/**
 	 * Builds a one argument function that always evaluates to the given value.
 	 * 
 	 * @param <T> Type of the argument values.
@@ -123,247 +82,11 @@ public class Functions {
 	 * @param result The result value. May be <code>null</code>.
 	 * @return The built function.
 	 */
-	public static <T, R, X extends Exception> Function1<T, R, X> constant1(final R result) {
+	public static <T, R, X extends Exception> Function1<T, R, X> constant(final R result) {
 		return new Function1<T, R, X>() {
 			@Override
 			public R evaluate(final T value) {
 				return result;
-			}
-		};
-	}
-	
-	/**
-	 * Builds a two arguments function that always evaluates to the given value.
-	 * 
-	 * @param <T1> Type of the first argument values.
-	 * @param <T2> Type of the second argument values.
-	 * @param <R> Type of the result value.
-	 * @param <X> Type of the exceptions.
-	 * @param result The result value. May be <code>null</code>.
-	 * @return The built function.
-	 */
-	public static <T1, T2, R, X extends Exception> Function2<T1, T2, R, X> constant2(final R result) {
-		return new Function2<T1, T2, R, X>() {
-			@Override
-			public R evaluate(final T1 value1, final T2 value2) {
-				return result;
-			}
-		};
-	}
-	
-	/**
-	 * Builds a three arguments function that always evaluates to the given value.
-	 * 
-	 * @param <T1> Type of the first argument values.
-	 * @param <T2> Type of the second argument values.
-	 * @param <T3> Type of the third argument values.
-	 * @param <R> Type of the result value.
-	 * @param <X> Type of the exceptions.
-	 * @param result The result value. May be <code>null</code>.
-	 * @return The built function.
-	 */
-	public static <T1, T2, T3, R, X extends Exception> Function3<T1, T2, T3, R, X> constant3(final R result) {
-		return new Function3<T1, T2, T3, R, X>() {
-			@Override
-			public R evaluate(final T1 value1, final T2 value2, final T3 value3) {
-				return result;
-			}
-		};
-	}
-	
-	/**
-	 * Builds a one argument function that lifts the given zero arguments function.
-	 * 
-	 * @param <T> Type of the argument values.
-	 * @param <R> Type of the result values.
-	 * @param <X> Type of the exceptions.
-	 * @param function The lifted function.
-	 * @return The built function.
-	 */
-	public static <T, R, X extends Exception> Function1<T, R, X> lift1(final Function0<? extends R, ? extends X> function) {
-		assert null != function;
-		
-		return new Function1<T, R, X>() {
-			@Override
-			public R evaluate(final T value)
-			throws X {
-				return function.evaluate();
-			}
-		};
-	}
-	
-	/**
-	 * Builds a two arguments function that lifts the given zero arguments function.
-	 * 
-	 * @param <T1> Type of the first argument values.
-	 * @param <T2> Type of the second argument values.
-	 * @param <R> Type of the result values.
-	 * @param <X> Type of the exceptions.
-	 * @param function The lifted function.
-	 * @return The built function.
-	 */
-	public static <T1, T2, R, X extends Exception> Function2<T1, T2, R, X> lift2(final Function0<? extends R, ? extends X> function) {
-		assert null != function;
-		
-		return new Function2<T1, T2, R, X>() {
-			@Override
-			public R evaluate(final T1 value1, final T2 value2)
-			throws X {
-				return function.evaluate();
-			}
-		};
-	}
-	
-	/**
-	 * Builds a two arguments function that lifts the given one argument function.
-	 * 
-	 * @param <T1> Type of the first argument values.
-	 * @param <T2> Type of the second argument values.
-	 * @param <R> Type of the result values.
-	 * @param <X> Type of the exceptions.
-	 * @param function The lifted function.
-	 * @return The built function.
-	 */
-	public static <T1, T2, R, X extends Exception> Function2<T1, T2, R, X> lift2(final Function1<? super T1, ? extends R, ? extends X> function) {
-		assert null != function;
-		
-		return new Function2<T1, T2, R, X>() {
-			@Override
-			public R evaluate(final T1 value1, final T2 value2)
-			throws X {
-				return function.evaluate(value1);
-			}
-		};
-	}
-	
-	/**
-	 * Builds a three arguments function that lifts the given zero arguments function.
-	 * 
-	 * @param <T1> Type of the first argument values.
-	 * @param <T2> Type of the second argument values.
-	 * @param <T3> Type of the third argument values.
-	 * @param <R> Type of the result values.
-	 * @param <X> Type of the exceptions.
-	 * @param function The lifted function.
-	 * @return The built function.
-	 */
-	public static <T1, T2, T3, R, X extends Exception> Function3<T1, T2, T3, R, X> lift3(final Function0<? extends R, ? extends X> function) {
-		assert null != function;
-		
-		return new Function3<T1, T2, T3, R, X>() {
-			@Override
-			public R evaluate(final T1 value1, final T2 value2, final T3 value3)
-			throws X {
-				return function.evaluate();
-			}
-		};
-	}
-	
-	/**
-	 * Builds a three arguments function that lifts the given one argument function.
-	 * 
-	 * @param <T1> Type of the first argument values.
-	 * @param <T2> Type of the second argument values.
-	 * @param <T3> Type of the third argument values.
-	 * @param <R> Type of the result values.
-	 * @param <X> Type of the exceptions.
-	 * @param function The lifted function.
-	 * @return The built function.
-	 */
-	public static <T1, T2, T3, R, X extends Exception> Function3<T1, T2, T3, R, X> lift3(final Function1<? super T1, ? extends R, ? extends X> function) {
-		assert null != function;
-		
-		return new Function3<T1, T2, T3, R, X>() {
-			@Override
-			public R evaluate(final T1 value1, final T2 value2, final T3 value3)
-			throws X {
-				return function.evaluate(value1);
-			}
-		};
-	}
-	
-	/**
-	 * Builds a three argument function that lifts the given two arguments function.
-	 * 
-	 * @param <T1> Type of the first argument values.
-	 * @param <T2> Type of the second argument values.
-	 * @param <T3> Type of the third argument values.
-	 * @param <R> Type of the result values.
-	 * @param <X> Type of the exceptions.
-	 * @param function The lifted function.
-	 * @return The built function.
-	 */
-	public static <T1, T2, T3, R, X extends Exception> Function3<T1, T2, T3, R, X> lift3(final Function2<? super T1, ? super T2, ? extends R, ? extends X> function) {
-		assert null != function;
-		
-		return new Function3<T1, T2, T3, R, X>() {
-			@Override
-			public R evaluate(final T1 value1, final T2 value2, final T3 value3)
-			throws X {
-				return function.evaluate(value1, value2);
-			}
-		};
-	}
-	
-	/**
-	 * Build a one argument function from the given one argument predicate.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param <X> Type of the exceptions.
-	 * @param predicate The lifted predicate.
-	 * @return The built function.
-	 */
-	public static final <T, X extends Exception> Function1<T, Boolean, X> fromPredicate(final Predicate1<? super T, ? extends X> predicate) {
-		assert null != predicate;
-		
-		return new Function1<T, Boolean, X>() {
-			@Override
-			public Boolean evaluate(final T value)
-			throws X {
-				return predicate.evaluate(value);
-			}
-		};
-	}
-	
-	/**
-	 * Builds a two arguments function from the given two arguments predicate.
-	 * 
-	 * @param <T1> Type of the first argument values.
-	 * @param <T2> Type of the second argument values.
-	 * @param <X> Type of the exceptions.
-	 * @param predicate The lifted predicate.
-	 * @return The built function.
-	 */
-	public static final <T1, T2, X extends Exception> Function2<T1, T2, Boolean, X> fromPredicate(final Predicate2<? super T1, ? super T2, ? extends X> predicate) {
-		assert null != predicate;
-		
-		return new Function2<T1, T2, Boolean, X>() {
-			@Override
-			public Boolean evaluate(final T1 value1, final T2 value2)
-			throws X {
-				return predicate.evaluate(value1, value2);
-			}
-		};
-	}
-	
-	/**
-	 * Builds a three arguments function from the given three arguments predicate.
-	 * 
-	 * @param <T1> Type of the first argument values.
-	 * @param <T2> Type of the second argument values.
-	 * @param <T3> Type of the third argument values.
-	 * @param <X> Type of the exceptions.
-	 * @param predicate The lifted predicate.
-	 * @return The built function.
-	 */
-	public static final <T1, T2, T3, X extends Exception> Function3<T1, T2, T3, Boolean, X> fromPredicate(final Predicate3<? super T1, ? super T2, ? super T3, ? extends X> predicate) {
-		assert null != predicate;
-		
-		return new Function3<T1, T2, T3, Boolean, X>() {
-			@Override
-			public Boolean evaluate(final T1 value1, final T2 value2, final T3 value3)
-			throws X {
-				return predicate.evaluate(value1, value2, value3);
 			}
 		};
 	}
@@ -533,7 +256,69 @@ public class Functions {
 		};
 	}
 	
-	// TODO: move to FunctionUtils ?
+	/**
+	 * Build a one argument function from the given one argument predicate.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate The lifted predicate.
+	 * @return The built function.
+	 */
+	public static final <T, X extends Exception> Function1<T, Boolean, X> fromPredicate(final Predicate1<? super T, ? extends X> predicate) {
+		assert null != predicate;
+		
+		return new Function1<T, Boolean, X>() {
+			@Override
+			public Boolean evaluate(final T value)
+			throws X {
+				return predicate.evaluate(value);
+			}
+		};
+	}
+	
+	/**
+	 * Builds a two arguments function from the given two arguments predicate.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate The lifted predicate.
+	 * @return The built function.
+	 */
+	public static final <T1, T2, X extends Exception> Function2<T1, T2, Boolean, X> fromPredicate(final Predicate2<? super T1, ? super T2, ? extends X> predicate) {
+		assert null != predicate;
+		
+		return new Function2<T1, T2, Boolean, X>() {
+			@Override
+			public Boolean evaluate(final T1 value1, final T2 value2)
+			throws X {
+				return predicate.evaluate(value1, value2);
+			}
+		};
+	}
+	
+	/**
+	 * Builds a three arguments function from the given three arguments predicate.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <T3> Type of the third argument values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate The lifted predicate.
+	 * @return The built function.
+	 */
+	public static final <T1, T2, T3, X extends Exception> Function3<T1, T2, T3, Boolean, X> fromPredicate(final Predicate3<? super T1, ? super T2, ? super T3, ? extends X> predicate) {
+		assert null != predicate;
+		
+		return new Function3<T1, T2, T3, Boolean, X>() {
+			@Override
+			public Boolean evaluate(final T1 value1, final T2 value2, final T3 value3)
+			throws X {
+				return predicate.evaluate(value1, value2, value3);
+			}
+		};
+	}
+	
 	/**
 	 * Builds a function that evaluates to the result of the evaluation of its zero arguments function arguments.
 	 * 
@@ -542,18 +327,17 @@ public class Functions {
 	 * @return The built function.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <R, X extends Exception> Function1<Function0<? extends R, ? extends X>, R, X> evaluate0() {
-		return (Function1<Function0<? extends R, ? extends X>, R, X>) _EVALUATE0;
+	public static <R, X extends Exception> Function1<Function0<? extends R, ? extends X>, R, X> evaluate() {
+		return (Function1<Function0<? extends R, ? extends X>, R, X>) _EVALUATE;
 	}
 	
-	private static final Function1<? extends Function0<?, ?>, ?, ?> _EVALUATE0 = new Function1<Function0<Object, RuntimeException>, Object, RuntimeException>() {
+	private static final Function1<? extends Function0<?, ?>, ?, ?> _EVALUATE = new Function1<Function0<Object, RuntimeException>, Object, RuntimeException>() {
 		@Override
 		public Object evaluate(final Function0<Object, RuntimeException> function) {
 			return function.evaluate();
 		}
 	};
 	
-	// TODO: move to FunctionUtils ?
 	/**
 	 * Builds a function that evaluates to the result of the evaluation of its one argument function arguments with the given value.
 	 * 
@@ -563,7 +347,7 @@ public class Functions {
 	 * @param value The argument value. May be <code>null</code>.
 	 * @return The built function.
 	 */
-	public static <T, R, X extends Exception> Function1<Function1<? super T, ? extends R, ? extends X>, R, X> evaluate1(final T value) {
+	public static <T, R, X extends Exception> Function1<Function1<? super T, ? extends R, ? extends X>, R, X> evaluate(final T value) {
 		return new Function1<Function1<? super T, ? extends R, ? extends X>, R, X>() {
 			@Override
 			public R evaluate(final Function1<? super T, ? extends R, ? extends X> function)
@@ -573,7 +357,6 @@ public class Functions {
 		};
 	}
 	
-	// TODO: move to FunctionUtils ?
 	/**
 	 * Builds a function that evaluates to the result of the evaluation of its two arguments function arguments with the given values.
 	 * 
@@ -585,10 +368,223 @@ public class Functions {
 	 * @param value2 The second argument value. May be <code>null</code>.
 	 * @return The built function.
 	 */
-	public static <T1, T2, R, X extends Exception> Function1<Function2<? super T1, ? super T2, ? extends R, ? extends X>, R, X> evaluate2(final T1 value1, final T2 value2) {
+	public static <T1, T2, R, X extends Exception> Function1<Function2<? super T1, ? super T2, ? extends R, ? extends X>, R, X> evaluate(final T1 value1, final T2 value2) {
 		return new Function1<Function2<? super T1, ? super T2, ? extends R, ? extends X>, R, X>() {
 			@Override
 			public R evaluate(final Function2<? super T1, ? super T2, ? extends R, ? extends X> function)
+			throws X {
+				return function.evaluate(value1, value2);
+			}
+		};
+	}
+	
+	/**
+	 * Builds a function corresponding to the composition of the given functions (g . f).
+	 * 
+	 * @param <T1> Type of the argument values of the outer function.
+	 * @param <T2> Type of the results.
+	 * @param <X> Type of the exceptions.
+	 * @param g The outer function.
+	 * @param f The inner function.
+	 * @return The built function.
+	 */
+	public static <T1, T2, X extends Exception> Function0<T2, X> compose(final Function1<? super T1, ? extends T2, ? extends X> g, final Function0<? extends T1, ? extends X> f) {
+		assert null != g;
+		assert null != f;
+		
+		return new Function0<T2, X>() {
+			@Override
+			public T2 evaluate()
+			throws X {
+				return g.evaluate(f.evaluate());
+			}
+		};
+	}
+	
+	/**
+     * Builds a zero arguments function that always evaluates to the given value.
+     * 
+     * @param <R> Type of the result values.
+     * @param <X> Type of the exceptions.
+     * @param result The result value. May be <code>null</code>.
+     * @return The built function.
+     */
+    public static <R, X extends Exception> Function0<R, X> constant0(final R result) {
+    	return new Function0<R, X>() {
+    		@Override
+    		public R evaluate() {
+    			return result;
+    		}
+    	};
+    }
+
+	/**
+	 * Builds a two arguments function that always evaluates to the given value.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <R> Type of the result value.
+	 * @param <X> Type of the exceptions.
+	 * @param result The result value. May be <code>null</code>.
+	 * @return The built function.
+	 */
+	public static <T1, T2, R, X extends Exception> Function2<T1, T2, R, X> constant2(final R result) {
+		return new Function2<T1, T2, R, X>() {
+			@Override
+			public R evaluate(final T1 value1, final T2 value2) {
+				return result;
+			}
+		};
+	}
+	
+	/**
+     * Builds a three arguments function that always evaluates to the given value.
+     * 
+     * @param <T1> Type of the first argument values.
+     * @param <T2> Type of the second argument values.
+     * @param <T3> Type of the third argument values.
+     * @param <R> Type of the result value.
+     * @param <X> Type of the exceptions.
+     * @param result The result value. May be <code>null</code>.
+     * @return The built function.
+     */
+    public static <T1, T2, T3, R, X extends Exception> Function3<T1, T2, T3, R, X> constant3(final R result) {
+    	return new Function3<T1, T2, T3, R, X>() {
+    		@Override
+    		public R evaluate(final T1 value1, final T2 value2, final T3 value3) {
+    			return result;
+    		}
+    	};
+    }
+
+	/**
+     * Builds a one argument function that lifts the given zero arguments function.
+     * 
+     * @param <T> Type of the argument values.
+     * @param <R> Type of the result values.
+     * @param <X> Type of the exceptions.
+     * @param function The lifted function.
+     * @return The built function.
+     */
+    public static <T, R, X extends Exception> Function1<T, R, X> lift(final Function0<? extends R, ? extends X> function) {
+    	assert null != function;
+    	
+    	return new Function1<T, R, X>() {
+    		@Override
+    		public R evaluate(final T value)
+    		throws X {
+    			return function.evaluate();
+    		}
+    	};
+    }
+
+	/**
+	 * Builds a two arguments function that lifts the given zero arguments function.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <R> Type of the result values.
+	 * @param <X> Type of the exceptions.
+	 * @param function The lifted function.
+	 * @return The built function.
+	 */
+	public static <T1, T2, R, X extends Exception> Function2<T1, T2, R, X> lift2(final Function0<? extends R, ? extends X> function) {
+		assert null != function;
+		
+		return new Function2<T1, T2, R, X>() {
+			@Override
+			public R evaluate(final T1 value1, final T2 value2)
+			throws X {
+				return function.evaluate();
+			}
+		};
+	}
+	
+	/**
+	 * Builds a two arguments function that lifts the given one argument function.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <R> Type of the result values.
+	 * @param <X> Type of the exceptions.
+	 * @param function The lifted function.
+	 * @return The built function.
+	 */
+	public static <T1, T2, R, X extends Exception> Function2<T1, T2, R, X> lift2(final Function1<? super T1, ? extends R, ? extends X> function) {
+		assert null != function;
+		
+		return new Function2<T1, T2, R, X>() {
+			@Override
+			public R evaluate(final T1 value1, final T2 value2)
+			throws X {
+				return function.evaluate(value1);
+			}
+		};
+	}
+	
+	/**
+	 * Builds a three arguments function that lifts the given zero arguments function.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <T3> Type of the third argument values.
+	 * @param <R> Type of the result values.
+	 * @param <X> Type of the exceptions.
+	 * @param function The lifted function.
+	 * @return The built function.
+	 */
+	public static <T1, T2, T3, R, X extends Exception> Function3<T1, T2, T3, R, X> lift3(final Function0<? extends R, ? extends X> function) {
+		assert null != function;
+		
+		return new Function3<T1, T2, T3, R, X>() {
+			@Override
+			public R evaluate(final T1 value1, final T2 value2, final T3 value3)
+			throws X {
+				return function.evaluate();
+			}
+		};
+	}
+	
+	/**
+	 * Builds a three arguments function that lifts the given one argument function.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <T3> Type of the third argument values.
+	 * @param <R> Type of the result values.
+	 * @param <X> Type of the exceptions.
+	 * @param function The lifted function.
+	 * @return The built function.
+	 */
+	public static <T1, T2, T3, R, X extends Exception> Function3<T1, T2, T3, R, X> lift3(final Function1<? super T1, ? extends R, ? extends X> function) {
+		assert null != function;
+		
+		return new Function3<T1, T2, T3, R, X>() {
+			@Override
+			public R evaluate(final T1 value1, final T2 value2, final T3 value3)
+			throws X {
+				return function.evaluate(value1);
+			}
+		};
+	}
+	
+	/**
+	 * Builds a three argument function that lifts the given two arguments function.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <T3> Type of the third argument values.
+	 * @param <R> Type of the result values.
+	 * @param <X> Type of the exceptions.
+	 * @param function The lifted function.
+	 * @return The built function.
+	 */
+	public static <T1, T2, T3, R, X extends Exception> Function3<T1, T2, T3, R, X> lift3(final Function2<? super T1, ? super T2, ? extends R, ? extends X> function) {
+		assert null != function;
+		
+		return new Function3<T1, T2, T3, R, X>() {
+			@Override
+			public R evaluate(final T1 value1, final T2 value2, final T3 value3)
 			throws X {
 				return function.evaluate(value1, value2);
 			}
