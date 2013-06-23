@@ -34,7 +34,7 @@ extends BaseFeed<T, X> {
 	@Override
 	public Maybe<Tuple2<T, Feed<T, X>>> evaluate()
 	throws X {
-		if (_evaluated) {
+		if (!_evaluated) {
 			_value = compute();
 			_evaluated = true;
 		}
