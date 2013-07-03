@@ -17,9 +17,9 @@ package com.trazere.util.function;
 
 import com.trazere.util.accumulator.Accumulator1;
 import com.trazere.util.accumulator.Accumulator2;
-import com.trazere.util.accumulator.Accumulators;
 import com.trazere.util.collection.CheckedIterator;
 import com.trazere.util.collection.CheckedIterators;
+import com.trazere.util.collection.CollectionAccumulators;
 import com.trazere.util.collection.Multimap;
 import com.trazere.util.feed.Feed;
 import com.trazere.util.lang.Counter;
@@ -561,7 +561,7 @@ public class FunctionUtils {
 		assert null != operator;
 		assert null != values;
 		
-		final Accumulator1<V, R, X> accumulator = Accumulators.fold(operator, initialAccumulator);
+		final Accumulator1<V, R, X> accumulator = FunctionAccumulators.fold(operator, initialAccumulator);
 		while (values.hasNext()) {
 			accumulator.add(values.next());
 		}
@@ -732,7 +732,7 @@ public class FunctionUtils {
 	 */
 	public static <V, C extends Collection<? super V>, X extends Exception> C filter(final Predicate1<? super V, X> predicate, final Collection<V> values, final C results)
 	throws X {
-		return filter(predicate, values, Accumulators.<V, C, InternalException>collection(results)).get();
+		return filter(predicate, values, CollectionAccumulators.<V, C, InternalException>add(results)).get();
 	}
 	
 	/**
@@ -779,7 +779,7 @@ public class FunctionUtils {
 	 */
 	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M filter(final Predicate2<? super K, ? super V, X> predicate, final Map<K, V> bindings, final M results)
 	throws X {
-		return filter(predicate, bindings, Accumulators.<K, V, M, InternalException>map(results)).get();
+		return filter(predicate, bindings, CollectionAccumulators.<K, V, M, InternalException>put(results)).get();
 	}
 	
 	/**
@@ -832,7 +832,7 @@ public class FunctionUtils {
 	 */
 	public static <K, V, M extends Multimap<? super K, ? super V, ?>, X extends Exception> M filter(final Predicate2<? super K, ? super V, X> predicate, final Multimap<K, V, ?> bindings, final M results)
 	throws X {
-		return filter(predicate, bindings, Accumulators.<K, V, M, InternalException>multimap(results)).get();
+		return filter(predicate, bindings, CollectionAccumulators.<K, V, M, InternalException>put(results)).get();
 	}
 	
 	/**
@@ -1007,7 +1007,7 @@ public class FunctionUtils {
 	 */
 	public static <V, RV, C extends Collection<? super RV>, X extends Exception> C map(final Function1<? super V, RV, X> function, final Collection<V> values, final C results)
 	throws X {
-		return map(function, values, Accumulators.<RV, C, InternalException>collection(results)).get();
+		return map(function, values, CollectionAccumulators.<RV, C, InternalException>add(results)).get();
 	}
 	
 	/**
@@ -1054,7 +1054,7 @@ public class FunctionUtils {
 	 */
 	public static <K, V, RV, M extends Map<? super K, ? super RV>, X extends Exception> M map(final Function2<? super K, ? super V, RV, X> function, final Map<K, V> bindings, final M results)
 	throws X {
-		return map(function, bindings, Accumulators.<K, RV, M, InternalException>map(results)).get();
+		return map(function, bindings, CollectionAccumulators.<K, RV, M, InternalException>put(results)).get();
 	}
 	
 	/**
@@ -1108,7 +1108,7 @@ public class FunctionUtils {
 	 */
 	public static <K, V, RV, M extends Multimap<? super K, ? super RV, ?>, X extends Exception> M map(final Function2<? super K, ? super V, RV, X> function, final Multimap<K, V, ?> bindings, final M results)
 	throws X {
-		return map(function, bindings, Accumulators.<K, RV, M, InternalException>multimap(results)).get();
+		return map(function, bindings, CollectionAccumulators.<K, RV, M, InternalException>put(results)).get();
 	}
 	
 	/**
@@ -1159,7 +1159,7 @@ public class FunctionUtils {
 	 */
 	public static <V, RV, C extends Collection<? super RV>, X extends Exception> C mapFilter(final Function1<? super V, ? extends Maybe<? extends RV>, X> extractor, final Collection<V> values, final C results)
 	throws X {
-		return mapFilter(extractor, values, Accumulators.<RV, C, InternalException>collection(results)).get();
+		return mapFilter(extractor, values, CollectionAccumulators.<RV, C, InternalException>add(results)).get();
 	}
 	
 	/**
@@ -1211,7 +1211,7 @@ public class FunctionUtils {
 	 */
 	public static <K, V, RV, M extends Map<? super K, ? super RV>, X extends Exception> M mapFilter(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, X> extractor, final Map<K, V> bindings, final M results)
 	throws X {
-		return mapFilter(extractor, bindings, Accumulators.<K, RV, M, InternalException>map(results)).get();
+		return mapFilter(extractor, bindings, CollectionAccumulators.<K, RV, M, InternalException>put(results)).get();
 	}
 	
 	/**
@@ -1268,7 +1268,7 @@ public class FunctionUtils {
 	 */
 	public static <K, V, RV, M extends Multimap<? super K, ? super RV, ?>, X extends Exception> M mapFilter(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, X> extractor, final Multimap<K, V, ?> bindings, final M results)
 	throws X {
-		return mapFilter(extractor, bindings, Accumulators.<K, RV, M, InternalException>multimap(results)).get();
+		return mapFilter(extractor, bindings, CollectionAccumulators.<K, RV, M, InternalException>put(results)).get();
 	}
 	
 	/**
