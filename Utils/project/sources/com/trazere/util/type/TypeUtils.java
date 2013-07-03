@@ -22,7 +22,7 @@ import java.util.Comparator;
  */
 public class TypeUtils {
 	/**
-	 * Get the boolean value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
+	 * Gets the boolean value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
 	 * 
 	 * @param value The value.
 	 * @param defaultValue The default value. May be <code>null</code>.
@@ -35,7 +35,7 @@ public class TypeUtils {
 	}
 	
 	/**
-	 * Get the byte value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
+	 * Gets the byte value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
 	 * 
 	 * @param value The value.
 	 * @param defaultValue The default value. May be <code>null</code>.
@@ -48,7 +48,7 @@ public class TypeUtils {
 	}
 	
 	/**
-	 * Get the short value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
+	 * Gets the short value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
 	 * 
 	 * @param value The value.
 	 * @param defaultValue The default value. May be <code>null</code>.
@@ -61,7 +61,7 @@ public class TypeUtils {
 	}
 	
 	/**
-	 * Get the integer value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
+	 * Gets the integer value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
 	 * 
 	 * @param value The value.
 	 * @param defaultValue The default value. May be <code>null</code>.
@@ -74,7 +74,7 @@ public class TypeUtils {
 	}
 	
 	/**
-	 * Get the long value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
+	 * Gets the long value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
 	 * 
 	 * @param value The value.
 	 * @param defaultValue The default value. May be <code>null</code>.
@@ -87,7 +87,7 @@ public class TypeUtils {
 	}
 	
 	/**
-	 * Get the float value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
+	 * Gets the float value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
 	 * 
 	 * @param value The value.
 	 * @param defaultValue The default value. May be <code>null</code>.
@@ -100,7 +100,7 @@ public class TypeUtils {
 	}
 	
 	/**
-	 * Get the double value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
+	 * Gets the double value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
 	 * 
 	 * @param value The value.
 	 * @param defaultValue The default value. May be <code>null</code>.
@@ -113,7 +113,7 @@ public class TypeUtils {
 	}
 	
 	/**
-	 * Get the character value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
+	 * Gets the character value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
 	 * 
 	 * @param value The value.
 	 * @param defaultValue The default value. May be <code>null</code>.
@@ -125,23 +125,8 @@ public class TypeUtils {
 		return value.isSome() ? value.asSome().getValue().charValue() : defaultValue;
 	}
 	
-	// TODO: move as a member of Maybe
 	/**
-	 * Get the value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
-	 * 
-	 * @param <T> Type of the value.
-	 * @param value The value.
-	 * @param defaultValue The default value. May be <code>null</code>.
-	 * @return The value. May be <code>null</code>.
-	 */
-	public static <T> T get(final Maybe<? extends T> value, final T defaultValue) {
-		assert null != value;
-		
-		return value.isSome() ? value.asSome().getValue() : defaultValue;
-	}
-	
-	/**
-	 * Compare the values wrapped in the given maybe instances using the given comparator.
+	 * Compares the values wrapped in the given maybe instances using the given comparator.
 	 * <p>
 	 * <code>None</code> instances are considered as less than <code>Some</code> instances.
 	 * 

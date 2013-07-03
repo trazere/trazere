@@ -17,7 +17,6 @@ package com.trazere.util.function;
 
 import com.trazere.util.collection.CollectionUtils;
 import com.trazere.util.lang.LangUtils;
-import com.trazere.util.type.TypeUtils;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -129,7 +128,7 @@ public class Predicates {
 		assert null != predicates;
 		
 		if (predicates.size() < 2) {
-			return (Predicate1<T, X>) TypeUtils.get(CollectionUtils.any(predicates), Predicates.<T, X>all());
+			return (Predicate1<T, X>) CollectionUtils.any(predicates).get(Predicates.<T, X>all());
 		} else {
 			return new Predicate1<T, X>() {
 				@Override
@@ -181,7 +180,7 @@ public class Predicates {
 		assert null != predicates;
 		
 		if (predicates.size() < 2) {
-			return (Predicate1<T, X>) TypeUtils.get(CollectionUtils.any(predicates), Predicates.<T, X>none());
+			return (Predicate1<T, X>) CollectionUtils.any(predicates).get(Predicates.<T, X>none());
 		} else {
 			return new Predicate1<T, X>() {
 				@Override
@@ -397,7 +396,7 @@ public class Predicates {
 		assert null != predicates;
 		
 		if (predicates.size() < 2) {
-			return (Predicate2<T1, T2, X>) TypeUtils.get(CollectionUtils.any(predicates), Predicates.<T1, T2, X>none2());
+			return (Predicate2<T1, T2, X>) CollectionUtils.any(predicates).get(Predicates.<T1, T2, X>none2());
 		} else {
 			return new Predicate2<T1, T2, X>() {
 				@Override
@@ -451,7 +450,7 @@ public class Predicates {
 		assert null != predicates;
 		
 		if (predicates.size() < 2) {
-			return (Predicate2<T1, T2, X>) TypeUtils.get(CollectionUtils.any(predicates), Predicates.<T1, T2, X>none2());
+			return (Predicate2<T1, T2, X>) CollectionUtils.any(predicates).get(Predicates.<T1, T2, X>none2());
 		} else {
 			return new Predicate2<T1, T2, X>() {
 				@Override
