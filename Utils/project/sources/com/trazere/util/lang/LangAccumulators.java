@@ -67,16 +67,16 @@ public class LangAccumulators {
 			private final MutableInt _value = new MutableInt(initialResult);
 			
 			@Override
-			public Integer get() {
-				return _value.get();
-			}
-			
-			@Override
 			public void add(final Integer value)
 			throws X {
 				assert null != value;
 				
 				_value.add(value.intValue());
+			}
+			
+			@Override
+			public Integer get() {
+				return _value.get();
 			}
 		};
 	}
@@ -93,16 +93,16 @@ public class LangAccumulators {
 			private final MutableLong _value = new MutableLong(initialResult);
 			
 			@Override
-			public Long get() {
-				return _value.get();
-			}
-			
-			@Override
 			public void add(final Long value)
 			throws X {
 				assert null != value;
 				
 				_value.add(value.longValue());
+			}
+			
+			@Override
+			public Long get() {
+				return _value.get();
 			}
 		};
 	}
