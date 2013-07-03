@@ -18,39 +18,120 @@ package com.trazere.util.xml;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.UUID;
 
 /**
  * The {@link DatatypeConverters} class provides various methods to convert XML values when using JAXB.
  */
 public class DatatypeConverters {
-	public static Date parseDate(final String s) {
-		return javax.xml.bind.DatatypeConverter.parseDate(s).getTime();
+	/**
+	 * Parses the given date.
+	 * 
+	 * @param representation The representation of the date.
+	 * @return The date.
+	 * @throws IllegalArgumentException When the representation is invalid.
+	 */
+	public static Date parseDate(final String representation)
+	throws IllegalArgumentException {
+		assert null != representation;
+		
+		return javax.xml.bind.DatatypeConverter.parseDate(representation).getTime();
 	}
 	
-	public static Date parseTime(final String s) {
-		return javax.xml.bind.DatatypeConverter.parseTime(s).getTime();
-	}
-	
-	public static Date parseDateTime(final String s) {
-		return javax.xml.bind.DatatypeConverter.parseDateTime(s).getTime();
-	}
-	
-	public static String printDate(final Date dt) {
+	/**
+	 * Formats the given date.
+	 * 
+	 * @param date The date.
+	 * @return The representation.
+	 */
+	public static String printDate(final Date date) {
+		assert null != date;
+		
 		final Calendar cal = new GregorianCalendar();
-		cal.setTime(dt);
+		cal.setTime(date);
 		return javax.xml.bind.DatatypeConverter.printDate(cal);
 	}
 	
-	public static String printTime(final Date dt) {
+	/**
+	 * Parses the given time.
+	 * 
+	 * @param representation The representation of the time.
+	 * @return The time.
+	 * @throws IllegalArgumentException When the representation is invalid.
+	 */
+	public static Date parseTime(final String representation)
+	throws IllegalArgumentException {
+		assert null != representation;
+		
+		return javax.xml.bind.DatatypeConverter.parseTime(representation).getTime();
+	}
+	
+	/**
+	 * Formats the given time.
+	 * 
+	 * @param date The time.
+	 * @return The representation.
+	 */
+	public static String printTime(final Date date) {
+		assert null != date;
+		
 		final Calendar cal = new GregorianCalendar();
-		cal.setTime(dt);
+		cal.setTime(date);
 		return javax.xml.bind.DatatypeConverter.printTime(cal);
 	}
 	
-	public static String printDateTime(final Date dt) {
+	/**
+	 * Parses the given date and time.
+	 * 
+	 * @param representation The representation of the time.
+	 * @return The date and time.
+	 * @throws IllegalArgumentException When the representation is invalid.
+	 */
+	public static Date parseDateTime(final String representation)
+	throws IllegalArgumentException {
+		assert null != representation;
+		
+		return javax.xml.bind.DatatypeConverter.parseDateTime(representation).getTime();
+	}
+	
+	/**
+	 * Formats the given date and time.
+	 * 
+	 * @param date The date and time.
+	 * @return The representation.
+	 */
+	public static String printDateTime(final Date date) {
+		assert null != date;
+		
 		final Calendar cal = new GregorianCalendar();
-		cal.setTime(dt);
+		cal.setTime(date);
 		return javax.xml.bind.DatatypeConverter.printDateTime(cal);
+	}
+	
+	/**
+	 * Parses the given UUID.
+	 * 
+	 * @param representation The representation of the time.
+	 * @return The UUID.
+	 * @throws IllegalArgumentException When the representation is invalid.
+	 */
+	public static UUID parseUUID(final String representation)
+	throws IllegalArgumentException {
+		assert null != representation;
+		
+		return UUID.fromString(representation);
+	}
+	
+	/**
+	 * Formats the given UUID.
+	 * 
+	 * @param uuid The UUID.
+	 * @return The representation.
+	 */
+	public static String printUUID(final UUID uuid) {
+		assert null != uuid;
+		
+		return uuid.toString();
 	}
 	
 	private DatatypeConverters() {
