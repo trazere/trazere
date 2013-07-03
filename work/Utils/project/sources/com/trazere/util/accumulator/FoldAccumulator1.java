@@ -38,11 +38,6 @@ extends BaseAccumulator1<V, R, X> {
 	}
 	
 	@Override
-	public R get() {
-		return _result;
-	}
-	
-	@Override
 	public void add(final V value)
 	throws X {
 		_result = fold(_result, value);
@@ -58,4 +53,9 @@ extends BaseAccumulator1<V, R, X> {
 	 */
 	protected abstract R fold(final R result, final V value)
 	throws X;
+	
+	@Override
+	public R get() {
+		return _result;
+	}
 }

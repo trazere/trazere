@@ -35,13 +35,13 @@ public class Accumulators {
 	public static <T, S, X extends Exception> Accumulator1<T, S, X> constant1(final S result) {
 		return new BaseAccumulator1<T, S, X>() {
 			@Override
-			public S get() {
-				return result;
+			public void add(final T value) {
+				// Nothing to do.
 			}
 			
 			@Override
-			public void add(final T value) {
-				// Nothing to do.
+			public S get() {
+				return result;
 			}
 		};
 	}
@@ -179,13 +179,13 @@ public class Accumulators {
 	public static <T1, T2, S, X extends Exception> Accumulator2<T1, T2, S, X> constant2(final S result) {
 		return new BaseAccumulator2<T1, T2, S, X>() {
 			@Override
-			public S get() {
-				return result;
+			public void add(final T1 value1, final T2 value2) {
+				// Nothing to do.
 			}
 			
 			@Override
-			public void add(final T1 value1, final T2 value2) {
-				// Nothing to do.
+			public S get() {
+				return result;
 			}
 		};
 	}

@@ -43,14 +43,14 @@ public class CollectionAccumulators {
 		
 		return new BaseAccumulator1<T, C, X>() {
 			@Override
-			public C get() {
-				return collection;
-			}
-			
-			@Override
 			public void add(final T value)
 			throws X {
 				collection.add(value);
+			}
+			
+			@Override
+			public C get() {
+				return collection;
 			}
 		};
 	}
@@ -96,14 +96,14 @@ public class CollectionAccumulators {
 		
 		return new BaseAccumulator2<K, V, M, X>() {
 			@Override
-			public M get() {
-				return map;
-			}
-			
-			@Override
 			public void add(final K key, final V value)
 			throws X {
 				map.put(key, value);
+			}
+			
+			@Override
+			public M get() {
+				return map;
 			}
 		};
 	}
@@ -123,14 +123,14 @@ public class CollectionAccumulators {
 		
 		return new BaseAccumulator2<K, V, M, X>() {
 			@Override
-			public M get() {
-				return multimap;
-			}
-			
-			@Override
 			public void add(final K key, final V value)
 			throws X {
 				multimap.put(key, value);
+			}
+			
+			@Override
+			public M get() {
+				return multimap;
 			}
 		};
 	}
