@@ -20,7 +20,6 @@ import com.trazere.parser.ParserException;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.LangUtils;
 import com.trazere.util.type.Maybe;
-import com.trazere.util.type.TypeUtils;
 
 /**
  * DOCME
@@ -44,7 +43,7 @@ extends Sequence1Parser<Token, Maybe<Result>, Result> {
 	@Override
 	protected Result combine(final Maybe<Result> subResult1)
 	throws ParserException {
-		return TypeUtils.get(subResult1, _defaultResult);
+		return subResult1.get(_defaultResult);
 	}
 	
 	// Object.

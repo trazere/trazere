@@ -16,6 +16,7 @@
 package com.trazere.util.type;
 
 import com.trazere.util.collection.Iterators;
+import com.trazere.util.function.Function0;
 import com.trazere.util.function.Function1;
 import com.trazere.util.function.Functions;
 import com.trazere.util.function.Predicate1;
@@ -135,7 +136,7 @@ implements Iterable<T>, Describable {
 	public static <T> T toValue(final Maybe<T> maybe) {
 		assert null != maybe;
 		
-		return TypeUtils.get(maybe, null);
+		return maybe.get((T) null);
 	}
 	
 	/**
@@ -201,6 +202,21 @@ implements Iterable<T>, Describable {
 		@Override
 		public None<T> asNone() {
 			return this;
+		}
+		
+		// Getting.
+		
+		@Override
+		public T get(final T defaultValue) {
+			return defaultValue;
+		}
+		
+		@Override
+		public <X extends Exception> T get(final Function0<T, X> defaultValue)
+		throws X {
+			assert null != defaultValue;
+			
+			return defaultValue.evaluate();
 		}
 		
 		// Matching.
@@ -331,6 +347,20 @@ implements Iterable<T>, Describable {
 			return _value;
 		}
 		
+		// Getting.
+		
+		@Override
+		public T get(final T defaultValue) {
+			return _value;
+		}
+		
+		@Override
+		public <X extends Exception> T get(final Function0<T, X> defaultValue) {
+			assert null != defaultValue;
+			
+			return _value;
+		}
+		
 		// Matching.
 		
 		@Override
@@ -416,6 +446,27 @@ implements Iterable<T>, Describable {
 	throws InvalidConstructorException {
 		throw InvalidConstructorException.build(this, Some.class);
 	}
+	
+	// Getting.
+	
+	/**
+	 * Gets the value of the receiver {@link Maybe} instance using the given default value when the instance is {@link Maybe.None}.
+	 * 
+	 * @param defaultValue The default value. May be <code>null</code>.
+	 * @return The value. May be <code>null</code>.
+	 */
+	public abstract T get(final T defaultValue);
+	
+	/**
+	 * Gets the value of the receiver {@link Maybe} instance using the given default value when the instance is {@link Maybe.None}.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @param defaultValue The default value. May be <code>null</code>.
+	 * @return The value. May be <code>null</code>.
+	 * @throws X When the evaluation of the default value fails.
+	 */
+	public abstract <X extends Exception> T get(final Function0<T, X> defaultValue)
+	throws X;
 	
 	// Matching.
 	
