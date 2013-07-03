@@ -21,7 +21,7 @@ public class LangFunctions {
 	 * @return The built extractor.
 	 * @see LangUtils#match(Object, Class, ThrowableFactory)
 	 */
-	public static <L, T extends L, X extends Exception> Function1<L, T, X> matchFunction(final Class<T> type, final ThrowableFactory<? extends X> throwableFactory) {
+	public static <L, T extends L, X extends Exception> Function1<L, T, X> match(final Class<T> type, final ThrowableFactory<? extends X> throwableFactory) {
 		assert null != type;
 		assert null != throwableFactory;
 		
@@ -62,7 +62,7 @@ public class LangFunctions {
 	 * @return The built function.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <X extends Exception> Function1<Boolean, Boolean, X> notFunction() {
+	public static <X extends Exception> Function1<Boolean, Boolean, X> not() {
 		return (Function1<Boolean, Boolean, X>) _NOT;
 	}
 	
