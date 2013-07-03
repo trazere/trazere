@@ -36,14 +36,14 @@ public class ReferenceAccumulators {
 		
 		return new BaseAccumulator1<T, R, X>() {
 			@Override
-			public R get() {
-				return reference;
-			}
-			
-			@Override
 			public void add(final T value)
 			throws X {
 				reference.update(value);
+			}
+			
+			@Override
+			public R get() {
+				return reference;
 			}
 		};
 	}

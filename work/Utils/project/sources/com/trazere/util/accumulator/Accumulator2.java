@@ -28,13 +28,6 @@ import com.trazere.util.function.Procedure2;
 public interface Accumulator2<T1, T2, S, X extends Exception>
 extends Procedure2<T1, T2, X> {
 	/**
-	 * Gets the current result of the receiver accumulator.
-	 * 
-	 * @return The result. May be <code>null</code>.
-	 */
-	public S get();
-	
-	/**
 	 * Accumulates the given pair of values into the receiver accumulator.
 	 * 
 	 * @param value1 The first value. May be <code>null</code>.
@@ -43,4 +36,11 @@ extends Procedure2<T1, T2, X> {
 	 */
 	public void add(final T1 value1, T2 value2)
 	throws X;
+	
+	/**
+	 * Gets the current result of the receiver accumulator.
+	 * 
+	 * @return The result. May be <code>null</code>.
+	 */
+	public S get();
 }
