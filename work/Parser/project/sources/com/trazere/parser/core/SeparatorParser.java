@@ -75,7 +75,7 @@ extends BaseParser<Token, List<Value>> {
 		
 		// More.
 		if (count < _max) {
-			state.parse(count > 0 ? CoreParsers.second(_delimiterParser, _valueParser, null) : _valueParser, buildMoreHandler(closure, count + 1, values), closure);
+			state.parse(count > 0 ? CoreParsers.second(_delimiterParser, _valueParser, null) : _valueParser, buildMoreHandler(closure, count, values), closure);
 		}
 	}
 	
