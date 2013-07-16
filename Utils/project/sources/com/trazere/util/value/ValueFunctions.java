@@ -15,7 +15,7 @@ public class ValueFunctions {
 	 * @param serializer The serializer.
 	 * @return The built function.
 	 */
-	public static <T, R, X extends Exception> Function1<T, R, X> serializeFunction(final ValueSerializer<? super T, ? extends R, ? extends X> serializer) {
+	public static <T, R, X extends Exception> Function1<T, R, X> serialize(final ValueSerializer<? super T, ? extends R, ? extends X> serializer) {
 		assert null != serializer;
 		
 		return new Function1<T, R, X>() {
@@ -36,7 +36,7 @@ public class ValueFunctions {
 	 * @param serializer The serializer.
 	 * @return The built function.
 	 */
-	public static <T, R, X extends Exception> Function1<R, T, X> deserializeFunction(final ValueSerializer<? extends T, ? super R, ? extends X> serializer) {
+	public static <T, R, X extends Exception> Function1<R, T, X> deserialize(final ValueSerializer<? extends T, ? super R, ? extends X> serializer) {
 		assert null != serializer;
 		
 		return new Function1<R, T, X>() {
