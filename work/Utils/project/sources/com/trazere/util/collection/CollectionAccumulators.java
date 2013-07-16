@@ -71,7 +71,6 @@ public class CollectionAccumulators {
 		assert null != collection;
 		assert null != collectionFactory;
 		
-		// TODO: make CollectionFactory extend Function1<Collection, Collection, X> in trazere
 		final Function1<Collection<T>, C, InternalException> function = new Function1<Collection<T>, C, InternalException>() {
 			@Override
 			public C evaluate(final Collection<T> values) {
