@@ -212,7 +212,7 @@ implements Iterable<T>, Describable {
 		}
 		
 		@Override
-		public <X extends Exception> T get(final Function0<T, X> defaultValue)
+		public <X extends Exception> T get(final Function0<? extends T, X> defaultValue)
 		throws X {
 			assert null != defaultValue;
 			
@@ -355,7 +355,7 @@ implements Iterable<T>, Describable {
 		}
 		
 		@Override
-		public <X extends Exception> T get(final Function0<T, X> defaultValue) {
+		public <X extends Exception> T get(final Function0<? extends T, X> defaultValue) {
 			assert null != defaultValue;
 			
 			return _value;
@@ -465,8 +465,41 @@ implements Iterable<T>, Describable {
 	 * @return The value. May be <code>null</code>.
 	 * @throws X When the evaluation of the default value fails.
 	 */
-	public abstract <X extends Exception> T get(final Function0<T, X> defaultValue)
+	public abstract <X extends Exception> T get(final Function0<? extends T, X> defaultValue)
 	throws X;
+	
+	/**
+	 * Gets the value of the given {@link Maybe} instance using the given default value when the instance is {@link Maybe.None}.
+	 * <p>
+	 * This method is more general than {@link Maybe#get(Object)}.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param maybe The {@link Maybe} instance.
+	 * @param defaultValue The default value. May be <code>null</code>.
+	 * @return The value. May be <code>null</code>.
+	 */
+	public static <T> T get(final Maybe<? extends T> maybe, final T defaultValue) {
+		assert null != maybe;
+		
+		return maybe.isSome() ? maybe.asSome().getValue() : defaultValue;
+	}
+	
+	/**
+	 * Gets the value of the given {@link Maybe} instance using the given default value when the instance is {@link Maybe.None}.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param <X> Type of the exceptions.
+	 * @param maybe The {@link Maybe} instance.
+	 * @param defaultValue The default value. May be <code>null</code>.
+	 * @return The value. May be <code>null</code>.
+	 * @throws X When the evaluation of the default value fails.
+	 */
+	public static <T, X extends Exception> T get(final Maybe<? extends T> maybe, final Function0<T, X> defaultValue)
+	throws X {
+		assert null != maybe;
+		
+		return maybe.isSome() ? maybe.asSome().getValue() : defaultValue.evaluate();
+	}
 	
 	// Matching.
 	
