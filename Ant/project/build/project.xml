@@ -44,7 +44,7 @@
 	<!-- Setup the dependencies -->
 	<target name="ant.setupDependencies">
 		<ivy:resolve file="${ant.build.ivy}" log="download-only" />
-		<ivy:retrieve pattern="${ant.target.libs}/${ivy.retrieve.pattern}" type="${ivy.retrieve.type}" />
+		<ivy:retrieve pattern="${ant.target.libs}/${ivy.retrieve.pattern}" type="${ivy.retrieve.type}" conf="compile" />
 
 		<mkdir dir="${ant.target.libs}/compile" />
 		<path id="ant.dependencies.compile.classpath">
@@ -99,10 +99,16 @@
 		</jar>
 	</target>
 
+	<!-- Build the artifacts -->
+	<target name="ant.buildArtifacts" depends="ant.buildJar, ant.buildPom, ant.buildSource" />
+
 	<!-- Publish the artifacts -->
-	<target name="ant.publish" depends="ant.buildJar, ant.buildPom, ant.buildSource">
+	<target name="ant.publish" depends="ant.buildArtifacts">
 		<ivy:resolve file="${ant.build.ivy}" log="download-only" />
 		<ivy:publish pubrevision="${trazere.version}" resolver="${ivy.publish.resolver}" overwrite="true" forcedeliver="true">
+			<artifacts pattern="${ant.target.artifacts}/ant-[type].[ext]" />
+		</ivy:publish>
+		<ivy:publish pubrevision="${trazere.version}" resolver="${ivy.publish.resolver}-m2-publish" overwrite="true" forcedeliver="true" publishivy="false">
 			<artifacts pattern="${ant.target.artifacts}/ant-[type].[ext]" />
 		</ivy:publish>
 	</target>

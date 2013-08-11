@@ -44,7 +44,7 @@
 	<!-- Setup the dependencies -->
 	<target name="utils.setupDependencies">
 		<ivy:resolve file="${utils.build.ivy}" log="download-only" />
-		<ivy:retrieve pattern="${utils.target.libs}/${ivy.retrieve.pattern}" type="${ivy.retrieve.type}" />
+		<ivy:retrieve pattern="${utils.target.libs}/${ivy.retrieve.pattern}" type="${ivy.retrieve.type}" conf="compile" />
 
 		<mkdir dir="${utils.target.libs}/compile" />
 		<path id="utils.dependencies.compile.classpath">
@@ -99,10 +99,16 @@
 		</jar>
 	</target>
 
+	<!-- Build the artifacts -->
+	<target name="utils.buildArtifacts" depends="utils.buildJar, utils.buildPom, utils.buildSource" />
+
 	<!-- Publish the artifacts -->
-	<target name="utils.publish" depends="utils.buildJar, utils.buildPom, utils.buildSource">
+	<target name="utils.publish" depends="utils.buildArtifacts">
 		<ivy:resolve file="${utils.build.ivy}" log="download-only" />
 		<ivy:publish pubrevision="${trazere.version}" resolver="${ivy.publish.resolver}" overwrite="true" forcedeliver="true">
+			<artifacts pattern="${utils.target.artifacts}/utils-[type].[ext]" />
+		</ivy:publish>
+		<ivy:publish pubrevision="${trazere.version}" resolver="${ivy.publish.resolver}-m2-publish" overwrite="true" forcedeliver="true" publishivy="false">
 			<artifacts pattern="${utils.target.artifacts}/utils-[type].[ext]" />
 		</ivy:publish>
 	</target>
