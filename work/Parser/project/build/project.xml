@@ -45,7 +45,7 @@
 	<!-- Setup the dependencies -->
 	<target name="parser.setupDependencies">
 		<ivy:resolve file="${parser.build.ivy}" log="download-only" />
-		<ivy:retrieve pattern="${parser.target.libs}/${ivy.retrieve.pattern}" type="${ivy.retrieve.type}" />
+		<ivy:retrieve pattern="${parser.target.libs}/${ivy.retrieve.pattern}" type="${ivy.retrieve.type}" conf="compile" />
 
 		<mkdir dir="${parser.target.libs}/compile" />
 		<path id="parser.dependencies.compile.classpath">
@@ -101,10 +101,16 @@
 		</jar>
 	</target>
 
+	<!-- Build the artifacts -->
+	<target name="parser.buildArtifacts" depends="parser.buildJar, parser.buildPom, parser.buildSource" />
+
 	<!-- Publish the artifacts -->
-	<target name="parser.publish" depends="parser.buildJar, parser.buildPom, parser.buildSource">
+	<target name="parser.publish" depends="parser.buildArtifacts">
 		<ivy:resolve file="${parser.build.ivy}" log="download-only" />
 		<ivy:publish pubrevision="${trazere.version}" resolver="${ivy.publish.resolver}" overwrite="true" forcedeliver="true">
+			<artifacts pattern="${parser.target.artifacts}/parser-[type].[ext]" />
+		</ivy:publish>
+		<ivy:publish pubrevision="${trazere.version}" resolver="${ivy.publish.resolver}-m2-publish" overwrite="true" forcedeliver="true" publishivy="false">
 			<artifacts pattern="${parser.target.artifacts}/parser-[type].[ext]" />
 		</ivy:publish>
 	</target>
