@@ -46,7 +46,7 @@
 	<target name="root.publish" depends="ant.publish, parser.publish, utils.publish" />
 
 	<!-- Build the distribution -->
-	<target name="root.build" depends="ant.buildJar, ant.buildPom, ant.buildSource, parser.buildJar, parser.buildPom, parser.buildSource, utils.buildJar, utils.buildPom, utils.buildSource">
+	<target name="root.build" depends="ant.buildArtifacts, parser.buildArtifacts, utils.buildArtifacts">
 		<mkdir dir="${root.dist.binary}" />
 
 		<!-- Libs -->
