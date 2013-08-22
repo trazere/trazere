@@ -1,13 +1,10 @@
 package com.trazere.util.lang;
 
-import com.trazere.util.function.Extractors;
 import com.trazere.util.function.Function1;
 import com.trazere.util.type.Maybe;
 
 /**
- * The {@link Extractors} class provides various factories of extractors related to the language.
- * <p>
- * An extractor is function that combines a map and a filter operation.
+ * The {@link LangExtractors} class provides various factories of extractors related to the language.
  * 
  * @see Function1
  */
