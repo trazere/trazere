@@ -16,6 +16,8 @@
 package com.trazere.util.function;
 
 import com.trazere.util.accumulator.Accumulator1;
+import com.trazere.util.accumulator.Accumulator2;
+import com.trazere.util.accumulator.BaseAccumulator1;
 import com.trazere.util.accumulator.FoldAccumulator1;
 
 /**
@@ -40,6 +42,35 @@ public class FunctionAccumulators {
 			protected R fold(final R result, final V value)
 			throws X {
 				return operator.evaluate(result, value);
+			}
+		};
+	}
+	
+	/**
+	 * Builds an accumulator that populates the given map by projecting the values.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <S> Type of the states.
+	 * @param <X> Type of the exceptions.
+	 * @param projector The projection function.
+	 * @param results The accumulator to populate.
+	 * @return The built accumulator.
+	 */
+	public static <K, V, S, X extends Exception> Accumulator1<V, S, X> projectValues(final Function1<? super V, ? extends K, ? extends X> projector, final Accumulator2<? super K, ? super V, S, ? extends X> results) {
+		assert null != projector;
+		assert null != results;
+		
+		return new BaseAccumulator1<V, S, X>() {
+			@Override
+			public void add(final V value)
+			throws X {
+				results.add(projector.evaluate(value), value);
+			}
+			
+			@Override
+			public S get() {
+				return results.get();
 			}
 		};
 	}
