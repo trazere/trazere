@@ -54,6 +54,10 @@ public class CoreParsers {
 		return new MapParser<Token, SubResult, Result>(subParser, function, description);
 	}
 	
+	public static <Token, SubResult, Result> Parser<Token, Result> extract(final Parser<Token, ? extends SubResult> subParser, final Function1<? super SubResult, ? extends Maybe<? extends Result>, ? extends ParserException> extractor, final String description) {
+		return new ExtractParser<Token, SubResult, Result>(subParser, extractor, description);
+	}
+	
 	@SuppressWarnings("unchecked")
 	public static <Token, Result> EOFParser<Token, Result> eof() {
 		return (EOFParser<Token, Result>) _EOF;

@@ -128,7 +128,11 @@ public class TextParsers {
 	private static final Parser<Character, Character> _ALPHANUMERIC = alphanumeric("an alphanumeric");
 	
 	public static Parser<Character, BigInteger> integer(final String description) {
-		return CoreParsers.fold1(_DIGIT, _FOLD_INTEGER, BigInteger.ZERO, description);
+		return integer(1, description);
+	}
+	
+	public static Parser<Character, BigInteger> integer(final int length, final String description) {
+		return CoreParsers.fold(TextParsers.digit(), _FOLD_INTEGER, length, Integer.MAX_VALUE, BigInteger.ZERO, description);
 	}
 	
 	private static final Function2<BigInteger, Character, BigInteger, ParserException> _FOLD_INTEGER = new Function2<BigInteger, Character, BigInteger, ParserException>() {
@@ -138,90 +142,20 @@ public class TextParsers {
 			return previousValue.multiply(BigInteger.TEN).add(BigInteger.valueOf(digit));
 		}
 	};
-	
+
+	public static <N extends Number> Parser<Character, N> integer(final Function1<? super BigInteger, ? extends Maybe<? extends N>, ? extends ParserException> extractor, final String description) {
+		return CoreParsers.extract(integer(), extractor, description);
+	}
+
+	public static <N extends Number> Parser<Character, N> integer(final int length, final Function1<? super BigInteger, ? extends Maybe<? extends N>, ? extends ParserException> extractor, final String description) {
+		return CoreParsers.extract(integer(length, null), extractor, description);
+	}
+
 	public static Parser<Character, BigInteger> integer() {
 		return _INTEGER;
 	}
-	
+
 	private static final Parser<Character, BigInteger> _INTEGER = integer("an integer");
-	
-	public static <N extends Number> Parser<Character, N> integer(final IntegerExtractor<N> extractor, final String description) {
-		return CoreParsers.map(integer(), new Function1<BigInteger, N, ParserException>() {
-			@Override
-			public N evaluate(final BigInteger value)
-			throws ParserException {
-				final Maybe<N> result = extractor.extract(value);
-				if (result.isSome()) {
-					return result.asSome().getValue();
-				} else {
-					throw new ParserException("Failed extracting integer \"" + value + "\"");
-				}
-			}
-		}, description);
-	}
-	
-	// TODO: generalize and move to lang
-	public static abstract class IntegerExtractor<N extends Number>
-	implements Function1<BigInteger, Maybe<N>, ParserException> {
-		public abstract Maybe<N> extract(final BigInteger value);
-		
-		@Override
-		public Maybe<N> evaluate(final BigInteger value) {
-			return extract(value);
-		}
-	}
-	
-	public static final IntegerExtractor<Byte> BYTE_INTEGER_EXTRACTOR = new IntegerExtractor<Byte>() {
-		@Override
-		public Maybe<Byte> extract(final BigInteger value) {
-			assert null != value;
-			
-			if (value.bitLength() < Byte.SIZE) {
-				return Maybe.some(value.byteValue());
-			} else {
-				return Maybe.none();
-			}
-		}
-	};
-	
-	public static final IntegerExtractor<Short> SHORT_INTEGER_EXTRACTOR = new IntegerExtractor<Short>() {
-		@Override
-		public Maybe<Short> extract(final BigInteger value) {
-			assert null != value;
-			
-			if (value.bitLength() < Short.SIZE) {
-				return Maybe.some(value.shortValue());
-			} else {
-				return Maybe.none();
-			}
-		}
-	};
-	
-	public static final IntegerExtractor<Integer> INTEGER_INTEGER_EXTRACTOR = new IntegerExtractor<Integer>() {
-		@Override
-		public Maybe<Integer> extract(final BigInteger value) {
-			assert null != value;
-			
-			if (value.bitLength() < Integer.SIZE) {
-				return Maybe.some(value.intValue());
-			} else {
-				return Maybe.none();
-			}
-		}
-	};
-	
-	public static final IntegerExtractor<Long> LONG_INTEGER_EXTRACTOR = new IntegerExtractor<Long>() {
-		@Override
-		public Maybe<Long> extract(final BigInteger value) {
-			assert null != value;
-			
-			if (value.bitLength() < Long.SIZE) {
-				return Maybe.some(value.longValue());
-			} else {
-				return Maybe.none();
-			}
-		}
-	};
 	
 	public static Parser<Character, BigDecimal> decimal(final String description) {
 		final Parser<Character, Tuple2<BigDecimal, BigDecimal>> decimalPartParser = CoreParsers.fold1(TextParsers.digit(), _FOLD_DECIMAL_PART, Tuple2.build(BigDecimal.ONE, BigDecimal.ZERO), null);
@@ -280,105 +214,9 @@ public class TextParsers {
 	
 	private static final Parser<Character, BigDecimal> _DECIMAL = decimal("a decimal");
 	
-	public static <N extends Number> Parser<Character, N> decimal(final DecimalExtractor<N> extractor, final String description) {
-		return CoreParsers.map(decimal(), extractor, description);
+	public static <N extends Number> Parser<Character, N> decimal(final Function1<? super BigDecimal, ? extends Maybe<? extends N>, ? extends ParserException> extractor, final String description) {
+		return CoreParsers.extract(decimal(), extractor, description);
 	}
-	
-	private static abstract class DecimalExtractor<N extends Number>
-	implements Function1<BigDecimal, N, ParserException> {
-		public abstract N extract(final BigDecimal value)
-		throws ParserException;
-		
-		@Override
-		public N evaluate(final BigDecimal value)
-		throws ParserException {
-			return extract(value);
-		}
-	}
-	
-	public static final DecimalExtractor<Byte> BYTE_DECIMAL_EXTRACTOR = new DecimalExtractor<Byte>() {
-		@Override
-		public Byte extract(final BigDecimal value)
-		throws ParserException {
-			assert null != value;
-			
-			try {
-				return value.byteValueExact();
-			} catch (final ArithmeticException exception) {
-				throw new ParserException(exception);
-			}
-		}
-	};
-	
-	public static final DecimalExtractor<Short> SHORT_DECIMAL_EXTRACTOR = new DecimalExtractor<Short>() {
-		@Override
-		public Short extract(final BigDecimal value)
-		throws ParserException {
-			assert null != value;
-			
-			try {
-				return value.shortValueExact();
-			} catch (final ArithmeticException exception) {
-				throw new ParserException(exception);
-			}
-		}
-	};
-	
-	public static final DecimalExtractor<Integer> INTEGER_DECIMAL_EXTRACTOR = new DecimalExtractor<Integer>() {
-		@Override
-		public Integer extract(final BigDecimal value)
-		throws ParserException {
-			assert null != value;
-			
-			try {
-				return value.intValueExact();
-			} catch (final ArithmeticException exception) {
-				throw new ParserException(exception);
-			}
-		}
-	};
-	
-	public static final DecimalExtractor<Long> LONG_DECIMAL_EXTRACTOR = new DecimalExtractor<Long>() {
-		@Override
-		public Long extract(final BigDecimal value)
-		throws ParserException {
-			assert null != value;
-			
-			try {
-				return value.longValueExact();
-			} catch (final ArithmeticException exception) {
-				throw new ParserException(exception);
-			}
-		}
-	};
-	
-	public static final DecimalExtractor<Float> FLOAT_DECIMAL_EXTRACTOR = new DecimalExtractor<Float>() {
-		@Override
-		public Float extract(final BigDecimal value)
-		throws ParserException {
-			assert null != value;
-			
-			try {
-				return value.floatValue();
-			} catch (final NumberFormatException exception) {
-				throw new ParserException(exception);
-			}
-		}
-	};
-	
-	public static final DecimalExtractor<Double> DOUBLE_DECIMAL_EXTRACTOR = new DecimalExtractor<Double>() {
-		@Override
-		public Double extract(final BigDecimal value)
-		throws ParserException {
-			assert null != value;
-			
-			try {
-				return value.doubleValue();
-			} catch (final NumberFormatException exception) {
-				throw new ParserException(exception);
-			}
-		}
-	};
 	
 	public static Parser<Character, String> word(final String description) {
 		return string(CharPredicates.<ParserException>isLetter(), false, description);
