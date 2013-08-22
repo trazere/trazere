@@ -29,7 +29,7 @@ import java.util.HashSet;
  */
 public class Predicates {
 	/**
-	 * Builds a predicate that evaluates to the given result for all values.
+	 * Builds a one argument predicate that evaluates to the given result for all values.
 	 * 
 	 * @param <T> Type of the argument values.
 	 * @param <X> Type of the exceptions.
@@ -46,7 +46,25 @@ public class Predicates {
 	}
 	
 	/**
-	 * Builds a predicate that evaluates to <code>true</code> for all values.
+	 * Builds a two arguments predicate that evaluates to the given result for all values.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <X> Type of the exceptions.
+	 * @param result The result.
+	 * @return The built predicate.
+	 */
+	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> constant2(final boolean result) {
+		return new Predicate2<T1, T2, X>() {
+			@Override
+			public boolean evaluate(final T1 value1, final T2 value2) {
+				return result;
+			}
+		};
+	}
+	
+	/**
+	 * Builds a one argument predicate that evaluates to <code>true</code> for all values.
 	 * 
 	 * @param <T> Type of the argument values.
 	 * @param <X> Type of the exceptions.
@@ -60,7 +78,22 @@ public class Predicates {
 	private static final Predicate1<?, ?> _ALL = Predicates.<Object, RuntimeException>constant(true);
 	
 	/**
-	 * Builds a predicate that evaluates to <code>false</code> for all values.
+	 * Builds a two arguments predicate that evaluates to <code>true</code> for all pairs of values.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <X> Type of the exceptions.
+	 * @return The built predicate.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> all2() {
+		return (Predicate2<T1, T2, X>) _ALL2;
+	}
+	
+	private static final Predicate2<?, ?, ?> _ALL2 = Predicates.<Object, Object, RuntimeException>constant2(true);
+	
+	/**
+	 * Builds a one argument predicate that evaluates to <code>false</code> for all values.
 	 * 
 	 * @param <T> Type of the argument values.
 	 * @param <X> Type of the exceptions.
@@ -72,6 +105,21 @@ public class Predicates {
 	}
 	
 	private static final Predicate1<?, ?> _NONE = Predicates.<Object, RuntimeException>constant(false);
+	
+	/**
+	 * Builds a two arguments predicate that evaluates to <code>false</code> for all pairs of values.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <X> Type of the exceptions.
+	 * @return The built predicate.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> none2() {
+		return (Predicate2<T1, T2, X>) _NONE2;
+	}
+	
+	private static final Predicate2<?, ?, ?> _NONE2 = Predicates.<Object, Object, RuntimeException>constant2(false);
 	
 	/**
 	 * Builds a predicate corresponding to the inverse of the given predicate.
@@ -89,6 +137,27 @@ public class Predicates {
 			public boolean evaluate(final T value)
 			throws X {
 				return !predicate.evaluate(value);
+			}
+		};
+	}
+	
+	/**
+	 * Builds a predicate corresponding to the inverse of the given predicate.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate The predicate.
+	 * @return The built predicate.
+	 */
+	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> not(final Predicate2<? super T1, ? super T2, ? extends X> predicate) {
+		assert null != predicate;
+		
+		return new Predicate2<T1, T2, X>() {
+			@Override
+			public boolean evaluate(final T1 value1, final T2 value2)
+			throws X {
+				return !predicate.evaluate(value1, value2);
 			}
 		};
 	}
@@ -118,6 +187,29 @@ public class Predicates {
 	/**
 	 * Builds a predicate corresponding to the conjonction of the given predicates.
 	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate1 The first predicate.
+	 * @param predicate2 The second predicate.
+	 * @return The built predicate.
+	 */
+	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> and(final Predicate2<? super T1, ? super T2, ? extends X> predicate1, final Predicate2<? super T1, ? super T2, ? extends X> predicate2) {
+		assert null != predicate1;
+		assert null != predicate2;
+		
+		return new Predicate2<T1, T2, X>() {
+			@Override
+			public boolean evaluate(final T1 value1, final T2 value2)
+			throws X {
+				return predicate1.evaluate(value1, value2) && predicate2.evaluate(value1, value2);
+			}
+		};
+	}
+	
+	/**
+	 * Builds a one argument predicate corresponding to the conjonction of the given one argument predicates.
+	 * 
 	 * @param <T> Type of the argument values.
 	 * @param <X> Type of the exceptions.
 	 * @param predicates The predicates.
@@ -136,6 +228,37 @@ public class Predicates {
 				throws X {
 					for (final Predicate1<? super T, ? extends X> predicate : predicates) {
 						if (!predicate.evaluate(value)) {
+							return false;
+						}
+					}
+					return true;
+				}
+			};
+		}
+	}
+	
+	/**
+	 * Builds a two arguments predicate corresponding to the conjonction of the given two arguments predicates.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicates The predicates.
+	 * @return The built predicate.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> and2(final Collection<? extends Predicate2<? super T1, ? super T2, ? extends X>> predicates) {
+		assert null != predicates;
+		
+		if (predicates.size() < 2) {
+			return (Predicate2<T1, T2, X>) CollectionUtils.any(predicates).get(Predicates.<T1, T2, X>none2());
+		} else {
+			return new Predicate2<T1, T2, X>() {
+				@Override
+				public boolean evaluate(final T1 value1, final T2 value2)
+				throws X {
+					for (final Predicate2<? super T1, ? super T2, ? extends X> predicate : predicates) {
+						if (!predicate.evaluate(value1, value2)) {
 							return false;
 						}
 					}
@@ -170,6 +293,29 @@ public class Predicates {
 	/**
 	 * Builds a predicate corresponding to the disjunction of the given predicates.
 	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate1 The first predicate.
+	 * @param predicate2 The second predicate.
+	 * @return The built predicate.
+	 */
+	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> or(final Predicate2<? super T1, ? super T2, ? extends X> predicate1, final Predicate2<? super T1, ? super T2, ? extends X> predicate2) {
+		assert null != predicate1;
+		assert null != predicate2;
+		
+		return new Predicate2<T1, T2, X>() {
+			@Override
+			public boolean evaluate(final T1 value1, final T2 value2)
+			throws X {
+				return predicate1.evaluate(value1, value2) || predicate2.evaluate(value1, value2);
+			}
+		};
+	}
+	
+	/**
+	 * Builds a one argument predicate corresponding to the disjunction of the given one argument predicates.
+	 * 
 	 * @param <T> Type of the argument values.
 	 * @param <X> Type of the exceptions.
 	 * @param predicates The predicates.
@@ -188,6 +334,37 @@ public class Predicates {
 				throws X {
 					for (final Predicate1<? super T, ? extends X> predicate : predicates) {
 						if (predicate.evaluate(value)) {
+							return true;
+						}
+					}
+					return false;
+				}
+			};
+		}
+	}
+	
+	/**
+	 * Builds a two arguments predicate corresponding to the disjunction of the given two arguments predicates.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicates The predicates.
+	 * @return The built predicate.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> or2(final Collection<? extends Predicate2<? super T1, ? super T2, ? extends X>> predicates) {
+		assert null != predicates;
+		
+		if (predicates.size() < 2) {
+			return (Predicate2<T1, T2, X>) CollectionUtils.any(predicates).get(Predicates.<T1, T2, X>none2());
+		} else {
+			return new Predicate2<T1, T2, X>() {
+				@Override
+				public boolean evaluate(final T1 value1, final T2 value2)
+				throws X {
+					for (final Predicate2<? super T1, ? super T2, ? extends X> predicate : predicates) {
+						if (predicate.evaluate(value1, value2)) {
 							return true;
 						}
 					}
@@ -291,180 +468,44 @@ public class Predicates {
 	};
 	
 	/**
-	 * Builds a two arguments predicate that evaluates to the given result for all values.
+	 * Builds a one argument predicate from the given one argument function.
 	 * 
-	 * @param <T1> Type of the first argument values.
-	 * @param <T2> Type of the second argument values.
+	 * @param <T> Type of the values.
 	 * @param <X> Type of the exceptions.
-	 * @param result The result.
+	 * @param function The lifted function.
 	 * @return The built predicate.
 	 */
-	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> constant2(final boolean result) {
-		return new Predicate2<T1, T2, X>() {
+	public static final <T, X extends Exception> Predicate1<T, X> fromFunction(final Function1<? super T, Boolean, ? extends X> function) {
+		assert null != function;
+		
+		return new Predicate1<T, X>() {
 			@Override
-			public boolean evaluate(final T1 value1, final T2 value2) {
-				return result;
+			public boolean evaluate(final T value)
+			throws X {
+				return function.evaluate(value).booleanValue();
 			}
 		};
 	}
 	
 	/**
-	 * Builds a two arguments predicate that evaluates to <code>true</code> for all pairs of values.
+	 * Builds a two arguments predicate from the given two arguments function.
 	 * 
 	 * @param <T1> Type of the first argument values.
 	 * @param <T2> Type of the second argument values.
 	 * @param <X> Type of the exceptions.
+	 * @param function The lifted function.
 	 * @return The built predicate.
 	 */
-	@SuppressWarnings("unchecked")
-	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> all2() {
-		return (Predicate2<T1, T2, X>) _ALL2;
-	}
-	
-	private static final Predicate2<?, ?, ?> _ALL2 = Predicates.<Object, Object, RuntimeException>constant2(true);
-	
-	/**
-	 * Builds a two arguments predicate that evaluates to <code>false</code> for all pairs of values.
-	 * 
-	 * @param <T1> Type of the first argument values.
-	 * @param <T2> Type of the second argument values.
-	 * @param <X> Type of the exceptions.
-	 * @return The built predicate.
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> none2() {
-		return (Predicate2<T1, T2, X>) _NONE2;
-	}
-	
-	private static final Predicate2<?, ?, ?> _NONE2 = Predicates.<Object, Object, RuntimeException>constant2(false);
-	
-	/**
-	 * Builds a predicate corresponding to the inverse of the given predicate.
-	 * 
-	 * @param <T1> Type of the first argument values.
-	 * @param <T2> Type of the second argument values.
-	 * @param <X> Type of the exceptions.
-	 * @param predicate The predicate.
-	 * @return The built predicate.
-	 */
-	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> not2(final Predicate2<? super T1, ? super T2, ? extends X> predicate) {
-		assert null != predicate;
+	public static final <T1, T2, X extends Exception> Predicate2<T1, T2, X> fromFunction(final Function2<? super T1, ? super T2, Boolean, ? extends X> function) {
+		assert null != function;
 		
 		return new Predicate2<T1, T2, X>() {
 			@Override
 			public boolean evaluate(final T1 value1, final T2 value2)
 			throws X {
-				return !predicate.evaluate(value1, value2);
+				return function.evaluate(value1, value2).booleanValue();
 			}
 		};
-	}
-	
-	/**
-	 * Builds a predicate corresponding to the conjonction of the given predicates.
-	 * 
-	 * @param <T1> Type of the first argument values.
-	 * @param <T2> Type of the second argument values.
-	 * @param <X> Type of the exceptions.
-	 * @param predicate1 The first predicate.
-	 * @param predicate2 The second predicate.
-	 * @return The built predicate.
-	 */
-	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> and2(final Predicate2<? super T1, ? super T2, ? extends X> predicate1, final Predicate2<? super T1, ? super T2, ? extends X> predicate2) {
-		assert null != predicate1;
-		assert null != predicate2;
-		
-		return new Predicate2<T1, T2, X>() {
-			@Override
-			public boolean evaluate(final T1 value1, final T2 value2)
-			throws X {
-				return predicate1.evaluate(value1, value2) && predicate2.evaluate(value1, value2);
-			}
-		};
-	}
-	
-	/**
-	 * Builds a predicate corresponding to the conjonction of the given predicates.
-	 * 
-	 * @param <T1> Type of the first argument values.
-	 * @param <T2> Type of the second argument values.
-	 * @param <X> Type of the exceptions.
-	 * @param predicates The predicates.
-	 * @return The built predicate.
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> and2(final Collection<? extends Predicate2<? super T1, ? super T2, ? extends X>> predicates) {
-		assert null != predicates;
-		
-		if (predicates.size() < 2) {
-			return (Predicate2<T1, T2, X>) CollectionUtils.any(predicates).get(Predicates.<T1, T2, X>none2());
-		} else {
-			return new Predicate2<T1, T2, X>() {
-				@Override
-				public boolean evaluate(final T1 value1, final T2 value2)
-				throws X {
-					for (final Predicate2<? super T1, ? super T2, ? extends X> predicate : predicates) {
-						if (!predicate.evaluate(value1, value2)) {
-							return false;
-						}
-					}
-					return true;
-				}
-			};
-		}
-	}
-	
-	/**
-	 * Builds a predicate corresponding to the disjunction of the given predicates.
-	 * 
-	 * @param <T1> Type of the first argument values.
-	 * @param <T2> Type of the second argument values.
-	 * @param <X> Type of the exceptions.
-	 * @param predicate1 The first predicate.
-	 * @param predicate2 The second predicate.
-	 * @return The built predicate.
-	 */
-	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> or2(final Predicate2<? super T1, ? super T2, ? extends X> predicate1, final Predicate2<? super T1, ? super T2, ? extends X> predicate2) {
-		assert null != predicate1;
-		assert null != predicate2;
-		
-		return new Predicate2<T1, T2, X>() {
-			@Override
-			public boolean evaluate(final T1 value1, final T2 value2)
-			throws X {
-				return predicate1.evaluate(value1, value2) || predicate2.evaluate(value1, value2);
-			}
-		};
-	}
-	
-	/**
-	 * Builds a predicate corresponding to the disjunction of the given predicates.
-	 * 
-	 * @param <T1> Type of the first argument values.
-	 * @param <T2> Type of the second argument values.
-	 * @param <X> Type of the exceptions.
-	 * @param predicates The predicates.
-	 * @return The built predicate.
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> or2(final Collection<? extends Predicate2<? super T1, ? super T2, ? extends X>> predicates) {
-		assert null != predicates;
-		
-		if (predicates.size() < 2) {
-			return (Predicate2<T1, T2, X>) CollectionUtils.any(predicates).get(Predicates.<T1, T2, X>none2());
-		} else {
-			return new Predicate2<T1, T2, X>() {
-				@Override
-				public boolean evaluate(final T1 value1, final T2 value2)
-				throws X {
-					for (final Predicate2<? super T1, ? super T2, ? extends X> predicate : predicates) {
-						if (predicate.evaluate(value1, value2)) {
-							return true;
-						}
-					}
-					return false;
-				}
-			};
-		}
 	}
 	
 	/**
