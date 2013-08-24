@@ -16,18 +16,18 @@
 package com.trazere.util.lang;
 
 /**
- * {@link InternalException} exceptions are thrown when internal errors occur.
+ * {@link UncheckedException} exceptions are thrown when internal errors occur.
  * <p>
  * These exceptions aim to indicate problems in the code (like situations supposed to be impossible) rather than runtime issues.
  */
-public class InternalException
+public class UncheckedException
 extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * Instantiates a new exception.
 	 */
-	public InternalException() {
+	public UncheckedException() {
 		super();
 	}
 	
@@ -36,7 +36,7 @@ extends RuntimeException {
 	 * 
 	 * @param message Details about the exception.
 	 */
-	public InternalException(final String message) {
+	public UncheckedException(final String message) {
 		super(message);
 	}
 	
@@ -45,7 +45,7 @@ extends RuntimeException {
 	 * 
 	 * @param cause Cause of the exception.
 	 */
-	public InternalException(final Throwable cause) {
+	public UncheckedException(final Throwable cause) {
 		super(cause);
 	}
 	
@@ -55,30 +55,7 @@ extends RuntimeException {
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
 	 */
-	public InternalException(final String message, final Throwable cause) {
+	public UncheckedException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
-	
-	/** Factory of {@link InternalException}. */
-	public static final ThrowableFactory<InternalException> FACTORY = new BaseThrowableFactory<InternalException>() {
-		@Override
-		public InternalException build() {
-			return new InternalException();
-		}
-		
-		@Override
-		public InternalException build(final String message) {
-			return new InternalException(message);
-		}
-		
-		@Override
-		public InternalException build(final Throwable cause) {
-			return new InternalException(cause);
-		}
-		
-		@Override
-		public InternalException build(final String message, final Throwable cause) {
-			return new InternalException(message, cause);
-		}
-	};
 }
