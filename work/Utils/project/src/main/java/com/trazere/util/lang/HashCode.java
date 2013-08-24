@@ -31,7 +31,7 @@ implements Describable {
 	private int _hashCode;
 	
 	/**
-	 * Instantiate a new hash code computation for the given object.
+	 * Instantiates a new hash code computation for the given object.
 	 * 
 	 * @param object Object whose hash code should be computed.
 	 */
@@ -43,7 +43,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Append the given boolean value to the computation of the receiver hash code.
+	 * Appends the given boolean value to the computation of the receiver hash code.
 	 * 
 	 * @param value Value to append.
 	 * @return The receiver hash code.
@@ -54,7 +54,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Append the given byte value to the computation of the receiver hash code.
+	 * Appends the given byte value to the computation of the receiver hash code.
 	 * 
 	 * @param value Value to append.
 	 * @return The receiver hash code.
@@ -65,7 +65,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Append the given int value to the computation of the receiver hash code.
+	 * Appends the given int value to the computation of the receiver hash code.
 	 * 
 	 * @param value Value to append.
 	 * @return The receiver hash code.
@@ -76,7 +76,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Append the given long value to the computation of the receiver hash code.
+	 * Appends the given long value to the computation of the receiver hash code.
 	 * 
 	 * @param value Value to append.
 	 * @return The receiver hash code.
@@ -88,7 +88,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Append the given object value to the computation of the receiver hash code.
+	 * Appends the given object value to the computation of the receiver hash code.
 	 * 
 	 * @param value Value to append. May be <code>null</code>.
 	 * @return The receiver hash code.
@@ -99,13 +99,15 @@ implements Describable {
 	}
 	
 	/**
-	 * Get the computed hash code.
+	 * Gets the computed hash code.
 	 * 
 	 * @return The hash code.
 	 */
 	public int get() {
 		return _hashCode;
 	}
+	
+	// Object.
 	
 	@Override
 	public String toString() {

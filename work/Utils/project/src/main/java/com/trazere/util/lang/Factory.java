@@ -26,7 +26,7 @@ import com.trazere.util.function.Function0;
 public interface Factory<T, X extends Exception>
 extends Function0<T, X> {
 	/**
-	 * Execute the receiver factory to build a new value.
+	 * Executes the receiver factory to build a new value.
 	 * 
 	 * @return The built value. May be <code>null</code>.
 	 * @throws X When the value cannot be built.
