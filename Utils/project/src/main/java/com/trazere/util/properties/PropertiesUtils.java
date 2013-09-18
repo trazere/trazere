@@ -24,8 +24,10 @@ import com.trazere.util.type.Tuple2;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.List;
 import java.util.Properties;
 
@@ -250,6 +252,19 @@ public class PropertiesUtils {
 	public static Maybe<URI> getUriProperty(final Properties properties, final String name)
 	throws PropertiesException {
 		return getProperty(properties, name, READ_URI_FUNCTION);
+	}
+	
+	/**
+	 * Gets the value of the URL property with the given name from the given properties.
+	 * 
+	 * @param properties The properties to read.
+	 * @param name The name of the property.
+	 * @return The value of the property.
+	 * @throws PropertiesException When the value of the property is invalid.
+	 */
+	public static Maybe<URL> getUrlProperty(final Properties properties, final String name)
+	throws PropertiesException {
+		return getProperty(properties, name, READ_URL_FUNCTION);
 	}
 	
 	/**
@@ -543,6 +558,41 @@ public class PropertiesUtils {
 	}
 	
 	/**
+	 * Gets the value of the URL property with the given name from the given properties.
+	 * <p>
+	 * The given default value is returned when the property does not exist.
+	 * 
+	 * @param properties The properties to read.
+	 * @param name The name of the property.
+	 * @param defaultValue The default value.
+	 * @return The value of the property.
+	 * @throws PropertiesException When the value of the property is invalid.
+	 */
+	public static URL getUrlProperty(final Properties properties, final String name, final URL defaultValue)
+	throws PropertiesException {
+		assert null != defaultValue;
+		
+		return getUrlProperty(properties, name, Functions.<URL, PropertiesException>constant0(defaultValue));
+	}
+	
+	/**
+	 * Gets the value of the URL property with the given name from the given properties.
+	 * <p>
+	 * The given default value is returned when the property does not exist.
+	 * 
+	 * @param properties The properties to read.
+	 * @param name The name of the property.
+	 * @param defaultValue The function computing the default value.
+	 * @return The value of the property.
+	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws PropertiesException When the default value cannot be evaluated.
+	 */
+	public static URL getUrlProperty(final Properties properties, final String name, final Function0<? extends URL, ? extends PropertiesException> defaultValue)
+	throws PropertiesException {
+		return getProperty(properties, name, READ_URL_FUNCTION, defaultValue);
+	}
+	
+	/**
 	 * Gets the value of the mandatory property with the given name from the given properties.
 	 * <p>
 	 * An exception is raised when the property does not exist.
@@ -691,6 +741,22 @@ public class PropertiesUtils {
 	public static URI getMandatoryUriProperty(final Properties properties, final String name)
 	throws PropertiesException {
 		return getMandatoryProperty(properties, name, READ_URI_FUNCTION);
+	}
+	
+	/**
+	 * Gets the value of the mandatory URL property with the given name from the given properties.
+	 * <p>
+	 * An exception is raised if the property does not exist.
+	 * 
+	 * @param properties The properties to read.
+	 * @param name The name of the property.
+	 * @return The value of the property.
+	 * @throws PropertiesException When the property does not exist.
+	 * @throws PropertiesException When the value of the property is invalid.
+	 */
+	public static URL getMandatoryUrlProperty(final Properties properties, final String name)
+	throws PropertiesException {
+		return getMandatoryProperty(properties, name, READ_URL_FUNCTION);
 	}
 	
 	/**
@@ -872,6 +938,33 @@ public class PropertiesUtils {
 		public URI evaluate(final String representation)
 		throws PropertiesException {
 			return readUri(representation);
+		}
+	};
+	
+	/**
+	 * Reads the URL property value from the given representation.
+	 * 
+	 * @param representation The representation.
+	 * @return The value.
+	 * @throws PropertiesException When the representation is invalid.
+	 */
+	public static URL readUrl(final String representation)
+	throws PropertiesException {
+		assert null != representation;
+		
+		try {
+			return new URL(representation);
+		} catch (final MalformedURLException exception) {
+			throw new PropertiesException("Invalid URL value \"" + representation + "\"", exception);
+		}
+	}
+	
+	/** Function that reads URL property values. */
+	public static final Function1<String, URL, PropertiesException> READ_URL_FUNCTION = new Function1<String, URL, PropertiesException>() {
+		@Override
+		public URL evaluate(final String representation)
+		throws PropertiesException {
+			return readUrl(representation);
 		}
 	};
 	
