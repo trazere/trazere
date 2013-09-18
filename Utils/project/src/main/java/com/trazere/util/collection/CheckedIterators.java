@@ -19,7 +19,6 @@ import com.trazere.util.feed.Feed;
 import com.trazere.util.function.Function1;
 import com.trazere.util.function.Predicate1;
 import com.trazere.util.type.Maybe;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -124,7 +123,7 @@ public class CheckedIterators {
 	 * @param collection The collection.
 	 * @return The built iterator.
 	 */
-	public static <V, X extends Exception> CheckedIterator<V, X> fromCollection(final Collection<? extends V> collection) {
+	public static <V, X extends Exception> CheckedIterator<V, X> fromCollection(final Iterable<? extends V> collection) {
 		assert null != collection;
 		
 		return fromIterator(collection.iterator());

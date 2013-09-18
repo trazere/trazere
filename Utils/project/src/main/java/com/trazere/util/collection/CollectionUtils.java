@@ -168,16 +168,16 @@ public class CollectionUtils {
 	// TODO: add dropWhile
 	
 	/**
-	 * Gets an element from the given collection.
+	 * Gets a value from the given values.
 	 * 
-	 * @param <T> Type of the elements.
-	 * @param collection The collection.
-	 * @return Any element of the collection.
+	 * @param <T> Type of the values.
+	 * @param values Values to read.
+	 * @return Some value if any.
 	 */
-	public static <T> Maybe<T> any(final Collection<? extends T> collection) {
-		assert null != collection;
+	public static <T> Maybe<T> any(final Iterable<? extends T> values) {
+		assert null != values;
 		
-		return next(collection.iterator());
+		return next(values.iterator());
 	}
 	
 	/**
@@ -185,8 +185,8 @@ public class CollectionUtils {
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
-	 * @param map The map.
-	 * @return Any binding of the map.
+	 * @param map Map to read.
+	 * @return Some binding if any.
 	 */
 	public static <K, V> Maybe<Map.Entry<K, V>> any(final Map<K, V> map) {
 		assert null != map;
@@ -198,9 +198,9 @@ public class CollectionUtils {
 	 * Gets the element of the given list corresponding to the given index.
 	 * 
 	 * @param <T> Type of the elements.
-	 * @param list The list.
-	 * @param index The index.
-	 * @return The first element.
+	 * @param list List to read.
+	 * @param index Index of the element to get.
+	 * @return The element or nothing if the index is out of bound.
 	 */
 	public static <T> Maybe<T> get(final List<? extends T> list, final int index) {
 		assert null != list;
@@ -212,7 +212,7 @@ public class CollectionUtils {
 	 * Gets the first element of the given list.
 	 * 
 	 * @param <T> Type of the elements.
-	 * @param list The list.
+	 * @param list List to read.
 	 * @return The first element.
 	 */
 	public static <T> Maybe<T> first(final List<? extends T> list) {
@@ -223,7 +223,7 @@ public class CollectionUtils {
 	 * Gets the last element of the given list.
 	 * 
 	 * @param <T> Type of the elements.
-	 * @param list The list.
+	 * @param list List to read.
 	 * @return The last element.
 	 */
 	public static <T> Maybe<T> last(final List<? extends T> list) {
@@ -232,18 +232,18 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Adds the given value to the given collection.
+	 * Adds the given values to the given collection.
 	 * 
 	 * @param <T> Type of the values.
-	 * @param collection The collection.
-	 * @param value The value.
+	 * @param collection Collection to fill.
+	 * @param values Values to add.
 	 */
-	public static <T> void add(final Collection<? super T> collection, final Maybe<? extends T> value) {
+	public static <T> void add(final Collection<? super T> collection, final Iterable<? extends T> values) {
 		assert null != collection;
-		assert null != value;
+		assert null != values;
 		
-		if (value.isSome()) {
-			collection.add(value.asSome().getValue());
+		for (final T value : values) {
+			collection.add(value);
 		}
 	}
 	
@@ -754,7 +754,7 @@ public class CollectionUtils {
 	 * @param value The value. May be <code>null</code>.
 	 * @return The given map.
 	 */
-	public static <K, V, M extends Map<? super K, ? super V>> M fill(final M map, final Collection<? extends K> keys, final V value) {
+	public static <K, V, M extends Map<? super K, ? super V>> M fill(final M map, final Iterable<? extends K> keys, final V value) {
 		assert null != map;
 		assert null != keys;
 		
@@ -765,6 +765,7 @@ public class CollectionUtils {
 	}
 	
 	// TODO: rename to retain or filter
+	// TODO: genalize with a funciton instead of a map
 	/**
 	 * Gets the bindings of the given map associated to the given keys and populates the given result map with them.
 	 * 
@@ -776,7 +777,7 @@ public class CollectionUtils {
 	 * @param results The map to populate with the results.
 	 * @return The given result map.
 	 */
-	public static <K, V, M extends Map<? super K, ? super V>> M sub(final Map<? extends K, ? extends V> map, final Set<? extends K> keys, final M results) {
+	public static <K, V, M extends Map<? super K, ? super V>> M sub(final Map<? extends K, ? extends V> map, final Iterable<? extends K> keys, final M results) {
 		assert null != map;
 		assert null != keys;
 		assert null != results;
@@ -791,6 +792,7 @@ public class CollectionUtils {
 	}
 	
 	// TODO: rename to ???
+	// TODO: genalize with a funciton instead of a map
 	/**
 	 * Gets the bindings of the given map not associated to the given keys and populates the given result map with them.
 	 * 
@@ -825,16 +827,17 @@ public class CollectionUtils {
 	 * @param results The collection to populate with the results.
 	 * @return The given result collection.
 	 */
-	public static <T, R extends Collection<? super T>> R flatten(final Collection<? extends Collection<? extends T>> collections, final R results) {
+	public static <T, R extends Collection<? super T>> R flatten(final Iterable<? extends Iterable<? extends T>> collections, final R results) {
 		assert null != collections;
 		assert null != results;
 		
-		for (final Collection<? extends T> collection : collections) {
-			results.addAll(collection);
+		for (final Iterable<? extends T> collection : collections) {
+			add(results, collection);
 		}
 		return results;
 	}
 	
+	// TODO: accumulator version
 	/**
 	 * Groups the given values by batches of the given size and populates the given collections with the batches.
 	 * 
@@ -847,18 +850,19 @@ public class CollectionUtils {
 	 * @param results The collection to populates with the results.
 	 * @return The given result collection.
 	 */
-	public static <T, C extends Collection<? super T>, R extends Collection<? super C>> R group(final CollectionFactory<T, C> factory, final int size, final Collection<T> values, final R results) {
+	public static <T, C extends Collection<? super T>, R extends Collection<? super C>> R group(final CollectionFactory<T, C> factory, final int size, final Iterable<? extends T> values, final R results) {
 		assert null != factory;
 		assert null != values;
 		assert null != results;
 		
-		final Iterator<T> valuesIt = values.iterator();
+		final Iterator<? extends T> valuesIt = values.iterator();
 		while (valuesIt.hasNext()) {
 			results.add(drain(size, valuesIt, factory.build(size)));
 		}
 		return results;
 	}
 	
+	// TODO: accumulator version
 	/**
 	 * Groups the elements of the given lists and populates the given result list with the pairs.
 	 * <p>
@@ -873,7 +877,7 @@ public class CollectionUtils {
 	 * @param results The list to populate with the results.
 	 * @return The given result list.
 	 */
-	public static <T1, T2, L extends List<? super Tuple2<T1, T2>>> L zip(final List<? extends T1> list1, final List<? extends T2> list2, final L results) {
+	public static <T1, T2, L extends List<? super Tuple2<T1, T2>>> L zip(final Iterable<? extends T1> list1, final Iterable<? extends T2> list2, final L results) {
 		assert null != list1;
 		assert null != list2;
 		
@@ -905,6 +909,7 @@ public class CollectionUtils {
 		return results;
 	}
 	
+	// TODO: accumulator version
 	/**
 	 * Decomposes the pairs of the given collection and populates the given collections with the first and second values.
 	 * 
@@ -914,7 +919,7 @@ public class CollectionUtils {
 	 * @param results1 The collection to populate with the first values.
 	 * @param results2 The collection to populate with the second values.
 	 */
-	public static <T1, T2> void unzip(final Collection<? extends Tuple2<T1, T2>> pairs, final Collection<? super T1> results1, final Collection<? super T2> results2) {
+	public static <T1, T2> void unzip(final Iterable<? extends Tuple2<T1, T2>> pairs, final Collection<? super T1> results1, final Collection<? super T2> results2) {
 		assert null != pairs;
 		assert null != results1;
 		assert null != results2;

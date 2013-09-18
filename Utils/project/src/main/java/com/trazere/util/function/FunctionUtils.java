@@ -29,7 +29,6 @@ import com.trazere.util.type.Tuple2;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The {@link FunctionUtils} provides various helpers regarding predicates, functions and procedures.
@@ -52,7 +51,7 @@ public class FunctionUtils {
 	 * @return <code>true</code> if any value is accepted, <code>false</code> if all values are rejected.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <V, X extends Exception> boolean isAny(final Predicate1<? super V, X> predicate, final Collection<V> values)
+	public static <V, X extends Exception> boolean isAny(final Predicate1<? super V, X> predicate, final Iterable<? extends V> values)
 	throws X {
 		return isAny(predicate, CheckedIterators.<V, InternalException>fromCollection(values));
 	}
@@ -67,7 +66,7 @@ public class FunctionUtils {
 	 * @return <code>true</code> if any value is accepted, <code>false</code> if all values are rejected.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <V, X extends Exception> boolean isAny(final Predicate1<? super V, X> predicate, final Iterator<V> values)
+	public static <V, X extends Exception> boolean isAny(final Predicate1<? super V, X> predicate, final Iterator<? extends V> values)
 	throws X {
 		return isAny(predicate, CheckedIterators.<V, InternalException>fromIterator(values));
 	}
@@ -84,7 +83,7 @@ public class FunctionUtils {
 	 * @throws X When some predicate evaluation fails.
 	 * @throws VX When some iteration fails.
 	 */
-	public static <V, X extends Exception, VX extends Exception> boolean isAny(final Predicate1<? super V, X> predicate, final CheckedIterator<V, VX> values)
+	public static <V, X extends Exception, VX extends Exception> boolean isAny(final Predicate1<? super V, X> predicate, final CheckedIterator<? extends V, VX> values)
 	throws X, VX {
 		assert null != predicate;
 		assert null != values;
@@ -109,7 +108,7 @@ public class FunctionUtils {
 	 * @throws X When some predicate evaluation fails.
 	 * @throws VX When some feed iteration fails.
 	 */
-	public static <V, X extends Exception, VX extends Exception> boolean isAny(final Predicate1<? super V, X> predicate, final Feed<V, VX> values)
+	public static <V, X extends Exception, VX extends Exception> boolean isAny(final Predicate1<? super V, X> predicate, final Feed<? extends V, VX> values)
 	throws X, VX {
 		return isAny(predicate, CheckedIterators.fromFeed(values));
 	}
@@ -127,12 +126,12 @@ public class FunctionUtils {
 	 * @return <code>true</code> if any binding is accepted, <code>false</code> if all bindings are rejected.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <K, V, X extends Exception> boolean isAny(final Predicate2<? super K, ? super V, X> predicate, final Map<K, V> bindings)
+	public static <K, V, X extends Exception> boolean isAny(final Predicate2<? super K, ? super V, X> predicate, final Map<? extends K, ? extends V> bindings)
 	throws X {
 		assert null != predicate;
 		assert null != bindings;
 		
-		for (final Map.Entry<K, V> binding : bindings.entrySet()) {
+		for (final Map.Entry<? extends K, ? extends V> binding : bindings.entrySet()) {
 			if (predicate.evaluate(binding.getKey(), binding.getValue())) {
 				return true;
 			}
@@ -153,7 +152,7 @@ public class FunctionUtils {
 	 * @return <code>true</code> if any binding is accepted, <code>false</code> if all bindings are rejected.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <K, V, X extends Exception> boolean isAny(final Predicate2<? super K, ? super V, X> predicate, final Multimap<K, V, ?> bindings)
+	public static <K, V, X extends Exception> boolean isAny(final Predicate2<? super K, ? super V, X> predicate, final Multimap<K, ? extends V, ?> bindings)
 	throws X {
 		assert null != predicate;
 		assert null != bindings;
@@ -178,7 +177,7 @@ public class FunctionUtils {
 	 * @return <code>true</code> if all values are accepted, <code>false</code> if any value is rejected.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <V, X extends Exception> boolean areAll(final Predicate1<? super V, X> predicate, final Collection<V> values)
+	public static <V, X extends Exception> boolean areAll(final Predicate1<? super V, X> predicate, final Iterable<? extends V> values)
 	throws X {
 		assert null != values;
 		
@@ -195,7 +194,7 @@ public class FunctionUtils {
 	 * @return <code>true</code> if all values are accepted, <code>false</code> if any value is rejected.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <V, X extends Exception> boolean areAll(final Predicate1<? super V, X> predicate, final Iterator<V> values)
+	public static <V, X extends Exception> boolean areAll(final Predicate1<? super V, X> predicate, final Iterator<? extends V> values)
 	throws X {
 		return areAll(predicate, CheckedIterators.<V, InternalException>fromIterator(values));
 	}
@@ -212,7 +211,7 @@ public class FunctionUtils {
 	 * @throws X When some predicate evaluation fails.
 	 * @throws VX When some iteration fails.
 	 */
-	public static <V, X extends Exception, VX extends Exception> boolean areAll(final Predicate1<? super V, X> predicate, final CheckedIterator<V, VX> values)
+	public static <V, X extends Exception, VX extends Exception> boolean areAll(final Predicate1<? super V, X> predicate, final CheckedIterator<? extends V, VX> values)
 	throws X, VX {
 		assert null != predicate;
 		assert null != values;
@@ -237,7 +236,7 @@ public class FunctionUtils {
 	 * @throws X When some predicate evaluation fails.
 	 * @throws VX When some feed iteration fails.
 	 */
-	public static <V, X extends Exception, VX extends Exception> boolean areAll(final Predicate1<? super V, X> predicate, final Feed<V, VX> values)
+	public static <V, X extends Exception, VX extends Exception> boolean areAll(final Predicate1<? super V, X> predicate, final Feed<? extends V, VX> values)
 	throws X, VX {
 		return areAll(predicate, CheckedIterators.fromFeed(values));
 	}
@@ -255,12 +254,12 @@ public class FunctionUtils {
 	 * @return <code>true</code> if all bindings are accepted, <code>false</code> if any binding is rejected.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <K, V, X extends Exception> boolean areAll(final Predicate2<? super K, ? super V, X> predicate, final Map<K, V> bindings)
+	public static <K, V, X extends Exception> boolean areAll(final Predicate2<? super K, ? super V, X> predicate, final Map<? extends K, ? extends V> bindings)
 	throws X {
 		assert null != predicate;
 		assert null != bindings;
 		
-		for (final Map.Entry<K, V> binding : bindings.entrySet()) {
+		for (final Map.Entry<? extends K, ? extends V> binding : bindings.entrySet()) {
 			if (!predicate.evaluate(binding.getKey(), binding.getValue())) {
 				return false;
 			}
@@ -281,7 +280,7 @@ public class FunctionUtils {
 	 * @return <code>true</code> if all bindings are accepted, <code>false</code> if any binding is rejected.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <K, V, X extends Exception> boolean areAll(final Predicate2<? super K, ? super V, X> predicate, final Multimap<K, V, ?> bindings)
+	public static <K, V, X extends Exception> boolean areAll(final Predicate2<? super K, ? super V, X> predicate, final Multimap<K, ? extends V, ?> bindings)
 	throws X {
 		assert null != predicate;
 		assert null != bindings;
@@ -306,7 +305,7 @@ public class FunctionUtils {
 	 * @return The first accepted value.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <V, X extends Exception> Maybe<V> first(final Predicate1<? super V, X> predicate, final Collection<V> values)
+	public static <V, X extends Exception> Maybe<V> first(final Predicate1<? super V, X> predicate, final Iterable<? extends V> values)
 	throws X {
 		assert null != values;
 		
@@ -323,7 +322,7 @@ public class FunctionUtils {
 	 * @return The first accepted value.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <V, X extends Exception> Maybe<V> first(final Predicate1<? super V, X> predicate, final Iterator<V> values)
+	public static <V, X extends Exception> Maybe<V> first(final Predicate1<? super V, X> predicate, final Iterator<? extends V> values)
 	throws X {
 		return first(predicate, CheckedIterators.<V, InternalException>fromIterator(values));
 	}
@@ -340,7 +339,7 @@ public class FunctionUtils {
 	 * @throws X When some predicate evaluation fails.
 	 * @throws VX When some iteration fails.
 	 */
-	public static <V, X extends Exception, VX extends Exception> Maybe<V> first(final Predicate1<? super V, X> predicate, final CheckedIterator<V, VX> values)
+	public static <V, X extends Exception, VX extends Exception> Maybe<V> first(final Predicate1<? super V, X> predicate, final CheckedIterator<? extends V, VX> values)
 	throws X, VX {
 		assert null != predicate;
 		assert null != values;
@@ -366,7 +365,7 @@ public class FunctionUtils {
 	 * @throws X When some predicate evaluation fails.
 	 * @throws VX When some feed iteration fails.
 	 */
-	public static <V, X extends Exception, VX extends Exception> Maybe<V> first(final Predicate1<? super V, X> predicate, final Feed<V, VX> values)
+	public static <V, X extends Exception, VX extends Exception> Maybe<V> first(final Predicate1<? super V, X> predicate, final Feed<? extends V, VX> values)
 	throws X, VX {
 		return first(predicate, CheckedIterators.fromFeed(values));
 	}
@@ -384,12 +383,12 @@ public class FunctionUtils {
 	 * @return The first accepted binding.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <K, V, X extends Exception> Maybe<Tuple2<K, V>> first(final Predicate2<? super K, ? super V, X> predicate, final Map<K, V> bindings)
+	public static <K, V, X extends Exception> Maybe<Tuple2<K, V>> first(final Predicate2<? super K, ? super V, X> predicate, final Map<? extends K, ? extends V> bindings)
 	throws X {
 		assert null != predicate;
 		assert null != bindings;
 		
-		for (final Map.Entry<K, V> binding : bindings.entrySet()) {
+		for (final Map.Entry<? extends K, ? extends V> binding : bindings.entrySet()) {
 			final K key = binding.getKey();
 			final V value = binding.getValue();
 			if (predicate.evaluate(key, value)) {
@@ -412,7 +411,7 @@ public class FunctionUtils {
 	 * @return The first accepted binding.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <K, V, X extends Exception> Maybe<Tuple2<K, V>> first(final Predicate2<? super K, ? super V, X> predicate, final Multimap<K, V, ?> bindings)
+	public static <K, V, X extends Exception> Maybe<Tuple2<K, V>> first(final Predicate2<? super K, ? super V, X> predicate, final Multimap<K, ? extends V, ?> bindings)
 	throws X {
 		assert null != predicate;
 		assert null != bindings;
@@ -438,7 +437,7 @@ public class FunctionUtils {
 	 * @return The first extracted value.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <V, RV, X extends Exception> Maybe<RV> first(final Function1<? super V, ? extends Maybe<RV>, X> function, final Collection<V> values)
+	public static <V, RV, X extends Exception> Maybe<RV> first(final Function1<? super V, ? extends Maybe<RV>, X> function, final Iterable<? extends V> values)
 	throws X {
 		assert null != values;
 		
@@ -456,7 +455,7 @@ public class FunctionUtils {
 	 * @return The first accepted value.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <V, RV, X extends Exception> Maybe<RV> first(final Function1<? super V, ? extends Maybe<RV>, X> function, final Iterator<V> values)
+	public static <V, RV, X extends Exception> Maybe<RV> first(final Function1<? super V, ? extends Maybe<RV>, X> function, final Iterator<? extends V> values)
 	throws X {
 		return first(function, CheckedIterators.<V, InternalException>fromIterator(values));
 	}
@@ -474,7 +473,7 @@ public class FunctionUtils {
 	 * @throws X When some predicate evaluation fails.
 	 * @throws VX When some iteration fails.
 	 */
-	public static <V, RV, X extends Exception, VX extends Exception> Maybe<RV> first(final Function1<? super V, ? extends Maybe<RV>, X> function, final CheckedIterator<V, VX> values)
+	public static <V, RV, X extends Exception, VX extends Exception> Maybe<RV> first(final Function1<? super V, ? extends Maybe<RV>, X> function, final CheckedIterator<? extends V, VX> values)
 	throws X, VX {
 		assert null != function;
 		assert null != values;
@@ -501,7 +500,7 @@ public class FunctionUtils {
 	 * @throws X When some predicate evaluation fails.
 	 * @throws VX When some feed iteration fails.
 	 */
-	public static <V, RV, X extends Exception, VX extends Exception> Maybe<RV> first(final Function1<? super V, ? extends Maybe<RV>, X> function, final Feed<V, VX> values)
+	public static <V, RV, X extends Exception, VX extends Exception> Maybe<RV> first(final Function1<? super V, ? extends Maybe<RV>, X> function, final Feed<? extends V, VX> values)
 	throws X, VX {
 		return first(function, CheckedIterators.fromFeed(values));
 	}
@@ -518,7 +517,7 @@ public class FunctionUtils {
 	 * @return The result of the fold. May be <code>null</code>.
 	 * @throws X When some operator evaluation fails.
 	 */
-	public static <R, V, X extends Exception> R fold(final Function2<? super R, ? super V, ? extends R, X> operator, final R initialAccumulator, final Collection<V> values)
+	public static <R, V, X extends Exception> R fold(final Function2<? super R, ? super V, ? extends R, X> operator, final R initialAccumulator, final Iterable<? extends V> values)
 	throws X {
 		assert null != values;
 		
@@ -537,7 +536,7 @@ public class FunctionUtils {
 	 * @return The result of the fold. May be <code>null</code>.
 	 * @throws X When some operator evaluation fails.
 	 */
-	public static <R, V, X extends Exception> R fold(final Function2<? super R, ? super V, ? extends R, X> operator, final R initialAccumulator, final Iterator<V> values)
+	public static <R, V, X extends Exception> R fold(final Function2<? super R, ? super V, ? extends R, X> operator, final R initialAccumulator, final Iterator<? extends V> values)
 	throws X {
 		return fold(operator, initialAccumulator, CheckedIterators.<V, InternalException>fromIterator(values));
 	}
@@ -556,7 +555,7 @@ public class FunctionUtils {
 	 * @throws X When some operator evaluation fails.
 	 * @throws VX When some iteration fails.
 	 */
-	public static <R, V, X extends Exception, VX extends Exception> R fold(final Function2<? super R, ? super V, ? extends R, X> operator, final R initialAccumulator, final CheckedIterator<V, VX> values)
+	public static <R, V, X extends Exception, VX extends Exception> R fold(final Function2<? super R, ? super V, ? extends R, X> operator, final R initialAccumulator, final CheckedIterator<? extends V, VX> values)
 	throws X, VX {
 		assert null != operator;
 		assert null != values;
@@ -582,7 +581,7 @@ public class FunctionUtils {
 	 * @throws X When some operator evaluation fails.
 	 * @throws VX When some feed iteration fails.
 	 */
-	public static <R, V, X extends Exception, VX extends Exception> R fold(final Function2<? super R, ? super V, ? extends R, X> operator, final R initialAccumulator, final Feed<V, VX> values)
+	public static <R, V, X extends Exception, VX extends Exception> R fold(final Function2<? super R, ? super V, ? extends R, X> operator, final R initialAccumulator, final Feed<? extends V, VX> values)
 	throws X, VX {
 		return fold(operator, initialAccumulator, CheckedIterators.fromFeed(values));
 	}
@@ -597,7 +596,7 @@ public class FunctionUtils {
 	 * @return The number of accepted values.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <V, X extends Exception> int count(final Predicate1<? super V, X> predicate, final Collection<V> values)
+	public static <V, X extends Exception> int count(final Predicate1<? super V, X> predicate, final Iterable<? extends V> values)
 	throws X {
 		assert null != values;
 		
@@ -614,7 +613,7 @@ public class FunctionUtils {
 	 * @return The number of accepted values.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <V, X extends Exception> int count(final Predicate1<? super V, X> predicate, final Iterator<V> values)
+	public static <V, X extends Exception> int count(final Predicate1<? super V, X> predicate, final Iterator<? extends V> values)
 	throws X {
 		return count(predicate, CheckedIterators.<V, InternalException>fromIterator(values));
 	}
@@ -631,7 +630,7 @@ public class FunctionUtils {
 	 * @throws X When some predicate evaluation fails.
 	 * @throws VX When some iteration fails.
 	 */
-	public static <V, X extends Exception, VX extends Exception> int count(final Predicate1<? super V, X> predicate, final CheckedIterator<V, VX> values)
+	public static <V, X extends Exception, VX extends Exception> int count(final Predicate1<? super V, X> predicate, final CheckedIterator<? extends V, VX> values)
 	throws X, VX {
 		assert null != predicate;
 		assert null != values;
@@ -657,7 +656,7 @@ public class FunctionUtils {
 	 * @throws X When some predicate evaluation fails.
 	 * @throws VX When some feed iteration fails.
 	 */
-	public static <V, X extends Exception, VX extends Exception> int count(final Predicate1<? super V, X> predicate, final Feed<V, VX> values)
+	public static <V, X extends Exception, VX extends Exception> int count(final Predicate1<? super V, X> predicate, final Feed<? extends V, VX> values)
 	throws X, VX {
 		return count(predicate, CheckedIterators.fromFeed(values));
 	}
@@ -675,13 +674,13 @@ public class FunctionUtils {
 	 * @return The number of accepted bindings.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <K, V, X extends Exception> int count(final Predicate2<? super K, ? super V, X> predicate, final Map<K, V> bindings)
+	public static <K, V, X extends Exception> int count(final Predicate2<? super K, ? super V, X> predicate, final Map<? extends K, ? extends V> bindings)
 	throws X {
 		assert null != predicate;
 		assert null != bindings;
 		
 		final Counter count = new Counter();
-		for (final Map.Entry<K, V> binding : bindings.entrySet()) {
+		for (final Map.Entry<? extends K, ? extends V> binding : bindings.entrySet()) {
 			if (predicate.evaluate(binding.getKey(), binding.getValue())) {
 				count.inc();
 			}
@@ -702,7 +701,7 @@ public class FunctionUtils {
 	 * @return The number of accepted bindings.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <K, V, X extends Exception> int count(final Predicate2<? super K, ? super V, X> predicate, final Multimap<K, V, ?> bindings)
+	public static <K, V, X extends Exception> int count(final Predicate2<? super K, ? super V, X> predicate, final Multimap<K, ? extends V, ?> bindings)
 	throws X {
 		assert null != predicate;
 		assert null != bindings;
@@ -730,7 +729,7 @@ public class FunctionUtils {
 	 * @return The given result collection.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <V, C extends Collection<? super V>, X extends Exception> C filter(final Predicate1<? super V, X> predicate, final Collection<V> values, final C results)
+	public static <V, C extends Collection<? super V>, X extends Exception> C filter(final Predicate1<? super V, X> predicate, final Iterable<? extends V> values, final C results)
 	throws X {
 		return filter(predicate, values, CollectionAccumulators.<V, C, InternalException>add(results)).get();
 	}
@@ -749,7 +748,7 @@ public class FunctionUtils {
 	 * @throws PX When some predicate evaluation fails.
 	 * @throws AX When some accumulation fails.
 	 */
-	public static <V, A extends Accumulator1<? super V, ?, AX>, PX extends Exception, AX extends Exception> A filter(final Predicate1<? super V, PX> predicate, final Collection<V> values, final A results)
+	public static <V, A extends Accumulator1<? super V, ?, AX>, PX extends Exception, AX extends Exception> A filter(final Predicate1<? super V, PX> predicate, final Iterable<? extends V> values, final A results)
 	throws PX, AX {
 		assert null != values;
 		assert null != results;
@@ -777,7 +776,7 @@ public class FunctionUtils {
 	 * @return The given result map.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M filter(final Predicate2<? super K, ? super V, X> predicate, final Map<K, V> bindings, final M results)
+	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M filter(final Predicate2<? super K, ? super V, X> predicate, final Map<? extends K, ? extends V> bindings, final M results)
 	throws X {
 		return filter(predicate, bindings, CollectionAccumulators.<K, V, M, InternalException>put(results)).get();
 	}
@@ -799,13 +798,13 @@ public class FunctionUtils {
 	 * @throws PX When some predicate evaluation fails.
 	 * @throws AX When some accumulation fails.
 	 */
-	public static <K, V, A extends Accumulator2<? super K, ? super V, ?, AX>, PX extends Exception, AX extends Exception> A filter(final Predicate2<? super K, ? super V, PX> predicate, final Map<K, V> bindings, final A results)
+	public static <K, V, A extends Accumulator2<? super K, ? super V, ?, AX>, PX extends Exception, AX extends Exception> A filter(final Predicate2<? super K, ? super V, PX> predicate, final Map<? extends K, ? extends V> bindings, final A results)
 	throws PX, AX {
 		assert null != predicate;
 		assert null != bindings;
 		assert null != results;
 		
-		for (final Map.Entry<K, V> entry : bindings.entrySet()) {
+		for (final Map.Entry<? extends K, ? extends V> entry : bindings.entrySet()) {
 			final K key = entry.getKey();
 			final V value = entry.getValue();
 			if (predicate.evaluate(key, value)) {
@@ -830,7 +829,7 @@ public class FunctionUtils {
 	 * @return The given result map.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <K, V, M extends Multimap<? super K, ? super V, ?>, X extends Exception> M filter(final Predicate2<? super K, ? super V, X> predicate, final Multimap<K, V, ?> bindings, final M results)
+	public static <K, V, M extends Multimap<? super K, ? super V, ?>, X extends Exception> M filter(final Predicate2<? super K, ? super V, X> predicate, final Multimap<K, ? extends V, ?> bindings, final M results)
 	throws X {
 		return filter(predicate, bindings, CollectionAccumulators.<K, V, M, InternalException>put(results)).get();
 	}
@@ -852,7 +851,7 @@ public class FunctionUtils {
 	 * @throws PX When some predicate evaluation fails.
 	 * @throws AX When some accumulation fails.
 	 */
-	public static <K, V, A extends Accumulator2<? super K, ? super V, ?, AX>, PX extends Exception, AX extends Exception> A filter(final Predicate2<? super K, ? super V, PX> predicate, final Multimap<K, V, ?> bindings, final A results)
+	public static <K, V, A extends Accumulator2<? super K, ? super V, ?, AX>, PX extends Exception, AX extends Exception> A filter(final Predicate2<? super K, ? super V, PX> predicate, final Multimap<K, ? extends V, ?> bindings, final A results)
 	throws PX, AX {
 		assert null != predicate;
 		assert null != bindings;
@@ -883,13 +882,13 @@ public class FunctionUtils {
 	 * @return The given result set.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <K, V, C extends Collection<? super K>, X extends Exception> C filterKeys(final Predicate2<? super K, ? super V, X> predicate, final Map<K, V> bindings, final C results)
+	public static <K, V, C extends Collection<? super K>, X extends Exception> C filterKeys(final Predicate2<? super K, ? super V, X> predicate, final Map<? extends K, ? extends V> bindings, final C results)
 	throws X {
 		assert null != predicate;
 		assert null != bindings;
 		assert null != results;
 		
-		for (final Map.Entry<K, V> entry : bindings.entrySet()) {
+		for (final Map.Entry<? extends K, ? extends V> entry : bindings.entrySet()) {
 			final K key = entry.getKey();
 			if (predicate.evaluate(key, entry.getValue())) {
 				results.add(key);
@@ -915,13 +914,13 @@ public class FunctionUtils {
 	 * @return The given result collection.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <K, V, C extends Collection<? super V>, X extends Exception> C filterValues(final Predicate2<? super K, ? super V, X> predicate, final Map<K, V> bindings, final C results)
+	public static <K, V, C extends Collection<? super V>, X extends Exception> C filterValues(final Predicate2<? super K, ? super V, X> predicate, final Map<? extends K, ? extends V> bindings, final C results)
 	throws X {
 		assert null != predicate;
 		assert null != bindings;
 		assert null != results;
 		
-		for (final Map.Entry<K, V> entry : bindings.entrySet()) {
+		for (final Map.Entry<? extends K, ? extends V> entry : bindings.entrySet()) {
 			final K key = entry.getKey();
 			final V value = entry.getValue();
 			if (predicate.evaluate(key, value)) {
@@ -1005,7 +1004,7 @@ public class FunctionUtils {
 	 * @return The given result collection.
 	 * @throws X When some function evaluation fails.
 	 */
-	public static <V, RV, C extends Collection<? super RV>, X extends Exception> C map(final Function1<? super V, RV, X> function, final Collection<V> values, final C results)
+	public static <V, RV, C extends Collection<? super RV>, X extends Exception> C map(final Function1<? super V, RV, X> function, final Iterable<? extends V> values, final C results)
 	throws X {
 		return map(function, values, CollectionAccumulators.<RV, C, InternalException>add(results)).get();
 	}
@@ -1025,7 +1024,7 @@ public class FunctionUtils {
 	 * @throws PX When some predicate evaluation fails.
 	 * @throws AX When some accumulation fails.
 	 */
-	public static <V, RV, A extends Accumulator1<? super RV, ?, AX>, PX extends Exception, AX extends Exception> A map(final Function1<? super V, RV, PX> function, final Collection<V> values, final A results)
+	public static <V, RV, A extends Accumulator1<? super RV, ?, AX>, PX extends Exception, AX extends Exception> A map(final Function1<? super V, RV, PX> function, final Iterable<? extends V> values, final A results)
 	throws PX, AX {
 		assert null != values;
 		
@@ -1052,7 +1051,7 @@ public class FunctionUtils {
 	 * @return The given result map.
 	 * @throws X When some function evaluation fails.
 	 */
-	public static <K, V, RV, M extends Map<? super K, ? super RV>, X extends Exception> M map(final Function2<? super K, ? super V, RV, X> function, final Map<K, V> bindings, final M results)
+	public static <K, V, RV, M extends Map<? super K, ? super RV>, X extends Exception> M map(final Function2<? super K, ? super V, RV, X> function, final Map<? extends K, ? extends V> bindings, final M results)
 	throws X {
 		return map(function, bindings, CollectionAccumulators.<K, RV, M, InternalException>put(results)).get();
 	}
@@ -1076,13 +1075,13 @@ public class FunctionUtils {
 	 * @throws PX When some function evaluation fails.
 	 * @throws AX When some accumulation fails.
 	 */
-	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, AX>, PX extends Exception, AX extends Exception> A map(final Function2<? super K, ? super V, RV, PX> function, final Map<K, V> bindings, final A results)
+	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, AX>, PX extends Exception, AX extends Exception> A map(final Function2<? super K, ? super V, RV, PX> function, final Map<? extends K, ? extends V> bindings, final A results)
 	throws PX, AX {
 		assert null != function;
 		assert null != bindings;
 		assert null != results;
 		
-		for (final Map.Entry<K, V> binding : bindings.entrySet()) {
+		for (final Map.Entry<? extends K, ? extends V> binding : bindings.entrySet()) {
 			final K key = binding.getKey();
 			results.add(key, function.evaluate(key, binding.getValue()));
 		}
@@ -1106,7 +1105,7 @@ public class FunctionUtils {
 	 * @return The given result map.
 	 * @throws X When some function evaluation fails.
 	 */
-	public static <K, V, RV, M extends Multimap<? super K, ? super RV, ?>, X extends Exception> M map(final Function2<? super K, ? super V, RV, X> function, final Multimap<K, V, ?> bindings, final M results)
+	public static <K, V, RV, M extends Multimap<? super K, ? super RV, ?>, X extends Exception> M map(final Function2<? super K, ? super V, RV, X> function, final Multimap<K, ? extends V, ?> bindings, final M results)
 	throws X {
 		return map(function, bindings, CollectionAccumulators.<K, RV, M, InternalException>put(results)).get();
 	}
@@ -1130,7 +1129,7 @@ public class FunctionUtils {
 	 * @throws PX When some function evaluation fails.
 	 * @throws AX When some accumulation fails.
 	 */
-	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, AX>, PX extends Exception, AX extends Exception> A map(final Function2<? super K, ? super V, RV, PX> function, final Multimap<K, V, ?> bindings, final A results)
+	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, AX>, PX extends Exception, AX extends Exception> A map(final Function2<? super K, ? super V, RV, PX> function, final Multimap<K, ? extends V, ?> bindings, final A results)
 	throws PX, AX {
 		assert null != function;
 		assert null != bindings;
@@ -1157,7 +1156,7 @@ public class FunctionUtils {
 	 * @return The given result collection.
 	 * @throws X When some extractor evaluation fails.
 	 */
-	public static <V, RV, C extends Collection<? super RV>, X extends Exception> C mapFilter(final Function1<? super V, ? extends Maybe<? extends RV>, X> extractor, final Collection<V> values, final C results)
+	public static <V, RV, C extends Collection<? super RV>, X extends Exception> C mapFilter(final Function1<? super V, ? extends Maybe<? extends RV>, X> extractor, final Iterable<? extends V> values, final C results)
 	throws X {
 		return mapFilter(extractor, values, CollectionAccumulators.<RV, C, InternalException>add(results)).get();
 	}
@@ -1177,7 +1176,7 @@ public class FunctionUtils {
 	 * @throws PX When some extractor evaluation fails.
 	 * @throws AX When some accumulation fails.
 	 */
-	public static <V, RV, A extends Accumulator1<? super RV, ?, AX>, PX extends Exception, AX extends Exception> A mapFilter(final Function1<? super V, ? extends Maybe<? extends RV>, PX> extractor, final Collection<V> values, final A results)
+	public static <V, RV, A extends Accumulator1<? super RV, ?, AX>, PX extends Exception, AX extends Exception> A mapFilter(final Function1<? super V, ? extends Maybe<? extends RV>, PX> extractor, final Iterable<? extends V> values, final A results)
 	throws PX, AX {
 		assert null != extractor;
 		assert null != values;
@@ -1209,7 +1208,7 @@ public class FunctionUtils {
 	 * @return The given result map.
 	 * @throws X When some extractor evaluation fails.
 	 */
-	public static <K, V, RV, M extends Map<? super K, ? super RV>, X extends Exception> M mapFilter(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, X> extractor, final Map<K, V> bindings, final M results)
+	public static <K, V, RV, M extends Map<? super K, ? super RV>, X extends Exception> M mapFilter(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, X> extractor, final Map<? extends K, ? extends V> bindings, final M results)
 	throws X {
 		return mapFilter(extractor, bindings, CollectionAccumulators.<K, RV, M, InternalException>put(results)).get();
 	}
@@ -1233,13 +1232,13 @@ public class FunctionUtils {
 	 * @throws PX When some extractor evaluation fails.
 	 * @throws AX When some accumulation fails.
 	 */
-	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, AX>, PX extends Exception, AX extends Exception> A mapFilter(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, PX> extractor, final Map<K, V> bindings, final A results)
+	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, AX>, PX extends Exception, AX extends Exception> A mapFilter(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, PX> extractor, final Map<? extends K, ? extends V> bindings, final A results)
 	throws PX, AX {
 		assert null != extractor;
 		assert null != bindings;
 		assert null != results;
 		
-		for (final Map.Entry<K, V> binding : bindings.entrySet()) {
+		for (final Map.Entry<? extends K, ? extends V> binding : bindings.entrySet()) {
 			final K key = binding.getKey();
 			final Maybe<? extends RV> result = extractor.evaluate(key, binding.getValue());
 			if (result.isSome()) {
@@ -1266,7 +1265,7 @@ public class FunctionUtils {
 	 * @return The given result map.
 	 * @throws X When some extractor evaluation fails.
 	 */
-	public static <K, V, RV, M extends Multimap<? super K, ? super RV, ?>, X extends Exception> M mapFilter(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, X> extractor, final Multimap<K, V, ?> bindings, final M results)
+	public static <K, V, RV, M extends Multimap<? super K, ? super RV, ?>, X extends Exception> M mapFilter(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, X> extractor, final Multimap<K, ? extends V, ?> bindings, final M results)
 	throws X {
 		return mapFilter(extractor, bindings, CollectionAccumulators.<K, RV, M, InternalException>put(results)).get();
 	}
@@ -1290,7 +1289,7 @@ public class FunctionUtils {
 	 * @throws PX When some extractor evaluation fails.
 	 * @throws AX When some accumulation fails.
 	 */
-	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, AX>, PX extends Exception, AX extends Exception> A mapFilter(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, PX> extractor, final Multimap<K, V, ?> bindings, final A results)
+	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, AX>, PX extends Exception, AX extends Exception> A mapFilter(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, PX> extractor, final Multimap<K, ? extends V, ?> bindings, final A results)
 	throws PX, AX {
 		assert null != extractor;
 		assert null != bindings;
@@ -1320,7 +1319,7 @@ public class FunctionUtils {
 	 * @return The given result collection.
 	 * @throws X When some function evaluation fails.
 	 */
-	public static <V, RV, C extends Collection<? super RV>, X extends Exception> C flatMap(final Function1<? super V, ? extends Collection<? extends RV>, X> function, final Collection<V> values, final C results)
+	public static <V, RV, C extends Collection<? super RV>, X extends Exception> C flatMap(final Function1<? super V, ? extends Collection<? extends RV>, X> function, final Iterable<? extends V> values, final C results)
 	throws X {
 		assert null != values;
 		
@@ -1341,7 +1340,7 @@ public class FunctionUtils {
 	 * @return The given result collection.
 	 * @throws X When some function evaluation fails.
 	 */
-	public static <V, RV, C extends Collection<? super RV>, X extends Exception> C flatMap(final Function1<? super V, ? extends Collection<? extends RV>, X> function, final Iterator<V> values, final C results)
+	public static <V, RV, C extends Collection<? super RV>, X extends Exception> C flatMap(final Function1<? super V, ? extends Collection<? extends RV>, X> function, final Iterator<? extends V> values, final C results)
 	throws X {
 		return flatMap(function, CheckedIterators.<V, InternalException>fromIterator(values), results);
 	}
@@ -1362,7 +1361,7 @@ public class FunctionUtils {
 	 * @throws X When some function evaluation fails.
 	 * @throws TX When some iteration fails.
 	 */
-	public static <V, RV, C extends Collection<? super RV>, X extends Exception, TX extends Exception> C flatMap(final Function1<? super V, ? extends Collection<? extends RV>, X> function, final CheckedIterator<V, TX> values, final C results)
+	public static <V, RV, C extends Collection<? super RV>, X extends Exception, TX extends Exception> C flatMap(final Function1<? super V, ? extends Collection<? extends RV>, X> function, final CheckedIterator<? extends V, TX> values, final C results)
 	throws X, TX {
 		assert null != function;
 		assert null != values;
@@ -1389,7 +1388,7 @@ public class FunctionUtils {
 	 * @return The given result map.
 	 * @throws X When some function evaluation fails.
 	 */
-	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M projectKeys(final Function1<? super K, V, X> function, final Set<K> keys, final M results)
+	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M projectKeys(final Function1<? super K, V, X> function, final Iterable<? extends K> keys, final M results)
 	throws X {
 		assert null != function;
 		assert null != keys;
@@ -1418,7 +1417,7 @@ public class FunctionUtils {
 	 * @return The given result map.
 	 * @throws X When some function evaluation fails.
 	 */
-	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M projectValues(final Function1<? super V, K, X> function, final Collection<V> values, final M results)
+	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M projectValues(final Function1<? super V, K, X> function, final Iterable<? extends V> values, final M results)
 	throws X {
 		assert null != function;
 		assert null != values;
@@ -1446,7 +1445,7 @@ public class FunctionUtils {
 	 * @return The given result map.
 	 * @throws X When some function evaluation fails.
 	 */
-	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M projectFilterKeys(final Function1<? super K, ? extends Maybe<? extends V>, X> extractor, final Collection<K> keys, final M results)
+	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M projectFilterKeys(final Function1<? super K, ? extends Maybe<? extends V>, X> extractor, final Iterable<? extends K> keys, final M results)
 	throws X {
 		assert null != extractor;
 		assert null != keys;
@@ -1479,7 +1478,7 @@ public class FunctionUtils {
 	 * @return The given result map.
 	 * @throws X When some function evaluation fails.
 	 */
-	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M projectFilterValues(final Function1<? super V, ? extends Maybe<? extends K>, X> extractor, final Collection<V> values, final M results)
+	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M projectFilterValues(final Function1<? super V, ? extends Maybe<? extends K>, X> extractor, final Iterable<? extends V> values, final M results)
 	throws X {
 		assert null != extractor;
 		assert null != values;
@@ -1511,13 +1510,13 @@ public class FunctionUtils {
 	 * @return The given result map.
 	 * @throws X When some function evaluation fails.
 	 */
-	public static <K, RK, V, M extends Map<? super RK, ? super V>, X extends Exception> M remap(final Function1<? super K, RK, X> function, final Map<K, V> bindings, final M results)
+	public static <K, RK, V, M extends Map<? super RK, ? super V>, X extends Exception> M remap(final Function1<? super K, RK, X> function, final Map<? extends K, ? extends V> bindings, final M results)
 	throws X {
 		assert null != function;
 		assert null != bindings;
 		assert null != results;
 		
-		for (final Map.Entry<K, V> entry : bindings.entrySet()) {
+		for (final Map.Entry<? extends K, ? extends V> entry : bindings.entrySet()) {
 			results.put(function.evaluate(entry.getKey()), entry.getValue());
 		}
 		return results;
@@ -1541,13 +1540,13 @@ public class FunctionUtils {
 	 * @return The given result map.
 	 * @throws X When some function evaluation fails.
 	 */
-	public static <K, RK, V, M extends Map<? super RK, ? super V>, X extends Exception> M remap(final Function2<? super K, ? super V, RK, X> function, final Map<K, V> bindings, final M results)
+	public static <K, RK, V, M extends Map<? super RK, ? super V>, X extends Exception> M remap(final Function2<? super K, ? super V, RK, X> function, final Map<? extends K, ? extends V> bindings, final M results)
 	throws X {
 		assert null != function;
 		assert null != bindings;
 		assert null != results;
 		
-		for (final Map.Entry<K, V> entry : bindings.entrySet()) {
+		for (final Map.Entry<? extends K, ? extends V> entry : bindings.entrySet()) {
 			final V value = entry.getValue();
 			results.put(function.evaluate(entry.getKey(), value), value);
 		}
@@ -1571,13 +1570,13 @@ public class FunctionUtils {
 	 * @return The given result map.
 	 * @throws X When some function evaluation fails.
 	 */
-	public static <K, RK, V, M extends Map<? super RK, ? super V>, X extends Exception> M remapFilter(final Function1<? super K, ? extends Maybe<? extends RK>, X> function, final Map<K, V> bindings, final M results)
+	public static <K, RK, V, M extends Map<? super RK, ? super V>, X extends Exception> M remapFilter(final Function1<? super K, ? extends Maybe<? extends RK>, X> function, final Map<? extends K, ? extends V> bindings, final M results)
 	throws X {
 		assert null != function;
 		assert null != bindings;
 		assert null != results;
 		
-		for (final Map.Entry<K, V> entry : bindings.entrySet()) {
+		for (final Map.Entry<? extends K, ? extends V> entry : bindings.entrySet()) {
 			final Maybe<? extends RK> newKey = function.evaluate(entry.getKey());
 			if (newKey.isSome()) {
 				results.put(newKey.asSome().getValue(), entry.getValue());
@@ -1605,13 +1604,13 @@ public class FunctionUtils {
 	 * @return The given result map.
 	 * @throws X When some function evaluation fails.
 	 */
-	public static <K, RK, V, M extends Map<? super RK, ? super V>, X extends Exception> M remapFilter(final Function2<? super K, ? super V, ? extends Maybe<? extends RK>, X> function, final Map<K, V> bindings, final M results)
+	public static <K, RK, V, M extends Map<? super RK, ? super V>, X extends Exception> M remapFilter(final Function2<? super K, ? super V, ? extends Maybe<? extends RK>, X> function, final Map<? extends K, ? extends V> bindings, final M results)
 	throws X {
 		assert null != function;
 		assert null != bindings;
 		assert null != results;
 		
-		for (final Map.Entry<K, V> entry : bindings.entrySet()) {
+		for (final Map.Entry<? extends K, ? extends V> entry : bindings.entrySet()) {
 			final V value = entry.getValue();
 			final Maybe<? extends RK> newKey = function.evaluate(entry.getKey(), value);
 			if (newKey.isSome()) {
@@ -1632,7 +1631,7 @@ public class FunctionUtils {
 	 * @param values The argument values.
 	 * @throws X When some procedure execution fails.
 	 */
-	public static <V, X extends Exception> void execute(final Procedure1<? super V, X> procedure, final Collection<V> values)
+	public static <V, X extends Exception> void execute(final Procedure1<? super V, X> procedure, final Iterable<? extends V> values)
 	throws X {
 		assert null != values;
 		
@@ -1648,7 +1647,7 @@ public class FunctionUtils {
 	 * @param values The iterator providing the argument values.
 	 * @throws X When some procedure execution fails.
 	 */
-	public static <V, X extends Exception> void execute(final Procedure1<? super V, X> procedure, final Iterator<V> values)
+	public static <V, X extends Exception> void execute(final Procedure1<? super V, X> procedure, final Iterator<? extends V> values)
 	throws X {
 		execute(procedure, CheckedIterators.<V, InternalException>fromIterator(values));
 	}
@@ -1664,7 +1663,7 @@ public class FunctionUtils {
 	 * @throws X When some procedure execution fails.
 	 * @throws VX When some iteration fails.
 	 */
-	public static <V, X extends Exception, VX extends Exception> void execute(final Procedure1<? super V, X> procedure, final CheckedIterator<V, VX> values)
+	public static <V, X extends Exception, VX extends Exception> void execute(final Procedure1<? super V, X> procedure, final CheckedIterator<? extends V, VX> values)
 	throws X, VX {
 		assert null != procedure;
 		assert null != values;
@@ -1685,7 +1684,7 @@ public class FunctionUtils {
 	 * @throws X When some procedure execution fails.
 	 * @throws VX When some feed iteration fails.
 	 */
-	public static <V, X extends Exception, VX extends Exception> void execute(final Procedure1<? super V, X> procedure, final Feed<V, VX> values)
+	public static <V, X extends Exception, VX extends Exception> void execute(final Procedure1<? super V, X> procedure, final Feed<? extends V, VX> values)
 	throws X, VX {
 		execute(procedure, CheckedIterators.fromFeed(values));
 	}
@@ -1702,12 +1701,12 @@ public class FunctionUtils {
 	 * @param bindings The argument bindings.
 	 * @throws X When some procedure execution fails.
 	 */
-	public static <K, V, X extends Exception> void execute(final Procedure2<? super K, ? super V, X> procedure, final Map<K, V> bindings)
+	public static <K, V, X extends Exception> void execute(final Procedure2<? super K, ? super V, X> procedure, final Map<? extends K, ? extends V> bindings)
 	throws X {
 		assert null != procedure;
 		assert null != bindings;
 		
-		for (final Map.Entry<K, V> binding : bindings.entrySet()) {
+		for (final Map.Entry<? extends K, ? extends V> binding : bindings.entrySet()) {
 			procedure.execute(binding.getKey(), binding.getValue());
 		}
 	}
@@ -1724,7 +1723,7 @@ public class FunctionUtils {
 	 * @param bindings The argument bindings.
 	 * @throws X When some procedure execution fails.
 	 */
-	public static <K, V, X extends Exception> void execute(final Procedure2<? super K, ? super V, X> procedure, final Multimap<K, V, ?> bindings)
+	public static <K, V, X extends Exception> void execute(final Procedure2<? super K, ? super V, X> procedure, final Multimap<K, ? extends V, ?> bindings)
 	throws X {
 		assert null != procedure;
 		assert null != bindings;
