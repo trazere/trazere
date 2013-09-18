@@ -15,6 +15,9 @@
  */
 package com.trazere.util.accumulator;
 
+import com.trazere.util.type.Maybe;
+import java.util.Collection;
+
 /**
  * The {@link BaseAccumulator1} abstract class provides a skeleton implementation of {@link Accumulator1 accumulators}.
  * 
@@ -24,6 +27,28 @@ package com.trazere.util.accumulator;
  */
 public abstract class BaseAccumulator1<T, S, X extends Exception>
 implements Accumulator1<T, S, X> {
+	// Accumulator.
+	
+	@Override
+	public void add(final Maybe<? extends T> value)
+	throws X {
+		assert null != value;
+		
+		if (value.isSome()) {
+			add(value.asSome().getValue());
+		}
+	}
+	
+	@Override
+	public void addAll(final Collection<? extends T> values)
+	throws X {
+		assert null != values;
+		
+		for (final T value : values) {
+			add(value);
+		}
+	}
+	
 	// Procedure.
 	
 	@Override

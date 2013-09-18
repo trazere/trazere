@@ -16,6 +16,8 @@
 package com.trazere.util.accumulator;
 
 import com.trazere.util.function.Procedure1;
+import com.trazere.util.type.Maybe;
+import java.util.Collection;
 
 /**
  * The {@link Accumulator1} interface defines left folding functions over an internal state.
@@ -29,10 +31,28 @@ extends Procedure1<T, X> {
 	/**
 	 * Accumulates the given value into the receiver accumulator.
 	 * 
-	 * @param value The value. May be <code>null</code>.
+	 * @param value Value to accumulate. May be <code>null</code>.
 	 * @throws X When the accumulation fails.
 	 */
 	public void add(final T value)
+	throws X;
+	
+	/**
+	 * Accumulates the given value into the receiver accumulator.
+	 * 
+	 * @param value Value to accumulate. May be <code>null</code>.
+	 * @throws X When the accumulation fails.
+	 */
+	public void add(final Maybe<? extends T> value)
+	throws X;
+	
+	/**
+	 * Accumulates the given values into the receiver accumulator.
+	 * 
+	 * @param values Values to accumulate. May be <code>null</code>.
+	 * @throws X When the accumulation fails.
+	 */
+	public void addAll(final Collection<? extends T> values)
 	throws X;
 	
 	/**
