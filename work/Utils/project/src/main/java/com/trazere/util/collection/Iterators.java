@@ -19,6 +19,8 @@ import com.trazere.util.function.Function1;
 import com.trazere.util.function.Predicate1;
 import com.trazere.util.type.Maybe;
 import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 /**
@@ -136,7 +138,7 @@ public class Iterators {
 	 * @param iterator The iterator.
 	 * @return The built iterator over the filtered values.
 	 */
-	public static <T> FilterIterator<T> build(final Predicate1<? super T, ? extends RuntimeException> predicate, final Iterator<? extends T> iterator) {
+	public static <T> Iterator<T> filter(final Predicate1<? super T, ? extends RuntimeException> predicate, final Iterator<? extends T> iterator) {
 		assert null != predicate;
 		assert null != iterator;
 		
@@ -162,7 +164,7 @@ public class Iterators {
 	 * @param iterator The iterator.
 	 * @return The built iterator over the transformed values.
 	 */
-	public static <T, R> MapIterator<T, R> map(final Function1<? super T, ? extends R, ? extends RuntimeException> function, final Iterator<? extends T> iterator) {
+	public static <T, R> Iterator<R> map(final Function1<? super T, ? extends R, ? extends RuntimeException> function, final Iterator<? extends T> iterator) {
 		assert null != function;
 		assert null != iterator;
 		
@@ -188,7 +190,7 @@ public class Iterators {
 	 * @param iterator The iterator.
 	 * @return The built iterator over the filtered and transformed values.
 	 */
-	public static <T, R> MapFilterIterator<T, R> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, ? extends RuntimeException> extractor, final Iterator<? extends T> iterator) {
+	public static <T, R> Iterator<R> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, ? extends RuntimeException> extractor, final Iterator<? extends T> iterator) {
 		assert null != extractor;
 		assert null != iterator;
 		
@@ -201,6 +203,35 @@ public class Iterators {
 			@Override
 			public Maybe<? extends R> extract(final T value) {
 				return extractor.evaluate(value);
+			}
+		};
+	}
+	
+	/**
+	 * Builds an iterator which iterates the given list in reverse.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param list List to iterate.
+	 * @return The built iterator.
+	 */
+	public static <T> Iterator<T> reverse(final List<? extends T> list) {
+		assert null != list;
+		
+		final ListIterator<? extends T> iterator = list.listIterator(list.size());
+		return new Iterator<T>() {
+			@Override
+			public boolean hasNext() {
+				return iterator.hasPrevious();
+			}
+			
+			@Override
+			public T next() {
+				return iterator.previous();
+			}
+			
+			@Override
+			public void remove() {
+				iterator.remove();
 			}
 		};
 	}
