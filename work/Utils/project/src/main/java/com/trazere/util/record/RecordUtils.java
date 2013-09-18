@@ -19,7 +19,6 @@ import com.trazere.util.function.Function1;
 import com.trazere.util.function.Predicate1;
 import com.trazere.util.function.Predicates;
 import com.trazere.util.type.Maybe;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -42,7 +41,7 @@ public class RecordUtils {
 	 * @throws DuplicateFieldException When some field is identified by the given key in the receiver builder.
 	 * @throws RecordException When the fields cannot be added.
 	 */
-	public static <K, V> void fill(final RecordBuilder<? super K, ? super V, ?> builder, final Collection<? extends K> keys, final V value)
+	public static <K, V> void fill(final RecordBuilder<? super K, ? super V, ?> builder, final Iterable<? extends K> keys, final V value)
 	throws RecordException {
 		assert null != builder;
 		assert null != keys;
@@ -64,7 +63,7 @@ public class RecordUtils {
 	 * @param value Value to set. May be <code>null</code>.
 	 * @throws RecordException When the fields cannot be added.
 	 */
-	public static <K, V> void complete(final RecordBuilder<? super K, ? super V, ?> builder, final Collection<? extends K> keys, final V value)
+	public static <K, V> void complete(final RecordBuilder<? super K, ? super V, ?> builder, final Iterable<? extends K> keys, final V value)
 	throws RecordException {
 		assert null != builder;
 		assert null != keys;
@@ -89,7 +88,7 @@ public class RecordUtils {
 	 * @throws MissingFieldException When no fields are identified by any given key in the the given record.
 	 * @throws RecordException When the fields cannot be read.
 	 */
-	public static <K, V> SimpleRecord<K, V> sub(final Record<K, V> record, final Predicate1<? super K, ? extends RecordException> keys)
+	public static <K, V> Record<K, V> sub(final Record<K, V> record, final Predicate1<? super K, ? extends RecordException> keys)
 	throws RecordException {
 		return sub(record, keys, SimpleRecordFactory.<K, V>factory());
 	}
@@ -167,7 +166,7 @@ public class RecordUtils {
 	 * @return The sub record.
 	 * @throws RecordException When the fields cannot be read.
 	 */
-	public static <K, V> SimpleRecord<K, V> drop(final Record<K, V> record, final Predicate1<? super K, ? extends RecordException> keys)
+	public static <K, V> Record<K, V> drop(final Record<K, V> record, final Predicate1<? super K, ? extends RecordException> keys)
 	throws RecordException {
 		return sub(record, Predicates.not(keys));
 	}
@@ -221,7 +220,7 @@ public class RecordUtils {
 	 * @throws DuplicateFieldException When some fields are identified by a same key in both records.
 	 * @throws RecordException When the fields cannot be read.
 	 */
-	public static <K, V> SimpleRecord<K, V> union(final Record<? extends K, ? extends V> record1, final Record<? extends K, ? extends V> record2)
+	public static <K, V> Record<K, V> union(final Record<? extends K, ? extends V> record1, final Record<? extends K, ? extends V> record2)
 	throws RecordException {
 		return union(record1, record2, SimpleRecordFactory.<K, V>factory());
 	}
