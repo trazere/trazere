@@ -15,6 +15,10 @@
  */
 package com.trazere.util.accumulator;
 
+import com.trazere.util.type.Maybe;
+import com.trazere.util.type.Tuple2;
+import java.util.Collection;
+
 /**
  * The {@link BaseAccumulator2} abstract class provides a skeleton implementation of {@link Accumulator2 pair accumulators}.
  * 
@@ -25,6 +29,36 @@ package com.trazere.util.accumulator;
  */
 public abstract class BaseAccumulator2<T1, T2, S, X extends Exception>
 implements Accumulator2<T1, T2, S, X> {
+	// Accumulator.
+	
+	@Override
+	public void add(final Tuple2<? extends T1, ? extends T2> value)
+	throws X {
+		assert null != value;
+		
+		add(value.getFirst(), value.getSecond());
+	}
+	
+	@Override
+	public void add(final Maybe<? extends Tuple2<? extends T1, ? extends T2>> value)
+	throws X {
+		assert null != value;
+		
+		if (value.isSome()) {
+			add(value.asSome().getValue());
+		}
+	}
+	
+	@Override
+	public void addAll(final Collection<? extends Tuple2<? extends T1, ? extends T2>> values)
+	throws X {
+		assert null != values;
+		
+		for (final Tuple2<? extends T1, ? extends T2> value : values) {
+			add(value);
+		}
+	}
+	
 	// Procedure.
 	
 	@Override
