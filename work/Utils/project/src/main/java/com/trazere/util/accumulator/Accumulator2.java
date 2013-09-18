@@ -16,9 +16,7 @@
 package com.trazere.util.accumulator;
 
 import com.trazere.util.function.Procedure2;
-import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Tuple2;
-import java.util.Collection;
 
 /**
  * The {@link Accumulator2} interface defines left folding functions of pairs over an internal state.
@@ -50,21 +48,12 @@ extends Procedure2<T1, T2, X> {
 	throws X;
 	
 	/**
-	 * Accumulates the given pair of values into the receiver accumulator.
-	 * 
-	 * @param value Pair to accumulate. May be <code>null</code>.
-	 * @throws X When the accumulation fails.
-	 */
-	public void add(final Maybe<? extends Tuple2<? extends T1, ? extends T2>> value)
-	throws X;
-	
-	/**
 	 * Accumulates the given pairs of values into the receiver accumulator.
 	 * 
 	 * @param values Pairs to accumulate. May be <code>null</code>.
 	 * @throws X When the accumulation fails.
 	 */
-	public void addAll(final Collection<? extends Tuple2<? extends T1, ? extends T2>> values)
+	public void addAll(final Iterable<? extends Tuple2<? extends T1, ? extends T2>> values)
 	throws X;
 	
 	/**

@@ -56,6 +56,7 @@ public class Accumulators {
 	 * @param <X> Type of the exceptions.
 	 * @param state State of the accumulator. May be <code>null</code>.
 	 * @return The built accumulator.
+	 * @deprecated Use {@link #constant(Object)}.
 	 */
 	@Deprecated
 	public static <T, S, X extends Exception> Accumulator1<T, S, X> constant1(final S state) {

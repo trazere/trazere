@@ -28,7 +28,6 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.List;
 import java.util.Properties;
 
 /**
@@ -45,7 +44,7 @@ public class PropertiesUtils {
 	 * @throws PropertiesException When some property file is not optional and does not exist.
 	 * @throws PropertiesException When some property file cannot be loaded.
 	 */
-	public static Properties loadProperties(final List<Tuple2<Input, Boolean>> inputs)
+	public static Properties loadProperties(final Iterable<? extends Tuple2<? extends Input, Boolean>> inputs)
 	throws PropertiesException {
 		return loadProperties(new Properties(), inputs);
 	}
@@ -61,12 +60,12 @@ public class PropertiesUtils {
 	 * @throws PropertiesException When some property file is not optional and does not exist.
 	 * @throws PropertiesException When some property file cannot be loaded.
 	 */
-	public static Properties loadProperties(final Properties properties, final List<Tuple2<Input, Boolean>> inputs)
+	public static Properties loadProperties(final Properties properties, final Iterable<? extends Tuple2<? extends Input, Boolean>> inputs)
 	throws PropertiesException {
 		assert null != properties;
 		assert null != inputs;
 		
-		for (final Tuple2<Input, Boolean> file : inputs) {
+		for (final Tuple2<? extends Input, Boolean> file : inputs) {
 			loadProperties(properties, file.getFirst(), file.getSecond().booleanValue());
 		}
 		return properties;

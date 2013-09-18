@@ -13,14 +13,11 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.lang;
+package com.trazere.util.math;
 
 /**
  * The {@link MathUtils} class provides various math related helpers.
- * 
- * @deprecated Use {@link com.trazere.util.math.MathUtils}.
  */
-@Deprecated
 public class MathUtils {
 	/**
 	 * Computes the greatest common denomitor of the given values.
@@ -28,11 +25,9 @@ public class MathUtils {
 	 * @param a The first value.
 	 * @param b The second value.
 	 * @return The greatest common denominator.
-	 * @deprecated Use {@link com.trazere.util.math.MathUtils#gcd(int, int)}.
 	 */
-	@Deprecated
 	public static int gcd(final int a, final int b) {
-		return com.trazere.util.math.MathUtils.gcd(a, b);
+		return 0 == b ? a : gcd(b, a % b);
 	}
 	
 	/**
@@ -41,11 +36,9 @@ public class MathUtils {
 	 * @param a The first value.
 	 * @param b The second value.
 	 * @return The greatest common denominator.
-	 * @deprecated Use {@link com.trazere.util.math.MathUtils#gcd(long, long)}.
 	 */
-	@Deprecated
 	public static long gcd(final long a, final long b) {
-		return com.trazere.util.math.MathUtils.gcd(a, b);
+		return 0 == b ? a : gcd(b, a % b);
 	}
 	
 	/**
@@ -54,11 +47,9 @@ public class MathUtils {
 	 * @param a The first value.
 	 * @param b The second value.
 	 * @return The least common multiple.
-	 * @deprecated Use {@link com.trazere.util.math.MathUtils#lcm(int, int)}.
 	 */
-	@Deprecated
 	public static int lcm(final int a, final int b) {
-		return com.trazere.util.math.MathUtils.lcm(a, b);
+		return 0 == a ? 0 : (a / gcd(a, b)) * b;
 	}
 	
 	/**
@@ -67,11 +58,9 @@ public class MathUtils {
 	 * @param a The first value.
 	 * @param b The second value.
 	 * @return The least common multiple.
-	 * @deprecated Use {@link com.trazere.util.math.MathUtils#lcm(long, long)}.
 	 */
-	@Deprecated
 	public static long lcm(final long a, final long b) {
-		return com.trazere.util.math.MathUtils.lcm(a, b);
+		return 0 == a ? 0 : (a / gcd(a, b)) * b;
 	}
 	
 	private MathUtils() {

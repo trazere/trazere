@@ -15,9 +15,7 @@
  */
 package com.trazere.util.accumulator;
 
-import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Tuple2;
-import java.util.Collection;
 
 /**
  * The {@link BaseAccumulator2} abstract class provides a skeleton implementation of {@link Accumulator2 pair accumulators}.
@@ -40,17 +38,7 @@ implements Accumulator2<T1, T2, S, X> {
 	}
 	
 	@Override
-	public void add(final Maybe<? extends Tuple2<? extends T1, ? extends T2>> value)
-	throws X {
-		assert null != value;
-		
-		if (value.isSome()) {
-			add(value.asSome().getValue());
-		}
-	}
-	
-	@Override
-	public void addAll(final Collection<? extends Tuple2<? extends T1, ? extends T2>> values)
+	public void addAll(final Iterable<? extends Tuple2<? extends T1, ? extends T2>> values)
 	throws X {
 		assert null != values;
 		
