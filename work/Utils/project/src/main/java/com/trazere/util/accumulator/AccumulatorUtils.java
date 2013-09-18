@@ -7,6 +7,7 @@ import com.trazere.util.type.Tuple2;
  * The {@link AccumulatorUtils} class provides various helpers regarding accumulators.
  */
 public class AccumulatorUtils {
+	// TODO: move into Accumulator1
 	/**
 	 * Accumulates the given value into the given accumulator.
 	 * 
@@ -25,6 +26,7 @@ public class AccumulatorUtils {
 		}
 	}
 	
+	// TODO: move into Accumulator2
 	/**
 	 * Accumulates the given pair of values into the given accumulator.
 	 * 
