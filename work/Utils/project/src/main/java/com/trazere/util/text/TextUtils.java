@@ -29,6 +29,7 @@ import java.text.ParsePosition;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.UUID;
 
 /**
  * The {@link TextUtils} class provides various helpers regarding the manipulation of text.
@@ -556,6 +557,34 @@ public class TextUtils {
 			} else {
 				return Maybe.none();
 			}
+		}
+	}
+	
+	/**
+	 * Formats the given UUID.
+	 * 
+	 * @param uuid The UUID to format.
+	 * @return The UUID representation.
+	 */
+	public static String formatUuid(final UUID uuid) {
+		assert null != uuid;
+		
+		return uuid.toString();
+	}
+	
+	/**
+	 * Parses the given UUID representation.
+	 * 
+	 * @param representation The representation to parse.
+	 * @return The parsed UUID.
+	 */
+	public static Maybe<UUID> parseUuid(final String representation) {
+		assert null != representation;
+		
+		try {
+			return Maybe.some(UUID.fromString(representation));
+		} catch (final IllegalArgumentException exception) {
+			return Maybe.none();
 		}
 	}
 	
