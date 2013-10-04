@@ -5,6 +5,7 @@ import com.trazere.util.type.Maybe;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * The {@link TextFunctions} class provides various factories of functions related to text.
@@ -163,6 +164,44 @@ public class TextFunctions {
 			}
 		};
 	}
+	
+	/**
+	 * Builds an UUID formatting function.
+	 * 
+	 * @param <X> Type of the exception.
+	 * @return The built function.
+	 * @see TextUtils#formatUuid(UUID)
+	 */
+	@SuppressWarnings("unchecked")
+	public static <X extends Exception> Function1<UUID, String, X> formatUuid() {
+		return (Function1<UUID, String, X>) _FORMAT_UUID;
+	}
+	
+	private static final Function1<UUID, String, ?> _FORMAT_UUID = new Function1<UUID, String, RuntimeException>() {
+		@Override
+		public String evaluate(final UUID uuid) {
+			return TextUtils.formatUuid(uuid);
+		}
+	};
+	
+	/**
+	 * Builds an UUID parsing function.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @return The built function.
+	 * @see TextUtils#parseUuid(String)
+	 */
+	@SuppressWarnings("unchecked")
+	public static <X extends Exception> Function1<String, Maybe<UUID>, X> parseUuid() {
+		return (Function1<String, Maybe<UUID>, X>) _PARSE_UUID;
+	}
+	
+	private static final Function1<String, Maybe<UUID>, ?> _PARSE_UUID = new Function1<String, Maybe<UUID>, RuntimeException>() {
+		@Override
+		public Maybe<UUID> evaluate(final String representation) {
+			return TextUtils.parseUuid(representation);
+		}
+	};
 	
 	private TextFunctions() {
 		// Prevents instantiation.
