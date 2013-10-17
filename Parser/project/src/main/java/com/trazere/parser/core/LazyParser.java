@@ -20,7 +20,7 @@ import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserState;
 import com.trazere.util.closure.Closure;
-import com.trazere.util.closure.ResetableClosure;
+import com.trazere.util.closure.ResettableClosure;
 import com.trazere.util.function.Function0;
 
 /**
@@ -43,7 +43,7 @@ implements Parser<Token, Result> {
 		};
 	}
 	
-	protected final Closure<Parser<Token, Result>, ParserException> _parser = new ResetableClosure<Parser<Token, Result>, ParserException>() {
+	protected final Closure<Parser<Token, Result>, ParserException> _parser = new ResettableClosure<Parser<Token, Result>, ParserException>() {
 		@Override
 		protected Parser<Token, Result> compute()
 		throws ParserException {
