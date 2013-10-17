@@ -16,14 +16,7 @@
 package com.trazere.util.closure;
 
 import com.trazere.util.function.Function0;
-import com.trazere.util.lang.Releasable;
-import com.trazere.util.reference.MutableReference;
-import com.trazere.util.text.Describable;
 import com.trazere.util.text.Description;
-import com.trazere.util.text.TextUtils;
-import com.trazere.util.type.Maybe;
-import com.trazere.util.type.Maybe.None;
-import com.trazere.util.type.Maybe.Some;
 
 /**
  * The {@link ResetableClosure} abstract class represents closures which can be re-evaluated.
@@ -33,9 +26,11 @@ import com.trazere.util.type.Maybe.Some;
  * 
  * @param <T> Type of the value.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link ResettableClosure}.
  */
+@Deprecated
 public abstract class ResetableClosure<T, X extends Exception>
-implements Closure<T, X>, Releasable<RuntimeException>, Describable {
+extends ResettableClosure<T, X> {
 	/**
 	 * Builds a closure evaluating to the given value.
 	 * 
@@ -43,7 +38,9 @@ implements Closure<T, X>, Releasable<RuntimeException>, Describable {
 	 * @param <X> Type of the exceptions.
 	 * @param value Value. May be <code>null</code>.
 	 * @return The closure.
+	 * @deprecated Use {@link ResettableClosure#build(Object)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> ResetableClosure<T, X> build(final T value) {
 		return new ResetableClosure<T, X>() {
 			@Override
@@ -66,7 +63,9 @@ implements Closure<T, X>, Releasable<RuntimeException>, Describable {
 	 * @param <X> Type of the exceptions.
 	 * @param function The function computing the value.
 	 * @return The closure.
+	 * @deprecated Use {@link ResettableClosure#build(Function0)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> ResetableClosure<T, X> build(final Function0<? extends T, ? extends X> function) {
 		return new ResetableClosure<T, X>() {
 			@Override
@@ -81,86 +80,5 @@ implements Closure<T, X>, Releasable<RuntimeException>, Describable {
 				description.append("Function", function);
 			}
 		};
-	}
-	
-	// Closure.
-	
-	/** The value. */
-	protected final MutableReference<T> _value = new MutableReference<T>() {
-		@Override
-		protected void dispose(final T value) {
-			ResetableClosure.this.dispose(value);
-		}
-	};
-	
-	@Override
-	public T evaluate()
-	throws X {
-		if (_value.isSet()) {
-			return _value.get();
-		} else {
-			return _value.set(compute());
-		}
-	}
-	
-	/**
-	 * Computes the value of the receiver closure.
-	 * 
-	 * @return The computed value. May be <code>null</code>.
-	 * @throws X When the computation fails.
-	 */
-	protected abstract T compute()
-	throws X;
-	
-	/**
-	 * Disposes the given current value of the receiver closure.
-	 * <p>
-	 * This methods is called when the receiver evaluated closure is reset. The defaut implementation does nothing.
-	 * 
-	 * @param value The value. May be <code>null</code>.
-	 */
-	protected void dispose(final T value) {
-		// Nothing to do.
-	}
-	
-	@Override
-	public boolean isEvaluated() {
-		return _value.isSet();
-	}
-	
-	/**
-	 * Reset the value memoized in the receiver closure. The value will be computed (again) during the next call to {@link #evaluate()}.
-	 */
-	public void reset() {
-		_value.reset();
-	}
-	
-	/**
-	 * Get a view of the computed value of the receiver closure as an instance of {@link Maybe}.
-	 * 
-	 * @return The computed value wrapped in {@link Some}, or {@link None} when the value has not been computed yet.
-	 */
-	@Override
-	public Maybe<T> asMaybe() {
-		return _value.asMaybe();
-	}
-	
-	// Releasable.
-	
-	@Override
-	public void release() {
-		reset();
-	}
-	
-	// Object.
-	
-	@Override
-	public String toString() {
-		return _value.isSet() ? String.valueOf(_value.get()) : TextUtils.computeDescription(this);
-	}
-	
-	@Override
-	public void fillDescription(final Description description) {
-		// Nothing to do.
 	}
 }
