@@ -42,7 +42,7 @@ public class ClosureUtils {
 	 * 
 	 * @param closure The closure.
 	 */
-	public static void synchronizedReset(final ResetableClosure<?, ?> closure) {
+	public static void synchronizedReset(final ResettableClosure<?, ?> closure) {
 		assert null != closure;
 		
 		synchronized (closure) {
