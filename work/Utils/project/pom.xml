@@ -11,7 +11,7 @@
 		<groupId>com.trazere</groupId>
 		<artifactId>root</artifactId>
 		<version>0.0-SNAPSHOT</version>
-		<relativePath>../../project</relativePath>
+		<relativePath>../../project/pom.xml</relativePath>
 	</parent>
 
 	<dependencies>
