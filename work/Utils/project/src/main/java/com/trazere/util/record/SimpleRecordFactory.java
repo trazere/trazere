@@ -56,7 +56,7 @@ implements RecordFactory<K, V, SimpleRecord<K, V>> {
 	
 	@Override
 	public SimpleRecord<K, V> build(final Record<? extends K, ? extends V> record)
-	throws RecordException {
+	throws InvalidFieldException {
 		return SimpleRecord.build(record);
 	}
 }

@@ -15,6 +15,8 @@
  */
 package com.trazere.util.record;
 
+import com.trazere.util.lang.InternalException;
+
 /**
  * The {@link BaseParametrable} abstract class provides a skeleton implementation of {@link Parametrable parametrables}.
  * 
@@ -24,8 +26,11 @@ package com.trazere.util.record;
 public abstract class BaseParametrable<K, V>
 implements Parametrable<K, V> {
 	@Override
-	public RecordSignature<K, V> getRequirements()
-	throws RecordException {
-		return unifyRequirements(new SimpleRecordSignatureBuilder<K, V>()).build();
+	public RecordSignature<K, V> getRequirements() {
+		try {
+			return unifyRequirements(new SimpleRecordSignatureBuilder<K, V>()).build();
+		} catch (final IncompatibleFieldException exception) {
+			throw new InternalException(exception);
+		}
 	}
 }

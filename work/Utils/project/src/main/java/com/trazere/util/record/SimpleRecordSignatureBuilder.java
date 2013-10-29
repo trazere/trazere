@@ -26,16 +26,16 @@ import java.util.Map;
  * @see SimpleRecordSignature
  */
 public class SimpleRecordSignatureBuilder<K, V>
-extends BaseSimpleRecordSignatureBuilder<K, V, SimpleRecordSignature<K, V>> {
+extends BaseRecordSignatureBuilder<K, V, SimpleRecordSignature<K, V>> {
 	/**
-	 * Instantiate a new empty builder.
+	 * Instantiates a new empty builder.
 	 */
 	public SimpleRecordSignatureBuilder() {
 		super();
 	}
 	
 	/**
-	 * Instantiate a new builder populated with the given field signatures.
+	 * Instantiates a new builder populated with the given field signatures.
 	 * 
 	 * @param fields Initial field signatures identified by their keys.
 	 */
@@ -44,13 +44,13 @@ extends BaseSimpleRecordSignatureBuilder<K, V, SimpleRecordSignature<K, V>> {
 	}
 	
 	/**
-	 * Instantiate a new builder populated with the field signatures of the given record signature.
+	 * Instantiates a new builder populated with the field signatures of the given record signature.
 	 * 
 	 * @param signature Record signature containing the initial field signatures.
-	 * @throws RecordException When the record signature cannot be read.
+	 * @throws InvalidFieldException When some field signature cannot be read.
 	 */
 	public SimpleRecordSignatureBuilder(final RecordSignature<K, ? extends V> signature)
-	throws RecordException {
+	throws InvalidFieldException {
 		super(signature);
 	}
 	

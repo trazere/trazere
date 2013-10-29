@@ -15,6 +15,8 @@
  */
 package com.trazere.util.record;
 
+import com.trazere.util.lang.Factory;
+
 /**
  * The {@link RecordBuilderFactory} interface defines factories of {@link RecordBuilder record builders}.
  * 
@@ -24,13 +26,15 @@ package com.trazere.util.record;
  * @param <B> Type of the record builders.
  * @see RecordBuilder
  */
-public interface RecordBuilderFactory<K, V, R extends Record<K, V>, B extends RecordBuilder<K, V, R>> {
+public interface RecordBuilderFactory<K, V, R extends Record<K, V>, B extends RecordBuilder<K, V, R>>
+extends Factory<B, RecordException> {
 	/**
-	 * Build a new empty record builder.
+	 * Builds a new empty record builder.
 	 * 
 	 * @return The built record builder.
-	 * @throws RecordException
+	 * @throws RecordException When the record builder cannot be built.
 	 */
+	@Override
 	public B build()
 	throws RecordException;
 }
