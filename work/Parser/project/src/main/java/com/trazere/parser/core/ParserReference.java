@@ -19,7 +19,9 @@ import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserState;
+import com.trazere.util.lang.InternalException;
 import com.trazere.util.reference.MutableReference;
+import com.trazere.util.reference.ReferenceNotSetException;
 
 // TODO: improve parser comparison to handle recursive parsers
 
@@ -42,19 +44,32 @@ implements Parser<Token, Result> {
 		return parser;
 	}
 	
-	protected Parser<Token, Result> get() {
+	protected Parser<Token, Result> get()
+	throws ReferenceNotSetException {
 		return _parser.get();
 	}
 	
 	@Override
 	public String getDescription() {
-		return get().getDescription();
+		if (_parser.isSet()) {
+			try {
+				return get().getDescription();
+			} catch (final ReferenceNotSetException exception) {
+				throw new InternalException(exception);
+			}
+		} else {
+			return "?";
+		}
 	}
 	
 	@Override
 	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
 	throws ParserException {
-		get().run(closure, state);
+		try {
+			get().run(closure, state);
+		} catch (final ReferenceNotSetException exception) {
+			throw new ParserException("Parser reference has not been set");
+		}
 	}
 	
 	// // Object.
