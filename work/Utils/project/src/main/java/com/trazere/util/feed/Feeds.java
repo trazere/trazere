@@ -255,7 +255,7 @@ public class Feeds {
 		
 		return new MemoizedFeed<T, X>() {
 			@Override
-			protected Maybe<Tuple2<T, Feed<T, X>>> compute()
+			protected Maybe<? extends Tuple2<? extends T, ? extends Feed<? extends T, ? extends X>>> compute()
 			throws X {
 				return feed.evaluate();
 			}
@@ -279,7 +279,7 @@ public class Feeds {
 			// Function.
 			
 			@Override
-			protected Maybe<Tuple2<T, Feed<T, X>>> compute()
+			protected Maybe<? extends Tuple2<T, ? extends Feed<? extends T, ? extends X>>> compute()
 			throws X {
 				Feed<? extends T, ? extends X> tail = feed;
 				while (!tail.isEmpty()) {

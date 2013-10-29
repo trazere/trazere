@@ -180,7 +180,7 @@ public class CheckedIterators {
 		assert null != feed;
 		
 		return new CheckedIterator<T, X>() {
-			private Feed<T, X> _tail = feed;
+			private Feed<? extends T, ? extends X> _tail = feed;
 			
 			@Override
 			public boolean hasNext()
