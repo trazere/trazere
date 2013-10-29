@@ -19,20 +19,16 @@ import com.trazere.util.lang.BaseThrowableFactory;
 import com.trazere.util.lang.ThrowableFactory;
 
 /**
- * {@link ReferenceAlreadySetException} exceptions are thrown when trying to set some reference which has already been set.
- * <p>
- * These exceptions are runtime exceptions in order to reduce clutter when using computations which cannot fail.
- * 
- * @see MutableReference
+ * {@link ReferenceException} exceptions are thrown when reference related errors occur.
  */
-public class ReferenceAlreadySetException
-extends ReferenceException {
+public class ReferenceException
+extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * Instantiates a new exception.
 	 */
-	public ReferenceAlreadySetException() {
+	public ReferenceException() {
 		super();
 	}
 	
@@ -41,7 +37,7 @@ extends ReferenceException {
 	 * 
 	 * @param message Details about the exception.
 	 */
-	public ReferenceAlreadySetException(final String message) {
+	public ReferenceException(final String message) {
 		super(message);
 	}
 	
@@ -50,7 +46,7 @@ extends ReferenceException {
 	 * 
 	 * @param cause Cause of the exception.
 	 */
-	public ReferenceAlreadySetException(final Throwable cause) {
+	public ReferenceException(final Throwable cause) {
 		super(cause);
 	}
 	
@@ -60,31 +56,30 @@ extends ReferenceException {
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
 	 */
-	public ReferenceAlreadySetException(final String message, final Throwable cause) {
+	public ReferenceException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 	
-	/** Factory of {@link ReferenceAlreadySetException}. */
-	@SuppressWarnings("hiding")
-	public static final ThrowableFactory<ReferenceAlreadySetException> FACTORY = new BaseThrowableFactory<ReferenceAlreadySetException>() {
+	/** Factory of {@link ReferenceException}. */
+	public static final ThrowableFactory<ReferenceException> FACTORY = new BaseThrowableFactory<ReferenceException>() {
 		@Override
-		public ReferenceAlreadySetException build() {
-			return new ReferenceAlreadySetException();
+		public ReferenceException build() {
+			return new ReferenceException();
 		}
 		
 		@Override
-		public ReferenceAlreadySetException build(final String message) {
-			return new ReferenceAlreadySetException(message);
+		public ReferenceException build(final String message) {
+			return new ReferenceException(message);
 		}
 		
 		@Override
-		public ReferenceAlreadySetException build(final Throwable cause) {
-			return new ReferenceAlreadySetException(cause);
+		public ReferenceException build(final Throwable cause) {
+			return new ReferenceException(cause);
 		}
 		
 		@Override
-		public ReferenceAlreadySetException build(final String message, final Throwable cause) {
-			return new ReferenceAlreadySetException(message, cause);
+		public ReferenceException build(final String message, final Throwable cause) {
+			return new ReferenceException(message, cause);
 		}
 	};
 }
