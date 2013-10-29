@@ -18,6 +18,7 @@ package com.trazere.util.value;
 import com.trazere.util.function.Function1;
 import com.trazere.util.lang.TypeCheckException;
 import com.trazere.util.record.IncompatibleFieldException;
+import com.trazere.util.record.InvalidFieldException;
 import com.trazere.util.record.Record;
 import com.trazere.util.record.RecordException;
 import com.trazere.util.record.RecordSignatureBuilder;
@@ -102,7 +103,7 @@ public class ValueUtils {
 			
 			@Override
 			public ValueReader<R> compose(final RecordReader<String, Object> reader)
-			throws ValueException {
+			throws RecordException {
 				final ValueReader<T> valueReader_ = valueReader.compose(reader);
 				return map(type, nullable, function, valueReader_);
 			}
@@ -116,20 +117,17 @@ public class ValueUtils {
 	 * @param reader The value reader.
 	 * @param parameters The parameters.
 	 * @return A reduced value reader if the requirements were met, or the given value reader.
-	 * @throws ValueException
+	 * @throws InvalidFieldException When some parameter cannot be read.
+	 * @throws ValueException When the value cannot be read.
 	 */
 	public static <T> ValueReader<T> reduce(final ValueReader<T> reader, final Record<String, Object> parameters)
-	throws ValueException {
+	throws InvalidFieldException, ValueException {
 		assert null != reader;
 		
-		try {
-			if (reader.getRequirements().accepts(parameters)) {
-				return ConstantValueReader.build(reader.read(parameters), reader.getValueClass());
-			} else {
-				return reader;
-			}
-		} catch (final RecordException exception) {
-			throw new ValueException(exception);
+		if (reader.getRequirements().accepts(parameters)) {
+			return ConstantValueReader.build(reader.read(parameters), reader.getValueClass());
+		} else {
+			return reader;
 		}
 	}
 	
