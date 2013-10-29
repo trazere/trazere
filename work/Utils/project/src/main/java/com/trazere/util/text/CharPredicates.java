@@ -133,87 +133,87 @@ public class CharPredicates {
 	}
 	
 	/**
-     * Builds a predicate that evaluate to <code>true</code> for the given character.
-     * 
-     * @param <X> Type of the exceptions.
-     * @param value The character.
-     * @return The built predicate.
-     */
-    public static <X extends Exception> CharPredicate<X> value(final char value) {
-    	return new CharPredicate<X>() {
-    		@Override
-    		public boolean evaluate(final char c_) {
-    			return value == c_;
-    		}
-    	};
-    }
-
+	 * Builds a predicate that evaluate to <code>true</code> for the given character.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @param value The character.
+	 * @return The built predicate.
+	 */
+	public static <X extends Exception> CharPredicate<X> value(final char value) {
+		return new CharPredicate<X>() {
+			@Override
+			public boolean evaluate(final char c_) {
+				return value == c_;
+			}
+		};
+	}
+	
 	/**
-     * Builds a predicate that evaluates to <code>true</code> for any given characters.
-     * 
-     * @param <X> Type of the exceptions.
-     * @param values The characters.
-     * @return The built predicate.
-     */
-    public static <X extends Exception> CharPredicate<X> values(final char... values) {
-    	assert null != values;
-    	
-    	final Set<Character> values_ = new HashSet<Character>();
-    	for (final char value : values) {
-    		values_.add(value);
-    	}
-    	return values(values_);
-    }
-
+	 * Builds a predicate that evaluates to <code>true</code> for any given characters.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @param values The characters.
+	 * @return The built predicate.
+	 */
+	public static <X extends Exception> CharPredicate<X> values(final char... values) {
+		assert null != values;
+		
+		final Set<Character> values_ = new HashSet<Character>();
+		for (final char value : values) {
+			values_.add(value);
+		}
+		return values(values_);
+	}
+	
 	/**
-     * Builds a predicate that evaluates to <code>true</code> for any given characters.
-     * 
-     * @param <X> Type of the exceptions.
-     * @param values The characters.
-     * @return The built predicate.
-     */
-    public static <X extends Exception> CharPredicate<X> values(final Character... values) {
-    	assert null != values;
-    	
-    	return values(new HashSet<Character>(Arrays.asList(values)));
-    }
-
+	 * Builds a predicate that evaluates to <code>true</code> for any given characters.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @param values The characters.
+	 * @return The built predicate.
+	 */
+	public static <X extends Exception> CharPredicate<X> values(final Character... values) {
+		assert null != values;
+		
+		return values(new HashSet<Character>(Arrays.asList(values)));
+	}
+	
 	/**
-     * Builds a predicate that evaluates to <code>true</code> for any given values.
-     * 
-     * @param <X> Type of the exceptions.
-     * @param values The characters.
-     * @return The built predicate.
-     */
-    public static <X extends Exception> CharPredicate<X> values(final Collection<Character> values) {
-    	assert null != values;
-    	
-    	return new CharPredicate<X>() {
-    		@Override
-    		public boolean evaluate(final char c) {
-    			return values.contains(c);
-    		}
-    	};
-    }
-
+	 * Builds a predicate that evaluates to <code>true</code> for any given values.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @param values The characters.
+	 * @return The built predicate.
+	 */
+	public static <X extends Exception> CharPredicate<X> values(final Collection<Character> values) {
+		assert null != values;
+		
+		return new CharPredicate<X>() {
+			@Override
+			public boolean evaluate(final char c) {
+				return values.contains(c);
+			}
+		};
+	}
+	
 	/**
-     * Builds a predicate that evaluate to <code>true</code> for any character of the given string.
-     * 
-     * @param <X> Type of the exceptions.
-     * @param chars The characters.
-     * @return The built predicate.
-     */
-    public static <X extends Exception> CharPredicate<X> values(final String chars) {
-    	assert null != chars;
-    	
-    	return new CharPredicate<X>() {
-    		@Override
-    		public boolean evaluate(final char c) {
-    			return chars.indexOf(c) >= 0;
-    		}
-    	};
-    }
-
+	 * Builds a predicate that evaluate to <code>true</code> for any character of the given string.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @param chars The characters.
+	 * @return The built predicate.
+	 */
+	public static <X extends Exception> CharPredicate<X> values(final String chars) {
+		assert null != chars;
+		
+		return new CharPredicate<X>() {
+			@Override
+			public boolean evaluate(final char c) {
+				return chars.indexOf(c) >= 0;
+			}
+		};
+	}
+	
 	/**
 	 * Builds a predicate that evaluates to <code>true</code> for whitespace characters.
 	 * 

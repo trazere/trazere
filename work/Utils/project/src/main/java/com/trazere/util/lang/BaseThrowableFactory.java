@@ -21,7 +21,7 @@ package com.trazere.util.lang;
  * @param <T> Type of the throwables.
  */
 public abstract class BaseThrowableFactory<T extends Throwable>
-extends BaseFactory<T, RuntimeException>
+extends BaseFactory<T, InternalException>
 implements ThrowableFactory<T> {
 	// Nothing to do.
 }

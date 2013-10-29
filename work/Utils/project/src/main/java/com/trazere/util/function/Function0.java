@@ -15,8 +15,6 @@
  */
 package com.trazere.util.function;
 
-// TODO: kill, replace by factory ?
-
 /**
  * The {@link Function0} interface defines zero arguments functions.
  * 

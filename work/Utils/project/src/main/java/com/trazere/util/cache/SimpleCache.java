@@ -18,6 +18,7 @@ package com.trazere.util.cache;
 import com.trazere.util.collection.CollectionUtils;
 import com.trazere.util.function.Predicate1;
 import com.trazere.util.function.Predicates;
+import com.trazere.util.lang.InternalException;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
@@ -98,7 +99,7 @@ implements Cache<K, V>, Describable {
 		final Set<K> dirtyKeys = _policy.updatedEntry(key, new HashSet<K>());
 		
 		// Clean the cache up.
-		clear(Predicates.<K, RuntimeException>values(dirtyKeys));
+		clear(Predicates.<K, InternalException>values(dirtyKeys));
 		
 		return oldValue;
 	}
@@ -115,7 +116,7 @@ implements Cache<K, V>, Describable {
 			final Set<K> dirtyKeys = _policy.accessedEntry(key, new HashSet<K>());
 			
 			// Clean the cache up.
-			clear(Predicates.<K, RuntimeException>values(dirtyKeys));
+			clear(Predicates.<K, InternalException>values(dirtyKeys));
 		}
 		
 		return value;

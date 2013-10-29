@@ -15,6 +15,9 @@
  */
 package com.trazere.util.reference;
 
+import com.trazere.util.lang.BaseThrowableFactory;
+import com.trazere.util.lang.ThrowableFactory;
+
 /**
  * {@link ReferenceNotSetException} exceptions are thrown when trying to reset some reference which has not been set.
  * <p>
@@ -27,14 +30,14 @@ extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 	
 	/**
-	 * Instantiate a new exception.
+	 * Instantiates a new exception.
 	 */
 	public ReferenceNotSetException() {
 		super();
 	}
 	
 	/**
-	 * Instantiate a new exception using the given message.
+	 * Instantiates a new exception using the given message.
 	 * 
 	 * @param message Details about the exception.
 	 */
@@ -43,7 +46,7 @@ extends RuntimeException {
 	}
 	
 	/**
-	 * Instantiate a new exception using the given cause.
+	 * Instantiates a new exception using the given cause.
 	 * 
 	 * @param cause Cause of the exception.
 	 */
@@ -52,7 +55,7 @@ extends RuntimeException {
 	}
 	
 	/**
-	 * Instantiate a new exception using the given message and cause.
+	 * Instantiates a new exception using the given message and cause.
 	 * 
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
@@ -60,4 +63,27 @@ extends RuntimeException {
 	public ReferenceNotSetException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
+	
+	/** Factory of {@link ReferenceNotSetException}. */
+	public static final ThrowableFactory<ReferenceNotSetException> FACTORY = new BaseThrowableFactory<ReferenceNotSetException>() {
+		@Override
+		public ReferenceNotSetException build() {
+			return new ReferenceNotSetException();
+		}
+		
+		@Override
+		public ReferenceNotSetException build(final String message) {
+			return new ReferenceNotSetException(message);
+		}
+		
+		@Override
+		public ReferenceNotSetException build(final Throwable cause) {
+			return new ReferenceNotSetException(cause);
+		}
+		
+		@Override
+		public ReferenceNotSetException build(final String message, final Throwable cause) {
+			return new ReferenceNotSetException(message, cause);
+		}
+	};
 }
