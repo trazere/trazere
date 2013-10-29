@@ -17,6 +17,7 @@ package com.trazere.util.value;
 
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.record.FieldSignature;
+import com.trazere.util.record.IncompatibleFieldException;
 import com.trazere.util.record.Record;
 import com.trazere.util.record.RecordException;
 import com.trazere.util.record.RecordSignatureBuilder;
@@ -108,7 +109,7 @@ extends BaseValueReader<T> {
 	
 	@Override
 	public <B extends RecordSignatureBuilder<String, Object, ?>> B unifyRequirements(final B builder)
-	throws RecordException {
+	throws IncompatibleFieldException {
 		builder.unify(_name, _valueClass, _nullable);
 		return builder;
 	}
@@ -154,7 +155,7 @@ extends BaseValueReader<T> {
 		return new BaseValueReader<T>(_valueClass, _nullable) {
 			@Override
 			public <B extends RecordSignatureBuilder<String, Object, ?>> B unifyRequirements(final B builder)
-			throws RecordException {
+			throws IncompatibleFieldException {
 				return valueReader.unifyRequirements(builder);
 			}
 			

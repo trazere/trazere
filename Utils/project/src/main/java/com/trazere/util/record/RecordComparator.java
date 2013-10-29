@@ -16,6 +16,7 @@
 package com.trazere.util.record;
 
 import com.trazere.util.lang.MapComparator;
+import com.trazere.util.lang.WrapException;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
@@ -65,8 +66,10 @@ implements Describable {
 		
 		try {
 			return record.get(_key);
-		} catch (final RecordException exception) {
-			throw new RuntimeException("Failed reading record " + record, exception);
+		} catch (final InvalidFieldException exception) {
+			throw new WrapException(exception);
+		} catch (final MissingFieldException exception) {
+			throw new WrapException(exception);
 		}
 	}
 	

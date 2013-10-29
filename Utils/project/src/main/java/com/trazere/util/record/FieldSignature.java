@@ -199,6 +199,8 @@ implements Describable {
 		}
 	}
 	
+	// TODO: accepts(FieldSignature)
+	
 	// TODO: should return a reason in case of failure
 	/**
 	 * Check whether the receiver field signature accepts a value with the given type and nullability.

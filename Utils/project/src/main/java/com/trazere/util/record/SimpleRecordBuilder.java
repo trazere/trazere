@@ -26,16 +26,16 @@ import java.util.Map;
  * @see SimpleRecord
  */
 public class SimpleRecordBuilder<K, V>
-extends BaseSimpleRecordBuilder<K, V, SimpleRecord<K, V>> {
+extends BaseRecordBuilder<K, V, SimpleRecord<K, V>> {
 	/**
-	 * Instantiate a new empty record builder.
+	 * Instantiates a new empty record builder.
 	 */
 	public SimpleRecordBuilder() {
 		super();
 	}
 	
 	/**
-	 * Instantiate a new record builder populated with the given fields.
+	 * Instantiates a new record builder populated with the given fields.
 	 * 
 	 * @param fields Values of the initial fields identified by their keys.
 	 */
@@ -44,24 +44,22 @@ extends BaseSimpleRecordBuilder<K, V, SimpleRecord<K, V>> {
 	}
 	
 	/**
-	 * Instantiate a new record builder populated with the fields of the given record.
+	 * Instantiates a new record builder populated with the fields of the given record.
 	 * 
 	 * @param record Record containing the initial fields of the new record builder.
-	 * @throws RecordException When the given record cannot be read.
+	 * @throws InvalidFieldException When the some field of the given record cannot be read.
 	 */
 	public SimpleRecordBuilder(final Record<? extends K, ? extends V> record)
-	throws RecordException {
+	throws InvalidFieldException {
 		super(record);
 	}
 	
 	/**
-	 * Instantiate a new record builder populated with the fields of the given record builder.
+	 * Instantiates a new record builder populated with the fields of the given record builder.
 	 * 
 	 * @param builder Record builder containing the initial fields of the new record builder.
-	 * @throws RecordException When the given record builder cannot populate the new record builder.
 	 */
-	public SimpleRecordBuilder(final RecordBuilder<? extends K, ? extends V, ?> builder)
-	throws RecordException {
+	public SimpleRecordBuilder(final RecordBuilder<? extends K, ? extends V, ?> builder) {
 		super(builder);
 	}
 	

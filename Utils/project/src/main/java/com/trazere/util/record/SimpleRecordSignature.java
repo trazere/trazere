@@ -27,6 +27,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+// TODO: rename to MapRecordSignature ?
+
 /**
  * The {@link SimpleRecordSignature} class implements simple record signatures.
  * 
@@ -37,8 +39,9 @@ public class SimpleRecordSignature<K, V>
 implements RecordSignature<K, V>, Describable {
 	private static final SimpleRecordSignature<?, ?> EMPTY = new SimpleRecordSignature<Object, Object>(Collections.<Object, FieldSignature<Object, Object>>emptyMap());
 	
+	// TODO: move to RecordSignatures
 	/**
-	 * Build an empty record signature.
+	 * Builds an empty record signature.
 	 * <p>
 	 * This method actually returns a singleton instead of building a new objet.
 	 * 
@@ -51,8 +54,9 @@ implements RecordSignature<K, V>, Describable {
 		return (SimpleRecordSignature<K, V>) EMPTY;
 	}
 	
+	// TODO: move to RecordSignatures
 	/**
-	 * Build a record signature with the given field signatures.
+	 * Builds a record signature with the given field signatures.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -70,8 +74,9 @@ implements RecordSignature<K, V>, Describable {
 		return new SimpleRecordSignature<K, V>(fieldsByKeys);
 	}
 	
+	// TODO: move to RecordSignatures
 	/**
-	 * Build a record signature with the given field signatures.
+	 * Builds a record signature with the given field signatures.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -93,7 +98,7 @@ implements RecordSignature<K, V>, Describable {
 	protected final Map<K, FieldSignature<K, ? extends V>> _fields;
 	
 	/**
-	 * Instantiate a new record signature with the given field signatures.
+	 * Instantiates a new record signature with the given field signatures.
 	 * 
 	 * @param signatures Signatures of the fields identified by their keys.
 	 */
@@ -136,8 +141,7 @@ implements RecordSignature<K, V>, Describable {
 	}
 	
 	@Override
-	public Maybe<FieldSignature<K, ? extends V>> getMaybe(final K key)
-	throws RecordException {
+	public Maybe<FieldSignature<K, ? extends V>> getMaybe(final K key) {
 		assert null != key;
 		
 		return CollectionUtils.get(_fields, key);
@@ -150,7 +154,7 @@ implements RecordSignature<K, V>, Describable {
 	
 	@Override
 	public boolean accepts(final Record<? super K, ? extends V> record)
-	throws RecordException {
+	throws InvalidFieldException {
 		assert null != record;
 		
 		for (final Map.Entry<K, FieldSignature<K, ? extends V>> requirement : _fields.entrySet()) {
@@ -164,15 +168,17 @@ implements RecordSignature<K, V>, Describable {
 	
 	@Override
 	public boolean accepts(final RecordSignature<? super K, ? extends V> signature)
-	throws RecordException {
+	throws InvalidFieldException {
 		assert null != signature;
 		
 		for (final Map.Entry<K, FieldSignature<K, ? extends V>> requirement : _fields.entrySet()) {
 			final K key = requirement.getKey();
-			if (!signature.contains(key)) {
+			final Maybe<? extends FieldSignature<? super K, ?>> maybeFieldSignature = signature.getMaybe(key);
+			if (maybeFieldSignature.isNone()) {
 				return false;
 			} else {
-				final FieldSignature<? super K, ?> fieldSignature = signature.get(key);
+				final FieldSignature<? super K, ?> fieldSignature = maybeFieldSignature.asSome().getValue();
+				// TODO: accepts method with fieldsignature as arg
 				if (!requirement.getValue().accepts(fieldSignature.getType(), fieldSignature.isNullable())) {
 					return false;
 				}

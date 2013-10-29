@@ -16,6 +16,7 @@
 package com.trazere.util.value;
 
 import com.trazere.util.function.Function1;
+import com.trazere.util.record.IncompatibleFieldException;
 import com.trazere.util.record.Record;
 import com.trazere.util.record.RecordException;
 import com.trazere.util.record.RecordSignatureBuilder;
@@ -88,9 +89,8 @@ public class ValueUtils {
 		return new BaseValueReader<R>(type, nullable) {
 			@Override
 			public <B extends RecordSignatureBuilder<String, Object, ?>> B unifyRequirements(final B builder)
-			throws RecordException {
-				valueReader.unifyRequirements(builder);
-				return builder;
+			throws IncompatibleFieldException {
+				return valueReader.unifyRequirements(builder);
 			}
 			
 			@Override

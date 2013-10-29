@@ -16,6 +16,7 @@
 package com.trazere.util.value;
 
 import com.trazere.util.record.FieldSignature;
+import com.trazere.util.record.IncompatibleFieldException;
 import com.trazere.util.record.Record;
 import com.trazere.util.record.RecordBuilder;
 import com.trazere.util.record.RecordException;
@@ -53,20 +54,17 @@ extends BaseRecordReader<K, V> {
 	}
 	
 	@Override
-	public RecordSignature<String, Object> getRequirements()
-	throws RecordException {
+	public RecordSignature<String, Object> getRequirements() {
 		if (_fields.isEmpty()) {
 			return SimpleRecordSignature.build();
 		} else {
-			final RecordSignatureBuilder<String, Object, ?> builder = new SimpleRecordSignatureBuilder<String, Object>();
-			unifyRequirements(builder);
-			return builder.build();
+			return super.getRequirements();
 		}
 	}
 	
 	@Override
 	public <B extends RecordSignatureBuilder<String, Object, ?>> B unifyRequirements(final B builder)
-	throws RecordException {
+	throws IncompatibleFieldException {
 		for (final ValueReader<? extends V> field : _fields.values()) {
 			field.unifyRequirements(builder);
 		}
