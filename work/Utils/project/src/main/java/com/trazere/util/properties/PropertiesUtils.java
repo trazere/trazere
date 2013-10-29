@@ -41,11 +41,10 @@ public class PropertiesUtils {
 	 * 
 	 * @param inputs Input of the property files to load paired with flags indicating whether they are optional.
 	 * @return The loaded properties.
-	 * @throws PropertiesException When some property file is not optional and does not exist.
-	 * @throws PropertiesException When some property file cannot be loaded.
+	 * @throws IOException When the property file cannot be loaded.
 	 */
 	public static Properties loadProperties(final Iterable<? extends Tuple2<? extends Input, Boolean>> inputs)
-	throws PropertiesException {
+	throws IOException {
 		return loadProperties(new Properties(), inputs);
 	}
 	
@@ -57,11 +56,10 @@ public class PropertiesUtils {
 	 * @param properties Properties to fill.
 	 * @param inputs Inputs of the property files to load paired with flags indicating whether they are optional.
 	 * @return The given properties.
-	 * @throws PropertiesException When some property file is not optional and does not exist.
-	 * @throws PropertiesException When some property file cannot be loaded.
+	 * @throws IOException When the property file cannot be loaded.
 	 */
 	public static Properties loadProperties(final Properties properties, final Iterable<? extends Tuple2<? extends Input, Boolean>> inputs)
-	throws PropertiesException {
+	throws IOException {
 		assert null != properties;
 		assert null != inputs;
 		
@@ -80,27 +78,22 @@ public class PropertiesUtils {
 	 * @param input Input of the property file to load.
 	 * @param optional Flag indicating whether the property file is optional.
 	 * @return The given properties.
-	 * @throws PropertiesException When the property file is not optional and does not exist.
-	 * @throws PropertiesException When the property file cannot be loaded.
+	 * @throws IOException When the property file cannot be loaded.
 	 */
 	public static Properties loadProperties(final Properties properties, final Input input, final boolean optional)
-	throws PropertiesException {
+	throws IOException {
 		assert null != properties;
 		assert null != input;
 		
-		try {
-			if (!optional || input.exists()) {
-				final InputStream stream = input.open();
-				try {
-					properties.load(stream);
-				} finally {
-					stream.close();
-				}
+		if (!optional || input.exists()) {
+			final InputStream stream = input.open();
+			try {
+				properties.load(stream);
+			} finally {
+				stream.close();
 			}
-			return properties;
-		} catch (final IOException exception) {
-			throw new PropertiesException("Failed loading properties from " + input, exception);
 		}
+		return properties;
 	}
 	
 	/**
@@ -134,19 +127,15 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @param reader The value reader function.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 */
-	public static <T> Maybe<T> getProperty(final Properties properties, final String name, final Function1<? super String, ? extends T, ? extends PropertiesException> reader)
-	throws PropertiesException {
+	public static <T> Maybe<T> getProperty(final Properties properties, final String name, final Function1<? super String, ? extends T, ? extends InvalidPropertyException> reader)
+	throws InvalidPropertyException {
 		assert null != properties;
 		assert null != name;
 		assert null != reader;
 		
-		try {
-			return Maybe.fromValue(properties.getProperty(name)).map(reader);
-		} catch (final PropertiesException exception) {
-			throw new PropertiesException("Invalid property \"" + name + "\"", exception);
-		}
+		return Maybe.fromValue(properties.getProperty(name)).map(reader);
 	}
 	
 	/**
@@ -155,11 +144,11 @@ public class PropertiesUtils {
 	 * @param properties The properties to read.
 	 * @param name The name of the property.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 */
 	public static Maybe<String> getStringProperty(final Properties properties, final String name)
-	throws PropertiesException {
-		return getProperty(properties, name, Functions.<String, PropertiesException>identity());
+	throws InvalidPropertyException {
+		return getProperty(properties, name, Functions.<String, InvalidPropertyException>identity());
 	}
 	
 	/**
@@ -168,10 +157,10 @@ public class PropertiesUtils {
 	 * @param properties The properties to read.
 	 * @param name The name of the property.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 */
 	public static Maybe<Boolean> getBooleanProperty(final Properties properties, final String name)
-	throws PropertiesException {
+	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_BOOLEAN_FUNCTION);
 	}
 	
@@ -181,10 +170,10 @@ public class PropertiesUtils {
 	 * @param properties The properties to read.
 	 * @param name The name of the property.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 */
 	public static Maybe<Integer> getIntegerProperty(final Properties properties, final String name)
-	throws PropertiesException {
+	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_INTEGER_FUNCTION);
 	}
 	
@@ -194,10 +183,10 @@ public class PropertiesUtils {
 	 * @param properties The properties to read.
 	 * @param name The name of the property.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 */
 	public static Maybe<Long> getLongProperty(final Properties properties, final String name)
-	throws PropertiesException {
+	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_LONG_FUNCTION);
 	}
 	
@@ -207,10 +196,10 @@ public class PropertiesUtils {
 	 * @param properties The properties to read.
 	 * @param name The name of the property.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 */
 	public static Maybe<Float> getFloatProperty(final Properties properties, final String name)
-	throws PropertiesException {
+	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_FLOAT_FUNCTION);
 	}
 	
@@ -220,10 +209,10 @@ public class PropertiesUtils {
 	 * @param properties The properties to read.
 	 * @param name The name of the property.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 */
 	public static Maybe<Double> getDoubleProperty(final Properties properties, final String name)
-	throws PropertiesException {
+	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_DOUBLE_FUNCTION);
 	}
 	
@@ -233,10 +222,10 @@ public class PropertiesUtils {
 	 * @param properties The properties to read.
 	 * @param name The name of the property.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 */
 	public static Maybe<File> getFileProperty(final Properties properties, final String name)
-	throws PropertiesException {
+	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_FILE_FUNCTION);
 	}
 	
@@ -246,10 +235,10 @@ public class PropertiesUtils {
 	 * @param properties The properties to read.
 	 * @param name The name of the property.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 */
 	public static Maybe<URI> getUriProperty(final Properties properties, final String name)
-	throws PropertiesException {
+	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_URI_FUNCTION);
 	}
 	
@@ -259,10 +248,10 @@ public class PropertiesUtils {
 	 * @param properties The properties to read.
 	 * @param name The name of the property.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 */
 	public static Maybe<URL> getUrlProperty(final Properties properties, final String name)
-	throws PropertiesException {
+	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_URL_FUNCTION);
 	}
 	
@@ -277,11 +266,11 @@ public class PropertiesUtils {
 	 * @param reader The value reader function.
 	 * @param defaultValue The function computing the default value.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the value of the property is invalid.
-	 * @throws PropertiesException When the default value cannot be evaluated.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @throws InvalidPropertyException When the default value cannot be evaluated.
 	 */
-	public static <T> T getProperty(final Properties properties, final String name, final Function1<? super String, ? extends T, ? extends PropertiesException> reader, final Function0<? extends T, ? extends PropertiesException> defaultValue)
-	throws PropertiesException {
+	public static <T> T getProperty(final Properties properties, final String name, final Function1<? super String, ? extends T, ? extends InvalidPropertyException> reader, final Function0<? extends T, ? extends InvalidPropertyException> defaultValue)
+	throws InvalidPropertyException {
 		assert null != defaultValue;
 		
 		final Maybe<T> value = getProperty(properties, name, reader);
@@ -297,11 +286,11 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @param defaultValue The default value.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 */
 	public static String getStringProperty(final Properties properties, final String name, final String defaultValue)
-	throws PropertiesException {
-		return getStringProperty(properties, name, Functions.<String, PropertiesException>constant0(defaultValue));
+	throws InvalidPropertyException {
+		return getStringProperty(properties, name, Functions.<String, InvalidPropertyException>constant0(defaultValue));
 	}
 	
 	/**
@@ -313,12 +302,12 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @param defaultValue The function computing the default value.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the value of the property is invalid.
-	 * @throws PropertiesException When the default value cannot be evaluated.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @throws InvalidPropertyException When the default value cannot be evaluated.
 	 */
-	public static String getStringProperty(final Properties properties, final String name, final Function0<? extends String, ? extends PropertiesException> defaultValue)
-	throws PropertiesException {
-		return getProperty(properties, name, Functions.<String, PropertiesException>identity(), defaultValue);
+	public static String getStringProperty(final Properties properties, final String name, final Function0<? extends String, ? extends InvalidPropertyException> defaultValue)
+	throws InvalidPropertyException {
+		return getProperty(properties, name, Functions.<String, InvalidPropertyException>identity(), defaultValue);
 	}
 	
 	/**
@@ -330,11 +319,11 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @param defaultValue The default value.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 */
 	public static boolean getBooleanProperty(final Properties properties, final String name, final boolean defaultValue)
-	throws PropertiesException {
-		return getBooleanProperty(properties, name, Functions.<Boolean, PropertiesException>constant0(defaultValue));
+	throws InvalidPropertyException {
+		return getBooleanProperty(properties, name, Functions.<Boolean, InvalidPropertyException>constant0(defaultValue));
 	}
 	
 	/**
@@ -346,11 +335,11 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @param defaultValue The function computing the default value.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the value of the property is invalid.
-	 * @throws PropertiesException When the default value cannot be evaluated.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @throws InvalidPropertyException When the default value cannot be evaluated.
 	 */
-	public static boolean getBooleanProperty(final Properties properties, final String name, final Function0<? extends Boolean, ? extends PropertiesException> defaultValue)
-	throws PropertiesException {
+	public static boolean getBooleanProperty(final Properties properties, final String name, final Function0<? extends Boolean, ? extends InvalidPropertyException> defaultValue)
+	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_BOOLEAN_FUNCTION, defaultValue).booleanValue();
 	}
 	
@@ -363,11 +352,11 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @param defaultValue The default value.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 */
 	public static int getIntegerProperty(final Properties properties, final String name, final int defaultValue)
-	throws PropertiesException {
-		return getIntegerProperty(properties, name, Functions.<Integer, PropertiesException>constant0(defaultValue));
+	throws InvalidPropertyException {
+		return getIntegerProperty(properties, name, Functions.<Integer, InvalidPropertyException>constant0(defaultValue));
 	}
 	
 	/**
@@ -379,11 +368,11 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @param defaultValue The function computing the default value.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the value of the property is invalid.
-	 * @throws PropertiesException When the default value cannot be evaluated.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @throws InvalidPropertyException When the default value cannot be evaluated.
 	 */
-	public static int getIntegerProperty(final Properties properties, final String name, final Function0<? extends Integer, ? extends PropertiesException> defaultValue)
-	throws PropertiesException {
+	public static int getIntegerProperty(final Properties properties, final String name, final Function0<? extends Integer, ? extends InvalidPropertyException> defaultValue)
+	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_INTEGER_FUNCTION, defaultValue).intValue();
 	}
 	
@@ -396,11 +385,11 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @param defaultValue The default value.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 */
 	public static long getLongProperty(final Properties properties, final String name, final long defaultValue)
-	throws PropertiesException {
-		return getLongProperty(properties, name, Functions.<Long, PropertiesException>constant0(defaultValue));
+	throws InvalidPropertyException {
+		return getLongProperty(properties, name, Functions.<Long, InvalidPropertyException>constant0(defaultValue));
 	}
 	
 	/**
@@ -412,11 +401,11 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @param defaultValue The function computing the default value.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the value of the property is invalid.
-	 * @throws PropertiesException When the default value cannot be evaluated.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @throws InvalidPropertyException When the default value cannot be evaluated.
 	 */
-	public static long getLongProperty(final Properties properties, final String name, final Function0<? extends Long, ? extends PropertiesException> defaultValue)
-	throws PropertiesException {
+	public static long getLongProperty(final Properties properties, final String name, final Function0<? extends Long, ? extends InvalidPropertyException> defaultValue)
+	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_LONG_FUNCTION, defaultValue).longValue();
 	}
 	
@@ -429,11 +418,11 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @param defaultValue The default value.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 */
 	public static float getFloatProperty(final Properties properties, final String name, final float defaultValue)
-	throws PropertiesException {
-		return getFloatProperty(properties, name, Functions.<Float, PropertiesException>constant0(defaultValue));
+	throws InvalidPropertyException {
+		return getFloatProperty(properties, name, Functions.<Float, InvalidPropertyException>constant0(defaultValue));
 	}
 	
 	/**
@@ -445,11 +434,11 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @param defaultValue The function computing the default value.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the value of the property is invalid.
-	 * @throws PropertiesException When the default value cannot be evaluated.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @throws InvalidPropertyException When the default value cannot be evaluated.
 	 */
-	public static float getFloatProperty(final Properties properties, final String name, final Function0<? extends Float, ? extends PropertiesException> defaultValue)
-	throws PropertiesException {
+	public static float getFloatProperty(final Properties properties, final String name, final Function0<? extends Float, ? extends InvalidPropertyException> defaultValue)
+	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_FLOAT_FUNCTION, defaultValue).floatValue();
 	}
 	
@@ -462,11 +451,11 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @param defaultValue The default value.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 */
 	public static double getDoubleProperty(final Properties properties, final String name, final double defaultValue)
-	throws PropertiesException {
-		return getDoubleProperty(properties, name, Functions.<Double, PropertiesException>constant0(defaultValue));
+	throws InvalidPropertyException {
+		return getDoubleProperty(properties, name, Functions.<Double, InvalidPropertyException>constant0(defaultValue));
 	}
 	
 	/**
@@ -478,11 +467,11 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @param defaultValue The function computing the default value.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the value of the property is invalid.
-	 * @throws PropertiesException When the default value cannot be evaluated.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @throws InvalidPropertyException When the default value cannot be evaluated.
 	 */
-	public static double getDoubleProperty(final Properties properties, final String name, final Function0<? extends Double, ? extends PropertiesException> defaultValue)
-	throws PropertiesException {
+	public static double getDoubleProperty(final Properties properties, final String name, final Function0<? extends Double, ? extends InvalidPropertyException> defaultValue)
+	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_DOUBLE_FUNCTION, defaultValue).doubleValue();
 	}
 	
@@ -495,13 +484,13 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @param defaultValue The default value.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 */
 	public static File getFileProperty(final Properties properties, final String name, final File defaultValue)
-	throws PropertiesException {
+	throws InvalidPropertyException {
 		assert null != defaultValue;
 		
-		return getFileProperty(properties, name, Functions.<File, PropertiesException>constant0(defaultValue));
+		return getFileProperty(properties, name, Functions.<File, InvalidPropertyException>constant0(defaultValue));
 	}
 	
 	/**
@@ -513,11 +502,11 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @param defaultValue The function computing the default value.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the value of the property is invalid.
-	 * @throws PropertiesException When the default value cannot be evaluated.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @throws InvalidPropertyException When the default value cannot be evaluated.
 	 */
-	public static File getFileProperty(final Properties properties, final String name, final Function0<? extends File, ? extends PropertiesException> defaultValue)
-	throws PropertiesException {
+	public static File getFileProperty(final Properties properties, final String name, final Function0<? extends File, ? extends InvalidPropertyException> defaultValue)
+	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_FILE_FUNCTION, defaultValue);
 	}
 	
@@ -530,13 +519,13 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @param defaultValue The default value.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 */
 	public static URI getUriProperty(final Properties properties, final String name, final URI defaultValue)
-	throws PropertiesException {
+	throws InvalidPropertyException {
 		assert null != defaultValue;
 		
-		return getUriProperty(properties, name, Functions.<URI, PropertiesException>constant0(defaultValue));
+		return getUriProperty(properties, name, Functions.<URI, InvalidPropertyException>constant0(defaultValue));
 	}
 	
 	/**
@@ -548,11 +537,11 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @param defaultValue The function computing the default value.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the value of the property is invalid.
-	 * @throws PropertiesException When the default value cannot be evaluated.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @throws InvalidPropertyException When the default value cannot be evaluated.
 	 */
-	public static URI getUriProperty(final Properties properties, final String name, final Function0<? extends URI, ? extends PropertiesException> defaultValue)
-	throws PropertiesException {
+	public static URI getUriProperty(final Properties properties, final String name, final Function0<? extends URI, ? extends InvalidPropertyException> defaultValue)
+	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_URI_FUNCTION, defaultValue);
 	}
 	
@@ -565,13 +554,13 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @param defaultValue The default value.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 */
 	public static URL getUrlProperty(final Properties properties, final String name, final URL defaultValue)
-	throws PropertiesException {
+	throws InvalidPropertyException {
 		assert null != defaultValue;
 		
-		return getUrlProperty(properties, name, Functions.<URL, PropertiesException>constant0(defaultValue));
+		return getUrlProperty(properties, name, Functions.<URL, InvalidPropertyException>constant0(defaultValue));
 	}
 	
 	/**
@@ -583,11 +572,11 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @param defaultValue The function computing the default value.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the value of the property is invalid.
-	 * @throws PropertiesException When the default value cannot be evaluated.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @throws InvalidPropertyException When the default value cannot be evaluated.
 	 */
-	public static URL getUrlProperty(final Properties properties, final String name, final Function0<? extends URL, ? extends PropertiesException> defaultValue)
-	throws PropertiesException {
+	public static URL getUrlProperty(final Properties properties, final String name, final Function0<? extends URL, ? extends InvalidPropertyException> defaultValue)
+	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_URL_FUNCTION, defaultValue);
 	}
 	
@@ -601,16 +590,16 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @param reader The value reader function.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the property does not exist.
-	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws MissingPropertyException When the property does not exist.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 */
-	public static <T> T getMandatoryProperty(final Properties properties, final String name, final Function1<? super String, ? extends T, ? extends PropertiesException> reader)
-	throws PropertiesException {
+	public static <T> T getMandatoryProperty(final Properties properties, final String name, final Function1<? super String, ? extends T, ? extends InvalidPropertyException> reader)
+	throws MissingPropertyException, InvalidPropertyException {
 		final Maybe<T> value = getProperty(properties, name, reader);
 		if (value.isSome()) {
 			return value.asSome().getValue();
 		} else {
-			throw new PropertiesException("Missing property \"" + name + "\"");
+			throw new MissingPropertyException("Missing property \"" + name + "\"");
 		}
 	}
 	
@@ -622,12 +611,12 @@ public class PropertiesUtils {
 	 * @param properties The properties to read.
 	 * @param name The name of the property.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the property does not exist.
-	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws MissingPropertyException When the property does not exist.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 */
 	public static String getMandatoryStringProperty(final Properties properties, final String name)
-	throws PropertiesException {
-		return getMandatoryProperty(properties, name, Functions.<String, PropertiesException>identity());
+	throws MissingPropertyException, InvalidPropertyException {
+		return getMandatoryProperty(properties, name, Functions.<String, InvalidPropertyException>identity());
 	}
 	
 	/**
@@ -638,11 +627,11 @@ public class PropertiesUtils {
 	 * @param properties The properties to read.
 	 * @param name The name of the property.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the property does not exist.
-	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws MissingPropertyException When the property does not exist.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 */
 	public static boolean getMandatoryBooleanProperty(final Properties properties, final String name)
-	throws PropertiesException {
+	throws MissingPropertyException, InvalidPropertyException {
 		return getMandatoryProperty(properties, name, READ_BOOLEAN_FUNCTION).booleanValue();
 	}
 	
@@ -654,11 +643,11 @@ public class PropertiesUtils {
 	 * @param properties The properties to read.
 	 * @param name The name of the property.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the property does not exist.
-	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws MissingPropertyException When the property does not exist.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 */
 	public static int getMandatoryIntegerProperty(final Properties properties, final String name)
-	throws PropertiesException {
+	throws MissingPropertyException, InvalidPropertyException {
 		return getMandatoryProperty(properties, name, READ_INTEGER_FUNCTION).intValue();
 	}
 	
@@ -670,11 +659,11 @@ public class PropertiesUtils {
 	 * @param properties The properties to read.
 	 * @param name The name of the property.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the property does not exist.
-	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws MissingPropertyException When the property does not exist.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 */
 	public static long getMandatoryLongProperty(final Properties properties, final String name)
-	throws PropertiesException {
+	throws MissingPropertyException, InvalidPropertyException {
 		return getMandatoryProperty(properties, name, READ_LONG_FUNCTION).longValue();
 	}
 	
@@ -686,11 +675,11 @@ public class PropertiesUtils {
 	 * @param properties The properties to read.
 	 * @param name The name of the property.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the property does not exist.
-	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws MissingPropertyException When the property does not exist.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 */
 	public static float getMandatoryFloatProperty(final Properties properties, final String name)
-	throws PropertiesException {
+	throws MissingPropertyException, InvalidPropertyException {
 		return getMandatoryProperty(properties, name, READ_FLOAT_FUNCTION).floatValue();
 	}
 	
@@ -702,11 +691,11 @@ public class PropertiesUtils {
 	 * @param properties The properties to read.
 	 * @param name The name of the property.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the property does not exist.
-	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws MissingPropertyException When the property does not exist.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 */
 	public static double getMandatoryDoubleProperty(final Properties properties, final String name)
-	throws PropertiesException {
+	throws MissingPropertyException, InvalidPropertyException {
 		return getMandatoryProperty(properties, name, READ_DOUBLE_FUNCTION).doubleValue();
 	}
 	
@@ -718,11 +707,11 @@ public class PropertiesUtils {
 	 * @param properties The properties to read.
 	 * @param name The name of the property.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the property does not exist.
-	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws MissingPropertyException When the property does not exist.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 */
 	public static File getMandatoryFileProperty(final Properties properties, final String name)
-	throws PropertiesException {
+	throws MissingPropertyException, InvalidPropertyException {
 		return getMandatoryProperty(properties, name, READ_FILE_FUNCTION);
 	}
 	
@@ -734,11 +723,11 @@ public class PropertiesUtils {
 	 * @param properties The properties to read.
 	 * @param name The name of the property.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the property does not exist.
-	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws MissingPropertyException When the property does not exist.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 */
 	public static URI getMandatoryUriProperty(final Properties properties, final String name)
-	throws PropertiesException {
+	throws MissingPropertyException, InvalidPropertyException {
 		return getMandatoryProperty(properties, name, READ_URI_FUNCTION);
 	}
 	
@@ -750,11 +739,11 @@ public class PropertiesUtils {
 	 * @param properties The properties to read.
 	 * @param name The name of the property.
 	 * @return The value of the property.
-	 * @throws PropertiesException When the property does not exist.
-	 * @throws PropertiesException When the value of the property is invalid.
+	 * @throws MissingPropertyException When the property does not exist.
+	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 */
 	public static URL getMandatoryUrlProperty(final Properties properties, final String name)
-	throws PropertiesException {
+	throws MissingPropertyException, InvalidPropertyException {
 		return getMandatoryProperty(properties, name, READ_URL_FUNCTION);
 	}
 	
@@ -763,17 +752,17 @@ public class PropertiesUtils {
 	 * 
 	 * @param representation The representation.
 	 * @return The value.
-	 * @throws PropertiesException When the representation is invalid.
+	 * @throws InvalidPropertyException When the representation is invalid.
 	 */
 	public static boolean readBoolean(final String representation)
-	throws PropertiesException {
+	throws InvalidPropertyException {
 		assert null != representation;
 		
 		return Boolean.parseBoolean(representation);
 	}
 	
 	/** Function that reads boolean property values. */
-	public static final Function1<String, Boolean, PropertiesException> READ_BOOLEAN_FUNCTION = new Function1<String, Boolean, PropertiesException>() {
+	public static final Function1<String, Boolean, InvalidPropertyException> READ_BOOLEAN_FUNCTION = new Function1<String, Boolean, InvalidPropertyException>() {
 		@Override
 		public Boolean evaluate(final String representation) {
 			assert null != representation;
@@ -787,24 +776,24 @@ public class PropertiesUtils {
 	 * 
 	 * @param representation The representation.
 	 * @return The value.
-	 * @throws PropertiesException When the representation is invalid.
+	 * @throws InvalidPropertyException When the representation is invalid.
 	 */
 	public static int readInteger(final String representation)
-	throws PropertiesException {
+	throws InvalidPropertyException {
 		assert null != representation;
 		
 		try {
 			return Integer.parseInt(representation);
 		} catch (final NumberFormatException exception) {
-			throw new PropertiesException("Invalid integer value \"" + representation + "\"", exception);
+			throw new InvalidPropertyException("Invalid integer value \"" + representation + "\"", exception);
 		}
 	}
 	
 	/** Function that reads integer property values. */
-	public static final Function1<String, Integer, PropertiesException> READ_INTEGER_FUNCTION = new Function1<String, Integer, PropertiesException>() {
+	public static final Function1<String, Integer, InvalidPropertyException> READ_INTEGER_FUNCTION = new Function1<String, Integer, InvalidPropertyException>() {
 		@Override
 		public Integer evaluate(final String representation)
-		throws PropertiesException {
+		throws InvalidPropertyException {
 			return readInteger(representation);
 		}
 	};
@@ -814,24 +803,24 @@ public class PropertiesUtils {
 	 * 
 	 * @param representation The representation.
 	 * @return The value.
-	 * @throws PropertiesException When the representation is invalid.
+	 * @throws InvalidPropertyException When the representation is invalid.
 	 */
 	public static long readLong(final String representation)
-	throws PropertiesException {
+	throws InvalidPropertyException {
 		assert null != representation;
 		
 		try {
 			return Long.parseLong(representation);
 		} catch (final NumberFormatException exception) {
-			throw new PropertiesException("Invalid long value \"" + representation + "\"", exception);
+			throw new InvalidPropertyException("Invalid long value \"" + representation + "\"", exception);
 		}
 	}
 	
 	/** Function that reads long property values. */
-	public static final Function1<String, Long, PropertiesException> READ_LONG_FUNCTION = new Function1<String, Long, PropertiesException>() {
+	public static final Function1<String, Long, InvalidPropertyException> READ_LONG_FUNCTION = new Function1<String, Long, InvalidPropertyException>() {
 		@Override
 		public Long evaluate(final String representation)
-		throws PropertiesException {
+		throws InvalidPropertyException {
 			return readLong(representation);
 		}
 	};
@@ -841,24 +830,24 @@ public class PropertiesUtils {
 	 * 
 	 * @param representation The representation.
 	 * @return The value.
-	 * @throws PropertiesException When the representation is invalid.
+	 * @throws InvalidPropertyException When the representation is invalid.
 	 */
 	public static float readFloat(final String representation)
-	throws PropertiesException {
+	throws InvalidPropertyException {
 		assert null != representation;
 		
 		try {
 			return Float.parseFloat(representation);
 		} catch (final NumberFormatException exception) {
-			throw new PropertiesException("Invalid float value \"" + representation + "\"", exception);
+			throw new InvalidPropertyException("Invalid float value \"" + representation + "\"", exception);
 		}
 	}
 	
 	/** Function that reads long property values. */
-	public static final Function1<String, Float, PropertiesException> READ_FLOAT_FUNCTION = new Function1<String, Float, PropertiesException>() {
+	public static final Function1<String, Float, InvalidPropertyException> READ_FLOAT_FUNCTION = new Function1<String, Float, InvalidPropertyException>() {
 		@Override
 		public Float evaluate(final String representation)
-		throws PropertiesException {
+		throws InvalidPropertyException {
 			return readFloat(representation);
 		}
 	};
@@ -868,24 +857,24 @@ public class PropertiesUtils {
 	 * 
 	 * @param representation The representation.
 	 * @return The value.
-	 * @throws PropertiesException When the representation is invalid.
+	 * @throws InvalidPropertyException When the representation is invalid.
 	 */
 	public static double readDouble(final String representation)
-	throws PropertiesException {
+	throws InvalidPropertyException {
 		assert null != representation;
 		
 		try {
 			return Double.parseDouble(representation);
 		} catch (final NumberFormatException exception) {
-			throw new PropertiesException("Invalid double value \"" + representation + "\"", exception);
+			throw new InvalidPropertyException("Invalid double value \"" + representation + "\"", exception);
 		}
 	}
 	
 	/** Function that reads double property values. */
-	public static final Function1<String, Double, PropertiesException> READ_DOUBLE_FUNCTION = new Function1<String, Double, PropertiesException>() {
+	public static final Function1<String, Double, InvalidPropertyException> READ_DOUBLE_FUNCTION = new Function1<String, Double, InvalidPropertyException>() {
 		@Override
 		public Double evaluate(final String representation)
-		throws PropertiesException {
+		throws InvalidPropertyException {
 			return readDouble(representation);
 		}
 	};
@@ -895,20 +884,20 @@ public class PropertiesUtils {
 	 * 
 	 * @param representation The representation.
 	 * @return The value.
-	 * @throws PropertiesException When the representation is invalid.
+	 * @throws InvalidPropertyException When the representation is invalid.
 	 */
 	public static File readFile(final String representation)
-	throws PropertiesException {
+	throws InvalidPropertyException {
 		assert null != representation;
 		
 		return new File(representation);
 	}
 	
 	/** Function that reads file property values. */
-	public static final Function1<String, File, PropertiesException> READ_FILE_FUNCTION = new Function1<String, File, PropertiesException>() {
+	public static final Function1<String, File, InvalidPropertyException> READ_FILE_FUNCTION = new Function1<String, File, InvalidPropertyException>() {
 		@Override
 		public File evaluate(final String representation)
-		throws PropertiesException {
+		throws InvalidPropertyException {
 			return readFile(representation);
 		}
 	};
@@ -918,24 +907,24 @@ public class PropertiesUtils {
 	 * 
 	 * @param representation The representation.
 	 * @return The value.
-	 * @throws PropertiesException When the representation is invalid.
+	 * @throws InvalidPropertyException When the representation is invalid.
 	 */
 	public static URI readUri(final String representation)
-	throws PropertiesException {
+	throws InvalidPropertyException {
 		assert null != representation;
 		
 		try {
 			return new URI(representation);
 		} catch (final URISyntaxException exception) {
-			throw new PropertiesException("Invalid URI value \"" + representation + "\"", exception);
+			throw new InvalidPropertyException("Invalid URI value \"" + representation + "\"", exception);
 		}
 	}
 	
 	/** Function that reads URI property values. */
-	public static final Function1<String, URI, PropertiesException> READ_URI_FUNCTION = new Function1<String, URI, PropertiesException>() {
+	public static final Function1<String, URI, InvalidPropertyException> READ_URI_FUNCTION = new Function1<String, URI, InvalidPropertyException>() {
 		@Override
 		public URI evaluate(final String representation)
-		throws PropertiesException {
+		throws InvalidPropertyException {
 			return readUri(representation);
 		}
 	};
@@ -945,24 +934,24 @@ public class PropertiesUtils {
 	 * 
 	 * @param representation The representation.
 	 * @return The value.
-	 * @throws PropertiesException When the representation is invalid.
+	 * @throws InvalidPropertyException When the representation is invalid.
 	 */
 	public static URL readUrl(final String representation)
-	throws PropertiesException {
+	throws InvalidPropertyException {
 		assert null != representation;
 		
 		try {
 			return new URL(representation);
 		} catch (final MalformedURLException exception) {
-			throw new PropertiesException("Invalid URL value \"" + representation + "\"", exception);
+			throw new InvalidPropertyException("Invalid URL value \"" + representation + "\"", exception);
 		}
 	}
 	
 	/** Function that reads URL property values. */
-	public static final Function1<String, URL, PropertiesException> READ_URL_FUNCTION = new Function1<String, URL, PropertiesException>() {
+	public static final Function1<String, URL, InvalidPropertyException> READ_URL_FUNCTION = new Function1<String, URL, InvalidPropertyException>() {
 		@Override
 		public URL evaluate(final String representation)
-		throws PropertiesException {
+		throws InvalidPropertyException {
 			return readUrl(representation);
 		}
 	};
