@@ -122,8 +122,22 @@ public class CheckedIterators {
 	 * @param <X> Type of the exceptions.
 	 * @param collection The collection.
 	 * @return The built iterator.
+	 * @deprecated Use {@link #fromIterable(Iterable)}
 	 */
+	@Deprecated
 	public static <V, X extends Exception> CheckedIterator<V, X> fromCollection(final Iterable<? extends V> collection) {
+		return fromIterable(collection);
+	}
+	
+	/**
+	 * Builds a checked iterator over the values of the given collection.
+	 * 
+	 * @param <V> Type of the the values.
+	 * @param <X> Type of the exceptions.
+	 * @param collection The collection.
+	 * @return The built iterator.
+	 */
+	public static <V, X extends Exception> CheckedIterator<V, X> fromIterable(final Iterable<? extends V> collection) {
 		assert null != collection;
 		
 		return fromIterator(collection.iterator());

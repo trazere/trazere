@@ -53,7 +53,7 @@ public class FunctionUtils {
 	 */
 	public static <V, X extends Exception> boolean isAny(final Predicate1<? super V, X> predicate, final Iterable<? extends V> values)
 	throws X {
-		return isAny(predicate, CheckedIterators.<V, InternalException>fromCollection(values));
+		return isAny(predicate, CheckedIterators.<V, InternalException>fromIterable(values));
 	}
 	
 	/**
@@ -181,7 +181,7 @@ public class FunctionUtils {
 	throws X {
 		assert null != values;
 		
-		return areAll(predicate, CheckedIterators.<V, InternalException>fromCollection(values));
+		return areAll(predicate, CheckedIterators.<V, InternalException>fromIterable(values));
 	}
 	
 	/**
@@ -309,7 +309,7 @@ public class FunctionUtils {
 	throws X {
 		assert null != values;
 		
-		return first(predicate, CheckedIterators.<V, InternalException>fromCollection(values));
+		return first(predicate, CheckedIterators.<V, InternalException>fromIterable(values));
 	}
 	
 	/**
@@ -441,7 +441,7 @@ public class FunctionUtils {
 	throws X {
 		assert null != values;
 		
-		return first(function, CheckedIterators.<V, InternalException>fromCollection(values));
+		return first(function, CheckedIterators.<V, InternalException>fromIterable(values));
 	}
 	
 	/**
@@ -521,7 +521,7 @@ public class FunctionUtils {
 	throws X {
 		assert null != values;
 		
-		return fold(operator, initialAccumulator, CheckedIterators.<V, InternalException>fromCollection(values));
+		return fold(operator, initialAccumulator, CheckedIterators.<V, InternalException>fromIterable(values));
 	}
 	
 	/**
@@ -600,7 +600,7 @@ public class FunctionUtils {
 	throws X {
 		assert null != values;
 		
-		return count(predicate, CheckedIterators.<V, InternalException>fromCollection(values));
+		return count(predicate, CheckedIterators.<V, InternalException>fromIterable(values));
 	}
 	
 	/**
@@ -1323,7 +1323,7 @@ public class FunctionUtils {
 	throws X {
 		assert null != values;
 		
-		return flatMap(function, CheckedIterators.<V, InternalException>fromCollection(values), results);
+		return flatMap(function, CheckedIterators.<V, InternalException>fromIterable(values), results);
 	}
 	
 	// TODO: kill
@@ -1635,7 +1635,7 @@ public class FunctionUtils {
 	throws X {
 		assert null != values;
 		
-		execute(procedure, CheckedIterators.<V, InternalException>fromCollection(values));
+		execute(procedure, CheckedIterators.<V, InternalException>fromIterable(values));
 	}
 	
 	/**
