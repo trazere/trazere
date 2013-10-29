@@ -43,6 +43,9 @@ public interface Reference<T> {
 	public T get()
 	throws ReferenceNotSetException;
 	
+	// TODO: get(T defaultValue)
+	// TODO: get(Factory<0, X> defaultValue)
+	
 	/**
 	 * Gets a view of the value set in the receiver reference as an instance of {@link Maybe}.
 	 * 

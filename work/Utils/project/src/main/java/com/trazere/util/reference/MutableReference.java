@@ -117,8 +117,6 @@ implements ReleasableReference<T, RuntimeException>, Describable {
 	
 	/**
 	 * Resets the receiver reference.
-	 * 
-	 * @throws ReferenceNotSetException When the reference has not been set.
 	 */
 	public void reset() {
 		if (_value.isSome()) {

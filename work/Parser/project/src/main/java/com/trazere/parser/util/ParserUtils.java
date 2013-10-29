@@ -23,7 +23,9 @@ import com.trazere.parser.ParserSource;
 import com.trazere.parser.core.CoreParsers;
 import com.trazere.parser.impl.ParserFailureImpl;
 import com.trazere.util.function.Procedure2;
+import com.trazere.util.lang.InternalException;
 import com.trazere.util.reference.MutableReference;
+import com.trazere.util.reference.ReferenceNotSetException;
 import com.trazere.util.text.TextUtils;
 import com.trazere.util.type.Either;
 import com.trazere.util.type.Maybe;
@@ -122,9 +124,13 @@ public class ParserUtils {
 			
 			@Override
 			public void success(final Result result, final ParserPosition<Token> resultPosition) {
-				if (!_position.isSet() || resultPosition.compareTo(_position.get()) > 0) {
-					successReference.update(result);
-					_position.update(resultPosition);
+				try {
+					if (!_position.isSet() || resultPosition.compareTo(_position.get()) > 0) {
+						successReference.update(result);
+						_position.update(resultPosition);
+					}
+				} catch (final ReferenceNotSetException exception) {
+					throw new InternalException(exception);
 				}
 			}
 		});
@@ -155,9 +161,13 @@ public class ParserUtils {
 			
 			@Override
 			public void success(final Result result, final ParserPosition<Token> resultPosition) {
-				if (!_position.isSet() || resultPosition.compareTo(_position.get()) > 0) {
-					successReference.update(result);
-					_position.update(resultPosition);
+				try {
+					if (!_position.isSet() || resultPosition.compareTo(_position.get()) > 0) {
+						successReference.update(result);
+						_position.update(resultPosition);
+					}
+				} catch (final ReferenceNotSetException exception) {
+					throw new InternalException(exception);
 				}
 			}
 			
@@ -170,7 +180,11 @@ public class ParserUtils {
 		
 		// Result.
 		if (successReference.isSet()) {
-			return Either.<Result, List<ParserFailure<Token>>>left(successReference.get());
+			try {
+				return Either.<Result, List<ParserFailure<Token>>>left(successReference.get());
+			} catch (final ReferenceNotSetException exception) {
+				throw new InternalException(exception);
+			}
 		} else {
 			return Either.<Result, List<ParserFailure<Token>>>right(failures);
 		}
@@ -199,27 +213,42 @@ public class ParserUtils {
 			
 			@Override
 			public void success(final Result result, final ParserPosition<Token> resultPosition) {
-				if (!_successPosition.isSet() || resultPosition.compareTo(_successPosition.get()) > 0) {
-					successReference.update(result);
-					_successPosition.update(resultPosition);
+				try {
+					if (!_successPosition.isSet() || resultPosition.compareTo(_successPosition.get()) > 0) {
+						successReference.update(result);
+						_successPosition.update(resultPosition);
+					}
+				} catch (final ReferenceNotSetException exception) {
+					throw new InternalException(exception);
 				}
 			}
 			
 			@Override
-			public void failure(final Parser<Token, ?> failureParser, final ParserPosition<Token> failurePosition)
-			throws ParserException {
-				if (!_failurePosition.isSet() || failurePosition.compareTo(_failurePosition.get()) > 0) {
-					failureReference.update(new ParserFailureImpl<Token>(failureParser, failurePosition));
-					_failurePosition.update(failurePosition);
+			public void failure(final Parser<Token, ?> failureParser, final ParserPosition<Token> failurePosition) {
+				try {
+					if (!_failurePosition.isSet() || failurePosition.compareTo(_failurePosition.get()) > 0) {
+						failureReference.update(new ParserFailureImpl<Token>(failureParser, failurePosition));
+						_failurePosition.update(failurePosition);
+					}
+				} catch (final ReferenceNotSetException exception) {
+					throw new InternalException(exception);
 				}
 			}
 		});
 		
 		// Result.
 		if (successReference.isSet()) {
-			return Either.<Result, ParserFailure<Token>>left(successReference.get());
+			try {
+				return Either.<Result, ParserFailure<Token>>left(successReference.get());
+			} catch (final ReferenceNotSetException exception) {
+				throw new InternalException(exception);
+			}
 		} else if (failureReference.isSet()) {
-			return Either.<Result, ParserFailure<Token>>right(failureReference.get());
+			try {
+				return Either.<Result, ParserFailure<Token>>right(failureReference.get());
+			} catch (final ReferenceNotSetException exception) {
+				throw new InternalException(exception);
+			}
 		} else {
 			throw new ParserException("Incompatible successes or failures !");
 		}

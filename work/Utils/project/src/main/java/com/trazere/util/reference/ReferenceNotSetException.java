@@ -26,7 +26,7 @@ import com.trazere.util.lang.ThrowableFactory;
  * @see MutableReference
  */
 public class ReferenceNotSetException
-extends RuntimeException {
+extends ReferenceException {
 	private static final long serialVersionUID = 1L;
 	
 	/**
@@ -65,6 +65,7 @@ extends RuntimeException {
 	}
 	
 	/** Factory of {@link ReferenceNotSetException}. */
+	@SuppressWarnings("hiding")
 	public static final ThrowableFactory<ReferenceNotSetException> FACTORY = new BaseThrowableFactory<ReferenceNotSetException>() {
 		@Override
 		public ReferenceNotSetException build() {
