@@ -15,7 +15,7 @@ public class XMLAdapters {
 	 * @param serializer The serializer to use.
 	 * @return The built adapter.
 	 */
-	public static <T, R> XmlAdapter<R, T> fromValueSerializer(final ValueSerializer<T, R, ? extends RuntimeException> serializer) {
+	public static <T, R> XmlAdapter<R, T> fromValueSerializer(final ValueSerializer<T, R, ?> serializer) {
 		assert null != serializer;
 		
 		return new XmlAdapter<R, T>() {

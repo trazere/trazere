@@ -81,10 +81,10 @@ implements Function1<T, Either<S, F>, X> {
 	 * @param function The function.
 	 * @param value The argument value.
 	 * @return The result.
-	 * @throws F
+	 * @throws F When the evaluation fails repeatedly.
 	 * @throws X
 	 */
-	public static <T, S, F extends Exception, X extends Exception> S evaluate(final RetryFunction1<T, S, F, X> function, final T value)
+	public static <T, S, F extends Throwable, X extends Exception> S evaluate(final RetryFunction1<T, S, F, X> function, final T value)
 	throws F, X {
 		final Either<S, F> result = function.evaluate(value);
 		if (result.isLeft()) {
