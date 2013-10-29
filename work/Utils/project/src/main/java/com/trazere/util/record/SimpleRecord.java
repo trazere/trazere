@@ -28,6 +28,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+// TODO: rename to MapRecord ?
+
 /**
  * The {@link SimpleRecord} class implements simple records.
  * 
@@ -39,8 +41,9 @@ public class SimpleRecord<K, V>
 implements Record<K, V>, Describable {
 	private static final SimpleRecord<?, ?> EMPTY = new SimpleRecord<Object, Object>(Collections.emptyMap());
 	
+	// TODO: move to Records
 	/**
-	 * Build an empty record.
+	 * Builds an empty record.
 	 * <p>
 	 * This method actually returns a singleton instead of building a new objet.
 	 * 
@@ -53,8 +56,9 @@ implements Record<K, V>, Describable {
 		return (SimpleRecord<K, V>) EMPTY;
 	}
 	
+	// TODO: move to Records
 	/**
-	 * Build a record populated with one field using the given key and value.
+	 * Builds a record populated with one field using the given key and value.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -69,8 +73,9 @@ implements Record<K, V>, Describable {
 		return new SimpleRecord<K, V>(Maps.fromBinding(key, value));
 	}
 	
+	// TODO: move to Records
 	/**
-	 * Build a record populated with two fields using the given keys and values.
+	 * Builds a record populated with two fields using the given keys and values.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -92,7 +97,7 @@ implements Record<K, V>, Describable {
 	}
 	
 	/**
-	 * Build a record populated with the given fields.
+	 * Builds a record populated with the given fields.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -113,10 +118,10 @@ implements Record<K, V>, Describable {
 	 * @param <V> Type of the values.
 	 * @param record Record to copy.
 	 * @return The built record.
-	 * @throws RecordException When the given record cannot be read.
+	 * @throws InvalidFieldException When some field cannot be computed.
 	 */
 	public static <K, V> SimpleRecord<K, V> build(final Record<? extends K, ? extends V> record)
-	throws RecordException {
+	throws InvalidFieldException {
 		assert null != record;
 		
 		// Build.
@@ -158,7 +163,7 @@ implements Record<K, V>, Describable {
 	
 	@Override
 	public V get(final K key)
-	throws RecordException {
+	throws MissingFieldException {
 		assert null != key;
 		
 		// Get.
@@ -187,7 +192,7 @@ implements Record<K, V>, Describable {
 	
 	@Override
 	public <T extends V> T getTyped(final K key, final Class<T> type)
-	throws RecordException {
+	throws MissingFieldException, IncompatibleFieldException {
 		assert null != key;
 		assert null != type;
 		
@@ -208,7 +213,7 @@ implements Record<K, V>, Describable {
 	
 	@Override
 	public <T extends V> T getTyped(final K key, final Class<T> type, final T defaultValue)
-	throws RecordException {
+	throws IncompatibleFieldException {
 		assert null != key;
 		assert null != type;
 		
@@ -229,7 +234,7 @@ implements Record<K, V>, Describable {
 	
 	@Override
 	public <T extends V> Maybe<T> getTypedMaybe(final K key, final Class<T> type)
-	throws RecordException {
+	throws IncompatibleFieldException {
 		// Get.
 		if (_fields.containsKey(key)) {
 			final V value = _fields.get(key);
@@ -247,7 +252,7 @@ implements Record<K, V>, Describable {
 	
 	@Override
 	public <T extends V> T getTyped(final FieldSignature<? extends K, T> signature)
-	throws RecordException {
+	throws MissingFieldException, IncompatibleFieldException, NullFieldException {
 		assert null != signature;
 		
 		// Get.
@@ -261,7 +266,7 @@ implements Record<K, V>, Describable {
 	
 	@Override
 	public <T extends V> T getTyped(final FieldSignature<? extends K, T> signature, final T defaultValue)
-	throws RecordException {
+	throws IncompatibleFieldException, NullFieldException {
 		assert null != signature;
 		
 		// Get.
@@ -275,7 +280,7 @@ implements Record<K, V>, Describable {
 	
 	@Override
 	public <T extends V> Maybe<T> getTypedMaybe(final FieldSignature<? extends K, T> signature)
-	throws RecordException {
+	throws IncompatibleFieldException, NullFieldException {
 		assert null != signature;
 		
 		// Get.

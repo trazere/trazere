@@ -18,10 +18,10 @@ package com.trazere.util.record;
 import com.trazere.util.function.Function1;
 import com.trazere.util.function.Predicate1;
 import com.trazere.util.function.Predicates;
+import com.trazere.util.lang.InternalException;
 import com.trazere.util.type.Maybe;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -29,7 +29,7 @@ import java.util.Set;
  */
 public class RecordUtils {
 	/**
-	 * Fill the given record builder with fields identified by the given keys and containing the given value.
+	 * Fills the given record builder with fields identified by the given keys and containing the given value.
 	 * <p>
 	 * No fields may be identified by any given keys in the given builder.
 	 * 
@@ -39,10 +39,9 @@ public class RecordUtils {
 	 * @param keys Keys identifying the fields to fill.
 	 * @param value Value of the fields. May be <code>null</code>.
 	 * @throws DuplicateFieldException When some field is identified by the given key in the receiver builder.
-	 * @throws RecordException When the fields cannot be added.
 	 */
 	public static <K, V> void fill(final RecordBuilder<? super K, ? super V, ?> builder, final Iterable<? extends K> keys, final V value)
-	throws RecordException {
+	throws DuplicateFieldException {
 		assert null != builder;
 		assert null != keys;
 		
@@ -52,7 +51,7 @@ public class RecordUtils {
 	}
 	
 	/**
-	 * Fill the given record builder with fields identified by the missing given keys and containing the given value.
+	 * Fills the given record builder with fields identified by the missing given keys and containing the given value.
 	 * <p>
 	 * This method only add the missing fields, the existing ones are not modified.
 	 * 
@@ -61,154 +60,177 @@ public class RecordUtils {
 	 * @param builder Record builder to fill.
 	 * @param keys Keys identifying the fields to fill.
 	 * @param value Value to set. May be <code>null</code>.
-	 * @throws RecordException When the fields cannot be added.
 	 */
-	public static <K, V> void complete(final RecordBuilder<? super K, ? super V, ?> builder, final Iterable<? extends K> keys, final V value)
-	throws RecordException {
+	public static <K, V> void complete(final RecordBuilder<? super K, ? super V, ?> builder, final Iterable<? extends K> keys, final V value) {
 		assert null != builder;
 		assert null != keys;
 		
 		for (final K key : keys) {
 			if (!builder.contains(key)) {
-				builder.add(key, value);
+				try {
+					builder.add(key, value);
+				} catch (final DuplicateFieldException exception) {
+					throw new InternalException(exception);
+				}
 			}
 		}
 	}
 	
 	/**
-	 * Compute the sub record of the given record containing only the fields identified by the given keys.
+	 * Computes the sub record of the given record containing only the fields identified by the given keys.
 	 * <p>
 	 * Some field must be identified by every given key in the given record.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
+	 * @param <KX> Type of the key filter exceptions.
 	 * @param record Record to read.
 	 * @param keys Predicates filtering the keys of the fields to keep.
 	 * @return The sub record.
-	 * @throws MissingFieldException When no fields are identified by any given key in the the given record.
-	 * @throws RecordException When the fields cannot be read.
+	 * @throws KX When some key filter evaluation fails.
+	 * @throws InvalidFieldException When some field of the given record cannot be read.
+	 * @throws RecordException When the result record cannot be built.
 	 */
-	public static <K, V> Record<K, V> sub(final Record<K, V> record, final Predicate1<? super K, ? extends RecordException> keys)
-	throws RecordException {
+	public static <K, V, KX extends Exception> Record<K, V> sub(final Record<K, V> record, final Predicate1<? super K, KX> keys)
+	throws KX, InvalidFieldException, RecordException {
 		return sub(record, keys, SimpleRecordFactory.<K, V>factory());
 	}
 	
 	/**
-	 * Compute the sub record of the given record containing only the fields identified by the given keys.
+	 * Computes the sub record of the given record containing only the fields identified by the given keys.
 	 * <p>
 	 * Some field must be identified by every given key in the given record.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param <R> Type of the sub record.
+	 * @param <KX> Type of the key filter exceptions.
 	 * @param record Record to read.
 	 * @param keys Predicates filtering the keys of the fields to keep.
 	 * @param factory Record factory to use.
 	 * @return The sub record.
-	 * @throws MissingFieldException When no fields are identified by any given key in the the given record.
-	 * @throws RecordException When the fields cannot be read.
+	 * @throws KX When some key filter evaluation fails.
+	 * @throws InvalidFieldException When some field of the given record cannot be read.
+	 * @throws RecordException When the result record cannot be built.
 	 */
-	public static <K, V, R extends Record<K, V>> R sub(final Record<K, V> record, final Predicate1<? super K, ? extends RecordException> keys, final RecordFactory<K, V, R> factory)
-	throws RecordException {
+	public static <K, V, R extends Record<K, V>, KX extends Exception> R sub(final Record<K, V> record, final Predicate1<? super K, KX> keys, final RecordFactory<K, V, R> factory)
+	throws KX, InvalidFieldException, RecordException {
 		assert null != record;
 		assert null != keys;
 		assert null != factory;
 		
 		final Map<K, V> fields = new HashMap<K, V>();
-		for (final Entry<K, ? extends V> entry : record.asMap().entrySet()) {
-			final K key = entry.getKey();
+		for (final K key : record.getKeys()) {
 			if (keys.evaluate(key)) {
-				fields.put(key, entry.getValue());
+				final V value;
+				try {
+					value = record.get(key);
+				} catch (final MissingFieldException exception) {
+					throw new InternalException(exception);
+				}
+				fields.put(key, value);
 			}
 		}
 		return factory.build(fields);
 	}
 	
 	/**
-	 * Populate the given record builder with the fields of the given record identified by the given keys.
+	 * Populates the given record builder with the fields of the given record identified by the given keys.
 	 * <p>
 	 * Some field must be identified by every given key in the given record and no fields may be identified by any given key in the given builder.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param <B> Type of the record builder.
+	 * @param <KX> Type of the key filter exceptions.
 	 * @param record Record to read.
 	 * @param keys Predicates filtering the keys of the fields to copy.
 	 * @param builder Record builder to populate.
 	 * @return The given record builder.
-	 * @throws MissingFieldException When no fields are identified by any given key in the the given record.
+	 * @throws KX When some key filter evaluation fails.
+	 * @throws InvalidFieldException When some field of the given record cannot be read.
 	 * @throws DuplicateFieldException When some field is identified by any given key in the given builder.
-	 * @throws RecordException When the fields cannot be read.
-	 * @throws RecordException When the fields cannot be added.
 	 */
-	public static <K, V, B extends RecordBuilder<? super K, ? super V, ?>> B sub(final Record<K, V> record, final Predicate1<? super K, ? extends RecordException> keys, final B builder)
-	throws RecordException {
+	public static <K, V, B extends RecordBuilder<? super K, ? super V, ?>, KX extends Exception> B sub(final Record<K, V> record, final Predicate1<? super K, KX> keys, final B builder)
+	throws KX, InvalidFieldException, DuplicateFieldException {
 		assert null != record;
 		assert null != keys;
 		assert null != builder;
 		
-		for (final Map.Entry<K, ? extends V> entry : record.asMap().entrySet()) {
-			final K key = entry.getKey();
+		for (final K key : record.getKeys()) {
 			if (keys.evaluate(key)) {
-				builder.add(key, entry.getValue());
+				final V value;
+				try {
+					value = record.get(key);
+				} catch (final MissingFieldException exception) {
+					throw new InternalException(exception);
+				}
+				builder.add(key, value);
 			}
 		}
 		return builder;
 	}
 	
 	/**
-	 * Compute the sub record of the given record containing the fields which are not identified by the given keys.
+	 * Computes the sub record of the given record containing the fields which are not identified by the given keys.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
+	 * @param <KX> Type of the key filter exceptions.
 	 * @param record Record to read.
 	 * @param keys Predicates filtering the keys of the fields to drop.
 	 * @return The sub record.
-	 * @throws RecordException When the fields cannot be read.
+	 * @throws KX When some key filter evaluation fails.
+	 * @throws InvalidFieldException When some field of the given record cannot be read.
+	 * @throws RecordException When the result record cannot be built.
 	 */
-	public static <K, V> Record<K, V> drop(final Record<K, V> record, final Predicate1<? super K, ? extends RecordException> keys)
-	throws RecordException {
+	public static <K, V, KX extends Exception> Record<K, V> drop(final Record<K, V> record, final Predicate1<? super K, KX> keys)
+	throws KX, InvalidFieldException, RecordException {
 		return sub(record, Predicates.not(keys));
 	}
 	
 	/**
-	 * Compute the sub record of the given record containing the fields which are not identified by the given keys.
+	 * Computes the sub record of the given record containing the fields which are not identified by the given keys.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param <R> Type of the sub record.
+	 * @param <KX> Type of the key filter exceptions.
 	 * @param record Record to read.
 	 * @param keys Predicates filtering the keys of the fields to drop.
 	 * @param factory Record factory to use.
 	 * @return The sub record.
-	 * @throws RecordException When the fields cannot be read.
+	 * @throws KX When some key filter evaluation fails.
+	 * @throws InvalidFieldException When some field of the given record cannot be read.
+	 * @throws RecordException When the result record cannot be built.
 	 */
-	public static <K, V, R extends Record<K, V>> R drop(final Record<K, V> record, final Predicate1<? super K, ? extends RecordException> keys, final RecordFactory<K, V, R> factory)
-	throws RecordException {
+	public static <K, V, R extends Record<K, V>, KX extends Exception> R drop(final Record<K, V> record, final Predicate1<? super K, KX> keys, final RecordFactory<K, V, R> factory)
+	throws KX, InvalidFieldException, RecordException {
 		return sub(record, Predicates.not(keys), factory);
 	}
 	
 	/**
-	 * Populate the given record builder with the fields of the given record which are not identified by the given keys.
+	 * Populates the given record builder with the fields of the given record which are not identified by the given keys.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param <B> Type of the record builder.
+	 * @param <KX> Type of the key filter exceptions.
 	 * @param record Record to read.
 	 * @param keys Predicates filtering the keys of the fields to drop.
 	 * @param builder Record builder to populate.
 	 * @return The given record builder.
-	 * @throws DuplicateFieldException When some fields are identified by the keys of kept fields in the given builder.
-	 * @throws RecordException When the fields cannot be read.
-	 * @throws RecordException When the fields cannot be added.
+	 * @throws KX When some key filter evaluation fails.
+	 * @throws InvalidFieldException When some field of the given record cannot be read.
+	 * @throws DuplicateFieldException When some field is identified by any given key in the given builder.
 	 */
-	public static <K, V, B extends RecordBuilder<K, ? super V, ?>> B drop(final Record<K, ? extends V> record, final Predicate1<? super K, ? extends RecordException> keys, final B builder)
-	throws RecordException {
+	public static <K, V, B extends RecordBuilder<K, ? super V, ?>, KX extends Exception> B drop(final Record<K, ? extends V> record, final Predicate1<? super K, KX> keys, final B builder)
+	throws KX, InvalidFieldException, DuplicateFieldException {
 		return sub(record, Predicates.not(keys), builder);
 	}
 	
 	/**
-	 * Build the union of the given records.
+	 * Builds the union of the given records.
 	 * <p>
 	 * The keys identifying the fields of the given records must not overlap.
 	 * 
@@ -217,16 +239,17 @@ public class RecordUtils {
 	 * @param record1 First record.
 	 * @param record2 Second record.
 	 * @return The union record.
+	 * @throws InvalidFieldException When some field of the given record cannot be read.
 	 * @throws DuplicateFieldException When some fields are identified by a same key in both records.
-	 * @throws RecordException When the fields cannot be read.
+	 * @throws RecordException When the result record cannot be built.
 	 */
 	public static <K, V> Record<K, V> union(final Record<? extends K, ? extends V> record1, final Record<? extends K, ? extends V> record2)
-	throws RecordException {
+	throws InvalidFieldException, DuplicateFieldException, RecordException {
 		return union(record1, record2, SimpleRecordFactory.<K, V>factory());
 	}
 	
 	/**
-	 * Build the union of the given records.
+	 * Builds the union of the given records.
 	 * <p>
 	 * The keys identifying the fields of the given records must not overlap.
 	 * 
@@ -237,11 +260,12 @@ public class RecordUtils {
 	 * @param record2 Second record.
 	 * @param factory Record factory to use.
 	 * @return The union record.
+	 * @throws InvalidFieldException When some field of the given record cannot be read.
 	 * @throws DuplicateFieldException When some fields are identified by a same key in both records.
-	 * @throws RecordException When the fields cannot be read.
+	 * @throws RecordException When the result record cannot be built.
 	 */
 	public static <K, V, R extends Record<K, V>> R union(final Record<? extends K, ? extends V> record1, final Record<? extends K, ? extends V> record2, final RecordFactory<K, V, R> factory)
-	throws RecordException {
+	throws InvalidFieldException, DuplicateFieldException, RecordException {
 		assert null != record1;
 		assert null != record2;
 		assert null != factory;
@@ -267,7 +291,7 @@ public class RecordUtils {
 	}
 	
 	/**
-	 * Build the union of the given records.
+	 * Builds the union of the given records.
 	 * <p>
 	 * The keys identifying the fields of the given records must not overlap.
 	 * 
@@ -278,12 +302,12 @@ public class RecordUtils {
 	 * @param record2 Second record.
 	 * @param builder Record builder to populate.
 	 * @return The union record.
+	 * @throws InvalidFieldException When some field of the given records cannot be read.
 	 * @throws DuplicateFieldException When some fields are identified by a same key in both records.
 	 * @throws DuplicateFieldException When some fields are identified by the keys of unified fields in the given builder.
-	 * @throws RecordException When the fields cannot be read.
 	 */
 	public static <K, V, B extends RecordBuilder<? super K, ? super V, ?>> B union(final Record<? extends K, ? extends V> record1, final Record<? extends K, ? extends V> record2, final B builder)
-	throws RecordException {
+	throws InvalidFieldException, DuplicateFieldException {
 		assert null != record1;
 		assert null != record2;
 		assert null != builder;
@@ -304,64 +328,80 @@ public class RecordUtils {
 		return builder;
 	}
 	
+	// TODO: remove ??
 	/**
-	 * Get the value of the field of the receiver record identified by the given key.
+	 * Gets the value of the field of the receiver record identified by the given key.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param record The record.
 	 * @param key The key of the field.
 	 * @return The value of the field.
-	 * @throws RecordException When the field cannot be got.  
+	 * @throws InvalidFieldException When the value of the field cannot be read.
 	 */
 	public static <K, V> Maybe<V> get(final Record<K, ? extends V> record, final K key)
-	throws RecordException {
+	throws InvalidFieldException {
 		assert null != record;
 		
 		if (record.contains(key)) {
-			return Maybe.<V>some(record.get(key));
+			try {
+				return Maybe.<V>some(record.get(key));
+			} catch (final MissingFieldException exception) {
+				throw new InternalException(exception);
+			}
 		} else {
 			return Maybe.none();
 		}
 	}
 	
+	// TODO: remove ??
 	/**
-	 * Get the value of the field of the receiver record identified by the given signature.
+	 * Gets the value of the field of the receiver record identified by the given signature.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param record The record.
 	 * @param signature The signature of the field.
 	 * @return The value of the field.
-	 * @throws RecordException When the field cannot be got.  
+	 * @throws InvalidFieldException When the value of the field cannot be read.
+	 * @throws IncompatibleFieldException When the value of the field is not compatible with the given type.
+	 * @throws NullFieldException When the value is null and the field is not nullable.
 	 */
 	public static <K, V> Maybe<V> getTyped(final Record<K, ? super V> record, final FieldSignature<? extends K, ? extends V> signature)
-	throws RecordException {
+	throws InvalidFieldException, IncompatibleFieldException, NullFieldException {
 		assert null != record;
 		
 		if (record.contains(signature.getKey())) {
-			return Maybe.<V>some(record.getTyped(signature));
+			try {
+				return Maybe.<V>some(record.getTyped(signature));
+			} catch (final MissingFieldException exception) {
+				throw new InternalException(exception);
+			}
 		} else {
 			return Maybe.none();
 		}
 	}
 	
 	/**
-	 * Get the signature of the field identified by the given key of the given record signature.
+	 * Gets the signature of the field identified by the given key of the given record signature.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param signature The record signature.
 	 * @param key The key of the field.
 	 * @return The signature of the field.
-	 * @throws RecordException When the field signature cannot be got.
+	 * @throws InvalidFieldException When the signature of the field cannot be read.
 	 */
 	public static <K, V> Maybe<FieldSignature<K, ? extends V>> get(final RecordSignature<K, V> signature, final K key)
-	throws RecordException {
+	throws InvalidFieldException {
 		assert null != signature;
 		
 		if (signature.contains(key)) {
-			return Maybe.<FieldSignature<K, ? extends V>>some(signature.get(key));
+			try {
+				return Maybe.<FieldSignature<K, ? extends V>>some(signature.get(key));
+			} catch (final MissingFieldException exception) {
+				throw new InternalException(exception);
+			}
 		} else {
 			return Maybe.none();
 		}
@@ -372,22 +412,29 @@ public class RecordUtils {
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
-	 * @param <X> Type of the filter exceptions.
+	 * @param <KX> Type of the key filter exceptions.
 	 * @param parametrable The parametrable.
-	 * @param filter The filter.
+	 * @param keys The filter.
 	 * @param builder The record signature builder.
-	 * @throws RecordException When the unification of some requirement fails.
-	 * @throws X When some filter evaluation fails.
+	 * @throws KX When some key filter evaluation fails.
+	 * @throws InvalidFieldException When some requirement cannot be read.
+	 * @throws IncompatibleFieldException When the signature of some requirement is not compatible.
 	 */
-	public static <K, V, X extends Exception> void unifyRequirements(final Parametrable<K, V> parametrable, final Predicate1<? super K, X> filter, final RecordSignatureBuilder<K, V, ?> builder)
-	throws RecordException, X {
+	public static <K, V, KX extends Exception> void unifyRequirements(final Parametrable<K, V> parametrable, final Predicate1<? super K, KX> keys, final RecordSignatureBuilder<K, V, ?> builder)
+	throws IncompatibleFieldException, InvalidFieldException, KX {
 		assert null != parametrable;
-		assert null != filter;
+		assert null != keys;
 		assert null != builder;
 		
 		final RecordSignature<K, V> requirements = parametrable.getRequirements();
-		for (final FieldSignature<K, ? extends V> requirement : requirements.asMap().values()) {
-			if (filter.evaluate(requirement.getKey())) {
+		for (final K key : requirements.getKeys()) {
+			if (keys.evaluate(key)) {
+				final FieldSignature<K, ? extends V> requirement;
+				try {
+					requirement = requirements.get(key);
+				} catch (final MissingFieldException exception) {
+					throw new InternalException(exception);
+				}
 				builder.unify(requirement);
 			}
 		}
@@ -398,25 +445,30 @@ public class RecordUtils {
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
-	 * @param <X> Type of the filter exceptions.
+	 * @param <EX> Type of the extractor exceptions.
 	 * @param parametrable The parametrable.
 	 * @param extractor The extractor.
 	 * @param builder The record signature builder.
-	 * @throws RecordException When the unification of some requirement fails.
-	 * @throws X When some extractor evaluation fails.
+	 * @throws InvalidFieldException When some requirement cannot be read.
+	 * @throws EX When some requirement extraction fails.
+	 * @throws IncompatibleFieldException When the signature of some requirement is not compatible.
 	 */
-	public static <K, V, X extends Exception> void unifyRequirements(final Parametrable<K, V> parametrable, final Function1<? super FieldSignature<K, ? extends V>, ? extends Maybe<? extends FieldSignature<K, ? extends V>>, X> extractor, final RecordSignatureBuilder<K, V, ?> builder)
-	throws RecordException, X {
+	public static <K, V, EX extends Exception> void unifyRequirements(final Parametrable<K, V> parametrable, final Function1<? super FieldSignature<K, ? extends V>, ? extends Maybe<? extends FieldSignature<K, ? extends V>>, EX> extractor, final RecordSignatureBuilder<K, V, ?> builder)
+	throws InvalidFieldException, EX, IncompatibleFieldException {
 		assert null != parametrable;
 		assert null != extractor;
 		assert null != builder;
 		
 		final RecordSignature<K, V> requirements = parametrable.getRequirements();
-		for (final FieldSignature<K, ? extends V> requirement : requirements.asMap().values()) {
-			final Maybe<? extends FieldSignature<K, ? extends V>> extractedRequirement = extractor.evaluate(requirement);
-			if (extractedRequirement.isSome()) {
-				builder.unify(extractedRequirement.asSome().getValue());
+		for (final K key : requirements.getKeys()) {
+			final FieldSignature<K, ? extends V> requirement;
+			try {
+				requirement = requirements.get(key);
+			} catch (final MissingFieldException exception) {
+				throw new InternalException(exception);
 			}
+			final Maybe<? extends FieldSignature<K, ? extends V>> extractedRequirement = extractor.evaluate(requirement);
+			builder.unify(extractedRequirement.asSome().getValue());
 		}
 	}
 	
@@ -427,10 +479,13 @@ public class RecordUtils {
 	 * @param <V> Type of the values.
 	 * @param parametrable The parametrable.
 	 * @param signature The signature.
-	 * @throws RecordException When the typechecking fails.
+	 * @throws InvalidFieldException When some requirement field cannot be read.
+	 * @throws MissingFieldException When some signature field is missing but required.
+	 * @throws InvalidFieldException When some signature field cannot be read.
+	 * @throws IncompatibleFieldException When some signature field is incompatible with the requirement.
 	 */
 	public static <K, V> void typeCheck(final Parametrable<K, V> parametrable, final RecordSignature<? super K, ? extends V> signature)
-	throws RecordException {
+	throws InvalidFieldException, MissingFieldException, IncompatibleFieldException {
 		assert null != parametrable;
 		
 		typeCheck(parametrable.getRequirements(), signature);
@@ -443,11 +498,14 @@ public class RecordUtils {
 	 * @param <V> Type of the values.
 	 * @param requirements The requierements.
 	 * @param signature The signature.
-	 * @throws RecordException When the typechecking fails.
+	 * @throws InvalidFieldException When some requirement field cannot be read.
+	 * @throws MissingFieldException When some signature field is missing but required.
+	 * @throws InvalidFieldException When some signature field cannot be read.
+	 * @throws IncompatibleFieldException When some signature field is incompatible with the requirement.
 	 */
 	public static <K, V> void typeCheck(final RecordSignature<K, V> requirements, final RecordSignature<? super K, ? extends V> signature)
-	throws RecordException {
-		typeCheck(requirements, signature, Predicates.<K, RecordException>all());
+	throws InvalidFieldException, MissingFieldException, IncompatibleFieldException {
+		typeCheck(requirements, signature, Predicates.<K, InternalException>all());
 	}
 	
 	/**
@@ -455,19 +513,30 @@ public class RecordUtils {
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
+	 * @param <KX> Type of the key filter exceptions.
 	 * @param requirements The requierements.
 	 * @param signature The signature.
-	 * @param filter The filter of the requirements to typecheck.
-	 * @throws RecordException When the typechecking fails.
+	 * @param keys The filter of the requirements to typecheck.
+	 * @throws KX When some key filter evaluation fails.
+	 * @throws InvalidFieldException When some requirement field cannot be read.
+	 * @throws MissingFieldException When some signature field is missing but required.
+	 * @throws InvalidFieldException When some signature field cannot be read.
+	 * @throws IncompatibleFieldException When some signature field is incompatible with the requirement.
 	 */
-	public static <K, V> void typeCheck(final RecordSignature<K, V> requirements, final RecordSignature<? super K, ? extends V> signature, final Predicate1<? super K, ? extends RecordException> filter)
-	throws RecordException {
+	public static <K, V, KX extends Exception> void typeCheck(final RecordSignature<K, V> requirements, final RecordSignature<? super K, ? extends V> signature, final Predicate1<? super K, KX> keys)
+	throws KX, InvalidFieldException, MissingFieldException, IncompatibleFieldException {
 		assert null != requirements;
 		assert null != signature;
-		assert null != filter;
+		assert null != keys;
 		
-		for (final FieldSignature<K, ? extends V> requirement : requirements.asMap().values()) {
-			if (filter.evaluate(requirement.getKey())) {
+		for (final K key : requirements.getKeys()) {
+			if (keys.evaluate(key)) {
+				final FieldSignature<K, ? extends V> requirement;
+				try {
+					requirement = requirements.get(key);
+				} catch (final MissingFieldException exception) {
+					throw new InternalException(exception);
+				}
 				typeCheck(requirement, signature);
 			}
 		}
@@ -479,18 +548,25 @@ public class RecordUtils {
 	 * @param <K> Type of the keys.
 	 * @param requirement The requierement.
 	 * @param signature The signature.
-	 * @throws RecordException When the typechecking fails.
+	 * @throws MissingFieldException When some signature field is missing but required.
+	 * @throws InvalidFieldException When some signature field cannot be read.
+	 * @throws IncompatibleFieldException When some signature field is incompatible with the requirement.
 	 */
+	// TODO: use TypeCheckException
 	public static <K> void typeCheck(final FieldSignature<K, ?> requirement, final RecordSignature<? super K, ?> signature)
-	throws RecordException {
+	throws MissingFieldException, InvalidFieldException, IncompatibleFieldException {
 		assert null != requirement;
 		assert null != signature;
 		
 		final K key = requirement.getKey();
-		if (!signature.contains(key)) {
-			throw new RecordException("Missing parameter \"" + key + "\" in parameters " + signature);
-		} else if (!requirement.accepts(signature.get(key).getType(), signature.get(key).isNullable())) {
-			throw new RecordException("Incompatible parameter \"" + key + "\" with requirement " + requirement + " in parameters " + signature);
+		final Maybe<? extends FieldSignature<? super K, ?>> maybeFieldSignature = signature.getMaybe(key);
+		if (maybeFieldSignature.isNone()) {
+			throw new MissingFieldException("Missing field \"" + key + "\" in signature " + signature);
+		}
+		final FieldSignature<? super K, ?> fieldSignature = maybeFieldSignature.asSome().getValue();
+		// TODO: accepts(FieldSignature)
+		if (!requirement.accepts(fieldSignature.getType(), fieldSignature.isNullable())) {
+			throw new IncompatibleFieldException("Incompatible field \"" + key + "\" with requirement " + requirement + " in signature " + signature);
 		}
 	}
 	

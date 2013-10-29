@@ -26,10 +26,8 @@ public interface Parametrable<K, V> {
 	 * Gets the requirements of the receiver parametrable over its parameters.
 	 * 
 	 * @return The signature of the requirements.
-	 * @throws RecordException When the requirements cannot be computed.
 	 */
-	public RecordSignature<K, V> getRequirements()
-	throws RecordException;
+	public RecordSignature<K, V> getRequirements();
 	
 	/**
 	 * Unifies the requirements of the receiver parametrable over its parameters within the given builder.
@@ -38,8 +36,7 @@ public interface Parametrable<K, V> {
 	 * @param builder The builder within which the requirements should be unified.
 	 * @return The given signature builder.
 	 * @throws IncompatibleFieldException When the unification fails.
-	 * @throws RecordException When the requirements cannot be computed.
 	 */
 	public <B extends RecordSignatureBuilder<K, V, ?>> B unifyRequirements(final B builder)
-	throws RecordException;
+	throws IncompatibleFieldException;
 }

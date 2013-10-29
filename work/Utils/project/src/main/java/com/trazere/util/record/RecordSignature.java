@@ -29,14 +29,14 @@ import java.util.Set;
  */
 public interface RecordSignature<K, V> {
 	/**
-	 * Test whether the receiver record signature is empty or not.
+	 * Tests whether the receiver record signature is empty or not.
 	 * 
 	 * @return <code>true</code> when empty, <code>false</code> otherwise.
 	 */
 	public boolean isEmpty();
 	
 	/**
-	 * Test whether the field identified by the given key is signed in the receiver record signature or not.
+	 * Tests whether the field identified by the given key is signed in the receiver record signature or not.
 	 * 
 	 * @param key Key of the field to test.
 	 * @return <code>true</code> when the field is signed, <code>false</code> otherwise.
@@ -44,66 +44,65 @@ public interface RecordSignature<K, V> {
 	public boolean contains(final K key);
 	
 	/**
-	 * Get the keys identifying the fields signed in the receiver record signature.
+	 * Gets the keys identifying the fields signed in the receiver record signature.
 	 * 
 	 * @return An unmodiable set of the keys.
 	 */
 	public Set<K> getKeys();
 	
 	/**
-	 * Get the signature of the field identified by the given key of the receiver record signature.
+	 * Gets the signature of the field identified by the given key of the receiver record signature.
 	 * 
 	 * @param key Key of the field.
 	 * @return The signature of the field.
 	 * @throws MissingFieldException When the field identified by the given key is not signed.
-	 * @throws RecordException When the field signature cannot be got.
+	 * @throws InvalidFieldException When the field signature cannot be got.
 	 */
 	public FieldSignature<K, ? extends V> get(final K key)
-	throws RecordException;
+	throws MissingFieldException, InvalidFieldException;
 	
 	/**
-	 * Get the signature of the field identified by the given key of the receiver record signature.
+	 * Gets the signature of the field identified by the given key of the receiver record signature.
 	 * 
 	 * @param key Key of the field.
 	 * @return The signature of the field.
-	 * @throws MissingFieldException When the field identified by the given key is not signed.
-	 * @throws RecordException When the field signature cannot be got.
+	 * @throws InvalidFieldException When the field signature cannot be got.
 	 */
 	public Maybe<FieldSignature<K, ? extends V>> getMaybe(final K key)
-	throws RecordException;
+	throws InvalidFieldException;
 	
 	/**
-	 * Get a view of the receiver record signature as a map.
+	 * Gets a view of the receiver record signature as a map.
 	 * 
 	 * @return An unmodiable map of the field signatures identified by their keys.
-	 * @throws RecordException When the view cannot be built.
+	 * @throws InvalidFieldException When the field signature cannot be got.
 	 */
 	public Map<K, FieldSignature<K, ? extends V>> asMap()
-	throws RecordException;
+	throws InvalidFieldException;
 	
 	// TODO: should return a reason in case of failure
 	/**
-	 * Check whether the receiver record signature accepts the given record.
+	 * Checks whether the receiver record signature accepts the given record.
 	 * <p>
 	 * Records are accepted when they contain compatible fields for every field signature of the receiver record signature.
 	 * 
 	 * @param record Record to test.
 	 * @return <code>true</code> when the record is accepted, <code>false</code> otherwise.
-	 * @throws RecordException When the record cannot be tested.
+	 * @throws InvalidFieldException When some field of the record cannot be read.
 	 */
 	public boolean accepts(final Record<? super K, ? extends V> record)
-	throws RecordException;
+	throws InvalidFieldException;
 	
 	// TODO: should return a reason in case of failure
 	/**
-	 * Check whether the receiver record signature accepts the given record signature.
+	 * Checks whether the receiver record signature accepts the given record signature.
 	 * <p>
 	 * Signatures are accepted when they contain compatible field signatures for every field signature of the receiver record signature.
 	 * 
 	 * @param signature Signature to test.
 	 * @return <code>true</code> when the signature is accepted, <code>false</code> otherwise.
-	 * @throws RecordException When the signature cannot be tested.
+	 * @throws InvalidFieldException When some field of the record cannot be read.
 	 */
 	public boolean accepts(final RecordSignature<? super K, ? extends V> signature)
-	throws RecordException;
+	throws InvalidFieldException;
 }

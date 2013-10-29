@@ -15,10 +15,10 @@
  */
 package com.trazere.util.csv;
 
-import com.trazere.util.record.BaseSimpleRecordBuilder;
+import com.trazere.util.record.BaseRecordBuilder;
+import com.trazere.util.record.InvalidFieldException;
 import com.trazere.util.record.Record;
 import com.trazere.util.record.RecordBuilder;
-import com.trazere.util.record.RecordException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +26,7 @@ import java.util.Map;
  * The {@link CSVLineBuilder} class implements builders of {@link CSVLine CSV lines}.
  */
 public class CSVLineBuilder
-extends BaseSimpleRecordBuilder<String, String, CSVLine> {
+extends BaseRecordBuilder<String, String, CSVLine> {
 	/**
 	 * Instantiate a new empty CSV line builder.
 	 */
@@ -47,10 +47,10 @@ extends BaseSimpleRecordBuilder<String, String, CSVLine> {
 	 * Instantiate a new CSV line builder populated with the fields of the given record.
 	 * 
 	 * @param record Record containing the initial fields of the new record builder.
-	 * @throws RecordException When the given record cannot be read.
+	 * @throws InvalidFieldException When the some field of the given record cannot be read.
 	 */
 	public CSVLineBuilder(final Record<String, String> record)
-	throws RecordException {
+	throws InvalidFieldException {
 		super(record);
 	}
 	
@@ -58,10 +58,8 @@ extends BaseSimpleRecordBuilder<String, String, CSVLine> {
 	 * Instantiate a new CSV line builder populated with the fields of the given record builder.
 	 * 
 	 * @param builder Record builder containing the initial fields of the new record builder.
-	 * @throws RecordException When the given record builder cannot populate the new record builder.
 	 */
-	public CSVLineBuilder(final RecordBuilder<String, String, ?> builder)
-	throws RecordException {
+	public CSVLineBuilder(final RecordBuilder<String, String, ?> builder) {
 		super(builder);
 	}
 	

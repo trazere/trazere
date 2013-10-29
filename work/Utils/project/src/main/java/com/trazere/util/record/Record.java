@@ -58,10 +58,10 @@ public interface Record<K, V> {
 	 * @param key Key of the field.
 	 * @return The value of the field. May be <code>null</code>.
 	 * @throws MissingFieldException When no fields are identified by the given key.
-	 * @throws RecordException When the field cannot be got.
+	 * @throws InvalidFieldException When the value of the field cannot be read.
 	 */
 	public V get(final K key)
-	throws RecordException;
+	throws MissingFieldException, InvalidFieldException;
 	
 	/**
 	 * Get the value of the field of the receiver record identified by the given key.
@@ -69,20 +69,20 @@ public interface Record<K, V> {
 	 * @param key Key of the field.
 	 * @param defaultValue Default value of the field. May be <code>null</code>.
 	 * @return The value of the field or the given default value when no fields are identified by the given key. May be <code>null</code>.
-	 * @throws RecordException When the field cannot be got.
+	 * @throws InvalidFieldException When the value of the field cannot be read.
 	 */
 	public V get(final K key, final V defaultValue)
-	throws RecordException;
+	throws InvalidFieldException;
 	
 	/**
 	 * Get the value of the field of the receiver record identified by the given key.
 	 * 
 	 * @param key Key of the field.
 	 * @return The value of the field.
-	 * @throws RecordException When the field cannot be got.
+	 * @throws InvalidFieldException When the value of the field cannot be read.
 	 */
 	public Maybe<V> getMaybe(final K key)
-	throws RecordException;
+	throws InvalidFieldException;
 	
 	/**
 	 * Get the value of the field of the receiver record identified by the given key according to the given type.
@@ -92,11 +92,11 @@ public interface Record<K, V> {
 	 * @param type Type of the value.
 	 * @return The value of the field. May be <code>null</code>.
 	 * @throws MissingFieldException When no fields are identified by the given key.
+	 * @throws InvalidFieldException When the value of the field cannot be read.
 	 * @throws IncompatibleFieldException When the value of the field is not compatible with the given type.
-	 * @throws RecordException When the field cannot be got.
 	 */
 	public <T extends V> T getTyped(final K key, final Class<T> type)
-	throws RecordException;
+	throws MissingFieldException, InvalidFieldException, IncompatibleFieldException;
 	
 	/**
 	 * Get the value of the field of the receiver record identified by the given key according to the given type.
@@ -106,11 +106,11 @@ public interface Record<K, V> {
 	 * @param type Type of the value.
 	 * @param defaultValue Default value of the field. May be <code>null</code>.
 	 * @return The value of the field or the given default value when no fields are identified by the given key. May be <code>null</code>.
+	 * @throws InvalidFieldException When the value of the field cannot be read.
 	 * @throws IncompatibleFieldException When the value of the field is not compatible with the given type.
-	 * @throws RecordException When the field cannot be got.
 	 */
 	public <T extends V> T getTyped(final K key, final Class<T> type, final T defaultValue)
-	throws RecordException;
+	throws InvalidFieldException, IncompatibleFieldException;
 	
 	/**
 	 * Get the value of the field of the receiver record identified by the given key according to the given type.
@@ -119,11 +119,11 @@ public interface Record<K, V> {
 	 * @param key Key of the field.
 	 * @param type Type of the value.
 	 * @return The value of the field.
+	 * @throws InvalidFieldException When the value of the field cannot be read.
 	 * @throws IncompatibleFieldException When the value of the field is not compatible with the given type.
-	 * @throws RecordException When the field cannot be got.
 	 */
 	public <T extends V> Maybe<T> getTypedMaybe(final K key, final Class<T> type)
-	throws RecordException;
+	throws InvalidFieldException, IncompatibleFieldException;
 	
 	/**
 	 * Get the value of the field of the receiver record identified by the given signature.
@@ -132,11 +132,12 @@ public interface Record<K, V> {
 	 * @param signature Signature of the field.
 	 * @return The value of the field. May be <code>null</code>.
 	 * @throws MissingFieldException When no fields are identified by the key of the given signature.
+	 * @throws InvalidFieldException When the value of the field cannot be read.
 	 * @throws IncompatibleFieldException When the value of the field is not compatible with the given type.
-	 * @throws RecordException When the field cannot be got.
+	 * @throws NullFieldException When the value is null and the field is not nullable.
 	 */
 	public <T extends V> T getTyped(final FieldSignature<? extends K, T> signature)
-	throws RecordException;
+	throws MissingFieldException, InvalidFieldException, IncompatibleFieldException, NullFieldException;
 	
 	/**
 	 * Get the value of the field of the receiver record identified by the given signature.
@@ -145,11 +146,12 @@ public interface Record<K, V> {
 	 * @param signature Signature of the field.
 	 * @param defaultValue Default value of the field. May be <code>null</code>.
 	 * @return The value of the field or the given default value when no fields are identified by the key of the given signature. May be <code>null</code>.
+	 * @throws InvalidFieldException When the value of the field cannot be read.
 	 * @throws IncompatibleFieldException When the value of the field is not compatible with the given type.
-	 * @throws RecordException When the field cannot be got.
+	 * @throws NullFieldException When the value is null and the field is not nullable.
 	 */
 	public <T extends V> T getTyped(final FieldSignature<? extends K, T> signature, final T defaultValue)
-	throws RecordException;
+	throws InvalidFieldException, IncompatibleFieldException, NullFieldException;
 	
 	/**
 	 * Get the value of the field of the receiver record identified by the given signature.
@@ -157,27 +159,30 @@ public interface Record<K, V> {
 	 * @param <T> Type of the value.
 	 * @param signature Signature of the field.
 	 * @return The value of the field.
+	 * @throws InvalidFieldException When the value of the field cannot be read.
 	 * @throws IncompatibleFieldException When the value of the field is not compatible with the given type.
-	 * @throws RecordException When the field cannot be got.
+	 * @throws NullFieldException When the value is null and the field is not nullable.
 	 */
 	public <T extends V> Maybe<T> getTypedMaybe(final FieldSignature<? extends K, T> signature)
-	throws RecordException;
+	throws InvalidFieldException, IncompatibleFieldException, NullFieldException;
 	
 	/**
 	 * Get the values of the fields of the receiver record.
 	 * 
 	 * @return An unmodiable collection of the values of the fields.
-	 * @throws RecordException When the values of the fields cannot by got.
+	 * @throws InvalidFieldException When the value of some field cannot be read.
 	 */
 	public Collection<V> getValues()
-	throws RecordException;
+	throws InvalidFieldException;
+	
+	// TODO: add populate methods similar to those of record builder
 	
 	/**
 	 * Get a view of the fields of the receiver record as a map.
 	 * 
 	 * @return An unmodiable map of the values of the fields identified by their keys.
-	 * @throws RecordException When the view cannot be built.
+	 * @throws InvalidFieldException When some field cannot be read.
 	 */
 	public Map<K, V> asMap()
-	throws RecordException;
+	throws InvalidFieldException;
 }
