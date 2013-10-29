@@ -15,11 +15,13 @@
  */
 package com.trazere.util.value;
 
+import com.trazere.util.lang.InternalException;
+import com.trazere.util.record.DuplicateFieldException;
 import com.trazere.util.record.FieldSignature;
 import com.trazere.util.record.IncompatibleFieldException;
+import com.trazere.util.record.MissingFieldException;
 import com.trazere.util.record.Record;
 import com.trazere.util.record.RecordBuilder;
-import com.trazere.util.record.RecordException;
 import com.trazere.util.record.RecordSignature;
 import com.trazere.util.record.RecordSignatureBuilder;
 import com.trazere.util.record.SimpleRecord;
@@ -90,29 +92,28 @@ extends BaseRecordReader<K, V> {
 	
 	@Override
 	public ValueReader<? extends V> get(final K key)
-	throws ValueException {
+	throws MissingFieldException {
 		assert null != key;
 		
 		// Get.
 		if (_fields.containsKey(key)) {
 			return _fields.get(key);
 		} else {
-			throw new ValueException("Missing reader for field \"" + key + "\" in record reader " + this);
+			throw new MissingFieldException("Missing reader for field \"" + key + "\" in record reader " + this);
 		}
 	}
 	
 	@Override
-	public RecordSignature<K, V> getSignature()
-	throws ValueException {
-		try {
-			final RecordSignatureBuilder<K, V, ?> builder = new SimpleRecordSignatureBuilder<K, V>();
-			for (final Map.Entry<K, ValueReader<? extends V>> entry : _fields.entrySet()) {
+	public RecordSignature<K, V> getSignature() {
+		final SimpleRecordSignatureBuilder<K, V> builder = new SimpleRecordSignatureBuilder<K, V>();
+		for (final Map.Entry<K, ValueReader<? extends V>> entry : _fields.entrySet()) {
+			try {
 				builder.add(FieldSignature.build(entry.getKey(), entry.getValue().getValueClass(), entry.getValue().isNullable()));
+			} catch (final DuplicateFieldException exception) {
+				throw new InternalException(exception);
 			}
-			return builder.build();
-		} catch (final RecordException exception) {
-			throw new ValueException(exception);
 		}
+		return builder.build();
 	}
 	
 	@Override
@@ -130,15 +131,15 @@ extends BaseRecordReader<K, V> {
 	throws ValueException {
 		assert null != builder;
 		
-		try {
-			// Populate.
-			for (final Map.Entry<K, ValueReader<? extends V>> entry : _fields.entrySet()) {
+		// Populate.
+		for (final Map.Entry<K, ValueReader<? extends V>> entry : _fields.entrySet()) {
+			try {
 				builder.add(entry.getKey(), entry.getValue().read(parameters));
+			} catch (final DuplicateFieldException exception) {
+				throw new InternalException(exception);
 			}
-			
-			return builder;
-		} catch (final RecordException exception) {
-			throw new ValueException(exception);
 		}
+		
+		return builder;
 	}
 }

@@ -17,6 +17,7 @@ package com.trazere.util.value;
 
 import com.trazere.util.record.ParameterFunction;
 import com.trazere.util.record.Record;
+import com.trazere.util.record.RecordException;
 
 /**
  * The {@link ValueReader} interface defines value reading functions.
@@ -54,8 +55,8 @@ extends ParameterFunction<String, Object, T, ValueException> {
 	 * 
 	 * @param reader The record reader.
 	 * @return The composed value reader.
-	 * @throws ValueException When the value reader cannot be composed.
+	 * @throws RecordException When the value reader cannot be composed.
 	 */
 	public ValueReader<T> compose(final RecordReader<String, Object> reader)
-	throws ValueException;
+	throws RecordException;
 }
