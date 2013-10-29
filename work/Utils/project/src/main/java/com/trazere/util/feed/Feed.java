@@ -27,9 +27,7 @@ import java.util.NoSuchElementException;
  * @param <X> Type of the exceptions.
  */
 public interface Feed<T, X extends Exception>
-extends Function0<Maybe<Tuple2<T, Feed<T, X>>>, X> {
-	// Feed.
-	
+extends Function0<Maybe<? extends Tuple2<? extends T, ? extends Feed<? extends T, ? extends X>>>, X> {
 	/**
 	 * Tests whether the receiver feed is empty.
 	 * 
@@ -56,6 +54,6 @@ extends Function0<Maybe<Tuple2<T, Feed<T, X>>>, X> {
 	 * @throws NoSuchElementException When the feed is empty.
 	 * @throws X When the tail cannot be computed.
 	 */
-	public Feed<T, X> getTail()
+	public Feed<? extends T, ? extends X> getTail()
 	throws NoSuchElementException, X;
 }
