@@ -27,6 +27,26 @@ extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 	
 	/**
+	 * Prevents instantiating wrap exceptions with runtime exception causes.
+	 * 
+	 * @param cause Throwable to wrap.
+	 */
+	@SuppressWarnings("unused")
+	private WrapException(final RuntimeException cause) {
+		this((Throwable) cause);
+	}
+	
+	/**
+	 * Prevents instantiating wrap exceptions with error causes.
+	 * 
+	 * @param cause Throwable to wrap.
+	 */
+	@SuppressWarnings("unused")
+	private WrapException(final Error cause) {
+		this((Throwable) cause);
+	}
+	
+	/**
 	 * Instantiates a new wrap exception with the given throwable.
 	 * <p>
 	 * The wrapped throwable is stored as cause.
@@ -70,6 +90,38 @@ extends RuntimeException {
 	 */
 	public <T extends Throwable> void unwrap(final Class<T> type)
 	throws T {
-		unwrap(LangExtractors.<Throwable, T, RuntimeException>match(type));
+		unwrap(LangExtractors.<Throwable, T, InternalException>match(type));
+	}
+	
+	/**
+	 * Builds a factory of wrap exceptions.
+	 * 
+	 * @param throwableFactory Factory of the throwables to wrap.
+	 * @return The built factory.
+	 */
+	public static ThrowableFactory<WrapException> factory(final ThrowableFactory<?> throwableFactory) {
+		assert null != throwableFactory;
+		
+		return new BaseThrowableFactory<WrapException>() {
+			@Override
+			public WrapException build() {
+				return new WrapException(throwableFactory.build());
+			}
+			
+			@Override
+			public WrapException build(final String message) {
+				return new WrapException(throwableFactory.build(message));
+			}
+			
+			@Override
+			public WrapException build(final Throwable cause) {
+				return new WrapException(throwableFactory.build(cause));
+			}
+			
+			@Override
+			public WrapException build(final String message, final Throwable cause) {
+				return new WrapException(throwableFactory.build(message, cause));
+			}
+		};
 	}
 }
