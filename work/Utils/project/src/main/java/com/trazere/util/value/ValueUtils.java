@@ -16,6 +16,7 @@
 package com.trazere.util.value;
 
 import com.trazere.util.function.Function1;
+import com.trazere.util.lang.TypeCheckException;
 import com.trazere.util.record.IncompatibleFieldException;
 import com.trazere.util.record.Record;
 import com.trazere.util.record.RecordException;
@@ -32,16 +33,16 @@ public class ValueUtils {
 	 * @param reader The value reader.
 	 * @param valueClass The excepted type of values.
 	 * @return The typed value reader.
-	 * @throws ValueException When the value type of the value reader is not compatible with the excepted type.
+	 * @throws TypeCheckException When the value type of the value reader is not compatible with the excepted type.
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> ValueReader<? extends T> typeCheckUpperBound(final ValueReader<?> reader, final Class<T> valueClass)
-	throws ValueException {
+	throws TypeCheckException {
 		assert null != reader;
 		assert null != valueClass;
 		
 		if (!valueClass.isAssignableFrom(reader.getValueClass())) {
-			throw new ValueException("Incompatible value type " + reader.getValueClass().getName() + " with type " + valueClass.getName());
+			throw new TypeCheckException("Incompatible value type " + reader.getValueClass().getName() + " with type " + valueClass.getName());
 		} else {
 			return (ValueReader<? extends T>) reader;
 		}
@@ -56,16 +57,16 @@ public class ValueUtils {
 	 * @param serializer The value serializer.
 	 * @param valueClass The excepted type of values.
 	 * @return The typed value serializer.
-	 * @throws ValueException When the value type of the value serializer is not compatible with the excepted type.
+	 * @throws TypeCheckException When the value type of the value serializer is not compatible with the excepted type.
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T, R, X extends Exception> ValueSerializer<T, R, X> typeCheckValue(final ValueSerializer<?, R, X> serializer, final Class<T> valueClass)
-	throws ValueException {
+	throws TypeCheckException {
 		assert null != serializer;
 		assert null != valueClass;
 		
 		if (!serializer.getValueClass().equals(valueClass)) {
-			throw new ValueException("Incompatible value type " + serializer.getValueClass().getName() + " with type " + valueClass.getName());
+			throw new TypeCheckException("Incompatible value type " + serializer.getValueClass().getName() + " with type " + valueClass.getName());
 		} else {
 			return (ValueSerializer<T, R, X>) serializer;
 		}
