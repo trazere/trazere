@@ -15,12 +15,15 @@
  */
 package com.trazere.util.value;
 
+import com.trazere.util.record.InvalidFieldException;
+import com.trazere.util.record.MissingFieldException;
 import com.trazere.util.record.ParameterFunction;
 import com.trazere.util.record.Record;
 import com.trazere.util.record.RecordBuilder;
 import com.trazere.util.record.RecordSignature;
 import java.util.Set;
 
+// TODO: extends Record<K, ValueReader<? extends V>> ?
 /**
  * The {@link RecordReader} interface defines record reading functions.
  * 
@@ -33,48 +36,41 @@ extends ParameterFunction<String, Object, Record<K, V>, ValueException> {
 	 * Test whether the records produced by the receiver reader are empty or not.
 	 * 
 	 * @return <code>true</code> when empty, <code>false</code> otherwise.
-	 * @throws ValueException When the emptyness connot by computed.
 	 */
-	public boolean isEmpty()
-	throws ValueException;
+	public boolean isEmpty();
 	
 	/**
 	 * Test whether some field is identified by the given key in the records produced by the receiver reader or not.
 	 * 
 	 * @param key Key of the field to test.
 	 * @return <code>true</code> when some field is identified by the given key, <code>false</code> otherwise.
-	 * @throws ValueException When the key cannot be tested.
 	 */
-	public boolean contains(final K key)
-	throws ValueException;
+	public boolean contains(final K key);
 	
 	/**
 	 * Get the keys identifying the fields of the records produced by the receiver reader.
 	 * 
 	 * @return An unmodiable set of the keys.
-	 * @throws ValueException When the keys cannot be computed.
 	 */
-	public Set<K> getKeys()
-	throws ValueException;
+	public Set<K> getKeys();
 	
 	/**
 	 * Get the value reader of the field produced by the receiver reader identified by the given key.
 	 * 
 	 * @param key Key of the field.
 	 * @return The value reader of the field.
-	 * @throws ValueException When the field reader cannot be got.
+	 * @throws MissingFieldException When no fields are identified by the given key.
+	 * @throws InvalidFieldException When the value of the field cannot be read.
 	 */
 	public ValueReader<? extends V> get(final K key)
-	throws ValueException;
+	throws MissingFieldException, InvalidFieldException;
 	
 	/**
 	 * Get the signature of the records produced by the receiver reader.
 	 * 
 	 * @return The signature of the record.
-	 * @throws ValueException When the signature cannot be computed.
 	 */
-	public RecordSignature<K, V> getSignature()
-	throws ValueException;
+	public RecordSignature<K, V> getSignature();
 	
 	/**
 	 * Read the record defined by the receiver reader using the given parameters.

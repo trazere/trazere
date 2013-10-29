@@ -15,7 +15,10 @@
  */
 package com.trazere.util.value;
 
+import com.trazere.util.lang.Factory;
+import com.trazere.util.record.DuplicateFieldException;
 import com.trazere.util.record.FieldSignature;
+import com.trazere.util.record.RecordException;
 import java.util.Map;
 import java.util.Set;
 
@@ -26,16 +29,18 @@ import java.util.Set;
  * @param <V> Type of the values.
  * @param <R> Type of the record readers.
  */
-public interface RecordReaderBuilder<K, V, R extends RecordReader<K, V>> {
+// TODO: extends RecordBuilder
+public interface RecordReaderBuilder<K, V, R extends RecordReader<K, V>>
+extends Factory<R, RecordException> {
 	/**
 	 * Add a field identified by the given key with the given value reader.
 	 * 
 	 * @param key Key identifying the field to add.
 	 * @param value Reader of the field to add.
-	 * @throws ValueException When some field is already identified by the given key.
+	 * @throws DuplicateFieldException When some field is already identified by the given key.
 	 */
 	public void add(final K key, final ValueReader<? extends V> value)
-	throws ValueException;
+	throws DuplicateFieldException;
 	
 	/**
 	 * Add a field identified by the given key with the given value reader.
@@ -43,10 +48,10 @@ public interface RecordReaderBuilder<K, V, R extends RecordReader<K, V>> {
 	 * @param <T> Type of the value.
 	 * @param field Signature of the field to add.
 	 * @param value Reader of the field to add.
-	 * @throws ValueException When some field is already identified by the given key.
+	 * @throws DuplicateFieldException When some field is already identified by the given key.
 	 */
 	public <T extends V> void add(final FieldSignature<K, T> field, final ValueReader<? extends T> value)
-	throws ValueException;
+	throws DuplicateFieldException;
 	
 	/**
 	 * Add the given fields to the receiver record reader builder.
@@ -54,11 +59,10 @@ public interface RecordReaderBuilder<K, V, R extends RecordReader<K, V>> {
 	 * No fields may be identified by any given keys in the receiver record reader builder.
 	 * 
 	 * @param fields Values of the fields to add identified by their keys.
-	 * @throws ValueException When fields are already identified by given keys.
-	 * @throws ValueException When some field cannot be added.
+	 * @throws DuplicateFieldException When fields are already identified by given keys.
 	 */
 	public void addAll(final Map<? extends K, ? extends ValueReader<? extends V>> fields)
-	throws ValueException;
+	throws DuplicateFieldException;
 	
 	/**
 	 * Test whether some field is identified by the given key in the receiver record reader builder or not.
@@ -83,18 +87,16 @@ public interface RecordReaderBuilder<K, V, R extends RecordReader<K, V>> {
 	 * @param <B> Type of the record reader builder to populate.
 	 * @param builder Record reader builder to populate.
 	 * @return The given record reader builder.
-	 * @throws ValueException When fields are already identified by keys identifying the populated fields.
-	 * @throws ValueException When the given record reader builder cannot be populated.
+	 * @throws DuplicateFieldException When fields are already identified by keys identifying the populated fields.
 	 */
 	public <B extends RecordReaderBuilder<? super K, ? super V, ?>> B populate(final B builder)
-	throws ValueException;
+	throws DuplicateFieldException;
 	
 	/**
 	 * Build a new record reader populated with the fields of the receiver record reader builder.
 	 * 
 	 * @return The new record reader.
-	 * @throws ValueException When the record reader cannot be built.
 	 */
-	public R build()
-	throws ValueException;
+	@Override
+	public R build();
 }

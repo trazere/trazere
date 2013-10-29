@@ -17,6 +17,7 @@ package com.trazere.util.value;
 
 import com.trazere.util.record.BaseParametrable;
 import com.trazere.util.record.Record;
+import com.trazere.util.record.RecordException;
 import com.trazere.util.record.SimpleRecordBuilder;
 
 /**
@@ -47,7 +48,11 @@ implements RecordReader<K, V> {
 		
 		final SimpleRecordReaderBuilder<K, V> builder = new SimpleRecordReaderBuilder<K, V>();
 		for (final K key : getKeys()) {
-			builder.add(key, get(key).compose(reader));
+			try {
+				builder.add(key, get(key).compose(reader));
+			} catch (final RecordException exception) {
+				throw new ValueException(exception);
+			}
 		}
 		return builder.build();
 	}

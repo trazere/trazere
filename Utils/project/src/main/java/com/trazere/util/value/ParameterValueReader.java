@@ -18,6 +18,7 @@ package com.trazere.util.value;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.record.FieldSignature;
 import com.trazere.util.record.IncompatibleFieldException;
+import com.trazere.util.record.NullFieldException;
 import com.trazere.util.record.Record;
 import com.trazere.util.record.RecordException;
 import com.trazere.util.record.RecordSignatureBuilder;
@@ -127,7 +128,7 @@ extends BaseValueReader<T> {
 	@Override
 	@SuppressWarnings("unchecked")
 	public ValueReader<T> compose(final RecordReader<String, Object> reader)
-	throws ValueException {
+	throws RecordException {
 		assert null != reader;
 		
 		// Get the value reader which produces the parameter to read.
@@ -135,7 +136,7 @@ extends BaseValueReader<T> {
 		
 		// Check the nullability.
 		if (!_nullable && valueReader.isNullable()) {
-			throw new ValueException("Value reader of field \"" + _name + "\" should not be nullable in record reader " + reader);
+			throw new NullFieldException("Value reader of field \"" + _name + "\" should not be nullable in record reader " + reader);
 		}
 		
 		// Check the type.
@@ -145,7 +146,7 @@ extends BaseValueReader<T> {
 		} else if (_valueClass.isAssignableFrom(valueClass)) {
 			return adapt((ValueReader<? extends T>) valueReader);
 		} else {
-			throw new ValueException("Value reader of field \"" + _name + "\" is not compatible with type \"" + _valueClass + "\" in record reader " + reader);
+			throw new IncompatibleFieldException("Value reader of field \"" + _name + "\" is not compatible with type \"" + _valueClass + "\" in record reader " + reader);
 		}
 	}
 	
@@ -167,7 +168,7 @@ extends BaseValueReader<T> {
 			
 			@Override
 			public ValueReader<T> compose(final RecordReader<String, Object> reader)
-			throws ValueException {
+			throws RecordException {
 				return adapt(valueReader.compose(reader));
 			}
 		};

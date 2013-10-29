@@ -15,7 +15,11 @@
  */
 package com.trazere.util.value;
 
+import com.trazere.util.lang.BaseFactory;
+import com.trazere.util.lang.InternalException;
+import com.trazere.util.record.DuplicateFieldException;
 import com.trazere.util.record.FieldSignature;
+import com.trazere.util.record.RecordException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +32,7 @@ import java.util.Set;
  * @param <V> Type of the values.
  */
 public class SimpleRecordReaderBuilder<K, V>
+extends BaseFactory<SimpleRecordReader<K, V>, RecordException>
 implements RecordReaderBuilder<K, V, SimpleRecordReader<K, V>> {
 	/** Field readers. */
 	protected final Map<K, ValueReader<? extends V>> _fields;
@@ -56,20 +61,22 @@ implements RecordReaderBuilder<K, V, SimpleRecordReader<K, V>> {
 	 * Instantiate a new record reader builder populated with the fields of the given record reader builder.
 	 * 
 	 * @param builder Record builder containing the initial fields of the new record builder.
-	 * @throws ValueException When the given record builder cannot populate the new record builder.
 	 */
-	public SimpleRecordReaderBuilder(final RecordReaderBuilder<? extends K, ? extends V, ?> builder)
-	throws ValueException {
+	public SimpleRecordReaderBuilder(final RecordReaderBuilder<? extends K, ? extends V, ?> builder) {
 		assert null != builder;
 		
 		// Populate.
 		_fields = new HashMap<K, ValueReader<? extends V>>();
-		builder.populate(this);
+		try {
+			builder.populate(this);
+		} catch (final DuplicateFieldException exception) {
+			throw new InternalException(exception);
+		}
 	}
 	
 	@Override
 	public void add(final K key, final ValueReader<? extends V> value)
-	throws ValueException {
+	throws DuplicateFieldException {
 		assert null != key;
 		assert null != value;
 		
@@ -77,13 +84,13 @@ implements RecordReaderBuilder<K, V, SimpleRecordReader<K, V>> {
 		if (!_fields.containsKey(key)) {
 			_fields.put(key, value);
 		} else {
-			throw new ValueException("Field \"" + key + "\" already exists in builder " + this);
+			throw new DuplicateFieldException("Field \"" + key + "\" already exists in builder " + this);
 		}
 	}
 	
 	@Override
 	public <T extends V> void add(final FieldSignature<K, T> field, final ValueReader<? extends T> value)
-	throws ValueException {
+	throws DuplicateFieldException {
 		assert null != field;
 		
 		// Add the field.
@@ -92,7 +99,7 @@ implements RecordReaderBuilder<K, V, SimpleRecordReader<K, V>> {
 	
 	@Override
 	public void addAll(final Map<? extends K, ? extends ValueReader<? extends V>> fields)
-	throws ValueException {
+	throws DuplicateFieldException {
 		assert null != fields;
 		
 		// Add the fields.
@@ -101,7 +108,7 @@ implements RecordReaderBuilder<K, V, SimpleRecordReader<K, V>> {
 			if (!_fields.containsKey(key)) {
 				_fields.put(key, entry.getValue());
 			} else {
-				throw new ValueException("Field \"" + key + "\" already exists in builder " + this);
+				throw new DuplicateFieldException("Field \"" + key + "\" already exists in builder " + this);
 			}
 		}
 	}
@@ -121,7 +128,7 @@ implements RecordReaderBuilder<K, V, SimpleRecordReader<K, V>> {
 	
 	@Override
 	public <B extends RecordReaderBuilder<? super K, ? super V, ?>> B populate(final B builder)
-	throws ValueException {
+	throws DuplicateFieldException {
 		assert null != builder;
 		
 		// Populate.
