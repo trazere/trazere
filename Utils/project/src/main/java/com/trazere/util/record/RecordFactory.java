@@ -15,6 +15,7 @@
  */
 package com.trazere.util.record;
 
+import com.trazere.util.lang.Factory;
 import java.util.Map;
 
 /**
@@ -25,18 +26,20 @@ import java.util.Map;
  * @param <R> Type of the records.
  * @see Record
  */
-public interface RecordFactory<K, V, R extends Record<K, V>> {
+public interface RecordFactory<K, V, R extends Record<K, V>>
+extends Factory<R, RecordException> {
 	/**
-	 * Build a new empty record.
+	 * Builds a new empty record.
 	 * 
 	 * @return The built record.
 	 * @throws RecordException When the record cannot be built.
 	 */
+	@Override
 	public R build()
 	throws RecordException;
 	
 	/**
-	 * Build a new record populated with the given fields.
+	 * Builds a new record populated with the given fields.
 	 * 
 	 * @param fields Values of the fields identified by their keys.
 	 * @return The built record builder.
@@ -46,7 +49,7 @@ public interface RecordFactory<K, V, R extends Record<K, V>> {
 	throws RecordException;
 	
 	/**
-	 * Build a new record populated with the fields of given record.
+	 * Builds a new record populated with the fields of given record.
 	 * 
 	 * @param record Record to copy.
 	 * @return The built record builder.

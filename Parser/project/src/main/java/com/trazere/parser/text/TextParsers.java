@@ -142,19 +142,19 @@ public class TextParsers {
 			return previousValue.multiply(BigInteger.TEN).add(BigInteger.valueOf(digit));
 		}
 	};
-
+	
 	public static <N extends Number> Parser<Character, N> integer(final Function1<? super BigInteger, ? extends Maybe<? extends N>, ? extends ParserException> extractor, final String description) {
 		return CoreParsers.extract(integer(), extractor, description);
 	}
-
+	
 	public static <N extends Number> Parser<Character, N> integer(final int length, final Function1<? super BigInteger, ? extends Maybe<? extends N>, ? extends ParserException> extractor, final String description) {
 		return CoreParsers.extract(integer(length, null), extractor, description);
 	}
-
+	
 	public static Parser<Character, BigInteger> integer() {
 		return _INTEGER;
 	}
-
+	
 	private static final Parser<Character, BigInteger> _INTEGER = integer("an integer");
 	
 	public static Parser<Character, BigDecimal> decimal(final String description) {

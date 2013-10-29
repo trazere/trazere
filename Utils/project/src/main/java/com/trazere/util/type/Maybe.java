@@ -21,6 +21,7 @@ import com.trazere.util.function.Function1;
 import com.trazere.util.function.Functions;
 import com.trazere.util.function.Predicate1;
 import com.trazere.util.lang.HashCode;
+import com.trazere.util.lang.InternalException;
 import com.trazere.util.lang.LangUtils;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.Description;
@@ -390,7 +391,7 @@ implements Iterable<T>, Describable {
 		@Override
 		public <R, X extends Exception> Maybe<R> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, X> function)
 		throws X {
-			return function.evaluate(_value).map(Functions.<R, RuntimeException>identity());
+			return function.evaluate(_value).map(Functions.<R, InternalException>identity());
 		}
 		
 		// Iterable.
