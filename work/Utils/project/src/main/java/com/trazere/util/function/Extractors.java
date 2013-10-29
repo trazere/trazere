@@ -57,7 +57,7 @@ public class Extractors {
 	 * @param f The inned extractor.
 	 * @return The built extractor.
 	 */
-	public static <T1, T2, T3, X extends Exception> Function1<T1, Maybe<T3>, X> compose(final Function1<? super T2, ? extends Maybe<? extends T3>, ? extends X> g, final Function1<? super T1, ? extends Maybe<? extends T2>, X> f) {
+	public static <T1, T2, T3, X extends Exception> Function1<T1, Maybe<T3>, X> compose(final Function1<? super T2, ? extends Maybe<? extends T3>, ? extends X> g, final Function1<? super T1, ? extends Maybe<? extends T2>, ? extends X> f) {
 		return Functions.compose(Maybe.mapFilterFunction(g), f);
 	}
 	
