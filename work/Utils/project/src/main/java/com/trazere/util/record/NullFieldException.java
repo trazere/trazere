@@ -15,6 +15,9 @@
  */
 package com.trazere.util.record;
 
+import com.trazere.util.lang.BaseThrowableFactory;
+import com.trazere.util.lang.ThrowableFactory;
+
 /**
  * {@link NullFieldException} exceptions are thrown when some non-nullable record field is <code>null</code>.
  */
@@ -23,14 +26,14 @@ extends RecordException {
 	private static final long serialVersionUID = 1L;
 	
 	/**
-	 * Instantiate a new exception.
+	 * Instantiates a new exception.
 	 */
 	public NullFieldException() {
 		super();
 	}
 	
 	/**
-	 * Instantiate a new exception using the given message.
+	 * Instantiates a new exception using the given message.
 	 * 
 	 * @param message Details about the exception.
 	 */
@@ -39,7 +42,7 @@ extends RecordException {
 	}
 	
 	/**
-	 * Instantiate a new exception using the given cause.
+	 * Instantiates a new exception using the given cause.
 	 * 
 	 * @param cause Cause of the exception.
 	 */
@@ -48,7 +51,7 @@ extends RecordException {
 	}
 	
 	/**
-	 * Instantiate a new exception using the given message and cause.
+	 * Instantiates a new exception using the given message and cause.
 	 * 
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
@@ -56,4 +59,28 @@ extends RecordException {
 	public NullFieldException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
+	
+	/** Factory of {@link NullFieldException}. */
+	@SuppressWarnings("hiding")
+	public static final ThrowableFactory<NullFieldException> FACTORY = new BaseThrowableFactory<NullFieldException>() {
+		@Override
+		public NullFieldException build() {
+			return new NullFieldException();
+		}
+		
+		@Override
+		public NullFieldException build(final String message) {
+			return new NullFieldException(message);
+		}
+		
+		@Override
+		public NullFieldException build(final Throwable cause) {
+			return new NullFieldException(cause);
+		}
+		
+		@Override
+		public NullFieldException build(final String message, final Throwable cause) {
+			return new NullFieldException(message, cause);
+		}
+	};
 }

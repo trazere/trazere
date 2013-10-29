@@ -17,6 +17,7 @@ package com.trazere.util.collection;
 
 import com.trazere.util.function.Function1;
 import com.trazere.util.function.FunctionUtils;
+import com.trazere.util.lang.InternalException;
 import com.trazere.util.type.Maybe;
 import java.util.Arrays;
 import java.util.Collection;
@@ -119,9 +120,11 @@ implements ObjectTypeMap<T, Maybe<? extends V>, X> {
 	
 	@Override
 	protected Collection<Class<? extends T>> getSuperTypes(final Class<? extends T> type) {
+		assert null != type;
+		
 		// Filter according to the upper bound.
 		final Class<? extends T> upperBound = _upperBound.asSome().getValue();
-		final Function1<Class<?>, Maybe<Class<? extends T>>, RuntimeException> filter = new Function1<Class<?>, Maybe<Class<? extends T>>, RuntimeException>() {
+		final Function1<Class<?>, Maybe<Class<? extends T>>, InternalException> filter = new Function1<Class<?>, Maybe<Class<? extends T>>, InternalException>() {
 			@Override
 			@SuppressWarnings("unchecked")
 			public Maybe<Class<? extends T>> evaluate(final Class<?> superType) {

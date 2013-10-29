@@ -15,6 +15,7 @@
  */
 package com.trazere.util.record;
 
+import com.trazere.util.lang.BaseFactory;
 import java.util.Map;
 
 /**
@@ -25,11 +26,12 @@ import java.util.Map;
  * @see SimpleRecord
  */
 public class SimpleRecordFactory<K, V>
+extends BaseFactory<SimpleRecord<K, V>, RecordException>
 implements RecordFactory<K, V, SimpleRecord<K, V>> {
 	private static final SimpleRecordFactory<?, ?> _FACTORY = new SimpleRecordFactory<Object, Object>();
 	
 	/**
-	 * Build a simple record factory.
+	 * Builds a simple record factory.
 	 * <p>
 	 * This method actually returns a singleton instead of building a new objet.
 	 * 

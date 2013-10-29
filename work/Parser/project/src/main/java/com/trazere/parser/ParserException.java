@@ -15,22 +15,25 @@
  */
 package com.trazere.parser;
 
+import com.trazere.util.lang.BaseThrowableFactory;
+import com.trazere.util.lang.ThrowableFactory;
+
 /**
- * <code>ParserException</code> exceptions are thrown when parser related errors occur.
+ * {@link ParserException} exceptions are thrown when parser related errors occur.
  */
 public class ParserException
 extends Exception {
 	private static final long serialVersionUID = 1L;
 	
 	/**
-	 * Instantiate a new exception.
+	 * Instantiates a new exception.
 	 */
 	public ParserException() {
 		super();
 	}
 	
 	/**
-	 * Instantiate a new exception using the given message.
+	 * Instantiates a new exception using the given message.
 	 * 
 	 * @param message Details about the exception.
 	 */
@@ -39,7 +42,7 @@ extends Exception {
 	}
 	
 	/**
-	 * Instantiate a new exception using the given cause.
+	 * Instantiates a new exception using the given cause.
 	 * 
 	 * @param cause Cause of the exception.
 	 */
@@ -48,7 +51,7 @@ extends Exception {
 	}
 	
 	/**
-	 * Instantiate a new exception using the given message and cause.
+	 * Instantiates a new exception using the given message and cause.
 	 * 
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
@@ -56,4 +59,27 @@ extends Exception {
 	public ParserException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
+	
+	/** Factory of {@link ParserException}. */
+	public static final ThrowableFactory<ParserException> FACTORY = new BaseThrowableFactory<ParserException>() {
+		@Override
+		public ParserException build() {
+			return new ParserException();
+		}
+		
+		@Override
+		public ParserException build(final String message) {
+			return new ParserException(message);
+		}
+		
+		@Override
+		public ParserException build(final Throwable cause) {
+			return new ParserException(cause);
+		}
+		
+		@Override
+		public ParserException build(final String message, final Throwable cause) {
+			return new ParserException(message, cause);
+		}
+	};
 }

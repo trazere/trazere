@@ -30,11 +30,11 @@ import java.util.UUID;
  */
 public class ValueSerializers {
 	/**
-	 * Build an identity serializer.
+	 * Builds an identity serializer.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param <X> Type of the exceptions.
-	 * @param valueClass
+	 * @param valueClass Java class of the values.
 	 * @return The built serializer.
 	 */
 	public static <T, X extends Exception> ValueSerializer<T, T, X> identity(final Class<T> valueClass) {

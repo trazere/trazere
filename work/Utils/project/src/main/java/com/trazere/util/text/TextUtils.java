@@ -19,6 +19,7 @@ import com.trazere.util.function.Function1;
 import com.trazere.util.function.Functions;
 import com.trazere.util.function.Procedure2;
 import com.trazere.util.lang.Counter;
+import com.trazere.util.lang.InternalException;
 import com.trazere.util.lang.LangUtils;
 import com.trazere.util.lang.MutableBoolean;
 import com.trazere.util.lang.MutableInt;
@@ -279,7 +280,7 @@ public class TextUtils {
 	 * @return The given string builder.
 	 */
 	public static StringBuilder join(final Iterator<String> tokens, final String delimiter, final StringBuilder builder) {
-		return join(tokens, Functions.<String, RuntimeException>identity(), delimiter, builder);
+		return join(tokens, Functions.<String, InternalException>identity(), delimiter, builder);
 	}
 	
 	/**

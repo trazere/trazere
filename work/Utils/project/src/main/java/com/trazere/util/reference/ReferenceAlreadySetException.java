@@ -15,6 +15,9 @@
  */
 package com.trazere.util.reference;
 
+import com.trazere.util.lang.BaseThrowableFactory;
+import com.trazere.util.lang.ThrowableFactory;
+
 /**
  * {@link ReferenceAlreadySetException} exceptions are thrown when trying to set some reference which has already been set.
  * <p>
@@ -27,14 +30,14 @@ extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 	
 	/**
-	 * Instantiate a new exception.
+	 * Instantiates a new exception.
 	 */
 	public ReferenceAlreadySetException() {
 		super();
 	}
 	
 	/**
-	 * Instantiate a new exception using the given message.
+	 * Instantiates a new exception using the given message.
 	 * 
 	 * @param message Details about the exception.
 	 */
@@ -43,7 +46,7 @@ extends RuntimeException {
 	}
 	
 	/**
-	 * Instantiate a new exception using the given cause.
+	 * Instantiates a new exception using the given cause.
 	 * 
 	 * @param cause Cause of the exception.
 	 */
@@ -52,7 +55,7 @@ extends RuntimeException {
 	}
 	
 	/**
-	 * Instantiate a new exception using the given message and cause.
+	 * Instantiates a new exception using the given message and cause.
 	 * 
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
@@ -60,4 +63,27 @@ extends RuntimeException {
 	public ReferenceAlreadySetException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
+	
+	/** Factory of {@link ReferenceAlreadySetException}. */
+	public static final ThrowableFactory<ReferenceAlreadySetException> FACTORY = new BaseThrowableFactory<ReferenceAlreadySetException>() {
+		@Override
+		public ReferenceAlreadySetException build() {
+			return new ReferenceAlreadySetException();
+		}
+		
+		@Override
+		public ReferenceAlreadySetException build(final String message) {
+			return new ReferenceAlreadySetException(message);
+		}
+		
+		@Override
+		public ReferenceAlreadySetException build(final Throwable cause) {
+			return new ReferenceAlreadySetException(cause);
+		}
+		
+		@Override
+		public ReferenceAlreadySetException build(final String message, final Throwable cause) {
+			return new ReferenceAlreadySetException(message, cause);
+		}
+	};
 }

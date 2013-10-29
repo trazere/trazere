@@ -25,6 +25,41 @@ public class ValueException
 extends Exception {
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * Instantiates a new exception.
+	 */
+	public ValueException() {
+		super();
+	}
+	
+	/**
+	 * Instantiates a new exception using the given message.
+	 * 
+	 * @param message Details about the exception.
+	 */
+	public ValueException(final String message) {
+		super(message);
+	}
+	
+	/**
+	 * Instantiates a new exception using the given cause.
+	 * 
+	 * @param cause Cause of the exception.
+	 */
+	public ValueException(final Throwable cause) {
+		super(cause);
+	}
+	
+	/**
+	 * Instantiates a new exception using the given message and cause.
+	 * 
+	 * @param message Details about the exception.
+	 * @param cause Cause of the exception.
+	 */
+	public ValueException(final String message, final Throwable cause) {
+		super(message, cause);
+	}
+	
 	/** Factory of {@link ValueException}. */
 	public static final ThrowableFactory<ValueException> FACTORY = new BaseThrowableFactory<ValueException>() {
 		@Override
@@ -47,39 +82,4 @@ extends Exception {
 			return new ValueException(message, cause);
 		}
 	};
-	
-	/**
-	 * Instantiate a new exception.
-	 */
-	public ValueException() {
-		super();
-	}
-	
-	/**
-	 * Instantiate a new exception using the given message.
-	 * 
-	 * @param message Details about the exception.
-	 */
-	public ValueException(final String message) {
-		super(message);
-	}
-	
-	/**
-	 * Instantiate a new exception using the given cause.
-	 * 
-	 * @param cause Cause of the exception.
-	 */
-	public ValueException(final Throwable cause) {
-		super(cause);
-	}
-	
-	/**
-	 * Instantiate a new exception using the given message and cause.
-	 * 
-	 * @param message Details about the exception.
-	 * @param cause Cause of the exception.
-	 */
-	public ValueException(final String message, final Throwable cause) {
-		super(message, cause);
-	}
 }

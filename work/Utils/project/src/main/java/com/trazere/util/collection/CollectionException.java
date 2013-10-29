@@ -25,6 +25,41 @@ public class CollectionException
 extends Exception {
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * Instantiates a new exception.
+	 */
+	public CollectionException() {
+		super();
+	}
+	
+	/**
+	 * Instantiates a new exception using the given message.
+	 * 
+	 * @param message Details about the exception.
+	 */
+	public CollectionException(final String message) {
+		super(message);
+	}
+	
+	/**
+	 * Instantiates a new exception using the given cause.
+	 * 
+	 * @param cause Cause of the exception.
+	 */
+	public CollectionException(final Throwable cause) {
+		super(cause);
+	}
+	
+	/**
+	 * Instantiates a new exception using the given message and cause.
+	 * 
+	 * @param message Details about the exception.
+	 * @param cause Cause of the exception.
+	 */
+	public CollectionException(final String message, final Throwable cause) {
+		super(message, cause);
+	}
+	
 	/** Factory of {@link CollectionException}. */
 	public static final ThrowableFactory<CollectionException> FACTORY = new BaseThrowableFactory<CollectionException>() {
 		@Override
@@ -47,39 +82,4 @@ extends Exception {
 			return new CollectionException(message, cause);
 		}
 	};
-	
-	/**
-	 * Instantiate a new exception.
-	 */
-	public CollectionException() {
-		super();
-	}
-	
-	/**
-	 * Instantiate a new exception using the given message.
-	 * 
-	 * @param message Details about the exception.
-	 */
-	public CollectionException(final String message) {
-		super(message);
-	}
-	
-	/**
-	 * Instantiate a new exception using the given cause.
-	 * 
-	 * @param cause Cause of the exception.
-	 */
-	public CollectionException(final Throwable cause) {
-		super(cause);
-	}
-	
-	/**
-	 * Instantiate a new exception using the given message and cause.
-	 * 
-	 * @param message Details about the exception.
-	 * @param cause Cause of the exception.
-	 */
-	public CollectionException(final String message, final Throwable cause) {
-		super(message, cause);
-	}
 }
