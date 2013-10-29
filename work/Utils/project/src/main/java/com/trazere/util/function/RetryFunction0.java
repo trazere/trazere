@@ -77,10 +77,10 @@ implements Function0<Either<S, F>, X> {
 	 * @param <X> Type of the exceptions.
 	 * @param function The function.
 	 * @return The result.
-	 * @throws F
+	 * @throws F When the evaluation fails repeatedly.
 	 * @throws X
 	 */
-	public static <S, F extends Exception, X extends Exception> S evaluate(final RetryFunction0<S, F, X> function)
+	public static <S, F extends Throwable, X extends Exception> S evaluate(final RetryFunction0<S, F, X> function)
 	throws F, X {
 		final Either<S, F> result = function.evaluate();
 		if (result.isLeft()) {

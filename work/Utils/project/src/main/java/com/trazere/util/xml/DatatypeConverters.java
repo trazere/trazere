@@ -20,6 +20,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.UUID;
 
+// TODO: move methods in adapters
+
 /**
  * The {@link DatatypeConverters} class provides various methods to convert XML values when using JAXB.
  */
