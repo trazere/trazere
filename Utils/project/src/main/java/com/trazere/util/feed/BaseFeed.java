@@ -27,17 +27,15 @@ import java.util.NoSuchElementException;
  */
 public abstract class BaseFeed<T, X extends Exception>
 implements Feed<T, X> {
-	// Feed.
-	
 	@Override
 	public boolean isEmpty()
 	throws X {
 		return evaluate().isNone();
 	}
 	
-	public Tuple2<T, Feed<T, X>> get()
+	public Tuple2<? extends T, ? extends Feed<? extends T, ? extends X>> get()
 	throws NoSuchElementException, X {
-		final Maybe<Tuple2<T, Feed<T, X>>> value = evaluate();
+		final Maybe<? extends Tuple2<? extends T, ? extends Feed<? extends T, ? extends X>>> value = evaluate();
 		if (value.isSome()) {
 			return value.asSome().getValue();
 		} else {
@@ -52,7 +50,7 @@ implements Feed<T, X> {
 	}
 	
 	@Override
-	public Feed<T, X> getTail()
+	public Feed<? extends T, ? extends X> getTail()
 	throws NoSuchElementException, X {
 		return get().getSecond();
 	}

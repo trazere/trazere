@@ -29,10 +29,10 @@ extends BaseFeed<T, X> {
 	// Function.
 	
 	protected boolean _evaluated = false;
-	protected Maybe<Tuple2<T, Feed<T, X>>> _value = null;
+	protected Maybe<? extends Tuple2<? extends T, ? extends Feed<? extends T, ? extends X>>> _value = null;
 	
 	@Override
-	public Maybe<Tuple2<T, Feed<T, X>>> evaluate()
+	public Maybe<? extends Tuple2<? extends T, ? extends Feed<? extends T, ? extends X>>> evaluate()
 	throws X {
 		if (!_evaluated) {
 			_value = compute();
@@ -41,6 +41,6 @@ extends BaseFeed<T, X> {
 		return _value;
 	}
 	
-	protected abstract Maybe<Tuple2<T, Feed<T, X>>> compute()
+	protected abstract Maybe<? extends Tuple2<? extends T, ? extends Feed<? extends T, ? extends X>>> compute()
 	throws X;
 }
