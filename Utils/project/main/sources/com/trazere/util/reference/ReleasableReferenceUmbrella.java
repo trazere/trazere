@@ -68,7 +68,9 @@ implements Releasable<X> {
 		final T value = _value.get();
 		
 		// Build the reference.
-		final ReleasableReference<T, X> reference = new ReleasableReference<T, X>() {
+		final class Reference
+		extends BaseReference<T>
+		implements ReleasableReference<T, X> {
 			@Override
 			public T get()
 			throws ReferenceNotSetException {
@@ -98,7 +100,8 @@ implements Releasable<X> {
 			throws X {
 				removeReference(this);
 			}
-		};
+		}
+		final ReleasableReference<T, X> reference = new Reference();
 		_references.add(reference);
 		
 		return reference;

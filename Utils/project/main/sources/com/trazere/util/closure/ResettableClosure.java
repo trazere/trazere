@@ -16,8 +16,11 @@
 package com.trazere.util.closure;
 
 import com.trazere.util.function.Function0;
+import com.trazere.util.lang.InternalException;
 import com.trazere.util.lang.Releasable;
 import com.trazere.util.reference.MutableReference;
+import com.trazere.util.reference.ReferenceAlreadySetException;
+import com.trazere.util.reference.ReferenceNotSetException;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
@@ -97,9 +100,18 @@ implements Closure<T, X>, Releasable<RuntimeException>, Describable {
 	public T evaluate()
 	throws X {
 		if (_value.isSet()) {
-			return _value.get();
+			try {
+				return _value.get();
+			} catch (final ReferenceNotSetException exception) {
+				throw new InternalException(exception);
+			}
 		} else {
-			return _value.set(compute());
+			final T value = compute();
+			try {
+				return _value.set(value);
+			} catch (final ReferenceAlreadySetException exception) {
+				throw new InternalException(exception);
+			}
 		}
 	}
 	
@@ -156,7 +168,17 @@ implements Closure<T, X>, Releasable<RuntimeException>, Describable {
 	
 	@Override
 	public String toString() {
-		return _value.isSet() ? String.valueOf(_value.get()) : TextUtils.computeDescription(this);
+		if (_value.isSet()) {
+			final T value;
+			try {
+				value = _value.get();
+			} catch (final ReferenceNotSetException exception) {
+				throw new InternalException(exception);
+			}
+			return String.valueOf(value);
+		} else {
+			return TextUtils.computeDescription(this);
+		}
 	}
 	
 	@Override
