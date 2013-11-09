@@ -15,8 +15,10 @@
  */
 package com.trazere.util.collection;
 
+import com.trazere.util.lang.InternalException;
 import com.trazere.util.lang.MutableBoolean;
 import com.trazere.util.reference.MutableReference;
+import com.trazere.util.reference.ReferenceNotSetException;
 import com.trazere.util.type.Maybe;
 import java.util.NoSuchElementException;
 
@@ -41,7 +43,12 @@ implements CheckedIterator<R, X> {
 	public R next()
 	throws X {
 		if (lookAhead()) {
-			final R next = _next.get();
+			final R next;
+			try {
+				next = _next.get();
+			} catch (final ReferenceNotSetException exception) {
+				throw new InternalException(exception);
+			}
 			_next.reset();
 			_lookAhead.set(false);
 			return next;

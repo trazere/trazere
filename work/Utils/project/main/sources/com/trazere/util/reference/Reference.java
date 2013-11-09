@@ -15,6 +15,7 @@
  */
 package com.trazere.util.reference;
 
+import com.trazere.util.function.Function0;
 import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Maybe.None;
 import com.trazere.util.type.Maybe.Some;
@@ -38,18 +39,34 @@ public interface Reference<T> {
 	 * The reference must be set.
 	 * 
 	 * @return The set value.
-	 * @throws ReferenceNotSetException When the reference has not been set.
+	 * @throws ReferenceNotSetException When the reference is not set.
 	 */
 	public T get()
 	throws ReferenceNotSetException;
 	
-	// TODO: get(T defaultValue)
-	// TODO: get(Factory<0, X> defaultValue)
+	/**
+	 * Gets the value set in the receiver reference.
+	 * 
+	 * @param defaultValue Default default. Maybe <code>null</code>.
+	 * @return The set value or the given default value when the reference is not set. Maybe <code>null</code>.
+	 */
+	public T get(final T defaultValue);
+	
+	/**
+	 * Gets the value set in the receiver reference.
+	 * 
+	 * @param <X> Type of the default value evaluation exceptions.
+	 * @param defaultValue Default default.
+	 * @return The set value or the given default value when no values are set. Maybe <code>null</code>.
+	 * @throws X When the default value cannot be evaluated.
+	 */
+	public <X extends Exception> T get(final Function0<? extends T, X> defaultValue)
+	throws X;
 	
 	/**
 	 * Gets a view of the value set in the receiver reference as an instance of {@link Maybe}.
 	 * 
-	 * @return The set value wrapped in {@link Some}, or {@link None} when the reference has not been set.
+	 * @return The set value wrapped in {@link Some}, or {@link None} when the reference is not set.
 	 */
 	public Maybe<T> asMaybe();
 }
