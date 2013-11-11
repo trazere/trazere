@@ -21,10 +21,10 @@ import com.trazere.util.type.Maybe;
 import java.util.Collection;
 
 /**
- * DOCME
+ * The {@link FeedUtils} class provides various utilities regarding feeds.
  */
 public class FeedUtils {
-	// TODO: rename to pull or head
+	// TODO: rename to head
 	/**
 	 * Gets the next value from the given feed.
 	 * 
@@ -41,6 +41,7 @@ public class FeedUtils {
 		return !feed.isEmpty() ? Maybe.<T>some(feed.getHead()) : Maybe.<T>none();
 	}
 	
+	// TODO: rename to take
 	/**
 	 * Drains all elements from the given checked iterator and populates the given collection with them.
 	 * 
