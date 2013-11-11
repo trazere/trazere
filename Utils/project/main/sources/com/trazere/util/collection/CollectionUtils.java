@@ -38,7 +38,6 @@ import java.util.Set;
  * The {@link CollectionUtils} class provides various utilities regarding the manipulation of collections and maps.
  */
 public class CollectionUtils {
-	// TODO: rename to pull or head
 	/**
 	 * Gets the next value provided by the given iterator.
 	 * 
@@ -52,6 +51,7 @@ public class CollectionUtils {
 		return iterator.hasNext() ? Maybe.<T>some(iterator.next()) : Maybe.<T>none();
 	}
 	
+	// TODO: rename to take
 	/**
 	 * Drains all values provided by the the given iterator and populates the given collection with them.
 	 * 
@@ -98,7 +98,6 @@ public class CollectionUtils {
 	// TODO: add drop
 	// TODO: add dropWhile
 	
-	// TODO: rename to pull or head
 	/**
 	 * Gets the next value provided by the given iterator.
 	 * 
@@ -115,6 +114,7 @@ public class CollectionUtils {
 		return iterator.hasNext() ? Maybe.<T>some(iterator.next()) : Maybe.<T>none();
 	}
 	
+	// TODO: rename to take
 	/**
 	 * Drains all values from the given checked iterator and populates the given collection with them.
 	 * 

@@ -30,6 +30,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
+// TODO: dispatch in CollectionUtils, IteratorUtils and FeedUtils ?
+
 /**
  * The {@link FunctionUtils} provides various helpers regarding predicates, functions and procedures.
  * 
