@@ -20,6 +20,7 @@ import com.trazere.util.lang.LangUtils;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * The {@link Predicates} class provides various factories of predicates.
@@ -443,6 +444,25 @@ public class Predicates {
 			@Override
 			public boolean evaluate(final T value) {
 				return values.contains(value);
+			}
+		};
+	}
+	
+	/**
+	 * Builds a one argument predicates that accepts each value only once.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @return The built predicate.
+	 */
+	public static <T, X extends Exception> Predicate1<T, X> normalizer() {
+		return new Predicate1<T, X>() {
+			private final Set<T> _visitedValues = new HashSet<T>();
+			
+			@Override
+			public boolean evaluate(final T value)
+			throws X {
+				return _visitedValues.add(value);
 			}
 		};
 	}
