@@ -255,6 +255,7 @@ public class CheckedIterators {
 		};
 	}
 	
+	// TODO: rename to extract
 	/**
 	 * Filters and transforms the given iterator using the given extractor.
 	 * 

@@ -22,6 +22,8 @@ import com.trazere.util.reference.ReferenceNotSetException;
 import com.trazere.util.type.Maybe;
 import java.util.NoSuchElementException;
 
+// TODO: rename to CheckedExtractIterator
+
 /**
  * The {@link CheckedMapFilterIterator} abstract class provides iterator combinators which transform and filter their values.
  * 

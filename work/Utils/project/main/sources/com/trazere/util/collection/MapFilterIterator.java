@@ -17,6 +17,8 @@ package com.trazere.util.collection;
 
 import java.util.Iterator;
 
+// TODO: rename to ExtractIterator
+
 /**
  * The {@link MapFilterIterator} abstract class provides iterator combinators which transform and filter their values.
  * 

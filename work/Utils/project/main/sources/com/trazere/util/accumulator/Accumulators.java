@@ -26,156 +26,6 @@ import com.trazere.util.type.Tuple2;
  */
 public class Accumulators {
 	/**
-	 * Builds an accumulator that ignores the accumulated values.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param <S> Type of the states.
-	 * @param <X> Type of the exceptions.
-	 * @param state State of the accumulator. May be <code>null</code>.
-	 * @return The built accumulator.
-	 */
-	public static <T, S, X extends Exception> Accumulator1<T, S, X> constant(final S state) {
-		return new BaseAccumulator1<T, S, X>() {
-			@Override
-			public void add(final T value) {
-				// Nothing to do.
-			}
-			
-			@Override
-			public S get() {
-				return state;
-			}
-		};
-	}
-	
-	/**
-	 * Builds an accumulator that ignores the accumulated values.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param <S> Type of the states.
-	 * @param <X> Type of the exceptions.
-	 * @param state State of the accumulator. May be <code>null</code>.
-	 * @return The built accumulator.
-	 * @deprecated Use {@link #constant(Object)}.
-	 */
-	@Deprecated
-	public static <T, S, X extends Exception> Accumulator1<T, S, X> constant1(final S state) {
-		return constant(state);
-	}
-	
-	/**
-	 * Builds a two-arguments accumulator that ignores the accumulated values.
-	 * 
-	 * @param <T1> Type of the first values.
-	 * @param <T2> Type of the second values.
-	 * @param <S> Type of the states.
-	 * @param <X> Type of the exceptions.
-	 * @param state State of the accumulator. May be <code>null</code>.
-	 * @return The built accumulator.
-	 */
-	public static <T1, T2, S, X extends Exception> Accumulator2<T1, T2, S, X> constant2(final S state) {
-		return new BaseAccumulator2<T1, T2, S, X>() {
-			@Override
-			public void add(final T1 value1, final T2 value2) {
-				// Nothing to do.
-			}
-			
-			@Override
-			public S get() {
-				return state;
-			}
-		};
-	}
-	
-	/**
-	 * Builds an accumulator that maps the accumulated values using the given function.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param <RT> Type of the result values.
-	 * @param <S> Type of the states.
-	 * @param <X> Type of the exceptions.
-	 * @param function Mapping function to use.
-	 * @param accumulator Accumulator to map.
-	 * @return The built accumulator.
-	 */
-	public static <T, RT, S, X extends Exception> Accumulator1<T, S, X> map(final Function1<? super T, ? extends RT, ? extends X> function, final Accumulator1<? super RT, ? extends S, ? extends X> accumulator) {
-		assert null != function;
-		assert null != accumulator;
-		
-		return new BaseAccumulator1<T, S, X>() {
-			@Override
-			public void add(final T value)
-			throws X {
-				accumulator.add(function.evaluate(value));
-			}
-			
-			@Override
-			public S get() {
-				return accumulator.get();
-			}
-		};
-	}
-	
-	/**
-	 * Builds an accumulator that maps its state using the given function.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param <S> Type of the states.
-	 * @param <RS> Type of the result states.
-	 * @param <X> Type of the exceptions.
-	 * @param function Mapping function to use.
-	 * @param accumulator Accumulator to map.
-	 * @return The built accumulator.
-	 */
-	public static <T, S, RS, X extends Exception> Accumulator1<T, RS, X> mapState(final Function1<? super S, ? extends RS, ? extends RuntimeException> function, final Accumulator1<? super T, ? extends S, ? extends X> accumulator) {
-		assert null != function;
-		assert null != accumulator;
-		
-		return new BaseAccumulator1<T, RS, X>() {
-			@Override
-			public void add(final T value)
-			throws X {
-				accumulator.add(value);
-			}
-			
-			@Override
-			public RS get() {
-				return function.evaluate(accumulator.get());
-			}
-		};
-	}
-	
-	/**
-	 * Builds an accumulator that maps its state using the given function.
-	 * 
-	 * @param <T1> Type of the first values.
-	 * @param <T2> Type of the second values.
-	 * @param <S> Type of the states.
-	 * @param <RS> Type of the result states.
-	 * @param <X> Type of the exceptions.
-	 * @param function Mapping function to use.
-	 * @param accumulator Accumulator to map.
-	 * @return The built accumulator.
-	 */
-	public static <T1, T2, S, RS, X extends Exception> Accumulator2<T1, T2, RS, X> mapState(final Function1<? super S, ? extends RS, ? extends RuntimeException> function, final Accumulator2<? super T1, ? super T2, ? extends S, ? extends X> accumulator) {
-		assert null != function;
-		assert null != accumulator;
-		
-		return new BaseAccumulator2<T1, T2, RS, X>() {
-			@Override
-			public void add(final T1 value1, final T2 value2)
-			throws X {
-				accumulator.add(value1, value2);
-			}
-			
-			@Override
-			public RS get() {
-				return function.evaluate(accumulator.get());
-			}
-		};
-	}
-	
-	/**
 	 * Builds an accumulator that filters the accumulated values using the given predicate.
 	 * 
 	 * @param <T> Type of the values.
@@ -236,6 +86,65 @@ public class Accumulators {
 		};
 	}
 	
+	/**
+	 * Builds an accumulator that maps the accumulated values using the given function.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <RT> Type of the result values.
+	 * @param <S> Type of the states.
+	 * @param <X> Type of the exceptions.
+	 * @param function Mapping function to use.
+	 * @param accumulator Accumulator to map.
+	 * @return The built accumulator.
+	 */
+	public static <T, RT, S, X extends Exception> Accumulator1<T, S, X> map(final Function1<? super T, ? extends RT, ? extends X> function, final Accumulator1<? super RT, ? extends S, ? extends X> accumulator) {
+		assert null != function;
+		assert null != accumulator;
+		
+		return new BaseAccumulator1<T, S, X>() {
+			@Override
+			public void add(final T value)
+			throws X {
+				accumulator.add(function.evaluate(value));
+			}
+			
+			@Override
+			public S get() {
+				return accumulator.get();
+			}
+		};
+	}
+	
+	/**
+	 * Builds an accumulator that maps the accumulated values using the given function.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <RT> Type of the result values.
+	 * @param <S> Type of the states.
+	 * @param <X> Type of the exceptions.
+	 * @param function Mapping function to use.
+	 * @param accumulator Accumulator to map.
+	 * @return The built accumulator.
+	 */
+	public static <T, RT, S, X extends Exception> Accumulator1<T, S, X> flatMap(final Function1<? super T, ? extends Iterable<? extends RT>, ? extends X> function, final Accumulator1<? super RT, ? extends S, ? extends X> accumulator) {
+		assert null != function;
+		assert null != accumulator;
+		
+		return new BaseAccumulator1<T, S, X>() {
+			@Override
+			public void add(final T value)
+			throws X {
+				accumulator.addAll(function.evaluate(value));
+			}
+			
+			@Override
+			public S get() {
+				return accumulator.get();
+			}
+		};
+	}
+	
+	// TODO: rename to extract
 	/**
 	 * Builds an accumulator that filters and transforms the accumulated values using the given extractor.
 	 * 
@@ -318,6 +227,127 @@ public class Accumulators {
 			@Override
 			public S get() {
 				return accumulator.get();
+			}
+		};
+	}
+	
+	/**
+	 * Builds an accumulator that ignores the accumulated values.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <S> Type of the states.
+	 * @param <X> Type of the exceptions.
+	 * @param state State of the accumulator. May be <code>null</code>.
+	 * @return The built accumulator.
+	 */
+	public static <T, S, X extends Exception> Accumulator1<T, S, X> constant(final S state) {
+		return new BaseAccumulator1<T, S, X>() {
+			@Override
+			public void add(final T value) {
+				// Nothing to do.
+			}
+			
+			@Override
+			public S get() {
+				return state;
+			}
+		};
+	}
+	
+	/**
+	 * Builds an accumulator that ignores the accumulated values.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <S> Type of the states.
+	 * @param <X> Type of the exceptions.
+	 * @param state State of the accumulator. May be <code>null</code>.
+	 * @return The built accumulator.
+	 * @deprecated Use {@link #constant(Object)}.
+	 */
+	@Deprecated
+	public static <T, S, X extends Exception> Accumulator1<T, S, X> constant1(final S state) {
+		return constant(state);
+	}
+	
+	/**
+	 * Builds a two-arguments accumulator that ignores the accumulated values.
+	 * 
+	 * @param <T1> Type of the first values.
+	 * @param <T2> Type of the second values.
+	 * @param <S> Type of the states.
+	 * @param <X> Type of the exceptions.
+	 * @param state State of the accumulator. May be <code>null</code>.
+	 * @return The built accumulator.
+	 */
+	public static <T1, T2, S, X extends Exception> Accumulator2<T1, T2, S, X> constant2(final S state) {
+		return new BaseAccumulator2<T1, T2, S, X>() {
+			@Override
+			public void add(final T1 value1, final T2 value2) {
+				// Nothing to do.
+			}
+			
+			@Override
+			public S get() {
+				return state;
+			}
+		};
+	}
+	
+	/**
+	 * Builds an accumulator that maps its state using the given function.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <S> Type of the states.
+	 * @param <RS> Type of the result states.
+	 * @param <X> Type of the exceptions.
+	 * @param function Mapping function to use.
+	 * @param accumulator Accumulator to map.
+	 * @return The built accumulator.
+	 */
+	public static <T, S, RS, X extends Exception> Accumulator1<T, RS, X> mapState(final Function1<? super S, ? extends RS, ? extends RuntimeException> function, final Accumulator1<? super T, ? extends S, ? extends X> accumulator) {
+		assert null != function;
+		assert null != accumulator;
+		
+		return new BaseAccumulator1<T, RS, X>() {
+			@Override
+			public void add(final T value)
+			throws X {
+				accumulator.add(value);
+			}
+			
+			@Override
+			public RS get() {
+				return function.evaluate(accumulator.get());
+			}
+		};
+	}
+	
+	/**
+	 * Builds an accumulator that maps its state using the given function.
+	 * 
+	 * @param <T1> Type of the first values.
+	 * @param <T2> Type of the second values.
+	 * @param <S> Type of the states.
+	 * @param <RS> Type of the result states.
+	 * @param <X> Type of the exceptions.
+	 * @param function Mapping function to use.
+	 * @param accumulator Accumulator to map.
+	 * @return The built accumulator.
+	 */
+	public static <T1, T2, S, RS, X extends Exception> Accumulator2<T1, T2, RS, X> mapState(final Function1<? super S, ? extends RS, ? extends RuntimeException> function, final Accumulator2<? super T1, ? super T2, ? extends S, ? extends X> accumulator) {
+		assert null != function;
+		assert null != accumulator;
+		
+		return new BaseAccumulator2<T1, T2, RS, X>() {
+			@Override
+			public void add(final T1 value1, final T2 value2)
+			throws X {
+				accumulator.add(value1, value2);
+			}
+			
+			@Override
+			public RS get() {
+				return function.evaluate(accumulator.get());
 			}
 		};
 	}
