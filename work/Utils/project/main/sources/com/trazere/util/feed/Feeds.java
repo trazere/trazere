@@ -381,6 +381,33 @@ public class Feeds {
 		};
 	}
 	
+	/**
+	 * Appends the given feeds.
+	 * 
+	 * @param <T> Type of the elements.
+	 * @param <X> Type of the exceptions.
+	 * @param feed1 First feed.
+	 * @param feed2 Second feed.
+	 * @return The built feed appending the given feeds.
+	 */
+	public static <T, X extends Exception> Feed<T, X> append(final Feed<? extends T, ? extends X> feed1, final Feed<? extends T, ? extends X> feed2) {
+		assert null != feed1;
+		assert null != feed2;
+		
+		return new BaseFeed<T, X>() {
+			@Override
+			public Maybe<? extends Tuple2<? extends T, ? extends Feed<? extends T, ? extends X>>> evaluate()
+			throws X {
+				final Maybe<? extends Tuple2<? extends T, ? extends Feed<? extends T, ? extends X>>> item1 = feed1.evaluate();
+				if (item1.isSome()) {
+					return Maybe.some(Tuple2.build(item1.asSome().getValue().getFirst(), append(item1.asSome().getValue().getSecond(), feed2)));
+				} else {
+					return feed2.evaluate();
+				}
+			}
+		};
+	}
+	
 	private Feeds() {
 		// Prevent instantiation.
 	}
