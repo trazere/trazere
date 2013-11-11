@@ -346,6 +346,7 @@ public class Feeds {
 		};
 	}
 	
+	// TODO: rename to extract
 	/**
 	 * Filters and transforms the given feed using the given extractor.
 	 * 

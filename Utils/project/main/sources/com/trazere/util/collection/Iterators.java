@@ -181,6 +181,7 @@ public class Iterators {
 		};
 	}
 	
+	// TODO: rename to extract
 	/**
 	 * Filters and transforms the given iterator using the given extractor.
 	 * 

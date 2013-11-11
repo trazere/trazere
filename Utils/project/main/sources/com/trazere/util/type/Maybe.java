@@ -618,6 +618,7 @@ implements Iterable<T>, Describable {
 		};
 	}
 	
+	// TODO: rename to extract
 	/**
 	 * Maps and filters the value wrapped by the receiver instance.
 	 * 
@@ -630,6 +631,7 @@ implements Iterable<T>, Describable {
 	public abstract <R, X extends Exception> Maybe<R> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, X> function)
 	throws X;
 	
+	// TODO: rename to extractFunction
 	/**
 	 * Builds a function which maps and filters the values wrapped in the argument instances using the given function.
 	 * 

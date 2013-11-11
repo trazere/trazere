@@ -932,7 +932,6 @@ public class FunctionUtils {
 	
 	// TODO: filterValues with accumulator
 	
-	// TODO: kill, use filter + Predicates.not
 	/**
 	 * Filters the content of the given collection using the given predicate.
 	 * <p>
@@ -961,7 +960,6 @@ public class FunctionUtils {
 		return collection;
 	}
 	
-	// TODO: kill, use filter + Predicates.not
 	/**
 	 * Filters the content of the given map using the given predicate.
 	 * <p>
@@ -1015,17 +1013,17 @@ public class FunctionUtils {
 	 * @param <V> Type of the values.
 	 * @param <RV> Type of the result values.
 	 * @param <A> Type of the accumulator to populate with the result values.
-	 * @param <PX> Type of the predicate exceptions.
+	 * @param <FX> Type of the function exceptions.
 	 * @param <AX> Type of the accumulator exceptions.
 	 * @param function The function.
 	 * @param values The values.
 	 * @param results The accumulator to populate with the result values.
 	 * @return The given result accumulator.
-	 * @throws PX When some predicate evaluation fails.
+	 * @throws FX When some predicate evaluation fails.
 	 * @throws AX When some accumulation fails.
 	 */
-	public static <V, RV, A extends Accumulator1<? super RV, ?, AX>, PX extends Exception, AX extends Exception> A map(final Function1<? super V, RV, PX> function, final Iterable<? extends V> values, final A results)
-	throws PX, AX {
+	public static <V, RV, A extends Accumulator1<? super RV, ?, AX>, FX extends Exception, AX extends Exception> A map(final Function1<? super V, RV, FX> function, final Iterable<? extends V> values, final A results)
+	throws FX, AX {
 		assert null != values;
 		
 		for (final V value : values) {
@@ -1066,17 +1064,17 @@ public class FunctionUtils {
 	 * @param <V> Type of the values.
 	 * @param <RV> Type of the result values.
 	 * @param <A> Type of the map to populate with the result bindings.
-	 * @param <PX> Type of the predicate exceptions.
+	 * @param <FX> Type of the function exceptions.
 	 * @param <AX> Type of the accumulator exceptions.
 	 * @param function The function.
 	 * @param bindings The bindings.
 	 * @param results The accumulator to populate with the result bindings.
 	 * @return The given accumulator.
-	 * @throws PX When some function evaluation fails.
+	 * @throws FX When some function evaluation fails.
 	 * @throws AX When some accumulation fails.
 	 */
-	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, AX>, PX extends Exception, AX extends Exception> A map(final Function2<? super K, ? super V, RV, PX> function, final Map<? extends K, ? extends V> bindings, final A results)
-	throws PX, AX {
+	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, AX>, FX extends Exception, AX extends Exception> A map(final Function2<? super K, ? super V, RV, FX> function, final Map<? extends K, ? extends V> bindings, final A results)
+	throws FX, AX {
 		assert null != function;
 		assert null != bindings;
 		assert null != results;
@@ -1120,17 +1118,17 @@ public class FunctionUtils {
 	 * @param <V> Type of the values.
 	 * @param <RV> Type of the result values.
 	 * @param <A> Type of the accumulator to populate with the result bindings.
-	 * @param <PX> Type of the predicate exceptions.
+	 * @param <FX> Type of the function exceptions.
 	 * @param <AX> Type of the accumulator exceptions.
 	 * @param function The function.
 	 * @param bindings The bindings.
 	 * @param results The accumulator to populate with the result bindings.
 	 * @return The given accumulator.
-	 * @throws PX When some function evaluation fails.
+	 * @throws FX When some function evaluation fails.
 	 * @throws AX When some accumulation fails.
 	 */
-	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, AX>, PX extends Exception, AX extends Exception> A map(final Function2<? super K, ? super V, RV, PX> function, final Multimap<K, ? extends V, ?> bindings, final A results)
-	throws PX, AX {
+	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, AX>, FX extends Exception, AX extends Exception> A map(final Function2<? super K, ? super V, RV, FX> function, final Multimap<K, ? extends V, ?> bindings, final A results)
+	throws FX, AX {
 		assert null != function;
 		assert null != bindings;
 		assert null != results;
@@ -1143,6 +1141,7 @@ public class FunctionUtils {
 		return results;
 	}
 	
+	// TODO: rename to extract
 	/**
 	 * Filters and transforms the given values using the given extractor and populates the given collection with the accepted results.
 	 * 
@@ -1161,23 +1160,24 @@ public class FunctionUtils {
 		return mapFilter(extractor, values, CollectionAccumulators.<RV, C, InternalException>add(results)).get();
 	}
 	
+	// TODO: rename to extract
 	/**
 	 * Filters and transforms the given values using the given extractor and populates the given accumulator with the accepted results.
 	 * 
 	 * @param <V> Type of the values.
 	 * @param <RV> Type of the result values.
 	 * @param <A> Type of the accumulator to populate with the result values.
-	 * @param <PX> Type of the predicate exceptions.
+	 * @param <EX> Type of the extractor exceptions.
 	 * @param <AX> Type of the accumulator exceptions.
 	 * @param extractor The extractor.
 	 * @param values The values.
 	 * @param results The accumulator to populate with the result values.
 	 * @return The given accumulator.
-	 * @throws PX When some extractor evaluation fails.
+	 * @throws EX When some extractor evaluation fails.
 	 * @throws AX When some accumulation fails.
 	 */
-	public static <V, RV, A extends Accumulator1<? super RV, ?, AX>, PX extends Exception, AX extends Exception> A mapFilter(final Function1<? super V, ? extends Maybe<? extends RV>, PX> extractor, final Iterable<? extends V> values, final A results)
-	throws PX, AX {
+	public static <V, RV, A extends Accumulator1<? super RV, ?, AX>, EX extends Exception, AX extends Exception> A mapFilter(final Function1<? super V, ? extends Maybe<? extends RV>, EX> extractor, final Iterable<? extends V> values, final A results)
+	throws EX, AX {
 		assert null != extractor;
 		assert null != values;
 		assert null != results;
@@ -1191,6 +1191,7 @@ public class FunctionUtils {
 		return results;
 	}
 	
+	// TODO: rename to extract
 	/**
 	 * Filters and transforms the given bindings using the given extractor and populates the given map with the bindings of the argument keys and the
 	 * corresponding accepted results.
@@ -1213,6 +1214,7 @@ public class FunctionUtils {
 		return mapFilter(extractor, bindings, CollectionAccumulators.<K, RV, M, InternalException>put(results)).get();
 	}
 	
+	// TODO: rename to extract
 	/**
 	 * Filters and transforms the given bindings using the given extractor and populates the given accumulator with the bindings of the argument keys and the
 	 * corresponding accepted results.
@@ -1223,17 +1225,17 @@ public class FunctionUtils {
 	 * @param <V> Type of the values.
 	 * @param <RV> Type of the result values.
 	 * @param <A> Type of the accumulator to populate with the result bindings.
-	 * @param <PX> Type of the predicate exceptions.
+	 * @param <EX> Type of the extractor exceptions.
 	 * @param <AX> Type of the accumulator exceptions.
 	 * @param extractor The extractor.
 	 * @param bindings The bindings.
 	 * @param results The map to populate with the result bindings.
 	 * @return The given accumulator.
-	 * @throws PX When some extractor evaluation fails.
+	 * @throws EX When some extractor evaluation fails.
 	 * @throws AX When some accumulation fails.
 	 */
-	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, AX>, PX extends Exception, AX extends Exception> A mapFilter(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, PX> extractor, final Map<? extends K, ? extends V> bindings, final A results)
-	throws PX, AX {
+	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, AX>, EX extends Exception, AX extends Exception> A mapFilter(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, EX> extractor, final Map<? extends K, ? extends V> bindings, final A results)
+	throws EX, AX {
 		assert null != extractor;
 		assert null != bindings;
 		assert null != results;
@@ -1248,6 +1250,7 @@ public class FunctionUtils {
 		return results;
 	}
 	
+	// TODO: rename to extract
 	/**
 	 * Filters and transforms the given bindings using the given extractor and populates the given map with the bindings of the argument keys and the
 	 * corresponding accepted results.
@@ -1270,6 +1273,7 @@ public class FunctionUtils {
 		return mapFilter(extractor, bindings, CollectionAccumulators.<K, RV, M, InternalException>put(results)).get();
 	}
 	
+	// TODO: rename to extract
 	/**
 	 * Filters and transforms the given bindings using the given extractor and populates the given accumulator with the bindings of the argument keys and the
 	 * corresponding accepted results.
@@ -1280,17 +1284,17 @@ public class FunctionUtils {
 	 * @param <V> Type of the values.
 	 * @param <RV> Type of the result values.
 	 * @param <A> Type of the accumulator to populate with the result bindings.
-	 * @param <PX> Type of the predicate exceptions.
+	 * @param <EX> Type of the extractor exceptions.
 	 * @param <AX> Type of the accumulator exceptions.
 	 * @param extractor The extractor.
 	 * @param bindings The bindings.
 	 * @param results The map to populate with the result bindings.
 	 * @return The given accumulator.
-	 * @throws PX When some extractor evaluation fails.
+	 * @throws EX When some extractor evaluation fails.
 	 * @throws AX When some accumulation fails.
 	 */
-	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, AX>, PX extends Exception, AX extends Exception> A mapFilter(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, PX> extractor, final Multimap<K, ? extends V, ?> bindings, final A results)
-	throws PX, AX {
+	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, AX>, EX extends Exception, AX extends Exception> A mapFilter(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, EX> extractor, final Multimap<K, ? extends V, ?> bindings, final A results)
+	throws EX, AX {
 		assert null != extractor;
 		assert null != bindings;
 		assert null != results;
@@ -1323,10 +1327,9 @@ public class FunctionUtils {
 	throws X {
 		assert null != values;
 		
-		return flatMap(function, CheckedIterators.<V, InternalException>fromIterable(values), results);
+		return flatMap(function, values, CollectionAccumulators.<RV, C, InternalException>add(results)).get();
 	}
 	
-	// TODO: kill
 	/**
 	 * Transforms the values provided by the given iterator using the given function, flattens them and populates the given collection with the result values.
 	 * 
@@ -1345,7 +1348,6 @@ public class FunctionUtils {
 		return flatMap(function, CheckedIterators.<V, InternalException>fromIterator(values), results);
 	}
 	
-	// TODO: kill
 	/**
 	 * Transforms the values provided by the given iterator using the given function, flattens them and populates the given collection with the result values.
 	 * 
@@ -1373,7 +1375,32 @@ public class FunctionUtils {
 		return results;
 	}
 	
-	// TODO: flatMap with Accumulator
+	/**
+	 * Transforms the given values using the given function, flattens them and populates the given collection with the result values.
+	 * 
+	 * @param <V> Type of the argument values.
+	 * @param <RV> Type of the result values.
+	 * @param <A> Type of the accumulator to populate with the result values.
+	 * @param <FX> Type of the function exceptions.
+	 * @param <AX> Type of the accumulator exceptions.
+	 * @param function The function.
+	 * @param values The argument values.
+	 * @param results The accumulator to populate with the result values.
+	 * @return The given accumulator.
+	 * @throws FX When some function evaluation fails.
+	 * @throws AX When some accumulation fails.
+	 */
+	public static <V, RV, A extends Accumulator1<? super RV, ?, AX>, FX extends Exception, AX extends Exception> A flatMap(final Function1<? super V, ? extends Collection<? extends RV>, FX> function, final Iterable<? extends V> values, final A results)
+	throws FX, AX {
+		assert null != function;
+		assert null != values;
+		assert null != results;
+		
+		for (final V value : values) {
+			results.addAll(function.evaluate(value));
+		}
+		return results;
+	}
 	
 	/**
 	 * Projects the given keys using the given function and populates the given map with the bindings of the keys and the projected values.
