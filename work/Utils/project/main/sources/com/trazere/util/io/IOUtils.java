@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
+import java.io.StringWriter;
 import java.io.Writer;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -31,34 +32,28 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 /**
- * DOCME
+ * The {@link IOUtils} class provides various utilities regarding I/O.
  */
 public class IOUtils {
-	// TODO: move to IOFunctions
 	/**
 	 * Builds a function which builds files.
 	 * 
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
+	 * @deprecated Use {@link IOFunctions#file()}
 	 */
-	@SuppressWarnings("unchecked")
+	@Deprecated
 	public static <X extends Exception> Function1<String, File, X> buildFileFunction() {
-		return (Function1<String, File, X>) _BUILD_FILE_FUNCTION;
+		return IOFunctions.file();
 	}
 	
-	private static Function1<String, File, ?> _BUILD_FILE_FUNCTION = new Function1<String, File, RuntimeException>() {
-		@Override
-		public File evaluate(final String path) {
-			return new File(path);
-		}
-	};
-	
 	/**
-	 * Reads the data from the given input stream and write it to the given output stream.
+	 * Reads all data from the given input stream and write it to the given output stream.
 	 * 
 	 * @param input Input stream to read.
 	 * @param output Output stream to write into.
-	 * @throws IOException
+	 * @throws IOException When the input cannot be read.
+	 * @throws IOException When the output cannot be written.
 	 */
 	public static void copyStream(final InputStream input, final OutputStream output)
 	throws IOException {
@@ -78,11 +73,12 @@ public class IOUtils {
 	}
 	
 	/**
-	 * Reads the text from the given reader and write it to the given writer.
+	 * Reads all text from the given reader and write it to the given writer.
 	 * 
 	 * @param reader Reader to read from.
 	 * @param writer Writer to write into.
-	 * @throws IOException
+	 * @throws IOException When the reader cannot be read.
+	 * @throws IOException When the writer cannot be written.
 	 */
 	public static void copyText(final Reader reader, final Writer writer)
 	throws IOException {
@@ -99,6 +95,20 @@ public class IOUtils {
 				break;
 			}
 		}
+	}
+	
+	/**
+	 * Reads all text from the given reader.
+	 * 
+	 * @param reader Reader to read from.
+	 * @return The read text.
+	 * @throws IOException The
+	 */
+	public static String readText(final Reader reader)
+	throws IOException {
+		final StringWriter result = new StringWriter();
+		copyText(reader, result);
+		return result.toString();
 	}
 	
 	/**
