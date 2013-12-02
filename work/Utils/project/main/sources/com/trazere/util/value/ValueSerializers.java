@@ -58,6 +58,36 @@ public class ValueSerializers {
 	}
 	
 	/**
+	 * Builds a value serializer corresponding to the composition of the given value serializers (g . f).
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <IR> Type of the intermediate representations.
+	 * @param <R> Type of the representations.
+	 * @param <X> Type of the exceptions.
+	 * @param g The outer value serializer.
+	 * @param f The inner value serializer.
+	 * @return The built value serializer.
+	 */
+	public static <T, IR, R, X extends Exception> ValueSerializer<T, R, X> compose(final ValueSerializer<IR, R, ? extends X> g, final ValueSerializer<T, IR, ? extends X> f) {
+		assert null != f;
+		assert null != g;
+		
+		return new BaseValueSerializer<T, R, X>(f.getValueClass(), g.getRepresentationClass()) {
+			@Override
+			public R serialize(final T value)
+			throws X {
+				return g.serialize(f.serialize(value));
+			}
+			
+			@Override
+			public T deserialize(final R representation)
+			throws X {
+				return f.deserialize(g.deserialize(representation));
+			}
+		};
+	}
+	
+	/**
 	 * Builds a serializer of booleans to strings.
 	 * 
 	 * @param <X> Type of the exceptions.
