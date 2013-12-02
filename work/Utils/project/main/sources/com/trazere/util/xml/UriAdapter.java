@@ -19,9 +19,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-// TODO: move serialization methods in adapters in trazere
-// TODO: handle null correctly in adpaters in trazere
-
 /**
  * The {@link UriAdapter} class provides JAXB adpaters for URIs.
  */
@@ -59,12 +56,12 @@ extends XmlAdapter<String, URI> {
 	/**
 	 * Formats the given uri.
 	 * 
-	 * @param uri Uri to print.
+	 * @param value Uri to format.
 	 * @return The representation.
 	 */
-	public static String print(final URI uri) {
-		assert null != uri;
+	public static String print(final URI value) {
+		assert null != value;
 		
-		return uri.toString();
+		return value.toString();
 	}
 }

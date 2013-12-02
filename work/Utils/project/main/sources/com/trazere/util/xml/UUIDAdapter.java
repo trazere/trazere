@@ -19,17 +19,43 @@ import java.util.UUID;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
- * The {@link UUIDAdapter} class provides JAXB adpater for UUID.
+ * The {@link UUIDAdapter} class provides JAXB adpaters for UUIDs.
  */
 public class UUIDAdapter
 extends XmlAdapter<String, UUID> {
 	@Override
 	public UUID unmarshal(final String value) {
-		return DatatypeConverters.parseUUID(value);
+		return null != value ? parse(value) : null;
 	}
 	
 	@Override
 	public String marshal(final UUID value) {
-		return DatatypeConverters.printUUID(value);
+		return null != value ? print(value) : null;
+	}
+	
+	/**
+	 * Parses the given UUID.
+	 * 
+	 * @param representation Representation to parse.
+	 * @return The UUID.
+	 * @throws IllegalArgumentException When the representation is invalid.
+	 */
+	public static UUID parse(final String representation)
+	throws IllegalArgumentException {
+		assert null != representation;
+		
+		return UUID.fromString(representation);
+	}
+	
+	/**
+	 * Formats the given UUID.
+	 * 
+	 * @param value UUID to format.
+	 * @return The representation.
+	 */
+	public static String print(final UUID value) {
+		assert null != value;
+		
+		return value.toString();
 	}
 }

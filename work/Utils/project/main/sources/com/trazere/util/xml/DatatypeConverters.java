@@ -15,16 +15,13 @@
  */
 package com.trazere.util.xml;
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.UUID;
-
-// TODO: move methods in adapters
 
 /**
  * The {@link DatatypeConverters} class provides various methods to convert XML values when using JAXB.
  */
+@Deprecated
 public class DatatypeConverters {
 	/**
 	 * Parses the given date.
@@ -32,12 +29,12 @@ public class DatatypeConverters {
 	 * @param representation The representation of the date.
 	 * @return The date.
 	 * @throws IllegalArgumentException When the representation is invalid.
+	 * @deprecated Use {@link DateAdapter#parse(String)}
 	 */
+	@Deprecated
 	public static Date parseDate(final String representation)
 	throws IllegalArgumentException {
-		assert null != representation;
-		
-		return javax.xml.bind.DatatypeConverter.parseDate(representation).getTime();
+		return DateAdapter.parse(representation);
 	}
 	
 	/**
@@ -45,13 +42,11 @@ public class DatatypeConverters {
 	 * 
 	 * @param date The date.
 	 * @return The representation.
+	 * @deprecated Use {@link DateAdapter#print(Date)}
 	 */
+	@Deprecated
 	public static String printDate(final Date date) {
-		assert null != date;
-		
-		final Calendar cal = new GregorianCalendar();
-		cal.setTime(date);
-		return javax.xml.bind.DatatypeConverter.printDate(cal);
+		return DateAdapter.print(date);
 	}
 	
 	/**
@@ -60,12 +55,12 @@ public class DatatypeConverters {
 	 * @param representation The representation of the time.
 	 * @return The time.
 	 * @throws IllegalArgumentException When the representation is invalid.
+	 * @deprecated Use {@link TimeAdapter#parse(String)}
 	 */
+	@Deprecated
 	public static Date parseTime(final String representation)
 	throws IllegalArgumentException {
-		assert null != representation;
-		
-		return javax.xml.bind.DatatypeConverter.parseTime(representation).getTime();
+		return TimeAdapter.parse(representation);
 	}
 	
 	/**
@@ -73,13 +68,11 @@ public class DatatypeConverters {
 	 * 
 	 * @param date The time.
 	 * @return The representation.
+	 * @deprecated Use {@link TimeAdapter#print(Date)}
 	 */
+	@Deprecated
 	public static String printTime(final Date date) {
-		assert null != date;
-		
-		final Calendar cal = new GregorianCalendar();
-		cal.setTime(date);
-		return javax.xml.bind.DatatypeConverter.printTime(cal);
+		return TimeAdapter.print(date);
 	}
 	
 	/**
@@ -88,12 +81,12 @@ public class DatatypeConverters {
 	 * @param representation The representation of the time.
 	 * @return The date and time.
 	 * @throws IllegalArgumentException When the representation is invalid.
+	 * @deprecated Use {@link DateTimeAdapter#parse(String)}
 	 */
+	@Deprecated
 	public static Date parseDateTime(final String representation)
 	throws IllegalArgumentException {
-		assert null != representation;
-		
-		return javax.xml.bind.DatatypeConverter.parseDateTime(representation).getTime();
+		return DateTimeAdapter.parse(representation);
 	}
 	
 	/**
@@ -101,13 +94,11 @@ public class DatatypeConverters {
 	 * 
 	 * @param date The date and time.
 	 * @return The representation.
+	 * @deprecated Use {@link DateTimeAdapter#print(Date)}
 	 */
+	@Deprecated
 	public static String printDateTime(final Date date) {
-		assert null != date;
-		
-		final Calendar cal = new GregorianCalendar();
-		cal.setTime(date);
-		return javax.xml.bind.DatatypeConverter.printDateTime(cal);
+		return DateTimeAdapter.print(date);
 	}
 	
 	/**
@@ -116,12 +107,12 @@ public class DatatypeConverters {
 	 * @param representation The representation of the time.
 	 * @return The UUID.
 	 * @throws IllegalArgumentException When the representation is invalid.
+	 * @deprecated Use {@link UUIDAdapter#parse(String)}
 	 */
+	@Deprecated
 	public static UUID parseUUID(final String representation)
 	throws IllegalArgumentException {
-		assert null != representation;
-		
-		return UUID.fromString(representation);
+		return UUIDAdapter.parse(representation);
 	}
 	
 	/**
@@ -129,11 +120,11 @@ public class DatatypeConverters {
 	 * 
 	 * @param uuid The UUID.
 	 * @return The representation.
+	 * @deprecated Use {@link UUIDAdapter#print(UUID)}
 	 */
+	@Deprecated
 	public static String printUUID(final UUID uuid) {
-		assert null != uuid;
-		
-		return uuid.toString();
+		return UUIDAdapter.print(uuid);
 	}
 	
 	private DatatypeConverters() {
