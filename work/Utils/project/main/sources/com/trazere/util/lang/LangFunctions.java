@@ -35,6 +35,24 @@ public class LangFunctions {
 	}
 	
 	/**
+	 * Builds a function returning the Java class of the values.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @return The built function.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <X extends Exception> Function1<Object, Class<?>, X> getClass_() {
+		return (Function1<Object, Class<?>, X>) _GET_CLASS;
+	}
+	
+	private static final Function1<Object, Class<?>, ?> _GET_CLASS = new Function1<Object, Class<?>, RuntimeException>() {
+		@Override
+		public Class<?> evaluate(final Object value) {
+			return value.getClass();
+		}
+	};
+	
+	/**
 	 * Builds a function returning the string representation of the values.
 	 * 
 	 * @param <T> Type of the values.
