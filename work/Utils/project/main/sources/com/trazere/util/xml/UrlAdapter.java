@@ -19,9 +19,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-// TODO: move serialization methods in adapters in trazere
-// TODO: handle null correctly in adpaters in trazere
-
 /**
  * The {@link UrlAdapter} class provides JAXB adpaters for URLs.
  */
@@ -59,12 +56,12 @@ extends XmlAdapter<String, URL> {
 	/**
 	 * Formats the given url.
 	 * 
-	 * @param url Url to print.
+	 * @param value Url to format.
 	 * @return The representation.
 	 */
-	public static String print(final URL url) {
-		assert null != url;
+	public static String print(final URL value) {
+		assert null != value;
 		
-		return url.toExternalForm();
+		return value.toExternalForm();
 	}
 }
