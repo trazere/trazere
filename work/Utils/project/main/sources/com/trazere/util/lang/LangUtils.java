@@ -210,7 +210,7 @@ public class LangUtils {
 		return null != value ? value.charValue() : defaultValue;
 	}
 	
-	// TODO: rename to ???
+	// TODO: rename to ?? (safeUnbox ?)
 	/**
 	 * Gets the value of the given object.
 	 * 
@@ -238,6 +238,7 @@ public class LangUtils {
 		return object1 == object2 || null != object1 && object1.equals(object2);
 	}
 	
+	// TODO: move to ComparatorUtils
 	/**
 	 * Compares the given comparable values.
 	 * <p>
@@ -257,6 +258,7 @@ public class LangUtils {
 		}
 	}
 	
+	// TODO: move to ComparatorUtils
 	/**
 	 * Compares the given values using the given comparator.
 	 * <p>
@@ -279,6 +281,7 @@ public class LangUtils {
 		}
 	}
 	
+	// TODO: move to ComparatorUtils or CollectionUtils
 	/**
 	 * Gets the least of the given values according to the given comparator.
 	 * 
@@ -294,6 +297,7 @@ public class LangUtils {
 		return comparator.compare(value1, value2) <= 0 ? value1 : value2;
 	}
 	
+	// TODO: move to ComparatorUtils or CollectionUtils
 	/**
 	 * Gets the least given value according to the given comparator.
 	 * 
@@ -308,6 +312,7 @@ public class LangUtils {
 		return least(comparator, values.iterator());
 	}
 	
+	// TODO: move to ComparatorUtils or CollectionUtils
 	/**
 	 * Gets the least given value according to the given comparator.
 	 * 
@@ -336,6 +341,7 @@ public class LangUtils {
 		return Maybe.some(least.get());
 	}
 	
+	// TODO: move to ComparatorUtils or CollectionUtils
 	/**
 	 * Gets the greatest of the given values according to the given comparator.
 	 * 
@@ -351,6 +357,7 @@ public class LangUtils {
 		return comparator.compare(value1, value2) >= 0 ? value1 : value2;
 	}
 	
+	// TODO: move to ComparatorUtils or CollectionUtils
 	/**
 	 * Gets the greatest given value according to the given comparator.
 	 * 
@@ -365,6 +372,7 @@ public class LangUtils {
 		return greatest(comparator, values.iterator());
 	}
 	
+	// TODO: move to ComparatorUtils or CollectionUtils
 	/**
 	 * Gets the greatest given value according to the given comparator.
 	 * 
