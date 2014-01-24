@@ -25,12 +25,6 @@ import com.trazere.util.reference.ReferenceNotSetException;
 
 // TODO: improve parser comparison to handle recursive parsers
 
-/**
- * DOCME
- * 
- * @param <Token>
- * @param <Result>
- */
 public class ParserReference<Token, Result>
 implements Parser<Token, Result> {
 	// Parser.

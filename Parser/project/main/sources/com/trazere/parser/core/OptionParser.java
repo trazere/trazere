@@ -25,12 +25,6 @@ import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.LangUtils;
 import com.trazere.util.type.Maybe;
 
-/**
- * DOCME
- * 
- * @param <Token>
- * @param <Result>
- */
 public class OptionParser<Token, Result>
 extends BaseParser<Token, Maybe<Result>> {
 	protected final Parser<Token, Result> _subParser;

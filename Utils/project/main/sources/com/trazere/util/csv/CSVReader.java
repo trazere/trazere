@@ -83,7 +83,7 @@ public class CSVReader {
 	 * @param reader Reader providing the CSV input.
 	 * @param delimiter Delimiter of the CSV fields.
 	 * @param options Options.
-	 * @throws IOException
+	 * @throws IOException On failure.
 	 */
 	public CSVReader(final Reader reader, final String delimiter, final EnumSet<CSVReaderOption> options)
 	throws IOException {
@@ -167,7 +167,7 @@ public class CSVReader {
 	 * 
 	 * @return <code>true</code> if another entry is available, <code>false</code> if the input has been exausted or if the reader hangs because of an invalid
 	 *         line.
-	 * @throws IOException
+	 * @throws IOException On failure.
 	 */
 	public boolean hasNext()
 	throws IOException {
@@ -312,7 +312,7 @@ public class CSVReader {
 	 * Read the next CSV entry. This method should not be called if <code>hasNext</code> returns <code>false</code>.
 	 * 
 	 * @return A map of the values of the CSV fields identified by their corresponding headers, or <code>null</code> if the entry is invalid.
-	 * @throws IOException
+	 * @throws IOException On failure.
 	 */
 	public CSVLine next()
 	throws IOException {
@@ -340,7 +340,7 @@ public class CSVReader {
 	/**
 	 * Close the underlying reader.
 	 * 
-	 * @throws IOException
+	 * @throws IOException On failure.
 	 */
 	public void close()
 	throws IOException {

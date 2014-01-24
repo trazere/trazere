@@ -19,11 +19,6 @@ import com.trazere.parser.Parser;
 import com.trazere.parser.ParserFailure;
 import com.trazere.parser.ParserPosition;
 
-/**
- * DOCME
- * 
- * @param <Token>
- */
 public class ParserFailureImpl<Token>
 implements ParserFailure<Token> {
 	public ParserFailureImpl(final Parser<Token, ?> parser, final ParserPosition<Token> position) {

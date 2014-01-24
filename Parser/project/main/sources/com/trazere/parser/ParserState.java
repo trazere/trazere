@@ -15,11 +15,6 @@
  */
 package com.trazere.parser;
 
-/**
- * DOCME
- * 
- * @param <Token>
- */
 public interface ParserState<Token> {
 	public ParserPosition<Token> getPosition();
 	

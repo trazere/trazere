@@ -19,16 +19,17 @@ import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Tuple2;
 
 /**
- * DOCME
+ * The {@link MemoizedFeed} class provides a skeleton implementation of feeds that memoize their value.
  * 
- * @param <T>
- * @param <X>
+ * @param <T> Type of the elements.
+ * @param <X> Type of the exceptions.
  */
 public abstract class MemoizedFeed<T, X extends Exception>
 extends BaseFeed<T, X> {
-	// Function.
-	
+	/** Indicates whether the feed has been computed. */
 	protected boolean _evaluated = false;
+	
+	/** Head and tail of the feed. */
 	protected Maybe<? extends Tuple2<? extends T, ? extends Feed<? extends T, ? extends X>>> _value = null;
 	
 	@Override
@@ -41,6 +42,12 @@ extends BaseFeed<T, X> {
 		return _value;
 	}
 	
+	/**
+	 * Computes the head and tail of the receiver feed.
+	 * 
+	 * @return The computed head and tail.
+	 * @throws X On failure.
+	 */
 	protected abstract Maybe<? extends Tuple2<? extends T, ? extends Feed<? extends T, ? extends X>>> compute()
 	throws X;
 }

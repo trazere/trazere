@@ -93,7 +93,7 @@ public class CSVWriter {
 	/**
 	 * Write a line containing the headers of the CSV output.
 	 * 
-	 * @throws IOException
+	 * @throws IOException On failure.
 	 */
 	public void writeHeaders()
 	throws IOException {
@@ -118,7 +118,7 @@ public class CSVWriter {
 	 * Write the given CSV line.
 	 * 
 	 * @param line Values of the CSV fields of the line identified by their header.
-	 * @throws IOException
+	 * @throws IOException On failure.
 	 */
 	public void writeLine(final CSVLine line)
 	throws IOException {
@@ -168,7 +168,7 @@ public class CSVWriter {
 	/**
 	 * Flush the underlying writer of the receiver CSV writer.
 	 * 
-	 * @throws IOException
+	 * @throws IOException On failure.
 	 */
 	public void flush()
 	throws IOException {
@@ -178,7 +178,7 @@ public class CSVWriter {
 	/**
 	 * Close the underlying writer of the receiver CSV writer.
 	 * 
-	 * @throws IOException
+	 * @throws IOException On failure.
 	 */
 	public void close()
 	throws IOException {

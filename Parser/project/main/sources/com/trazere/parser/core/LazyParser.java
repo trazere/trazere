@@ -23,12 +23,6 @@ import com.trazere.util.closure.Closure;
 import com.trazere.util.closure.ResettableClosure;
 import com.trazere.util.function.Function0;
 
-/**
- * DOCME
- * 
- * @param <Token>
- * @param <Result>
- */
 public abstract class LazyParser<Token, Result>
 implements Parser<Token, Result> {
 	public static <Token, Result> LazyParser<Token, Result> build(final Function0<? extends Parser<Token, Result>, ? extends ParserException> parser) {

@@ -26,12 +26,6 @@ import com.trazere.util.lang.LangUtils;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * DOCME
- * 
- * @param <Token>
- * @param <Result>
- */
 public class ChoiceParser<Token, Result>
 extends BaseParser<Token, Result> {
 	protected final List<? extends Parser<Token, ? extends Result>> _subParsers;
