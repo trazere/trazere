@@ -29,11 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * DOCME
- * 
- * @param <Token>
- */
 public abstract class ParserStateImpl<Token>
 implements ParserState<Token> {
 	// FIXME: implement parser graph comparison function

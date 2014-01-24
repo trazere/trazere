@@ -19,12 +19,6 @@ import com.trazere.parser.Parser;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.LangUtils;
 
-/**
- * DOCME
- * 
- * @param <Token>
- * @param <Result>
- */
 public class IdentityParser<Token, Result>
 extends Sequence1Parser<Token, Result, Result> {
 	public IdentityParser(final Parser<Token, ? extends Result> subParser, final String description) {

@@ -18,8 +18,8 @@ package com.trazere.parser;
 /**
  * The {@link ParserClosure} interfaces represents parser evaluation instances.
  * 
- * @param <Token>
- * @param <Result>
+ * @param <Token> Type of the tokens.
+ * @param <Result> Type of the result values.
  */
 public interface ParserClosure<Token, Result> {
 	public Parser<Token, ?> getParser();

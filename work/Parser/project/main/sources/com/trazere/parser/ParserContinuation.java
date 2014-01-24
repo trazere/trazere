@@ -15,11 +15,6 @@
  */
 package com.trazere.parser;
 
-/**
- * DOCME
- * 
- * @param <Token>
- */
 public interface ParserContinuation<Token> {
 	public void token(final Token token, final ParserState<Token> state)
 	throws ParserException;

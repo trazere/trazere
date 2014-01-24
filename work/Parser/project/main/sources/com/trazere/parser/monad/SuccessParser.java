@@ -22,12 +22,6 @@ import com.trazere.parser.ParserState;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.LangUtils;
 
-/**
- * DOCME
- * 
- * @param <Token>
- * @param <Result>
- */
 public class SuccessParser<Token, Result>
 extends BaseParser<Token, Result> {
 	protected final Result _result;

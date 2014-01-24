@@ -15,12 +15,6 @@
  */
 package com.trazere.parser;
 
-/**
- * DOCME
- * 
- * @param <Token>
- * @param <Result>
- */
 public abstract class BaseParser<Token, Result>
 implements Parser<Token, Result> {
 	protected final String _description;

@@ -29,8 +29,8 @@ import java.util.Collection;
  * <p>
  * The handlers are stored in the closures to so that cleaning is automatic.
  * 
- * @param <Token>
- * @param <Result>
+ * @param <Token> Type of the tokens.
+ * @param <Result> Type of the result values.
  */
 public abstract class ParserClosureImpl<Token, Result>
 implements ParserClosure<Token, Result> {

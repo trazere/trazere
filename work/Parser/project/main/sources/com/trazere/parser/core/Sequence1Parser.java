@@ -22,13 +22,6 @@ import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserHandler;
 import com.trazere.parser.ParserState;
 
-/**
- * DOCME
- * 
- * @param <Token>
- * @param <SubResult1>
- * @param <Result>
- */
 public abstract class Sequence1Parser<Token, SubResult1, Result>
 extends BaseParser<Token, Result> {
 	protected final Parser<Token, ? extends SubResult1> _subParser1;

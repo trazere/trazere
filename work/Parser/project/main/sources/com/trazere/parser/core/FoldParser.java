@@ -22,13 +22,6 @@ import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserHandler;
 import com.trazere.parser.ParserState;
 
-/**
- * DOCME
- * 
- * @param <Token>
- * @param <Value>
- * @param <Result>
- */
 public abstract class FoldParser<Token, Value, Result>
 extends BaseParser<Token, Result> {
 	protected final Parser<Token, ? extends Value> _valueParser;

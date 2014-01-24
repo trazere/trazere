@@ -78,7 +78,7 @@ public class Scanner {
 	 * Test whether the end-of-file has been reached.
 	 * 
 	 * @return <code>true</code> if the eof has been reached, <code>false</code> if characters are still available.
-	 * @throws IOException
+	 * @throws IOException On failure.
 	 */
 	public boolean eof()
 	throws IOException {
@@ -97,7 +97,7 @@ public class Scanner {
 	 * This scan operation always succeeds, unless there are no more characters to read.
 	 * 
 	 * @return The scanned character, or <code>null</code> if the eof has been reached.
-	 * @throws IOException
+	 * @throws IOException On failure.
 	 */
 	public Character scanChar()
 	throws IOException {
@@ -117,7 +117,7 @@ public class Scanner {
 	 * 
 	 * @param c Character to scan.
 	 * @return <code>true</code> if the scan is succesful, <code>false</code> otherwise.
-	 * @throws IOException
+	 * @throws IOException On failure.
 	 */
 	public boolean scanChar(final char c)
 	throws IOException {
@@ -142,7 +142,7 @@ public class Scanner {
 	 * 
 	 * @param chars Set of characters to scan.
 	 * @return The sequence of scanned characters.
-	 * @throws IOException
+	 * @throws IOException On failure.
 	 */
 	public String scanChars(final String chars)
 	throws IOException {
@@ -162,7 +162,7 @@ public class Scanner {
 	 * 
 	 * @param filter Filter defining the accepted characters.
 	 * @return The sequence of scanned characters.
-	 * @throws IOException
+	 * @throws IOException On failure.
 	 */
 	public String scanChars(final CharPredicate<? extends IOException> filter)
 	throws IOException {
@@ -192,7 +192,7 @@ public class Scanner {
 	 * 
 	 * @param string Sequence of characters.
 	 * @return <code>true</code> if the scan is succesful, <code>false</code> otherwise.
-	 * @throws IOException
+	 * @throws IOException On failure.
 	 */
 	public boolean scanString(final String string)
 	throws IOException {
@@ -222,7 +222,7 @@ public class Scanner {
 	 * empty.
 	 * 
 	 * @return The sequence of scanned characters.
-	 * @throws IOException
+	 * @throws IOException On failure.
 	 */
 	public String scanUpToEOF()
 	throws IOException {
@@ -248,7 +248,7 @@ public class Scanner {
 	 * 
 	 * @param c Stopping character.
 	 * @return The sequence of scanned characters.
-	 * @throws IOException
+	 * @throws IOException On failure.
 	 */
 	public String scanUpToChar(final char c)
 	throws IOException {
@@ -280,7 +280,7 @@ public class Scanner {
 	 * 
 	 * @param chars Stopping character set.
 	 * @return The sequence of scanned characters.
-	 * @throws IOException
+	 * @throws IOException On failure.
 	 */
 	public String scanUpToAnyChar(final String chars)
 	throws IOException {
@@ -301,7 +301,7 @@ public class Scanner {
 	 * 
 	 * @param filter Filter defining the stopping characters.
 	 * @return The sequence of scanned characters.
-	 * @throws IOException
+	 * @throws IOException On failure.
 	 */
 	public String scanUpToAnyChar(final CharPredicate<IOException> filter)
 	throws IOException {
@@ -335,7 +335,7 @@ public class Scanner {
 	 * 
 	 * @param string Stopping sequence of characters.
 	 * @return The sequence of scanned characters.
-	 * @throws IOException
+	 * @throws IOException On failure.
 	 */
 	public String scanUpToString(final String string)
 	throws IOException {
@@ -382,7 +382,7 @@ public class Scanner {
 	/**
 	 * Close the reader of the receiver scanner.
 	 * 
-	 * @throws IOException
+	 * @throws IOException On failure.
 	 */
 	public void close()
 	throws IOException {
