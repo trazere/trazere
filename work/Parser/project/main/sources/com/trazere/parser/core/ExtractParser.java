@@ -22,13 +22,6 @@ import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.LangUtils;
 import com.trazere.util.type.Maybe;
 
-/**
- * DOCME
- * 
- * @param <Token>
- * @param <SubResult>
- * @param <Result>
- */
 public class ExtractParser<Token, SubResult, Result>
 extends Sequence1Parser<Token, SubResult, Result> {
 	public ExtractParser(final Parser<Token, ? extends SubResult> subParser, final Function1<? super SubResult, ? extends Maybe<? extends Result>, ? extends ParserException> extractor, final String description) {

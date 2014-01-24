@@ -27,12 +27,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * DOCME
- * 
- * @param <Token>
- * @param <Value>
- */
 public class ManyParser<Token, Value>
 extends BaseParser<Token, List<Value>> {
 	protected final Parser<Token, Value> _valueParser;

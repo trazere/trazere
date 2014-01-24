@@ -15,13 +15,6 @@
  */
 package com.trazere.parser.util;
 
-/**
- * DOCME
- * 
- * @param <R>
- * @param <V>
- * @param <X>
- */
 public abstract class BaseParserToken<R, V, X extends Exception>
 implements ParserToken<R, V, X> {
 	public BaseParserToken(final R representation) {

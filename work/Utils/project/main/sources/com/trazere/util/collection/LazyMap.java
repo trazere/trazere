@@ -224,7 +224,7 @@ implements Function1<K, V, X> {
 	 * 
 	 * @param <PX> Type of the exceptions.
 	 * @param predicate The predicate.
-	 * @throws PX
+	 * @throws PX On failure.
 	 */
 	public <PX extends Exception> void retain(final Predicate2<? super K, ? super V, PX> predicate)
 	throws PX {

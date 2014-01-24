@@ -15,11 +15,6 @@
  */
 package com.trazere.parser;
 
-/**
- * DOCME
- * 
- * @param <Token>
- */
 public interface ParserSource<Token> {
 	public boolean hasNext()
 	throws ParserException;

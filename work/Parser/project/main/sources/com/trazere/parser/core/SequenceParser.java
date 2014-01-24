@@ -25,13 +25,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * DOCME
- * 
- * @param <Token>
- * @param <SubResult>
- * @param <Result>
- */
 public abstract class SequenceParser<Token, SubResult, Result>
 extends BaseParser<Token, Result> {
 	protected final List<Parser<Token, ? extends SubResult>> _subParsers;

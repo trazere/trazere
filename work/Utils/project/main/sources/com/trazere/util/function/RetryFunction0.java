@@ -53,7 +53,7 @@ implements Function0<Either<S, F>, X> {
 	 * 
 	 * @param failureCount The number of failures.
 	 * @return The succes or failure result.
-	 * @throws X
+	 * @throws X On failure.
 	 */
 	protected abstract Either<S, F> evaluateStep(final int failureCount)
 	throws X;
@@ -64,7 +64,7 @@ implements Function0<Either<S, F>, X> {
 	 * @param failure The failure result.
 	 * @param failureCount The number of failures.
 	 * @return Some failure value to end the evaluation with, or nothing to perform another evaluation attempt.
-	 * @throws X
+	 * @throws X On failure.
 	 */
 	protected abstract Maybe<F> handleFailure(final F failure, final int failureCount)
 	throws X;
@@ -78,7 +78,7 @@ implements Function0<Either<S, F>, X> {
 	 * @param function The function.
 	 * @return The result.
 	 * @throws F When the evaluation fails repeatedly.
-	 * @throws X
+	 * @throws X On failure.
 	 */
 	public static <S, F extends Throwable, X extends Exception> S evaluate(final RetryFunction0<S, F, X> function)
 	throws F, X {

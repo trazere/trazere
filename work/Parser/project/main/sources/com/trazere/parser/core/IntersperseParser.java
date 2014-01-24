@@ -29,12 +29,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * DOCME
- * 
- * @param <Token>
- * @param <Value>
- */
 public class IntersperseParser<Token, Value>
 extends BaseParser<Token, List<Value>> {
 	protected final Parser<Token, ? extends Value> _valueParser;

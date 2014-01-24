@@ -20,10 +20,10 @@ import com.trazere.util.type.Tuple2;
 import java.util.NoSuchElementException;
 
 /**
- * DOCME
+ * The {@link BaseFeed} class provides a skeleton implementation of feeds.
  * 
- * @param <T>
- * @param <X>
+ * @param <T> Type of the elements.
+ * @param <X> Type of the exceptions.
  */
 public abstract class BaseFeed<T, X extends Exception>
 implements Feed<T, X> {

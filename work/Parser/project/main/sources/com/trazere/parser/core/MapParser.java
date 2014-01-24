@@ -21,13 +21,6 @@ import com.trazere.util.function.Function1;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.LangUtils;
 
-/**
- * DOCME
- * 
- * @param <Token>
- * @param <SubResult>
- * @param <Result>
- */
 public class MapParser<Token, SubResult, Result>
 extends Sequence1Parser<Token, SubResult, Result> {
 	public MapParser(final Parser<Token, ? extends SubResult> subParser, final Function1<? super SubResult, ? extends Result, ? extends ParserException> function, final String description) {
