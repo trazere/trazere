@@ -15,6 +15,7 @@
  */
 package com.trazere.util.text;
 
+import com.trazere.util.collection.CollectionUtils;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -30,7 +31,7 @@ public class CharPredicates {
 	 * Builds a predicate that evaluates to the given result for all characters.
 	 * 
 	 * @param <X> Type of the exceptions.
-	 * @param result The result.
+	 * @param result Result to return.
 	 * @return The built predicate.
 	 */
 	public static <X extends Exception> CharPredicate<X> constant(final boolean result) {
@@ -50,10 +51,10 @@ public class CharPredicates {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> CharPredicate<X> all() {
-		return (CharPredicate<X>) _ALL;
+		return (CharPredicate<X>) ALL;
 	}
 	
-	private static final CharPredicate<?> _ALL = CharPredicates.<RuntimeException>constant(true);
+	private static final CharPredicate<?> ALL = CharPredicates.<RuntimeException>constant(true);
 	
 	/**
 	 * Builds a predicate that evaluates to <code>false</code> for all characters.
@@ -63,16 +64,16 @@ public class CharPredicates {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> CharPredicate<X> none() {
-		return (CharPredicate<X>) _NONE;
+		return (CharPredicate<X>) NONE;
 	}
 	
-	private static final CharPredicate<?> _NONE = CharPredicates.<RuntimeException>constant(false);
+	private static final CharPredicate<?> NONE = CharPredicates.<RuntimeException>constant(false);
 	
 	/**
 	 * Builds a predicate corresponding to the inverse of the given predicate.
 	 * 
 	 * @param <X> Type of the exceptions.
-	 * @param predicate The predicate.
+	 * @param predicate Predicate to inverse.
 	 * @return The built predicate.
 	 */
 	public static <X extends Exception> CharPredicate<X> not(final CharPredicate<X> predicate) {
@@ -92,8 +93,8 @@ public class CharPredicates {
 	 * Builds a predicate corresponding to the conjonction of the given predicates.
 	 * 
 	 * @param <X> Type of the exceptions.
-	 * @param predicate1 The first predicate.
-	 * @param predicate2 The second predicate.
+	 * @param predicate1 First predicate.
+	 * @param predicate2 Second predicate.
 	 * @return The built predicate.
 	 */
 	public static <X extends Exception> CharPredicate<X> and(final CharPredicate<? extends X> predicate1, final CharPredicate<? extends X> predicate2) {
@@ -111,11 +112,40 @@ public class CharPredicates {
 	}
 	
 	/**
+	 * Builds a predicate corresponding to the conjonction of the given predicates.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @param predicates Predicates to combine.
+	 * @return The built predicate.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <X extends Exception> CharPredicate<X> and(final Collection<? extends CharPredicate<? extends X>> predicates) {
+		assert null != predicates;
+		
+		if (predicates.size() < 2) {
+			return (CharPredicate<X>) CollectionUtils.any(predicates).get(CharPredicates.<X>all());
+		} else {
+			return new CharPredicate<X>() {
+				@Override
+				public boolean evaluate(final char c)
+				throws X {
+					for (final CharPredicate<? extends X> predicate : predicates) {
+						if (!predicate.evaluate(c)) {
+							return false;
+						}
+					}
+					return true;
+				}
+			};
+		}
+	}
+	
+	/**
 	 * Builds a predicate corresponding to the disjunction of the given predicates.
 	 * 
 	 * @param <X> Type of the exceptions.
-	 * @param predicate1 The first predicate.
-	 * @param predicate2 The second predicate.
+	 * @param predicate1 First predicate.
+	 * @param predicate2 Second predicate.
 	 * @return The built predicate.
 	 */
 	public static <X extends Exception> CharPredicate<X> or(final CharPredicate<? extends X> predicate1, final CharPredicate<? extends X> predicate2) {
@@ -133,10 +163,39 @@ public class CharPredicates {
 	}
 	
 	/**
+	 * Builds a predicate corresponding to the disjunction of the given predicates.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @param predicates Predicates to combine.
+	 * @return The built predicate.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <X extends Exception> CharPredicate<X> or(final Collection<? extends CharPredicate<? extends X>> predicates) {
+		assert null != predicates;
+		
+		if (predicates.size() < 2) {
+			return (CharPredicate<X>) CollectionUtils.any(predicates).get(CharPredicates.<X>none());
+		} else {
+			return new CharPredicate<X>() {
+				@Override
+				public boolean evaluate(final char c)
+				throws X {
+					for (final CharPredicate<? extends X> predicate : predicates) {
+						if (predicate.evaluate(c)) {
+							return true;
+						}
+					}
+					return false;
+				}
+			};
+		}
+	}
+	
+	/**
 	 * Builds a predicate that evaluate to <code>true</code> for the given character.
 	 * 
 	 * @param <X> Type of the exceptions.
-	 * @param value The character.
+	 * @param value Character to accept.
 	 * @return The built predicate.
 	 */
 	public static <X extends Exception> CharPredicate<X> value(final char value) {
@@ -152,7 +211,7 @@ public class CharPredicates {
 	 * Builds a predicate that evaluates to <code>true</code> for any given characters.
 	 * 
 	 * @param <X> Type of the exceptions.
-	 * @param values The characters.
+	 * @param values Characters to accept.
 	 * @return The built predicate.
 	 */
 	public static <X extends Exception> CharPredicate<X> values(final char... values) {
@@ -169,7 +228,7 @@ public class CharPredicates {
 	 * Builds a predicate that evaluates to <code>true</code> for any given characters.
 	 * 
 	 * @param <X> Type of the exceptions.
-	 * @param values The characters.
+	 * @param values Characters to accept.
 	 * @return The built predicate.
 	 */
 	public static <X extends Exception> CharPredicate<X> values(final Character... values) {
@@ -182,7 +241,7 @@ public class CharPredicates {
 	 * Builds a predicate that evaluates to <code>true</code> for any given values.
 	 * 
 	 * @param <X> Type of the exceptions.
-	 * @param values The characters.
+	 * @param values Characters to accept.
 	 * @return The built predicate.
 	 */
 	public static <X extends Exception> CharPredicate<X> values(final Collection<Character> values) {
@@ -200,7 +259,7 @@ public class CharPredicates {
 	 * Builds a predicate that evaluate to <code>true</code> for any character of the given string.
 	 * 
 	 * @param <X> Type of the exceptions.
-	 * @param chars The characters.
+	 * @param chars Characters to accept.
 	 * @return The built predicate.
 	 */
 	public static <X extends Exception> CharPredicate<X> values(final String chars) {
@@ -223,10 +282,10 @@ public class CharPredicates {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> CharPredicate<X> isWhitespace() {
-		return (CharPredicate<X>) _WHITESPACE;
+		return (CharPredicate<X>) WHITESPACE;
 	}
 	
-	private static final CharPredicate<?> _WHITESPACE = new CharPredicate<RuntimeException>() {
+	private static final CharPredicate<?> WHITESPACE = new CharPredicate<RuntimeException>() {
 		@Override
 		public boolean evaluate(final char c) {
 			return Character.isWhitespace(c);
@@ -242,10 +301,10 @@ public class CharPredicates {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> CharPredicate<X> isDigit() {
-		return (CharPredicate<X>) _DIGIT;
+		return (CharPredicate<X>) DIGIT;
 	}
 	
-	private static final CharPredicate<?> _DIGIT = new CharPredicate<RuntimeException>() {
+	private static final CharPredicate<?> DIGIT = new CharPredicate<RuntimeException>() {
 		@Override
 		public boolean evaluate(final char c) {
 			return Character.isDigit(c);
@@ -261,10 +320,10 @@ public class CharPredicates {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> CharPredicate<X> isLetter() {
-		return (CharPredicate<X>) _LETTER;
+		return (CharPredicate<X>) LETTER;
 	}
 	
-	private static final CharPredicate<?> _LETTER = new CharPredicate<RuntimeException>() {
+	private static final CharPredicate<?> LETTER = new CharPredicate<RuntimeException>() {
 		@Override
 		public boolean evaluate(final char c) {
 			return Character.isLetter(c);
@@ -280,10 +339,10 @@ public class CharPredicates {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> CharPredicate<X> isAlphanumeric() {
-		return (CharPredicate<X>) _ALPHANUMERIC;
+		return (CharPredicate<X>) ALPHANUMERIC;
 	}
 	
-	private static final CharPredicate<?> _ALPHANUMERIC = new CharPredicate<RuntimeException>() {
+	private static final CharPredicate<?> ALPHANUMERIC = new CharPredicate<RuntimeException>() {
 		@Override
 		public boolean evaluate(final char c) {
 			return Character.isLetterOrDigit(c) || '_' == c;
