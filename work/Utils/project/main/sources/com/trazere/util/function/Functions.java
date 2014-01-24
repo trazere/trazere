@@ -21,6 +21,7 @@ import com.trazere.util.lang.ThrowableFactory;
 import com.trazere.util.record.Record;
 import com.trazere.util.record.RecordException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -746,6 +747,38 @@ public class Functions {
 			public boolean evaluate(final T value)
 			throws X {
 				return _visitedValues.add(value);
+			}
+		};
+	}
+	
+	/**
+	 * Builds a function that normalizes values according to the given hash function.
+	 * <p>
+	 * The built function always returns the same value for a given hash. The returned value corresponds to the first value that produced the corresponding
+	 * hash.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <H> Type of the hash values.
+	 * @param <X> Type of the exceptions.
+	 * @param hash Function that hash the values.
+	 * @return The built predicate.
+	 */
+	public static <T, H, X extends Exception> Function1<T, T, X> normalizer(final Function1<? super T, H, ? extends X> hash) {
+		assert null != hash;
+		
+		return new Function1<T, T, X>() {
+			private final Map<H, T> _values = new HashMap<H, T>();
+			
+			@Override
+			public T evaluate(final T value)
+			throws X {
+				final H hashValue = hash.evaluate(value);
+				if (_values.containsKey(hashValue)) {
+					return _values.get(hashValue);
+				} else {
+					_values.put(hashValue, value);
+					return value;
+				}
 			}
 		};
 	}
