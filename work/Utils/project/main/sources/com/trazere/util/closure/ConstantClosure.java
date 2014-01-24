@@ -33,7 +33,7 @@ implements Closure<T, X> {
 	 * @param value The value. May be <code>null</code>.
 	 * @return The closure.
 	 */
-	public static <T, X extends Exception> Closure<T, X> build(final T value) {
+	public static <T, X extends Exception> ConstantClosure<T, X> build(final T value) {
 		return new ConstantClosure<T, X>(value);
 	}
 	
