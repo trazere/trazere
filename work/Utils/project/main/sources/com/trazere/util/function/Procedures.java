@@ -80,6 +80,8 @@ public class Procedures {
 		}
 	};
 	
+	// TODO: sequence
+	
 	/**
 	 * Builds a procedure which executes its zero arguments procedure arguments.
 	 * 

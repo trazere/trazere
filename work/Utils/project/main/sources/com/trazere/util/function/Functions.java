@@ -21,7 +21,9 @@ import com.trazere.util.lang.ThrowableFactory;
 import com.trazere.util.record.Record;
 import com.trazere.util.record.RecordException;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * The {@link Functions} class provides various factories of functions.
@@ -87,6 +89,27 @@ public class Functions {
 			@Override
 			public R evaluate(final T value) {
 				return result;
+			}
+		};
+	}
+	
+	/**
+	 * Builds a one argument function that fails.
+	 * 
+	 * @param <T> Type of the argument values.
+	 * @param <R> Type of the result values.
+	 * @param <X> Type of the exceptions.
+	 * @param throwableFactory Throwable factory to use.
+	 * @return The built function.
+	 */
+	public static <T, R, X extends Exception> Function1<T, R, X> failure(final ThrowableFactory<? extends X> throwableFactory) {
+		assert null != throwableFactory;
+		
+		return new Function1<T, R, X>() {
+			@Override
+			public R evaluate(final T value)
+			throws X {
+				throw throwableFactory.build();
 			}
 		};
 	}
@@ -257,69 +280,6 @@ public class Functions {
 	}
 	
 	/**
-	 * Builds a one argument function from the given one argument predicate.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param <X> Type of the exceptions.
-	 * @param predicate The lifted predicate.
-	 * @return The built function.
-	 */
-	public static final <T, X extends Exception> Function1<T, Boolean, X> fromPredicate(final Predicate1<? super T, ? extends X> predicate) {
-		assert null != predicate;
-		
-		return new Function1<T, Boolean, X>() {
-			@Override
-			public Boolean evaluate(final T value)
-			throws X {
-				return predicate.evaluate(value);
-			}
-		};
-	}
-	
-	/**
-	 * Builds a two arguments function from the given two arguments predicate.
-	 * 
-	 * @param <T1> Type of the first argument values.
-	 * @param <T2> Type of the second argument values.
-	 * @param <X> Type of the exceptions.
-	 * @param predicate The lifted predicate.
-	 * @return The built function.
-	 */
-	public static final <T1, T2, X extends Exception> Function2<T1, T2, Boolean, X> fromPredicate(final Predicate2<? super T1, ? super T2, ? extends X> predicate) {
-		assert null != predicate;
-		
-		return new Function2<T1, T2, Boolean, X>() {
-			@Override
-			public Boolean evaluate(final T1 value1, final T2 value2)
-			throws X {
-				return predicate.evaluate(value1, value2);
-			}
-		};
-	}
-	
-	/**
-	 * Builds a three arguments function from the given three arguments predicate.
-	 * 
-	 * @param <T1> Type of the first argument values.
-	 * @param <T2> Type of the second argument values.
-	 * @param <T3> Type of the third argument values.
-	 * @param <X> Type of the exceptions.
-	 * @param predicate The lifted predicate.
-	 * @return The built function.
-	 */
-	public static final <T1, T2, T3, X extends Exception> Function3<T1, T2, T3, Boolean, X> fromPredicate(final Predicate3<? super T1, ? super T2, ? super T3, ? extends X> predicate) {
-		assert null != predicate;
-		
-		return new Function3<T1, T2, T3, Boolean, X>() {
-			@Override
-			public Boolean evaluate(final T1 value1, final T2 value2, final T3 value3)
-			throws X {
-				return predicate.evaluate(value1, value2, value3);
-			}
-		};
-	}
-	
-	/**
 	 * Builds a function that evaluates to the result of the evaluation of its zero arguments function arguments.
 	 * 
 	 * @param <R> Type of the result values.
@@ -458,6 +418,71 @@ public class Functions {
 	}
 	
 	/**
+	 * Builds a zero arguments function that fails.
+	 * 
+	 * @param <R> Type of the result values.
+	 * @param <X> Type of the exceptions.
+	 * @param throwableFactory Throwable factory to use.
+	 * @return The built function.
+	 */
+	public static <R, X extends Exception> Function0<R, X> failure0(final ThrowableFactory<? extends X> throwableFactory) {
+		assert null != throwableFactory;
+		
+		return new Function0<R, X>() {
+			@Override
+			public R evaluate()
+			throws X {
+				throw throwableFactory.build();
+			}
+		};
+	}
+	
+	/**
+	 * Builds a two arguments function that fails.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <R> Type of the result values.
+	 * @param <X> Type of the exceptions.
+	 * @param throwableFactory Throwable factory to use.
+	 * @return The built function.
+	 */
+	public static <T1, T2, R, X extends Exception> Function2<T1, T2, R, X> failure2(final ThrowableFactory<? extends X> throwableFactory) {
+		assert null != throwableFactory;
+		
+		return new Function2<T1, T2, R, X>() {
+			@Override
+			public R evaluate(final T1 value1, final T2 value2)
+			throws X {
+				throw throwableFactory.build();
+			}
+		};
+	}
+	
+	/**
+	 * Builds a three arguments function that fails.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <T3> Type of the third argument values.
+	 * @param <R> Type of the result values.
+	 * @param <X> Type of the exceptions.
+	 * @param throwableFactory Throwable factory to use.
+	 * @return The built function.
+	 */
+	public static <T1, T2, T3, R, X extends Exception> Function3<T1, T2, T3, R, X> failure3(final ThrowableFactory<? extends X> throwableFactory) {
+		assert null != throwableFactory;
+		
+		return new Function3<T1, T2, T3, R, X>() {
+			@Override
+			public R evaluate(final T1 value1, final T2 value2, final T3 value3)
+			throws X {
+				throw throwableFactory.build();
+			}
+		};
+	}
+	
+	/**
 	 * Builds a one argument function that lifts the given zero arguments function.
 	 * 
 	 * @param <T> Type of the argument values.
@@ -587,6 +612,140 @@ public class Functions {
 			public R evaluate(final T1 value1, final T2 value2, final T3 value3)
 			throws X {
 				return function.evaluate(value1, value2);
+			}
+		};
+	}
+	
+	/**
+	 * Builds a one argument function from the given one argument predicate.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate The lifted predicate.
+	 * @return The built function.
+	 */
+	public static final <T, X extends Exception> Function1<T, Boolean, X> fromPredicate(final Predicate1<? super T, ? extends X> predicate) {
+		assert null != predicate;
+		
+		return new Function1<T, Boolean, X>() {
+			@Override
+			public Boolean evaluate(final T value)
+			throws X {
+				return predicate.evaluate(value);
+			}
+		};
+	}
+	
+	/**
+	 * Builds a two arguments function from the given two arguments predicate.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate The lifted predicate.
+	 * @return The built function.
+	 */
+	public static final <T1, T2, X extends Exception> Function2<T1, T2, Boolean, X> fromPredicate(final Predicate2<? super T1, ? super T2, ? extends X> predicate) {
+		assert null != predicate;
+		
+		return new Function2<T1, T2, Boolean, X>() {
+			@Override
+			public Boolean evaluate(final T1 value1, final T2 value2)
+			throws X {
+				return predicate.evaluate(value1, value2);
+			}
+		};
+	}
+	
+	/**
+	 * Builds a three arguments function from the given three arguments predicate.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <T3> Type of the third argument values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate The lifted predicate.
+	 * @return The built function.
+	 */
+	public static final <T1, T2, T3, X extends Exception> Function3<T1, T2, T3, Boolean, X> fromPredicate(final Predicate3<? super T1, ? super T2, ? super T3, ? extends X> predicate) {
+		assert null != predicate;
+		
+		return new Function3<T1, T2, T3, Boolean, X>() {
+			@Override
+			public Boolean evaluate(final T1 value1, final T2 value2, final T3 value3)
+			throws X {
+				return predicate.evaluate(value1, value2, value3);
+			}
+		};
+	}
+	
+	/**
+	 * Builds a zero arguments function from the given zero arguments procedure.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @param procedure The lifted procedure.
+	 * @return The built function.
+	 */
+	public static <X extends Exception> Function0<Void, X> fromProcedure(final Procedure0<? extends X> procedure) {
+		return new Function0<Void, X>() {
+			@Override
+			public Void evaluate()
+			throws X {
+				procedure.execute();
+				return null;
+			}
+		};
+	}
+	
+	/**
+	 * Builds a one argument function from the given one argument procedure.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @param procedure The lifted procedure.
+	 * @return The built function.
+	 */
+	public static <T, X extends Exception> Function1<T, Void, X> fromProcedure(final Procedure1<? super T, ? extends X> procedure) {
+		assert null != procedure;
+		
+		return new Function1<T, Void, X>() {
+			@Override
+			public Void evaluate(final T value)
+			throws X {
+				procedure.execute(value);
+				return null;
+			}
+		};
+	}
+	
+	/**
+	 * Builds a two arguments function from the given two arguments procedure.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <X> Type of the exceptions.
+	 * @param procedure The lifted procedure.
+	 * @return The built function.
+	 */
+	public static <T1, T2, X extends Exception> Function2<T1, T2, Void, X> fromProcedure(final Procedure2<? super T1, ? super T2, ? extends X> procedure) {
+		return new Function2<T1, T2, Void, X>() {
+			@Override
+			public Void evaluate(final T1 value1, final T2 value2)
+			throws X {
+				procedure.execute(value1, value2);
+				return null;
+			}
+		};
+	}
+	
+	public static <T, X extends Exception> Predicate1<T, X> normalizer() {
+		return new Predicate1<T, X>() {
+			private final Set<T> _visitedValues = new HashSet<T>();
+			
+			@Override
+			public boolean evaluate(final T value)
+			throws X {
+				return _visitedValues.add(value);
 			}
 		};
 	}
