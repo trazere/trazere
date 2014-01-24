@@ -16,55 +16,66 @@
 package com.trazere.util.io;
 
 import com.trazere.util.lang.HashCode;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 
 /**
  * The {@link FileInput} class implements data inputs based on URLs.
  */
-public class URLInput
+public class ResourceInput
 implements Input {
-	/** URL to read. */
-	protected final URL _url;
+	/** Base class. */
+	protected final Class<?> _base;
+	
+	/** Name of the resource. */
+	protected final String _name;
 	
 	/**
 	 * Instanciate a new data input with the given URL.
 	 * 
-	 * @param url URL to read.
+	 * @param base Base class
+	 * @param name Name of the resource.
 	 */
-	public URLInput(final URL url) {
-		assert null != url;
+	public ResourceInput(final Class<?> base, final String name) {
+		assert null != base;
+		assert null != name;
 		
 		// Initialization.
-		_url = url;
+		_base = base;
+		_name = name;
 	}
 	
-	/**
-	 * Get the URL read by the receiver data input.
-	 * 
-	 * @return The url.
-	 */
-	public URL getUrl() {
-		return _url;
+	public Class<?> getBase() {
+		return _base;
+	}
+	
+	public String getName() {
+		return _name;
 	}
 	
 	@Override
 	public boolean exists()
 	throws IOException {
-		return true;
+		return null != _base.getResource(_name);
 	}
 	
 	@Override
 	public InputStream open()
 	throws IOException {
-		return _url.openStream();
+		final InputStream stream = _base.getResourceAsStream(_name);
+		if (null != stream) {
+			return stream;
+		} else {
+			throw new FileNotFoundException("Missing resource \"" + _name + "\" from class \"" + _base + "\"");
+		}
 	}
 	
 	@Override
 	public int hashCode() {
 		final HashCode result = new HashCode(this);
-		result.append(_url);
+		result.append(_base);
+		result.append(_name);
 		return result.get();
 	}
 	
@@ -73,8 +84,8 @@ implements Input {
 		if (this == object) {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
-			final URLInput input = (URLInput) object;
-			return _url.equals(input._url);
+			final ResourceInput input = (ResourceInput) object;
+			return _base.equals(input._base) && _name.equals(input._name);
 		} else {
 			return false;
 		}
@@ -82,6 +93,6 @@ implements Input {
 	
 	@Override
 	public String toString() {
-		return _url.toString();
+		return _base + "#" + _name;
 	}
 }
