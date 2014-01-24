@@ -83,6 +83,6 @@ implements Input {
 	
 	@Override
 	public String toString() {
-		return "@" + _file;
+		return _file.toString();
 	}
 }
