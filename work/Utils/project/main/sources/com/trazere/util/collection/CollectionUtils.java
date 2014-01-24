@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
+// TODO: split into ListUtils, MapUtils...
 // TODO: use accumulators for results
 
 /**
