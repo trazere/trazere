@@ -80,10 +80,10 @@ public class Feeds {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T, X extends Exception> Feed<T, X> empty() {
-		return (Feed<T, X>) _EMPTY;
+		return (Feed<T, X>) EMPTY;
 	}
 	
-	private static final Feed<?, ?> _EMPTY = new Feed<Object, RuntimeException>() {
+	private static final Feed<?, ?> EMPTY = new Feed<Object, RuntimeException>() {
 		// Feed.
 		
 		@Override
@@ -406,6 +406,45 @@ public class Feeds {
 				}
 			}
 		};
+	}
+	
+	/**
+	 * Builds a feed of the integers starting at the given value.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @param start Start value.
+	 * @return The built feed.
+	 */
+	public static <X extends Exception> Feed<Integer, X> integer(final int start) {
+		return integer(start, 1);
+	}
+	
+	/**
+	 * Builds a feed of integers starting at the given value and with the given increment.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @param start Start value.
+	 * @param increment Increment.
+	 * @return The built feed.
+	 */
+	public static <X extends Exception> Feed<Integer, X> integer(final int start, final int increment) {
+		return new BaseFeed<Integer, X>() {
+			@Override
+			public Maybe<? extends Tuple2<? extends Integer, ? extends Feed<? extends Integer, ? extends X>>> evaluate()
+			throws X {
+				return Maybe.some(Tuple2.build(start, Feeds.<X>integer(start + increment)));
+			}
+		};
+	}
+	
+	/**
+	 * Builds a feed of the natural integers.
+	 * 
+	 * @param <X> Type of the exceptions.
+	 * @return The built feed.
+	 */
+	public static <X extends Exception> Feed<Integer, X> natural() {
+		return integer(0, 1);
 	}
 	
 	private Feeds() {
