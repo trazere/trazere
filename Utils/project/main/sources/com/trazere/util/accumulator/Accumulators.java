@@ -18,6 +18,7 @@ package com.trazere.util.accumulator;
 import com.trazere.util.function.Function1;
 import com.trazere.util.function.Predicate1;
 import com.trazere.util.function.Predicate2;
+import com.trazere.util.reference.MutableReference;
 import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Tuple2;
 
@@ -348,6 +349,32 @@ public class Accumulators {
 			@Override
 			public RS get() {
 				return function.evaluate(accumulator.get());
+			}
+		};
+	}
+	
+	/**
+	 * Builds an accumulator that retain the first accumulated value.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @return The built accumulator.
+	 */
+	public static <T, X extends Exception> Accumulator1<T, Maybe<T>, X> first() {
+		return new BaseAccumulator1<T, Maybe<T>, X>() {
+			private final MutableReference<T> _value = new MutableReference<T>();
+			
+			@Override
+			public void add(final T value)
+			throws X {
+				if (!_value.isSet()) {
+					_value.set(value);
+				}
+			}
+			
+			@Override
+			public Maybe<T> get() {
+				return _value.asMaybe();
 			}
 		};
 	}
