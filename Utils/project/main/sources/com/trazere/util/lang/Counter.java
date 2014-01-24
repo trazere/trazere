@@ -19,13 +19,13 @@ package com.trazere.util.lang;
  * The {@link Counter} class represents counters.
  */
 public class Counter {
-	/** Start value of the counter. */
+	/** Start value. */
 	protected final int _start;
 	
-	/** Increment of the counter. */
+	/** Increment. */
 	protected final int _increment;
 	
-	/** Current value of the counter. */
+	/** Current value. */
 	protected int _value;
 	
 	/**
@@ -38,8 +38,8 @@ public class Counter {
 	/**
 	 * Instantiates a new counter.
 	 * 
-	 * @param start The start value.
-	 * @param increment The increment.
+	 * @param start Start value.
+	 * @param increment Increment.
 	 */
 	public Counter(final int start, final int increment) {
 		_start = start;
@@ -99,6 +99,40 @@ public class Counter {
 		_value += _increment;
 		return _value;
 	}
+	
+	/**
+	 * Increments the receiver counter <code>n</code> times.
+	 * 
+	 * @param n Number of times to increment the counter.
+	 * @return The incremented value.
+	 */
+	public int inc(final int n) {
+		_value += _increment * n;
+		return _value;
+	}
+	
+	/**
+	 * Decrements the receiver counter.
+	 * 
+	 * @return The decremented value.
+	 */
+	public int dec() {
+		_value -= _increment;
+		return _value;
+	}
+	
+	/**
+	 * Decrements the receiver counter <code>n</code> times.
+	 * 
+	 * @param n Number of times to decrement the counter.
+	 * @return The decremented value.
+	 */
+	public int dec(final int n) {
+		_value -= _increment * n;
+		return _value;
+	}
+	
+	// Object.
 	
 	@Override
 	public String toString() {
