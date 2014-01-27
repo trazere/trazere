@@ -16,16 +16,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.sun.xml.bind</groupId>
-			<artifactId>jaxb-impl</artifactId>
-			<version>${tools.com.sun.xml.bind.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.xml.stream</groupId>
-			<artifactId>sjsxp</artifactId>
-			<version>${tools.com.sun.xml.stream.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>${tools.org.slf4j.version}</version>
@@ -34,11 +24,6 @@
 
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-			</plugin>
-			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
