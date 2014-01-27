@@ -28,8 +28,6 @@
 		<plugin.maven-source-plugin.version>2.2.1</plugin.maven-source-plugin.version>
 		<plugin.maven-surefire-plugin.version>2.16</plugin.maven-surefire-plugin.version>
 
-		<tools.com.sun.xml.bind.version>2.1.13</tools.com.sun.xml.bind.version>
-		<tools.com.sun.xml.stream.version>1.0.2</tools.com.sun.xml.stream.version>
 		<tools.org.apache.ant.version>1.8.4</tools.org.apache.ant.version>
 		<tools.org.slf4j.version>1.6.6</tools.org.slf4j.version>
 
