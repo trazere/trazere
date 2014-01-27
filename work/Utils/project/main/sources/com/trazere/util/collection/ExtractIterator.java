@@ -15,16 +15,21 @@
  */
 package com.trazere.util.collection;
 
+import java.util.Iterator;
+
 /**
- * The {@link CheckedMapFilterIterator} abstract class provides iterator combinators which transform and filter their values.
+ * The {@link ExtractIterator} class provides iterator combinators that extract values.
  * 
  * @param <T> Type of the values of the feed.
  * @param <R> Type of the extracted values.
- * @param <X> Type of the exceptions.
- * @deprecated Use {@link CheckedExtractIterator}.
  */
-@Deprecated
-public abstract class CheckedMapFilterIterator<T, R, X extends Exception>
-extends CheckedExtractIterator<T, R, X> {
-	// Nothing to do.
+public abstract class ExtractIterator<T, R>
+extends CheckedExtractIterator<T, R, RuntimeException>
+implements Iterator<R> {
+	// Iterator.
+	
+	@Override
+	public void remove() {
+		throw new UnsupportedOperationException();
+	}
 }
