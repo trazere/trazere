@@ -34,6 +34,7 @@ import java.util.Set;
 public abstract class LazyObjectTypeMap<T, V, X extends Exception>
 extends LazyTypeMap<Class<? extends T>, V, X>
 implements ObjectTypeMap<T, Maybe<? extends V>, X> {
+	// HACK: named buildObject to work around javac bug 
 	/**
 	 * Builds a new type map with no upper bounds and defaut values using the given function.
 	 * 
@@ -42,10 +43,11 @@ implements ObjectTypeMap<T, Maybe<? extends V>, X> {
 	 * @param function The function.
 	 * @return The built map.
 	 */
-	public static <V, X extends Exception> LazyObjectTypeMap<Object, V, X> build(final Function1<? super Class<?>, ? extends Maybe<? extends V>, ? extends X> function) {
-		return build(function, Object.class, Maybe.<V>none());
+	public static <V, X extends Exception> LazyObjectTypeMap<Object, V, X> buildObject(final Function1<? super Class<?>, ? extends Maybe<? extends V>, ? extends X> function) {
+		return buildObject(function, Object.class, Maybe.<V>none());
 	}
 	
+	// HACK: named buildObject to work around javac bug 
 	/**
 	 * Builds a new type map with no upper bounds and the given default value using the given function.
 	 * 
@@ -55,10 +57,11 @@ implements ObjectTypeMap<T, Maybe<? extends V>, X> {
 	 * @param defaultValue The default value.
 	 * @return The built map.
 	 */
-	public static <V, X extends Exception> LazyObjectTypeMap<Object, V, X> build(final Function1<? super Class<?>, ? extends Maybe<? extends V>, ? extends X> function, final Maybe<? extends V> defaultValue) {
-		return build(function, Object.class, defaultValue);
+	public static <V, X extends Exception> LazyObjectTypeMap<Object, V, X> buildObject(final Function1<? super Class<?>, ? extends Maybe<? extends V>, ? extends X> function, final Maybe<? extends V> defaultValue) {
+		return buildObject(function, Object.class, defaultValue);
 	}
 	
+	// HACK: named buildObject to work around javac bug 
 	/**
 	 * Builds a new type map with the given upper bound and default value using the given function.
 	 * 
@@ -69,10 +72,11 @@ implements ObjectTypeMap<T, Maybe<? extends V>, X> {
 	 * @param upperBound The upper bound.
 	 * @return The built map.
 	 */
-	public static <T, V, X extends Exception> LazyObjectTypeMap<T, V, X> build(final Function1<? super Class<? extends T>, ? extends Maybe<? extends V>, ? extends X> function, final Class<T> upperBound) {
-		return build(function, upperBound, Maybe.<V>none());
+	public static <T, V, X extends Exception> LazyObjectTypeMap<T, V, X> buildObject(final Function1<? super Class<? extends T>, ? extends Maybe<? extends V>, ? extends X> function, final Class<T> upperBound) {
+		return buildObject(function, upperBound, Maybe.<V>none());
 	}
 	
+	// HACK: named buildObject to work around javac bug 
 	/**
 	 * Builds a new type map with the given upper bound and default value using the given function.
 	 * 
@@ -84,7 +88,7 @@ implements ObjectTypeMap<T, Maybe<? extends V>, X> {
 	 * @param defaultValue The default value.
 	 * @return The built map.
 	 */
-	public static <T, V, X extends Exception> LazyObjectTypeMap<T, V, X> build(final Function1<? super Class<? extends T>, ? extends Maybe<? extends V>, ? extends X> function, final Class<T> upperBound, final Maybe<? extends V> defaultValue) {
+	public static <T, V, X extends Exception> LazyObjectTypeMap<T, V, X> buildObject(final Function1<? super Class<? extends T>, ? extends Maybe<? extends V>, ? extends X> function, final Class<T> upperBound, final Maybe<? extends V> defaultValue) {
 		return new LazyObjectTypeMap<T, V, X>(upperBound, defaultValue) {
 			@Override
 			protected Maybe<? extends V> computeDiscrete(final Class<? extends T> type)
