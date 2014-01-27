@@ -24,7 +24,7 @@ import com.trazere.util.type.Maybe;
  * @param <X> Type of the exceptions.
  */
 public abstract class CheckedFilterIterator<T, X extends Exception>
-extends CheckedMapFilterIterator<T, T, X> {
+extends CheckedExtractIterator<T, T, X> {
 	// Iterator.
 	
 	@Override

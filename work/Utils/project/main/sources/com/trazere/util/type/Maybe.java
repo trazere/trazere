@@ -243,7 +243,7 @@ implements Iterable<T>, Describable {
 		}
 		
 		@Override
-		public <R, X extends Exception> Maybe<R> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, X> function) {
+		public <R, X extends Exception> Maybe<R> extract(final Function1<? super T, ? extends Maybe<? extends R>, X> function) {
 			return none();
 		}
 		
@@ -389,7 +389,7 @@ implements Iterable<T>, Describable {
 		}
 		
 		@Override
-		public <R, X extends Exception> Maybe<R> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, X> function)
+		public <R, X extends Exception> Maybe<R> extract(final Function1<? super T, ? extends Maybe<? extends R>, X> function)
 		throws X {
 			return function.evaluate(_value).map(Functions.<R, InternalException>identity());
 		}
@@ -618,7 +618,6 @@ implements Iterable<T>, Describable {
 		};
 	}
 	
-	// TODO: rename to extract
 	/**
 	 * Maps and filters the value wrapped by the receiver instance.
 	 * 
@@ -627,11 +626,26 @@ implements Iterable<T>, Describable {
 	 * @param function The mapping function.
 	 * @return An instance containing the mapped value.
 	 * @throws X When the mapping fails.
+	 * @deprecated Use {@link #extract(Function1)}.
 	 */
-	public abstract <R, X extends Exception> Maybe<R> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, X> function)
+	@Deprecated
+	public <R, X extends Exception> Maybe<R> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, X> function)
+	throws X {
+		return extract(function);
+	}
+	
+	/**
+	 * Extracts the value wrapped by the receiver instance.
+	 * 
+	 * @param <R> Type of the mapped value.
+	 * @param <X> Type of the exceptions.
+	 * @param function The mapping function.
+	 * @return An instance containing the mapped value.
+	 * @throws X When the mapping fails.
+	 */
+	public abstract <R, X extends Exception> Maybe<R> extract(final Function1<? super T, ? extends Maybe<? extends R>, X> function)
 	throws X;
 	
-	// TODO: rename to extractFunction
 	/**
 	 * Builds a function which maps and filters the values wrapped in the argument instances using the given function.
 	 * 
@@ -640,8 +654,23 @@ implements Iterable<T>, Describable {
 	 * @param <X> Type of the exceptions.
 	 * @param function The function.
 	 * @return The built function.
+	 * @deprecated Use {@link #extractFunction(Function1)}.
 	 */
+	@Deprecated
 	public static <T, R, X extends Exception> Function1<Maybe<? extends T>, Maybe<R>, X> mapFilterFunction(final Function1<? super T, ? extends Maybe<? extends R>, ? extends X> function) {
+		return extractFunction(function);
+	}
+	
+	/**
+	 * Builds a function that extracts the values wrapped in the argument instances using the given function.
+	 * 
+	 * @param <T> Type of the argument values.
+	 * @param <R> Type of the result values.
+	 * @param <X> Type of the exceptions.
+	 * @param function The function.
+	 * @return The built function.
+	 */
+	public static <T, R, X extends Exception> Function1<Maybe<? extends T>, Maybe<R>, X> extractFunction(final Function1<? super T, ? extends Maybe<? extends R>, ? extends X> function) {
 		assert null != function;
 		
 		return new Function1<Maybe<? extends T>, Maybe<R>, X>() {
@@ -650,7 +679,7 @@ implements Iterable<T>, Describable {
 			throws X {
 				assert null != value;
 				
-				return value.mapFilter(function);
+				return value.extract(function);
 			}
 		};
 	}

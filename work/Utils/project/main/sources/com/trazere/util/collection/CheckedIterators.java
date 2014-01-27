@@ -207,7 +207,7 @@ public class CheckedIterators {
 	 * @param iterator The iterator.
 	 * @return The built iterator over the filtered values.
 	 */
-	public static <T, X extends Exception> CheckedFilterIterator<T, X> filter(final Predicate1<? super T, ? extends X> predicate, final CheckedIterator<? extends T, ? extends X> iterator) {
+	public static <T, X extends Exception> CheckedIterator<T, X> filter(final Predicate1<? super T, ? extends X> predicate, final CheckedIterator<? extends T, ? extends X> iterator) {
 		assert null != predicate;
 		assert null != iterator;
 		
@@ -236,7 +236,7 @@ public class CheckedIterators {
 	 * @param iterator The iterator.
 	 * @return The built iterator over the transformed values.
 	 */
-	public static <T, R, X extends Exception> CheckedMapIterator<T, R, X> map(final Function1<? super T, ? extends R, ? extends X> function, final CheckedIterator<? extends T, ? extends X> iterator) {
+	public static <T, R, X extends Exception> CheckedIterator<R, X> map(final Function1<? super T, ? extends R, ? extends X> function, final CheckedIterator<? extends T, ? extends X> iterator) {
 		assert null != function;
 		assert null != iterator;
 		
@@ -255,7 +255,6 @@ public class CheckedIterators {
 		};
 	}
 	
-	// TODO: rename to extract
 	/**
 	 * Filters and transforms the given iterator using the given extractor.
 	 * 
@@ -265,12 +264,28 @@ public class CheckedIterators {
 	 * @param extractor The extractor.
 	 * @param iterator The iterator.
 	 * @return The built iterator over the filtered and transformed values.
+	 * @deprecated Use {@link #extract(Function1, CheckedIterator)}.
 	 */
-	public static <T, R, X extends Exception> CheckedMapFilterIterator<T, R, X> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, ? extends X> extractor, final CheckedIterator<? extends T, ? extends X> iterator) {
+	@Deprecated
+	public static <T, R, X extends Exception> CheckedIterator<R, X> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, ? extends X> extractor, final CheckedIterator<? extends T, ? extends X> iterator) {
+		return extract(extractor, iterator);
+	}
+	
+	/**
+	 * Builds an iterators that extracts values from the given iterator using the given extractor.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <R> Type of the transformed values.
+	 * @param <X> Type of the exceptions.
+	 * @param extractor The extractor.
+	 * @param iterator The iterator.
+	 * @return The built iterator over the filtered and transformed values.
+	 */
+	public static <T, R, X extends Exception> CheckedIterator<R, X> extract(final Function1<? super T, ? extends Maybe<? extends R>, ? extends X> extractor, final CheckedIterator<? extends T, ? extends X> iterator) {
 		assert null != extractor;
 		assert null != iterator;
 		
-		return new CheckedMapFilterIterator<T, R, X>() {
+		return new CheckedExtractIterator<T, R, X>() {
 			@Override
 			protected Maybe<T> pull()
 			throws X {

@@ -239,6 +239,7 @@ public class CollectionUtils {
 	 * @param collection Collection to fill.
 	 * @param values Values to add.
 	 */
+	// TODO: rename to addAll
 	public static <T> void add(final Collection<? super T> collection, final Iterable<? extends T> values) {
 		assert null != collection;
 		assert null != values;

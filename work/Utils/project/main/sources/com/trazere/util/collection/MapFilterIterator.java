@@ -15,23 +15,15 @@
  */
 package com.trazere.util.collection;
 
-import java.util.Iterator;
-
-// TODO: rename to ExtractIterator
-
 /**
  * The {@link MapFilterIterator} abstract class provides iterator combinators which transform and filter their values.
  * 
  * @param <T> Type of the values of the feed.
  * @param <R> Type of the extracted values.
+ * @deprecated Use {@link ExtractIterator}.
  */
+@Deprecated
 public abstract class MapFilterIterator<T, R>
-extends CheckedMapFilterIterator<T, R, RuntimeException>
-implements Iterator<R> {
-	// Iterator.
-	
-	@Override
-	public void remove() {
-		throw new UnsupportedOperationException();
-	}
+extends ExtractIterator<T, R> {
+	// Nothing to do.
 }

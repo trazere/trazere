@@ -142,8 +142,8 @@ implements ObjectTypeMap<T, Maybe<? extends V>, X> {
 		
 		// Get the super types.
 		final Set<Class<? extends T>> superTypes = new HashSet<Class<? extends T>>();
-		CollectionUtils.add(superTypes, Maybe.fromValue(type.getSuperclass()).mapFilter(filter));
-		FunctionUtils.mapFilter(filter, Arrays.asList(type.getInterfaces()), superTypes);
+		CollectionUtils.add(superTypes, Maybe.fromValue(type.getSuperclass()).extract(filter));
+		FunctionUtils.extract(filter, Arrays.asList(type.getInterfaces()), superTypes);
 		return superTypes;
 	}
 }
