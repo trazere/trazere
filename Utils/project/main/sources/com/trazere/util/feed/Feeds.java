@@ -346,7 +346,6 @@ public class Feeds {
 		};
 	}
 	
-	// TODO: rename to extract
 	/**
 	 * Filters and transforms the given feed using the given extractor.
 	 * 
@@ -356,8 +355,24 @@ public class Feeds {
 	 * @param extractor The extractor.
 	 * @param feed The feed.
 	 * @return The built feed over the filtered and transformed elements.
+	 * @deprecated Use {@link #extract(Function1, Feed)}.
 	 */
+	@Deprecated
 	public static <T, R, X extends Exception> Feed<R, X> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, ? extends X> extractor, final Feed<? extends T, ? extends X> feed) {
+		return extract(extractor, feed);
+	}
+	
+	/**
+	 * Builds a feed that extracts values from the given feed using the given extractor.
+	 * 
+	 * @param <T> Type of the elements.
+	 * @param <R> Type of the transformed elements.
+	 * @param <X> Type of the exceptions.
+	 * @param extractor The extractor.
+	 * @param feed The feed.
+	 * @return The built feed over the filtered and transformed elements.
+	 */
+	public static <T, R, X extends Exception> Feed<R, X> extract(final Function1<? super T, ? extends Maybe<? extends R>, ? extends X> extractor, final Feed<? extends T, ? extends X> feed) {
 		assert null != extractor;
 		assert null != feed;
 		
@@ -371,7 +386,7 @@ public class Feeds {
 				while (!tail.isEmpty()) {
 					final Maybe<? extends R> head = extractor.evaluate(tail.getHead());
 					if (head.isSome()) {
-						return Maybe.some(Tuple2.<R, Feed<R, X>>build(head.asSome().getValue(), mapFilter(extractor, tail.getTail())));
+						return Maybe.some(Tuple2.<R, Feed<R, X>>build(head.asSome().getValue(), extract(extractor, tail.getTail())));
 					} else {
 						tail = tail.getTail();
 					}
