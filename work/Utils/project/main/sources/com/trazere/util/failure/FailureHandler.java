@@ -13,18 +13,28 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.function;
+package com.trazere.util.failure;
+
+import com.trazere.util.type.Maybe;
 
 /**
- * The {@link RetryFunction0} interface defines zero arguments functions that are attempted multiple times in case of failure.
+ * The {@link FailureHandler} interface defines handlers for failures.
  * 
- * @param <S> Type of the success values.
- * @param <F> Type of the failure values.
+ * @param <F> Type of the failures.
  * @param <X> Type of the exceptions.
- * @deprecated Use {@link com.trazere.util.failure.RetryFunction0}.
  */
-@Deprecated
-public abstract class RetryFunction0<S, F, X extends Exception>
-extends com.trazere.util.failure.RetryFunction0<S, F, X> {
-	// Nothing to do.
+public interface FailureHandler<F, X extends Exception> {
+	/**
+	 * Handles a failed attempt at evaluating the receiver function.
+	 */
+	/**
+	 * Handles the given failure.
+	 * 
+	 * @param failure Failure to handle.
+	 * @param failureCount Number of failures.
+	 * @return The extracted failure.
+	 * @throws X On failure.
+	 */
+	public Maybe<? extends F> handleFailure(final F failure, final int failureCount)
+	throws X;
 }
