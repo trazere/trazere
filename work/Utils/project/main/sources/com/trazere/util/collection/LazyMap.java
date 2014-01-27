@@ -45,7 +45,7 @@ implements Function1<K, V, X> {
 	 * @param function The function.
 	 * @return The built lazy map.
 	 */
-	public static <K, V, X extends Exception> LazyMap<K, V, X> build(final Function1<? super K, ? extends V, X> function) {
+	public static <K, V, X extends Exception> LazyMap<K, V, X> build(final Function1<? super K, ? extends V, ? extends X> function) {
 		assert null != function;
 		
 		// Build.
