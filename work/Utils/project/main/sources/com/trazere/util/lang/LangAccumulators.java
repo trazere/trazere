@@ -18,6 +18,9 @@ package com.trazere.util.lang;
 import com.trazere.util.accumulator.Accumulator1;
 import com.trazere.util.accumulator.BaseAccumulator1;
 import com.trazere.util.accumulator.FoldAccumulator1;
+import com.trazere.util.reference.MutableReference;
+import com.trazere.util.type.Maybe;
+import java.util.Comparator;
 
 /**
  * The {@link LangAccumulators} class provides various factories of accumulators related to the language.
@@ -103,6 +106,40 @@ public class LangAccumulators {
 			@Override
 			public Long get() {
 				return _value.get();
+			}
+		};
+	}
+	
+	// TODO: move to CollectionAccumulators or ComparatorAccumulators ?
+	/**
+	 * Builds an accumulator of the greatest value according to the given comparator.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @param comparator Comparator of the values.
+	 * @return The built accumulator.
+	 */
+	public static <T, X extends Exception> Accumulator1<T, Maybe<T>, X> greatest(final Comparator<? super T> comparator) {
+		assert null != comparator;
+		
+		return new BaseAccumulator1<T, Maybe<T>, X>() {
+			private final MutableReference<T> _result = new MutableReference<T>();
+			
+			@Override
+			public void add(final T value)
+			throws X {
+				if (_result.isSet()) {
+					if (comparator.compare(value, _result.get()) > 1) {
+						_result.update(value);
+					}
+				} else {
+					_result.set(value);
+				}
+			}
+			
+			@Override
+			public Maybe<T> get() {
+				return _result.asMaybe();
 			}
 		};
 	}
