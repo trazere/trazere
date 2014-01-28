@@ -18,6 +18,7 @@ package com.trazere.util.accumulator;
 import com.trazere.util.function.Function1;
 import com.trazere.util.function.Predicate1;
 import com.trazere.util.function.Predicate2;
+import com.trazere.util.lang.Counter;
 import com.trazere.util.reference.MutableReference;
 import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Tuple2;
@@ -26,6 +27,29 @@ import com.trazere.util.type.Tuple2;
  * The {@link Accumulators} class provides various factories of accumulators.
  */
 public class Accumulators {
+	/**
+	 * Builds an accumulator that counts the accumulations (number of times some value is accumulated).
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @return The built accumulator.
+	 */
+	public static <T, X extends Exception> Accumulator1<T, Integer, X> counter() {
+		return new BaseAccumulator1<T, Integer, X>() {
+			private final Counter _result = new Counter();
+			
+			@Override
+			public void add(final T value) {
+				_result.inc();
+			}
+			
+			@Override
+			public Integer get() {
+				return _result.get();
+			}
+		};
+	}
+	
 	/**
 	 * Builds an accumulator that filters the accumulated values using the given predicate.
 	 * 
