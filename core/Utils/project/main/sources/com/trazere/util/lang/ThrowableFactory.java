@@ -19,7 +19,9 @@ package com.trazere.util.lang;
  * The {@link ThrowableFactory} interface defines factories of {@link Throwable throwable objects}.
  * 
  * @param <T> Type of the throwables.
+ * @deprecated Use {@link com.trazere.core.lang.ThrowableFactory}
  */
+@Deprecated
 public interface ThrowableFactory<T extends Throwable>
 extends Factory<T, InternalException> {
 	/**

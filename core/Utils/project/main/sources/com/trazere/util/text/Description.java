@@ -22,7 +22,10 @@ import com.trazere.util.type.Maybe;
  * The {@link Description} class helps to compute descriptions of objects.
  * <p>
  * This class works as an accumulator of named properties, each instance can only be used to compute a single description.
+ * 
+ * @deprecated Use {@link com.trazere.core.text.Description}.
  */
+@Deprecated
 public class Description {
 	public static Description buildObjectDescription(final Object object) {
 		assert null != object;

@@ -449,7 +449,9 @@ public class TextUtils {
 	 * 
 	 * @param class_ The class.
 	 * @return The name of the class.
+	 * @deprecated Use {@link com.trazere.core.text.TextUtils#computeClassName(Class)}.
 	 */
+	@Deprecated
 	public static String computeClassName(final Class<?> class_) {
 		assert null != class_;
 		
@@ -465,7 +467,9 @@ public class TextUtils {
 	 * 
 	 * @param object The object.
 	 * @return The description.
+	 * @deprecated Use {@link com.trazere.core.text.TextUtils#computeDescription(com.trazere.core.text.Describable)}.
 	 */
+	@Deprecated
 	public static String computeDescription(final Describable object) {
 		assert null != object;
 		
@@ -499,14 +503,14 @@ public class TextUtils {
 	 * 
 	 * @param <T> Type of the number to parse.
 	 * @param <CX> Type of the conversion exceptions.
-	 * 
 	 * @param format The number format.
 	 * @param converter The extractor of the {@link Number} instance of the excepted type.
 	 * @param representation The representation to parse.
 	 * @return The parsed number.
-	 * @throws CX When the conversion to the result type fails. 
+	 * @throws CX When the conversion to the result type fails.
 	 */
-	public static <T extends Number, CX extends Exception> Maybe<T> parseNumber(final NumberFormat format, final Function1<? super Number, ? extends T, CX> converter, final String representation) throws CX {
+	public static <T extends Number, CX extends Exception> Maybe<T> parseNumber(final NumberFormat format, final Function1<? super Number, ? extends T, CX> converter, final String representation)
+	throws CX {
 		assert null != format;
 		assert null != converter;
 		assert null != representation;

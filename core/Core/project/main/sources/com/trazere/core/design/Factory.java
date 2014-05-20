@@ -13,18 +13,20 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.collection;
+package com.trazere.core.design;
 
 /**
- * The {@link CheckedMapFilterIterator} abstract class provides iterator combinators which transform and filter their values.
+ * The {@link Factory} interface defines factories.
+ * <p>
+ * TODO: compare to factory design pattern
  * 
- * @param <T> Type of the values of the feed.
- * @param <R> Type of the extracted values.
- * @param <X> Type of the exceptions.
- * @deprecated Use {@link CheckedExtractIterator}.
+ * @param <T> Type of the built values.
  */
-@Deprecated
-public abstract class CheckedMapFilterIterator<T, R, X extends Exception>
-extends CheckedExtractIterator<T, R, X> {
-	// Nothing to do.
+public interface Factory<T> {
+	/**
+	 * Builds a new value.
+	 * 
+	 * @return The built value.
+	 */
+	T build();
 }
