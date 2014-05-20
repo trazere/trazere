@@ -15,13 +15,17 @@
  */
 package com.trazere.util.function;
 
+import com.trazere.core.functional.Function;
+
 /**
  * The {@link Function1} interface defines one argument functions.
  * 
  * @param <T> Type of the argument values.
  * @param <R> Type of the result values.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link Function}.
  */
+@Deprecated
 public interface Function1<T, R, X extends Exception> {
 	/**
 	 * Evaluates the receiver function with the given argument value.

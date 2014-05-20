@@ -30,7 +30,9 @@ public class LangUtils {
 	 * @param <T> Type of the object.
 	 * @param object The object.
 	 * @return The class.
+	 * @deprecated Use {@link com.trazere.core.lang.LangUtils#getClass(Object)}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T> Class<? extends T> getClass(final T object) {
 		assert null != object;
@@ -233,7 +235,9 @@ public class LangUtils {
 	 * @param object2 The second value. May be <code>null</code>.
 	 * @return <code>true</code> if the values are both <code>null</code> or both not <code>null</code> and equal.
 	 * @see Comparable#compareTo(Object)
+	 * @deprecated Use {@link com.trazere.core.lang.LangUtils#safeEquals(Object, Object)}.
 	 */
+	@Deprecated
 	public static <T extends Object> boolean safeEquals(final T object1, final T object2) {
 		return object1 == object2 || null != object1 && object1.equals(object2);
 	}
@@ -249,7 +253,9 @@ public class LangUtils {
 	 * @param object2 The second value. May be <code>null</code>.
 	 * @return The result of the comparison as defined by the {@link Comparable#compareTo(Object)} method.
 	 * @see Comparable#compareTo(Object)
+	 * @deprecated Use {@link com.trazere.core.lang.LangUtils#safeCompare(Comparable, Comparable)}.
 	 */
+	@Deprecated
 	public static <T extends Comparable<T>> int safeCompare(final T object1, final T object2) {
 		if (null == object1) {
 			return null == object2 ? 0 : -1;
@@ -270,7 +276,9 @@ public class LangUtils {
 	 * @param object2 The second value. May be <code>null</code>.
 	 * @return The result of the comparison as defined by the {@link Comparator#compare(Object, Object)} method.
 	 * @see Comparable#compareTo(Object)
+	 * @deprecated Use {@link com.trazere.core.lang.LangUtils#safeCompare(Comparator, Object, Object)}.
 	 */
+	@Deprecated
 	public static <T> int safeCompare(final Comparator<T> comparator, final T object1, final T object2) {
 		assert null != comparator;
 		

@@ -21,7 +21,10 @@ import com.trazere.util.text.TextUtils;
 
 /**
  * The {@link MutableShort} class represents mutable short values.
+ * 
+ * @deprecated Use {@link com.trazere.core.lang.MutableShort}.
  */
+@Deprecated
 public class MutableShort
 implements Describable {
 	/** The value. */

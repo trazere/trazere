@@ -15,12 +15,16 @@
  */
 package com.trazere.util.function;
 
+import com.trazere.core.functional.Thunk;
+
 /**
  * The {@link Function0} interface defines zero arguments functions.
  * 
  * @param <R> Type of the result values.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link Thunk}.
  */
+@Deprecated
 public interface Function0<R, X extends Exception> {
 	/**
 	 * Evaluates the receiver function.

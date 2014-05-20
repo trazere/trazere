@@ -21,7 +21,10 @@ import com.trazere.util.text.TextUtils;
 
 /**
  * The {@link MutableFloat} class represents mutable float values.
+ * 
+ * @deprecated Use {@link com.trazere.core.lang.MutableFloat}.
  */
+@Deprecated
 public class MutableFloat
 implements Describable {
 	/** The value. */

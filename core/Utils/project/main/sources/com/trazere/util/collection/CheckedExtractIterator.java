@@ -29,6 +29,7 @@ import java.util.NoSuchElementException;
  * @param <R> Type of the extracted values.
  * @param <X> Type of the exceptions.
  */
+@Deprecated
 public abstract class CheckedExtractIterator<T, R, X extends Exception>
 implements CheckedIterator<R, X> {
 	// Iterator.

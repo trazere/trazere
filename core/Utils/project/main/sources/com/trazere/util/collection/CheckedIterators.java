@@ -25,6 +25,7 @@ import java.util.NoSuchElementException;
 /**
  * The {@link CheckedIterators} class provides various factories of checked iterators.
  */
+@Deprecated
 public class CheckedIterators {
 	/**
 	 * Builds a checked iterator over no values.

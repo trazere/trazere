@@ -20,6 +20,7 @@ package com.trazere.util.lang;
  * <p>
  * These exceptions aim to indicate problems in the code (like situations supposed to be impossible) rather than runtime issues.
  */
+@Deprecated
 public class UncheckedException
 extends RuntimeException {
 	private static final long serialVersionUID = 1L;

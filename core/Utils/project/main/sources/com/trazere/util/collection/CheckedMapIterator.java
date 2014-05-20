@@ -24,6 +24,7 @@ import com.trazere.util.type.Maybe;
  * @param <R> Type of the extracted values.
  * @param <X> Type of the exceptions.
  */
+@Deprecated
 public abstract class CheckedMapIterator<T, R, X extends Exception>
 extends CheckedExtractIterator<T, R, X> {
 	// Iterator.

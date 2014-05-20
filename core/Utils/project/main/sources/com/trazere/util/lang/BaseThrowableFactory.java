@@ -20,6 +20,7 @@ package com.trazere.util.lang;
  * 
  * @param <T> Type of the throwables.
  */
+@Deprecated
 public abstract class BaseThrowableFactory<T extends Throwable>
 extends BaseFactory<T, InternalException>
 implements ThrowableFactory<T> {
