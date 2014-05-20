@@ -15,9 +15,11 @@
  */
 package com.trazere.util.type;
 
+import com.trazere.core.lang.HashCode;
+import com.trazere.core.lang.LangUtils;
+import com.trazere.core.util.TupleComparators;
+import com.trazere.core.util.TupleFunctions;
 import com.trazere.util.function.Function1;
-import com.trazere.util.lang.HashCode;
-import com.trazere.util.lang.LangUtils;
 
 /**
  * The {@link Tuple7} class represents a 7-tuple (septuplet) data type which stores sequences of 7 values.
@@ -29,7 +31,9 @@ import com.trazere.util.lang.LangUtils;
  * @param <T5> Type of the fifth value.
  * @param <T6> Type of the sixth value.
  * @param <T7> Type of the seventh value.
+ * @deprecated Use {@link com.trazere.core.util.Tuple7}.
  */
+@Deprecated
 public class Tuple7<T1, T2, T3, T4, T5, T6, T7>
 extends Tuple6<T1, T2, T3, T4, T5, T6> {
 	/**
@@ -82,7 +86,9 @@ extends Tuple6<T1, T2, T3, T4, T5, T6> {
 	 * Gets the seventh value of the receiver tuple.
 	 * 
 	 * @return The value. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.util.Tuple7#get7()}.
 	 */
+	@Deprecated
 	public T7 getSeventh() {
 		return _seventh;
 	}
@@ -93,7 +99,9 @@ extends Tuple6<T1, T2, T3, T4, T5, T6> {
 	 * @param <T7> Type of the seventh value of the tuples.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
+	 * @deprecated Use {@link TupleFunctions#get7()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T7, X extends Exception> Function1<Tuple7<?, ?, ?, ?, ?, ?, ? extends T7>, T7, X> getSeventhFunction() {
 		return (Function1<Tuple7<?, ?, ?, ?, ?, ?, ? extends T7>, T7, X>) _GET_SEVENTH_FUNCTION;
@@ -124,7 +132,11 @@ extends Tuple6<T1, T2, T3, T4, T5, T6> {
 	 * @param tuple2 The second tuple.
 	 * @return The result of the comparison as defined by the {@link Comparable#compareTo(Object)} method.
 	 * @see Comparable#compareTo(Object)
+	 * @deprecated Use
+	 *             {@link TupleComparators#tuple7(java.util.Comparator, java.util.Comparator, java.util.Comparator, java.util.Comparator, java.util.Comparator, java.util.Comparator, java.util.Comparator)}
+	 *             .
 	 */
+	@Deprecated
 	public static <T1 extends Comparable<T1>, T2 extends Comparable<T2>, T3 extends Comparable<T3>, T4 extends Comparable<T4>, T5 extends Comparable<T5>, T6 extends Comparable<T6>, T7 extends Comparable<T7>> int compare(final Tuple7<T1, T2, T3, T4, T5, T6, T7> tuple1, final Tuple7<T1, T2, T3, T4, T5, T6, T7> tuple2) {
 		assert null != tuple1;
 		assert null != tuple2;

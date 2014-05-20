@@ -15,12 +15,12 @@
  */
 package com.trazere.util.type;
 
+import com.trazere.core.lang.HashCode;
+import com.trazere.core.lang.LangUtils;
+import com.trazere.core.text.Describable;
+import com.trazere.core.text.Description;
+import com.trazere.core.text.TextUtils;
 import com.trazere.util.function.Function1;
-import com.trazere.util.lang.HashCode;
-import com.trazere.util.lang.LangUtils;
-import com.trazere.util.text.Describable;
-import com.trazere.util.text.Description;
-import com.trazere.util.text.TextUtils;
 
 /**
  * The {@link Either} class represents an algebraic data type which wraps a binary disjonction.
@@ -30,7 +30,9 @@ import com.trazere.util.text.TextUtils;
  * 
  * @param <L> Type of the left value.
  * @param <R> Type of the right value.
+ * @deprecated Use {@link com.trazere.core.util.Either}.
  */
+@Deprecated
 public abstract class Either<L, R>
 implements Describable {
 	/**
@@ -212,7 +214,7 @@ implements Describable {
 		}
 		
 		@Override
-		public void fillDescription(final Description description) {
+		public void appendDescription(final Description description) {
 			description.append("Left", _left);
 		}
 	}
@@ -356,7 +358,7 @@ implements Describable {
 		}
 		
 		@Override
-		public void fillDescription(final Description description) {
+		public void appendDescription(final Description description) {
 			description.append("Right", _right);
 		}
 	}

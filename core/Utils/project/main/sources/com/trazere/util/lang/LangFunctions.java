@@ -1,5 +1,6 @@
 package com.trazere.util.lang;
 
+import com.trazere.core.lang.ThrowableFactory;
 import com.trazere.util.function.Function1;
 import java.util.Calendar;
 import java.util.Date;

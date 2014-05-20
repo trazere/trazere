@@ -15,8 +15,8 @@
  */
 package com.trazere.util.function;
 
+import com.trazere.core.lang.LangUtils;
 import com.trazere.util.collection.CollectionUtils;
-import com.trazere.util.lang.LangUtils;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;

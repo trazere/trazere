@@ -15,12 +15,12 @@
  */
 package com.trazere.util.record;
 
+import com.trazere.core.lang.HashCode;
+import com.trazere.core.text.Describable;
+import com.trazere.core.text.Description;
+import com.trazere.core.text.TextUtils;
 import com.trazere.util.function.Function1;
 import com.trazere.util.function.Predicate1;
-import com.trazere.util.lang.HashCode;
-import com.trazere.util.text.Describable;
-import com.trazere.util.text.Description;
-import com.trazere.util.text.TextUtils;
 
 /**
  * The {@link FieldSignature} class describes signatures of record fields.
@@ -242,7 +242,7 @@ implements Describable {
 	}
 	
 	@Override
-	public void fillDescription(final Description description) {
+	public void appendDescription(final Description description) {
 		description.append("Key", _key);
 		description.append("Type", _type);
 		description.append("Nullable", _nullable);

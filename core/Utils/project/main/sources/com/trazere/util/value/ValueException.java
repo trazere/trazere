@@ -15,8 +15,7 @@
  */
 package com.trazere.util.value;
 
-import com.trazere.util.lang.BaseThrowableFactory;
-import com.trazere.util.lang.ThrowableFactory;
+import com.trazere.core.lang.ThrowableFactory;
 
 /**
  * {@link ValueException} exceptions are thrown when value related errors occur.
@@ -61,7 +60,7 @@ extends Exception {
 	}
 	
 	/** Factory of {@link ValueException}. */
-	public static final ThrowableFactory<ValueException> FACTORY = new BaseThrowableFactory<ValueException>() {
+	public static final ThrowableFactory<ValueException> FACTORY = new ThrowableFactory<ValueException>() {
 		@Override
 		public ValueException build() {
 			return new ValueException();

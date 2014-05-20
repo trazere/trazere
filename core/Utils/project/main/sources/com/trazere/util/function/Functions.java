@@ -15,9 +15,9 @@
  */
 package com.trazere.util.function;
 
+import com.trazere.core.lang.ThrowableFactory;
 import com.trazere.util.collection.CollectionUtils;
 import com.trazere.util.collection.Multimap;
-import com.trazere.util.lang.ThrowableFactory;
 import com.trazere.util.record.Record;
 import com.trazere.util.record.RecordException;
 import java.util.Collection;

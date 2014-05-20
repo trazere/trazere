@@ -15,9 +15,9 @@
  */
 package com.trazere.util.value;
 
+import com.trazere.core.lang.ThrowableFactory;
+import com.trazere.core.text.Description;
 import com.trazere.util.function.Function1;
-import com.trazere.util.lang.ThrowableFactory;
-import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
 import com.trazere.util.type.Maybe;
 import java.text.DateFormat;
@@ -144,8 +144,8 @@ public class ValueSerializers {
 			}
 			
 			@Override
-			public void fillDescription(final Description description) {
-				super.fillDescription(description);
+			public void appendDescription(final Description description) {
+				super.appendDescription(description);
 				description.append("Format", format);
 			}
 		};
@@ -185,8 +185,8 @@ public class ValueSerializers {
 			}
 			
 			@Override
-			public void fillDescription(final Description description) {
-				super.fillDescription(description);
+			public void appendDescription(final Description description) {
+				super.appendDescription(description);
 				description.append("Format", format);
 			}
 		};
@@ -252,8 +252,8 @@ public class ValueSerializers {
 			}
 			
 			@Override
-			public void fillDescription(final Description description) {
-				super.fillDescription(description);
+			public void appendDescription(final Description description) {
+				super.appendDescription(description);
 				description.append("Min length", minLength);
 				description.append("Max length", maxLength);
 			}

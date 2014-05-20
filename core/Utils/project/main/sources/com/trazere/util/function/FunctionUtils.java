@@ -1144,26 +1144,6 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Filters and transforms the given values using the given extractor and populates the given collection with the accepted results.
-	 * 
-	 * @param <V> Type of the values.
-	 * @param <RV> Type of the result values.
-	 * @param <C> Type of the collection to populate with the result values.
-	 * @param <X> Type of the exceptions.
-	 * @param extractor The extractor.
-	 * @param values The values.
-	 * @param results The collection to populate with the result values.
-	 * @return The given result collection.
-	 * @throws X When some extractor evaluation fails.
-	 * @deprecated Use {@link #extract(Function1, Iterable, Collection)}.
-	 */
-	@Deprecated
-	public static <V, RV, C extends Collection<? super RV>, X extends Exception> C mapFilter(final Function1<? super V, ? extends Maybe<? extends RV>, X> extractor, final Iterable<? extends V> values, final C results)
-	throws X {
-		return extract(extractor, values, results);
-	}
-	
-	/**
 	 * Extracts the given values using the given extractor and populates the given collection with the accepted results.
 	 * 
 	 * @param <V> Type of the values.
@@ -1179,28 +1159,6 @@ public class FunctionUtils {
 	public static <V, RV, C extends Collection<? super RV>, X extends Exception> C extract(final Function1<? super V, ? extends Maybe<? extends RV>, X> extractor, final Iterable<? extends V> values, final C results)
 	throws X {
 		return extract(extractor, values, CollectionAccumulators.<RV, C, InternalException>add(results)).get();
-	}
-	
-	/**
-	 * Filters and transforms the given values using the given extractor and populates the given accumulator with the accepted results.
-	 * 
-	 * @param <V> Type of the values.
-	 * @param <RV> Type of the result values.
-	 * @param <A> Type of the accumulator to populate with the result values.
-	 * @param <EX> Type of the extractor exceptions.
-	 * @param <AX> Type of the accumulator exceptions.
-	 * @param extractor The extractor.
-	 * @param values The values.
-	 * @param results The accumulator to populate with the result values.
-	 * @return The given accumulator.
-	 * @throws EX When some extractor evaluation fails.
-	 * @throws AX When some accumulation fails.
-	 * @deprecated Use {@link #extract(Function1, Iterable, Accumulator1)}.
-	 */
-	@Deprecated
-	public static <V, RV, A extends Accumulator1<? super RV, ?, AX>, EX extends Exception, AX extends Exception> A mapFilter(final Function1<? super V, ? extends Maybe<? extends RV>, EX> extractor, final Iterable<? extends V> values, final A results)
-	throws EX, AX {
-		return extract(extractor, values, results);
 	}
 	
 	/**
@@ -1234,30 +1192,6 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Filters and transforms the given bindings using the given extractor and populates the given map with the bindings of the argument keys and the
-	 * corresponding accepted results.
-	 * <p>
-	 * This method evaluates the extractor by passing the keys and values of the bindings respectively as first and second arguments.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <RV> Type of the result values.
-	 * @param <M> Type of the map to populate with the result bindings.
-	 * @param <X> Type of the exceptions.
-	 * @param extractor The extractor.
-	 * @param bindings The bindings.
-	 * @param results The map to populate with the result bindings.
-	 * @return The given result map.
-	 * @throws X When some extractor evaluation fails.
-	 * @deprecated Use {@link #extract(Function2, Map, Map)}.
-	 */
-	@Deprecated
-	public static <K, V, RV, M extends Map<? super K, ? super RV>, X extends Exception> M mapFilter(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, X> extractor, final Map<? extends K, ? extends V> bindings, final M results)
-	throws X {
-		return extract(extractor, bindings, results);
-	}
-	
-	/**
 	 * Extracts the given bindings using the given extractor and populates the given map with the bindings of the argument keys and the corresponding accepted
 	 * results.
 	 * <p>
@@ -1277,32 +1211,6 @@ public class FunctionUtils {
 	public static <K, V, RV, M extends Map<? super K, ? super RV>, X extends Exception> M extract(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, X> extractor, final Map<? extends K, ? extends V> bindings, final M results)
 	throws X {
 		return extract(extractor, bindings, CollectionAccumulators.<K, RV, M, InternalException>put(results)).get();
-	}
-	
-	/**
-	 * Filters and transforms the given bindings using the given extractor and populates the given accumulator with the bindings of the argument keys and the
-	 * corresponding accepted results.
-	 * <p>
-	 * This method evaluates the extractor by passing the keys and values of the bindings respectively as first and second arguments.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <RV> Type of the result values.
-	 * @param <A> Type of the accumulator to populate with the result bindings.
-	 * @param <EX> Type of the extractor exceptions.
-	 * @param <AX> Type of the accumulator exceptions.
-	 * @param extractor The extractor.
-	 * @param bindings The bindings.
-	 * @param results The map to populate with the result bindings.
-	 * @return The given accumulator.
-	 * @throws EX When some extractor evaluation fails.
-	 * @throws AX When some accumulation fails.
-	 * @deprecated Use {@link #extract(Function2, Map, Accumulator2)}.
-	 */
-	@Deprecated
-	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, AX>, EX extends Exception, AX extends Exception> A mapFilter(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, EX> extractor, final Map<? extends K, ? extends V> bindings, final A results)
-	throws EX, AX {
-		return extract(extractor, bindings, results);
 	}
 	
 	/**
@@ -1341,30 +1249,6 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Filters and transforms the given bindings using the given extractor and populates the given map with the bindings of the argument keys and the
-	 * corresponding accepted results.
-	 * <p>
-	 * This method evaluates the extractor by passing the keys and values of the bindings respectively as first and second arguments.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <RV> Type of the result values.
-	 * @param <M> Type of the map to populate with the result bindings.
-	 * @param <X> Type of the exceptions.
-	 * @param extractor The extractor.
-	 * @param bindings The bindings.
-	 * @param results The map to populate with the result bindings.
-	 * @return The given result map.
-	 * @throws X When some extractor evaluation fails.
-	 * @deprecated {@link #extract(Function2, Multimap, Multimap)}.
-	 */
-	@Deprecated
-	public static <K, V, RV, M extends Multimap<? super K, ? super RV, ?>, X extends Exception> M mapFilter(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, X> extractor, final Multimap<K, ? extends V, ?> bindings, final M results)
-	throws X {
-		return extract(extractor, bindings, results);
-	}
-	
-	/**
 	 * Extracts the given bindings using the given extractor and populates the given map with the bindings of the argument keys and the corresponding accepted
 	 * results.
 	 * <p>
@@ -1384,32 +1268,6 @@ public class FunctionUtils {
 	public static <K, V, RV, M extends Multimap<? super K, ? super RV, ?>, X extends Exception> M extract(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, X> extractor, final Multimap<K, ? extends V, ?> bindings, final M results)
 	throws X {
 		return extract(extractor, bindings, CollectionAccumulators.<K, RV, M, InternalException>put(results)).get();
-	}
-	
-	/**
-	 * Filters and transforms the given bindings using the given extractor and populates the given accumulator with the bindings of the argument keys and the
-	 * corresponding accepted results.
-	 * <p>
-	 * This method evaluates the extractor by passing the keys and values of the bindings respectively as first and second arguments.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <RV> Type of the result values.
-	 * @param <A> Type of the accumulator to populate with the result bindings.
-	 * @param <EX> Type of the extractor exceptions.
-	 * @param <AX> Type of the accumulator exceptions.
-	 * @param extractor The extractor.
-	 * @param bindings The bindings.
-	 * @param results The map to populate with the result bindings.
-	 * @return The given accumulator.
-	 * @throws EX When some extractor evaluation fails.
-	 * @throws AX When some accumulation fails.
-	 * @deprecated Use {@link #extract(Function2, Multimap, Accumulator2)}.
-	 */
-	@Deprecated
-	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, AX>, EX extends Exception, AX extends Exception> A mapFilter(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, EX> extractor, final Multimap<K, ? extends V, ?> bindings, final A results)
-	throws EX, AX {
-		return extract(extractor, bindings, results);
 	}
 	
 	/**

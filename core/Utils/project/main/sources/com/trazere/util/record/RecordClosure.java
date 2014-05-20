@@ -15,9 +15,9 @@
  */
 package com.trazere.util.record;
 
+import com.trazere.core.text.Description;
 import com.trazere.util.closure.Closure;
 import com.trazere.util.closure.ResettableClosure;
-import com.trazere.util.text.Description;
 import com.trazere.util.value.RecordReader;
 import com.trazere.util.value.ValueException;
 
@@ -62,8 +62,8 @@ extends ResettableClosure<Record<K, V>, RecordException> {
 			}
 			
 			@Override
-			public void fillDescription(final Description description) {
-				super.fillDescription(description);
+			public void appendDescription(final Description description) {
+				super.appendDescription(description);
 				description.append("Value", value);
 			}
 		};
@@ -94,8 +94,8 @@ extends ResettableClosure<Record<K, V>, RecordException> {
 			}
 			
 			@Override
-			public void fillDescription(final Description description) {
-				super.fillDescription(description);
+			public void appendDescription(final Description description) {
+				super.appendDescription(description);
 				description.append("Reader", reader);
 				description.append("Parameters", parameters);
 			}

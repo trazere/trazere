@@ -15,20 +15,27 @@
  */
 package com.trazere.util.collection;
 
-import java.util.Iterator;
+import com.trazere.util.type.Maybe;
 
 /**
- * The {@link FilterIterator} abstract class represents iterator combinators which filter their values.
+ * The {@link CheckedFilterIterator} class implements iterator combinators that filter their values.
  * 
  * @param <T> Type of the values.
  */
 public abstract class FilterIterator<T>
-extends CheckedFilterIterator<T, RuntimeException>
-implements Iterator<T> {
+extends ExtractIterator<T, T> {
 	// Iterator.
 	
 	@Override
-	public void remove() {
-		throw new UnsupportedOperationException();
+	protected Maybe<? extends T> extract(final T value) {
+		return filter(value) ? Maybe.some(value) : Maybe.<T>none();
 	}
+	
+	/**
+	 * Filters the given value.
+	 * 
+	 * @param value The value to filter. May be <code>null</code>.
+	 * @return <code>true</code> when the value is accepted, <code>false</code> otherwise.
+	 */
+	protected abstract boolean filter(final T value);
 }

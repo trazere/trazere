@@ -15,7 +15,7 @@
  */
 package com.trazere.util.function;
 
-import com.trazere.util.lang.MutableObject;
+import com.trazere.core.lang.MutableObject;
 
 /**
  * The {@link FixedPoint} abstract class implements convergence functions to some fixed point.

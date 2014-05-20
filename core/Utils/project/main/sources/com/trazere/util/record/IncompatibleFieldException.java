@@ -15,8 +15,7 @@
  */
 package com.trazere.util.record;
 
-import com.trazere.util.lang.BaseThrowableFactory;
-import com.trazere.util.lang.ThrowableFactory;
+import com.trazere.core.lang.ThrowableFactory;
 
 /**
  * {@link IncompatibleFieldException} exceptions are thrown when some record field does not have the appropriate type.
@@ -62,7 +61,7 @@ extends RecordException {
 	
 	/** Factory of {@link NullFieldException}. */
 	@SuppressWarnings("hiding")
-	public static final ThrowableFactory<NullFieldException> FACTORY = new BaseThrowableFactory<NullFieldException>() {
+	public static final ThrowableFactory<NullFieldException> FACTORY = new ThrowableFactory<NullFieldException>() {
 		@Override
 		public NullFieldException build() {
 			return new NullFieldException();
