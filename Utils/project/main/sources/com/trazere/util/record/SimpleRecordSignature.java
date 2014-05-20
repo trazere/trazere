@@ -15,11 +15,11 @@
  */
 package com.trazere.util.record;
 
+import com.trazere.core.lang.HashCode;
+import com.trazere.core.text.Describable;
+import com.trazere.core.text.Description;
+import com.trazere.core.text.TextUtils;
 import com.trazere.util.collection.CollectionUtils;
-import com.trazere.util.lang.HashCode;
-import com.trazere.util.text.Describable;
-import com.trazere.util.text.Description;
-import com.trazere.util.text.TextUtils;
 import com.trazere.util.type.Maybe;
 import java.util.Collection;
 import java.util.Collections;
@@ -212,7 +212,7 @@ implements RecordSignature<K, V>, Describable {
 	}
 	
 	@Override
-	public void fillDescription(final Description description) {
+	public void appendDescription(final Description description) {
 		for (final FieldSignature<K, ? extends V> field : _fields.values()) {
 			description.append(field.getKey().toString(), field);
 		}

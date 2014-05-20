@@ -15,17 +15,21 @@
  */
 package com.trazere.util.type;
 
+import com.trazere.core.lang.HashCode;
+import com.trazere.core.lang.LangUtils;
+import com.trazere.core.util.TupleComparators;
+import com.trazere.core.util.TupleFunctions;
 import com.trazere.util.function.Function1;
 import com.trazere.util.function.Function2;
-import com.trazere.util.lang.HashCode;
-import com.trazere.util.lang.LangUtils;
 
 /**
  * The {@link Tuple2} class represents a 2-tuple (pair) data types which stores sequences of 2 values.
  * 
  * @param <T1> Type of the first value.
  * @param <T2> Type of the second value.
+ * @deprecated Use {@link com.trazere.core.util.Tuple2}.
  */
+@Deprecated
 public class Tuple2<T1, T2>
 extends Tuple1<T1> {
 	/**
@@ -48,7 +52,9 @@ extends Tuple1<T1> {
 	 * @param <T2> Type of the second value.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
+	 * @deprecated Use {@link TupleFunctions#build2()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T1, T2, X extends Exception> Function2<T1, T2, Tuple2<T1, T2>, X> buildFunction() {
 		return (Function2<T1, T2, Tuple2<T1, T2>, X>) _BUILD_FUNCTION;
@@ -83,7 +89,9 @@ extends Tuple1<T1> {
 	 * Gets the second value of the receiver tuple.
 	 * 
 	 * @return The value. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.util.Tuple2#get2()}.
 	 */
+	@Deprecated
 	public T2 getSecond() {
 		return _second;
 	}
@@ -94,7 +102,9 @@ extends Tuple1<T1> {
 	 * @param <T2> Type of the second values of the tuples.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
+	 * @deprecated Use {@link TupleFunctions#get2()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T2, X extends Exception> Function1<Tuple2<?, ? extends T2>, T2, X> getSecondFunction() {
 		return (Function1<Tuple2<?, ? extends T2>, T2, X>) _GET_SECOND_FUNCTION;
@@ -120,7 +130,9 @@ extends Tuple1<T1> {
 	 * @param tuple2 The second tuple.
 	 * @return The result of the comparison as defined by the {@link Comparable#compareTo(Object)} method.
 	 * @see Comparable#compareTo(Object)
+	 * @deprecated Use {@link TupleComparators#tuple2(java.util.Comparator, java.util.Comparator)}.
 	 */
+	@Deprecated
 	public static <T1 extends Comparable<T1>, T2 extends Comparable<T2>> int compare(final Tuple2<T1, T2> tuple1, final Tuple2<T1, T2> tuple2) {
 		assert null != tuple1;
 		assert null != tuple2;

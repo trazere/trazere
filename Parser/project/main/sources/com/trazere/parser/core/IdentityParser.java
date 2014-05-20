@@ -15,9 +15,9 @@
  */
 package com.trazere.parser.core;
 
+import com.trazere.core.lang.HashCode;
+import com.trazere.core.lang.LangUtils;
 import com.trazere.parser.Parser;
-import com.trazere.util.lang.HashCode;
-import com.trazere.util.lang.LangUtils;
 
 public class IdentityParser<Token, Result>
 extends Sequence1Parser<Token, Result, Result> {

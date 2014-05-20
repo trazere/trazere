@@ -15,8 +15,7 @@
  */
 package com.trazere.util.properties;
 
-import com.trazere.util.lang.BaseThrowableFactory;
-import com.trazere.util.lang.ThrowableFactory;
+import com.trazere.core.lang.ThrowableFactory;
 
 /**
  * {@link InvalidPropertyException} exceptions are thrown some property is invalid.
@@ -62,7 +61,7 @@ extends PropertiesException {
 	
 	/** Factory of {@link InvalidPropertyException}. */
 	@SuppressWarnings("hiding")
-	public static final ThrowableFactory<InvalidPropertyException> FACTORY = new BaseThrowableFactory<InvalidPropertyException>() {
+	public static final ThrowableFactory<InvalidPropertyException> FACTORY = new ThrowableFactory<InvalidPropertyException>() {
 		@Override
 		public InvalidPropertyException build() {
 			return new InvalidPropertyException();

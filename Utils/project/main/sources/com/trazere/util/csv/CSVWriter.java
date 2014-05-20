@@ -15,7 +15,7 @@
  */
 package com.trazere.util.csv;
 
-import com.trazere.util.lang.MutableBoolean;
+import com.trazere.core.lang.MutableBoolean;
 import com.trazere.util.type.Maybe;
 import java.io.IOException;
 import java.io.Writer;

@@ -170,23 +170,6 @@ public class Accumulators {
 	}
 	
 	/**
-	 * Builds an accumulator that filters and transforms the accumulated values using the given extractor.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param <RT> Type of the result values.
-	 * @param <S> Type of the states.
-	 * @param <X> Type of the exceptions.
-	 * @param extractor Extractor to use.
-	 * @param accumulator Accumulator to transform.
-	 * @return The built accumulator.
-	 * @deprecated Use {@link #extract(Function1, Accumulator1)}
-	 */
-	@Deprecated
-	public static <T, RT, S, X extends Exception> Accumulator1<T, S, X> mapFilter(final Function1<? super T, ? extends Maybe<? extends RT>, ? extends X> extractor, final Accumulator1<? super RT, ? extends S, ? extends X> accumulator) {
-		return extract(extractor, accumulator);
-	}
-	
-	/**
 	 * Builds an accumulator that extracts the values accumulated in the given accumulator using the given extractor.
 	 * 
 	 * @param <T> Type of the values.
@@ -293,21 +276,6 @@ public class Accumulators {
 				return state;
 			}
 		};
-	}
-	
-	/**
-	 * Builds an accumulator that ignores the accumulated values.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param <S> Type of the states.
-	 * @param <X> Type of the exceptions.
-	 * @param state State of the accumulator. May be <code>null</code>.
-	 * @return The built accumulator.
-	 * @deprecated Use {@link #constant(Object)}.
-	 */
-	@Deprecated
-	public static <T, S, X extends Exception> Accumulator1<T, S, X> constant1(final S state) {
-		return constant(state);
 	}
 	
 	/**

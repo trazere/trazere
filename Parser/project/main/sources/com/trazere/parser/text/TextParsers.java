@@ -15,6 +15,8 @@
  */
 package com.trazere.parser.text;
 
+import com.trazere.core.lang.HashCode;
+import com.trazere.core.lang.LangUtils;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserException;
 import com.trazere.parser.core.CoreParsers;
@@ -22,8 +24,6 @@ import com.trazere.parser.core.Sequence3Parser;
 import com.trazere.util.function.Function1;
 import com.trazere.util.function.Function2;
 import com.trazere.util.function.FunctionUtils;
-import com.trazere.util.lang.HashCode;
-import com.trazere.util.lang.LangUtils;
 import com.trazere.util.text.CharPredicate;
 import com.trazere.util.text.CharPredicates;
 import com.trazere.util.type.Maybe;

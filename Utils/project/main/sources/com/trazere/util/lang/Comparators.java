@@ -15,6 +15,8 @@
  */
 package com.trazere.util.lang;
 
+import com.trazere.core.lang.LangUtils;
+import com.trazere.core.util.ComparatorUtils;
 import com.trazere.util.function.Function1;
 import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Maybe.None;
@@ -33,7 +35,9 @@ public class Comparators {
 	 * @param <T> Type of the values.
 	 * @return The built comparator.
 	 * @see Comparable#compareTo(Object)
+	 * @deprecated Use {@link com.trazere.core.util.Comparators#natural()}.
 	 */
+	@Deprecated
 	public static <T extends Comparable<T>> Comparator<T> natural() {
 		return new Comparator<T>() {
 			@Override
@@ -54,7 +58,9 @@ public class Comparators {
 	 * @param comparator The unsafe comparator.
 	 * @return The built comparator.
 	 * @see LangUtils#safeCompare(Comparator, Object, Object)
+	 * @deprecated Use {@link com.trazere.core.util.Comparators#safe(Comparator)}.
 	 */
+	@Deprecated
 	public static <T> Comparator<T> safe(final Comparator<? super T> comparator) {
 		assert null != comparator;
 		
@@ -72,6 +78,7 @@ public class Comparators {
 	 * @param <T> Type of the values.
 	 * @return The built comparator.
 	 * @see Comparable#compareTo(Object)
+	 * @deprecated Use {@link com.trazere.core.util.Comparators#safeNatural()}.
 	 */
 	public static <T extends Comparable<T>> Comparator<T> safeNatural() {
 		return new Comparator<T>() {
@@ -111,7 +118,9 @@ public class Comparators {
 	 * @param comparator The inversed comparator.
 	 * @return The built comparator.
 	 * @see InverseComparator
+	 * @deprecated Use {@link com.trazere.core.util.Comparators#inverse(Comparator)}.
 	 */
+	@Deprecated
 	public static <T> Comparator<T> inverse(final Comparator<? super T> comparator) {
 		assert null != comparator;
 		
@@ -125,7 +134,9 @@ public class Comparators {
 	 * @param comparators The sequence of comparators.
 	 * @return The built comparator.
 	 * @see SequenceComparator
+	 * @deprecated Use {@link com.trazere.core.util.Comparators#sequence(List)}.
 	 */
+	@Deprecated
 	public static <T> Comparator<T> sequence(final List<? extends Comparator<? super T>> comparators) {
 		assert null != comparators;
 		
@@ -139,7 +150,9 @@ public class Comparators {
 	 * @param comparators The sequence of comparators.
 	 * @return The built comparator.
 	 * @see SequenceComparator
+	 * @deprecated Use {@link com.trazere.core.util.Comparators#sequence(Comparator...)}.
 	 */
+	@Deprecated
 	public static <T> Comparator<T> sequence(final Comparator<? super T>... comparators) {
 		return new SequenceComparator<T>(comparators);
 	}
@@ -153,7 +166,9 @@ public class Comparators {
 	 * @param comparator The comparator.
 	 * @return The built comparator.
 	 * @see MapComparator
+	 * @deprecated Use {@link ComparatorUtils#map(Comparator, com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public static <T1, T2> Comparator<T1> map(final Function1<? super T1, ? extends T2, ? extends RuntimeException> function, final Comparator<? super T2> comparator) {
 		assert null != function;
 		assert null != comparator;

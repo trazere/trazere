@@ -15,7 +15,7 @@
  */
 package com.trazere.util.io;
 
-import com.trazere.util.lang.HashCode;
+import com.trazere.core.lang.HashCode;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;

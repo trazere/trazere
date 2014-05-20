@@ -15,6 +15,9 @@
  */
 package com.trazere.util.text;
 
+import com.trazere.core.text.Describable;
+import com.trazere.core.text.Description;
+import com.trazere.core.text.TextUtils;
 import com.trazere.util.collection.CollectionUtils;
 import com.trazere.util.function.Predicate1;
 import java.util.ArrayList;
@@ -74,7 +77,7 @@ implements Predicate1<Collection<String>, RuntimeException>, Describable {
 	 * @param delimeter The delimiter of the flags.
 	 */
 	public FlagPredicate(final String representation, final String delimeter) {
-		this(TextUtils.split(representation, delimeter, false, true, new ArrayList<String>()));
+		this(com.trazere.util.text.TextUtils.split(representation, delimeter, false, true, new ArrayList<String>()));
 	}
 	
 	/**
@@ -180,15 +183,15 @@ implements Predicate1<Collection<String>, RuntimeException>, Describable {
 	}
 	
 	@Override
-	public void fillDescription(final Description description) {
+	public void appendDescription(final Description description) {
 		if (!_required.isEmpty()) {
-			description.append("Required", TextUtils.join(_required, ","));
+			description.append("Required", com.trazere.util.text.TextUtils.join(_required, ","));
 		}
 		if (!_enabled.isEmpty()) {
-			description.append("Enabled", TextUtils.join(_enabled, ","));
+			description.append("Enabled", com.trazere.util.text.TextUtils.join(_enabled, ","));
 		}
 		if (!_forbidden.isEmpty()) {
-			description.append("Forbidden", TextUtils.join(_forbidden, ","));
+			description.append("Forbidden", com.trazere.util.text.TextUtils.join(_forbidden, ","));
 		}
 	}
 }

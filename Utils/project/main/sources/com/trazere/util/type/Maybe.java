@@ -15,17 +15,17 @@
  */
 package com.trazere.util.type;
 
-import com.trazere.util.collection.Iterators;
+import com.trazere.core.imperative.Iterators;
+import com.trazere.core.lang.HashCode;
+import com.trazere.core.lang.LangUtils;
+import com.trazere.core.text.Describable;
+import com.trazere.core.text.Description;
+import com.trazere.core.text.TextUtils;
 import com.trazere.util.function.Function0;
 import com.trazere.util.function.Function1;
 import com.trazere.util.function.Functions;
 import com.trazere.util.function.Predicate1;
-import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.InternalException;
-import com.trazere.util.lang.LangUtils;
-import com.trazere.util.text.Describable;
-import com.trazere.util.text.Description;
-import com.trazere.util.text.TextUtils;
 import java.util.Iterator;
 
 /**
@@ -37,7 +37,9 @@ import java.util.Iterator;
  * This class aims to improve the reliability of the code by avoiding uses of <code>null</code> values.
  * 
  * @param <T> Type of the value.
+ * @deprecated Use {@link com.trazere.core.util.Maybe}.
  */
+@Deprecated
 public abstract class Maybe<T>
 implements Iterable<T>, Describable {
 	/**
@@ -274,7 +276,7 @@ implements Iterable<T>, Describable {
 		}
 		
 		@Override
-		public void fillDescription(final Description description) {
+		public void appendDescription(final Description description) {
 			// Nothing to do.
 		}
 	}
@@ -423,7 +425,7 @@ implements Iterable<T>, Describable {
 		}
 		
 		@Override
-		public void fillDescription(final Description description) {
+		public void appendDescription(final Description description) {
 			description.append("Value", _value);
 		}
 	}
@@ -619,22 +621,6 @@ implements Iterable<T>, Describable {
 	}
 	
 	/**
-	 * Maps and filters the value wrapped by the receiver instance.
-	 * 
-	 * @param <R> Type of the mapped value.
-	 * @param <X> Type of the exceptions.
-	 * @param function The mapping function.
-	 * @return An instance containing the mapped value.
-	 * @throws X When the mapping fails.
-	 * @deprecated Use {@link #extract(Function1)}.
-	 */
-	@Deprecated
-	public <R, X extends Exception> Maybe<R> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, X> function)
-	throws X {
-		return extract(function);
-	}
-	
-	/**
 	 * Extracts the value wrapped by the receiver instance.
 	 * 
 	 * @param <R> Type of the mapped value.
@@ -645,21 +631,6 @@ implements Iterable<T>, Describable {
 	 */
 	public abstract <R, X extends Exception> Maybe<R> extract(final Function1<? super T, ? extends Maybe<? extends R>, X> function)
 	throws X;
-	
-	/**
-	 * Builds a function which maps and filters the values wrapped in the argument instances using the given function.
-	 * 
-	 * @param <T> Type of the argument values.
-	 * @param <R> Type of the result values.
-	 * @param <X> Type of the exceptions.
-	 * @param function The function.
-	 * @return The built function.
-	 * @deprecated Use {@link #extractFunction(Function1)}.
-	 */
-	@Deprecated
-	public static <T, R, X extends Exception> Function1<Maybe<? extends T>, Maybe<R>, X> mapFilterFunction(final Function1<? super T, ? extends Maybe<? extends R>, ? extends X> function) {
-		return extractFunction(function);
-	}
 	
 	/**
 	 * Builds a function that extracts the values wrapped in the argument instances using the given function.

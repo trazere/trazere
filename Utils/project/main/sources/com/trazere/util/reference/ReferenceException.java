@@ -15,8 +15,7 @@
  */
 package com.trazere.util.reference;
 
-import com.trazere.util.lang.BaseThrowableFactory;
-import com.trazere.util.lang.ThrowableFactory;
+import com.trazere.core.lang.ThrowableFactory;
 
 /**
  * {@link ReferenceException} exceptions are thrown when reference related errors occur.
@@ -61,7 +60,7 @@ extends RuntimeException {
 	}
 	
 	/** Factory of {@link ReferenceException}. */
-	public static final ThrowableFactory<ReferenceException> FACTORY = new BaseThrowableFactory<ReferenceException>() {
+	public static final ThrowableFactory<ReferenceException> FACTORY = new ThrowableFactory<ReferenceException>() {
 		@Override
 		public ReferenceException build() {
 			return new ReferenceException();

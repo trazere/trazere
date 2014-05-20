@@ -15,6 +15,8 @@
  */
 package com.trazere.util.lang;
 
+import com.trazere.core.lang.ThrowableFactory;
+
 /**
  * {@link TypeCheckException} exceptions are thrown when some type checking fails.
  */
@@ -58,7 +60,7 @@ extends Exception {
 	}
 	
 	/** Factory of {@link TypeCheckException}. */
-	public static final ThrowableFactory<TypeCheckException> FACTORY = new BaseThrowableFactory<TypeCheckException>() {
+	public static final ThrowableFactory<TypeCheckException> FACTORY = new ThrowableFactory<TypeCheckException>() {
 		@Override
 		public TypeCheckException build() {
 			return new TypeCheckException();

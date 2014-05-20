@@ -15,7 +15,7 @@
  */
 package com.trazere.util.trigger;
 
-import com.trazere.util.lang.MutableBoolean;
+import com.trazere.core.lang.MutableBoolean;
 
 /**
  * The {@link BaseTrigger} abstract class provides skeletons for writing triggers.

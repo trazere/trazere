@@ -15,8 +15,8 @@
  */
 package com.trazere.util.automaton;
 
+import com.trazere.core.lang.MutableObject;
 import com.trazere.util.function.Function1;
-import com.trazere.util.lang.MutableObject;
 
 /**
  * The {@link Automaton} class provides a skeleton implementation of automatons.

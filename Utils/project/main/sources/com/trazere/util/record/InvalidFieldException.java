@@ -15,8 +15,7 @@
  */
 package com.trazere.util.record;
 
-import com.trazere.util.lang.BaseThrowableFactory;
-import com.trazere.util.lang.ThrowableFactory;
+import com.trazere.core.lang.ThrowableFactory;
 
 /**
  * {@link InvalidFieldException} exceptions are thrown when some record field is invalid or cannot be computed.
@@ -62,7 +61,7 @@ extends RecordException {
 	
 	/** Factory of {@link InvalidFieldException}. */
 	@SuppressWarnings("hiding")
-	public static final ThrowableFactory<InvalidFieldException> FACTORY = new BaseThrowableFactory<InvalidFieldException>() {
+	public static final ThrowableFactory<InvalidFieldException> FACTORY = new ThrowableFactory<InvalidFieldException>() {
 		@Override
 		public InvalidFieldException build() {
 			return new InvalidFieldException();

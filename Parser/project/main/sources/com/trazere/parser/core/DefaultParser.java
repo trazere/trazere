@@ -15,10 +15,10 @@
  */
 package com.trazere.parser.core;
 
+import com.trazere.core.lang.HashCode;
+import com.trazere.core.lang.LangUtils;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserException;
-import com.trazere.util.lang.HashCode;
-import com.trazere.util.lang.LangUtils;
 import com.trazere.util.type.Maybe;
 
 public class DefaultParser<Token, Result>
