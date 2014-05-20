@@ -15,12 +15,13 @@
  */
 package com.trazere.util.lang;
 
+import com.trazere.core.lang.ThrowableFactory;
+
 /**
  * {@link InternalException} exceptions are thrown when internal errors occur.
  * <p>
  * These exceptions aim to indicate problems in the code (like situations supposed to be impossible) rather than runtime issues.
  */
-@Deprecated
 public class InternalException
 extends RuntimeException {
 	private static final long serialVersionUID = 1L;
@@ -61,7 +62,7 @@ extends RuntimeException {
 	}
 	
 	/** Factory of {@link InternalException}. */
-	public static final ThrowableFactory<InternalException> FACTORY = new BaseThrowableFactory<InternalException>() {
+	public static final ThrowableFactory<InternalException> FACTORY = new ThrowableFactory<InternalException>() {
 		@Override
 		public InternalException build() {
 			return new InternalException();

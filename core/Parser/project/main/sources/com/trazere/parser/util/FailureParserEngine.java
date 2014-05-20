@@ -15,6 +15,7 @@
  */
 package com.trazere.parser.util;
 
+import com.trazere.core.lang.MutableObject;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserContinuation;
@@ -25,7 +26,6 @@ import com.trazere.parser.ParserSource;
 import com.trazere.parser.ParserState;
 import com.trazere.parser.impl.ParserClosureImpl;
 import com.trazere.parser.impl.ParserStateImpl;
-import com.trazere.util.lang.MutableObject;
 import com.trazere.util.type.Maybe;
 import java.util.ArrayList;
 import java.util.Iterator;

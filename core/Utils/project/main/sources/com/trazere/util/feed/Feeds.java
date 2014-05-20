@@ -347,22 +347,6 @@ public class Feeds {
 	}
 	
 	/**
-	 * Filters and transforms the given feed using the given extractor.
-	 * 
-	 * @param <T> Type of the elements.
-	 * @param <R> Type of the transformed elements.
-	 * @param <X> Type of the exceptions.
-	 * @param extractor The extractor.
-	 * @param feed The feed.
-	 * @return The built feed over the filtered and transformed elements.
-	 * @deprecated Use {@link #extract(Function1, Feed)}.
-	 */
-	@Deprecated
-	public static <T, R, X extends Exception> Feed<R, X> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, ? extends X> extractor, final Feed<? extends T, ? extends X> feed) {
-		return extract(extractor, feed);
-	}
-	
-	/**
 	 * Builds a feed that extracts values from the given feed using the given extractor.
 	 * 
 	 * @param <T> Type of the elements.

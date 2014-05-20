@@ -15,9 +15,11 @@
  */
 package com.trazere.util.type;
 
+import com.trazere.core.lang.HashCode;
+import com.trazere.core.lang.LangUtils;
+import com.trazere.core.util.TupleComparators;
+import com.trazere.core.util.TupleFunctions;
 import com.trazere.util.function.Function1;
-import com.trazere.util.lang.HashCode;
-import com.trazere.util.lang.LangUtils;
 
 /**
  * The {@link Tuple6} class represents a 6-tuple (sexuplet) data type which stores sequences of 6 values.
@@ -28,7 +30,9 @@ import com.trazere.util.lang.LangUtils;
  * @param <T4> Type of the fourth value.
  * @param <T5> Type of the fifth value.
  * @param <T6> Type of the sixth value.
+ * @deprecated Use {@link com.trazere.core.util.Tuple6}.
  */
+@Deprecated
 public class Tuple6<T1, T2, T3, T4, T5, T6>
 extends Tuple5<T1, T2, T3, T4, T5> {
 	/**
@@ -78,7 +82,9 @@ extends Tuple5<T1, T2, T3, T4, T5> {
 	 * Gets the sixth value of the receiver tuple.
 	 * 
 	 * @return The value. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.util.Tuple6#get6()}.
 	 */
+	@Deprecated
 	public T6 getSixth() {
 		return _sixth;
 	}
@@ -89,7 +95,9 @@ extends Tuple5<T1, T2, T3, T4, T5> {
 	 * @param <T6> Type of the sixth value of the tuples.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
+	 * @deprecated Use {@link TupleFunctions#get6()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T6, X extends Exception> Function1<Tuple6<?, ?, ?, ?, ?, ? extends T6>, T6, X> getSixthFunction() {
 		return (Function1<Tuple6<?, ?, ?, ?, ?, ? extends T6>, T6, X>) _GET_SIXTH_FUNCTION;
@@ -119,7 +127,11 @@ extends Tuple5<T1, T2, T3, T4, T5> {
 	 * @param tuple2 The second tuple.
 	 * @return The result of the comparison as defined by the {@link Comparable#compareTo(Object)} method.
 	 * @see Comparable#compareTo(Object)
+	 * @deprecated Use
+	 *             {@link TupleComparators#tuple6(java.util.Comparator, java.util.Comparator, java.util.Comparator, java.util.Comparator, java.util.Comparator, java.util.Comparator)}
+	 *             .
 	 */
+	@Deprecated
 	public static <T1 extends Comparable<T1>, T2 extends Comparable<T2>, T3 extends Comparable<T3>, T4 extends Comparable<T4>, T5 extends Comparable<T5>, T6 extends Comparable<T6>> int compare(final Tuple6<T1, T2, T3, T4, T5, T6> tuple1, final Tuple6<T1, T2, T3, T4, T5, T6> tuple2) {
 		assert null != tuple1;
 		assert null != tuple2;

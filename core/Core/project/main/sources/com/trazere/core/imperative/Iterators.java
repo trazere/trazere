@@ -179,21 +179,6 @@ public class Iterators {
 	//	}
 	//	
 	//	/**
-	//	 * Filters and transforms the given iterator using the given extractor.
-	//	 * 
-	//	 * @param <T> Type of the values.
-	//	 * @param <R> Type of the transformed values.
-	//	 * @param extractor The extractor.
-	//	 * @param iterator The iterator.
-	//	 * @return The built iterator over the filtered and transformed values.
-	//	 * @deprecated Use {@link #extract(Function1, Iterator)}.
-	//	 */
-	//	@Deprecated
-	//	public static <T, R> Iterator<R> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, ? extends RuntimeException> extractor, final Iterator<? extends T> iterator) {
-	//		return extract(extractor, iterator);
-	//	}
-	//	
-	//	/**
 	//	 * Builds an iterator that extracts values from the given iterator using the given extractor.
 	//	 * 
 	//	 * @param <T> Type of the values.

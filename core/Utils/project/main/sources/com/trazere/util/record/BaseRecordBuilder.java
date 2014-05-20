@@ -15,10 +15,10 @@
  */
 package com.trazere.util.record;
 
+import com.trazere.core.text.Describable;
+import com.trazere.core.text.Description;
+import com.trazere.core.text.TextUtils;
 import com.trazere.util.lang.InternalException;
-import com.trazere.util.text.Describable;
-import com.trazere.util.text.Description;
-import com.trazere.util.text.TextUtils;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -241,7 +241,7 @@ implements RecordBuilder<K, V, R>, Describable {
 	}
 	
 	@Override
-	public void fillDescription(final Description description) {
+	public void appendDescription(final Description description) {
 		for (final Map.Entry<K, V> entry : _fields.entrySet()) {
 			description.append(entry.getKey().toString(), entry.getValue());
 		}

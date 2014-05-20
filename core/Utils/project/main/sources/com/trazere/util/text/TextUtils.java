@@ -15,14 +15,14 @@
  */
 package com.trazere.util.text;
 
+import com.trazere.core.lang.LangUtils;
+import com.trazere.core.lang.MutableBoolean;
+import com.trazere.core.lang.MutableInt;
 import com.trazere.util.function.Function1;
 import com.trazere.util.function.Functions;
 import com.trazere.util.function.Procedure2;
 import com.trazere.util.lang.Counter;
 import com.trazere.util.lang.InternalException;
-import com.trazere.util.lang.LangUtils;
-import com.trazere.util.lang.MutableBoolean;
-import com.trazere.util.lang.MutableInt;
 import com.trazere.util.type.Maybe;
 import java.text.DateFormat;
 import java.text.NumberFormat;
@@ -442,40 +442,6 @@ public class TextUtils {
 		assert null != s;
 		
 		return s.replaceAll("[^\\w]", "\\\\$0"); // Escape all special chars
-	}
-	
-	/**
-	 * Computes the name of the given class (without package information).
-	 * 
-	 * @param class_ The class.
-	 * @return The name of the class.
-	 * @deprecated Use {@link com.trazere.core.text.TextUtils#computeClassName(Class)}.
-	 */
-	@Deprecated
-	public static String computeClassName(final Class<?> class_) {
-		assert null != class_;
-		
-		final String fullName = class_.getName();
-		final int index = fullName.lastIndexOf('.');
-		return index > 0 ? fullName.substring(index + 1) : fullName;
-	}
-	
-	/**
-	 * Computes the description of the given object.
-	 * <p>
-	 * This method aims to be used in {@link Object#toString()} implementations.
-	 * 
-	 * @param object The object.
-	 * @return The description.
-	 * @deprecated Use {@link com.trazere.core.text.TextUtils#computeDescription(com.trazere.core.text.Describable)}.
-	 */
-	@Deprecated
-	public static String computeDescription(final Describable object) {
-		assert null != object;
-		
-		final Description description = Description.buildObjectDescription(object);
-		object.fillDescription(description);
-		return description.toString();
 	}
 	
 	/**

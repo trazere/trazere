@@ -15,14 +15,14 @@
  */
 package com.trazere.util.value;
 
-import com.trazere.util.lang.HashCode;
+import com.trazere.core.lang.HashCode;
+import com.trazere.core.text.Description;
 import com.trazere.util.record.FieldSignature;
 import com.trazere.util.record.IncompatibleFieldException;
 import com.trazere.util.record.NullFieldException;
 import com.trazere.util.record.Record;
 import com.trazere.util.record.RecordException;
 import com.trazere.util.record.RecordSignatureBuilder;
-import com.trazere.util.text.Description;
 
 /**
  * The {@link ParameterValueReader} class reads values from the parameters.
@@ -196,8 +196,8 @@ extends BaseValueReader<T> {
 	}
 	
 	@Override
-	public void fillDescription(final Description description) {
+	public void appendDescription(final Description description) {
 		description.append("Name", _name);
-		super.fillDescription(description);
+		super.appendDescription(description);
 	}
 }

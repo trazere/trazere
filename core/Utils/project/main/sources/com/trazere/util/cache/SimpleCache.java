@@ -15,13 +15,13 @@
  */
 package com.trazere.util.cache;
 
+import com.trazere.core.text.Describable;
+import com.trazere.core.text.Description;
+import com.trazere.core.text.TextUtils;
 import com.trazere.util.collection.CollectionUtils;
 import com.trazere.util.function.Predicate1;
 import com.trazere.util.function.Predicates;
 import com.trazere.util.lang.InternalException;
-import com.trazere.util.text.Describable;
-import com.trazere.util.text.Description;
-import com.trazere.util.text.TextUtils;
 import com.trazere.util.type.Maybe;
 import java.util.Collection;
 import java.util.Collections;
@@ -207,7 +207,7 @@ implements Cache<K, V>, Describable {
 	}
 	
 	@Override
-	public void fillDescription(final Description description) {
+	public void appendDescription(final Description description) {
 		description.append("Policy", _policy);
 		description.append("Size", _entries.size());
 		description.append("Keys", _entries.keySet());

@@ -15,10 +15,8 @@
  */
 package com.trazere.util.io;
 
-import com.trazere.util.function.Function1;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -35,18 +33,6 @@ import javax.xml.transform.stream.StreamSource;
  * The {@link IOUtils} class provides various utilities regarding I/O.
  */
 public class IOUtils {
-	/**
-	 * Builds a function which builds files.
-	 * 
-	 * @param <X> Type of the exceptions.
-	 * @return The built function.
-	 * @deprecated Use {@link IOFunctions#file()}
-	 */
-	@Deprecated
-	public static <X extends Exception> Function1<String, File, X> buildFileFunction() {
-		return IOFunctions.file();
-	}
-	
 	/**
 	 * Reads all data from the given input stream and write it to the given output stream.
 	 * 

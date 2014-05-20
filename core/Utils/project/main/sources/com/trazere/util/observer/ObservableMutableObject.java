@@ -15,9 +15,9 @@
  */
 package com.trazere.util.observer;
 
+import com.trazere.core.lang.LangUtils;
+import com.trazere.core.lang.MutableObject;
 import com.trazere.util.function.Predicate1;
-import com.trazere.util.lang.LangUtils;
-import com.trazere.util.lang.MutableObject;
 import com.trazere.util.type.Tuple2;
 
 /**

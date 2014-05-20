@@ -15,7 +15,7 @@
  */
 package com.trazere.util.xml;
 
-import com.trazere.util.lang.MutableInt;
+import com.trazere.core.lang.MutableInt;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 

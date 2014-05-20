@@ -15,7 +15,7 @@
  */
 package com.trazere.util.identifier;
 
-import com.trazere.util.lang.HashCode;
+import com.trazere.core.lang.HashCode;
 
 /**
  * The {@link LenientIdentifier} class represents identifiers which need not to be normalized according to their values.

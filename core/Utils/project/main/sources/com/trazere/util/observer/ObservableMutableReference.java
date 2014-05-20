@@ -15,8 +15,8 @@
  */
 package com.trazere.util.observer;
 
+import com.trazere.core.lang.LangUtils;
 import com.trazere.util.function.Predicate1;
-import com.trazere.util.lang.LangUtils;
 import com.trazere.util.reference.MutableReference;
 import com.trazere.util.reference.ReferenceAlreadySetException;
 import com.trazere.util.type.Maybe;
