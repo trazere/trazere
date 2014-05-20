@@ -21,7 +21,10 @@ import com.trazere.util.text.TextUtils;
 
 /**
  * The {@link MutableInt} class represents mutable integer values.
+ * 
+ * @deprecated Use {@link com.trazere.core.lang.MutableInt}.
  */
+@Deprecated
 public class MutableInt
 implements Describable {
 	/** The value. */

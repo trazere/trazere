@@ -21,7 +21,10 @@ import com.trazere.util.text.TextUtils;
 
 /**
  * The {@link MutableByte} class represents mutable byte values.
+ * 
+ * @Use {@link com.trazere.core.lang.MutableByte}.
  */
+@Deprecated
 public class MutableByte
 implements Describable {
 	/** The value. */

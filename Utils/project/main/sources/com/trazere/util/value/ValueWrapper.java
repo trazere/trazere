@@ -1,5 +1,6 @@
 package com.trazere.util.value;
 
+import com.trazere.core.util.Value;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.Description;
@@ -9,7 +10,9 @@ import com.trazere.util.text.TextUtils;
  * The {@link ValueWrapper} class implements wrappers of single values.
  * 
  * @param <T> Type of the wrapped value.
+ * @deprecated Use {@link Value}.
  */
+@Deprecated
 public class ValueWrapper<T>
 implements Describable {
 	/**

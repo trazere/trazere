@@ -39,12 +39,15 @@ public class Functions {
 	 * @param <T> Type of the argument and result values.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.functional.Functions#identity()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T, X extends Exception> Function1<T, T, X> identity() {
 		return (Function1<T, T, X>) _IDENTITY;
 	}
 	
+	@Deprecated
 	private static final Function1<?, ?, ?> _IDENTITY = new Function1<Object, Object, RuntimeException>() {
 		@Override
 		public Object evaluate(final Object value) {

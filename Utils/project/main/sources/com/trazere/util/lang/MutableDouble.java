@@ -21,7 +21,10 @@ import com.trazere.util.text.TextUtils;
 
 /**
  * The {@link MutableDouble} class represents mutable double values.
+ * 
+ * @deprecated Use {@link com.trazere.core.lang.MutableDouble}.
  */
+@Deprecated
 public class MutableDouble
 implements Describable {
 	/** The value. */

@@ -34,12 +34,15 @@ public class Iterators {
 	 * 
 	 * @param <V> Type of the the values.
 	 * @return The built iterator.
+	 * @deprecated Use {@link com.trazere.core.imperative.Iterators#empty()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <V> Iterator<V> empty() {
 		return (Iterator<V>) _EMPTY;
 	}
 	
+	@Deprecated
 	private static final Iterator<?> _EMPTY = new Iterator<Object>() {
 		@Override
 		public boolean hasNext() {
@@ -64,7 +67,9 @@ public class Iterators {
 	 * @param <V> Type of the the value.
 	 * @param value The value. May be <code>null</code>.
 	 * @return The built iterator.
+	 * @deprecated Use {@link com.trazere.core.imperative.Iterators#fromValue(Object)}.
 	 */
+	@Deprecated
 	public static <V> Iterator<V> fromValue(final V value) {
 		return new Iterator<V>() {
 			protected boolean _next = true;
@@ -98,7 +103,9 @@ public class Iterators {
 	 * @param <T> Type of the the values.
 	 * @param values The values.
 	 * @return The built iterator.
+	 * @deprecated Use {@link com.trazere.core.imperative.Iterators#fromValues(Object...)}.
 	 */
+	@Deprecated
 	public static <T> Iterator<T> fromValues(final T... values) {
 		assert null != values;
 		
@@ -182,21 +189,6 @@ public class Iterators {
 	}
 	
 	/**
-	 * Filters and transforms the given iterator using the given extractor.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param <R> Type of the transformed values.
-	 * @param extractor The extractor.
-	 * @param iterator The iterator.
-	 * @return The built iterator over the filtered and transformed values.
-	 * @deprecated Use {@link #extract(Function1, Iterator)}.
-	 */
-	@Deprecated
-	public static <T, R> Iterator<R> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, ? extends RuntimeException> extractor, final Iterator<? extends T> iterator) {
-		return extract(extractor, iterator);
-	}
-	
-	/**
 	 * Builds an iterator that extracts values from the given iterator using the given extractor.
 	 * 
 	 * @param <T> Type of the values.
@@ -228,7 +220,9 @@ public class Iterators {
 	 * @param <T> Type of the values.
 	 * @param list List to iterate.
 	 * @return The built iterator.
+	 * @deprecated Use {@link com.trazere.core.imperative.Iterators#reverse(List)}.
 	 */
+	@Deprecated
 	public static <T> Iterator<T> reverse(final List<? extends T> list) {
 		assert null != list;
 		

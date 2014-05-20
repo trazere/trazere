@@ -15,6 +15,8 @@
  */
 package com.trazere.util.lang;
 
+import com.trazere.core.lang.MutableInt;
+import com.trazere.core.lang.MutableLong;
 import com.trazere.util.accumulator.Accumulator1;
 import com.trazere.util.accumulator.BaseAccumulator1;
 import com.trazere.util.accumulator.FoldAccumulator1;
