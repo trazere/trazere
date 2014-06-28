@@ -17,7 +17,7 @@ package com.trazere.core.util;
 
 import com.trazere.core.functional.Function;
 import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.LangUtils;
+import com.trazere.core.lang.ObjectUtils;
 
 /**
  * The {@link Tuple5} class implements a 5-tuple (quintuple) data type which represents sequences of 5 elements.
@@ -168,7 +168,7 @@ extends Tuple4<E1, E2, E3, E4> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final Tuple5<?, ?, ?, ?, ?> tuple = (Tuple5<?, ?, ?, ?, ?>) object;
-			return LangUtils.safeEquals(_e1, tuple._e1) && LangUtils.safeEquals(_e2, tuple._e2) && LangUtils.safeEquals(_e3, tuple._e3) && LangUtils.safeEquals(_e4, tuple._e4) && LangUtils.safeEquals(_e5, tuple._e5);
+			return ObjectUtils.safeEquals(_e1, tuple._e1) && ObjectUtils.safeEquals(_e2, tuple._e2) && ObjectUtils.safeEquals(_e3, tuple._e3) && ObjectUtils.safeEquals(_e4, tuple._e4) && ObjectUtils.safeEquals(_e5, tuple._e5);
 		} else {
 			return false;
 		}

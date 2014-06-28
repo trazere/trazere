@@ -129,7 +129,7 @@ public class Iterators {
 	
 	//	/**
 	//	 * Filters the given iterator using the given predicate.
-	//	 * 
+	//	 *
 	//	 * @param <T> Type of the values.
 	//	 * @param predicate The predicate.
 	//	 * @param iterator The iterator.
@@ -138,23 +138,23 @@ public class Iterators {
 	//	public static <T> Iterator<T> filter(final Predicate1<? super T, ? extends RuntimeException> predicate, final Iterator<? extends T> iterator) {
 	//		assert null != predicate;
 	//		assert null != iterator;
-	//		
+	//
 	//		return new FilterIterator<T>() {
 	//			@Override
 	//			protected Maybe<T> pull() {
 	//				return CollectionUtils.next(iterator);
 	//			}
-	//			
+	//
 	//			@Override
 	//			public boolean filter(final T value) {
 	//				return predicate.evaluate(value);
 	//			}
 	//		};
 	//	}
-	//	
+	//
 	//	/**
 	//	 * Transforms the given iterator using the given function.
-	//	 * 
+	//	 *
 	//	 * @param <T> Type of the values.
 	//	 * @param <R> Type of the transformed values.
 	//	 * @param function The function.
@@ -164,23 +164,23 @@ public class Iterators {
 	//	public static <T, R> Iterator<R> map(final Function1<? super T, ? extends R, ? extends RuntimeException> function, final Iterator<? extends T> iterator) {
 	//		assert null != function;
 	//		assert null != iterator;
-	//		
+	//
 	//		return new MapIterator<T, R>() {
 	//			@Override
 	//			protected Maybe<T> pull() {
 	//				return CollectionUtils.next(iterator);
 	//			}
-	//			
+	//
 	//			@Override
 	//			protected R map(final T value) {
 	//				return function.evaluate(value);
 	//			}
 	//		};
 	//	}
-	//	
+	//
 	//	/**
 	//	 * Builds an iterator that extracts values from the given iterator using the given extractor.
-	//	 * 
+	//	 *
 	//	 * @param <T> Type of the values.
 	//	 * @param <R> Type of the transformed values.
 	//	 * @param extractor The extractor.
@@ -190,13 +190,13 @@ public class Iterators {
 	//	public static <T, R> Iterator<R> extract(final Function1<? super T, ? extends Maybe<? extends R>, ? extends RuntimeException> extractor, final Iterator<? extends T> iterator) {
 	//		assert null != extractor;
 	//		assert null != iterator;
-	//		
+	//
 	//		return new ExtractIterator<T, R>() {
 	//			@Override
 	//			protected Maybe<T> pull() {
 	//				return CollectionUtils.next(iterator);
 	//			}
-	//			
+	//
 	//			@Override
 	//			public Maybe<? extends R> extract(final T value) {
 	//				return extractor.evaluate(value);

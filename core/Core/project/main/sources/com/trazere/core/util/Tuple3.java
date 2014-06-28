@@ -17,7 +17,7 @@ package com.trazere.core.util;
 
 import com.trazere.core.functional.Function;
 import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.LangUtils;
+import com.trazere.core.lang.ObjectUtils;
 
 /**
  * The {@link Tuple3} class implements a 3-tuple (triple) data type which represents sequences of 3 elements.
@@ -134,7 +134,7 @@ extends Tuple2<E1, E2> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final Tuple3<?, ?, ?> tuple = (Tuple3<?, ?, ?>) object;
-			return LangUtils.safeEquals(_e1, tuple._e1) && LangUtils.safeEquals(_e2, tuple._e2) && LangUtils.safeEquals(_e3, tuple._e3);
+			return ObjectUtils.safeEquals(_e1, tuple._e1) && ObjectUtils.safeEquals(_e2, tuple._e2) && ObjectUtils.safeEquals(_e3, tuple._e3);
 		} else {
 			return false;
 		}

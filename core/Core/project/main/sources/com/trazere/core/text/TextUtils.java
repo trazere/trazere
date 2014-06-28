@@ -23,7 +23,7 @@ public class TextUtils {
 	//	 * Compares the given string ignoring case.
 	//	 * <p>
 	//	 * This method supports comparisons of <code>null</code> values. <code>null</code> values are considered as less than non <code>null</code> values.
-	//	 * 
+	//	 *
 	//	 * @param string1 The first string to compare. May be <code>null</code>.
 	//	 * @param string2 The second string to compare. May be <code>null</code>.
 	//	 * @return The result of the comparison as defined by the {@link String#compareToIgnoreCase(String)} method.
@@ -32,10 +32,10 @@ public class TextUtils {
 	//	public static int safeCompareIgnoreCase(final String string1, final String string2) {
 	//		return LangUtils.safeCompare(String.CASE_INSENSITIVE_ORDER, string1, string2);
 	//	}
-	//	
+	//
 	//	/**
 	//	 * Tests whether the given string contains some characters accepted by the given filter.
-	//	 * 
+	//	 *
 	//	 * @param <X> Type of the exceptions.
 	//	 * @param filter The filter.
 	//	 * @param s The string.
@@ -46,7 +46,7 @@ public class TextUtils {
 	//	throws X {
 	//		assert null != filter;
 	//		assert null != s;
-	//		
+	//
 	//		for (int index = 0; index < s.length(); index += 1) {
 	//			if (filter.evaluate(s.charAt(index))) {
 	//				return true;
@@ -54,10 +54,10 @@ public class TextUtils {
 	//		}
 	//		return false;
 	//	}
-	//	
+	//
 	//	/**
 	//	 * Tests whether the all characters of the string contains matches the given filter.
-	//	 * 
+	//	 *
 	//	 * @param <X> Type of the exceptions.
 	//	 * @param filter The filter.
 	//	 * @param s The string.
@@ -68,7 +68,7 @@ public class TextUtils {
 	//	throws X {
 	//		assert null != filter;
 	//		assert null != s;
-	//		
+	//
 	//		for (int index = 0; index < s.length(); index += 1) {
 	//			if (!filter.evaluate(s.charAt(index))) {
 	//				return false;
@@ -76,10 +76,10 @@ public class TextUtils {
 	//		}
 	//		return true;
 	//	}
-	//	
+	//
 	//	/**
 	//	 * Filters the given string using the given filter.
-	//	 * 
+	//	 *
 	//	 * @param <X> Type of the exceptions.
 	//	 * @param filter The filter.
 	//	 * @param s The string.
@@ -90,7 +90,7 @@ public class TextUtils {
 	//	throws X {
 	//		assert null != filter;
 	//		assert null != s;
-	//		
+	//
 	//		final StringBuilder result = new StringBuilder();
 	//		for (int index = 0; index < s.length(); index += 1) {
 	//			final char c = s.charAt(index);
@@ -100,10 +100,10 @@ public class TextUtils {
 	//		}
 	//		return result.toString();
 	//	}
-	//	
+	//
 	//	/**
 	//	 * Trims the heading and trailing characters of the given string accepted by the given filter.
-	//	 * 
+	//	 *
 	//	 * @param <X> Type of the exceptions.
 	//	 * @param filter The filter.
 	//	 * @param s The string to trim.
@@ -114,7 +114,7 @@ public class TextUtils {
 	//	throws X {
 	//		assert null != filter;
 	//		assert null != s;
-	//		
+	//
 	//		final int length = s.length();
 	//		int start = 0;
 	//		while (start < length && filter.evaluate(s.charAt(start))) {
@@ -126,10 +126,10 @@ public class TextUtils {
 	//		}
 	//		return start > 0 || stop < length ? s.substring(start, stop) : s;
 	//	}
-	//	
+	//
 	//	/**
 	//	 * Trims the heading characters of the given string accepted by the given filter.
-	//	 * 
+	//	 *
 	//	 * @param <X> Type of the exceptions.
 	//	 * @param filter The filter.
 	//	 * @param s The string to trim.
@@ -140,7 +140,7 @@ public class TextUtils {
 	//	throws X {
 	//		assert null != filter;
 	//		assert null != s;
-	//		
+	//
 	//		final int length = s.length();
 	//		int index = 0;
 	//		while (index < length && filter.evaluate(s.charAt(index))) {
@@ -148,10 +148,10 @@ public class TextUtils {
 	//		}
 	//		return index > 0 ? s.substring(index) : s;
 	//	}
-	//	
+	//
 	//	/**
 	//	 * Trims the trailing characters of the given string accepted by the given filter.
-	//	 * 
+	//	 *
 	//	 * @param <X> Type of the exceptions.
 	//	 * @param filter The filter.
 	//	 * @param s The string to trim.
@@ -162,7 +162,7 @@ public class TextUtils {
 	//	throws X {
 	//		assert null != filter;
 	//		assert null != s;
-	//		
+	//
 	//		final int length = s.length();
 	//		int index = length;
 	//		while (index > 0 && filter.evaluate(s.charAt(index - 1))) {
@@ -170,10 +170,10 @@ public class TextUtils {
 	//		}
 	//		return index < length ? s.substring(0, index) : s;
 	//	}
-	//	
+	//
 	//	/**
 	//	 * Splits the given string according to the given delimiter.
-	//	 * 
+	//	 *
 	//	 * @param <C> Type of the collection filled with the results.
 	//	 * @param string The string to split.
 	//	 * @param delimiter The delimiter string.
@@ -185,7 +185,7 @@ public class TextUtils {
 	//	public static <C extends Collection<? super String>> C split(final String string, final String delimiter, final boolean trim, final boolean ignoreEmpty, final C results) {
 	//		assert null != string;
 	//		assert null != delimiter;
-	//		
+	//
 	//		for (final String token : string.split(delimiter.replaceAll("[^\\w]", "\\\\$0"))) {
 	//			final String trimmedToken = trim ? token.trim() : token;
 	//			if (!ignoreEmpty || trimmedToken.length() > 0) {
@@ -194,12 +194,12 @@ public class TextUtils {
 	//		}
 	//		return results;
 	//	}
-	//	
+	//
 	//	/**
 	//	 * Counts the number of occurences of the given substring in the given string.
 	//	 * <p>
 	//	 * The occurences may overlap.
-	//	 * 
+	//	 *
 	//	 * @param string The string.
 	//	 * @param sub The substring.
 	//	 * @return The number of occurences.
@@ -207,7 +207,7 @@ public class TextUtils {
 	//	public static int occurences(final String string, final String sub) {
 	//		assert null != string;
 	//		assert null != sub;
-	//		
+	//
 	//		// Count.
 	//		final Counter count = new Counter();
 	//		final MutableInt index = new MutableInt(string.indexOf(sub));
@@ -217,10 +217,10 @@ public class TextUtils {
 	//		}
 	//		return count.get();
 	//	}
-	//	
+	//
 	//	/**
 	//	 * Joins the given string tokens using the given delimiter.
-	//	 * 
+	//	 *
 	//	 * @param tokens The tokens.
 	//	 * @param delimiter The delimiter.
 	//	 * @return The resulting string.
@@ -228,10 +228,10 @@ public class TextUtils {
 	//	public static String join(final Collection<String> tokens, final String delimiter) {
 	//		return join(tokens, delimiter, new StringBuilder()).toString();
 	//	}
-	//	
+	//
 	//	/**
 	//	 * Joins the given string tokens using the given delimiter.
-	//	 * 
+	//	 *
 	//	 * @param tokens The tokens.
 	//	 * @param delimiter The delimiter.
 	//	 * @param builder The string builder to fill.
@@ -239,13 +239,13 @@ public class TextUtils {
 	//	 */
 	//	public static StringBuilder join(final Collection<String> tokens, final String delimiter, final StringBuilder builder) {
 	//		assert null != tokens;
-	//		
+	//
 	//		return join(tokens.iterator(), delimiter, builder);
 	//	}
-	//	
+	//
 	//	/**
 	//	 * Joins the string tokens provided by the given iterator using the given delimiter.
-	//	 * 
+	//	 *
 	//	 * @param tokens The tokens.
 	//	 * @param delimiter The delimiter.
 	//	 * @return The resulting string.
@@ -253,10 +253,10 @@ public class TextUtils {
 	//	public static String join(final Iterator<String> tokens, final String delimiter) {
 	//		return join(tokens, delimiter, new StringBuilder()).toString();
 	//	}
-	//	
+	//
 	//	/**
 	//	 * Joins the string tokens provided by the given iterator using the given delimiter.
-	//	 * 
+	//	 *
 	//	 * @param tokens The tokens.
 	//	 * @param delimiter The delimiter.
 	//	 * @param builder The string builder to fill.
@@ -265,10 +265,10 @@ public class TextUtils {
 	//	public static StringBuilder join(final Iterator<String> tokens, final String delimiter, final StringBuilder builder) {
 	//		return join(tokens, Functions.<String, InternalException>identity(), delimiter, builder);
 	//	}
-	//	
+	//
 	//	/**
 	//	 * Joins the given string tokens using the given renderer and delimiter.
-	//	 * 
+	//	 *
 	//	 * @param <T> Type of the tokens.
 	//	 * @param <X> Type of the exceptions.
 	//	 * @param tokens The tokens.
@@ -281,10 +281,10 @@ public class TextUtils {
 	//	throws X {
 	//		return join(tokens, renderer, delimiter, new StringBuilder()).toString();
 	//	}
-	//	
+	//
 	//	/**
 	//	 * Joins the given string tokens using the given renderer and delimiter.
-	//	 * 
+	//	 *
 	//	 * @param <T> Type of the tokens.
 	//	 * @param <X> Type of the exceptions.
 	//	 * @param tokens The tokens.
@@ -297,13 +297,13 @@ public class TextUtils {
 	//	public static <T, X extends Exception> StringBuilder join(final Collection<T> tokens, final Function1<? super T, String, X> renderer, final String delimiter, final StringBuilder builder)
 	//	throws X {
 	//		assert null != tokens;
-	//		
+	//
 	//		return join(tokens.iterator(), renderer, delimiter, builder);
 	//	}
-	//	
+	//
 	//	/**
 	//	 * Joins the string tokens provided by the given iterator using the given renderer and delimiter.
-	//	 * 
+	//	 *
 	//	 * @param <T> Type of the tokens.
 	//	 * @param <X> Type of the exceptions.
 	//	 * @param tokens The tokens.
@@ -316,7 +316,7 @@ public class TextUtils {
 	//	public static <T, X extends Exception> StringBuilder join(final Iterator<T> tokens, final Function1<? super T, String, X> renderer, final String delimiter, final StringBuilder builder)
 	//	throws X {
 	//		assert null != renderer;
-	//		
+	//
 	//		return join(tokens, new Procedure2<StringBuilder, T, X>() {
 	//			@Override
 	//			public void execute(final StringBuilder builder_, final T token)
@@ -325,10 +325,10 @@ public class TextUtils {
 	//			}
 	//		}, delimiter, builder);
 	//	}
-	//	
+	//
 	//	/**
 	//	 * Joins the string tokens provided by the given iterator using the given renderer and delimiter.
-	//	 * 
+	//	 *
 	//	 * @param <T> Type of the tokens.
 	//	 * @param <X> Type of the exceptions.
 	//	 * @param tokens The tokens.
@@ -344,7 +344,7 @@ public class TextUtils {
 	//		assert null != renderer;
 	//		assert null != delimiter;
 	//		assert null != builder;
-	//		
+	//
 	//		final MutableBoolean first = new MutableBoolean(true);
 	//		while (tokens.hasNext()) {
 	//			final T token = tokens.next();
@@ -355,26 +355,26 @@ public class TextUtils {
 	//			}
 	//			renderer.execute(builder, token);
 	//		}
-	//		
+	//
 	//		return builder;
 	//	}
-	//	
+	//
 	//	/**
 	//	 * Capitalizes the given string.
-	//	 * 
+	//	 *
 	//	 * @param s The string to capitalize.
 	//	 * @return The capitalized string.
 	//	 */
 	//	public static String capitalize(final String s) {
 	//		assert null != s;
-	//		
+	//
 	//		if (s.length() > 0) {
 	//			return s.substring(0, 1).toUpperCase() + s.substring(1);
 	//		} else {
 	//			return s;
 	//		}
 	//	}
-	//	
+	//
 	//	/** Array of the hexadecimal digits characters (upper case). */
 	//	public static final char[] HEX_DIGITS = {
 	//	    '0',
@@ -394,18 +394,18 @@ public class TextUtils {
 	//	    'E',
 	//	    'F'
 	//	};
-	//	
+	//
 	//	/**
 	//	 * Computes the hexadecimal representation of the given array of bytes.
 	//	 * <p>
 	//	 * The leading zeros are not stripped.
-	//	 * 
+	//	 *
 	//	 * @param bytes Bytes representing the hexadecimal value.
 	//	 * @return The string representation.
 	//	 */
 	//	public static String toHexString(final byte[] bytes) {
 	//		assert null != bytes;
-	//		
+	//
 	//		final StringBuilder builder = new StringBuilder();
 	//		for (int i = 0; i < bytes.length; i += 1) {
 	//			final byte b = bytes[i];
@@ -414,19 +414,20 @@ public class TextUtils {
 	//		}
 	//		return builder.toString();
 	//	}
-	//	
+	//
 	//	/**
 	//	 * Builds a regular expression corresponding to the given string.
-	//	 * 
+	//	 *
 	//	 * @param s The string.
 	//	 * @return The regular expression.
 	//	 */
 	//	public static String regexp(final String s) {
 	//		assert null != s;
-	//		
+	//
 	//		return s.replaceAll("[^\\w]", "\\\\$0"); // Escape all special chars
 	//	}
 	
+	// TODO: move to ClassUtils ?
 	/**
 	 * Computes the name of the given class (without package information).
 	 * 
@@ -448,7 +449,7 @@ public class TextUtils {
 	 * @return The description.
 	 */
 	public static String computeDescription(final Describable object) {
-		final Description description = Description.build(object);
+		final Description description = new Description(TextUtils.computeClassName(object.getClass()));
 		object.appendDescription(description);
 		return description.toString();
 	}
@@ -457,7 +458,7 @@ public class TextUtils {
 	//	 * Formats the given number using the given format.
 	//	 * <p>
 	//	 * This method synchronizes the format.
-	//	 * 
+	//	 *
 	//	 * @param format The number format.
 	//	 * @param number The number to format.
 	//	 * @return The number representation.
@@ -465,31 +466,31 @@ public class TextUtils {
 	//	public static String formatNumber(final NumberFormat format, final Number number) {
 	//		assert null != format;
 	//		assert null != number;
-	//		
+	//
 	//		synchronized (format) {
 	//			return format.format(number);
 	//		}
 	//	}
-	//	
+	//
 	//	/**
 	//	 * Parses the given number representation using the given format and extractor.
 	//	 * <p>
 	//	 * This method synchronizes the format.
-	//	 * 
+	//	 *
 	//	 * @param <T> Type of the number to parse.
 	//	 * @param <CX> Type of the conversion exceptions.
-	//	 * 
+	//	 *
 	//	 * @param format The number format.
 	//	 * @param converter The extractor of the {@link Number} instance of the excepted type.
 	//	 * @param representation The representation to parse.
 	//	 * @return The parsed number.
-	//	 * @throws CX When the conversion to the result type fails. 
+	//	 * @throws CX When the conversion to the result type fails.
 	//	 */
 	//	public static <T extends Number, CX extends Exception> Maybe<T> parseNumber(final NumberFormat format, final Function1<? super Number, ? extends T, CX> converter, final String representation) throws CX {
 	//		assert null != format;
 	//		assert null != converter;
 	//		assert null != representation;
-	//		
+	//
 	//		synchronized (format) {
 	//			final ParsePosition position = new ParsePosition(0);
 	//			final Number number = format.parse(representation, position);
@@ -500,12 +501,12 @@ public class TextUtils {
 	//			}
 	//		}
 	//	}
-	//	
+	//
 	//	/**
 	//	 * Formats the given date using the given format.
 	//	 * <p>
 	//	 * This method synchronizes the format.
-	//	 * 
+	//	 *
 	//	 * @param format The date format.
 	//	 * @param date The date to format.
 	//	 * @return The date representation.
@@ -513,17 +514,17 @@ public class TextUtils {
 	//	public static String formatDate(final DateFormat format, final Date date) {
 	//		assert null != format;
 	//		assert null != date;
-	//		
+	//
 	//		synchronized (format) {
 	//			return format.format(date);
 	//		}
 	//	}
-	//	
+	//
 	//	/**
 	//	 * Parses the given date representation using the given format.
 	//	 * <p>
 	//	 * This method synchronizes the format.
-	//	 * 
+	//	 *
 	//	 * @param format The date format.
 	//	 * @param representation The representation to parse.
 	//	 * @return The parsed number.
@@ -531,7 +532,7 @@ public class TextUtils {
 	//	public static Maybe<Date> parseDate(final DateFormat format, final String representation) {
 	//		assert null != format;
 	//		assert null != representation;
-	//		
+	//
 	//		synchronized (format) {
 	//			final ParsePosition position = new ParsePosition(0);
 	//			final Date date = format.parse(representation, position);
@@ -542,28 +543,28 @@ public class TextUtils {
 	//			}
 	//		}
 	//	}
-	//	
+	//
 	//	/**
 	//	 * Formats the given UUID.
-	//	 * 
+	//	 *
 	//	 * @param uuid The UUID to format.
 	//	 * @return The UUID representation.
 	//	 */
 	//	public static String formatUuid(final UUID uuid) {
 	//		assert null != uuid;
-	//		
+	//
 	//		return uuid.toString();
 	//	}
-	//	
+	//
 	//	/**
 	//	 * Parses the given UUID representation.
-	//	 * 
+	//	 *
 	//	 * @param representation The representation to parse.
 	//	 * @return The parsed UUID.
 	//	 */
 	//	public static Maybe<UUID> parseUuid(final String representation) {
 	//		assert null != representation;
-	//		
+	//
 	//		try {
 	//			return Maybe.some(UUID.fromString(representation));
 	//		} catch (final IllegalArgumentException exception) {

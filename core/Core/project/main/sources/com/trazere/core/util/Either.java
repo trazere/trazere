@@ -17,7 +17,7 @@ package com.trazere.core.util;
 
 import com.trazere.core.functional.Function;
 import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.LangUtils;
+import com.trazere.core.lang.ObjectUtils;
 import com.trazere.core.text.Describable;
 import com.trazere.core.text.Description;
 import com.trazere.core.text.TextUtils;
@@ -47,26 +47,6 @@ implements Describable {
 	}
 	
 	/**
-	 * Builds a function that builds {@link Either} instances using the {@link Left} constructor.
-	 * 
-	 * @param <L> Type of the left values.
-	 * @param <R> Type of the right values.
-	 * @return The built function.
-	 * @see #left(Object)
-	 */
-	@SuppressWarnings("unchecked")
-	public static <L, R> Function<L, Either<L, R>> leftFunction() {
-		return (Function<L, Either<L, R>>) LEFT_FUNCTION;
-	}
-	
-	private static final Function<?, ?> LEFT_FUNCTION = new Function<Object, Either<?, ?>>() {
-		@Override
-		public Either<?, ?> evaluate(final Object value) {
-			return Either.left(value);
-		}
-	};
-	
-	/**
 	 * Builds a {@link Either} instance using the {@link Right} constructor.
 	 * 
 	 * @param <L> Type of the left value.
@@ -78,26 +58,6 @@ implements Describable {
 	public static <L, R> Either<L, R> right(final R right) {
 		return new Right<L, R>(right);
 	}
-	
-	/**
-	 * Builds a function that builds {@link Either} instances using the {@link Right} constructor.
-	 * 
-	 * @param <L> Type of the left values.
-	 * @param <R> Type of the right values.
-	 * @return The built function.
-	 * @see #right(Object)
-	 */
-	@SuppressWarnings("unchecked")
-	public static <L, R> Function<R, Either<L, R>> rightFunction() {
-		return (Function<R, Either<L, R>>) RIGHT_FUNCTION;
-	}
-	
-	private static final Function<?, ?> RIGHT_FUNCTION = new Function<Object, Either<?, ?>>() {
-		@Override
-		public Either<?, ?> evaluate(final Object value) {
-			return Either.right(value);
-		}
-	};
 	
 	// Left.
 	
@@ -177,7 +137,7 @@ implements Describable {
 				return true;
 			} else if (null != object && getClass().equals(object.getClass())) {
 				final Left<?, ?> either = (Left<?, ?>) object;
-				return LangUtils.safeEquals(_left, either._left);
+				return ObjectUtils.safeEquals(_left, either._left);
 			} else {
 				return false;
 			}
@@ -208,24 +168,6 @@ implements Describable {
 	throws InvalidConstructorException {
 		throw InvalidConstructorException.build(this, Left.class);
 	}
-	
-	/**
-	 * Builds an extractor of left values.
-	 * 
-	 * @param <L> Type of the left value.
-	 * @return The built extractor.
-	 */
-	@SuppressWarnings("unchecked")
-	public static <L> Function<Either<? extends L, ?>, Maybe<L>> getLeftExtractor() {
-		return (Function<Either<? extends L, ?>, Maybe<L>>) GET_LEFT_EXTRACTOR;
-	}
-	
-	private static final Function<? extends Either<?, ?>, ? extends Maybe<?>> GET_LEFT_EXTRACTOR = new Function<Either<Object, Object>, Maybe<Object>>() {
-		@Override
-		public Maybe<Object> evaluate(final Either<Object, Object> instance) {
-			return instance.isLeft() ? Maybe.some(instance.asLeft().getLeft()) : Maybe.<Object>none();
-		}
-	};
 	
 	// Right.
 	
@@ -305,7 +247,7 @@ implements Describable {
 				return true;
 			} else if (null != object && getClass().equals(object.getClass())) {
 				final Right<?, ?> either = (Right<?, ?>) object;
-				return LangUtils.safeEquals(_right, either._right);
+				return ObjectUtils.safeEquals(_right, either._right);
 			} else {
 				return false;
 			}
@@ -336,24 +278,6 @@ implements Describable {
 	throws InvalidConstructorException {
 		throw InvalidConstructorException.build(this, Right.class);
 	}
-	
-	/**
-	 * Builds an extractor of right values.
-	 * 
-	 * @param <R> Type of the right value.
-	 * @return The built extractor.
-	 */
-	@SuppressWarnings("unchecked")
-	public static <R> Function<Either<?, ? extends R>, Maybe<R>> getRightExtractor() {
-		return (Function<Either<?, ? extends R>, Maybe<R>>) GET_RIGHT_EXTRACTOR;
-	}
-	
-	private static final Function<? extends Either<?, ?>, ? extends Maybe<?>> GET_RIGHT_EXTRACTOR = new Function<Either<Object, Object>, Maybe<Object>>() {
-		@Override
-		public Maybe<Object> evaluate(final Either<Object, Object> instance) {
-			return instance.isRight() ? Maybe.some(instance.asRight().getRight()) : Maybe.<Object>none();
-		}
-	};
 	
 	// Matching.
 	
@@ -406,27 +330,6 @@ implements Describable {
 	public abstract <RL> Either<RL, R> mapLeft(final Function<? super L, ? extends RL> function);
 	
 	/**
-	 * Builds a function that maps the left value wrapped in {@link Either} instances using the given function.
-	 * 
-	 * @param <L> Type of the left value.
-	 * @param <R> Type of the right value.
-	 * @param <RL> Type of the mapped left value.
-	 * @param function Mapping function to use.
-	 * @return The built function.
-	 * @see #mapLeft(Function)
-	 */
-	public static <L, R, RL> Function<Either<? extends L, R>, Either<RL, R>> mapLeftFunction(final Function<? super L, ? extends RL> function) {
-		assert null != function;
-		
-		return new Function<Either<? extends L, R>, Either<RL, R>>() {
-			@Override
-			public Either<RL, R> evaluate(final Either<? extends L, R> either) {
-				return either.mapLeft(function);
-			}
-		};
-	}
-	
-	/**
 	 * Maps the right value wrapped by the receiver {@link Either} instance using the given function.
 	 * 
 	 * @param <RR> Type of the mapped right value.
@@ -434,27 +337,6 @@ implements Describable {
 	 * @return The {@link Either} instance wrapping the mapped right value.
 	 */
 	public abstract <RR> Either<L, RR> mapRight(final Function<? super R, ? extends RR> function);
-	
-	/**
-	 * Builds a function that maps the right value wrapped in {@link Either} instances using the given function.
-	 * 
-	 * @param <L> Type of the left value.
-	 * @param <R> Type of the right value.
-	 * @param <RR> Type of the mapped right value.
-	 * @param function Mapping function to use.
-	 * @return The built function.
-	 * @see #mapRight(Function)
-	 */
-	public static <L, R, RR> Function<Either<L, ? extends R>, Either<L, RR>> mapRightFunction(final Function<? super R, ? extends RR> function) {
-		assert null != function;
-		
-		return new Function<Either<L, ? extends R>, Either<L, RR>>() {
-			@Override
-			public Either<L, RR> evaluate(final Either<L, ? extends R> either) {
-				return either.mapRight(function);
-			}
-		};
-	}
 	
 	// Object.
 	

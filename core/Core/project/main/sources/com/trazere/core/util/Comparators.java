@@ -51,7 +51,7 @@ public class Comparators {
 	 * @param <T> Type of the values.
 	 * @param comparator The unsafe comparator.
 	 * @return The built comparator.
-	 * @see LangUtils#safeCompare(Comparator, Object, Object)
+	 * @see ComparatorUtils#safeCompare(Comparator, Object, Object)
 	 */
 	public static <T> Comparator<T> safe(final Comparator<? super T> comparator) {
 		assert null != comparator;
@@ -59,7 +59,7 @@ public class Comparators {
 		return new Comparator<T>() {
 			@Override
 			public int compare(final T object1, final T object2) {
-				return LangUtils.safeCompare(comparator, object1, object2);
+				return ComparatorUtils.safeCompare(comparator, object1, object2);
 			}
 		};
 	}
@@ -83,27 +83,7 @@ public class Comparators {
 		}
 	};
 	
-	//	/**
-	//	 * Builds a comparator of {@link Maybe} instances according to the given order for values.
-	//	 * <p>
-	//	 * {@link None} instances are less than {@link Some} instances.
-	//	 * 
-	//	 * @param <T> Type of the values.
-	//	 * @param comparator The comparator of the wrapped values.
-	//	 * @return The built comparator.
-	//	 * @see TypeUtils#compare(Comparator, Maybe, Maybe)
-	//	 */
-	//	public static <T> Comparator<Maybe<T>> maybe(final Comparator<? super T> comparator) {
-	//		assert null != comparator;
-	//		
-	//		return new Comparator<Maybe<T>>() {
-	//			@Override
-	//			public int compare(final Maybe<T> value1, final Maybe<T> value2) {
-	//				return TypeUtils.compare(comparator, value1, value2);
-	//			}
-	//		};
-	//	}
-	
+	// TODO: move to ComparatorUtils ?
 	/**
 	 * Builds a comparator according to the inverse order of the given comparator.
 	 * 
@@ -116,6 +96,7 @@ public class Comparators {
 		return new InverseComparator<T>(comparator);
 	}
 	
+	// TODO: move to ComparatorUtils ?
 	/**
 	 * Builds a comparator according to the direct or inverse order of the given comparator.
 	 * 

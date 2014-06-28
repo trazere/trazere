@@ -17,7 +17,7 @@ package com.trazere.core.util;
 
 import com.trazere.core.functional.Function;
 import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.LangUtils;
+import com.trazere.core.lang.ObjectUtils;
 
 /**
  * The {@link Tuple10} class implements a 10-tuple (decuple) data type which represents sequences of 10 elements.
@@ -253,7 +253,7 @@ extends Tuple9<E1, E2, E3, E4, E5, E6, E7, E8, E9> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final Tuple10<?, ?, ?, ?, ?, ?, ?, ?, ?, ?> tuple = (Tuple10<?, ?, ?, ?, ?, ?, ?, ?, ?, ?>) object;
-			return LangUtils.safeEquals(_e1, tuple._e1) && LangUtils.safeEquals(_e2, tuple._e2) && LangUtils.safeEquals(_e3, tuple._e3) && LangUtils.safeEquals(_e4, tuple._e4) && LangUtils.safeEquals(_e5, tuple._e5) && LangUtils.safeEquals(_e6, tuple._e6) && LangUtils.safeEquals(_e7, tuple._e7) && LangUtils.safeEquals(_e8, tuple._e8) && LangUtils.safeEquals(_e9, tuple._e9) && LangUtils.safeEquals(_e10, tuple._e10);
+			return ObjectUtils.safeEquals(_e1, tuple._e1) && ObjectUtils.safeEquals(_e2, tuple._e2) && ObjectUtils.safeEquals(_e3, tuple._e3) && ObjectUtils.safeEquals(_e4, tuple._e4) && ObjectUtils.safeEquals(_e5, tuple._e5) && ObjectUtils.safeEquals(_e6, tuple._e6) && ObjectUtils.safeEquals(_e7, tuple._e7) && ObjectUtils.safeEquals(_e8, tuple._e8) && ObjectUtils.safeEquals(_e9, tuple._e9) && ObjectUtils.safeEquals(_e10, tuple._e10);
 		} else {
 			return false;
 		}
