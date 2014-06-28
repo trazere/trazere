@@ -17,7 +17,7 @@ package com.trazere.core.util;
 
 import com.trazere.core.functional.Function;
 import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.LangUtils;
+import com.trazere.core.lang.ObjectUtils;
 
 /**
  * The {@link Tuple1} class implements a 1-tuple data type (single) which represents sequences of 1 element.
@@ -96,7 +96,7 @@ public class Tuple1<E1> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final Tuple1<?> tuple = (Tuple1<?>) object;
-			return LangUtils.safeEquals(_e1, tuple._e1);
+			return ObjectUtils.safeEquals(_e1, tuple._e1);
 		} else {
 			return false;
 		}

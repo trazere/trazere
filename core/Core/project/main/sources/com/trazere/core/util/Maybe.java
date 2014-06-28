@@ -21,7 +21,7 @@ import com.trazere.core.functional.Predicate;
 import com.trazere.core.functional.Thunk;
 import com.trazere.core.imperative.Iterators;
 import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.LangUtils;
+import com.trazere.core.lang.ObjectUtils;
 import com.trazere.core.text.Describable;
 import com.trazere.core.text.Description;
 import com.trazere.core.text.TextUtils;
@@ -66,25 +66,6 @@ implements Iterable<T>, Describable {
 	}
 	
 	/**
-	 * Builds a function that builds {@link Maybe} instances using the {@link Maybe.Some} constructor.
-	 * 
-	 * @param <T> Type of the values.
-	 * @return The built function.
-	 * @see #some(Object)
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T> Function<T, Maybe<T>> someFunction() {
-		return (Function<T, Maybe<T>>) SOME_FUNCTION;
-	}
-	
-	private static final Function<?, ?> SOME_FUNCTION = new Function<Object, Maybe<Object>>() {
-		@Override
-		public Maybe<Object> evaluate(final Object value) {
-			return some(value);
-		}
-	};
-	
-	/**
 	 * Builds an instance of {@link Maybe} from the given value according to the following rules:
 	 * <ul>
 	 * <li><code>null</code> are translated to an absent value ({@link None}),
@@ -105,25 +86,6 @@ implements Iterable<T>, Describable {
 	}
 	
 	/**
-	 * Builds a function that builds instances of {@link Maybe} from values.
-	 * 
-	 * @param <T> Type of the values.
-	 * @return The built function.
-	 * @see #fromValue(Object)
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T> Function<T, Maybe<T>> fromValueFunction() {
-		return (Function<T, Maybe<T>>) FROM_VALUE_FUNCTION;
-	}
-	
-	private static final Function<?, ?> FROM_VALUE_FUNCTION = new Function<Object, Maybe<Object>>() {
-		@Override
-		public Maybe<Object> evaluate(final Object value) {
-			return fromValue(value);
-		}
-	};
-	
-	/**
 	 * Convert the given {@link Maybe} instance to a value according to the following rules:
 	 * <ul>
 	 * <li>absents values ({@link None}) are translated to <code>null</code>,
@@ -138,25 +100,6 @@ implements Iterable<T>, Describable {
 	public static <T> T toValue(final Maybe<T> maybe) {
 		return maybe.get((T) null);
 	}
-	
-	/**
-	 * Builds a function that convert {@link Maybe} instances to values.
-	 * 
-	 * @param <T> Type of the values.
-	 * @return The built function.
-	 * @see #toValue(Maybe)
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T> Function<Maybe<T>, T> toValueFunction() {
-		return (Function<Maybe<T>, T>) TO_VALUE_FUNCTION;
-	}
-	
-	private static final Function<?, ?> TO_VALUE_FUNCTION = new Function<Maybe<Object>, Object>() {
-		@Override
-		public Object evaluate(final Maybe<Object> instance) {
-			return toValue(instance);
-		}
-	};
 	
 	// None.
 	
@@ -367,7 +310,7 @@ implements Iterable<T>, Describable {
 				return true;
 			} else if (null != object && getClass().equals(object.getClass())) {
 				final Some<?> maybe = (Some<?>) object;
-				return LangUtils.safeEquals(_value, maybe._value);
+				return ObjectUtils.safeEquals(_value, maybe._value);
 			} else {
 				return false;
 			}
@@ -507,51 +450,12 @@ implements Iterable<T>, Describable {
 	public abstract <R> Maybe<R> map(final Function<? super T, ? extends R> function);
 	
 	/**
-	 * Builds a function that maps the value wrapped in {@link Maybe} instances using the given function.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param <R> Type of the mapped values.
-	 * @param function Mapping function to use.
-	 * @return The built function.
-	 * @see #map(Function)
-	 */
-	public static <T, R> Function<Maybe<? extends T>, Maybe<R>> mapFunction(final Function<? super T, ? extends R> function) {
-		assert null != function;
-		
-		return new Function<Maybe<? extends T>, Maybe<R>>() {
-			@Override
-			public Maybe<R> evaluate(final Maybe<? extends T> maybe) {
-				return maybe.map(function);
-			}
-		};
-	}
-	
-	/**
 	 * Filters the value wrapped by the receiver {@link Maybe} instance using the given filter.
 	 * 
 	 * @param filter Filter to use.
 	 * @return The {@link Maybe} instance wrapping the filtered value.
 	 */
 	public abstract Maybe<T> filter(final Predicate<? super T> filter);
-	
-	/**
-	 * Builds a function that filters the value wrapped in {@link Maybe} instances using the given filter.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param filter Filter to use.
-	 * @return The built function.
-	 * @see #filter(Predicate)
-	 */
-	public static <T> Function<Maybe<? extends T>, Maybe<T>> filterFunction(final Predicate<? super T> filter) {
-		assert null != filter;
-		
-		return new Function<Maybe<? extends T>, Maybe<T>>() {
-			@Override
-			public Maybe<T> evaluate(final Maybe<? extends T> maybe) {
-				return maybe.filter(filter).map(Functions.<T>identity());
-			}
-		};
-	}
 	
 	/**
 	 * Extracts the value wrapped by the receiver {@link Maybe} instance using the given extractor.
@@ -561,25 +465,6 @@ implements Iterable<T>, Describable {
 	 * @return The {@link Maybe} instance wrapping the extracted value.
 	 */
 	public abstract <R> Maybe<R> extract(final Function<? super T, ? extends Maybe<? extends R>> extractor);
-	
-	/**
-	 * Builds a function that extracts the value wrapped in {@link Maybe} instances using the given extractor.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param <R> Type of the extracted values.
-	 * @param extractor Extractor to use.
-	 * @return The built function.
-	 */
-	public static <T, R> Function<Maybe<? extends T>, Maybe<R>> extractFunction(final Function<? super T, ? extends Maybe<? extends R>> extractor) {
-		assert null != extractor;
-		
-		return new Function<Maybe<? extends T>, Maybe<R>>() {
-			@Override
-			public Maybe<R> evaluate(final Maybe<? extends T> maybe) {
-				return maybe.extract(extractor);
-			}
-		};
-	}
 	
 	// Object.
 	

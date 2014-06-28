@@ -28,18 +28,6 @@ import com.trazere.core.util.Maybe;
  * This class works as an accumulator of named properties that populates some string builder.
  */
 public class Description {
-	/**
-	 * Builds a new description for the given object.
-	 * <p>
-	 * This factory method uses the class of the object as header.
-	 * 
-	 * @param object Object to describe.
-	 * @return The built descriptor.
-	 */
-	public static Description build(final Object object) {
-		return new Description(TextUtils.computeClassName(object.getClass()));
-	}
-	
 	/** String to populate with the description. */
 	protected final StringBuilder _builder;
 	

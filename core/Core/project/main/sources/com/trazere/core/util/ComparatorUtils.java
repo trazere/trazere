@@ -30,6 +30,7 @@ public class ComparatorUtils {
 		// Nothing to do.
 	}
 	
+	// TODO: move to Comparators ?
 	/**
 	 * Maps the given comparator using the given function.
 	 * 
@@ -49,6 +50,74 @@ public class ComparatorUtils {
 				return function.evaluate(object);
 			}
 		};
+	}
+	
+	/**
+	 * Compares the given optional values using the given comparator.
+	 * <p>
+	 * Absent values are considered less than available values. Available values are ordered according to the given comparator.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param comparator Comparator of the values.
+	 * @param value1 First value to compare.
+	 * @param value2 Second value to compare.
+	 * @return The result of the comparison as defined by the {@link Comparator#compare(Object, Object)} method.
+	 * @see Comparator#compare(Object, Object)
+	 */
+	public static <T> int compare(final Comparator<T> comparator, final Maybe<? extends T> value1, final Maybe<? extends T> value2) {
+		if (value1.isNone()) {
+			return value2.isNone() ? 0 : -1;
+		} else {
+			return value2.isNone() ? 1 : comparator.compare(value1.asSome().getValue(), value2.asSome().getValue());
+		}
+	}
+	
+	/**
+	 * Compares the given values using the given comparator.
+	 * <p>
+	 * This method supports comparison of <code>null</code> values. <code>null</code> values are considered as less than non <code>null</code> values.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param comparator The comparator.
+	 * @param object1 The first value. May be <code>null</code>.
+	 * @param object2 The second value. May be <code>null</code>.
+	 * @return The result of the comparison as defined by the {@link Comparator#compare(Object, Object)} method.
+	 * @see Comparable#compareTo(Object)
+	 */
+	public static <T> int safeCompare(final Comparator<T> comparator, final T object1, final T object2) {
+		assert null != comparator;
+		
+		if (null == object1) {
+			return null == object2 ? 0 : -1;
+		} else {
+			return null == object2 ? 1 : comparator.compare(object1, object2);
+		}
+	}
+	
+	/**
+	 * Gets the least of the given values according to the given comparator.
+	 *
+	 * @param <T> Type of the values.
+	 * @param comparator Comparator to use.
+	 * @param value1 First value.
+	 * @param value2 Second value.
+	 * @return The least value.
+	 */
+	public static <T> T least(final Comparator<? super T> comparator, final T value1, final T value2) {
+		return comparator.compare(value1, value2) <= 0 ? value1 : value2;
+	}
+	
+	/**
+	 * Gets the greatest of the given values according to the given comparator.
+	 *
+	 * @param <T> Type of the values.
+	 * @param comparator Comparator to use.
+	 * @param value1 First value.
+	 * @param value2 Second value.
+	 * @return The greatest value.
+	 */
+	public static <T> T greatest(final Comparator<? super T> comparator, final T value1, final T value2) {
+		return comparator.compare(value1, value2) >= 0 ? value1 : value2;
 	}
 	
 	private ComparatorUtils() {
