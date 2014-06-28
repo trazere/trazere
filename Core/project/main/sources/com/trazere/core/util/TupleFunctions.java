@@ -32,11 +32,11 @@ public class TupleFunctions {
 	 * @return The built function.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <E1> Function<E1, Tuple1<E1>> build1() {
-		return (Function<E1, Tuple1<E1>>) BUILD1;
+	public static <E1> Function<E1, Tuple1<E1>> tuple1() {
+		return (Function<E1, Tuple1<E1>>) TUPLE1;
 	}
 	
-	private static final Function<?, ? extends Tuple1<?>> BUILD1 = new Function<Object, Tuple1<Object>>() {
+	private static final Function<?, ? extends Tuple1<?>> TUPLE1 = new Function<Object, Tuple1<Object>>() {
 		@Override
 		public Tuple1<Object> evaluate(final Object e1) {
 			return Tuple1.build(e1);
@@ -51,11 +51,11 @@ public class TupleFunctions {
 	 * @return The built function.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <E1, E2> Function2<E1, E2, Tuple2<E1, E2>> build2() {
-		return (Function2<E1, E2, Tuple2<E1, E2>>) BUILD2;
+	public static <E1, E2> Function2<E1, E2, Tuple2<E1, E2>> tuple2() {
+		return (Function2<E1, E2, Tuple2<E1, E2>>) TUPLE2;
 	}
 	
-	private static final Function2<?, ?, ? extends Tuple2<?, ?>> BUILD2 = new Function2<Object, Object, Tuple2<Object, Object>>() {
+	private static final Function2<?, ?, ? extends Tuple2<?, ?>> TUPLE2 = new Function2<Object, Object, Tuple2<Object, Object>>() {
 		@Override
 		public Tuple2<Object, Object> evaluate(final Object e1, final Object e2) {
 			return Tuple2.build(e1, e2);
@@ -71,11 +71,11 @@ public class TupleFunctions {
 	 * @return The built function.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <E1, E2, E3> Function3<E1, E2, E3, Tuple3<E1, E2, E3>> build3() {
-		return (Function3<E1, E2, E3, Tuple3<E1, E2, E3>>) BUILD3;
+	public static <E1, E2, E3> Function3<E1, E2, E3, Tuple3<E1, E2, E3>> tuple3() {
+		return (Function3<E1, E2, E3, Tuple3<E1, E2, E3>>) TUPLE3;
 	}
 	
-	private static final Function3<?, ?, ?, ? extends Tuple3<?, ?, ?>> BUILD3 = new Function3<Object, Object, Object, Tuple3<Object, Object, Object>>() {
+	private static final Function3<?, ?, ?, ? extends Tuple3<?, ?, ?>> TUPLE3 = new Function3<Object, Object, Object, Tuple3<Object, Object, Object>>() {
 		@Override
 		public Tuple3<Object, Object, Object> evaluate(final Object e1, final Object e2, final Object e3) {
 			return Tuple3.build(e1, e2, e3);
@@ -92,11 +92,11 @@ public class TupleFunctions {
 	 * @return The built function.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <E1, E2, E3, E4> Function4<E1, E2, E3, E4, Tuple4<E1, E2, E3, E4>> build4() {
-		return (Function4<E1, E2, E3, E4, Tuple4<E1, E2, E3, E4>>) BUILD4;
+	public static <E1, E2, E3, E4> Function4<E1, E2, E3, E4, Tuple4<E1, E2, E3, E4>> tuple4() {
+		return (Function4<E1, E2, E3, E4, Tuple4<E1, E2, E3, E4>>) TUPLE4;
 	}
 	
-	private static final Function4<?, ?, ?, ?, ? extends Tuple4<?, ?, ?, ?>> BUILD4 = new Function4<Object, Object, Object, Object, Tuple4<Object, Object, Object, Object>>() {
+	private static final Function4<?, ?, ?, ?, ? extends Tuple4<?, ?, ?, ?>> TUPLE4 = new Function4<Object, Object, Object, Object, Tuple4<Object, Object, Object, Object>>() {
 		@Override
 		public Tuple4<Object, Object, Object, Object> evaluate(final Object e1, final Object e2, final Object e3, final Object e4) {
 			return Tuple4.build(e1, e2, e3, e4);
@@ -114,11 +114,11 @@ public class TupleFunctions {
 	 * @return The built function.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <E1, E2, E3, E4, E5> Function5<E1, E2, E3, E4, E5, Tuple5<E1, E2, E3, E4, E5>> build5() {
-		return (Function5<E1, E2, E3, E4, E5, Tuple5<E1, E2, E3, E4, E5>>) BUILD5;
+	public static <E1, E2, E3, E4, E5> Function5<E1, E2, E3, E4, E5, Tuple5<E1, E2, E3, E4, E5>> tuple5() {
+		return (Function5<E1, E2, E3, E4, E5, Tuple5<E1, E2, E3, E4, E5>>) TUPLE5;
 	}
 	
-	private static final Function5<?, ?, ?, ?, ?, ? extends Tuple5<?, ?, ?, ?, ?>> BUILD5 = new Function5<Object, Object, Object, Object, Object, Tuple5<Object, Object, Object, Object, Object>>() {
+	private static final Function5<?, ?, ?, ?, ?, ? extends Tuple5<?, ?, ?, ?, ?>> TUPLE5 = new Function5<Object, Object, Object, Object, Object, Tuple5<Object, Object, Object, Object, Object>>() {
 		@Override
 		public Tuple5<Object, Object, Object, Object, Object> evaluate(final Object e1, final Object e2, final Object e3, final Object e4, final Object e5) {
 			return Tuple5.build(e1, e2, e3, e4, e5);

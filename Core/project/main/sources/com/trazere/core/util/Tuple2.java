@@ -17,7 +17,7 @@ package com.trazere.core.util;
 
 import com.trazere.core.functional.Function;
 import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.LangUtils;
+import com.trazere.core.lang.ObjectUtils;
 
 /**
  * The {@link Tuple2} class implements a 2-tuple (douple or pair) data type which represents sequences of 2 elements.
@@ -117,7 +117,7 @@ extends Tuple1<E1> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final Tuple2<?, ?> tuple = (Tuple2<?, ?>) object;
-			return LangUtils.safeEquals(_e1, tuple._e1) && LangUtils.safeEquals(_e2, tuple._e2);
+			return ObjectUtils.safeEquals(_e1, tuple._e1) && ObjectUtils.safeEquals(_e2, tuple._e2);
 		} else {
 			return false;
 		}
