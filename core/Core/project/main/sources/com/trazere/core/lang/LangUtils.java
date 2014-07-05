@@ -19,38 +19,27 @@ package com.trazere.core.lang;
  * The {@link LangUtils} class provides various helpers regarding objects and the Java language.
  */
 public class LangUtils {
-	// TODO: move to ComparableUtils
 	/**
-	 * Compares the given comparable values.
-	 * <p>
-	 * This method supports comparison of <code>null</code> values. <code>null</code> values are considered as less than non <code>null</code> values.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param object1 The first value. May be <code>null</code>.
-	 * @param object2 The second value. May be <code>null</code>.
-	 * @return The result of the comparison as defined by the {@link Comparable#compareTo(Object)} method.
-	 * @see Comparable#compareTo(Object)
+	 * Safely unbox the given boolean wrapper.
+	 *
+	 * @param value Wrapper to unbox. May be <code>null</code>.
+	 * @return The unboxed value or <code>false</code> when the wrapper is <code>null</code>.
 	 */
-	public static <T extends Comparable<T>> int safeCompare(final T object1, final T object2) {
-		if (null == object1) {
-			return null == object2 ? 0 : -1;
-		} else {
-			return null == object2 ? 1 : object1.compareTo(object2);
-		}
+	public static boolean safeUnbox(final Boolean value) {
+		return safeUnbox(value, false);
 	}
 	
-	//	// TODO: rename to safeBooleanValue or safeUnbox
-	//	/**
-	//	 * Gets the value of the given boolean wrapper.
-	//	 *
-	//	 * @param value The wrapper. May be <code>null</code>.
-	//	 * @param defaultValue The default value.
-	//	 * @return The value of the wrapper or the default value when it is <code>null</code>.
-	//	 */
-	//	public static boolean get(final Boolean value, final boolean defaultValue) {
-	//		return null != value ? value.booleanValue() : defaultValue;
-	//	}
-	//
+	/**
+	 * Safely unbox the given boolean wrapper.
+	 *
+	 * @param value Wrapper to unbox. May be <code>null</code>.
+	 * @param nullValue Default value for <code>null</code> wrappers.
+	 * @return The unboxed value or the default value when the wrapper is <code>null</code>.
+	 */
+	public static boolean safeUnbox(final Boolean value, final boolean nullValue) {
+		return null != value ? value.booleanValue() : nullValue;
+	}
+	
 	//	// TODO: rename to safeByteValue or safeUnbox
 	//	/**
 	//	 * Gets the value of the given byte wrapper.
@@ -148,94 +137,6 @@ public class LangUtils {
 	//		return null != value ? value : defaultValue;
 	//	}
 	
-	//	// TODO: move to IterableUtils or CollectionUtils
-	//	/**
-	//	 * Gets the least given value according to the given comparator.
-	//	 *
-	//	 * @param <T> Type of the values.
-	//	 * @param comparator The comparator.
-	//	 * @param values The values.
-	//	 * @return The least value.
-	//	 */
-	//	public static <T> Maybe<T> least(final Comparator<? super T> comparator, final Collection<? extends T> values) {
-	//		assert null != values;
-	//
-	//		return least(comparator, values.iterator());
-	//	}
-	//
-	//	// TODO: move to IteratorUtils
-	//	/**
-	//	 * Gets the least given value according to the given comparator.
-	//	 *
-	//	 * @param <T> Type of the values.
-	//	 * @param comparator The comparator.
-	//	 * @param values The values.
-	//	 * @return The least value.
-	//	 */
-	//	public static <T> Maybe<T> least(final Comparator<? super T> comparator, final Iterator<? extends T> values) {
-	//		assert null != comparator;
-	//		assert null != values;
-	//
-	//		// Get the first value.
-	//		if (!values.hasNext()) {
-	//			return Maybe.none();
-	//		}
-	//
-	//		// Get the least value.
-	//		final MutableObject<T> least = new MutableObject<T>(values.next());
-	//		while (values.hasNext()) {
-	//			final T value = values.next();
-	//			if (comparator.compare(value, least.get()) < 1) {
-	//				least.set(value);
-	//			}
-	//		}
-	//		return Maybe.some(least.get());
-	//	}
-	//
-	//	// TODO: move to IterableUtils or CollectionUtils
-	//	/**
-	//	 * Gets the greatest given value according to the given comparator.
-	//	 *
-	//	 * @param <T> Type of the values.
-	//	 * @param comparator The comparator.
-	//	 * @param values The values.
-	//	 * @return The greatest value.
-	//	 */
-	//	public static <T> Maybe<T> greatest(final Comparator<? super T> comparator, final Collection<? extends T> values) {
-	//		assert null != values;
-	//
-	//		return greatest(comparator, values.iterator());
-	//	}
-	//
-	//	// TODO: move to IteratorUtils
-	//	/**
-	//	 * Gets the greatest given value according to the given comparator.
-	//	 *
-	//	 * @param <T> Type of the values.
-	//	 * @param comparator The comparator.
-	//	 * @param values The values.
-	//	 * @return The greatest value.
-	//	 */
-	//	public static <T> Maybe<T> greatest(final Comparator<? super T> comparator, final Iterator<? extends T> values) {
-	//		assert null != comparator;
-	//		assert null != values;
-	//
-	//		// Get the first value.
-	//		if (!values.hasNext()) {
-	//			return Maybe.none();
-	//		}
-	//
-	//		// Get the greatest value.
-	//		final MutableObject<T> greatest = new MutableObject<T>(values.next());
-	//		while (values.hasNext()) {
-	//			final T value = values.next();
-	//			if (comparator.compare(value, greatest.get()) > 1) {
-	//				greatest.set(value);
-	//			}
-	//		}
-	//		return Maybe.some(greatest.get());
-	//	}
-	//
 	// TODO: move to ThreadUtils
 	//	/**
 	//	 * Puts the current thread to sleep for the given amount of time.

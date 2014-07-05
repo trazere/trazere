@@ -18,9 +18,12 @@ package com.trazere.core.imperative;
 import com.trazere.core.collection.CollectionAccumulators;
 import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Predicate;
+import com.trazere.core.lang.ComparableAccumulators;
+import com.trazere.core.util.ComparatorAccumulators;
 import com.trazere.core.util.IntCounter;
 import com.trazere.core.util.Maybe;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Iterator;
 
 /**
@@ -125,6 +128,52 @@ public class IteratorUtils {
 	 */
 	public static <T, C extends Collection<? super T>> C drain(final Iterator<? extends T> values, final int n, final C results) {
 		return drain(values, n, CollectionAccumulators.add(results)).get();
+	}
+	
+	/**
+	 * Gets the least value provided by the given iterator.
+	 *
+	 * @param <T> Type of the values.
+	 * @param values Iterator providing the values.
+	 * @return The least value.
+	 */
+	public static <T extends Comparable<T>> Maybe<? extends T> least(final Iterator<? extends T> values) {
+		return drain(values, ComparableAccumulators.<T>least()).get();
+	}
+	
+	/**
+	 * Gets the least value provided by the given iterator according to the given comparator.
+	 *
+	 * @param <T> Type of the values.
+	 * @param comparator The comparator.
+	 * @param values The values.
+	 * @return The least value.
+	 */
+	public static <T> Maybe<? extends T> least(final Iterator<? extends T> values, final Comparator<? super T> comparator) {
+		return drain(values, ComparatorAccumulators.least(comparator)).get();
+	}
+	
+	/**
+	 * Gets the greatest value provided by the given iterator.
+	 *
+	 * @param <T> Type of the values.
+	 * @param values Iterator providing the values.
+	 * @return The greatest value.
+	 */
+	public static <T extends Comparable<T>> Maybe<? extends T> greatest(final Iterator<? extends T> values) {
+		return drain(values, ComparableAccumulators.<T>greatest()).get();
+	}
+	
+	/**
+	 * Gets the greatest value provided by the given iterator according to the given comparator.
+	 *
+	 * @param <T> Type of the values.
+	 * @param comparator The comparator.
+	 * @param values The values.
+	 * @return The greatest value.
+	 */
+	public static <T> Maybe<? extends T> greatest(final Iterator<? extends T> values, final Comparator<? super T> comparator) {
+		return drain(values, ComparatorAccumulators.greatest(comparator)).get();
 	}
 	
 	/**
