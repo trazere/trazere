@@ -15,7 +15,6 @@
  */
 package com.trazere.core.util;
 
-
 /**
  * The {@link MaybeUtils} class provides various helpers regarding types.
  */

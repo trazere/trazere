@@ -39,7 +39,7 @@ public class TupleFunctions {
 	private static final Function<?, ? extends Tuple1<?>> TUPLE1 = new Function<Object, Tuple1<Object>>() {
 		@Override
 		public Tuple1<Object> evaluate(final Object e1) {
-			return Tuple1.build(e1);
+			return new Tuple1<Object>(e1);
 		}
 	};
 	
@@ -58,7 +58,7 @@ public class TupleFunctions {
 	private static final Function2<?, ?, ? extends Tuple2<?, ?>> TUPLE2 = new Function2<Object, Object, Tuple2<Object, Object>>() {
 		@Override
 		public Tuple2<Object, Object> evaluate(final Object e1, final Object e2) {
-			return Tuple2.build(e1, e2);
+			return new Tuple2<Object, Object>(e1, e2);
 		}
 	};
 	
@@ -78,7 +78,7 @@ public class TupleFunctions {
 	private static final Function3<?, ?, ?, ? extends Tuple3<?, ?, ?>> TUPLE3 = new Function3<Object, Object, Object, Tuple3<Object, Object, Object>>() {
 		@Override
 		public Tuple3<Object, Object, Object> evaluate(final Object e1, final Object e2, final Object e3) {
-			return Tuple3.build(e1, e2, e3);
+			return new Tuple3<Object, Object, Object>(e1, e2, e3);
 		}
 	};
 	
@@ -99,7 +99,7 @@ public class TupleFunctions {
 	private static final Function4<?, ?, ?, ?, ? extends Tuple4<?, ?, ?, ?>> TUPLE4 = new Function4<Object, Object, Object, Object, Tuple4<Object, Object, Object, Object>>() {
 		@Override
 		public Tuple4<Object, Object, Object, Object> evaluate(final Object e1, final Object e2, final Object e3, final Object e4) {
-			return Tuple4.build(e1, e2, e3, e4);
+			return new Tuple4<Object, Object, Object, Object>(e1, e2, e3, e4);
 		}
 	};
 	
@@ -121,7 +121,7 @@ public class TupleFunctions {
 	private static final Function5<?, ?, ?, ?, ?, ? extends Tuple5<?, ?, ?, ?, ?>> TUPLE5 = new Function5<Object, Object, Object, Object, Object, Tuple5<Object, Object, Object, Object, Object>>() {
 		@Override
 		public Tuple5<Object, Object, Object, Object, Object> evaluate(final Object e1, final Object e2, final Object e3, final Object e4, final Object e5) {
-			return Tuple5.build(e1, e2, e3, e4, e5);
+			return new Tuple5<Object, Object, Object, Object, Object>(e1, e2, e3, e4, e5);
 		}
 	};
 	

@@ -30,23 +30,6 @@ import com.trazere.core.lang.ObjectUtils;
 public class Tuple4<E1, E2, E3, E4>
 extends Tuple3<E1, E2, E3> {
 	/**
-	 * Builds a 4-tuple with the given elements.
-	 * 
-	 * @param <E1> Type of the first element.
-	 * @param <E2> Type of the second element.
-	 * @param <E3> Type of the third element.
-	 * @param <E4> Type of the fourth element.
-	 * @param e1 First element.
-	 * @param e2 Second element.
-	 * @param e3 Third element.
-	 * @param e4 Fourth element.
-	 * @return The built tuple.
-	 */
-	public static <E1, E2, E3, E4> Tuple4<E1, E2, E3, E4> build(final E1 e1, final E2 e2, final E3 e3, final E4 e4) {
-		return new Tuple4<E1, E2, E3, E4>(e1, e2, e3, e4);
-	}
-	
-	/**
 	 * Instantiates a new 4-tuple with the given elements.
 	 * 
 	 * @param e1 First element.
