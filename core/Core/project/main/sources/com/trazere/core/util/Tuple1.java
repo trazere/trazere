@@ -26,17 +26,6 @@ import com.trazere.core.lang.ObjectUtils;
  */
 public class Tuple1<E1> {
 	/**
-	 * Builds a 1-tuple with the given element.
-	 * 
-	 * @param <E1> Type of the first element.
-	 * @param e1 First element.
-	 * @return The built tuple.
-	 */
-	public static <E1> Tuple1<E1> build(final E1 e1) {
-		return new Tuple1<E1>(e1);
-	}
-	
-	/**
 	 * Instantiates a new 1-tuple.
 	 * 
 	 * @param e1 First element.

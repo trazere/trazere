@@ -28,19 +28,6 @@ import com.trazere.core.lang.ObjectUtils;
 public class Tuple2<E1, E2>
 extends Tuple1<E1> {
 	/**
-	 * Builds a 2-tuple with the given elements.
-	 * 
-	 * @param <E1> Type of the first element.
-	 * @param <E2> Type of the second element.
-	 * @param e1 First element.
-	 * @param e2 Second element.
-	 * @return The built tuple.
-	 */
-	public static <E1, E2> Tuple2<E1, E2> build(final E1 e1, final E2 e2) {
-		return new Tuple2<E1, E2>(e1, e2);
-	}
-	
-	/**
 	 * Instantiates a new 2-tuple with the given elements.
 	 * 
 	 * @param e1 First element.
