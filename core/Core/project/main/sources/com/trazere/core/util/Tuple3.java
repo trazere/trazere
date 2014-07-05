@@ -29,21 +29,6 @@ import com.trazere.core.lang.ObjectUtils;
 public class Tuple3<E1, E2, E3>
 extends Tuple2<E1, E2> {
 	/**
-	 * Builds a 3-tuple with the given elements.
-	 * 
-	 * @param <E1> Type of the first element.
-	 * @param <E2> Type of the second element.
-	 * @param <E3> Type of the third element.
-	 * @param e1 First element.
-	 * @param e2 Second element.
-	 * @param e3 Third element.
-	 * @return The built tuple.
-	 */
-	public static <E1, E2, E3> Tuple3<E1, E2, E3> build(final E1 e1, final E2 e2, final E3 e3) {
-		return new Tuple3<E1, E2, E3>(e1, e2, e3);
-	}
-	
-	/**
 	 * Instantiates a new 3-tuple with the given elements.
 	 * 
 	 * @param e1 First element.

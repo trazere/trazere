@@ -31,25 +31,6 @@ import com.trazere.core.lang.ObjectUtils;
 public class Tuple5<E1, E2, E3, E4, E5>
 extends Tuple4<E1, E2, E3, E4> {
 	/**
-	 * Builds a 5-tuple with the given elements.
-	 * 
-	 * @param <E1> Type of the first element.
-	 * @param <E2> Type of the second element.
-	 * @param <E3> Type of the third element.
-	 * @param <E4> Type of the fourth element.
-	 * @param <E5> Type of the fifth element.
-	 * @param e1 First element.
-	 * @param e2 Second element.
-	 * @param e3 Third element.
-	 * @param e4 Fourth element.
-	 * @param e5 Fifth element.
-	 * @return The built tuple.
-	 */
-	public static <E1, E2, E3, E4, E5> Tuple5<E1, E2, E3, E4, E5> build(final E1 e1, final E2 e2, final E3 e3, final E4 e4, final E5 e5) {
-		return new Tuple5<E1, E2, E3, E4, E5>(e1, e2, e3, e4, e5);
-	}
-	
-	/**
 	 * Instantiates a new 5-tuple with the given elements.
 	 * 
 	 * @param e1 First element.

@@ -35,33 +35,6 @@ import com.trazere.core.lang.ObjectUtils;
 public class Tuple9<E1, E2, E3, E4, E5, E6, E7, E8, E9>
 extends Tuple8<E1, E2, E3, E4, E5, E6, E7, E8> {
 	/**
-	 * Builds a 9-tuple with the given elements.
-	 * 
-	 * @param <E1> Type of the first element.
-	 * @param <E2> Type of the second element.
-	 * @param <E3> Type of the third element.
-	 * @param <E4> Type of the fourth element.
-	 * @param <E5> Type of the fifth element.
-	 * @param <E6> Type of the sixth element.
-	 * @param <E7> Type of the seventh element.
-	 * @param <E8> Type of the eighth element.
-	 * @param <E9> Type of the ninth element.
-	 * @param e1 First element.
-	 * @param e2 Second element.
-	 * @param e3 Third element.
-	 * @param e4 Fourth element.
-	 * @param e5 Fifth element.
-	 * @param e6 Sixth element.
-	 * @param e7 Seventh element.
-	 * @param e8 Eighth element.
-	 * @param e9 Ninth element.
-	 * @return The built tuple.
-	 */
-	public static <E1, E2, E3, E4, E5, E6, E7, E8, E9> Tuple9<E1, E2, E3, E4, E5, E6, E7, E8, E9> build(final E1 e1, final E2 e2, final E3 e3, final E4 e4, final E5 e5, final E6 e6, final E7 e7, final E8 e8, final E9 e9) {
-		return new Tuple9<E1, E2, E3, E4, E5, E6, E7, E8, E9>(e1, e2, e3, e4, e5, e6, e7, e8, e9);
-	}
-	
-	/**
 	 * Instantiates a new 9-tuple with the given elements.
 	 * 
 	 * @param e1 First element.
