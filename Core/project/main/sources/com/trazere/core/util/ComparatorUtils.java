@@ -30,28 +30,6 @@ public class ComparatorUtils {
 		// Nothing to do.
 	}
 	
-	// TODO: move to Comparators ?
-	/**
-	 * Maps the given comparator using the given function.
-	 * 
-	 * @param <T1> Type of the values.
-	 * @param <T2> Type of the mapped values.
-	 * @param comparator Comparator to map.
-	 * @param function Mapping function to use.
-	 * @return The built comparator.
-	 * @see MapComparator
-	 */
-	public static <T1, T2> Comparator<T1> map(final Comparator<? super T2> comparator, final Function<? super T1, ? extends T2> function) {
-		assert null != function;
-		
-		return new MapComparator<T1, T2>(comparator) {
-			@Override
-			protected T2 mapValue(final T1 object) {
-				return function.evaluate(object);
-			}
-		};
-	}
-	
 	/**
 	 * Compares the given optional values using the given comparator.
 	 * <p>
@@ -118,6 +96,72 @@ public class ComparatorUtils {
 	 */
 	public static <T> T greatest(final Comparator<? super T> comparator, final T value1, final T value2) {
 		return comparator.compare(value1, value2) >= 0 ? value1 : value2;
+	}
+	
+	/**
+	 * Derives a comparator that safely supports <code>null</code> values.
+	 * <p>
+	 * <code>null</code> values are less than non <code>null</code> values.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param comparator Unsafe comparator to derive.
+	 * @return The built comparator.
+	 * @see ComparatorUtils#safeCompare(Comparator, Object, Object)
+	 */
+	public static <T> Comparator<T> safe(final Comparator<? super T> comparator) {
+		assert null != comparator;
+		
+		return new Comparator<T>() {
+			@Override
+			public int compare(final T object1, final T object2) {
+				return ComparatorUtils.safeCompare(comparator, object1, object2);
+			}
+		};
+	}
+	
+	/**
+	 * Derives a comparator according to the inverse order of the given comparator.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param comparator The inversed comparator.
+	 * @return The built comparator.
+	 * @see InverseComparator
+	 */
+	public static <T> Comparator<T> inverse(final Comparator<? super T> comparator) {
+		return new InverseComparator<T>(comparator);
+	}
+	
+	/**
+	 * Derives a comparator according to the direct or inverse order of the given comparator.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param comparator Comparator to use.
+	 * @param inverse Indicates whether to inverse the order or not.
+	 * @return The built comparator.
+	 */
+	public static <T> Comparator<T> inverse(final Comparator<T> comparator, final boolean inverse) {
+		return inverse ? inverse(comparator) : comparator;
+	}
+	
+	/**
+	 * Maps the given comparator using the given function.
+	 * 
+	 * @param <T1> Type of the values.
+	 * @param <T2> Type of the mapped values.
+	 * @param comparator Comparator to map.
+	 * @param function Mapping function to use.
+	 * @return The built comparator.
+	 * @see MapComparator
+	 */
+	public static <T1, T2> Comparator<T1> map(final Comparator<? super T2> comparator, final Function<? super T1, ? extends T2> function) {
+		assert null != function;
+		
+		return new MapComparator<T1, T2>(comparator) {
+			@Override
+			protected T2 mapValue(final T1 object) {
+				return function.evaluate(object);
+			}
+		};
 	}
 	
 	private ComparatorUtils() {
