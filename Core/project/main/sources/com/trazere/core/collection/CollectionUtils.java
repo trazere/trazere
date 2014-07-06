@@ -15,14 +15,274 @@
  */
 package com.trazere.core.collection;
 
+import com.trazere.core.functional.Function;
+import com.trazere.core.functional.Function2;
+import com.trazere.core.functional.Predicate;
 import com.trazere.core.imperative.Accumulator;
+import com.trazere.core.imperative.IteratorUtils;
+import com.trazere.core.lang.IterableUtils;
 import com.trazere.core.lang.LangAccumulators;
+import com.trazere.core.util.Maybe;
 import java.util.Collection;
+import java.util.Comparator;
 
 /**
  * The {@link CollectionUtils} class provides various utilities regarding the manipulation of collections and maps.
  */
 public class CollectionUtils {
+	/**
+	 * Gets an element from the given collection.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param collection Collection to read.
+	 * @return Some value if any.
+	 */
+	public static <E> Maybe<E> any(final Collection<? extends E> collection) {
+		return IteratorUtils.next(collection.iterator());
+	}
+	
+	/**
+	 * Left folds over the elements of the given collection using the given binary operator and initial value.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param <S> Type of the state.
+	 * @param collection Collection containing the elements to fold over.
+	 * @param operator Binary operator to use.
+	 * @param initialState Initial state.
+	 * @return The folded state.
+	 */
+	public static <E, S> S fold(final Collection<? extends E> collection, final Function2<? super S, ? super E, ? extends S> operator, final S initialState) {
+		return IteratorUtils.fold(collection.iterator(), operator, initialState);
+	}
+	
+	/**
+	 * Gets the first element of the given collection accepted by the given filter.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param collection Collection containing the elements to filter.
+	 * @param filter Filter predicate.
+	 * @return The first accepted element.
+	 */
+	public static <E> Maybe<E> first(final Collection<? extends E> collection, final Predicate<? super E> filter) {
+		return IteratorUtils.first(collection.iterator(), filter);
+	}
+	
+	/**
+	 * Gets the first element extracted from the given collection by the given extractor.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param <RE> Type of the extracted elements.
+	 * @param collection Collection containing the elements to extract from.
+	 * @param extractor Extractor function.
+	 * @return The first extracted element.
+	 */
+	public static <E, RE> Maybe<? extends RE> first(final Collection<? extends E> collection, final Function<? super E, ? extends Maybe<? extends RE>> extractor) {
+		return IteratorUtils.first(collection.iterator(), extractor);
+	}
+	
+	/**
+	 * Tests whether any element of the given collection is accepted by the given filter.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param collection Collection to test.
+	 * @param filter Filter predicate.
+	 * @return <code>true</code> when some element is accepted, <code>false</code> when all elements are rejected.
+	 */
+	public static <E> boolean isAny(final Collection<? extends E> collection, final Predicate<? super E> filter) {
+		return IteratorUtils.isAny(collection.iterator(), filter);
+	}
+	
+	/**
+	 * Tests whether all elements of the given collection are accepted by the given filter.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param collection Collection to test.
+	 * @param filter Filter predicate.
+	 * @return <code>true</code> when all values are accepted, <code>false</code> when some value is rejected.
+	 */
+	public static <E> boolean areAll(final Collection<? extends E> collection, final Predicate<? super E> filter) {
+		return IteratorUtils.areAll(collection.iterator(), filter);
+	}
+	
+	/**
+	 * Counts the elements of the given collection accepted by the given filter.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param collection Collection containing the elements to count.
+	 * @param filter Filter predicate.
+	 * @return The number of accepted elements.
+	 */
+	public static <E> int count(final Collection<? extends E> collection, final Predicate<? super E> filter) {
+		return IteratorUtils.count(collection.iterator(), filter);
+	}
+	
+	/**
+	 * Gets the least element of the given collection.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param collection Collection containing the elements to compare.
+	 * @return The least element.
+	 */
+	public static <E extends Comparable<E>> Maybe<? extends E> least(final Collection<? extends E> collection) {
+		return IteratorUtils.least(collection.iterator());
+	}
+	
+	/**
+	 * Gets the least element of the given collection according to the given comparator.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param collection Collection providing the elements to compare.
+	 * @param comparator Comparator to use.
+	 * @return The least element.
+	 */
+	public static <E> Maybe<? extends E> least(final Collection<? extends E> collection, final Comparator<? super E> comparator) {
+		return IteratorUtils.least(collection.iterator(), comparator);
+	}
+	
+	/**
+	 * Gets the greatest element of the given collection.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param collection Collection containing the elements to compare.
+	 * @return The greatest element.
+	 */
+	public static <E extends Comparable<E>> Maybe<? extends E> greatest(final Collection<? extends E> collection) {
+		return IteratorUtils.greatest(collection.iterator());
+	}
+	
+	/**
+	 * Gets the greatest element of the given collection according to the given comparator.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param collection Collection containing the elements to compare.
+	 * @param comparator Comparator to use.
+	 * @return The greatest element.
+	 */
+	public static <E> Maybe<? extends E> greatest(final Collection<? extends E> collection, final Comparator<? super E> comparator) {
+		return IteratorUtils.greatest(collection.iterator(), comparator);
+	}
+	
+	/**
+	 * Appends the given collections together.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param <R> Type of the result collection.
+	 * @param collection1 First collection providing the elements to append.
+	 * @param collection2 Second collection providing the elements to append.
+	 * @param resultFactory Factory of the result collection.
+	 * @return A collection containing the appended elements.
+	 */
+	public static <E, R extends Collection<? super E>> R append(final Collection<? extends E> collection1, final Collection<? extends E> collection2, final CollectionFactory<E, R> resultFactory) {
+		final R results = resultFactory.build(collection1.size() + collection2.size());
+		results.addAll(collection1);
+		results.addAll(collection2);
+		return results;
+	}
+	
+	/**
+	 * Flattens the elements of the collections contained in the given collection.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param <R> Type of the result collection.
+	 * @param collection Collection containing the collections containing the elements to flatten.
+	 * @param resultFactory Factory of the result collection.
+	 * @return A collection containing the flatten elements.
+	 */
+	public static <E, R extends Collection<? super E>> R flatten(final Collection<? extends Collection<? extends E>> collection, final CollectionFactory<E, R> resultFactory) {
+		final R results = resultFactory.build();
+		for (final Collection<? extends E> elements : collection) {
+			results.addAll(elements);
+		}
+		return results;
+	}
+	
+	/**
+	 * Takes the n first elements of the given collection.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param <R> Type of the result collection.
+	 * @param collection Collection containing the elements to take.
+	 * @param n Number of elements to take.
+	 * @param resultFactory Factory of the result collection.
+	 * @return A collection containing the taken elements.
+	 */
+	public static <E, R extends Collection<? super E>> R take(final Collection<? extends E> collection, final int n, final CollectionFactory<E, R> resultFactory) {
+		return IteratorUtils.drainAll(IteratorUtils.take(collection.iterator(), n), resultFactory.build(n));
+	}
+	
+	/**
+	 * Drops the n first elements of the given collection.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param <R> Type of the result collection.
+	 * @param collection Collection containing the elements to drop.
+	 * @param n Number of elements to drop.
+	 * @param resultFactory Factory of the result collection.
+	 * @return A collection containing the remaining elements.
+	 */
+	public static <E, R extends Collection<? super E>> R drop(final Collection<? extends E> collection, final int n, final CollectionFactory<E, R> resultFactory) {
+		return IteratorUtils.drainAll(IteratorUtils.drop(collection.iterator(), n), resultFactory.build(n));
+	}
+	
+	/**
+	 * Filters the elements of the given collection using the given filter.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param <R> Type of the result collection.
+	 * @param collection Collection containing the elements to filter.
+	 * @param filter Predicate to use to filter the elements.
+	 * @param resultFactory Factory of the result collection.
+	 * @return A collection containing the filtered elements.
+	 */
+	public static <E, R extends Collection<? super E>> R filter(final Collection<? extends E> collection, final Predicate<? super E> filter, final CollectionFactory<E, R> resultFactory) {
+		return IteratorUtils.drainAll(IteratorUtils.filter(collection.iterator(), filter), resultFactory.build());
+	}
+	
+	/**
+	 * Transforms the elements of the given collection using the given function.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param <RE> Type of the transformed elements.
+	 * @param <R> Type of the result collection.
+	 * @param collection Collection containing the elements to transform.
+	 * @param function Function to use to transform the elements.
+	 * @param resultFactory Factory of the result collection.
+	 * @return A collection containing the transformed elements.
+	 */
+	public static <E, RE, R extends Collection<? super RE>> R map(final Collection<? extends E> collection, final Function<? super E, ? extends RE> function, final CollectionFactory<RE, R> resultFactory) {
+		return IteratorUtils.drainAll(IteratorUtils.map(collection.iterator(), function), resultFactory.build(collection.size()));
+	}
+	
+	/**
+	 * Transforms and flatten the elements of the given collection using the given function.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param <RE> Type of the transformed elements.
+	 * @param <R> Type of the result collection.
+	 * @param collection Collection containing the elements to transform.
+	 * @param function Function to use to transform the elements.
+	 * @param resultFactory Factory of the result collection.
+	 * @return A collection containing the flatten, transformed elements.
+	 */
+	public static <E, RE, R extends Collection<? super RE>> R flatMap(final Collection<? extends E> collection, final Function<? super E, ? extends Collection<? extends RE>> function, final CollectionFactory<RE, R> resultFactory) {
+		return resultFactory.build(IterableUtils.flatMap(collection, function));
+	}
+	
+	/**
+	 * Extracts from the elements of the given collection using the given extractor.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param <RE> Type of the extracted elements.
+	 * @param <R> Type of the result collection.
+	 * @param collection Collection containing the elements to extract from.
+	 * @param extractor Function to use to extract the elements.
+	 * @param resultFactory Factory of the result collection.
+	 * @return A collection containing the extracted elements.
+	 */
+	public static <E, RE, R extends Collection<? super RE>> R extract(final Collection<? extends E> collection, final Function<? super E, ? extends Maybe<? extends RE>> extractor, final CollectionFactory<RE, R> resultFactory) {
+		return IteratorUtils.drainAll(IteratorUtils.extract(collection.iterator(), extractor), resultFactory.build());
+	}
+	
 	//	/**
 	//	 * Gets a binding from the given map.
 	//	 *
@@ -657,25 +917,6 @@ public class CollectionUtils {
 	//			if (!keys.contains(key)) {
 	//				results.put(key, entry.getValue());
 	//			}
-	//		}
-	//		return results;
-	//	}
-	//
-	//	/**
-	//	 * Flattens the values of the given collection of collections and populates the given collections with them.
-	//	 *
-	//	 * @param <T> Type of the values.
-	//	 * @param <R> Type of the result collection.
-	//	 * @param collections The collection of collections.
-	//	 * @param results The collection to populate with the results.
-	//	 * @return The given result collection.
-	//	 */
-	//	public static <T, R extends Collection<? super T>> R flatten(final Iterable<? extends Iterable<? extends T>> collections, final R results) {
-	//		assert null != collections;
-	//		assert null != results;
-	//
-	//		for (final Iterable<? extends T> collection : collections) {
-	//			add(results, collection);
 	//		}
 	//		return results;
 	//	}

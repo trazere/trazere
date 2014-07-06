@@ -48,11 +48,6 @@ public class Iterators {
 		throws NoSuchElementException {
 			throw new NoSuchElementException();
 		}
-		
-		@Override
-		public void remove() {
-			throw new UnsupportedOperationException();
-		}
 	};
 	
 	/**
@@ -80,11 +75,6 @@ public class Iterators {
 				} else {
 					throw new NoSuchElementException();
 				}
-			}
-			
-			@Override
-			public void remove() {
-				throw new UnsupportedOperationException();
 			}
 		};
 	}
@@ -119,11 +109,6 @@ public class Iterators {
 				} else {
 					throw new NoSuchElementException();
 				}
-			}
-			
-			@Override
-			public void remove() {
-				throw new UnsupportedOperationException();
 			}
 		};
 	}

@@ -39,31 +39,28 @@ public class Functions {
 		}
 	};
 	
-	// TODO: move to FunctionUtils ???
-	//	/**
-	//	 * Builds a function corresponding to the composition of the given functions (g . f).
-	//	 *
-	//	 * @param <T1> Type of the argument values of the inner function.
-	//	 * @param <T2> Type of the argument values of the outer function.
-	//	 * @param <T3> Type of the result values.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param g The outer function.
-	//	 * @param f The inner function.
-	//	 * @return The built function.
-	//	 */
-	//	public static <T1, T2, T3, X extends Exception> Function1<T1, T3, X> compose(final Function1<? super T2, ? extends T3, ? extends X> g, final Function1<? super T1, ? extends T2, ? extends X> f) {
-	//		assert null != g;
-	//		assert null != f;
-	//
-	//		return new Function1<T1, T3, X>() {
-	//			@Override
-	//			public T3 evaluate(final T1 value)
-	//			throws X {
-	//				return g.evaluate(f.evaluate(value));
-	//			}
-	//		};
-	//	}
-	//
+	/**
+	 * Builds a function corresponding to the composition of the given functions (g . f).
+	 *
+	 * @param <A1> Type of the arguments of the inner function.
+	 * @param <A2> Type of the arguments of the outer function.
+	 * @param <R> Type of the results.
+	 * @param g Outer function.
+	 * @param f Inner function.
+	 * @return The built function.
+	 */
+	public static <A1, A2, R> Function<A1, R> compose(final Function<? super A2, ? extends R> g, final Function<? super A1, ? extends A2> f) {
+		assert null != g;
+		assert null != f;
+		
+		return new Function<A1, R>() {
+			@Override
+			public R evaluate(final A1 arg) {
+				return g.evaluate(f.evaluate(arg));
+			}
+		};
+	}
+	
 	//	/**
 	//	 * Builds a one argument function that always evaluates to the given value.
 	//	 *

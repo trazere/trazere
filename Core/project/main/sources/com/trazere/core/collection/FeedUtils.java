@@ -15,11 +15,15 @@
  */
 package com.trazere.core.collection;
 
+import com.trazere.core.functional.Function;
+import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Predicate;
-import com.trazere.core.lang.IterableUtils;
+import com.trazere.core.imperative.IteratorUtils;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
+import com.trazere.core.util.Tuples;
 import java.util.Comparator;
+import java.util.NoSuchElementException;
 
 /**
  * The {@link FeedUtils} class provides various utilities regarding feeds.
@@ -52,6 +56,81 @@ public class FeedUtils {
 	}
 	
 	/**
+	 * Left folds over the elements of the given feed using the given binary operator and initial value.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param <S> Type of the state.
+	 * @param feed Feed of the elements to fold over.
+	 * @param operator Binary operator to use.
+	 * @param initialState Initial state.
+	 * @return The folded state.
+	 */
+	public static <E, S> S fold(final Feed<? extends E> feed, final Function2<? super S, ? super E, ? extends S> operator, final S initialState) {
+		return IteratorUtils.fold(feed.iterator(), operator, initialState);
+	}
+	
+	/**
+	 * Gets the first element of the given feed accepted by the given filter.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param feed Feed of the elements to test.
+	 * @param filter Filter predicate.
+	 * @return The first accepted element.
+	 */
+	public static <E> Maybe<E> first(final Feed<? extends E> feed, final Predicate<? super E> filter) {
+		return IteratorUtils.first(feed.iterator(), filter);
+	}
+	
+	/**
+	 * Gets the first element extracted from the given feed by the given extractor.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param <RE> Type of the extracted elements.
+	 * @param collection Collection containing the elements to extract from.
+	 * @param extractor Extractor function.
+	 * @return The first extracted element.
+	 */
+	public static <E, RE> Maybe<? extends RE> first(final Iterable<? extends E> collection, final Function<? super E, ? extends Maybe<? extends RE>> extractor) {
+		return IteratorUtils.first(collection.iterator(), extractor);
+	}
+	
+	/**
+	 * Tests whether any element of the given feed is accepted by the given filter.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param feed Feed of the elements to test.
+	 * @param filter Filter predicate.
+	 * @return <code>true</code> when some element is accepted, <code>false</code> when all elements are rejected.
+	 */
+	public static <E> boolean isAny(final Feed<? extends E> feed, final Predicate<? super E> filter) {
+		return IteratorUtils.isAny(feed.iterator(), filter);
+	}
+	
+	/**
+	 * Tests whether all elements of the given feed are accepted by the given filter.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param feed Feed of the elements to test.
+	 * @param filter Filter predicate.
+	 * @return <code>true</code> when all values are accepted, <code>false</code> when some value is rejected.
+	 */
+	public static <E> boolean areAll(final Feed<? extends E> feed, final Predicate<? super E> filter) {
+		return IteratorUtils.areAll(feed.iterator(), filter);
+	}
+	
+	/**
+	 * Counts the elements of the given feed accepted by the given filter.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param feed Feed of the elements to count.
+	 * @param filter Filter predicate.
+	 * @return The number of accepted elements.
+	 */
+	public static <E> int count(final Feed<? extends E> feed, final Predicate<? super E> filter) {
+		return IteratorUtils.count(feed.iterator(), filter);
+	}
+	
+	/**
 	 * Gets the least element of the given feed according to their natural order.
 	 *
 	 * @param <E> Type of the elements.
@@ -59,7 +138,7 @@ public class FeedUtils {
 	 * @return The least element.
 	 */
 	public static <E extends Comparable<E>> Maybe<? extends E> least(final Feed<? extends E> feed) {
-		return IterableUtils.least(feed);
+		return IteratorUtils.least(feed.iterator());
 	}
 	
 	/**
@@ -71,7 +150,7 @@ public class FeedUtils {
 	 * @return The least element.
 	 */
 	public static <E> Maybe<? extends E> least(final Feed<? extends E> feed, final Comparator<? super E> comparator) {
-		return IterableUtils.least(feed, comparator);
+		return IteratorUtils.least(feed.iterator(), comparator);
 	}
 	
 	/**
@@ -82,7 +161,7 @@ public class FeedUtils {
 	 * @return The greatest element.
 	 */
 	public static <E extends Comparable<E>> Maybe<? extends E> greatest(final Feed<? extends E> feed) {
-		return IterableUtils.greatest(feed);
+		return IteratorUtils.greatest(feed.iterator());
 	}
 	
 	/**
@@ -94,7 +173,7 @@ public class FeedUtils {
 	 * @return The greatest element.
 	 */
 	public static <E> Maybe<? extends E> greatest(final Feed<? extends E> feed, final Comparator<? super E> comparator) {
-		return IterableUtils.greatest(feed, comparator);
+		return IteratorUtils.greatest(feed.iterator(), comparator);
 	}
 	
 	/**
@@ -116,6 +195,65 @@ public class FeedUtils {
 					return Maybe.some(new Tuple2<E, Feed<E>>(item.get1(), memoize(item.get2())));
 				} else {
 					return Maybe.none();
+				}
+			}
+		};
+	}
+	
+	/**
+	 * Appends the given feeds together.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param feed First feed.
+	 * @param appendedFeed Second feed.
+	 * @return The built feed.
+	 */
+	public static <E> Feed<E> append(final Feed<? extends E> feed, final Feed<? extends E> appendedFeed) {
+		assert null != feed;
+		assert null != appendedFeed;
+		
+		return new MemoizedFeed<E>() {
+			@Override
+			protected Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> compute() {
+				final Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> maybeItem1 = feed.evaluate();
+				if (maybeItem1.isSome()) {
+					final Tuple2<? extends E, ? extends Feed<? extends E>> item1 = maybeItem1.asSome().getValue();
+					return Maybe.some(Tuples.tuple2(item1.get1(), append(item1.get2(), appendedFeed)));
+				} else {
+					return appendedFeed.evaluate();
+				}
+			}
+		};
+	}
+	
+	/**
+	 * Flattens the elements of the feeds of the given feed.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param feed Feed of the feeds of the elements to flatten.
+	 * @return A feed of the flatten elements.
+	 */
+	public static <E> Feed<E> flatten(final Feed<? extends Feed<? extends E>> feed) {
+		assert null != feed;
+		
+		return new MemoizedFeed<E>() {
+			@Override
+			protected Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> compute() {
+				Feed<? extends Feed<? extends E>> iterFeed = feed;
+				while (true) {
+					final Maybe<? extends Tuple2<? extends Feed<? extends E>, ? extends Feed<? extends Feed<? extends E>>>> maybeFeedItem = iterFeed.evaluate();
+					if (maybeFeedItem.isSome()) {
+						final Tuple2<? extends Feed<? extends E>, ? extends Feed<? extends Feed<? extends E>>> feedItem = maybeFeedItem.asSome().getValue();
+						final Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> maybeItem = feedItem.get1().evaluate();
+						if (maybeItem.isSome()) {
+							final Tuple2<? extends E, ? extends Feed<? extends E>> item = maybeItem.asSome().getValue();
+							return Maybe.some(new Tuple2<>(item.get1(), append(item.get2(), flatten(feedItem.get2()))));
+						} else {
+							iterFeed = feedItem.get2();
+						}
+					} else {
+						return Maybe.none();
+					}
 				}
 			}
 		};
@@ -247,120 +385,135 @@ public class FeedUtils {
 		};
 	}
 	
-	// TODO: fold
+	/**
+	 * Filters the elements of the given feed using the given filter.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param feed Feed of the elements to filter.
+	 * @param filter Predicate to use to filter the elements.
+	 * @return A feed of the filtered elements.
+	 */
+	public static <E> Feed<E> filter(final Feed<? extends E> feed, final Predicate<? super E> filter) {
+		assert null != feed;
+		assert null != filter;
+		
+		return new MemoizedFeed<E>() {
+			@Override
+			protected Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> compute() {
+				Feed<? extends E> iterFeed = feed;
+				while (true) {
+					final Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> maybeItem = iterFeed.evaluate();
+					if (maybeItem.isSome()) {
+						final Tuple2<? extends E, ? extends Feed<? extends E>> item = maybeItem.asSome().getValue();
+						final E head = item.get1();
+						if (filter.evaluate(head)) {
+							return Maybe.some(new Tuple2<E, Feed<E>>(head, filter(item.get2(), filter)));
+						} else {
+							iterFeed = item.get2();
+						}
+					} else {
+						return Maybe.none();
+					}
+				}
+			}
+		};
+	}
 	
-	//	/**
-	//	 * Filters the elements of the given feed using the given predicate.
-	//	 *
-	//	 * @param <T> Type of the elements.
-	//	 * @param feed Feed to filter.
-	//	 * @param filter Filter to use.
-	//	 * @return The built feed over the filtered elements.
-	//	 */
-	//	public static <T> Feed<T> filter(final Feed<? extends T> feed, final Predicate<? super T> filter) {
-	//		assert null != feed;
-	//		assert null != filter;
-	//
-	//		return new MemoizedFeed<T>() {
-	//			// Function.
-	//
-	//			@Override
-	//			protected Maybe<? extends Tuple2<T, ? extends Feed<? extends T>>> compute() {
-	//				Feed<? extends T> tail = feed;
-	//				while (!tail.isEmpty()) {
-	//					final T head = tail.getHead();
-	//					if (filter.evaluate(head)) {
-	//						return Maybe.some(Tuples.tuple2(head, filter(tail.getTail(), filter)));
-	//					} else {
-	//						tail = tail.getTail();
-	//					}
-	//				}
-	//				return Maybe.none();
-	//			}
-	//		};
-	//	}
-	//
-	//	/**
-	//	 * Transforms the elements of the given feed using the given function.
-	//	 *
-	//	 * @param <T> Type of the elements.
-	//	 * @param <R> Type of the transformed elements.
-	//	 * @param feed Feed to transform.
-	//	 * @param function Transform function to use.
-	//	 * @return The built feed over the transformed elements.
-	//	 */
-	//	public static <T, R> Feed<R> map(final Feed<? extends T> feed, final Function<? super T, ? extends R> function) {
-	//		assert null != feed;
-	//		assert null != function;
-	//
-	//		return new BaseFeed<R>() {
-	//			// Feed.
-	//
-	//			@Override
-	//			public boolean isEmpty() {
-	//				return feed.isEmpty();
-	//			}
-	//
-	//			@Override
-	//			public R getHead()
-	//			throws NoSuchElementException {
-	//				return function.evaluate(feed.getHead());
-	//			}
-	//
-	//			@Override
-	//			public Feed<R> getTail()
-	//			throws NoSuchElementException {
-	//				return map(feed.getTail(), function);
-	//			}
-	//
-	//			// Function.
-	//
-	//			@Override
-	//			public Maybe<Tuple2<R, Feed<R>>> evaluate() {
-	//				final Maybe<? extends Tuple2<? extends T, ? extends Feed<? extends T>>> maybeItem = feed.evaluate();
-	//				if (maybeItem.isSome()) {
-	//					final Tuple2<? extends T, ? extends Feed<? extends T>> item = maybeItem.asSome().getValue();
-	//					return Maybe.some(new Tuple2<R, Feed<R>>(function.evaluate(item.get1()), map(item.get2(), function)));
-	//				} else {
-	//					return Maybe.none();
-	//				}
-	//			}
-	//		};
-	//	}
-	//
-	//	/**
-	//	 * Builds a feed that extracts values from the given feed using the given extractor.
-	//	 *
-	//	 * @param <T> Type of the elements.
-	//	 * @param <R> Type of the transformed elements.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param extractor The extractor.
-	//	 * @param feed The feed.
-	//	 * @return The built feed over the filtered and transformed elements.
-	//	 */
-	//	public static <T, R, X extends Exception> Feed<R, X> extract(final Function1<? super T, ? extends Maybe<? extends R>, ? extends X> extractor, final Feed<? extends T, ? extends X> feed) {
-	//		assert null != extractor;
-	//		assert null != feed;
-	//
-	//		return new MemoizedFeed<R, X>() {
-	//			// Function.
-	//
-	//			@Override
-	//			protected Maybe<Tuple2<R, Feed<R, X>>> compute()
-	//			throws X {
-	//				Feed<? extends T, ? extends X> tail = feed;
-	//				while (!tail.isEmpty()) {
-	//					final Maybe<? extends R> head = extractor.evaluate(tail.getHead());
-	//					if (head.isSome()) {
-	//						return Maybe.some(new Tuple2<R, Feed<R, X>>(head.asSome().getValue(), extract(extractor, tail.getTail())));
-	//					} else {
-	//						tail = tail.getTail();
-	//					}
-	//				}
-	//				return Maybe.none();
-	//			}
-	//		};
-	//	}
+	/**
+	 * Transforms the elements of the given feed using the given function.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param <RE> Type of the transformed elements.
+	 * @param feed Feed of the elements to transform.
+	 * @param function Function to use to transform the elements.
+	 * @return A feed of the transformed elements.
+	 */
+	public static <E, RE> Feed<RE> map(final Feed<? extends E> feed, final Function<? super E, ? extends RE> function) {
+		assert null != feed;
+		assert null != function;
+		
+		return new Feed<RE>() {
+			// Feed.
+			
+			@Override
+			public boolean isEmpty() {
+				return feed.isEmpty();
+			}
+			
+			@Override
+			public RE getHead()
+			throws NoSuchElementException {
+				return function.evaluate(feed.getHead());
+			}
+			
+			@Override
+			public Feed<RE> getTail()
+			throws NoSuchElementException {
+				return map(feed.getTail(), function);
+			}
+			
+			// Function.
+			
+			@Override
+			public Maybe<? extends Tuple2<? extends RE, ? extends Feed<? extends RE>>> evaluate() {
+				final Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> maybeItem = feed.evaluate();
+				if (maybeItem.isSome()) {
+					final Tuple2<? extends E, ? extends Feed<? extends E>> item = maybeItem.asSome().getValue();
+					return Maybe.some(new Tuple2<RE, Feed<RE>>(function.evaluate(item.get1()), map(item.get2(), function)));
+				} else {
+					return Maybe.none();
+				}
+			}
+		};
+	}
+	
+	/**
+	 * Transforms and flatten the elements of the given feed using the given function.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param <RE> Type of the transformed elements.
+	 * @param feed Feed of the elements to transform.
+	 * @param function Function to use to transform the elements.
+	 * @return An feed of the flatten, transformed elements.
+	 */
+	public static <E, RE> Feed<RE> flatMap(final Feed<? extends E> feed, final Function<? super E, ? extends Feed<? extends RE>> function) {
+		return flatten(map(feed, function));
+	}
+	
+	/**
+	 * Extracts from the elements of the given feed using the given extractor.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param <RE> Type of the extracted elements.
+	 * @param feed Feed of the elements to extract from.
+	 * @param extractor Function to use to extract the elements.
+	 * @return A feed of the extracted elements.
+	 */
+	public static <E, RE> Feed<RE> extract(final Feed<? extends E> feed, final Function<? super E, ? extends Maybe<? extends RE>> extractor) {
+		assert null != feed;
+		assert null != extractor;
+		
+		return new MemoizedFeed<RE>() {
+			@Override
+			protected Maybe<? extends Tuple2<? extends RE, ? extends Feed<? extends RE>>> compute() {
+				Feed<? extends E> iterFeed = feed;
+				while (true) {
+					final Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> maybeItem = iterFeed.evaluate();
+					if (maybeItem.isSome()) {
+						final Tuple2<? extends E, ? extends Feed<? extends E>> item = maybeItem.asSome().getValue();
+						final Maybe<? extends RE> extractedHead = extractor.evaluate(item.get1());
+						if (extractedHead.isSome()) {
+							return Maybe.some(new Tuple2<RE, Feed<RE>>(extractedHead.asSome().getValue(), extract(item.get2(), extractor)));
+						} else {
+							iterFeed = item.get2();
+						}
+					} else {
+						return Maybe.none();
+					}
+				}
+			}
+		};
+	}
 	
 	private FeedUtils() {
 		// Prevent instantiation.

@@ -15,23 +15,22 @@
  */
 package com.trazere.core.imperative;
 
-
 /**
  * The {@link Accumulator} interface defines left folding functions over an internal state.
  * <p>
  * Accumulators are dual to iterators.
  * 
- * @param <A> Type of the arguments.
+ * @param <V> Type of the accumulated values.
  * @param <S> Type of the state.
  */
-public interface Accumulator<A, S>
-extends Procedure<A> {
+public interface Accumulator<V, S>
+extends Procedure<V> {
 	/**
 	 * Accumulates the given value into the receiver accumulator.
 	 * 
 	 * @param value Value to accumulate.
 	 */
-	void add(A value);
+	void add(V value);
 	
 	/**
 	 * Accumulates the given values into the receiver accumulator.
@@ -40,8 +39,8 @@ extends Procedure<A> {
 	 * 
 	 * @param values Values to accumulate.
 	 */
-	default void addAll(final Iterable<? extends A> values) {
-		for (final A value : values) {
+	default void addAll(final Iterable<? extends V> values) {
+		for (final V value : values) {
 			add(value);
 		}
 	}
@@ -56,7 +55,7 @@ extends Procedure<A> {
 	// Procedure.
 	
 	@Override
-	default void execute(final A value) {
+	default void execute(final V value) {
 		add(value);
 	}
 }
