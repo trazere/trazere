@@ -25,208 +25,289 @@ import com.trazere.core.util.Maybe;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * The {@link IteratorUtils} class provides various helpers regarding {@link Iterator iterators}.
  */
 public class IteratorUtils {
 	/**
-	 * Drops the next value provided by the given iterator.
+	 * Gets the next element provided by the given iterator.
 	 * 
+	 * @param <E> Type of the elements.
 	 * @param iterator Iterator to consume.
-	 * @return <code>true</code> when some value is dropped, <code>false</code> when the iterator is empty.
+	 * @return The next element.
 	 */
-	public static boolean drop(final Iterator<?> iterator) {
-		if (iterator.hasNext()) {
+	public static <E> Maybe<E> next(final Iterator<? extends E> iterator) {
+		return iterator.hasNext() ? Maybe.<E>some(iterator.next()) : Maybe.<E>none();
+	}
+	
+	/**
+	 * Drains the next n elements provided by the given iterator.
+	 * 
+	 * @param n Number of elements to drain.
+	 * @param iterator Iterator to drain.
+	 */
+	public static void drain(final Iterator<?> iterator, final int n) {
+		final IntCounter counter = new IntCounter();
+		while (iterator.hasNext() && counter.inc() <= n) {
 			iterator.next();
-			return true;
-		} else {
-			return false;
 		}
 	}
 	
 	/**
-	 * Drops the next n values provided by the given iterator.
+	 * Drains the next n elements provided by the given iterator and populates the given accumulator with them.
 	 * 
-	 * @param n Number of values to drop.
-	 * @param values Iterator to consume.
-	 */
-	public static void drop(final Iterator<?> values, final int n) {
-		final IntCounter counter = new IntCounter();
-		while (values.hasNext() && counter.inc() <= n) {
-			values.next();
-		}
-	}
-	
-	/**
-	 * Gets the next value provided by the given iterator.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param iterator Iterator to consume.
-	 * @return The next value.
-	 */
-	public static <T> Maybe<T> next(final Iterator<? extends T> iterator) {
-		return iterator.hasNext() ? Maybe.<T>some(iterator.next()) : Maybe.<T>none();
-	}
-	
-	/**
-	 * Drains all values provided by the the given iterator and populates the given accumulator with them.
-	 * 
-	 * @param <T> Type of the values.
+	 * @param <E> Type of the elements.
 	 * @param <A> Type of the accumulator to populate.
-	 * @param values Iterator to drain.
-	 * @param results Accumulator to populate with the drained values.
+	 * @param n Number of elements to drain.
+	 * @param iterator Iterator to drain.
+	 * @param results Accumulator to populate with the drained elements.
 	 * @return The given result accumulator.
 	 */
-	public static <T, A extends Accumulator<? super T, ?>> A drain(final Iterator<? extends T> values, final A results) {
-		while (values.hasNext()) {
-			results.add(values.next());
+	public static <E, A extends Accumulator<? super E, ?>> A drain(final Iterator<? extends E> iterator, final int n, final A results) {
+		final IntCounter counter = new IntCounter();
+		while (iterator.hasNext() && counter.inc() <= n) {
+			results.add(iterator.next());
 		}
 		return results;
 	}
 	
 	/**
-	 * Drains all values provided by the the given iterator and adds them to the given collection.
+	 * Drains the next n elements provided by the given iterator and adds them to the given collection.
 	 * 
-	 * @param <T> Type of the values.
+	 * @param <E> Type of the elements.
 	 * @param <C> Type of the collection to populate.
-	 * @param values Iterator to drain.
-	 * @param results Collection to populate with the drained values.
+	 * @param n Number of elements to drain.
+	 * @param iterator Iterator to drain.
+	 * @param results Collection to populate with the drained elements.
 	 * @return The given result collection.
 	 */
-	public static <T, C extends Collection<? super T>> C drain(final Iterator<? extends T> values, final C results) {
-		return drain(values, CollectionAccumulators.add(results)).get();
+	public static <E, C extends Collection<? super E>> C drain(final Iterator<? extends E> iterator, final int n, final C results) {
+		return drain(iterator, n, CollectionAccumulators.add(results)).get();
 	}
 	
 	/**
-	 * Drains the next n values provided by the given iterator and populates the given accumulator with them.
+	 * Drains all elements provided by the the given iterator.
 	 * 
-	 * @param <T> Type of the values.
+	 * @param <E> Type of the elements.
+	 * @param iterator Iterator to drain.
+	 */
+	public static <E> void drainAll(final Iterator<? extends E> iterator) {
+		while (iterator.hasNext()) {
+			iterator.next();
+		}
+	}
+	
+	/**
+	 * Drains all elements provided by the the given iterator and populates the given accumulator with them.
+	 * 
+	 * @param <E> Type of the elements.
 	 * @param <A> Type of the accumulator to populate.
-	 * @param n Number of values to drain.
-	 * @param values Iterator to drain.
-	 * @param results Accumulator to populate with the drained values.
+	 * @param iterator Iterator to drain.
+	 * @param results Accumulator to populate with the drained elements.
 	 * @return The given result accumulator.
 	 */
-	public static <T, A extends Accumulator<? super T, ?>> A drain(final Iterator<? extends T> values, final int n, final A results) {
-		final IntCounter counter = new IntCounter();
-		while (values.hasNext() && counter.inc() <= n) {
-			results.add(values.next());
+	public static <E, A extends Accumulator<? super E, ?>> A drainAll(final Iterator<? extends E> iterator, final A results) {
+		while (iterator.hasNext()) {
+			results.add(iterator.next());
 		}
 		return results;
 	}
 	
 	/**
-	 * Drains the next n values provided by the given iterator and adds them to the given collection.
+	 * Drains all elements provided by the the given iterator and adds them to the given collection.
 	 * 
-	 * @param <T> Type of the values.
+	 * @param <E> Type of the elements.
 	 * @param <C> Type of the collection to populate.
-	 * @param n Number of values to drain.
-	 * @param values Iterator to drain.
-	 * @param results Collection to populate with the drained values.
+	 * @param iterator Iterator to drain.
+	 * @param results Collection to populate with the drained elements.
 	 * @return The given result collection.
 	 */
-	public static <T, C extends Collection<? super T>> C drain(final Iterator<? extends T> values, final int n, final C results) {
-		return drain(values, n, CollectionAccumulators.add(results)).get();
+	public static <E, C extends Collection<? super E>> C drainAll(final Iterator<? extends E> iterator, final C results) {
+		return drainAll(iterator, CollectionAccumulators.add(results)).get();
 	}
 	
 	/**
-	 * Gets the least value provided by the given iterator.
+	 * Gets the least element provided by the given iterator according to their natural order.
 	 *
-	 * @param <T> Type of the values.
-	 * @param values Iterator providing the values.
-	 * @return The least value.
+	 * @param <E> Type of the elements.
+	 * @param iterator Iterator providing the elements.
+	 * @return The least element.
 	 */
-	public static <T extends Comparable<T>> Maybe<? extends T> least(final Iterator<? extends T> values) {
-		return drain(values, ComparableAccumulators.<T>least()).get();
+	public static <E extends Comparable<E>> Maybe<? extends E> least(final Iterator<? extends E> iterator) {
+		return drainAll(iterator, ComparableAccumulators.<E>least()).get();
 	}
 	
 	/**
-	 * Gets the least value provided by the given iterator according to the given comparator.
+	 * Gets the least element provided by the given iterator according to the given comparator.
 	 *
-	 * @param <T> Type of the values.
-	 * @param comparator The comparator.
-	 * @param values The values.
-	 * @return The least value.
+	 * @param <E> Type of the elements.
+	 * @param iterator Iterator providing the elements.
+	 * @param comparator Comparator to use.
+	 * @return The least element.
 	 */
-	public static <T> Maybe<? extends T> least(final Iterator<? extends T> values, final Comparator<? super T> comparator) {
-		return drain(values, ComparatorAccumulators.least(comparator)).get();
+	public static <E> Maybe<? extends E> least(final Iterator<? extends E> iterator, final Comparator<? super E> comparator) {
+		return drainAll(iterator, ComparatorAccumulators.least(comparator)).get();
 	}
 	
 	/**
-	 * Gets the greatest value provided by the given iterator.
+	 * Gets the greatest element provided by the given iterator according to their natural order.
 	 *
-	 * @param <T> Type of the values.
-	 * @param values Iterator providing the values.
-	 * @return The greatest value.
+	 * @param <E> Type of the elements.
+	 * @param iterator Iterator providing the elements.
+	 * @return The greatest element.
 	 */
-	public static <T extends Comparable<T>> Maybe<? extends T> greatest(final Iterator<? extends T> values) {
-		return drain(values, ComparableAccumulators.<T>greatest()).get();
+	public static <E extends Comparable<E>> Maybe<? extends E> greatest(final Iterator<? extends E> iterator) {
+		return drainAll(iterator, ComparableAccumulators.<E>greatest()).get();
 	}
 	
 	/**
-	 * Gets the greatest value provided by the given iterator according to the given comparator.
+	 * Gets the greatest element provided by the given iterator according to the given comparator.
 	 *
-	 * @param <T> Type of the values.
-	 * @param comparator The comparator.
-	 * @param values The values.
-	 * @return The greatest value.
+	 * @param <E> Type of the elements.
+	 * @param iterator Iterator providing the elements.
+	 * @param comparator Comparator to use.
+	 * @return The greatest element.
 	 */
-	public static <T> Maybe<? extends T> greatest(final Iterator<? extends T> values, final Comparator<? super T> comparator) {
-		return drain(values, ComparatorAccumulators.greatest(comparator)).get();
+	public static <E> Maybe<? extends E> greatest(final Iterator<? extends E> iterator, final Comparator<? super E> comparator) {
+		return drainAll(iterator, ComparatorAccumulators.greatest(comparator)).get();
 	}
 	
 	/**
-	 * Filters the values from the given iterator using the given predicate.
+	 * Takes the n first elements of the given iterator.
 	 * <p>
 	 * The built iterator feeds from the given iterator.
-	 *
-	 * @param <T> Type of the values.
-	 * @param iterator Iterator to filter.
-	 * @param filter Filter to use.
-	 * @return The built iterator over the filtered values.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param iterator Iterator providing the elements.
+	 * @param n Number of elements to take.
+	 * @return An iterator providing the taken elements.
 	 */
-	public static <T> Iterator<T> filter(final Iterator<? extends T> iterator, final Predicate<? super T> filter) {
+	public static <E> Iterator<E> take(final Iterator<? extends E> iterator, final int n) {
 		assert null != iterator;
-		assert null != filter;
 		
-		return new FilterIterator<T>() {
+		return new Iterator<E>() {
+			private int _i = 0;
+			
 			@Override
-			protected Maybe<T> pull() {
-				return IteratorUtils.next(iterator);
+			public boolean hasNext() {
+				return iterator.hasNext() && _i < n;
 			}
 			
 			@Override
-			public boolean filter(final T value) {
-				return filter.evaluate(value);
+			public E next() {
+				if (_i < n) {
+					_i += 1;
+					return iterator.next();
+				} else {
+					throw new NoSuchElementException();
+				}
+			}
+			
+			@Override
+			public void remove() {
+				iterator.remove();
 			}
 		};
 	}
 	
 	/**
-	 * Transforms the values from the given iterator using the given function.
+	 * Drops the n first elements of the given iterator.
+	 * <p>
+	 * The built iterator feeds from the given iterator.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param iterator Iterator providing the elements.
+	 * @param n Number of elements to drop.
+	 * @return An iterator providing the remaining elements.
+	 */
+	public static <E> Iterator<E> drop(final Iterator<? extends E> iterator, final int n) {
+		assert null != iterator;
+		
+		return new Iterator<E>() {
+			private int _droppedN = 0;
+			
+			@Override
+			public boolean hasNext() {
+				drop();
+				return iterator.hasNext();
+			}
+			
+			@Override
+			public E next() {
+				drop();
+				return iterator.next();
+			}
+			
+			@Override
+			public void remove() {
+				drop();
+				iterator.remove();
+			}
+			
+			private void drop() {
+				while (_droppedN < n && iterator.hasNext()) {
+					iterator.next();
+					_droppedN += 1;
+				}
+			}
+		};
+	}
+	
+	// TODO: fold
+	
+	/**
+	 * Filters the elements from the given iterator using the given predicate.
 	 * <p>
 	 * The built iterator feeds from the given iterator.
 	 *
-	 * @param <T> Type of the values.
-	 * @param <R> Type of the transformed values.
-	 * @param iterator Iterator to transform.
-	 * @param function Function to use to transform the values.
-	 * @return The built iterator over the transformed values.
+	 * @param <E> Type of the elements.
+	 * @param iterator Iterator to filter.
+	 * @param filter Filter to use.
+	 * @return The built iterator over the filtered elements.
 	 */
-	public static <T, R> Iterator<R> map(final Iterator<? extends T> iterator, final Function<? super T, ? extends R> function) {
+	public static <E> Iterator<E> filter(final Iterator<? extends E> iterator, final Predicate<? super E> filter) {
 		assert null != iterator;
-		assert null != function;
+		assert null != filter;
 		
-		return new MapIterator<T, R>() {
+		return new FilterIterator<E>() {
 			@Override
-			protected Maybe<T> pull() {
+			protected Maybe<E> pull() {
 				return IteratorUtils.next(iterator);
 			}
 			
 			@Override
-			protected R map(final T value) {
-				return function.evaluate(value);
+			public boolean filter(final E element) {
+				return filter.evaluate(element);
+			}
+		};
+	}
+	
+	/**
+	 * Transforms the elements from the given iterator using the given function.
+	 * <p>
+	 * The built iterator feeds from the given iterator.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param <RE> Type of the transformed elements.
+	 * @param iterator Iterator to transform.
+	 * @param function Function to use to transform the elements.
+	 * @return The built iterator over the transformed elements.
+	 */
+	public static <E, RE> Iterator<RE> map(final Iterator<? extends E> iterator, final Function<? super E, ? extends RE> function) {
+		assert null != iterator;
+		assert null != function;
+		
+		return new MapIterator<E, RE>() {
+			@Override
+			protected Maybe<E> pull() {
+				return IteratorUtils.next(iterator);
+			}
+			
+			@Override
+			protected RE map(final E element) {
+				return function.evaluate(element);
 			}
 		};
 	}
@@ -234,29 +315,29 @@ public class IteratorUtils {
 	// TODO: flatMap
 	
 	/**
-	 * Extracts the values from the given iterator using the given extractor.
+	 * Extracts the elements from the given iterator using the given extractor.
 	 * <p>
 	 * The built iterator feeds from the given iterator.
 	 *
-	 * @param <T> Type of the values.
-	 * @param <R> Type of the extracted values.
+	 * @param <E> Type of the elements.
+	 * @param <RE> Type of the extracted elements.
 	 * @param iterator Iterator to extract.
-	 * @param extractor Extractor to use to extract the values.
-	 * @return The built iterator over the extracted values.
+	 * @param extractor Extractor to use to extract the elements.
+	 * @return The built iterator over the extracted elements.
 	 */
-	public static <T, R> Iterator<R> extract(final Iterator<? extends T> iterator, final Function<? super T, ? extends Maybe<? extends R>> extractor) {
+	public static <E, RE> Iterator<RE> extract(final Iterator<? extends E> iterator, final Function<? super E, ? extends Maybe<? extends RE>> extractor) {
 		assert null != iterator;
 		assert null != extractor;
 		
-		return new ExtractIterator<T, R>() {
+		return new ExtractIterator<E, RE>() {
 			@Override
-			protected Maybe<T> pull() {
+			protected Maybe<E> pull() {
 				return IteratorUtils.next(iterator);
 			}
 			
 			@Override
-			public Maybe<? extends R> extract(final T value) {
-				return extractor.evaluate(value);
+			public Maybe<? extends RE> extract(final E element) {
+				return extractor.evaluate(element);
 			}
 		};
 	}

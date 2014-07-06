@@ -26,9 +26,9 @@ import java.util.Collection;
 public abstract class BaseCollectionFactory<T, C extends Collection<? super T>>
 implements CollectionFactory<T, C> {
 	@Override
-	public C build(final Iterable<? extends T> values) {
+	public C build(final Iterable<? extends T> elements) {
 		final C collection = build();
-		CollectionUtils.addAll(collection, values);
+		CollectionUtils.addAll(collection, elements);
 		return collection;
 	}
 }

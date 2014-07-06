@@ -18,24 +18,24 @@ package com.trazere.core.imperative;
 import com.trazere.core.util.Maybe;
 
 /**
- * The {@link FilterIterator} class implements iterator combinators that filter values.
+ * The {@link FilterIterator} class implements iterator combinators that filter elements.
  * 
- * @param <T> Type of the values.
+ * @param <E> Type of the elements.
  */
-public abstract class FilterIterator<T>
-extends ExtractIterator<T, T> {
+public abstract class FilterIterator<E>
+extends ExtractIterator<E, E> {
 	// Iterator.
 	
 	@Override
-	protected Maybe<? extends T> extract(final T value) {
-		return filter(value) ? Maybe.some(value) : Maybe.<T>none();
+	protected Maybe<? extends E> extract(final E element) {
+		return filter(element) ? Maybe.some(element) : Maybe.<E>none();
 	}
 	
 	/**
-	 * Filters the given value.
+	 * Filters the given element.
 	 * 
-	 * @param value Value to filter.
+	 * @param element Element to filter.
 	 * @return <code>true</code> when the value is accepted, <code>false</code> otherwise.
 	 */
-	protected abstract boolean filter(final T value);
+	protected abstract boolean filter(final E element);
 }

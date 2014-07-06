@@ -30,7 +30,7 @@ public class CollectionFactories {
 	/**
 	 * Builds a collection factory that builds {@link ArrayList}s.
 	 * 
-	 * @param <T> Type of the values.
+	 * @param <T> Type of the elements.
 	 * @return The built factory.
 	 */
 	@SuppressWarnings("unchecked")
@@ -50,15 +50,15 @@ public class CollectionFactories {
 		}
 		
 		@Override
-		public ArrayList<Object> build(final Collection<? extends Object> values) {
-			return new ArrayList<Object>(values);
+		public ArrayList<Object> build(final Collection<? extends Object> elements) {
+			return new ArrayList<Object>(elements);
 		}
 	};
 	
 	/**
 	 * Builds a collection factory that builds {@link LinkedList}s.
 	 * 
-	 * @param <T> Type of the values.
+	 * @param <T> Type of the elements.
 	 * @return The built factory.
 	 */
 	@SuppressWarnings("unchecked")
@@ -78,15 +78,15 @@ public class CollectionFactories {
 		}
 		
 		@Override
-		public LinkedList<Object> build(final Collection<? extends Object> values) {
-			return new LinkedList<Object>(values);
+		public LinkedList<Object> build(final Collection<? extends Object> elements) {
+			return new LinkedList<Object>(elements);
 		}
 	};
 	
 	/**
 	 * Builds a collection factory that builds {@link HashSet}s.
 	 * 
-	 * @param <T> Type of the values.
+	 * @param <T> Type of the elements.
 	 * @return The built factory.
 	 */
 	@SuppressWarnings("unchecked")
@@ -106,15 +106,15 @@ public class CollectionFactories {
 		}
 		
 		@Override
-		public HashSet<Object> build(final Collection<? extends Object> values) {
-			return new HashSet<Object>(values);
+		public HashSet<Object> build(final Collection<? extends Object> elements) {
+			return new HashSet<Object>(elements);
 		}
 	};
 	
 	/**
 	 * Builds a collection factory that builds {@link TreeSet}s.
 	 * 
-	 * @param <T> Type of the values.
+	 * @param <T> Type of the elements.
 	 * @return The built factory.
 	 */
 	@SuppressWarnings("unchecked")
@@ -134,8 +134,8 @@ public class CollectionFactories {
 		}
 		
 		@Override
-		public TreeSet<Object> build(final Collection<? extends Object> values) {
-			return new TreeSet<Object>(values);
+		public TreeSet<Object> build(final Collection<? extends Object> elements) {
+			return new TreeSet<Object>(elements);
 		}
 	};
 	

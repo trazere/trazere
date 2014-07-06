@@ -18,25 +18,25 @@ package com.trazere.core.imperative;
 import com.trazere.core.util.Maybe;
 
 /**
- * The {@link MapIterator} class implements iterator combinators that transform values.
+ * The {@link MapIterator} class implements iterator combinators that transform elements.
  * 
- * @param <T> Type of the feeded values.
- * @param <R> Type of the transformed values.
+ * @param <E> Type of the feeded elements.
+ * @param <RE> Type of the transformed elements.
  */
-public abstract class MapIterator<T, R>
-extends ExtractIterator<T, R> {
+public abstract class MapIterator<E, RE>
+extends ExtractIterator<E, RE> {
 	// Iterator.
 	
 	@Override
-	protected Maybe<? extends R> extract(final T value) {
-		return Maybe.some(map(value));
+	protected Maybe<? extends RE> extract(final E element) {
+		return Maybe.some(map(element));
 	}
 	
 	/**
-	 * Transforms the given value.
+	 * Transforms the given element.
 	 * 
-	 * @param value Value to transform.
-	 * @return The transformed value.
+	 * @param element Feed element to transform.
+	 * @return The transformed element.
 	 */
-	protected abstract R map(final T value);
+	protected abstract RE map(final E element);
 }

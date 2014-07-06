@@ -20,13 +20,13 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * The {@link ExtractIterator} class implements iterators that extract values.
+ * The {@link ExtractIterator} class implements iterators that extract elements.
  * 
- * @param <T> Type of the feeded values.
- * @param <R> Type of the extracted values.
+ * @param <E> Type of the feeded elements.
+ * @param <RE> Type of the extracted elements.
  */
-public abstract class ExtractIterator<T, R>
-implements Iterator<R> {
+public abstract class ExtractIterator<E, RE>
+implements Iterator<RE> {
 	// Iterator.
 	
 	@Override
@@ -35,9 +35,9 @@ implements Iterator<R> {
 	}
 	
 	@Override
-	public R next() {
+	public RE next() {
 		if (lookAhead()) {
-			final R next = _next.asSome().getValue();
+			final RE next = _next.asSome().getValue();
 			_next = Maybe.none();
 			_lookAhead = false;
 			return next;
@@ -46,20 +46,20 @@ implements Iterator<R> {
 		}
 	}
 	
-	/** Flag indicating whether the next value has been retrieved from the feed. */
+	/** Flag indicating whether the next element has been retrieved from the feed. */
 	private boolean _lookAhead = false;
 	
-	/** Next value from the feed. */
-	private Maybe<? extends R> _next = Maybe.none();
+	/** Next element from the feed. */
+	private Maybe<? extends RE> _next = Maybe.none();
 	
 	private boolean lookAhead() {
 		if (_lookAhead) {
 			return _next.isSome();
 		} else {
 			while (true) {
-				final Maybe<T> rawNext = pull();
+				final Maybe<E> rawNext = pull();
 				if (rawNext.isSome()) {
-					final Maybe<? extends R> next = extract(rawNext.asSome().getValue());
+					final Maybe<? extends RE> next = extract(rawNext.asSome().getValue());
 					if (next.isSome()) {
 						_next = next;
 						_lookAhead = true;
@@ -75,19 +75,19 @@ implements Iterator<R> {
 	}
 	
 	/**
-	 * Pulls the next value from the feed.
+	 * Pulls the next element from the feed.
 	 * 
-	 * @return The next value.
+	 * @return The next element.
 	 */
-	protected abstract Maybe<T> pull();
+	protected abstract Maybe<E> pull();
 	
 	/**
-	 * Extracts the value to produce from the given value.
+	 * Extracts the element to produce from the given feed element.
 	 * 
-	 * @param value Value to extract from.
-	 * @return The extracted value.
+	 * @param element Feed element to extract from.
+	 * @return The extracted element.
 	 */
-	protected abstract Maybe<? extends R> extract(final T value);
+	protected abstract Maybe<? extends RE> extract(final E element);
 	
 	@Override
 	public void remove() {
