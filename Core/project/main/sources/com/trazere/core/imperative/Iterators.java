@@ -29,12 +29,12 @@ public class Iterators {
 	/**
 	 * Builds an empty iterator.
 	 * 
-	 * @param <T> Type of the the values.
+	 * @param <E> Type of the the elements.
 	 * @return The built iterator.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> Iterator<T> empty() {
-		return (Iterator<T>) EMPTY;
+	public static <E> Iterator<E> empty() {
+		return (Iterator<E>) EMPTY;
 	}
 	
 	private static final Iterator<?> EMPTY = new Iterator<Object>() {
@@ -58,12 +58,12 @@ public class Iterators {
 	/**
 	 * Builds an iterator over the given value.
 	 * 
-	 * @param <T> Type of the the value.
+	 * @param <E> Type of the the element.
 	 * @param value Value to iterate.
 	 * @return The built iterator.
 	 */
-	public static <T> Iterator<T> fromValue(final T value) {
-		return new Iterator<T>() {
+	public static <E> Iterator<E> fromValue(final E value) {
+		return new Iterator<E>() {
 			protected boolean _next = true;
 			
 			@Override
@@ -72,7 +72,7 @@ public class Iterators {
 			}
 			
 			@Override
-			public T next()
+			public E next()
 			throws NoSuchElementException {
 				if (_next) {
 					_next = false;
@@ -92,14 +92,14 @@ public class Iterators {
 	/**
 	 * Builds an iterator over the given values.
 	 * 
-	 * @param <T> Type of the the values.
+	 * @param <E> Type of the the elements.
 	 * @param values Values to iterate.
 	 * @return The built iterator.
 	 */
-	public static <T> Iterator<T> fromValues(final T... values) {
+	public static <E> Iterator<E> fromValues(final E... values) {
 		assert null != values;
 		
-		return new Iterator<T>() {
+		return new Iterator<E>() {
 			protected int _index = 0;
 			
 			@Override
@@ -108,10 +108,10 @@ public class Iterators {
 			}
 			
 			@Override
-			public T next()
+			public E next()
 			throws NoSuchElementException {
 				if (_index < values.length) {
-					final T value = values[_index];
+					final E value = values[_index];
 					_index += 1;
 					
 					return value;
@@ -130,20 +130,20 @@ public class Iterators {
 	/**
 	 * Builds an iterator that iterates the given list in reverse.
 	 * 
-	 * @param <T> Type of the values.
+	 * @param <E> Type of the elements.
 	 * @param list List to iterate.
 	 * @return The built iterator.
 	 */
-	public static <T> Iterator<T> reverse(final List<? extends T> list) {
-		final ListIterator<? extends T> iterator = list.listIterator(list.size());
-		return new Iterator<T>() {
+	public static <E> Iterator<E> reverse(final List<? extends E> list) {
+		final ListIterator<? extends E> iterator = list.listIterator(list.size());
+		return new Iterator<E>() {
 			@Override
 			public boolean hasNext() {
 				return iterator.hasPrevious();
 			}
 			
 			@Override
-			public T next() {
+			public E next() {
 				return iterator.previous();
 			}
 			

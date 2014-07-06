@@ -24,19 +24,6 @@ import java.util.Collection;
  */
 public class CollectionUtils {
 	//	/**
-	//	 * Gets a value from the given values.
-	//	 *
-	//	 * @param <T> Type of the values.
-	//	 * @param values Values to read.
-	//	 * @return Some value if any.
-	//	 */
-	//	public static <T> Maybe<T> any(final Iterable<? extends T> values) {
-	//		assert null != values;
-	//
-	//		return IteratorUtils.next(values.iterator());
-	//	}
-	//
-	//	/**
 	//	 * Gets a binding from the given map.
 	//	 *
 	//	 * @param <K> Type of the keys.
