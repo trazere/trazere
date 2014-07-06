@@ -19,7 +19,6 @@ import com.trazere.core.imperative.Iterators;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Maybe.None;
 import com.trazere.core.util.Tuple2;
-import com.trazere.core.util.Tuples;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -207,32 +206,6 @@ public class Feeds {
 					return Maybe.some(new Tuple2<E, Feed<E>>(iterator.next(), Feeds.fromIterator(iterator)));
 				} else {
 					return Maybe.none();
-				}
-			}
-		};
-	}
-	
-	/**
-	 * Appends the given feeds together.
-	 * 
-	 * @param <E> Type of the elements.
-	 * @param feed1 First feed.
-	 * @param feed2 Second feed.
-	 * @return The built feed.
-	 */
-	public static <E> Feed<E> append(final Feed<? extends E> feed1, final Feed<? extends E> feed2) {
-		assert null != feed1;
-		assert null != feed2;
-		
-		return new Feed<E>() {
-			@Override
-			public Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> evaluate() {
-				final Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> maybeItem1 = feed1.evaluate();
-				if (maybeItem1.isSome()) {
-					final Tuple2<? extends E, ? extends Feed<? extends E>> item1 = maybeItem1.asSome().getValue();
-					return Maybe.some(Tuples.tuple2(item1.get1(), append(item1.get2(), feed2)));
-				} else {
-					return feed2.evaluate();
 				}
 			}
 		};

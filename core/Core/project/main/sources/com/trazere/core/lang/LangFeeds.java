@@ -59,6 +59,31 @@ public class LangFeeds {
 		return integer(0, 1);
 	}
 	
+	/**
+	 * Builds a feed of characters corresponding to the given string.
+	 * 
+	 * @param s String.
+	 * @return The built feed.
+	 */
+	public static final Feed<Character> fromString(final String s) {
+		return fromString(s, 0);
+	}
+	
+	private static final Feed<Character> fromString(final String s, final int index) {
+		assert null != s;
+		
+		return new Feed<Character>() {
+			@Override
+			public Maybe<Tuple2<Character, Feed<Character>>> evaluate() {
+				if (s.length() > index) {
+					return Maybe.some(new Tuple2<>(s.charAt(index), fromString(s, index + 1)));
+				} else {
+					return Maybe.none();
+				}
+			}
+		};
+	}
+	
 	private LangFeeds() {
 		// Prevent instantiation.
 	}
