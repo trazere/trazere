@@ -52,7 +52,13 @@ public interface Reference<T> {
 	 * @param defaultValue Default value.
 	 * @return The referenced value or the given default value when the reference is not set.
 	 */
-	T get(T defaultValue);
+	default T get(final T defaultValue) {
+		if (isSet()) {
+			return get();
+		} else {
+			return defaultValue;
+		}
+	}
 	
 	/**
 	 * Gets the value set in this reference.
@@ -60,7 +66,13 @@ public interface Reference<T> {
 	 * @param defaultValue Default value.
 	 * @return The referenced value or the given default value when the reference is not set.
 	 */
-	T get(Thunk<? extends T> defaultValue);
+	default T get(final Thunk<? extends T> defaultValue) {
+		if (isSet()) {
+			return get();
+		} else {
+			return defaultValue.evaluate();
+		}
+	}
 	
 	/**
 	 * Gets a view of the value set in the receiver reference.
@@ -70,5 +82,11 @@ public interface Reference<T> {
 	 * 
 	 * @return The view of the referenced value.
 	 */
-	Maybe<T> asMaybe();
+	default Maybe<T> asMaybe() {
+		if (isSet()) {
+			return Maybe.some(get());
+		} else {
+			return Maybe.none();
+		}
+	}
 }

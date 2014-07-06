@@ -41,7 +41,9 @@ extends Factory<C> {
 	 * @param capacity Initial capacity of the collection.
 	 * @return The built collection.
 	 */
-	C build(int capacity);
+	default C build(final int capacity) {
+		return build();
+	}
 	
 	/**
 	 * Builds a collection containing the given elements.
@@ -49,7 +51,11 @@ extends Factory<C> {
 	 * @param elements Elements.
 	 * @return The built collection.
 	 */
-	C build(Iterable<? extends T> elements);
+	default C build(final Iterable<? extends T> elements) {
+		final C collection = build();
+		CollectionUtils.addAll(collection, elements);
+		return collection;
+	}
 	
 	/**
 	 * Builds a collection containing the given elements.

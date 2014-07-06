@@ -16,7 +16,6 @@
 package com.trazere.core.reference;
 
 import com.trazere.core.imperative.Accumulator;
-import com.trazere.core.imperative.BaseAccumulator;
 
 /**
  * The {@link ReferenceAccumulators} class provides various factories of accumulators related to references.
@@ -33,7 +32,7 @@ public class ReferenceAccumulators {
 	public static <T, R extends MutableReference<T>> Accumulator<T, R> update(final R reference) {
 		assert null != reference;
 		
-		return new BaseAccumulator<T, R>() {
+		return new Accumulator<T, R>() {
 			@Override
 			public void add(final T value) {
 				reference.update(value);

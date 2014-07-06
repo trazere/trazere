@@ -37,7 +37,7 @@ public class MapFactories {
 		return (MapFactory<K, V, HashMap<K, V>>) HASH_MAP;
 	}
 	
-	private static final MapFactory<?, ?, ?> HASH_MAP = new BaseMapFactory<Object, Object, HashMap<Object, Object>>() {
+	private static final MapFactory<?, ?, ?> HASH_MAP = new MapFactory<Object, Object, HashMap<Object, Object>>() {
 		@Override
 		public HashMap<Object, Object> build() {
 			return new HashMap<>();
@@ -66,14 +66,9 @@ public class MapFactories {
 		return (MapFactory<K, V, TreeMap<K, V>>) TREE_MAP;
 	}
 	
-	private static final MapFactory<?, ?, ?> TREE_MAP = new BaseMapFactory<Object, Object, TreeMap<Object, Object>>() {
+	private static final MapFactory<?, ?, ?> TREE_MAP = new MapFactory<Object, Object, TreeMap<Object, Object>>() {
 		@Override
 		public TreeMap<Object, Object> build() {
-			return new TreeMap<>();
-		}
-		
-		@Override
-		public TreeMap<Object, Object> build(final int capacity) {
 			return new TreeMap<>();
 		}
 		
