@@ -27,7 +27,7 @@ public class Tuples {
 	 * @return The built tuple.
 	 */
 	public static <E1> Tuple1<E1> tuple1(final E1 e1) {
-		return new Tuple1<E1>(e1);
+		return new Tuple1<>(e1);
 	}
 	
 	/**
@@ -40,7 +40,7 @@ public class Tuples {
 	 * @return The built tuple.
 	 */
 	public static <E1, E2> Tuple2<E1, E2> tuple2(final E1 e1, final E2 e2) {
-		return new Tuple2<E1, E2>(e1, e2);
+		return new Tuple2<>(e1, e2);
 	}
 	
 	/**
@@ -55,7 +55,7 @@ public class Tuples {
 	 * @return The built tuple.
 	 */
 	public static <E1, E2, E3> Tuple3<E1, E2, E3> tuple3(final E1 e1, final E2 e2, final E3 e3) {
-		return new Tuple3<E1, E2, E3>(e1, e2, e3);
+		return new Tuple3<>(e1, e2, e3);
 	}
 	
 	/**
@@ -72,7 +72,7 @@ public class Tuples {
 	 * @return The built tuple.
 	 */
 	public static <E1, E2, E3, E4> Tuple4<E1, E2, E3, E4> tuple4(final E1 e1, final E2 e2, final E3 e3, final E4 e4) {
-		return new Tuple4<E1, E2, E3, E4>(e1, e2, e3, e4);
+		return new Tuple4<>(e1, e2, e3, e4);
 	}
 	
 	/**
@@ -91,7 +91,7 @@ public class Tuples {
 	 * @return The built tuple.
 	 */
 	public static <E1, E2, E3, E4, E5> Tuple5<E1, E2, E3, E4, E5> tuple5(final E1 e1, final E2 e2, final E3 e3, final E4 e4, final E5 e5) {
-		return new Tuple5<E1, E2, E3, E4, E5>(e1, e2, e3, e4, e5);
+		return new Tuple5<>(e1, e2, e3, e4, e5);
 	}
 	
 	/**
@@ -112,7 +112,7 @@ public class Tuples {
 	 * @return The built tuple.
 	 */
 	public static <E1, E2, E3, E4, E5, E6> Tuple6<E1, E2, E3, E4, E5, E6> tuple6(final E1 e1, final E2 e2, final E3 e3, final E4 e4, final E5 e5, final E6 e6) {
-		return new Tuple6<E1, E2, E3, E4, E5, E6>(e1, e2, e3, e4, e5, e6);
+		return new Tuple6<>(e1, e2, e3, e4, e5, e6);
 	}
 	
 	/**
@@ -135,7 +135,7 @@ public class Tuples {
 	 * @return The built tuple.
 	 */
 	public static <E1, E2, E3, E4, E5, E6, E7> Tuple7<E1, E2, E3, E4, E5, E6, E7> tuple7(final E1 e1, final E2 e2, final E3 e3, final E4 e4, final E5 e5, final E6 e6, final E7 e7) {
-		return new Tuple7<E1, E2, E3, E4, E5, E6, E7>(e1, e2, e3, e4, e5, e6, e7);
+		return new Tuple7<>(e1, e2, e3, e4, e5, e6, e7);
 	}
 	
 	/**
@@ -160,7 +160,7 @@ public class Tuples {
 	 * @return The built tuple.
 	 */
 	public static <E1, E2, E3, E4, E5, E6, E7, E8> Tuple8<E1, E2, E3, E4, E5, E6, E7, E8> tuple8(final E1 e1, final E2 e2, final E3 e3, final E4 e4, final E5 e5, final E6 e6, final E7 e7, final E8 e8) {
-		return new Tuple8<E1, E2, E3, E4, E5, E6, E7, E8>(e1, e2, e3, e4, e5, e6, e7, e8);
+		return new Tuple8<>(e1, e2, e3, e4, e5, e6, e7, e8);
 	}
 	
 	/**
@@ -187,7 +187,7 @@ public class Tuples {
 	 * @return The built tuple.
 	 */
 	public static <E1, E2, E3, E4, E5, E6, E7, E8, E9> Tuple9<E1, E2, E3, E4, E5, E6, E7, E8, E9> tuple9(final E1 e1, final E2 e2, final E3 e3, final E4 e4, final E5 e5, final E6 e6, final E7 e7, final E8 e8, final E9 e9) {
-		return new Tuple9<E1, E2, E3, E4, E5, E6, E7, E8, E9>(e1, e2, e3, e4, e5, e6, e7, e8, e9);
+		return new Tuple9<>(e1, e2, e3, e4, e5, e6, e7, e8, e9);
 	}
 	
 	/**
@@ -216,7 +216,7 @@ public class Tuples {
 	 * @return The built tuple.
 	 */
 	public static <E1, E2, E3, E4, E5, E6, E7, E8, E9, E10> Tuple10<E1, E2, E3, E4, E5, E6, E7, E8, E9, E10> tuple10(final E1 e1, final E2 e2, final E3 e3, final E4 e4, final E5 e5, final E6 e6, final E7 e7, final E8 e8, final E9 e9, final E10 e10) {
-		return new Tuple10<E1, E2, E3, E4, E5, E6, E7, E8, E9, E10>(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10);
+		return new Tuple10<>(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10);
 	}
 	
 	private Tuples() {

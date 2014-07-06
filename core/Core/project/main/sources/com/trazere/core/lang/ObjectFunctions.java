@@ -13,7 +13,7 @@ public class ObjectFunctions {
 	 * @return The built function.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> Function<T, Class<? extends T>> getClass() {
+	public static <T> Function<T, Class<? extends T>> getClass_() {
 		return (Function<T, Class<? extends T>>) GET_CLASS;
 	}
 	
@@ -31,7 +31,7 @@ public class ObjectFunctions {
 	 * @return The built function.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> Function<T, Integer> hashCode() {
+	public static <T> Function<T, Integer> hashCode_() {
 		return (Function<T, Integer>) HASH_CODE;
 	}
 	
@@ -49,7 +49,7 @@ public class ObjectFunctions {
 	 * @return The built function.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> Function<T, String> toString() {
+	public static <T> Function<T, String> toString_() {
 		return (Function<T, String>) TO_STRING;
 	}
 	
