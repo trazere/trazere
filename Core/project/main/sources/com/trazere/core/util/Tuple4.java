@@ -48,36 +48,36 @@ extends Tuple3<E1, E2, E3> {
 	
 	@Override
 	public <NE1> Tuple4<NE1, E2, E3, E4> with1(final NE1 ne1) {
-		return new Tuple4<NE1, E2, E3, E4>(ne1, _e2, _e3, _e4);
+		return new Tuple4<>(ne1, _e2, _e3, _e4);
 	}
 	
 	@Override
 	public <NE1> Tuple4<NE1, E2, E3, E4> map1(final Function<? super E1, ? extends NE1> function) {
-		return new Tuple4<NE1, E2, E3, E4>(function.evaluate(_e1), _e2, _e3, _e4);
+		return new Tuple4<>(function.evaluate(_e1), _e2, _e3, _e4);
 	}
 	
 	// Second element.
 	
 	@Override
 	public <NE2> Tuple4<E1, NE2, E3, E4> with2(final NE2 ne2) {
-		return new Tuple4<E1, NE2, E3, E4>(_e1, ne2, _e3, _e4);
+		return new Tuple4<>(_e1, ne2, _e3, _e4);
 	}
 	
 	@Override
 	public <NE2> Tuple4<E1, NE2, E3, E4> map2(final Function<? super E2, ? extends NE2> function) {
-		return new Tuple4<E1, NE2, E3, E4>(_e1, function.evaluate(_e2), _e3, _e4);
+		return new Tuple4<>(_e1, function.evaluate(_e2), _e3, _e4);
 	}
 	
 	// Third element.
 	
 	@Override
 	public <NE3> Tuple4<E1, E2, NE3, E4> with3(final NE3 ne3) {
-		return new Tuple4<E1, E2, NE3, E4>(_e1, _e2, ne3, _e4);
+		return new Tuple4<>(_e1, _e2, ne3, _e4);
 	}
 	
 	@Override
 	public <NE3> Tuple4<E1, E2, NE3, E4> map3(final Function<? super E3, ? extends NE3> function) {
-		return new Tuple4<E1, E2, NE3, E4>(_e1, _e2, function.evaluate(_e3), _e4);
+		return new Tuple4<>(_e1, _e2, function.evaluate(_e3), _e4);
 	}
 	
 	// Fourth element.
@@ -102,7 +102,7 @@ extends Tuple3<E1, E2, E3> {
 	 * @return The derived tuple.
 	 */
 	public <NE4> Tuple4<E1, E2, E3, NE4> with4(final NE4 ne4) {
-		return new Tuple4<E1, E2, E3, NE4>(_e1, _e2, _e3, ne4);
+		return new Tuple4<>(_e1, _e2, _e3, ne4);
 	}
 	
 	/**
@@ -113,7 +113,7 @@ extends Tuple3<E1, E2, E3> {
 	 * @return The derived tuple.
 	 */
 	public <NE4> Tuple4<E1, E2, E3, NE4> map4(final Function<? super E4, ? extends NE4> function) {
-		return new Tuple4<E1, E2, E3, NE4>(_e1, _e2, _e3, function.evaluate(_e4));
+		return new Tuple4<>(_e1, _e2, _e3, function.evaluate(_e4));
 	}
 	
 	// Object.

@@ -47,6 +47,7 @@ implements Comparator<T> {
 	 * 
 	 * @param comparators The sequence of comparators.
 	 */
+	@SafeVarargs
 	public SequenceComparator(final Comparator<? super T>... comparators) {
 		this(Arrays.asList(comparators));
 	}

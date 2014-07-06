@@ -56,84 +56,84 @@ extends Tuple7<E1, E2, E3, E4, E5, E6, E7> {
 	
 	@Override
 	public <NE1> Tuple8<NE1, E2, E3, E4, E5, E6, E7, E8> with1(final NE1 ne1) {
-		return new Tuple8<NE1, E2, E3, E4, E5, E6, E7, E8>(ne1, _e2, _e3, _e4, _e5, _e6, _e7, _e8);
+		return new Tuple8<>(ne1, _e2, _e3, _e4, _e5, _e6, _e7, _e8);
 	}
 	
 	@Override
 	public <NE1> Tuple8<NE1, E2, E3, E4, E5, E6, E7, E8> map1(final Function<? super E1, ? extends NE1> function) {
-		return new Tuple8<NE1, E2, E3, E4, E5, E6, E7, E8>(function.evaluate(_e1), _e2, _e3, _e4, _e5, _e6, _e7, _e8);
+		return new Tuple8<>(function.evaluate(_e1), _e2, _e3, _e4, _e5, _e6, _e7, _e8);
 	}
 	
 	// Second element.
 	
 	@Override
 	public <NE2> Tuple8<E1, NE2, E3, E4, E5, E6, E7, E8> with2(final NE2 ne2) {
-		return new Tuple8<E1, NE2, E3, E4, E5, E6, E7, E8>(_e1, ne2, _e3, _e4, _e5, _e6, _e7, _e8);
+		return new Tuple8<>(_e1, ne2, _e3, _e4, _e5, _e6, _e7, _e8);
 	}
 	
 	@Override
 	public <NE2> Tuple8<E1, NE2, E3, E4, E5, E6, E7, E8> map2(final Function<? super E2, ? extends NE2> function) {
-		return new Tuple8<E1, NE2, E3, E4, E5, E6, E7, E8>(_e1, function.evaluate(_e2), _e3, _e4, _e5, _e6, _e7, _e8);
+		return new Tuple8<>(_e1, function.evaluate(_e2), _e3, _e4, _e5, _e6, _e7, _e8);
 	}
 	
 	// Third element.
 	
 	@Override
 	public <NE3> Tuple8<E1, E2, NE3, E4, E5, E6, E7, E8> with3(final NE3 ne3) {
-		return new Tuple8<E1, E2, NE3, E4, E5, E6, E7, E8>(_e1, _e2, ne3, _e4, _e5, _e6, _e7, _e8);
+		return new Tuple8<>(_e1, _e2, ne3, _e4, _e5, _e6, _e7, _e8);
 	}
 	
 	@Override
 	public <NE3> Tuple8<E1, E2, NE3, E4, E5, E6, E7, E8> map3(final Function<? super E3, ? extends NE3> function) {
-		return new Tuple8<E1, E2, NE3, E4, E5, E6, E7, E8>(_e1, _e2, function.evaluate(_e3), _e4, _e5, _e6, _e7, _e8);
+		return new Tuple8<>(_e1, _e2, function.evaluate(_e3), _e4, _e5, _e6, _e7, _e8);
 	}
 	
 	// Fourth element.
 	
 	@Override
 	public <NE4> Tuple8<E1, E2, E3, NE4, E5, E6, E7, E8> with4(final NE4 ne4) {
-		return new Tuple8<E1, E2, E3, NE4, E5, E6, E7, E8>(_e1, _e2, _e3, ne4, _e5, _e6, _e7, _e8);
+		return new Tuple8<>(_e1, _e2, _e3, ne4, _e5, _e6, _e7, _e8);
 	}
 	
 	@Override
 	public <NE4> Tuple8<E1, E2, E3, NE4, E5, E6, E7, E8> map4(final Function<? super E4, ? extends NE4> function) {
-		return new Tuple8<E1, E2, E3, NE4, E5, E6, E7, E8>(_e1, _e2, _e3, function.evaluate(_e4), _e5, _e6, _e7, _e8);
+		return new Tuple8<>(_e1, _e2, _e3, function.evaluate(_e4), _e5, _e6, _e7, _e8);
 	}
 	
 	// Fifth element.
 	
 	@Override
 	public <NE5> Tuple8<E1, E2, E3, E4, NE5, E6, E7, E8> with5(final NE5 ne5) {
-		return new Tuple8<E1, E2, E3, E4, NE5, E6, E7, E8>(_e1, _e2, _e3, _e4, ne5, _e6, _e7, _e8);
+		return new Tuple8<>(_e1, _e2, _e3, _e4, ne5, _e6, _e7, _e8);
 	}
 	
 	@Override
 	public <NE5> Tuple8<E1, E2, E3, E4, NE5, E6, E7, E8> map5(final Function<? super E5, ? extends NE5> function) {
-		return new Tuple8<E1, E2, E3, E4, NE5, E6, E7, E8>(_e1, _e2, _e3, _e4, function.evaluate(_e5), _e6, _e7, _e8);
+		return new Tuple8<>(_e1, _e2, _e3, _e4, function.evaluate(_e5), _e6, _e7, _e8);
 	}
 	
 	// Sixth element.
 	
 	@Override
 	public <NE6> Tuple8<E1, E2, E3, E4, E5, NE6, E7, E8> with6(final NE6 ne6) {
-		return new Tuple8<E1, E2, E3, E4, E5, NE6, E7, E8>(_e1, _e2, _e3, _e4, _e5, ne6, _e7, _e8);
+		return new Tuple8<>(_e1, _e2, _e3, _e4, _e5, ne6, _e7, _e8);
 	}
 	
 	@Override
 	public <NE6> Tuple8<E1, E2, E3, E4, E5, NE6, E7, E8> map6(final Function<? super E6, ? extends NE6> function) {
-		return new Tuple8<E1, E2, E3, E4, E5, NE6, E7, E8>(_e1, _e2, _e3, _e4, _e5, function.evaluate(_e6), _e7, _e8);
+		return new Tuple8<>(_e1, _e2, _e3, _e4, _e5, function.evaluate(_e6), _e7, _e8);
 	}
 	
 	// Seventh element.
 	
 	@Override
 	public <NE7> Tuple8<E1, E2, E3, E4, E5, E6, NE7, E8> with7(final NE7 ne7) {
-		return new Tuple8<E1, E2, E3, E4, E5, E6, NE7, E8>(_e1, _e2, _e3, _e4, _e5, _e6, ne7, _e8);
+		return new Tuple8<>(_e1, _e2, _e3, _e4, _e5, _e6, ne7, _e8);
 	}
 	
 	@Override
 	public <NE7> Tuple8<E1, E2, E3, E4, E5, E6, NE7, E8> map7(final Function<? super E7, ? extends NE7> function) {
-		return new Tuple8<E1, E2, E3, E4, E5, E6, NE7, E8>(_e1, _e2, _e3, _e4, _e5, _e6, function.evaluate(_e7), _e8);
+		return new Tuple8<>(_e1, _e2, _e3, _e4, _e5, _e6, function.evaluate(_e7), _e8);
 	}
 	
 	// Eighth element.
@@ -158,7 +158,7 @@ extends Tuple7<E1, E2, E3, E4, E5, E6, E7> {
 	 * @return The derived tuple.
 	 */
 	public <NE8> Tuple8<E1, E2, E3, E4, E5, E6, E7, NE8> with8(final NE8 ne8) {
-		return new Tuple8<E1, E2, E3, E4, E5, E6, E7, NE8>(_e1, _e2, _e3, _e4, _e5, _e6, _e7, ne8);
+		return new Tuple8<>(_e1, _e2, _e3, _e4, _e5, _e6, _e7, ne8);
 	}
 	
 	/**
@@ -169,7 +169,7 @@ extends Tuple7<E1, E2, E3, E4, E5, E6, E7> {
 	 * @return The derived tuple.
 	 */
 	public <NE8> Tuple8<E1, E2, E3, E4, E5, E6, E7, NE8> map8(final Function<? super E8, ? extends NE8> function) {
-		return new Tuple8<E1, E2, E3, E4, E5, E6, E7, NE8>(_e1, _e2, _e3, _e4, _e5, _e6, _e7, function.evaluate(_e8));
+		return new Tuple8<>(_e1, _e2, _e3, _e4, _e5, _e6, _e7, function.evaluate(_e8));
 	}
 	
 	// Object.

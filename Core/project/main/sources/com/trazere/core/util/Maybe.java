@@ -51,7 +51,7 @@ implements Iterable<T>, Describable {
 		return (None<T>) NONE;
 	}
 	
-	private static final None<?> NONE = new None<Object>();
+	private static final None<?> NONE = new None<>();
 	
 	/**
 	 * Builds a {@link Maybe} instance using the {@link Some} constructor.
@@ -62,7 +62,7 @@ implements Iterable<T>, Describable {
 	 * @see Some
 	 */
 	public static <T> Some<T> some(final T value) {
-		return new Some<T>(value);
+		return new Some<>(value);
 	}
 	
 	/**

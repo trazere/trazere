@@ -132,6 +132,7 @@ public class Feeds {
 	 * @param values Values.
 	 * @return The built feed.
 	 */
+	@SafeVarargs
 	public static <E> Feed<E> fromValues(final E... values) {
 		return fromValues(values, 0);
 	}
@@ -170,7 +171,7 @@ public class Feeds {
 			@Override
 			public Maybe<Tuple2<E, Feed<E>>> evaluate() {
 				if (index < values.length) {
-					return Maybe.some(new Tuple2<E, Feed<E>>(values[index], Feeds.<E>fromValues(values, index + 1)));
+					return Maybe.some(new Tuple2<>(values[index], Feeds.<E>fromValues(values, index + 1)));
 				} else {
 					return Maybe.none();
 				}

@@ -46,24 +46,24 @@ extends Tuple2<E1, E2> {
 	
 	@Override
 	public <NE1> Tuple3<NE1, E2, E3> with1(final NE1 ne1) {
-		return new Tuple3<NE1, E2, E3>(ne1, _e2, _e3);
+		return new Tuple3<>(ne1, _e2, _e3);
 	}
 	
 	@Override
 	public <NE1> Tuple3<NE1, E2, E3> map1(final Function<? super E1, ? extends NE1> function) {
-		return new Tuple3<NE1, E2, E3>(function.evaluate(_e1), _e2, _e3);
+		return new Tuple3<>(function.evaluate(_e1), _e2, _e3);
 	}
 	
 	// Second element.
 	
 	@Override
 	public <NE2> Tuple3<E1, NE2, E3> with2(final NE2 ne2) {
-		return new Tuple3<E1, NE2, E3>(_e1, ne2, _e3);
+		return new Tuple3<>(_e1, ne2, _e3);
 	}
 	
 	@Override
 	public <NE2> Tuple3<E1, NE2, E3> map2(final Function<? super E2, ? extends NE2> function) {
-		return new Tuple3<E1, NE2, E3>(_e1, function.evaluate(_e2), _e3);
+		return new Tuple3<>(_e1, function.evaluate(_e2), _e3);
 	}
 	
 	// Third element.
@@ -88,7 +88,7 @@ extends Tuple2<E1, E2> {
 	 * @return The derived tuple.
 	 */
 	public <NE3> Tuple3<E1, E2, NE3> with3(final NE3 ne3) {
-		return new Tuple3<E1, E2, NE3>(_e1, _e2, ne3);
+		return new Tuple3<>(_e1, _e2, ne3);
 	}
 	
 	/**
@@ -99,7 +99,7 @@ extends Tuple2<E1, E2> {
 	 * @return The derived tuple.
 	 */
 	public <NE3> Tuple3<E1, E2, NE3> map3(final Function<? super E3, ? extends NE3> function) {
-		return new Tuple3<E1, E2, NE3>(_e1, _e2, function.evaluate(_e3));
+		return new Tuple3<>(_e1, _e2, function.evaluate(_e3));
 	}
 	
 	// Object.

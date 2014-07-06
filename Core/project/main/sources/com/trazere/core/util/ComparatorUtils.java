@@ -128,7 +128,7 @@ public class ComparatorUtils {
 	 * @see InverseComparator
 	 */
 	public static <T> Comparator<T> inverse(final Comparator<? super T> comparator) {
-		return new InverseComparator<T>(comparator);
+		return new InverseComparator<>(comparator);
 	}
 	
 	/**

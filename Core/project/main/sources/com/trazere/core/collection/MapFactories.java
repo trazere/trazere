@@ -40,17 +40,17 @@ public class MapFactories {
 	private static final MapFactory<?, ?, ?> HASH_MAP = new BaseMapFactory<Object, Object, HashMap<Object, Object>>() {
 		@Override
 		public HashMap<Object, Object> build() {
-			return new HashMap<Object, Object>();
+			return new HashMap<>();
 		}
 		
 		@Override
 		public HashMap<Object, Object> build(final int capacity) {
-			return new HashMap<Object, Object>(capacity);
+			return new HashMap<>(capacity);
 		}
 		
 		@Override
 		public HashMap<Object, Object> build(final Map<? extends Object, ? extends Object> bindings) {
-			return new HashMap<Object, Object>(bindings);
+			return new HashMap<>(bindings);
 		}
 	};
 	
@@ -69,17 +69,17 @@ public class MapFactories {
 	private static final MapFactory<?, ?, ?> TREE_MAP = new BaseMapFactory<Object, Object, TreeMap<Object, Object>>() {
 		@Override
 		public TreeMap<Object, Object> build() {
-			return new TreeMap<Object, Object>();
+			return new TreeMap<>();
 		}
 		
 		@Override
 		public TreeMap<Object, Object> build(final int capacity) {
-			return new TreeMap<Object, Object>();
+			return new TreeMap<>();
 		}
 		
 		@Override
 		public TreeMap<Object, Object> build(final Map<? extends Object, ? extends Object> bindings) {
-			return new TreeMap<Object, Object>(bindings);
+			return new TreeMap<>(bindings);
 		}
 	};
 	
