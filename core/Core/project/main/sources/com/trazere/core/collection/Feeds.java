@@ -41,7 +41,7 @@ public class Feeds {
 		assert null != head;
 		assert null != tail;
 		
-		return new BaseFeed<E>() {
+		return new Feed<E>() {
 			// Feed.
 			
 			@Override
@@ -138,7 +138,7 @@ public class Feeds {
 	}
 	
 	private static <E> Feed<E> fromValues(final E[] values, final int index) {
-		return new BaseFeed<E>() {
+		return new Feed<E>() {
 			// Feed.
 			
 			@Override
@@ -224,7 +224,7 @@ public class Feeds {
 		assert null != feed1;
 		assert null != feed2;
 		
-		return new BaseFeed<E>() {
+		return new Feed<E>() {
 			@Override
 			public Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> evaluate() {
 				final Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> maybeItem1 = feed1.evaluate();

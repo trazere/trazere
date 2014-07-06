@@ -22,7 +22,7 @@ package com.trazere.core.imperative;
  * @param <S> Type of the state.
  */
 public abstract class FoldAccumulator<A, S>
-extends BaseAccumulator<A, S> {
+implements Accumulator<A, S> {
 	/** Current state. */
 	private S _state;
 	

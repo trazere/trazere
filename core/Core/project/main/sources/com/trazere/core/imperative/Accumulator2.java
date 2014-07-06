@@ -41,14 +41,20 @@ extends Procedure2<A1, A2> {
 	 * 
 	 * @param value Pair of values to accumulate.
 	 */
-	void add(Tuple2<? extends A1, ? extends A2> value);
+	default void add(final Tuple2<? extends A1, ? extends A2> value) {
+		add(value.get1(), value.get2());
+	}
 	
 	/**
 	 * Accumulates the given pairs of values into the receiver accumulator.
 	 * 
 	 * @param values Pairs of values to accumulate.
 	 */
-	void addAll(Iterable<? extends Tuple2<? extends A1, ? extends A2>> values);
+	default void addAll(final Iterable<? extends Tuple2<? extends A1, ? extends A2>> values) {
+		for (final Tuple2<? extends A1, ? extends A2> value : values) {
+			add(value);
+		}
+	}
 	
 	/**
 	 * Gets the current state of the receiver accumulator.
@@ -56,4 +62,11 @@ extends Procedure2<A1, A2> {
 	 * @return The state.
 	 */
 	S get();
+	
+	// Procedure.
+	
+	@Override
+	default void execute(final A1 value1, final A2 value2) {
+		add(value1, value2);
+	}
 }

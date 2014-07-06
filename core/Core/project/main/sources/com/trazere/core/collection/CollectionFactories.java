@@ -38,7 +38,7 @@ public class CollectionFactories {
 		return (CollectionFactory<T, ArrayList<T>>) ARRAY_LIST;
 	}
 	
-	private static final CollectionFactory<?, ?> ARRAY_LIST = new BaseCollectionFactory<Object, ArrayList<Object>>() {
+	private static final CollectionFactory<?, ?> ARRAY_LIST = new CollectionFactory<Object, ArrayList<Object>>() {
 		@Override
 		public ArrayList<Object> build() {
 			return new ArrayList<>();
@@ -66,14 +66,9 @@ public class CollectionFactories {
 		return (CollectionFactory<T, LinkedList<T>>) LINKED_LIST;
 	}
 	
-	private static final CollectionFactory<?, ?> LINKED_LIST = new BaseCollectionFactory<Object, LinkedList<Object>>() {
+	private static final CollectionFactory<?, ?> LINKED_LIST = new CollectionFactory<Object, LinkedList<Object>>() {
 		@Override
 		public LinkedList<Object> build() {
-			return new LinkedList<>();
-		}
-		
-		@Override
-		public LinkedList<Object> build(final int capacity) {
 			return new LinkedList<>();
 		}
 		
@@ -94,7 +89,7 @@ public class CollectionFactories {
 		return (CollectionFactory<T, HashSet<T>>) HASH_SET;
 	}
 	
-	private static final CollectionFactory<?, ?> HASH_SET = new BaseCollectionFactory<Object, HashSet<Object>>() {
+	private static final CollectionFactory<?, ?> HASH_SET = new CollectionFactory<Object, HashSet<Object>>() {
 		@Override
 		public HashSet<Object> build() {
 			return new HashSet<>();
@@ -122,14 +117,9 @@ public class CollectionFactories {
 		return (CollectionFactory<T, TreeSet<T>>) TREE_SET;
 	}
 	
-	private static final CollectionFactory<?, ?> TREE_SET = new BaseCollectionFactory<Object, TreeSet<Object>>() {
+	private static final CollectionFactory<?, ?> TREE_SET = new CollectionFactory<Object, TreeSet<Object>>() {
 		@Override
 		public TreeSet<Object> build() {
-			return new TreeSet<>();
-		}
-		
-		@Override
-		public TreeSet<Object> build(final int capacity) {
 			return new TreeSet<>();
 		}
 		

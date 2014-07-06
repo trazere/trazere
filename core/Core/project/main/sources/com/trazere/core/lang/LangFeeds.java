@@ -15,7 +15,6 @@
  */
 package com.trazere.core.lang;
 
-import com.trazere.core.collection.BaseFeed;
 import com.trazere.core.collection.Feed;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
@@ -43,7 +42,7 @@ public class LangFeeds {
 	 * @return The built feed.
 	 */
 	public static Feed<Integer> integer(final int start, final int increment) {
-		return new BaseFeed<Integer>() {
+		return new Feed<Integer>() {
 			@Override
 			public Maybe<? extends Tuple2<? extends Integer, ? extends Feed<? extends Integer>>> evaluate() {
 				return Maybe.some(Tuples.tuple2(start, integer(start + increment, increment)));

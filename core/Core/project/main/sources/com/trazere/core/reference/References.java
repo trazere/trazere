@@ -34,7 +34,7 @@ public class References {
 		return (Reference<T>) EMTPY;
 	}
 	
-	private static final Reference<?> EMTPY = new BaseReference<Object>() {
+	private static final Reference<?> EMTPY = new Reference<Object>() {
 		@Override
 		public boolean isSet() {
 			return false;
@@ -60,7 +60,7 @@ public class References {
 	 * @return The built reference.
 	 */
 	public static <T> Reference<T> fromValue(final T value) {
-		return new BaseReference<T>() {
+		return new Reference<T>() {
 			@Override
 			public boolean isSet() {
 				return true;

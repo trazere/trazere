@@ -17,8 +17,6 @@ package com.trazere.core.collection;
 
 import com.trazere.core.imperative.Accumulator;
 import com.trazere.core.imperative.Accumulator2;
-import com.trazere.core.imperative.BaseAccumulator;
-import com.trazere.core.imperative.BaseAccumulator2;
 import java.util.Collection;
 import java.util.Map;
 
@@ -37,7 +35,7 @@ public class CollectionAccumulators {
 	public static <T, C extends Collection<? super T>> Accumulator<T, C> add(final C collection) {
 		assert null != collection;
 		
-		return new BaseAccumulator<T, C>() {
+		return new Accumulator<T, C>() {
 			@Override
 			public void add(final T value) {
 				collection.add(value);
@@ -87,7 +85,7 @@ public class CollectionAccumulators {
 	public static <K, V, M extends Map<? super K, ? super V>> Accumulator2<K, V, M> put(final M map) {
 		assert null != map;
 		
-		return new BaseAccumulator2<K, V, M>() {
+		return new Accumulator2<K, V, M>() {
 			@Override
 			public void add(final K key, final V value) {
 				map.put(key, value);
@@ -102,7 +100,7 @@ public class CollectionAccumulators {
 	
 	//	/**
 	//	 * Builds an accumulator that populates the given multimap.
-	//	 * 
+	//	 *
 	//	 * @param <K> Type of the keys.
 	//	 * @param <V> Type of the values.
 	//	 * @param <M> Type of the multimap.
@@ -112,14 +110,14 @@ public class CollectionAccumulators {
 	//	 */
 	//	public static <K, V, M extends Multimap<? super K, ? super V, ?>, X extends Exception> Accumulator2<K, V, M, X> put(final M multimap) {
 	//		assert null != multimap;
-	//		
+	//
 	//		return new BaseAccumulator2<K, V, M, X>() {
 	//			@Override
 	//			public void add(final K key, final V value)
 	//			throws X {
 	//				multimap.put(key, value);
 	//			}
-	//			
+	//
 	//			@Override
 	//			public M get() {
 	//				return multimap;
