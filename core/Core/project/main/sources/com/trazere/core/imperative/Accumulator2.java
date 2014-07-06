@@ -22,26 +22,26 @@ import com.trazere.core.util.Tuple2;
  * <p>
  * Accumulators are dual to iterators.
  * 
- * @param <A1> Type of the first value of the pairs.
- * @param <A2> Type of the second value of the pairs.
+ * @param <V1> Type of the first value of the accumulated pairs.
+ * @param <V2> Type of the second value of the accumulated pairs.
  * @param <S> Type of the state.
  */
-public interface Accumulator2<A1, A2, S>
-extends Procedure2<A1, A2> {
+public interface Accumulator2<V1, V2, S>
+extends Procedure2<V1, V2> {
 	/**
 	 * Accumulates the given pair of values into the receiver accumulator.
 	 * 
 	 * @param value1 First value of the pair to accumulate.
 	 * @param value2 Second value of the pair to accumulate.
 	 */
-	void add(A1 value1, A2 value2);
+	void add(V1 value1, V2 value2);
 	
 	/**
 	 * Accumulates the given pair of values into the receiver accumulator.
 	 * 
 	 * @param value Pair of values to accumulate.
 	 */
-	default void add(final Tuple2<? extends A1, ? extends A2> value) {
+	default void add(final Tuple2<? extends V1, ? extends V2> value) {
 		add(value.get1(), value.get2());
 	}
 	
@@ -50,8 +50,8 @@ extends Procedure2<A1, A2> {
 	 * 
 	 * @param values Pairs of values to accumulate.
 	 */
-	default void addAll(final Iterable<? extends Tuple2<? extends A1, ? extends A2>> values) {
-		for (final Tuple2<? extends A1, ? extends A2> value : values) {
+	default void addAll(final Iterable<? extends Tuple2<? extends V1, ? extends V2>> values) {
+		for (final Tuple2<? extends V1, ? extends V2> value : values) {
 			add(value);
 		}
 	}
@@ -66,7 +66,7 @@ extends Procedure2<A1, A2> {
 	// Procedure.
 	
 	@Override
-	default void execute(final A1 value1, final A2 value2) {
+	default void execute(final V1 value1, final V2 value2) {
 		add(value1, value2);
 	}
 }

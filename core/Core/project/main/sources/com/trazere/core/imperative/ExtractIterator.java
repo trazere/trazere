@@ -37,10 +37,7 @@ implements Iterator<RE> {
 	@Override
 	public RE next() {
 		if (lookAhead()) {
-			final RE next = _next.asSome().getValue();
-			_next = Maybe.none();
-			_lookAhead = false;
-			return next;
+			return consume();
 		} else {
 			throw new NoSuchElementException();
 		}
@@ -72,6 +69,13 @@ implements Iterator<RE> {
 				}
 			}
 		}
+	}
+	
+	private RE consume() {
+		final RE next = _next.asSome().getValue();
+		_next = Maybe.none();
+		_lookAhead = false;
+		return next;
 	}
 	
 	/**
