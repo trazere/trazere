@@ -18,6 +18,7 @@ package com.trazere.core.collection;
 import com.trazere.core.functional.Thunk;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
@@ -32,7 +33,25 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * 
 	 * @return <code>true</code> when the feed is empty, <code>false</code> otherwise.
 	 */
-	public boolean isEmpty();
+	default boolean isEmpty() {
+		return evaluate().isNone();
+	}
+	
+	/**
+	 * Gets the head element and tail of this feed.
+	 * 
+	 * @return The head element and tail.
+	 * @throws NoSuchElementException When the feed is emtpy.
+	 */
+	default Tuple2<? extends E, ? extends Feed<? extends E>> get()
+	throws NoSuchElementException {
+		final Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> value = evaluate();
+		if (value.isSome()) {
+			return value.asSome().getValue();
+		} else {
+			throw new NoSuchElementException();
+		}
+	}
 	
 	/**
 	 * Gets the head element of this feed.
@@ -40,8 +59,10 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @return The element.
 	 * @throws NoSuchElementException When the feed is empty.
 	 */
-	public E getHead()
-	throws NoSuchElementException;
+	default E getHead()
+	throws NoSuchElementException {
+		return get().get1();
+	}
 	
 	/**
 	 * Gets the tail of this feed.
@@ -49,6 +70,35 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @return The tail.
 	 * @throws NoSuchElementException When the feed is empty.
 	 */
-	public Feed<? extends E> getTail()
-	throws NoSuchElementException;
+	default Feed<? extends E> getTail()
+	throws NoSuchElementException {
+		return get().get2();
+	}
+	
+	// Iterable.
+	
+	@Override
+	default Iterator<E> iterator() {
+		return new Iterator<E>() {
+			private Feed<? extends E> _tail = Feed.this;
+			
+			@Override
+			public boolean hasNext() {
+				return !_tail.isEmpty();
+			}
+			
+			@Override
+			public E next()
+			throws NoSuchElementException {
+				final E head = _tail.getHead();
+				_tail = _tail.getTail();
+				return head;
+			}
+			
+			@Override
+			public void remove() {
+				throw new UnsupportedOperationException();
+			}
+		};
+	}
 }

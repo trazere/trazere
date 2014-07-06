@@ -35,7 +35,7 @@ extends Factory<M> {
 	 * @return The built map.
 	 */
 	@Override
-	public M build();
+	M build();
 	
 	/**
 	 * Builds an empty map with the given initial capacity.
@@ -43,7 +43,9 @@ extends Factory<M> {
 	 * @param capacity Initial capacity of the map.
 	 * @return The built map.
 	 */
-	public M build(final int capacity);
+	default M build(final int capacity) {
+		return build();
+	}
 	
 	/**
 	 * Builds a map containing the given bindings.
@@ -51,7 +53,11 @@ extends Factory<M> {
 	 * @param bindings Bindings.
 	 * @return The built map.
 	 */
-	M build(Iterable<? extends Tuple2<? extends K, ? extends V>> bindings);
+	default M build(final Iterable<? extends Tuple2<? extends K, ? extends V>> bindings) {
+		final M map = build();
+		MapUtils.putAll(map, bindings);
+		return map;
+	}
 	
 	/**
 	 * Builds a map containing the given bindings.
@@ -59,5 +65,5 @@ extends Factory<M> {
 	 * @param bindings Values.
 	 * @return The built map.
 	 */
-	public M build(final Map<? extends K, ? extends V> bindings);
+	M build(Map<? extends K, ? extends V> bindings);
 }

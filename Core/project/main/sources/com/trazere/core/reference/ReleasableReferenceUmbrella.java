@@ -63,13 +63,8 @@ implements Releasable {
 	 */
 	public ReleasableReference<T> getReference()
 	throws ReferenceNotSetException {
-		// Get the value.
-		final T value = _value.get();
-		
-		// Build the reference.
-		final class Reference
-		extends BaseReference<T>
-		implements ReleasableReference<T> {
+		final T value = _value.get(); // Note: capture the value.
+		final ReleasableReference<T> reference = new ReleasableReference<T>() {
 			@Override
 			public T get()
 			throws ReferenceNotSetException {
@@ -98,9 +93,8 @@ implements Releasable {
 			public void release() {
 				removeReference(this);
 			}
-		}
+		};
 		// TODO: add CollectionUtils.add(Collection, Object): Object in CollectionUtils
-		final ReleasableReference<T> reference = new Reference();
 		_references.add(reference);
 		
 		return reference;

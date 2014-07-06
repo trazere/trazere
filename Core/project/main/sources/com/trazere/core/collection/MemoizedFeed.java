@@ -24,7 +24,7 @@ import com.trazere.core.util.Tuple2;
  * @param <E> Type of the elements.
  */
 public abstract class MemoizedFeed<E>
-extends BaseFeed<E> {
+implements Feed<E> {
 	/** Indicates whether the feed has been computed or not. */
 	protected boolean _evaluated = false;
 	
