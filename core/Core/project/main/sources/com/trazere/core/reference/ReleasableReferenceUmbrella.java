@@ -51,7 +51,7 @@ implements Releasable {
 	// References.
 	
 	/** References. */
-	protected final Set<Releasable> _references = new HashSet<Releasable>();
+	protected final Set<Releasable> _references = new HashSet<>();
 	
 	/**
 	 * Gets a new reference to the value of this umbrella.

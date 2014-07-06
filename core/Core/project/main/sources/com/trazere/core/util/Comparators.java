@@ -71,7 +71,7 @@ public class Comparators {
 	 * @see SequenceComparator
 	 */
 	public static <T> Comparator<T> sequence(final List<? extends Comparator<? super T>> comparators) {
-		return new SequenceComparator<T>(comparators);
+		return new SequenceComparator<>(comparators);
 	}
 	
 	/**
@@ -82,8 +82,9 @@ public class Comparators {
 	 * @return The built comparator.
 	 * @see SequenceComparator
 	 */
+	@SafeVarargs
 	public static <T> Comparator<T> sequence(final Comparator<? super T>... comparators) {
-		return new SequenceComparator<T>(comparators);
+		return new SequenceComparator<>(comparators);
 	}
 	
 	private Comparators() {

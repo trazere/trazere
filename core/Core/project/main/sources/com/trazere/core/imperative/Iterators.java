@@ -96,6 +96,7 @@ public class Iterators {
 	 * @param values Values to iterate.
 	 * @return The built iterator.
 	 */
+	@SafeVarargs
 	public static <E> Iterator<E> fromValues(final E... values) {
 		assert null != values;
 		

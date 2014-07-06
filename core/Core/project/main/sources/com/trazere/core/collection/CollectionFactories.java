@@ -41,17 +41,17 @@ public class CollectionFactories {
 	private static final CollectionFactory<?, ?> ARRAY_LIST = new BaseCollectionFactory<Object, ArrayList<Object>>() {
 		@Override
 		public ArrayList<Object> build() {
-			return new ArrayList<Object>();
+			return new ArrayList<>();
 		}
 		
 		@Override
 		public ArrayList<Object> build(final int capacity) {
-			return new ArrayList<Object>(capacity);
+			return new ArrayList<>(capacity);
 		}
 		
 		@Override
 		public ArrayList<Object> build(final Collection<? extends Object> elements) {
-			return new ArrayList<Object>(elements);
+			return new ArrayList<>(elements);
 		}
 	};
 	
@@ -69,17 +69,17 @@ public class CollectionFactories {
 	private static final CollectionFactory<?, ?> LINKED_LIST = new BaseCollectionFactory<Object, LinkedList<Object>>() {
 		@Override
 		public LinkedList<Object> build() {
-			return new LinkedList<Object>();
+			return new LinkedList<>();
 		}
 		
 		@Override
 		public LinkedList<Object> build(final int capacity) {
-			return new LinkedList<Object>();
+			return new LinkedList<>();
 		}
 		
 		@Override
 		public LinkedList<Object> build(final Collection<? extends Object> elements) {
-			return new LinkedList<Object>(elements);
+			return new LinkedList<>(elements);
 		}
 	};
 	
@@ -97,17 +97,17 @@ public class CollectionFactories {
 	private static final CollectionFactory<?, ?> HASH_SET = new BaseCollectionFactory<Object, HashSet<Object>>() {
 		@Override
 		public HashSet<Object> build() {
-			return new HashSet<Object>();
+			return new HashSet<>();
 		}
 		
 		@Override
 		public HashSet<Object> build(final int capacity) {
-			return new HashSet<Object>(capacity);
+			return new HashSet<>(capacity);
 		}
 		
 		@Override
 		public HashSet<Object> build(final Collection<? extends Object> elements) {
-			return new HashSet<Object>(elements);
+			return new HashSet<>(elements);
 		}
 	};
 	
@@ -125,17 +125,17 @@ public class CollectionFactories {
 	private static final CollectionFactory<?, ?> TREE_SET = new BaseCollectionFactory<Object, TreeSet<Object>>() {
 		@Override
 		public TreeSet<Object> build() {
-			return new TreeSet<Object>();
+			return new TreeSet<>();
 		}
 		
 		@Override
 		public TreeSet<Object> build(final int capacity) {
-			return new TreeSet<Object>();
+			return new TreeSet<>();
 		}
 		
 		@Override
 		public TreeSet<Object> build(final Collection<? extends Object> elements) {
-			return new TreeSet<Object>(elements);
+			return new TreeSet<>(elements);
 		}
 	};
 	

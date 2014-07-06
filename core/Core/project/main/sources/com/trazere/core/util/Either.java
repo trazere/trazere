@@ -43,7 +43,7 @@ implements Describable {
 	 * @see Left
 	 */
 	public static <L, R> Either<L, R> left(final L left) {
-		return new Left<L, R>(left);
+		return new Left<>(left);
 	}
 	
 	/**
@@ -56,7 +56,7 @@ implements Describable {
 	 * @see Right
 	 */
 	public static <L, R> Either<L, R> right(final R right) {
-		return new Right<L, R>(right);
+		return new Right<>(right);
 	}
 	
 	// Left.

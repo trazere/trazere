@@ -56,7 +56,7 @@ public class Tuple1<E1> {
 	 * @return The derived tuple.
 	 */
 	public <NE1> Tuple1<NE1> with1(final NE1 ne1) {
-		return new Tuple1<NE1>(ne1);
+		return new Tuple1<>(ne1);
 	}
 	
 	/**
@@ -67,7 +67,7 @@ public class Tuple1<E1> {
 	 * @return The derived tuple.
 	 */
 	public <NE1> Tuple1<NE1> map1(final Function<? super E1, ? extends NE1> function) {
-		return new Tuple1<NE1>(function.evaluate(_e1));
+		return new Tuple1<>(function.evaluate(_e1));
 	}
 	
 	// Object.
