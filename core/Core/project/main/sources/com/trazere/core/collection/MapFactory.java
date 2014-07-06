@@ -25,6 +25,7 @@ import java.util.Map;
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  * @param <M> Type of the maps.
+ * @see Map
  */
 public interface MapFactory<K, V, M extends Map<? super K, ? super V>>
 extends Factory<M> {

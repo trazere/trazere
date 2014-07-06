@@ -21,8 +21,9 @@ import java.util.Collection;
 /**
  * The {@link CollectionFactory} interface defines factories of collections.
  * 
- * @param <T> Type of the values.
+ * @param <T> Type of the elements.
  * @param <C> Type of the collections.
+ * @see Collection
  */
 public interface CollectionFactory<T, C extends Collection<? super T>>
 extends Factory<C> {
@@ -43,18 +44,18 @@ extends Factory<C> {
 	C build(int capacity);
 	
 	/**
-	 * Builds a collection containing the given values.
+	 * Builds a collection containing the given elements.
 	 * 
-	 * @param values Values.
+	 * @param elements Elements.
 	 * @return The built collection.
 	 */
-	C build(Iterable<? extends T> values);
+	C build(Iterable<? extends T> elements);
 	
 	/**
-	 * Builds a collection containing the given values.
+	 * Builds a collection containing the given elements.
 	 * 
-	 * @param values Values.
+	 * @param elements Elements.
 	 * @return The built collection.
 	 */
-	C build(Collection<? extends T> values);
+	C build(Collection<? extends T> elements);
 }
