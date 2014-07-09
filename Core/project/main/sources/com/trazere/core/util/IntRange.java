@@ -116,11 +116,6 @@ implements Iterable<Integer> {
 					throw new NoSuchElementException();
 				}
 			}
-			
-			@Override
-			public void remove() {
-				throw new UnsupportedOperationException();
-			}
 		};
 	}
 	
