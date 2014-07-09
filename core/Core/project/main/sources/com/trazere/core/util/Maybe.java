@@ -144,17 +144,17 @@ implements Iterable<T>, Describable {
 		// Functional.
 		
 		@Override
-		public <R> Maybe<R> map(final Function<? super T, ? extends R> function) {
-			return none();
-		}
-		
-		@Override
 		public Maybe<T> filter(final Predicate<? super T> filter) {
 			return none();
 		}
 		
 		@Override
-		public <R> Maybe<R> extract(final Function<? super T, ? extends Maybe<? extends R>> extractor) {
+		public <R> Maybe<R> map(final Function<? super T, ? extends R> function) {
+			return none();
+		}
+		
+		@Override
+		public <R> Maybe<R> flatMap(final Function<? super T, ? extends Maybe<? extends R>> extractor) {
 			return none();
 		}
 		
@@ -274,17 +274,17 @@ implements Iterable<T>, Describable {
 		// Functional.
 		
 		@Override
-		public <R> Maybe<R> map(final Function<? super T, ? extends R> function) {
-			return Maybe.<R>some(function.evaluate(_value));
-		}
-		
-		@Override
 		public Maybe<T> filter(final Predicate<? super T> predicate) {
 			return predicate.evaluate(_value) ? this : Maybe.<T>none();
 		}
 		
 		@Override
-		public <R> Maybe<R> extract(final Function<? super T, ? extends Maybe<? extends R>> function) {
+		public <R> Maybe<R> map(final Function<? super T, ? extends R> function) {
+			return Maybe.<R>some(function.evaluate(_value));
+		}
+		
+		@Override
+		public <R> Maybe<R> flatMap(final Function<? super T, ? extends Maybe<? extends R>> function) {
 			return function.evaluate(_value).map(Functions.<R>identity());
 		}
 		
@@ -441,30 +441,30 @@ implements Iterable<T>, Describable {
 	// Functional.
 	
 	/**
-	 * Maps the value wrapped by the receiver {@link Maybe} instance using the given function.
-	 * 
-	 * @param <R> Type of the mapped value.
-	 * @param function Mapping function to use.
-	 * @return The {@link Maybe} instance wrapping the mapped value.
-	 */
-	public abstract <R> Maybe<R> map(final Function<? super T, ? extends R> function);
-	
-	/**
 	 * Filters the value wrapped by the receiver {@link Maybe} instance using the given filter.
 	 * 
-	 * @param filter Filter to use.
+	 * @param filter Predicate to use to filter the value.
 	 * @return The {@link Maybe} instance wrapping the filtered value.
 	 */
 	public abstract Maybe<T> filter(final Predicate<? super T> filter);
 	
 	/**
-	 * Extracts the value wrapped by the receiver {@link Maybe} instance using the given extractor.
+	 * Maps the value wrapped by the receiver {@link Maybe} instance using the given function.
+	 * 
+	 * @param <R> Type of the mapped value.
+	 * @param function Function to use to transform the value.
+	 * @return The {@link Maybe} instance wrapping the mapped value.
+	 */
+	public abstract <R> Maybe<R> map(final Function<? super T, ? extends R> function);
+	
+	/**
+	 * Transforms and flattens the value wrapped by the receiver {@link Maybe} instance using the given function.
 	 * 
 	 * @param <R> Type of the extracted value.
-	 * @param extractor Extractor to use.
+	 * @param function Function to use to transform the value.
 	 * @return The {@link Maybe} instance wrapping the extracted value.
 	 */
-	public abstract <R> Maybe<R> extract(final Function<? super T, ? extends Maybe<? extends R>> extractor);
+	public abstract <R> Maybe<R> flatMap(final Function<? super T, ? extends Maybe<? extends R>> function);
 	
 	// Object.
 	

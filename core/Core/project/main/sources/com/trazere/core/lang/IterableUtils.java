@@ -20,6 +20,7 @@ import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Functions;
 import com.trazere.core.functional.Predicate;
 import com.trazere.core.imperative.IteratorUtils;
+import com.trazere.core.imperative.Procedure;
 import com.trazere.core.util.Maybe;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -39,6 +40,28 @@ public class IterableUtils {
 	 */
 	public static <E> Maybe<E> any(final Iterable<? extends E> iterable) {
 		return IteratorUtils.next(iterable.iterator());
+	}
+	
+	/**
+	 * Executes the given procedure with each element provided by the given iterable.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param iterable Iterable providing the elements.
+	 * @param procedure Procedure to execute.
+	 */
+	public static <E> void foreach(final Iterable<? extends E> iterable, final Procedure<? super E> procedure) {
+		IteratorUtils.foreach(iterable.iterator(), procedure);
+	}
+	
+	/**
+	 * Evaluates the given function with each element provided by the given iterable.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param iterable Iterable providing the elements.
+	 * @param function Function to evaluate.
+	 */
+	public static <E> void foreach(final Iterable<? extends E> iterable, final Function<? super E, ?> function) {
+		IteratorUtils.foreach(iterable.iterator(), function);
 	}
 	
 	/**
@@ -280,7 +303,7 @@ public class IterableUtils {
 	}
 	
 	/**
-	 * Transforms and flatten the elements provided by the given iterable using the given function.
+	 * Transforms and flattens the elements provided by the given iterable using the given function.
 	 * 
 	 * @param <E> Type of the elements.
 	 * @param <RE> Type of the transformed elements.
@@ -296,27 +319,6 @@ public class IterableUtils {
 			@Override
 			public Iterator<RE> iterator() {
 				return IteratorUtils.flatMap(iterable.iterator(), Functions.compose(IterableFunctions.iterator(), function));
-			}
-		};
-	}
-	
-	/**
-	 * Extracts from the elements provided by the given iterable using the given extractor.
-	 *
-	 * @param <E> Type of the elements.
-	 * @param <RE> Type of the extracted elements.
-	 * @param iterable Iterable providing the elements to extract from.
-	 * @param extractor Function to use to extract the elements.
-	 * @return An iterable providing the extracted elements.
-	 */
-	public static <E, RE> Iterable<RE> extract(final Iterable<? extends E> iterable, final Function<? super E, ? extends Maybe<? extends RE>> extractor) {
-		assert null != iterable;
-		assert null != extractor;
-		
-		return new Iterable<RE>() {
-			@Override
-			public Iterator<RE> iterator() {
-				return IteratorUtils.extract(iterable.iterator(), extractor);
 			}
 		};
 	}

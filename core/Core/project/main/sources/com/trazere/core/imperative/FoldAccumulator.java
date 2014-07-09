@@ -16,13 +16,16 @@
 package com.trazere.core.imperative;
 
 /**
- * The {@link FoldAccumulator} class implements accumulators that update a state using a binary operation.
+ * The {@link FoldAccumulator} class implements accumulators that update their state using a binary operation combining the previous state and the accumulated
+ * element.
+ * <p>
+ * They simulate left folding functions.
  * 
- * @param <V> Type of the accumulated values.
+ * @param <E> Type of the accumulated elements.
  * @param <S> Type of the state.
  */
-public abstract class FoldAccumulator<V, S>
-implements Accumulator<V, S> {
+public abstract class FoldAccumulator<E, S>
+implements Accumulator<E, S> {
 	/** Current state. */
 	private S _state;
 	
@@ -36,18 +39,18 @@ implements Accumulator<V, S> {
 	}
 	
 	@Override
-	public void add(final V value) {
-		_state = fold(_state, value);
+	public void add(final E element) {
+		_state = fold(_state, element);
 	}
 	
 	/**
-	 * Folds the state by applying the binary operation with given value.
+	 * Applies the binary operation with the given state and element.
 	 * 
 	 * @param state Current state.
-	 * @param value Value to accumulate.
-	 * @return The folded state.
+	 * @param element Accumulated element.
+	 * @return The new state.
 	 */
-	protected abstract S fold(S state, V value);
+	protected abstract S fold(S state, E element);
 	
 	@Override
 	public S get() {

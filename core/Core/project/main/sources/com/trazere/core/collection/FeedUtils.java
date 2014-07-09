@@ -19,6 +19,7 @@ import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Predicate;
 import com.trazere.core.imperative.IteratorUtils;
+import com.trazere.core.imperative.Procedure;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 import com.trazere.core.util.Tuples;
@@ -53,6 +54,28 @@ public class FeedUtils {
 	 */
 	public static <E> Feed<? extends E> tail(final Feed<? extends E> feed) {
 		return !feed.isEmpty() ? feed.getTail() : Feeds.<E>empty();
+	}
+	
+	/**
+	 * Executes the given procedure with each element of the given feed.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param feed Feed of elements.
+	 * @param procedure Procedure to execute.
+	 */
+	public static <E> void foreach(final Feed<? extends E> feed, final Procedure<? super E> procedure) {
+		IteratorUtils.foreach(feed.iterator(), procedure);
+	}
+	
+	/**
+	 * Evaluates the given function with each element of the given feed.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param feed Feed of elements.
+	 * @param function Function to evaluate.
+	 */
+	public static <E> void foreach(final Feed<? extends E> feed, final Function<? super E, ?> function) {
+		IteratorUtils.foreach(feed.iterator(), function);
 	}
 	
 	/**
@@ -468,7 +491,7 @@ public class FeedUtils {
 	}
 	
 	/**
-	 * Transforms and flatten the elements of the given feed using the given function.
+	 * Transforms and flattens the elements of the given feed using the given function.
 	 * 
 	 * @param <E> Type of the elements.
 	 * @param <RE> Type of the transformed elements.
@@ -481,7 +504,7 @@ public class FeedUtils {
 	}
 	
 	/**
-	 * Extracts from the elements of the given feed using the given extractor.
+	 * Extracts and flattens from the elements of the given feed using the given extractor.
 	 *
 	 * @param <E> Type of the elements.
 	 * @param <RE> Type of the extracted elements.
@@ -489,30 +512,13 @@ public class FeedUtils {
 	 * @param extractor Function to use to extract the elements.
 	 * @return A feed of the extracted elements.
 	 */
-	public static <E, RE> Feed<RE> extract(final Feed<? extends E> feed, final Function<? super E, ? extends Maybe<? extends RE>> extractor) {
-		assert null != feed;
-		assert null != extractor;
-		
-		return new MemoizedFeed<RE>() {
+	public static <E, RE> Feed<RE> extract(final Feed<? extends E> feed, final Function<? super E, ? extends Iterable<? extends RE>> extractor) {
+		return flatten(map(feed, new Function<E, Feed<? extends RE>>() {
 			@Override
-			protected Maybe<? extends Tuple2<? extends RE, ? extends Feed<? extends RE>>> compute() {
-				Feed<? extends E> iterFeed = feed;
-				while (true) {
-					final Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> maybeItem = iterFeed.evaluate();
-					if (maybeItem.isSome()) {
-						final Tuple2<? extends E, ? extends Feed<? extends E>> item = maybeItem.asSome().getValue();
-						final Maybe<? extends RE> extractedHead = extractor.evaluate(item.get1());
-						if (extractedHead.isSome()) {
-							return Maybe.some(new Tuple2<RE, Feed<RE>>(extractedHead.asSome().getValue(), extract(item.get2(), extractor)));
-						} else {
-							iterFeed = item.get2();
-						}
-					} else {
-						return Maybe.none();
-					}
-				}
+			public Feed<? extends RE> evaluate(final E element) {
+				return Feeds.fromIterable(extractor.evaluate(element));
 			}
-		};
+		}));
 	}
 	
 	private FeedUtils() {

@@ -48,31 +48,6 @@ public class CollectionAccumulators {
 		};
 	}
 	
-	//	/**
-	//	 * Builds an accumulator that populates the given collection.
-	//	 * <p>
-	//	 * These accumulators return a fresh copy of the accumulated collection.
-	//	 *
-	//	 * @param <T> Type of the values.
-	//	 * @param <C> Type of the collection.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param collection The collection to populate.
-	//	 * @param collectionFactory The collection factory to use to copy the collections.
-	//	 * @return The built accumulator.
-	//	 */
-	//	public static <T, C extends Collection<? super T>, X extends Exception> Accumulator1<T, C, X> add(final Collection<T> collection, final CollectionFactory<T, ? extends C> collectionFactory) {
-	//		assert null != collection;
-	//		assert null != collectionFactory;
-	//
-	//		final Function1<Collection<T>, C, InternalException> function = new Function1<Collection<T>, C, InternalException>() {
-	//			@Override
-	//			public C evaluate(final Collection<T> values) {
-	//				return collectionFactory.build(values);
-	//			}
-	//		};
-	//		return Accumulators.<T, Collection<T>, C, X>mapState(function, CollectionAccumulators.<T, Collection<T>, X>add(collection));
-	//	}
-	
 	/**
 	 * Builds an accumulator that puts into the given map.
 	 * 

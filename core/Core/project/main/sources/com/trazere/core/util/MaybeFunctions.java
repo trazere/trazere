@@ -81,30 +81,10 @@ public class MaybeFunctions {
 	};
 	
 	/**
-	 * Builds a function that maps the value wrapped in {@link Maybe} instances using the given function.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param <R> Type of the mapped values.
-	 * @param function Mapping function to use.
-	 * @return The built function.
-	 * @see Maybe#map(Function)
-	 */
-	public static <T, R> Function<Maybe<? extends T>, Maybe<R>> map(final Function<? super T, ? extends R> function) {
-		assert null != function;
-		
-		return new Function<Maybe<? extends T>, Maybe<R>>() {
-			@Override
-			public Maybe<R> evaluate(final Maybe<? extends T> maybe) {
-				return maybe.map(function);
-			}
-		};
-	}
-	
-	/**
 	 * Builds a function that filters the value wrapped in {@link Maybe} instances using the given filter.
 	 * 
 	 * @param <T> Type of the values.
-	 * @param filter Filter to use.
+	 * @param filter Predicate to use to filter the value.
 	 * @return The built function.
 	 * @see Maybe#filter(Predicate)
 	 */
@@ -120,21 +100,41 @@ public class MaybeFunctions {
 	}
 	
 	/**
-	 * Builds a function that extracts the value wrapped in {@link Maybe} instances using the given extractor.
+	 * Builds a function that maps the value wrapped in {@link Maybe} instances using the given function.
 	 * 
 	 * @param <T> Type of the values.
-	 * @param <R> Type of the extracted values.
-	 * @param extractor Extractor to use.
+	 * @param <R> Type of the mapped values.
+	 * @param function Function to use to transform the value.
 	 * @return The built function.
-	 * @see Maybe#extract(Function)
+	 * @see Maybe#map(Function)
 	 */
-	public static <T, R> Function<Maybe<? extends T>, Maybe<R>> extract(final Function<? super T, ? extends Maybe<? extends R>> extractor) {
-		assert null != extractor;
+	public static <T, R> Function<Maybe<? extends T>, Maybe<R>> map(final Function<? super T, ? extends R> function) {
+		assert null != function;
 		
 		return new Function<Maybe<? extends T>, Maybe<R>>() {
 			@Override
 			public Maybe<R> evaluate(final Maybe<? extends T> maybe) {
-				return maybe.extract(extractor);
+				return maybe.map(function);
+			}
+		};
+	}
+	
+	/**
+	 * Builds a function that extracts the value wrapped in {@link Maybe} instances using the given extractor.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <R> Type of the extracted values.
+	 * @param function Function to use to transform the value.
+	 * @return The built function.
+	 * @see Maybe#flatMap(Function)
+	 */
+	public static <T, R> Function<Maybe<? extends T>, Maybe<R>> flatMap(final Function<? super T, ? extends Maybe<? extends R>> function) {
+		assert null != function;
+		
+		return new Function<Maybe<? extends T>, Maybe<R>>() {
+			@Override
+			public Maybe<R> evaluate(final Maybe<? extends T> maybe) {
+				return maybe.flatMap(function);
 			}
 		};
 	}
