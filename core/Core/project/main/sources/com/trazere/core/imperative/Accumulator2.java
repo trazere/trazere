@@ -18,41 +18,41 @@ package com.trazere.core.imperative;
 import com.trazere.core.util.Tuple2;
 
 /**
- * The {@link Accumulator2} interface defines left folding functions of pairs of values over an internal state.
+ * The {@link Accumulator2} interface defines automata that incrementally refine an internal state over a sequence of pairs of elements.
  * <p>
  * Accumulators are dual to iterators.
  * 
- * @param <V1> Type of the first value of the accumulated pairs.
- * @param <V2> Type of the second value of the accumulated pairs.
+ * @param <E1> Type of the first element of the accumulated pairs.
+ * @param <E2> Type of the second element of the accumulated pairs.
  * @param <S> Type of the state.
  */
-public interface Accumulator2<V1, V2, S>
-extends Procedure2<V1, V2> {
+public interface Accumulator2<E1, E2, S>
+extends Procedure2<E1, E2> {
 	/**
-	 * Accumulates the given pair of values into the receiver accumulator.
+	 * Accumulates the given pair of elements into the receiver accumulator.
 	 * 
-	 * @param value1 First value of the pair to accumulate.
-	 * @param value2 Second value of the pair to accumulate.
+	 * @param element1 First element of the pair to accumulate.
+	 * @param element2 Second element of the pair to accumulate.
 	 */
-	void add(V1 value1, V2 value2);
+	void add(E1 element1, E2 element2);
 	
 	/**
-	 * Accumulates the given pair of values into the receiver accumulator.
+	 * Accumulates the given pair element into the receiver accumulator.
 	 * 
-	 * @param value Pair of values to accumulate.
+	 * @param element Pair element to accumulate.
 	 */
-	default void add(final Tuple2<? extends V1, ? extends V2> value) {
-		add(value.get1(), value.get2());
+	default void add(final Tuple2<? extends E1, ? extends E2> element) {
+		add(element.get1(), element.get2());
 	}
 	
 	/**
-	 * Accumulates the given pairs of values into the receiver accumulator.
+	 * Accumulates the pair elements into the receiver accumulator.
 	 * 
-	 * @param values Pairs of values to accumulate.
+	 * @param elements Pair elements to accumulate.
 	 */
-	default void addAll(final Iterable<? extends Tuple2<? extends V1, ? extends V2>> values) {
-		for (final Tuple2<? extends V1, ? extends V2> value : values) {
-			add(value);
+	default void addAll(final Iterable<? extends Tuple2<? extends E1, ? extends E2>> elements) {
+		for (final Tuple2<? extends E1, ? extends E2> element : elements) {
+			add(element);
 		}
 	}
 	
@@ -66,7 +66,7 @@ extends Procedure2<V1, V2> {
 	// Procedure.
 	
 	@Override
-	default void execute(final V1 value1, final V2 value2) {
-		add(value1, value2);
+	default void execute(final E1 element1, final E2 element2) {
+		add(element1, element2);
 	}
 }

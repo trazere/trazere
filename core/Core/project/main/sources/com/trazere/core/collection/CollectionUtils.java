@@ -20,6 +20,7 @@ import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Predicate;
 import com.trazere.core.imperative.Accumulator;
 import com.trazere.core.imperative.IteratorUtils;
+import com.trazere.core.imperative.Procedure;
 import com.trazere.core.lang.IterableUtils;
 import com.trazere.core.lang.LangAccumulators;
 import com.trazere.core.util.Maybe;
@@ -39,6 +40,28 @@ public class CollectionUtils {
 	 */
 	public static <E> Maybe<E> any(final Collection<? extends E> collection) {
 		return IteratorUtils.next(collection.iterator());
+	}
+	
+	/**
+	 * Executes the given procedure with each element of the given collection.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param collection Collection of elements.
+	 * @param procedure Procedure to execute.
+	 */
+	public static <E> void foreach(final Collection<? extends E> collection, final Procedure<? super E> procedure) {
+		IteratorUtils.foreach(collection.iterator(), procedure);
+	}
+	
+	/**
+	 * Evaluates the given function with each element of the given collection.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param collection Collection of elements.
+	 * @param function Function to evaluate.
+	 */
+	public static <E> void foreach(final Collection<? extends E> collection, final Function<? super E, ?> function) {
+		IteratorUtils.foreach(collection.iterator(), function);
 	}
 	
 	/**
@@ -254,7 +277,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Transforms and flatten the elements of the given collection using the given function.
+	 * Transforms and flattens the elements of the given collection using the given function.
 	 * 
 	 * @param <E> Type of the elements.
 	 * @param <RE> Type of the transformed elements.
@@ -269,7 +292,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Extracts from the elements of the given collection using the given extractor.
+	 * Extracts and flattens the elements of the given collection using the given extractor.
 	 *
 	 * @param <E> Type of the elements.
 	 * @param <RE> Type of the extracted elements.
@@ -279,7 +302,7 @@ public class CollectionUtils {
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection containing the extracted elements.
 	 */
-	public static <E, RE, R extends Collection<? super RE>> R extract(final Collection<? extends E> collection, final Function<? super E, ? extends Maybe<? extends RE>> extractor, final CollectionFactory<RE, R> resultFactory) {
+	public static <E, RE, R extends Collection<? super RE>> R extract(final Collection<? extends E> collection, final Function<? super E, ? extends Iterable<? extends RE>> extractor, final CollectionFactory<RE, R> resultFactory) {
 		return IteratorUtils.drainAll(IteratorUtils.extract(collection.iterator(), extractor), resultFactory.build());
 	}
 	

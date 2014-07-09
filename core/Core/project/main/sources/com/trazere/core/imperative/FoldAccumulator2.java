@@ -16,14 +16,17 @@
 package com.trazere.core.imperative;
 
 /**
- * The {@link FoldAccumulator2} class implements accumulators that update a state using a binary operation.
+ * The {@link FoldAccumulator} class implements accumulators that update their state using a binary operation combining the previous state and the accumulated
+ * pair of elements.
+ * <p>
+ * They simulate left folding functions.
  * 
- * @param <V1> Type of the first value of the accumulated pairs.
- * @param <V2> Type of the second value of the accumulated pairs.
+ * @param <E1> Type of the first element of the accumulated pairs.
+ * @param <E2> Type of the second element of the accumulated pairs.
  * @param <S> Type of the states.
  */
-public abstract class FoldAccumulator2<V1, V2, S>
-implements Accumulator2<V1, V2, S> {
+public abstract class FoldAccumulator2<E1, E2, S>
+implements Accumulator2<E1, E2, S> {
 	/** Current state. */
 	private S _state;
 	
@@ -37,19 +40,19 @@ implements Accumulator2<V1, V2, S> {
 	}
 	
 	@Override
-	public void add(final V1 value1, final V2 value2) {
-		_state = fold(_state, value1, value2);
+	public void add(final E1 element1, final E2 element2) {
+		_state = fold(_state, element1, element2);
 	}
 	
 	/**
-	 * Folds the state by applying the binary operation with given pair of values.
+	 * Applies the binary operation with the given state and pair of elements.
 	 * 
 	 * @param state Current state.
-	 * @param value1 First value of the pair to accumulate.
-	 * @param value2 Second value of the pair to accumulate.
-	 * @return The folded state.
+	 * @param element1 First element of the accumulated pair.
+	 * @param element2 Second element of the accumulated pair.
+	 * @return The new state.
 	 */
-	protected abstract S fold(S state, V1 value1, V2 value2);
+	protected abstract S fold(S state, E1 element1, E2 element2);
 	
 	@Override
 	public S get() {

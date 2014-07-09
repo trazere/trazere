@@ -19,8 +19,10 @@ import com.trazere.core.collection.CollectionAccumulators;
 import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.FunctionAccumulators;
+import com.trazere.core.functional.Functions;
 import com.trazere.core.functional.Predicate;
 import com.trazere.core.lang.ComparableAccumulators;
+import com.trazere.core.lang.IterableFunctions;
 import com.trazere.core.util.ComparatorAccumulators;
 import com.trazere.core.util.IntCounter;
 import com.trazere.core.util.Maybe;
@@ -128,6 +130,32 @@ public class IteratorUtils {
 	 */
 	public static <E, C extends Collection<? super E>> C drainAll(final Iterator<? extends E> iterator, final C results) {
 		return drainAll(iterator, CollectionAccumulators.add(results)).get();
+	}
+	
+	/**
+	 * Executes the given procedure with each element provided by the given iterator.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param iterator Iterator providing the elements.
+	 * @param procedure Procedure to execute.
+	 */
+	public static <E> void foreach(final Iterator<? extends E> iterator, final Procedure<? super E> procedure) {
+		while (iterator.hasNext()) {
+			procedure.execute(iterator.next());
+		}
+	}
+	
+	/**
+	 * Evaluates the given function with each element provided by the given iterator.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param iterator Iterator providing the elements.
+	 * @param function Function to evaluate.
+	 */
+	public static <E> void foreach(final Iterator<? extends E> iterator, final Function<? super E, ?> function) {
+		while (iterator.hasNext()) {
+			function.evaluate(iterator.next());
+		}
 	}
 	
 	/**
@@ -354,11 +382,6 @@ public class IteratorUtils {
 					_iterator = iterator.next();
 				}
 			}
-			
-			@Override
-			public void remove() {
-				_iterator.remove();
-			}
 		};
 	}
 	
@@ -457,15 +480,10 @@ public class IteratorUtils {
 		assert null != iterator;
 		assert null != filter;
 		
-		return new FilterIterator<E>() {
+		return new LookAheadIterator<E>() {
 			@Override
-			protected Maybe<E> pull() {
-				return IteratorUtils.next(iterator);
-			}
-			
-			@Override
-			public boolean filter(final E element) {
-				return filter.evaluate(element);
+			protected Maybe<? extends E> pull() {
+				return first(iterator, filter);
 			}
 		};
 	}
@@ -485,21 +503,18 @@ public class IteratorUtils {
 		assert null != iterator;
 		assert null != function;
 		
-		return new MapIterator<E, RE>() {
+		return new LookAheadIterator<RE>() {
 			@Override
-			protected Maybe<E> pull() {
-				return IteratorUtils.next(iterator);
-			}
-			
-			@Override
-			protected RE map(final E element) {
-				return function.evaluate(element);
+			protected Maybe<? extends RE> pull() {
+				return IteratorUtils.next(iterator).map(function);
 			}
 		};
 	}
 	
 	/**
-	 * Transforms and flatten the elements provided by the given iterator using the given function.
+	 * Transforms and flattens the elements provided by the given iterator using the given function.
+	 * <p>
+	 * The built iterator feeds from the given iterator.
 	 * 
 	 * @param <E> Type of the elements.
 	 * @param <RE> Type of the transformed elements.
@@ -512,31 +527,18 @@ public class IteratorUtils {
 	}
 	
 	/**
-	 * Extracts from the elements provided by the given iterator using the given extractor.
+	 * Extracts and flattens the elements provided by the given iterator using the given extractor.
 	 * <p>
 	 * The built iterator feeds from the given iterator.
 	 *
 	 * @param <E> Type of the elements.
 	 * @param <RE> Type of the extracted elements.
 	 * @param iterator Iterator providing the elements to extract from.
-	 * @param extractor Function to use to extract the elements.
+	 * @param function Function to use to extract the elements.
 	 * @return An iterator providing the extracted elements.
 	 */
-	public static <E, RE> Iterator<RE> extract(final Iterator<? extends E> iterator, final Function<? super E, ? extends Maybe<? extends RE>> extractor) {
-		assert null != iterator;
-		assert null != extractor;
-		
-		return new ExtractIterator<E, RE>() {
-			@Override
-			protected Maybe<E> pull() {
-				return IteratorUtils.next(iterator);
-			}
-			
-			@Override
-			public Maybe<? extends RE> extract(final E element) {
-				return extractor.evaluate(element);
-			}
-		};
+	public static <E, RE> Iterator<RE> extract(final Iterator<? extends E> iterator, final Function<? super E, ? extends Iterable<? extends RE>> function) {
+		return flatMap(iterator, Functions.compose(IterableFunctions.iterator(), function));
 	}
 	
 	private IteratorUtils() {

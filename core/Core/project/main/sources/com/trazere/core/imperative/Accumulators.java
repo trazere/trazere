@@ -15,369 +15,203 @@
  */
 package com.trazere.core.imperative;
 
+import com.trazere.core.reference.MutableReference;
+import com.trazere.core.util.IntCounter;
+import com.trazere.core.util.Maybe;
+import com.trazere.core.util.Tuple2;
+
 /**
  * The {@link Accumulators} class provides various factories of accumulators.
  */
 public class Accumulators {
-	//	/**
-	//	 * Builds an accumulator that counts the accumulations (number of times some value is accumulated).
-	//	 *
-	//	 * @param <T> Type of the values.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @return The built accumulator.
-	//	 */
-	//	public static <T, X extends Exception> Accumulator1<T, Integer, X> counter() {
-	//		return new BaseAccumulator1<T, Integer, X>() {
-	//			private final Counter _result = new Counter();
-	//
-	//			@Override
-	//			public void add(final T value) {
-	//				_result.inc();
-	//			}
-	//
-	//			@Override
-	//			public Integer get() {
-	//				return _result.get();
-	//			}
-	//		};
-	//	}
-	//
-	//	/**
-	//	 * Builds an accumulator that filters the accumulated values using the given predicate.
-	//	 *
-	//	 * @param <T> Type of the values.
-	//	 * @param <S> Type of the states.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param predicate Filter predicate to use.
-	//	 * @param accumulator Accumulator to filter.
-	//	 * @return The built accumulator.
-	//	 */
-	//	public static <T, S, X extends Exception> Accumulator1<T, S, X> filter(final Predicate1<? super T, ? extends X> predicate, final Accumulator1<? super T, ? extends S, ? extends X> accumulator) {
-	//		assert null != predicate;
-	//		assert null != accumulator;
-	//
-	//		return new BaseAccumulator1<T, S, X>() {
-	//			@Override
-	//			public void add(final T value)
-	//			throws X {
-	//				if (predicate.evaluate(value)) {
-	//					accumulator.add(value);
-	//				}
-	//			}
-	//
-	//			@Override
-	//			public S get() {
-	//				return accumulator.get();
-	//			}
-	//		};
-	//	}
-	//
-	//	/**
-	//	 * Builds an accumulator that filters the accumulated values using the given predicate.
-	//	 *
-	//	 * @param <T1> Type of the first values.
-	//	 * @param <T2> Type of the second values.
-	//	 * @param <S> Type of the states.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param predicate Filter predicate to use.
-	//	 * @param accumulator The accumulator to filter.
-	//	 * @return The built accumulator.
-	//	 */
-	//	public static <T1, T2, S, X extends Exception> Accumulator2<T1, T2, S, X> filter(final Predicate2<? super T1, ? super T2, ? extends X> predicate, final Accumulator2<? super T1, ? super T2, ? extends S, ? extends X> accumulator) {
-	//		assert null != predicate;
-	//		assert null != accumulator;
-	//
-	//		return new BaseAccumulator2<T1, T2, S, X>() {
-	//			@Override
-	//			public void add(final T1 value1, final T2 value2)
-	//			throws X {
-	//				if (predicate.evaluate(value1, value2)) {
-	//					accumulator.add(value1, value2);
-	//				}
-	//			}
-	//
-	//			@Override
-	//			public S get() {
-	//				return accumulator.get();
-	//			}
-	//		};
-	//	}
-	//
-	//	/**
-	//	 * Builds an accumulator that maps the accumulated values using the given function.
-	//	 *
-	//	 * @param <T> Type of the values.
-	//	 * @param <RT> Type of the result values.
-	//	 * @param <S> Type of the states.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param function Mapping function to use.
-	//	 * @param accumulator Accumulator to map.
-	//	 * @return The built accumulator.
-	//	 */
-	//	public static <T, RT, S, X extends Exception> Accumulator1<T, S, X> map(final Function1<? super T, ? extends RT, ? extends X> function, final Accumulator1<? super RT, ? extends S, ? extends X> accumulator) {
-	//		assert null != function;
-	//		assert null != accumulator;
-	//
-	//		return new BaseAccumulator1<T, S, X>() {
-	//			@Override
-	//			public void add(final T value)
-	//			throws X {
-	//				accumulator.add(function.evaluate(value));
-	//			}
-	//
-	//			@Override
-	//			public S get() {
-	//				return accumulator.get();
-	//			}
-	//		};
-	//	}
-	//
-	//	/**
-	//	 * Builds an accumulator that maps the accumulated values using the given function.
-	//	 *
-	//	 * @param <T> Type of the values.
-	//	 * @param <RT> Type of the result values.
-	//	 * @param <S> Type of the states.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param function Mapping function to use.
-	//	 * @param accumulator Accumulator to map.
-	//	 * @return The built accumulator.
-	//	 */
-	//	public static <T, RT, S, X extends Exception> Accumulator1<T, S, X> flatMap(final Function1<? super T, ? extends Iterable<? extends RT>, ? extends X> function, final Accumulator1<? super RT, ? extends S, ? extends X> accumulator) {
-	//		assert null != function;
-	//		assert null != accumulator;
-	//
-	//		return new BaseAccumulator1<T, S, X>() {
-	//			@Override
-	//			public void add(final T value)
-	//			throws X {
-	//				accumulator.addAll(function.evaluate(value));
-	//			}
-	//
-	//			@Override
-	//			public S get() {
-	//				return accumulator.get();
-	//			}
-	//		};
-	//	}
-	//
-	//	/**
-	//	 * Builds an accumulator that extracts the values accumulated in the given accumulator using the given extractor.
-	//	 *
-	//	 * @param <T> Type of the values.
-	//	 * @param <RT> Type of the result values.
-	//	 * @param <S> Type of the states.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param extractor Extractor to use.
-	//	 * @param accumulator Accumulator to transform.
-	//	 * @return The built accumulator.
-	//	 */
-	//	public static <T, RT, S, X extends Exception> Accumulator1<T, S, X> extract(final Function1<? super T, ? extends Maybe<? extends RT>, ? extends X> extractor, final Accumulator1<? super RT, ? extends S, ? extends X> accumulator) {
-	//		assert null != extractor;
-	//		assert null != accumulator;
-	//
-	//		return new BaseAccumulator1<T, S, X>() {
-	//			@Override
-	//			public void add(final T value)
-	//			throws X {
-	//				final Maybe<? extends RT> result = extractor.evaluate(value);
-	//				if (result.isSome()) {
-	//					accumulator.add(result.asSome().getValue());
-	//				}
-	//			}
-	//
-	//			@Override
-	//			public S get() {
-	//				return accumulator.get();
-	//			}
-	//		};
-	//	}
-	//
-	//	/**
-	//	 * Curries the given pair accumulator.
-	//	 *
-	//	 * @param <T1> Type of the first values.
-	//	 * @param <T2> Type of the second values.
-	//	 * @param <S> Type of the states.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param accumulator Accumulator to curry.
-	//	 * @return The built accumulator.
-	//	 */
-	//	public static <T1, T2, S, X extends Exception> Accumulator2<T1, T2, S, X> curry(final Accumulator1<? super Tuple2<? super T1, ? super T2>, ? extends S, ? extends X> accumulator) {
-	//		assert null != accumulator;
-	//
-	//		return new BaseAccumulator2<T1, T2, S, X>() {
-	//			@Override
-	//			public void add(final T1 value1, final T2 value2)
-	//			throws X {
-	//				accumulator.add(Tuple2.build(value1, value2));
-	//			}
-	//
-	//			@Override
-	//			public S get() {
-	//				return accumulator.get();
-	//			}
-	//		};
-	//	}
-	//
-	//	/**
-	//	 * Uncurries the given two-arguments accumulator.
-	//	 *
-	//	 * @param <T1> Type of the first values.
-	//	 * @param <T2> Type of the second values.
-	//	 * @param <S> Type of the states.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param accumulator Accumulator to uncurry.
-	//	 * @return The built accumulator.
-	//	 */
-	//	public static <T1, T2, S, X extends Exception> Accumulator1<Tuple2<T1, T2>, S, X> uncurry(final Accumulator2<? super T1, ? super T2, ? extends S, ? extends X> accumulator) {
-	//		assert null != accumulator;
-	//
-	//		return new BaseAccumulator1<Tuple2<T1, T2>, S, X>() {
-	//			@Override
-	//			public void add(final Tuple2<T1, T2> value)
-	//			throws X {
-	//				accumulator.add(value.get1(), value.get2());
-	//			}
-	//
-	//			@Override
-	//			public S get() {
-	//				return accumulator.get();
-	//			}
-	//		};
-	//	}
-	//
-	//	/**
-	//	 * Builds an accumulator that ignores the accumulated values.
-	//	 *
-	//	 * @param <T> Type of the values.
-	//	 * @param <S> Type of the states.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param state State of the accumulator. May be <code>null</code>.
-	//	 * @return The built accumulator.
-	//	 */
-	//	public static <T, S, X extends Exception> Accumulator1<T, S, X> constant(final S state) {
-	//		return new BaseAccumulator1<T, S, X>() {
-	//			@Override
-	//			public void add(final T value) {
-	//				// Nothing to do.
-	//			}
-	//
-	//			@Override
-	//			public S get() {
-	//				return state;
-	//			}
-	//		};
-	//	}
-	//
-	//	/**
-	//	 * Builds a two-arguments accumulator that ignores the accumulated values.
-	//	 *
-	//	 * @param <T1> Type of the first values.
-	//	 * @param <T2> Type of the second values.
-	//	 * @param <S> Type of the states.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param state State of the accumulator. May be <code>null</code>.
-	//	 * @return The built accumulator.
-	//	 */
-	//	public static <T1, T2, S, X extends Exception> Accumulator2<T1, T2, S, X> constant2(final S state) {
-	//		return new BaseAccumulator2<T1, T2, S, X>() {
-	//			@Override
-	//			public void add(final T1 value1, final T2 value2) {
-	//				// Nothing to do.
-	//			}
-	//
-	//			@Override
-	//			public S get() {
-	//				return state;
-	//			}
-	//		};
-	//	}
-	//
-	//	/**
-	//	 * Builds an accumulator that maps its state using the given function.
-	//	 *
-	//	 * @param <T> Type of the values.
-	//	 * @param <S> Type of the states.
-	//	 * @param <RS> Type of the result states.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param function Mapping function to use.
-	//	 * @param accumulator Accumulator to map.
-	//	 * @return The built accumulator.
-	//	 */
-	//	public static <T, S, RS, X extends Exception> Accumulator1<T, RS, X> mapState(final Function1<? super S, ? extends RS, ? extends RuntimeException> function, final Accumulator1<? super T, ? extends S, ? extends X> accumulator) {
-	//		assert null != function;
-	//		assert null != accumulator;
-	//
-	//		return new BaseAccumulator1<T, RS, X>() {
-	//			@Override
-	//			public void add(final T value)
-	//			throws X {
-	//				accumulator.add(value);
-	//			}
-	//
-	//			@Override
-	//			public RS get() {
-	//				return function.evaluate(accumulator.get());
-	//			}
-	//		};
-	//	}
-	//
-	//	/**
-	//	 * Builds an accumulator that maps its state using the given function.
-	//	 *
-	//	 * @param <T1> Type of the first values.
-	//	 * @param <T2> Type of the second values.
-	//	 * @param <S> Type of the states.
-	//	 * @param <RS> Type of the result states.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param function Mapping function to use.
-	//	 * @param accumulator Accumulator to map.
-	//	 * @return The built accumulator.
-	//	 */
-	//	public static <T1, T2, S, RS, X extends Exception> Accumulator2<T1, T2, RS, X> mapState(final Function1<? super S, ? extends RS, ? extends RuntimeException> function, final Accumulator2<? super T1, ? super T2, ? extends S, ? extends X> accumulator) {
-	//		assert null != function;
-	//		assert null != accumulator;
-	//
-	//		return new BaseAccumulator2<T1, T2, RS, X>() {
-	//			@Override
-	//			public void add(final T1 value1, final T2 value2)
-	//			throws X {
-	//				accumulator.add(value1, value2);
-	//			}
-	//
-	//			@Override
-	//			public RS get() {
-	//				return function.evaluate(accumulator.get());
-	//			}
-	//		};
-	//	}
-	//
-	//	/**
-	//	 * Builds an accumulator that retain the first accumulated value.
-	//	 *
-	//	 * @param <T> Type of the values.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @return The built accumulator.
-	//	 */
-	//	public static <T, X extends Exception> Accumulator1<T, Maybe<T>, X> first() {
-	//		return new BaseAccumulator1<T, Maybe<T>, X>() {
-	//			private final MutableReference<T> _value = new MutableReference<T>();
-	//
-	//			@Override
-	//			public void add(final T value)
-	//			throws X {
-	//				if (!_value.isSet()) {
-	//					_value.set(value);
-	//				}
-	//			}
-	//
-	//			@Override
-	//			public Maybe<T> get() {
-	//				return _value.asMaybe();
-	//			}
-	//		};
-	//	}
+	/**
+	 * Builds an accumulator that ignores the accumulated elements and keeps a constant state.
+	 *
+	 * @param <E> Type of the accumulated elements.
+	 * @param <S> Type of the state.
+	 * @param state State of the accumulator.
+	 * @return The built accumulator.
+	 */
+	public static <E, S> Accumulator<E, S> constant(final S state) {
+		return new Accumulator<E, S>() {
+			@Override
+			public void add(final E element) {
+				// Nothing to do.
+			}
+			
+			@Override
+			public S get() {
+				return state;
+			}
+		};
+	}
+	
+	/**
+	 * Builds an accumulator that retains the first accumulated element.
+	 *
+	 * @param <E> Type of the accumulated elements.
+	 * @return The built accumulator.
+	 */
+	public static <E> Accumulator<E, Maybe<E>> first() {
+		return new Accumulator<E, Maybe<E>>() {
+			private final MutableReference<E> _element = new MutableReference<>();
+			
+			@Override
+			public void add(final E element) {
+				if (!_element.isSet()) {
+					_element.set(element);
+				}
+			}
+			
+			@Override
+			public Maybe<E> get() {
+				return _element.asMaybe();
+			}
+		};
+	}
+	
+	/**
+	 * Builds an accumulator that counts the accumulated elements (number of times some element is accumulated).
+	 *
+	 * @param <E> Type of the accumulated elements.
+	 * @return The built accumulator.
+	 */
+	public static <E> Accumulator<E, Integer> counter() {
+		return new Accumulator<E, Integer>() {
+			private final IntCounter _result = new IntCounter();
+			
+			@Override
+			public void add(final E element) {
+				_result.inc();
+			}
+			
+			@Override
+			public Integer get() {
+				return _result.get();
+			}
+		};
+	}
+	
+	/**
+	 * Builds an accumulator that ignores the accumulated pairs of elements and keeps a constant state.
+	 *
+	 * @param <E1> Type of the first element of the accumulated pairs.
+	 * @param <E2> Type of the second element of the accumulated pairs.
+	 * @param <S> Type of the state.
+	 * @param state State of the accumulator.
+	 * @return The built accumulator.
+	 */
+	public static <E1, E2, S> Accumulator2<E1, E2, S> constant2(final S state) {
+		return new Accumulator2<E1, E2, S>() {
+			@Override
+			public void add(final E1 element1, final E2 element2) {
+				// Nothing to do.
+			}
+			
+			@Override
+			public S get() {
+				return state;
+			}
+		};
+	}
+	
+	/**
+	 * Builds an accumulator that retains the first accumulated pair of elements.
+	 *
+	 * @param <E1> Type of the first element of the accumulated pairs.
+	 * @param <E2> Type of the second element of the accumulated pairs.
+	 * @return The built accumulator.
+	 */
+	public static <E1, E2> Accumulator2<E1, E2, Maybe<Tuple2<E1, E2>>> first2() {
+		return new Accumulator2<E1, E2, Maybe<Tuple2<E1, E2>>>() {
+			private final MutableReference<Tuple2<E1, E2>> _value = new MutableReference<>();
+			
+			@Override
+			public void add(final E1 element1, final E2 element2) {
+				if (!_value.isSet()) {
+					_value.set(new Tuple2<>(element1, element2));
+				}
+			}
+			
+			@Override
+			public Maybe<Tuple2<E1, E2>> get() {
+				return _value.asMaybe();
+			}
+		};
+	}
+	
+	/**
+	 * Builds an accumulator that counts the accumulated pairs of elements (number of times some pair of elements is accumulated).
+	 *
+	 * @param <E1> Type of the first element of the accumulated pairs.
+	 * @param <E2> Type of the second element of the accumulated pairs.
+	 * @return The built accumulator.
+	 */
+	public static <E1, E2> Accumulator2<E1, E2, Integer> counter2() {
+		return new Accumulator2<E1, E2, Integer>() {
+			private final IntCounter _result = new IntCounter();
+			
+			@Override
+			public void add(final E1 element1, final E2 element2) {
+				_result.inc();
+			}
+			
+			@Override
+			public Integer get() {
+				return _result.get();
+			}
+		};
+	}
+	
+	/**
+	 * Curries the given accumulator of pair of elements.
+	 *
+	 * @param <E1> Type of the first element of the accumulated pairs.
+	 * @param <E2> Type of the second element of the accumulated pairs.
+	 * @param <S> Type of the state.
+	 * @param accumulator Accumulator to curry.
+	 * @return The built accumulator.
+	 */
+	public static <E1, E2, S> Accumulator2<E1, E2, S> curry(final Accumulator<? super Tuple2<? super E1, ? super E2>, ? extends S> accumulator) {
+		assert null != accumulator;
+		
+		return new Accumulator2<E1, E2, S>() {
+			@Override
+			public void add(final E1 element1, final E2 element2) {
+				accumulator.add(new Tuple2<>(element1, element2));
+			}
+			
+			@Override
+			public S get() {
+				return accumulator.get();
+			}
+		};
+	}
+	
+	/**
+	 * Uncurries the given accumulator of pair of elements.
+	 *
+	 * @param <E1> Type of the first element of the accumulated pairs.
+	 * @param <E2> Type of the second element of the accumulated pairs.
+	 * @param <S> Type of the state.
+	 * @param accumulator Accumulator to uncurry.
+	 * @return The built accumulator.
+	 */
+	public static <E1, E2, S> Accumulator<Tuple2<? extends E1, ? extends E2>, S> uncurry(final Accumulator2<? super E1, ? super E2, ? extends S> accumulator) {
+		assert null != accumulator;
+		
+		return new Accumulator<Tuple2<? extends E1, ? extends E2>, S>() {
+			@Override
+			public void add(final Tuple2<? extends E1, ? extends E2> element) {
+				accumulator.add(element.get1(), element.get2());
+			}
+			
+			@Override
+			public S get() {
+				return accumulator.get();
+			}
+		};
+	}
 	
 	private Accumulators() {
 		// Prevents instantiation.

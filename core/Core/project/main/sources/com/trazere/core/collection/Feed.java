@@ -94,11 +94,6 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 				_tail = _tail.getTail();
 				return head;
 			}
-			
-			@Override
-			public void remove() {
-				throw new UnsupportedOperationException();
-			}
 		};
 	}
 }

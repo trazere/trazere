@@ -52,57 +52,49 @@ public class LangAccumulators {
 		};
 	}
 	
-	//	/**
-	//	 * Builds an arithmetic accumulator corresponding to a sum.
-	//	 *
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param initialResult The initial result.
-	//	 * @return The built accumulator.
-	//	 */
-	//	public static <X extends Exception> Accumulator1<Integer, Integer, X> sum(final int initialResult) {
-	//		return new BaseAccumulator1<Integer, Integer, X>() {
-	//			private final MutableInt _value = new MutableInt(initialResult);
-	//
-	//			@Override
-	//			public void add(final Integer value)
-	//			throws X {
-	//				assert null != value;
-	//
-	//				_value.add(value.intValue());
-	//			}
-	//
-	//			@Override
-	//			public Integer get() {
-	//				return _value.get();
-	//			}
-	//		};
-	//	}
-	//
-	//	/**
-	//	 * Builds an arithmetic accumulator corresponding to a sum.
-	//	 *
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param initialResult The initial result.
-	//	 * @return The built accumulator.
-	//	 */
-	//	public static <X extends Exception> Accumulator1<Long, Long, X> sum(final long initialResult) {
-	//		return new BaseAccumulator1<Long, Long, X>() {
-	//			private final MutableLong _value = new MutableLong(initialResult);
-	//
-	//			@Override
-	//			public void add(final Long value)
-	//			throws X {
-	//				assert null != value;
-	//
-	//				_value.add(value.longValue());
-	//			}
-	//
-	//			@Override
-	//			public Long get() {
-	//				return _value.get();
-	//			}
-	//		};
-	//	}
+	/**
+	 * Builds an arithmetic accumulator corresponding to a sum.
+	 *
+	 * @param initialState Initial state.
+	 * @return The built accumulator.
+	 */
+	public static Accumulator<Integer, Integer> sum(final int initialState) {
+		return new Accumulator<Integer, Integer>() {
+			private final MutableInt _value = new MutableInt(initialState);
+			
+			@Override
+			public void add(final Integer value) {
+				_value.add(value.intValue());
+			}
+			
+			@Override
+			public Integer get() {
+				return _value.get();
+			}
+		};
+	}
+	
+	/**
+	 * Builds an arithmetic accumulator corresponding to a sum.
+	 *
+	 * @param initialState Initial state.
+	 * @return The built accumulator.
+	 */
+	public static Accumulator<Long, Long> sum(final long initialState) {
+		return new Accumulator<Long, Long>() {
+			private final MutableLong _value = new MutableLong(initialState);
+			
+			@Override
+			public void add(final Long value) {
+				_value.add(value.longValue());
+			}
+			
+			@Override
+			public Long get() {
+				return _value.get();
+			}
+		};
+	}
 	
 	private LangAccumulators() {
 		// Prevents instantiation.
