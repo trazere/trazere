@@ -66,7 +66,7 @@ implements Iterable<T>, Describable {
 	}
 	
 	/**
-	 * Builds an instance of {@link Maybe} from the given value according to the following rules:
+	 * Builds an instance of {@link Maybe} from the given nullable value according to the following rules:
 	 * <ul>
 	 * <li><code>null</code> are translated to an absent value ({@link None}),
 	 * <li>non-<code>null</code> values are wrapped in available values ({@link Some}).
@@ -77,7 +77,7 @@ implements Iterable<T>, Describable {
 	 * @param value Value to wrap.
 	 * @return The built instance.
 	 */
-	public static <T> Maybe<T> fromValue(final T value) {
+	public static <T> Maybe<T> fromNullable(final T value) {
 		if (null != value) {
 			return some(value);
 		} else {
@@ -86,7 +86,7 @@ implements Iterable<T>, Describable {
 	}
 	
 	/**
-	 * Convert the given {@link Maybe} instance to a value according to the following rules:
+	 * Convert the given {@link Maybe} instance to a nullable value according to the following rules:
 	 * <ul>
 	 * <li>absents values ({@link None}) are translated to <code>null</code>,
 	 * <li>available values ({@link Some}) are unwrapped.
@@ -97,7 +97,7 @@ implements Iterable<T>, Describable {
 	 * @param maybe Instance to convert.
 	 * @return The resulting value.
 	 */
-	public static <T> T toValue(final Maybe<T> maybe) {
+	public static <T> T toNullable(final Maybe<T> maybe) {
 		return maybe.get((T) null);
 	}
 	

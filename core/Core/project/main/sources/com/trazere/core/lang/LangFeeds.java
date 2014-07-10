@@ -42,12 +42,7 @@ public class LangFeeds {
 	 * @return The built feed.
 	 */
 	public static Feed<Integer> integer(final int start, final int increment) {
-		return new Feed<Integer>() {
-			@Override
-			public Maybe<? extends Tuple2<? extends Integer, ? extends Feed<? extends Integer>>> evaluate() {
-				return Maybe.some(Tuples.tuple2(start, integer(start + increment, increment)));
-			}
-		};
+		return () -> Maybe.some(Tuples.tuple2(start, integer(start + increment, increment)));
 	}
 	
 	/**
@@ -69,17 +64,15 @@ public class LangFeeds {
 		return fromString(s, 0);
 	}
 	
+	// TODO: make public and add version with a range
 	private static final Feed<Character> fromString(final String s, final int index) {
 		assert null != s;
 		
-		return new Feed<Character>() {
-			@Override
-			public Maybe<Tuple2<Character, Feed<Character>>> evaluate() {
-				if (s.length() > index) {
-					return Maybe.some(new Tuple2<>(s.charAt(index), fromString(s, index + 1)));
-				} else {
-					return Maybe.none();
-				}
+		return () -> {
+			if (s.length() > index) {
+				return Maybe.some(new Tuple2<>(s.charAt(index), fromString(s, index + 1)));
+			} else {
+				return Maybe.none();
 			}
 		};
 	}

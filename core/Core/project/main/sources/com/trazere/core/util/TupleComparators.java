@@ -31,7 +31,7 @@ public class TupleComparators {
 	 * @return The built comparator.
 	 */
 	public static <E1> Comparator<Tuple1<E1>> element1(final Comparator<? super E1> comparator) {
-		return ComparatorUtils.map(comparator, TupleFunctions.<E1>get1());
+		return ComparatorUtils.map(comparator, TupleFunctions.get1());
 	}
 	
 	/**
@@ -42,7 +42,7 @@ public class TupleComparators {
 	 * @return The built comparator.
 	 */
 	public static <E2> Comparator<Tuple2<?, E2>> element2(final Comparator<? super E2> comparator) {
-		return ComparatorUtils.map(comparator, TupleFunctions.<E2>get2());
+		return ComparatorUtils.map(comparator, TupleFunctions.get2());
 	}
 	
 	/**
@@ -53,7 +53,7 @@ public class TupleComparators {
 	 * @return The built comparator.
 	 */
 	public static <E3> Comparator<Tuple3<?, ?, E3>> element3(final Comparator<? super E3> comparator) {
-		return ComparatorUtils.map(comparator, TupleFunctions.<E3>get3());
+		return ComparatorUtils.map(comparator, TupleFunctions.get3());
 	}
 	
 	/**
@@ -64,7 +64,7 @@ public class TupleComparators {
 	 * @return The built comparator.
 	 */
 	public static <E4> Comparator<Tuple4<?, ?, ?, E4>> element4(final Comparator<? super E4> comparator) {
-		return ComparatorUtils.map(comparator, TupleFunctions.<E4>get4());
+		return ComparatorUtils.map(comparator, TupleFunctions.get4());
 	}
 	
 	/**
@@ -75,7 +75,7 @@ public class TupleComparators {
 	 * @return The built comparator.
 	 */
 	public static <E5> Comparator<Tuple5<?, ?, ?, ?, E5>> element5(final Comparator<? super E5> comparator) {
-		return ComparatorUtils.map(comparator, TupleFunctions.<E5>get5());
+		return ComparatorUtils.map(comparator, TupleFunctions.get5());
 	}
 	
 	/**
@@ -86,7 +86,7 @@ public class TupleComparators {
 	 * @return The built comparator.
 	 */
 	public static <E6> Comparator<Tuple6<?, ?, ?, ?, ?, E6>> element6(final Comparator<? super E6> comparator) {
-		return ComparatorUtils.map(comparator, TupleFunctions.<E6>get6());
+		return ComparatorUtils.map(comparator, TupleFunctions.get6());
 	}
 	
 	/**
@@ -97,7 +97,7 @@ public class TupleComparators {
 	 * @return The built comparator.
 	 */
 	public static <E7> Comparator<Tuple7<?, ?, ?, ?, ?, ?, E7>> element7(final Comparator<? super E7> comparator) {
-		return ComparatorUtils.map(comparator, TupleFunctions.<E7>get7());
+		return ComparatorUtils.map(comparator, TupleFunctions.get7());
 	}
 	
 	/**
@@ -108,7 +108,7 @@ public class TupleComparators {
 	 * @return The built comparator.
 	 */
 	public static <E8> Comparator<Tuple8<?, ?, ?, ?, ?, ?, ?, E8>> element8(final Comparator<? super E8> comparator) {
-		return ComparatorUtils.map(comparator, TupleFunctions.<E8>get8());
+		return ComparatorUtils.map(comparator, TupleFunctions.get8());
 	}
 	
 	/**
@@ -119,7 +119,7 @@ public class TupleComparators {
 	 * @return The built comparator.
 	 */
 	public static <E9> Comparator<Tuple9<?, ?, ?, ?, ?, ?, ?, ?, E9>> element9(final Comparator<? super E9> comparator) {
-		return ComparatorUtils.map(comparator, TupleFunctions.<E9>get9());
+		return ComparatorUtils.map(comparator, TupleFunctions.get9());
 	}
 	
 	/**
@@ -130,7 +130,7 @@ public class TupleComparators {
 	 * @return The built comparator.
 	 */
 	public static <E10> Comparator<Tuple10<?, ?, ?, ?, ?, ?, ?, ?, ?, E10>> element10(final Comparator<? super E10> comparator) {
-		return ComparatorUtils.map(comparator, TupleFunctions.<E10>get10());
+		return ComparatorUtils.map(comparator, TupleFunctions.get10());
 	}
 	
 	/**

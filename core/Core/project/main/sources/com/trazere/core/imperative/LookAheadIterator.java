@@ -63,9 +63,4 @@ implements Iterator<E> {
 	 * @return The next element.
 	 */
 	protected abstract Maybe<? extends E> pull();
-	
-	@Override
-	public void remove() {
-		throw new UnsupportedOperationException();
-	}
 }

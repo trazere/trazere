@@ -23,6 +23,7 @@ package com.trazere.core.imperative;
  * @param <A3> Type of the third arguments.
  * @param <A4> Type of the fourth arguments.
  */
+@FunctionalInterface
 public interface Procedure4<A1, A2, A3, A4> {
 	/**
 	 * Executes the receiver procedure with the given arguments.

@@ -32,12 +32,7 @@ public class Functions {
 		return (Function<T, T>) IDENTITY;
 	}
 	
-	private static final Function<?, ?> IDENTITY = new Function<Object, Object>() {
-		@Override
-		public Object evaluate(final Object value) {
-			return value;
-		}
-	};
+	private static final Function<?, ?> IDENTITY = value -> value;
 	
 	/**
 	 * Builds a function corresponding to the composition of the given functions (g . f).
@@ -53,32 +48,21 @@ public class Functions {
 		assert null != g;
 		assert null != f;
 		
-		return new Function<A1, R>() {
-			@Override
-			public R evaluate(final A1 arg) {
-				return g.evaluate(f.evaluate(arg));
-			}
-		};
+		return arg -> g.evaluate(f.evaluate(arg));
 	}
 	
-	//	/**
-	//	 * Builds a one argument function that always evaluates to the given value.
-	//	 *
-	//	 * @param <T> Type of the argument values.
-	//	 * @param <R> Type of the result value.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param result The result value. May be <code>null</code>.
-	//	 * @return The built function.
-	//	 */
-	//	public static <T, R, X extends Exception> Function1<T, R, X> constant(final R result) {
-	//		return new Function1<T, R, X>() {
-	//			@Override
-	//			public R evaluate(final T value) {
-	//				return result;
-	//			}
-	//		};
-	//	}
-	//
+	/**
+	 * Builds a function that always evaluates to the given value.
+	 *
+	 * @param <A> Type of the arguments.
+	 * @param <R> Type of the results.
+	 * @param result Result of the function.
+	 * @return The built function.
+	 */
+	public static <A, R> Function<A, R> constant(final R result) {
+		return arg -> result;
+	}
+	
 	//	/**
 	//	 * Builds a one argument function that fails.
 	//	 *

@@ -34,12 +34,7 @@ public class MaybeComparators {
 	public static <T> Comparator<Maybe<T>> maybe(final Comparator<? super T> comparator) {
 		assert null != comparator;
 		
-		return new Comparator<Maybe<T>>() {
-			@Override
-			public int compare(final Maybe<T> value1, final Maybe<T> value2) {
-				return ComparatorUtils.compare(comparator, value1, value2);
-			}
-		};
+		return (value1, value2) -> ComparatorUtils.compare(comparator, value1, value2);
 	}
 	
 	private MaybeComparators() {

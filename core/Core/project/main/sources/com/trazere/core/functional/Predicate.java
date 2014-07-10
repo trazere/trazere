@@ -22,6 +22,7 @@ package com.trazere.core.functional;
  * 
  * @param <A> Type of the arguments.
  */
+@FunctionalInterface
 public interface Predicate<A> {
 	/**
 	 * Evaluates the receiver predicate with the given argument.

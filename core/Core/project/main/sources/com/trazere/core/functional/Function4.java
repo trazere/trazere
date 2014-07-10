@@ -24,6 +24,7 @@ package com.trazere.core.functional;
  * @param <A4> Type of the fourth arguments.
  * @param <R> Type of the results.
  */
+@FunctionalInterface
 public interface Function4<A1, A2, A3, A4, R> {
 	/**
 	 * Evaluates the receiver function with the given arguments.

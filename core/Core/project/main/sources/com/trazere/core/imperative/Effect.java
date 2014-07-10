@@ -20,6 +20,7 @@ package com.trazere.core.imperative;
  * <p>
  * Effects represent no-arguments procedures whose execution solely relies on the captured context. They provide an abstraction for lazy side effects.
  */
+@FunctionalInterface
 public interface Effect {
 	/**
 	 * Executes the receiver effect.

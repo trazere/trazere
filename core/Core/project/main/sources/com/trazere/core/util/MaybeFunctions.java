@@ -16,7 +16,6 @@
 package com.trazere.core.util;
 
 import com.trazere.core.functional.Function;
-import com.trazere.core.functional.Functions;
 import com.trazere.core.functional.Predicate;
 
 /**
@@ -35,50 +34,35 @@ public class MaybeFunctions {
 		return (Function<T, Maybe<T>>) SOME;
 	}
 	
-	private static final Function<?, ?> SOME = new Function<Object, Maybe<Object>>() {
-		@Override
-		public Maybe<Object> evaluate(final Object value) {
-			return Maybe.some(value);
-		}
-	};
+	private static final Function<?, ? extends Maybe<?>> SOME = Maybe::some;
 	
 	/**
-	 * Builds a function that builds instances of {@link Maybe} from values.
+	 * Builds a function that builds instances of {@link Maybe} from nullable values.
 	 * 
 	 * @param <T> Type of the values.
 	 * @return The built function.
-	 * @see Maybe#fromValue(Object)
+	 * @see Maybe#fromNullable(Object)
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> Function<T, Maybe<T>> fromValue() {
-		return (Function<T, Maybe<T>>) FROM_VALUE;
+	public static <T> Function<T, Maybe<T>> fromNullable() {
+		return (Function<T, Maybe<T>>) FROM_NULLABLE;
 	}
 	
-	private static final Function<?, ?> FROM_VALUE = new Function<Object, Maybe<Object>>() {
-		@Override
-		public Maybe<Object> evaluate(final Object value) {
-			return Maybe.fromValue(value);
-		}
-	};
+	private static final Function<?, ? extends Maybe<?>> FROM_NULLABLE = Maybe::fromNullable;
 	
 	/**
-	 * Builds a function that convert {@link Maybe} instances to values.
+	 * Builds a function that convert {@link Maybe} instances to nullable values.
 	 * 
 	 * @param <T> Type of the values.
 	 * @return The built function.
-	 * @see Maybe#toValue(Maybe)
+	 * @see Maybe#toNullable(Maybe)
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> Function<Maybe<T>, T> toValue() {
-		return (Function<Maybe<T>, T>) TO_VALUE;
+	public static <T> Function<Maybe<T>, T> toNullable() {
+		return (Function<Maybe<T>, T>) TO_NULLABLE;
 	}
 	
-	private static final Function<?, ?> TO_VALUE = new Function<Maybe<Object>, Object>() {
-		@Override
-		public Object evaluate(final Maybe<Object> instance) {
-			return Maybe.toValue(instance);
-		}
-	};
+	private static final Function<? extends Maybe<?>, ?> TO_NULLABLE = instance -> Maybe.toNullable(instance);
 	
 	/**
 	 * Builds a function that filters the value wrapped in {@link Maybe} instances using the given filter.
@@ -88,15 +72,10 @@ public class MaybeFunctions {
 	 * @return The built function.
 	 * @see Maybe#filter(Predicate)
 	 */
-	public static <T> Function<Maybe<? extends T>, Maybe<T>> filter(final Predicate<? super T> filter) {
+	public static <T> Function<Maybe<? extends T>, Maybe<? extends T>> filter(final Predicate<? super T> filter) {
 		assert null != filter;
 		
-		return new Function<Maybe<? extends T>, Maybe<T>>() {
-			@Override
-			public Maybe<T> evaluate(final Maybe<? extends T> maybe) {
-				return maybe.filter(filter).map(Functions.<T>identity());
-			}
-		};
+		return maybe -> maybe.filter(filter);
 	}
 	
 	/**
@@ -111,12 +90,7 @@ public class MaybeFunctions {
 	public static <T, R> Function<Maybe<? extends T>, Maybe<R>> map(final Function<? super T, ? extends R> function) {
 		assert null != function;
 		
-		return new Function<Maybe<? extends T>, Maybe<R>>() {
-			@Override
-			public Maybe<R> evaluate(final Maybe<? extends T> maybe) {
-				return maybe.map(function);
-			}
-		};
+		return maybe -> maybe.map(function);
 	}
 	
 	/**
@@ -131,12 +105,7 @@ public class MaybeFunctions {
 	public static <T, R> Function<Maybe<? extends T>, Maybe<R>> flatMap(final Function<? super T, ? extends Maybe<? extends R>> function) {
 		assert null != function;
 		
-		return new Function<Maybe<? extends T>, Maybe<R>>() {
-			@Override
-			public Maybe<R> evaluate(final Maybe<? extends T> maybe) {
-				return maybe.flatMap(function);
-			}
-		};
+		return maybe -> maybe.flatMap(function);
 	}
 	
 	private MaybeFunctions() {

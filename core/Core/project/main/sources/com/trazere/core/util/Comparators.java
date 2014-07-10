@@ -36,11 +36,8 @@ public class Comparators {
 		return (Comparator<T>) NATURAL;
 	}
 	
-	private static final Comparator<? extends Comparable<?>> NATURAL = new Comparator<DummyComparable>() {
-		@Override
-		public int compare(final DummyComparable object1, final DummyComparable object2) {
-			return object1.compareTo(object2);
-		}
+	private static final Comparator<? extends Comparable<?>> NATURAL = (final DummyComparable object1, final DummyComparable object2) -> {
+		return object1.compareTo(object2);
 	};
 	
 	/**
@@ -55,11 +52,8 @@ public class Comparators {
 		return (Comparator<T>) SAFE_NATURAL;
 	}
 	
-	private static final Comparator<? extends Comparable<?>> SAFE_NATURAL = new Comparator<DummyComparable>() {
-		@Override
-		public int compare(final DummyComparable object1, final DummyComparable object2) {
-			return ComparableUtils.safeCompareTo(object1, object2);
-		}
+	private static final Comparator<? extends Comparable<?>> SAFE_NATURAL = (final DummyComparable object1, final DummyComparable object2) -> {
+		return ComparableUtils.safeCompareTo(object1, object2);
 	};
 	
 	/**
