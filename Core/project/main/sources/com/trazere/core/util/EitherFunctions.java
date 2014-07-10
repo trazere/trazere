@@ -21,12 +21,7 @@ public class EitherFunctions {
 		return (Function<L, Either<L, R>>) LEFT;
 	}
 	
-	private static final Function<?, ?> LEFT = new Function<Object, Either<?, ?>>() {
-		@Override
-		public Either<?, ?> evaluate(final Object value) {
-			return Either.left(value);
-		}
-	};
+	private static final Function<?, ?> LEFT = Either::left;
 	
 	/**
 	 * Builds a function that builds {@link Either} instances using the {@link Right} constructor.
@@ -41,12 +36,7 @@ public class EitherFunctions {
 		return (Function<R, Either<L, R>>) RIGHT;
 	}
 	
-	private static final Function<?, ?> RIGHT = new Function<Object, Either<?, ?>>() {
-		@Override
-		public Either<?, ?> evaluate(final Object value) {
-			return Either.right(value);
-		}
-	};
+	private static final Function<?, ?> RIGHT = Either::right;
 	
 	/**
 	 * Builds a function that maps the left value wrapped in {@link Either} instances using the given function.
@@ -61,12 +51,7 @@ public class EitherFunctions {
 	public static <L, R, RL> Function<Either<? extends L, R>, Either<RL, R>> mapLeft(final Function<? super L, ? extends RL> function) {
 		assert null != function;
 		
-		return new Function<Either<? extends L, R>, Either<RL, R>>() {
-			@Override
-			public Either<RL, R> evaluate(final Either<? extends L, R> either) {
-				return either.mapLeft(function);
-			}
-		};
+		return either -> either.mapLeft(function);
 	}
 	
 	/**
@@ -82,12 +67,7 @@ public class EitherFunctions {
 	public static <L, R, RR> Function<Either<L, ? extends R>, Either<L, RR>> mapRight(final Function<? super R, ? extends RR> function) {
 		assert null != function;
 		
-		return new Function<Either<L, ? extends R>, Either<L, RR>>() {
-			@Override
-			public Either<L, RR> evaluate(final Either<L, ? extends R> either) {
-				return either.mapRight(function);
-			}
-		};
+		return either -> either.mapRight(function);
 	}
 	
 	private EitherFunctions() {

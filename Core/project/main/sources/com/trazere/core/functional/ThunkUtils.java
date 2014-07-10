@@ -36,12 +36,7 @@ public class ThunkUtils {
 		assert null != thunk;
 		assert null != function;
 		
-		return new Thunk<R>() {
-			@Override
-			public R evaluate() {
-				return function.evaluate(thunk.evaluate());
-			}
-		};
+		return () -> function.evaluate(thunk.evaluate());
 	}
 	
 	/**
@@ -76,7 +71,11 @@ public class ThunkUtils {
 			
 			@Override
 			public Maybe<T> get() {
-				return _value.isRight() ? Maybe.some(_value.asRight().getRight()) : Maybe.<T>none();
+				if (_value.isRight()) {
+					return Maybe.some(_value.asRight().getRight());
+				} else {
+					return Maybe.<T>none();
+				}
 			}
 			
 			// Object.
@@ -124,12 +123,7 @@ public class ThunkUtils {
 	public static <T> Thunk<T> synchronize(final Thunk<? extends T> thunk) {
 		assert null != thunk;
 		
-		return new Thunk<T>() {
-			@Override
-			public T evaluate() {
-				return synchronizedEvaluate(thunk);
-			}
-		};
+		return () -> synchronizedEvaluate(thunk);
 	}
 	
 	/**

@@ -26,6 +26,7 @@ import java.util.NoSuchElementException;
  * 
  * @param <E> Type of the elements.
  */
+@FunctionalInterface
 public interface Feed<E>
 extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>, Iterable<E> {
 	/**

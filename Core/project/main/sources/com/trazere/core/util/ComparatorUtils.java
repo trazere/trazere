@@ -111,12 +111,7 @@ public class ComparatorUtils {
 	public static <T> Comparator<T> safe(final Comparator<? super T> comparator) {
 		assert null != comparator;
 		
-		return new Comparator<T>() {
-			@Override
-			public int compare(final T object1, final T object2) {
-				return ComparatorUtils.safeCompare(comparator, object1, object2);
-			}
-		};
+		return (object1, object2) -> ComparatorUtils.safeCompare(comparator, object1, object2);
 	}
 	
 	/**

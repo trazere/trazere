@@ -20,6 +20,7 @@ package com.trazere.core.imperative;
  * 
  * @param <A> Type of the arguments.
  */
+@FunctionalInterface
 public interface Procedure<A> {
 	/**
 	 * Executes the receiver procedure with the given argument.

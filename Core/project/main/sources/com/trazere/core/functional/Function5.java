@@ -25,6 +25,7 @@ package com.trazere.core.functional;
  * @param <A5> Type of the fifth arguments.
  * @param <R> Type of the results.
  */
+@FunctionalInterface
 public interface Function5<A1, A2, A3, A4, A5, R> {
 	/**
 	 * Evaluates the receiver function with the given arguments.

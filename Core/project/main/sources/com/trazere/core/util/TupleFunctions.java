@@ -36,12 +36,7 @@ public class TupleFunctions {
 		return (Function<E1, Tuple1<E1>>) TUPLE1;
 	}
 	
-	private static final Function<?, ? extends Tuple1<?>> TUPLE1 = new Function<Object, Tuple1<Object>>() {
-		@Override
-		public Tuple1<Object> evaluate(final Object e1) {
-			return new Tuple1<>(e1);
-		}
-	};
+	private static final Function<?, ? extends Tuple1<?>> TUPLE1 = Tuple1<Object>::new;
 	
 	/**
 	 * Builds a function that builds 2-tuples.
@@ -55,12 +50,7 @@ public class TupleFunctions {
 		return (Function2<E1, E2, Tuple2<E1, E2>>) TUPLE2;
 	}
 	
-	private static final Function2<?, ?, ? extends Tuple2<?, ?>> TUPLE2 = new Function2<Object, Object, Tuple2<Object, Object>>() {
-		@Override
-		public Tuple2<Object, Object> evaluate(final Object e1, final Object e2) {
-			return new Tuple2<>(e1, e2);
-		}
-	};
+	private static final Function2<?, ?, ? extends Tuple2<?, ?>> TUPLE2 = Tuple2<Object, Object>::new;
 	
 	/**
 	 * Builds a function that builds 3-tuples.
@@ -75,12 +65,7 @@ public class TupleFunctions {
 		return (Function3<E1, E2, E3, Tuple3<E1, E2, E3>>) TUPLE3;
 	}
 	
-	private static final Function3<?, ?, ?, ? extends Tuple3<?, ?, ?>> TUPLE3 = new Function3<Object, Object, Object, Tuple3<Object, Object, Object>>() {
-		@Override
-		public Tuple3<Object, Object, Object> evaluate(final Object e1, final Object e2, final Object e3) {
-			return new Tuple3<>(e1, e2, e3);
-		}
-	};
+	private static final Function3<?, ?, ?, ? extends Tuple3<?, ?, ?>> TUPLE3 = Tuple3<Object, Object, Object>::new;
 	
 	/**
 	 * Builds a function that builds 4-tuples.
@@ -96,12 +81,7 @@ public class TupleFunctions {
 		return (Function4<E1, E2, E3, E4, Tuple4<E1, E2, E3, E4>>) TUPLE4;
 	}
 	
-	private static final Function4<?, ?, ?, ?, ? extends Tuple4<?, ?, ?, ?>> TUPLE4 = new Function4<Object, Object, Object, Object, Tuple4<Object, Object, Object, Object>>() {
-		@Override
-		public Tuple4<Object, Object, Object, Object> evaluate(final Object e1, final Object e2, final Object e3, final Object e4) {
-			return new Tuple4<>(e1, e2, e3, e4);
-		}
-	};
+	private static final Function4<?, ?, ?, ?, ? extends Tuple4<?, ?, ?, ?>> TUPLE4 = Tuple4<Object, Object, Object, Object>::new;
 	
 	/**
 	 * Builds a function that builds 5-tuples.
@@ -118,12 +98,7 @@ public class TupleFunctions {
 		return (Function5<E1, E2, E3, E4, E5, Tuple5<E1, E2, E3, E4, E5>>) TUPLE5;
 	}
 	
-	private static final Function5<?, ?, ?, ?, ?, ? extends Tuple5<?, ?, ?, ?, ?>> TUPLE5 = new Function5<Object, Object, Object, Object, Object, Tuple5<Object, Object, Object, Object, Object>>() {
-		@Override
-		public Tuple5<Object, Object, Object, Object, Object> evaluate(final Object e1, final Object e2, final Object e3, final Object e4, final Object e5) {
-			return new Tuple5<>(e1, e2, e3, e4, e5);
-		}
-	};
+	private static final Function5<?, ?, ?, ?, ?, ? extends Tuple5<?, ?, ?, ?, ?>> TUPLE5 = Tuple5<Object, Object, Object, Object, Object>::new;
 	
 	/**
 	 * Builds a function that gets the first element of the tuples.
@@ -136,12 +111,7 @@ public class TupleFunctions {
 		return (Function<Tuple1<? extends E1>, E1>) GET1;
 	}
 	
-	private static final Function<? extends Tuple1<?>, ?> GET1 = new Function<Tuple1<Object>, Object>() {
-		@Override
-		public Object evaluate(final Tuple1<Object> tuple) {
-			return tuple.get1();
-		}
-	};
+	private static final Function<? extends Tuple1<?>, ?> GET1 = tuple -> tuple.get1();
 	
 	/**
 	 * Builds a function that gets the second element of tuples.
@@ -154,12 +124,7 @@ public class TupleFunctions {
 		return (Function<Tuple2<?, ? extends E2>, E2>) GET2;
 	}
 	
-	private static final Function<? extends Tuple2<?, ?>, ?> GET2 = new Function<Tuple2<Object, Object>, Object>() {
-		@Override
-		public Object evaluate(final Tuple2<Object, Object> tuple) {
-			return tuple.get2();
-		}
-	};
+	private static final Function<? extends Tuple2<?, ?>, ?> GET2 = tuple -> tuple.get2();
 	
 	/**
 	 * Builds a function that gets the third element of tuples.
@@ -172,12 +137,7 @@ public class TupleFunctions {
 		return (Function<Tuple3<?, ?, ? extends E3>, E3>) GET3;
 	}
 	
-	private static final Function<? extends Tuple3<?, ?, ?>, ?> GET3 = new Function<Tuple3<Object, Object, Object>, Object>() {
-		@Override
-		public Object evaluate(final Tuple3<Object, Object, Object> tuple) {
-			return tuple.get3();
-		}
-	};
+	private static final Function<? extends Tuple3<?, ?, ?>, ?> GET3 = tuple -> tuple.get3();
 	
 	/**
 	 * Builds a function that gets the fourth element of tuples.
@@ -190,12 +150,7 @@ public class TupleFunctions {
 		return (Function<Tuple4<?, ?, ?, ? extends E4>, E4>) GET4;
 	}
 	
-	private static final Function<? extends Tuple4<?, ?, ?, ?>, ?> GET4 = new Function<Tuple4<Object, Object, Object, Object>, Object>() {
-		@Override
-		public Object evaluate(final Tuple4<Object, Object, Object, Object> tuple) {
-			return tuple.get4();
-		}
-	};
+	private static final Function<? extends Tuple4<?, ?, ?, ?>, ?> GET4 = tuple -> tuple.get4();
 	
 	/**
 	 * Builds a function that gets the fifth element of tuples.
@@ -208,12 +163,7 @@ public class TupleFunctions {
 		return (Function<Tuple5<?, ?, ?, ?, ? extends E5>, E5>) GET5;
 	}
 	
-	private static final Function<? extends Tuple5<?, ?, ?, ?, ?>, ?> GET5 = new Function<Tuple5<Object, Object, Object, Object, Object>, Object>() {
-		@Override
-		public Object evaluate(final Tuple5<Object, Object, Object, Object, Object> tuple) {
-			return tuple.get5();
-		}
-	};
+	private static final Function<? extends Tuple5<?, ?, ?, ?, ?>, ?> GET5 = tuple -> tuple.get5();
 	
 	/**
 	 * Builds a function that gets the sixth element of tuples.
@@ -226,12 +176,7 @@ public class TupleFunctions {
 		return (Function<Tuple6<?, ?, ?, ?, ?, ? extends E6>, E6>) GET6;
 	}
 	
-	private static final Function<? extends Tuple6<?, ?, ?, ?, ?, ?>, ?> GET6 = new Function<Tuple6<Object, Object, Object, Object, Object, Object>, Object>() {
-		@Override
-		public Object evaluate(final Tuple6<Object, Object, Object, Object, Object, Object> tuple) {
-			return tuple.get6();
-		}
-	};
+	private static final Function<? extends Tuple6<?, ?, ?, ?, ?, ?>, ?> GET6 = tuple -> tuple.get6();
 	
 	/**
 	 * Builds a function that gets the seventh element of tuples.
@@ -244,12 +189,7 @@ public class TupleFunctions {
 		return (Function<Tuple7<?, ?, ?, ?, ?, ?, ? extends E7>, E7>) GET7;
 	}
 	
-	private static final Function<? extends Tuple7<?, ?, ?, ?, ?, ?, ?>, ?> GET7 = new Function<Tuple7<Object, Object, Object, Object, Object, Object, Object>, Object>() {
-		@Override
-		public Object evaluate(final Tuple7<Object, Object, Object, Object, Object, Object, Object> tuple) {
-			return tuple.get7();
-		}
-	};
+	private static final Function<? extends Tuple7<?, ?, ?, ?, ?, ?, ?>, ?> GET7 = tuple -> tuple.get7();
 	
 	/**
 	 * Builds a function that gets the eighth element of tuples.
@@ -262,12 +202,7 @@ public class TupleFunctions {
 		return (Function<Tuple8<?, ?, ?, ?, ?, ?, ?, ? extends E8>, E8>) GET8;
 	}
 	
-	private static final Function<? extends Tuple8<?, ?, ?, ?, ?, ?, ?, ?>, ?> GET8 = new Function<Tuple8<Object, Object, Object, Object, Object, Object, Object, Object>, Object>() {
-		@Override
-		public Object evaluate(final Tuple8<Object, Object, Object, Object, Object, Object, Object, Object> tuple) {
-			return tuple.get8();
-		}
-	};
+	private static final Function<? extends Tuple8<?, ?, ?, ?, ?, ?, ?, ?>, ?> GET8 = tuple -> tuple.get8();
 	
 	/**
 	 * Builds a function that gets the ninth element of tuples.
@@ -280,12 +215,7 @@ public class TupleFunctions {
 		return (Function<Tuple9<?, ?, ?, ?, ?, ?, ?, ?, ? extends E9>, E9>) GET9;
 	}
 	
-	private static final Function<? extends Tuple9<?, ?, ?, ?, ?, ?, ?, ?, ?>, ?> GET9 = new Function<Tuple9<Object, Object, Object, Object, Object, Object, Object, Object, Object>, Object>() {
-		@Override
-		public Object evaluate(final Tuple9<Object, Object, Object, Object, Object, Object, Object, Object, Object> tuple) {
-			return tuple.get9();
-		}
-	};
+	private static final Function<? extends Tuple9<?, ?, ?, ?, ?, ?, ?, ?, ?>, ?> GET9 = tuple -> tuple.get9();
 	
 	/**
 	 * Builds a function that gets the tenth element of tuples.
@@ -298,12 +228,7 @@ public class TupleFunctions {
 		return (Function<Tuple10<?, ?, ?, ?, ?, ?, ?, ?, ?, ? extends E10>, E10>) GET10;
 	}
 	
-	private static final Function<? extends Tuple10<?, ?, ?, ?, ?, ?, ?, ?, ?, ?>, ?> GET10 = new Function<Tuple10<Object, Object, Object, Object, Object, Object, Object, Object, Object, Object>, Object>() {
-		@Override
-		public Object evaluate(final Tuple10<Object, Object, Object, Object, Object, Object, Object, Object, Object, Object> tuple) {
-			return tuple.get10();
-		}
-	};
+	private static final Function<? extends Tuple10<?, ?, ?, ?, ?, ?, ?, ?, ?, ?>, ?> GET10 = tuple -> tuple.get10();
 	
 	private TupleFunctions() {
 		// Prevent instantiation.

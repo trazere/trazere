@@ -17,12 +17,7 @@ public class ObjectFunctions {
 		return (Function<T, Class<? extends T>>) GET_CLASS;
 	}
 	
-	private static final Function<?, ? extends Class<?>> GET_CLASS = new Function<Object, Class<?>>() {
-		@Override
-		public Class<?> evaluate(final Object object) {
-			return object.getClass();
-		}
-	};
+	private static final Function<?, ? extends Class<?>> GET_CLASS = Object::getClass;
 	
 	/**
 	 * Builds a function that computes the hash code of objects.
@@ -35,12 +30,7 @@ public class ObjectFunctions {
 		return (Function<T, Integer>) HASH_CODE;
 	}
 	
-	private static final Function<?, Integer> HASH_CODE = new Function<Object, Integer>() {
-		@Override
-		public Integer evaluate(final Object value) {
-			return value.hashCode();
-		}
-	};
+	private static final Function<?, Integer> HASH_CODE = Object::hashCode;
 	
 	/**
 	 * Builds a function that computes the string representation of objects.
@@ -53,12 +43,7 @@ public class ObjectFunctions {
 		return (Function<T, String>) TO_STRING;
 	}
 	
-	private static final Function<?, String> TO_STRING = new Function<Object, String>() {
-		@Override
-		public String evaluate(final Object value) {
-			return value.toString();
-		}
-	};
+	private static final Function<?, String> TO_STRING = Object::toString;
 	
 	/**
 	 * Builds a function that matches objects against the given type.
@@ -74,12 +59,7 @@ public class ObjectFunctions {
 		assert null != type;
 		assert null != throwableFactory;
 		
-		return new Function<T, R>() {
-			@Override
-			public R evaluate(final T object) {
-				return ObjectUtils.match(object, type, throwableFactory);
-			}
-		};
+		return object -> ObjectUtils.match(object, type, throwableFactory);
 	}
 	
 	private ObjectFunctions() {

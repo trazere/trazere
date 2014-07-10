@@ -16,12 +16,7 @@ public class ObjectPredicates {
 	public static <T> Predicate<T> isInstanceOf(final Class<? extends T> type) {
 		assert null != type;
 		
-		return new Predicate<T>() {
-			@Override
-			public boolean evaluate(final T object) {
-				return null != object && type.isInstance(object);
-			}
-		};
+		return object -> null != object && type.isInstance(object);
 	}
 	
 	private ObjectPredicates() {

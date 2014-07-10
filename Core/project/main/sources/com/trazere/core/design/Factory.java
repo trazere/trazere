@@ -22,6 +22,7 @@ package com.trazere.core.design;
  * 
  * @param <T> Type of the built values.
  */
+@FunctionalInterface
 public interface Factory<T> {
 	/**
 	 * Builds a new value.
