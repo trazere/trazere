@@ -513,12 +513,7 @@ public class FeedUtils {
 	 * @return A feed of the extracted elements.
 	 */
 	public static <E, RE> Feed<RE> extract(final Feed<? extends E> feed, final Function<? super E, ? extends Iterable<? extends RE>> extractor) {
-		return flatten(map(feed, new Function<E, Feed<? extends RE>>() {
-			@Override
-			public Feed<? extends RE> evaluate(final E element) {
-				return Feeds.fromIterable(extractor.evaluate(element));
-			}
-		}));
+		return flatten(map(feed, element -> Feeds.fromIterable(extractor.evaluate(element))));
 	}
 	
 	private FeedUtils() {

@@ -17,10 +17,11 @@ public class EitherExtractors {
 		return (Function<Either<? extends L, ?>, Maybe<L>>) GET_LEFT;
 	}
 	
-	private static final Function<? extends Either<?, ?>, ? extends Maybe<?>> GET_LEFT = new Function<Either<Object, Object>, Maybe<Object>>() {
-		@Override
-		public Maybe<Object> evaluate(final Either<Object, Object> instance) {
-			return instance.isLeft() ? Maybe.some(instance.asLeft().getLeft()) : Maybe.<Object>none();
+	private static final Function<? extends Either<?, ?>, ? extends Maybe<?>> GET_LEFT = (final Either<Object, Object> instance) -> {
+		if (instance.isLeft()) {
+			return Maybe.some(instance.asLeft().getLeft());
+		} else {
+			return Maybe.none();
 		}
 	};
 	
@@ -35,10 +36,11 @@ public class EitherExtractors {
 		return (Function<Either<?, ? extends R>, Maybe<R>>) GET_RIGHT;
 	}
 	
-	private static final Function<? extends Either<?, ?>, ? extends Maybe<?>> GET_RIGHT = new Function<Either<Object, Object>, Maybe<Object>>() {
-		@Override
-		public Maybe<Object> evaluate(final Either<Object, Object> instance) {
-			return instance.isRight() ? Maybe.some(instance.asRight().getRight()) : Maybe.<Object>none();
+	private static final Function<? extends Either<?, ?>, ? extends Maybe<?>> GET_RIGHT = (final Either<Object, Object> instance) -> {
+		if (instance.isRight()) {
+			return Maybe.some(instance.asRight().getRight());
+		} else {
+			return Maybe.none();
 		}
 	};
 	

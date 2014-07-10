@@ -31,16 +31,11 @@ public class IterableFunctions {
 	 * @return The built function.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <E> Function<Iterable<E>, Iterator<E>> iterator() {
-		return (Function<Iterable<E>, Iterator<E>>) ITERATOR;
+	public static <E> Function<Iterable<? extends E>, Iterator<? extends E>> iterator() {
+		return (Function<Iterable<? extends E>, Iterator<? extends E>>) ITERATOR;
 	}
 	
-	private static final Function<? extends Iterable<?>, ? extends Iterator<?>> ITERATOR = new Function<Iterable<?>, Iterator<?>>() {
-		@Override
-		public Iterator<?> evaluate(final Iterable<?> arg) {
-			return arg.iterator();
-		}
-	};
+	private static final Function<? extends Iterable<?>, ? extends Iterator<?>> ITERATOR = arg -> arg.iterator();
 	
 	private IterableFunctions() {
 		// Prevent instantiation.

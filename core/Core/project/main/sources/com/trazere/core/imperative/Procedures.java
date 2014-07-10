@@ -32,11 +32,8 @@ public class Procedures {
 		return (Procedure<A>) NOP;
 	}
 	
-	private static final Procedure<?> NOP = new Procedure<Object>() {
-		@Override
-		public void execute(final Object arg) {
-			// Nothing to do.
-		}
+	private static final Procedure<?> NOP = arg -> {
+		// Nothing to do.
 	};
 	
 	//	/**
@@ -81,7 +78,7 @@ public class Procedures {
 	
 	//	/**
 	//	 * Builds a procedure which executes its zero arguments procedure arguments.
-	//	 * 
+	//	 *
 	//	 * @param <X> Type of the exceptions.
 	//	 * @return The built procedure.
 	//	 */
@@ -89,7 +86,7 @@ public class Procedures {
 	//	public static <X extends Exception> Procedure1<Procedure0<? extends X>, X> execute() {
 	//		return (Procedure1<Procedure0<? extends X>, X>) _EXECUTE;
 	//	}
-	//	
+	//
 	//	private static final Procedure1<? extends Procedure0<?>, ?> _EXECUTE = new Procedure1<Procedure0<?>, Exception>() {
 	//		@Override
 	//		public void execute(final Procedure0<? extends Exception> procedure)
@@ -97,10 +94,10 @@ public class Procedures {
 	//			procedure.execute();
 	//		}
 	//	};
-	//	
+	//
 	//	/**
 	//	 * Builds a procedure which executes ite one argument procedure arguments with the given value.
-	//	 * 
+	//	 *
 	//	 * @param <T> Type of the argument values.
 	//	 * @param <X> Type of the exceptions.
 	//	 * @param value The argument value. May be <code>null</code>.
@@ -115,10 +112,10 @@ public class Procedures {
 	//			}
 	//		};
 	//	}
-	//	
+	//
 	//	/**
 	//	 * Builds a procedure which executes ite two arguments procedure arguments with the given values.
-	//	 * 
+	//	 *
 	//	 * @param <T1> Type of the first argument values.
 	//	 * @param <T2> Type of the secord argument values.
 	//	 * @param <X> Type of the exceptions.

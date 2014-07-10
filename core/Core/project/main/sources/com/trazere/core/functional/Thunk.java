@@ -22,6 +22,7 @@ package com.trazere.core.functional;
  * 
  * @param <T> Type of the values.
  */
+@FunctionalInterface
 public interface Thunk<T> {
 	/**
 	 * Evaluates the receiver thunk.

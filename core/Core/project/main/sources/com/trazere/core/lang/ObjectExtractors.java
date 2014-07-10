@@ -20,12 +20,7 @@ public class ObjectExtractors {
 	public static <T, R extends T, X extends Exception> Function<T, Maybe<R>> match(final Class<R> type) {
 		assert null != type;
 		
-		return new Function<T, Maybe<R>>() {
-			@Override
-			public Maybe<R> evaluate(final Object object) {
-				return ObjectUtils.match(object, type);
-			}
-		};
+		return object -> ObjectUtils.match(object, type);
 	}
 	
 	private ObjectExtractors() {

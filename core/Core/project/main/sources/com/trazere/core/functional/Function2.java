@@ -22,6 +22,7 @@ package com.trazere.core.functional;
  * @param <A2> Type of the second arguments.
  * @param <R> Type of the results.
  */
+@FunctionalInterface
 public interface Function2<A1, A2, R> {
 	/**
 	 * Evaluates the receiver function with the given arguments.
