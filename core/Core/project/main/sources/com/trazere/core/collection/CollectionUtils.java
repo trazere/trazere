@@ -21,25 +21,87 @@ import com.trazere.core.functional.Predicate;
 import com.trazere.core.imperative.Accumulator;
 import com.trazere.core.imperative.IteratorUtils;
 import com.trazere.core.imperative.Procedure;
-import com.trazere.core.lang.IterableUtils;
 import com.trazere.core.lang.LangAccumulators;
 import com.trazere.core.util.Maybe;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Iterator;
 
 /**
  * The {@link CollectionUtils} class provides various utilities regarding the manipulation of collections and maps.
  */
 public class CollectionUtils {
 	/**
-	 * Gets an element from the given collection.
+	 * Gets an element of the given collection.
 	 *
 	 * @param <E> Type of the elements.
 	 * @param collection Collection to read.
-	 * @return Some value if any.
+	 * @return An element of the collection, or nothing when the collection is empty.
 	 */
 	public static <E> Maybe<E> any(final Collection<? extends E> collection) {
 		return IteratorUtils.next(collection.iterator());
+	}
+	
+	/**
+	 * Adds all given elements to the given collection.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param collection Collection to modify.
+	 * @param elements Elements to add.
+	 * @return <code>true</code> when the given collection is modified, <code>false</code> otherwise.
+	 */
+	public static <E> boolean addAll(final Collection<? super E> collection, final Iterable<? extends E> elements) {
+		final Accumulator<Boolean, Boolean> changed = LangAccumulators.or(false);
+		for (final E element : elements) {
+			changed.add(collection.add(element));
+		}
+		return changed.get().booleanValue();
+	}
+	
+	/**
+	 * Removes an element from the given collection.
+	 * <p>
+	 * The collection must support removal through its iterators.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param collection Collection to modify.
+	 * @return The removed element, or nothing when the collection is empty.
+	 */
+	public static <E> Maybe<E> removeAny(final Collection<? extends E> collection) {
+		final Iterator<? extends E> iterator = collection.iterator();
+		if (iterator.hasNext()) {
+			final E element = iterator.next();
+			iterator.remove();
+			return Maybe.some(element);
+		} else {
+			return Maybe.none();
+		}
+	}
+	
+	/**
+	 * Populates the given accumulator with copies of the elements of the given collection.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param <A> Type of the accumulator to populate.
+	 * @param collection Collection to read.
+	 * @param results Accumulator to populate with the elements.
+	 * @return The given result accumulator.
+	 */
+	public static <E, A extends Accumulator<? super E, ?>> A copy(final Collection<? extends E> collection, final A results) {
+		return IteratorUtils.drain(collection.iterator(), results);
+	}
+	
+	/**
+	 * Adds copies of the bindings of the given map to the given collection.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param <C> Type of the collection to populate.
+	 * @param collection Collection to read.
+	 * @param results Collection to populate with the bindings.
+	 * @return The given result collection.
+	 */
+	public static <E, C extends Collection<? super E>> C copy(final Collection<? extends E> collection, final C results) {
+		return IteratorUtils.drain(collection.iterator(), results);
 	}
 	
 	/**
@@ -54,18 +116,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Evaluates the given function with each element of the given collection.
-	 * 
-	 * @param <E> Type of the elements.
-	 * @param collection Collection of elements.
-	 * @param function Function to evaluate.
-	 */
-	public static <E> void foreach(final Collection<? extends E> collection, final Function<? super E, ?> function) {
-		IteratorUtils.foreach(collection.iterator(), function);
-	}
-	
-	/**
-	 * Left folds over the elements of the given collection using the given binary operator and initial value.
+	 * Left folds over the elements of the given collection using the given binary operator and initial state.
 	 * 
 	 * @param <E> Type of the elements.
 	 * @param <S> Type of the state.
@@ -83,7 +134,7 @@ public class CollectionUtils {
 	 * 
 	 * @param <E> Type of the elements.
 	 * @param collection Collection containing the elements to filter.
-	 * @param filter Filter predicate.
+	 * @param filter Predicate to use to filter the elements.
 	 * @return The first accepted element.
 	 */
 	public static <E> Maybe<E> first(final Collection<? extends E> collection, final Predicate<? super E> filter) {
@@ -94,12 +145,12 @@ public class CollectionUtils {
 	 * Gets the first element extracted from the given collection by the given extractor.
 	 * 
 	 * @param <E> Type of the elements.
-	 * @param <RE> Type of the extracted elements.
+	 * @param <EE> Type of the extracted elements.
 	 * @param collection Collection containing the elements to extract from.
-	 * @param extractor Extractor function.
+	 * @param extractor Function to use to extract the elements.
 	 * @return The first extracted element.
 	 */
-	public static <E, RE> Maybe<? extends RE> first(final Collection<? extends E> collection, final Function<? super E, ? extends Maybe<? extends RE>> extractor) {
+	public static <E, EE> Maybe<EE> first(final Collection<? extends E> collection, final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
 		return IteratorUtils.first(collection.iterator(), extractor);
 	}
 	
@@ -108,7 +159,7 @@ public class CollectionUtils {
 	 * 
 	 * @param <E> Type of the elements.
 	 * @param collection Collection to test.
-	 * @param filter Filter predicate.
+	 * @param filter Predicate to use to filter the elements.
 	 * @return <code>true</code> when some element is accepted, <code>false</code> when all elements are rejected.
 	 */
 	public static <E> boolean isAny(final Collection<? extends E> collection, final Predicate<? super E> filter) {
@@ -120,8 +171,8 @@ public class CollectionUtils {
 	 * 
 	 * @param <E> Type of the elements.
 	 * @param collection Collection to test.
-	 * @param filter Filter predicate.
-	 * @return <code>true</code> when all values are accepted, <code>false</code> when some value is rejected.
+	 * @param filter Predicate to use to filter the elements.
+	 * @return <code>true</code> when all elements are accepted, <code>false</code> when some element is rejected.
 	 */
 	public static <E> boolean areAll(final Collection<? extends E> collection, final Predicate<? super E> filter) {
 		return IteratorUtils.areAll(collection.iterator(), filter);
@@ -132,7 +183,7 @@ public class CollectionUtils {
 	 * 
 	 * @param <E> Type of the elements.
 	 * @param collection Collection containing the elements to count.
-	 * @param filter Filter predicate.
+	 * @param filter Predicate to use to filter the elements.
 	 * @return The number of accepted elements.
 	 */
 	public static <E> int count(final Collection<? extends E> collection, final Predicate<? super E> filter) {
@@ -146,7 +197,7 @@ public class CollectionUtils {
 	 * @param collection Collection containing the elements to compare.
 	 * @return The least element.
 	 */
-	public static <E extends Comparable<E>> Maybe<? extends E> least(final Collection<? extends E> collection) {
+	public static <E extends Comparable<E>> Maybe<E> least(final Collection<? extends E> collection) {
 		return IteratorUtils.least(collection.iterator());
 	}
 	
@@ -158,7 +209,7 @@ public class CollectionUtils {
 	 * @param comparator Comparator to use.
 	 * @return The least element.
 	 */
-	public static <E> Maybe<? extends E> least(final Collection<? extends E> collection, final Comparator<? super E> comparator) {
+	public static <E> Maybe<E> least(final Collection<? extends E> collection, final Comparator<? super E> comparator) {
 		return IteratorUtils.least(collection.iterator(), comparator);
 	}
 	
@@ -169,7 +220,7 @@ public class CollectionUtils {
 	 * @param collection Collection containing the elements to compare.
 	 * @return The greatest element.
 	 */
-	public static <E extends Comparable<E>> Maybe<? extends E> greatest(final Collection<? extends E> collection) {
+	public static <E extends Comparable<E>> Maybe<E> greatest(final Collection<? extends E> collection) {
 		return IteratorUtils.greatest(collection.iterator());
 	}
 	
@@ -181,7 +232,7 @@ public class CollectionUtils {
 	 * @param comparator Comparator to use.
 	 * @return The greatest element.
 	 */
-	public static <E> Maybe<? extends E> greatest(final Collection<? extends E> collection, final Comparator<? super E> comparator) {
+	public static <E> Maybe<E> greatest(final Collection<? extends E> collection, final Comparator<? super E> comparator) {
 		return IteratorUtils.greatest(collection.iterator(), comparator);
 	}
 	
@@ -189,14 +240,14 @@ public class CollectionUtils {
 	 * Appends the given collections together.
 	 * 
 	 * @param <E> Type of the elements.
-	 * @param <R> Type of the result collection.
+	 * @param <C> Type of the result collection.
 	 * @param collection1 First collection providing the elements to append.
 	 * @param collection2 Second collection providing the elements to append.
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection containing the appended elements.
 	 */
-	public static <E, R extends Collection<? super E>> R append(final Collection<? extends E> collection1, final Collection<? extends E> collection2, final CollectionFactory<E, R> resultFactory) {
-		final R results = resultFactory.build(collection1.size() + collection2.size());
+	public static <E, C extends Collection<? super E>> C append(final Collection<? extends E> collection1, final Collection<? extends E> collection2, final CollectionFactory<E, C> resultFactory) {
+		final C results = resultFactory.build(collection1.size() + collection2.size());
 		results.addAll(collection1);
 		results.addAll(collection2);
 		return results;
@@ -206,13 +257,13 @@ public class CollectionUtils {
 	 * Flattens the elements of the collections contained in the given collection.
 	 *
 	 * @param <E> Type of the elements.
-	 * @param <R> Type of the result collection.
+	 * @param <C> Type of the result collection.
 	 * @param collection Collection containing the collections containing the elements to flatten.
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection containing the flatten elements.
 	 */
-	public static <E, R extends Collection<? super E>> R flatten(final Collection<? extends Collection<? extends E>> collection, final CollectionFactory<E, R> resultFactory) {
-		final R results = resultFactory.build();
+	public static <E, C extends Collection<? super E>> C flatten(final Collection<? extends Collection<? extends E>> collection, final CollectionFactory<E, C> resultFactory) {
+		final C results = resultFactory.build();
 		for (final Collection<? extends E> elements : collection) {
 			results.addAll(elements);
 		}
@@ -223,532 +274,113 @@ public class CollectionUtils {
 	 * Takes the n first elements of the given collection.
 	 *
 	 * @param <E> Type of the elements.
-	 * @param <R> Type of the result collection.
+	 * @param <C> Type of the result collection.
 	 * @param collection Collection containing the elements to take.
 	 * @param n Number of elements to take.
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection containing the taken elements.
 	 */
-	public static <E, R extends Collection<? super E>> R take(final Collection<? extends E> collection, final int n, final CollectionFactory<E, R> resultFactory) {
-		return IteratorUtils.drainAll(IteratorUtils.take(collection.iterator(), n), resultFactory.build(n));
+	public static <E, C extends Collection<? super E>> C take(final Collection<? extends E> collection, final int n, final CollectionFactory<E, C> resultFactory) {
+		return IteratorUtils.drain(IteratorUtils.take(collection.iterator(), n), resultFactory.build(n));
 	}
 	
 	/**
 	 * Drops the n first elements of the given collection.
 	 *
 	 * @param <E> Type of the elements.
-	 * @param <R> Type of the result collection.
+	 * @param <C> Type of the result collection.
 	 * @param collection Collection containing the elements to drop.
 	 * @param n Number of elements to drop.
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection containing the remaining elements.
 	 */
-	public static <E, R extends Collection<? super E>> R drop(final Collection<? extends E> collection, final int n, final CollectionFactory<E, R> resultFactory) {
-		return IteratorUtils.drainAll(IteratorUtils.drop(collection.iterator(), n), resultFactory.build(n));
+	public static <E, C extends Collection<? super E>> C drop(final Collection<? extends E> collection, final int n, final CollectionFactory<E, C> resultFactory) {
+		return IteratorUtils.drain(IteratorUtils.drop(collection.iterator(), n), resultFactory.build(Math.max(0, collection.size() - n)));
 	}
 	
 	/**
 	 * Filters the elements of the given collection using the given filter.
 	 *
 	 * @param <E> Type of the elements.
-	 * @param <R> Type of the result collection.
+	 * @param <C> Type of the result collection.
 	 * @param collection Collection containing the elements to filter.
 	 * @param filter Predicate to use to filter the elements.
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection containing the filtered elements.
 	 */
-	public static <E, R extends Collection<? super E>> R filter(final Collection<? extends E> collection, final Predicate<? super E> filter, final CollectionFactory<E, R> resultFactory) {
-		return IteratorUtils.drainAll(IteratorUtils.filter(collection.iterator(), filter), resultFactory.build());
+	public static <E, C extends Collection<? super E>> C filter(final Collection<? extends E> collection, final Predicate<? super E> filter, final CollectionFactory<E, C> resultFactory) {
+		final C results = resultFactory.build();
+		for (final E element : collection) {
+			if (filter.evaluate(element)) {
+				results.add(element);
+			}
+		}
+		return results;
 	}
 	
 	/**
 	 * Transforms the elements of the given collection using the given function.
 	 *
 	 * @param <E> Type of the elements.
-	 * @param <RE> Type of the transformed elements.
-	 * @param <R> Type of the result collection.
+	 * @param <TE> Type of the transformed elements.
+	 * @param <C> Type of the result collection.
 	 * @param collection Collection containing the elements to transform.
 	 * @param function Function to use to transform the elements.
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection containing the transformed elements.
 	 */
-	public static <E, RE, R extends Collection<? super RE>> R map(final Collection<? extends E> collection, final Function<? super E, ? extends RE> function, final CollectionFactory<RE, R> resultFactory) {
-		return IteratorUtils.drainAll(IteratorUtils.map(collection.iterator(), function), resultFactory.build(collection.size()));
+	public static <E, TE, C extends Collection<? super TE>> C map(final Collection<? extends E> collection, final Function<? super E, ? extends TE> function, final CollectionFactory<TE, C> resultFactory) {
+		final C results = resultFactory.build(collection.size());
+		for (final E element : collection) {
+			results.add(function.evaluate(element));
+		}
+		return results;
 	}
 	
 	/**
 	 * Transforms and flattens the elements of the given collection using the given function.
 	 * 
 	 * @param <E> Type of the elements.
-	 * @param <RE> Type of the transformed elements.
-	 * @param <R> Type of the result collection.
+	 * @param <TE> Type of the transformed elements.
+	 * @param <C> Type of the result collection.
 	 * @param collection Collection containing the elements to transform.
 	 * @param function Function to use to transform the elements.
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection containing the flatten, transformed elements.
 	 */
-	public static <E, RE, R extends Collection<? super RE>> R flatMap(final Collection<? extends E> collection, final Function<? super E, ? extends Collection<? extends RE>> function, final CollectionFactory<RE, R> resultFactory) {
-		return resultFactory.build(IterableUtils.flatMap(collection, function));
+	public static <E, TE, C extends Collection<? super TE>> C flatMap(final Collection<? extends E> collection, final Function<? super E, ? extends Collection<? extends TE>> function, final CollectionFactory<TE, C> resultFactory) {
+		final C results = resultFactory.build();
+		for (final E element : collection) {
+			addAll(results, function.evaluate(element));
+		}
+		return results;
 	}
 	
 	/**
 	 * Extracts and flattens the elements of the given collection using the given extractor.
 	 *
 	 * @param <E> Type of the elements.
-	 * @param <RE> Type of the extracted elements.
-	 * @param <R> Type of the result collection.
+	 * @param <EE> Type of the extracted elements.
+	 * @param <C> Type of the result collection.
 	 * @param collection Collection containing the elements to extract from.
 	 * @param extractor Function to use to extract the elements.
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection containing the extracted elements.
 	 */
-	public static <E, RE, R extends Collection<? super RE>> R extract(final Collection<? extends E> collection, final Function<? super E, ? extends Iterable<? extends RE>> extractor, final CollectionFactory<RE, R> resultFactory) {
-		return IteratorUtils.drainAll(IteratorUtils.extract(collection.iterator(), extractor), resultFactory.build());
-	}
-	
-	//	/**
-	//	 * Gets a binding from the given map.
-	//	 *
-	//	 * @param <K> Type of the keys.
-	//	 * @param <V> Type of the values.
-	//	 * @param map Map to read.
-	//	 * @return Some binding if any.
-	//	 */
-	//	public static <K, V> Maybe<Map.Entry<K, V>> any(final Map<K, V> map) {
-	//		assert null != map;
-	//
-	//		return IteratorUtils.next(map.entrySet().iterator());
-	//	}
-	//
-	//	/**
-	//	 * Gets the element of the given list corresponding to the given index.
-	//	 *
-	//	 * @param <T> Type of the elements.
-	//	 * @param list List to read.
-	//	 * @param index Index of the element to get.
-	//	 * @return The element or nothing if the index is out of bound.
-	//	 */
-	//	public static <T> Maybe<T> get(final List<? extends T> list, final int index) {
-	//		assert null != list;
-	//
-	//		return index < list.size() ? Maybe.<T>some(list.get(index)) : Maybe.<T>none();
-	//	}
-	//
-	//	/**
-	//	 * Gets the first element of the given list.
-	//	 *
-	//	 * @param <T> Type of the elements.
-	//	 * @param list List to read.
-	//	 * @return The first element.
-	//	 */
-	//	public static <T> Maybe<T> first(final List<? extends T> list) {
-	//		return get(list, 0);
-	//	}
-	//
-	//	/**
-	//	 * Gets the last element of the given list.
-	//	 *
-	//	 * @param <T> Type of the elements.
-	//	 * @param list List to read.
-	//	 * @return The last element.
-	//	 */
-	//	public static <T> Maybe<T> last(final List<? extends T> list) {
-	//		final int size = list.size();
-	//		return size > 0 ? Maybe.<T>some(list.get(size - 1)) : Maybe.<T>none();
-	//	}
-	
-	/**
-	 * Adds all given values to the given collection.
-	 *
-	 * @param <T> Type of the values.
-	 * @param collection Collection to populate.
-	 * @param values Values to add.
-	 * @return <code>true</code> when the given collection has been modified, <code>false</code> otherwise.
-	 */
-	public static <T> boolean addAll(final Collection<? super T> collection, final Iterable<? extends T> values) {
-		final Accumulator<Boolean, Boolean> changed = LangAccumulators.or(false);
-		for (final T value : values) {
-			changed.add(collection.add(value));
+	public static <E, EE, C extends Collection<? super EE>> C extract(final Collection<? extends E> collection, final Function<? super E, ? extends Iterable<? extends EE>> extractor, final CollectionFactory<EE, C> resultFactory) {
+		final C results = resultFactory.build();
+		for (final E element : collection) {
+			addAll(results, extractor.evaluate(element));
 		}
-		return changed.get().booleanValue();
+		return results;
 	}
 	
-	//	/**
-	//	 * Removes an element from the given collection.
-	//	 * <p>
-	//	 * This method does modify the given collection.
-	//	 *
-	//	 * @param <T> Type of the elements.
-	//	 * @param collection The collection.
-	//	 * @return The removed element.
-	//	 */
-	//	public static <T> Maybe<T> removeAny(final Collection<? extends T> collection) {
-	//		assert null != collection;
 	//
-	//		final Iterator<? extends T> iterator = collection.iterator();
-	//		if (iterator.hasNext()) {
-	//			final T object = iterator.next();
-	//			iterator.remove();
-	//			return Maybe.some(object);
-	//		} else {
-	//			return Maybe.none();
-	//		}
-	//	}
 	//
-	//	/**
-	//	 * Gets the value associated to the given key in the given map.
-	//	 *
-	//	 * @param <K> Type of the keys.
-	//	 * @param <V> Type of the values.
-	//	 * @param map The map.
-	//	 * @param key The key. May be <code>null</code>.
-	//	 * @return The associated value.
-	//	 */
-	//	public static <K, V> Maybe<V> get(final Map<? super K, ? extends V> map, final K key) {
-	//		assert null != map;
 	//
-	//		return map.containsKey(key) ? Maybe.<V>some(map.get(key)) : Maybe.<V>none();
-	//	}
 	//
-	//	/**
-	//	 * Gets the value associated to the given key in the given map.
-	//	 *
-	//	 * @param <K> Type of the keys.
-	//	 * @param <V> Type of the values.
-	//	 * @param map The map.
-	//	 * @param key The key. May be <code>null</code>.
-	//	 * @param defaultValue The default value. May be <code>null</code>.
-	//	 * @return The associated value if any, or the default value. May be <code>null</code>.
-	//	 */
-	//	public static <K, V> V get(final Map<? super K, ? extends V> map, final K key, final V defaultValue) {
-	//		assert null != map;
 	//
-	//		return map.containsKey(key) ? map.get(key) : defaultValue;
-	//	}
-	//
-	//	/**
-	//	 * Gets the value associated to the given key in the given map.
-	//	 *
-	//	 * @param <K> Type of the keys.
-	//	 * @param <V> Type of the values.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param map The map.
-	//	 * @param key The key. May be <code>null</code>.
-	//	 * @param throwableFactory The throwable factory.
-	//	 * @return The associated value. May be <code>null</code>.
-	//	 * @throws X When no values is identified by the given key in the map.
-	//	 */
-	//	public static <K, V, X extends Exception> V get(final Map<? super K, ? extends V> map, final K key, final ThrowableFactory<X> throwableFactory)
-	//	throws X {
-	//		assert null != map;
-	//		assert null != throwableFactory;
-	//
-	//		if (map.containsKey(key)) {
-	//			return map.get(key);
-	//		} else {
-	//			throw throwableFactory.build("Missing value for key \"" + key + "\"");
-	//		}
-	//	}
-	//
-	//	/**
-	//	 * Associates the given value to the given key in the given map.
-	//	 *
-	//	 * @param <K> Type of the keys.
-	//	 * @param <V> Type of the values.
-	//	 * @param map The map.
-	//	 * @param key The key. May be <code>null</code>.
-	//	 * @param value The value. May be <code>null</code>.
-	//	 * @return The presiously associated value.
-	//	 */
-	//	public static <K, V> Maybe<V> put(final Map<? super K, V> map, final K key, final V value) {
-	//		assert null != map;
-	//
-	//		final Maybe<V> currentValue = get(map, key);
-	//		map.put(key, value);
-	//		return currentValue;
-	//	}
-	//
-	//	/**
-	//	 * Associates the given value to the given key in the given map.
-	//	 *
-	//	 * @param <K> Type of the keys.
-	//	 * @param <V> Type of the values.
-	//	 * @param map The map.
-	//	 * @param key The key. May be <code>null</code>.
-	//	 * @param value The value.
-	//	 */
-	//	public static <K, V> void put(final Map<? super K, V> map, final K key, final Maybe<? extends V> value) {
-	//		assert null != map;
-	//		assert null != value;
-	//
-	//		if (value.isSome()) {
-	//			map.put(key, value.asSome().getValue());
-	//		}
-	//	}
-	//
-	//	/**
-	//	 * Removes the value associated to the given key from the given map.
-	//	 *
-	//	 * @param <K> Type of the keys.
-	//	 * @param <V> Type of the values.
-	//	 * @param map The map.
-	//	 * @param key The key. May be <code>null</code>.
-	//	 * @return The removed value.
-	//	 */
-	//	public static <K, V> Maybe<V> remove(final Map<? super K, ? extends V> map, final K key) {
-	//		assert null != map;
-	//		assert null != key;
-	//
-	//		if (map.containsKey(key)) {
-	//			return Maybe.<V>some(map.remove(key));
-	//		} else {
-	//			return Maybe.none();
-	//		}
-	//	}
-	//
-	//	/**
-	//	 * Reverses the given list.
-	//	 * <p>
-	//	 * This method does modify the given list.
-	//	 *
-	//	 * @param <T> Type of the elements.
-	//	 * @param <L> Type of the list.
-	//	 * @param list The list.
-	//	 * @return The given modified list.
-	//	 */
-	//	public static <T, L extends List<T>> L reverse(final L list) {
-	//		assert null != list;
-	//
-	//		Collections.reverse(list);
-	//		return list;
-	//	}
-	//
-	//	/**
-	//	 * Sorts the given list using the given comparator.
-	//	 * <p>
-	//	 * This method does modify the given list.
-	//	 *
-	//	 * @param <T> Type of the elements.
-	//	 * @param <L> Type of the list.
-	//	 * @param list The list.
-	//	 * @return The given modified list.
-	//	 */
-	//	public static <T extends Comparable<? super T>, L extends List<T>> L sort(final L list) {
-	//		assert null != list;
-	//
-	//		Collections.sort(list);
-	//		return list;
-	//	}
-	//
-	//	/**
-	//	 * Sorts the given list using the given comparator.
-	//	 * <p>
-	//	 * This method does modify the given list.
-	//	 *
-	//	 * @param <T> Type of the elements.
-	//	 * @param <L> Type of the list.
-	//	 * @param list The list.
-	//	 * @param comparator The comparator.
-	//	 * @return The given modified list.
-	//	 */
-	//	public static <T, L extends List<T>> L sort(final L list, final Comparator<? super T> comparator) {
-	//		assert null != list;
-	//		assert null != comparator;
-	//
-	//		Collections.sort(list, comparator);
-	//		return list;
-	//	}
-	//
-	//	/**
-	//	 * Sorts the given values topologically and populates the given list with the sorted values.
-	//	 * <p>
-	//	 * The dependencies between the values are computed using the given function. This function must compute the values whose the argument value depends on. The
-	//	 * computed values must belong to the values to sort.
-	//	 * <p>
-	//	 * This method places the dependencies before the value which depend on them. The sort is stable and fails when the dependencies form a cyclic graph.
-	//	 *
-	//	 * @param <T> Type of the values.
-	//	 * @param <L> Type of the result list.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param dependencyFunction The function computing the dependencies.
-	//	 * @param close Flag indicating whether a transitive closure should be performed or if the given values are supposed are supposed to closed.
-	//	 * @param values The values.
-	//	 * @param results The list to populate with the results.
-	//	 * @return The given result list.
-	//	 * @throws CollectionException When some computed dependency value does not belong to the values to sort.
-	//	 * @throws CollectionException When there is a cycle in the dependencies.
-	//	 * @throws X When some dependency computation fails.
-	//	 */
-	//	public static <T, L extends List<? super T>, X extends Exception> L topologicalSort(final Function1<? super T, ? extends Collection<? extends T>, X> dependencyFunction, final boolean close, final Collection<? extends T> values, final L results)
-	//	throws CollectionException, X {
-	//		assert null != values;
-	//		assert null != dependencyFunction;
-	//		assert null != results;
-	//
-	//		// Compute the dependencies.
-	//		final List<T> pendingValues = new ArrayList<T>(values.size());
-	//		final Collection<Tuple2<T, T>> dependencies = computeTopologicalSortDependencies(dependencyFunction, close, values, pendingValues, new ArrayList<Tuple2<T, T>>());
-	//
-	//		// Sort the values.
-	//		while (!pendingValues.isEmpty()) {
-	//			// Find the leaves.
-	//			final Set<T> leafValues = findTopologicalSortLeaves(pendingValues, dependencies);
-	//			if (leafValues.isEmpty()) {
-	//				throw new CollectionException("Cyclic or external dependencies for values " + pendingValues);
-	//			}
-	//
-	//			// Add the leaves to the result.
-	//			extractTopologicalSortLeaves(leafValues, pendingValues, results);
-	//
-	//			// Clean the dependencies.
-	//			cleanTopologicalSortDependencies(dependencies, leafValues);
-	//		}
-	//
-	//		return results;
-	//	}
-	//
-	//	/**
-	//	 * Sorts the given values topologically and populates the given list with the sorted regions.
-	//	 * <p>
-	//	 * A region is a set of values which have no dependencies on each other. They however do have dependencies on some values of the previous region.
-	//	 * <p>
-	//	 * The dependencies between the values are computed using the given function. This function must compute the values whose the argument value depends on. The
-	//	 * computed values must belong to the values to sort.
-	//	 * <p>
-	//	 * This method places the dependencies before the value which depend on them. The sort is stable and fails when the dependencies form a cyclic graph.
-	//	 *
-	//	 * @param <T> Type of the values.
-	//	 * @param <L> Type of the result list.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param dependencyFunction The function computing the dependencies.
-	//	 * @param close Flag indicating whether a transitive closure should be performed or if the given values are supposed are supposed to closed.
-	//	 * @param values The values.
-	//	 * @param results The list to populate with the results.
-	//	 * @return The given result list.
-	//	 * @throws CollectionException When some computed dependency value does not belong to the values to sort.
-	//	 * @throws CollectionException When there is a cycle in the dependencies.
-	//	 * @throws X When some dependency computation fails.
-	//	 */
-	//	public static <T, L extends List<? super List<T>>, X extends Exception> L regionTopologicalSort(final Function1<? super T, ? extends Collection<? extends T>, X> dependencyFunction, final boolean close, final Collection<? extends T> values, final L results)
-	//	throws CollectionException, X {
-	//		assert null != values;
-	//		assert null != dependencyFunction;
-	//		assert null != results;
-	//
-	//		// Compute the dependencies.
-	//		final List<T> pendingValues = new ArrayList<T>(values.size());
-	//		final Collection<Tuple2<T, T>> dependencies = computeTopologicalSortDependencies(dependencyFunction, close, values, pendingValues, new ArrayList<Tuple2<T, T>>());
-	//
-	//		// Sort the values.
-	//		while (!pendingValues.isEmpty()) {
-	//			// Find the leaves.
-	//			final Set<T> leafValues = findTopologicalSortLeaves(pendingValues, dependencies);
-	//			if (leafValues.isEmpty()) {
-	//				throw new CollectionException("Cyclic dependencies for values " + pendingValues);
-	//			}
-	//
-	//			// Add the leaves to the result.
-	//			results.add(extractTopologicalSortLeaves(leafValues, pendingValues, new ArrayList<T>(leafValues.size())));
-	//
-	//			// Clean the dependencies.
-	//			cleanTopologicalSortDependencies(dependencies, leafValues);
-	//		}
-	//
-	//		return results;
-	//	}
-	//
-	//	private static <T, C extends Collection<? super Tuple2<T, T>>, X extends Exception> C computeTopologicalSortDependencies(final Function1<? super T, ? extends Collection<? extends T>, X> dependencyFunction, final boolean close, final Collection<? extends T> values, final Collection<T> closedValues, final C dependencies)
-	//	throws X {
-	//		assert null != values;
-	//		assert null != closedValues;
-	//
-	//		if (close) {
-	//			return computeClosedTopologicalSortDependencies(dependencyFunction, values, closedValues, dependencies);
-	//		} else {
-	//			closedValues.addAll(values);
-	//			return computeTopologicalSortDependencies(dependencyFunction, values, dependencies);
-	//		}
-	//	}
-	//
-	//	private static <T, C extends Collection<? super Tuple2<T, T>>, X extends Exception> C computeTopologicalSortDependencies(final Function1<? super T, ? extends Collection<? extends T>, X> dependencyFunction, final Collection<? extends T> values, final C dependencies)
-	//	throws X {
-	//		assert null != dependencyFunction;
-	//		assert null != values;
-	//		assert null != dependencies;
-	//
-	//		for (final T value : values) {
-	//			for (final T dependencyValue : dependencyFunction.evaluate(value)) {
-	//				dependencies.add(new Tuple2<T, T>(value, dependencyValue));
-	//			}
-	//		}
-	//		return dependencies;
-	//	}
-	//
-	//	private static <T, C extends Collection<? super Tuple2<T, T>>, X extends Exception> C computeClosedTopologicalSortDependencies(final Function1<? super T, ? extends Collection<? extends T>, X> dependencyFunction, final Collection<? extends T> values, final Collection<T> closedValues, final C dependencies)
-	//	throws X {
-	//		assert null != dependencyFunction;
-	//		assert null != values;
-	//		assert null != dependencies;
-	//
-	//		final Queue<T> pendingValues = new LinkedList<T>(values);
-	//		final Set<T> visitedValues = new HashSet<T>();
-	//		while (!pendingValues.isEmpty()) {
-	//			final T value = pendingValues.poll();
-	//			if (visitedValues.add(value)) {
-	//				// Add the value.
-	//				closedValues.add(value);
-	//
-	//				// Add the dependencies.
-	//				for (final T dependencyValue : dependencyFunction.evaluate(value)) {
-	//					dependencies.add(new Tuple2<T, T>(value, dependencyValue));
-	//					pendingValues.add(dependencyValue); // Note: must queued in order to keep the closed value stable
-	//				}
-	//			}
-	//		}
-	//		return dependencies;
-	//	}
-	//
-	//	private static <T> Set<T> findTopologicalSortLeaves(final Collection<T> values, final Collection<? extends Tuple2<T, T>> dependencies) {
-	//		assert null != values;
-	//		assert null != dependencies;
-	//
-	//		final Set<T> leafValues = new HashSet<T>(values);
-	//		for (final Tuple2<T, T> dependency : dependencies) {
-	//			leafValues.remove(dependency.get1());
-	//		}
-	//		return leafValues;
-	//	}
-	//
-	//	private static <T, C extends Collection<? super T>> C extractTopologicalSortLeaves(final Set<T> leafValues, final List<T> pendingValues, final C results) {
-	//		assert null != leafValues;
-	//		assert null != pendingValues;
-	//		assert null != results;
-	//
-	//		// Note: Pending values are iterated instead of leaf values to keep the sort stable and to handle duplicate values.
-	//		final Iterator<T> pendingValuesIt = pendingValues.iterator();
-	//		while (pendingValuesIt.hasNext()) {
-	//			final T value = pendingValuesIt.next();
-	//			if (leafValues.contains(value)) {
-	//				results.add(value);
-	//				pendingValuesIt.remove();
-	//			}
-	//		}
-	//		return results;
-	//	}
-	//
-	//	private static <T> void cleanTopologicalSortDependencies(final Collection<? extends Tuple2<T, T>> dependencies, final Set<T> leafValues) {
-	//		assert null != dependencies;
-	//		assert null != leafValues;
-	//
-	//		final Iterator<? extends Tuple2<T, T>> dependenciesIt = dependencies.iterator();
-	//		while (dependenciesIt.hasNext()) {
-	//			final Tuple2<T, T> dependency = dependenciesIt.next();
-	//			if (leafValues.contains(dependency.get2())) {
-	//				dependenciesIt.remove();
-	//			}
-	//		}
-	//	}
-	//
+	
 	//	/**
 	//	 * Computes the union of the given collections and populates the given result collection with it.
 	//	 * <p>
@@ -950,7 +582,7 @@ public class CollectionUtils {
 	//	 *
 	//	 * @param <T> Type of the values.
 	//	 * @param <C> Type of the batch collections.
-	//	 * @param <R> Type of the result collection.
+	//	 * @param <C> Type of the result collection.
 	//	 * @param factory The collection factory of the batches.
 	//	 * @param size The maximum size of each batch.
 	//	 * @param values The values.
@@ -1053,26 +685,6 @@ public class CollectionUtils {
 	//			results1.add(value.get1());
 	//			results2.add(value.get2());
 	//		}
-	//	}
-	//
-	//	/**
-	//	 * Extracts the bindings of the given map and populates the given collection with them.
-	//	 *
-	//	 * @param <K> Type of the keys.
-	//	 * @param <V> Type of the values.
-	//	 * @param <C> Type of the result collection.
-	//	 * @param map The map.
-	//	 * @param results The collection to populate with the results.
-	//	 * @return The given result collection.
-	//	 */
-	//	public static <K, V, C extends Collection<? super Tuple2<K, V>>> C bindings(final Map<? extends K, ? extends V> map, final C results) {
-	//		assert null != map;
-	//		assert null != results;
-	//
-	//		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
-	//			results.add(new Tuple2<K, V>(entry.getKey(), entry.getValue()));
-	//		}
-	//		return results;
 	//	}
 	
 	private CollectionUtils() {

@@ -15,6 +15,9 @@
  */
 package com.trazere.core.functional;
 
+import com.trazere.core.design.Factory;
+import com.trazere.core.imperative.Effect;
+import com.trazere.core.lang.ThrowableFactory;
 import com.trazere.core.util.Maybe;
 
 /**
@@ -25,10 +28,11 @@ public class Thunks {
 	 * Builds a thunk evaluating to the given value.
 	 * 
 	 * @param <T> Type of the value.
-	 * @param value Value.
+	 * @param value Value of the thunk.
 	 * @return The built thunk.
 	 */
-	public static <T> MemoizedThunk<T> fromValue(final T value) {
+	// TODO: rename to fromValue ?
+	public static <T> MemoizedThunk<T> constant(final T value) {
 		return new MemoizedThunk<T>() {
 			@Override
 			public T evaluate() {
@@ -44,6 +48,76 @@ public class Thunks {
 			public Maybe<T> get() {
 				return Maybe.some(value);
 			}
+		};
+	}
+	
+	/**
+	 * Builds a thunk that throws the given exception.
+	 *
+	 * @param <T> Type of the value.
+	 * @param exception Exception to throw.
+	 * @return The built thunk.
+	 */
+	public static <T> Thunk<T> failure(final RuntimeException exception) {
+		assert null != exception;
+		
+		return () -> {
+			throw exception;
+		};
+	}
+	
+	/**
+	 * Builds a thunk that throws an exception.
+	 *
+	 * @param <T> Type of the value.
+	 * @param throwableFactory Throwable factory to use.
+	 * @return The built thunk.
+	 */
+	public static <T> Thunk<T> failure(final ThrowableFactory<? extends RuntimeException> throwableFactory) {
+		assert null != throwableFactory;
+		
+		return () -> {
+			throw throwableFactory.build();
+		};
+	}
+	
+	/**
+	 * Builds a thunk that lifts the given factory.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param factory Factory to lift.
+	 * @return The built thunk.
+	 */
+	public static <T> Thunk<T> fromFactory(final Factory<T> factory) {
+		assert null != factory;
+		
+		return () -> factory.build();
+	}
+	
+	/**
+	 * Builds a thunk that lifts the given effect.
+	 *
+	 * @param effect Effect to lift.
+	 * @return The built thunk.
+	 */
+	public static Thunk<Void> fromEffect(final Effect effect) {
+		return fromEffect(effect, (Void) null);
+	}
+	
+	/**
+	 * Builds a thunk that lifts the given effect and evaluates to the given value.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param effect Effect to lift.
+	 * @param value Value of the thunk.
+	 * @return The built thunk.
+	 */
+	public static <T> Thunk<T> fromEffect(final Effect effect, final T value) {
+		assert null != effect;
+		
+		return () -> {
+			effect.execute();
+			return value;
 		};
 	}
 	
