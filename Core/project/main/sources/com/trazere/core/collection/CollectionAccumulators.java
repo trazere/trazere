@@ -17,28 +17,28 @@ package com.trazere.core.collection;
 
 import com.trazere.core.imperative.Accumulator;
 import com.trazere.core.imperative.Accumulator2;
+import com.trazere.core.util.Tuple2;
 import java.util.Collection;
-import java.util.Map;
 
 /**
  * The {@link CollectionAccumulators} class provides various factories of accumulators related to collections.
  */
 public class CollectionAccumulators {
 	/**
-	 * Builds an accumulator that adds to the given collection.
+	 * Builds an accumulator that adds elements to the given collection.
 	 * 
-	 * @param <T> Type of the values.
+	 * @param <E> Type of the elements.
 	 * @param <C> Type of the collection.
 	 * @param collection Collection to populate.
 	 * @return The built accumulator.
 	 */
-	public static <T, C extends Collection<? super T>> Accumulator<T, C> add(final C collection) {
+	public static <E, C extends Collection<? super E>> Accumulator<E, C> add(final C collection) {
 		assert null != collection;
 		
-		return new Accumulator<T, C>() {
+		return new Accumulator<E, C>() {
 			@Override
-			public void add(final T value) {
-				collection.add(value);
+			public void add(final E element) {
+				collection.add(element);
 			}
 			
 			@Override
@@ -49,56 +49,29 @@ public class CollectionAccumulators {
 	}
 	
 	/**
-	 * Builds an accumulator that puts into the given map.
+	 * Builds an accumulator that adds pairs of elements to the given collection.
 	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <M> Type of the map.
-	 * @param map Map to populate.
+	 * @param <E1> Type of the first element of the pairs.
+	 * @param <E2> Type of the second element of the pairs.
+	 * @param <C> Type of the collection.
+	 * @param collection Collection to populate.
 	 * @return The built accumulator.
 	 */
-	public static <K, V, M extends Map<? super K, ? super V>> Accumulator2<K, V, M> put(final M map) {
-		assert null != map;
+	public static <E1, E2, C extends Collection<? super Tuple2<? extends E1, ? extends E2>>> Accumulator2<E1, E2, C> add2(final C collection) {
+		assert null != collection;
 		
-		return new Accumulator2<K, V, M>() {
+		return new Accumulator2<E1, E2, C>() {
 			@Override
-			public void add(final K key, final V value) {
-				map.put(key, value);
+			public void add(final E1 element1, final E2 element2) {
+				collection.add(new Tuple2<>(element1, element2));
 			}
 			
 			@Override
-			public M get() {
-				return map;
+			public C get() {
+				return collection;
 			}
 		};
 	}
-	
-	//	/**
-	//	 * Builds an accumulator that populates the given multimap.
-	//	 *
-	//	 * @param <K> Type of the keys.
-	//	 * @param <V> Type of the values.
-	//	 * @param <M> Type of the multimap.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param multimap The map to populate.
-	//	 * @return The built accumulator.
-	//	 */
-	//	public static <K, V, M extends Multimap<? super K, ? super V, ?>, X extends Exception> Accumulator2<K, V, M, X> put(final M multimap) {
-	//		assert null != multimap;
-	//
-	//		return new BaseAccumulator2<K, V, M, X>() {
-	//			@Override
-	//			public void add(final K key, final V value)
-	//			throws X {
-	//				multimap.put(key, value);
-	//			}
-	//
-	//			@Override
-	//			public M get() {
-	//				return multimap;
-	//			}
-	//		};
-	//	}
 	
 	private CollectionAccumulators() {
 		// Prevents instantiation.

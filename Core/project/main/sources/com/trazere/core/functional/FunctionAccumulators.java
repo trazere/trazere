@@ -16,27 +16,29 @@
 package com.trazere.core.functional;
 
 import com.trazere.core.imperative.Accumulator;
+import com.trazere.core.imperative.Accumulator2;
 import com.trazere.core.imperative.FoldAccumulator;
+import com.trazere.core.imperative.FoldAccumulator2;
 
 /**
  * The {@link FunctionAccumulators} class provides various factories of accumulators related to functions.
  */
 public class FunctionAccumulators {
 	/**
-	 * Builds an accumulator that left folds over the accumulated values using the given binary operator and initial state.
+	 * Builds an accumulator that left folds over the accumulated elements using the given binary operator and initial state.
 	 *
-	 * @param <V> Type of the accumulated values.
+	 * @param <E> Type of the accumulated elements.
 	 * @param <S> Type of the state.
 	 * @param operator Binary operator.
 	 * @param initialState Initial state.
 	 * @return The built accumulator.
 	 */
-	public static <V, S> Accumulator<V, S> fold(final Function2<? super S, ? super V, ? extends S> operator, final S initialState) {
+	public static <E, S> Accumulator<E, S> fold(final Function2<? super S, ? super E, ? extends S> operator, final S initialState) {
 		assert null != operator;
 		
-		return new FoldAccumulator<V, S>(initialState) {
+		return new FoldAccumulator<E, S>(initialState) {
 			@Override
-			protected S fold(final S state, final V value) {
+			protected S fold(final S state, final E value) {
 				return operator.evaluate(state, value);
 			}
 		};
@@ -70,6 +72,27 @@ public class FunctionAccumulators {
 	//			}
 	//		};
 	//	}
+	
+	/**
+	 * Builds an accumulator that left folds over the accumulated pairs of elements using the given binary operator and initial state.
+	 *
+	 * @param <E1> Type of the first element of the accumulated pairs.
+	 * @param <E2> Type of the second element of the accumulated pairs.
+	 * @param <S> Type of the state.
+	 * @param operator Binary operator.
+	 * @param initialState Initial state.
+	 * @return The built accumulator.
+	 */
+	public static <E1, E2, S> Accumulator2<E1, E2, S> fold2(final Function3<? super S, ? super E1, ? super E2, ? extends S> operator, final S initialState) {
+		assert null != operator;
+		
+		return new FoldAccumulator2<E1, E2, S>(initialState) {
+			@Override
+			protected S fold(final S state, final E1 element1, final E2 element2) {
+				return operator.evaluate(state, element1, element2);
+			}
+		};
+	}
 	
 	private FunctionAccumulators() {
 		// Prevents instantiation.

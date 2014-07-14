@@ -68,18 +68,7 @@ public class FeedUtils {
 	}
 	
 	/**
-	 * Evaluates the given function with each element of the given feed.
-	 * 
-	 * @param <E> Type of the elements.
-	 * @param feed Feed of elements.
-	 * @param function Function to evaluate.
-	 */
-	public static <E> void foreach(final Feed<? extends E> feed, final Function<? super E, ?> function) {
-		IteratorUtils.foreach(feed.iterator(), function);
-	}
-	
-	/**
-	 * Left folds over the elements of the given feed using the given binary operator and initial value.
+	 * Left folds over the elements of the given feed using the given binary operator and initial state.
 	 * 
 	 * @param <E> Type of the elements.
 	 * @param <S> Type of the state.
@@ -97,7 +86,7 @@ public class FeedUtils {
 	 * 
 	 * @param <E> Type of the elements.
 	 * @param feed Feed of the elements to test.
-	 * @param filter Filter predicate.
+	 * @param filter Predicate to use to filter the elements.
 	 * @return The first accepted element.
 	 */
 	public static <E> Maybe<E> first(final Feed<? extends E> feed, final Predicate<? super E> filter) {
@@ -108,12 +97,12 @@ public class FeedUtils {
 	 * Gets the first element extracted from the given feed by the given extractor.
 	 * 
 	 * @param <E> Type of the elements.
-	 * @param <RE> Type of the extracted elements.
+	 * @param <EE> Type of the extracted elements.
 	 * @param collection Collection containing the elements to extract from.
-	 * @param extractor Extractor function.
+	 * @param extractor Function to use to extract the elements.
 	 * @return The first extracted element.
 	 */
-	public static <E, RE> Maybe<? extends RE> first(final Iterable<? extends E> collection, final Function<? super E, ? extends Maybe<? extends RE>> extractor) {
+	public static <E, EE> Maybe<EE> first(final Iterable<? extends E> collection, final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
 		return IteratorUtils.first(collection.iterator(), extractor);
 	}
 	
@@ -122,7 +111,7 @@ public class FeedUtils {
 	 * 
 	 * @param <E> Type of the elements.
 	 * @param feed Feed of the elements to test.
-	 * @param filter Filter predicate.
+	 * @param filter Predicate to use to filter the elements.
 	 * @return <code>true</code> when some element is accepted, <code>false</code> when all elements are rejected.
 	 */
 	public static <E> boolean isAny(final Feed<? extends E> feed, final Predicate<? super E> filter) {
@@ -134,8 +123,8 @@ public class FeedUtils {
 	 * 
 	 * @param <E> Type of the elements.
 	 * @param feed Feed of the elements to test.
-	 * @param filter Filter predicate.
-	 * @return <code>true</code> when all values are accepted, <code>false</code> when some value is rejected.
+	 * @param filter Predicate to use to filter the elements.
+	 * @return <code>true</code> when all elements are accepted, <code>false</code> when some element is rejected.
 	 */
 	public static <E> boolean areAll(final Feed<? extends E> feed, final Predicate<? super E> filter) {
 		return IteratorUtils.areAll(feed.iterator(), filter);
@@ -146,7 +135,7 @@ public class FeedUtils {
 	 * 
 	 * @param <E> Type of the elements.
 	 * @param feed Feed of the elements to count.
-	 * @param filter Filter predicate.
+	 * @param filter Predicate to use to filter the elements.
 	 * @return The number of accepted elements.
 	 */
 	public static <E> int count(final Feed<? extends E> feed, final Predicate<? super E> filter) {
@@ -160,7 +149,7 @@ public class FeedUtils {
 	 * @param feed Feed of the elements.
 	 * @return The least element.
 	 */
-	public static <E extends Comparable<E>> Maybe<? extends E> least(final Feed<? extends E> feed) {
+	public static <E extends Comparable<E>> Maybe<E> least(final Feed<? extends E> feed) {
 		return IteratorUtils.least(feed.iterator());
 	}
 	
@@ -172,7 +161,7 @@ public class FeedUtils {
 	 * @param comparator Comparator to use.
 	 * @return The least element.
 	 */
-	public static <E> Maybe<? extends E> least(final Feed<? extends E> feed, final Comparator<? super E> comparator) {
+	public static <E> Maybe<E> least(final Feed<? extends E> feed, final Comparator<? super E> comparator) {
 		return IteratorUtils.least(feed.iterator(), comparator);
 	}
 	
@@ -183,7 +172,7 @@ public class FeedUtils {
 	 * @param feed Feed of the elements.
 	 * @return The greatest element.
 	 */
-	public static <E extends Comparable<E>> Maybe<? extends E> greatest(final Feed<? extends E> feed) {
+	public static <E extends Comparable<E>> Maybe<E> greatest(final Feed<? extends E> feed) {
 		return IteratorUtils.greatest(feed.iterator());
 	}
 	
@@ -195,7 +184,7 @@ public class FeedUtils {
 	 * @param comparator Comparator to use.
 	 * @return The greatest element.
 	 */
-	public static <E> Maybe<? extends E> greatest(final Feed<? extends E> feed, final Comparator<? super E> comparator) {
+	public static <E> Maybe<E> greatest(final Feed<? extends E> feed, final Comparator<? super E> comparator) {
 		return IteratorUtils.greatest(feed.iterator(), comparator);
 	}
 	
@@ -446,16 +435,16 @@ public class FeedUtils {
 	 * Transforms the elements of the given feed using the given function.
 	 *
 	 * @param <E> Type of the elements.
-	 * @param <RE> Type of the transformed elements.
+	 * @param <TE> Type of the transformed elements.
 	 * @param feed Feed of the elements to transform.
 	 * @param function Function to use to transform the elements.
 	 * @return A feed of the transformed elements.
 	 */
-	public static <E, RE> Feed<RE> map(final Feed<? extends E> feed, final Function<? super E, ? extends RE> function) {
+	public static <E, TE> Feed<TE> map(final Feed<? extends E> feed, final Function<? super E, ? extends TE> function) {
 		assert null != feed;
 		assert null != function;
 		
-		return new Feed<RE>() {
+		return new Feed<TE>() {
 			// Feed.
 			
 			@Override
@@ -464,13 +453,13 @@ public class FeedUtils {
 			}
 			
 			@Override
-			public RE getHead()
+			public TE getHead()
 			throws NoSuchElementException {
 				return function.evaluate(feed.getHead());
 			}
 			
 			@Override
-			public Feed<RE> getTail()
+			public Feed<TE> getTail()
 			throws NoSuchElementException {
 				return map(feed.getTail(), function);
 			}
@@ -478,11 +467,11 @@ public class FeedUtils {
 			// Function.
 			
 			@Override
-			public Maybe<? extends Tuple2<? extends RE, ? extends Feed<? extends RE>>> evaluate() {
+			public Maybe<? extends Tuple2<? extends TE, ? extends Feed<? extends TE>>> evaluate() {
 				final Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> maybeItem = feed.evaluate();
 				if (maybeItem.isSome()) {
 					final Tuple2<? extends E, ? extends Feed<? extends E>> item = maybeItem.asSome().getValue();
-					return Maybe.some(new Tuple2<RE, Feed<RE>>(function.evaluate(item.get1()), map(item.get2(), function)));
+					return Maybe.some(new Tuple2<TE, Feed<TE>>(function.evaluate(item.get1()), map(item.get2(), function)));
 				} else {
 					return Maybe.none();
 				}
@@ -494,12 +483,12 @@ public class FeedUtils {
 	 * Transforms and flattens the elements of the given feed using the given function.
 	 * 
 	 * @param <E> Type of the elements.
-	 * @param <RE> Type of the transformed elements.
+	 * @param <TE> Type of the transformed elements.
 	 * @param feed Feed of the elements to transform.
 	 * @param function Function to use to transform the elements.
 	 * @return An feed of the flatten, transformed elements.
 	 */
-	public static <E, RE> Feed<RE> flatMap(final Feed<? extends E> feed, final Function<? super E, ? extends Feed<? extends RE>> function) {
+	public static <E, TE> Feed<TE> flatMap(final Feed<? extends E> feed, final Function<? super E, ? extends Feed<? extends TE>> function) {
 		return flatten(map(feed, function));
 	}
 	
@@ -507,12 +496,12 @@ public class FeedUtils {
 	 * Extracts and flattens from the elements of the given feed using the given extractor.
 	 *
 	 * @param <E> Type of the elements.
-	 * @param <RE> Type of the extracted elements.
+	 * @param <EE> Type of the extracted elements.
 	 * @param feed Feed of the elements to extract from.
 	 * @param extractor Function to use to extract the elements.
 	 * @return A feed of the extracted elements.
 	 */
-	public static <E, RE> Feed<RE> extract(final Feed<? extends E> feed, final Function<? super E, ? extends Iterable<? extends RE>> extractor) {
+	public static <E, EE> Feed<EE> extract(final Feed<? extends E> feed, final Function<? super E, ? extends Iterable<? extends EE>> extractor) {
 		return flatten(map(feed, element -> Feeds.fromIterable(extractor.evaluate(element))));
 	}
 	

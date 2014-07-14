@@ -29,7 +29,7 @@ public class ComparableAccumulators {
 	 * @param <T> Type of the values.
 	 * @return The built accumulator.
 	 */
-	public static <T extends Comparable<T>> Accumulator<T, Maybe<? extends T>> least() {
+	public static <T extends Comparable<T>> Accumulator<T, Maybe<T>> least() {
 		return least(Maybe.<T>none());
 	}
 	
@@ -40,7 +40,7 @@ public class ComparableAccumulators {
 	 * @param initialState Initial state.
 	 * @return The built accumulator.
 	 */
-	public static <T extends Comparable<T>> Accumulator<T, Maybe<? extends T>> least(final T initialState) {
+	public static <T extends Comparable<T>> Accumulator<T, Maybe<T>> least(final T initialState) {
 		return least(Maybe.some(initialState));
 	}
 	
@@ -51,10 +51,10 @@ public class ComparableAccumulators {
 	 * @param initialState Initial state.
 	 * @return The built accumulator.
 	 */
-	public static <T extends Comparable<T>> Accumulator<T, Maybe<? extends T>> least(final Maybe<? extends T> initialState) {
-		return new FoldAccumulator<T, Maybe<? extends T>>(initialState) {
+	public static <T extends Comparable<T>> Accumulator<T, Maybe<T>> least(final Maybe<T> initialState) {
+		return new FoldAccumulator<T, Maybe<T>>(initialState) {
 			@Override
-			protected Maybe<? extends T> fold(final Maybe<? extends T> currentState, final T value) {
+			protected Maybe<T> fold(final Maybe<T> currentState, final T value) {
 				return Maybe.some(currentState.isSome() ? ComparableUtils.least(currentState.asSome().getValue(), value) : value);
 			}
 		};
@@ -66,7 +66,7 @@ public class ComparableAccumulators {
 	 * @param <T> Type of the values.
 	 * @return The built accumulator.
 	 */
-	public static <T extends Comparable<T>> Accumulator<T, Maybe<? extends T>> greatest() {
+	public static <T extends Comparable<T>> Accumulator<T, Maybe<T>> greatest() {
 		return greatest(Maybe.<T>none());
 	}
 	
@@ -77,7 +77,7 @@ public class ComparableAccumulators {
 	 * @param initialState Initial state.
 	 * @return The built accumulator.
 	 */
-	public static <T extends Comparable<T>> Accumulator<T, Maybe<? extends T>> greatest(final T initialState) {
+	public static <T extends Comparable<T>> Accumulator<T, Maybe<T>> greatest(final T initialState) {
 		return greatest(Maybe.some(initialState));
 	}
 	
@@ -88,10 +88,10 @@ public class ComparableAccumulators {
 	 * @param initialState Initial state.
 	 * @return The built accumulator.
 	 */
-	public static <T extends Comparable<T>> Accumulator<T, Maybe<? extends T>> greatest(final Maybe<? extends T> initialState) {
-		return new FoldAccumulator<T, Maybe<? extends T>>(initialState) {
+	public static <T extends Comparable<T>> Accumulator<T, Maybe<T>> greatest(final Maybe<T> initialState) {
+		return new FoldAccumulator<T, Maybe<T>>(initialState) {
 			@Override
-			protected Maybe<? extends T> fold(final Maybe<? extends T> currentState, final T value) {
+			protected Maybe<T> fold(final Maybe<T> currentState, final T value) {
 				return Maybe.some(currentState.isSome() ? ComparableUtils.greatest(currentState.asSome().getValue(), value) : value);
 			}
 		};
