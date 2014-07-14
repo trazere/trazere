@@ -39,10 +39,10 @@ extends Procedure2<E1, E2> {
 	/**
 	 * Accumulates the given pair element into the receiver accumulator.
 	 * 
-	 * @param element Pair element to accumulate.
+	 * @param elementPair Pair element to accumulate.
 	 */
-	default void add(final Tuple2<? extends E1, ? extends E2> element) {
-		add(element.get1(), element.get2());
+	default void add(final Tuple2<? extends E1, ? extends E2> elementPair) {
+		add(elementPair.get1(), elementPair.get2());
 	}
 	
 	/**
