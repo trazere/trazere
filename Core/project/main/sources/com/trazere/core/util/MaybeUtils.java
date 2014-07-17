@@ -123,6 +123,8 @@ public class MaybeUtils {
 	//		return value.isSome() ? value.asSome().getValue().charValue() : defaultValue;
 	//	}
 	
+	// TODO: flatten
+	
 	private MaybeUtils() {
 		// Prevents instantiation.
 	}

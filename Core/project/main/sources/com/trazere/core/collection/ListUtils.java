@@ -16,7 +16,9 @@
 package com.trazere.core.collection;
 
 import com.trazere.core.util.Maybe;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * The {@link ListUtils} class provides various utilities regarding {@link List lists}.
@@ -75,7 +77,7 @@ public class ListUtils {
 	/**
 	 * Inserts all given elements in the given list at the given position.
 	 *
-	 * @param <E> Type of the values.
+	 * @param <E> Type of the elements.
 	 * @param list List to modify.
 	 * @param index Index at which the elements should be inserted.
 	 * @param elements Elements to insert.
@@ -83,8 +85,8 @@ public class ListUtils {
 	 */
 	public static <E> boolean addAll(final List<? super E> list, final int index, final Iterable<? extends E> elements) {
 		int iterIndex = index;
-		for (final E value : elements) {
-			list.add(iterIndex, value);
+		for (final E element : elements) {
+			list.add(iterIndex, element);
 			iterIndex += 1;
 		}
 		return iterIndex > index;
@@ -104,6 +106,33 @@ public class ListUtils {
 		} else {
 			return Maybe.none();
 		}
+	}
+	
+	/**
+	 * Builds an iterator that iterates the given list from the last element to the first one.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param list List to iterate.
+	 * @return The built iterator.
+	 */
+	public static <E> Iterator<E> backwardIterator(final List<? extends E> list) {
+		final ListIterator<? extends E> iterator = list.listIterator(list.size());
+		return new Iterator<E>() {
+			@Override
+			public boolean hasNext() {
+				return iterator.hasPrevious();
+			}
+			
+			@Override
+			public E next() {
+				return iterator.previous();
+			}
+			
+			@Override
+			public void remove() {
+				iterator.remove();
+			}
+		};
 	}
 	
 	//	/**

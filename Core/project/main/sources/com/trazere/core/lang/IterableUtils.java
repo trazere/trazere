@@ -18,7 +18,6 @@ package com.trazere.core.lang;
 import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Function3;
-import com.trazere.core.functional.FunctionUtils;
 import com.trazere.core.functional.Predicate;
 import com.trazere.core.functional.Predicate2;
 import com.trazere.core.imperative.IteratorUtils;
@@ -441,15 +440,7 @@ public class IterableUtils {
 	 * @return An iterable providing the flatten, transformed elements.
 	 */
 	public static <E, TE> Iterable<TE> flatMap(final Iterable<? extends E> iterable, final Function<? super E, ? extends Iterable<? extends TE>> function) {
-		assert null != iterable;
-		assert null != function;
-		
-		return new Iterable<TE>() {
-			@Override
-			public Iterator<TE> iterator() {
-				return IteratorUtils.flatMap(iterable.iterator(), FunctionUtils.map(function, IterableFunctions.iterator()));
-			}
-		};
+		return flatten(map(iterable, function));
 	}
 	
 	/**
@@ -463,15 +454,7 @@ public class IterableUtils {
 	 * @return An iterable providing the flatten, transformed elements.
 	 */
 	public static <E1, E2, TE> Iterable<TE> flatMap(final Iterable<? extends Tuple2<? extends E1, ? extends E2>> iterable, final Function2<? super E1, ? super E2, ? extends Iterable<? extends TE>> function) {
-		assert null != iterable;
-		assert null != function;
-		
-		return new Iterable<TE>() {
-			@Override
-			public Iterator<TE> iterator() {
-				return IteratorUtils.flatMap(iterable.iterator(), FunctionUtils.map2(function, IterableFunctions.iterator()));
-			}
-		};
+		return flatten(map(iterable, function));
 	}
 	
 	private IterableUtils() {

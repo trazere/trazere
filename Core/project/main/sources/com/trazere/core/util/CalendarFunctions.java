@@ -13,21 +13,28 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.core.functional;
+package com.trazere.core.util;
+
+import com.trazere.core.functional.Function;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
- * The {@link Thunk} interface defines abstract computations of some value.
- * <p>
- * Thunks represent no-arguments functions whose evaluation solely relies on the captured context. They provide an abstraction for lazy evaluation.
- * 
- * @param <T> Type of the value.
+ * The {@link CalendarFunctions} class provides various factories of functions related {@link Calendar calendars}.
  */
-@FunctionalInterface
-public interface Thunk<T> {
+public class CalendarFunctions {
 	/**
-	 * Evaluates the receiver thunk.
-	 * 
-	 * @return The value of the thunk.
+	 * Builds a function that gets the time of the argument calendars.
+	 *
+	 * @return The built function.
 	 */
-	T evaluate();
+	public static Function<Calendar, Date> getTime() {
+		return GET_TIME;
+	}
+	
+	private static final Function<Calendar, Date> GET_TIME = Calendar::getTime;
+	
+	private CalendarFunctions() {
+		// Prevent instantiation.
+	}
 }

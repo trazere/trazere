@@ -54,14 +54,13 @@ public class Functions {
 	}
 	
 	/**
-	 * Builds a function that always evaluates to the given result.
+	 * Builds a function that evaluates to the given result for all arguments.
 	 *
 	 * @param <A> Type of the arguments.
 	 * @param <R> Type of the results.
 	 * @param result Result of the function.
 	 * @return The built function.
 	 */
-	// TODO: rename to fromValue ?
 	public static <A, R> Function<A, R> constant(final R result) {
 		return arg -> result;
 	}
@@ -154,26 +153,87 @@ public class Functions {
 		};
 	}
 	
-	//	/**
-	//	 * Builds a function corresponding to the given multimap.
-	//	 *
-	//	 * @param <K> Type of the arguments (the keys of the multimap).
-	//	 * @param <C> Type of the results (the collections of the multimap).
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param map The multimap.
-	//	 * @return The built function.
-	//	 */
-	//	public static <K, C extends Collection<?>, X extends Exception> Function1<K, C, X> fromMultimap(final Multimap<? super K, ?, ? extends C> map) {
-	//		assert null != map;
-	//
-	//		return new Function1<K, C, X>() {
-	//			@Override
-	//			public C evaluate(final K key) {
-	//				return map.get(key);
-	//			}
-	//		};
-	//	}
+	/**
+	 * Builds a function that evaluates the argument functions with the given argument.
+	 *
+	 * @param <A> Type of the argument.
+	 * @param <R> Type of the results.
+	 * @param arg Argument to use to evaluate the functions.
+	 * @return The built function.
+	 */
+	public static <A, R> Function<Function<? super A, ? extends R>, R> evaluate(final A arg) {
+		return function -> function.evaluate(arg);
+	}
 	
+	/**
+	 * Builds a function that evaluates the two arguments argument functions with the given arguments.
+	 *
+	 * @param <A1> Type of the first argument.
+	 * @param <A2> Type of the second argument.
+	 * @param <R> Type of the results.
+	 * @param arg1 First argument to use to evaluate the functions.
+	 * @param arg2 Second argument to use to evaluate the functions.
+	 * @return The built function.
+	 */
+	public static <A1, A2, R> Function<Function2<? super A1, ? super A2, ? extends R>, R> evaluate(final A1 arg1, final A2 arg2) {
+		return function -> function.evaluate(arg1, arg2);
+	}
+	
+	/**
+	 * Builds a function that evaluates the three arguments argument functions with the given arguments.
+	 *
+	 * @param <A1> Type of the first argument.
+	 * @param <A2> Type of the second argument.
+	 * @param <A3> Type of the third argument.
+	 * @param <R> Type of the results.
+	 * @param arg1 First argument to use to evaluate the functions.
+	 * @param arg2 Second argument to use to evaluate the functions.
+	 * @param arg3 Third argument to use to evaluate the functions.
+	 * @return The built function.
+	 */
+	public static <A1, A2, A3, R> Function<Function3<? super A1, ? super A2, ? super A3, ? extends R>, R> evaluate(final A1 arg1, final A2 arg2, final A3 arg3) {
+		return function -> function.evaluate(arg1, arg2, arg3);
+	}
+	
+	/**
+	 * Builds a function that evaluates the four arguments argument functions with the given arguments.
+	 *
+	 * @param <A1> Type of the first argument.
+	 * @param <A2> Type of the second argument.
+	 * @param <A3> Type of the third argument.
+	 * @param <A4> Type of the fourth argument.
+	 * @param <R> Type of the results.
+	 * @param arg1 First argument to use to evaluate the functions.
+	 * @param arg2 Second argument to use to evaluate the functions.
+	 * @param arg3 Third argument to use to evaluate the functions.
+	 * @param arg4 Fourth argument to use to evaluate the functions.
+	 * @return The built function.
+	 */
+	public static <A1, A2, A3, A4, R> Function<Function4<? super A1, ? super A2, ? super A3, ? super A4, ? extends R>, R> evaluate(final A1 arg1, final A2 arg2, final A3 arg3, final A4 arg4) {
+		return function -> function.evaluate(arg1, arg2, arg3, arg4);
+	}
+	
+	/**
+	 * Builds a function that evaluates the five arguments argument functions with the given arguments.
+	 *
+	 * @param <A1> Type of the first argument.
+	 * @param <A2> Type of the second argument.
+	 * @param <A3> Type of the third argument.
+	 * @param <A4> Type of the fourth argument.
+	 * @param <A5> Type of the fifth argument.
+	 * @param <R> Type of the results.
+	 * @param arg1 First argument to use to evaluate the functions.
+	 * @param arg2 Second argument to use to evaluate the functions.
+	 * @param arg3 Third argument to use to evaluate the functions.
+	 * @param arg4 Fourth argument to use to evaluate the functions.
+	 * @param arg5 Fifth argument to use to evaluate the functions.
+	 * @return The built function.
+	 */
+	public static <A1, A2, A3, A4, A5, R> Function<Function5<? super A1, ? super A2, ? super A3, ? super A4, ? super A5, ? extends R>, R> evaluate(final A1 arg1, final A2 arg2, final A3 arg3, final A4 arg4, final A5 arg5) {
+		return function -> function.evaluate(arg1, arg2, arg3, arg4, arg5);
+	}
+	
+	// TODO: RecordFunctions
 	//	/**
 	//	 * Builds a function corresponding to the given record.
 	//	 * <p>
@@ -196,6 +256,7 @@ public class Functions {
 	//		};
 	//	}
 	//
+	// TODO: RecordFunctions
 	//	/**
 	//	 * Builds a function corresponding to the given record.
 	//	 * <p>
@@ -220,6 +281,7 @@ public class Functions {
 	//		};
 	//	}
 	//
+	// TODO: RecordFunctions
 	//	/**
 	//	 * Builds a function corresponding to the given record.
 	//	 * <p>
@@ -249,67 +311,8 @@ public class Functions {
 	//		};
 	//	}
 	
-	//	/**
-	//	 * Builds a function that evaluates to the result of the evaluation of its zero arguments function arguments.
-	//	 *
-	//	 * @param <R> Type of the result values.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @return The built function.
-	//	 */
-	//	@SuppressWarnings("unchecked")
-	//	public static <R, X extends Exception> Function1<Function0<? extends R, ? extends X>, R, X> evaluate() {
-	//		return (Function1<Function0<? extends R, ? extends X>, R, X>) _EVALUATE;
-	//	}
-	//
-	//	private static final Function1<? extends Function0<?, ?>, ?, ?> _EVALUATE = new Function1<Function0<Object, RuntimeException>, Object, RuntimeException>() {
-	//		@Override
-	//		public Object evaluate(final Function0<Object, RuntimeException> function) {
-	//			return function.evaluate();
-	//		}
-	//	};
-	//
-	//	/**
-	//	 * Builds a function that evaluates to the result of the evaluation of its one argument function arguments with the given value.
-	//	 *
-	//	 * @param <T> Type of the argument values.
-	//	 * @param <R> Type of the result values.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param value The argument value. May be <code>null</code>.
-	//	 * @return The built function.
-	//	 */
-	//	public static <T, R, X extends Exception> Function1<Function1<? super T, ? extends R, ? extends X>, R, X> evaluate(final T value) {
-	//		return new Function1<Function1<? super T, ? extends R, ? extends X>, R, X>() {
-	//			@Override
-	//			public R evaluate(final Function1<? super T, ? extends R, ? extends X> function)
-	//			throws X {
-	//				return function.evaluate(value);
-	//			}
-	//		};
-	//	}
-	//
-	//	/**
-	//	 * Builds a function that evaluates to the result of the evaluation of its two arguments function arguments with the given values.
-	//	 *
-	//	 * @param <T1> Type of the first argument values.
-	//	 * @param <T2> Type of the second argument values.
-	//	 * @param <R> Type of the result values.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param value1 The first argument value. May be <code>null</code>.
-	//	 * @param value2 The second argument value. May be <code>null</code>.
-	//	 * @return The built function.
-	//	 */
-	//	public static <T1, T2, R, X extends Exception> Function1<Function2<? super T1, ? super T2, ? extends R, ? extends X>, R, X> evaluate(final T1 value1, final T2 value2) {
-	//		return new Function1<Function2<? super T1, ? super T2, ? extends R, ? extends X>, R, X>() {
-	//			@Override
-	//			public R evaluate(final Function2<? super T1, ? super T2, ? extends R, ? extends X> function)
-	//			throws X {
-	//				return function.evaluate(value1, value2);
-	//			}
-	//		};
-	//	}
-	
 	/**
-	 * Builds a two arguments function that always evaluates to the given result.
+	 * Builds a two arguments function that evaluates to the given result for all arguments.
 	 *
 	 * @param <A1> Type of the first arguments.
 	 * @param <A2> Type of the second arguments.
@@ -433,7 +436,7 @@ public class Functions {
 	//	}
 	
 	/**
-	 * Builds a three arguments function that always evaluates to the given result.
+	 * Builds a three arguments function that evaluates to the given result for all arguments.
 	 *
 	 * @param <A1> Type of the first arguments.
 	 * @param <A2> Type of the second arguments.
