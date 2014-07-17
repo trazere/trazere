@@ -22,7 +22,7 @@ package com.trazere.core.imperative;
  */
 public class Procedures {
 	/**
-	 * Builds a procedure which does nothing.
+	 * Builds a procedure that does nothing.
 	 * 
 	 * @param <A> Type of the arguments.
 	 * @return The built procedure.
@@ -36,102 +36,100 @@ public class Procedures {
 		// Nothing to do.
 	};
 	
-	//	/**
-	//	 * Builds a zero arguments procedure which does nothing.
-	//	 *
-	//	 * @param <X> Type of the exceptions.
-	//	 * @return The built procedure.
-	//	 */
-	//	@SuppressWarnings("unchecked")
-	//	public static <X extends Exception> Procedure0<X> nop0() {
-	//		return (Procedure0<X>) _NOP0;
-	//	}
-	//
-	//	private static final Procedure0<?> _NOP0 = new Procedure0<RuntimeException>() {
-	//		@Override
-	//		public void execute() {
-	//			// Nothing to do.
-	//		}
-	//	};
-	//
-	//	/**
-	//	 * Builds a two arguments procedure which does nothing.
-	//	 *
-	//	 * @param <T1> Type of the first argument values.
-	//	 * @param <T2> Type of the second argument values.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @return The built procedure.
-	//	 */
-	//	@SuppressWarnings("unchecked")
-	//	public static <T1, T2, X extends Exception> Procedure2<T1, T2, X> nop2() {
-	//		return (Procedure2<T1, T2, X>) _NOP2;
-	//	}
-	//
-	//	private static final Procedure2<?, ?, ?> _NOP2 = new Procedure2<Object, Object, RuntimeException>() {
-	//		@Override
-	//		public void execute(final Object value1, final Object value2) {
-	//			// Nothing to do.
-	//		}
-	//	};
-	
 	// TODO: sequence
 	
-	//	/**
-	//	 * Builds a procedure which executes its zero arguments procedure arguments.
-	//	 *
-	//	 * @param <X> Type of the exceptions.
-	//	 * @return The built procedure.
-	//	 */
-	//	@SuppressWarnings("unchecked")
-	//	public static <X extends Exception> Procedure1<Procedure0<? extends X>, X> execute() {
-	//		return (Procedure1<Procedure0<? extends X>, X>) _EXECUTE;
-	//	}
-	//
-	//	private static final Procedure1<? extends Procedure0<?>, ?> _EXECUTE = new Procedure1<Procedure0<?>, Exception>() {
-	//		@Override
-	//		public void execute(final Procedure0<? extends Exception> procedure)
-	//		throws Exception {
-	//			procedure.execute();
-	//		}
-	//	};
-	//
-	//	/**
-	//	 * Builds a procedure which executes ite one argument procedure arguments with the given value.
-	//	 *
-	//	 * @param <T> Type of the argument values.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param value The argument value. May be <code>null</code>.
-	//	 * @return The built procedure.
-	//	 */
-	//	public static <T, X extends Exception> Procedure1<Procedure1<? super T, ? extends X>, X> execute(final T value) {
-	//		return new Procedure1<Procedure1<? super T, ? extends X>, X>() {
-	//			@Override
-	//			public void execute(final Procedure1<? super T, ? extends X> procedure)
-	//			throws X {
-	//				procedure.execute(value);
-	//			}
-	//		};
-	//	}
-	//
-	//	/**
-	//	 * Builds a procedure which executes ite two arguments procedure arguments with the given values.
-	//	 *
-	//	 * @param <T1> Type of the first argument values.
-	//	 * @param <T2> Type of the secord argument values.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param value1 The first argument value. May be <code>null</code>.
-	//	 * @param value2 The second argument value. May be <code>null</code>.
-	//	 * @return The built procedure.
-	//	 */
-	//	public static <T1, T2, X extends Exception> Procedure1<Procedure2<? super T1, ? super T2, ? extends X>, X> execute(final T1 value1, final T2 value2) {
-	//		return new Procedure1<Procedure2<? super T1, ? super T2, ? extends X>, X>() {
-	//			@Override
-	//			public void execute(final Procedure2<? super T1, ? super T2, ? extends X> procedure)
-	//			throws X {
-	//				procedure.execute(value1, value2);
-	//			}
-	//		};
-	//	}
+	/**
+	 * Builds a procedure that executes the argument procedures with the given argument.
+	 *
+	 * @param <A> Type of the arguments.
+	 * @param arg Argument to use to execute the procedures.
+	 * @return The built procedure.
+	 */
+	public static <A> Procedure<Procedure<? super A>> execute(final A arg) {
+		return procedure -> procedure.execute(arg);
+	}
+	
+	/**
+	 * Builds a procedure that executes the two arguments argument procedures with the given arguments.
+	 *
+	 * @param <A1> Type of the first argument.
+	 * @param <A2> Type of the second argument.
+	 * @param arg1 First argument to use to execute the procedures.
+	 * @param arg2 Second argument to use to execute the procedures.
+	 * @return The built procedure.
+	 */
+	public static <A1, A2> Procedure<Procedure2<? super A1, ? super A2>> execute(final A1 arg1, final A2 arg2) {
+		return procedure -> procedure.execute(arg1, arg2);
+	}
+	
+	/**
+	 * Builds a procedure that executes the three arguments argument procedures with the given arguments.
+	 *
+	 * @param <A1> Type of the first argument.
+	 * @param <A2> Type of the second argument.
+	 * @param <A3> Type of the third argument.
+	 * @param arg1 First argument to use to execute the procedures.
+	 * @param arg2 Second argument to use to execute the procedures.
+	 * @param arg3 Third argument to use to execute the procedures.
+	 * @return The built procedure.
+	 */
+	public static <A1, A2, A3> Procedure<Procedure3<? super A1, ? super A2, ? super A3>> execute(final A1 arg1, final A2 arg2, final A3 arg3) {
+		return procedure -> procedure.execute(arg1, arg2, arg3);
+	}
+	
+	/**
+	 * Builds a procedure that executes the four arguments argument procedures with the given arguments.
+	 *
+	 * @param <A1> Type of the first argument.
+	 * @param <A2> Type of the second argument.
+	 * @param <A3> Type of the third argument.
+	 * @param <A4> Type of the fourth argument.
+	 * @param arg1 First argument to use to execute the procedures.
+	 * @param arg2 Second argument to use to execute the procedures.
+	 * @param arg3 Third argument to use to execute the procedures.
+	 * @param arg4 Fourth argument to use to execute the procedures.
+	 * @return The built procedure.
+	 */
+	public static <A1, A2, A3, A4> Procedure<Procedure4<? super A1, ? super A2, ? super A3, ? super A4>> execute(final A1 arg1, final A2 arg2, final A3 arg3, final A4 arg4) {
+		return procedure -> procedure.execute(arg1, arg2, arg3, arg4);
+	}
+	
+	/**
+	 * Builds a procedure that executes the five arguments argument procedures with the given arguments.
+	 *
+	 * @param <A1> Type of the first argument.
+	 * @param <A2> Type of the second argument.
+	 * @param <A3> Type of the third argument.
+	 * @param <A4> Type of the fourth argument.
+	 * @param <A5> Type of the fifth argument.
+	 * @param arg1 First argument to use to execute the procedures.
+	 * @param arg2 Second argument to use to execute the procedures.
+	 * @param arg3 Third argument to use to execute the procedures.
+	 * @param arg4 Fourth argument to use to execute the procedures.
+	 * @param arg5 Fifth argument to use to execute the procedures.
+	 * @return The built procedure.
+	 */
+	public static <A1, A2, A3, A4, A5> Procedure<Procedure5<? super A1, ? super A2, ? super A3, ? super A4, ? super A5>> execute(final A1 arg1, final A2 arg2, final A3 arg3, final A4 arg4, final A5 arg5) {
+		return procedure -> procedure.execute(arg1, arg2, arg3, arg4, arg5);
+	}
+	
+	/**
+	 * Builds a two arguments procedure that does nothing.
+	 *
+	 * @param <A1> Type of the first arguments.
+	 * @param <A2> Type of the second arguments.
+	 * @return The built procedure.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <A1, A2> Procedure2<A1, A2> nop2() {
+		return (Procedure2<A1, A2>) NOP2;
+	}
+	
+	private static final Procedure2<?, ?> NOP2 = (arg1, arg2) -> {
+		// Nothing to do.
+	};
+	
+	// TODO: sequence2
 	
 	private Procedures() {
 		// Prevents instantiation.

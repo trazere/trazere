@@ -16,18 +16,23 @@
 package com.trazere.core.functional;
 
 /**
- * The {@link Thunk} interface defines abstract computations of some value.
- * <p>
- * Thunks represent no-arguments functions whose evaluation solely relies on the captured context. They provide an abstraction for lazy evaluation.
- * 
- * @param <T> Type of the value.
+ * The {@link ThunkFunctions} class provides various factories of functions related to {@link Thunk thunks}.
  */
-@FunctionalInterface
-public interface Thunk<T> {
+public class ThunkFunctions {
 	/**
-	 * Evaluates the receiver thunk.
-	 * 
-	 * @return The value of the thunk.
+	 * Builds a function that evaluates the argument thunks.
+	 *
+	 * @param <T> Type of the values.
+	 * @return The built function.
 	 */
-	T evaluate();
+	@SuppressWarnings("unchecked")
+	public static <T> Function<Thunk<? extends T>, T> evaluate() {
+		return (Function<Thunk<? extends T>, T>) EVALUATE;
+	}
+	
+	private static final Function<? extends Thunk<?>, ?> EVALUATE = thunk -> thunk.evaluate();
+	
+	private ThunkFunctions() {
+		// Prevent instantiation.
+	}
 }

@@ -114,42 +114,43 @@ public class Feeds {
 	};
 	
 	/**
-	 * Builds a feed over the given value.
+	 * Builds a feed over the given element.
 	 * 
 	 * @param <E> Type of the elements.
-	 * @param value Value.
+	 * @param element Element of the feed to build.
 	 * @return The built feed.
 	 */
-	public static <E> Feed<E> fromValue(final E value) {
-		return feed(value, Feeds.<E>empty());
+	public static <E> Feed<E> fromElement(final E element) {
+		return feed(element, Feeds.<E>empty());
 	}
 	
 	/**
-	 * Builds a feed over the given values.
+	 * Builds a feed over the given elements.
 	 * 
 	 * @param <E> Type of the elements.
-	 * @param values Values.
+	 * @param elements Elements of the feed to build.
 	 * @return The built feed.
 	 */
 	@SafeVarargs
-	public static <E> Feed<E> fromValues(final E... values) {
-		return fromValues(values, 0);
+	public static <E> Feed<E> fromElements(final E... elements) {
+		return fromElements(elements, 0);
 	}
 	
-	private static <E> Feed<E> fromValues(final E[] values, final int index) {
+	// TODO: generalize to any range and make public
+	private static <E> Feed<E> fromElements(final E[] elements, final int index) {
 		return new Feed<E>() {
 			// Feed.
 			
 			@Override
 			public boolean isEmpty() {
-				return index >= values.length;
+				return index >= elements.length;
 			}
 			
 			@Override
 			public E getHead()
 			throws NoSuchElementException {
-				if (index < values.length) {
-					return values[index];
+				if (index < elements.length) {
+					return elements[index];
 				} else {
 					throw new NoSuchElementException();
 				}
@@ -158,8 +159,8 @@ public class Feeds {
 			@Override
 			public Feed<E> getTail()
 			throws NoSuchElementException {
-				if (index < values.length) {
-					return Feeds.fromValues(values, index + 1);
+				if (index < elements.length) {
+					return Feeds.fromElements(elements, index + 1);
 				} else {
 					throw new NoSuchElementException();
 				}
@@ -169,8 +170,8 @@ public class Feeds {
 			
 			@Override
 			public Maybe<Tuple2<E, Feed<E>>> evaluate() {
-				if (index < values.length) {
-					return Maybe.some(new Tuple2<>(values[index], Feeds.<E>fromValues(values, index + 1)));
+				if (index < elements.length) {
+					return Maybe.some(new Tuple2<>(elements[index], Feeds.<E>fromElements(elements, index + 1)));
 				} else {
 					return Maybe.none();
 				}

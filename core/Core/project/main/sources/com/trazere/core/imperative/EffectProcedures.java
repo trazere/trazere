@@ -13,21 +13,26 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.core.functional;
+package com.trazere.core.imperative;
 
 /**
- * The {@link Thunk} interface defines abstract computations of some value.
- * <p>
- * Thunks represent no-arguments functions whose evaluation solely relies on the captured context. They provide an abstraction for lazy evaluation.
+ * The {@link EffectProcedures} class provides various factories of procedures related to {@link Effect effects}.
  * 
- * @param <T> Type of the value.
+ * @see Effect
  */
-@FunctionalInterface
-public interface Thunk<T> {
+public class EffectProcedures {
 	/**
-	 * Evaluates the receiver thunk.
-	 * 
-	 * @return The value of the thunk.
+	 * Builds a procedure that executes the argument effects.
+	 *
+	 * @return The built procedure.
 	 */
-	T evaluate();
+	public static Procedure<Effect> execute() {
+		return EXECUTE;
+	}
+	
+	private static final Procedure<Effect> EXECUTE = effect -> effect.execute();
+	
+	private EffectProcedures() {
+		// Prevents instantiation.
+	}
 }

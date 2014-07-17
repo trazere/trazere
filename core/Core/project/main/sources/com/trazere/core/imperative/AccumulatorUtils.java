@@ -56,17 +56,18 @@ public class AccumulatorUtils {
 		};
 	}
 	
+	// TODO: rename to ???
 	/**
 	 * Transforms the elements accumulated into the given accumulator using the given function.
 	 *
 	 * @param <E> Type of the accumulated elements.
-	 * @param <RE> Type of the transformed accumulated elements.
+	 * @param <TE> Type of the transformed accumulated elements.
 	 * @param <S> Type of the state.
 	 * @param accumulator Accumulator of the transformed elements.
 	 * @param function Function to use to transform the elements.
 	 * @return The built accumulator.
 	 */
-	public static <E, RE, S> Accumulator<E, S> map(final Accumulator<? super RE, ? extends S> accumulator, final Function<? super E, ? extends RE> function) {
+	public static <E, TE, S> Accumulator<E, S> map(final Accumulator<? super TE, ? extends S> accumulator, final Function<? super E, ? extends TE> function) {
 		assert null != accumulator;
 		assert null != function;
 		
@@ -83,17 +84,18 @@ public class AccumulatorUtils {
 		};
 	}
 	
+	// TODO: rename to ???
 	/**
 	 * Extracts and flattens the elements accumulated into the given accumulator using the given extractor.
 	 *
 	 * @param <E> Type of the accumulated elements.
-	 * @param <RE> Type of the accumulated extracted elements.
+	 * @param <EE> Type of the accumulated extracted elements.
 	 * @param <S> Type of the state.
 	 * @param accumulator Accumulator of the extracted elements.
 	 * @param extractor Function to use to extract the elements.
 	 * @return The built accumulator.
 	 */
-	public static <E, RE, S> Accumulator<E, S> extract(final Accumulator<? super RE, ? extends S> accumulator, final Function<? super E, ? extends Iterable<? extends RE>> extractor) {
+	public static <E, EE, S> Accumulator<E, S> extract(final Accumulator<? super EE, ? extends S> accumulator, final Function<? super E, ? extends Iterable<? extends EE>> extractor) {
 		assert null != extractor;
 		assert null != accumulator;
 		
@@ -110,28 +112,29 @@ public class AccumulatorUtils {
 		};
 	}
 	
+	// TODO: rename to map
 	/**
 	 * Transforms the state of the given accumulator using the given function.
 	 *
 	 * @param <E> Type of the accumulated elements.
 	 * @param <S> Type of the state.
-	 * @param <RS> Type of the transformed states.
+	 * @param <TS> Type of the transformed states.
 	 * @param accumulator Accumulator to transform.
 	 * @param function Function to use to transform the state.
 	 * @return The built accumulator.
 	 */
-	public static <E, S, RS> Accumulator<E, RS> mapState(final Accumulator<? super E, ? extends S> accumulator, final Function<? super S, ? extends RS> function) {
+	public static <E, S, TS> Accumulator<E, TS> mapState(final Accumulator<? super E, ? extends S> accumulator, final Function<? super S, ? extends TS> function) {
 		assert null != accumulator;
 		assert null != function;
 		
-		return new Accumulator<E, RS>() {
+		return new Accumulator<E, TS>() {
 			@Override
 			public void add(final E value) {
 				accumulator.add(value);
 			}
 			
 			@Override
-			public RS get() {
+			public TS get() {
 				return function.evaluate(accumulator.get());
 			}
 		};
@@ -171,14 +174,14 @@ public class AccumulatorUtils {
 	 *
 	 * @param <E1> Type of the first element of the accumulated pairs.
 	 * @param <E2> Type of the second element of the accumulated pairs.
-	 * @param <RE1> Type of the first elements of transformed accumulated pairs.
-	 * @param <RE2> Type of the second elements of transformed accumulated pairs.
+	 * @param <TE1> Type of the first elements of transformed accumulated pairs.
+	 * @param <TE2> Type of the second elements of transformed accumulated pairs.
 	 * @param <S> Type of the state.
 	 * @param accumulator Accumulator of the transformed pairs of elements.
 	 * @param function Function to use to transform the pairs of elements.
 	 * @return The built accumulator.
 	 */
-	public static <E1, E2, RE1, RE2, S> Accumulator2<E1, E2, S> map2(final Accumulator2<? super RE1, ? super RE2, ? extends S> accumulator, final Function2<? super E1, ? super E2, ? extends Tuple2<? extends RE1, ? extends RE2>> function) {
+	public static <E1, E2, TE1, TE2, S> Accumulator2<E1, E2, S> map2(final Accumulator2<? super TE1, ? super TE2, ? extends S> accumulator, final Function2<? super E1, ? super E2, ? extends Tuple2<? extends TE1, ? extends TE2>> function) {
 		assert null != accumulator;
 		assert null != function;
 		
@@ -200,14 +203,14 @@ public class AccumulatorUtils {
 	 *
 	 * @param <E1> Type of the first element of the accumulated pairs.
 	 * @param <E2> Type of the second element of the accumulated pairs.
-	 * @param <RE1> Type of the first elements of transformed accumulated pairs.
-	 * @param <RE2> Type of the second elements of transformed accumulated pairs.
+	 * @param <EE1> Type of the first elements of transformed accumulated pairs.
+	 * @param <EE2> Type of the second elements of transformed accumulated pairs.
 	 * @param <S> Type of the state.
 	 * @param accumulator Accumulator of the extracted pairs of elements.
 	 * @param extractor Function to use to extract the pairs of elements.
 	 * @return The built accumulator.
 	 */
-	public static <E1, E2, RE1, RE2, S> Accumulator2<E1, E2, S> extract2(final Accumulator2<? super RE1, ? super RE2, ? extends S> accumulator, final Function2<? super E1, ? super E2, ? extends Iterable<? extends Tuple2<? extends RE1, ? extends RE2>>> extractor) {
+	public static <E1, E2, EE1, EE2, S> Accumulator2<E1, E2, S> extract2(final Accumulator2<? super EE1, ? super EE2, ? extends S> accumulator, final Function2<? super E1, ? super E2, ? extends Iterable<? extends Tuple2<? extends EE1, ? extends EE2>>> extractor) {
 		assert null != extractor;
 		assert null != accumulator;
 		
@@ -230,23 +233,23 @@ public class AccumulatorUtils {
 	 * @param <E1> Type of the first element of the accumulated pairs.
 	 * @param <E2> Type of the second element of the accumulated pairs.
 	 * @param <S> Type of the state.
-	 * @param <RS> Type of the transformed state.
+	 * @param <TS> Type of the transformed state.
 	 * @param accumulator Accumulator to transform.
 	 * @param function Function to use to transform the state.
 	 * @return The built accumulator.
 	 */
-	public static <E1, E2, S, RS> Accumulator2<E1, E2, RS> mapState2(final Accumulator2<? super E1, ? super E2, ? extends S> accumulator, final Function<? super S, ? extends RS> function) {
+	public static <E1, E2, S, TS> Accumulator2<E1, E2, TS> mapState2(final Accumulator2<? super E1, ? super E2, ? extends S> accumulator, final Function<? super S, ? extends TS> function) {
 		assert null != accumulator;
 		assert null != function;
 		
-		return new Accumulator2<E1, E2, RS>() {
+		return new Accumulator2<E1, E2, TS>() {
 			@Override
 			public void add(final E1 value1, final E2 value2) {
 				accumulator.add(value1, value2);
 			}
 			
 			@Override
-			public RS get() {
+			public TS get() {
 				return function.evaluate(accumulator.get());
 			}
 		};
