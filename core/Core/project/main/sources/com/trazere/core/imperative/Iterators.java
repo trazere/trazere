@@ -16,12 +16,10 @@
 package com.trazere.core.imperative;
 
 import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 /**
- * The {@link Iterators} class provides various factories of iterators.
+ * The {@link Iterators} class provides various factories of {@link Iterator iterators}.
  * 
  * @see Iterator
  */
@@ -29,7 +27,7 @@ public class Iterators {
 	/**
 	 * Builds an empty iterator.
 	 * 
-	 * @param <E> Type of the the elements.
+	 * @param <E> Type of the elements.
 	 * @return The built iterator.
 	 */
 	@SuppressWarnings("unchecked")
@@ -51,13 +49,13 @@ public class Iterators {
 	};
 	
 	/**
-	 * Builds an iterator over the given value.
+	 * Builds an iterator over the given element.
 	 * 
 	 * @param <E> Type of the the element.
-	 * @param value Value to iterate.
+	 * @param element Element provided by the iterator to build.
 	 * @return The built iterator.
 	 */
-	public static <E> Iterator<E> fromValue(final E value) {
+	public static <E> Iterator<E> fromElement(final E element) {
 		return new Iterator<E>() {
 			protected boolean _next = true;
 			
@@ -71,7 +69,7 @@ public class Iterators {
 			throws NoSuchElementException {
 				if (_next) {
 					_next = false;
-					return value;
+					return element;
 				} else {
 					throw new NoSuchElementException();
 				}
@@ -80,62 +78,35 @@ public class Iterators {
 	}
 	
 	/**
-	 * Builds an iterator over the given values.
+	 * Builds an iterator over the given elements.
 	 * 
 	 * @param <E> Type of the the elements.
-	 * @param values Values to iterate.
+	 * @param elements Elements provided by the iterator to build.
 	 * @return The built iterator.
 	 */
 	@SafeVarargs
-	public static <E> Iterator<E> fromValues(final E... values) {
-		assert null != values;
+	public static <E> Iterator<E> fromElements(final E... elements) {
+		assert null != elements;
 		
 		return new Iterator<E>() {
 			protected int _index = 0;
 			
 			@Override
 			public boolean hasNext() {
-				return _index < values.length;
+				return _index < elements.length;
 			}
 			
 			@Override
 			public E next()
 			throws NoSuchElementException {
-				if (_index < values.length) {
-					final E value = values[_index];
+				if (_index < elements.length) {
+					final E value = elements[_index];
 					_index += 1;
 					
 					return value;
 				} else {
 					throw new NoSuchElementException();
 				}
-			}
-		};
-	}
-	
-	/**
-	 * Builds an iterator that iterates the given list in reverse.
-	 * 
-	 * @param <E> Type of the elements.
-	 * @param list List to iterate.
-	 * @return The built iterator.
-	 */
-	public static <E> Iterator<E> reverse(final List<? extends E> list) {
-		final ListIterator<? extends E> iterator = list.listIterator(list.size());
-		return new Iterator<E>() {
-			@Override
-			public boolean hasNext() {
-				return iterator.hasPrevious();
-			}
-			
-			@Override
-			public E next() {
-				return iterator.previous();
-			}
-			
-			@Override
-			public void remove() {
-				iterator.remove();
 			}
 		};
 	}

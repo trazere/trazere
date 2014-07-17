@@ -20,7 +20,7 @@ package com.trazere.core.functional;
  */
 public class FunctionUtils {
 	/**
-	 * Maps the given function using the given function.
+	 * Transforms the given function using the given function.
 	 * <p>
 	 * This method is equivalent to function composition.
 	 *
@@ -39,7 +39,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Maps the given two arguments function using the given function.
+	 * Transforms the given two arguments function using the given function.
 	 * <p>
 	 * This method is equivalent to function composition.
 	 *
@@ -59,7 +59,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Maps the given three arguments function using the given function.
+	 * Transforms the given three arguments function using the given function.
 	 * <p>
 	 * This method is equivalent to function composition.
 	 *

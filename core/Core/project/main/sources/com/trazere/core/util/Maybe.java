@@ -292,7 +292,7 @@ implements Iterable<T>, Describable {
 		
 		@Override
 		public Iterator<T> iterator() {
-			return Iterators.fromValue(_value);
+			return Iterators.fromElement(_value);
 		}
 		
 		// Object.
@@ -439,6 +439,12 @@ implements Iterable<T>, Describable {
 	public abstract <R> R match(final Matcher<? super T, R> matcher);
 	
 	// Functional.
+	
+	// TODO: foreach
+	// TODO: fold
+	// TODO: isAny
+	// TODO: areAll
+	// TODO: count
 	
 	/**
 	 * Filters the value wrapped by the receiver {@link Maybe} instance using the given filter.

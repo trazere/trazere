@@ -31,7 +31,6 @@ public class Thunks {
 	 * @param value Value of the thunk.
 	 * @return The built thunk.
 	 */
-	// TODO: rename to fromValue ?
 	public static <T> MemoizedThunk<T> constant(final T value) {
 		return new MemoizedThunk<T>() {
 			@Override

@@ -502,7 +502,9 @@ public class FeedUtils {
 	 * @return A feed of the extracted elements.
 	 */
 	public static <E, EE> Feed<EE> extract(final Feed<? extends E> feed, final Function<? super E, ? extends Iterable<? extends EE>> extractor) {
-		return flatten(map(feed, element -> Feeds.fromIterable(extractor.evaluate(element))));
+		assert null != extractor;
+		
+		return flatMap(feed, element -> Feeds.fromIterable(extractor.evaluate(element)));
 	}
 	
 	private FeedUtils() {
