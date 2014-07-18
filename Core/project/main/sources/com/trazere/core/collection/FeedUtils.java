@@ -493,7 +493,7 @@ public class FeedUtils {
 	}
 	
 	/**
-	 * Extracts and flattens from the elements of the given feed using the given extractor.
+	 * Extracts the elements of the given feed using the given extractor.
 	 *
 	 * @param <E> Type of the elements.
 	 * @param <EE> Type of the extracted elements.
@@ -501,10 +501,10 @@ public class FeedUtils {
 	 * @param extractor Function to use to extract the elements.
 	 * @return A feed of the extracted elements.
 	 */
-	public static <E, EE> Feed<EE> extract(final Feed<? extends E> feed, final Function<? super E, ? extends Iterable<? extends EE>> extractor) {
+	public static <E, EE> Feed<EE> extract(final Feed<? extends E> feed, final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
 		assert null != extractor;
 		
-		return flatMap(feed, element -> Feeds.fromIterable(extractor.evaluate(element)));
+		return flatMap(feed, element -> Feeds.fromMaybe(extractor.evaluate(element)));
 	}
 	
 	private FeedUtils() {

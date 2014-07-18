@@ -15,10 +15,28 @@
  */
 package com.trazere.core.functional;
 
+import com.trazere.core.util.Maybe;
+
 /**
  * The {@link FunctionUtils} class provides various helpers regarding functions.
  */
 public class FunctionUtils {
+	/**
+	 * Filters the given function using the given filter.
+	 * 
+	 * @param <A> Type of the arguments.
+	 * @param <R> Type of the results.
+	 * @param function Function to filter.
+	 * @param filter Predicate to use to filter the results.
+	 * @return The built function.
+	 */
+	public static <A, R> Function<A, Maybe<R>> filter(final Function<? super A, ? extends R> function, final Predicate<? super R> filter) {
+		assert null != function;
+		assert null != filter;
+		
+		return arg -> Maybe.<R>some(function.evaluate(arg)).filter(filter);
+	}
+	
 	/**
 	 * Transforms the given function using the given function.
 	 * <p>
@@ -39,6 +57,23 @@ public class FunctionUtils {
 	}
 	
 	/**
+	 * Filters the given two arguments function using the given filter.
+	 * 
+	 * @param <A1> Type of the first arguments.
+	 * @param <A2> Type of the second arguments.
+	 * @param <R> Type of the results.
+	 * @param function Function to filter.
+	 * @param filter Predicate to use to filter the results.
+	 * @return The built function.
+	 */
+	public static <A1, A2, R> Function2<A1, A2, Maybe<R>> filter2(final Function2<? super A1, ? super A2, ? extends R> function, final Predicate<? super R> filter) {
+		assert null != function;
+		assert null != filter;
+		
+		return (arg1, arg2) -> Maybe.<R>some(function.evaluate(arg1, arg2)).filter(filter);
+	}
+	
+	/**
 	 * Transforms the given two arguments function using the given function.
 	 * <p>
 	 * This method is equivalent to function composition.
@@ -56,6 +91,24 @@ public class FunctionUtils {
 		assert null != mapFunction;
 		
 		return (arg1, arg2) -> mapFunction.evaluate(function.evaluate(arg1, arg2));
+	}
+	
+	/**
+	 * Filters the given three arguments function using the given filter.
+	 * 
+	 * @param <A1> Type of the first arguments.
+	 * @param <A2> Type of the second arguments.
+	 * @param <A3> Type of the third arguments.
+	 * @param <R> Type of the results.
+	 * @param function Function to filter.
+	 * @param filter Predicate to use to filter the results.
+	 * @return The built function.
+	 */
+	public static <A1, A2, A3, R> Function3<A1, A2, A3, Maybe<R>> filter3(final Function3<? super A1, ? super A2, ? super A3, ? extends R> function, final Predicate<? super R> filter) {
+		assert null != function;
+		assert null != filter;
+		
+		return (arg1, arg2, arg3) -> Maybe.<R>some(function.evaluate(arg1, arg2, arg3)).filter(filter);
 	}
 	
 	/**

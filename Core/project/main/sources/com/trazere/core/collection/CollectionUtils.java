@@ -357,7 +357,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Extracts and flattens the elements of the given collection using the given extractor.
+	 * Extracts the elements of the given collection using the given extractor.
 	 *
 	 * @param <E> Type of the elements.
 	 * @param <EE> Type of the extracted elements.
@@ -367,10 +367,13 @@ public class CollectionUtils {
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection containing the extracted elements.
 	 */
-	public static <E, EE, C extends Collection<? super EE>> C extract(final Collection<? extends E> collection, final Function<? super E, ? extends Iterable<? extends EE>> extractor, final CollectionFactory<EE, C> resultFactory) {
+	public static <E, EE, C extends Collection<? super EE>> C extract(final Collection<? extends E> collection, final Function<? super E, ? extends Maybe<? extends EE>> extractor, final CollectionFactory<EE, C> resultFactory) {
 		final C results = resultFactory.build();
 		for (final E element : collection) {
-			addAll(results, extractor.evaluate(element));
+			final Maybe<? extends EE> extractedElement = extractor.evaluate(element);
+			if (extractedElement.isSome()) {
+				results.add(extractedElement.asSome().getValue());
+			}
 		}
 		return results;
 	}
