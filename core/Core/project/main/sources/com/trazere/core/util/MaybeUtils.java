@@ -15,6 +15,8 @@
  */
 package com.trazere.core.util;
 
+import com.trazere.core.functional.Functions;
+
 /**
  * The {@link MaybeUtils} class provides various helpers regarding types.
  */
@@ -123,7 +125,16 @@ public class MaybeUtils {
 	//		return value.isSome() ? value.asSome().getValue().charValue() : defaultValue;
 	//	}
 	
-	// TODO: flatten
+	/**
+	 * Flattens the value wrapped in the {@link Maybe} instance wrapped in the given {@link Maybe} instance.
+	 *
+	 * @param <T> Type of the value.
+	 * @param maybe {@link Maybe} instance wrapping the {@link Maybe} instance to flatten.
+	 * @return A {@link Maybe} instance wrapping the flatten value.
+	 */
+	public static <T> Maybe<T> flatten(final Maybe<? extends Maybe<? extends T>> maybe) {
+		return maybe.flatMap(Functions.<Maybe<? extends T>>identity());
+	}
 	
 	private MaybeUtils() {
 		// Prevents instantiation.

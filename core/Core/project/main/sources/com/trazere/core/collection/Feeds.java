@@ -180,17 +180,6 @@ public class Feeds {
 	}
 	
 	/**
-	 * Builds a feed over the given iterable.
-	 * 
-	 * @param <E> Type of the elements.
-	 * @param iterable Iterable of the elements.
-	 * @return The built feed.
-	 */
-	public static <E> Feed<E> fromIterable(final Iterable<? extends E> iterable) {
-		return fromIterator(iterable.iterator());
-	}
-	
-	/**
 	 * Builds a feed over the elements provided by the given iterator.
 	 * 
 	 * @param <E> Type of the elements.
@@ -210,6 +199,28 @@ public class Feeds {
 				}
 			}
 		};
+	}
+	
+	/**
+	 * Builds a feed over the given iterable.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param iterable Iterable providing the elements.
+	 * @return The built feed.
+	 */
+	public static <E> Feed<E> fromIterable(final Iterable<? extends E> iterable) {
+		return fromIterator(iterable.iterator());
+	}
+	
+	/**
+	 * Builds a feed over the value wrapped in the given {@link Maybe} instance.
+	 * 
+	 * @param <T> Type of the wrapped value.
+	 * @param maybe {@link Maybe} instance wrapping the value.
+	 * @return The built feed.
+	 */
+	public static <T> Feed<T> fromMaybe(final Maybe<? extends T> maybe) {
+		return maybe.isSome() ? fromElement(maybe.asSome().getValue()) : empty();
 	}
 	
 	private Feeds() {

@@ -19,6 +19,7 @@ import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Predicate;
 import com.trazere.core.functional.Predicate2;
+import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 
 /**
@@ -84,7 +85,36 @@ public class AccumulatorUtils {
 		};
 	}
 	
-	// TODO: rename to ???
+	/**
+	 * Extracts the elements accumulated into the given accumulator using the given extractor.
+	 *
+	 * @param <E> Type of the accumulated elements.
+	 * @param <EE> Type of the accumulated extracted elements.
+	 * @param <S> Type of the state.
+	 * @param accumulator Accumulator of the extracted elements.
+	 * @param extractor Function to use to extract the elements.
+	 * @return The built accumulator.
+	 */
+	public static <E, EE, S> Accumulator<E, S> extract(final Accumulator<? super EE, ? extends S> accumulator, final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
+		assert null != extractor;
+		assert null != accumulator;
+		
+		return new Accumulator<E, S>() {
+			@Override
+			public void add(final E element) {
+				final Maybe<? extends EE> extractedElement = extractor.evaluate(element);
+				if (extractedElement.isSome()) {
+					accumulator.add(extractedElement.asSome().getValue());
+				}
+			}
+			
+			@Override
+			public S get() {
+				return accumulator.get();
+			}
+		};
+	}
+	
 	/**
 	 * Extracts and flattens the elements accumulated into the given accumulator using the given extractor.
 	 *
@@ -95,7 +125,7 @@ public class AccumulatorUtils {
 	 * @param extractor Function to use to extract the elements.
 	 * @return The built accumulator.
 	 */
-	public static <E, EE, S> Accumulator<E, S> extract(final Accumulator<? super EE, ? extends S> accumulator, final Function<? super E, ? extends Iterable<? extends EE>> extractor) {
+	public static <E, EE, S> Accumulator<E, S> extractAll(final Accumulator<? super EE, ? extends S> accumulator, final Function<? super E, ? extends Iterable<? extends EE>> extractor) {
 		assert null != extractor;
 		assert null != accumulator;
 		
