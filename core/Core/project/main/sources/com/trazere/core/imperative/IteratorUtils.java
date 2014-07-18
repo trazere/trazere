@@ -712,10 +712,20 @@ public class IteratorUtils {
 		assert null != iterator;
 		assert null != function;
 		
-		return new LookAheadIterator<TE>() {
+		return new Iterator<TE>() {
 			@Override
-			protected Maybe<? extends TE> pull() {
-				return IteratorUtils.next(iterator).map(function);
+			public boolean hasNext() {
+				return iterator.hasNext();
+			}
+			
+			@Override
+			public TE next() {
+				return function.evaluate(iterator.next());
+			}
+			
+			@Override
+			public void remove() {
+				iterator.remove();
 			}
 		};
 	}
@@ -736,16 +746,21 @@ public class IteratorUtils {
 		assert null != iterator;
 		assert null != function;
 		
-		return new LookAheadIterator<TE>() {
+		return new Iterator<TE>() {
 			@Override
-			protected Maybe<? extends TE> pull() {
-				final Maybe<? extends Tuple2<? extends E1, ? extends E2>> maybeNext = IteratorUtils.next(iterator);
-				if (maybeNext.isSome()) {
-					final Tuple2<? extends E1, ? extends E2> next = maybeNext.asSome().getValue();
-					return Maybe.some(function.evaluate(next.get1(), next.get2()));
-				} else {
-					return Maybe.none();
-				}
+			public boolean hasNext() {
+				return iterator.hasNext();
+			}
+			
+			@Override
+			public TE next() {
+				final Tuple2<? extends E1, ? extends E2> next = iterator.next();
+				return function.evaluate(next.get1(), next.get2());
+			}
+			
+			@Override
+			public void remove() {
+				iterator.remove();
 			}
 		};
 	}
@@ -758,11 +773,11 @@ public class IteratorUtils {
 	 * @param <E> Type of the elements.
 	 * @param <TE> Type of the transformed elements.
 	 * @param iterator Iterator providing the elements to transform.
-	 * @param function Function to use to transform the elements.
+	 * @param extractor Function to use to transform the elements.
 	 * @return An iterator providing the flatten, transformed elements.
 	 */
-	public static <E, TE> Iterator<TE> flatMap(final Iterator<? extends E> iterator, final Function<? super E, ? extends Iterator<? extends TE>> function) {
-		return flatten(map(iterator, function));
+	public static <E, TE> Iterator<TE> flatMap(final Iterator<? extends E> iterator, final Function<? super E, ? extends Iterator<? extends TE>> extractor) {
+		return flatten(map(iterator, extractor));
 	}
 	
 	/**
@@ -782,6 +797,53 @@ public class IteratorUtils {
 	}
 	
 	/**
+	 * Extracts the elements provided by the given iterator using the given extractor.
+	 * <p>
+	 * The built iterator feeds from the given iterator.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param <EE> Type of the extracted elements.
+	 * @param iterator Iterator providing the elements to extract from.
+	 * @param extractor Function to use to extract the elements.
+	 * @return An iterator providing the extracted elements.
+	 */
+	public static <E, EE> Iterator<EE> extract(final Iterator<? extends E> iterator, final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
+		assert null != iterator;
+		assert null != extractor;
+		
+		return new LookAheadIterator<EE>() {
+			@Override
+			protected Maybe<? extends EE> pull() {
+				return IteratorUtils.first(iterator, extractor);
+			}
+		};
+	}
+	
+	/**
+	 * Extracts the pairs of elements provided by the given iterator using the given extractor.
+	 * <p>
+	 * The built iterator feeds from the given iterator.
+	 *
+	 * @param <E1> Type of the first element of the pairs.
+	 * @param <E2> Type of the second element of the pairs.
+	 * @param <EE> Type of the extracted elements.
+	 * @param iterator Iterator providing the pairs of elements to extract from.
+	 * @param extractor Function to use to extract the pairs of elements.
+	 * @return An iterator providing the extracted elements.
+	 */
+	public static <E1, E2, EE> Iterator<EE> extract(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor) {
+		assert null != iterator;
+		assert null != extractor;
+		
+		return new LookAheadIterator<EE>() {
+			@Override
+			protected Maybe<? extends EE> pull() {
+				return IteratorUtils.first(iterator, extractor);
+			}
+		};
+	}
+
+	/**
 	 * Extracts and flattens the elements provided by the given iterator using the given extractor.
 	 * <p>
 	 * The built iterator feeds from the given iterator.
@@ -789,11 +851,11 @@ public class IteratorUtils {
 	 * @param <E> Type of the elements.
 	 * @param <TE> Type of the extracted elements.
 	 * @param iterator Iterator providing the elements to extract from.
-	 * @param function Function to use to extract the elements.
+	 * @param extractor Function to use to extract the elements.
 	 * @return An iterator providing the extracted elements.
 	 */
-	public static <E, TE> Iterator<TE> extract(final Iterator<? extends E> iterator, final Function<? super E, ? extends Iterable<? extends TE>> function) {
-		return flatMap(iterator, FunctionUtils.map(function, IterableFunctions.iterator()));
+	public static <E, TE> Iterator<TE> extractAll(final Iterator<? extends E> iterator, final Function<? super E, ? extends Iterable<? extends TE>> extractor) {
+		return flatMap(iterator, FunctionUtils.map(extractor, IterableFunctions.iterator()));
 	}
 	
 	/**
@@ -805,11 +867,11 @@ public class IteratorUtils {
 	 * @param <E2> Type of the second element of the pairs.
 	 * @param <EE> Type of the extracted elements.
 	 * @param iterator Iterator providing the pairs of elements to extract from.
-	 * @param function Function to use to extract the pairs of elements.
+	 * @param extractor Function to use to extract the pairs of elements.
 	 * @return An iterator providing the extracted elements.
 	 */
-	public static <E1, E2, EE> Iterator<EE> extract(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Function2<? super E1, ? super E2, ? extends Iterable<? extends EE>> function) {
-		return flatMap(iterator, FunctionUtils.map2(function, IterableFunctions.iterator()));
+	public static <E1, E2, EE> Iterator<EE> extractAll(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Function2<? super E1, ? super E2, ? extends Iterable<? extends EE>> extractor) {
+		return flatMap(iterator, FunctionUtils.map2(extractor, IterableFunctions.iterator()));
 	}
 	
 	private IteratorUtils() {

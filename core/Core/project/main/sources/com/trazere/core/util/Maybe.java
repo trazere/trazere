@@ -16,10 +16,12 @@
 package com.trazere.core.util;
 
 import com.trazere.core.functional.Function;
+import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Functions;
 import com.trazere.core.functional.Predicate;
 import com.trazere.core.functional.Thunk;
 import com.trazere.core.imperative.Iterators;
+import com.trazere.core.imperative.Procedure;
 import com.trazere.core.lang.HashCode;
 import com.trazere.core.lang.ObjectUtils;
 import com.trazere.core.text.Describable;
@@ -141,7 +143,34 @@ implements Iterable<T>, Describable {
 			return matcher.none(this);
 		}
 		
+		// Imperative.
+		
+		@Override
+		public void foreach(final Procedure<? super T> procedure) {
+			// Nothing to do.
+		}
+		
 		// Functional.
+		
+		@Override
+		public <S> S fold(final Function2<? super S, ? super T, ? extends S> operator, final S initialState) {
+			return initialState;
+		}
+		
+		@Override
+		public boolean isAny(final Predicate<? super T> filter) {
+			return false;
+		}
+		
+		@Override
+		public boolean areAll(final Predicate<? super T> filter) {
+			return true;
+		}
+		
+		@Override
+		public int count(final Predicate<? super T> filter) {
+			return 0;
+		}
 		
 		@Override
 		public Maybe<T> filter(final Predicate<? super T> filter) {
@@ -271,7 +300,34 @@ implements Iterable<T>, Describable {
 			return matcher.some(this);
 		}
 		
+		// Imperative.
+		
+		@Override
+		public void foreach(final Procedure<? super T> procedure) {
+			procedure.execute(_value);
+		}
+		
 		// Functional.
+		
+		@Override
+		public <S> S fold(final Function2<? super S, ? super T, ? extends S> operator, final S initialState) {
+			return operator.evaluate(initialState, _value);
+		}
+		
+		@Override
+		public boolean isAny(final Predicate<? super T> filter) {
+			return filter.evaluate(_value);
+		}
+		
+		@Override
+		public boolean areAll(final Predicate<? super T> filter) {
+			return filter.evaluate(_value);
+		}
+		
+		@Override
+		public int count(final Predicate<? super T> filter) {
+			return filter.evaluate(_value) ? 1 : 0;
+		}
 		
 		@Override
 		public Maybe<T> filter(final Predicate<? super T> predicate) {
@@ -438,13 +494,50 @@ implements Iterable<T>, Describable {
 	 */
 	public abstract <R> R match(final Matcher<? super T, R> matcher);
 	
+	// Imperative.
+	
+	/**
+	 * Executes the given procedure with the value wrapped in the receiver {@link Maybe} instance.
+	 * 
+	 * @param procedure Procedure to execute.
+	 */
+	public abstract void foreach(final Procedure<? super T> procedure);
+	
 	// Functional.
 	
-	// TODO: foreach
-	// TODO: fold
-	// TODO: isAny
-	// TODO: areAll
-	// TODO: count
+	/**
+	 * Left folds over the value wrapped in the receiver {@link Maybe} instance using the given binary operator and initial state.
+	 * 
+	 * @param <S> Type of the state.
+	 * @param operator Binary operator to use.
+	 * @param initialState Initial state.
+	 * @return The folded state.
+	 */
+	public abstract <S> S fold(final Function2<? super S, ? super T, ? extends S> operator, final S initialState);
+	
+	/**
+	 * Tests whether the value wrapped in the receiver {@link Maybe} instance is accepted by the given filter.
+	 * 
+	 * @param filter Predicate to use to filter the value.
+	 * @return <code>true</code> when the wrapped value is accepted, <code>false</code> when no value is wrapped and when the wrapped value is rejected.
+	 */
+	public abstract boolean isAny(final Predicate<? super T> filter);
+	
+	/**
+	 * Tests whether the value wrapped in the receiver {@link Maybe} instance is accepted by the given filter.
+	 * 
+	 * @param filter Predicate to use to filter the value.
+	 * @return <code>true</code> when no value is wrapped and when the wrapped value is accepted, <code>false</code> when the wrapped value is rejected.
+	 */
+	public abstract boolean areAll(final Predicate<? super T> filter);
+	
+	/**
+	 * Counts the value wrapped in the receiver {@link Maybe} instance accepted by the given filter.
+	 * 
+	 * @param filter Predicate to use to filter the value.
+	 * @return <tt>1</tt> when the wrapped value is accepted by the filter, <tt>0</tt> when no value is wrapped and when the wrapped value is rejected.
+	 */
+	public abstract int count(final Predicate<? super T> filter);
 	
 	/**
 	 * Filters the value wrapped by the receiver {@link Maybe} instance using the given filter.

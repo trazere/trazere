@@ -12,12 +12,11 @@ public class ObjectExtractors {
 	 * 
 	 * @param <T> Type of the argument values.
 	 * @param <R> Type of the result values.
-	 * @param <X> Type of the exceptions.
 	 * @param type The type.
 	 * @return The built extractor.
 	 * @see ObjectUtils#match(Object, Class)
 	 */
-	public static <T, R extends T, X extends Exception> Function<T, Maybe<R>> match(final Class<R> type) {
+	public static <T, R extends T> Function<T, Maybe<R>> match(final Class<R> type) {
 		assert null != type;
 		
 		return object -> ObjectUtils.match(object, type);

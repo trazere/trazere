@@ -29,7 +29,7 @@ public class Functions {
 	/**
 	 * Builds an identity function.
 	 * 
-	 * @param <T> Type of the arguments and results.
+	 * @param <T> Type of the values.
 	 * @return The built function.
 	 */
 	@SuppressWarnings("unchecked")
