@@ -24,17 +24,6 @@ import java.util.Collection;
  */
 public class Predicates {
 	/**
-	 * Builds a predicate that evaluates to the given result for all arguments.
-	 * 
-	 * @param <A> Type of the arguments.
-	 * @param result Result of the predicate.
-	 * @return The built predicate.
-	 */
-	public static <A> Predicate<A> constant(final boolean result) {
-		return result ? all() : none();
-	}
-	
-	/**
 	 * Builds a predicate that evaluates to <code>true</code> for all arguments.
 	 * 
 	 * @param <A> Type of the arguments.
@@ -61,7 +50,18 @@ public class Predicates {
 	private static final Predicate<?> NONE = arg -> false;
 	
 	/**
-	 * Builds a predicate corresponding to the logical inverse of the given predicate.
+	 * Builds a predicate that evaluates to the given result for all arguments.
+	 * 
+	 * @param <A> Type of the arguments.
+	 * @param result Result of the predicate.
+	 * @return The built predicate.
+	 */
+	public static <A> Predicate<A> constant(final boolean result) {
+		return result ? all() : none();
+	}
+	
+	/**
+	 * Builds a predicate corresponding to the logical negation of the given predicate.
 	 * 
 	 * @param <A> Type of the arguments.
 	 * @param predicate Predicate to inverse.

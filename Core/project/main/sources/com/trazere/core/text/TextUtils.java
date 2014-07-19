@@ -15,6 +15,8 @@
  */
 package com.trazere.core.text;
 
+import com.trazere.core.math.IntSequence;
+
 /**
  * The {@link TextUtils} class provides various helpers regarding the manipulation of text.
  */
@@ -32,145 +34,109 @@ public class TextUtils {
 	//	public static int safeCompareIgnoreCase(final String string1, final String string2) {
 	//		return LangUtils.safeCompare(String.CASE_INSENSITIVE_ORDER, string1, string2);
 	//	}
-	//
-	//	/**
-	//	 * Tests whether the given string contains some characters accepted by the given filter.
-	//	 *
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param filter The filter.
-	//	 * @param s The string.
-	//	 * @return <code>true</code> when the string contains some character accepted by the filter.
-	//	 * @throws X When some filter evaluation fails.
-	//	 */
-	//	public static <X extends Exception> boolean contains(final CharPredicate<X> filter, final String s)
-	//	throws X {
-	//		assert null != filter;
-	//		assert null != s;
-	//
-	//		for (int index = 0; index < s.length(); index += 1) {
-	//			if (filter.evaluate(s.charAt(index))) {
-	//				return true;
-	//			}
-	//		}
-	//		return false;
-	//	}
-	//
-	//	/**
-	//	 * Tests whether the all characters of the string contains matches the given filter.
-	//	 *
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param filter The filter.
-	//	 * @param s The string.
-	//	 * @return <code>true</code> when the string contains some character accepted by the filter.
-	//	 * @throws X When some filter evaluation fails.
-	//	 */
-	//	public static <X extends Exception> boolean matches(final CharPredicate<X> filter, final String s)
-	//	throws X {
-	//		assert null != filter;
-	//		assert null != s;
-	//
-	//		for (int index = 0; index < s.length(); index += 1) {
-	//			if (!filter.evaluate(s.charAt(index))) {
-	//				return false;
-	//			}
-	//		}
-	//		return true;
-	//	}
-	//
-	//	/**
-	//	 * Filters the given string using the given filter.
-	//	 *
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param filter The filter.
-	//	 * @param s The string.
-	//	 * @return The filtered string.
-	//	 * @throws X When some filter evaluation fails.
-	//	 */
-	//	public static <X extends Exception> String filter(final CharPredicate<X> filter, final String s)
-	//	throws X {
-	//		assert null != filter;
-	//		assert null != s;
-	//
-	//		final StringBuilder result = new StringBuilder();
-	//		for (int index = 0; index < s.length(); index += 1) {
-	//			final char c = s.charAt(index);
-	//			if (filter.evaluate(c)) {
-	//				result.append(c);
-	//			}
-	//		}
-	//		return result.toString();
-	//	}
-	//
-	//	/**
-	//	 * Trims the heading and trailing characters of the given string accepted by the given filter.
-	//	 *
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param filter The filter.
-	//	 * @param s The string to trim.
-	//	 * @return The trimmed string.
-	//	 * @throws X When some predicate evaluation fails.
-	//	 */
-	//	public static <X extends Exception> String trim(final CharPredicate<X> filter, final String s)
-	//	throws X {
-	//		assert null != filter;
-	//		assert null != s;
-	//
-	//		final int length = s.length();
-	//		int start = 0;
-	//		while (start < length && filter.evaluate(s.charAt(start))) {
-	//			start += 1;
-	//		}
-	//		int stop = length;
-	//		while (stop > start && filter.evaluate(s.charAt(stop - 1))) {
-	//			stop -= 1;
-	//		}
-	//		return start > 0 || stop < length ? s.substring(start, stop) : s;
-	//	}
-	//
-	//	/**
-	//	 * Trims the heading characters of the given string accepted by the given filter.
-	//	 *
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param filter The filter.
-	//	 * @param s The string to trim.
-	//	 * @return The trimmed string.
-	//	 * @throws X When some predicate evaluation fails.
-	//	 */
-	//	public static <X extends Exception> String trimHeading(final CharPredicate<X> filter, final String s)
-	//	throws X {
-	//		assert null != filter;
-	//		assert null != s;
-	//
-	//		final int length = s.length();
-	//		int index = 0;
-	//		while (index < length && filter.evaluate(s.charAt(index))) {
-	//			index += 1;
-	//		}
-	//		return index > 0 ? s.substring(index) : s;
-	//	}
-	//
-	//	/**
-	//	 * Trims the trailing characters of the given string accepted by the given filter.
-	//	 *
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param filter The filter.
-	//	 * @param s The string to trim.
-	//	 * @return The trimmed string.
-	//	 * @throws X When some predicate evaluation fails.
-	//	 */
-	//	public static <X extends Exception> String trimTrailing(final CharPredicate<X> filter, final String s)
-	//	throws X {
-	//		assert null != filter;
-	//		assert null != s;
-	//
-	//		final int length = s.length();
-	//		int index = length;
-	//		while (index > 0 && filter.evaluate(s.charAt(index - 1))) {
-	//			index -= 1;
-	//		}
-	//		return index < length ? s.substring(0, index) : s;
-	//	}
-	//
+	
+	/**
+	 * Tests whether any character of the given sequence is accepted by the given filter.
+	 *
+	 * @param s Sequence of characters to test.
+	 * @param filter Predicate to use to filter the characters.
+	 * @return <code>true</code> when any character of the sequence is accepted by the filter, <code>false</code> otherwise.
+	 */
+	public static boolean contains(final CharSequence s, final CharPredicate filter) {
+		for (final int i : new IntSequence(0, s.length())) {
+			if (filter.evaluate(s.charAt(i))) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Tests whether all characters of the given sequence are accepted by the given filter.
+	 *
+	 * @param s Sequence of characters to test.
+	 * @param filter Predicate to use to filter the characters.
+	 * @return <code>true</code> when all characters of the sequence is accepted by the filter, <code>false</code> otherwise.
+	 */
+	public static boolean matches(final CharSequence s, final CharPredicate filter) {
+		for (final int i : new IntSequence(0, s.length())) {
+			if (!filter.evaluate(s.charAt(i))) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * Filters the characters of the given sequence using the given filter.
+	 *
+	 * @param s Sequence of characters to filter.
+	 * @param filter Predicate to use to filter the characters.
+	 * @return A sequence of the accepted characters.
+	 */
+	public static CharSequence filter(final CharSequence s, final CharPredicate filter) {
+		final StringBuilder result = new StringBuilder();
+		for (final int i : new IntSequence(0, s.length())) {
+			final char c = s.charAt(i);
+			if (filter.evaluate(c)) {
+				result.append(c);
+			}
+		}
+		return result;
+	}
+	
+	/**
+	 * Trims the heading and trailing characters accepted by the given filter of the given sequence.
+	 *
+	 * @param s Sequence of characters to trim.
+	 * @param filter Predicate to use to filter the characters.
+	 * @return A trimmed sequence of characters.
+	 */
+	public static CharSequence trim(final CharSequence s, final CharPredicate filter) {
+		final int length = s.length();
+		int start = 0;
+		while (start < length && filter.evaluate(s.charAt(start))) {
+			start += 1;
+		}
+		int end = length;
+		while (end > start && filter.evaluate(s.charAt(end - 1))) {
+			end -= 1;
+		}
+		return start > 0 || end < length ? s.subSequence(start, end) : s;
+	}
+	
+	/**
+	 * Trims the heading characters accepted by the given filter of the given sequence.
+	 *
+	 * @param s Sequence of characters to trim.
+	 * @param filter Predicate to use to filter the characters.
+	 * @return A trimmed sequence of characters.
+	 */
+	public static CharSequence trimHeading(final CharSequence s, final CharPredicate filter) {
+		final int length = s.length();
+		int index = 0;
+		while (index < length && filter.evaluate(s.charAt(index))) {
+			index += 1;
+		}
+		return index > 0 ? s.subSequence(index, s.length()) : s;
+	}
+	
+	/**
+	 * Trims the trailing characters accepted by the given filter of the given sequence.
+	 *
+	 * @param s Sequence of characters to trim.
+	 * @param filter Predicate to use to filter the characters.
+	 * @return A trimmed sequence of characters.
+	 */
+	public static CharSequence trimTrailing(final CharSequence s, final CharPredicate filter) {
+		final int length = s.length();
+		int index = length;
+		while (index > 0 && filter.evaluate(s.charAt(index - 1))) {
+			index -= 1;
+		}
+		return index < length ? s.subSequence(0, index) : s;
+	}
+	
 	//	/**
 	//	 * Splits the given string according to the given delimiter.
 	//	 *
