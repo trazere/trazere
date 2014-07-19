@@ -41,28 +41,28 @@ public class MaybeFunctions {
 	 * 
 	 * @param <T> Type of the values.
 	 * @return The built function.
-	 * @see Maybe#fromNullable(Object)
+	 * @see MaybeUtils#fromNullable(Object)
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<T, Maybe<T>> fromNullable() {
 		return (Function<T, Maybe<T>>) FROM_NULLABLE;
 	}
 	
-	private static final Function<?, ? extends Maybe<?>> FROM_NULLABLE = Maybe::fromNullable;
+	private static final Function<?, ? extends Maybe<?>> FROM_NULLABLE = MaybeUtils::fromNullable;
 	
 	/**
 	 * Builds a function that convert {@link Maybe} instances to nullable values.
 	 * 
 	 * @param <T> Type of the values.
 	 * @return The built function.
-	 * @see Maybe#toNullable(Maybe)
+	 * @see MaybeUtils#toNullable(Maybe)
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<Maybe<T>, T> toNullable() {
 		return (Function<Maybe<T>, T>) TO_NULLABLE;
 	}
 	
-	private static final Function<? extends Maybe<?>, ?> TO_NULLABLE = instance -> Maybe.toNullable(instance);
+	private static final Function<? extends Maybe<?>, ?> TO_NULLABLE = instance -> MaybeUtils.toNullable(instance);
 	
 	/**
 	 * Builds a function that filters the value wrapped in {@link Maybe} instances using the given filter.
