@@ -42,14 +42,14 @@ public class Functions {
 	/**
 	 * Builds a function corresponding to the composition of the given functions (g . f).
 	 *
-	 * @param <A1> Type of the arguments of the inner function.
-	 * @param <A2> Type of the arguments of the outer function.
+	 * @param <A> Type of the arguments.
+	 * @param <I> Type of the intermediate values
 	 * @param <R> Type of the results.
 	 * @param g Outer function.
 	 * @param f Inner function.
 	 * @return The built function.
 	 */
-	public static <A1, A2, R> Function<A1, R> compose(final Function<? super A2, ? extends R> g, final Function<? super A1, ? extends A2> f) {
+	public static <A, I, R> Function<A, R> compose(final Function<? super I, ? extends R> g, final Function<? super A, ? extends I> f) {
 		return FunctionUtils.map(f, g);
 	}
 	
