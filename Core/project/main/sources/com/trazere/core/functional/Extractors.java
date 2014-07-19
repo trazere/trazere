@@ -40,14 +40,14 @@ public class Extractors {
 	/**
 	 * Builds an extractor corresponding to the composition of the given extractors (g . f).
 	 * 
-	 * @param <A1> Type of the arguments of the inner extractor.
-	 * @param <A2> Type of the arguments of the outer extractor.
+	 * @param <A> Type of the arguments.
+	 * @param <I> Type of the intermediate values.
 	 * @param <R> Type of the results.
 	 * @param g Outer extractor.
 	 * @param f Inner extractor.
 	 * @return The built extractor.
 	 */
-	public static <A1, A2, R> Function<A1, Maybe<R>> compose(final Function<? super A2, ? extends Maybe<? extends R>> g, final Function<? super A1, ? extends Maybe<? extends A2>> f) {
+	public static <A, I, R> Function<A, Maybe<R>> compose(final Function<? super I, ? extends Maybe<? extends R>> g, final Function<? super A, ? extends Maybe<? extends I>> f) {
 		return ExtractorUtils.flatMap(f, g);
 	}
 	
