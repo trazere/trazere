@@ -13,36 +13,37 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.core.util;
+package com.trazere.core.math;
 
+import com.trazere.core.imperative.IntCounter;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * The {@link IntRange} class reprensents ranges of integers.
+ * The {@link IntSequence} class reprensents sequences of integers.
  * <p>
- * The ranges includes their lower bound and exclude their upper bound.
+ * The sequences includes their lower bound and exclude their upper bound.
  */
-public class IntRange
+public class IntSequence
 implements Iterable<Integer> {
 	/**
-	 * Instantiates a new range.
+	 * Instantiates a new sequence with a step of <tt>1</tt>.
 	 * 
-	 * @param from Lower bound of the range.
-	 * @param to Upper bound of the range.
+	 * @param from Lower bound of the sequence (included).
+	 * @param to Upper bound of the sequence (excluded).
 	 */
-	public IntRange(final int from, final int to) {
+	public IntSequence(final int from, final int to) {
 		this(from, to, 1);
 	}
 	
 	/**
-	 * Instantiates a new range.
+	 * Instantiates a new sequence.
 	 * 
-	 * @param from Lower bound of the range.
-	 * @param to Upper bound of the range.
-	 * @param step Interval between the values in the range.
+	 * @param from Lower bound of the sequence (included).
+	 * @param to Upper bound of the sequence (excluded).
+	 * @param step Interval between two consecutive values of the sequence.
 	 */
-	public IntRange(final int from, final int to, final int step) {
+	public IntSequence(final int from, final int to, final int step) {
 		assert from <= to;
 		assert step > 0;
 		
@@ -54,11 +55,11 @@ implements Iterable<Integer> {
 	
 	// From.
 	
-	/** Lower bound of the range. */
+	/** Lower bound of the sequence. */
 	protected final int _from;
 	
 	/**
-	 * Gets the lower bound of this range.
+	 * Gets the lower bound of this sequence.
 	 * 
 	 * @return The lower bound.
 	 */
@@ -68,11 +69,11 @@ implements Iterable<Integer> {
 	
 	// To.
 	
-	/** Upper bound of the range. */
+	/** Upper bound of the sequence. */
 	protected final int _to;
 	
 	/**
-	 * Gets the upper bound of this range.
+	 * Gets the upper bound of this sequence.
 	 * 
 	 * @return The upper bound.
 	 */
@@ -82,16 +83,28 @@ implements Iterable<Integer> {
 	
 	// Step.
 	
-	/** Interval between the values in the range. */
+	/** Interval between two consecutive values of the sequence. */
 	protected final int _step;
 	
 	/**
-	 * Gets the interval between the values in this range.
+	 * Gets the interval between two consecutive values of this sequence.
 	 * 
 	 * @return The interval.
 	 */
 	public int getStep() {
 		return _step;
+	}
+	
+	// Sequence.
+	
+	/**
+	 * Indicates whether the given value belongs to this sequence.
+	 * 
+	 * @param value Value to test.
+	 * @return <code>true</code> when the value belongs to the sequence, <code>false</code> otherwise.
+	 */
+	public boolean contains(final int value) {
+		return value >= _from && value < _to && 0 == ((value - _from) % _step);
 	}
 	
 	// Iterable.

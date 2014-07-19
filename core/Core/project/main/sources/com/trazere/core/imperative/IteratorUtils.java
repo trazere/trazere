@@ -27,7 +27,6 @@ import com.trazere.core.functional.Predicate2;
 import com.trazere.core.lang.ComparableAccumulators;
 import com.trazere.core.lang.IterableFunctions;
 import com.trazere.core.util.ComparatorAccumulators;
-import com.trazere.core.util.IntCounter;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 import java.util.Collection;
@@ -842,7 +841,7 @@ public class IteratorUtils {
 			}
 		};
 	}
-
+	
 	/**
 	 * Extracts and flattens the elements provided by the given iterator using the given extractor.
 	 * <p>
