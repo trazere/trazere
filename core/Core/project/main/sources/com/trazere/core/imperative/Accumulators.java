@@ -16,7 +16,6 @@
 package com.trazere.core.imperative;
 
 import com.trazere.core.reference.MutableReference;
-import com.trazere.core.util.IntCounter;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 
