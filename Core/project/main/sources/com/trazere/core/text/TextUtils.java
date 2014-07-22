@@ -20,6 +20,11 @@ import com.trazere.core.functional.Function;
 import com.trazere.core.imperative.IntCounter;
 import com.trazere.core.math.IntSequence;
 import com.trazere.core.util.Maybe;
+import java.text.DateFormat;
+import java.text.NumberFormat;
+import java.text.ParsePosition;
+import java.util.Date;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 /**
@@ -384,22 +389,22 @@ public class TextUtils {
 	
 	/** Array of the hexadecimal digits characters (upper case). */
 	public static final char[] HEX_DIGITS = {
-	    '0',
-	    '1',
-	    '2',
-	    '3',
-	    '4',
-	    '5',
-	    '6',
-	    '7',
-	    '8',
-	    '9',
-	    'A',
-	    'B',
-	    'C',
-	    'D',
-	    'E',
-	    'F'
+		'0',
+		'1',
+		'2',
+		'3',
+		'4',
+		'5',
+		'6',
+		'7',
+		'8',
+		'9',
+		'A',
+		'B',
+		'C',
+		'D',
+		'E',
+		'F'
 	};
 	
 	/**
@@ -420,127 +425,107 @@ public class TextUtils {
 	
 	// Numbers.
 	
-	//	/**
-	//	 * Formats the given number using the given format.
-	//	 * <p>
-	//	 * This method synchronizes the format.
-	//	 *
-	//	 * @param format The number format.
-	//	 * @param number The number to format.
-	//	 * @return The number representation.
-	//	 */
-	//	public static String formatNumber(final NumberFormat format, final Number number) {
-	//		assert null != format;
-	//		assert null != number;
-	//
-	//		synchronized (format) {
-	//			return format.format(number);
-	//		}
-	//	}
-	//
-	//	/**
-	//	 * Parses the given number representation using the given format and extractor.
-	//	 * <p>
-	//	 * This method synchronizes the format.
-	//	 *
-	//	 * @param <T> Type of the number to parse.
-	//	 * @param <CX> Type of the conversion exceptions.
-	//	 *
-	//	 * @param format The number format.
-	//	 * @param converter The extractor of the {@link Number} instance of the excepted type.
-	//	 * @param representation The representation to parse.
-	//	 * @return The parsed number.
-	//	 * @throws CX When the conversion to the result type fails.
-	//	 */
-	//	public static <T extends Number, CX extends Exception> Maybe<T> parseNumber(final NumberFormat format, final Function1<? super Number, ? extends T, CX> converter, final String representation) throws CX {
-	//		assert null != format;
-	//		assert null != converter;
-	//		assert null != representation;
-	//
-	//		synchronized (format) {
-	//			final ParsePosition position = new ParsePosition(0);
-	//			final Number number = format.parse(representation, position);
-	//			if (null != number && position.getIndex() == representation.length()) {
-	//				return Maybe.<T>some(converter.evaluate(number));
-	//			} else {
-	//				return Maybe.none();
-	//			}
-	//		}
-	//	}
+	/**
+	 * Formats the given number using the given format.
+	 * <p>
+	 * This method synchronizes the format to ensure reentrancy.
+	 *
+	 * @param format Format of the number.
+	 * @param value Number to format.
+	 * @return The representation of the number.
+	 */
+	public static String formatNumber(final NumberFormat format, final Number value) {
+		synchronized (format) {
+			return format.format(value);
+		}
+	}
+	
+	/**
+	 * Parses the given number representation according to the given format.
+	 * <p>
+	 * This method synchronizes the format to ensure reentrancy.
+	 *
+	 * @param <N> Type of the number to parse.
+	 * @param format Format of the number.
+	 * @param converter Function to use to convert the parsed number to the excepted type.
+	 * @param representation Representation of the number to parse.
+	 * @return The parsed number, or nothing when the representation is not valid.
+	 */
+	public static <N extends Number> Maybe<N> parseNumber(final NumberFormat format, final Function<? super Number, ? extends N> converter, final String representation) {
+		synchronized (format) {
+			final ParsePosition position = new ParsePosition(0);
+			final Number number = format.parse(representation, position);
+			if (null != number && position.getIndex() == representation.length()) {
+				return Maybe.<N>some(converter.evaluate(number));
+			} else {
+				return Maybe.none();
+			}
+		}
+	}
 	
 	// Dates.
 	
-	//	/**
-	//	 * Formats the given date using the given format.
-	//	 * <p>
-	//	 * This method synchronizes the format.
-	//	 *
-	//	 * @param format The date format.
-	//	 * @param date The date to format.
-	//	 * @return The date representation.
-	//	 */
-	//	public static String formatDate(final DateFormat format, final Date date) {
-	//		assert null != format;
-	//		assert null != date;
-	//
-	//		synchronized (format) {
-	//			return format.format(date);
-	//		}
-	//	}
-	//
-	//	/**
-	//	 * Parses the given date representation using the given format.
-	//	 * <p>
-	//	 * This method synchronizes the format.
-	//	 *
-	//	 * @param format The date format.
-	//	 * @param representation The representation to parse.
-	//	 * @return The parsed number.
-	//	 */
-	//	public static Maybe<Date> parseDate(final DateFormat format, final String representation) {
-	//		assert null != format;
-	//		assert null != representation;
-	//
-	//		synchronized (format) {
-	//			final ParsePosition position = new ParsePosition(0);
-	//			final Date date = format.parse(representation, position);
-	//			if (null != date && position.getIndex() == representation.length()) {
-	//				return Maybe.some(date);
-	//			} else {
-	//				return Maybe.none();
-	//			}
-	//		}
-	//	}
+	/**
+	 * Formats the given date using the given format.
+	 * <p>
+	 * This method synchronizes the format to ensure reentrancy.
+	 *
+	 * @param format Format of the date.
+	 * @param value Date to format.
+	 * @return The representation of the date.
+	 */
+	public static String formatDate(final DateFormat format, final Date value) {
+		synchronized (format) {
+			return format.format(value);
+		}
+	}
+	
+	/**
+	 * Parses the given date representation according to the given format.
+	 * <p>
+	 * This method synchronizes the format to ensure reentrancy.
+	 *
+	 * @param format Format of the date.
+	 * @param representation Representation of the date to parse.
+	 * @return The parsed date, or nothing when the representation is not valid.
+	 */
+	public static Maybe<Date> parseDate(final DateFormat format, final String representation) {
+		synchronized (format) {
+			final ParsePosition position = new ParsePosition(0);
+			final Date date = format.parse(representation, position);
+			if (null != date && position.getIndex() == representation.length()) {
+				return Maybe.some(date);
+			} else {
+				return Maybe.none();
+			}
+		}
+	}
 	
 	// UUIDs.
 	
-	//	/**
-	//	 * Formats the given UUID.
-	//	 *
-	//	 * @param uuid The UUID to format.
-	//	 * @return The UUID representation.
-	//	 */
-	//	public static String formatUuid(final UUID uuid) {
-	//		assert null != uuid;
-	//
-	//		return uuid.toString();
-	//	}
-	//
-	//	/**
-	//	 * Parses the given UUID representation.
-	//	 *
-	//	 * @param representation The representation to parse.
-	//	 * @return The parsed UUID.
-	//	 */
-	//	public static Maybe<UUID> parseUuid(final String representation) {
-	//		assert null != representation;
-	//
-	//		try {
-	//			return Maybe.some(UUID.fromString(representation));
-	//		} catch (final IllegalArgumentException exception) {
-	//			return Maybe.none();
-	//		}
-	//	}
+	/**
+	 * Formats the given UUID using the standard format.
+	 *
+	 * @param value UUID to format.
+	 * @return The representation of the UUID.
+	 */
+	public static String formatUuid(final UUID value) {
+		return value.toString();
+	}
+	
+	/**
+	 * Parses the given UUID representation according to the standard format.
+	 *
+	 * @param representation Representation of the UUID to parse.
+	 * @return The parsed UUID, or nothing when the representation is not valid.
+	 */
+	public static Maybe<UUID> parseUuid(final String representation) {
+		try {
+			return Maybe.some(UUID.fromString(representation));
+		} catch (final IllegalArgumentException exception) {
+			return Maybe.none();
+		}
+	}
 	
 	private TextUtils() {
 		// Prevents instantiation.
