@@ -34,7 +34,7 @@ extends RuntimeException {
 	 * @return The built exception.
 	 */
 	public static <T> InvalidConstructorException build(final T object, final Class<? extends T> type) {
-		return new InvalidConstructorException(object + " is not a " + TextUtils.computeClassName(type));
+		return new InvalidConstructorException(object + " is not a " + TextUtils.className(type));
 	}
 	
 	/**

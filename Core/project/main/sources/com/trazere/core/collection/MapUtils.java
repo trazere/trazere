@@ -467,6 +467,32 @@ public class MapUtils {
 		return results;
 	}
 	
+	/**
+	 * Extracts the bindings of the given map using the given extractor.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <EV> Type of the extracted values.
+	 * @param <M> Type of the result map.
+	 * @param map Map containing the bindings to extract.
+	 * @param extractor Function to use to extract the bindings.
+	 * @param resultFactory Factory of the result map.
+	 * @return A map containing the extracted bindings.
+	 */
+	public static <K, V, EV, M extends Map<? super K, ? super EV>> M extract(final Map<? extends K, ? extends V> map, final Function2<? super K, ? super V, ? extends Maybe<? extends EV>> extractor, final MapFactory<K, EV, M> resultFactory) {
+		final M results = resultFactory.build(map.size());
+		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
+			final K key = entry.getKey();
+			final Maybe<? extends EV> extractedValue = extractor.evaluate(key, entry.getValue());
+			if (extractedValue.isSome()) {
+				results.put(key, extractedValue.asSome().getValue());
+			}
+		}
+		return results;
+	}
+	
+	// TODO: extractAll to Multimap ?
+	
 	private MapUtils() {
 		// Prevent instantiation.
 	}

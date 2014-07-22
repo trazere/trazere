@@ -15,6 +15,8 @@
  */
 package com.trazere.core.util;
 
+import com.trazere.core.lang.ThrowableFactory;
+
 /**
  * The {@link BaseSerializer} class provides a skeleton implementation of {@link Serializer serializers}.
  * 
@@ -23,12 +25,34 @@ package com.trazere.core.util;
  */
 public abstract class BaseSerializer<T, R>
 implements Serializer<T, R> {
+	/** Factory of the serialization/deserialization failures. */
+	protected final ThrowableFactory<? extends RuntimeException> _failureFactory;
+	
+	/**
+	 * Instantiates a new serializer.
+	 */
+	public BaseSerializer() {
+		this(SerializerException.FACTORY);
+	}
+	
+	/**
+	 * Instantiates a new serializer.
+	 * 
+	 * @param failureFactory Factory of the serialization/deserialization failures.
+	 */
+	public BaseSerializer(final ThrowableFactory<? extends RuntimeException> failureFactory) {
+		assert null != failureFactory;
+		
+		// Initialization.
+		_failureFactory = failureFactory;
+	}
+	
 	@Override
 	public R serialize(final T value) {
 		try {
 			return innerSerialize(value);
 		} catch (final Exception exception) {
-			throw new SerializerException("Failed serializing value \"" + value + "\"", exception);
+			throw _failureFactory.build("Failed serializing value \"" + value + "\"", exception);
 		}
 	}
 	
@@ -47,7 +71,7 @@ implements Serializer<T, R> {
 		try {
 			return innerDeserialize(representation);
 		} catch (final Exception exception) {
-			throw new SerializerException("Failed deserializing representation \"" + representation + "\"", exception);
+			throw _failureFactory.build("Failed deserializing representation \"" + representation + "\"", exception);
 		}
 	}
 	
