@@ -20,7 +20,7 @@ package com.trazere.core.lang;
  */
 public interface Releasable {
 	/**
-	 * Releases the this object.
+	 * Releases this releasable.
 	 */
 	public void release();
 }

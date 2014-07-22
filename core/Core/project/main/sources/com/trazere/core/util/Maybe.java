@@ -533,6 +533,6 @@ implements Iterable<T>, Describable {
 	
 	@Override
 	public final String toString() {
-		return TextUtils.computeDescription(this);
+		return TextUtils.description(this);
 	}
 }
