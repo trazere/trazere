@@ -15,18 +15,26 @@
  */
 package com.trazere.core.text;
 
-// TOOD: update usage so that classes dont inherit publicly (use constants ?)
+import com.trazere.core.functional.Predicate;
 
 /**
- * The {@link Describable} interface defines objects that can describe themselves in a {@link Description description}.
+ * The {@link TextPredicates} class provides various factories of {@link Predicate predicates} related to text.
  * 
- * @see TextUtils#description(Describable)
+ * @see Predicate
  */
-public interface Describable {
+public class TextPredicates {
 	/**
-	 * Appends the description of the receiver object in the given description.
+	 * Builds a predicate that evaluates to <code>true</code> for empty char sequences.
 	 * 
-	 * @param description The description to populate.
+	 * @return The built predicate.
 	 */
-	void appendDescription(Description description);
+	public static Predicate<CharSequence> isEmpty() {
+		return IS_EMPTY;
+	}
+	
+	private static Predicate<CharSequence> IS_EMPTY = s -> 0 == s.length();
+	
+	private TextPredicates() {
+		// Prevents instantiation.
+	}
 }

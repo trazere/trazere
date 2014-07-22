@@ -15,25 +15,51 @@
  */
 package com.trazere.core.text;
 
+import com.trazere.core.collection.Feed;
+import com.trazere.core.functional.Function;
+import com.trazere.core.imperative.IntCounter;
 import com.trazere.core.math.IntSequence;
+import com.trazere.core.util.Maybe;
+import java.util.regex.Pattern;
 
 /**
- * The {@link TextUtils} class provides various helpers regarding the manipulation of text.
+ * The {@link TextUtils} class provides various helpers regarding text.
  */
 public class TextUtils {
-	//	/**
-	//	 * Compares the given string ignoring case.
-	//	 * <p>
-	//	 * This method supports comparisons of <code>null</code> values. <code>null</code> values are considered as less than non <code>null</code> values.
-	//	 *
-	//	 * @param string1 The first string to compare. May be <code>null</code>.
-	//	 * @param string2 The second string to compare. May be <code>null</code>.
-	//	 * @return The result of the comparison as defined by the {@link String#compareToIgnoreCase(String)} method.
-	//	 * @see String#compareToIgnoreCase(String)
-	//	 */
-	//	public static int safeCompareIgnoreCase(final String string1, final String string2) {
-	//		return LangUtils.safeCompare(String.CASE_INSENSITIVE_ORDER, string1, string2);
-	//	}
+	// Sequences of characters.
+	
+	/**
+	 * Capitalizes the given sequence of characters.
+	 *
+	 * @param s The sequence of characters to capitalize.
+	 * @return The capitalized sequence of characters.
+	 */
+	public static CharSequence capitalize(final CharSequence s) {
+		if (s.length() > 0) {
+			final StringBuilder result = new StringBuilder();
+			result.append(Character.toUpperCase(s.charAt(0)));
+			result.append(s, 1, s.length());
+			return result;
+		} else {
+			return "";
+		}
+	}
+	
+	/**
+	 * Tests whether the given sequence contains the given character.
+	 *
+	 * @param s Sequence of characters to test.
+	 * @param c Character to look for.
+	 * @return <code>true</code> when the sequence contains the character, <code>false</code> otherwise.
+	 */
+	public static boolean contains(final CharSequence s, final char c) {
+		for (final int i : new IntSequence(0, s.length())) {
+			if (c == s.charAt(i)) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	/**
 	 * Tests whether any character of the given sequence is accepted by the given filter.
@@ -52,6 +78,22 @@ public class TextUtils {
 	}
 	
 	/**
+	 * Tests whether the given sequence of characters contains the given sub-sequence.
+	 *
+	 * @param s Sequence of characters to test.
+	 * @param sub Sub-sequence of characters to look for.
+	 * @return <code>true</code> when the sequence contains the sub-sequence, <code>false</code> otherwise.
+	 */
+	public static boolean contains(final CharSequence s, final CharSequence sub) {
+		for (final int i : new IntSequence(0, s.length())) {
+			if (equals(s, i, sub, 0, sub.length())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
 	 * Tests whether all characters of the given sequence are accepted by the given filter.
 	 *
 	 * @param s Sequence of characters to test.
@@ -61,6 +103,118 @@ public class TextUtils {
 	public static boolean matches(final CharSequence s, final CharPredicate filter) {
 		for (final int i : new IntSequence(0, s.length())) {
 			if (!filter.evaluate(s.charAt(i))) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * Finds the first index of the given character in the given sequence.
+	 *
+	 * @param s Sequence of characters to test.
+	 * @param c Character to look for.
+	 * @return The index of the first accepted character, or <code>-1</code> when no characters is accepted by the filter.
+	 */
+	public static int indexOf(final CharSequence s, final char c) {
+		return indexOf(s, c, 0);
+	}
+	
+	/**
+	 * Finds the first index of the given character in the given sequence.
+	 *
+	 * @param s Sequence of characters to test.
+	 * @param c Character to look for.
+	 * @param offset Index at which the search should start.
+	 * @return The index of the first accepted character, or <code>-1</code> when no characters is accepted by the filter.
+	 */
+	public static int indexOf(final CharSequence s, final char c, final int offset) {
+		for (final int i : new IntSequence(offset, s.length())) {
+			if (c == s.charAt(i)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	/**
+	 * Finds the index of the first character accepted by the given filter in the given sequence.
+	 *
+	 * @param s Sequence of characters to test.
+	 * @param filter Predicate to use to filter the characters.
+	 * @return The index of the first accepted character, or <code>-1</code> when no characters is accepted by the filter.
+	 */
+	public static int indexOf(final CharSequence s, final CharPredicate filter) {
+		return indexOf(s, filter, 0);
+	}
+	
+	/**
+	 * Finds the index of the first character accepted by the given filter in the given sequence.
+	 *
+	 * @param s Sequence of characters to test.
+	 * @param filter Predicate to use to filter the characters.
+	 * @param offset Index at which the search should start.
+	 * @return The index of the first accepted character, or <code>-1</code> when no characters is accepted by the filter.
+	 */
+	public static int indexOf(final CharSequence s, final CharPredicate filter, final int offset) {
+		for (final int i : new IntSequence(offset, s.length())) {
+			if (filter.evaluate(s.charAt(i))) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	/**
+	 * Finds the first index of the given sub-sequence in the given sequence of characters.
+	 *
+	 * @param s Sequence of characters to test.
+	 * @param sub Sub-sequence of characters to look for.
+	 * @return The index of the first accepted character, or <code>-1</code> when no characters is accepted by the filter.
+	 */
+	public static int indexOf(final CharSequence s, final CharSequence sub) {
+		return indexOf(s, sub, 0);
+	}
+	
+	/**
+	 * Finds the first index of the given sub-sequence in the given sequence of characters.
+	 *
+	 * @param s Sequence of characters to test.
+	 * @param sub Character to look for.
+	 * @param offset Index at which the search should start.
+	 * @return The index of the first accepted character, or <code>-1</code> when no characters is accepted by the filter.
+	 */
+	public static int indexOf(final CharSequence s, final CharSequence sub, final int offset) {
+		for (final int i : new IntSequence(0, s.length())) {
+			if (equals(s, i, sub, 0, sub.length())) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	/**
+	 * Counts the number of occurences of the given sub-sequence in the given sequence of characters.
+	 * <p>
+	 * The occurences may overlap.
+	 *
+	 * @param s String containing the substring occurences to count.
+	 * @param sub Substring whose occurences should be counter.
+	 * @return The number of occurences.
+	 */
+	public static int count(final CharSequence s, final CharSequence sub) {
+		final IntCounter count = new IntCounter();
+		for (final int i : new IntSequence(0, Math.max(0, s.length() - sub.length()))) {
+			if (equals(s, i, sub, 0, sub.length())) {
+				count.inc();
+			}
+		}
+		return count.get();
+	}
+	
+	private static boolean equals(final CharSequence s1, final int offset1, final CharSequence s2, final int offset2, final int n) {
+		for (final int i : new IntSequence(0, n)) {
+			if (s1.charAt(offset1 + i) != s2.charAt(offset2 + i)) {
 				return false;
 			}
 		}
@@ -137,261 +291,67 @@ public class TextUtils {
 		return index < length ? s.subSequence(0, index) : s;
 	}
 	
-	//	/**
-	//	 * Splits the given string according to the given delimiter.
-	//	 *
-	//	 * @param <C> Type of the collection filled with the results.
-	//	 * @param string The string to split.
-	//	 * @param delimiter The delimiter string.
-	//	 * @param trim Indicates whether the empty tokens are trimmed or not.
-	//	 * @param ignoreEmpty Indicates whether the empty tokens are ignored or not.
-	//	 * @param results The collection to fill with the tokens.
-	//	 * @return The given result collection.
-	//	 */
-	//	public static <C extends Collection<? super String>> C split(final String string, final String delimiter, final boolean trim, final boolean ignoreEmpty, final C results) {
-	//		assert null != string;
-	//		assert null != delimiter;
-	//
-	//		for (final String token : string.split(delimiter.replaceAll("[^\\w]", "\\\\$0"))) {
-	//			final String trimmedToken = trim ? token.trim() : token;
-	//			if (!ignoreEmpty || trimmedToken.length() > 0) {
-	//				results.add(trimmedToken);
-	//			}
-	//		}
-	//		return results;
-	//	}
-	//
-	//	/**
-	//	 * Counts the number of occurences of the given substring in the given string.
-	//	 * <p>
-	//	 * The occurences may overlap.
-	//	 *
-	//	 * @param string The string.
-	//	 * @param sub The substring.
-	//	 * @return The number of occurences.
-	//	 */
-	//	public static int occurences(final String string, final String sub) {
-	//		assert null != string;
-	//		assert null != sub;
-	//
-	//		// Count.
-	//		final Counter count = new Counter();
-	//		final MutableInt index = new MutableInt(string.indexOf(sub));
-	//		while (index.get() >= 0) {
-	//			count.inc();
-	//			index.set(string.indexOf(sub, index.get() + 1));
-	//		}
-	//		return count.get();
-	//	}
-	//
-	//	/**
-	//	 * Joins the given string tokens using the given delimiter.
-	//	 *
-	//	 * @param tokens The tokens.
-	//	 * @param delimiter The delimiter.
-	//	 * @return The resulting string.
-	//	 */
-	//	public static String join(final Collection<String> tokens, final String delimiter) {
-	//		return join(tokens, delimiter, new StringBuilder()).toString();
-	//	}
-	//
-	//	/**
-	//	 * Joins the given string tokens using the given delimiter.
-	//	 *
-	//	 * @param tokens The tokens.
-	//	 * @param delimiter The delimiter.
-	//	 * @param builder The string builder to fill.
-	//	 * @return The given string builder.
-	//	 */
-	//	public static StringBuilder join(final Collection<String> tokens, final String delimiter, final StringBuilder builder) {
-	//		assert null != tokens;
-	//
-	//		return join(tokens.iterator(), delimiter, builder);
-	//	}
-	//
-	//	/**
-	//	 * Joins the string tokens provided by the given iterator using the given delimiter.
-	//	 *
-	//	 * @param tokens The tokens.
-	//	 * @param delimiter The delimiter.
-	//	 * @return The resulting string.
-	//	 */
-	//	public static String join(final Iterator<String> tokens, final String delimiter) {
-	//		return join(tokens, delimiter, new StringBuilder()).toString();
-	//	}
-	//
-	//	/**
-	//	 * Joins the string tokens provided by the given iterator using the given delimiter.
-	//	 *
-	//	 * @param tokens The tokens.
-	//	 * @param delimiter The delimiter.
-	//	 * @param builder The string builder to fill.
-	//	 * @return The given string builder.
-	//	 */
-	//	public static StringBuilder join(final Iterator<String> tokens, final String delimiter, final StringBuilder builder) {
-	//		return join(tokens, Functions.<String, InternalException>identity(), delimiter, builder);
-	//	}
-	//
-	//	/**
-	//	 * Joins the given string tokens using the given renderer and delimiter.
-	//	 *
-	//	 * @param <T> Type of the tokens.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param tokens The tokens.
-	//	 * @param renderer The token renderer.
-	//	 * @param delimiter The delimiter.
-	//	 * @return The resulting string.
-	//	 * @throws X When some rendering fails.
-	//	 */
-	//	public static <T, X extends Exception> String join(final Collection<T> tokens, final Function1<? super T, String, X> renderer, final String delimiter)
-	//	throws X {
-	//		return join(tokens, renderer, delimiter, new StringBuilder()).toString();
-	//	}
-	//
-	//	/**
-	//	 * Joins the given string tokens using the given renderer and delimiter.
-	//	 *
-	//	 * @param <T> Type of the tokens.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param tokens The tokens.
-	//	 * @param renderer The token renderer.
-	//	 * @param delimiter The delimiter.
-	//	 * @param builder The string builder to fill.
-	//	 * @return The given string builder.
-	//	 * @throws X When some rendering fails.
-	//	 */
-	//	public static <T, X extends Exception> StringBuilder join(final Collection<T> tokens, final Function1<? super T, String, X> renderer, final String delimiter, final StringBuilder builder)
-	//	throws X {
-	//		assert null != tokens;
-	//
-	//		return join(tokens.iterator(), renderer, delimiter, builder);
-	//	}
-	//
-	//	/**
-	//	 * Joins the string tokens provided by the given iterator using the given renderer and delimiter.
-	//	 *
-	//	 * @param <T> Type of the tokens.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param tokens The tokens.
-	//	 * @param renderer The token renderer.
-	//	 * @param delimiter The delimiter.
-	//	 * @param builder The string builder to fill.
-	//	 * @return The given string builder.
-	//	 * @throws X When some rendering fails.
-	//	 */
-	//	public static <T, X extends Exception> StringBuilder join(final Iterator<T> tokens, final Function1<? super T, String, X> renderer, final String delimiter, final StringBuilder builder)
-	//	throws X {
-	//		assert null != renderer;
-	//
-	//		return join(tokens, new Procedure2<StringBuilder, T, X>() {
-	//			@Override
-	//			public void execute(final StringBuilder builder_, final T token)
-	//			throws X {
-	//				builder_.append(renderer.evaluate(token));
-	//			}
-	//		}, delimiter, builder);
-	//	}
-	//
-	//	/**
-	//	 * Joins the string tokens provided by the given iterator using the given renderer and delimiter.
-	//	 *
-	//	 * @param <T> Type of the tokens.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param tokens The tokens.
-	//	 * @param renderer The token renderer.
-	//	 * @param delimiter The delimiter.
-	//	 * @param builder The string builder to fill.
-	//	 * @return The given string builder.
-	//	 * @throws X When some rendering fails.
-	//	 */
-	//	public static <T, X extends Exception> StringBuilder join(final Iterator<T> tokens, final Procedure2<StringBuilder, ? super T, X> renderer, final String delimiter, final StringBuilder builder)
-	//	throws X {
-	//		assert null != tokens;
-	//		assert null != renderer;
-	//		assert null != delimiter;
-	//		assert null != builder;
-	//
-	//		final MutableBoolean first = new MutableBoolean(true);
-	//		while (tokens.hasNext()) {
-	//			final T token = tokens.next();
-	//			if (!first.get()) {
-	//				builder.append(delimiter);
-	//			} else {
-	//				first.set(false);
-	//			}
-	//			renderer.execute(builder, token);
-	//		}
-	//
-	//		return builder;
-	//	}
-	//
-	//	/**
-	//	 * Capitalizes the given string.
-	//	 *
-	//	 * @param s The string to capitalize.
-	//	 * @return The capitalized string.
-	//	 */
-	//	public static String capitalize(final String s) {
-	//		assert null != s;
-	//
-	//		if (s.length() > 0) {
-	//			return s.substring(0, 1).toUpperCase() + s.substring(1);
-	//		} else {
-	//			return s;
-	//		}
-	//	}
-	//
-	//	/** Array of the hexadecimal digits characters (upper case). */
-	//	public static final char[] HEX_DIGITS = {
-	//	    '0',
-	//	    '1',
-	//	    '2',
-	//	    '3',
-	//	    '4',
-	//	    '5',
-	//	    '6',
-	//	    '7',
-	//	    '8',
-	//	    '9',
-	//	    'A',
-	//	    'B',
-	//	    'C',
-	//	    'D',
-	//	    'E',
-	//	    'F'
-	//	};
-	//
-	//	/**
-	//	 * Computes the hexadecimal representation of the given array of bytes.
-	//	 * <p>
-	//	 * The leading zeros are not stripped.
-	//	 *
-	//	 * @param bytes Bytes representing the hexadecimal value.
-	//	 * @return The string representation.
-	//	 */
-	//	public static String toHexString(final byte[] bytes) {
-	//		assert null != bytes;
-	//
-	//		final StringBuilder builder = new StringBuilder();
-	//		for (int i = 0; i < bytes.length; i += 1) {
-	//			final byte b = bytes[i];
-	//			builder.append(HEX_DIGITS[b >> 4 & 0xF]);
-	//			builder.append(HEX_DIGITS[b & 0xF]);
-	//		}
-	//		return builder.toString();
-	//	}
-	//
-	//	/**
-	//	 * Builds a regular expression corresponding to the given string.
-	//	 *
-	//	 * @param s The string.
-	//	 * @return The regular expression.
-	//	 */
-	//	public static String regexp(final String s) {
-	//		assert null != s;
-	//
-	//		return s.replaceAll("[^\\w]", "\\\\$0"); // Escape all special chars
-	//	}
+	/**
+	 * Joins the given text tokens with the given delimiter ignoring the empty ones.
+	 *
+	 * @param tokens Tokens to join.
+	 * @param delimiter Delimiter to insert between the tokens.
+	 * @return The representation of the joined tokens.
+	 */
+	public static CharSequence join(final Iterable<? extends CharSequence> tokens, final CharSequence delimiter) {
+		return Joiners.joiner(true, delimiter).join(tokens);
+	}
+	
+	/**
+	 * Joins the given text tokens with the given delimiter, using the given rendering function and ignoring the empty representations.
+	 *
+	 * @param <T> Type of the tokens.
+	 * @param tokens Tokens to join.
+	 * @param renderer Function to use to compute the string representation of the tokens.
+	 * @param delimiter Delimiter to insert between the tokens.
+	 * @return The representation of the joined tokens.
+	 */
+	public static <T> CharSequence join(final Iterable<? extends T> tokens, final Function<? super T, ? extends CharSequence> renderer, final CharSequence delimiter) {
+		return Joiners.joiner(renderer, true, delimiter).join(tokens);
+	}
+	
+	/**
+	 * Splits the given sequence of characters with the given delimiter.
+	 * 
+	 * @param s Sequence of characters to split.
+	 * @param delimiter Delimiter to use.
+	 * @param trim Indicates whether to trim the whitespaces of the tokens.
+	 * @return A feed of the split tokens.
+	 */
+	public static Feed<CharSequence> split(final CharSequence s, final char delimiter, final boolean trim) {
+		return Splitters.delimiter(delimiter, false, trim ? Maybe.some(CharPredicates.whitespace()) : Maybe.<CharPredicate>none(), true).split(s);
+	}
+	
+	/**
+	 * Splits the given sequence of characters with the given delimiter.
+	 * 
+	 * @param s Sequence of characters to split.
+	 * @param delimiter Delimiter to use.
+	 * @param trim Indicates whether to trim the whitespaces of the tokens.
+	 * @return A feed of the split tokens.
+	 */
+	public static Feed<CharSequence> split(final CharSequence s, final CharSequence delimiter, final boolean trim) {
+		return Splitters.delimiter(delimiter, false, trim ? Maybe.some(CharPredicates.whitespace()) : Maybe.<CharPredicate>none(), true).split(s);
+	}
+	
+	/**
+	 * Splits the given sequence of characters with the given delimiter.
+	 * 
+	 * @param s Sequence of characters to split.
+	 * @param delimiter Delimiter to use.
+	 * @param trim Indicates whether to trim the whitespaces of the tokens.
+	 * @return A feed of the split tokens.
+	 */
+	public static Feed<CharSequence> split(final CharSequence s, final Pattern delimiter, final boolean trim) {
+		return Splitters.delimiter(delimiter, false, trim ? Maybe.some(CharPredicates.whitespace()) : Maybe.<CharPredicate>none(), true).split(s);
+	}
+	
+	// Descriptions.
 	
 	// TODO: move to ClassUtils ?
 	/**
@@ -400,7 +360,7 @@ public class TextUtils {
 	 * @param class_ Class to compute the name of.
 	 * @return The name of the class.
 	 */
-	public static String computeClassName(final Class<?> class_) {
+	public static String className(final Class<?> class_) {
 		final String fullName = class_.getName();
 		final int index = fullName.lastIndexOf('.');
 		return index > 0 ? fullName.substring(index + 1) : fullName;
@@ -414,11 +374,51 @@ public class TextUtils {
 	 * @param object The object.
 	 * @return The description.
 	 */
-	public static String computeDescription(final Describable object) {
-		final Description description = new Description(TextUtils.computeClassName(object.getClass()));
+	public static String description(final Describable object) {
+		final Description description = new Description(className(object.getClass()));
 		object.appendDescription(description);
 		return description.toString();
 	}
+	
+	// Bytes.
+	
+	/** Array of the hexadecimal digits characters (upper case). */
+	public static final char[] HEX_DIGITS = {
+	    '0',
+	    '1',
+	    '2',
+	    '3',
+	    '4',
+	    '5',
+	    '6',
+	    '7',
+	    '8',
+	    '9',
+	    'A',
+	    'B',
+	    'C',
+	    'D',
+	    'E',
+	    'F'
+	};
+	
+	/**
+	 * Computes the hexadecimal text representation of the given array of bytes.
+	 *
+	 * @param bytes Bytes to render.
+	 * @return The text representation.
+	 */
+	public static CharSequence toHex(final byte[] bytes) {
+		final StringBuilder builder = new StringBuilder();
+		for (final int i : new IntSequence(0, bytes.length)) {
+			final byte b = bytes[i];
+			builder.append(HEX_DIGITS[b >> 4 & 0xF]);
+			builder.append(HEX_DIGITS[b & 0xF]);
+		}
+		return builder;
+	}
+	
+	// Numbers.
 	
 	//	/**
 	//	 * Formats the given number using the given format.
@@ -467,7 +467,9 @@ public class TextUtils {
 	//			}
 	//		}
 	//	}
-	//
+	
+	// Dates.
+	
 	//	/**
 	//	 * Formats the given date using the given format.
 	//	 * <p>
@@ -509,7 +511,9 @@ public class TextUtils {
 	//			}
 	//		}
 	//	}
-	//
+	
+	// UUIDs.
+	
 	//	/**
 	//	 * Formats the given UUID.
 	//	 *

@@ -97,7 +97,7 @@ implements MemoizedThunk<T>, Releasable, Describable {
 		if (_value.isSome()) {
 			return String.valueOf(_value.asSome().getValue());
 		} else {
-			return TextUtils.computeDescription(this);
+			return TextUtils.description(this);
 		}
 	}
 	
