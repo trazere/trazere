@@ -15,7 +15,10 @@
  */
 package com.trazere.core.functional;
 
+import com.trazere.core.collection.MapUtils;
 import com.trazere.core.util.Maybe;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The {@link FunctionUtils} class provides various helpers regarding functions.
@@ -54,6 +57,103 @@ public class FunctionUtils {
 		assert null != mapFunction;
 		
 		return arg -> mapFunction.evaluate(function.evaluate(arg));
+	}
+	
+	/**
+	 * Builds a function that memoizes the evaluations of the given function.
+	 * 
+	 * @param <A> Type of the arguments.
+	 * @param <R> Type of the results.
+	 * @param function Function to memoize.
+	 * @return The built thunk.
+	 */
+	public static <A, R> MemoizedFunction<A, R> memoize(final Function<? super A, ? extends R> function) {
+		assert null != function;
+		
+		return new MemoizedFunction<A, R>() {
+			/** Memoized results. */
+			protected final Map<A, R> _results = new HashMap<>();
+			
+			@Override
+			public R evaluate(final A arg) {
+				if (_results.containsKey(arg)) {
+					return _results.get(arg);
+				} else {
+					final R result = function.evaluate(arg);
+					_results.put(arg, result);
+					return result;
+				}
+			}
+			
+			@Override
+			public boolean isMemoized(final A arg) {
+				return _results.containsKey(arg);
+			}
+			
+			@Override
+			public Maybe<R> get(final A arg) {
+				return MapUtils.get(_results, arg);
+			}
+		};
+	}
+	
+	/**
+	 * Builds a function that memoizes the evaluations of the given function and can be reset.
+	 * 
+	 * @param <A> Type of the arguments.
+	 * @param <R> Type of the results.
+	 * @param function Function to memoize.
+	 * @return The build function.
+	 */
+	public static <A, R> ResettableFunction<A, R> resettable(final Function<? super A, ? extends R> function) {
+		return new ResettableFunction<A, R>() {
+			@Override
+			protected R compute(final A arg) {
+				return function.evaluate(arg);
+			}
+		};
+	}
+	
+	/**
+	 * Builds a synchronized function that evaluates to the given function.
+	 * 
+	 * @param <A> Type of the arguments.
+	 * @param <R> Type of the results.
+	 * @param function Function to synchronize.
+	 * @return The built function.
+	 */
+	public static <A, R> Function<A, R> synchronize(final Function<? super A, ? extends R> function) {
+		assert null != function;
+		
+		return arg -> synchronizedEvaluate(function, arg);
+	}
+	
+	/**
+	 * Evaluates the given function in a thread safe way.
+	 * 
+	 * @param <A> Type of the arguments.
+	 * @param <R> Type of the results.
+	 * @param function Thunk to evaluate.
+	 * @param arg Argument to evaluate the function with.
+	 * @return The result of the function evaluation.
+	 */
+	public static <A, R> R synchronizedEvaluate(final Function<? super A, ? extends R> function, final A arg) {
+		synchronized (function) {
+			return function.evaluate(arg);
+		}
+	}
+	
+	/**
+	 * Resets the given function in a thread safe way.
+	 * 
+	 * @param <A> Type of the arguments.
+	 * @param arg Argument corresponding to the evaluation to reset.
+	 * @param function Function to reset.
+	 */
+	public static <A> void synchronizedReset(final ResettableFunction<? super A, ?> function, final A arg) {
+		synchronized (function) {
+			function.reset(arg);
+		}
 	}
 	
 	/**

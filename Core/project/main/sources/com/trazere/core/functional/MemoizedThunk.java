@@ -20,7 +20,7 @@ import com.trazere.core.util.Maybe;
 /**
  * The {@link MemoizedThunk} interface defines abstract, memoized computations of some value.
  * <p>
- * After is has been computed, the value of the memoized thunks is stored so that it can returned by subsequent evaluations without additional computations.
+ * After it has been computed, the value of the memoized thunks is stored so that it can be returned by subsequent evaluations without additional computations.
  * Memoized thunks simulate the call-by-need evaluation strategy whereas non-memoized thunks simulate the call-by-name evaluation strategy.
  * 
  * @param <T> Type of the value.
@@ -28,16 +28,16 @@ import com.trazere.core.util.Maybe;
 public interface MemoizedThunk<T>
 extends Thunk<T> {
 	/**
-	 * Indicates whether the receiver thunk has already been evaluated (ie, some value has been memoized).
+	 * Indicates whether the value of this thunk has already been evaluated and memoized.
 	 * 
-	 * @return <code>true</code> if the thunk has been evaluated, <code>false</code> otherwise.
+	 * @return <code>true</code> when the value has been evaluated and memoized, <code>false</code> otherwise.
 	 */
-	boolean isEvaluated();
+	boolean isMemoized();
 	
 	/**
-	 * Gets the memoized value of the receiver thunk without computation.
+	 * Gets the memoized value of this thunk without evaluation.
 	 * 
-	 * @return The memoized value.
+	 * @return The memoized value, or nothing when the value has not been evaluated and memoized yet.
 	 */
 	Maybe<T> get();
 }

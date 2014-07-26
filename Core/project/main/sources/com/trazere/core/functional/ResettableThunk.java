@@ -22,16 +22,13 @@ import com.trazere.core.text.TextUtils;
 import com.trazere.core.util.Maybe;
 
 /**
- * The {@link ResettableThunk} abstract class represents closures which can be re-evaluated.
- * <p>
- * Once computed, values of the resetable closure are memoized. The computation contexts are however preserved so that the values can be reset and computed
- * again.
+ * The {@link ResettableThunk} class implements memoized thunks that can be re-evaluated.
  * 
  * @param <T> Type of the value.
  */
 public abstract class ResettableThunk<T>
 implements MemoizedThunk<T>, Releasable, Describable {
-	/** The memoized value. */
+	/** Memoized value. */
 	protected Maybe<T> _value = Maybe.none();
 	
 	@Override
@@ -53,7 +50,7 @@ implements MemoizedThunk<T>, Releasable, Describable {
 	protected abstract T compute();
 	
 	@Override
-	public boolean isEvaluated() {
+	public boolean isMemoized() {
 		return _value.isSome();
 	}
 	
