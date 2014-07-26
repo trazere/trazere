@@ -124,7 +124,7 @@ public class LangUtils {
 	//		return null != value ? value.charValue() : defaultValue;
 	//	}
 	//
-	//	// TODO: rename to ?? (safeUnbox ?)
+	//	// TODO: rename to ?? (safe, safeValue ?)
 	//	/**
 	//	 * Gets the value of the given object.
 	//	 *
