@@ -19,13 +19,13 @@ import com.trazere.core.design.Factory;
 import java.util.Collection;
 
 /**
- * The {@link CollectionFactory} interface defines factories of collections.
+ * The {@link CollectionFactory} interface defines factories of {@link Collection collections}.
  * 
- * @param <T> Type of the elements.
+ * @param <E> Type of the elements.
  * @param <C> Type of the collections.
  * @see Collection
  */
-public interface CollectionFactory<T, C extends Collection<? super T>>
+public interface CollectionFactory<E, C extends Collection<E>>
 extends Factory<C> {
 	/**
 	 * Builds an empty collection.
@@ -51,7 +51,7 @@ extends Factory<C> {
 	 * @param elements Elements.
 	 * @return The built collection.
 	 */
-	default C build(final Iterable<? extends T> elements) {
+	default C build(final Iterable<? extends E> elements) {
 		final C collection = build();
 		CollectionUtils.addAll(collection, elements);
 		return collection;
@@ -63,5 +63,5 @@ extends Factory<C> {
 	 * @param elements Elements.
 	 * @return The built collection.
 	 */
-	C build(Collection<? extends T> elements);
+	C build(Collection<? extends E> elements);
 }

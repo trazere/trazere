@@ -22,23 +22,24 @@ import java.util.LinkedList;
 import java.util.TreeSet;
 
 /**
- * The {@link CollectionFactories} class provides various factories of collection factories.
+ * The {@link CollectionFactories} class provides various factories of {@link CollectionFactory collection factories}.
  * 
  * @see CollectionFactory
  */
 public class CollectionFactories {
 	/**
-	 * Builds a collection factory that builds {@link ArrayList}s.
+	 * Builds a factory of {@link ArrayList}s.
 	 * 
-	 * @param <T> Type of the elements.
+	 * @param <E> Type of the elements.
 	 * @return The built factory.
+	 * @see ArrayList
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> CollectionFactory<T, ArrayList<T>> arrayList() {
-		return (CollectionFactory<T, ArrayList<T>>) ARRAY_LIST;
+	public static <E> ExtendedListFactory<E, ArrayList<E>> arrayList() {
+		return (ExtendedListFactory<E, ArrayList<E>>) ARRAY_LIST;
 	}
 	
-	private static final CollectionFactory<?, ?> ARRAY_LIST = new CollectionFactory<Object, ArrayList<Object>>() {
+	private static final ExtendedListFactory<?, ?> ARRAY_LIST = new ExtendedListFactory<Object, ArrayList<Object>>() {
 		@Override
 		public ArrayList<Object> build() {
 			return new ArrayList<>();
@@ -56,17 +57,18 @@ public class CollectionFactories {
 	};
 	
 	/**
-	 * Builds a collection factory that builds {@link LinkedList}s.
+	 * Builds a factory of {@link LinkedList}s.
 	 * 
-	 * @param <T> Type of the elements.
+	 * @param <E> Type of the elements.
 	 * @return The built factory.
+	 * @see LinkedList
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> CollectionFactory<T, LinkedList<T>> linkedList() {
-		return (CollectionFactory<T, LinkedList<T>>) LINKED_LIST;
+	public static <E> ExtendedListFactory<E, LinkedList<E>> linkedList() {
+		return (ExtendedListFactory<E, LinkedList<E>>) LINKED_LIST;
 	}
 	
-	private static final CollectionFactory<?, ?> LINKED_LIST = new CollectionFactory<Object, LinkedList<Object>>() {
+	private static final ExtendedListFactory<?, ?> LINKED_LIST = new ExtendedListFactory<Object, LinkedList<Object>>() {
 		@Override
 		public LinkedList<Object> build() {
 			return new LinkedList<>();
@@ -79,17 +81,18 @@ public class CollectionFactories {
 	};
 	
 	/**
-	 * Builds a collection factory that builds {@link HashSet}s.
+	 * Builds a factory of {@link HashSet}s.
 	 * 
-	 * @param <T> Type of the elements.
+	 * @param <E> Type of the elements.
 	 * @return The built factory.
+	 * @see HashSet
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> CollectionFactory<T, HashSet<T>> hashSet() {
-		return (CollectionFactory<T, HashSet<T>>) HASH_SET;
+	public static <E> ExtendedSetFactory<E, HashSet<E>> hashSet() {
+		return (ExtendedSetFactory<E, HashSet<E>>) HASH_SET;
 	}
 	
-	private static final CollectionFactory<?, ?> HASH_SET = new CollectionFactory<Object, HashSet<Object>>() {
+	private static final ExtendedSetFactory<?, ?> HASH_SET = new ExtendedSetFactory<Object, HashSet<Object>>() {
 		@Override
 		public HashSet<Object> build() {
 			return new HashSet<>();
@@ -107,17 +110,18 @@ public class CollectionFactories {
 	};
 	
 	/**
-	 * Builds a collection factory that builds {@link TreeSet}s.
+	 * Builds a factory of {@link TreeSet}s.
 	 * 
-	 * @param <T> Type of the elements.
+	 * @param <E> Type of the elements.
 	 * @return The built factory.
+	 * @see TreeSet
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> CollectionFactory<T, TreeSet<T>> treeSet() {
-		return (CollectionFactory<T, TreeSet<T>>) TREE_SET;
+	public static <E> ExtendedSetFactory<E, TreeSet<E>> treeSet() {
+		return (ExtendedSetFactory<E, TreeSet<E>>) TREE_SET;
 	}
 	
-	private static final CollectionFactory<?, ?> TREE_SET = new CollectionFactory<Object, TreeSet<Object>>() {
+	private static final ExtendedSetFactory<?, ?> TREE_SET = new ExtendedSetFactory<Object, TreeSet<Object>>() {
 		@Override
 		public TreeSet<Object> build() {
 			return new TreeSet<>();

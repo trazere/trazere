@@ -34,7 +34,6 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * The {@link MapUtils} class provides various utilities regarding {@link Map maps}.
@@ -66,9 +65,9 @@ public class MapUtils {
 	 * @return A binding of the map, or nothing when the map is empty.
 	 */
 	public static <K, V> Maybe<Tuple2<K, V>> any(final Map<K, V> map) {
-		final Iterator<Entry<K, V>> entries = map.entrySet().iterator();
+		final Iterator<Map.Entry<K, V>> entries = map.entrySet().iterator();
 		if (entries.hasNext()) {
-			final Entry<K, V> entry = entries.next();
+			final Map.Entry<K, V> entry = entries.next();
 			return Maybe.some(new Tuple2<>(entry.getKey(), entry.getValue()));
 		} else {
 			return Maybe.none();
@@ -142,7 +141,7 @@ public class MapUtils {
 	}
 	
 	/**
-	 * Associates the given value to the given key in the given map, or do nothing when no value is given.
+	 * Associates the given value to the given key in the given map, or does nothing when no value is given.
 	 *
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -150,7 +149,7 @@ public class MapUtils {
 	 * @param key Key which the value should be associated to.
 	 * @param value Value to associate to the key.
 	 */
-	public static <K, V> void put(final Map<? super K, V> map, final K key, final Maybe<? extends V> value) {
+	public static <K, V> void put(final Map<? super K, ? super V> map, final K key, final Maybe<? extends V> value) {
 		if (value.isSome()) {
 			map.put(key, value.asSome().getValue());
 		}
@@ -208,6 +207,8 @@ public class MapUtils {
 		}
 	}
 	
+	// TODO: removeAll
+	
 	/**
 	 * Populates the given accumulator with copies of the bindings of the given map.
 	 *
@@ -259,7 +260,7 @@ public class MapUtils {
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param <S> Type of the state.
-	 * @param map Collection containing the bindings to fold over.
+	 * @param map Map containing the bindings to fold over.
 	 * @param operator Operator to use.
 	 * @param initialState Initial state.
 	 * @return The folded state.
@@ -404,7 +405,7 @@ public class MapUtils {
 	 * @param resultFactory Factory of the result map.
 	 * @return A map containing the taken bindings.
 	 */
-	public static <K, V, M extends Map<? super K, ? super V>> M take(final Map<? extends K, ? extends V> map, final int n, final MapFactory<K, V, M> resultFactory) {
+	public static <K, V, M extends Map<? super K, ? super V>> M take(final Map<? extends K, ? extends V> map, final int n, final MapFactory<? super K, ? super V, M> resultFactory) {
 		return IteratorUtils.drain(IteratorUtils.take(MapUtils.<K, V>bindings(map).iterator(), n), resultFactory.build(n));
 	}
 	
@@ -419,7 +420,7 @@ public class MapUtils {
 	 * @param resultFactory Factory of the result map.
 	 * @return A map containing the remaining bindings.
 	 */
-	public static <K, V, M extends Map<? super K, ? super V>> M drop(final Map<? extends K, ? extends V> map, final int n, final MapFactory<K, V, M> resultFactory) {
+	public static <K, V, M extends Map<? super K, ? super V>> M drop(final Map<? extends K, ? extends V> map, final int n, final MapFactory<? super K, ? super V, M> resultFactory) {
 		return IteratorUtils.drain(IteratorUtils.drop(MapUtils.<K, V>bindings(map).iterator(), n), resultFactory.build(Math.max(0, map.size() - n)));
 	}
 	
@@ -434,7 +435,7 @@ public class MapUtils {
 	 * @param resultFactory Factory of the result map.
 	 * @return A map containing the filtered bindings.
 	 */
-	public static <K, V, M extends Map<? super K, ? super V>> M filter(final Map<? extends K, ? extends V> map, final Predicate2<? super K, ? super V> filter, final MapFactory<K, V, M> resultFactory) {
+	public static <K, V, M extends Map<? super K, ? super V>> M filter(final Map<? extends K, ? extends V> map, final Predicate2<? super K, ? super V> filter, final MapFactory<? super K, ? super V, M> resultFactory) {
 		final M result = resultFactory.build();
 		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
 			final K key = entry.getKey();
@@ -458,7 +459,7 @@ public class MapUtils {
 	 * @param resultFactory Factory of the result map.
 	 * @return A map containing the transformed bindings.
 	 */
-	public static <K, V, TV, M extends Map<? super K, ? super TV>> M map(final Map<? extends K, ? extends V> map, final Function2<? super K, ? super V, ? extends TV> function, final MapFactory<K, TV, M> resultFactory) {
+	public static <K, V, TV, M extends Map<? super K, ? super TV>> M map(final Map<? extends K, ? extends V> map, final Function2<? super K, ? super V, ? extends TV> function, final MapFactory<? super K, ? super TV, M> resultFactory) {
 		final M results = resultFactory.build(map.size());
 		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
 			final K key = entry.getKey();
@@ -479,7 +480,7 @@ public class MapUtils {
 	 * @param resultFactory Factory of the result map.
 	 * @return A map containing the extracted bindings.
 	 */
-	public static <K, V, EV, M extends Map<? super K, ? super EV>> M extract(final Map<? extends K, ? extends V> map, final Function2<? super K, ? super V, ? extends Maybe<? extends EV>> extractor, final MapFactory<K, EV, M> resultFactory) {
+	public static <K, V, EV, M extends Map<? super K, ? super EV>> M extract(final Map<? extends K, ? extends V> map, final Function2<? super K, ? super V, ? extends Maybe<? extends EV>> extractor, final MapFactory<? super K, ? super EV, M> resultFactory) {
 		final M results = resultFactory.build(map.size());
 		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
 			final K key = entry.getKey();

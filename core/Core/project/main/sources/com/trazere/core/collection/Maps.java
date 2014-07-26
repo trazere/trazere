@@ -16,6 +16,7 @@
 package com.trazere.core.collection;
 
 import com.trazere.core.util.Tuple2;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +27,17 @@ import java.util.Map;
  */
 public class Maps {
 	/**
+	 * Builds an unmutable empty map.
+	 * 
+	 * @param <K> Type of the key.
+	 * @param <V> Type of the value.
+	 * @return The built map.
+	 */
+	public static <K, V> Map<K, V> empty() {
+		return Collections.emptyMap();
+	}
+	
+	/**
 	 * Builds a map containing the binding corresponding to the given key and value.
 	 * 
 	 * @param <K> Type of the key.
@@ -35,9 +47,9 @@ public class Maps {
 	 * @return The built map.
 	 */
 	public static <K, V> Map<K, V> fromBinding(final K key, final V value) {
-		final Map<K, V> result = new HashMap<>();
-		result.put(key, value);
-		return result;
+		final Map<K, V> map = new HashMap<>();
+		map.put(key, value);
+		return map;
 	}
 	
 	/**
@@ -52,10 +64,10 @@ public class Maps {
 	 * @return The built map.
 	 */
 	public static <K, V> Map<K, V> fromBindings(final K key1, final V value1, final K key2, final V value2) {
-		final Map<K, V> result = new HashMap<>(2);
-		result.put(key1, value1);
-		result.put(key2, value2);
-		return result;
+		final Map<K, V> map = new HashMap<>(2);
+		map.put(key1, value1);
+		map.put(key2, value2);
+		return map;
 	}
 	
 	/**
@@ -72,11 +84,11 @@ public class Maps {
 	 * @return The built map.
 	 */
 	public static <K, V> Map<K, V> fromBindings(final K key1, final V value1, final K key2, final V value2, final K key3, final V value3) {
-		final Map<K, V> result = new HashMap<>(3);
-		result.put(key1, value1);
-		result.put(key2, value2);
-		result.put(key3, value3);
-		return result;
+		final Map<K, V> map = new HashMap<>(3);
+		map.put(key1, value1);
+		map.put(key2, value2);
+		map.put(key3, value3);
+		return map;
 	}
 	
 	/**
@@ -95,12 +107,12 @@ public class Maps {
 	 * @return The built map.
 	 */
 	public static <K, V> Map<K, V> fromBindings(final K key1, final V value1, final K key2, final V value2, final K key3, final V value3, final K key4, final V value4) {
-		final Map<K, V> result = new HashMap<>(4);
-		result.put(key1, value1);
-		result.put(key2, value2);
-		result.put(key3, value3);
-		result.put(key4, value4);
-		return result;
+		final Map<K, V> map = new HashMap<>(4);
+		map.put(key1, value1);
+		map.put(key2, value2);
+		map.put(key3, value3);
+		map.put(key4, value4);
+		return map;
 	}
 	
 	/**
@@ -121,13 +133,13 @@ public class Maps {
 	 * @return The built map.
 	 */
 	public static <K, V> Map<K, V> fromBindings(final K key1, final V value1, final K key2, final V value2, final K key3, final V value3, final K key4, final V value4, final K key5, final V value5) {
-		final Map<K, V> result = new HashMap<>(5);
-		result.put(key1, value1);
-		result.put(key2, value2);
-		result.put(key3, value3);
-		result.put(key4, value4);
-		result.put(key5, value5);
-		return result;
+		final Map<K, V> map = new HashMap<>(5);
+		map.put(key1, value1);
+		map.put(key2, value2);
+		map.put(key3, value3);
+		map.put(key4, value4);
+		map.put(key5, value5);
+		return map;
 	}
 	
 	/**
@@ -140,11 +152,11 @@ public class Maps {
 	 */
 	@SafeVarargs
 	public static <K, V> Map<K, V> fromBindings(final Tuple2<? extends K, ? extends V>... bindings) {
-		final Map<K, V> results = new HashMap<>(bindings.length);
+		final Map<K, V> map = new HashMap<>(bindings.length);
 		for (final Tuple2<? extends K, ? extends V> binding : bindings) {
-			results.put(binding.get1(), binding.get2());
+			map.put(binding.get1(), binding.get2());
 		}
-		return results;
+		return map;
 	}
 	
 	/**
@@ -156,11 +168,11 @@ public class Maps {
 	 * @return The built map.
 	 */
 	public static <K, V> Map<K, V> fromBindings(final Iterable<? extends Tuple2<? extends K, ? extends V>> iterable) {
-		final Map<K, V> results = new HashMap<>();
+		final Map<K, V> map = new HashMap<>();
 		for (final Tuple2<? extends K, ? extends V> binding : iterable) {
-			results.put(binding.get1(), binding.get2());
+			map.put(binding.get1(), binding.get2());
 		}
-		return results;
+		return map;
 	}
 	
 	private Maps() {

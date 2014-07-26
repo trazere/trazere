@@ -17,53 +17,44 @@ package com.trazere.core.collection;
 
 import com.trazere.core.design.Factory;
 import com.trazere.core.util.Tuple2;
-import java.util.Map;
+import java.util.Collection;
 
 /**
- * The {@link MapFactory} interface defines factories of {@link Map maps}.
+ * The {@link MultimapFactory} interface defines factories of {@link Multimap multimaps}.
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
- * @param <M> Type of the maps.
- * @see Map
+ * @param <C> Type of the collections of values.
+ * @param <M> Type of the multimaps.
+ * @see Multimap
  */
-public interface MapFactory<K, V, M extends Map<K, V>>
+public interface MultimapFactory<K, V, C extends Collection<V>, M extends Multimap<K, V, C>>
 extends Factory<M> {
 	/**
-	 * Builds an empty map.
+	 * Builds an empty multimap.
 	 * 
-	 * @return The built map.
+	 * @return The built multimap.
 	 */
 	@Override
 	M build();
 	
 	/**
-	 * Builds an empty map with the given initial capacity.
-	 * 
-	 * @param capacity Initial capacity of the map.
-	 * @return The built map.
-	 */
-	default M build(final int capacity) {
-		return build();
-	}
-	
-	/**
-	 * Builds a map containing the given bindings.
+	 * Builds a multimap containing the given bindings.
 	 * 
 	 * @param bindings Bindings.
-	 * @return The built map.
+	 * @return The built multimap.
 	 */
 	default M build(final Iterable<? extends Tuple2<? extends K, ? extends V>> bindings) {
-		final M map = build();
-		MapUtils.putAll(map, bindings);
-		return map;
+		final M multimap = build();
+		MultimapUtils.putAll(multimap, bindings);
+		return multimap;
 	}
 	
 	/**
-	 * Builds a map containing the given bindings.
+	 * Builds a multimap containing the given bindings.
 	 * 
 	 * @param bindings Values.
-	 * @return The built map.
+	 * @return The built multimap.
 	 */
-	M build(Map<? extends K, ? extends V> bindings);
+	M build(Multimap<? extends K, ? extends V, ?> bindings);
 }
