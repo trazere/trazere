@@ -39,7 +39,7 @@ public class Thunks {
 			}
 			
 			@Override
-			public boolean isEvaluated() {
+			public boolean isMemoized() {
 				return true;
 			}
 			

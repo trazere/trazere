@@ -50,7 +50,7 @@ public class ThunkUtils {
 		assert null != thunk;
 		
 		return new MemoizedThunk<T>() {
-			/** The value. */
+			/** Unevaluated thunk or memoized value. */
 			protected Either<Thunk<? extends T>, T> _value = Either.<Thunk<? extends T>, T>left(thunk);
 			
 			@Override
@@ -65,7 +65,7 @@ public class ThunkUtils {
 			}
 			
 			@Override
-			public boolean isEvaluated() {
+			public boolean isMemoized() {
 				return _value.isRight();
 			}
 			
