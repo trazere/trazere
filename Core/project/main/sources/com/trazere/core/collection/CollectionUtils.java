@@ -79,6 +79,22 @@ public class CollectionUtils {
 	}
 	
 	/**
+	 * Removes all given elements from the given collection.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param collection Collection to modify.
+	 * @param elements Elements to remove.
+	 * @return <code>true</code> when the given collection is modified, <code>false</code> otherwise.
+	 */
+	public static <E> boolean removeAll(final Collection<? super E> collection, final Iterable<? extends E> elements) {
+		final Accumulator<Boolean, Boolean> changed = LangAccumulators.or(false);
+		for (final E element : elements) {
+			changed.add(collection.remove(element));
+		}
+		return changed.get().booleanValue();
+	}
+	
+	/**
 	 * Populates the given accumulator with copies of the elements of the given collection.
 	 *
 	 * @param <E> Type of the elements.
@@ -246,7 +262,7 @@ public class CollectionUtils {
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection containing the appended elements.
 	 */
-	public static <E, C extends Collection<? super E>> C append(final Collection<? extends E> collection1, final Collection<? extends E> collection2, final CollectionFactory<E, C> resultFactory) {
+	public static <E, C extends Collection<? super E>> C append(final Collection<? extends E> collection1, final Collection<? extends E> collection2, final CollectionFactory<? super E, C> resultFactory) {
 		final C results = resultFactory.build(collection1.size() + collection2.size());
 		results.addAll(collection1);
 		results.addAll(collection2);
@@ -262,7 +278,7 @@ public class CollectionUtils {
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection containing the flatten elements.
 	 */
-	public static <E, C extends Collection<? super E>> C flatten(final Collection<? extends Collection<? extends E>> collection, final CollectionFactory<E, C> resultFactory) {
+	public static <E, C extends Collection<? super E>> C flatten(final Collection<? extends Collection<? extends E>> collection, final CollectionFactory<? super E, C> resultFactory) {
 		final C results = resultFactory.build();
 		for (final Collection<? extends E> elements : collection) {
 			results.addAll(elements);
@@ -280,7 +296,7 @@ public class CollectionUtils {
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection containing the taken elements.
 	 */
-	public static <E, C extends Collection<? super E>> C take(final Collection<? extends E> collection, final int n, final CollectionFactory<E, C> resultFactory) {
+	public static <E, C extends Collection<? super E>> C take(final Collection<? extends E> collection, final int n, final CollectionFactory<? super E, C> resultFactory) {
 		return IteratorUtils.drain(IteratorUtils.take(collection.iterator(), n), resultFactory.build(n));
 	}
 	
@@ -294,7 +310,7 @@ public class CollectionUtils {
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection containing the remaining elements.
 	 */
-	public static <E, C extends Collection<? super E>> C drop(final Collection<? extends E> collection, final int n, final CollectionFactory<E, C> resultFactory) {
+	public static <E, C extends Collection<? super E>> C drop(final Collection<? extends E> collection, final int n, final CollectionFactory<? super E, C> resultFactory) {
 		return IteratorUtils.drain(IteratorUtils.drop(collection.iterator(), n), resultFactory.build(Math.max(0, collection.size() - n)));
 	}
 	
@@ -308,7 +324,7 @@ public class CollectionUtils {
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection containing the filtered elements.
 	 */
-	public static <E, C extends Collection<? super E>> C filter(final Collection<? extends E> collection, final Predicate<? super E> filter, final CollectionFactory<E, C> resultFactory) {
+	public static <E, C extends Collection<? super E>> C filter(final Collection<? extends E> collection, final Predicate<? super E> filter, final CollectionFactory<? super E, C> resultFactory) {
 		final C results = resultFactory.build();
 		for (final E element : collection) {
 			if (filter.evaluate(element)) {
@@ -329,7 +345,7 @@ public class CollectionUtils {
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection containing the transformed elements.
 	 */
-	public static <E, TE, C extends Collection<? super TE>> C map(final Collection<? extends E> collection, final Function<? super E, ? extends TE> function, final CollectionFactory<TE, C> resultFactory) {
+	public static <E, TE, C extends Collection<? super TE>> C map(final Collection<? extends E> collection, final Function<? super E, ? extends TE> function, final CollectionFactory<? super TE, C> resultFactory) {
 		final C results = resultFactory.build(collection.size());
 		for (final E element : collection) {
 			results.add(function.evaluate(element));
@@ -348,7 +364,7 @@ public class CollectionUtils {
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection containing the flatten, transformed elements.
 	 */
-	public static <E, TE, C extends Collection<? super TE>> C flatMap(final Collection<? extends E> collection, final Function<? super E, ? extends Collection<? extends TE>> function, final CollectionFactory<TE, C> resultFactory) {
+	public static <E, TE, C extends Collection<? super TE>> C flatMap(final Collection<? extends E> collection, final Function<? super E, ? extends Collection<? extends TE>> function, final CollectionFactory<? super TE, C> resultFactory) {
 		final C results = resultFactory.build();
 		for (final E element : collection) {
 			addAll(results, function.evaluate(element));
@@ -367,7 +383,7 @@ public class CollectionUtils {
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection containing the extracted elements.
 	 */
-	public static <E, EE, C extends Collection<? super EE>> C extract(final Collection<? extends E> collection, final Function<? super E, ? extends Maybe<? extends EE>> extractor, final CollectionFactory<EE, C> resultFactory) {
+	public static <E, EE, C extends Collection<? super EE>> C extract(final Collection<? extends E> collection, final Function<? super E, ? extends Maybe<? extends EE>> extractor, final CollectionFactory<? super EE, C> resultFactory) {
 		final C results = resultFactory.build();
 		for (final E element : collection) {
 			final Maybe<? extends EE> extractedElement = extractor.evaluate(element);

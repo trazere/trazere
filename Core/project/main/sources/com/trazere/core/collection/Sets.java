@@ -15,6 +15,7 @@
  */
 package com.trazere.core.collection;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,6 +25,16 @@ import java.util.Set;
  * @see Set
  */
 public class Sets {
+	/**
+	 * Builds an unmutable empty set.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @return The built set.
+	 */
+	public static <E> Set<E> empty() {
+		return Collections.emptySet();
+	}
+	
 	/**
 	 * Builds a set containing the given element.
 	 * 

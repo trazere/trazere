@@ -33,11 +33,11 @@ public class MapFactories {
 	 * @return The built factory.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <K, V> MapFactory<K, V, HashMap<K, V>> hashMap() {
-		return (MapFactory<K, V, HashMap<K, V>>) HASH_MAP;
+	public static <K, V> ExtendedMapFactory<K, V, HashMap<K, V>> hashMap() {
+		return (ExtendedMapFactory<K, V, HashMap<K, V>>) HASH_MAP;
 	}
 	
-	private static final MapFactory<?, ?, ?> HASH_MAP = new MapFactory<Object, Object, HashMap<Object, Object>>() {
+	private static final ExtendedMapFactory<?, ?, ?> HASH_MAP = new ExtendedMapFactory<Object, Object, HashMap<Object, Object>>() {
 		@Override
 		public HashMap<Object, Object> build() {
 			return new HashMap<>();
@@ -62,11 +62,11 @@ public class MapFactories {
 	 * @return The built factory.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <K, V> MapFactory<K, V, TreeMap<K, V>> treeMap() {
-		return (MapFactory<K, V, TreeMap<K, V>>) TREE_MAP;
+	public static <K, V> ExtendedMapFactory<K, V, TreeMap<K, V>> treeMap() {
+		return (ExtendedMapFactory<K, V, TreeMap<K, V>>) TREE_MAP;
 	}
 	
-	private static final MapFactory<?, ?, ?> TREE_MAP = new MapFactory<Object, Object, TreeMap<Object, Object>>() {
+	private static final ExtendedMapFactory<?, ?, ?> TREE_MAP = new ExtendedMapFactory<Object, Object, TreeMap<Object, Object>>() {
 		@Override
 		public TreeMap<Object, Object> build() {
 			return new TreeMap<>();
