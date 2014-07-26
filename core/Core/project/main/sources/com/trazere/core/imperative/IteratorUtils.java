@@ -17,6 +17,8 @@ package com.trazere.core.imperative;
 
 import com.trazere.core.collection.CollectionAccumulators;
 import com.trazere.core.collection.MapAccumulators;
+import com.trazere.core.collection.Multimap;
+import com.trazere.core.collection.MultimapAccumulators;
 import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Function3;
@@ -130,6 +132,21 @@ public class IteratorUtils {
 	}
 	
 	/**
+	 * Drains the next n pairs of elements provided by the given iterator and puts the corresponding bindings into the given multimap.
+	 * 
+	 * @param <E1> Type of the first element of the pairs.
+	 * @param <E2> Type of the second element of the pairs.
+	 * @param <M> Type of the multimap to populate.
+	 * @param n Number of elements to drain.
+	 * @param iterator Iterator to drain.
+	 * @param results Collection to populate with the drained elements.
+	 * @return The given result collection.
+	 */
+	public static <E1, E2, M extends Multimap<? super E1, ? super E2, ?>> M drain(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final int n, final M results) {
+		return drain(iterator, n, MultimapAccumulators.put(results)).get();
+	}
+	
+	/**
 	 * Drains all elements provided by the the given iterator.
 	 * 
 	 * @param iterator Iterator to drain.
@@ -198,6 +215,20 @@ public class IteratorUtils {
 	 */
 	public static <E1, E2, M extends Map<? super E1, ? super E2>> M drain(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final M results) {
 		return drain(iterator, MapAccumulators.put(results)).get();
+	}
+	
+	/**
+	 * Drains all pairs of elements provided by the the given iterator and puts the corresponding bindings into the given multimap.
+	 * 
+	 * @param <E1> Type of the first element of the pairs.
+	 * @param <E2> Type of the second element of the pairs.
+	 * @param <M> Type of the multimap to populate.
+	 * @param iterator Iterator to drain.
+	 * @param results Multimap to populate with the drained pairs of elements.
+	 * @return The given result collection.
+	 */
+	public static <E1, E2, M extends Multimap<? super E1, ? super E2, ?>> M drain(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final M results) {
+		return drain(iterator, MultimapAccumulators.put(results)).get();
 	}
 	
 	/**

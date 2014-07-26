@@ -16,6 +16,7 @@
 package com.trazere.core.collection;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -24,6 +25,16 @@ import java.util.List;
  * @see List
  */
 public class Lists {
+	/**
+	 * Builds an unmutable empty list.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @return The built list.
+	 */
+	public static <E> List<E> empty() {
+		return Collections.emptyList();
+	}
+	
 	/**
 	 * Builds a new list containing the given element.
 	 * 

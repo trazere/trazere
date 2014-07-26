@@ -78,27 +78,6 @@ public class MapFunctions {
 		return key -> MapUtils.getMandatory(map, key, throwableFactory);
 	}
 	
-	// TODO: MapFunctions
-	//	/**
-	//	 * Builds a function corresponding to the given multimap.
-	//	 *
-	//	 * @param <K> Type of the arguments (the keys of the multimap).
-	//	 * @param <C> Type of the results (the collections of the multimap).
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param map The multimap.
-	//	 * @return The built function.
-	//	 */
-	//	public static <K, C extends Collection<?>, X extends Exception> Function1<K, C, X> fromMultimap(final Multimap<? super K, ?, ? extends C> map) {
-	//		assert null != map;
-	//
-	//		return new Function1<K, C, X>() {
-	//			@Override
-	//			public C evaluate(final K key) {
-	//				return map.get(key);
-	//			}
-	//		};
-	//	}
-	
 	private MapFunctions() {
 		// Prevent instantiation.
 	}

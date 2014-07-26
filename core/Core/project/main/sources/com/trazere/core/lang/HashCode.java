@@ -38,7 +38,16 @@ implements Describable {
 	 * @param object Object whose hash code should be computed.
 	 */
 	public HashCode(final Object object) {
-		_hashCode = object.getClass().hashCode();
+		this(object.getClass().hashCode());
+	}
+	
+	/**
+	 * Instantiates a new hash code computation.
+	 * 
+	 * @param seed Seed hash code value.
+	 */
+	public HashCode(final int seed) {
+		_hashCode = seed;
 	}
 	
 	/**
