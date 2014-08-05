@@ -27,6 +27,8 @@ import com.trazere.util.lang.HashCode;
  */
 public class LenientIdentifier<V>
 extends Identifier<V> {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Instantiates an identifier with the given value.
 	 * 

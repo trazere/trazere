@@ -16,6 +16,7 @@
 package com.trazere.util.identifier;
 
 import com.trazere.util.function.Function1;
+import java.io.Serializable;
 
 /**
  * The {@link Identifier} class represents typed identification values.
@@ -28,7 +29,10 @@ import com.trazere.util.function.Function1;
  * @param <V> Type of the underlying values.
  * @see IdentifierBase
  */
-public class Identifier<V> {
+public class Identifier<V>
+implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Instantiates an identifier with the given value.
 	 * 

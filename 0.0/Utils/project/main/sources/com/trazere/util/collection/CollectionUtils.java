@@ -344,6 +344,7 @@ public class CollectionUtils {
 		return currentValue;
 	}
 	
+	// TODO: generalize to Iterable and rename to putAll
 	/**
 	 * Associates the given value to the given key in the given map.
 	 * 
