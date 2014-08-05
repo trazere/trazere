@@ -22,9 +22,7 @@ import com.trazere.util.record.Record;
 import com.trazere.util.record.RecordException;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The {@link Functions} class provides various factories of functions.
@@ -735,18 +733,6 @@ public class Functions {
 			throws X {
 				procedure.execute(value1, value2);
 				return null;
-			}
-		};
-	}
-	
-	public static <T, X extends Exception> Predicate1<T, X> normalizer() {
-		return new Predicate1<T, X>() {
-			private final Set<T> _visitedValues = new HashSet<T>();
-			
-			@Override
-			public boolean evaluate(final T value)
-			throws X {
-				return _visitedValues.add(value);
 			}
 		};
 	}
