@@ -28,6 +28,8 @@ import com.trazere.util.lang.LangUtils;
  */
 public class Tuple2<T1, T2>
 extends Tuple1<T1> {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Builds a tuple with the given values.
 	 * 

@@ -18,13 +18,17 @@ package com.trazere.util.type;
 import com.trazere.util.function.Function1;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.LangUtils;
+import java.io.Serializable;
 
 /**
  * The {@link Tuple1} class represents a 1-tuple data type which stores sequences of 1 value.
  * 
  * @param <T1> Type of the first value.
  */
-public class Tuple1<T1> {
+public class Tuple1<T1>
+implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Builds a tuple with the given value.
 	 * 

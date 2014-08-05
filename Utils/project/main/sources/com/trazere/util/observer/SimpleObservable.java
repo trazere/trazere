@@ -20,6 +20,7 @@ package com.trazere.util.observer;
  * 
  * @param <T> Type of the event values.
  */
+// TODO: implement Observer and rename to Broadcaster or something else
 public class SimpleObservable<T>
 extends BaseObservable<T> {
 	@Override

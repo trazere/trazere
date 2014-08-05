@@ -21,6 +21,7 @@ import com.trazere.util.lang.LangUtils;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
+import java.io.Serializable;
 
 /**
  * The {@link Either} class represents an algebraic data type which wraps a binary disjonction.
@@ -32,7 +33,9 @@ import com.trazere.util.text.TextUtils;
  * @param <R> Type of the right value.
  */
 public abstract class Either<L, R>
-implements Describable {
+implements Serializable, Describable {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Builds a {@link Either.Left} instance wrapping the given value.
 	 * 
@@ -124,6 +127,8 @@ implements Describable {
 	 */
 	public final static class Left<L, R>
 	extends Either<L, R> {
+		private static final long serialVersionUID = 1L;
+		
 		/**
 		 * Instantiates a new instance wrapping the given left value.
 		 * 
@@ -268,6 +273,8 @@ implements Describable {
 	 */
 	public final static class Right<L, R>
 	extends Either<L, R> {
+		private static final long serialVersionUID = 1L;
+		
 		/**
 		 * Instantiates a new instance wrapping the given right value.
 		 * 

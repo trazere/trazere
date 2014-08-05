@@ -4,6 +4,7 @@ import com.trazere.util.lang.HashCode;
 import com.trazere.util.text.Describable;
 import com.trazere.util.text.Description;
 import com.trazere.util.text.TextUtils;
+import java.io.Serializable;
 
 /**
  * The {@link ValueWrapper} class implements wrappers of single values.
@@ -11,7 +12,9 @@ import com.trazere.util.text.TextUtils;
  * @param <T> Type of the wrapped value.
  */
 public class ValueWrapper<T>
-implements Describable {
+implements Describable, Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Instantiates a new value.
 	 * 
