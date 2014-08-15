@@ -28,7 +28,7 @@ import java.util.UUID;
 import java.util.regex.Pattern;
 
 /**
- * The {@link TextUtils} class provides various helpers regarding text.
+ * The {@link TextUtils} class provides various utilities regarding text.
  */
 public class TextUtils {
 	// Sequences of characters.

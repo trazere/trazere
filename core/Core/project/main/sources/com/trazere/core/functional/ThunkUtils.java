@@ -20,7 +20,7 @@ import com.trazere.core.util.Either;
 import com.trazere.core.util.Maybe;
 
 /**
- * The {@link ThunkUtils} class provides various helpers regarding {@link Thunk}s.
+ * The {@link ThunkUtils} class provides various utilities regarding {@link Thunk}s.
  */
 public class ThunkUtils {
 	/**

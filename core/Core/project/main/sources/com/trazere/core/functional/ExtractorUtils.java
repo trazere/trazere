@@ -18,7 +18,7 @@ package com.trazere.core.functional;
 import com.trazere.core.util.Maybe;
 
 /**
- * The {@link ExtractorUtils} class provides various helpers regarding extractors.
+ * The {@link ExtractorUtils} class provides various utilities regarding extractors.
  * <p>
  * An extractor is function that combines a map and a filter operation.
  * 

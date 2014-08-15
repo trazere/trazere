@@ -29,7 +29,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 
 /**
- * The {@link IterableUtils} class provides various helpers regarding {@link Iterable iterables}.
+ * The {@link IterableUtils} class provides various utilities regarding {@link Iterable iterables}.
  * 
  * @see Iterable
  */
