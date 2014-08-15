@@ -38,7 +38,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 /**
- * The {@link IteratorUtils} class provides various helpers regarding {@link Iterator iterators}.
+ * The {@link IteratorUtils} class provides various utilities regarding {@link Iterator iterators}.
  */
 public class IteratorUtils {
 	/**

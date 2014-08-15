@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The {@link FunctionUtils} class provides various helpers regarding functions.
+ * The {@link FunctionUtils} class provides various utilities regarding functions.
  */
 public class FunctionUtils {
 	/**

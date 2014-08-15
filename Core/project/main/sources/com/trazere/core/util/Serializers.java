@@ -45,25 +45,25 @@ public class Serializers {
 	/**
 	 * Builds a serializer corresponding to the composition of the given serializers (g . f).
 	 * 
-	 * @param <T> Type of the values.
+	 * @param <V> Type of the values.
 	 * @param <I> Type of the intermediate values/representations.
 	 * @param <R> Type of the representations.
 	 * @param g Outer serializer.
 	 * @param f Inner serializer.
 	 * @return The built value serializer.
 	 */
-	public static <T, I, R> Serializer<T, R> compose(final Serializer<I, R> g, final Serializer<T, I> f) {
+	public static <V, I, R> Serializer<V, R> compose(final Serializer<I, R> g, final Serializer<V, I> f) {
 		assert null != f;
 		assert null != g;
 		
-		return new Serializer<T, R>() {
+		return new Serializer<V, R>() {
 			@Override
-			public R serialize(final T value) {
+			public R serialize(final V value) {
 				return g.serialize(f.serialize(value));
 			}
 			
 			@Override
-			public T deserialize(final R representation) {
+			public V deserialize(final R representation) {
 				return f.deserialize(g.deserialize(representation));
 			}
 		};

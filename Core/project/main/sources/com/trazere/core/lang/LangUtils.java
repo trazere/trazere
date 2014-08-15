@@ -16,7 +16,7 @@
 package com.trazere.core.lang;
 
 /**
- * The {@link LangUtils} class provides various helpers regarding objects and the Java language.
+ * The {@link LangUtils} class provides various utilities regarding objects and the Java language.
  */
 public class LangUtils {
 	/**

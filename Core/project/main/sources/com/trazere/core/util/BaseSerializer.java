@@ -20,11 +20,11 @@ import com.trazere.core.lang.ThrowableFactory;
 /**
  * The {@link BaseSerializer} class provides a skeleton implementation of {@link Serializer serializers}.
  * 
- * @param <T> Type of the values.
+ * @param <V> Type of the values.
  * @param <R> Type of the representations.
  */
-public abstract class BaseSerializer<T, R>
-implements Serializer<T, R> {
+public abstract class BaseSerializer<V, R>
+implements Serializer<V, R> {
 	/** Factory of the serialization/deserialization failures. */
 	protected final ThrowableFactory<? extends RuntimeException> _failureFactory;
 	
@@ -48,7 +48,7 @@ implements Serializer<T, R> {
 	}
 	
 	@Override
-	public R serialize(final T value) {
+	public R serialize(final V value) {
 		try {
 			return innerSerialize(value);
 		} catch (final Exception exception) {
@@ -63,11 +63,11 @@ implements Serializer<T, R> {
 	 * @return The representation of the value.
 	 * @throws Exception When the serialization fails.
 	 */
-	protected abstract R innerSerialize(T value)
+	protected abstract R innerSerialize(V value)
 	throws Exception;
 	
 	@Override
-	public T deserialize(final R representation) {
+	public V deserialize(final R representation) {
 		try {
 			return innerDeserialize(representation);
 		} catch (final Exception exception) {
@@ -82,6 +82,6 @@ implements Serializer<T, R> {
 	 * @return The value.
 	 * @throws Exception When the deserialization fails.
 	 */
-	protected abstract T innerDeserialize(R representation)
+	protected abstract V innerDeserialize(R representation)
 	throws Exception;
 }

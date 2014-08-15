@@ -16,7 +16,7 @@
 package com.trazere.core.functional;
 
 /**
- * The {@link PredicateUtils} class provides various helpers regarding predicates.
+ * The {@link PredicateUtils} class provides various utilities regarding predicates.
  */
 public class PredicateUtils {
 	// TODO: rename to ???

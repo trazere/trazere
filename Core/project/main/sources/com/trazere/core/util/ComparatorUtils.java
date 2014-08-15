@@ -19,7 +19,7 @@ import com.trazere.core.functional.Function;
 import java.util.Comparator;
 
 /**
- * The {@link ComparatorUtils} class provides various helpers regarding comparators.
+ * The {@link ComparatorUtils} class provides various utilities regarding comparators.
  */
 public class ComparatorUtils {
 	/**

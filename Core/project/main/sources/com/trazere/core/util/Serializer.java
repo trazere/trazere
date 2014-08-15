@@ -18,17 +18,17 @@ package com.trazere.core.util;
 /**
  * The {@link Serializer} interface defines serialization/deserialization functions.
  * 
- * @param <T> Type of the values.
+ * @param <V> Type of the values.
  * @param <R> Type of the representations.
  */
-public interface Serializer<T, R> {
+public interface Serializer<V, R> {
 	/**
 	 * Serializes the given value to its corresponding representation.
 	 * 
 	 * @param value Value to serialize.
 	 * @return The representation of the value.
 	 */
-	R serialize(T value);
+	R serialize(V value);
 	
 	/**
 	 * Deserializes the given representation to its corresponding value.
@@ -36,5 +36,5 @@ public interface Serializer<T, R> {
 	 * @param representation Representation of the value to deserialize.
 	 * @return The value.
 	 */
-	T deserialize(R representation);
+	V deserialize(R representation);
 }

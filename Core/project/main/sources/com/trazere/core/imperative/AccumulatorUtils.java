@@ -23,7 +23,7 @@ import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 
 /**
- * The {@link AccumulatorUtils} class provides various helpers regarding accumulators.
+ * The {@link AccumulatorUtils} class provides various utilities regarding accumulators.
  * 
  * @see Accumulator
  * @see Accumulator2

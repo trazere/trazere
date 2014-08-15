@@ -20,7 +20,7 @@ import com.trazere.core.util.Maybe.None;
 import com.trazere.core.util.Maybe.Some;
 
 /**
- * The {@link MaybeUtils} class provides various helpers regarding types.
+ * The {@link MaybeUtils} class provides various utilities regarding types.
  */
 public class MaybeUtils {
 	/**
