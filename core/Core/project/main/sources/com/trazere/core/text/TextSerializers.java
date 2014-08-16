@@ -20,6 +20,11 @@ import com.trazere.core.lang.ThrowableFactory;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Serializer;
 import com.trazere.core.util.Serializers;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.util.Date;
@@ -33,6 +38,8 @@ import java.util.UUID;
 public class TextSerializers {
 	/**
 	 * Builds a serializer of strings to text.
+	 * <p>
+	 * This serializer is an identity.
 	 * 
 	 * @return The built serializer.
 	 */
@@ -87,6 +94,8 @@ public class TextSerializers {
 	 * Builds a serializer of booleans to text.
 	 * 
 	 * @return The built serializer.
+	 * @see Boolean#toString()
+	 * @see Boolean#valueOf(String)
 	 */
 	public static Serializer<Boolean, String> boolean_() {
 		return BOOLEAN;
@@ -105,18 +114,202 @@ public class TextSerializers {
 	};
 	
 	/**
+	 * Builds a serializer of bytes to text.
+	 * 
+	 * @return The built serializer.
+	 * @see Byte#toString()
+	 * @see Byte#parseByte(String)
+	 */
+	public static Serializer<Byte, String> byte_() {
+		return BYTE;
+	}
+	
+	private static final Serializer<Byte, String> BYTE = new Serializer<Byte, String>() {
+		@Override
+		public String serialize(final Byte value) {
+			return value.toString();
+		}
+		
+		@Override
+		public Byte deserialize(final String representation) {
+			return Byte.parseByte(representation);
+		}
+	};
+	
+	/**
+	 * Builds a serializer of short integers to text.
+	 * 
+	 * @return The built serializer.
+	 * @see Short#toString()
+	 * @see Short#parseShort(String)
+	 */
+	public static Serializer<Short, String> short_() {
+		return SHORT;
+	}
+	
+	private static final Serializer<Short, String> SHORT = new Serializer<Short, String>() {
+		@Override
+		public String serialize(final Short value) {
+			return value.toString();
+		}
+		
+		@Override
+		public Short deserialize(final String representation) {
+			return Short.parseShort(representation);
+		}
+	};
+	
+	/**
+	 * Builds a serializer of integers to text.
+	 * 
+	 * @return The built serializer.
+	 * @see Integer#toString()
+	 * @see Integer#parseInt(String)
+	 */
+	public static Serializer<Integer, String> integer() {
+		return INTEGER;
+	}
+	
+	private static final Serializer<Integer, String> INTEGER = new Serializer<Integer, String>() {
+		@Override
+		public String serialize(final Integer value) {
+			return value.toString();
+		}
+		
+		@Override
+		public Integer deserialize(final String representation) {
+			return Integer.parseInt(representation);
+		}
+	};
+	
+	/**
+	 * Builds a serializer of unsigned integers to text.
+	 * 
+	 * @return The built serializer.
+	 * @see Integer#toString()
+	 * @see Integer#parseUnsignedInt(String)
+	 */
+	public static Serializer<Integer, String> unsignedInteger() {
+		return UNSIGNED_INTEGER;
+	}
+	
+	private static final Serializer<Integer, String> UNSIGNED_INTEGER = new Serializer<Integer, String>() {
+		@Override
+		public String serialize(final Integer value) {
+			return value.toString();
+		}
+		
+		@Override
+		public Integer deserialize(final String representation) {
+			return Integer.parseUnsignedInt(representation);
+		}
+	};
+	
+	/**
+	 * Builds a serializer of long integers to text.
+	 * 
+	 * @return The built serializer.
+	 * @see Long#toString()
+	 * @see Long#parseLong(String)
+	 */
+	public static Serializer<Long, String> long_() {
+		return LONG;
+	}
+	
+	private static final Serializer<Long, String> LONG = new Serializer<Long, String>() {
+		@Override
+		public String serialize(final Long value) {
+			return value.toString();
+		}
+		
+		@Override
+		public Long deserialize(final String representation) {
+			return Long.parseLong(representation);
+		}
+	};
+	
+	/**
+	 * Builds a serializer of unsigned long integers to text.
+	 * 
+	 * @return The built serializer.
+	 * @see Long#toString()
+	 * @see Long#parseUnsignedLong(String)
+	 */
+	public static Serializer<Long, String> unsignedLong() {
+		return UNSIGNED_LONG;
+	}
+	
+	private static final Serializer<Long, String> UNSIGNED_LONG = new Serializer<Long, String>() {
+		@Override
+		public String serialize(final Long value) {
+			return value.toString();
+		}
+		
+		@Override
+		public Long deserialize(final String representation) {
+			return Long.parseUnsignedLong(representation);
+		}
+	};
+	
+	/**
+	 * Builds a serializer of floats to text.
+	 * 
+	 * @return The built serializer.
+	 * @see Float#toString()
+	 * @see Float#parseFloat(String)
+	 */
+	public static Serializer<Float, String> float_() {
+		return FLOAT;
+	}
+	
+	private static final Serializer<Float, String> FLOAT = new Serializer<Float, String>() {
+		@Override
+		public String serialize(final Float value) {
+			return value.toString();
+		}
+		
+		@Override
+		public Float deserialize(final String representation) {
+			return Float.parseFloat(representation);
+		}
+	};
+	
+	/**
+	 * Builds a serializer of doubles to text.
+	 * 
+	 * @return The built serializer.
+	 * @see Double#toString()
+	 * @see Double#parseDouble(String)
+	 */
+	public static Serializer<Double, String> double_() {
+		return DOUBLE;
+	}
+	
+	private static final Serializer<Double, String> DOUBLE = new Serializer<Double, String>() {
+		@Override
+		public String serialize(final Double value) {
+			return value.toString();
+		}
+		
+		@Override
+		public Double deserialize(final String representation) {
+			return Double.parseDouble(representation);
+		}
+	};
+	
+	/**
 	 * Builds a serializer of numbers to text.
 	 * 
 	 * @param <N> Type of the numbers.
 	 * @param format Format of the numbers.
 	 * @param converter Function to use to convert the parsed numbers to the excepted type.
-	 * @param failureFactory Factory of the failures.
 	 * @return The built serializer.
+	 * @see TextUtils#formatNumber(NumberFormat, Number)
+	 * @see TextUtils#parseNumber(NumberFormat, Function, String)
 	 */
-	public static <N extends Number> Serializer<N, String> number(final NumberFormat format, final Function<Number, N> converter, final ThrowableFactory<? extends RuntimeException> failureFactory) {
+	public static <N extends Number> Serializer<N, String> number(final NumberFormat format, final Function<Number, N> converter) {
 		assert null != converter;
 		assert null != format;
-		assert null != failureFactory;
 		
 		return new Serializer<N, String>() {
 			@Override
@@ -130,7 +323,7 @@ public class TextSerializers {
 				if (value.isSome()) {
 					return value.asSome().getValue();
 				} else {
-					throw failureFactory.build("Invalid number \"" + representation + "\" (" + TextUtils.formatNumber(format, 123.456) + ").");
+					throw new NumberFormatException("Invalid number representation \"" + representation + "\" (" + TextUtils.formatNumber(format, 123.456) + ").");
 				}
 			}
 		};
@@ -140,12 +333,12 @@ public class TextSerializers {
 	 * Builds a serializer of dates to text.
 	 * 
 	 * @param format Format of the dates.
-	 * @param failureFactory Factory of the failures.
 	 * @return The built serializer.
+	 * @see TextUtils#formatDate(DateFormat, Date)
+	 * @see TextUtils#parseDate(DateFormat, String)
 	 */
-	public static Serializer<Date, String> date(final DateFormat format, final ThrowableFactory<? extends RuntimeException> failureFactory) {
+	public static Serializer<Date, String> date(final DateFormat format) {
 		assert null != format;
-		assert null != failureFactory;
 		
 		return new Serializer<Date, String>() {
 			@Override
@@ -159,7 +352,7 @@ public class TextSerializers {
 				if (value.isSome()) {
 					return value.asSome().getValue();
 				} else {
-					throw failureFactory.build("Invalid date \"" + representation + "\" (" + TextUtils.formatDate(format, new Date()) + ").");
+					throw new IllegalArgumentException("Invalid date representation \"" + representation + "\" (" + TextUtils.formatDate(format, new Date()) + ").");
 				}
 			}
 		};
@@ -168,29 +361,102 @@ public class TextSerializers {
 	/**
 	 * Builds a serializer of UUIDs to text.
 	 * 
-	 * @param failureFactory Factory of the failures.
 	 * @return The built serializer.
+	 * @see UUID#toString()
+	 * @see UUID#fromString(String)
 	 */
-	public static Serializer<UUID, String> uuid(final ThrowableFactory<? extends RuntimeException> failureFactory) {
-		assert null != failureFactory;
-		
-		return new Serializer<UUID, String>() {
-			@Override
-			public String serialize(final UUID value) {
-				return TextUtils.formatUuid(value);
-			}
-			
-			@Override
-			public UUID deserialize(final String representation) {
-				final Maybe<UUID> value = TextUtils.parseUuid(representation);
-				if (value.isSome()) {
-					return value.asSome().getValue();
-				} else {
-					throw failureFactory.build("Invalid UUID \"" + representation + "\" (" + TextUtils.formatUuid(new UUID(0L, 0L)) + ").");
-				}
-			}
-		};
+	public static Serializer<UUID, String> uuid() {
+		return UUID;
 	}
+	
+	private static final Serializer<UUID, String> UUID = new Serializer<UUID, String>() {
+		@Override
+		public String serialize(final UUID value) {
+			return value.toString();
+		}
+		
+		@Override
+		public UUID deserialize(final String representation) {
+			return java.util.UUID.fromString(representation);
+		}
+	};
+	
+	/**
+	 * Builds a serializer of files to text.
+	 * 
+	 * @return The built serializer.
+	 * @see File#toString()
+	 * @see File#File(String)
+	 */
+	public static Serializer<File, String> file() {
+		return FILE;
+	}
+	
+	private static final Serializer<File, String> FILE = new Serializer<File, String>() {
+		@Override
+		public String serialize(final File value) {
+			return value.toString();
+		}
+		
+		@Override
+		public File deserialize(final String representation) {
+			return new File(representation);
+		}
+	};
+	
+	/**
+	 * Builds a serializer of URIs to text.
+	 * 
+	 * @return The built serializer.
+	 * @see URI#toString()
+	 * @see URI#URI(String)
+	 */
+	public static Serializer<URI, String> uri() {
+		return URI;
+	}
+	
+	private static final Serializer<URI, String> URI = new Serializer<URI, String>() {
+		@Override
+		public String serialize(final URI value) {
+			return value.toString();
+		}
+		
+		@Override
+		public URI deserialize(final String representation) {
+			try {
+				return new URI(representation);
+			} catch (final URISyntaxException exception) {
+				throw new IllegalArgumentException(exception);
+			}
+		}
+	};
+	
+	/**
+	 * Builds a serializer of URLs to text.
+	 * 
+	 * @return The built serializer.
+	 * @see URL#toString()
+	 * @see URL#URL(String)
+	 */
+	public static Serializer<URL, String> url() {
+		return URL;
+	}
+	
+	private static final Serializer<URL, String> URL = new Serializer<URL, String>() {
+		@Override
+		public String serialize(final URL value) {
+			return value.toString();
+		}
+		
+		@Override
+		public URL deserialize(final String representation) {
+			try {
+				return new URL(representation);
+			} catch (final MalformedURLException exception) {
+				throw new IllegalArgumentException(exception);
+			}
+		}
+	};
 	
 	private TextSerializers() {
 		// Prevents instantiation.

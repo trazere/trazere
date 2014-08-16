@@ -451,6 +451,7 @@ public class TextUtils {
 	 * @param representation Representation of the number to parse.
 	 * @return The parsed number, or nothing when the representation is not valid.
 	 */
+	// TODO: return Result
 	public static <N extends Number> Maybe<N> parseNumber(final NumberFormat format, final Function<? super Number, ? extends N> converter, final String representation) {
 		synchronized (format) {
 			final ParsePosition position = new ParsePosition(0);
@@ -489,6 +490,7 @@ public class TextUtils {
 	 * @param representation Representation of the date to parse.
 	 * @return The parsed date, or nothing when the representation is not valid.
 	 */
+	// TODO: return Result
 	public static Maybe<Date> parseDate(final DateFormat format, final String representation) {
 		synchronized (format) {
 			final ParsePosition position = new ParsePosition(0);
@@ -519,6 +521,7 @@ public class TextUtils {
 	 * @param representation Representation of the UUID to parse.
 	 * @return The parsed UUID, or nothing when the representation is not valid.
 	 */
+	// TODO: return Result
 	public static Maybe<UUID> parseUuid(final String representation) {
 		try {
 			return Maybe.some(UUID.fromString(representation));
