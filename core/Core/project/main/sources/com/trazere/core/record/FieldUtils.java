@@ -40,7 +40,7 @@ public class FieldUtils {
 	 * @param <V> Type of the value.
 	 * @param description Description of the field to read (for error messages).
 	 * @param representation Representation of the field to read.
-	 * @return The read value.
+	 * @return The read value, or nothing when there is no representation.
 	 */
 	public static <V> Maybe<V> read(final String description, final Maybe<? extends V> representation) {
 		return read(description, representation, Functions.<V>identity());
@@ -54,7 +54,7 @@ public class FieldUtils {
 	 * @param description Description of the field to read (for error messages).
 	 * @param representation Representation of the field to read.
 	 * @param deserializer Function to use to deserialize the representation.
-	 * @return The read value.
+	 * @return The read value, or nothing when there is no representation.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
 	public static <R, V> Maybe<V> read(final String description, final Maybe<? extends R> representation, final Function<? super R, ? extends V> deserializer)
@@ -74,7 +74,7 @@ public class FieldUtils {
 	 * @param description Description of the field to read (for error messages).
 	 * @param representation Representation of the field to read.
 	 * @param deserializer Serializer to use to deserialize the representation.
-	 * @return The read value.
+	 * @return The read value, or nothing when there is no representation.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
 	public static <R, V> Maybe<V> read(final String description, final Maybe<? extends R> representation, final Serializer<? extends V, ? super R> deserializer)
@@ -89,7 +89,7 @@ public class FieldUtils {
 	 * @param description Description of the field to read (for error messages).
 	 * @param representation Representation of the field to read.
 	 * @param defaultValue Default value when the field is missing.
-	 * @return The read value.
+	 * @return The read value, or the default value when there is no representation.
 	 */
 	public static <V> V readOptional(final String description, final Maybe<? extends V> representation, final V defaultValue) {
 		return readOptional(description, representation, Functions.<V>identity(), defaultValue);
@@ -104,7 +104,7 @@ public class FieldUtils {
 	 * @param representation Representation of the field to read.
 	 * @param deserializer Function to use to deserialize the representation.
 	 * @param defaultValue Default value when the field is missing.
-	 * @return The read value.
+	 * @return The read value, or the default value when there is no representation.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
 	public static <R, V> V readOptional(final String description, final Maybe<? extends R> representation, final Function<? super R, ? extends V> deserializer, final V defaultValue)
@@ -129,7 +129,7 @@ public class FieldUtils {
 	 * @param representation Representation of the field to read.
 	 * @param deserializer Serializer to use to deserialize the representation.
 	 * @param defaultValue Default value when the field is missing.
-	 * @return The read value.
+	 * @return The read value, or the default value when there is no representation.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
 	public static <R, V> V readOptional(final String description, final Maybe<? extends R> representation, final Serializer<? extends V, ? super R> deserializer, final V defaultValue)
@@ -144,7 +144,7 @@ public class FieldUtils {
 	 * @param description Description of the field to read (for error messages).
 	 * @param representation Representation of the field to read.
 	 * @param defaultValue Default value when the field is missing.
-	 * @return The read value.
+	 * @return The read value, or the default value when there is no representation.
 	 */
 	public static <V> V readOptional(final String description, final Maybe<? extends V> representation, final Thunk<? extends V> defaultValue) {
 		return readOptional(description, representation, Functions.<V>identity(), defaultValue);
@@ -159,7 +159,7 @@ public class FieldUtils {
 	 * @param representation Representation of the field to read.
 	 * @param deserializer Function to use to deserialize the representation.
 	 * @param defaultValue Default value when the field is missing.
-	 * @return The read value.
+	 * @return The read value, or the default value when there is no representation.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
 	public static <R, V> V readOptional(final String description, final Maybe<? extends R> representation, final Function<? super R, ? extends V> deserializer, final Thunk<? extends V> defaultValue)
@@ -184,7 +184,7 @@ public class FieldUtils {
 	 * @param representation Representation of the field to read.
 	 * @param deserializer Serializer to use to deserialize the representation.
 	 * @param defaultValue Default value when the field is missing.
-	 * @return The read value.
+	 * @return The read value, or the default value when there is no representation.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
 	public static <R, V> V readOptional(final String description, final Maybe<? extends R> representation, final Serializer<? extends V, ? super R> deserializer, final Thunk<? extends V> defaultValue)
@@ -366,7 +366,7 @@ public class FieldUtils {
 	 * @param <V> Type of the value.
 	 * @param description Description of the field to read (for error messages).
 	 * @param representation Representation of the field to read. May be <code>null</code> when no representations.
-	 * @return The read value.
+	 * @return The read value, or nothing when there is no representation.
 	 */
 	public static <V> Maybe<V> readNullable(final String description, final V representation) {
 		return read(description, MaybeUtils.fromNullable(representation));
@@ -380,7 +380,7 @@ public class FieldUtils {
 	 * @param description Description of the field to read (for error messages).
 	 * @param representation Representation of the field to read. May be <code>null</code> when no representations.
 	 * @param deserializer Function to use to deserialize the representation.
-	 * @return The read value.
+	 * @return The read value, or nothing when there is no representation.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
 	public static <R, V> Maybe<V> readNullable(final String description, final R representation, final Function<? super R, ? extends V> deserializer)
@@ -396,7 +396,7 @@ public class FieldUtils {
 	 * @param description Description of the field to read (for error messages).
 	 * @param representation Representation of the field to read. May be <code>null</code> when no representations.
 	 * @param deserializer Serializer to use to deserialize the representation.
-	 * @return The read value.
+	 * @return The read value, or nothing when there is no representation.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
 	public static <R, V> Maybe<V> readNullable(final String description, final R representation, final Serializer<? extends V, ? super R> deserializer)
@@ -411,7 +411,7 @@ public class FieldUtils {
 	 * @param description Description of the field to read (for error messages).
 	 * @param representation Representation of the field to read. May be <code>null</code> when no representations.
 	 * @param defaultValue Default value when the field is missing.
-	 * @return The read value.
+	 * @return The read value, or the default value when there is no representation.
 	 */
 	public static <V> V readOptionalNullable(final String description, final V representation, final V defaultValue) {
 		return readOptional(description, MaybeUtils.fromNullable(representation), defaultValue);
@@ -426,7 +426,7 @@ public class FieldUtils {
 	 * @param representation Representation of the field to read. May be <code>null</code> when no representations.
 	 * @param deserializer Function to use to deserialize the representation.
 	 * @param defaultValue Default value when the field is missing.
-	 * @return The read value.
+	 * @return The read value, or the default value when there is no representation.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
 	public static <R, V> V readOptionalNullable(final String description, final R representation, final Function<? super R, ? extends V> deserializer, final V defaultValue)
@@ -443,7 +443,7 @@ public class FieldUtils {
 	 * @param representation Representation of the field to read. May be <code>null</code> when no representations.
 	 * @param deserializer Serializer to use to deserialize the representation.
 	 * @param defaultValue Default value when the field is missing.
-	 * @return The read value.
+	 * @return The read value, or the default value when there is no representation.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
 	public static <R, V> V readOptionalNullable(final String description, final R representation, final Serializer<? extends V, ? super R> deserializer, final V defaultValue)
@@ -458,7 +458,7 @@ public class FieldUtils {
 	 * @param description Description of the field to read (for error messages).
 	 * @param representation Representation of the field to read. May be <code>null</code> when no representations.
 	 * @param defaultValue Default value when the field is missing.
-	 * @return The read value.
+	 * @return The read value, or the default value when there is no representation.
 	 */
 	public static <V> V readOptionalNullable(final String description, final V representation, final Thunk<? extends V> defaultValue) {
 		return readOptional(description, MaybeUtils.fromNullable(representation), defaultValue);
@@ -473,7 +473,7 @@ public class FieldUtils {
 	 * @param representation Representation of the field to read. May be <code>null</code> when no representations.
 	 * @param deserializer Function to use to deserialize the representation.
 	 * @param defaultValue Default value when the field is missing.
-	 * @return The read value.
+	 * @return The read value, or the default value when there is no representation.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
 	public static <R, V> V readOptionalNullable(final String description, final R representation, final Function<? super R, ? extends V> deserializer, final Thunk<? extends V> defaultValue)
@@ -490,7 +490,7 @@ public class FieldUtils {
 	 * @param representation Representation of the field to read. May be <code>null</code> when no representations.
 	 * @param deserializer Serializer to use to deserialize the representation.
 	 * @param defaultValue Default value when the field is missing.
-	 * @return The read value.
+	 * @return The read value, or the default value when there is no representation.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
 	public static <R, V> V readOptionalNullable(final String description, final R representation, final Serializer<? extends V, ? super R> deserializer, final Thunk<? extends V> defaultValue)
