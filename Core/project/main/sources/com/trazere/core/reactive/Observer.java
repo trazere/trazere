@@ -13,15 +13,22 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.core.lang;
+package com.trazere.core.reactive;
+
+import java.util.Observable;
 
 /**
- * The {@link Releasable} interface defines object that can be released.
+ * The {@link Observer} interface defines observers of events raised by {@link Observable observables}.
+ * 
+ * @param <E> Type of the observed events.
+ * @see Observable
  */
-@FunctionalInterface
-public interface Releasable {
+public interface Observer<E> {
 	/**
-	 * Releases this releasable.
+	 * Notifies this observer that the given event has been raised.
+	 * 
+	 * @param event Raised event.
+	 * @return <code>true</code> to hold the subscription corresponding to this notification, <code>false</code> to cancel it.
 	 */
-	public void release();
+	boolean onEvent(final E event);
 }

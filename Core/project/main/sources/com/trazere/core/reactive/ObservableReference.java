@@ -13,15 +13,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.core.lang;
+package com.trazere.core.reactive;
+
+import com.trazere.core.reference.Reference;
+import com.trazere.core.util.Maybe;
 
 /**
- * The {@link Releasable} interface defines object that can be released.
+ * The {@link ObservableReference} interface defines references that can be observed.
+ * <p>
+ * Events are raised when the reference is updated, providing the new referenced value.
+ * 
+ * @param <T> Type of the referenced value.
  */
-@FunctionalInterface
-public interface Releasable {
-	/**
-	 * Releases this releasable.
-	 */
-	public void release();
+public interface ObservableReference<T>
+extends Reference<T>, ObservableValue<Maybe<T>> {
+	// Nothing to do.
 }
