@@ -13,15 +13,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.core.lang;
+package com.trazere.core.reactive;
+
+import com.trazere.core.reference.MutableReference;
 
 /**
- * The {@link Releasable} interface defines object that can be released.
+ * The {@link ObserverSubscriptionMutableReference} class implements mutable references of {@link ObserverSubscription observer subscriptions}.
+ * <p>
+ * The referenced subscriptions are cancelled when the reference is modified.
  */
-@FunctionalInterface
-public interface Releasable {
-	/**
-	 * Releases this releasable.
-	 */
-	public void release();
+public class ObserverSubscriptionMutableReference
+extends MutableReference<ObserverSubscription> {
+	@Override
+	protected void dispose(final ObserverSubscription subscription) {
+		subscription.unsubscribe();
+	}
 }

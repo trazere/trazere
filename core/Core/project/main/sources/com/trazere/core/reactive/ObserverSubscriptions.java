@@ -13,15 +13,26 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.core.lang;
+package com.trazere.core.reactive;
 
 /**
- * The {@link Releasable} interface defines object that can be released.
+ * The {@link ObserverSubscriptions} class provides various factories of {@link ObserverSubscription observer subscriptions}.
  */
-@FunctionalInterface
-public interface Releasable {
+public class ObserverSubscriptions {
 	/**
-	 * Releases this releasable.
+	 * Builds an observer subscription that does nothing.
+	 * 
+	 * @return The built subscription.
 	 */
-	public void release();
+	public static ObserverSubscription nop() {
+		return NOP;
+	}
+	
+	private static final ObserverSubscription NOP = () -> {
+		// Nothing to do.
+	};
+	
+	private ObserverSubscriptions() {
+		// Prevent instantiation.
+	}
 }
