@@ -59,109 +59,117 @@ public class MaybeUtils {
 		return maybe.get((T) null);
 	}
 	
-	//	/**
-	//	 * Gets the boolean value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
-	//	 *
-	//	 * @param value The value.
-	//	 * @param defaultValue The default value. May be <code>null</code>.
-	//	 * @return The value. May be <code>null</code>.
-	//	 */
-	//	public static boolean get(final Maybe<Boolean> value, final boolean defaultValue) {
-	//		assert null != value;
-	//
-	//		return value.isSome() ? value.asSome().getValue().booleanValue() : defaultValue;
-	//	}
-	//
-	//	/**
-	//	 * Gets the byte value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
-	//	 *
-	//	 * @param value The value.
-	//	 * @param defaultValue The default value. May be <code>null</code>.
-	//	 * @return The value. May be <code>null</code>.
-	//	 */
-	//	public static int get(final Maybe<Byte> value, final byte defaultValue) {
-	//		assert null != value;
-	//
-	//		return value.isSome() ? value.asSome().getValue().byteValue() : defaultValue;
-	//	}
-	//
-	//	/**
-	//	 * Gets the short value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
-	//	 *
-	//	 * @param value The value.
-	//	 * @param defaultValue The default value. May be <code>null</code>.
-	//	 * @return The value. May be <code>null</code>.
-	//	 */
-	//	public static int get(final Maybe<Short> value, final short defaultValue) {
-	//		assert null != value;
-	//
-	//		return value.isSome() ? value.asSome().getValue().shortValue() : defaultValue;
-	//	}
-	//
-	//	/**
-	//	 * Gets the integer value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
-	//	 *
-	//	 * @param value The value.
-	//	 * @param defaultValue The default value. May be <code>null</code>.
-	//	 * @return The value. May be <code>null</code>.
-	//	 */
-	//	public static int get(final Maybe<Integer> value, final int defaultValue) {
-	//		assert null != value;
-	//
-	//		return value.isSome() ? value.asSome().getValue().intValue() : defaultValue;
-	//	}
-	//
-	//	/**
-	//	 * Gets the long value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
-	//	 *
-	//	 * @param value The value.
-	//	 * @param defaultValue The default value. May be <code>null</code>.
-	//	 * @return The value. May be <code>null</code>.
-	//	 */
-	//	public static long get(final Maybe<Long> value, final long defaultValue) {
-	//		assert null != value;
-	//
-	//		return value.isSome() ? value.asSome().getValue().longValue() : defaultValue;
-	//	}
-	//
-	//	/**
-	//	 * Gets the float value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
-	//	 *
-	//	 * @param value The value.
-	//	 * @param defaultValue The default value. May be <code>null</code>.
-	//	 * @return The value. May be <code>null</code>.
-	//	 */
-	//	public static float get(final Maybe<Float> value, final float defaultValue) {
-	//		assert null != value;
-	//
-	//		return value.isSome() ? value.asSome().getValue().floatValue() : defaultValue;
-	//	}
-	//
-	//	/**
-	//	 * Gets the double value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
-	//	 *
-	//	 * @param value The value.
-	//	 * @param defaultValue The default value. May be <code>null</code>.
-	//	 * @return The value. May be <code>null</code>.
-	//	 */
-	//	public static double get(final Maybe<Double> value, final double defaultValue) {
-	//		assert null != value;
-	//
-	//		return value.isSome() ? value.asSome().getValue().doubleValue() : defaultValue;
-	//	}
-	//
-	//	/**
-	//	 * Gets the character value of the given {@link Maybe} instance using the given default value when the value is {@link Maybe.None}.
-	//	 *
-	//	 * @param value The value.
-	//	 * @param defaultValue The default value. May be <code>null</code>.
-	//	 * @return The value. May be <code>null</code>.
-	//	 */
-	//	public static char get(final Maybe<Character> value, final char defaultValue) {
-	//		assert null != value;
-	//
-	//		return value.isSome() ? value.asSome().getValue().charValue() : defaultValue;
-	//	}
+	/**
+	 * Gets the boolean value of the given {@link Maybe} instance.
+	 * <p>
+	 * This method returns the wrapped value for the instances built using the {@link Some} constructor and the given default value for instances built using
+	 * the {@link Maybe.None} constructor.
+	 *
+	 * @param value Instance to read.
+	 * @param defaultValue Default value.
+	 * @return The value.
+	 */
+	public static boolean get(final Maybe<Boolean> value, final boolean defaultValue) {
+		return value.isSome() ? value.asSome().getValue().booleanValue() : defaultValue;
+	}
+	
+	/**
+	 * Gets the byte value of the given {@link Maybe} instance.
+	 * <p>
+	 * This method returns the wrapped value for the instances built using the {@link Some} constructor and the given default value for instances built using
+	 * the {@link Maybe.None} constructor.
+	 *
+	 * @param value Instance to read.
+	 * @param defaultValue Default value.
+	 * @return The value.
+	 */
+	public static int get(final Maybe<Byte> value, final byte defaultValue) {
+		return value.isSome() ? value.asSome().getValue().byteValue() : defaultValue;
+	}
+	
+	/**
+	 * Gets the short integer value of the given {@link Maybe} instance.
+	 * <p>
+	 * This method returns the wrapped value for the instances built using the {@link Some} constructor and the given default value for instances built using
+	 * the {@link Maybe.None} constructor.
+	 *
+	 * @param value Instance to read.
+	 * @param defaultValue Default value.
+	 * @return The value.
+	 */
+	public static int get(final Maybe<Short> value, final short defaultValue) {
+		return value.isSome() ? value.asSome().getValue().shortValue() : defaultValue;
+	}
+	
+	/**
+	 * Gets the integer value of the given {@link Maybe} instance.
+	 * <p>
+	 * This method returns the wrapped value for the instances built using the {@link Some} constructor and the given default value for instances built using
+	 * the {@link Maybe.None} constructor.
+	 *
+	 * @param value Instance to read.
+	 * @param defaultValue Default value.
+	 * @return The value.
+	 */
+	public static int get(final Maybe<Integer> value, final int defaultValue) {
+		return value.isSome() ? value.asSome().getValue().intValue() : defaultValue;
+	}
+	
+	/**
+	 * Gets the long integer value of the given {@link Maybe} instance.
+	 * <p>
+	 * This method returns the wrapped value for the instances built using the {@link Some} constructor and the given default value for instances built using
+	 * the {@link Maybe.None} constructor.
+	 *
+	 * @param value Instance to read.
+	 * @param defaultValue Default value.
+	 * @return The value.
+	 */
+	public static long get(final Maybe<Long> value, final long defaultValue) {
+		return value.isSome() ? value.asSome().getValue().longValue() : defaultValue;
+	}
+	
+	/**
+	 * Gets the short value of the given {@link Maybe} instance.
+	 * <p>
+	 * This method returns the wrapped value for the instances built using the {@link Some} constructor and the given default value for instances built using
+	 * the {@link Maybe.None} constructor.
+	 *
+	 * @param value Instance to read.
+	 * @param defaultValue Default value.
+	 * @return The value.
+	 */
+	public static float get(final Maybe<Float> value, final float defaultValue) {
+		return value.isSome() ? value.asSome().getValue().floatValue() : defaultValue;
+	}
+	
+	/**
+	 * Gets the double value of the given {@link Maybe} instance.
+	 * <p>
+	 * This method returns the wrapped value for the instances built using the {@link Some} constructor and the given default value for instances built using
+	 * the {@link Maybe.None} constructor.
+	 *
+	 * @param value Instance to read.
+	 * @param defaultValue Default value.
+	 * @return The value.
+	 */
+	public static double get(final Maybe<Double> value, final double defaultValue) {
+		return value.isSome() ? value.asSome().getValue().doubleValue() : defaultValue;
+	}
+	
+	/**
+	 * Gets the character value of the given {@link Maybe} instance.
+	 * <p>
+	 * This method returns the wrapped value for the instances built using the {@link Some} constructor and the given default value for instances built using
+	 * the {@link Maybe.None} constructor.
+	 *
+	 * @param value Instance to read.
+	 * @param defaultValue Default value.
+	 * @return The value.
+	 */
+	public static char get(final Maybe<Character> value, final char defaultValue) {
+		return value.isSome() ? value.asSome().getValue().charValue() : defaultValue;
+	}
 	
 	/**
 	 * Flattens the value wrapped in the {@link Maybe} instance wrapped in the given {@link Maybe} instance.

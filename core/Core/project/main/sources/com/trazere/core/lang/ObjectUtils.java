@@ -1,5 +1,6 @@
 package com.trazere.core.lang;
 
+import com.trazere.core.functional.Thunk;
 import com.trazere.core.util.Maybe;
 
 /**
@@ -52,17 +53,41 @@ public class ObjectUtils {
 	}
 	
 	/**
-	 * Tests for equality of the given values.
+	 * Makes the given object safe by replacing <code>null</code>.
+	 *
+	 * @param <T> Type of the object.
+	 * @param object Unsafe object to make safe. May be <code>null</code>.
+	 * @param nullReplacement Object to use instead of <code>null</code>.
+	 * @return The given object or the object to use instead of <code>null</code> when the given object is <code>null</code>.
+	 */
+	public static <T> T safe(final T object, final T nullReplacement) {
+		return null != object ? object : nullReplacement;
+	}
+	
+	/**
+	 * Makes the given object safe by replacing <code>null</code>.
+	 *
+	 * @param <T> Type of the object.
+	 * @param object Unsafe object to make safe. May be <code>null</code>.
+	 * @param nullReplacement Object to use instead of <code>null</code>.
+	 * @return The given object or the object to use instead of <code>null</code> when the given object is <code>null</code>.
+	 */
+	public static <T> T safe(final T object, final Thunk<? extends T> nullReplacement) {
+		return null != object ? object : nullReplacement.evaluate();
+	}
+	
+	/**
+	 * Safely tests for equality of the given objects.
 	 * <p>
 	 * This method supports comparison of <code>null</code> values.
 	 * 
-	 * @param <T> Type of the values.
-	 * @param object1 The first value. May be <code>null</code>.
-	 * @param object2 The second value. May be <code>null</code>.
-	 * @return <code>true</code> if the values are both <code>null</code> or both not <code>null</code> and equal.
+	 * @param <T> Type of the objects.
+	 * @param object1 The first unsafe object to test for equality. May be <code>null</code>.
+	 * @param object2 The second unsafe object to test for equality. May be <code>null</code>.
+	 * @return <code>true</code> if the objects are both <code>null</code> or both not <code>null</code> and equal.
 	 * @see Object#equals(Object)
 	 */
-	public static <T extends Object> boolean safeEquals(final T object1, final T object2) {
+	public static <T> boolean safeEquals(final T object1, final T object2) {
 		return object1 == object2 || null != object1 && object1.equals(object2);
 	}
 	
@@ -102,7 +127,7 @@ public class ObjectUtils {
 		if (null != object && type.isInstance(object)) {
 			return type.cast(object);
 		} else {
-			throw throwableFactory.build("Invalid value \"" + object + "\"");
+			throw throwableFactory.build("Invalid object \"" + object + "\"");
 		}
 	}
 	

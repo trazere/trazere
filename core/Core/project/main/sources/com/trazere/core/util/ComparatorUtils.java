@@ -51,24 +51,24 @@ public class ComparatorUtils {
 	}
 	
 	/**
-	 * Compares the given values using the given comparator.
+	 * Safely compares the given values using the given comparator.
 	 * <p>
-	 * This method supports comparison of <code>null</code> values. <code>null</code> values are considered as less than non <code>null</code> values.
+	 * This method supports comparison of <code>null</code> values. <code>null</code> values are considered less than non <code>null</code> values.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param comparator The comparator.
-	 * @param object1 The first value. May be <code>null</code>.
-	 * @param object2 The second value. May be <code>null</code>.
+	 * @param value1 First unsafe value to compare. May be <code>null</code>.
+	 * @param value2 Second unsafe value to compare. May be <code>null</code>.
 	 * @return The result of the comparison as defined by the {@link Comparator#compare(Object, Object)} method.
 	 * @see Comparable#compareTo(Object)
 	 */
-	public static <T> int safeCompare(final Comparator<T> comparator, final T object1, final T object2) {
+	public static <T> int safeCompare(final Comparator<T> comparator, final T value1, final T value2) {
 		assert null != comparator;
 		
-		if (null == object1) {
-			return null == object2 ? 0 : -1;
+		if (null == value1) {
+			return null == value2 ? 0 : -1;
 		} else {
-			return null == object2 ? 1 : comparator.compare(object1, object2);
+			return null == value2 ? 1 : comparator.compare(value1, value2);
 		}
 	}
 	
@@ -99,9 +99,9 @@ public class ComparatorUtils {
 	}
 	
 	/**
-	 * Derives a comparator that safely supports <code>null</code> values.
+	 * Derives a safe comparator from the given comparator.
 	 * <p>
-	 * <code>null</code> values are less than non <code>null</code> values.
+	 * The derived comparator supports comparison of <code>null</code> values. <code>null</code> values are considered less than non <code>null</code> values.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param comparator Unsafe comparator to derive.
@@ -118,7 +118,7 @@ public class ComparatorUtils {
 	 * Derives a comparator according to the inverse order of the given comparator.
 	 * 
 	 * @param <T> Type of the values.
-	 * @param comparator The inversed comparator.
+	 * @param comparator Comparator to inverse.
 	 * @return The built comparator.
 	 * @see InverseComparator
 	 */
@@ -130,7 +130,7 @@ public class ComparatorUtils {
 	 * Derives a comparator according to the direct or inverse order of the given comparator.
 	 * 
 	 * @param <T> Type of the values.
-	 * @param comparator Comparator to use.
+	 * @param comparator Comparator to inverse.
 	 * @param inverse Indicates whether to inverse the order or not.
 	 * @return The built comparator.
 	 */

@@ -20,9 +20,11 @@ package com.trazere.core.lang;
  */
 public class LangUtils {
 	/**
-	 * Safely unbox the given boolean wrapper.
+	 * Safely unboxes the given boolean wrapper.
+	 * <p>
+	 * This methods support <code>null</code> values.
 	 *
-	 * @param value Wrapper to unbox. May be <code>null</code>.
+	 * @param value Unsafe wrapper to unbox. May be <code>null</code>.
 	 * @return The unboxed value or <code>false</code> when the wrapper is <code>null</code>.
 	 */
 	public static boolean safeUnbox(final Boolean value) {
@@ -30,112 +32,180 @@ public class LangUtils {
 	}
 	
 	/**
-	 * Safely unbox the given boolean wrapper.
+	 * Safely unboxes the given boolean wrapper.
+	 * <p>
+	 * This methods support <code>null</code> values.
 	 *
-	 * @param value Wrapper to unbox. May be <code>null</code>.
-	 * @param nullValue Default value for <code>null</code> wrappers.
+	 * @param value Unsafe wrapper to unbox. May be <code>null</code>.
+	 * @param nullReplacement Value to use for <code>null</code> wrappers.
 	 * @return The unboxed value or the default value when the wrapper is <code>null</code>.
 	 */
-	public static boolean safeUnbox(final Boolean value, final boolean nullValue) {
-		return null != value ? value.booleanValue() : nullValue;
+	public static boolean safeUnbox(final Boolean value, final boolean nullReplacement) {
+		return null != value ? value.booleanValue() : nullReplacement;
 	}
 	
-	//	// TODO: rename to safeByteValue or safeUnbox
-	//	/**
-	//	 * Gets the value of the given byte wrapper.
-	//	 *
-	//	 * @param value The wrapper. May be <code>null</code>.
-	//	 * @param defaultValue The default value.
-	//	 * @return The value of the wrapper or the default value when it is <code>null</code>.
-	//	 */
-	//	public static int get(final Byte value, final byte defaultValue) {
-	//		return null != value ? value.byteValue() : defaultValue;
-	//	}
-	//
-	//	// TODO: rename to safeShortValue or safeUnbox
-	//	/**
-	//	 * Gets the value of the given short wrapper.
-	//	 *
-	//	 * @param value The wrapper. May be <code>null</code>.
-	//	 * @param defaultValue The default value.
-	//	 * @return The value of the wrapper or the default value when it is <code>null</code>.
-	//	 */
-	//	public static int get(final Short value, final short defaultValue) {
-	//		return null != value ? value.shortValue() : defaultValue;
-	//	}
-	//
-	//	// TODO: rename to safeIntValue or safeUnbox
-	//	/**
-	//	 * Gets the value of the given integer wrapper.
-	//	 *
-	//	 * @param value The wrapper. May be <code>null</code>.
-	//	 * @param defaultValue The default value.
-	//	 * @return The value of the wrapper or the default value when it is <code>null</code>.
-	//	 */
-	//	public static int get(final Integer value, final int defaultValue) {
-	//		return null != value ? value.intValue() : defaultValue;
-	//	}
-	//
-	//	// TODO: rename to safeLongValue or safeUnbox
-	//	/**
-	//	 * Gets the value of the given long wrapper.
-	//	 *
-	//	 * @param value The wrapper. May be <code>null</code>.
-	//	 * @param defaultValue The default value.
-	//	 * @return The value of the wrapper or the default value when it is <code>null</code>.
-	//	 */
-	//	public static long get(final Long value, final long defaultValue) {
-	//		return null != value ? value.longValue() : defaultValue;
-	//	}
-	//
-	//	// TODO: rename to safeFloatValue or safeUnbox
-	//	/**
-	//	 * Gets the value of the given float wrapper.
-	//	 *
-	//	 * @param value The wrapper. May be <code>null</code>.
-	//	 * @param defaultValue The default value.
-	//	 * @return The value of the wrapper or the default value when it is <code>null</code>.
-	//	 */
-	//	public static float get(final Float value, final float defaultValue) {
-	//		return null != value ? value.floatValue() : defaultValue;
-	//	}
-	//
-	//	// TODO: rename to safeDoubleValue or safeUnbox
-	//	/**
-	//	 * Gets the value of the given double wrapper.
-	//	 *
-	//	 * @param value The wrapper. May be <code>null</code>.
-	//	 * @param defaultValue The default value.
-	//	 * @return The value of the wrapper or the default value when it is <code>null</code>.
-	//	 */
-	//	public static double get(final Double value, final double defaultValue) {
-	//		return null != value ? value.doubleValue() : defaultValue;
-	//	}
-	//
-	//	// TODO: rename to safeCharValue or safeUnbox
-	//	/**
-	//	 * Gets the value of the given character wrapper.
-	//	 *
-	//	 * @param value The wrapper. May be <code>null</code>.
-	//	 * @param defaultValue The default value.
-	//	 * @return The value of the wrapper or the default value when it is <code>null</code>.
-	//	 */
-	//	public static char get(final Character value, final char defaultValue) {
-	//		return null != value ? value.charValue() : defaultValue;
-	//	}
-	//
-	//	// TODO: rename to ?? (safe, safeValue ?)
-	//	/**
-	//	 * Gets the value of the given object.
-	//	 *
-	//	 * @param <T> Type of the value.
-	//	 * @param value The object. May be <code>null</code>.
-	//	 * @param defaultValue The default value. May be <code>null</code>.
-	//	 * @return The object or the default value when it is <code>null</code>. May be <code>null</code>.
-	//	 */
-	//	public static <T> T get(final T value, final T defaultValue) {
-	//		return null != value ? value : defaultValue;
-	//	}
+	/**
+	 * Safely unboxes the given byte wrapper.
+	 * <p>
+	 * This methods support <code>null</code> values.
+	 *
+	 * @param value Unsafe wrapper to unbox. May be <code>null</code>.
+	 * @return The unboxed value or <code>0</code> when the wrapper is <code>null</code>.
+	 */
+	public static int safeUnbox(final Byte value) {
+		return safeUnbox(value, (byte) 0);
+	}
+	
+	/**
+	 * Safely unboxes the given byte wrapper.
+	 * <p>
+	 * This methods support <code>null</code> values.
+	 *
+	 * @param value Unsafe wrapper to unbox. May be <code>null</code>.
+	 * @param nullReplacement Value to use for <code>null</code> wrappers.
+	 * @return The unboxed value or the default value when the wrapper is <code>null</code>.
+	 */
+	public static int safeUnbox(final Byte value, final byte nullReplacement) {
+		return null != value ? value.byteValue() : nullReplacement;
+	}
+	
+	/**
+	 * Safely unboxes the given short integer wrapper.
+	 * <p>
+	 * This methods support <code>null</code> values.
+	 *
+	 * @param value Unsafe wrapper to unbox. May be <code>null</code>.
+	 * @return The unboxed value or <code>0</code> when the wrapper is <code>null</code>.
+	 */
+	public static int safeUnbox(final Short value) {
+		return safeUnbox(value, (short) 0);
+	}
+	
+	/**
+	 * Safely unboxes the given short integer wrapper.
+	 * <p>
+	 * This methods support <code>null</code> values.
+	 *
+	 * @param value Unsafe wrapper to unbox. May be <code>null</code>.
+	 * @param nullReplacement Value to use for <code>null</code> wrappers.
+	 * @return The unboxed value or the default value when the wrapper is <code>null</code>.
+	 */
+	public static int safeUnbox(final Short value, final short nullReplacement) {
+		return null != value ? value.shortValue() : nullReplacement;
+	}
+	
+	/**
+	 * Safely unboxes the given integer wrapper.
+	 * <p>
+	 * This methods support <code>null</code> values.
+	 *
+	 * @param value Unsafe wrapper to unbox. May be <code>null</code>.
+	 * @return The unboxed value or <code>0</code> when the wrapper is <code>null</code>.
+	 */
+	public static int safeUnbox(final Integer value) {
+		return safeUnbox(value, 0);
+	}
+	
+	/**
+	 * Safely unboxes the given integer wrapper.
+	 * <p>
+	 * This methods support <code>null</code> values.
+	 *
+	 * @param value Unsafe wrapper to unbox. May be <code>null</code>.
+	 * @param nullReplacement Value to use for <code>null</code> wrappers.
+	 * @return The unboxed value or the default value when the wrapper is <code>null</code>.
+	 */
+	public static int safeUnbox(final Integer value, final int nullReplacement) {
+		return null != value ? value.intValue() : nullReplacement;
+	}
+	
+	/**
+	 * Safely unboxes the given long integer wrapper.
+	 * <p>
+	 * This methods support <code>null</code> values.
+	 *
+	 * @param value Unsafe wrapper to unbox. May be <code>null</code>.
+	 * @return The unboxed value or <code>0</code> when the wrapper is <code>null</code>.
+	 */
+	public static long safeUnbox(final Long value) {
+		return safeUnbox(value, 0L);
+	}
+	
+	/**
+	 * Safely unboxes the given long integer wrapper.
+	 * <p>
+	 * This methods support <code>null</code> values.
+	 *
+	 * @param value Unsafe wrapper to unbox. May be <code>null</code>.
+	 * @param nullReplacement Value to use for <code>null</code> wrappers.
+	 * @return The unboxed value or the default value when the wrapper is <code>null</code>.
+	 */
+	public static long safeUnbox(final Long value, final long nullReplacement) {
+		return null != value ? value.longValue() : nullReplacement;
+	}
+	
+	/**
+	 * Safely unboxes the given float wrapper.
+	 * <p>
+	 * This methods support <code>null</code> values.
+	 *
+	 * @param value Unsafe wrapper to unbox. May be <code>null</code>.
+	 * @return The unboxed value or <code>0</code> when the wrapper is <code>null</code>.
+	 */
+	public static float safeUnbox(final Float value) {
+		return safeUnbox(value, 0f);
+	}
+	
+	/**
+	 * Safely unboxes the given float wrapper.
+	 * <p>
+	 * This methods support <code>null</code> values.
+	 *
+	 * @param value Unsafe wrapper to unbox. May be <code>null</code>.
+	 * @param nullReplacement Value to use for <code>null</code> wrappers.
+	 * @return The unboxed value or the default value when the wrapper is <code>null</code>.
+	 */
+	public static float safeUnbox(final Float value, final float nullReplacement) {
+		return null != value ? value.floatValue() : nullReplacement;
+	}
+	
+	/**
+	 * Safely unboxes the given double wrapper.
+	 * <p>
+	 * This methods support <code>null</code> values.
+	 *
+	 * @param value Unsafe wrapper to unbox. May be <code>null</code>.
+	 * @return The unboxed value or <code>0</code> when the wrapper is <code>null</code>.
+	 */
+	public static double safeUnbox(final Double value) {
+		return safeUnbox(value, 0d);
+	}
+	
+	/**
+	 * Safely unboxes the given double wrapper.
+	 * <p>
+	 * This methods support <code>null</code> values.
+	 *
+	 * @param value Unsafe wrapper to unbox. May be <code>null</code>.
+	 * @param nullReplacement Value to use for <code>null</code> wrappers.
+	 * @return The unboxed value or the default value when the wrapper is <code>null</code>.
+	 */
+	public static double safeUnbox(final Double value, final double nullReplacement) {
+		return null != value ? value.doubleValue() : nullReplacement;
+	}
+	
+	/**
+	 * Safely unboxes the given character wrapper.
+	 * <p>
+	 * This methods support <code>null</code> values.
+	 *
+	 * @param value Unsafe wrapper to unbox. May be <code>null</code>.
+	 * @param nullReplacement Value to use for <code>null</code> wrappers.
+	 * @return The unboxed value or the default value when the wrapper is <code>null</code>.
+	 */
+	public static char safeUnbox(final Character value, final char nullReplacement) {
+		return null != value ? value.charValue() : nullReplacement;
+	}
 	
 	// TODO: move to ThreadUtils
 	//	/**
