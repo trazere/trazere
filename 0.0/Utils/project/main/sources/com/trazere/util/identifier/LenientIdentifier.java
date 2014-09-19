@@ -16,6 +16,7 @@
 package com.trazere.util.identifier;
 
 import com.trazere.util.lang.HashCode;
+import java.io.Serializable;
 
 /**
  * The {@link LenientIdentifier} class represents identifiers which need not to be normalized according to their values.
@@ -25,8 +26,9 @@ import com.trazere.util.lang.HashCode;
  * @param <V> Type of the underlying values.
  * @see IdentifierBase
  */
-public class LenientIdentifier<V>
-extends Identifier<V> {
+public abstract class LenientIdentifier<V>
+extends Identifier<V>
+implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	/**

@@ -29,5 +29,6 @@ public interface Observer<T> {
 	 * 
 	 * @param value The event value. May be <code>null</code>.
 	 */
+	// TODO: rename to onEvent(T event)
 	public void notify(final T value);
 }
