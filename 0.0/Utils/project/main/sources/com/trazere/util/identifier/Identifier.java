@@ -16,6 +16,10 @@
 package com.trazere.util.identifier;
 
 import com.trazere.util.function.Function1;
+import com.trazere.util.lang.HashCode;
+import java.io.Serializable;
+
+// TODO: kill this, merge/replace by ValueWrapper
 
 /**
  * The {@link Identifier} class represents typed identification values.
@@ -23,12 +27,14 @@ import com.trazere.util.function.Function1;
  * Usually, basic types like strings and integers are used as identifiers because they can be easily instanciated. This class aims at providing a typed
  * alternative so that identifiers of different classes cannot be mixed with each other.
  * <p>
- * Identifiers rely on physically egality, the underlying values are used for informational purpose.
+ * Equality of identifiers relies on their type and the logical equality of their underlying values.
  * 
  * @param <V> Type of the underlying values.
- * @see IdentifierBase
  */
-public abstract class Identifier<V> {
+public abstract class Identifier<V>
+implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Instantiates an identifier with the given value.
 	 * 
@@ -78,6 +84,25 @@ public abstract class Identifier<V> {
 	};
 	
 	// Object.
+	
+	@Override
+	public int hashCode() {
+		final HashCode result = new HashCode(this);
+		result.append(_value);
+		return result.get();
+	}
+	
+	@Override
+	public boolean equals(final Object object) {
+		if (this == object) {
+			return true;
+		} else if (null != object && getClass().equals(object.getClass())) {
+			final Identifier<?> key = (Identifier<?>) object;
+			return _value.equals(key._value);
+		} else {
+			return false;
+		}
+	}
 	
 	@Override
 	public String toString() {
