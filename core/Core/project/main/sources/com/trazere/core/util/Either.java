@@ -23,7 +23,7 @@ import com.trazere.core.text.Description;
 import com.trazere.core.text.TextUtils;
 
 /**
- * The {@link Either} class encodes a tagged union data type which represents a binary disjonction.
+ * The {@link Either} class implements a tagged union data type that represents a binary disjonction.
  * <ul>
  * <li>Instances built using the {@link Left} constructor encode the first alternative (left alternative).
  * <li>Instances built using the {@link Right} constructor encode the second alternative (right alternative).
