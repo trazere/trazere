@@ -49,7 +49,7 @@ implements Iterable<T>, Describable {
 	 * @see None
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> None<T> none() {
+	public static <T> Maybe<T> none() {
 		return (None<T>) NONE;
 	}
 	
@@ -63,7 +63,7 @@ implements Iterable<T>, Describable {
 	 * @return The built instance.
 	 * @see Some
 	 */
-	public static <T> Some<T> some(final T value) {
+	public static <T> Maybe<T> some(final T value) {
 		return new Some<>(value);
 	}
 	

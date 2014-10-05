@@ -24,116 +24,6 @@ import java.util.List;
  */
 public class TupleComparators {
 	/**
-	 * Builds a comparator of tuples according to their first element.
-	 * 
-	 * @param <E1> Type of the first elements.
-	 * @param comparator Comparator of the first elements.
-	 * @return The built comparator.
-	 */
-	public static <E1> Comparator<Tuple1<E1>> element1(final Comparator<? super E1> comparator) {
-		return ComparatorUtils.map(comparator, TupleFunctions.get1());
-	}
-	
-	/**
-	 * Builds a comparator of tuples according to their second element.
-	 * 
-	 * @param <E2> Type of the seconds elements.
-	 * @param comparator Comparator of the second elements.
-	 * @return The built comparator.
-	 */
-	public static <E2> Comparator<Tuple2<?, E2>> element2(final Comparator<? super E2> comparator) {
-		return ComparatorUtils.map(comparator, TupleFunctions.get2());
-	}
-	
-	/**
-	 * Builds a comparator of tuples according to their third element.
-	 * 
-	 * @param <E3> Type of the third elements.
-	 * @param comparator Comparator of the third elements.
-	 * @return The built comparator.
-	 */
-	public static <E3> Comparator<Tuple3<?, ?, E3>> element3(final Comparator<? super E3> comparator) {
-		return ComparatorUtils.map(comparator, TupleFunctions.get3());
-	}
-	
-	/**
-	 * Builds a comparator of tuples according to their fourth element.
-	 * 
-	 * @param <E4> Type of the fourth elements.
-	 * @param comparator Comparator of the fourth elements.
-	 * @return The built comparator.
-	 */
-	public static <E4> Comparator<Tuple4<?, ?, ?, E4>> element4(final Comparator<? super E4> comparator) {
-		return ComparatorUtils.map(comparator, TupleFunctions.get4());
-	}
-	
-	/**
-	 * Builds a comparator of tuples according to their fifth element.
-	 * 
-	 * @param <E5> Type of the fifth elements.
-	 * @param comparator Comparator of the fifth elements.
-	 * @return The built comparator.
-	 */
-	public static <E5> Comparator<Tuple5<?, ?, ?, ?, E5>> element5(final Comparator<? super E5> comparator) {
-		return ComparatorUtils.map(comparator, TupleFunctions.get5());
-	}
-	
-	/**
-	 * Builds a comparator of tuples according to their sixth element.
-	 * 
-	 * @param <E6> Type of the sixth elements.
-	 * @param comparator Comparator of the sixth elements.
-	 * @return The built comparator.
-	 */
-	public static <E6> Comparator<Tuple6<?, ?, ?, ?, ?, E6>> element6(final Comparator<? super E6> comparator) {
-		return ComparatorUtils.map(comparator, TupleFunctions.get6());
-	}
-	
-	/**
-	 * Builds a comparator of tuples according to their seventh element.
-	 * 
-	 * @param <E7> Type of the seventh elements.
-	 * @param comparator Comparator of the seventh elements.
-	 * @return The built comparator.
-	 */
-	public static <E7> Comparator<Tuple7<?, ?, ?, ?, ?, ?, E7>> element7(final Comparator<? super E7> comparator) {
-		return ComparatorUtils.map(comparator, TupleFunctions.get7());
-	}
-	
-	/**
-	 * Builds a comparator of tuples according to their eighth element.
-	 * 
-	 * @param <E8> Type of the eighth elements.
-	 * @param comparator Comparator of the eighth elements.
-	 * @return The built comparator.
-	 */
-	public static <E8> Comparator<Tuple8<?, ?, ?, ?, ?, ?, ?, E8>> element8(final Comparator<? super E8> comparator) {
-		return ComparatorUtils.map(comparator, TupleFunctions.get8());
-	}
-	
-	/**
-	 * Builds a comparator of tuples according to their ninth element.
-	 * 
-	 * @param <E9> Type of the ninth elements.
-	 * @param comparator Comparator of the ninth elements.
-	 * @return The built comparator.
-	 */
-	public static <E9> Comparator<Tuple9<?, ?, ?, ?, ?, ?, ?, ?, E9>> element9(final Comparator<? super E9> comparator) {
-		return ComparatorUtils.map(comparator, TupleFunctions.get9());
-	}
-	
-	/**
-	 * Builds a comparator of tuples according to their tenth element.
-	 * 
-	 * @param <E10> Type of the tenth elements.
-	 * @param comparator Comparator of the tenth elements.
-	 * @return The built comparator.
-	 */
-	public static <E10> Comparator<Tuple10<?, ?, ?, ?, ?, ?, ?, ?, ?, E10>> element10(final Comparator<? super E10> comparator) {
-		return ComparatorUtils.map(comparator, TupleFunctions.get10());
-	}
-	
-	/**
 	 * Builds a comparator of 1-tuples according using the given element comparator.
 	 * 
 	 * @param <E1> Type of the first elements.
@@ -141,7 +31,9 @@ public class TupleComparators {
 	 * @return The built comparator.
 	 */
 	public static <E1> Comparator<Tuple1<E1>> tuple1(final Comparator<? super E1> comparator1) {
-		return element1(comparator1);
+		final List<Comparator<? super Tuple1<E1>>> comparators = new ArrayList<>();
+		comparators.add(FieldComparators.field1(comparator1));
+		return Comparators.sequence(comparators);
 	}
 	
 	/**
@@ -155,8 +47,8 @@ public class TupleComparators {
 	 */
 	public static <E1, E2> Comparator<Tuple2<E1, E2>> tuple2(final Comparator<? super E1> comparator1, final Comparator<? super E2> comparator2) {
 		final List<Comparator<? super Tuple2<E1, E2>>> comparators = new ArrayList<>();
-		comparators.add(element1(comparator1));
-		comparators.add(element2(comparator2));
+		comparators.add(FieldComparators.field1(comparator1));
+		comparators.add(FieldComparators.field2(comparator2));
 		return Comparators.sequence(comparators);
 	}
 	
@@ -173,9 +65,9 @@ public class TupleComparators {
 	 */
 	public static <E1, E2, E3> Comparator<Tuple3<E1, E2, E3>> tuple3(final Comparator<? super E1> comparator1, final Comparator<? super E2> comparator2, final Comparator<? super E3> comparator3) {
 		final List<Comparator<? super Tuple3<E1, E2, E3>>> comparators = new ArrayList<>();
-		comparators.add(element1(comparator1));
-		comparators.add(element2(comparator2));
-		comparators.add(element3(comparator3));
+		comparators.add(FieldComparators.field1(comparator1));
+		comparators.add(FieldComparators.field2(comparator2));
+		comparators.add(FieldComparators.field3(comparator3));
 		return Comparators.sequence(comparators);
 	}
 	
@@ -194,10 +86,10 @@ public class TupleComparators {
 	 */
 	public static <E1, E2, E3, E4> Comparator<Tuple4<E1, E2, E3, E4>> tuple4(final Comparator<? super E1> comparator1, final Comparator<? super E2> comparator2, final Comparator<? super E3> comparator3, final Comparator<? super E4> comparator4) {
 		final List<Comparator<? super Tuple4<E1, E2, E3, E4>>> comparators = new ArrayList<>();
-		comparators.add(element1(comparator1));
-		comparators.add(element2(comparator2));
-		comparators.add(element3(comparator3));
-		comparators.add(element4(comparator4));
+		comparators.add(FieldComparators.field1(comparator1));
+		comparators.add(FieldComparators.field2(comparator2));
+		comparators.add(FieldComparators.field3(comparator3));
+		comparators.add(FieldComparators.field4(comparator4));
 		return Comparators.sequence(comparators);
 	}
 	
@@ -218,11 +110,11 @@ public class TupleComparators {
 	 */
 	public static <E1, E2, E3, E4, E5> Comparator<Tuple5<E1, E2, E3, E4, E5>> tuple5(final Comparator<? super E1> comparator1, final Comparator<? super E2> comparator2, final Comparator<? super E3> comparator3, final Comparator<? super E4> comparator4, final Comparator<? super E5> comparator5) {
 		final List<Comparator<? super Tuple5<E1, E2, E3, E4, E5>>> comparators = new ArrayList<>();
-		comparators.add(element1(comparator1));
-		comparators.add(element2(comparator2));
-		comparators.add(element3(comparator3));
-		comparators.add(element4(comparator4));
-		comparators.add(element5(comparator5));
+		comparators.add(FieldComparators.field1(comparator1));
+		comparators.add(FieldComparators.field2(comparator2));
+		comparators.add(FieldComparators.field3(comparator3));
+		comparators.add(FieldComparators.field4(comparator4));
+		comparators.add(FieldComparators.field5(comparator5));
 		return Comparators.sequence(comparators);
 	}
 	
@@ -245,12 +137,12 @@ public class TupleComparators {
 	 */
 	public static <E1, E2, E3, E4, E5, E6> Comparator<Tuple6<E1, E2, E3, E4, E5, E6>> tuple6(final Comparator<? super E1> comparator1, final Comparator<? super E2> comparator2, final Comparator<? super E3> comparator3, final Comparator<? super E4> comparator4, final Comparator<? super E5> comparator5, final Comparator<? super E6> comparator6) {
 		final List<Comparator<? super Tuple6<E1, E2, E3, E4, E5, E6>>> comparators = new ArrayList<>();
-		comparators.add(element1(comparator1));
-		comparators.add(element2(comparator2));
-		comparators.add(element3(comparator3));
-		comparators.add(element4(comparator4));
-		comparators.add(element5(comparator5));
-		comparators.add(element6(comparator6));
+		comparators.add(FieldComparators.field1(comparator1));
+		comparators.add(FieldComparators.field2(comparator2));
+		comparators.add(FieldComparators.field3(comparator3));
+		comparators.add(FieldComparators.field4(comparator4));
+		comparators.add(FieldComparators.field5(comparator5));
+		comparators.add(FieldComparators.field6(comparator6));
 		return Comparators.sequence(comparators);
 	}
 	
@@ -275,13 +167,13 @@ public class TupleComparators {
 	 */
 	public static <E1, E2, E3, E4, E5, E6, E7> Comparator<Tuple7<E1, E2, E3, E4, E5, E6, E7>> tuple7(final Comparator<? super E1> comparator1, final Comparator<? super E2> comparator2, final Comparator<? super E3> comparator3, final Comparator<? super E4> comparator4, final Comparator<? super E5> comparator5, final Comparator<? super E6> comparator6, final Comparator<? super E7> comparator7) {
 		final List<Comparator<? super Tuple7<E1, E2, E3, E4, E5, E6, E7>>> comparators = new ArrayList<>();
-		comparators.add(element1(comparator1));
-		comparators.add(element2(comparator2));
-		comparators.add(element3(comparator3));
-		comparators.add(element4(comparator4));
-		comparators.add(element5(comparator5));
-		comparators.add(element6(comparator6));
-		comparators.add(element7(comparator7));
+		comparators.add(FieldComparators.field1(comparator1));
+		comparators.add(FieldComparators.field2(comparator2));
+		comparators.add(FieldComparators.field3(comparator3));
+		comparators.add(FieldComparators.field4(comparator4));
+		comparators.add(FieldComparators.field5(comparator5));
+		comparators.add(FieldComparators.field6(comparator6));
+		comparators.add(FieldComparators.field7(comparator7));
 		return Comparators.sequence(comparators);
 	}
 	
@@ -308,14 +200,14 @@ public class TupleComparators {
 	 */
 	public static <E1, E2, E3, E4, E5, E6, E7, E8> Comparator<Tuple8<E1, E2, E3, E4, E5, E6, E7, E8>> tuple8(final Comparator<? super E1> comparator1, final Comparator<? super E2> comparator2, final Comparator<? super E3> comparator3, final Comparator<? super E4> comparator4, final Comparator<? super E5> comparator5, final Comparator<? super E6> comparator6, final Comparator<? super E7> comparator7, final Comparator<? super E8> comparator8) {
 		final List<Comparator<? super Tuple8<E1, E2, E3, E4, E5, E6, E7, E8>>> comparators = new ArrayList<>();
-		comparators.add(element1(comparator1));
-		comparators.add(element2(comparator2));
-		comparators.add(element3(comparator3));
-		comparators.add(element4(comparator4));
-		comparators.add(element5(comparator5));
-		comparators.add(element6(comparator6));
-		comparators.add(element7(comparator7));
-		comparators.add(element8(comparator8));
+		comparators.add(FieldComparators.field1(comparator1));
+		comparators.add(FieldComparators.field2(comparator2));
+		comparators.add(FieldComparators.field3(comparator3));
+		comparators.add(FieldComparators.field4(comparator4));
+		comparators.add(FieldComparators.field5(comparator5));
+		comparators.add(FieldComparators.field6(comparator6));
+		comparators.add(FieldComparators.field7(comparator7));
+		comparators.add(FieldComparators.field8(comparator8));
 		return Comparators.sequence(comparators);
 	}
 	
@@ -344,15 +236,15 @@ public class TupleComparators {
 	 */
 	public static <E1, E2, E3, E4, E5, E6, E7, E8, E9> Comparator<Tuple9<E1, E2, E3, E4, E5, E6, E7, E8, E9>> tuple9(final Comparator<? super E1> comparator1, final Comparator<? super E2> comparator2, final Comparator<? super E3> comparator3, final Comparator<? super E4> comparator4, final Comparator<? super E5> comparator5, final Comparator<? super E6> comparator6, final Comparator<? super E7> comparator7, final Comparator<? super E8> comparator8, final Comparator<? super E9> comparator9) {
 		final List<Comparator<? super Tuple9<E1, E2, E3, E4, E5, E6, E7, E8, E9>>> comparators = new ArrayList<>();
-		comparators.add(element1(comparator1));
-		comparators.add(element2(comparator2));
-		comparators.add(element3(comparator3));
-		comparators.add(element4(comparator4));
-		comparators.add(element5(comparator5));
-		comparators.add(element6(comparator6));
-		comparators.add(element7(comparator7));
-		comparators.add(element8(comparator8));
-		comparators.add(element9(comparator9));
+		comparators.add(FieldComparators.field1(comparator1));
+		comparators.add(FieldComparators.field2(comparator2));
+		comparators.add(FieldComparators.field3(comparator3));
+		comparators.add(FieldComparators.field4(comparator4));
+		comparators.add(FieldComparators.field5(comparator5));
+		comparators.add(FieldComparators.field6(comparator6));
+		comparators.add(FieldComparators.field7(comparator7));
+		comparators.add(FieldComparators.field8(comparator8));
+		comparators.add(FieldComparators.field9(comparator9));
 		return Comparators.sequence(comparators);
 	}
 	
@@ -383,16 +275,16 @@ public class TupleComparators {
 	 */
 	public static <E1, E2, E3, E4, E5, E6, E7, E8, E9, E10> Comparator<Tuple10<E1, E2, E3, E4, E5, E6, E7, E8, E9, E10>> tuple10(final Comparator<? super E1> comparator1, final Comparator<? super E2> comparator2, final Comparator<? super E3> comparator3, final Comparator<? super E4> comparator4, final Comparator<? super E5> comparator5, final Comparator<? super E6> comparator6, final Comparator<? super E7> comparator7, final Comparator<? super E8> comparator8, final Comparator<? super E9> comparator9, final Comparator<? super E10> comparator10) {
 		final List<Comparator<? super Tuple10<E1, E2, E3, E4, E5, E6, E7, E8, E9, E10>>> comparators = new ArrayList<>();
-		comparators.add(element1(comparator1));
-		comparators.add(element2(comparator2));
-		comparators.add(element3(comparator3));
-		comparators.add(element4(comparator4));
-		comparators.add(element5(comparator5));
-		comparators.add(element6(comparator6));
-		comparators.add(element7(comparator7));
-		comparators.add(element8(comparator8));
-		comparators.add(element9(comparator9));
-		comparators.add(element10(comparator10));
+		comparators.add(FieldComparators.field1(comparator1));
+		comparators.add(FieldComparators.field2(comparator2));
+		comparators.add(FieldComparators.field3(comparator3));
+		comparators.add(FieldComparators.field4(comparator4));
+		comparators.add(FieldComparators.field5(comparator5));
+		comparators.add(FieldComparators.field6(comparator6));
+		comparators.add(FieldComparators.field7(comparator7));
+		comparators.add(FieldComparators.field8(comparator8));
+		comparators.add(FieldComparators.field9(comparator9));
+		comparators.add(FieldComparators.field10(comparator10));
 		return Comparators.sequence(comparators);
 	}
 	
