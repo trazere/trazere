@@ -27,9 +27,9 @@ import com.trazere.core.imperative.Procedure2;
 import com.trazere.core.lang.IterableUtils;
 import com.trazere.core.lang.ThrowableFactory;
 import com.trazere.core.util.Comparators;
+import com.trazere.core.util.FieldComparators;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
-import com.trazere.core.util.TupleComparators;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -366,7 +366,7 @@ public class MapUtils {
 	 * @return The least element.
 	 */
 	public static <K, V> Maybe<Tuple2<K, V>> least(final Map<? extends K, ? extends V> map, final Comparator<? super V> comparator) {
-		return IteratorUtils.least(MapUtils.<K, V>bindings(map).iterator(), TupleComparators.element2(comparator));
+		return IteratorUtils.least(MapUtils.<K, V>bindings(map).iterator(), FieldComparators.field2(comparator));
 	}
 	
 	/**
@@ -391,7 +391,7 @@ public class MapUtils {
 	 * @return The greatest element.
 	 */
 	public static <K, V> Maybe<Tuple2<K, V>> greatest(final Map<? extends K, ? extends V> map, final Comparator<? super V> comparator) {
-		return IteratorUtils.greatest(MapUtils.<K, V>bindings(map).iterator(), TupleComparators.element2(comparator));
+		return IteratorUtils.greatest(MapUtils.<K, V>bindings(map).iterator(), FieldComparators.field2(comparator));
 	}
 	
 	/**

@@ -1,9 +1,6 @@
 package com.trazere.core.util;
 
 import com.trazere.core.lang.HashCode;
-import com.trazere.core.text.Describable;
-import com.trazere.core.text.Description;
-import com.trazere.core.text.TextUtils;
 
 /**
  * The {@link Value} class implements a basic data type that wraps single values.
@@ -13,7 +10,7 @@ import com.trazere.core.text.TextUtils;
  * @param <T> Type of the wrapped value.
  */
 public class Value<T>
-implements Describable {
+implements Field<T> {
 	/**
 	 * Instantiates a new value.
 	 * 
@@ -33,7 +30,8 @@ implements Describable {
 	 * 
 	 * @return The value.
 	 */
-	public T getValue() {
+	@Override
+	public T get() {
 		return _value;
 	}
 	
@@ -62,11 +60,6 @@ implements Describable {
 	
 	@Override
 	public String toString() {
-		return TextUtils.description(this);
-	}
-	
-	@Override
-	public void appendDescription(final Description description) {
-		description.append("Value", _value);
+		return String.valueOf(_value);
 	}
 }

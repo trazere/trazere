@@ -24,7 +24,8 @@ import com.trazere.core.lang.ObjectUtils;
  * 
  * @param <E1> Type of the first element.
  */
-public class Tuple1<E1> {
+public class Tuple1<E1>
+implements Field1<E1> {
 	/**
 	 * Instantiates a new 1-tuple.
 	 * 
@@ -40,16 +41,17 @@ public class Tuple1<E1> {
 	protected final E1 _e1;
 	
 	/**
-	 * Gets the first element of the receiver tuple.
+	 * Gets the first element of this tuple.
 	 * 
 	 * @return The first element.
 	 */
+	@Override
 	public E1 get1() {
 		return _e1;
 	}
 	
 	/**
-	 * Derives a new tuple from the receiver tuple by replacing the first element.
+	 * Derives a new tuple from this tuple by replacing the first element.
 	 * 
 	 * @param <NE1> Type of the new first element.
 	 * @param ne1 New first element.
@@ -60,7 +62,7 @@ public class Tuple1<E1> {
 	}
 	
 	/**
-	 * Derives a new tuple from the receiver tuple by mapping the first element using the given function.
+	 * Derives a new tuple from this tuple by mapping the first element using the given function.
 	 * 
 	 * @param <NE1> Type of the new first element.
 	 * @param function Mapping function to use.

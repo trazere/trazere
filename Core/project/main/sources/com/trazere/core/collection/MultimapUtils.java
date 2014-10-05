@@ -28,9 +28,9 @@ import com.trazere.core.imperative.Procedure2;
 import com.trazere.core.lang.IterableUtils;
 import com.trazere.core.lang.LangAccumulators;
 import com.trazere.core.util.Comparators;
+import com.trazere.core.util.FieldComparators;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
-import com.trazere.core.util.TupleComparators;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -393,7 +393,7 @@ public class MultimapUtils {
 	 * @return The least element.
 	 */
 	public static <K, V> Maybe<Tuple2<K, V>> least(final Multimap<? extends K, ? extends V, ?> multimap, final Comparator<? super V> comparator) {
-		return IteratorUtils.least(MultimapUtils.<K, V>bindings(multimap).iterator(), TupleComparators.element2(comparator));
+		return IteratorUtils.least(MultimapUtils.<K, V>bindings(multimap).iterator(), FieldComparators.field2(comparator));
 	}
 	
 	/**
@@ -418,7 +418,7 @@ public class MultimapUtils {
 	 * @return The greatest element.
 	 */
 	public static <K, V> Maybe<Tuple2<K, V>> greatest(final Multimap<? extends K, ? extends V, ?> multimap, final Comparator<? super V> comparator) {
-		return IteratorUtils.greatest(MultimapUtils.<K, V>bindings(multimap).iterator(), TupleComparators.element2(comparator));
+		return IteratorUtils.greatest(MultimapUtils.<K, V>bindings(multimap).iterator(), FieldComparators.field2(comparator));
 	}
 	
 	/**

@@ -17,7 +17,6 @@ package com.trazere.core.collection;
 
 import com.trazere.core.imperative.Iterators;
 import com.trazere.core.util.Maybe;
-import com.trazere.core.util.Maybe.None;
 import com.trazere.core.util.Tuple2;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -101,7 +100,7 @@ public class Feeds {
 		// Function.
 		
 		@Override
-		public None<Tuple2<Object, Feed<Object>>> evaluate() {
+		public Maybe<Tuple2<Object, Feed<Object>>> evaluate() {
 			return Maybe.none();
 		}
 		
