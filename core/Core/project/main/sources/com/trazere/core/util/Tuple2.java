@@ -20,7 +20,7 @@ import com.trazere.core.lang.HashCode;
 import com.trazere.core.lang.ObjectUtils;
 
 /**
- * The {@link Tuple2} class implements a 2-tuple (douple or pair) data type which represents sequences of 2 elements.
+ * The {@link Tuple2} class implements a 2-tuple (douple or pair) data type that represents sequences of 2 elements.
  * 
  * @param <E1> Type of the first element.
  * @param <E2> Type of the second element.

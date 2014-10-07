@@ -20,7 +20,7 @@ import com.trazere.core.lang.HashCode;
 import com.trazere.core.lang.ObjectUtils;
 
 /**
- * The {@link Tuple7} class implements a 7-tuple (septuple) data type which represents sequences of 7 elements.
+ * The {@link Tuple7} class implements a 7-tuple (septuple) data type that represents sequences of 7 elements.
  * 
  * @param <E1> Type of the first element.
  * @param <E2> Type of the second element.

@@ -20,7 +20,7 @@ import com.trazere.core.lang.HashCode;
 import com.trazere.core.lang.ObjectUtils;
 
 /**
- * The {@link Tuple1} class implements a 1-tuple data type (single) which represents sequences of 1 element.
+ * The {@link Tuple1} class implements a 1-tuple data type (single) that represents sequences of 1 element.
  * 
  * @param <E1> Type of the first element.
  */

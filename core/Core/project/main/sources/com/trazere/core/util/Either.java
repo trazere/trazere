@@ -105,7 +105,7 @@ implements Describable {
 		// Matching.
 		
 		@Override
-		public <RT> RT match(final Matcher<? super L, ? super R, RT> matcher) {
+		public <RT> RT match(final Matcher<? super L, ? super R, ? extends RT> matcher) {
 			return matcher.left(this);
 		}
 		
@@ -215,7 +215,7 @@ implements Describable {
 		// Matching.
 		
 		@Override
-		public <RT> RT match(final Matcher<? super L, ? super R, RT> matcher) {
+		public <RT> RT match(final Matcher<? super L, ? super R, ? extends RT> matcher) {
 			return matcher.right(this);
 		}
 		
@@ -316,7 +316,7 @@ implements Describable {
 	 * @param matcher Matching function to apply.
 	 * @return The result of the matching function evaluation.
 	 */
-	public abstract <RT> RT match(final Matcher<? super L, ? super R, RT> matcher);
+	public abstract <RT> RT match(final Matcher<? super L, ? super R, ? extends RT> matcher);
 	
 	// Functional.
 	

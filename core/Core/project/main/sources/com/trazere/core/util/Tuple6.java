@@ -20,7 +20,7 @@ import com.trazere.core.lang.HashCode;
 import com.trazere.core.lang.ObjectUtils;
 
 /**
- * The {@link Tuple6} class implements a 6-tuple (sexuple) data type which represents sequences of 6 elements.
+ * The {@link Tuple6} class implements a 6-tuple (sexuple) data type that represents sequences of 6 elements.
  * 
  * @param <E1> Type of the first element.
  * @param <E2> Type of the second element.

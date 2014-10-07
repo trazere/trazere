@@ -16,13 +16,13 @@
 package com.trazere.core.util;
 
 /**
- * The {@link Field3} interface defines the third field of product types.
+ * The {@link Field3} interface defines product types that contain a third field.
  * 
  * @param <T> Type of the value of the field.
  */
 public interface Field3<T> {
 	/**
-	 * Gets the value of the third field of this object.
+	 * Gets the value of the third field.
 	 * 
 	 * @return The value.
 	 */
