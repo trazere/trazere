@@ -20,7 +20,7 @@ import com.trazere.core.lang.HashCode;
 import com.trazere.core.lang.ObjectUtils;
 
 /**
- * The {@link Tuple5} class implements a 5-tuple (quintuple) data type which represents sequences of 5 elements.
+ * The {@link Tuple5} class implements a 5-tuple (quintuple) data type that represents sequences of 5 elements.
  * 
  * @param <E1> Type of the first element.
  * @param <E2> Type of the second element.

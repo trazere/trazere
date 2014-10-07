@@ -16,13 +16,13 @@
 package com.trazere.core.util;
 
 /**
- * The {@link Field5} interface defines the fifth field of product types.
+ * The {@link Field5} interface defines product types that contain a fifth field.
  * 
  * @param <T> Type of the value of the field.
  */
 public interface Field5<T> {
 	/**
-	 * Gets the value of the fifth field of this object.
+	 * Gets the value of the fifth field.
 	 * 
 	 * @return The value.
 	 */

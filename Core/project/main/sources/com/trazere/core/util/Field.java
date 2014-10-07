@@ -22,7 +22,7 @@ package com.trazere.core.util;
  */
 public interface Field<T> {
 	/**
-	 * Gets the value.
+	 * Gets the value of the field.
 	 * 
 	 * @return The value.
 	 */

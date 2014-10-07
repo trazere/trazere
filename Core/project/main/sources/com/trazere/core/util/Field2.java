@@ -16,13 +16,13 @@
 package com.trazere.core.util;
 
 /**
- * The {@link Field2} interface defines the second field of product types.
+ * The {@link Field2} interface defines product types that contain a second field.
  * 
  * @param <T> Type of the value of the field.
  */
 public interface Field2<T> {
 	/**
-	 * Gets the value of the second field of this object.
+	 * Gets the value of the second field.
 	 * 
 	 * @return The value.
 	 */

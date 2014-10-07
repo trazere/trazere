@@ -20,7 +20,7 @@ import com.trazere.core.lang.HashCode;
 import com.trazere.core.lang.ObjectUtils;
 
 /**
- * The {@link Tuple3} class implements a 3-tuple (triple) data type which represents sequences of 3 elements.
+ * The {@link Tuple3} class implements a 3-tuple (triple) data type that represents sequences of 3 elements.
  * 
  * @param <E1> Type of the first element.
  * @param <E2> Type of the second element.

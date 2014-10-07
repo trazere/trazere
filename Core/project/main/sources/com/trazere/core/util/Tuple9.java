@@ -20,7 +20,7 @@ import com.trazere.core.lang.HashCode;
 import com.trazere.core.lang.ObjectUtils;
 
 /**
- * The {@link Tuple9} class implements a 9-tuple (nonuple) data type which represents sequences of 9 elements.
+ * The {@link Tuple9} class implements a 9-tuple (nonuple) data type that represents sequences of 9 elements.
  * 
  * @param <E1> Type of the first element.
  * @param <E2> Type of the second element.
