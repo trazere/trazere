@@ -103,7 +103,7 @@ implements Iterable<T>, Describable {
 		// Matching.
 		
 		@Override
-		public <R> R match(final Matcher<? super T, R> matcher) {
+		public <R> R match(final Matcher<? super T, ? extends R> matcher) {
 			return matcher.none(this);
 		}
 		
@@ -260,7 +260,7 @@ implements Iterable<T>, Describable {
 		// Matching.
 		
 		@Override
-		public <R> R match(final Matcher<? super T, R> matcher) {
+		public <R> R match(final Matcher<? super T, ? extends R> matcher) {
 			return matcher.some(this);
 		}
 		
@@ -456,7 +456,7 @@ implements Iterable<T>, Describable {
 	 * @param matcher Matching function to apply.
 	 * @return The result of the matching function evaluation.
 	 */
-	public abstract <R> R match(final Matcher<? super T, R> matcher);
+	public abstract <R> R match(final Matcher<? super T, ? extends R> matcher);
 	
 	// Imperative.
 	

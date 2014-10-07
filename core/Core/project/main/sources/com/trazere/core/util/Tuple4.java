@@ -20,7 +20,7 @@ import com.trazere.core.lang.HashCode;
 import com.trazere.core.lang.ObjectUtils;
 
 /**
- * The {@link Tuple4} class implements a 4-tuple (quadruple) data type which represents sequences of 4 elements.
+ * The {@link Tuple4} class implements a 4-tuple (quadruple) data type that represents sequences of 4 elements.
  * 
  * @param <E1> Type of the first element.
  * @param <E2> Type of the second element.

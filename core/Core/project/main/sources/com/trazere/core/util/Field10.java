@@ -16,13 +16,13 @@
 package com.trazere.core.util;
 
 /**
- * The {@link Field10} interface defines the tenth field of product types.
+ * The {@link Field10} interface defines product types that contain a tenth field.
  * 
  * @param <T> Type of the value of the field.
  */
 public interface Field10<T> {
 	/**
-	 * Gets the value of the tenth field of this object.
+	 * Gets the value of the tenth field.
 	 * 
 	 * @return The value.
 	 */

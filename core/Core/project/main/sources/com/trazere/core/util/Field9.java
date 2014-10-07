@@ -16,13 +16,13 @@
 package com.trazere.core.util;
 
 /**
- * The {@link Field9} interface defines the ninth field of product types.
+ * The {@link Field9} interface defines product types that contain a ninth field.
  * 
  * @param <T> Type of the value of the field.
  */
 public interface Field9<T> {
 	/**
-	 * Gets the value of the ninth field of this object.
+	 * Gets the value of the ninth field.
 	 * 
 	 * @return The value.
 	 */

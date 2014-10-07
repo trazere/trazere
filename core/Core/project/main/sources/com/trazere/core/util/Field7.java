@@ -16,13 +16,13 @@
 package com.trazere.core.util;
 
 /**
- * The {@link Field7} interface defines the seventh field of product types.
+ * The {@link Field7} interface defines product types that contain a seventh field.
  * 
  * @param <T> Type of the value of the field.
  */
 public interface Field7<T> {
 	/**
-	 * Gets the value of the seventh field of this object.
+	 * Gets the value of the seventh field.
 	 * 
 	 * @return The value.
 	 */

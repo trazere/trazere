@@ -20,7 +20,7 @@ import com.trazere.core.lang.HashCode;
 import com.trazere.core.lang.ObjectUtils;
 
 /**
- * The {@link Tuple10} class implements a 10-tuple (decuple) data type which represents sequences of 10 elements.
+ * The {@link Tuple10} class implements a 10-tuple (decuple) data type that represents sequences of 10 elements.
  * 
  * @param <E1> Type of the first element.
  * @param <E2> Type of the second element.

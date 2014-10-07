@@ -20,7 +20,7 @@ import com.trazere.core.lang.HashCode;
 import com.trazere.core.lang.ObjectUtils;
 
 /**
- * The {@link Tuple8} class implements a 8-tuple (octuple) data type which represents sequences of 8 elements.
+ * The {@link Tuple8} class implements a 8-tuple (octuple) data type that represents sequences of 8 elements.
  * 
  * @param <E1> Type of the first element.
  * @param <E2> Type of the second element.
