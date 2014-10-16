@@ -19,14 +19,14 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-		<plugin.maven-assembly-plugin.version>2.4</plugin.maven-assembly-plugin.version>
-		<plugin.maven-clean-plugin.version>2.5</plugin.maven-clean-plugin.version>
-		<plugin.maven-compiler-plugin.version>3.1</plugin.maven-compiler-plugin.version>
-		<plugin.maven-deploy-plugin.version>2.8.1</plugin.maven-deploy-plugin.version>
-		<plugin.maven-jar-plugin.version>2.4</plugin.maven-jar-plugin.version>
-		<plugin.maven-resources-plugin.version>2.6</plugin.maven-resources-plugin.version>
-		<plugin.maven-source-plugin.version>2.2.1</plugin.maven-source-plugin.version>
-		<plugin.maven-surefire-plugin.version>2.16</plugin.maven-surefire-plugin.version>
+		<plugin.maven-assembly-plugin.version>2.4.1</plugin.maven-assembly-plugin.version>
+		<plugin.maven-clean-plugin.version>2.6</plugin.maven-clean-plugin.version>
+		<plugin.maven-compiler-plugin.version>3.2</plugin.maven-compiler-plugin.version>
+		<plugin.maven-deploy-plugin.version>2.8.2</plugin.maven-deploy-plugin.version>
+		<plugin.maven-jar-plugin.version>2.5</plugin.maven-jar-plugin.version>
+		<plugin.maven-resources-plugin.version>2.7</plugin.maven-resources-plugin.version>
+		<plugin.maven-source-plugin.version>2.4</plugin.maven-source-plugin.version>
+		<plugin.maven-surefire-plugin.version>2.17</plugin.maven-surefire-plugin.version>
 
 		<tools.org.apache.ant.version>1.8.4</tools.org.apache.ant.version>
 		<tools.org.slf4j.version>1.6.6</tools.org.slf4j.version>
@@ -36,7 +36,24 @@
 
 	<build>
 		<sourceDirectory>${basedir}/main/sources</sourceDirectory>
+		<resources>
+			<resource>
+				<directory>${project.build.sourceDirectory}</directory>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+		</resources>
+		
 		<testSourceDirectory>${basedir}/test/sources</testSourceDirectory>
+		<testResources>
+			<testResource>
+				<directory>${project.build.testSourceDirectory}</directory>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</testResource>
+		</testResources>
 
 		<pluginManagement>
 			<plugins>
