@@ -22,6 +22,8 @@ import com.trazere.core.text.Describable;
 import com.trazere.core.text.Description;
 import com.trazere.core.text.TextUtils;
 
+// TODO: replace by Variant2 ?
+
 /**
  * The {@link Either} class implements a tagged union data type that represents a binary disjonction.
  * <ul>
@@ -62,7 +64,7 @@ implements Describable {
 	// Left.
 	
 	/**
-	 * The {@link Either.Left} class represents instances of {@link Either} that encode the first alternative (left alternative).
+	 * The {@link Either.Left} class represents the instances of {@link Either} that encode the first alternative (left alternative).
 	 * 
 	 * @param <L> Type of the left value.
 	 * @param <R> Type of the right value.
@@ -72,10 +74,10 @@ implements Describable {
 		/**
 		 * Instantiates a new {@link Either} instance wrapping the given left value.
 		 * 
-		 * @param left Left value to wrap.
+		 * @param value Left value to wrap.
 		 */
-		public Left(final L left) {
-			_left = left;
+		public Left(final L value) {
+			_value = value;
 		}
 		
 		// Left.
@@ -90,16 +92,23 @@ implements Describable {
 			return this;
 		}
 		
+		@Override
+		public Maybe<L> getLeft() {
+			return Maybe.some(_value);
+		}
+		
+		// Value.
+		
 		/** Wrapped left value. */
-		private final L _left;
+		private final L _value;
 		
 		/**
 		 * Gets the left value wrapped in the receiver instance.
 		 * 
 		 * @return The wrapped left value.
 		 */
-		public L getLeft() {
-			return _left;
+		public L getValue() {
+			return _value;
 		}
 		
 		// Matching.
@@ -113,7 +122,7 @@ implements Describable {
 		
 		@Override
 		public <RL> Either<RL, R> mapLeft(final Function<? super L, ? extends RL> function) {
-			return Either.<RL, R>left(function.evaluate(_left));
+			return Either.<RL, R>left(function.evaluate(_value));
 		}
 		
 		@SuppressWarnings("unchecked")
@@ -127,7 +136,7 @@ implements Describable {
 		@Override
 		public int hashCode() {
 			final HashCode result = new HashCode(this);
-			result.append(_left);
+			result.append(_value);
 			return result.get();
 		}
 		
@@ -137,7 +146,7 @@ implements Describable {
 				return true;
 			} else if (null != object && getClass().equals(object.getClass())) {
 				final Left<?, ?> either = (Left<?, ?>) object;
-				return ObjectUtils.safeEquals(_left, either._left);
+				return ObjectUtils.safeEquals(_value, either._value);
 			} else {
 				return false;
 			}
@@ -145,7 +154,7 @@ implements Describable {
 		
 		@Override
 		public void appendDescription(final Description description) {
-			description.append("Left", _left);
+			description.append("Left", _value);
 		}
 	}
 	
@@ -169,6 +178,15 @@ implements Describable {
 		throw InvalidConstructorException.build(this, Left.class);
 	}
 	
+	/**
+	 * Extracts the left value wrapped in this {@link Either} instance.
+	 * 
+	 * @return The wrapped left value, or nothing when the instance has not been built using the {@link Left} constructor.
+	 */
+	public Maybe<L> getLeft() {
+		return Maybe.none();
+	}
+	
 	// Right.
 	
 	/**
@@ -182,10 +200,10 @@ implements Describable {
 		/**
 		 * Instantiates a new {@link Either} instance wrapping the given right value.
 		 * 
-		 * @param right Right value to wrap.
+		 * @param value Right value to wrap.
 		 */
-		public Right(final R right) {
-			_right = right;
+		public Right(final R value) {
+			_value = value;
 		}
 		
 		// Right.
@@ -200,16 +218,23 @@ implements Describable {
 			return this;
 		}
 		
+		@Override
+		public Maybe<R> getRight() {
+			return Maybe.some(_value);
+		}
+		
+		// Value.
+		
 		/** Wrapped right value. */
-		private final R _right;
+		private final R _value;
 		
 		/**
 		 * Gets the right value wrapped in the receiver instance.
 		 * 
 		 * @return The wrapped right value.
 		 */
-		public R getRight() {
-			return _right;
+		public R getValue() {
+			return _value;
 		}
 		
 		// Matching.
@@ -229,7 +254,7 @@ implements Describable {
 		
 		@Override
 		public <RR> Either<L, RR> mapRight(final Function<? super R, ? extends RR> function) {
-			return Either.<L, RR>right(function.evaluate(_right));
+			return Either.<L, RR>right(function.evaluate(_value));
 		}
 		
 		// Object.
@@ -237,7 +262,7 @@ implements Describable {
 		@Override
 		public int hashCode() {
 			final HashCode result = new HashCode(this);
-			result.append(_right);
+			result.append(_value);
 			return result.get();
 		}
 		
@@ -247,7 +272,7 @@ implements Describable {
 				return true;
 			} else if (null != object && getClass().equals(object.getClass())) {
 				final Right<?, ?> either = (Right<?, ?>) object;
-				return ObjectUtils.safeEquals(_right, either._right);
+				return ObjectUtils.safeEquals(_value, either._value);
 			} else {
 				return false;
 			}
@@ -255,7 +280,7 @@ implements Describable {
 		
 		@Override
 		public void appendDescription(final Description description) {
-			description.append("Right", _right);
+			description.append("Right", _value);
 		}
 	}
 	
@@ -277,6 +302,15 @@ implements Describable {
 	public Right<L, R> asRight()
 	throws InvalidConstructorException {
 		throw InvalidConstructorException.build(this, Right.class);
+	}
+	
+	/**
+	 * Extracts the right value wrapped in this {@link Either} instance.
+	 * 
+	 * @return The wrapped right value, or nothing when the instance has not been built using the {@link Right} constructor.
+	 */
+	public Maybe<R> getRight() {
+		return Maybe.none();
 	}
 	
 	// Matching.

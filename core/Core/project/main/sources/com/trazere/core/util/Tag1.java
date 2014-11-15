@@ -15,6 +15,8 @@
  */
 package com.trazere.core.util;
 
+// TODO: extends Field1<Maybe<T>> ?
+
 /**
  * The {@link Tag1} interface defines sum types that support a case associated to a first tag.
  * 

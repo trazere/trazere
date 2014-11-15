@@ -17,7 +17,7 @@ public class TagExtractors {
 		return (Function<Tag1<T>, Maybe<T>>) AS1;
 	}
 	
-	private static final Function<? extends Tag1<?>, ? extends Maybe<?>> AS1 = instance -> instance.is1() ? Maybe.some(instance.as1()) : Maybe.none();
+	private static final Function<? extends Tag1<?>, ? extends Maybe<?>> AS1 = tag -> tag.is1() ? Maybe.some(tag.as1()) : Maybe.none();
 	
 	/**
 	 * Builds an extractor of cases associated to a second tag.
@@ -30,7 +30,7 @@ public class TagExtractors {
 		return (Function<Tag2<T>, Maybe<T>>) AS2;
 	}
 	
-	private static final Function<? extends Tag2<?>, ? extends Maybe<?>> AS2 = instance -> instance.is2() ? Maybe.some(instance.as2()) : Maybe.none();
+	private static final Function<? extends Tag2<?>, ? extends Maybe<?>> AS2 = tag -> tag.is2() ? Maybe.some(tag.as2()) : Maybe.none();
 	
 	/**
 	 * Builds an extractor of cases associated to a third tag.
@@ -43,7 +43,7 @@ public class TagExtractors {
 		return (Function<Tag3<T>, Maybe<T>>) AS3;
 	}
 	
-	private static final Function<? extends Tag3<?>, ? extends Maybe<?>> AS3 = instance -> instance.is3() ? Maybe.some(instance.as3()) : Maybe.none();
+	private static final Function<? extends Tag3<?>, ? extends Maybe<?>> AS3 = tag -> tag.is3() ? Maybe.some(tag.as3()) : Maybe.none();
 	
 	/**
 	 * Builds an extractor of cases associated to a fourth tag.
@@ -56,7 +56,7 @@ public class TagExtractors {
 		return (Function<Tag4<T>, Maybe<T>>) AS4;
 	}
 	
-	private static final Function<? extends Tag4<?>, ? extends Maybe<?>> AS4 = instance -> instance.is4() ? Maybe.some(instance.as4()) : Maybe.none();
+	private static final Function<? extends Tag4<?>, ? extends Maybe<?>> AS4 = tag -> tag.is4() ? Maybe.some(tag.as4()) : Maybe.none();
 	
 	/**
 	 * Builds an extractor of cases associated to a fifth tag.
@@ -69,7 +69,7 @@ public class TagExtractors {
 		return (Function<Tag5<T>, Maybe<T>>) AS5;
 	}
 	
-	private static final Function<? extends Tag5<?>, ? extends Maybe<?>> AS5 = instance -> instance.is5() ? Maybe.some(instance.as5()) : Maybe.none();
+	private static final Function<? extends Tag5<?>, ? extends Maybe<?>> AS5 = tag -> tag.is5() ? Maybe.some(tag.as5()) : Maybe.none();
 	
 	private TagExtractors() {
 		// Prevent instantiation.

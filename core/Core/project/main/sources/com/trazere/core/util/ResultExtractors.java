@@ -18,36 +18,36 @@ package com.trazere.core.util;
 import com.trazere.core.functional.Function;
 
 /**
- * The {@link EitherExtractors} class provides various extractors related to {@link Either}s.
+ * The {@link ResultExtractors} class provides various extractors related to {@link Result}s.
  */
-public class EitherExtractors {
+public class ResultExtractors {
 	/**
-	 * Builds an extractor of left values.
+	 * Builds an extractor of success values.
 	 * 
-	 * @param <L> Type of the left value.
+	 * @param <T> Type of the success values.
 	 * @return The built extractor.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <L> Function<Either<? extends L, ?>, Maybe<L>> getLeft() {
-		return (Function<Either<? extends L, ?>, Maybe<L>>) GET_LEFT;
+	public static <T> Function<Result<? extends T>, Maybe<T>> getSuccess() {
+		return (Function<Result<? extends T>, Maybe<T>>) GET_SUCCESS;
 	}
 	
-	private static final Function<? extends Either<?, ?>, ? extends Maybe<?>> GET_LEFT = Either::getLeft;
+	private static Function<? extends Result<?>, ? extends Maybe<?>> GET_SUCCESS = Result::getSuccess;
 	
 	/**
-	 * Builds an extractor of right values.
+	 * Builds an extractor of causes of failures.
 	 * 
-	 * @param <R> Type of the right value.
+	 * @param <T> Type of the success values.
 	 * @return The built extractor.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <R> Function<Either<?, ? extends R>, Maybe<R>> getRight() {
-		return (Function<Either<?, ? extends R>, Maybe<R>>) GET_RIGHT;
+	public static <T> Function<Result<? extends T>, Maybe<Throwable>> getFailure() {
+		return (Function<Result<? extends T>, Maybe<Throwable>>) GET_FAILURE;
 	}
 	
-	private static final Function<? extends Either<?, ?>, ? extends Maybe<?>> GET_RIGHT = Either::getRight;
+	private static Function<? extends Result<?>, Maybe<Throwable>> GET_FAILURE = Result::getFailure;
 	
-	private EitherExtractors() {
+	private ResultExtractors() {
 		// Prevent instantiation.
 	}
 }

@@ -56,9 +56,9 @@ public class ThunkUtils {
 			@Override
 			public T evaluate() {
 				if (_value.isRight()) {
-					return _value.asRight().getRight();
+					return _value.asRight().getValue();
 				} else {
-					final T value = _value.asLeft().getLeft().evaluate();
+					final T value = _value.asLeft().getValue().evaluate();
 					_value = Either.right(value);
 					return value;
 				}
@@ -72,7 +72,7 @@ public class ThunkUtils {
 			@Override
 			public Maybe<T> get() {
 				if (_value.isRight()) {
-					return Maybe.some(_value.asRight().getRight());
+					return Maybe.some(_value.asRight().getValue());
 				} else {
 					return Maybe.<T>none();
 				}
