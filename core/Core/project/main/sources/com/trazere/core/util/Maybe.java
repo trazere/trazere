@@ -305,7 +305,7 @@ implements Iterable<T>, Describable {
 		
 		@Override
 		public <R> Maybe<R> flatMap(final Function<? super T, ? extends Maybe<? extends R>> function) {
-			return function.evaluate(_value).map(Functions.<R>identity());
+			return function.evaluate(_value).map(Functions.identity());
 		}
 		
 		// Iterable.
