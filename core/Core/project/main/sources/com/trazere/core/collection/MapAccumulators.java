@@ -55,6 +55,7 @@ public class MapAccumulators {
 	 * @param <M> Type of the map.
 	 * @param map Map to populate.
 	 * @return The built accumulator.
+	 * @see Map#put(Object, Object)
 	 */
 	public static <K, V, M extends Map<? super K, ? super V>> Accumulator2<K, V, M> put(final M map) {
 		assert null != map;

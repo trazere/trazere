@@ -102,8 +102,8 @@ public class FeedUtils {
 	 * @param extractor Function to use to extract the elements.
 	 * @return The first extracted element.
 	 */
-	public static <E, EE> Maybe<EE> first(final Iterable<? extends E> collection, final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
-		return IteratorUtils.first(collection.iterator(), extractor);
+	public static <E, EE> Maybe<EE> extractFirst(final Iterable<? extends E> collection, final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
+		return IteratorUtils.extractFirst(collection.iterator(), extractor);
 	}
 	
 	/**

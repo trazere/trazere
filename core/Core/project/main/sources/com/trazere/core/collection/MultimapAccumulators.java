@@ -29,6 +29,7 @@ public class MultimapAccumulators {
 	 * @param <M> Type of the multimap.
 	 * @param multimap Multimap to populate.
 	 * @return The built accumulator.
+	 * @see Multimap#put(Object, Object)
 	 */
 	public static <K, V, M extends Multimap<? super K, ? super V, ?>> Accumulator2<K, V, M> put(final M multimap) {
 		assert null != multimap;
