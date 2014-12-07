@@ -131,8 +131,8 @@ public class IterableUtils {
 	 * @param extractor Function to use to extract the elements.
 	 * @return The first extracted element.
 	 */
-	public static <E, EE> Maybe<? extends EE> first(final Iterable<? extends E> iterable, final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
-		return IteratorUtils.first(iterable.iterator(), extractor);
+	public static <E, EE> Maybe<? extends EE> extractFirst(final Iterable<? extends E> iterable, final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
+		return IteratorUtils.extractFirst(iterable.iterator(), extractor);
 	}
 	
 	/**
@@ -145,8 +145,8 @@ public class IterableUtils {
 	 * @param extractor Function to use to extract the elements.
 	 * @return The first extracted element.
 	 */
-	public static <E1, E2, EE> Maybe<? extends EE> first(final Iterable<? extends Tuple2<? extends E1, ? extends E2>> iterable, final Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor) {
-		return IteratorUtils.first(iterable.iterator(), extractor);
+	public static <E1, E2, EE> Maybe<? extends EE> extractFirst(final Iterable<? extends Tuple2<? extends E1, ? extends E2>> iterable, final Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor) {
+		return IteratorUtils.extractFirst(iterable.iterator(), extractor);
 	}
 	
 	/**

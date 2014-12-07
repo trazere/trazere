@@ -32,6 +32,7 @@ public class TextAccumulators {
 	 * @param <A> Type of the appendable.
 	 * @param appendable Appendable that should be appended to.
 	 * @return The built accumulator.
+	 * @see Appendable#append(CharSequence)
 	 */
 	public static <A extends Appendable> Accumulator<CharSequence, A> append(final A appendable) {
 		return append(appendable, TextException.FACTORY);
@@ -44,6 +45,7 @@ public class TextAccumulators {
 	 * @param appendable Appendable that should be appended to.
 	 * @param failureFactory Factory of the append failures.
 	 * @return The built accumulator.
+	 * @see Appendable#append(CharSequence)
 	 */
 	public static <A extends Appendable> Accumulator<CharSequence, A> append(final A appendable, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		return new Accumulator<CharSequence, A>() {
@@ -64,9 +66,9 @@ public class TextAccumulators {
 	}
 	
 	/**
-	 * Builds an accumulator that concatenate strings.
+	 * Builds an accumulator that concatenate character sequences.
 	 * 
-	 * @param initialState The initial string.
+	 * @param initialState The initial character sequence.
 	 * @return The built accumulator.
 	 */
 	public static Accumulator<CharSequence, CharSequence> concat(final CharSequence initialState) {
@@ -82,6 +84,7 @@ public class TextAccumulators {
 	 * @param appendable Appendable to populate with the joined representations of the tokens.
 	 * @param first Indicates whether the next appended token will be the first one or not.
 	 * @return The built accumulator.
+	 * @see Joiner#join(Object, Appendable, boolean)
 	 */
 	public static <T, A extends Appendable> Accumulator<T, A> join(final Joiner<? super T> joiner, final A appendable, final boolean first) {
 		assert null != joiner;

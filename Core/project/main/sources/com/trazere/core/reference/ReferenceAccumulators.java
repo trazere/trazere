@@ -28,6 +28,7 @@ public class ReferenceAccumulators {
 	 * @param <R> Type of the reference.
 	 * @param reference Reference to update.
 	 * @return The built accumulator.
+	 * @see MutableReference#update(com.trazere.core.util.Maybe)
 	 */
 	public static <T, R extends MutableReference<T>> Accumulator<T, R> update(final R reference) {
 		assert null != reference;

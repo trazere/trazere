@@ -166,8 +166,8 @@ public class CollectionUtils {
 	 * @param extractor Function to use to extract the elements.
 	 * @return The first extracted element.
 	 */
-	public static <E, EE> Maybe<EE> first(final Collection<? extends E> collection, final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
-		return IteratorUtils.first(collection.iterator(), extractor);
+	public static <E, EE> Maybe<EE> extractFirst(final Collection<? extends E> collection, final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
+		return IteratorUtils.extractFirst(collection.iterator(), extractor);
 	}
 	
 	/**
@@ -400,51 +400,6 @@ public class CollectionUtils {
 	//
 	//
 	
-	//	/**
-	//	 * Computes the union of the given collections and populates the given result collection with it.
-	//	 * <p>
-	//	 * When the populated collection is ordered, the items of the first given collection precede the items of the second one.
-	//	 *
-	//	 * @param <T> Type of the elements.
-	//	 * @param <C> Type of the result collection.
-	//	 * @param collection1 The first collection.
-	//	 * @param collection2 The second collection.
-	//	 * @param results The collection to populate with the results.
-	//	 * @return The given result collection.
-	//	 */
-	//	public static <T, C extends Collection<? super T>> C union(final Collection<? extends T> collection1, final Collection<? extends T> collection2, final C results) {
-	//		assert null != collection1;
-	//		assert null != collection2;
-	//		assert null != results;
-	//
-	//		results.addAll(collection1);
-	//		results.addAll(collection2);
-	//		return results;
-	//	}
-	//
-	//	/**
-	//	 * Computes the union of the given maps and populates the given result map with it.
-	//	 * <p>
-	//	 * The values of the first map have precedence over the values of the second map when their domains intersect.
-	//	 *
-	//	 * @param <K> Type of the keys.
-	//	 * @param <V> Type of the values.
-	//	 * @param <M> Type of the result map.
-	//	 * @param map1 The first map.
-	//	 * @param map2 The second map.
-	//	 * @param results The map to populate with the results.
-	//	 * @return The given result map.
-	//	 */
-	//	public static <K, V, M extends Map<? super K, ? super V>> M union(final Map<? extends K, ? extends V> map1, final Map<? extends K, ? extends V> map2, final M results) {
-	//		assert null != map1;
-	//		assert null != map2;
-	//		assert null != results;
-	//
-	//		results.putAll(map2);
-	//		results.putAll(map1);
-	//		return results;
-	//	}
-	//
 	//	/**
 	//	 * Tests whether the given collections intersect. The collections instersect when they have some common value.
 	//	 * <p>
