@@ -328,7 +328,7 @@ public class IteratorUtils {
 	}
 	
 	/**
-	 * Gets the first element extracted from the elements provided by the given iterator.
+	 * Get the first element extracted from the elements provided by the given iterator using the given extractor.
 	 * 
 	 * @param <E> Type of the elements.
 	 * @param <EE> Type of the extracted elements.
@@ -336,7 +336,7 @@ public class IteratorUtils {
 	 * @param extractor Function to use to extract the elements.
 	 * @return The first extracted element.
 	 */
-	public static <E, EE> Maybe<EE> first(final Iterator<? extends E> iterator, final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
+	public static <E, EE> Maybe<EE> extractFirst(final Iterator<? extends E> iterator, final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
 		while (iterator.hasNext()) {
 			final Maybe<? extends EE> extractedElement = extractor.evaluate(iterator.next());
 			if (extractedElement.isSome()) {
@@ -347,7 +347,7 @@ public class IteratorUtils {
 	}
 	
 	/**
-	 * Gets the first element extracted from the pairs of elements provided by the given iterator.
+	 * Get the first element extracted from the pairs of elements provided by the given iterator using the given extractor.
 	 * 
 	 * @param <E1> Type of the first element of the pairs.
 	 * @param <E2> Type of the second element of the pairs.
@@ -356,7 +356,7 @@ public class IteratorUtils {
 	 * @param extractor Function to use to extract the elements.
 	 * @return The first extracted element.
 	 */
-	public static <E1, E2, EE> Maybe<EE> first(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor) {
+	public static <E1, E2, EE> Maybe<EE> extractFirst(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor) {
 		while (iterator.hasNext()) {
 			final Tuple2<? extends E1, ? extends E2> elementPair = iterator.next();
 			final Maybe<? extends EE> extractedElement = extractor.evaluate(elementPair.get1(), elementPair.get2());
@@ -844,7 +844,7 @@ public class IteratorUtils {
 		return new LookAheadIterator<EE>() {
 			@Override
 			protected Maybe<? extends EE> pull() {
-				return IteratorUtils.first(iterator, extractor);
+				return IteratorUtils.extractFirst(iterator, extractor);
 			}
 		};
 	}
@@ -868,7 +868,7 @@ public class IteratorUtils {
 		return new LookAheadIterator<EE>() {
 			@Override
 			protected Maybe<? extends EE> pull() {
-				return IteratorUtils.first(iterator, extractor);
+				return IteratorUtils.extractFirst(iterator, extractor);
 			}
 		};
 	}
