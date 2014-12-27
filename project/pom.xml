@@ -12,6 +12,8 @@
 	<modules>
 		<module>dist</module>
 		<module>../Ant/project</module>
+		<module>../Core/project</module>
+		<module>../CSV/project</module>
 		<module>../Parser/project</module>
 		<module>../Utils/project</module>
 	</modules>
