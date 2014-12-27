@@ -177,21 +177,6 @@ public class CharPredicates {
 	 * @param cs Characters to accept.
 	 * @return The built predicate.
 	 */
-	public static CharPredicate values(final Character... cs) {
-		final Set<Character> cs_ = new HashSet<>();
-		for (final char c : cs) {
-			cs_.add(c);
-		}
-		return values(cs_);
-	}
-	
-	// TODO: fromChars ?
-	/**
-	 * Builds a character predicate that evaluates to <code>true</code> for the given characters.
-	 * 
-	 * @param cs Characters to accept.
-	 * @return The built predicate.
-	 */
 	public static CharPredicate values(final Collection<Character> cs) {
 		assert null != cs;
 		
