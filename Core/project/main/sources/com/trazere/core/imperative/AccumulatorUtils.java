@@ -19,6 +19,7 @@ import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Predicate;
 import com.trazere.core.functional.Predicate2;
+import com.trazere.core.functional.PredicateUtils;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 
@@ -55,6 +56,34 @@ public class AccumulatorUtils {
 				return accumulator.get();
 			}
 		};
+	}
+	
+	/**
+	 * Normalizes the elements accumulated into the given accumulator.
+	 * 
+	 * @param <E> Type of the accumulated elements.
+	 * @param <S> Type of the state.
+	 * @param accumulator Accumulator of the normalized elements.
+	 * @return The built accumulator.
+	 */
+	public static <E, S> Accumulator<E, S> normalize(final Accumulator<? super E, ? extends S> accumulator) {
+		return AccumulatorUtils.filter(accumulator, ImperativePredicates.normalizer());
+	}
+	
+	/**
+	 * Normalizes the elements accumulated into the given accumulator according to the given hash function.
+	 * <p>
+	 * At most one element will be accumulated for each hash value.
+	 * 
+	 * @param <E> Type of the accumulated elements.
+	 * @param <H> Type of the hash values.
+	 * @param <S> Type of the state.
+	 * @param accumulator Accumulator of the normalized elements.
+	 * @param hashFunction Function that hashes the elements.
+	 * @return The built accumulator.
+	 */
+	public static <E, H, S> Accumulator<E, S> normalize(final Accumulator<? super E, ? extends S> accumulator, final Function<? super E, H> hashFunction) {
+		return AccumulatorUtils.filter(accumulator, PredicateUtils.map(ImperativePredicates.normalizer(), hashFunction));
 	}
 	
 	// TODO: rename to ???

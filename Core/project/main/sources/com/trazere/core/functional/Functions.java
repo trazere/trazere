@@ -15,15 +15,14 @@
  */
 package com.trazere.core.functional;
 
-import com.trazere.core.imperative.Procedure;
-import com.trazere.core.imperative.Procedure2;
-import com.trazere.core.imperative.Procedure3;
 import com.trazere.core.lang.ThrowableFactory;
 
 /**
- * The {@link Functions} class provides various factories of functions.
+ * The {@link Functions} class provides various factories of {@link Function functions}.
  * 
  * @see Function
+ * @see Function2
+ * @see Function3
  */
 public class Functions {
 	/**
@@ -122,35 +121,6 @@ public class Functions {
 		assert null != predicate;
 		
 		return arg -> predicate.evaluate(arg);
-	}
-	
-	/**
-	 * Builds a function that lifts the given procedure.
-	 *
-	 * @param <A> Type of the arguments.
-	 * @param procedure Procedure to lift.
-	 * @return The built function.
-	 */
-	public static <A> Function<A, Void> fromProcedure(final Procedure<? super A> procedure) {
-		return fromProcedure(procedure, (Void) null);
-	}
-	
-	/**
-	 * Builds a function that lifts the given procedure and evaluates to the given result.
-	 *
-	 * @param <A> Type of the arguments.
-	 * @param <R> Type of the results.
-	 * @param procedure Procedure to lift.
-	 * @param result Result of the function.
-	 * @return The built function.
-	 */
-	public static <A, R> Function<A, R> fromProcedure(final Procedure<? super A> procedure, final R result) {
-		assert null != procedure;
-		
-		return arg -> {
-			procedure.execute(arg);
-			return result;
-		};
 	}
 	
 	/**
@@ -387,37 +357,6 @@ public class Functions {
 		return (arg1, arg2) -> predicate.evaluate(arg1, arg2);
 	}
 	
-	/**
-	 * Builds a two arguments function from the given two arguments procedure.
-	 *
-	 * @param <A1> Type of the first arguments.
-	 * @param <A2> Type of the second arguments.
-	 * @param procedure Procedure to lift.
-	 * @return The built function.
-	 */
-	public static <A1, A2> Function2<A1, A2, Void> fromProcedure2(final Procedure2<? super A1, ? super A2> procedure) {
-		return fromProcedure2(procedure, (Void) null);
-	}
-	
-	/**
-	 * Builds a two arguments function from the given two arguments procedure.
-	 *
-	 * @param <A1> Type of the first arguments.
-	 * @param <A2> Type of the second arguments.
-	 * @param <R> Type of the results.
-	 * @param procedure Procedure to lift.
-	 * @param result Result of the function.
-	 * @return The built function.
-	 */
-	public static <A1, A2, R> Function2<A1, A2, R> fromProcedure2(final Procedure2<? super A1, ? super A2> procedure, final R result) {
-		assert null != procedure;
-		
-		return (arg1, arg2) -> {
-			procedure.execute(arg1, arg2);
-			return result;
-		};
-	}
-	
 	//	/**
 	//	 * Builds a two arguments function that lifts the given function.
 	//	 * <p>
@@ -516,39 +455,6 @@ public class Functions {
 		return (arg1, arg2, arg3) -> predicate.evaluate(arg1, arg2, arg3);
 	}
 	
-	/**
-	 * Builds a three arguments function from the given three arguments procedure.
-	 *
-	 * @param <A1> Type of the first arguments.
-	 * @param <A2> Type of the second arguments.
-	 * @param <A3> Type of the third arguments.
-	 * @param procedure Procedure to lift.
-	 * @return The built function.
-	 */
-	public static <A1, A2, A3> Function3<A1, A2, A3, Void> fromProcedure3(final Procedure3<? super A1, ? super A2, ? super A3> procedure) {
-		return fromProcedure3(procedure, (Void) null);
-	}
-	
-	/**
-	 * Builds a three arguments function from the given three arguments procedure.
-	 *
-	 * @param <A1> Type of the first arguments.
-	 * @param <A2> Type of the second arguments.
-	 * @param <A3> Type of the third arguments.
-	 * @param <R> Type of the results.
-	 * @param procedure Procedure to lift.
-	 * @param result Result of the function.
-	 * @return The built function.
-	 */
-	public static <A1, A2, A3, R> Function3<A1, A2, A3, R> fromProcedure3(final Procedure3<? super A1, ? super A2, ? super A3> procedure, final R result) {
-		assert null != procedure;
-		
-		return (arg1, arg2, arg3) -> {
-			procedure.execute(arg1, arg2, arg3);
-			return result;
-		};
-	}
-	
 	//	/**
 	//	 * Builds a three arguments function that lifts the given one argument function.
 	//	 *
@@ -591,52 +497,6 @@ public class Functions {
 	//			public R evaluate(final T1 value1, final T2 value2, final T3 value3)
 	//			throws X {
 	//				return function.evaluate(value1, value2);
-	//			}
-	//		};
-	//	}
-	
-	//
-	
-	//	public static <T, X extends Exception> Predicate1<T, X> normalizer() {
-	//		return new Predicate1<T, X>() {
-	//			private final Set<T> _visitedValues = new HashSet<T>();
-	//
-	//			@Override
-	//			public boolean evaluate(final T value)
-	//			throws X {
-	//				return _visitedValues.add(value);
-	//			}
-	//		};
-	//	}
-	//
-	//	/**
-	//	 * Builds a function that normalizes values according to the given hash function.
-	//	 * <p>
-	//	 * The built function always returns the same value for a given hash. The returned value corresponds to the first value that produced the corresponding
-	//	 * hash.
-	//	 *
-	//	 * @param <T> Type of the values.
-	//	 * @param <H> Type of the hash values.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param hash Function that hash the values.
-	//	 * @return The built predicate.
-	//	 */
-	//	public static <T, H, X extends Exception> Function1<T, T, X> normalizer(final Function1<? super T, H, ? extends X> hash) {
-	//		assert null != hash;
-	//
-	//		return new Function1<T, T, X>() {
-	//			private final Map<H, T> _values = new HashMap<H, T>();
-	//
-	//			@Override
-	//			public T evaluate(final T value)
-	//			throws X {
-	//				final H hashValue = hash.evaluate(value);
-	//				if (_values.containsKey(hashValue)) {
-	//					return _values.get(hashValue);
-	//				} else {
-	//					_values.put(hashValue, value);
-	//					return value;
-	//				}
 	//			}
 	//		};
 	//	}
