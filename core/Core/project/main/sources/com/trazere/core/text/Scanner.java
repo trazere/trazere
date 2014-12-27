@@ -15,28 +15,25 @@
  */
 package com.trazere.core.text;
 
-import com.trazere.core.lang.ThrowableFactory;
 import com.trazere.core.util.Maybe;
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.PushbackReader;
 import java.io.Reader;
 
 /**
- * The {@link Scanner} class implements an helper to analyse/read character streams.
+ * The {@link Scanner} class provides helpers to analyse/read character streams.
  * <p>
- * It provides various methods to scan the upcoming characters with an infinite look ahead. Scanning operations are defined as reading as many characters as
- * necessary and matching them against some filter. When the matches are successful, the read characters are consumed and returned. Otherwise, no characters are
- * consumed, even when the match was partially successful.
+ * Scanners provide various operations that read characters and match them against some filter with an infinite look aread. Upon success of the match, the read
+ * characters are consumed and returned. Otherwise, no characters are consumed, even when the match was partially successful.
  */
-public class Scanner {
+public class Scanner
+implements Closeable {
 	/** Reader providing the character stream. */
 	protected final PushbackReader _reader;
 	
 	/** Current scanning position. */
 	protected int _position;
-	
-	/** Factory of the failures. */
-	protected final ThrowableFactory<? extends RuntimeException> _failureFactory;
 	
 	/**
 	 * Instantiates a new scanner with an initial <code>0</code> position.
@@ -54,25 +51,12 @@ public class Scanner {
 	 * @param position Initial scanning position.
 	 */
 	public Scanner(final Reader reader, final int position) {
-		this(reader, position, TextException.FACTORY);
-	}
-	
-	/**
-	 * Instantiates a new scanner with the given reader.
-	 * 
-	 * @param reader Reader providing the character stream.
-	 * @param position Initial scanning position.
-	 * @param failureFactory Factory of the failures.
-	 */
-	public Scanner(final Reader reader, final int position, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		assert null != reader;
 		assert position >= 0;
-		assert null != failureFactory;
 		
 		// Initialization.
 		_reader = new PushbackReader(reader, 512);
 		_position = position;
-		_failureFactory = failureFactory;
 	}
 	
 	/**
@@ -110,7 +94,7 @@ public class Scanner {
 				return false;
 			}
 		} catch (final IOException exception) {
-			throw _failureFactory.build(exception);
+			throw new TextException(exception);
 		}
 	}
 	
@@ -131,7 +115,7 @@ public class Scanner {
 				return Maybe.some((char) i);
 			}
 		} catch (final IOException exception) {
-			throw _failureFactory.build(exception);
+			throw new TextException(exception);
 		}
 	}
 	
@@ -158,7 +142,7 @@ public class Scanner {
 				return true;
 			}
 		} catch (final IOException exception) {
-			throw _failureFactory.build("Failed scanning char '" + c + "\'", exception);
+			throw new TextException("Failed scanning char '" + c + "\'", exception);
 		}
 	}
 	
@@ -187,7 +171,7 @@ public class Scanner {
 			_position += 1;
 			return Maybe.some(c);
 		} catch (final IOException exception) {
-			throw _failureFactory.build("Failed scanning some char accepted by \"" + filter + "\"", exception);
+			throw new TextException("Failed scanning some char accepted by \"" + filter + "\"", exception);
 		}
 	}
 	
@@ -221,7 +205,7 @@ public class Scanner {
 				buffer.append(c);
 			}
 		} catch (final IOException exception) {
-			throw _failureFactory.build("Failed scanning chars accepted by \"" + filter + "\"", exception);
+			throw new TextException("Failed scanning chars accepted by \"" + filter + "\"", exception);
 		}
 	}
 	
@@ -252,7 +236,7 @@ public class Scanner {
 			_position += n;
 			return true;
 		} catch (final IOException exception) {
-			throw _failureFactory.build("Failed scanning char sequence \"" + s + "\"", exception);
+			throw new TextException("Failed scanning char sequence \"" + s + "\"", exception);
 		}
 	}
 	
@@ -279,7 +263,7 @@ public class Scanner {
 				buffer.append((char) i);
 			}
 		} catch (final IOException exception) {
-			throw _failureFactory.build(exception);
+			throw new TextException(exception);
 		}
 	}
 	
@@ -313,7 +297,7 @@ public class Scanner {
 				buffer.append(rc);
 			}
 		} catch (final IOException exception) {
-			throw _failureFactory.build("Failed scanning to char '" + c + "\'", exception);
+			throw new TextException("Failed scanning to char '" + c + "\'", exception);
 		}
 	}
 	
@@ -347,7 +331,7 @@ public class Scanner {
 				buffer.append(c);
 			}
 		} catch (final IOException exception) {
-			throw _failureFactory.build("Failed scanning to any char accepted by \"" + filter + "\"", exception);
+			throw new TextException("Failed scanning to any char accepted by \"" + filter + "\"", exception);
 		}
 	}
 	
@@ -387,18 +371,19 @@ public class Scanner {
 				}
 			}
 		} catch (final IOException exception) {
-			throw _failureFactory.build("Failed scanning to char sequence \"" + s + "\"", exception);
+			throw new TextException("Failed scanning to char sequence \"" + s + "\"", exception);
 		}
 	}
 	
 	/**
-	 * Closes the reader of this scanner.
+	 * Closes the underlying reader providing the characters to this scanner.
 	 */
+	@Override
 	public void close() {
 		try {
 			_reader.close();
 		} catch (final IOException exception) {
-			throw _failureFactory.build(exception);
+			throw new TextException(exception);
 		}
 	}
 }

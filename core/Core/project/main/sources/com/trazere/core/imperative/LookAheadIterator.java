@@ -44,6 +44,7 @@ implements Iterator<E> {
 	public E next() {
 		lookAhead();
 		if (_next.isSome()) {
+			_lookAhead = false;
 			return _next.asSome().getValue();
 		} else {
 			throw new NoSuchElementException();
