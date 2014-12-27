@@ -16,12 +16,13 @@
 package com.trazere.core.functional;
 
 import com.trazere.core.design.Factory;
-import com.trazere.core.imperative.Effect;
 import com.trazere.core.lang.ThrowableFactory;
 import com.trazere.core.util.Maybe;
 
 /**
- * The {@link Thunks} class provides various factories of {@link Thunk}s.
+ * The {@link Thunks} class provides various factories of {@link Thunk thunks}.
+ * 
+ * @see Thunk
  */
 public class Thunks {
 	/**
@@ -91,33 +92,6 @@ public class Thunks {
 		assert null != factory;
 		
 		return () -> factory.build();
-	}
-	
-	/**
-	 * Builds a thunk that lifts the given effect.
-	 *
-	 * @param effect Effect to lift.
-	 * @return The built thunk.
-	 */
-	public static Thunk<Void> fromEffect(final Effect effect) {
-		return fromEffect(effect, (Void) null);
-	}
-	
-	/**
-	 * Builds a thunk that lifts the given effect and evaluates to the given value.
-	 * 
-	 * @param <T> Type of the value.
-	 * @param effect Effect to lift.
-	 * @param value Value of the thunk.
-	 * @return The built thunk.
-	 */
-	public static <T> Thunk<T> fromEffect(final Effect effect, final T value) {
-		assert null != effect;
-		
-		return () -> {
-			effect.execute();
-			return value;
-		};
 	}
 	
 	private Thunks() {

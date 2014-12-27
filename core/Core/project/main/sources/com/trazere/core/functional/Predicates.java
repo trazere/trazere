@@ -227,25 +227,6 @@ public class Predicates {
 	//			return value.booleanValue();
 	//		}
 	//	};
-	//
-	//	/**
-	//	 * Builds a one argument predicates that accepts each value only once.
-	//	 *
-	//	 * @param <T> Type of the values.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @return The built predicate.
-	//	 */
-	//	public static <T, X extends Exception> Predicate1<T, X> normalizer() {
-	//		return new Predicate1<T, X>() {
-	//			private final Set<T> _visitedValues = new HashSet<T>();
-	//
-	//			@Override
-	//			public boolean evaluate(final T value)
-	//			throws X {
-	//				return _visitedValues.add(value);
-	//			}
-	//		};
-	//	}
 	
 	/**
 	 * Builds a two arguments predicate that evaluates to the given result for all arguments.
