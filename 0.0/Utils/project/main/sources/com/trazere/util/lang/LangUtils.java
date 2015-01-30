@@ -334,7 +334,7 @@ public class LangUtils {
 		final MutableObject<T> least = new MutableObject<T>(values.next());
 		while (values.hasNext()) {
 			final T value = values.next();
-			if (comparator.compare(value, least.get()) < 1) {
+			if (comparator.compare(value, least.get()) < 0) {
 				least.set(value);
 			}
 		}
@@ -394,7 +394,7 @@ public class LangUtils {
 		final MutableObject<T> greatest = new MutableObject<T>(values.next());
 		while (values.hasNext()) {
 			final T value = values.next();
-			if (comparator.compare(value, greatest.get()) > 1) {
+			if (comparator.compare(value, greatest.get()) > 0) {
 				greatest.set(value);
 			}
 		}
