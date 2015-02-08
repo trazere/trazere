@@ -15,6 +15,7 @@
  */
 package com.trazere.core.lang;
 
+import com.trazere.core.functional.Function;
 import com.trazere.core.text.Describable;
 import com.trazere.core.text.Description;
 import com.trazere.core.text.TextUtils;
@@ -39,7 +40,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Gets the current value of the receiver mutable char.
+	 * Gets the current value of this mutable char.
 	 * 
 	 * @return The current value.
 	 */
@@ -48,14 +49,24 @@ implements Describable {
 	}
 	
 	/**
-	 * Sets the current value of the receiver mutable char.
+	 * Sets the value of this mutable char.
 	 * 
 	 * @param value New value.
-	 * @return The given value.
+	 * @return The given new value.
 	 */
 	public char set(final char value) {
 		_value = value;
 		return value;
+	}
+	
+	/**
+	 * Updates the value of this mutable char.
+	 * 
+	 * @param function Function to use to compute the new value.
+	 * @return The computed new value.
+	 */
+	public char update(final Function<? super Character, ? extends Character> function) {
+		return set(function.evaluate(_value).charValue());
 	}
 	
 	// Object.

@@ -15,6 +15,7 @@
  */
 package com.trazere.core.lang;
 
+import com.trazere.core.functional.Function;
 import com.trazere.core.text.Describable;
 import com.trazere.core.text.Description;
 import com.trazere.core.text.TextUtils;
@@ -24,41 +25,52 @@ import com.trazere.core.text.TextUtils;
  * <p>
  * This class can be used instead of non-final variables to help tagging side effects.
  * 
- * @param <T> Type of the value.
+ * @param <V> Type of the value.
  */
-public class MutableObject<T>
+public class MutableObject<V>
 implements Describable {
 	/** Current value. */
-	protected T _value;
+	protected V _value;
 	
 	/**
 	 * Instantiates a new mutable object.
 	 * 
 	 * @param value Initial value.
 	 */
-	public MutableObject(final T value) {
+	public MutableObject(final V value) {
 		_value = value;
 	}
 	
 	/**
-	 * Gets the current value of the receiver mutable object.
+	 * Gets the current value of this mutable object.
 	 * 
 	 * @return The current value.
 	 */
-	public T get() {
+	public V get() {
 		return _value;
 	}
 	
 	/**
-	 * Sets the current value of the receiver mutable obejct.
+	 * Sets the value of this mutable obejct.
 	 * 
-	 * @param <V> Type of the value.
+	 * @param <NV> Type of the new value.
 	 * @param value New value.
-	 * @return The given value.
+	 * @return The given new value.
 	 */
-	public <V extends T> V set(final V value) {
+	public <NV extends V> NV set(final NV value) {
 		_value = value;
 		return value;
+	}
+	
+	/**
+	 * Updates the value of this mutable object.
+	 * 
+	 * @param <NV> Type of the new value.
+	 * @param function Function to use to compute the new value.
+	 * @return The computed new value.
+	 */
+	public <NV extends V> NV update(final Function<? super V, ? extends NV> function) {
+		return set(function.evaluate(_value));
 	}
 	
 	// Object.

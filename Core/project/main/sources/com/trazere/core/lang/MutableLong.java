@@ -15,6 +15,7 @@
  */
 package com.trazere.core.lang;
 
+import com.trazere.core.functional.Function;
 import com.trazere.core.text.Describable;
 import com.trazere.core.text.Description;
 import com.trazere.core.text.TextUtils;
@@ -39,19 +40,19 @@ implements Describable {
 	}
 	
 	/**
-	 * Gets the current value of the receiver mutable long integer.
+	 * Gets the value of this mutable long integer.
 	 * 
-	 * @return The current value.
+	 * @return The value.
 	 */
 	public long get() {
 		return _value;
 	}
 	
 	/**
-	 * Sets the current value of the receiver mutable long integer.
+	 * Sets the value of this mutable long integer.
 	 * 
 	 * @param value New value.
-	 * @return The given value.
+	 * @return The given new value.
 	 */
 	public long set(final long value) {
 		_value = value;
@@ -59,90 +60,92 @@ implements Describable {
 	}
 	
 	/**
-	 * Negates the current value of the receiver mutable long integer.
+	 * Updates the value of this mutable long integer.
+	 * 
+	 * @param function Function to use to compute the new value.
+	 * @return The computed new value.
+	 */
+	public long update(final Function<? super Long, ? extends Long> function) {
+		return set(function.evaluate(_value).longValue());
+	}
+	
+	/**
+	 * Negates the value of this mutable long integer.
 	 * 
 	 * @return The resulting value.
 	 */
 	public long neg() {
-		_value = -_value;
-		return _value;
+		return set(-_value);
 	}
 	
 	/**
-	 * Adds the given value to the current value of the receiver mutable long integer.
+	 * Adds the given value to the value of this mutable long integer.
 	 * 
 	 * @param value Value to add.
 	 * @return The resulting value.
 	 */
 	public long add(final long value) {
-		_value = _value + value;
-		return _value;
+		return set(_value + value);
 	}
 	
 	/**
-	 * Substracts the given value from the current value of the receiver mutable long integer.
+	 * Substracts the given value from the value of this mutable long integer.
 	 * 
 	 * @param value Value to substract.
 	 * @return The resulting value.
 	 */
 	public long sub(final long value) {
-		_value = _value - value;
-		return _value;
+		return set(_value - value);
 	}
 	
 	/**
-	 * Multiplies the current value of the receiver mutable long integer by the given value.
+	 * Multiplies the value of this mutable long integer by the given value.
 	 * 
 	 * @param value Value to multiply by.
 	 * @return The resulting value.
 	 */
 	public long mul(final long value) {
-		_value = _value * value;
-		return _value;
+		return set(_value * value);
 	}
 	
 	/**
-	 * Divides the current value of the receiver mutable long integer by the given value.
+	 * Divides the value of this mutable long integer by the given value.
 	 * 
 	 * @param value Value to divide by.
 	 * @return The resulting value.
 	 */
 	public long div(final long value) {
-		_value = _value / value;
-		return _value;
+		return set(_value / value);
 	}
 	
 	/**
-	 * Sets the current value of the receiver mutable long integer to the reminder of the division by the given value.
+	 * Sets the value of this mutable long integer to the reminder of the division by the given value.
 	 * 
 	 * @param value Value to divide by.
 	 * @return The resulting value.
 	 */
 	public long mod(final long value) {
-		_value = _value % value;
-		return _value;
+		return set(_value % value);
 	}
 	
 	/**
-	 * Shifts the current value of the receiver mutable long integer to the left by the given number of bits.
+	 * Shifts the value of this mutable long integer to the left by the given number of bits.
 	 * 
 	 * @param position Number of bits to shift.
 	 * @return The resulting value.
 	 */
 	public long shiftl(final int position) {
-		_value = _value << position;
-		return _value;
+		return set(_value << position);
 	}
 	
 	/**
-	 * Shifts the current value of the receiver mutable long integer to the right by the given number of bits.
+	 * Shifts the value of this mutable long integer to the right by the given number of bits.
 	 * 
 	 * @param position Number of bits to shift.
 	 * @return The resulting value.
 	 */
 	public long shiftr(final int position) {
-		_value = _value >> position;
-		return _value;
+		return set(_value >> position);
 	}
 	
 	// Object.
