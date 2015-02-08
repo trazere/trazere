@@ -15,6 +15,7 @@
  */
 package com.trazere.core.lang;
 
+import com.trazere.core.functional.Function;
 import com.trazere.core.text.Describable;
 import com.trazere.core.text.Description;
 import com.trazere.core.text.TextUtils;
@@ -39,7 +40,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Gets the current value of the receiver mutable byte.
+	 * Gets the current value of this mutable byte.
 	 * 
 	 * @return The current value.
 	 */
@@ -48,14 +49,24 @@ implements Describable {
 	}
 	
 	/**
-	 * Sets the current value of the receiver mutable byte.
+	 * Sets the value of this mutable byte.
 	 * 
 	 * @param value New value.
-	 * @return The given value.
+	 * @return The given new value.
 	 */
 	public byte set(final byte value) {
 		_value = value;
 		return value;
+	}
+	
+	/**
+	 * Updates the value of this mutable byte.
+	 * 
+	 * @param function Function to use to compute the new value.
+	 * @return The computed new value.
+	 */
+	public byte update(final Function<? super Byte, ? extends Byte> function) {
+		return set(function.evaluate(_value).byteValue());
 	}
 	
 	// Object.

@@ -15,6 +15,7 @@
  */
 package com.trazere.core.lang;
 
+import com.trazere.core.functional.Function;
 import com.trazere.core.text.Describable;
 import com.trazere.core.text.Description;
 import com.trazere.core.text.TextUtils;
@@ -39,7 +40,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Gets the current value of the receiver mutable float.
+	 * Gets the current value of this mutable float.
 	 * 
 	 * @return The current value.
 	 */
@@ -48,10 +49,10 @@ implements Describable {
 	}
 	
 	/**
-	 * Sets the current value of the receiver mutable float.
+	 * Sets the value of this mutable float.
 	 * 
 	 * @param value New value.
-	 * @return The given value.
+	 * @return The given new value.
 	 */
 	public float set(final float value) {
 		_value = value;
@@ -59,57 +60,62 @@ implements Describable {
 	}
 	
 	/**
-	 * Negates the current value of the receiver mutable float.
+	 * Updates the value of this mutable float.
+	 * 
+	 * @param function Function to use to compute the new value.
+	 * @return The computed new value.
+	 */
+	public float update(final Function<? super Float, ? extends Float> function) {
+		return set(function.evaluate(_value).floatValue());
+	}
+	
+	/**
+	 * Negates the value of this mutable float.
 	 * 
 	 * @return The resulting value.
 	 */
 	public float neg() {
-		_value = -_value;
-		return _value;
+		return set(-_value);
 	}
 	
 	/**
-	 * Adds the given value to the current value of the receiver mutable float.
+	 * Adds the given value to the value of this mutable float.
 	 * 
 	 * @param value Value to add.
 	 * @return The resulting value.
 	 */
 	public float add(final float value) {
-		_value = _value + value;
-		return _value;
+		return set(_value + value);
 	}
 	
 	/**
-	 * Substracts the given value from the current value of the receiver mutable float.
+	 * Substracts the given value from the value of this mutable float.
 	 * 
 	 * @param value Value to substract.
 	 * @return The resulting value.
 	 */
 	public float sub(final float value) {
-		_value = _value - value;
-		return _value;
+		return set(_value - value);
 	}
 	
 	/**
-	 * Multiplies the current value of the receiver mutable float by the given value.
+	 * Multiplies the value of this mutable float by the given value.
 	 * 
 	 * @param value Value to multiply by.
 	 * @return The resulting value.
 	 */
 	public float mul(final float value) {
-		_value = _value * value;
-		return _value;
+		return set(_value * value);
 	}
 	
 	/**
-	 * Divides the current value of the receiver mutable float by the given value.
+	 * Divides the value of this mutable float by the given value.
 	 * 
 	 * @param value Value to divide by.
 	 * @return The resulting value.
 	 */
 	public float div(final float value) {
-		_value = _value / value;
-		return _value;
+		return set(_value / value);
 	}
 	
 	// Object.

@@ -15,6 +15,7 @@
  */
 package com.trazere.core.lang;
 
+import com.trazere.core.functional.Function;
 import com.trazere.core.text.Describable;
 import com.trazere.core.text.Description;
 import com.trazere.core.text.TextUtils;
@@ -39,7 +40,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Gets the current value of the receiver mutable double.
+	 * Gets the current value of this mutable double.
 	 * 
 	 * @return The current value.
 	 */
@@ -48,10 +49,10 @@ implements Describable {
 	}
 	
 	/**
-	 * Sets the current value of the receiver mutable double.
+	 * Sets the value of this mutable double.
 	 * 
 	 * @param value New value.
-	 * @return The given value.
+	 * @return The given new value.
 	 */
 	public double set(final double value) {
 		_value = value;
@@ -59,57 +60,62 @@ implements Describable {
 	}
 	
 	/**
-	 * Negates the current value of the receiver mutable double.
+	 * Updates the value of this mutable double.
+	 * 
+	 * @param function Function to use to compute the new value.
+	 * @return The computed new value.
+	 */
+	public double update(final Function<? super Double, ? extends Double> function) {
+		return set(function.evaluate(_value).doubleValue());
+	}
+	
+	/**
+	 * Negates the value of this mutable double.
 	 * 
 	 * @return The resulting value.
 	 */
 	public double neg() {
-		_value = -_value;
-		return _value;
+		return set(-_value);
 	}
 	
 	/**
-	 * Adds the given value to the current value of the receiver mutable double.
+	 * Adds the given value to the value of this mutable double.
 	 * 
 	 * @param value Value to add.
 	 * @return The resulting value.
 	 */
 	public double add(final double value) {
-		_value = _value + value;
-		return _value;
+		return set(_value + value);
 	}
 	
 	/**
-	 * Substracts the given value from the current value of the receiver mutable double.
+	 * Substracts the given value from the value of this mutable double.
 	 * 
 	 * @param value Value to substract.
 	 * @return The resulting value.
 	 */
 	public double sub(final double value) {
-		_value = _value - value;
-		return _value;
+		return set(_value - value);
 	}
 	
 	/**
-	 * Multiplies the current value of the receiver mutable double by the given value.
+	 * Multiplies the value of this mutable double by the given value.
 	 * 
 	 * @param value Value to multiply by.
 	 * @return The resulting value.
 	 */
 	public double mul(final double value) {
-		_value = _value * value;
-		return _value;
+		return set(_value * value);
 	}
 	
 	/**
-	 * Divides the current value of the receiver mutable double by the given value.
+	 * Divides the value of this mutable double by the given value.
 	 * 
 	 * @param value Value to divide by.
 	 * @return The resulting value.
 	 */
 	public double div(final double value) {
-		_value = _value / value;
-		return _value;
+		return set(_value / value);
 	}
 	
 	// Object.
