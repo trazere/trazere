@@ -15,6 +15,7 @@
  */
 package com.trazere.core.lang;
 
+import com.trazere.core.functional.Function;
 import com.trazere.core.text.Describable;
 import com.trazere.core.text.Description;
 import com.trazere.core.text.TextUtils;
@@ -39,7 +40,7 @@ implements Describable {
 	}
 	
 	/**
-	 * Gets the current value of the receiver mutable boolean.
+	 * Gets the current value of this mutable boolean.
 	 * 
 	 * @return The current value.
 	 */
@@ -48,10 +49,10 @@ implements Describable {
 	}
 	
 	/**
-	 * Sets the current value of the receiver mutable boolean.
+	 * Sets the value of this mutable boolean.
 	 * 
 	 * @param value New value.
-	 * @return The given value.
+	 * @return The given new value.
 	 */
 	public boolean set(final boolean value) {
 		_value = value;
@@ -59,35 +60,42 @@ implements Describable {
 	}
 	
 	/**
-	 * Inverses the value of the receiver mutable boolean.
+	 * Updates the value of this mutable boolean.
 	 * 
-	 * @return The resulting value.
+	 * @param function Function to use to compute the new value.
+	 * @return The computed new value.
+	 */
+	public boolean update(final Function<? super Boolean, ? extends Boolean> function) {
+		return set(function.evaluate(_value).booleanValue());
+	}
+	
+	/**
+	 * Inverses the value of this mutable boolean.
+	 * 
+	 * @return The resulting new value.
 	 */
 	public boolean not() {
-		_value = !_value;
-		return _value;
+		return set(!_value);
 	}
 	
 	/**
-	 * Updates the value of the receiver mutable boolean by conjunction with the given value.
+	 * Updates the value of this mutable boolean by conjunction with the given value.
 	 * 
-	 * @param value The value.
-	 * @return The resulting value.
+	 * @param value Value.
+	 * @return The resulting new value.
 	 */
 	public boolean and(final boolean value) {
-		_value = _value && value;
-		return _value;
+		return set(_value && value);
 	}
 	
 	/**
-	 * Updates the value of the receiver mutable boolean by disjunction with the given value.
+	 * Updates the value of this mutable boolean by disjunction with the given value.
 	 * 
-	 * @param value The value.
-	 * @return The resulting value.
+	 * @param value Value.
+	 * @return The resulting new value.
 	 */
 	public boolean or(final boolean value) {
-		_value = _value || value;
-		return _value;
+		return set(_value || value);
 	}
 	
 	// Object.
