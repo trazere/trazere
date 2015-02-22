@@ -16,6 +16,7 @@
 package com.trazere.core.util;
 
 import com.trazere.core.functional.Functions;
+import com.trazere.core.functional.Thunk;
 import com.trazere.core.util.Maybe.None;
 import com.trazere.core.util.Maybe.Some;
 
@@ -170,6 +171,40 @@ public class MaybeUtils {
 	 */
 	public static char get(final Maybe<Character> value, final char defaultValue) {
 		return value.isSome() ? value.asSome().getValue().charValue() : defaultValue;
+	}
+	
+	/**
+	 * Gets the value of the given {@link Maybe} instance.
+	 * <p>
+	 * This method returns the wrapped value for the instances built using the {@link Some} constructor and the given default value for instances built using
+	 * the {@link Maybe.None} constructor.
+	 * <p>
+	 * This method is slightly more general than {@link Maybe#get(Object)}.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param maybe {@link Maybe} instance to read.
+	 * @param defaultValue Default value.
+	 * @return The value.
+	 */
+	public static <T> T get(final Maybe<? extends T> maybe, final T defaultValue) {
+		return maybe.isSome() ? maybe.asSome().getValue() : defaultValue;
+	}
+	
+	/**
+	 * Gets the value of the given {@link Maybe} instance.
+	 * <p>
+	 * This method returns the wrapped value for the instances built using the {@link Some} constructor and the given default value for instances built using
+	 * the {@link Maybe.None} constructor.
+	 * <p>
+	 * This method is slightly more general than {@link Maybe#get(Thunk)}.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param maybe {@link Maybe} instance to read.
+	 * @param defaultValue Default value.
+	 * @return The value.
+	 */
+	public static <T> T get(final Maybe<? extends T> maybe, final Thunk<T> defaultValue) {
+		return maybe.isSome() ? maybe.asSome().getValue() : defaultValue.evaluate();
 	}
 	
 	/**
