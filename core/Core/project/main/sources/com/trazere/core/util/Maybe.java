@@ -376,23 +376,6 @@ implements Iterable<T>, Describable {
 	public abstract T get(final T defaultValue);
 	
 	/**
-	 * Gets the value of the given {@link Maybe} instance.
-	 * <p>
-	 * This method returns the wrapped value for the instances built using the {@link Some} constructor and the given default value for instances built using
-	 * the {@link Maybe.None} constructor.
-	 * <p>
-	 * This method is slightly more general than {@link Maybe#get(Object)}.
-	 * 
-	 * @param <T> Type of the value.
-	 * @param maybe {@link Maybe} instance to read.
-	 * @param defaultValue Default value.
-	 * @return The value.
-	 */
-	public static <T> T get(final Maybe<? extends T> maybe, final T defaultValue) {
-		return maybe.isSome() ? maybe.asSome().getValue() : defaultValue;
-	}
-	
-	/**
 	 * Gets the value of the receiver {@link Maybe} instance.
 	 * <p>
 	 * This method returns the wrapped value for the instances built using the {@link Some} constructor and the given default value for instances built using
@@ -402,23 +385,6 @@ implements Iterable<T>, Describable {
 	 * @return The value.
 	 */
 	public abstract T get(final Thunk<? extends T> defaultValue);
-	
-	/**
-	 * Gets the value of the given {@link Maybe} instance.
-	 * <p>
-	 * This method returns the wrapped value for the instances built using the {@link Some} constructor and the given default value for instances built using
-	 * the {@link Maybe.None} constructor.
-	 * <p>
-	 * This method is slightly more general than {@link Maybe#get(Thunk)}.
-	 * 
-	 * @param <T> Type of the value.
-	 * @param maybe {@link Maybe} instance to read.
-	 * @param defaultValue Default value.
-	 * @return The value.
-	 */
-	public static <T> T get(final Maybe<? extends T> maybe, final Thunk<T> defaultValue) {
-		return maybe.isSome() ? maybe.asSome().getValue() : defaultValue.evaluate();
-	}
 	
 	// Matching.
 	

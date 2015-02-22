@@ -16,11 +16,31 @@
 package com.trazere.core.util;
 
 import com.trazere.core.functional.Functions;
+import com.trazere.core.lang.ThrowableFactory;
 
 /**
  * The {@link ResultUtils} class provides various utilities regarding {@link Result}s.
  */
 public class ResultUtils {
+	/**
+	 * Gets the success value of the given result, or throws an exception cause by its failure.
+	 * 
+	 * @param <T> Type of the success value.
+	 * @param <X> Type of the failure exception.
+	 * @param result Result instance to read.
+	 * @param failureFactory Factory of the failure.
+	 * @return The success value.
+	 * @throws X An exceptioned caused the given result when it is a failure.
+	 */
+	public static <T, X extends Exception> T get(final Result<T> result, final ThrowableFactory<? extends X> failureFactory)
+	throws X {
+		if (result.isSuccess()) {
+			return result.asSuccess().getValue();
+		} else {
+			throw failureFactory.build(result.asFailure().getCause());
+		}
+	}
+	
 	/**
 	 * Flattens the success value of the {@link Result} instance contained in the given {@link Result} instance.
 	 *
