@@ -17,103 +17,85 @@ package com.trazere.core.util;
 
 import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Thunk;
+import com.trazere.core.io.Input;
 import com.trazere.core.record.FieldUtils;
 import com.trazere.core.record.InvalidFieldException;
 import com.trazere.core.record.MissingFieldException;
 import com.trazere.core.text.TextSerializers;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
 import java.util.Properties;
 
 /**
- * The {@link PropertiesUtils} class provides various utilities regarding the manipulation of properties.
+ * The {@link PropertiesUtils} class provides various utilities regarding {@link Properties properties}.
+ * 
+ * @see Properties
  */
 public class PropertiesUtils {
-	//	/**
-	//	 * Loads and merges the property files provided by the given inputs.
-	//	 * <p>
-	//	 * Later inputs in the list are having priority over the previous ones.
-	//	 *
-	//	 * @param inputs Input of the property files to load paired with flags indicating whether they are optional.
-	//	 * @return The loaded properties.
-	//	 * @throws IOException When the property file cannot be loaded.
-	//	 */
-	//	public static Properties loadProperties(final Iterable<? extends Tuple2<? extends Input, Boolean>> inputs)
-	//	throws IOException {
-	//		return loadProperties(new Properties(), inputs);
-	//	}
-	//
-	//	/**
-	//	 * Populates the given properties with the contents of the given property file inputs.
-	//	 * <p>
-	//	 * The loaded properties override the given properties. Later inputs in the list are having priority over the previous ones.
-	//	 *
-	//	 * @param properties Properties to fill.
-	//	 * @param inputs Inputs of the property files to load paired with flags indicating whether they are optional.
-	//	 * @return The given properties.
-	//	 * @throws IOException When the property file cannot be loaded.
-	//	 */
-	//	public static Properties loadProperties(final Properties properties, final Iterable<? extends Tuple2<? extends Input, Boolean>> inputs)
-	//	throws IOException {
-	//		assert null != properties;
-	//		assert null != inputs;
-	//
-	//		for (final Tuple2<? extends Input, Boolean> file : inputs) {
-	//			loadProperties(properties, file.get1(), file.get2().booleanValue());
-	//		}
-	//		return properties;
-	//	}
-	//
-	//	/**
-	//	 * Populates the given properties with the content of the given property file input.
-	//	 * <p>
-	//	 * The loaded properties override the given properties.
-	//	 *
-	//	 * @param properties Properties to populate.
-	//	 * @param input Input of the property file to load.
-	//	 * @param optional Flag indicating whether the property file is optional.
-	//	 * @return The given properties.
-	//	 * @throws IOException When the property file cannot be loaded.
-	//	 */
-	//	public static Properties loadProperties(final Properties properties, final Input input, final boolean optional)
-	//	throws IOException {
-	//		assert null != properties;
-	//		assert null != input;
-	//
-	//		if (!optional || input.exists()) {
-	//			final InputStream stream = input.open();
-	//			try {
-	//				properties.load(stream);
-	//			} finally {
-	//				stream.close();
-	//			}
-	//		}
-	//		return properties;
-	//	}
-	//
-	//	/**
-	//	 * Computes the name of a configuration property using the given delimiter and parts.
-	//	 *
-	//	 * @param delimiter Delimiter.
-	//	 * @param parts Parts.
-	//	 * @return The property name.
-	//	 */
-	//	public static String computePropertyName(final String delimiter, final String... parts) {
-	//		assert null != delimiter;
-	//		assert null != parts;
-	//
-	//		final StringBuilder builder = new StringBuilder();
-	//		boolean first = true;
-	//		for (final String part : parts) {
-	//			if (!first) {
-	//				builder.append(delimiter);
-	//			}
-	//			builder.append(part);
-	//			first = false;
-	//		}
-	//		return builder.toString();
-	//	}
+	/**
+	 * Loads and merges the property files provided by the given inputs.
+	 * <p>
+	 * Later inputs in the list are having priority over the previous ones.
+	 * 
+	 * @param inputs Input providing the property files to load paired with flags indicating whether they are optional or not.
+	 * @return The loaded properties.
+	 * @throws IOException When some property file cannot be loaded.
+	 */
+	public static Properties loadProperties(final Iterable<? extends Tuple2<? extends Input, Boolean>> inputs)
+	throws IOException {
+		return loadProperties(new Properties(), inputs);
+	}
+	
+	/**
+	 * Loads the property files provided by the given inputs and merges them into the given properties.
+	 * <p>
+	 * The merged properties override the existing given properties. Later inputs in the list are having priority over the previous ones.
+	 * <p>
+	 * This method does modify the given properties.
+	 * 
+	 * @param properties Properties to populate.
+	 * @param inputs Input providing the property files to load paired with flags indicating whether they are optional or not.
+	 * @return The given properties.
+	 * @throws IOException When some property file cannot be loaded.
+	 * @see Properties#load(InputStream)
+	 */
+	public static Properties loadProperties(final Properties properties, final Iterable<? extends Tuple2<? extends Input, Boolean>> inputs)
+	throws IOException {
+		for (final Tuple2<? extends Input, Boolean> file : inputs) {
+			loadProperties(properties, file.get1(), file.get2().booleanValue());
+		}
+		return properties;
+	}
+	
+	/**
+	 * Loads the property files provided by the given input and merges it into the given properties.
+	 * <p>
+	 * The merged properties override the existing given properties.
+	 * <p>
+	 * This method does modify the given properties.
+	 * 
+	 * @param properties Properties to populate.
+	 * @param input Input providing the property file to load.
+	 * @param optional Flag indicating whether the property file is optional or not.
+	 * @return The given properties.
+	 * @throws IOException When the property file cannot be loaded.
+	 * @see Properties#load(InputStream)
+	 */
+	public static Properties loadProperties(final Properties properties, final Input input, final boolean optional)
+	throws IOException {
+		if (!optional || input.exists()) {
+			final InputStream stream = input.open();
+			try {
+				properties.load(stream);
+			} finally {
+				stream.close();
+			}
+		}
+		return properties;
+	}
 	
 	/**
 	 * Gets the value of the property with the given name from the given properties.
