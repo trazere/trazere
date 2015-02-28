@@ -97,6 +97,37 @@ public class ThrowableUtils {
 		return FeedUtils.extractFirst(getCauseChain(throwable), extractor);
 	}
 	
+	/**
+	 * Gets the first throwable from the chain of the given throwable and its causes matching the given type and throws it.
+	 * 
+	 * @param <T> Type of the throwable to match.
+	 * @param throwable Throwable to explore.
+	 * @param type Type of the throwable to match.
+	 * @throws T The matched throwable.
+	 * @see #getCauseChain(Throwable)
+	 */
+	public static <T extends Throwable> void throwCause(final Throwable throwable, final Class<T> type)
+	throws T {
+		throwCause(throwable, ObjectExtractors.match(type));
+	}
+	
+	/**
+	 * Gets the first throwable extracted from the chain of the given throwable and its causes by the given extractor and throws it.
+	 * 
+	 * @param <T> Type of the extracted throwable.
+	 * @param throwable Throwable to explore.
+	 * @param extractor Function to use to extract the throwable.
+	 * @throws T The extracted throwable.
+	 * @see #getCauseChain(Throwable)
+	 */
+	public static <T extends Throwable> void throwCause(final Throwable throwable, final Function<? super Throwable, ? extends Maybe<? extends T>> extractor)
+	throws T {
+		final Maybe<? extends T> cause = extractCause(throwable, extractor);
+		if (cause.isSome()) {
+			throw cause.asSome().getValue();
+		}
+	}
+	
 	private ThrowableUtils() {
 		// Prevent instantiation.
 	}
