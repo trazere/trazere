@@ -74,10 +74,14 @@ extends DecoratorInputStream {
 	@Override
 	public int read(final byte[] b, final int off, final int len)
 	throws IOException {
-		final int truncatedLen = (int) Math.min(len, _remaining.get());
-		final int read = super.read(b, off, truncatedLen);
-		_remaining.sub(read);
-		return read;
+		if (_remaining.get() > 0) {
+			final int truncatedLen = (int) Math.min(len, _remaining.get());
+			final int read = super.read(b, off, truncatedLen);
+			_remaining.sub(read);
+			return read;
+		} else {
+			return -1;
+		}
 	}
 	
 	@Override
