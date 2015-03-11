@@ -32,7 +32,7 @@ public class FieldFunctions {
 		return (Function<Field<? extends T>, T>) GET;
 	}
 	
-	private static final Function<? extends Field<?>, ?> GET = Field::get;
+	private static final Function<? extends Field<?>, ?> GET = (Function<Field<Object>, Object>) Field::get; // HACK: explicit cast to work around a bug of javac
 	
 	/**
 	 * Builds a function that gets the value of first fields.
@@ -45,7 +45,7 @@ public class FieldFunctions {
 		return (Function<Field1<? extends T>, T>) GET1;
 	}
 	
-	private static final Function<? extends Field1<?>, ?> GET1 = Field1::get1;
+	private static final Function<? extends Field1<?>, ?> GET1 = (Function<Field1<Object>, Object>) Field1::get1; // HACK: explicit cast to work around a bug of javac
 	
 	/**
 	 * Builds a function that gets the value of second fields.
@@ -58,7 +58,7 @@ public class FieldFunctions {
 		return (Function<Field2<? extends T>, T>) GET2;
 	}
 	
-	private static final Function<? extends Field2<?>, ?> GET2 = Field2::get2;
+	private static final Function<? extends Field2<?>, ?> GET2 = (Function<Field2<Object>, Object>) Field2::get2; // HACK: explicit cast to work around a bug of javac
 	
 	/**
 	 * Builds a function that gets the value of third fields.
@@ -71,7 +71,7 @@ public class FieldFunctions {
 		return (Function<Field3<? extends T>, T>) GET3;
 	}
 	
-	private static final Function<? extends Field3<?>, ?> GET3 = Field3::get3;
+	private static final Function<? extends Field3<?>, ?> GET3 = (Function<Field3<Object>, Object>) Field3::get3; // HACK: explicit cast to work around a bug of javac
 	
 	/**
 	 * Builds a function that gets the value of fourth fields.
@@ -84,7 +84,7 @@ public class FieldFunctions {
 		return (Function<Field4<? extends T>, T>) GET4;
 	}
 	
-	private static final Function<? extends Field4<?>, ?> GET4 = Field4::get4;
+	private static final Function<? extends Field4<?>, ?> GET4 = (Function<Field4<Object>, Object>) Field4::get4; // HACK: explicit cast to work around a bug of javac
 	
 	/**
 	 * Builds a function that gets the value of fifth fields.
@@ -97,7 +97,7 @@ public class FieldFunctions {
 		return (Function<Field5<? extends T>, T>) GET5;
 	}
 	
-	private static final Function<? extends Field5<?>, ?> GET5 = Field5::get5;
+	private static final Function<? extends Field5<?>, ?> GET5 = (Function<Field5<Object>, Object>) Field5::get5; // HACK: explicit cast to work around a bug of javac
 	
 	/**
 	 * Builds a function that gets the value of sixth fields.
@@ -110,7 +110,7 @@ public class FieldFunctions {
 		return (Function<Field6<? extends T>, T>) GET6;
 	}
 	
-	private static final Function<? extends Field6<?>, ?> GET6 = Field6::get6;
+	private static final Function<? extends Field6<?>, ?> GET6 = (Function<Field6<Object>, Object>) Field6::get6; // HACK: explicit cast to work around a bug of javac
 	
 	/**
 	 * Builds a function that gets the value of seventh fields.
@@ -123,7 +123,7 @@ public class FieldFunctions {
 		return (Function<Field7<? extends T>, T>) GET7;
 	}
 	
-	private static final Function<? extends Field7<?>, ?> GET7 = Field7::get7;
+	private static final Function<? extends Field7<?>, ?> GET7 = (Function<Field7<Object>, Object>) Field7::get7; // HACK: explicit cast to work around a bug of javac
 	
 	/**
 	 * Builds a function that gets the value of eighth fields.
@@ -136,7 +136,7 @@ public class FieldFunctions {
 		return (Function<Field8<? extends T>, T>) GET8;
 	}
 	
-	private static final Function<? extends Field8<?>, ?> GET8 = Field8::get8;
+	private static final Function<? extends Field8<?>, ?> GET8 = (Function<Field8<Object>, Object>) Field8::get8; // HACK: explicit cast to work around a bug of javac
 	
 	/**
 	 * Builds a function that gets the value of ninth fields.
@@ -149,7 +149,7 @@ public class FieldFunctions {
 		return (Function<Field9<? extends T>, T>) GET9;
 	}
 	
-	private static final Function<? extends Field9<?>, ?> GET9 = Field9::get9;
+	private static final Function<? extends Field9<?>, ?> GET9 = (Function<Field9<Object>, Object>) Field9::get9; // HACK: explicit cast to work around a bug of javac
 	
 	/**
 	 * Builds a function that gets the value of tenth fields.
@@ -162,7 +162,7 @@ public class FieldFunctions {
 		return (Function<Field10<? extends T>, T>) GET10;
 	}
 	
-	private static final Function<? extends Field10<?>, ?> GET10 = Field10::get10;
+	private static final Function<? extends Field10<?>, ?> GET10 = (Function<Field10<Object>, Object>) Field10::get10; // HACK: explicit cast to work around a bug of javac
 	
 	private FieldFunctions() {
 		// Prevent instantiation.
