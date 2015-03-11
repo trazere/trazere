@@ -32,7 +32,8 @@ extends BaseRecordBuilder<K, Record<K>> {
 	}
 	
 	@Override
+	@SuppressWarnings("unused")
 	public Record<K> build() {
-		return new SimpleRecord<>(new HashMap<>(_fields));
+		return new SimpleRecord<K>(new HashMap<>(_fields)); // HACK: explicit type arguments to work around a bug of javac
 	}
 }
