@@ -189,6 +189,31 @@ public class TextUtils {
 	}
 	
 	/**
+	 * Adjusts the length of the given string to the given length.
+	 * <p>
+	 * The string is truncated when it is too long and right-padded using spaces when it it to short.
+	 * 
+	 * @param s String to adjust.
+	 * @param length Desired length, or <code>0</code> to leave the string as it is.
+	 * @return The adjusted string.
+	 */
+	public static String adjust(final String s, final int length) {
+		final int currentLength = s.length();
+		if (length <= 0 || currentLength == length) {
+			return s;
+		} else if (currentLength > length) {
+			return s.substring(0, length);
+		} else {
+			final StringBuilder builder = new StringBuilder(length);
+			builder.append(s);
+			while (builder.length() < length) {
+				builder.append(' ');
+			}
+			return builder.toString();
+		}
+	}
+	
+	/**
 	 * Splits the given string according to the given delimiter.
 	 * 
 	 * @param <C> Type of the collection filled with the results.
@@ -394,22 +419,22 @@ public class TextUtils {
 	
 	/** Array of the hexadecimal digits characters (upper case). */
 	public static final char[] HEX_DIGITS = {
-	    '0',
-	    '1',
-	    '2',
-	    '3',
-	    '4',
-	    '5',
-	    '6',
-	    '7',
-	    '8',
-	    '9',
-	    'A',
-	    'B',
-	    'C',
-	    'D',
-	    'E',
-	    'F'
+		'0',
+		'1',
+		'2',
+		'3',
+		'4',
+		'5',
+		'6',
+		'7',
+		'8',
+		'9',
+		'A',
+		'B',
+		'C',
+		'D',
+		'E',
+		'F'
 	};
 	
 	/**
@@ -499,14 +524,14 @@ public class TextUtils {
 	 * 
 	 * @param <T> Type of the number to parse.
 	 * @param <CX> Type of the conversion exceptions.
-	 * 
 	 * @param format The number format.
 	 * @param converter The extractor of the {@link Number} instance of the excepted type.
 	 * @param representation The representation to parse.
 	 * @return The parsed number.
-	 * @throws CX When the conversion to the result type fails. 
+	 * @throws CX When the conversion to the result type fails.
 	 */
-	public static <T extends Number, CX extends Exception> Maybe<T> parseNumber(final NumberFormat format, final Function1<? super Number, ? extends T, CX> converter, final String representation) throws CX {
+	public static <T extends Number, CX extends Exception> Maybe<T> parseNumber(final NumberFormat format, final Function1<? super Number, ? extends T, CX> converter, final String representation)
+	throws CX {
 		assert null != format;
 		assert null != converter;
 		assert null != representation;
