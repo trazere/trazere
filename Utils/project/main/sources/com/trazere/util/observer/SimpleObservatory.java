@@ -29,7 +29,7 @@ import com.trazere.util.type.Maybe;
  */
 public class SimpleObservatory<S, E>
 implements Observatory<S, E> {
-	protected final LazyMap<S, SimpleObservable<E>, RuntimeException> _observables = new LazyMap<S, SimpleObservable<E>, RuntimeException>() {
+	protected final LazyMap<S, SimpleObservable<E>, RuntimeException> _subjectObservables = new LazyMap<S, SimpleObservable<E>, RuntimeException>() {
 		@Override
 		protected SimpleObservable<E> compute(final S subject) {
 			return new SimpleObservable<E>() {
@@ -39,7 +39,7 @@ implements Observatory<S, E> {
 					
 					// Reset the observable.
 					if (!isObserved()) {
-						synchronized (_observables) {
+						synchronized (_subjectObservables) {
 							remove(subject);
 						}
 					}
@@ -56,8 +56,8 @@ implements Observatory<S, E> {
 			@Override
 			public ObserverSubscription subscribe(final Observer<? super E> observer) {
 				final SimpleObservable<E> observable;
-				synchronized (_observables) {
-					observable = _observables.get(subject);
+				synchronized (_subjectObservables) {
+					observable = _subjectObservables.get(subject);
 				}
 				synchronized (observable) {
 					return observable.subscribe(observer);
@@ -67,8 +67,8 @@ implements Observatory<S, E> {
 			@Override
 			public ObserverSubscription subscribeOnce(final Observer<? super E> observer) {
 				final SimpleObservable<E> observable;
-				synchronized (_observables) {
-					observable = _observables.get(subject);
+				synchronized (_subjectObservables) {
+					observable = _subjectObservables.get(subject);
 				}
 				synchronized (observable) {
 					return observable.subscribeOnce(observer);
@@ -78,8 +78,8 @@ implements Observatory<S, E> {
 			@Override
 			public ObserverSubscription subscribeWhile(final Observer<? super E> observer, final Predicate1<? super E, RuntimeException> condition) {
 				final SimpleObservable<E> observable;
-				synchronized (_observables) {
-					observable = _observables.get(subject);
+				synchronized (_subjectObservables) {
+					observable = _subjectObservables.get(subject);
 				}
 				synchronized (observable) {
 					return observable.subscribeWhile(observer, condition);
@@ -88,20 +88,30 @@ implements Observatory<S, E> {
 		};
 	}
 	
+	protected final SimpleObservable<E> _allObservable = new SimpleObservable<E>();
+	
+	@Override
+	public Observable<E> observeAll() {
+		return _allObservable;
+	}
+	
 	@Override
 	public void notify(final S subject, final E event) {
 		assert null != subject;
 		assert null != event;
 		
 		// Get the observable.
-		final Maybe<SimpleObservable<E>> observable;
-		synchronized (_observables) {
-			observable = _observables.probe(subject);
+		final Maybe<SimpleObservable<E>> subjectObservable;
+		synchronized (_subjectObservables) {
+			subjectObservable = _subjectObservables.probe(subject);
 		}
 		
 		// Notify.
-		if (observable.isSome()) {
-			observable.asSome().getValue().notify(event);
+		if (subjectObservable.isSome()) {
+			subjectObservable.asSome().getValue().notify(event);
 		}
+		
+		// Notify for all.
+		_allObservable.notify(event);
 	}
 }
