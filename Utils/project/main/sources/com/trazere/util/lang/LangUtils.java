@@ -15,6 +15,9 @@
  */
 package com.trazere.util.lang;
 
+import com.trazere.util.function.Function1;
+import com.trazere.util.reference.MutableReference;
+import com.trazere.util.reference.Reference;
 import com.trazere.util.type.Maybe;
 import java.util.Collection;
 import java.util.Comparator;
@@ -36,6 +39,24 @@ public class LangUtils {
 		assert null != object;
 		
 		return (Class<? extends T>) object.getClass();
+	}
+	
+	/**
+	 * Builds a recursive value using the given factory.
+	 * <p>
+	 * The factory is a function that takes a reference that will provide the built value. This reference must not be called during the evaluation of the
+	 * factory (because the value does not exist yet).
+	 * 
+	 * @param <T> Type of the value.
+	 * @param <X> Type of the exceptions.
+	 * @param factory Factory that build the value.
+	 * @return The built value.
+	 * @throws X When the factory evaluation fails.
+	 */
+	public static <T, X extends Exception> T rec(final Function1<? super Reference<T>, ? extends T, ? extends X> factory)
+	throws X {
+		final MutableReference<T> ref = new MutableReference<T>();
+		return ref.set(factory.evaluate(ref));
 	}
 	
 	/**
