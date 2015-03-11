@@ -267,7 +267,7 @@ public class TextUtils {
 	 * @param delimiter The delimiter.
 	 * @return The resulting string.
 	 */
-	public static String join(final Collection<String> tokens, final String delimiter) {
+	public static String join(final Iterable<String> tokens, final String delimiter) {
 		return join(tokens, delimiter, new StringBuilder()).toString();
 	}
 	
@@ -279,7 +279,7 @@ public class TextUtils {
 	 * @param builder The string builder to fill.
 	 * @return The given string builder.
 	 */
-	public static StringBuilder join(final Collection<String> tokens, final String delimiter, final StringBuilder builder) {
+	public static StringBuilder join(final Iterable<String> tokens, final String delimiter, final StringBuilder builder) {
 		assert null != tokens;
 		
 		return join(tokens.iterator(), delimiter, builder);
@@ -319,7 +319,7 @@ public class TextUtils {
 	 * @return The resulting string.
 	 * @throws X When some rendering fails.
 	 */
-	public static <T, X extends Exception> String join(final Collection<T> tokens, final Function1<? super T, String, X> renderer, final String delimiter)
+	public static <T, X extends Exception> String join(final Iterable<T> tokens, final Function1<? super T, String, X> renderer, final String delimiter)
 	throws X {
 		return join(tokens, renderer, delimiter, new StringBuilder()).toString();
 	}
@@ -336,7 +336,7 @@ public class TextUtils {
 	 * @return The given string builder.
 	 * @throws X When some rendering fails.
 	 */
-	public static <T, X extends Exception> StringBuilder join(final Collection<T> tokens, final Function1<? super T, String, X> renderer, final String delimiter, final StringBuilder builder)
+	public static <T, X extends Exception> StringBuilder join(final Iterable<T> tokens, final Function1<? super T, String, X> renderer, final String delimiter, final StringBuilder builder)
 	throws X {
 		assert null != tokens;
 		
