@@ -15,6 +15,8 @@
  */
 package com.trazere.core.lang;
 
+import com.trazere.core.collection.CollectionFactory;
+import com.trazere.core.collection.MapFactory;
 import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Function3;
@@ -25,8 +27,10 @@ import com.trazere.core.imperative.Procedure;
 import com.trazere.core.imperative.Procedure2;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.Map;
 
 /**
  * The {@link IterableUtils} class provides various utilities regarding {@link Iterable iterables}.
@@ -43,6 +47,60 @@ public class IterableUtils {
 	 */
 	public static <E> Maybe<E> any(final Iterable<? extends E> iterable) {
 		return IteratorUtils.next(iterable.iterator());
+	}
+	
+	/**
+	 * Copies of the bindings provided by the given iterable into the given result map.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param <C> Type of the collection to populate.
+	 * @param iterable Iterable providing the elements.
+	 * @param results Collection to populate with the elements.
+	 * @return The given result collection.
+	 */
+	public static <E, C extends Collection<? super E>> C copy(final Iterable<? extends E> iterable, final C results) {
+		return IteratorUtils.drain(iterable.iterator(), results);
+	}
+	
+	/**
+	 * Copies the elements provided by the given iterable into a collection.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param <C> Type of the result collection.
+	 * @param iterable Iterable providing the elements.
+	 * @param resultFactory Factory of the result collection.
+	 * @return A collection containing the elements.
+	 */
+	public static <E, C extends Collection<? super E>> C copy(final Iterable<? extends E> iterable, final CollectionFactory<? super E, C> resultFactory) {
+		return copy(iterable, resultFactory.build());
+	}
+	
+	/**
+	 * Copies of the elements provided by the given iterable into the given result collection.
+	 *
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <M> Type of the map to populate.
+	 * @param iterable Iterable providing the bindings.
+	 * @param results Map to populate with the bindings.
+	 * @return The given result map.
+	 */
+	public static <K, V, M extends Map<? super K, ? super V>> M copy(final Iterable<? extends Tuple2<? extends K, ? extends V>> iterable, final M results) {
+		return IteratorUtils.drain(iterable.iterator(), results);
+	}
+	
+	/**
+	 * Copies the bindings provided by the given iterable into a map.
+	 *
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <M> Type of the result map.
+	 * @param iterable Iterable providing the bindings.
+	 * @param resultFactory Factory of the result map.
+	 * @return A map containing the bindings.
+	 */
+	public static <K, V, M extends Map<? super K, ? super V>> M copy(final Iterable<? extends Tuple2<? extends K, ? extends V>> iterable, final MapFactory<? super K, ? super V, M> resultFactory) {
+		return copy(iterable, resultFactory.build());
 	}
 	
 	/**
