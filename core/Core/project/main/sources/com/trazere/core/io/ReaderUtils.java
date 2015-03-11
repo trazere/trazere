@@ -52,7 +52,7 @@ public class ReaderUtils {
 	/**
 	 * Reads all available text from the given reader.
 	 * 
-	 * @param input Reader from which the text should be read.
+	 * @param reader Reader from which the text should be read.
 	 * @return The read text.
 	 * @throws IOException When some text cannot be read.
 	 */
