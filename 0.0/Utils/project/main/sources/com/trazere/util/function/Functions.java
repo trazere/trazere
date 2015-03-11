@@ -170,7 +170,7 @@ public class Functions {
 	 * @param throwableFactory The throwable factory.
 	 * @return The built function.
 	 */
-	public static <K, V, X extends Exception> Function1<K, V, X> fromMap(final Map<? super K, ? extends V> map, final ThrowableFactory<X> throwableFactory) {
+	public static <K, V, X extends Exception> Function1<K, V, X> fromMap(final Map<? super K, ? extends V> map, final ThrowableFactory<? extends X> throwableFactory) {
 		assert null != map;
 		assert null != throwableFactory;
 		
@@ -261,7 +261,7 @@ public class Functions {
 	 * @param throwableFactory The throwable factory.
 	 * @return The built function.
 	 */
-	public static <K, V, X extends Exception> Function1<K, V, X> fromRecord(final Record<? super K, ? extends V> record, final ThrowableFactory<X> throwableFactory) {
+	public static <K, V, X extends Exception> Function1<K, V, X> fromRecord(final Record<? super K, ? extends V> record, final ThrowableFactory<? extends X> throwableFactory) {
 		assert null != record;
 		assert null != throwableFactory;
 		

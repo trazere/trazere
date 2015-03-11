@@ -172,7 +172,7 @@ implements Serializable, Describable {
 		// Matching.
 		
 		@Override
-		public <RT, X extends Exception> RT match(final Matcher<? super L, ? super R, RT, X> matcher)
+		public <RT, X extends Exception> RT match(final Matcher<? super L, ? super R, RT, ? extends X> matcher)
 		throws X {
 			assert null != matcher;
 			
@@ -182,7 +182,7 @@ implements Serializable, Describable {
 		// Functions.
 		
 		@Override
-		public <RL, X extends Exception> Either<RL, R> mapLeft(final Function1<? super L, ? extends RL, X> function)
+		public <RL, X extends Exception> Either<RL, R> mapLeft(final Function1<? super L, ? extends RL, ? extends X> function)
 		throws X {
 			assert null != function;
 			
@@ -191,7 +191,7 @@ implements Serializable, Describable {
 		
 		@SuppressWarnings("unchecked")
 		@Override
-		public <RR, X extends Exception> Either<L, RR> mapRight(final Function1<? super R, ? extends RR, X> function) {
+		public <RR, X extends Exception> Either<L, RR> mapRight(final Function1<? super R, ? extends RR, ? extends X> function) {
 			return (Either<L, RR>) this;
 		}
 		
@@ -318,7 +318,7 @@ implements Serializable, Describable {
 		// Matching.
 		
 		@Override
-		public <Result, X extends Exception> Result match(final Matcher<? super L, ? super R, Result, X> matcher)
+		public <Result, X extends Exception> Result match(final Matcher<? super L, ? super R, Result, ? extends X> matcher)
 		throws X {
 			assert null != matcher;
 			
@@ -329,12 +329,12 @@ implements Serializable, Describable {
 		
 		@SuppressWarnings("unchecked")
 		@Override
-		public <RL, X extends Exception> Either<RL, R> mapLeft(final Function1<? super L, ? extends RL, X> function) {
+		public <RL, X extends Exception> Either<RL, R> mapLeft(final Function1<? super L, ? extends RL, ? extends X> function) {
 			return (Either<RL, R>) this;
 		}
 		
 		@Override
-		public <RR, X extends Exception> Either<L, RR> mapRight(final Function1<? super R, ? extends RR, X> function)
+		public <RR, X extends Exception> Either<L, RR> mapRight(final Function1<? super R, ? extends RR, ? extends X> function)
 		throws X {
 			assert null != function;
 			
@@ -453,7 +453,7 @@ implements Serializable, Describable {
 	 * @return The result of the match.
 	 * @throws X When the match fails.
 	 */
-	public abstract <RT, X extends Exception> RT match(final Matcher<? super L, ? super R, RT, X> matcher)
+	public abstract <RT, X extends Exception> RT match(final Matcher<? super L, ? super R, RT, ? extends X> matcher)
 	throws X;
 	
 	// Functions.
@@ -467,7 +467,7 @@ implements Serializable, Describable {
 	 * @return An instance containing the mapped value.
 	 * @throws X When the mapping fails.
 	 */
-	public abstract <RL, X extends Exception> Either<RL, R> mapLeft(final Function1<? super L, ? extends RL, X> function)
+	public abstract <RL, X extends Exception> Either<RL, R> mapLeft(final Function1<? super L, ? extends RL, ? extends X> function)
 	throws X;
 	
 	/**
@@ -479,7 +479,7 @@ implements Serializable, Describable {
 	 * @return An instance containing the mapped value.
 	 * @throws X When the mapping fails.
 	 */
-	public abstract <RR, X extends Exception> Either<L, RR> mapRight(final Function1<? super R, ? extends RR, X> function)
+	public abstract <RR, X extends Exception> Either<L, RR> mapRight(final Function1<? super R, ? extends RR, ? extends X> function)
 	throws X;
 	
 	// Object.
