@@ -95,32 +95,6 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Populates the given accumulator with copies of the elements of the given collection.
-	 *
-	 * @param <E> Type of the elements.
-	 * @param <A> Type of the accumulator to populate.
-	 * @param collection Collection to read.
-	 * @param results Accumulator to populate with the elements.
-	 * @return The given result accumulator.
-	 */
-	public static <E, A extends Accumulator<? super E, ?>> A copy(final Collection<? extends E> collection, final A results) {
-		return IteratorUtils.drain(collection.iterator(), results);
-	}
-	
-	/**
-	 * Adds copies of the bindings of the given map to the given collection.
-	 *
-	 * @param <E> Type of the elements.
-	 * @param <C> Type of the collection to populate.
-	 * @param collection Collection to read.
-	 * @param results Collection to populate with the bindings.
-	 * @return The given result collection.
-	 */
-	public static <E, C extends Collection<? super E>> C copy(final Collection<? extends E> collection, final C results) {
-		return IteratorUtils.drain(collection.iterator(), results);
-	}
-	
-	/**
 	 * Executes the given procedure with each element of the given collection.
 	 * 
 	 * @param <E> Type of the elements.

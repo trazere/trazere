@@ -18,10 +18,7 @@ package com.trazere.core.collection;
 import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Function3;
-import com.trazere.core.functional.FunctionAccumulators;
 import com.trazere.core.functional.Predicate2;
-import com.trazere.core.imperative.Accumulator2;
-import com.trazere.core.imperative.IntCounter;
 import com.trazere.core.imperative.IteratorUtils;
 import com.trazere.core.imperative.Procedure2;
 import com.trazere.core.lang.IterableUtils;
@@ -30,7 +27,6 @@ import com.trazere.core.util.Comparators;
 import com.trazere.core.util.FieldComparators;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Map;
@@ -65,13 +61,7 @@ public class MapUtils {
 	 * @return A binding of the map, or nothing when the map is empty.
 	 */
 	public static <K, V> Maybe<Tuple2<K, V>> any(final Map<K, V> map) {
-		final Iterator<Map.Entry<K, V>> entries = map.entrySet().iterator();
-		if (entries.hasNext()) {
-			final Map.Entry<K, V> entry = entries.next();
-			return Maybe.some(new Tuple2<>(entry.getKey(), entry.getValue()));
-		} else {
-			return Maybe.none();
-		}
+		return IteratorUtils.next(bindings(map).iterator());
 	}
 	
 	/**
@@ -210,37 +200,6 @@ public class MapUtils {
 	// TODO: removeAll
 	
 	/**
-	 * Populates the given accumulator with copies of the bindings of the given map.
-	 *
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <A> Type of the accumulator to populate.
-	 * @param map Map to read.
-	 * @param results Accumulator to populate with the bindings.
-	 * @return The given result accumulator.
-	 */
-	public static <K, V, A extends Accumulator2<? super K, ? super V, ?>> A copy(final Map<? extends K, ? extends V> map, final A results) {
-		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
-			results.add(entry.getKey(), entry.getValue());
-		}
-		return results;
-	}
-	
-	/**
-	 * Adds copies of the bindings of the given map to the given collection.
-	 *
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <C> Type of the collection to populate.
-	 * @param map Map to read.
-	 * @param results Collection to populate with the bindings.
-	 * @return The given result collection.
-	 */
-	public static <K, V, C extends Collection<? super Tuple2<? extends K, ? extends V>>> C copy(final Map<? extends K, ? extends V> map, final C results) {
-		return copy(map, CollectionAccumulators.add2(results)).get();
-	}
-	
-	/**
 	 * Executes the given procedure with each binding of the given map.
 	 * 
 	 * @param <K> Type of the keys.
@@ -249,9 +208,7 @@ public class MapUtils {
 	 * @param procedure Procedure to execute.
 	 */
 	public static <K, V> void foreach(final Map<? extends K, ? extends V> map, final Procedure2<? super K, ? super V> procedure) {
-		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
-			procedure.execute(entry.getKey(), entry.getValue());
-		}
+		IteratorUtils.foreach(bindings(map).iterator(), procedure);
 	}
 	
 	/**
@@ -266,7 +223,7 @@ public class MapUtils {
 	 * @return The folded state.
 	 */
 	public static <K, V, S> S fold(final Map<? extends K, ? extends V> map, final Function3<? super S, ? super K, ? super V, ? extends S> operator, final S initialState) {
-		return copy(map, FunctionAccumulators.fold2(operator, initialState)).get();
+		return IteratorUtils.fold(bindings(map).iterator(), operator, initialState);
 	}
 	
 	/**
@@ -279,15 +236,10 @@ public class MapUtils {
 	 * @return The first accepted binding, or when no binding is accepted.
 	 */
 	public static <K, V> Maybe<Tuple2<K, V>> first(final Map<? extends K, ? extends V> map, final Predicate2<? super K, ? super V> filter) {
-		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
-			final K key = entry.getKey();
-			final V value = entry.getValue();
-			if (filter.evaluate(key, value)) {
-				return Maybe.some(new Tuple2<>(key, value));
-			}
-		}
-		return Maybe.none();
+		return IteratorUtils.first(bindings(map).iterator(), filter);
 	}
+	
+	// TODO: extractFirst
 	
 	/**
 	 * Tests whether any binding of the given map is accepted by the given filter.
@@ -299,12 +251,7 @@ public class MapUtils {
 	 * @return <code>true</code> when some binding is accepted, <code>false</code> when all bindings are rejected.
 	 */
 	public static <K, V> boolean isAny(final Map<? extends K, ? extends V> map, final Predicate2<? super K, ? super V> filter) {
-		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
-			if (filter.evaluate(entry.getKey(), entry.getValue())) {
-				return true;
-			}
-		}
-		return false;
+		return IteratorUtils.isAny(bindings(map).iterator(), filter);
 	}
 	
 	/**
@@ -317,12 +264,7 @@ public class MapUtils {
 	 * @return <code>true</code> when all bindings are accepted, <code>false</code> when some binding is rejected.
 	 */
 	public static <K, V> boolean areAll(final Map<? extends K, ? extends V> map, final Predicate2<? super K, ? super V> filter) {
-		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
-			if (!filter.evaluate(entry.getKey(), entry.getValue())) {
-				return false;
-			}
-		}
-		return true;
+		return IteratorUtils.areAll(bindings(map).iterator(), filter);
 	}
 	
 	/**
@@ -335,13 +277,7 @@ public class MapUtils {
 	 * @return The number of accepted bindings.
 	 */
 	public static <K, V> int count(final Map<? extends K, ? extends V> map, final Predicate2<? super K, ? super V> filter) {
-		final IntCounter counter = new IntCounter();
-		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
-			if (filter.evaluate(entry.getKey(), entry.getValue())) {
-				counter.inc();
-			}
-		}
-		return counter.get();
+		return IteratorUtils.count(bindings(map).iterator(), filter);
 	}
 	
 	/**
