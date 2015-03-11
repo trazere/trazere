@@ -17,6 +17,7 @@ package com.trazere.util.collection;
 
 import com.trazere.util.function.Function1;
 import com.trazere.util.function.Predicate1;
+import com.trazere.util.lang.Counter;
 import com.trazere.util.type.Maybe;
 import java.util.Iterator;
 import java.util.List;
@@ -228,8 +229,21 @@ public class Iterators {
 	 * @param <T> Type of the values.
 	 * @param list List to iterate.
 	 * @return The built iterator.
+	 * @deprecated Use {@link #reversed(List)}
 	 */
+	@Deprecated
 	public static <T> Iterator<T> reverse(final List<? extends T> list) {
+		return reversed(list);
+	}
+	
+	/**
+	 * Builds an iterator which iterates the given list in reverse.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param list List to iterate.
+	 * @return The built iterator.
+	 */
+	public static <T> Iterator<T> reversed(final List<? extends T> list) {
 		assert null != list;
 		
 		final ListIterator<? extends T> iterator = list.listIterator(list.size());
@@ -247,6 +261,54 @@ public class Iterators {
 			@Override
 			public void remove() {
 				iterator.remove();
+			}
+		};
+	}
+	
+	/**
+	 * Builds an iterator over the natural integers.
+	 * 
+	 * @return The built iterator.
+	 */
+	public static Iterator<Integer> counter() {
+		return counter(0, 1);
+	}
+	
+	/**
+	 * Builds an iterator over the integers starting at the given value and incrementing by <code>1</code> at each iteration.
+	 * 
+	 * @param start First value.
+	 * @return The built iterator.
+	 */
+	public static Iterator<Integer> counter(final int start) {
+		return counter(start, 1);
+	}
+	
+	/**
+	 * Builds an iterator over the integers starting at the given value and incrementing by given increment at each iteration.
+	 * 
+	 * @param start First value.
+	 * @param increment Increment.
+	 * @return The built iterator.
+	 */
+	public static Iterator<Integer> counter(final int start, final int increment) {
+		final Counter counter = new Counter(start, increment);
+		return new Iterator<Integer>() {
+			@Override
+			public boolean hasNext() {
+				return true;
+			}
+			
+			@Override
+			public Integer next() {
+				final int value = counter.get();
+				counter.inc();
+				return value;
+			}
+			
+			@Override
+			public void remove() {
+				throw new UnsupportedOperationException();
 			}
 		};
 	}
