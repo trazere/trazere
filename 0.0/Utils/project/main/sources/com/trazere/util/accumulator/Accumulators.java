@@ -52,6 +52,67 @@ public class Accumulators {
 	}
 	
 	/**
+	 * Builds a accumulators that forward the accumulated values and results to the given accumulator.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <A> Type of the delegate accumulator.
+	 * @param <X> Type of the exceptions.
+	 * @param accumulator Delegate accumulator.
+	 * @return The built accumulator.
+	 */
+	public static <T, A extends Accumulator1<? super T, ?, ? extends X>, X extends Exception> Accumulator1<T, A, X> delegate(final A accumulator) {
+		return new BaseAccumulator1<T, A, X>() {
+			@Override
+			public void add(final T value)
+			throws X {
+				accumulator.add(value);
+			}
+			
+			@Override
+			public void addAll(final Iterable<? extends T> values)
+			throws X {
+				accumulator.addAll(values);
+			}
+			
+			@Override
+			public A get() {
+				return accumulator;
+			}
+		};
+	}
+	
+	/**
+	 * Builds a accumulators that forward the accumulated values and results to the given accumulator.
+	 * 
+	 * @param <T1> Type of the first values.
+	 * @param <T2> Type of the second values.
+	 * @param <A> Type of the delegate accumulator.
+	 * @param <X> Type of the exceptions.
+	 * @param accumulator Delegate accumulator.
+	 * @return The built accumulator.
+	 */
+	public static <T1, T2, A extends Accumulator2<? super T1, ? super T2, ?, ? extends X>, X extends Exception> Accumulator2<T1, T2, A, X> delegate(final A accumulator) {
+		return new BaseAccumulator2<T1, T2, A, X>() {
+			@Override
+			public void add(final T1 value1, final T2 value2)
+			throws X {
+				accumulator.add(value1, value2);
+			}
+			
+			@Override
+			public void addAll(final Iterable<? extends Tuple2<? extends T1, ? extends T2>> values)
+			throws X {
+				accumulator.addAll(values);
+			}
+			
+			@Override
+			public A get() {
+				return accumulator;
+			}
+		};
+	}
+	
+	/**
 	 * Builds an accumulator that filters the accumulated values using the given predicate.
 	 * 
 	 * @param <T> Type of the values.
