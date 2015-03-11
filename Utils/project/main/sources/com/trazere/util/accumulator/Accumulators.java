@@ -18,6 +18,7 @@ package com.trazere.util.accumulator;
 import com.trazere.util.function.Function1;
 import com.trazere.util.function.Predicate1;
 import com.trazere.util.function.Predicate2;
+import com.trazere.util.function.Predicates;
 import com.trazere.util.lang.Counter;
 import com.trazere.util.reference.MutableReference;
 import com.trazere.util.type.Maybe;
@@ -417,6 +418,20 @@ public class Accumulators {
 				return _value.asMaybe();
 			}
 		};
+	}
+	
+	/**
+	 * Builds an accumulator that normalizes the accumulated values.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <S> Type of the state.
+	 * @param <X> Type of the exceptions.
+	 * @param accumulator Accumulator to populate with the normalized values.
+	 * @return The built accumulator.
+	 * @see Predicates#normalizer()
+	 */
+	public static <T, S, X extends Exception> Accumulator1<T, S, X> normalizer(final Accumulator1<? super T, ? extends S, ? extends X> accumulator) {
+		return filter(Predicates.<T, X>normalizer(), accumulator);
 	}
 	
 	private Accumulators() {
