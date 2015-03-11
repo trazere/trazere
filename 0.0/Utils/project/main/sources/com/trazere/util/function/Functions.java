@@ -114,6 +114,28 @@ public class Functions {
 	}
 	
 	/**
+	 * Builds a one argument function that fails.
+	 * 
+	 * @param <T> Type of the argument values.
+	 * @param <R> Type of the result values.
+	 * @param <X> Type of the exceptions.
+	 * @param throwableFactory Throwable factory to use.
+	 * @param message Message of the throwable.
+	 * @return The built function.
+	 */
+	public static <T, R, X extends Exception> Function1<T, R, X> failure(final ThrowableFactory<? extends X> throwableFactory, final String message) {
+		assert null != throwableFactory;
+		
+		return new Function1<T, R, X>() {
+			@Override
+			public R evaluate(final T value)
+			throws X {
+				throw throwableFactory.build(message);
+			}
+		};
+	}
+	
+	/**
 	 * Builds a function corresponding to the given map.
 	 * <p>
 	 * The built function evaluates to the values associated to the keys in the map and to <code>null</code> for the other keys.
@@ -437,6 +459,27 @@ public class Functions {
 	}
 	
 	/**
+	 * Builds a zero arguments function that fails.
+	 *
+	 * @param <R> Type of the result values.
+	 * @param <X> Type of the exceptions.
+	 * @param throwableFactory Throwable factory to use.
+	 * @param message Message of the throwable.
+	 * @return The built function.
+	 */
+	public static <R, X extends Exception> Function0<R, X> failure0(final ThrowableFactory<? extends X> throwableFactory, final String message) {
+		assert null != throwableFactory;
+		
+		return new Function0<R, X>() {
+			@Override
+			public R evaluate()
+			throws X {
+				throw throwableFactory.build(message);
+			}
+		};
+	}
+	
+	/**
 	 * Builds a two arguments function that fails.
 	 * 
 	 * @param <T1> Type of the first argument values.
@@ -454,6 +497,29 @@ public class Functions {
 			public R evaluate(final T1 value1, final T2 value2)
 			throws X {
 				throw throwableFactory.build();
+			}
+		};
+	}
+	
+	/**
+	 * Builds a two arguments function that fails.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <R> Type of the result values.
+	 * @param <X> Type of the exceptions.
+	 * @param throwableFactory Throwable factory to use.
+	 * @param message Message of the throwable.
+	 * @return The built function.
+	 */
+	public static <T1, T2, R, X extends Exception> Function2<T1, T2, R, X> failure2(final ThrowableFactory<? extends X> throwableFactory, final String message) {
+		assert null != throwableFactory;
+		
+		return new Function2<T1, T2, R, X>() {
+			@Override
+			public R evaluate(final T1 value1, final T2 value2)
+			throws X {
+				throw throwableFactory.build(message);
 			}
 		};
 	}
@@ -477,6 +543,30 @@ public class Functions {
 			public R evaluate(final T1 value1, final T2 value2, final T3 value3)
 			throws X {
 				throw throwableFactory.build();
+			}
+		};
+	}
+	
+	/**
+	 * Builds a three arguments function that fails.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <T3> Type of the third argument values.
+	 * @param <R> Type of the result values.
+	 * @param <X> Type of the exceptions.
+	 * @param throwableFactory Throwable factory to use.
+	 * @param message Message of the throwable.
+	 * @return The built function.
+	 */
+	public static <T1, T2, T3, R, X extends Exception> Function3<T1, T2, T3, R, X> failure3(final ThrowableFactory<? extends X> throwableFactory, final String message) {
+		assert null != throwableFactory;
+		
+		return new Function3<T1, T2, T3, R, X>() {
+			@Override
+			public R evaluate(final T1 value1, final T2 value2, final T3 value3)
+			throws X {
+				throw throwableFactory.build(message);
 			}
 		};
 	}
