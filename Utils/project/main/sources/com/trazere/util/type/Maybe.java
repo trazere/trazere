@@ -218,7 +218,7 @@ implements Iterable<T>, Serializable, Describable {
 		}
 		
 		@Override
-		public <X extends Exception> T get(final Function0<? extends T, X> defaultValue)
+		public <X extends Exception> T get(final Function0<? extends T, ? extends X> defaultValue)
 		throws X {
 			assert null != defaultValue;
 			
@@ -228,7 +228,7 @@ implements Iterable<T>, Serializable, Describable {
 		// Matching.
 		
 		@Override
-		public <R, X extends Exception> R match(final Matcher<? super T, R, X> matcher)
+		public <R, X extends Exception> R match(final Matcher<? super T, R, ? extends X> matcher)
 		throws X {
 			assert null != matcher;
 			
@@ -238,17 +238,17 @@ implements Iterable<T>, Serializable, Describable {
 		// Functions.
 		
 		@Override
-		public <R, X extends Exception> Maybe<R> map(final Function1<? super T, ? extends R, X> function) {
+		public <R, X extends Exception> Maybe<R> map(final Function1<? super T, ? extends R, ? extends X> function) {
 			return none();
 		}
 		
 		@Override
-		public <X extends Exception> Maybe<T> filter(final Predicate1<? super T, X> predicate) {
+		public <X extends Exception> Maybe<T> filter(final Predicate1<? super T, ? extends X> predicate) {
 			return none();
 		}
 		
 		@Override
-		public <R, X extends Exception> Maybe<R> extract(final Function1<? super T, ? extends Maybe<? extends R>, X> function) {
+		public <R, X extends Exception> Maybe<R> extract(final Function1<? super T, ? extends Maybe<? extends R>, ? extends X> function) {
 			return none();
 		}
 		
@@ -363,7 +363,7 @@ implements Iterable<T>, Serializable, Describable {
 		}
 		
 		@Override
-		public <X extends Exception> T get(final Function0<? extends T, X> defaultValue) {
+		public <X extends Exception> T get(final Function0<? extends T, ? extends X> defaultValue) {
 			assert null != defaultValue;
 			
 			return _value;
@@ -372,7 +372,7 @@ implements Iterable<T>, Serializable, Describable {
 		// Matching.
 		
 		@Override
-		public <R, X extends Exception> R match(final Matcher<? super T, R, X> matcher)
+		public <R, X extends Exception> R match(final Matcher<? super T, R, ? extends X> matcher)
 		throws X {
 			return matcher.some(this);
 		}
@@ -380,7 +380,7 @@ implements Iterable<T>, Serializable, Describable {
 		// Functions.
 		
 		@Override
-		public <R, X extends Exception> Maybe<R> map(final Function1<? super T, ? extends R, X> function)
+		public <R, X extends Exception> Maybe<R> map(final Function1<? super T, ? extends R, ? extends X> function)
 		throws X {
 			assert null != function;
 			
@@ -388,7 +388,7 @@ implements Iterable<T>, Serializable, Describable {
 		}
 		
 		@Override
-		public <X extends Exception> Maybe<T> filter(final Predicate1<? super T, X> predicate)
+		public <X extends Exception> Maybe<T> filter(final Predicate1<? super T, ? extends X> predicate)
 		throws X {
 			assert null != predicate;
 			
@@ -396,7 +396,7 @@ implements Iterable<T>, Serializable, Describable {
 		}
 		
 		@Override
-		public <R, X extends Exception> Maybe<R> extract(final Function1<? super T, ? extends Maybe<? extends R>, X> function)
+		public <R, X extends Exception> Maybe<R> extract(final Function1<? super T, ? extends Maybe<? extends R>, ? extends X> function)
 		throws X {
 			return function.evaluate(_value).map(Functions.<R, InternalException>identity());
 		}
@@ -473,7 +473,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * @return The value. May be <code>null</code>.
 	 * @throws X When the evaluation of the default value fails.
 	 */
-	public abstract <X extends Exception> T get(final Function0<? extends T, X> defaultValue)
+	public abstract <X extends Exception> T get(final Function0<? extends T, ? extends X> defaultValue)
 	throws X;
 	
 	/**
@@ -502,7 +502,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * @return The value. May be <code>null</code>.
 	 * @throws X When the evaluation of the default value fails.
 	 */
-	public static <T, X extends Exception> T get(final Maybe<? extends T> maybe, final Function0<T, X> defaultValue)
+	public static <T, X extends Exception> T get(final Maybe<? extends T> maybe, final Function0<? extends T, ? extends X> defaultValue)
 	throws X {
 		assert null != maybe;
 		
@@ -552,7 +552,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * @return The result of the match.
 	 * @throws X When the match fails.
 	 */
-	public abstract <R, X extends Exception> R match(final Matcher<? super T, R, X> matcher)
+	public abstract <R, X extends Exception> R match(final Matcher<? super T, R, ? extends X> matcher)
 	throws X;
 	
 	// Functions.
@@ -566,7 +566,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * @return An instance containing the mapped value.
 	 * @throws X When the mapping fails.
 	 */
-	public abstract <R, X extends Exception> Maybe<R> map(final Function1<? super T, ? extends R, X> function)
+	public abstract <R, X extends Exception> Maybe<R> map(final Function1<? super T, ? extends R, ? extends X> function)
 	throws X;
 	
 	/**
@@ -600,7 +600,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * @return An instance containing the filtered value.
 	 * @throws X When the filtering fails.
 	 */
-	public abstract <X extends Exception> Maybe<T> filter(final Predicate1<? super T, X> predicate)
+	public abstract <X extends Exception> Maybe<T> filter(final Predicate1<? super T, ? extends X> predicate)
 	throws X;
 	
 	/**
@@ -636,7 +636,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * @deprecated Use {@link #extract(Function1)}.
 	 */
 	@Deprecated
-	public <R, X extends Exception> Maybe<R> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, X> function)
+	public <R, X extends Exception> Maybe<R> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, ? extends X> function)
 	throws X {
 		return extract(function);
 	}
@@ -650,7 +650,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * @return An instance containing the mapped value.
 	 * @throws X When the mapping fails.
 	 */
-	public abstract <R, X extends Exception> Maybe<R> extract(final Function1<? super T, ? extends Maybe<? extends R>, X> function)
+	public abstract <R, X extends Exception> Maybe<R> extract(final Function1<? super T, ? extends Maybe<? extends R>, ? extends X> function)
 	throws X;
 	
 	/**

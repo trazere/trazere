@@ -40,7 +40,7 @@ public class Feeds {
 	 * @param tail The tail.
 	 * @return The built feed.
 	 */
-	public static <T, X extends Exception> Feed<T, X> build(final T head, final Feed<T, X> tail) {
+	public static <T, X extends Exception> Feed<T, X> build(final T head, final Feed<T, ? extends X> tail) {
 		assert null != head;
 		assert null != tail;
 		
@@ -58,14 +58,14 @@ public class Feeds {
 			}
 			
 			@Override
-			public Feed<T, X> getTail() {
+			public Feed<T, ? extends X> getTail() {
 				return tail;
 			}
 			
 			// Function.
 			
 			@Override
-			public Maybe<Tuple2<T, Feed<T, X>>> evaluate() {
+			public Maybe<? extends Tuple2<T, ? extends Feed<T, ? extends X>>> evaluate() {
 				return Maybe.some(Tuple2.build(head, tail));
 			}
 		};
@@ -250,7 +250,7 @@ public class Feeds {
 	 * @param feed The feed.
 	 * @return The built feed.
 	 */
-	public static <T, X extends Exception> Feed<T, X> memoize(final Feed<T, X> feed) {
+	public static <T, X extends Exception> Feed<T, X> memoize(final Feed<T, ? extends X> feed) {
 		assert null != feed;
 		
 		return new MemoizedFeed<T, X>() {

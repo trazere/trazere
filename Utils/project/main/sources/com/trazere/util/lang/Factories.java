@@ -48,7 +48,7 @@ public class Factories {
 	 * @param function The function.
 	 * @return The built factory.
 	 */
-	public static <T, X extends Exception> Factory<T, X> fromFunction(final Function0<T, X> function) {
+	public static <T, X extends Exception> Factory<T, X> fromFunction(final Function0<? extends T, ? extends X> function) {
 		assert null != function;
 		
 		return new BaseFactory<T, X>() {

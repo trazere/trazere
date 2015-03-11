@@ -59,7 +59,7 @@ public class TextUtils {
 	 * @return <code>true</code> when the string contains some character accepted by the filter.
 	 * @throws X When some filter evaluation fails.
 	 */
-	public static <X extends Exception> boolean contains(final CharPredicate<X> filter, final String s)
+	public static <X extends Exception> boolean contains(final CharPredicate<? extends X> filter, final String s)
 	throws X {
 		assert null != filter;
 		assert null != s;
@@ -81,7 +81,7 @@ public class TextUtils {
 	 * @return <code>true</code> when the string contains some character accepted by the filter.
 	 * @throws X When some filter evaluation fails.
 	 */
-	public static <X extends Exception> boolean matches(final CharPredicate<X> filter, final String s)
+	public static <X extends Exception> boolean matches(final CharPredicate<? extends X> filter, final String s)
 	throws X {
 		assert null != filter;
 		assert null != s;
@@ -103,7 +103,7 @@ public class TextUtils {
 	 * @return The filtered string.
 	 * @throws X When some filter evaluation fails.
 	 */
-	public static <X extends Exception> String filter(final CharPredicate<X> filter, final String s)
+	public static <X extends Exception> String filter(final CharPredicate<? extends X> filter, final String s)
 	throws X {
 		assert null != filter;
 		assert null != s;
@@ -127,7 +127,7 @@ public class TextUtils {
 	 * @return The trimmed string.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <X extends Exception> String trim(final CharPredicate<X> filter, final String s)
+	public static <X extends Exception> String trim(final CharPredicate<? extends X> filter, final String s)
 	throws X {
 		assert null != filter;
 		assert null != s;
@@ -153,7 +153,7 @@ public class TextUtils {
 	 * @return The trimmed string.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <X extends Exception> String trimHeading(final CharPredicate<X> filter, final String s)
+	public static <X extends Exception> String trimHeading(final CharPredicate<? extends X> filter, final String s)
 	throws X {
 		assert null != filter;
 		assert null != s;
@@ -175,7 +175,7 @@ public class TextUtils {
 	 * @return The trimmed string.
 	 * @throws X When some predicate evaluation fails.
 	 */
-	public static <X extends Exception> String trimTrailing(final CharPredicate<X> filter, final String s)
+	public static <X extends Exception> String trimTrailing(final CharPredicate<? extends X> filter, final String s)
 	throws X {
 		assert null != filter;
 		assert null != s;
@@ -319,7 +319,7 @@ public class TextUtils {
 	 * @return The resulting string.
 	 * @throws X When some rendering fails.
 	 */
-	public static <T, X extends Exception> String join(final Iterable<T> tokens, final Function1<? super T, String, X> renderer, final String delimiter)
+	public static <T, X extends Exception> String join(final Iterable<T> tokens, final Function1<? super T, String, ? extends X> renderer, final String delimiter)
 	throws X {
 		return join(tokens, renderer, delimiter, new StringBuilder()).toString();
 	}
@@ -336,7 +336,7 @@ public class TextUtils {
 	 * @return The given string builder.
 	 * @throws X When some rendering fails.
 	 */
-	public static <T, X extends Exception> StringBuilder join(final Iterable<T> tokens, final Function1<? super T, String, X> renderer, final String delimiter, final StringBuilder builder)
+	public static <T, X extends Exception> StringBuilder join(final Iterable<T> tokens, final Function1<? super T, String, ? extends X> renderer, final String delimiter, final StringBuilder builder)
 	throws X {
 		assert null != tokens;
 		
@@ -355,7 +355,7 @@ public class TextUtils {
 	 * @return The given string builder.
 	 * @throws X When some rendering fails.
 	 */
-	public static <T, X extends Exception> StringBuilder join(final Iterator<T> tokens, final Function1<? super T, String, X> renderer, final String delimiter, final StringBuilder builder)
+	public static <T, X extends Exception> StringBuilder join(final Iterator<T> tokens, final Function1<? super T, String, ? extends X> renderer, final String delimiter, final StringBuilder builder)
 	throws X {
 		assert null != renderer;
 		
@@ -380,7 +380,7 @@ public class TextUtils {
 	 * @return The given string builder.
 	 * @throws X When some rendering fails.
 	 */
-	public static <T, X extends Exception> StringBuilder join(final Iterator<T> tokens, final Procedure2<StringBuilder, ? super T, X> renderer, final String delimiter, final StringBuilder builder)
+	public static <T, X extends Exception> StringBuilder join(final Iterator<T> tokens, final Procedure2<StringBuilder, ? super T, ? extends X> renderer, final String delimiter, final StringBuilder builder)
 	throws X {
 		assert null != tokens;
 		assert null != renderer;
@@ -530,7 +530,7 @@ public class TextUtils {
 	 * @return The parsed number.
 	 * @throws CX When the conversion to the result type fails.
 	 */
-	public static <T extends Number, CX extends Exception> Maybe<T> parseNumber(final NumberFormat format, final Function1<? super Number, ? extends T, CX> converter, final String representation)
+	public static <T extends Number, CX extends Exception> Maybe<T> parseNumber(final NumberFormat format, final Function1<? super Number, ? extends T, ? extends CX> converter, final String representation)
 	throws CX {
 		assert null != format;
 		assert null != converter;

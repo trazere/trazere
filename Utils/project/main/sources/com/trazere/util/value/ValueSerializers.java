@@ -122,7 +122,7 @@ public class ValueSerializers {
 	 * @param exceptionFactory The exception factory to use.
 	 * @return The built serializer.
 	 */
-	public static <X extends Exception> ValueSerializer<Date, String, X> dateToString(final DateFormat format, final ThrowableFactory<X> exceptionFactory) {
+	public static <X extends Exception> ValueSerializer<Date, String, X> dateToString(final DateFormat format, final ThrowableFactory<? extends X> exceptionFactory) {
 		assert null != format;
 		assert null != exceptionFactory;
 		
@@ -162,7 +162,7 @@ public class ValueSerializers {
 	 * @param exceptionFactory The exception factory to use.
 	 * @return The built serializer.
 	 */
-	public static <T extends Number, X extends Exception> ValueSerializer<T, String, X> numberToString(final Class<T> type, final Function1<Number, T, RuntimeException> converter, final NumberFormat format, final ThrowableFactory<X> exceptionFactory) {
+	public static <T extends Number, X extends Exception> ValueSerializer<T, String, X> numberToString(final Class<T> type, final Function1<Number, T, RuntimeException> converter, final NumberFormat format, final ThrowableFactory<? extends X> exceptionFactory) {
 		assert null != converter;
 		assert null != format;
 		assert null != exceptionFactory;
@@ -214,7 +214,7 @@ public class ValueSerializers {
 	 * @param exceptionFactory The exception factory to use.
 	 * @return The built serializer.
 	 */
-	public static <X extends Exception> ValueSerializer<String, String, X> stringToString(final int minLength, final int maxLength, final ThrowableFactory<X> exceptionFactory) {
+	public static <X extends Exception> ValueSerializer<String, String, X> stringToString(final int minLength, final int maxLength, final ThrowableFactory<? extends X> exceptionFactory) {
 		assert minLength >= 0;
 		assert maxLength >= 0;
 		assert minLength <= maxLength;
@@ -267,7 +267,7 @@ public class ValueSerializers {
 	 * @param exceptionFactory The exception factory to use.
 	 * @return The built serializer.
 	 */
-	public static <X extends Exception> ValueSerializer<UUID, String, X> uuidToString(final ThrowableFactory<X> exceptionFactory) {
+	public static <X extends Exception> ValueSerializer<UUID, String, X> uuidToString(final ThrowableFactory<? extends X> exceptionFactory) {
 		assert null != exceptionFactory;
 		
 		return new BaseValueSerializer<UUID, String, X>(UUID.class, String.class) {
