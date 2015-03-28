@@ -29,7 +29,7 @@ public class IntCounter {
 	/**
 	 * Instantiates a new counter starting at the given value and incrementing by <code>1</code>.
 	 * 
-	 * @param start Start value.
+	 * @param start Starting value.
 	 */
 	public IntCounter(final int start) {
 		this(start, 1);
@@ -38,8 +38,8 @@ public class IntCounter {
 	/**
 	 * Instantiates a new counter.
 	 * 
-	 * @param start Start value.
-	 * @param increment Increment.
+	 * @param start Starting value.
+	 * @param increment Increment between consecutive values.
 	 */
 	public IntCounter(final int start, final int increment) {
 		_start = start;
@@ -49,11 +49,11 @@ public class IntCounter {
 	
 	// Start.
 	
-	/** Start value. */
+	/** Starting value of the counter. */
 	protected final int _start;
 	
 	/**
-	 * Gets the start value of this counter.
+	 * Gets the starting value of this counter.
 	 * 
 	 * @return The start value.
 	 */
@@ -63,11 +63,11 @@ public class IntCounter {
 	
 	// Increment.
 	
-	/** Increment. */
+	/** Increment between consecutive values. */
 	protected final int _increment;
 	
 	/**
-	 * Gets the increment of this counter.
+	 * Gets the increment between consecutive values of this counter.
 	 * 
 	 * @return The increment.
 	 */
@@ -90,16 +90,16 @@ public class IntCounter {
 	}
 	
 	/**
-	 * Indicates whether the value of this counter is the start value.
+	 * Indicates whether the current value of this counter is the starting value.
 	 * 
-	 * @return <code>true</code> when the value is the start value, <code>false</code> otherwise.
+	 * @return <code>true</code> when the current value is the starting value, <code>false</code> otherwise.
 	 */
 	public boolean isStart() {
 		return _start == _value;
 	}
 	
 	/**
-	 * Resets this counter to its start value.
+	 * Resets this counter to its starting value.
 	 */
 	public void reset() {
 		_value = _start;
