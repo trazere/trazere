@@ -185,7 +185,7 @@ public class CharPredicates {
 	
 	// TODO: fromSeq ?
 	/**
-	 * Builds a character predicate that evaluates to <code>true</code> for the character of the given character sequence.
+	 * Builds a character predicate that evaluates to <code>true</code> for the characters of the given character sequence.
 	 * 
 	 * @param s Sequence containing the characters to accept.
 	 * @return The built predicate.
@@ -196,6 +196,17 @@ public class CharPredicates {
 			cs.add(s.charAt(i));
 		}
 		return values(cs);
+	}
+	
+	/**
+	 * Builds a character predicate that evaluates to <code>true</code> for the characters in the given range.
+	 * 
+	 * @param start Starting character of the range (included).
+	 * @param end Ending character of the range (included).
+	 * @return
+	 */
+	public static CharPredicate range(final char start, final char end) {
+		return c -> c >= start && c <= end;
 	}
 	
 	/**
