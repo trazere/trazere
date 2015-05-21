@@ -15,11 +15,8 @@
  */
 package com.trazere.core.functional;
 
-import com.trazere.core.collection.MapUtils;
 import com.trazere.core.lang.Releasable;
-import com.trazere.core.util.Maybe;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -31,34 +28,8 @@ import java.util.Set;
  * @param <R> Type of the results.
  */
 public abstract class ResettableFunction<A, R>
-implements MemoizedFunction<A, R>, Releasable {
-	/** Memoized results. */
-	protected final Map<A, R> _results = new HashMap<>();
-	
-	@Override
-	public R evaluate(final A arg) {
-		if (_results.containsKey(arg)) {
-			return _results.get(arg);
-		} else {
-			final R result = compute(arg);
-			_results.put(arg, result);
-			return result;
-		}
-	}
-	
-	/**
-	 * Computes the evaluation this function with the given argument.
-	 * 
-	 * @param arg Argument to evaluate the function with.
-	 * @return The result of the function evaluation.
-	 */
-	protected abstract R compute(A arg);
-	
-	@Override
-	public boolean isMemoized(final A arg) {
-		return _results.containsKey(arg);
-	}
-	
+extends BaseMemoizedFunction<A, R>
+implements Releasable {
 	/**
 	 * Gets the arguments whose evaluation is memoized.
 	 * 
@@ -66,11 +37,6 @@ implements MemoizedFunction<A, R>, Releasable {
 	 */
 	public Set<A> memoizedArgs() {
 		return Collections.unmodifiableSet(_results.keySet());
-	}
-	
-	@Override
-	public Maybe<R> get(final A arg) {
-		return MapUtils.get(_results, arg);
 	}
 	
 	/**
