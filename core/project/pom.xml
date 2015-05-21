@@ -16,6 +16,7 @@
 		<module>../CSV/project</module>
 		<module>../Parser/project</module>
 		<module>../Utils/project</module>
+		<module>../XML/project</module>
 	</modules>
 
 	<properties>
