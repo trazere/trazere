@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.xml;
+package com.trazere.xml;
 
 import com.trazere.core.io.CharSequenceReader;
 import com.trazere.core.lang.ThrowableFactories;
