@@ -22,6 +22,7 @@ import com.trazere.core.text.Scanner;
 import com.trazere.core.text.TextException;
 import java.io.IOException;
 import java.io.Reader;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +31,8 @@ import java.util.Map;
  * The {@link XMLUtils} class provides various utilities regarding XML.
  */
 public class XMLUtils {
+	// Entities.
+	
 	/**
 	 * Escapes the given text to produce a valid XML representation.
 	 * 
@@ -184,9 +187,16 @@ public class XMLUtils {
 		ENTITY_VALUES = values;
 	}
 	
-	//	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-ddZ");
-	//	public static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-	//	public static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm:ss.SSSZ");
+	// Dates.
+	
+	/** Format for ISO-8601 dates. */
+	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-ddZ");
+	
+	/** Format for ISO-8601 date and times. */
+	public static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+	
+	/** Format for ISO-8601 times. */
+	public static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm:ss.SSSZ");
 	
 	private XMLUtils() {
 		// Prevents instantiation.
