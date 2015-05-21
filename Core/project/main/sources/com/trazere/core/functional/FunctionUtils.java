@@ -15,10 +15,7 @@
  */
 package com.trazere.core.functional;
 
-import com.trazere.core.collection.MapUtils;
 import com.trazere.core.util.Maybe;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * The {@link FunctionUtils} class provides various utilities regarding functions.
@@ -70,29 +67,10 @@ public class FunctionUtils {
 	public static <A, R> MemoizedFunction<A, R> memoize(final Function<? super A, ? extends R> function) {
 		assert null != function;
 		
-		return new MemoizedFunction<A, R>() {
-			/** Memoized results. */
-			protected final Map<A, R> _results = new HashMap<>();
-			
+		return new BaseMemoizedFunction<A, R>() {
 			@Override
-			public R evaluate(final A arg) {
-				if (_results.containsKey(arg)) {
-					return _results.get(arg);
-				} else {
-					final R result = function.evaluate(arg);
-					_results.put(arg, result);
-					return result;
-				}
-			}
-			
-			@Override
-			public boolean isMemoized(final A arg) {
-				return _results.containsKey(arg);
-			}
-			
-			@Override
-			public Maybe<R> get(final A arg) {
-				return MapUtils.get(_results, arg);
+			protected R compute(final A arg) {
+				return function.evaluate(arg);
 			}
 		};
 	}
@@ -106,6 +84,8 @@ public class FunctionUtils {
 	 * @return The build function.
 	 */
 	public static <A, R> ResettableFunction<A, R> resettable(final Function<? super A, ? extends R> function) {
+		assert null != function;
+		
 		return new ResettableFunction<A, R>() {
 			@Override
 			protected R compute(final A arg) {
