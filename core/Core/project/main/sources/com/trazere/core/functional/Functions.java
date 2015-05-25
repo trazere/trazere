@@ -16,6 +16,7 @@
 package com.trazere.core.functional;
 
 import com.trazere.core.lang.ThrowableFactory;
+import com.trazere.core.util.Tuple2;
 
 /**
  * The {@link Functions} class provides various factories of {@link Function functions}.
@@ -203,84 +204,6 @@ public class Functions {
 		return function -> function.evaluate(arg1, arg2, arg3, arg4, arg5);
 	}
 	
-	// TODO: RecordFunctions
-	//	/**
-	//	 * Builds a function corresponding to the given record.
-	//	 * <p>
-	//	 * The built function evaluates to the values associated to the keys in the record and fails for the other keys.
-	//	 *
-	//	 * @param <K> Type of the argument (the keys of the record).
-	//	 * @param <V> Type of the results (the values of the record).
-	//	 * @param record The record.
-	//	 * @return The built function.
-	//	 */
-	//	public static <K, V> Function1<K, V, RecordException> fromRecord(final Record<? super K, ? extends V> record) {
-	//		assert null != record;
-	//
-	//		return new Function1<K, V, RecordException>() {
-	//			@Override
-	//			public V evaluate(final K key)
-	//			throws RecordException {
-	//				return record.get(key);
-	//			}
-	//		};
-	//	}
-	//
-	// TODO: RecordFunctions
-	//	/**
-	//	 * Builds a function corresponding to the given record.
-	//	 * <p>
-	//	 * The built function evaluates to the values associated to the keys in the record and to the default value for the other keys.
-	//	 *
-	//	 * @param <K> Type of the argument (the keys of the record).
-	//	 * @param <V> Type of the results.
-	//	 * @param <RV> Type of the values of the record.
-	//	 * @param record The record.
-	//	 * @param defaultValue The default value. May be <code>null</code>.
-	//	 * @return The built function.
-	//	 */
-	//	public static <K, V, RV extends V> Function1<K, V, RecordException> fromRecord(final Record<? super K, RV> record, final RV defaultValue) {
-	//		assert null != record;
-	//
-	//		return new Function1<K, V, RecordException>() {
-	//			@Override
-	//			public V evaluate(final K key)
-	//			throws RecordException {
-	//				return record.get(key, defaultValue);
-	//			}
-	//		};
-	//	}
-	//
-	// TODO: RecordFunctions
-	//	/**
-	//	 * Builds a function corresponding to the given record.
-	//	 * <p>
-	//	 * The built function evaluates to the values associated to the keys in the record and throws an exception for the other keys.
-	//	 *
-	//	 * @param <K> Type of the argument (the keys of the map).
-	//	 * @param <V> Type of the results (the values values).
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param record The record.
-	//	 * @param throwableFactory The throwable factory.
-	//	 * @return The built function.
-	//	 */
-	//	public static <K, V, X extends Exception> Function1<K, V, X> fromRecord(final Record<? super K, ? extends V> record, final ThrowableFactory<X> throwableFactory) {
-	//		assert null != record;
-	//		assert null != throwableFactory;
-	//
-	//		return new Function1<K, V, X>() {
-	//			@Override
-	//			public V evaluate(final K key)
-	//			throws X {
-	//				try {
-	//					return record.get(key);
-	//				} catch (final RecordException exception) {
-	//					throw throwableFactory.build(exception);
-	//				}
-	//			}
-	//		};
-	//	}
-	
 	/**
 	 * Builds a two arguments function that evaluates to the given result for all arguments.
 	 *
@@ -356,23 +279,6 @@ public class Functions {
 		
 		return (arg1, arg2) -> predicate.evaluate(arg1, arg2);
 	}
-	
-	//	/**
-	//	 * Builds a two arguments function that lifts the given function.
-	//	 * <p>
-	//	 * The function is evaluated with the first argument.
-	//	 *
-	//	 * @param <A1> Type of the first arguments.
-	//	 * @param <A2> Type of the second arguments.
-	//	 * @param <R> Type of the results.
-	//	 * @param function Function to lift.
-	//	 * @return The built function.
-	//	 */
-	//	public static <A1, A2, R> Function2<A1, A2, R> lift2(final Function<? super A1, ? extends R> function) {
-	//		assert null != function;
-	//
-	//		return (arg1, arg2) -> function.evaluate(arg1);
-	//	}
 	
 	/**
 	 * Builds a three arguments function that evaluates to the given result for all arguments.
@@ -455,51 +361,35 @@ public class Functions {
 		return (arg1, arg2, arg3) -> predicate.evaluate(arg1, arg2, arg3);
 	}
 	
-	//	/**
-	//	 * Builds a three arguments function that lifts the given one argument function.
-	//	 *
-	//	 * @param <T1> Type of the first argument values.
-	//	 * @param <T2> Type of the second argument values.
-	//	 * @param <T3> Type of the third argument values.
-	//	 * @param <R> Type of the result values.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param function The lifted function.
-	//	 * @return The built function.
-	//	 */
-	//	public static <T1, T2, T3, R, X extends Exception> Function3<T1, T2, T3, R, X> lift3(final Function1<? super T1, ? extends R, ? extends X> function) {
-	//		assert null != function;
-	//
-	//		return new Function3<T1, T2, T3, R, X>() {
-	//			@Override
-	//			public R evaluate(final T1 value1, final T2 value2, final T3 value3)
-	//			throws X {
-	//				return function.evaluate(value1);
-	//			}
-	//		};
-	//	}
-	//
-	//	/**
-	//	 * Builds a three argument function that lifts the given two arguments function.
-	//	 *
-	//	 * @param <T1> Type of the first argument values.
-	//	 * @param <T2> Type of the second argument values.
-	//	 * @param <T3> Type of the third argument values.
-	//	 * @param <R> Type of the result values.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param function The lifted function.
-	//	 * @return The built function.
-	//	 */
-	//	public static <T1, T2, T3, R, X extends Exception> Function3<T1, T2, T3, R, X> lift3(final Function2<? super T1, ? super T2, ? extends R, ? extends X> function) {
-	//		assert null != function;
-	//
-	//		return new Function3<T1, T2, T3, R, X>() {
-	//			@Override
-	//			public R evaluate(final T1 value1, final T2 value2, final T3 value3)
-	//			throws X {
-	//				return function.evaluate(value1, value2);
-	//			}
-	//		};
-	//	}
+	/**
+	 * Curries the given function which takes pairs of elements into a function that takes two arguments.
+	 *
+	 * @param <A1> Type of the first element of the argument pairs.
+	 * @param <A2> Type of the second element of the argument pairs.
+	 * @param <R> Type of the results.
+	 * @param function Function to curry.
+	 * @return The built function.
+	 */
+	public static <A1, A2, R> Function2<A1, A2, R> curry(final Function<? super Tuple2<? super A1, ? super A2>, ? extends R> function) {
+		assert null != function;
+		
+		return (arg1, arg2) -> function.evaluate(new Tuple2<>(arg1, arg2));
+	}
+	
+	/**
+	 * Uncurries the given function which takes two arguments into a function that takes pairs of elements.
+	 *
+	 * @param <A1> Type of the first arguments.
+	 * @param <A2> Type of the second arguments.
+	 * @param <R> Type of the results.
+	 * @param function Function to uncurry.
+	 * @return The built function.
+	 */
+	public static <A1, A2, R> Function<Tuple2<? extends A1, ? extends A2>, R> uncurry(final Function2<? super A1, ? super A2, ? extends R> function) {
+		assert null != function;
+		
+		return (arg) -> function.evaluate(arg.get1(), arg.get2());
+	}
 	
 	private Functions() {
 		// Prevents instantiation.
