@@ -59,25 +59,6 @@ public class ExtractorUtils {
 		return arg -> extractor.evaluate(arg).map(function);
 	}
 	
-	/**
-	 * Transforms and flattens the given extractor using the given extractor.
-	 * <p>
-	 * This method is equivalent to extractor composition.
-	 * 
-	 * @param <A> Type of the arguments.
-	 * @param <R> Type of the results.
-	 * @param <ER> Type of the extracted results.
-	 * @param extractor Extractor to transform.
-	 * @param flatMapExtractor Extractor to use to extract the results.
-	 * @return The built extractor.
-	 */
-	public static <A, R, ER> Function<A, Maybe<ER>> flatMap(final Function<? super A, ? extends Maybe<? extends R>> extractor, final Function<? super R, ? extends Maybe<? extends ER>> flatMapExtractor) {
-		assert null != extractor;
-		assert null != flatMapExtractor;
-		
-		return arg -> extractor.evaluate(arg).flatMap(flatMapExtractor);
-	}
-	
 	private ExtractorUtils() {
 		// Prevents instantiation.
 	}
