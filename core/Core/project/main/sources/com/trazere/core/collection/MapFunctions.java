@@ -16,8 +16,9 @@
 package com.trazere.core.collection;
 
 import com.trazere.core.functional.Function;
+import com.trazere.core.lang.IterableUtils;
 import com.trazere.core.lang.ThrowableFactory;
-import com.trazere.core.util.Maybe;
+import com.trazere.core.util.Tuple2;
 import java.util.Map;
 
 /**
@@ -25,26 +26,9 @@ import java.util.Map;
  */
 public class MapFunctions {
 	/**
-	 * Builds a function that gets the value associated to keys in the given map.
-	 * <p>
-	 * The built function evaluates to the associated value, or nothing when no value is associated to the key in the map.
-	 *
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param map Map to read.
-	 * @return The built function.
-	 * @see MapUtils#get(Map, Object)
-	 */
-	public static <K, V> Function<K, Maybe<V>> get(final Map<? super K, ? extends V> map) {
-		assert null != map;
-		
-		return key -> MapUtils.get(map, key);
-	}
-	
-	/**
 	 * Builds a function that gets the optional value associated to keys in the given map.
 	 * <p>
-	 * The built function evaluates to the associated value, or the default value when no value is associated to the key in the map.
+	 * The built function evaluates to the associated value, or to the default value when no values are associated to the key in the map.
 	 *
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -76,6 +60,100 @@ public class MapFunctions {
 		assert null != throwableFactory;
 		
 		return key -> MapUtils.getMandatory(map, key, throwableFactory);
+	}
+	
+	/**
+	 * Builds a function according to the given bindings.
+	 * <p>
+	 * The built function evaluates to the value of the binding corresponding to the key, or to the default value when no bindings correspond to the key.
+	 *
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param bindings Bindings to use.
+	 * @param defaultValue Default value for the keys associated to no values.
+	 * @return The built function.
+	 */
+	public static <K, V> Function<K, V> fromBindings(final Iterable<? extends Tuple2<? extends K, ? extends V>> bindings, final V defaultValue) {
+		return get(Maps.fromBindings(bindings), defaultValue);
+	}
+	
+	/**
+	 * Builds a function according to the given bindings.
+	 * <p>
+	 * The built function evaluates to the value of the binding corresponding to the key, or throws an exception when no bindings correspond to the key.
+	 *
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param bindings Bindings to use.
+	 * @param throwableFactory Throwable factory to use.
+	 * @return The built function.
+	 */
+	public static <K, V> Function<K, V> fromBindings(final Iterable<? extends Tuple2<? extends K, ? extends V>> bindings, final ThrowableFactory<? extends RuntimeException> throwableFactory) {
+		return getMandatory(Maps.fromBindings(bindings), throwableFactory);
+	}
+	
+	/**
+	 * Builds a function according to the bindings resulting from the projection of the given keys.
+	 * <p>
+	 * The built function evaluates to the value of the binding corresponding to the key, or to the default value when no bindings correspond to the key.
+	 *
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param keys Keys of the bindings.
+	 * @param projection Projection function that computes the volue associated to each key.
+	 * @param defaultValue Default value for the keys associated to no values.
+	 * @return The built function.
+	 */
+	public static <K, V> Function<K, V> fromKeys(final Iterable<? extends K> keys, final Function<? super K, ? extends V> projection, final V defaultValue) {
+		return fromBindings(IterableUtils.<K, Tuple2<K, V>>map(keys, key -> new Tuple2<>(key, projection.evaluate(key))), defaultValue);
+	}
+	
+	/**
+	 * Builds a function according to the bindings resulting from the projection of the given keys.
+	 * <p>
+	 * The built function evaluates to the value of the binding corresponding to the key, or throws an exception when no bindings correspond to the key.
+	 *
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param keys Keys of the bindings.
+	 * @param projection Projection function that computes the volue associated to each key.
+	 * @param throwableFactory Throwable factory to use.
+	 * @return The built function.
+	 */
+	public static <K, V> Function<K, V> fromKeys(final Iterable<? extends K> keys, final Function<? super K, ? extends V> projection, final ThrowableFactory<? extends RuntimeException> throwableFactory) {
+		return fromBindings(IterableUtils.<K, Tuple2<K, V>>map(keys, key -> new Tuple2<>(key, projection.evaluate(key))), throwableFactory);
+	}
+	
+	/**
+	 * Builds a function according to the bindings resulting from the projection of the given values.
+	 * <p>
+	 * The built function evaluates to the value of the binding corresponding to the key, or to the default value when no bindings correspond to the key.
+	 *
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param values Values of the bindings.
+	 * @param projection Projection function that computes the key associated to each value.
+	 * @param defaultValue Default value for the keys associated to no values.
+	 * @return The built function.
+	 */
+	public static <K, V> Function<K, V> fromValues(final Iterable<? extends V> values, final Function<? super V, ? extends K> projection, final V defaultValue) {
+		return fromBindings(IterableUtils.<V, Tuple2<K, V>>map(values, value -> new Tuple2<>(projection.evaluate(value), value)), defaultValue);
+	}
+	
+	/**
+	 * Builds a function according to the bindings resulting from the projection of the given values.
+	 * <p>
+	 * The built function evaluates to the value of the binding corresponding to the key, or throws an exception when no bindings correspond to the key.
+	 *
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param values Values of the bindings.
+	 * @param projection Projection function that computes the key associated to each value.
+	 * @param throwableFactory Throwable factory to use.
+	 * @return The built function.
+	 */
+	public static <K, V> Function<K, V> fromValues(final Iterable<? extends V> values, final Function<? super V, ? extends K> projection, final ThrowableFactory<? extends RuntimeException> throwableFactory) {
+		return fromBindings(IterableUtils.<V, Tuple2<K, V>>map(values, value -> new Tuple2<>(projection.evaluate(value), value)), throwableFactory);
 	}
 	
 	private MapFunctions() {
