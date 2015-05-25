@@ -51,9 +51,25 @@ extends Factory<C> {
 	 * @param elements Elements.
 	 * @return The built collection.
 	 */
+	default C build(@SuppressWarnings("unchecked") final E... elements) {
+		final C collection = build();
+		for (final E element : elements) {
+			collection.add(element);
+		}
+		return collection;
+	}
+	
+	/**
+	 * Builds a collection containing the given elements.
+	 * 
+	 * @param elements Elements.
+	 * @return The built collection.
+	 */
 	default C build(final Iterable<? extends E> elements) {
 		final C collection = build();
-		CollectionUtils.addAll(collection, elements);
+		for (final E element : elements) {
+			collection.add(element);
+		}
 		return collection;
 	}
 	

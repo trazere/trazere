@@ -53,6 +53,18 @@ extends Factory<M> {
 	 * @param bindings Bindings.
 	 * @return The built map.
 	 */
+	default M build(@SuppressWarnings("unchecked") final Tuple2<? extends K, ? extends V>... bindings) {
+		final M map = build();
+		MapUtils.putAll(map, bindings);
+		return map;
+	}
+	
+	/**
+	 * Builds a map containing the given bindings.
+	 * 
+	 * @param bindings Bindings.
+	 * @return The built map.
+	 */
 	default M build(final Iterable<? extends Tuple2<? extends K, ? extends V>> bindings) {
 		final M map = build();
 		MapUtils.putAll(map, bindings);
