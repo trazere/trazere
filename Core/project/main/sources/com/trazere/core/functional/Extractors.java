@@ -48,7 +48,10 @@ public class Extractors {
 	 * @return The built extractor.
 	 */
 	public static <A, I, R> Function<A, Maybe<R>> compose(final Function<? super I, ? extends Maybe<? extends R>> g, final Function<? super A, ? extends Maybe<? extends I>> f) {
-		return ExtractorUtils.flatMap(f, g);
+		assert null != f;
+		assert null != g;
+		
+		return arg -> f.evaluate(arg).flatMap(g);
 	}
 	
 	/**
