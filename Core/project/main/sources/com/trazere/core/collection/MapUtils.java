@@ -153,6 +153,21 @@ public class MapUtils {
 	 * @param map Map to modify.
 	 * @param bindings Bindings to put in the map.
 	 */
+	@SafeVarargs
+	public static <K, V> void putAll(final Map<? super K, ? super V> map, final Tuple2<? extends K, ? extends V>... bindings) {
+		for (final Tuple2<? extends K, ? extends V> binding : bindings) {
+			map.put(binding.get1(), binding.get2());
+		}
+	}
+	
+	/**
+	 * Puts all given bindings into the given map.
+	 *
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param map Map to modify.
+	 * @param bindings Bindings to put in the map.
+	 */
 	public static <K, V> void putAll(final Map<? super K, ? super V> map, final Iterable<? extends Tuple2<? extends K, ? extends V>> bindings) {
 		for (final Tuple2<? extends K, ? extends V> binding : bindings) {
 			map.put(binding.get1(), binding.get2());
