@@ -50,6 +50,23 @@ public class CollectionUtils {
 	 * @param elements Elements to add.
 	 * @return <code>true</code> when the given collection is modified, <code>false</code> otherwise.
 	 */
+	@SafeVarargs
+	public static <E> boolean addAll(final Collection<? super E> collection, final E... elements) {
+		final Accumulator<Boolean, Boolean> changed = LangAccumulators.or(false);
+		for (final E element : elements) {
+			changed.add(collection.add(element));
+		}
+		return changed.get().booleanValue();
+	}
+	
+	/**
+	 * Adds all given elements to the given collection.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param collection Collection to modify.
+	 * @param elements Elements to add.
+	 * @return <code>true</code> when the given collection is modified, <code>false</code> otherwise.
+	 */
 	public static <E> boolean addAll(final Collection<? super E> collection, final Iterable<? extends E> elements) {
 		final Accumulator<Boolean, Boolean> changed = LangAccumulators.or(false);
 		for (final E element : elements) {

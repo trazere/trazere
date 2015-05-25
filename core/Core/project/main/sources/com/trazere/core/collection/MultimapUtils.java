@@ -209,6 +209,21 @@ public class MultimapUtils {
 	 * @param multimap Multimap to modify.
 	 * @param bindings Bindings to put in the multimap.
 	 */
+	@SafeVarargs
+	public static <K, V> void putAll(final Multimap<? super K, ? super V, ?> multimap, final Tuple2<? extends K, ? extends V>... bindings) {
+		for (final Tuple2<? extends K, ? extends V> binding : bindings) {
+			multimap.put(binding.get1(), binding.get2());
+		}
+	}
+	
+	/**
+	 * Puts all given bindings into the given multimap.
+	 *
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param multimap Multimap to modify.
+	 * @param bindings Bindings to put in the multimap.
+	 */
 	public static <K, V> void putAll(final Multimap<? super K, ? super V, ?> multimap, final Iterable<? extends Tuple2<? extends K, ? extends V>> bindings) {
 		for (final Tuple2<? extends K, ? extends V> binding : bindings) {
 			multimap.put(binding.get1(), binding.get2());
