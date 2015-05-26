@@ -179,7 +179,7 @@ implements Predicate1<Collection<String>, RuntimeException>, Describable {
 	
 	@Override
 	public String toString() {
-		return TextUtils.computeDescription(this);
+		return TextUtils.description(this);
 	}
 	
 	@Override

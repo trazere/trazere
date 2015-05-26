@@ -15,8 +15,10 @@
  */
 package com.trazere.util.type;
 
+import com.trazere.core.lang.ComparableUtils;
 import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.LangUtils;
+import com.trazere.core.lang.ObjectUtils;
+import com.trazere.core.util.FieldFunctions;
 import com.trazere.core.util.TupleComparators;
 import com.trazere.core.util.TupleFunctions;
 import com.trazere.util.function.Function1;
@@ -46,7 +48,7 @@ public class Tuple1<T1> {
 	 * @param <T1> Type of the first value.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
-	 * @deprecated Use {@link TupleFunctions#build1()}.
+	 * @deprecated Use {@link TupleFunctions#tuple1()}.
 	 */
 	@Deprecated
 	@SuppressWarnings("unchecked")
@@ -93,7 +95,7 @@ public class Tuple1<T1> {
 	 * @param <T1> Type of the first values of the tuples.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
-	 * @deprecated Use {@link TupleFunctions#get1()}.
+	 * @deprecated Use {@link FieldFunctions#get1()}.
 	 */
 	@Deprecated
 	@SuppressWarnings("unchecked")
@@ -128,7 +130,7 @@ public class Tuple1<T1> {
 		assert null != tuple2;
 		
 		// Compare.
-		return LangUtils.safeCompare(tuple1._first, tuple2._first);
+		return ComparableUtils.safeCompareTo(tuple1._first, tuple2._first);
 	}
 	
 	// Object.
@@ -146,7 +148,7 @@ public class Tuple1<T1> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final Tuple1<?> tuple = (Tuple1<?>) object;
-			return LangUtils.safeEquals(_first, tuple._first);
+			return ObjectUtils.safeEquals(_first, tuple._first);
 		} else {
 			return false;
 		}

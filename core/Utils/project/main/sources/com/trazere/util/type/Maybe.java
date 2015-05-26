@@ -17,7 +17,7 @@ package com.trazere.util.type;
 
 import com.trazere.core.imperative.Iterators;
 import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.LangUtils;
+import com.trazere.core.lang.ObjectUtils;
 import com.trazere.core.text.Describable;
 import com.trazere.core.text.Description;
 import com.trazere.core.text.TextUtils;
@@ -400,7 +400,7 @@ implements Iterable<T>, Describable {
 		
 		@Override
 		public Iterator<T> iterator() {
-			return Iterators.fromValue(_value);
+			return Iterators.fromElement(_value);
 		}
 		
 		// Object.
@@ -418,7 +418,7 @@ implements Iterable<T>, Describable {
 				return true;
 			} else if (null != object && getClass().equals(object.getClass())) {
 				final Some<?> maybe = (Some<?>) object;
-				return LangUtils.safeEquals(_value, maybe._value);
+				return ObjectUtils.safeEquals(_value, maybe._value);
 			} else {
 				return false;
 			}
@@ -659,6 +659,6 @@ implements Iterable<T>, Describable {
 	
 	@Override
 	public final String toString() {
-		return TextUtils.computeDescription(this);
+		return TextUtils.description(this);
 	}
 }

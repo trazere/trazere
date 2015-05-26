@@ -33,7 +33,7 @@ extends RuntimeException {
 		assert null != object;
 		assert null != type;
 		
-		return new InvalidConstructorException(object + " is not a " + TextUtils.computeClassName(type));
+		return new InvalidConstructorException(object + " is not a " + TextUtils.className(type));
 	}
 	
 	private InvalidConstructorException(final String message) {

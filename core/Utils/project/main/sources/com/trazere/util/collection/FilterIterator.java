@@ -18,7 +18,7 @@ package com.trazere.util.collection;
 import com.trazere.util.type.Maybe;
 
 /**
- * The {@link CheckedFilterIterator} class implements iterator combinators that filter their values.
+ * The {@link FilterIterator} class implements iterator combinators that filter their values.
  * 
  * @param <T> Type of the values.
  */

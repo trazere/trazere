@@ -15,10 +15,11 @@
  */
 package com.trazere.util.type;
 
+import com.trazere.core.lang.ComparableUtils;
 import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.LangUtils;
+import com.trazere.core.lang.ObjectUtils;
+import com.trazere.core.util.FieldFunctions;
 import com.trazere.core.util.TupleComparators;
-import com.trazere.core.util.TupleFunctions;
 import com.trazere.util.function.Function1;
 
 /**
@@ -99,7 +100,7 @@ extends Tuple6<T1, T2, T3, T4, T5, T6> {
 	 * @param <T7> Type of the seventh value of the tuples.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
-	 * @deprecated Use {@link TupleFunctions#get7()}.
+	 * @deprecated Use {@link FieldFunctions#get7()}.
 	 */
 	@Deprecated
 	@SuppressWarnings("unchecked")
@@ -143,7 +144,7 @@ extends Tuple6<T1, T2, T3, T4, T5, T6> {
 		
 		// Compare.
 		final int comp = Tuple6.compare(tuple1, tuple2);
-		return 0 != comp ? comp : LangUtils.safeCompare(tuple1._seventh, tuple2._seventh);
+		return 0 != comp ? comp : ComparableUtils.safeCompareTo(tuple1._seventh, tuple2._seventh);
 	}
 	
 	// Object.
@@ -167,7 +168,7 @@ extends Tuple6<T1, T2, T3, T4, T5, T6> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final Tuple7<?, ?, ?, ?, ?, ?, ?> tuple = (Tuple7<?, ?, ?, ?, ?, ?, ?>) object;
-			return LangUtils.safeEquals(_first, tuple._first) && LangUtils.safeEquals(_second, tuple._second) && LangUtils.safeEquals(_third, tuple._third) && LangUtils.safeEquals(_fourth, tuple._fourth) && LangUtils.safeEquals(_fifth, tuple._fifth) && LangUtils.safeEquals(_sixth, tuple._sixth) && LangUtils.safeEquals(_seventh, tuple._seventh);
+			return ObjectUtils.safeEquals(_first, tuple._first) && ObjectUtils.safeEquals(_second, tuple._second) && ObjectUtils.safeEquals(_third, tuple._third) && ObjectUtils.safeEquals(_fourth, tuple._fourth) && ObjectUtils.safeEquals(_fifth, tuple._fifth) && ObjectUtils.safeEquals(_sixth, tuple._sixth) && ObjectUtils.safeEquals(_seventh, tuple._seventh);
 		} else {
 			return false;
 		}
