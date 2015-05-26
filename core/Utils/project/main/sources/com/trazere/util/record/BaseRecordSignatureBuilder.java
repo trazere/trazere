@@ -249,7 +249,7 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 	
 	@Override
 	public final String toString() {
-		return TextUtils.computeDescription(this);
+		return TextUtils.description(this);
 	}
 	
 	@Override

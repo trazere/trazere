@@ -16,6 +16,7 @@
 package com.trazere.util.closure;
 
 import com.trazere.core.text.Description;
+import com.trazere.core.text.TextUtils;
 import com.trazere.util.function.Function0;
 import com.trazere.util.type.Either;
 import com.trazere.util.type.Maybe;
@@ -86,7 +87,7 @@ implements Closure<T, X> {
 		if (_value.isRight()) {
 			return String.valueOf(_value.asRight().getRight());
 		} else {
-			final Description description = Description.build(this);
+			final Description description = new Description(TextUtils.className(this.getClass()));
 			description.append("Function", _value.asLeft().getLeft());
 			return description.toString();
 		}

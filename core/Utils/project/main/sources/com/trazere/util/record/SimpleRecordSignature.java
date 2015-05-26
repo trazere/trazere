@@ -208,7 +208,7 @@ implements RecordSignature<K, V>, Describable {
 	
 	@Override
 	public final String toString() {
-		return TextUtils.computeDescription(this);
+		return TextUtils.description(this);
 	}
 	
 	@Override

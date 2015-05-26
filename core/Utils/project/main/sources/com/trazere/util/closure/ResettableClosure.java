@@ -177,7 +177,7 @@ implements Closure<T, X>, Releasable<RuntimeException>, Describable {
 			}
 			return String.valueOf(value);
 		} else {
-			return TextUtils.computeDescription(this);
+			return TextUtils.description(this);
 		}
 	}
 	

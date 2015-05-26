@@ -15,7 +15,7 @@
  */
 package com.trazere.util.lang;
 
-import com.trazere.core.lang.LangUtils;
+import com.trazere.core.lang.ComparableUtils;
 import com.trazere.core.util.ComparatorUtils;
 import com.trazere.util.function.Function1;
 import com.trazere.util.type.Maybe;
@@ -57,8 +57,8 @@ public class Comparators {
 	 * @param <T> Type of the values.
 	 * @param comparator The unsafe comparator.
 	 * @return The built comparator.
-	 * @see LangUtils#safeCompare(Comparator, Object, Object)
-	 * @deprecated Use {@link com.trazere.core.util.Comparators#safe(Comparator)}.
+	 * @see ComparatorUtils#safeCompare(Comparator, Object, Object)
+	 * @deprecated Use {@link com.trazere.core.util.ComparatorUtils#safe(Comparator)}.
 	 */
 	@Deprecated
 	public static <T> Comparator<T> safe(final Comparator<? super T> comparator) {
@@ -67,7 +67,7 @@ public class Comparators {
 		return new Comparator<T>() {
 			@Override
 			public int compare(final T object1, final T object2) {
-				return LangUtils.safeCompare(comparator, object1, object2);
+				return ComparatorUtils.safeCompare(comparator, object1, object2);
 			}
 		};
 	}
@@ -80,11 +80,12 @@ public class Comparators {
 	 * @see Comparable#compareTo(Object)
 	 * @deprecated Use {@link com.trazere.core.util.Comparators#safeNatural()}.
 	 */
+	@Deprecated
 	public static <T extends Comparable<T>> Comparator<T> safeNatural() {
 		return new Comparator<T>() {
 			@Override
 			public int compare(final T object1, final T object2) {
-				return LangUtils.safeCompare(object1, object2);
+				return ComparableUtils.safeCompareTo(object1, object2);
 			}
 		};
 	}
@@ -118,7 +119,7 @@ public class Comparators {
 	 * @param comparator The inversed comparator.
 	 * @return The built comparator.
 	 * @see InverseComparator
-	 * @deprecated Use {@link com.trazere.core.util.Comparators#inverse(Comparator)}.
+	 * @deprecated Use {@link com.trazere.core.util.ComparatorUtils#inverse(Comparator)}.
 	 */
 	@Deprecated
 	public static <T> Comparator<T> inverse(final Comparator<? super T> comparator) {

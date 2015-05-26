@@ -15,7 +15,7 @@
  */
 package com.trazere.util.observer;
 
-import com.trazere.core.lang.LangUtils;
+import com.trazere.core.lang.ObjectUtils;
 import com.trazere.util.function.Predicate1;
 import com.trazere.util.reference.MutableReference;
 import com.trazere.util.reference.ReferenceAlreadySetException;
@@ -88,7 +88,7 @@ implements ObservableReference<T> {
 		final V result = super.update(value);
 		
 		// Notify.
-		if (currentValue.isNone() || !LangUtils.safeEquals(currentValue.asSome().getValue(), value)) {
+		if (currentValue.isNone() || !ObjectUtils.safeEquals(currentValue.asSome().getValue(), value)) {
 			_observable.notify(_value);
 		}
 		

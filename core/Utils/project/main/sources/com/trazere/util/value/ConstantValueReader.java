@@ -16,7 +16,7 @@
 package com.trazere.util.value;
 
 import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.LangUtils;
+import com.trazere.core.lang.ObjectUtils;
 import com.trazere.core.text.Description;
 import com.trazere.util.record.Record;
 import com.trazere.util.record.RecordSignature;
@@ -103,7 +103,7 @@ extends BaseValueReader<T> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final ConstantValueReader<?> reader = (ConstantValueReader<?>) object;
-			return _valueClass.equals(reader._valueClass) && LangUtils.safeEquals(_value, reader._value);
+			return _valueClass.equals(reader._valueClass) && ObjectUtils.safeEquals(_value, reader._value);
 		} else {
 			return false;
 		}
