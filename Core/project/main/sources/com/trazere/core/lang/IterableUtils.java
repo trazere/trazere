@@ -16,7 +16,6 @@
 package com.trazere.core.lang;
 
 import com.trazere.core.collection.CollectionFactory;
-import com.trazere.core.collection.MapFactory;
 import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Function3;
@@ -29,8 +28,6 @@ import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  * The {@link IterableUtils} class provides various utilities regarding {@link Iterable iterables}.
@@ -47,60 +44,6 @@ public class IterableUtils {
 	 */
 	public static <E> Maybe<E> any(final Iterable<? extends E> iterable) {
 		return IteratorUtils.next(iterable.iterator());
-	}
-	
-	/**
-	 * Copies of the bindings provided by the given iterable into the given result map.
-	 *
-	 * @param <E> Type of the elements.
-	 * @param <C> Type of the collection to populate.
-	 * @param iterable Iterable providing the elements.
-	 * @param results Collection to populate with the elements.
-	 * @return The given result collection.
-	 */
-	public static <E, C extends Collection<? super E>> C copy(final Iterable<? extends E> iterable, final C results) {
-		return IteratorUtils.drain(iterable.iterator(), results);
-	}
-	
-	/**
-	 * Copies the elements provided by the given iterable into a collection.
-	 *
-	 * @param <E> Type of the elements.
-	 * @param <C> Type of the result collection.
-	 * @param iterable Iterable providing the elements.
-	 * @param resultFactory Factory of the result collection.
-	 * @return A collection containing the elements.
-	 */
-	public static <E, C extends Collection<? super E>> C copy(final Iterable<? extends E> iterable, final CollectionFactory<? super E, C> resultFactory) {
-		return copy(iterable, resultFactory.build());
-	}
-	
-	/**
-	 * Copies of the elements provided by the given iterable into the given result collection.
-	 *
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <M> Type of the map to populate.
-	 * @param iterable Iterable providing the bindings.
-	 * @param results Map to populate with the bindings.
-	 * @return The given result map.
-	 */
-	public static <K, V, M extends Map<? super K, ? super V>> M copy(final Iterable<? extends Tuple2<? extends K, ? extends V>> iterable, final M results) {
-		return IteratorUtils.drain(iterable.iterator(), results);
-	}
-	
-	/**
-	 * Copies the bindings provided by the given iterable into a map.
-	 *
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <M> Type of the result map.
-	 * @param iterable Iterable providing the bindings.
-	 * @param resultFactory Factory of the result map.
-	 * @return A map containing the bindings.
-	 */
-	public static <K, V, M extends Map<? super K, ? super V>> M copy(final Iterable<? extends Tuple2<? extends K, ? extends V>> iterable, final MapFactory<? super K, ? super V, M> resultFactory) {
-		return copy(iterable, resultFactory.build());
 	}
 	
 	/**
@@ -340,12 +283,7 @@ public class IterableUtils {
 		assert null != iterable1;
 		assert null != iterable2;
 		
-		return new Iterable<E>() {
-			@Override
-			public Iterator<E> iterator() {
-				return IteratorUtils.append(iterable1.iterator(), iterable2.iterator());
-			}
-		};
+		return () -> IteratorUtils.append(iterable1.iterator(), iterable2.iterator());
 	}
 	
 	/**
@@ -358,12 +296,7 @@ public class IterableUtils {
 	public static <E> Iterable<E> flatten(final Iterable<? extends Iterable<? extends E>> iterable) {
 		assert null != iterable;
 		
-		return new Iterable<E>() {
-			@Override
-			public Iterator<E> iterator() {
-				return IteratorUtils.flatten(IteratorUtils.map(iterable.iterator(), IterableFunctions.iterator()));
-			}
-		};
+		return () -> IteratorUtils.flatten(IteratorUtils.map(iterable.iterator(), IterableFunctions.iterator()));
 	}
 	
 	/**
@@ -377,12 +310,7 @@ public class IterableUtils {
 	public static <E> Iterable<E> take(final Iterable<? extends E> iterable, final int n) {
 		assert null != iterable;
 		
-		return new Iterable<E>() {
-			@Override
-			public Iterator<E> iterator() {
-				return IteratorUtils.take(iterable.iterator(), n);
-			}
-		};
+		return () -> IteratorUtils.take(iterable.iterator(), n);
 	}
 	
 	/**
@@ -396,12 +324,24 @@ public class IterableUtils {
 	public static <E> Iterable<E> drop(final Iterable<? extends E> iterable, final int n) {
 		assert null != iterable;
 		
-		return new Iterable<E>() {
-			@Override
-			public Iterator<E> iterator() {
-				return IteratorUtils.drop(iterable.iterator(), n);
-			}
-		};
+		return () -> IteratorUtils.drop(iterable.iterator(), n);
+	}
+	
+	/**
+	 * Groups the elements provided by the given iterable into batches of the given size.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param <B> Type of the batch collections.
+	 * @param iterable Iterable providing the elements to group.
+	 * @param n Number of elements of each batch.
+	 * @param batchFactory Factory of the batch collections.
+	 * @return An iterable providing the groups of elements.
+	 */
+	public static <E, B extends Collection<? super E>> Iterable<B> group(final Iterable<? extends E> iterable, final int n, final CollectionFactory<? super E, B> batchFactory) {
+		assert null != iterable;
+		assert null != batchFactory;
+		
+		return () -> IteratorUtils.group(iterable.iterator(), n, batchFactory);
 	}
 	
 	/**
@@ -416,12 +356,7 @@ public class IterableUtils {
 		assert null != iterable;
 		assert null != filter;
 		
-		return new Iterable<E>() {
-			@Override
-			public Iterator<E> iterator() {
-				return IteratorUtils.filter(iterable.iterator(), filter);
-			}
-		};
+		return () -> IteratorUtils.filter(iterable.iterator(), filter);
 	}
 	
 	/**
@@ -437,12 +372,7 @@ public class IterableUtils {
 		assert null != iterable;
 		assert null != filter;
 		
-		return new Iterable<Tuple2<? extends E1, ? extends E2>>() {
-			@Override
-			public Iterator<Tuple2<? extends E1, ? extends E2>> iterator() {
-				return IteratorUtils.filter(iterable.iterator(), filter);
-			}
-		};
+		return () -> IteratorUtils.filter(iterable.iterator(), filter);
 	}
 	
 	/**
@@ -458,12 +388,7 @@ public class IterableUtils {
 		assert null != iterable;
 		assert null != function;
 		
-		return new Iterable<TE>() {
-			@Override
-			public Iterator<TE> iterator() {
-				return IteratorUtils.map(iterable.iterator(), function);
-			}
-		};
+		return () -> IteratorUtils.map(iterable.iterator(), function);
 	}
 	
 	/**
@@ -480,12 +405,7 @@ public class IterableUtils {
 		assert null != iterable;
 		assert null != function;
 		
-		return new Iterable<TE>() {
-			@Override
-			public Iterator<TE> iterator() {
-				return IteratorUtils.map(iterable.iterator(), function);
-			}
-		};
+		return () -> IteratorUtils.map(iterable.iterator(), function);
 	}
 	
 	/**
@@ -498,7 +418,10 @@ public class IterableUtils {
 	 * @return An iterable providing the flatten, transformed elements.
 	 */
 	public static <E, TE> Iterable<TE> flatMap(final Iterable<? extends E> iterable, final Function<? super E, ? extends Iterable<? extends TE>> function) {
-		return flatten(map(iterable, function));
+		assert null != iterable;
+		assert null != function;
+		
+		return () -> IteratorUtils.flatMap(iterable.iterator(), arg -> function.evaluate(arg).iterator());
 	}
 	
 	/**
@@ -512,8 +435,13 @@ public class IterableUtils {
 	 * @return An iterable providing the flatten, transformed elements.
 	 */
 	public static <E1, E2, TE> Iterable<TE> flatMap(final Iterable<? extends Tuple2<? extends E1, ? extends E2>> iterable, final Function2<? super E1, ? super E2, ? extends Iterable<? extends TE>> function) {
-		return flatten(map(iterable, function));
+		assert null != iterable;
+		assert null != function;
+		
+		return () -> IteratorUtils.flatMap(iterable.iterator(), (arg1, arg2) -> function.evaluate(arg1, arg2).iterator());
 	}
+	
+	// TODO: extract(...) and extractAll(...) methods although they are redundant with flatMap(...) ? => optimized version for Maybe
 	
 	private IterableUtils() {
 		// Prevent instantiation.

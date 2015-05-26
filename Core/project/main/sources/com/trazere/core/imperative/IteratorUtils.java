@@ -16,6 +16,7 @@
 package com.trazere.core.imperative;
 
 import com.trazere.core.collection.CollectionAccumulators;
+import com.trazere.core.collection.CollectionFactory;
 import com.trazere.core.collection.MapAccumulators;
 import com.trazere.core.collection.Multimap;
 import com.trazere.core.collection.MultimapAccumulators;
@@ -678,6 +679,32 @@ public class IteratorUtils {
 					iterator.next();
 					_droppedN += 1;
 				}
+			}
+		};
+	}
+	
+	/**
+	 * Groups the elements provided by the given iterator into batches of the given size.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param <B> Type of the batch collections.
+	 * @param iterator Iterator providing the elements to group.
+	 * @param n Number of elements of each batch.
+	 * @param batchFactory Factory of the batch collections.
+	 * @return An iterator providing the groups of elements.
+	 */
+	public static <E, B extends Collection<? super E>> Iterator<B> group(final Iterator<? extends E> iterator, final int n, final CollectionFactory<? super E, B> batchFactory) {
+		assert null != iterator;
+		
+		return new Iterator<B>() {
+			@Override
+			public boolean hasNext() {
+				return iterator.hasNext();
+			}
+			
+			@Override
+			public B next() {
+				return drain(iterator, n, batchFactory.build(n));
 			}
 		};
 	}
