@@ -302,13 +302,13 @@ public class ListUtils {
 	 * @param elements Elements to sort.
 	 * @param dependencies Function computing the dependencies.
 	 * @param includeDependencies Indicates whether the dependency elements that do not belong to the elements to sort should be included in the results or not.
-	 * @param resultFactory Factory of the result list.
 	 * @param regionFactory Factory of the region lists.
+	 * @param resultFactory Factory of the result list.
 	 * @return A list containing the sorted regions of elements.
 	 * @throws IllegalArgumentException When there is a cycle in the dependency graph.
 	 * @throws IllegalArgumentException When some dependency element does not belong to the elements to sort and is not included into the results.
 	 */
-	public static <E, R extends List<? super E>, L extends List<? super R>> L topologicalRegionSort(final Collection<? extends E> elements, final Function<? super E, ? extends Collection<? extends E>> dependencies, final boolean includeDependencies, final CollectionFactory<? super R, L> resultFactory, final CollectionFactory<? super E, R> regionFactory) {
+	public static <E, R extends List<? super E>, L extends List<? super R>> L topologicalRegionSort(final Collection<? extends E> elements, final Function<? super E, ? extends Collection<? extends E>> dependencies, final boolean includeDependencies, final CollectionFactory<? super E, R> regionFactory, final CollectionFactory<? super R, L> resultFactory) {
 		final Accumulator<R, L> results = CollectionAccumulators.add(resultFactory.build());
 		
 		// Compute the dependencies.

@@ -26,14 +26,12 @@ public class ResultUtils {
 	 * Gets the success value of the given result, or throws an exception cause by its failure.
 	 * 
 	 * @param <T> Type of the success value.
-	 * @param <X> Type of the failure exception.
 	 * @param result Result instance to read.
 	 * @param failureFactory Factory of the failure.
 	 * @return The success value.
-	 * @throws X An exceptioned caused the given result when it is a failure.
+	 * @throws RuntimeException An exceptioned caused the given result when it is a failure.
 	 */
-	public static <T, X extends Exception> T get(final Result<T> result, final ThrowableFactory<? extends X> failureFactory)
-	throws X {
+	public static <T> T get(final Result<T> result, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		if (result.isSuccess()) {
 			return result.asSuccess().getValue();
 		} else {

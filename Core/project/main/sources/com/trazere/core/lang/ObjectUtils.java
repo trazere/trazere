@@ -115,15 +115,13 @@ public class ObjectUtils {
 	 * This methods tests that the given object is not <code>null</code> and is assignable to the given type.
 	 *
 	 * @param <T> Type of the match.
-	 * @param <X> Type of the exceptions.
 	 * @param object Object to match. May be <code>null</code>.
 	 * @param type Type against which to match.
 	 * @param throwableFactory Throwable factory to use.
 	 * @return The given matched object.
-	 * @throws X When the given object is null or is not assignable to the given type.
+	 * @throws RuntimeException When the given object is null or is not assignable to the given type.
 	 */
-	public static <T, X extends Exception> T match(final Object object, final Class<T> type, final ThrowableFactory<X> throwableFactory)
-	throws X {
+	public static <T> T match(final Object object, final Class<T> type, final ThrowableFactory<? extends RuntimeException> throwableFactory) {
 		if (null != object && type.isInstance(object)) {
 			return type.cast(object);
 		} else {
