@@ -15,10 +15,23 @@
  */
 package com.trazere.core.collection;
 
+import com.trazere.core.functional.Function;
+import com.trazere.core.functional.Predicate;
+import com.trazere.core.imperative.Accumulator;
+import com.trazere.core.imperative.Accumulator2;
+import com.trazere.core.imperative.ImperativePredicates;
 import com.trazere.core.util.Maybe;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Queue;
+import java.util.Random;
+import java.util.Set;
 
 /**
  * The {@link ListUtils} class provides various utilities regarding {@link List lists}.
@@ -108,6 +121,7 @@ public class ListUtils {
 		}
 	}
 	
+	// TODO: move to ListIterators ?
 	/**
 	 * Builds an iterator that iterates the given list from the last element to the first one.
 	 * 
@@ -135,248 +149,240 @@ public class ListUtils {
 		};
 	}
 	
-	//	/**
-	//	 * Reverses the given list.
-	//	 * <p>
-	//	 * This method does modify the given list.
-	//	 *
-	//	 * @param <T> Type of the elements.
-	//	 * @param <L> Type of the list.
-	//	 * @param list The list.
-	//	 * @return The given modified list.
-	//	 */
-	//	public static <T, L extends List<T>> L reverse(final L list) {
-	//		assert null != list;
-	//
-	//		Collections.reverse(list);
-	//		return list;
-	//	}
-	//
-	//	/**
-	//	 * Sorts the given list using the given comparator.
-	//	 * <p>
-	//	 * This method does modify the given list.
-	//	 *
-	//	 * @param <T> Type of the elements.
-	//	 * @param <L> Type of the list.
-	//	 * @param list The list.
-	//	 * @return The given modified list.
-	//	 */
-	//	public static <T extends Comparable<? super T>, L extends List<T>> L sort(final L list) {
-	//		assert null != list;
-	//
-	//		Collections.sort(list);
-	//		return list;
-	//	}
-	//
-	//	/**
-	//	 * Sorts the given list using the given comparator.
-	//	 * <p>
-	//	 * This method does modify the given list.
-	//	 *
-	//	 * @param <T> Type of the elements.
-	//	 * @param <L> Type of the list.
-	//	 * @param list The list.
-	//	 * @param comparator The comparator.
-	//	 * @return The given modified list.
-	//	 */
-	//	public static <T, L extends List<T>> L sort(final L list, final Comparator<? super T> comparator) {
-	//		assert null != list;
-	//		assert null != comparator;
-	//
-	//		Collections.sort(list, comparator);
-	//		return list;
-	//	}
-	//
-	//	/**
-	//	 * Sorts the given values topologically and populates the given list with the sorted values.
-	//	 * <p>
-	//	 * The dependencies between the values are computed using the given function. This function must compute the values whose the argument value depends on. The
-	//	 * computed values must belong to the values to sort.
-	//	 * <p>
-	//	 * This method places the dependencies before the value which depend on them. The sort is stable and fails when the dependencies form a cyclic graph.
-	//	 *
-	//	 * @param <T> Type of the values.
-	//	 * @param <L> Type of the result list.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param dependencyFunction The function computing the dependencies.
-	//	 * @param close Flag indicating whether a transitive closure should be performed or if the given values are supposed are supposed to closed.
-	//	 * @param values The values.
-	//	 * @param results The list to populate with the results.
-	//	 * @return The given result list.
-	//	 * @throws CollectionException When some computed dependency value does not belong to the values to sort.
-	//	 * @throws CollectionException When there is a cycle in the dependencies.
-	//	 * @throws X When some dependency computation fails.
-	//	 */
-	//	public static <T, L extends List<? super T>, X extends Exception> L topologicalSort(final Function1<? super T, ? extends Collection<? extends T>, X> dependencyFunction, final boolean close, final Collection<? extends T> values, final L results)
-	//	throws CollectionException, X {
-	//		assert null != values;
-	//		assert null != dependencyFunction;
-	//		assert null != results;
-	//
-	//		// Compute the dependencies.
-	//		final List<T> pendingValues = new ArrayList<T>(values.size());
-	//		final Collection<Tuple2<T, T>> dependencies = computeTopologicalSortDependencies(dependencyFunction, close, values, pendingValues, new ArrayList<Tuple2<T, T>>());
-	//
-	//		// Sort the values.
-	//		while (!pendingValues.isEmpty()) {
-	//			// Find the leaves.
-	//			final Set<T> leafValues = findTopologicalSortLeaves(pendingValues, dependencies);
-	//			if (leafValues.isEmpty()) {
-	//				throw new CollectionException("Cyclic or external dependencies for values " + pendingValues);
-	//			}
-	//
-	//			// Add the leaves to the result.
-	//			extractTopologicalSortLeaves(leafValues, pendingValues, results);
-	//
-	//			// Clean the dependencies.
-	//			cleanTopologicalSortDependencies(dependencies, leafValues);
-	//		}
-	//
-	//		return results;
-	//	}
-	//
-	//	/**
-	//	 * Sorts the given values topologically and populates the given list with the sorted regions.
-	//	 * <p>
-	//	 * A region is a set of values which have no dependencies on each other. They however do have dependencies on some values of the previous region.
-	//	 * <p>
-	//	 * The dependencies between the values are computed using the given function. This function must compute the values whose the argument value depends on. The
-	//	 * computed values must belong to the values to sort.
-	//	 * <p>
-	//	 * This method places the dependencies before the value which depend on them. The sort is stable and fails when the dependencies form a cyclic graph.
-	//	 *
-	//	 * @param <T> Type of the values.
-	//	 * @param <L> Type of the result list.
-	//	 * @param <X> Type of the exceptions.
-	//	 * @param dependencyFunction The function computing the dependencies.
-	//	 * @param close Flag indicating whether a transitive closure should be performed or if the given values are supposed are supposed to closed.
-	//	 * @param values The values.
-	//	 * @param results The list to populate with the results.
-	//	 * @return The given result list.
-	//	 * @throws CollectionException When some computed dependency value does not belong to the values to sort.
-	//	 * @throws CollectionException When there is a cycle in the dependencies.
-	//	 * @throws X When some dependency computation fails.
-	//	 */
-	//	public static <T, L extends List<? super List<T>>, X extends Exception> L regionTopologicalSort(final Function1<? super T, ? extends Collection<? extends T>, X> dependencyFunction, final boolean close, final Collection<? extends T> values, final L results)
-	//	throws CollectionException, X {
-	//		assert null != values;
-	//		assert null != dependencyFunction;
-	//		assert null != results;
-	//
-	//		// Compute the dependencies.
-	//		final List<T> pendingValues = new ArrayList<T>(values.size());
-	//		final Collection<Tuple2<T, T>> dependencies = computeTopologicalSortDependencies(dependencyFunction, close, values, pendingValues, new ArrayList<Tuple2<T, T>>());
-	//
-	//		// Sort the values.
-	//		while (!pendingValues.isEmpty()) {
-	//			// Find the leaves.
-	//			final Set<T> leafValues = findTopologicalSortLeaves(pendingValues, dependencies);
-	//			if (leafValues.isEmpty()) {
-	//				throw new CollectionException("Cyclic dependencies for values " + pendingValues);
-	//			}
-	//
-	//			// Add the leaves to the result.
-	//			results.add(extractTopologicalSortLeaves(leafValues, pendingValues, new ArrayList<T>(leafValues.size())));
-	//
-	//			// Clean the dependencies.
-	//			cleanTopologicalSortDependencies(dependencies, leafValues);
-	//		}
-	//
-	//		return results;
-	//	}
-	//
-	//	private static <T, C extends Collection<? super Tuple2<T, T>>, X extends Exception> C computeTopologicalSortDependencies(final Function1<? super T, ? extends Collection<? extends T>, X> dependencyFunction, final boolean close, final Collection<? extends T> values, final Collection<T> closedValues, final C dependencies)
-	//	throws X {
-	//		assert null != values;
-	//		assert null != closedValues;
-	//
-	//		if (close) {
-	//			return computeClosedTopologicalSortDependencies(dependencyFunction, values, closedValues, dependencies);
-	//		} else {
-	//			closedValues.addAll(values);
-	//			return computeTopologicalSortDependencies(dependencyFunction, values, dependencies);
-	//		}
-	//	}
-	//
-	//	private static <T, C extends Collection<? super Tuple2<T, T>>, X extends Exception> C computeTopologicalSortDependencies(final Function1<? super T, ? extends Collection<? extends T>, X> dependencyFunction, final Collection<? extends T> values, final C dependencies)
-	//	throws X {
-	//		assert null != dependencyFunction;
-	//		assert null != values;
-	//		assert null != dependencies;
-	//
-	//		for (final T value : values) {
-	//			for (final T dependencyValue : dependencyFunction.evaluate(value)) {
-	//				dependencies.add(new Tuple2<T, T>(value, dependencyValue));
-	//			}
-	//		}
-	//		return dependencies;
-	//	}
-	//
-	//	private static <T, C extends Collection<? super Tuple2<T, T>>, X extends Exception> C computeClosedTopologicalSortDependencies(final Function1<? super T, ? extends Collection<? extends T>, X> dependencyFunction, final Collection<? extends T> values, final Collection<T> closedValues, final C dependencies)
-	//	throws X {
-	//		assert null != dependencyFunction;
-	//		assert null != values;
-	//		assert null != dependencies;
-	//
-	//		final Queue<T> pendingValues = new LinkedList<T>(values);
-	//		final Set<T> visitedValues = new HashSet<T>();
-	//		while (!pendingValues.isEmpty()) {
-	//			final T value = pendingValues.poll();
-	//			if (visitedValues.add(value)) {
-	//				// Add the value.
-	//				closedValues.add(value);
-	//
-	//				// Add the dependencies.
-	//				for (final T dependencyValue : dependencyFunction.evaluate(value)) {
-	//					dependencies.add(new Tuple2<T, T>(value, dependencyValue));
-	//					pendingValues.add(dependencyValue); // Note: must queued in order to keep the closed value stable
-	//				}
-	//			}
-	//		}
-	//		return dependencies;
-	//	}
-	//
-	//	private static <T> Set<T> findTopologicalSortLeaves(final Collection<T> values, final Collection<? extends Tuple2<T, T>> dependencies) {
-	//		assert null != values;
-	//		assert null != dependencies;
-	//
-	//		final Set<T> leafValues = new HashSet<T>(values);
-	//		for (final Tuple2<T, T> dependency : dependencies) {
-	//			leafValues.remove(dependency.get1());
-	//		}
-	//		return leafValues;
-	//	}
-	//
-	//	private static <T, C extends Collection<? super T>> C extractTopologicalSortLeaves(final Set<T> leafValues, final List<T> pendingValues, final C results) {
-	//		assert null != leafValues;
-	//		assert null != pendingValues;
-	//		assert null != results;
-	//
-	//		// Note: Pending values are iterated instead of leaf values to keep the sort stable and to handle duplicate values.
-	//		final Iterator<T> pendingValuesIt = pendingValues.iterator();
-	//		while (pendingValuesIt.hasNext()) {
-	//			final T value = pendingValuesIt.next();
-	//			if (leafValues.contains(value)) {
-	//				results.add(value);
-	//				pendingValuesIt.remove();
-	//			}
-	//		}
-	//		return results;
-	//	}
-	//
-	//	private static <T> void cleanTopologicalSortDependencies(final Collection<? extends Tuple2<T, T>> dependencies, final Set<T> leafValues) {
-	//		assert null != dependencies;
-	//		assert null != leafValues;
-	//
-	//		final Iterator<? extends Tuple2<T, T>> dependenciesIt = dependencies.iterator();
-	//		while (dependenciesIt.hasNext()) {
-	//			final Tuple2<T, T> dependency = dependenciesIt.next();
-	//			if (leafValues.contains(dependency.get2())) {
-	//				dependenciesIt.remove();
-	//			}
-	//		}
-	//	}
+	/**
+	 * Reverses the order of the elements in the given list.
+	 * <p>
+	 * This method does modify the given list.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param <L> Type of the list.
+	 * @param list List to reverse.
+	 * @return The given reversed list.
+	 */
+	public static <E, L extends List<E>> L reverse(final L list) {
+		assert null != list;
+		
+		Collections.reverse(list);
+		return list;
+	}
+	
+	/**
+	 * Sorts the elements in the given list according to their natural order.
+	 * <p>
+	 * This method does modify the given list.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param <L> Type of the list.
+	 * @param list List to sort.
+	 * @return The given sorted list.
+	 */
+	public static <E extends Comparable<? super E>, L extends List<E>> L sort(final L list) {
+		assert null != list;
+		
+		Collections.sort(list);
+		return list;
+	}
+	
+	/**
+	 * Sorts the elements in the given list using the given comparator.
+	 * <p>
+	 * This method does modify the given list.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param <L> Type of the list.
+	 * @param list List to sort.
+	 * @param comparator Comparator to use.
+	 * @return The given sorted list.
+	 */
+	public static <E, L extends List<E>> L sort(final L list, final Comparator<? super E> comparator) {
+		assert null != list;
+		assert null != comparator;
+		
+		Collections.sort(list, comparator);
+		return list;
+	}
+	
+	/**
+	 * Shuffles the elements in the given list.
+	 * <p>
+	 * This method does modify the given list.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param <L> Type of the list.
+	 * @param list List to shuffle.
+	 * @return The given shuffled list.
+	 */
+	public static <E extends Comparable<? super E>, L extends List<E>> L shuffle(final L list) {
+		assert null != list;
+		
+		Collections.shuffle(list);
+		return list;
+	}
+	
+	/**
+	 * Shuffles the elements in the given list using the given source of randomness.
+	 * <p>
+	 * This method does modify the given list.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param <L> Type of the list.
+	 * @param list List to shuffle.
+	 * @param random Source of randomness to use.
+	 * @return The given shuffled list.
+	 */
+	public static <E extends Comparable<? super E>, L extends List<E>> L shuffle(final L list, final Random random) {
+		assert null != list;
+		
+		Collections.shuffle(list, random);
+		return list;
+	}
+	
+	/**
+	 * Sorts the given elements topologically.
+	 * <p>
+	 * The dependencies between the elements are computed using the given function. It must result to the elements whose the argument element depends on. The
+	 * sort fails when the dependency graph is cyclic.
+	 * <p>
+	 * The depencency elements that does not belong to the elements to sort may be transitively included into the results. The sort fails when the dependency
+	 * graph include such elements and that they are not included in the results.
+	 * <p>
+	 * The sort is stable and places the dependencies before the elements that depend on them.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param <L> Type of the result list.
+	 * @param elements Elements to sort.
+	 * @param dependencies Function computing the dependencies.
+	 * @param includeDependencies Indicates whether the dependency elements that do not belong to the elements to sort should be included in the results or not.
+	 * @param resultFactory Factory of the result list.
+	 * @return A list containing the sorted elements.
+	 * @throws IllegalArgumentException When there is a cycle in the dependency graph.
+	 * @throws IllegalArgumentException When some dependency element does not belong to the elements to sort and is not included into the results.
+	 */
+	public static <E, L extends List<? super E>> L topologicalSort(final Iterable<? extends E> elements, final Function<? super E, ? extends Iterable<? extends E>> dependencies, final boolean includeDependencies, final CollectionFactory<? super E, L> resultFactory) {
+		final Accumulator<E, L> results = CollectionAccumulators.add(resultFactory.build());
+		
+		// Compute the dependencies.
+		final List<E> pendingElements = new LinkedList<>();
+		final Multimap<E, E, Set<E>> pendingDependencies = computeTopologicalDependencies(elements, dependencies, includeDependencies, CollectionAccumulators.add(pendingElements), MultimapAccumulators.put(new MapMultimap<>(MapFactories.hashMap(), CollectionFactories.hashSet()))).get();
+		
+		// Sort.
+		while (!pendingElements.isEmpty()) {
+			// Iterate the pending elements.
+			final Maybe<E> maybeLeaf = CollectionUtils.removeFirst(pendingElements, element -> !pendingDependencies.containsKey(element));
+			if (maybeLeaf.isNone()) {
+				throw new IllegalArgumentException("Cyclic or external dependencies for elements " + pendingElements);
+			}
+			final E leaf = maybeLeaf.asSome().getValue();
+			
+			// Add the element to the result.
+			results.add(leaf);
+			
+			// Clean the dependencies.
+			pendingDependencies.removeValue(leaf);
+		}
+		return results.get();
+	}
+	
+	/**
+	 * Sorts the given elements topologically by region.
+	 * <p>
+	 * A region is a set of elements that only have dependencies on elements of previous region.
+	 * <p>
+	 * The dependencies between the elements are computed using the given function. It must result to the elements whose the argument element depends on. The
+	 * sort fails when the dependency graph is cyclic.
+	 * <p>
+	 * The depencency elements that does not belong to the elements to sort may be transitively included into the results. The sort fails when the dependency
+	 * graph include such elements and that they are not included in the results.
+	 * <p>
+	 * This sort is stable and places the dependencies before the regions that depend on them.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param <R> Type of the region lists.
+	 * @param <L> Type of the result list.
+	 * @param elements Elements to sort.
+	 * @param dependencies Function computing the dependencies.
+	 * @param includeDependencies Indicates whether the dependency elements that do not belong to the elements to sort should be included in the results or not.
+	 * @param resultFactory Factory of the result list.
+	 * @param regionFactory Factory of the region lists.
+	 * @return A list containing the sorted regions of elements.
+	 * @throws IllegalArgumentException When there is a cycle in the dependency graph.
+	 * @throws IllegalArgumentException When some dependency element does not belong to the elements to sort and is not included into the results.
+	 */
+	public static <E, R extends List<? super E>, L extends List<? super R>> L topologicalRegionSort(final Collection<? extends E> elements, final Function<? super E, ? extends Collection<? extends E>> dependencies, final boolean includeDependencies, final CollectionFactory<? super R, L> resultFactory, final CollectionFactory<? super E, R> regionFactory) {
+		final Accumulator<R, L> results = CollectionAccumulators.add(resultFactory.build());
+		
+		// Compute the dependencies.
+		final List<E> pendingElements = new LinkedList<>();
+		final Multimap<E, E, Set<E>> pendingDependencies = computeTopologicalDependencies(elements, dependencies, includeDependencies, CollectionAccumulators.add(pendingElements), MultimapAccumulators.put(new MapMultimap<>(MapFactories.hashMap(), CollectionFactories.hashSet()))).get();
+		
+		// Sort.
+		while (!pendingElements.isEmpty()) {
+			// Iterate the pending elements.
+			final R region = regionFactory.build();
+			final Set<E> leaves = new HashSet<>();
+			final Iterator<E> elementsIt = pendingElements.iterator();
+			while (elementsIt.hasNext()) {
+				final E element = elementsIt.next();
+				if (!pendingDependencies.containsKey(element)) {
+					// Add the element.
+					region.add(element);
+					leaves.add(element);
+					
+					// Not pending anymore.
+					elementsIt.remove();
+				}
+			}
+			
+			// Check that some leaf were found.
+			if (leaves.isEmpty()) {
+				throw new IllegalArgumentException("Cyclic or external dependencies for elements " + pendingElements);
+			} else {
+				results.add(region);
+			}
+			
+			// Clean the dependencies.
+			for (final E leaf : leaves) {
+				pendingDependencies.removeValue(leaf);
+			}
+		}
+		
+		return results.get();
+	}
+	
+	private static <E, A extends Accumulator2<? super E, ? super E, ?>> A computeTopologicalDependencies(final Iterable<? extends E> elements, final Function<? super E, ? extends Iterable<? extends E>> dependencies, final boolean includeDependencies, final Accumulator<? super E, ?> traversedElements, final A resultDependencies) {
+		if (!includeDependencies) {
+			// Do not include the dependencies.
+			for (final E element : elements) {
+				// Add the element.
+				traversedElements.add(element);
+				
+				// Add the dependencies.
+				for (final E dependency : dependencies.evaluate(element)) {
+					resultDependencies.add(element, dependency);
+				}
+			}
+			return resultDependencies;
+		} else {
+			// Include the dependencies.
+			final Predicate<E> visitedElements = ImperativePredicates.normalizer();
+			final Queue<E> pendingElements = new LinkedList<>();
+			CollectionUtils.addAll(pendingElements, elements);
+			while (!pendingElements.isEmpty()) {
+				final E element = pendingElements.poll();
+				if (visitedElements.evaluate(element)) {
+					// Add the element.
+					traversedElements.add(element);
+					
+					// Add the dependencies.
+					for (final E dependency : dependencies.evaluate(element)) {
+						resultDependencies.add(element, dependency);
+						pendingElements.add(dependency); // Note: must queued rather than stacked in order to keep the sort stable.
+					}
+				}
+			}
+			return resultDependencies;
+		}
+	}
 	
 	private ListUtils() {
 		// Prevent instantiation.

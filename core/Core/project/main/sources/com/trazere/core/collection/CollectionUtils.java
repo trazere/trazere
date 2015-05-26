@@ -18,6 +18,7 @@ package com.trazere.core.collection;
 import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Predicate;
+import com.trazere.core.functional.Predicates;
 import com.trazere.core.imperative.Accumulator;
 import com.trazere.core.imperative.IteratorUtils;
 import com.trazere.core.imperative.Procedure;
@@ -44,6 +45,8 @@ public class CollectionUtils {
 	
 	/**
 	 * Adds all given elements to the given collection.
+	 * <p>
+	 * This method does modify the given collection.
 	 *
 	 * @param <E> Type of the elements.
 	 * @param collection Collection to modify.
@@ -61,6 +64,8 @@ public class CollectionUtils {
 	
 	/**
 	 * Adds all given elements to the given collection.
+	 * <p>
+	 * This method does modify the given collection.
 	 *
 	 * @param <E> Type of the elements.
 	 * @param collection Collection to modify.
@@ -79,6 +84,8 @@ public class CollectionUtils {
 	 * Removes an element from the given collection.
 	 * <p>
 	 * The collection must support removal through its iterators.
+	 * <p>
+	 * This method does modify the given collection.
 	 *
 	 * @param <E> Type of the elements.
 	 * @param collection Collection to modify.
@@ -97,6 +104,8 @@ public class CollectionUtils {
 	
 	/**
 	 * Removes all given elements from the given collection.
+	 * <p>
+	 * This method does modify the given collection.
 	 *
 	 * @param <E> Type of the elements.
 	 * @param collection Collection to modify.
@@ -109,6 +118,51 @@ public class CollectionUtils {
 			changed.add(collection.remove(element));
 		}
 		return changed.get().booleanValue();
+	}
+	
+	/**
+	 * Removes the first element of the given collection accepted by the given filter.
+	 * <p>
+	 * The collection must support removal through its iterators.
+	 * <p>
+	 * This method does modify the given collection.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param collection Collection containing the elements to filter.
+	 * @param filter Predicate to use to filter the elements.
+	 * @return The first removed element.
+	 */
+	public static <E> Maybe<E> removeFirst(final Collection<? extends E> collection, final Predicate<? super E> filter) {
+		final Iterator<? extends E> iterator = collection.iterator();
+		while (iterator.hasNext()) {
+			final E element = iterator.next();
+			if (filter.evaluate(element)) {
+				iterator.remove();
+				return Maybe.some(element);
+			}
+		}
+		return Maybe.none();
+	}
+	
+	/**
+	 * Retains the elements in the given collection using the given filter.
+	 * <p>
+	 * This method does modify the given collection.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param <C> Type of the collection.
+	 * @param collection Collection to filter.
+	 * @param filter Predicate to use to filter the elements.
+	 * @return The given filtered collection.
+	 */
+	public static <E, C extends Collection<? extends E>> C retain(final C collection, final Predicate<? super E> filter) {
+		final Iterator<? extends E> elements = collection.iterator();
+		while (elements.hasNext()) {
+			if (!filter.evaluate(elements.next())) {
+				elements.remove();
+			}
+		}
+		return collection;
 	}
 	
 	/**
@@ -186,6 +240,21 @@ public class CollectionUtils {
 	}
 	
 	/**
+	 * Tests whether the given collections contains some common value.
+	 * <p>
+	 * This method iterates over the first collection and tests the presence of the values within the second collection. Therefore, providing a smaller first
+	 * collection and a second collection with a faster test method is more efficient.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param collection1 First collection.
+	 * @param collection2 Second collection.
+	 * @return <code>true</code> if the collections intersect, <code>false</code> otherwise.
+	 */
+	public static <E> boolean intersects(final Collection<? extends E> collection1, final Collection<? extends E> collection2) {
+		return isAny(collection1, Predicates.values(collection2));
+	}
+	
+	/**
 	 * Counts the elements of the given collection accepted by the given filter.
 	 * 
 	 * @param <E> Type of the elements.
@@ -248,8 +317,8 @@ public class CollectionUtils {
 	 * 
 	 * @param <E> Type of the elements.
 	 * @param <C> Type of the result collection.
-	 * @param collection1 First collection providing the elements to append.
-	 * @param collection2 Second collection providing the elements to append.
+	 * @param collection1 First collection containing the elements to append.
+	 * @param collection2 Second collection containing the elements to append.
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection containing the appended elements.
 	 */
@@ -273,6 +342,52 @@ public class CollectionUtils {
 		final C results = resultFactory.build();
 		for (final Collection<? extends E> elements : collection) {
 			results.addAll(elements);
+		}
+		return results;
+	}
+	
+	/**
+	 * Computes the intersection of the given collections.
+	 * <p>
+	 * This method iterates over the first collection and tests the presence of the values within the second collection. Therefore, providing a smaller first
+	 * collection and a second collection with a faster test method is more efficient.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param <C> Type of the result collection.
+	 * @param collection1 First collection.
+	 * @param collection2 Second collection.
+	 * @param resultFactory Factory of the result collection.
+	 * @return A collection containing the common elements.
+	 */
+	public static <E, C extends Collection<? super E>> C intersection(final Collection<? extends E> collection1, final Collection<? extends E> collection2, final CollectionFactory<? super E, C> resultFactory) {
+		final C results = resultFactory.build();
+		for (final E value : collection1) {
+			if (collection2.contains(value)) {
+				results.add(value);
+			}
+		}
+		return results;
+	}
+	
+	/**
+	 * Computes the exclusion of given collections (first minus second).
+	 * <p>
+	 * This method iterates over the first collection and tests the presence of the values within the second collection. Therefore, providing a smaller first
+	 * collection and a second collection with a faster test method is more efficient.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param <C> Type of the result collection.
+	 * @param collection1 First collection.
+	 * @param collection2 Second collection.
+	 * @param resultFactory Factory of the result collection.
+	 * @return A collection containing the excluded elements.
+	 */
+	public static <E, C extends Collection<? super E>> C exclusion(final Collection<? extends E> collection1, final Collection<? extends E> collection2, final CollectionFactory<? super E, C> resultFactory) {
+		final C results = resultFactory.build();
+		for (final E value : collection1) {
+			if (!collection2.contains(value)) {
+				results.add(value);
+			}
 		}
 		return results;
 	}
@@ -384,273 +499,6 @@ public class CollectionUtils {
 		}
 		return results;
 	}
-	
-	//
-	//
-	//
-	//
-	//
-	
-	//	/**
-	//	 * Tests whether the given collections intersect. The collections instersect when they have some common value.
-	//	 * <p>
-	//	 * This method iterates over the first collection and tests the presence of the values within the second collection. Therefore, providing a smaller first
-	//	 * collection and a second collection with a faster test method is more efficient.
-	//	 *
-	//	 * @param <T> Type of the elements.
-	//	 * @param collection1 The first collection.
-	//	 * @param collection2 The second collection.
-	//	 * @return <code>true</code> if the collections intersect, <code>false</code> otherwise.
-	//	 */
-	//	public static <T> boolean intersects(final Collection<? extends T> collection1, final Collection<? extends T> collection2) {
-	//		assert null != collection1;
-	//		assert null != collection2;
-	//
-	//		for (final T value : collection1) {
-	//			if (collection2.contains(value)) {
-	//				return true;
-	//			}
-	//		}
-	//		return false;
-	//	}
-	//
-	//	/**
-	//	 * Computes the intersection of the given collections and populates the given result collection with it.
-	//	 * <p>
-	//	 * This method iterates over the first collection and tests the presence of the values within the second collection. Therefore, providing a smaller first
-	//	 * collection and a second collection with a faster test method is more efficient.
-	//	 *
-	//	 * @param <T> Type of the elements.
-	//	 * @param <C> Type of the result collection.
-	//	 * @param collection1 The first collection.
-	//	 * @param collection2 The second collection.
-	//	 * @param results The collection to populate with the results.
-	//	 * @return The given result collection.
-	//	 */
-	//	public static <T, C extends Collection<? super T>> C intersection(final Collection<? extends T> collection1, final Collection<? extends T> collection2, final C results) {
-	//		assert null != collection1;
-	//		assert null != collection2;
-	//		assert null != results;
-	//
-	//		for (final T value : collection1) {
-	//			if (collection2.contains(value)) {
-	//				results.add(value);
-	//			}
-	//		}
-	//		return results;
-	//	}
-	//
-	//	/**
-	//	 * Computes the exclusion of given collections (first minus second) and populates the given result collection with it.
-	//	 * <p>
-	//	 * This method iterates over the first collection and tests the presence of the values within the second collection. Therefore, providing a smaller first
-	//	 * collection and a second collection with a faster test method is more efficient.
-	//	 *
-	//	 * @param <T> Type of the elements.
-	//	 * @param <C> Type of the result collection.
-	//	 * @param collection1 The first collection.
-	//	 * @param collection2 The second collection.
-	//	 * @param results The collection to populate with the results.
-	//	 * @return The given result collection.
-	//	 */
-	//	public static <T, C extends Collection<? super T>> C exclusion(final Collection<? extends T> collection1, final Collection<? extends T> collection2, final C results) {
-	//		assert null != collection1;
-	//		assert null != collection2;
-	//		assert null != results;
-	//
-	//		for (final T value : collection1) {
-	//			if (!collection2.contains(value)) {
-	//				results.add(value);
-	//			}
-	//		}
-	//		return results;
-	//	}
-	//
-	//	/**
-	//	 * Fills the given map with the bindings corresponding to the given value associated to the given keys.
-	//	 *
-	//	 * @param <K> Type of the keys.
-	//	 * @param <V> Type of the values.
-	//	 * @param <M> Type of the map.
-	//	 * @param map The map.
-	//	 * @param keys The keys.
-	//	 * @param value The value. May be <code>null</code>.
-	//	 * @return The given map.
-	//	 */
-	//	public static <K, V, M extends Map<? super K, ? super V>> M fill(final M map, final Iterable<? extends K> keys, final V value) {
-	//		assert null != map;
-	//		assert null != keys;
-	//
-	//		for (final K key : keys) {
-	//			map.put(key, value);
-	//		}
-	//		return map;
-	//	}
-	//
-	//	// TODO: rename to retain or filter
-	//	// TODO: genalize with a funciton instead of a map
-	//	/**
-	//	 * Gets the bindings of the given map associated to the given keys and populates the given result map with them.
-	//	 *
-	//	 * @param <K> Type of the keys.
-	//	 * @param <V> Type of the values.
-	//	 * @param <M> Type of the result map.
-	//	 * @param map The map.
-	//	 * @param keys The keys of the bindings.
-	//	 * @param results The map to populate with the results.
-	//	 * @return The given result map.
-	//	 */
-	//	public static <K, V, M extends Map<? super K, ? super V>> M sub(final Map<? extends K, ? extends V> map, final Iterable<? extends K> keys, final M results) {
-	//		assert null != map;
-	//		assert null != keys;
-	//		assert null != results;
-	//
-	//		for (final K key : keys) {
-	//			if (map.containsKey(key)) {
-	//				final V value = map.get(key);
-	//				results.put(key, value);
-	//			}
-	//		}
-	//		return results;
-	//	}
-	//
-	//	// TODO: rename to ???
-	//	// TODO: genalize with a funciton instead of a map
-	//	/**
-	//	 * Gets the bindings of the given map not associated to the given keys and populates the given result map with them.
-	//	 *
-	//	 * @param <K> Type of the keys.
-	//	 * @param <V> Type of the values.
-	//	 * @param <M> Type of the result map.
-	//	 * @param map The map.
-	//	 * @param keys The keys of the bindings.
-	//	 * @param results The map to populate with the results.
-	//	 * @return The given result map.
-	//	 */
-	//	public static <K, V, M extends Map<? super K, ? super V>> M retain(final Map<? extends K, ? extends V> map, final Collection<? extends K> keys, final M results) {
-	//		assert null != map;
-	//		assert null != keys;
-	//		assert null != results;
-	//
-	//		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
-	//			final K key = entry.getKey();
-	//			if (!keys.contains(key)) {
-	//				results.put(key, entry.getValue());
-	//			}
-	//		}
-	//		return results;
-	//	}
-	//
-	//	// TODO: accumulator version
-	//	/**
-	//	 * Groups the given values by batches of the given size and populates the given collections with the batches.
-	//	 *
-	//	 * @param <T> Type of the values.
-	//	 * @param <C> Type of the batch collections.
-	//	 * @param <C> Type of the result collection.
-	//	 * @param factory The collection factory of the batches.
-	//	 * @param size The maximum size of each batch.
-	//	 * @param values The values.
-	//	 * @param results The collection to populates with the results.
-	//	 * @return The given result collection.
-	//	 */
-	//	public static <T, C extends Collection<? super T>, R extends Collection<? super C>> R group(final CollectionFactory<T, C> factory, final int size, final Iterable<? extends T> values, final R results) {
-	//		assert null != factory;
-	//		assert null != values;
-	//		assert null != results;
-	//
-	//		final Iterator<? extends T> valuesIt = values.iterator();
-	//		while (valuesIt.hasNext()) {
-	//			results.add(IteratorUtils.drain(valuesIt, size, factory.build(size)));
-	//		}
-	//		return results;
-	//	}
-	//
-	//	// TODO: accumulator version
-	//	/**
-	//	 * Groups the elements of the given lists and populates the given result list with the pairs.
-	//	 * <p>
-	//	 * The pairs are formed with respect of the positions of the values in the lists. The extra values of the longest list are dropped when the lists don't have
-	//	 * the same length.
-	//	 *
-	//	 * @param <T1> Type of the first values.
-	//	 * @param <T2> Type of the second values.
-	//	 * @param <L> Type of the result list.
-	//	 * @param list1 The list containing the first values.
-	//	 * @param list2 The list containing the second values.
-	//	 * @param results The list to populate with the results.
-	//	 * @return The given result list.
-	//	 */
-	//	public static <T1, T2, L extends List<? super Tuple2<T1, T2>>> L zip(final Iterable<? extends T1> list1, final Iterable<? extends T2> list2, final L results) {
-	//		assert null != list1;
-	//		assert null != list2;
-	//
-	//		return zip(list1.iterator(), list2.iterator(), results);
-	//	}
-	//
-	//	/**
-	//	 * Groups the elements provided by the given iterators and populates the given result list with the pairs.
-	//	 * <p>
-	//	 * The pairs are formed with respect of the order of the iterators. The extra values of the longest iterator are dropped when the given iterators don't
-	//	 * provide the same number of elements.
-	//	 *
-	//	 * @param <T1> Type of the first values.
-	//	 * @param <T2> Type of the second values.
-	//	 * @param <L> Type of the result list.
-	//	 * @param iterator1 The iterator providing the first values.
-	//	 * @param iterator2 The iterator providing the second values.
-	//	 * @param results The list to populate with the results.
-	//	 * @return The given result list.
-	//	 */
-	//	public static <T1, T2, L extends List<? super Tuple2<T1, T2>>> L zip(final Iterator<? extends T1> iterator1, final Iterator<? extends T2> iterator2, final L results) {
-	//		assert null != iterator1;
-	//		assert null != iterator2;
-	//		assert null != results;
-	//
-	//		while (iterator1.hasNext() && iterator2.hasNext()) {
-	//			results.add(new Tuple2<T1, T2>(iterator1.next(), iterator2.next()));
-	//		}
-	//		return results;
-	//	}
-	//
-	//	// TODO: accumulator version
-	//	/**
-	//	 * Decomposes the pairs of the given collection and populates the given collections with the first and second values.
-	//	 *
-	//	 * @param <T1> Type of the first values.
-	//	 * @param <T2> Type of the second values.
-	//	 * @param pairs The pairs.
-	//	 * @param results1 The collection to populate with the first values.
-	//	 * @param results2 The collection to populate with the second values.
-	//	 */
-	//	public static <T1, T2> void unzip(final Iterable<? extends Tuple2<T1, T2>> pairs, final Collection<? super T1> results1, final Collection<? super T2> results2) {
-	//		assert null != pairs;
-	//		assert null != results1;
-	//		assert null != results2;
-	//
-	//		unzip(pairs.iterator(), results1, results2);
-	//	}
-	//
-	//	/**
-	//	 * Decomposes the pairs provided by the given iterator and populates the given collections with the first and second values.
-	//	 *
-	//	 * @param <T1> Type of the first values.
-	//	 * @param <T2> Type of the second values.
-	//	 * @param pairs The iterator.
-	//	 * @param results1 The collection to populate with the first values.
-	//	 * @param results2 The collection to populate with the second values.
-	//	 */
-	//	public static <T1, T2> void unzip(final Iterator<? extends Tuple2<T1, T2>> pairs, final Collection<? super T1> results1, final Collection<? super T2> results2) {
-	//		assert null != pairs;
-	//		assert null != results1;
-	//		assert null != results2;
-	//
-	//		while (pairs.hasNext()) {
-	//			final Tuple2<T1, T2> value = pairs.next();
-	//			results1.add(value.get1());
-	//			results2.add(value.get2());
-	//		}
-	//	}
 	
 	private CollectionUtils() {
 		// Prevents instantiation.
