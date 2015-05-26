@@ -64,7 +64,7 @@ public class Extractors {
 	public static <T> Function<T, Maybe<T>> fromPredicate(final Predicate<? super T> predicate) {
 		assert null != predicate;
 		
-		return (arg) -> predicate.evaluate(arg) ? Maybe.some(arg) : Maybe.<T>none();
+		return arg -> predicate.evaluate(arg) ? Maybe.some(arg) : Maybe.<T>none();
 	}
 	
 	/**
@@ -78,7 +78,7 @@ public class Extractors {
 	public static <A, R> Function<A, Maybe<R>> fromFunction(final Function<? super A, ? extends R> function) {
 		assert null != function;
 		
-		return (arg) -> Maybe.<R>some(function.evaluate(arg));
+		return arg -> Maybe.<R>some(function.evaluate(arg));
 	}
 	
 	private Extractors() {
