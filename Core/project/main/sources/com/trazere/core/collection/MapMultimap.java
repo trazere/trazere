@@ -19,6 +19,7 @@ import com.trazere.core.imperative.Accumulator;
 import com.trazere.core.lang.LangAccumulators;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -173,11 +174,6 @@ extends BaseMultimap<K, V, C> {
 	}
 	
 	@Override
-	public C remove(final K key) {
-		return _collectionFactory.unmodifiable(_bindings.containsKey(key) ? _bindings.remove(key) : _collectionFactory.build());
-	}
-	
-	@Override
 	public boolean remove(final K key, final V value) {
 		if (_bindings.containsKey(key)) {
 			final C collection = _bindings.get(key);
@@ -203,6 +199,27 @@ extends BaseMultimap<K, V, C> {
 		} else {
 			return false;
 		}
+	}
+	
+	@Override
+	public C removeKey(final K key) {
+		return _collectionFactory.unmodifiable(_bindings.containsKey(key) ? _bindings.remove(key) : _collectionFactory.build());
+	}
+	
+	@Override
+	public boolean removeValue(final V value) {
+		final Accumulator<Boolean, Boolean> result = LangAccumulators.or(false);
+		final Iterator<CC> bindings = _bindings.values().iterator();
+		while (bindings.hasNext()) {
+			final CC values = bindings.next();
+			if (values.remove(value)) {
+				result.add(true);
+				if (values.isEmpty()) {
+					bindings.remove();
+				}
+			}
+		}
+		return result.get();
 	}
 	
 	// Object.
