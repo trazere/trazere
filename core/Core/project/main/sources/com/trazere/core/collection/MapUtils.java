@@ -98,15 +98,13 @@ public class MapUtils {
 	 *
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
-	 * @param <X> Type of the exceptions.
 	 * @param map Map to read.
 	 * @param key Key whose associated value should be got.
 	 * @param throwableFactory Throwable factory to use.
 	 * @return The associated value.
-	 * @throws X When no value is associated to the given key in the map.
+	 * @throws RuntimeException When no value is associated to the given key in the map.
 	 */
-	public static <K, V, X extends Exception> V getMandatory(final Map<? super K, ? extends V> map, final K key, final ThrowableFactory<X> throwableFactory)
-	throws X {
+	public static <K, V> V getMandatory(final Map<? super K, ? extends V> map, final K key, final ThrowableFactory<? extends RuntimeException> throwableFactory) {
 		if (map.containsKey(key)) {
 			return map.get(key);
 		} else {
