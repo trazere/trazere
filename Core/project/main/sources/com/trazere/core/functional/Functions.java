@@ -370,7 +370,7 @@ public class Functions {
 	 * @param function Function to curry.
 	 * @return The built function.
 	 */
-	public static <A1, A2, R> Function2<A1, A2, R> curry(final Function<? super Tuple2<? super A1, ? super A2>, ? extends R> function) {
+	public static <A1, A2, R> Function2<A1, A2, R> curry(final Function<? super Tuple2<A1, A2>, ? extends R> function) {
 		assert null != function;
 		
 		return (arg1, arg2) -> function.evaluate(new Tuple2<>(arg1, arg2));
@@ -385,7 +385,7 @@ public class Functions {
 	 * @param function Function to uncurry.
 	 * @return The built function.
 	 */
-	public static <A1, A2, R> Function<Tuple2<? extends A1, ? extends A2>, R> uncurry(final Function2<? super A1, ? super A2, ? extends R> function) {
+	public static <A1, A2, R> Function<Tuple2<A1, A2>, R> uncurry(final Function2<? super A1, ? super A2, ? extends R> function) {
 		assert null != function;
 		
 		return (arg) -> function.evaluate(arg.get1(), arg.get2());
