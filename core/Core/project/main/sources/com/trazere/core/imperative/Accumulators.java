@@ -171,7 +171,7 @@ public class Accumulators {
 	 * @param accumulator Accumulator to curry.
 	 * @return The built accumulator.
 	 */
-	public static <E1, E2, S> Accumulator2<E1, E2, S> curry(final Accumulator<? super Tuple2<? super E1, ? super E2>, ? extends S> accumulator) {
+	public static <E1, E2, S> Accumulator2<E1, E2, S> curry(final Accumulator<? super Tuple2<E1, E2>, ? extends S> accumulator) {
 		assert null != accumulator;
 		
 		return new Accumulator2<E1, E2, S>() {
@@ -196,12 +196,12 @@ public class Accumulators {
 	 * @param accumulator Accumulator to uncurry.
 	 * @return The built accumulator.
 	 */
-	public static <E1, E2, S> Accumulator<Tuple2<? extends E1, ? extends E2>, S> uncurry(final Accumulator2<? super E1, ? super E2, ? extends S> accumulator) {
+	public static <E1, E2, S> Accumulator<Tuple2<E1, E2>, S> uncurry(final Accumulator2<? super E1, ? super E2, ? extends S> accumulator) {
 		assert null != accumulator;
 		
-		return new Accumulator<Tuple2<? extends E1, ? extends E2>, S>() {
+		return new Accumulator<Tuple2<E1, E2>, S>() {
 			@Override
-			public void add(final Tuple2<? extends E1, ? extends E2> element) {
+			public void add(final Tuple2<E1, E2> element) {
 				accumulator.add(element.get1(), element.get2());
 			}
 			
