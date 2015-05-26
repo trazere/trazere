@@ -15,9 +15,9 @@
  */
 package com.trazere.util.text;
 
-import com.trazere.core.lang.LangUtils;
 import com.trazere.core.lang.MutableBoolean;
 import com.trazere.core.lang.MutableInt;
+import com.trazere.core.util.ComparatorUtils;
 import com.trazere.util.function.Function1;
 import com.trazere.util.function.Functions;
 import com.trazere.util.function.Procedure2;
@@ -47,7 +47,7 @@ public class TextUtils {
 	 * @see String#compareToIgnoreCase(String)
 	 */
 	public static int safeCompareIgnoreCase(final String string1, final String string2) {
-		return LangUtils.safeCompare(String.CASE_INSENSITIVE_ORDER, string1, string2);
+		return ComparatorUtils.safeCompare(String.CASE_INSENSITIVE_ORDER, string1, string2);
 	}
 	
 	/**
@@ -394,22 +394,22 @@ public class TextUtils {
 	
 	/** Array of the hexadecimal digits characters (upper case). */
 	public static final char[] HEX_DIGITS = {
-	    '0',
-	    '1',
-	    '2',
-	    '3',
-	    '4',
-	    '5',
-	    '6',
-	    '7',
-	    '8',
-	    '9',
-	    'A',
-	    'B',
-	    'C',
-	    'D',
-	    'E',
-	    'F'
+		'0',
+		'1',
+		'2',
+		'3',
+		'4',
+		'5',
+		'6',
+		'7',
+		'8',
+		'9',
+		'A',
+		'B',
+		'C',
+		'D',
+		'E',
+		'F'
 	};
 	
 	/**

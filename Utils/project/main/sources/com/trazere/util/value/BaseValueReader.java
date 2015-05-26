@@ -75,7 +75,7 @@ implements ValueReader<T>, Describable {
 	
 	@Override
 	public String toString() {
-		return TextUtils.computeDescription(this);
+		return TextUtils.description(this);
 	}
 	
 	@Override

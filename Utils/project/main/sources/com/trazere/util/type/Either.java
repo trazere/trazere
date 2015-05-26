@@ -16,7 +16,7 @@
 package com.trazere.util.type;
 
 import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.LangUtils;
+import com.trazere.core.lang.ObjectUtils;
 import com.trazere.core.text.Describable;
 import com.trazere.core.text.Description;
 import com.trazere.core.text.TextUtils;
@@ -207,7 +207,7 @@ implements Describable {
 				return true;
 			} else if (null != object && getClass().equals(object.getClass())) {
 				final Left<?, ?> either = (Left<?, ?>) object;
-				return LangUtils.safeEquals(_left, either._left);
+				return ObjectUtils.safeEquals(_left, either._left);
 			} else {
 				return false;
 			}
@@ -351,7 +351,7 @@ implements Describable {
 				return true;
 			} else if (null != object && getClass().equals(object.getClass())) {
 				final Right<?, ?> either = (Right<?, ?>) object;
-				return LangUtils.safeEquals(_right, either._right);
+				return ObjectUtils.safeEquals(_right, either._right);
 			} else {
 				return false;
 			}
@@ -481,6 +481,6 @@ implements Describable {
 	
 	@Override
 	public final String toString() {
-		return TextUtils.computeDescription(this);
+		return TextUtils.description(this);
 	}
 }

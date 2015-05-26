@@ -15,8 +15,10 @@
  */
 package com.trazere.util.type;
 
+import com.trazere.core.lang.ComparableUtils;
 import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.LangUtils;
+import com.trazere.core.lang.ObjectUtils;
+import com.trazere.core.util.FieldFunctions;
 import com.trazere.core.util.TupleComparators;
 import com.trazere.core.util.TupleFunctions;
 import com.trazere.util.function.Function1;
@@ -56,7 +58,7 @@ extends Tuple2<T1, T2> {
 	 * @param <T3> Type of the third value.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
-	 * @deprecated Use {@link TupleFunctions#build3()}.
+	 * @deprecated Use {@link TupleFunctions#tuple3()}.
 	 */
 	@Deprecated
 	@SuppressWarnings("unchecked")
@@ -107,7 +109,7 @@ extends Tuple2<T1, T2> {
 	 * @param <T3> Type of the third values of the tuples.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
-	 * @deprecated Use {@link TupleFunctions#get3()}.
+	 * @deprecated Use {@link FieldFunctions#get3()}.
 	 */
 	@Deprecated
 	@SuppressWarnings("unchecked")
@@ -145,7 +147,7 @@ extends Tuple2<T1, T2> {
 		
 		// Compare.
 		final int comp = Tuple2.compare(tuple1, tuple2);
-		return 0 != comp ? comp : LangUtils.safeCompare(tuple1._third, tuple2._third);
+		return 0 != comp ? comp : ComparableUtils.safeCompareTo(tuple1._third, tuple2._third);
 	}
 	
 	// Object.
@@ -165,7 +167,7 @@ extends Tuple2<T1, T2> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final Tuple3<?, ?, ?> tuple = (Tuple3<?, ?, ?>) object;
-			return LangUtils.safeEquals(_first, tuple._first) && LangUtils.safeEquals(_second, tuple._second) && LangUtils.safeEquals(_third, tuple._third);
+			return ObjectUtils.safeEquals(_first, tuple._first) && ObjectUtils.safeEquals(_second, tuple._second) && ObjectUtils.safeEquals(_third, tuple._third);
 		} else {
 			return false;
 		}
