@@ -235,6 +235,27 @@ public class LangFunctions {
 		}
 	};
 	
+	// Enums.
+	
+	/**
+	 * Builds a function that gets the name of enumeration entries.
+	 * 
+	 * @param <E> Type of the enumeration.
+	 * @param <X> Type of the exceptions.
+	 * @return The built function.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <E extends Enum<E>, X extends Exception> Function1<E, String, X> name() {
+		return (Function1<E, String, X>) NAME;
+	}
+	
+	private static final Function1<? extends Enum<?>, String, ?> NAME = new Function1<Enum<?>, String, RuntimeException>() {
+		@Override
+		public String evaluate(final Enum<?> value) {
+			return value.name();
+		}
+	};
+	
 	// Dates.
 	
 	// TODO: move away, Date is not in lang

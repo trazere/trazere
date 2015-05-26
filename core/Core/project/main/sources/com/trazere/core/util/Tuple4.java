@@ -18,6 +18,7 @@ package com.trazere.core.util;
 import com.trazere.core.functional.Function;
 import com.trazere.core.lang.HashCode;
 import com.trazere.core.lang.ObjectUtils;
+import java.io.Serializable;
 
 /**
  * The {@link Tuple4} class implements a 4-tuple (quadruple) data type that represents sequences of 4 elements.
@@ -28,7 +29,9 @@ import com.trazere.core.lang.ObjectUtils;
  * @param <E4> Type of the fourth element.
  */
 public class Tuple4<E1, E2, E3, E4>
-implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4> {
+implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Instantiates a new 4-tuple with the given elements.
 	 * 

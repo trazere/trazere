@@ -31,6 +31,33 @@ import com.trazere.core.util.Tuple2;
  */
 public class AccumulatorUtils {
 	/**
+	 * Builds a accumulators that forwards the accumulated elements and results to the given accumulator.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param <A> Type of the delegate accumulator.
+	 * @param accumulator Delegate accumulator.
+	 * @return The built accumulator.
+	 */
+	public static <E, A extends Accumulator<? super E, ?>> Accumulator<E, A> delegate(final A accumulator) {
+		return new Accumulator<E, A>() {
+			@Override
+			public void add(final E element) {
+				accumulator.add(element);
+			}
+			
+			@Override
+			public void addAll(final Iterable<? extends E> elements) {
+				accumulator.addAll(elements);
+			}
+			
+			@Override
+			public A get() {
+				return accumulator;
+			}
+		};
+	}
+	
+	/**
 	 * Filters the elements accumulated into the given accumulator using the given filter.
 	 *
 	 * @param <E> Type of the accumulated elements.
@@ -188,13 +215,41 @@ public class AccumulatorUtils {
 		
 		return new Accumulator<E, TS>() {
 			@Override
-			public void add(final E value) {
-				accumulator.add(value);
+			public void add(final E element) {
+				accumulator.add(element);
 			}
 			
 			@Override
 			public TS get() {
 				return function.evaluate(accumulator.get());
+			}
+		};
+	}
+	
+	/**
+	 * Builds a accumulators that forwards the accumulated elements and results to the given accumulator.
+	 * 
+	 * @param <E1> Type of the first elements.
+	 * @param <E2> Type of the second elements.
+	 * @param <A> Type of the delegate accumulator.
+	 * @param accumulator Delegate accumulator.
+	 * @return The built accumulator.
+	 */
+	public static <E1, E2, A extends Accumulator2<? super E1, ? super E2, ?>> Accumulator2<E1, E2, A> delegate2(final A accumulator) {
+		return new Accumulator2<E1, E2, A>() {
+			@Override
+			public void add(final E1 element1, final E2 element2) {
+				accumulator.add(element1, element2);
+			}
+			
+			@Override
+			public void addAll(final Iterable<? extends Tuple2<? extends E1, ? extends E2>> elements) {
+				accumulator.addAll(elements);
+			}
+			
+			@Override
+			public A get() {
+				return accumulator;
 			}
 		};
 	}
@@ -303,8 +358,8 @@ public class AccumulatorUtils {
 		
 		return new Accumulator2<E1, E2, TS>() {
 			@Override
-			public void add(final E1 value1, final E2 value2) {
-				accumulator.add(value1, value2);
+			public void add(final E1 element1, final E2 element2) {
+				accumulator.add(element1, element2);
 			}
 			
 			@Override

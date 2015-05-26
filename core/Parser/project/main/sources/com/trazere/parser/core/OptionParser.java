@@ -16,14 +16,14 @@
 package com.trazere.parser.core;
 
 import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.LangUtils;
+import com.trazere.core.lang.ObjectUtils;
+import com.trazere.core.util.Maybe;
 import com.trazere.parser.BaseParser;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserHandler;
 import com.trazere.parser.ParserState;
-import com.trazere.util.type.Maybe;
 
 public class OptionParser<Token, Result>
 extends BaseParser<Token, Maybe<Result>> {
@@ -78,7 +78,7 @@ extends BaseParser<Token, Maybe<Result>> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final OptionParser<?, ?> parser = (OptionParser<?, ?>) object;
-			return LangUtils.safeEquals(_description, parser._description) && _subParser.equals(parser._subParser);
+			return ObjectUtils.safeEquals(_description, parser._description) && _subParser.equals(parser._subParser);
 		} else {
 			return false;
 		}

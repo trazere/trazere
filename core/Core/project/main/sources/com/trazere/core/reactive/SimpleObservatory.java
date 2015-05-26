@@ -29,7 +29,7 @@ import com.trazere.core.util.Maybe;
  */
 public class SimpleObservatory<S, E>
 implements Observatory<S, E> {
-	protected final ResettableFunction<S, Broadcaster<E>> _broadcasters = new ResettableFunction<S, Broadcaster<E>>() {
+	protected final ResettableFunction<S, Broadcaster<E>> _subjectBroadcasters = new ResettableFunction<S, Broadcaster<E>>() {
 		@Override
 		protected Broadcaster<E> compute(final S subject) {
 			return new Broadcaster<>(new BroadcasterObservable<E>() {
@@ -39,8 +39,8 @@ implements Observatory<S, E> {
 					
 					// Reset the broadcaster if not observed anymore.
 					if (!isObserved()) {
-						synchronized (_broadcasters) {
-							_broadcasters.reset(subject);
+						synchronized (_subjectBroadcasters) {
+							_subjectBroadcasters.reset(subject);
 						}
 					}
 				}
@@ -50,8 +50,8 @@ implements Observatory<S, E> {
 					super.unsubscribeAll();
 					
 					// Reset the broadcaster.
-					synchronized (_broadcasters) {
-						_broadcasters.reset(subject);
+					synchronized (_subjectBroadcasters) {
+						_subjectBroadcasters.reset(subject);
 					}
 				}
 			});
@@ -66,8 +66,8 @@ implements Observatory<S, E> {
 			@Override
 			public ObserverSubscription subscribe(final Observer<? super E> observer) {
 				final Broadcaster<E> broadcaster;
-				synchronized (_broadcasters) {
-					broadcaster = _broadcasters.evaluate(subject);
+				synchronized (_subjectBroadcasters) {
+					broadcaster = _subjectBroadcasters.evaluate(subject);
 				}
 				synchronized (broadcaster) {
 					return broadcaster.getObservable().subscribe(observer);
@@ -76,20 +76,30 @@ implements Observatory<S, E> {
 		};
 	}
 	
+	protected final Broadcaster<E> _allBroadcaster = new Broadcaster<>();
+	
+	@Override
+	public Observable<E> observeAll() {
+		return _allBroadcaster.getObservable();
+	}
+	
 	@Override
 	public void notify(final S subject, final E event) {
 		assert null != subject;
 		assert null != event;
 		
 		// Get the observable.
-		final Maybe<Broadcaster<E>> broadcaster;
-		synchronized (_broadcasters) {
-			broadcaster = _broadcasters.get(subject);
+		final Maybe<Broadcaster<E>> subjectBroadcaster;
+		synchronized (_subjectBroadcasters) {
+			subjectBroadcaster = _subjectBroadcasters.get(subject);
 		}
 		
 		// Notify.
-		if (broadcaster.isSome()) {
-			broadcaster.asSome().getValue().fire(event);
+		if (subjectBroadcaster.isSome()) {
+			subjectBroadcaster.asSome().getValue().fire(event);
 		}
+		
+		// Notify for all.
+		_allBroadcaster.fire(event);
 	}
 }

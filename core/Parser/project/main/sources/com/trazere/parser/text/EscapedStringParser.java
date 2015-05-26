@@ -16,24 +16,24 @@
 package com.trazere.parser.text;
 
 import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.LangUtils;
+import com.trazere.core.lang.ObjectUtils;
+import com.trazere.core.text.CharPredicate;
 import com.trazere.parser.BaseParser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserContinuation;
 import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserState;
-import com.trazere.util.text.CharPredicate;
 
 /**
  * DOCME
  */
 public class EscapedStringParser
 extends BaseParser<Character, String> {
-	protected final CharPredicate<? extends ParserException> _filter;
-	protected final CharPredicate<? extends ParserException> _escapeFilter;
+	protected final CharPredicate _filter;
+	protected final CharPredicate _escapeFilter;
 	protected final boolean _empty;
 	
-	public EscapedStringParser(final CharPredicate<? extends ParserException> filter, final CharPredicate<? extends ParserException> escapeFilter, final boolean empty, final String description) {
+	public EscapedStringParser(final CharPredicate filter, final CharPredicate escapeFilter, final boolean empty, final String description) {
 		super(description);
 		
 		// Checks.
@@ -136,7 +136,7 @@ extends BaseParser<Character, String> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final EscapedStringParser parser = (EscapedStringParser) object;
-			return LangUtils.safeEquals(_description, parser._description) && _filter.equals(parser._filter) && _escapeFilter.equals(parser._escapeFilter) && _empty == parser._empty;
+			return ObjectUtils.safeEquals(_description, parser._description) && _filter.equals(parser._filter) && _escapeFilter.equals(parser._escapeFilter) && _empty == parser._empty;
 		} else {
 			return false;
 		}

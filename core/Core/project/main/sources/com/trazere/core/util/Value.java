@@ -1,6 +1,7 @@
 package com.trazere.core.util;
 
 import com.trazere.core.lang.HashCode;
+import java.io.Serializable;
 
 /**
  * The {@link Value} class implements a basic data type that wraps single values.
@@ -10,7 +11,9 @@ import com.trazere.core.lang.HashCode;
  * @param <T> Type of the wrapped value.
  */
 public class Value<T>
-implements Field<T> {
+implements Field<T>, Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Instantiates a new value.
 	 * 

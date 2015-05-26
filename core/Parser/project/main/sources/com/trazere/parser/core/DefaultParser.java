@@ -16,10 +16,10 @@
 package com.trazere.parser.core;
 
 import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.LangUtils;
+import com.trazere.core.lang.ObjectUtils;
+import com.trazere.core.util.Maybe;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserException;
-import com.trazere.util.type.Maybe;
 
 public class DefaultParser<Token, Result>
 extends Sequence1Parser<Token, Maybe<Result>, Result> {
@@ -57,7 +57,7 @@ extends Sequence1Parser<Token, Maybe<Result>, Result> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final DefaultParser<?, ?> parser = (DefaultParser<?, ?>) object;
-			return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && LangUtils.safeEquals(_defaultResult, parser._defaultResult);
+			return ObjectUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && ObjectUtils.safeEquals(_defaultResult, parser._defaultResult);
 		} else {
 			return false;
 		}

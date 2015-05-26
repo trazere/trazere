@@ -15,18 +15,17 @@
  */
 package com.trazere.util.identifier;
 
-import com.trazere.core.lang.HashCode;
-
 /**
  * The {@link LenientIdentifier} class represents identifiers which need not to be normalized according to their values.
- * <p>
- * Equality of lenient identifiers relies on the logical equality of their underlying values.
  * 
  * @param <V> Type of the underlying values.
- * @see IdentifierBase
+ * @deprecated Use {@link Identifier}.
  */
-public class LenientIdentifier<V>
+@Deprecated
+public abstract class LenientIdentifier<V>
 extends Identifier<V> {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Instantiates an identifier with the given value.
 	 * 
@@ -34,26 +33,5 @@ extends Identifier<V> {
 	 */
 	protected LenientIdentifier(final V value) {
 		super(value);
-	}
-	
-	// Object.
-	
-	@Override
-	public int hashCode() {
-		final HashCode result = new HashCode(this);
-		result.append(_value);
-		return result.get();
-	}
-	
-	@Override
-	public boolean equals(final Object object) {
-		if (this == object) {
-			return true;
-		} else if (null != object && getClass().equals(object.getClass())) {
-			final LenientIdentifier<?> key = (LenientIdentifier<?>) object;
-			return _value.equals(key._value);
-		} else {
-			return false;
-		}
 	}
 }

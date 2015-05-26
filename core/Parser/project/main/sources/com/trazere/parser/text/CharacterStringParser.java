@@ -16,8 +16,8 @@
 package com.trazere.parser.text;
 
 import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.LangUtils;
 import com.trazere.core.lang.MutableBoolean;
+import com.trazere.core.lang.ObjectUtils;
 import com.trazere.parser.BaseParser;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
@@ -104,7 +104,7 @@ extends BaseParser<Character, String> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final CharacterStringParser parser = (CharacterStringParser) object;
-			return LangUtils.safeEquals(_description, parser._description) && _characterParser.equals(parser._characterParser) && _empty == parser._empty;
+			return ObjectUtils.safeEquals(_description, parser._description) && _characterParser.equals(parser._characterParser) && _empty == parser._empty;
 		} else {
 			return false;
 		}

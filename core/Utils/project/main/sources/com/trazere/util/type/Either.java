@@ -21,6 +21,7 @@ import com.trazere.core.text.Describable;
 import com.trazere.core.text.Description;
 import com.trazere.core.text.TextUtils;
 import com.trazere.util.function.Function1;
+import java.io.Serializable;
 
 /**
  * The {@link Either} class represents an algebraic data type which wraps a binary disjonction.
@@ -34,7 +35,9 @@ import com.trazere.util.function.Function1;
  */
 @Deprecated
 public abstract class Either<L, R>
-implements Describable {
+implements Serializable, Describable {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Builds a {@link Either.Left} instance wrapping the given value.
 	 * 
@@ -126,6 +129,8 @@ implements Describable {
 	 */
 	public final static class Left<L, R>
 	extends Either<L, R> {
+		private static final long serialVersionUID = 1L;
+		
 		/**
 		 * Instantiates a new instance wrapping the given left value.
 		 * 
@@ -169,7 +174,7 @@ implements Describable {
 		// Matching.
 		
 		@Override
-		public <RT, X extends Exception> RT match(final Matcher<? super L, ? super R, RT, X> matcher)
+		public <RT, X extends Exception> RT match(final Matcher<? super L, ? super R, RT, ? extends X> matcher)
 		throws X {
 			assert null != matcher;
 			
@@ -179,7 +184,7 @@ implements Describable {
 		// Functions.
 		
 		@Override
-		public <RL, X extends Exception> Either<RL, R> mapLeft(final Function1<? super L, ? extends RL, X> function)
+		public <RL, X extends Exception> Either<RL, R> mapLeft(final Function1<? super L, ? extends RL, ? extends X> function)
 		throws X {
 			assert null != function;
 			
@@ -188,7 +193,7 @@ implements Describable {
 		
 		@SuppressWarnings("unchecked")
 		@Override
-		public <RR, X extends Exception> Either<L, RR> mapRight(final Function1<? super R, ? extends RR, X> function) {
+		public <RR, X extends Exception> Either<L, RR> mapRight(final Function1<? super R, ? extends RR, ? extends X> function) {
 			return (Either<L, RR>) this;
 		}
 		
@@ -270,6 +275,8 @@ implements Describable {
 	 */
 	public final static class Right<L, R>
 	extends Either<L, R> {
+		private static final long serialVersionUID = 1L;
+		
 		/**
 		 * Instantiates a new instance wrapping the given right value.
 		 * 
@@ -313,7 +320,7 @@ implements Describable {
 		// Matching.
 		
 		@Override
-		public <Result, X extends Exception> Result match(final Matcher<? super L, ? super R, Result, X> matcher)
+		public <Result, X extends Exception> Result match(final Matcher<? super L, ? super R, Result, ? extends X> matcher)
 		throws X {
 			assert null != matcher;
 			
@@ -324,12 +331,12 @@ implements Describable {
 		
 		@SuppressWarnings("unchecked")
 		@Override
-		public <RL, X extends Exception> Either<RL, R> mapLeft(final Function1<? super L, ? extends RL, X> function) {
+		public <RL, X extends Exception> Either<RL, R> mapLeft(final Function1<? super L, ? extends RL, ? extends X> function) {
 			return (Either<RL, R>) this;
 		}
 		
 		@Override
-		public <RR, X extends Exception> Either<L, RR> mapRight(final Function1<? super R, ? extends RR, X> function)
+		public <RR, X extends Exception> Either<L, RR> mapRight(final Function1<? super R, ? extends RR, ? extends X> function)
 		throws X {
 			assert null != function;
 			
@@ -448,7 +455,7 @@ implements Describable {
 	 * @return The result of the match.
 	 * @throws X When the match fails.
 	 */
-	public abstract <RT, X extends Exception> RT match(final Matcher<? super L, ? super R, RT, X> matcher)
+	public abstract <RT, X extends Exception> RT match(final Matcher<? super L, ? super R, RT, ? extends X> matcher)
 	throws X;
 	
 	// Functions.
@@ -462,7 +469,7 @@ implements Describable {
 	 * @return An instance containing the mapped value.
 	 * @throws X When the mapping fails.
 	 */
-	public abstract <RL, X extends Exception> Either<RL, R> mapLeft(final Function1<? super L, ? extends RL, X> function)
+	public abstract <RL, X extends Exception> Either<RL, R> mapLeft(final Function1<? super L, ? extends RL, ? extends X> function)
 	throws X;
 	
 	/**
@@ -474,7 +481,7 @@ implements Describable {
 	 * @return An instance containing the mapped value.
 	 * @throws X When the mapping fails.
 	 */
-	public abstract <RR, X extends Exception> Either<L, RR> mapRight(final Function1<? super R, ? extends RR, X> function)
+	public abstract <RR, X extends Exception> Either<L, RR> mapRight(final Function1<? super R, ? extends RR, ? extends X> function)
 	throws X;
 	
 	// Object.

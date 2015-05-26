@@ -18,6 +18,7 @@ package com.trazere.core.util;
 import com.trazere.core.functional.Function;
 import com.trazere.core.lang.HashCode;
 import com.trazere.core.lang.ObjectUtils;
+import java.io.Serializable;
 
 /**
  * The {@link Tuple10} class implements a 10-tuple (decuple) data type that represents sequences of 10 elements.
@@ -34,7 +35,9 @@ import com.trazere.core.lang.ObjectUtils;
  * @param <E10> Type of the tenth element.
  */
 public class Tuple10<E1, E2, E3, E4, E5, E6, E7, E8, E9, E10>
-implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Field5<E5>, Field6<E6>, Field7<E7>, Field8<E8>, Field9<E9>, Field10<E10> {
+implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Field5<E5>, Field6<E6>, Field7<E7>, Field8<E8>, Field9<E9>, Field10<E10>, Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Instantiates a new 10-tuple with the given elements.
 	 * 

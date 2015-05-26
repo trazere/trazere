@@ -27,6 +27,7 @@ import com.trazere.core.lang.ObjectUtils;
 import com.trazere.core.text.Describable;
 import com.trazere.core.text.Description;
 import com.trazere.core.text.TextUtils;
+import java.io.Serializable;
 import java.util.Iterator;
 
 /**
@@ -40,7 +41,9 @@ import java.util.Iterator;
  * @param <T> Type of the value.
  */
 public abstract class Maybe<T>
-implements Iterable<T>, Describable {
+implements Iterable<T>, Serializable, Describable {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Builds a {@link Maybe} instance using the {@link None} constructor.
 	 * 
@@ -76,6 +79,8 @@ implements Iterable<T>, Describable {
 	 */
 	public static final class None<T>
 	extends Maybe<T> {
+		private static final long serialVersionUID = 1L;
+		
 		// None.
 		
 		@Override
@@ -212,6 +217,8 @@ implements Iterable<T>, Describable {
 	 */
 	public static final class Some<T>
 	extends Maybe<T> {
+		private static final long serialVersionUID = 1L;
+		
 		/**
 		 * Instantiates a new {@link Maybe} instance wrapping the given value.
 		 * 

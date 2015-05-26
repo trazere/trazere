@@ -15,22 +15,21 @@
  */
 package com.trazere.parser.text;
 
+import com.trazere.core.collection.CollectionFactories;
+import com.trazere.core.collection.CollectionUtils;
+import com.trazere.core.functional.Function;
+import com.trazere.core.functional.Function2;
 import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.LangUtils;
+import com.trazere.core.lang.ObjectUtils;
+import com.trazere.core.text.CharPredicate;
+import com.trazere.core.text.CharPredicates;
+import com.trazere.core.util.Maybe;
+import com.trazere.core.util.Tuple2;
 import com.trazere.parser.Parser;
-import com.trazere.parser.ParserException;
 import com.trazere.parser.core.CoreParsers;
 import com.trazere.parser.core.Sequence3Parser;
-import com.trazere.util.function.Function1;
-import com.trazere.util.function.Function2;
-import com.trazere.util.function.FunctionUtils;
-import com.trazere.util.text.CharPredicate;
-import com.trazere.util.text.CharPredicates;
-import com.trazere.util.type.Maybe;
-import com.trazere.util.type.Tuple2;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.EnumSet;
 
 /**
@@ -38,19 +37,19 @@ import java.util.EnumSet;
  */
 public class TextParsers {
 	public static Parser<Character, Character> character(final char c, final String description) {
-		return character(CharPredicates.<ParserException>value(c), description);
+		return character(CharPredicates.value(c), description);
 	}
 	
 	public static Parser<Character, Character> character(final char c) {
 		return character(c, "\'" + c + "\'");
 	}
 	
-	public static Parser<Character, Character> character(final CharPredicate<? extends ParserException> filter, final String description) {
+	public static Parser<Character, Character> character(final CharPredicate filter, final String description) {
 		return new FilterCharParser(filter, description);
 	}
 	
 	public static Parser<Character, Character> anyCharacter(final String description) {
-		return character(CharPredicates.<ParserException>all(), description);
+		return character(CharPredicates.all(), description);
 	}
 	
 	public static Parser<Character, Character> anyCharacter() {
@@ -65,7 +64,7 @@ public class TextParsers {
 		return string(string, "\'" + string + "\'");
 	}
 	
-	public static Parser<Character, String> string(final CharPredicate<? extends ParserException> filter, final boolean empty, final String description) {
+	public static Parser<Character, String> string(final CharPredicate filter, final boolean empty, final String description) {
 		return new FilterStringParser(filter, empty, description);
 	}
 	
@@ -73,7 +72,7 @@ public class TextParsers {
 		return new CharacterStringParser(characterParser, empty, description);
 	}
 	
-	public static Parser<Character, String> escapedString(final CharPredicate<? extends ParserException> filter, final CharPredicate<? extends ParserException> escapeFilter, final boolean empty, final String description) {
+	public static Parser<Character, String> escapedString(final CharPredicate filter, final CharPredicate escapeFilter, final boolean empty, final String description) {
 		return new EscapedStringParser(filter, escapeFilter, empty, description);
 	}
 	
@@ -82,60 +81,60 @@ public class TextParsers {
 	}
 	
 	public static Parser<Character, Character> space() {
-		return _SPACE;
+		return SPACE;
 	}
 	
-	private static final Parser<Character, Character> _SPACE = space("a space");
+	private static final Parser<Character, Character> SPACE = space("a space");
 	
 	public static Parser<Character, String> whitespace(final String description) {
-		return TextParsers.string(CharPredicates.<ParserException>isWhitespace(), false, description);
+		return TextParsers.string(CharPredicates.whitespace(), false, description);
 	}
 	
 	public static Parser<Character, String> whitespace() {
-		return _WHITESPACE;
+		return WHITESPACE;
 	}
 	
-	private static final Parser<Character, String> _WHITESPACE = whitespace("some whitespace");
+	private static final Parser<Character, String> WHITESPACE = whitespace("some whitespace");
 	
 	public static Parser<Character, Character> digit(final String description) {
-		return character(CharPredicates.<ParserException>isDigit(), description);
+		return character(CharPredicates.digit(), description);
 	}
 	
 	public static Parser<Character, Character> digit() {
-		return _DIGIT;
+		return DIGIT;
 	}
 	
-	private static final Parser<Character, Character> _DIGIT = digit("a digit");
+	private static final Parser<Character, Character> DIGIT = digit("a digit");
 	
 	public static Parser<Character, Character> letter(final String description) {
-		return character(CharPredicates.<ParserException>isLetter(), description);
+		return character(CharPredicates.letter(), description);
 	}
 	
 	public static Parser<Character, Character> letter() {
-		return _LETTER;
+		return LETTER;
 	}
 	
-	private static final Parser<Character, Character> _LETTER = letter("a letter");
+	private static final Parser<Character, Character> LETTER = letter("a letter");
 	
 	public static Parser<Character, Character> alphanumeric(final String description) {
-		return character(CharPredicates.<ParserException>isAlphanumeric(), description);
+		return character(CharPredicates.alphanumeric(), description);
 	}
 	
 	public static Parser<Character, Character> alphanumeric() {
-		return _ALPHANUMERIC;
+		return ALPHANUMERIC;
 	}
 	
-	private static final Parser<Character, Character> _ALPHANUMERIC = alphanumeric("an alphanumeric");
+	private static final Parser<Character, Character> ALPHANUMERIC = alphanumeric("an alphanumeric");
 	
 	public static Parser<Character, BigInteger> integer(final String description) {
 		return integer(1, description);
 	}
 	
 	public static Parser<Character, BigInteger> integer(final int length, final String description) {
-		return CoreParsers.fold(TextParsers.digit(), _FOLD_INTEGER, length, Integer.MAX_VALUE, BigInteger.ZERO, description);
+		return CoreParsers.fold(TextParsers.digit(), FOLD_INTEGER, length, Integer.MAX_VALUE, BigInteger.ZERO, description);
 	}
 	
-	private static final Function2<BigInteger, Character, BigInteger, ParserException> _FOLD_INTEGER = new Function2<BigInteger, Character, BigInteger, ParserException>() {
+	private static final Function2<BigInteger, Character, BigInteger> FOLD_INTEGER = new Function2<BigInteger, Character, BigInteger>() {
 		@Override
 		public BigInteger evaluate(final BigInteger previousValue, final Character subResult) {
 			final int digit = Character.digit(subResult.charValue(), 10);
@@ -143,22 +142,22 @@ public class TextParsers {
 		}
 	};
 	
-	public static <N extends Number> Parser<Character, N> integer(final Function1<? super BigInteger, ? extends Maybe<? extends N>, ? extends ParserException> extractor, final String description) {
+	public static <N extends Number> Parser<Character, N> integer(final Function<? super BigInteger, ? extends Maybe<? extends N>> extractor, final String description) {
 		return CoreParsers.extract(integer(), extractor, description);
 	}
 	
-	public static <N extends Number> Parser<Character, N> integer(final int length, final Function1<? super BigInteger, ? extends Maybe<? extends N>, ? extends ParserException> extractor, final String description) {
+	public static <N extends Number> Parser<Character, N> integer(final int length, final Function<? super BigInteger, ? extends Maybe<? extends N>> extractor, final String description) {
 		return CoreParsers.extract(integer(length, null), extractor, description);
 	}
 	
 	public static Parser<Character, BigInteger> integer() {
-		return _INTEGER;
+		return INTEGER;
 	}
 	
-	private static final Parser<Character, BigInteger> _INTEGER = integer("an integer");
+	private static final Parser<Character, BigInteger> INTEGER = integer("an integer");
 	
 	public static Parser<Character, BigDecimal> decimal(final String description) {
-		final Parser<Character, Tuple2<BigDecimal, BigDecimal>> decimalPartParser = CoreParsers.fold1(TextParsers.digit(), _FOLD_DECIMAL_PART, Tuple2.build(BigDecimal.ONE, BigDecimal.ZERO), null);
+		final Parser<Character, Tuple2<BigDecimal, BigDecimal>> decimalPartParser = CoreParsers.fold1(TextParsers.digit(), FOLD_DECIMAL_PART, new Tuple2<BigDecimal, BigDecimal>(BigDecimal.ONE, BigDecimal.ZERO), null);
 		final class DecimalParser
 		extends Sequence3Parser<Character, BigInteger, Character, Tuple2<BigDecimal, BigDecimal>, BigDecimal> {
 			public DecimalParser() {
@@ -169,7 +168,7 @@ public class TextParsers {
 			
 			@Override
 			protected BigDecimal combine(final BigInteger integerPart, final Character comma, final Tuple2<BigDecimal, BigDecimal> decimalPart) {
-				return new BigDecimal(integerPart).add(decimalPart.getSecond());
+				return new BigDecimal(integerPart).add(decimalPart.get2());
 			}
 			
 			// Object.
@@ -190,7 +189,7 @@ public class TextParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final DecimalParser parser = (DecimalParser) object;
-					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3);
+					return ObjectUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3);
 				} else {
 					return false;
 				}
@@ -199,27 +198,27 @@ public class TextParsers {
 		return new DecimalParser();
 	}
 	
-	private static final Function2<Tuple2<BigDecimal, BigDecimal>, Character, Tuple2<BigDecimal, BigDecimal>, ParserException> _FOLD_DECIMAL_PART = new Function2<Tuple2<BigDecimal, BigDecimal>, Character, Tuple2<BigDecimal, BigDecimal>, ParserException>() {
+	private static final Function2<Tuple2<BigDecimal, BigDecimal>, Character, Tuple2<BigDecimal, BigDecimal>> FOLD_DECIMAL_PART = new Function2<Tuple2<BigDecimal, BigDecimal>, Character, Tuple2<BigDecimal, BigDecimal>>() {
 		@Override
 		public Tuple2<BigDecimal, BigDecimal> evaluate(final Tuple2<BigDecimal, BigDecimal> previousValue, final Character subResult) {
 			final int digit = Character.digit(subResult.charValue(), 10);
-			final BigDecimal factor = previousValue.getFirst().divide(BigDecimal.TEN);
-			return Tuple2.build(factor, previousValue.getSecond().add(factor.multiply(BigDecimal.valueOf(digit))));
+			final BigDecimal factor = previousValue.get1().divide(BigDecimal.TEN);
+			return new Tuple2<BigDecimal, BigDecimal>(factor, previousValue.get2().add(factor.multiply(BigDecimal.valueOf(digit))));
 		}
 	};
 	
 	public static Parser<Character, BigDecimal> decimal() {
-		return _DECIMAL;
+		return DECIMAL;
 	}
 	
-	private static final Parser<Character, BigDecimal> _DECIMAL = decimal("a decimal");
+	private static final Parser<Character, BigDecimal> DECIMAL = decimal("a decimal");
 	
-	public static <N extends Number> Parser<Character, N> decimal(final Function1<? super BigDecimal, ? extends Maybe<? extends N>, ? extends ParserException> extractor, final String description) {
+	public static <N extends Number> Parser<Character, N> decimal(final Function<? super BigDecimal, ? extends Maybe<? extends N>> extractor, final String description) {
 		return CoreParsers.extract(decimal(), extractor, description);
 	}
 	
 	public static Parser<Character, String> word(final String description) {
-		return string(CharPredicates.<ParserException>isLetter(), false, description);
+		return string(CharPredicates.letter(), false, description);
 	}
 	
 	public static Parser<Character, String> word() {
@@ -228,18 +227,16 @@ public class TextParsers {
 	
 	private static final Parser<Character, String> _WORD = word("a word");
 	
-	public static final <E extends Enum<E>, X extends Exception> Parser<Character, E> enumeration(final Class<E> type, final Function1<E, String, X> renderer, final String description)
-	throws X {
+	public static final <E extends Enum<E>> Parser<Character, E> enumeration(final Class<E> type, final Function<? super E, String> renderer, final String description) {
 		assert null != type;
 		assert null != renderer;
 		
-		return CoreParsers.choice(FunctionUtils.map(new Function1<E, Parser<Character, E>, X>() {
+		return CoreParsers.choice(CollectionUtils.map(EnumSet.allOf(type), new Function<E, Parser<Character, E>>() {
 			@Override
-			public Parser<Character, E> evaluate(final E value)
-			throws X {
+			public Parser<Character, E> evaluate(final E value) {
 				return CoreParsers.lift(string(renderer.evaluate(value)), value, description);
 			}
-		}, EnumSet.allOf(type), new ArrayList<Parser<Character, E>>()), description);
+		}, CollectionFactories.<Parser<Character, E>>arrayList()), description);
 	}
 	
 	private TextParsers() {

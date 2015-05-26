@@ -18,6 +18,7 @@ package com.trazere.core.reactive;
 import com.trazere.core.reference.ReferenceAlreadySetException;
 
 // TODO: subclass Future ?
+// TODO: add some observer factory that forwards to a broadcaster
 
 /**
  * The {@link Promise} class implements placeholders for values that will be set in the future.

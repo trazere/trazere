@@ -296,6 +296,32 @@ public class TextUtils {
 		return index < length ? s.subSequence(0, index) : s;
 	}
 	
+	// TODO: arg for padding
+	/**
+	 * Adjusts the length of the given string.
+	 * <p>
+	 * The string is truncated when it is too long and right-padded using spaces when it it to short.
+	 * 
+	 * @param s String to adjust.
+	 * @param length Desired length, or <code>0</code> to leave the string as it is.
+	 * @return The adjusted string.
+	 */
+	public static String adjust(final String s, final int length) {
+		final int currentLength = s.length();
+		if (length <= 0 || currentLength == length) {
+			return s;
+		} else if (currentLength > length) {
+			return s.substring(0, length);
+		} else {
+			final StringBuilder builder = new StringBuilder(length);
+			builder.append(s);
+			while (builder.length() < length) {
+				builder.append(' ');
+			}
+			return builder.toString();
+		}
+	}
+	
 	/**
 	 * Joins the given text tokens with the given delimiter ignoring the empty ones.
 	 *

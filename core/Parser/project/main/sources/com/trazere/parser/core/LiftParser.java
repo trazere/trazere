@@ -16,7 +16,7 @@
 package com.trazere.parser.core;
 
 import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.LangUtils;
+import com.trazere.core.lang.ObjectUtils;
 import com.trazere.parser.Parser;
 
 public class LiftParser<Token, SubResult, Result>
@@ -54,7 +54,7 @@ extends Sequence1Parser<Token, SubResult, Result> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final LiftParser<?, ?, ?> parser = (LiftParser<?, ?, ?>) object;
-			return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && LangUtils.safeEquals(_result, parser._result);
+			return ObjectUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && ObjectUtils.safeEquals(_result, parser._result);
 		} else {
 			return false;
 		}

@@ -11,13 +11,13 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/Trazere - Utils"/>
-	<classpathentry kind="src" output="target/classes" path="main/sources">
+	<classpathentry including="**/*.java" kind="src" output="target/classes" path="main/sources">
 		<attributes>
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" output="target/test-classes" path="test/sources">
+	<classpathentry including="**/*.java" kind="src" output="target/test-classes" path="test/sources">
 		<attributes>
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>

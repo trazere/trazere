@@ -18,6 +18,7 @@ package com.trazere.core.util;
 import com.trazere.core.functional.Function;
 import com.trazere.core.lang.HashCode;
 import com.trazere.core.lang.ObjectUtils;
+import java.io.Serializable;
 
 /**
  * The {@link Tuple5} class implements a 5-tuple (quintuple) data type that represents sequences of 5 elements.
@@ -29,7 +30,9 @@ import com.trazere.core.lang.ObjectUtils;
  * @param <E5> Type of the fifth element.
  */
 public class Tuple5<E1, E2, E3, E4, E5>
-implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Field5<E5> {
+implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Field5<E5>, Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Instantiates a new 5-tuple with the given elements.
 	 * 
