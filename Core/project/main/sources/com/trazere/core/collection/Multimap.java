@@ -134,14 +134,6 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	void clear();
 	
 	/**
-	 * Removes all bindings with the given key from this multimap.
-	 * 
-	 * @param key Key of the bindings to remove.
-	 * @return An unmodifiable collection of the removed values.
-	 */
-	C remove(K key);
-	
-	/**
 	 * Removes the given binding from this multimap.
 	 * 
 	 * @param key Key of the binding to remove.
@@ -158,6 +150,22 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	 * @return <code>true</code> when the multimap has changed, <code>false</code> otherwise.
 	 */
 	boolean removeAll(K key, Collection<? extends V> values);
+	
+	/**
+	 * Removes all bindings with the given key from this multimap.
+	 * 
+	 * @param key Key of the bindings to remove.
+	 * @return An unmodifiable collection of the removed values.
+	 */
+	C removeKey(K key);
+	
+	/**
+	 * Removes all bindings with the given value from this multimap.
+	 * 
+	 * @param value Value of the binding to remove.
+	 * @return <code>true</code> when the multimap has changed, <code>false</code> otherwise.
+	 */
+	boolean removeValue(V value);
 	
 	// Object.
 	
