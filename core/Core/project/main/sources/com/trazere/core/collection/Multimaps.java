@@ -101,17 +101,22 @@ public class Multimaps {
 			}
 			
 			@Override
-			public C remove(final K key) {
-				throw new UnsupportedOperationException();
-			}
-			
-			@Override
 			public boolean remove(final K key, final V value) {
 				throw new UnsupportedOperationException();
 			}
 			
 			@Override
 			public boolean removeAll(final K key, final Collection<? extends V> values) {
+				throw new UnsupportedOperationException();
+			}
+			
+			@Override
+			public C removeKey(final K key) {
+				throw new UnsupportedOperationException();
+			}
+			
+			@Override
+			public boolean removeValue(final V value) {
 				throw new UnsupportedOperationException();
 			}
 			
