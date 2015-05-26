@@ -15,6 +15,7 @@
  */
 package com.trazere.parser.impl;
 
+import com.trazere.core.util.Maybe;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserContinuation;
@@ -22,7 +23,6 @@ import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserHandler;
 import com.trazere.parser.ParserPosition;
 import com.trazere.parser.ParserState;
-import com.trazere.util.type.Maybe;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;

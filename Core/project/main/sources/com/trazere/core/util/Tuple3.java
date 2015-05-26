@@ -18,6 +18,7 @@ package com.trazere.core.util;
 import com.trazere.core.functional.Function;
 import com.trazere.core.lang.HashCode;
 import com.trazere.core.lang.ObjectUtils;
+import java.io.Serializable;
 
 /**
  * The {@link Tuple3} class implements a 3-tuple (triple) data type that represents sequences of 3 elements.
@@ -27,7 +28,9 @@ import com.trazere.core.lang.ObjectUtils;
  * @param <E3> Type of the third element.
  */
 public class Tuple3<E1, E2, E3>
-implements Field1<E1>, Field2<E2>, Field3<E3> {
+implements Field1<E1>, Field2<E2>, Field3<E3>, Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Instantiates a new 3-tuple with the given elements.
 	 * 

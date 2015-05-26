@@ -108,7 +108,7 @@ public class CollectionUtils {
 	 * @return The next value.
 	 * @throws X When the retrieval of the next value fails.
 	 */
-	public static <T, X extends Exception> Maybe<T> next(final CheckedIterator<? extends T, X> iterator)
+	public static <T, X extends Exception> Maybe<T> next(final CheckedIterator<? extends T, ? extends X> iterator)
 	throws X {
 		assert null != iterator;
 		
@@ -127,7 +127,7 @@ public class CollectionUtils {
 	 * @return The result collection.
 	 * @throws X When the retrieval of some value fails.
 	 */
-	public static <T, R extends Collection<? super T>, X extends Exception> R drain(final CheckedIterator<? extends T, X> values, final R results)
+	public static <T, R extends Collection<? super T>, X extends Exception> R drain(final CheckedIterator<? extends T, ? extends X> values, final R results)
 	throws X {
 		assert null != values;
 		assert null != results;
@@ -151,7 +151,7 @@ public class CollectionUtils {
 	 * @return The result collection.
 	 * @throws X When the retrieval of some value fails.
 	 */
-	public static <T, R extends Collection<? super T>, X extends Exception> R drain(final int n, final CheckedIterator<? extends T, X> iterator, final R results)
+	public static <T, R extends Collection<? super T>, X extends Exception> R drain(final int n, final CheckedIterator<? extends T, ? extends X> iterator, final R results)
 	throws X {
 		assert null != iterator;
 		assert null != results;
@@ -314,7 +314,7 @@ public class CollectionUtils {
 	 * @return The associated value. May be <code>null</code>.
 	 * @throws X When no values is identified by the given key in the map.
 	 */
-	public static <K, V, X extends Exception> V get(final Map<? super K, ? extends V> map, final K key, final ThrowableFactory<X> throwableFactory)
+	public static <K, V, X extends Exception> V get(final Map<? super K, ? extends V> map, final K key, final ThrowableFactory<? extends X> throwableFactory)
 	throws X {
 		assert null != map;
 		assert null != throwableFactory;
@@ -344,6 +344,7 @@ public class CollectionUtils {
 		return currentValue;
 	}
 	
+	// TODO: generalize to Iterable and rename to putAll
 	/**
 	 * Associates the given value to the given key in the given map.
 	 * 
@@ -455,7 +456,7 @@ public class CollectionUtils {
 	 * @throws CollectionException When there is a cycle in the dependencies.
 	 * @throws X When some dependency computation fails.
 	 */
-	public static <T, L extends List<? super T>, X extends Exception> L topologicalSort(final Function1<? super T, ? extends Collection<? extends T>, X> dependencyFunction, final boolean close, final Collection<? extends T> values, final L results)
+	public static <T, L extends List<? super T>, X extends Exception> L topologicalSort(final Function1<? super T, ? extends Collection<? extends T>, ? extends X> dependencyFunction, final boolean close, final Collection<? extends T> values, final L results)
 	throws CollectionException, X {
 		assert null != values;
 		assert null != dependencyFunction;
@@ -505,7 +506,7 @@ public class CollectionUtils {
 	 * @throws CollectionException When there is a cycle in the dependencies.
 	 * @throws X When some dependency computation fails.
 	 */
-	public static <T, L extends List<? super List<T>>, X extends Exception> L regionTopologicalSort(final Function1<? super T, ? extends Collection<? extends T>, X> dependencyFunction, final boolean close, final Collection<? extends T> values, final L results)
+	public static <T, L extends List<? super List<T>>, X extends Exception> L regionTopologicalSort(final Function1<? super T, ? extends Collection<? extends T>, ? extends X> dependencyFunction, final boolean close, final Collection<? extends T> values, final L results)
 	throws CollectionException, X {
 		assert null != values;
 		assert null != dependencyFunction;
@@ -533,7 +534,7 @@ public class CollectionUtils {
 		return results;
 	}
 	
-	private static <T, C extends Collection<? super Tuple2<T, T>>, X extends Exception> C computeTopologicalSortDependencies(final Function1<? super T, ? extends Collection<? extends T>, X> dependencyFunction, final boolean close, final Collection<? extends T> values, final Collection<T> closedValues, final C dependencies)
+	private static <T, C extends Collection<? super Tuple2<T, T>>, X extends Exception> C computeTopologicalSortDependencies(final Function1<? super T, ? extends Collection<? extends T>, ? extends X> dependencyFunction, final boolean close, final Collection<? extends T> values, final Collection<T> closedValues, final C dependencies)
 	throws X {
 		assert null != values;
 		assert null != closedValues;
@@ -546,7 +547,7 @@ public class CollectionUtils {
 		}
 	}
 	
-	private static <T, C extends Collection<? super Tuple2<T, T>>, X extends Exception> C computeTopologicalSortDependencies(final Function1<? super T, ? extends Collection<? extends T>, X> dependencyFunction, final Collection<? extends T> values, final C dependencies)
+	private static <T, C extends Collection<? super Tuple2<T, T>>, X extends Exception> C computeTopologicalSortDependencies(final Function1<? super T, ? extends Collection<? extends T>, ? extends X> dependencyFunction, final Collection<? extends T> values, final C dependencies)
 	throws X {
 		assert null != dependencyFunction;
 		assert null != values;
@@ -560,7 +561,7 @@ public class CollectionUtils {
 		return dependencies;
 	}
 	
-	private static <T, C extends Collection<? super Tuple2<T, T>>, X extends Exception> C computeClosedTopologicalSortDependencies(final Function1<? super T, ? extends Collection<? extends T>, X> dependencyFunction, final Collection<? extends T> values, final Collection<T> closedValues, final C dependencies)
+	private static <T, C extends Collection<? super Tuple2<T, T>>, X extends Exception> C computeClosedTopologicalSortDependencies(final Function1<? super T, ? extends Collection<? extends T>, ? extends X> dependencyFunction, final Collection<? extends T> values, final Collection<T> closedValues, final C dependencies)
 	throws X {
 		assert null != dependencyFunction;
 		assert null != values;

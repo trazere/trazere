@@ -16,8 +16,12 @@
 package com.trazere.util.collection;
 
 import com.trazere.util.type.Maybe;
+import java.util.AbstractList;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * The {@link Lists} class provides various factories of lists.
@@ -112,6 +116,145 @@ public class Lists {
 			list.add(value);
 		}
 		return list;
+	}
+	
+	/**
+	 * Builds a view of the given list in the reversed order.
+	 * <p>
+	 * The built list is backed by the given list, any modification to one list is reported on the other.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param list List to wrap.
+	 * @return The built list.
+	 */
+	public static <E> List<E> reversed(final List<E> list) {
+		assert null != list;
+		
+		return new AbstractList<E>() {
+			@Override
+			public int size() {
+				return list.size();
+			}
+			
+			@Override
+			public Iterator<E> iterator() {
+				return Iterators.reversed(list);
+			}
+			
+			@Override
+			public boolean add(final E e) {
+				list.add(0, e);
+				return true;
+			}
+			
+			@Override
+			public boolean remove(final Object o) {
+				return list.remove(o);
+			}
+			
+			@Override
+			public boolean addAll(final int index, final Collection<? extends E> c) {
+				if (c.isEmpty()) {
+					return false;
+				} else {
+					final int addIndex = computeAddIndex(index);
+					for (final E e : c) {
+						add(addIndex, e);
+					}
+					return true;
+				}
+			}
+			
+			@Override
+			public void clear() {
+				list.clear();
+			}
+			
+			@Override
+			public E get(final int index) {
+				return list.get(computeIndex(index));
+			}
+			
+			@Override
+			public E set(final int index, final E element) {
+				return list.set(computeIndex(index), element);
+			}
+			
+			@Override
+			public void add(final int index, final E element) {
+				list.add(computeAddIndex(index) + 1, element);
+			}
+			
+			@Override
+			public E remove(final int index) {
+				return list.remove(computeIndex(index));
+			}
+			
+			@Override
+			public ListIterator<E> listIterator(final int index) {
+				final ListIterator<E> iterator = list.listIterator(computeAddIndex(index));
+				return new ListIterator<E>() {
+					@Override
+					public boolean hasNext() {
+						return iterator.hasPrevious();
+					}
+					
+					@Override
+					public E next() {
+						return iterator.previous();
+					}
+					
+					@Override
+					public boolean hasPrevious() {
+						return iterator.hasNext();
+					}
+					
+					@Override
+					public E previous() {
+						return iterator.next();
+					}
+					
+					@Override
+					public int nextIndex() {
+						return computeIndex(iterator.previousIndex());
+					}
+					
+					@Override
+					public int previousIndex() {
+						return computeIndex(iterator.nextIndex());
+					}
+					
+					@Override
+					public void remove() {
+						iterator.remove();
+					}
+					
+					@Override
+					public void set(final E e) {
+						iterator.set(e);
+					}
+					
+					@Override
+					public void add(final E e) {
+						iterator.add(e);
+						iterator.previous();
+					}
+				};
+			}
+			
+			@Override
+			public List<E> subList(final int fromIndex, final int toIndex) {
+				return reversed(list.subList(fromIndex, toIndex));
+			}
+			
+			private int computeIndex(final int index) {
+				return list.size() - index - 1;
+			}
+			
+			private int computeAddIndex(final int index) {
+				return list.size() - index;
+			}
+		};
 	}
 	
 	private Lists() {

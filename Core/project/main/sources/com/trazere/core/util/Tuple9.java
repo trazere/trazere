@@ -18,6 +18,7 @@ package com.trazere.core.util;
 import com.trazere.core.functional.Function;
 import com.trazere.core.lang.HashCode;
 import com.trazere.core.lang.ObjectUtils;
+import java.io.Serializable;
 
 /**
  * The {@link Tuple9} class implements a 9-tuple (nonuple) data type that represents sequences of 9 elements.
@@ -33,7 +34,9 @@ import com.trazere.core.lang.ObjectUtils;
  * @param <E9> Type of the ninth element.
  */
 public class Tuple9<E1, E2, E3, E4, E5, E6, E7, E8, E9>
-implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Field5<E5>, Field6<E6>, Field7<E7>, Field8<E8>, Field9<E9> {
+implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Field5<E5>, Field6<E6>, Field7<E7>, Field8<E8>, Field9<E9>, Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Instantiates a new 9-tuple with the given elements.
 	 * 

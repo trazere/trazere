@@ -18,7 +18,7 @@ public class NetFunctions {
 	 * @param throwableFactory Factory that builds the thrown exceptions.
 	 * @return A function that makes a URL from its string representation.
 	 */
-	public static <X extends Exception> Function1<String, URL, X> url(final ThrowableFactory<X> throwableFactory) {
+	public static <X extends Exception> Function1<String, URL, X> url(final ThrowableFactory<? extends X> throwableFactory) {
 		assert null != throwableFactory;
 		
 		return new Function1<String, URL, X>() {
@@ -41,7 +41,7 @@ public class NetFunctions {
 	 * @param throwableFactory Factory that builds the thrown exceptions.
 	 * @return A function that makes a URI from its string representation.
 	 */
-	public static <X extends Exception> Function1<String, URI, X> uri(final ThrowableFactory<X> throwableFactory) {
+	public static <X extends Exception> Function1<String, URI, X> uri(final ThrowableFactory<? extends X> throwableFactory) {
 		assert null != throwableFactory;
 		
 		return new Function1<String, URI, X>() {

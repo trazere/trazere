@@ -18,6 +18,7 @@ package com.trazere.core.util;
 import com.trazere.core.functional.Function;
 import com.trazere.core.lang.HashCode;
 import com.trazere.core.lang.ObjectUtils;
+import java.io.Serializable;
 
 /**
  * The {@link Tuple6} class implements a 6-tuple (sexuple) data type that represents sequences of 6 elements.
@@ -30,7 +31,9 @@ import com.trazere.core.lang.ObjectUtils;
  * @param <E6> Type of the sixth element.
  */
 public class Tuple6<E1, E2, E3, E4, E5, E6>
-implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Field5<E5>, Field6<E6> {
+implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Field5<E5>, Field6<E6>, Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Instantiates a new 6-tuple with the given elements.
 	 * 

@@ -15,23 +15,24 @@
  */
 package com.trazere.parser.core;
 
+import com.trazere.core.collection.Lists;
+import com.trazere.core.functional.Function;
+import com.trazere.core.functional.Function2;
 import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.LangUtils;
+import com.trazere.core.lang.ObjectUtils;
+import com.trazere.core.util.Either;
+import com.trazere.core.util.EitherFunctions;
+import com.trazere.core.util.Maybe;
+import com.trazere.core.util.Tuple1;
+import com.trazere.core.util.Tuple2;
+import com.trazere.core.util.Tuple3;
+import com.trazere.core.util.Tuple4;
+import com.trazere.core.util.Tuple5;
+import com.trazere.core.util.Tuple6;
+import com.trazere.core.util.Tuple7;
+import com.trazere.core.util.Tuple8;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserException;
-import com.trazere.util.collection.Lists;
-import com.trazere.util.function.Function1;
-import com.trazere.util.function.Function2;
-import com.trazere.util.type.Either;
-import com.trazere.util.type.Maybe;
-import com.trazere.util.type.Tuple1;
-import com.trazere.util.type.Tuple2;
-import com.trazere.util.type.Tuple3;
-import com.trazere.util.type.Tuple4;
-import com.trazere.util.type.Tuple5;
-import com.trazere.util.type.Tuple6;
-import com.trazere.util.type.Tuple7;
-import com.trazere.util.type.Tuple8;
 import java.util.List;
 
 /**
@@ -50,11 +51,11 @@ public class CoreParsers {
 		return new DefaultParser<Token, Result>(subParser, defaultResult, description);
 	}
 	
-	public static <Token, SubResult, Result> Parser<Token, Result> map(final Parser<Token, ? extends SubResult> subParser, final Function1<? super SubResult, ? extends Result, ? extends ParserException> function, final String description) {
+	public static <Token, SubResult, Result> Parser<Token, Result> map(final Parser<Token, ? extends SubResult> subParser, final Function<? super SubResult, ? extends Result> function, final String description) {
 		return new MapParser<Token, SubResult, Result>(subParser, function, description);
 	}
 	
-	public static <Token, SubResult, Result> Parser<Token, Result> extract(final Parser<Token, ? extends SubResult> subParser, final Function1<? super SubResult, ? extends Maybe<? extends Result>, ? extends ParserException> extractor, final String description) {
+	public static <Token, SubResult, Result> Parser<Token, Result> extract(final Parser<Token, ? extends SubResult> subParser, final Function<? super SubResult, ? extends Maybe<? extends Result>> extractor, final String description) {
 		return new ExtractParser<Token, SubResult, Result>(subParser, extractor, description);
 	}
 	
@@ -81,7 +82,7 @@ public class CoreParsers {
 		return new ManyParser<Token, Value>(subParser, 1, Integer.MAX_VALUE, description);
 	}
 	
-	public static <Token, Value, Result> FoldParser<Token, Value, Result> fold(final Parser<Token, ? extends Value> valueParser, final Function2<? super Result, ? super Value, ? extends Result, ? extends ParserException> function, final int min, final int max, final Result initialValue, final String description) {
+	public static <Token, Value, Result> FoldParser<Token, Value, Result> fold(final Parser<Token, ? extends Value> valueParser, final Function2<? super Result, ? super Value, ? extends Result> function, final int min, final int max, final Result initialValue, final String description) {
 		assert null != function;
 		
 		final class FoldParser
@@ -92,7 +93,7 @@ public class CoreParsers {
 			
 			// Parser.
 			
-			private final Function2<? super Result, ? super Value, ? extends Result, ? extends ParserException> _function = function;
+			private final Function2<? super Result, ? super Value, ? extends Result> _function = function;
 			
 			@Override
 			protected Result fold(final Result previousResult, final Value value)
@@ -120,7 +121,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final FoldParser parser = (FoldParser) object;
-					return LangUtils.safeEquals(_description, parser._description) && _valueParser.equals(parser._valueParser) && _min == parser._min && _max == parser._max && LangUtils.safeEquals(_initialResult, parser._initialResult) && _function.equals(parser._function);
+					return ObjectUtils.safeEquals(_description, parser._description) && _valueParser.equals(parser._valueParser) && _min == parser._min && _max == parser._max && ObjectUtils.safeEquals(_initialResult, parser._initialResult) && _function.equals(parser._function);
 				} else {
 					return false;
 				}
@@ -129,11 +130,11 @@ public class CoreParsers {
 		return new FoldParser();
 	}
 	
-	public static <Token, Value, Result> FoldParser<Token, Value, Result> fold(final Parser<Token, ? extends Value> subParser, final Function2<? super Result, ? super Value, ? extends Result, ? extends ParserException> function, final Result initialValue, final String description) {
+	public static <Token, Value, Result> FoldParser<Token, Value, Result> fold(final Parser<Token, ? extends Value> subParser, final Function2<? super Result, ? super Value, ? extends Result> function, final Result initialValue, final String description) {
 		return fold(subParser, function, 0, Integer.MAX_VALUE, initialValue, description);
 	}
 	
-	public static <Token, Value, Result> FoldParser<Token, Value, Result> fold1(final Parser<Token, ? extends Value> subParser, final Function2<? super Result, ? super Value, ? extends Result, ? extends ParserException> function, final Result initialValue, final String description) {
+	public static <Token, Value, Result> FoldParser<Token, Value, Result> fold1(final Parser<Token, ? extends Value> subParser, final Function2<? super Result, ? super Value, ? extends Result> function, final Result initialValue, final String description) {
 		return fold(subParser, function, 1, Integer.MAX_VALUE, initialValue, description);
 	}
 	
@@ -148,7 +149,7 @@ public class CoreParsers {
 			
 			@Override
 			protected Tuple1<SubResult1> combine(final SubResult1 subResult1) {
-				return Tuple1.build(subResult1);
+				return new Tuple1<SubResult1>(subResult1);
 			}
 			
 			// Object.
@@ -167,7 +168,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final SequenceParser parser = (SequenceParser) object;
-					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1);
+					return ObjectUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1);
 				} else {
 					return false;
 				}
@@ -187,7 +188,7 @@ public class CoreParsers {
 			
 			@Override
 			protected Tuple2<SubResult1, SubResult2> combine(final SubResult1 subResult1, final SubResult2 subResult2) {
-				return Tuple2.build(subResult1, subResult2);
+				return new Tuple2<SubResult1, SubResult2>(subResult1, subResult2);
 			}
 			
 			// Object.
@@ -207,7 +208,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final SequenceParser parser = (SequenceParser) object;
-					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2);
+					return ObjectUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2);
 				} else {
 					return false;
 				}
@@ -227,7 +228,7 @@ public class CoreParsers {
 			
 			@Override
 			protected Tuple3<SubResult1, SubResult2, SubResult3> combine(final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3) {
-				return Tuple3.build(subResult1, subResult2, subResult3);
+				return new Tuple3<SubResult1, SubResult2, SubResult3>(subResult1, subResult2, subResult3);
 			}
 			
 			// Object.
@@ -248,7 +249,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final SequenceParser parser = (SequenceParser) object;
-					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3);
+					return ObjectUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3);
 				} else {
 					return false;
 				}
@@ -268,7 +269,7 @@ public class CoreParsers {
 			
 			@Override
 			protected Tuple4<SubResult1, SubResult2, SubResult3, SubResult4> combine(final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3, final SubResult4 subResult4) {
-				return Tuple4.build(subResult1, subResult2, subResult3, subResult4);
+				return new Tuple4<SubResult1, SubResult2, SubResult3, SubResult4>(subResult1, subResult2, subResult3, subResult4);
 			}
 			
 			// Object.
@@ -290,7 +291,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final SequenceParser parser = (SequenceParser) object;
-					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4);
+					return ObjectUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4);
 				} else {
 					return false;
 				}
@@ -310,7 +311,7 @@ public class CoreParsers {
 			
 			@Override
 			protected Tuple5<SubResult1, SubResult2, SubResult3, SubResult4, SubResult5> combine(final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3, final SubResult4 subResult4, final SubResult5 subResult5) {
-				return Tuple5.build(subResult1, subResult2, subResult3, subResult4, subResult5);
+				return new Tuple5<SubResult1, SubResult2, SubResult3, SubResult4, SubResult5>(subResult1, subResult2, subResult3, subResult4, subResult5);
 			}
 			
 			// Object.
@@ -333,7 +334,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final SequenceParser parser = (SequenceParser) object;
-					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5);
+					return ObjectUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5);
 				} else {
 					return false;
 				}
@@ -353,7 +354,7 @@ public class CoreParsers {
 			
 			@Override
 			protected Tuple6<SubResult1, SubResult2, SubResult3, SubResult4, SubResult5, SubResult6> combine(final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3, final SubResult4 subResult4, final SubResult5 subResult5, final SubResult6 subResult6) {
-				return Tuple6.build(subResult1, subResult2, subResult3, subResult4, subResult5, subResult6);
+				return new Tuple6<SubResult1, SubResult2, SubResult3, SubResult4, SubResult5, SubResult6>(subResult1, subResult2, subResult3, subResult4, subResult5, subResult6);
 			}
 			
 			// Object.
@@ -377,7 +378,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final SequenceParser parser = (SequenceParser) object;
-					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5) && _subParser6.equals(parser._subParser6);
+					return ObjectUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5) && _subParser6.equals(parser._subParser6);
 				} else {
 					return false;
 				}
@@ -397,7 +398,7 @@ public class CoreParsers {
 			
 			@Override
 			protected Tuple7<SubResult1, SubResult2, SubResult3, SubResult4, SubResult5, SubResult6, SubResult7> combine(final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3, final SubResult4 subResult4, final SubResult5 subResult5, final SubResult6 subResult6, final SubResult7 subResult7) {
-				return Tuple7.build(subResult1, subResult2, subResult3, subResult4, subResult5, subResult6, subResult7);
+				return new Tuple7<SubResult1, SubResult2, SubResult3, SubResult4, SubResult5, SubResult6, SubResult7>(subResult1, subResult2, subResult3, subResult4, subResult5, subResult6, subResult7);
 			}
 			
 			// Object.
@@ -422,7 +423,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final SequenceParser parser = (SequenceParser) object;
-					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5) && _subParser6.equals(parser._subParser6) && _subParser7.equals(parser._subParser7);
+					return ObjectUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5) && _subParser6.equals(parser._subParser6) && _subParser7.equals(parser._subParser7);
 				} else {
 					return false;
 				}
@@ -442,7 +443,7 @@ public class CoreParsers {
 			
 			@Override
 			protected Tuple8<SubResult1, SubResult2, SubResult3, SubResult4, SubResult5, SubResult6, SubResult7, SubResult8> combine(final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3, final SubResult4 subResult4, final SubResult5 subResult5, final SubResult6 subResult6, final SubResult7 subResult7, final SubResult8 subResult8) {
-				return Tuple8.build(subResult1, subResult2, subResult3, subResult4, subResult5, subResult6, subResult7, subResult8);
+				return new Tuple8<SubResult1, SubResult2, SubResult3, SubResult4, SubResult5, SubResult6, SubResult7, SubResult8>(subResult1, subResult2, subResult3, subResult4, subResult5, subResult6, subResult7, subResult8);
 			}
 			
 			// Object.
@@ -468,7 +469,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final SequenceParser parser = (SequenceParser) object;
-					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5) && _subParser6.equals(parser._subParser6) && _subParser7.equals(parser._subParser7) && _subParser8.equals(parser._subParser8);
+					return ObjectUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5) && _subParser6.equals(parser._subParser6) && _subParser7.equals(parser._subParser7) && _subParser8.equals(parser._subParser8);
 				} else {
 					return false;
 				}
@@ -524,7 +525,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final FirstParser parser = (FirstParser) object;
-					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2);
+					return ObjectUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2);
 				} else {
 					return false;
 				}
@@ -565,7 +566,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final FirstParser parser = (FirstParser) object;
-					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3);
+					return ObjectUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3);
 				} else {
 					return false;
 				}
@@ -607,7 +608,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final FirstParser parser = (FirstParser) object;
-					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4);
+					return ObjectUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4);
 				} else {
 					return false;
 				}
@@ -650,7 +651,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final FirstParser parser = (FirstParser) object;
-					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5);
+					return ObjectUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5);
 				} else {
 					return false;
 				}
@@ -690,7 +691,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final SecondParser parser = (SecondParser) object;
-					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2);
+					return ObjectUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2);
 				} else {
 					return false;
 				}
@@ -731,7 +732,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final SecondParser parser = (SecondParser) object;
-					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3);
+					return ObjectUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3);
 				} else {
 					return false;
 				}
@@ -773,7 +774,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final SecondParser parser = (SecondParser) object;
-					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4);
+					return ObjectUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4);
 				} else {
 					return false;
 				}
@@ -816,7 +817,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final SecondParser parser = (SecondParser) object;
-					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5);
+					return ObjectUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5);
 				} else {
 					return false;
 				}
@@ -857,7 +858,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final ThirdParser parser = (ThirdParser) object;
-					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3);
+					return ObjectUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3);
 				} else {
 					return false;
 				}
@@ -899,7 +900,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final ThirdParser parser = (ThirdParser) object;
-					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4);
+					return ObjectUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4);
 				} else {
 					return false;
 				}
@@ -942,7 +943,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final ThirdParser parser = (ThirdParser) object;
-					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5);
+					return ObjectUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5);
 				} else {
 					return false;
 				}
@@ -984,7 +985,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final FourthParser parser = (FourthParser) object;
-					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4);
+					return ObjectUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4);
 				} else {
 					return false;
 				}
@@ -1027,7 +1028,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final FourthParser parser = (FourthParser) object;
-					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5);
+					return ObjectUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5);
 				} else {
 					return false;
 				}
@@ -1070,7 +1071,7 @@ public class CoreParsers {
 					return true;
 				} else if (null != object && getClass().equals(object.getClass())) {
 					final FifthParser parser = (FifthParser) object;
-					return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5);
+					return ObjectUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _subParser2.equals(parser._subParser2) && _subParser3.equals(parser._subParser3) && _subParser4.equals(parser._subParser4) && _subParser5.equals(parser._subParser5);
 				} else {
 					return false;
 				}
@@ -1080,11 +1081,11 @@ public class CoreParsers {
 	}
 	
 	public static <Token, Result> ChoiceParser<Token, Result> choice(final Parser<Token, ? extends Result> subParser1, final Parser<Token, ? extends Result> subParser2, final String description) {
-		return choice(Lists.<Parser<Token, ? extends Result>>fromValues(subParser1, subParser2), description);
+		return choice(Lists.<Parser<Token, ? extends Result>>fromElements(subParser1, subParser2), description);
 	}
 	
 	public static <Token, Result> ChoiceParser<Token, Result> choice(final Parser<Token, ? extends Result> subParser1, final Parser<Token, ? extends Result> subParser2, final Parser<Token, ? extends Result> subParser3, final String description) {
-		return choice(Lists.<Parser<Token, ? extends Result>>fromValues(subParser1, subParser2, subParser3), description);
+		return choice(Lists.<Parser<Token, ? extends Result>>fromElements(subParser1, subParser2, subParser3), description);
 	}
 	
 	public static <Token, Result> ChoiceParser<Token, Result> choice(final List<? extends Parser<Token, ? extends Result>> subParsers, final String description) {
@@ -1095,8 +1096,8 @@ public class CoreParsers {
 		assert null != leftParser;
 		assert null != rightParser;
 		
-		final Parser<Token, Either<R1, R2>> leftParser_ = map(leftParser, Either.<R1, R2, ParserException>leftFunction(), null);
-		final Parser<Token, Either<R1, R2>> rightParser_ = map(rightParser, Either.<R1, R2, ParserException>rightFunction(), null);
+		final Parser<Token, Either<R1, R2>> leftParser_ = map(leftParser, EitherFunctions.<R1, R2>left(), null);
+		final Parser<Token, Either<R1, R2>> rightParser_ = map(rightParser, EitherFunctions.<R1, R2>right(), null);
 		return CoreParsers.choice(leftParser_, rightParser_, description);
 	}
 	

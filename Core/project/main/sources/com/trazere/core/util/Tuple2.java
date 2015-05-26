@@ -18,6 +18,7 @@ package com.trazere.core.util;
 import com.trazere.core.functional.Function;
 import com.trazere.core.lang.HashCode;
 import com.trazere.core.lang.ObjectUtils;
+import java.io.Serializable;
 
 /**
  * The {@link Tuple2} class implements a 2-tuple (douple or pair) data type that represents sequences of 2 elements.
@@ -26,7 +27,9 @@ import com.trazere.core.lang.ObjectUtils;
  * @param <E2> Type of the second element.
  */
 public class Tuple2<E1, E2>
-implements Field1<E1>, Field2<E2> {
+implements Field1<E1>, Field2<E2>, Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Instantiates a new 2-tuple with the given elements.
 	 * 

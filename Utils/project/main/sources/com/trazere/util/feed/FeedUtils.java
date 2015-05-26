@@ -34,7 +34,7 @@ public class FeedUtils {
 	 * @return The next value.
 	 * @throws X When the retrieval of the next value fails.
 	 */
-	public static <T, X extends Exception> Maybe<T> next(final Feed<? extends T, X> feed)
+	public static <T, X extends Exception> Maybe<T> next(final Feed<? extends T, ? extends X> feed)
 	throws X {
 		assert null != feed;
 		
@@ -53,7 +53,7 @@ public class FeedUtils {
 	 * @return The result collection.
 	 * @throws X When the retrieval of some value fails.
 	 */
-	public static <T, C extends Collection<? super T>, X extends Exception> C drain(final Feed<? extends T, X> feed, final C results)
+	public static <T, C extends Collection<? super T>, X extends Exception> C drain(final Feed<? extends T, ? extends X> feed, final C results)
 	throws X {
 		assert null != feed;
 		assert null != results;
@@ -74,7 +74,7 @@ public class FeedUtils {
 	 * @return The result collection.
 	 * @throws X When the retrieval of some value fails.
 	 */
-	public static <T, C extends Collection<? super T>, X extends Exception> C drain(final int n, final Feed<? extends T, X> feed, final C results)
+	public static <T, C extends Collection<? super T>, X extends Exception> C drain(final int n, final Feed<? extends T, ? extends X> feed, final C results)
 	throws X {
 		assert null != feed;
 		assert null != results;

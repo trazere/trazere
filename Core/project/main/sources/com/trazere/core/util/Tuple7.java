@@ -18,6 +18,7 @@ package com.trazere.core.util;
 import com.trazere.core.functional.Function;
 import com.trazere.core.lang.HashCode;
 import com.trazere.core.lang.ObjectUtils;
+import java.io.Serializable;
 
 /**
  * The {@link Tuple7} class implements a 7-tuple (septuple) data type that represents sequences of 7 elements.
@@ -31,7 +32,9 @@ import com.trazere.core.lang.ObjectUtils;
  * @param <E7> Type of the seventh element.
  */
 public class Tuple7<E1, E2, E3, E4, E5, E6, E7>
-implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Field5<E5>, Field6<E6>, Field7<E7> {
+implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Field5<E5>, Field6<E6>, Field7<E7>, Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Instantiates a new 7-tuple with the given elements.
 	 * 

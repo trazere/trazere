@@ -38,6 +38,8 @@ import com.trazere.util.function.Function1;
 @Deprecated
 public class Tuple8<T1, T2, T3, T4, T5, T6, T7, T8>
 extends Tuple7<T1, T2, T3, T4, T5, T6, T7> {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Builds a tuple with the given values.
 	 * 

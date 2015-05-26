@@ -16,6 +16,7 @@
 package com.trazere.core.reactive;
 
 // TODO: subclass Observable ?
+// TODO: add some observer factory that forwards to a broadcaster
 
 /**
  * The {@link Broadcaster} class implements distribution points of events that can be observed.

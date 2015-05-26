@@ -16,7 +16,7 @@
 package com.trazere.parser.monad;
 
 import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.LangUtils;
+import com.trazere.core.lang.ObjectUtils;
 import com.trazere.parser.BaseParser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
@@ -52,7 +52,7 @@ extends BaseParser<Token, Result> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final FailureParser<?, ?> parser = (FailureParser<?, ?>) object;
-			return LangUtils.safeEquals(_description, parser._description);
+			return ObjectUtils.safeEquals(_description, parser._description);
 		} else {
 			return false;
 		}

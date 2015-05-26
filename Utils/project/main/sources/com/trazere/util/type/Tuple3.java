@@ -35,6 +35,8 @@ import com.trazere.util.function.Function3;
 @Deprecated
 public class Tuple3<T1, T2, T3>
 extends Tuple2<T1, T2> {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Builds a tuple with the given values.
 	 * 

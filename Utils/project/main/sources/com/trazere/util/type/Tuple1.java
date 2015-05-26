@@ -22,6 +22,7 @@ import com.trazere.core.util.FieldFunctions;
 import com.trazere.core.util.TupleComparators;
 import com.trazere.core.util.TupleFunctions;
 import com.trazere.util.function.Function1;
+import java.io.Serializable;
 
 /**
  * The {@link Tuple1} class represents a 1-tuple data type which stores sequences of 1 value.
@@ -30,7 +31,10 @@ import com.trazere.util.function.Function1;
  * @deprecated Use {@link com.trazere.core.util.Tuple1}.
  */
 @Deprecated
-public class Tuple1<T1> {
+public class Tuple1<T1>
+implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Builds a tuple with the given value.
 	 * 

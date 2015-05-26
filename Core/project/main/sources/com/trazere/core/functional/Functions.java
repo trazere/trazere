@@ -98,6 +98,23 @@ public class Functions {
 	}
 	
 	/**
+	 * Builds a function that throws an exception.
+	 * 
+	 * @param <A> Type of the arguments.
+	 * @param <R> Type of the results.
+	 * @param throwableFactory Throwable factory to use.
+	 * @param message Message of the throwable.
+	 * @return The built function.
+	 */
+	public static <A, R> Function<A, R> failure(final ThrowableFactory<? extends RuntimeException> throwableFactory, final String message) {
+		assert null != throwableFactory;
+		
+		return arg -> {
+			throw throwableFactory.build(message);
+		};
+	}
+	
+	/**
 	 * Builds a function that lifts the given thunk.
 	 *
 	 * @param <A> Type of the arguments.
@@ -252,6 +269,24 @@ public class Functions {
 	}
 	
 	/**
+	 * Builds a two arguments function that throws an exception.
+	 *
+	 * @param <A1> Type of the first arguments.
+	 * @param <A2> Type of the second arguments.
+	 * @param <R> Type of the results.
+	 * @param throwableFactory Throwable factory to use.
+	 * @param message Message of the throwable.
+	 * @return The built function.
+	 */
+	public static <A1, A2, R> Function2<A1, A2, R> failure2(final ThrowableFactory<? extends RuntimeException> throwableFactory, final String message) {
+		assert null != throwableFactory;
+		
+		return (arg1, arg2) -> {
+			throw throwableFactory.build(message);
+		};
+	}
+	
+	/**
 	 * Builds a two arguments function that lifts the given thunk.
 	 *
 	 * @param <A1> Type of the first arguments.
@@ -327,6 +362,25 @@ public class Functions {
 		
 		return (arg1, arg2, arg3) -> {
 			throw throwableFactory.build();
+		};
+	}
+	
+	/**
+	 * Builds a three arguments function that throws an exception.
+	 *
+	 * @param <A1> Type of the first arguments.
+	 * @param <A2> Type of the second arguments.
+	 * @param <A3> Type of the third arguments.
+	 * @param <R> Type of the results.
+	 * @param throwableFactory Throwable factory to use.
+	 * @param message Message of the throwable.
+	 * @return The built function.
+	 */
+	public static <A1, A2, A3, R> Function3<A1, A2, A3, R> failure3(final ThrowableFactory<? extends RuntimeException> throwableFactory, final String message) {
+		assert null != throwableFactory;
+		
+		return (arg1, arg2, arg3) -> {
+			throw throwableFactory.build(message);
 		};
 	}
 	
