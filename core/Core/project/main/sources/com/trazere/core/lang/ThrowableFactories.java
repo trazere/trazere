@@ -67,6 +67,29 @@ public class ThrowableFactories {
 		}
 	};
 	
+	/** Factory of {@link RuntimeException} exceptions. */
+	public static final ThrowableFactory<IllegalArgumentException> ILLEGAL_ARGUMENT_EXCEPTION = new ThrowableFactory<IllegalArgumentException>() {
+		@Override
+		public IllegalArgumentException build() {
+			return new IllegalArgumentException();
+		}
+		
+		@Override
+		public IllegalArgumentException build(final String message) {
+			return new IllegalArgumentException(message);
+		}
+		
+		@Override
+		public IllegalArgumentException build(final Throwable cause) {
+			return new IllegalArgumentException(cause);
+		}
+		
+		@Override
+		public IllegalArgumentException build(final String message, final Throwable cause) {
+			return new IllegalArgumentException(message, cause);
+		}
+	};
+	
 	private ThrowableFactories() {
 		// Prevents instantiation.
 	}
