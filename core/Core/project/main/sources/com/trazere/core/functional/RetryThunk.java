@@ -61,7 +61,6 @@ implements Thunk<Result<T>>, FailureHandler<T> {
 	 * Evaluates the given retry thunk.
 	 * 
 	 * @param <T> Type of the value.
-	 * @param <X> Type of the failure exceptions.
 	 * @param thunk Thunk to evaluate.
 	 * @param failureFactory Factory of the failure.
 	 * @return The value of the thunk.

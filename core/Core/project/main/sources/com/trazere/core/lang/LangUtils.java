@@ -15,8 +15,9 @@
  */
 package com.trazere.core.lang;
 
+
 /**
- * The {@link LangUtils} class provides various utilities regarding objects and the Java language.
+ * The {@link LangUtils} class provides various utilities regarding the Java language.
  */
 public class LangUtils {
 	/**
@@ -206,79 +207,6 @@ public class LangUtils {
 	public static char safeUnbox(final Character value, final char nullReplacement) {
 		return null != value ? value.charValue() : nullReplacement;
 	}
-	
-	// TODO: move to ThreadUtils
-	//	/**
-	//	 * Puts the current thread to sleep for the given amount of time.
-	//	 * <p>
-	//	 * This method throws an exception when the sleep is interrupted.
-	//	 *
-	//	 * @param <X> Type of the interruption exception.
-	//	 * @param timeout The timeout in milliseconds.
-	//	 * @param throwableFactory The exception factory for interruptions.
-	//	 * @throws X When the sleep is interrupted.
-	//	 * @see Thread#sleep(long)
-	//	 */
-	//	public static <X extends Exception> void sleep(final long timeout, final ThrowableFactory<X> throwableFactory)
-	//	throws X {
-	//		assert null != throwableFactory;
-	//
-	//		try {
-	//			Thread.sleep(timeout);
-	//		} catch (final InterruptedException exception) {
-	//			throw throwableFactory.build(exception);
-	//		}
-	//	}
-	//
-	// TODO: move to ObjectUtils
-	//	/**
-	//	 * Puts the current thread to sleep for the given amount of time or until the given object is notified.
-	//	 * <p>
-	//	 * This method throws an exception when the sleep is interrupted.
-	//	 *
-	//	 * @param <X> Type of the interruption exception.
-	//	 * @param object The object to observe.
-	//	 * @param timeout The timeout in milliseconds.
-	//	 * @param throwableFactory The exception factory for interruptions.
-	//	 * @throws X When the sleep is interrupted.
-	//	 * @see Thread#sleep(long)
-	//	 */
-	//	public static <X extends Exception> void wait(final Object object, final long timeout, final ThrowableFactory<X> throwableFactory)
-	//	throws X {
-	//		assert null != object;
-	//		assert null != throwableFactory;
-	//
-	//		try {
-	//			synchronized (object) {
-	//				object.wait(timeout);
-	//			}
-	//		} catch (final InterruptedException exception) {
-	//			throw throwableFactory.build(exception);
-	//		}
-	//	}
-	//
-	//	/**
-	//	 * Puts the current thread to sleep for the given amount of time or until the given object is notified.
-	//	 * <p>
-	//	 * This method throws an exception when the sleep is interrupted.
-	//	 *
-	//	 * @param <X> Type of the interruption exception.
-	//	 * @param object The object to observe.
-	//	 * @param timeout The timeout in milliseconds.
-	//	 * @param throwableFactory The exception factory for interruptions.
-	//	 * @throws X When the sleep is interrupted.
-	//	 * @see Thread#sleep(long)
-	//	 */
-	//	public static <X extends Exception> void waitOrSleep(final Maybe<?> object, final long timeout, final ThrowableFactory<X> throwableFactory)
-	//	throws X {
-	//		assert null != object;
-	//
-	//		if (object.isSome()) {
-	//			wait(object.asSome().getValue(), timeout, throwableFactory);
-	//		} else {
-	//			LangUtils.sleep(timeout, throwableFactory);
-	//		}
-	//	}
 	
 	private LangUtils() {
 		// Prevents instantiation.
