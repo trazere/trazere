@@ -24,6 +24,7 @@ import com.trazere.core.imperative.IteratorUtils;
 import com.trazere.core.imperative.Procedure;
 import com.trazere.core.lang.LangAccumulators;
 import com.trazere.core.util.Maybe;
+import com.trazere.core.util.Tuple2;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -496,6 +497,46 @@ public class CollectionUtils {
 	}
 	
 	// TODO: extractAll(...) ?
+	
+	/**
+	 * Composes pairs with the elements of the given collections.
+	 * <p>
+	 * The pairs are composed of an element of each collection according to their iteration order. The extra values of the longest collection are dropped when
+	 * the given collections don't contain the same number of elements.
+	 * 
+	 * @param <E1> Type of the first elements.
+	 * @param <E2> Type of the second elements.
+	 * @param <C> Type of the result collection.
+	 * @param collection1 Collection containing the first elements of the pairs.
+	 * @param collection2 Collection containing the second elements of the pairs.
+	 * @param resultFactory Factory of the pair collection.
+	 * @return A collection containing the pairs of elements.
+	 */
+	public static <E1, E2, C extends Collection<? super Tuple2<E1, E2>>> C zip(final Collection<? extends E1> collection1, final Collection<? extends E2> collection2, final CollectionFactory<? super Tuple2<E1, E2>, C> resultFactory) {
+		return IteratorUtils.drain(IteratorUtils.zip(collection1.iterator(), collection2.iterator()), resultFactory.build(Math.min(collection1.size(), collection2.size())));
+	}
+	
+	/**
+	 * Decomposes the pairs of elements of the given collection.
+	 *
+	 * @param <E1> Type of the first elements.
+	 * @param <E2> Type of the second elements.
+	 * @param <C1> Type of the first result collection.
+	 * @param <C2> Type of the second result collection.
+	 * @param collection Collection containing the pairs of elements.
+	 * @param resultFactory1 Factory of the first element collection.
+	 * @param resultFactory2 Factory of the second element collection.
+	 * @return A collection containing the first elements of the pairs and a collection containing the second elements of the pairs.
+	 */
+	public static <E1, E2, C1 extends Collection<? super E1>, C2 extends Collection<? super E2>> Tuple2<C1, C2> unzip(final Collection<? extends Tuple2<E1, E2>> collection, final CollectionFactory<? super E1, C1> resultFactory1, final CollectionFactory<? super E2, C2> resultFactory2) {
+		final C1 results1 = resultFactory1.build(collection.size());
+		final C2 results2 = resultFactory2.build(collection.size());
+		for (final Tuple2<E1, E2> pair : collection) {
+			results1.add(pair.get1());
+			results2.add(pair.get2());
+		}
+		return new Tuple2<>(results1, results2);
+	}
 	
 	private CollectionUtils() {
 		// Prevents instantiation.

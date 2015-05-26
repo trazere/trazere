@@ -443,6 +443,25 @@ public class IterableUtils {
 	
 	// TODO: extract(...) and extractAll(...) methods although they are redundant with flatMap(...) ? => optimized version for Maybe
 	
+	/**
+	 * Composes pairs with the elements provided by the given iterables.
+	 * <p>
+	 * The pairs are composed of an element provided by each iterable in order. The extra values of the longest iterable are dropped when the given iterables
+	 * don't provide the same number of elements.
+	 * 
+	 * @param <E1> Type of the first elements.
+	 * @param <E2> Type of the second elements.
+	 * @param iterable1 Iterable providing the first elements of the pairs.
+	 * @param iterable2 Iterable providing the second elements of the pairs.
+	 * @return An iterable providing the pairs of elements.
+	 */
+	public static <E1, E2> Iterable<Tuple2<E1, E2>> zip(final Iterable<? extends E1> iterable1, final Iterable<? extends E2> iterable2) {
+		assert null != iterable1;
+		assert null != iterable2;
+		
+		return () -> IteratorUtils.zip(iterable1.iterator(), iterable2.iterator());
+	}
+	
 	private IterableUtils() {
 		// Prevent instantiation.
 	}
