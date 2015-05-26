@@ -23,6 +23,7 @@ import com.trazere.core.imperative.Procedure;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 import com.trazere.core.util.Tuples;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.NoSuchElementException;
 
@@ -398,6 +399,46 @@ public class FeedUtils {
 	}
 	
 	/**
+	 * Groups the elements of the given feed into batches of the given size.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param <B> Type of the batch collections.
+	 * @param feed Feed containing the elements to group.
+	 * @param n Number of elements of each batch.
+	 * @param batchFactory Factory of the batch collections.
+	 * @return A feed of the groups of elements.
+	 */
+	public static <E, B extends Collection<? super E>> Feed<B> group(final Feed<? extends E> feed, final int n, final CollectionFactory<? super E, B> batchFactory) {
+		assert null != feed;
+		assert null != batchFactory;
+		
+		return new MemoizedFeed<B>() {
+			@Override
+			protected Maybe<? extends Tuple2<? extends B, ? extends Feed<? extends B>>> compute() {
+				Feed<? extends E> iterFeed = feed;
+				int iterN = n;
+				final B batch = batchFactory.build(n);
+				while (iterN > 0) {
+					final Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> maybeItem = iterFeed.evaluate();
+					if (maybeItem.isSome()) {
+						final Tuple2<? extends E, ? extends Feed<? extends E>> item = maybeItem.asSome().getValue();
+						batch.add(item.get1());
+						iterFeed = item.get2();
+						iterN -= 1;
+					} else {
+						break;
+					}
+				}
+				if (batch.isEmpty()) {
+					return Maybe.none();
+				} else {
+					return Maybe.some(new Tuple2<>(batch, group(iterFeed, n, batchFactory)));
+				}
+			}
+		};
+	}
+	
+	/**
 	 * Filters the elements of the given feed using the given filter.
 	 *
 	 * @param <E> Type of the elements.
@@ -468,13 +509,7 @@ public class FeedUtils {
 			
 			@Override
 			public Maybe<? extends Tuple2<? extends TE, ? extends Feed<? extends TE>>> evaluate() {
-				final Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> maybeItem = feed.evaluate();
-				if (maybeItem.isSome()) {
-					final Tuple2<? extends E, ? extends Feed<? extends E>> item = maybeItem.asSome().getValue();
-					return Maybe.some(new Tuple2<TE, Feed<TE>>(function.evaluate(item.get1()), map(item.get2(), function)));
-				} else {
-					return Maybe.none();
-				}
+				return feed.evaluate().map(item -> new Tuple2<>(function.evaluate(item.get1()), map(item.get2(), function)));
 			}
 		};
 	}
@@ -505,6 +540,35 @@ public class FeedUtils {
 		assert null != extractor;
 		
 		return flatMap(feed, element -> Feeds.fromMaybe(extractor.evaluate(element)));
+	}
+	
+	/**
+	 * Composes pairs with the elements of the given feeds.
+	 * <p>
+	 * The pairs are composed of an element of each feed according in order. The extra values of the longest feed are dropped when the given feeds don't contain
+	 * the same number of elements.
+	 * 
+	 * @param <E1> Type of the first elements.
+	 * @param <E2> Type of the second elements.
+	 * @param feed1 Feed containing the first elements of the pairs.
+	 * @param feed2 Feed containing the second elements of the pairs.
+	 * @return A feed of the pairs of elements.
+	 */
+	public static <E1, E2> Feed<Tuple2<E1, E2>> zip(final Feed<? extends E1> feed1, final Feed<? extends E2> feed2) {
+		return new MemoizedFeed<Tuple2<E1, E2>>() {
+			@Override
+			protected Maybe<? extends Tuple2<? extends Tuple2<E1, E2>, ? extends Feed<? extends Tuple2<E1, E2>>>> compute() {
+				final Maybe<? extends Tuple2<? extends E1, ? extends Feed<? extends E1>>> maybeItem1 = feed1.evaluate();
+				final Maybe<? extends Tuple2<? extends E2, ? extends Feed<? extends E2>>> maybeItem2 = feed2.evaluate();
+				if (maybeItem1.isSome() && maybeItem2.isSome()) {
+					final Tuple2<? extends E1, ? extends Feed<? extends E1>> item1 = maybeItem1.asSome().getValue();
+					final Tuple2<? extends E2, ? extends Feed<? extends E2>> item2 = maybeItem2.asSome().getValue();
+					return Maybe.some(new Tuple2<>(new Tuple2<>(item1.get1(), item2.get1()), zip(item1.get2(), item2.get2())));
+				} else {
+					return Maybe.none();
+				}
+			}
+		};
 	}
 	
 	private FeedUtils() {

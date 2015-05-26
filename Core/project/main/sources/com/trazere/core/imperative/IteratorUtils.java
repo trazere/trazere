@@ -931,6 +931,35 @@ public class IteratorUtils {
 		return flatMap(iterator, FunctionUtils.map2(extractor, IterableFunctions.iterator()));
 	}
 	
+	/**
+	 * Composes pairs with the elements provided by the given iterators.
+	 * <p>
+	 * The pairs are composed of an element provided by each iterator in order. The extra values of the longest iterator are dropped when the given iterators
+	 * don't provide the same number of elements.
+	 * 
+	 * @param <E1> Type of the first elements.
+	 * @param <E2> Type of the second elements.
+	 * @param iterator1 Iterator providing the first elements of the pairs.
+	 * @param iterator2 Iterator providing the second elements of the pairs.
+	 * @return An iterator providing the pairs of elements.
+	 */
+	public static <E1, E2> Iterator<Tuple2<E1, E2>> zip(final Iterator<? extends E1> iterator1, final Iterator<? extends E2> iterator2) {
+		assert null != iterator1;
+		assert null != iterator2;
+		
+		return new Iterator<Tuple2<E1, E2>>() {
+			@Override
+			public boolean hasNext() {
+				return iterator1.hasNext() && iterator2.hasNext();
+			}
+			
+			@Override
+			public Tuple2<E1, E2> next() {
+				return new Tuple2<>(iterator1.next(), iterator2.next());
+			}
+		};
+	}
+	
 	private IteratorUtils() {
 		// Prevent instantiation.
 	}
