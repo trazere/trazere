@@ -28,7 +28,7 @@ public class ClosureUtils {
 	 * @return The value of the closure.
 	 * @throws X When the evaluation of the closure fails.
 	 */
-	public static <T, X extends Exception> T synchronizedEvaluate(final Closure<T, X> closure)
+	public static <T, X extends Exception> T synchronizedEvaluate(final Closure<T, ? extends X> closure)
 	throws X {
 		assert null != closure;
 		

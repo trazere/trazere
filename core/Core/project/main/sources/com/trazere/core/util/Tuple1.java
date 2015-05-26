@@ -18,6 +18,7 @@ package com.trazere.core.util;
 import com.trazere.core.functional.Function;
 import com.trazere.core.lang.HashCode;
 import com.trazere.core.lang.ObjectUtils;
+import java.io.Serializable;
 
 /**
  * The {@link Tuple1} class implements a 1-tuple data type (single) that represents sequences of 1 element.
@@ -25,7 +26,9 @@ import com.trazere.core.lang.ObjectUtils;
  * @param <E1> Type of the first element.
  */
 public class Tuple1<E1>
-implements Field1<E1> {
+implements Field1<E1>, Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Instantiates a new 1-tuple.
 	 * 

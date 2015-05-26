@@ -21,6 +21,7 @@ import com.trazere.core.lang.ObjectUtils;
 import com.trazere.core.text.Describable;
 import com.trazere.core.text.Description;
 import com.trazere.core.text.TextUtils;
+import java.io.Serializable;
 
 // TODO: replace by Variant2 ?
 
@@ -34,7 +35,9 @@ import com.trazere.core.text.TextUtils;
  * @param <R> Type of the right value.
  */
 public abstract class Either<L, R>
-implements Describable {
+implements Serializable, Describable {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Builds a {@link Either} instance using the {@link Left} constructor.
 	 * 
@@ -71,6 +74,8 @@ implements Describable {
 	 */
 	public static final class Left<L, R>
 	extends Either<L, R> {
+		private static final long serialVersionUID = 1L;
+		
 		/**
 		 * Instantiates a new {@link Either} instance wrapping the given left value.
 		 * 
@@ -197,6 +202,8 @@ implements Describable {
 	 */
 	public static final class Right<L, R>
 	extends Either<L, R> {
+		private static final long serialVersionUID = 1L;
+		
 		/**
 		 * Instantiates a new {@link Either} instance wrapping the given right value.
 		 * 

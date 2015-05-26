@@ -160,7 +160,7 @@ public class CheckedIterators {
 	 * @param feed The feed.
 	 * @return The built iterator.
 	 */
-	public static <T, X extends Exception> CheckedIterator<T, X> fromFeed(final Feed<T, X> feed) {
+	public static <T, X extends Exception> CheckedIterator<T, X> fromFeed(final Feed<T, ? extends X> feed) {
 		assert null != feed;
 		
 		return new CheckedIterator<T, X>() {

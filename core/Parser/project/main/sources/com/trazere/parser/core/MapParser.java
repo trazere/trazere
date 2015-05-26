@@ -15,15 +15,15 @@
  */
 package com.trazere.parser.core;
 
+import com.trazere.core.functional.Function;
 import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.LangUtils;
+import com.trazere.core.lang.ObjectUtils;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserException;
-import com.trazere.util.function.Function1;
 
 public class MapParser<Token, SubResult, Result>
 extends Sequence1Parser<Token, SubResult, Result> {
-	public MapParser(final Parser<Token, ? extends SubResult> subParser, final Function1<? super SubResult, ? extends Result, ? extends ParserException> function, final String description) {
+	public MapParser(final Parser<Token, ? extends SubResult> subParser, final Function<? super SubResult, ? extends Result> function, final String description) {
 		super(subParser, description);
 		
 		// Checks.
@@ -35,7 +35,7 @@ extends Sequence1Parser<Token, SubResult, Result> {
 	
 	// Parser.
 	
-	protected final Function1<? super SubResult, ? extends Result, ? extends ParserException> _function;
+	protected final Function<? super SubResult, ? extends Result> _function;
 	
 	@Override
 	protected Result combine(final SubResult subResult)
@@ -60,7 +60,7 @@ extends Sequence1Parser<Token, SubResult, Result> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final MapParser<?, ?, ?> parser = (MapParser<?, ?, ?>) object;
-			return LangUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _function.equals(parser._function);
+			return ObjectUtils.safeEquals(_description, parser._description) && _subParser1.equals(parser._subParser1) && _function.equals(parser._function);
 		} else {
 			return false;
 		}

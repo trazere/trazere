@@ -120,6 +120,26 @@ public class LangFunctions {
 	
 	private static final Function<? extends Number, Double> DOUBLE_VALUE = Number::doubleValue;
 	
+	// Enums.
+	
+	/**
+	 * Builds a function that gets the name of enumeration entries.
+	 * 
+	 * @param <E> Type of the enumeration.
+	 * @return The built function.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <E extends Enum<E>> Function<E, String> name() {
+		return (Function<E, String>) NAME;
+	}
+	
+	private static final Function<? extends Enum<?>, String> NAME = new Function<Enum<?>, String>() {
+		@Override
+		public String evaluate(final Enum<?> value) {
+			return value.name();
+		}
+	};
+	
 	private LangFunctions() {
 		// Prevents instantiation.
 	}

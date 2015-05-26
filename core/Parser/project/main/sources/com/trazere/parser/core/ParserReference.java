@@ -15,13 +15,13 @@
  */
 package com.trazere.parser.core;
 
+import com.trazere.core.lang.InternalException;
+import com.trazere.core.reference.MutableReference;
+import com.trazere.core.reference.ReferenceNotSetException;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserState;
-import com.trazere.util.lang.InternalException;
-import com.trazere.util.reference.MutableReference;
-import com.trazere.util.reference.ReferenceNotSetException;
 
 // TODO: improve parser comparison to handle recursive parsers
 

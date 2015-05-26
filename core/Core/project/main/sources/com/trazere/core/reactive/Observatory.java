@@ -25,12 +25,19 @@ package com.trazere.core.reactive;
  */
 public interface Observatory<S, E> {
 	/**
-	 * Gets an observable which allows to subscribe to events routed by the reveiver observatory for the given subject.
+	 * Gets an observable that allows to subscribe to events routed by the reveiver observatory for the given subject.
 	 * 
 	 * @param subject The subject.
 	 * @return The observable.
 	 */
 	Observable<E> observe(S subject);
+	
+	/**
+	 * Gets an observable that allows to subscribe to all events routed by the reveiver observatory.
+	 * 
+	 * @return The observable.
+	 */
+	public Observable<E> observeAll();
 	
 	/**
 	 * Notifies the observers of the events routed by the receiver observatory for the given subject with the given event.

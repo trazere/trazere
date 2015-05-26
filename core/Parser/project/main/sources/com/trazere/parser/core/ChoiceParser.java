@@ -16,7 +16,7 @@
 package com.trazere.parser.core;
 
 import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.LangUtils;
+import com.trazere.core.lang.ObjectUtils;
 import com.trazere.parser.BaseParser;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
@@ -78,7 +78,7 @@ extends BaseParser<Token, Result> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final ChoiceParser<?, ?> parser = (ChoiceParser<?, ?>) object;
-			return LangUtils.safeEquals(_description, parser._description) && _subParsers.equals(parser._subParsers);
+			return ObjectUtils.safeEquals(_description, parser._description) && _subParsers.equals(parser._subParsers);
 		} else {
 			return false;
 		}

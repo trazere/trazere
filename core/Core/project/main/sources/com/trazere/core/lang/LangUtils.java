@@ -15,6 +15,9 @@
  */
 package com.trazere.core.lang;
 
+import com.trazere.core.functional.Function;
+import com.trazere.core.reference.MutableReference;
+import com.trazere.core.reference.Reference;
 
 /**
  * The {@link LangUtils} class provides various utilities regarding the Java language.
@@ -206,6 +209,21 @@ public class LangUtils {
 	 */
 	public static char safeUnbox(final Character value, final char nullReplacement) {
 		return null != value ? value.charValue() : nullReplacement;
+	}
+	
+	/**
+	 * Builds a recursive value using the given factory.
+	 * <p>
+	 * The factory is a function that takes a reference that will provide the built value. This reference must not be called during the evaluation of the
+	 * factory (because the value does not exist yet).
+	 * 
+	 * @param <T> Type of the value.
+	 * @param factory Factory that builds the value.
+	 * @return The built value.
+	 */
+	public static <T> T rec(final Function<? super Reference<T>, ? extends T> factory) {
+		final MutableReference<T> ref = new MutableReference<>();
+		return ref.set(factory.evaluate(ref));
 	}
 	
 	private LangUtils() {

@@ -18,6 +18,7 @@ package com.trazere.core.util;
 import com.trazere.core.functional.Function;
 import com.trazere.core.lang.HashCode;
 import com.trazere.core.lang.ObjectUtils;
+import java.io.Serializable;
 
 /**
  * The {@link Tuple8} class implements a 8-tuple (octuple) data type that represents sequences of 8 elements.
@@ -32,7 +33,9 @@ import com.trazere.core.lang.ObjectUtils;
  * @param <E8> Type of the eighth element.
  */
 public class Tuple8<E1, E2, E3, E4, E5, E6, E7, E8>
-implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Field5<E5>, Field6<E6>, Field7<E7>, Field8<E8> {
+implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Field5<E5>, Field6<E6>, Field7<E7>, Field8<E8>, Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Instantiates a new 8-tuple with the given elements.
 	 * 
