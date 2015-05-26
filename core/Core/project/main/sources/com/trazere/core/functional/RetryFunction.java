@@ -64,15 +64,13 @@ implements Function<A, Result<R>>, FailureHandler<R> {
 	 * 
 	 * @param <A> Type of the arguments.
 	 * @param <R> Type of the results.
-	 * @param <X> Type of the failure exceptions.
 	 * @param function Function to evaluate.
 	 * @param arg Argument to evaluate the function with.
 	 * @param failureFactory Factory of the failure.
 	 * @return The result.
-	 * @throws X When the evaluation fails repeatedly.
+	 * @throws RuntimeException When the evaluation fails repeatedly.
 	 */
-	public static <A, R, X extends Exception> R evaluate(final RetryFunction<A, R> function, final A arg, final ThrowableFactory<? extends X> failureFactory)
-	throws X {
+	public static <A, R> R evaluate(final RetryFunction<A, R> function, final A arg, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		return ResultUtils.get(function.evaluate(arg), failureFactory);
 	}
 }

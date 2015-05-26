@@ -65,10 +65,9 @@ implements Thunk<Result<T>>, FailureHandler<T> {
 	 * @param thunk Thunk to evaluate.
 	 * @param failureFactory Factory of the failure.
 	 * @return The value of the thunk.
-	 * @throws X When the evaluation fails repeatedly.
+	 * @throws RuntimeException When the evaluation fails repeatedly.
 	 */
-	public static <T, X extends Exception> T evaluate(final RetryThunk<T> thunk, final ThrowableFactory<? extends X> failureFactory)
-	throws X {
+	public static <T> T evaluate(final RetryThunk<T> thunk, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		return ResultUtils.get(thunk.evaluate(), failureFactory);
 	}
 }
