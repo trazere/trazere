@@ -422,7 +422,7 @@ public class MapUtils {
 	 * @return A map containing the taken bindings.
 	 */
 	public static <K, V, M extends Map<? super K, ? super V>> M take(final Map<? extends K, ? extends V> map, final int n, final MapFactory<? super K, ? super V, M> resultFactory) {
-		return IteratorUtils.drain(IteratorUtils.take(MapUtils.<K, V>bindings(map).iterator(), n), resultFactory.build(n));
+		return IteratorUtils.drain(IteratorUtils.take(bindings(map).iterator(), n), resultFactory.build(n));
 	}
 	
 	/**
@@ -437,7 +437,7 @@ public class MapUtils {
 	 * @return A map containing the remaining bindings.
 	 */
 	public static <K, V, M extends Map<? super K, ? super V>> M drop(final Map<? extends K, ? extends V> map, final int n, final MapFactory<? super K, ? super V, M> resultFactory) {
-		return IteratorUtils.drain(IteratorUtils.drop(MapUtils.<K, V>bindings(map).iterator(), n), resultFactory.build(Math.max(0, map.size() - n)));
+		return IteratorUtils.drain(IteratorUtils.drop(bindings(map).iterator(), n), resultFactory.build(Math.max(0, map.size() - n)));
 	}
 	
 	/**
@@ -452,6 +452,8 @@ public class MapUtils {
 	 * @return A map containing the filtered bindings.
 	 */
 	public static <K, V, M extends Map<? super K, ? super V>> M filter(final Map<? extends K, ? extends V> map, final Predicate2<? super K, ? super V> filter, final MapFactory<? super K, ? super V, M> resultFactory) {
+		//		return IteratorUtils.drain(IteratorUtils.filter(bindings(map).iterator(), filter), resultFactory.build());
+		
 		final M result = resultFactory.build();
 		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
 			final K key = entry.getKey();
@@ -476,6 +478,8 @@ public class MapUtils {
 	 * @return A map containing the transformed bindings.
 	 */
 	public static <K, V, TV, M extends Map<? super K, ? super TV>> M map(final Map<? extends K, ? extends V> map, final Function2<? super K, ? super V, ? extends TV> function, final MapFactory<? super K, ? super TV, M> resultFactory) {
+		//		return IteratorUtils.drain(IteratorUtils.map(bindings(map).iterator(), (k, v) -> new Tuple2<K, TV>(k, function.evaluate(k, v))), resultFactory.build(map.size()));
+		
 		final M results = resultFactory.build(map.size());
 		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
 			final K key = entry.getKey();
@@ -497,6 +501,8 @@ public class MapUtils {
 	 * @return A map containing the extracted bindings.
 	 */
 	public static <K, V, EV, M extends Map<? super K, ? super EV>> M extract(final Map<? extends K, ? extends V> map, final Function2<? super K, ? super V, ? extends Maybe<? extends EV>> extractor, final MapFactory<? super K, ? super EV, M> resultFactory) {
+		//		return IteratorUtils.drain(IteratorUtils.extract(bindings(map).iterator(), (k, v) -> extractor.evaluate(k, v).map(ev -> new Tuple2<K, EV>(k, ev))), resultFactory.build());
+		
 		final M results = resultFactory.build(map.size());
 		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
 			final K key = entry.getKey();

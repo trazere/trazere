@@ -421,6 +421,22 @@ public class CollectionUtils {
 	}
 	
 	/**
+	 * Groups the elements of the given collection into batches of the given size.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param <B> Type of the batch collections.
+	 * @param <C> Type of the result collection.
+	 * @param collection Collection containing the elements to group.
+	 * @param n Number of elements of each batch.
+	 * @param batchFactory Factory of the batch collections.
+	 * @param resultFactory Factory of the result collection.
+	 * @return A collection of the groups of elements.
+	 */
+	public static <E, B extends Collection<? super E>, C extends Collection<? super B>> C group(final Collection<? extends E> collection, final int n, final CollectionFactory<? super E, B> batchFactory, final CollectionFactory<? super B, C> resultFactory) {
+		return IteratorUtils.drain(IteratorUtils.group(collection.iterator(), n, batchFactory), resultFactory.build((collection.size() + n - 1) / n));
+	}
+	
+	/**
 	 * Filters the elements of the given collection using the given filter.
 	 *
 	 * @param <E> Type of the elements.
@@ -431,13 +447,7 @@ public class CollectionUtils {
 	 * @return A collection containing the filtered elements.
 	 */
 	public static <E, C extends Collection<? super E>> C filter(final Collection<? extends E> collection, final Predicate<? super E> filter, final CollectionFactory<? super E, C> resultFactory) {
-		final C results = resultFactory.build();
-		for (final E element : collection) {
-			if (filter.evaluate(element)) {
-				results.add(element);
-			}
-		}
-		return results;
+		return IteratorUtils.drain(IteratorUtils.filter(collection.iterator(), filter), resultFactory.build());
 	}
 	
 	/**
@@ -452,11 +462,7 @@ public class CollectionUtils {
 	 * @return A collection containing the transformed elements.
 	 */
 	public static <E, TE, C extends Collection<? super TE>> C map(final Collection<? extends E> collection, final Function<? super E, ? extends TE> function, final CollectionFactory<? super TE, C> resultFactory) {
-		final C results = resultFactory.build(collection.size());
-		for (final E element : collection) {
-			results.add(function.evaluate(element));
-		}
-		return results;
+		return IteratorUtils.drain(IteratorUtils.map(collection.iterator(), function), resultFactory.build(collection.size()));
 	}
 	
 	/**
@@ -471,11 +477,7 @@ public class CollectionUtils {
 	 * @return A collection containing the flatten, transformed elements.
 	 */
 	public static <E, TE, C extends Collection<? super TE>> C flatMap(final Collection<? extends E> collection, final Function<? super E, ? extends Collection<? extends TE>> function, final CollectionFactory<? super TE, C> resultFactory) {
-		final C results = resultFactory.build();
-		for (final E element : collection) {
-			addAll(results, function.evaluate(element));
-		}
-		return results;
+		return IteratorUtils.drain(IteratorUtils.flatMap(collection.iterator(), arg -> function.evaluate(arg).iterator()), resultFactory.build());
 	}
 	
 	/**
@@ -490,15 +492,10 @@ public class CollectionUtils {
 	 * @return A collection containing the extracted elements.
 	 */
 	public static <E, EE, C extends Collection<? super EE>> C extract(final Collection<? extends E> collection, final Function<? super E, ? extends Maybe<? extends EE>> extractor, final CollectionFactory<? super EE, C> resultFactory) {
-		final C results = resultFactory.build();
-		for (final E element : collection) {
-			final Maybe<? extends EE> extractedElement = extractor.evaluate(element);
-			if (extractedElement.isSome()) {
-				results.add(extractedElement.asSome().getValue());
-			}
-		}
-		return results;
+		return IteratorUtils.drain(IteratorUtils.extract(collection.iterator(), extractor), resultFactory.build());
 	}
+	
+	// TODO: extractAll(...) ?
 	
 	private CollectionUtils() {
 		// Prevents instantiation.
