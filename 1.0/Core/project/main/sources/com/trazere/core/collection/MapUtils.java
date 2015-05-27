@@ -78,6 +78,8 @@ public class MapUtils {
 		return null != value || map.containsKey(key) ? Maybe.some(value) : Maybe.<V>none();
 	}
 	
+	// TODO: rename to getOptional ?
+	// TODO: add a version that uses a thunk as default value
 	/**
 	 * Gets the optional value associated to the given key in the given map.
 	 *

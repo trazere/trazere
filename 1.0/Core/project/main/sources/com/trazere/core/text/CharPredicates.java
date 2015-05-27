@@ -15,7 +15,7 @@
  */
 package com.trazere.core.text;
 
-import com.trazere.core.math.IntSequence;
+import com.trazere.core.lang.FiniteIntSequence;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -192,7 +192,7 @@ public class CharPredicates {
 	 */
 	public static CharPredicate values(final CharSequence s) {
 		final Set<Character> cs = new HashSet<>();
-		for (final int i : new IntSequence(0, s.length())) {
+		for (final int i : new FiniteIntSequence(0, s.length())) {
 			cs.add(s.charAt(i));
 		}
 		return values(cs);
@@ -203,7 +203,7 @@ public class CharPredicates {
 	 * 
 	 * @param start Starting character of the range (included).
 	 * @param end Ending character of the range (included).
-	 * @return
+	 * @return The built predicate.
 	 */
 	public static CharPredicate range(final char start, final char end) {
 		return c -> c >= start && c <= end;

@@ -18,7 +18,7 @@ package com.trazere.core.text;
 import com.trazere.core.collection.Feed;
 import com.trazere.core.functional.Function;
 import com.trazere.core.imperative.IntCounter;
-import com.trazere.core.math.IntSequence;
+import com.trazere.core.lang.FiniteIntSequence;
 import com.trazere.core.util.Maybe;
 import java.text.DateFormat;
 import java.text.NumberFormat;
@@ -58,7 +58,7 @@ public class TextUtils {
 	 * @return <code>true</code> when the sequence contains the character, <code>false</code> otherwise.
 	 */
 	public static boolean contains(final CharSequence s, final char c) {
-		for (final int i : new IntSequence(0, s.length())) {
+		for (final int i : new FiniteIntSequence(0, s.length())) {
 			if (c == s.charAt(i)) {
 				return true;
 			}
@@ -74,7 +74,7 @@ public class TextUtils {
 	 * @return <code>true</code> when any character of the sequence is accepted by the filter, <code>false</code> otherwise.
 	 */
 	public static boolean contains(final CharSequence s, final CharPredicate filter) {
-		for (final int i : new IntSequence(0, s.length())) {
+		for (final int i : new FiniteIntSequence(0, s.length())) {
 			if (filter.evaluate(s.charAt(i))) {
 				return true;
 			}
@@ -90,7 +90,7 @@ public class TextUtils {
 	 * @return <code>true</code> when the sequence contains the sub-sequence, <code>false</code> otherwise.
 	 */
 	public static boolean contains(final CharSequence s, final CharSequence sub) {
-		for (final int i : new IntSequence(0, s.length())) {
+		for (final int i : new FiniteIntSequence(0, s.length())) {
 			if (equals(s, i, sub, 0, sub.length())) {
 				return true;
 			}
@@ -106,7 +106,7 @@ public class TextUtils {
 	 * @return <code>true</code> when all characters of the sequence is accepted by the filter, <code>false</code> otherwise.
 	 */
 	public static boolean matches(final CharSequence s, final CharPredicate filter) {
-		for (final int i : new IntSequence(0, s.length())) {
+		for (final int i : new FiniteIntSequence(0, s.length())) {
 			if (!filter.evaluate(s.charAt(i))) {
 				return false;
 			}
@@ -134,7 +134,7 @@ public class TextUtils {
 	 * @return The index of the first accepted character, or <code>-1</code> when no characters is accepted by the filter.
 	 */
 	public static int indexOf(final CharSequence s, final char c, final int offset) {
-		for (final int i : new IntSequence(offset, s.length())) {
+		for (final int i : new FiniteIntSequence(offset, s.length())) {
 			if (c == s.charAt(i)) {
 				return i;
 			}
@@ -162,7 +162,7 @@ public class TextUtils {
 	 * @return The index of the first accepted character, or <code>-1</code> when no characters is accepted by the filter.
 	 */
 	public static int indexOf(final CharSequence s, final CharPredicate filter, final int offset) {
-		for (final int i : new IntSequence(offset, s.length())) {
+		for (final int i : new FiniteIntSequence(offset, s.length())) {
 			if (filter.evaluate(s.charAt(i))) {
 				return i;
 			}
@@ -190,7 +190,7 @@ public class TextUtils {
 	 * @return The index of the first accepted character, or <code>-1</code> when no characters is accepted by the filter.
 	 */
 	public static int indexOf(final CharSequence s, final CharSequence sub, final int offset) {
-		for (final int i : new IntSequence(0, s.length())) {
+		for (final int i : new FiniteIntSequence(0, s.length())) {
 			if (equals(s, i, sub, 0, sub.length())) {
 				return i;
 			}
@@ -209,7 +209,7 @@ public class TextUtils {
 	 */
 	public static int count(final CharSequence s, final CharSequence sub) {
 		final IntCounter count = new IntCounter();
-		for (final int i : new IntSequence(0, Math.max(0, s.length() - sub.length()))) {
+		for (final int i : new FiniteIntSequence(0, Math.max(0, s.length() - sub.length()))) {
 			if (equals(s, i, sub, 0, sub.length())) {
 				count.inc();
 			}
@@ -218,7 +218,7 @@ public class TextUtils {
 	}
 	
 	private static boolean equals(final CharSequence s1, final int offset1, final CharSequence s2, final int offset2, final int n) {
-		for (final int i : new IntSequence(0, n)) {
+		for (final int i : new FiniteIntSequence(0, n)) {
 			if (s1.charAt(offset1 + i) != s2.charAt(offset2 + i)) {
 				return false;
 			}
@@ -235,7 +235,7 @@ public class TextUtils {
 	 */
 	public static CharSequence filter(final CharSequence s, final CharPredicate filter) {
 		final StringBuilder result = new StringBuilder();
-		for (final int i : new IntSequence(0, s.length())) {
+		for (final int i : new FiniteIntSequence(0, s.length())) {
 			final char c = s.charAt(i);
 			if (filter.evaluate(c)) {
 				result.append(c);
@@ -441,7 +441,7 @@ public class TextUtils {
 	 */
 	public static CharSequence toHex(final byte[] bytes) {
 		final StringBuilder builder = new StringBuilder();
-		for (final int i : new IntSequence(0, bytes.length)) {
+		for (final int i : new FiniteIntSequence(0, bytes.length)) {
 			final byte b = bytes[i];
 			builder.append(HEX_DIGITS[b >> 4 & 0xF]);
 			builder.append(HEX_DIGITS[b & 0xF]);
