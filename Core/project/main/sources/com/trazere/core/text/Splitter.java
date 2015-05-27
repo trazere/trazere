@@ -18,7 +18,7 @@ package com.trazere.core.text;
 import com.trazere.core.collection.Feed;
 import com.trazere.core.collection.FeedUtils;
 import com.trazere.core.collection.Feeds;
-import com.trazere.core.math.IntSequence;
+import com.trazere.core.lang.FiniteIntSequence;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 
@@ -51,7 +51,7 @@ public abstract class Splitter {
 	 * @param offset Index from which the search should start.
 	 * @return The range of the delimiter, or nothing when no delimiters are found.
 	 */
-	protected abstract Maybe<IntSequence> findDelimiter(final CharSequence s, final int offset);
+	protected abstract Maybe<FiniteIntSequence> findDelimiter(final CharSequence s, final int offset);
 	
 	// Include delimiters.
 	
@@ -134,13 +134,13 @@ public abstract class Splitter {
 		return new Feed<CharSequence>() {
 			@Override
 			public Maybe<? extends Tuple2<? extends CharSequence, ? extends Feed<? extends CharSequence>>> evaluate() {
-				final Maybe<IntSequence> maybeDelimiterRange = findDelimiter(s, offset);
+				final Maybe<FiniteIntSequence> maybeDelimiterRange = findDelimiter(s, offset);
 				if (maybeDelimiterRange.isSome()) {
-					final IntSequence delimiterRange = maybeDelimiterRange.asSome().getValue();
-					final CharSequence token = s.subSequence(offset, delimiterRange.getFrom());
-					final Feed<CharSequence> tail = rawSplit(s, delimiterRange.getTo());
+					final FiniteIntSequence delimiterRange = maybeDelimiterRange.asSome().getValue();
+					final CharSequence token = s.subSequence(offset, delimiterRange.getStart());
+					final Feed<CharSequence> tail = rawSplit(s, delimiterRange.getEnd());
 					if (_includeDelimiters) {
-						final CharSequence delimiter = s.subSequence(delimiterRange.getFrom(), delimiterRange.getTo());
+						final CharSequence delimiter = s.subSequence(delimiterRange.getStart(), delimiterRange.getEnd());
 						return Maybe.some(new Tuple2<>(token, Feeds.feed(delimiter, tail)));
 					} else {
 						return Maybe.some(new Tuple2<>(token, tail));

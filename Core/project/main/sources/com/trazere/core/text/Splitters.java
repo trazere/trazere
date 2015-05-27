@@ -15,7 +15,7 @@
  */
 package com.trazere.core.text;
 
-import com.trazere.core.math.IntSequence;
+import com.trazere.core.lang.FiniteIntSequence;
 import com.trazere.core.util.Maybe;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -36,10 +36,10 @@ public class Splitters {
 	public static Splitter delimiter(final char delimiter, final boolean includeDelimiters, final Maybe<? extends CharPredicate> trimFilter, final boolean ignoreEmpty) {
 		return new Splitter(includeDelimiters, trimFilter, ignoreEmpty) {
 			@Override
-			protected Maybe<IntSequence> findDelimiter(final CharSequence s, final int offset) {
+			protected Maybe<FiniteIntSequence> findDelimiter(final CharSequence s, final int offset) {
 				final int index = TextUtils.indexOf(s, delimiter);
 				if (index >= 0) {
-					return Maybe.some(new IntSequence(index, index + 1));
+					return Maybe.some(new FiniteIntSequence(index, index + 1));
 				} else {
 					return Maybe.none();
 				}
@@ -61,10 +61,10 @@ public class Splitters {
 		
 		return new Splitter(includeDelimiters, trimFilter, ignoreEmpty) {
 			@Override
-			protected Maybe<IntSequence> findDelimiter(final CharSequence s, final int offset) {
+			protected Maybe<FiniteIntSequence> findDelimiter(final CharSequence s, final int offset) {
 				final int index = TextUtils.indexOf(s, delimiter);
 				if (index >= 0) {
-					return Maybe.some(new IntSequence(index, index + 1));
+					return Maybe.some(new FiniteIntSequence(index, index + 1));
 				} else {
 					return Maybe.none();
 				}
@@ -87,10 +87,10 @@ public class Splitters {
 		
 		return new Splitter(includeDelimiters, trimFilter, ignoreEmpty) {
 			@Override
-			protected Maybe<IntSequence> findDelimiter(final CharSequence s, final int offset) {
+			protected Maybe<FiniteIntSequence> findDelimiter(final CharSequence s, final int offset) {
 				final int index = TextUtils.indexOf(s, delimiter);
 				if (index >= 0) {
-					return Maybe.some(new IntSequence(index, index + delimiter.length()));
+					return Maybe.some(new FiniteIntSequence(index, index + delimiter.length()));
 				} else {
 					return Maybe.none();
 				}
@@ -112,10 +112,10 @@ public class Splitters {
 		
 		return new Splitter(includeDelimiters, trimFilter, ignoreEmpty) {
 			@Override
-			protected Maybe<IntSequence> findDelimiter(final CharSequence s, final int offset) {
+			protected Maybe<FiniteIntSequence> findDelimiter(final CharSequence s, final int offset) {
 				final Matcher matcher = delimiter.matcher(s);
 				if (matcher.find(offset)) {
-					return Maybe.some(new IntSequence(matcher.start(), matcher.end()));
+					return Maybe.some(new FiniteIntSequence(matcher.start(), matcher.end()));
 				} else {
 					return Maybe.none();
 				}
@@ -138,10 +138,10 @@ public class Splitters {
 		
 		return new Splitter(false, trimFilter, ignoreEmpty) {
 			@Override
-			protected Maybe<IntSequence> findDelimiter(final CharSequence s, final int offset) {
+			protected Maybe<FiniteIntSequence> findDelimiter(final CharSequence s, final int offset) {
 				final int split = offset + n;
 				if (split < s.length()) { // Note: no trailing delimiter when the lenght of last token is n
-					return Maybe.some(new IntSequence(split, split));
+					return Maybe.some(new FiniteIntSequence(split, split));
 				} else {
 					return Maybe.none();
 				}
