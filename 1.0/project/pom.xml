@@ -4,7 +4,7 @@
 
 	<groupId>com.trazere</groupId>
 	<artifactId>root</artifactId>
-	<version>0.0-SNAPSHOT</version>
+	<version>1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Trazere</name>
 	<description>Trazere libraries.</description>
