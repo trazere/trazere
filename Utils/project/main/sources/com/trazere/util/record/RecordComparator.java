@@ -15,11 +15,11 @@
  */
 package com.trazere.util.record;
 
-import com.trazere.core.text.Describable;
-import com.trazere.core.text.Description;
-import com.trazere.core.text.TextUtils;
 import com.trazere.util.lang.MapComparator;
 import com.trazere.util.lang.WrapException;
+import com.trazere.util.text.Describable;
+import com.trazere.util.text.Description;
+import com.trazere.util.text.TextUtils;
 import java.util.Comparator;
 
 /**
@@ -75,11 +75,11 @@ implements Describable {
 	
 	@Override
 	public String toString() {
-		return TextUtils.description(this);
+		return TextUtils.computeDescription(this);
 	}
 	
 	@Override
-	public void appendDescription(final Description description) {
+	public void fillDescription(final Description description) {
 		description.append("Key", _key);
 	}
 }

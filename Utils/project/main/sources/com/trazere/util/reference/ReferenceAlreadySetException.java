@@ -15,7 +15,8 @@
  */
 package com.trazere.util.reference;
 
-import com.trazere.core.lang.ThrowableFactory;
+import com.trazere.util.lang.BaseThrowableFactory;
+import com.trazere.util.lang.ThrowableFactory;
 
 /**
  * {@link ReferenceAlreadySetException} exceptions are thrown when trying to set some reference which has already been set.
@@ -65,7 +66,7 @@ extends ReferenceException {
 	
 	/** Factory of {@link ReferenceAlreadySetException}. */
 	@SuppressWarnings("hiding")
-	public static final ThrowableFactory<ReferenceAlreadySetException> FACTORY = new ThrowableFactory<ReferenceAlreadySetException>() {
+	public static final ThrowableFactory<ReferenceAlreadySetException> FACTORY = new BaseThrowableFactory<ReferenceAlreadySetException>() {
 		@Override
 		public ReferenceAlreadySetException build() {
 			return new ReferenceAlreadySetException();

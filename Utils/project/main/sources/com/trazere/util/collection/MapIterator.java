@@ -15,28 +15,21 @@
  */
 package com.trazere.util.collection;
 
-import com.trazere.util.type.Maybe;
+import java.util.Iterator;
 
 /**
- * The {@link MapIterator} class implements iterator combinators that transform their values.
+ * The {@link MapIterator} abstract class provides iterator combinators which transform their values.
  * 
  * @param <T> Type of the values of the feed.
  * @param <R> Type of the extracted values.
  */
 public abstract class MapIterator<T, R>
-extends ExtractIterator<T, R> {
+extends CheckedMapIterator<T, R, RuntimeException>
+implements Iterator<R> {
 	// Iterator.
 	
 	@Override
-	protected Maybe<? extends R> extract(final T value) {
-		return Maybe.some(map(value));
+	public void remove() {
+		throw new UnsupportedOperationException();
 	}
-	
-	/**
-	 * Transform the given value.
-	 * 
-	 * @param value The value to transform. May be <code>null</code>.
-	 * @return The transformed value.
-	 */
-	protected abstract R map(final T value);
 }

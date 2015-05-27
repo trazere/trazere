@@ -23,7 +23,6 @@ import java.util.NoSuchElementException;
  * @param <T> Type of the values.
  * @param <X> Type of the exceptions.
  */
-@Deprecated
 public interface CheckedIterator<T, X extends Exception> {
 	/**
 	 * Indicates whether the receiver iterator contains another value.

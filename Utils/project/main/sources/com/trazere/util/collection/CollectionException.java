@@ -15,7 +15,8 @@
  */
 package com.trazere.util.collection;
 
-import com.trazere.core.lang.ThrowableFactory;
+import com.trazere.util.lang.BaseThrowableFactory;
+import com.trazere.util.lang.ThrowableFactory;
 
 /**
  * {@link CollectionException} exceptions are thrown when collection related errors occur.
@@ -60,7 +61,7 @@ extends Exception {
 	}
 	
 	/** Factory of {@link CollectionException}. */
-	public static final ThrowableFactory<CollectionException> FACTORY = new ThrowableFactory<CollectionException>() {
+	public static final ThrowableFactory<CollectionException> FACTORY = new BaseThrowableFactory<CollectionException>() {
 		@Override
 		public CollectionException build() {
 			return new CollectionException();

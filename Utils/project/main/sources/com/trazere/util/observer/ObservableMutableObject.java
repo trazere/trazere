@@ -15,9 +15,9 @@
  */
 package com.trazere.util.observer;
 
-import com.trazere.core.lang.MutableObject;
-import com.trazere.core.lang.ObjectUtils;
 import com.trazere.util.function.Predicate1;
+import com.trazere.util.lang.LangUtils;
+import com.trazere.util.lang.MutableObject;
 import com.trazere.util.type.Tuple2;
 
 /**
@@ -46,7 +46,7 @@ implements ObservableValue<T> {
 		final V result = super.set(value);
 		
 		// Notify.
-		if (!ObjectUtils.safeEquals(currentValue, value)) {
+		if (!LangUtils.safeEquals(currentValue, value)) {
 			_observable.notify(_value);
 		}
 		

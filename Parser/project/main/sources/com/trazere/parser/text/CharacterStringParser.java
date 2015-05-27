@@ -15,15 +15,15 @@
  */
 package com.trazere.parser.text;
 
-import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.MutableBoolean;
-import com.trazere.core.lang.ObjectUtils;
 import com.trazere.parser.BaseParser;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserHandler;
 import com.trazere.parser.ParserState;
+import com.trazere.util.lang.HashCode;
+import com.trazere.util.lang.LangUtils;
+import com.trazere.util.lang.MutableBoolean;
 
 /**
  * DOCME
@@ -104,7 +104,7 @@ extends BaseParser<Character, String> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final CharacterStringParser parser = (CharacterStringParser) object;
-			return ObjectUtils.safeEquals(_description, parser._description) && _characterParser.equals(parser._characterParser) && _empty == parser._empty;
+			return LangUtils.safeEquals(_description, parser._description) && _characterParser.equals(parser._characterParser) && _empty == parser._empty;
 		} else {
 			return false;
 		}

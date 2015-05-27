@@ -15,9 +15,9 @@
  */
 package com.trazere.util.collection;
 
-import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.MutableBoolean;
-import com.trazere.core.lang.MutableInt;
+import com.trazere.util.lang.HashCode;
+import com.trazere.util.lang.MutableBoolean;
+import com.trazere.util.lang.MutableInt;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;

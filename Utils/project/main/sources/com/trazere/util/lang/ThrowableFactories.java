@@ -15,14 +15,12 @@
  */
 package com.trazere.util.lang;
 
-import com.trazere.core.lang.ThrowableFactory;
-
 /**
  * The {@link ThrowableFactories} class provides various throwable factories.
  */
 public class ThrowableFactories {
 	/** Factory of {@link Exception} instances. */
-	public static final ThrowableFactory<Exception> EXCEPTION = new ThrowableFactory<Exception>() {
+	public static final ThrowableFactory<Exception> EXCEPTION = new BaseThrowableFactory<Exception>() {
 		@Override
 		public Exception build() {
 			return new Exception();
@@ -45,7 +43,7 @@ public class ThrowableFactories {
 	};
 	
 	/** Factory of {@link RuntimeException} instances. */
-	public static final ThrowableFactory<RuntimeException> RUNTIME_EXCEPTION = new ThrowableFactory<RuntimeException>() {
+	public static final ThrowableFactory<RuntimeException> RUNTIME_EXCEPTION = new BaseThrowableFactory<RuntimeException>() {
 		@Override
 		public RuntimeException build() {
 			return new RuntimeException();

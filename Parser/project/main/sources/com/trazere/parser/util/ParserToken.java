@@ -15,11 +15,12 @@
  */
 package com.trazere.parser.util;
 
-import com.trazere.core.functional.Thunk;
+import com.trazere.util.function.Function0;
 
-public interface ParserToken<R, V>
-extends Thunk<V> {
+public interface ParserToken<R, V, X extends Exception>
+extends Function0<V, X> {
 	public R getRepresentation();
 	
-	public V parse();
+	public V parse()
+	throws X;
 }

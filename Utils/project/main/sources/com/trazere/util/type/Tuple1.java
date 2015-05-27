@@ -15,22 +15,16 @@
  */
 package com.trazere.util.type;
 
-import com.trazere.core.lang.ComparableUtils;
-import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.ObjectUtils;
-import com.trazere.core.util.FieldFunctions;
-import com.trazere.core.util.TupleComparators;
-import com.trazere.core.util.TupleFunctions;
 import com.trazere.util.function.Function1;
+import com.trazere.util.lang.HashCode;
+import com.trazere.util.lang.LangUtils;
 import java.io.Serializable;
 
 /**
  * The {@link Tuple1} class represents a 1-tuple data type which stores sequences of 1 value.
  * 
  * @param <T1> Type of the first value.
- * @deprecated Use {@link com.trazere.core.util.Tuple1}.
  */
-@Deprecated
 public class Tuple1<T1>
 implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -52,9 +46,7 @@ implements Serializable {
 	 * @param <T1> Type of the first value.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
-	 * @deprecated Use {@link TupleFunctions#tuple1()}.
 	 */
-	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T1, X extends Exception> Function1<T1, Tuple1<T1>, X> buildFunction() {
 		return (Function1<T1, Tuple1<T1>, X>) _BUILD_FUNCTION;
@@ -86,9 +78,7 @@ implements Serializable {
 	 * Gets the first value of the receiver tuple.
 	 * 
 	 * @return The value. May be <code>null</code>.
-	 * @deprecated Use {@link com.trazere.core.util.Tuple1#get1()}.
 	 */
-	@Deprecated
 	public T1 getFirst() {
 		return _first;
 	}
@@ -99,9 +89,7 @@ implements Serializable {
 	 * @param <T1> Type of the first values of the tuples.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
-	 * @deprecated Use {@link FieldFunctions#get1()}.
 	 */
-	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T1, X extends Exception> Function1<Tuple1<? extends T1>, T1, X> getFirstFunction() {
 		return (Function1<Tuple1<? extends T1>, T1, X>) _GET_FIRST_FUNCTION;
@@ -126,15 +114,13 @@ implements Serializable {
 	 * @param tuple2 The second tuple.
 	 * @return The result of the comparison as defined by the {@link Comparable#compareTo(Object)} method.
 	 * @see Comparable#compareTo(Object)
-	 * @deprecated Use {@link TupleComparators#tuple1(java.util.Comparator)}.
 	 */
-	@Deprecated
 	public static <T1 extends Comparable<T1>> int compare(final Tuple1<T1> tuple1, final Tuple1<T1> tuple2) {
 		assert null != tuple1;
 		assert null != tuple2;
 		
 		// Compare.
-		return ComparableUtils.safeCompareTo(tuple1._first, tuple2._first);
+		return LangUtils.safeCompare(tuple1._first, tuple2._first);
 	}
 	
 	// Object.
@@ -152,7 +138,7 @@ implements Serializable {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final Tuple1<?> tuple = (Tuple1<?>) object;
-			return ObjectUtils.safeEquals(_first, tuple._first);
+			return LangUtils.safeEquals(_first, tuple._first);
 		} else {
 			return false;
 		}

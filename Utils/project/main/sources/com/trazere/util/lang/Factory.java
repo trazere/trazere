@@ -22,9 +22,7 @@ import com.trazere.util.function.Function0;
  * 
  * @param <T> Type of the built values.
  * @param <X> Type of the exceptions.
- * @deprecated Use {@link com.trazere.core.design.Factory}.
  */
-@Deprecated
 public interface Factory<T, X extends Exception>
 extends Function0<T, X> {
 	/**

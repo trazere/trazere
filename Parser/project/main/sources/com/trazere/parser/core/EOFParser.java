@@ -15,13 +15,13 @@
  */
 package com.trazere.parser.core;
 
-import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.ObjectUtils;
 import com.trazere.parser.BaseParser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserContinuation;
 import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserState;
+import com.trazere.util.lang.HashCode;
+import com.trazere.util.lang.LangUtils;
 
 public class EOFParser<Token, Result>
 extends BaseParser<Token, Result> {
@@ -70,7 +70,7 @@ extends BaseParser<Token, Result> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final EOFParser<?, ?> parser = (EOFParser<?, ?>) object;
-			return ObjectUtils.safeEquals(_description, parser._description);
+			return LangUtils.safeEquals(_description, parser._description);
 		} else {
 			return false;
 		}

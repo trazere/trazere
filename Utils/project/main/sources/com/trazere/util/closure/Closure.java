@@ -15,7 +15,6 @@
  */
 package com.trazere.util.closure;
 
-import com.trazere.core.functional.MemoizedThunk;
 import com.trazere.util.function.Function0;
 import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Maybe.None;
@@ -30,9 +29,7 @@ import com.trazere.util.type.Maybe.Some;
  * 
  * @param <T> Type of the value.
  * @param <X> Type of the exceptions.
- * @deprecated Use {@link MemoizedThunk}.
  */
-@Deprecated
 public interface Closure<T, X extends Exception>
 extends Function0<T, X> {
 	/**

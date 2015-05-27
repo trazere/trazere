@@ -16,13 +16,15 @@
 package com.trazere.util.collection;
 
 import com.trazere.util.feed.Feed;
+import com.trazere.util.function.Function1;
+import com.trazere.util.function.Predicate1;
+import com.trazere.util.type.Maybe;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
  * The {@link CheckedIterators} class provides various factories of checked iterators.
  */
-@Deprecated
 public class CheckedIterators {
 	/**
 	 * Builds a checked iterator over no values.
@@ -120,6 +122,20 @@ public class CheckedIterators {
 	 * @param <X> Type of the exceptions.
 	 * @param collection The collection.
 	 * @return The built iterator.
+	 * @deprecated Use {@link #fromIterable(Iterable)}
+	 */
+	@Deprecated
+	public static <V, X extends Exception> CheckedIterator<V, X> fromCollection(final Iterable<? extends V> collection) {
+		return fromIterable(collection);
+	}
+	
+	/**
+	 * Builds a checked iterator over the values of the given collection.
+	 * 
+	 * @param <V> Type of the the values.
+	 * @param <X> Type of the exceptions.
+	 * @param collection The collection.
+	 * @return The built iterator.
 	 */
 	public static <V, X extends Exception> CheckedIterator<V, X> fromIterable(final Iterable<? extends V> collection) {
 		assert null != collection;
@@ -178,6 +194,108 @@ public class CheckedIterators {
 				final T value = _tail.getHead();
 				_tail = _tail.getTail();
 				return value;
+			}
+		};
+	}
+	
+	/**
+	 * Filters the given checked iterator with the given predicate.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @param predicate The predicate.
+	 * @param iterator The iterator.
+	 * @return The built iterator over the filtered values.
+	 */
+	public static <T, X extends Exception> CheckedIterator<T, X> filter(final Predicate1<? super T, ? extends X> predicate, final CheckedIterator<? extends T, ? extends X> iterator) {
+		assert null != predicate;
+		assert null != iterator;
+		
+		return new CheckedFilterIterator<T, X>() {
+			@Override
+			protected Maybe<T> pull()
+			throws X {
+				return CollectionUtils.next(iterator);
+			}
+			
+			@Override
+			public boolean filter(final T value)
+			throws X {
+				return predicate.evaluate(value);
+			}
+		};
+	}
+	
+	/**
+	 * Transforms the given checked iterator using the given function.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <R> Type of the transformed values.
+	 * @param <X> Type of the exceptions.
+	 * @param function The function.
+	 * @param iterator The iterator.
+	 * @return The built iterator over the transformed values.
+	 */
+	public static <T, R, X extends Exception> CheckedIterator<R, X> map(final Function1<? super T, ? extends R, ? extends X> function, final CheckedIterator<? extends T, ? extends X> iterator) {
+		assert null != function;
+		assert null != iterator;
+		
+		return new CheckedMapIterator<T, R, X>() {
+			@Override
+			protected Maybe<T> pull()
+			throws X {
+				return CollectionUtils.next(iterator);
+			}
+			
+			@Override
+			protected R map(final T value)
+			throws X {
+				return function.evaluate(value);
+			}
+		};
+	}
+	
+	/**
+	 * Filters and transforms the given iterator using the given extractor.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <R> Type of the transformed values.
+	 * @param <X> Type of the exceptions.
+	 * @param extractor The extractor.
+	 * @param iterator The iterator.
+	 * @return The built iterator over the filtered and transformed values.
+	 * @deprecated Use {@link #extract(Function1, CheckedIterator)}.
+	 */
+	@Deprecated
+	public static <T, R, X extends Exception> CheckedIterator<R, X> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, ? extends X> extractor, final CheckedIterator<? extends T, ? extends X> iterator) {
+		return extract(extractor, iterator);
+	}
+	
+	/**
+	 * Builds an iterators that extracts values from the given iterator using the given extractor.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <R> Type of the transformed values.
+	 * @param <X> Type of the exceptions.
+	 * @param extractor The extractor.
+	 * @param iterator The iterator.
+	 * @return The built iterator over the filtered and transformed values.
+	 */
+	public static <T, R, X extends Exception> CheckedIterator<R, X> extract(final Function1<? super T, ? extends Maybe<? extends R>, ? extends X> extractor, final CheckedIterator<? extends T, ? extends X> iterator) {
+		assert null != extractor;
+		assert null != iterator;
+		
+		return new CheckedExtractIterator<T, R, X>() {
+			@Override
+			protected Maybe<T> pull()
+			throws X {
+				return CollectionUtils.next(iterator);
+			}
+			
+			@Override
+			public Maybe<? extends R> extract(final T value)
+			throws X {
+				return extractor.evaluate(value);
 			}
 		};
 	}

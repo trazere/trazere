@@ -15,8 +15,8 @@
  */
 package com.trazere.parser.util;
 
-public abstract class BaseParserToken<R, V>
-implements ParserToken<R, V> {
+public abstract class BaseParserToken<R, V, X extends Exception>
+implements ParserToken<R, V, X> {
 	public BaseParserToken(final R representation) {
 		assert null != representation;
 		
@@ -36,16 +36,19 @@ implements ParserToken<R, V> {
 	// Parse.
 	
 	@Override
-	public V parse() {
+	public V parse()
+	throws X {
 		return parse(_representation);
 	}
 	
-	protected abstract V parse(final R representation);
+	protected abstract V parse(final R representation)
+	throws X;
 	
 	// Function.
 	
 	@Override
-	public V evaluate() {
+	public V evaluate()
+	throws X {
 		return parse();
 	}
 }

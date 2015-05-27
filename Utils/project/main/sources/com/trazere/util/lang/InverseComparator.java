@@ -15,16 +15,13 @@
  */
 package com.trazere.util.lang;
 
-import com.trazere.core.lang.HashCode;
 import java.util.Comparator;
 
 /**
  * The {@link InverseComparator} class provides comparators according to the inverse order of some other comparator.
  * 
  * @param <T> Type of the values.
- * @deprecated Use {@link com.trazere.core.util.InverseComparator}.
  */
-@Deprecated
 public class InverseComparator<T>
 implements Comparator<T> {
 	/**

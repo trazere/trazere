@@ -15,8 +15,8 @@
  */
 package com.trazere.util.identifier;
 
-import com.trazere.core.lang.HashCode;
 import com.trazere.util.function.Function1;
+import com.trazere.util.lang.HashCode;
 import java.io.Serializable;
 
 // TODO: kill this, merge/replace by ValueWrapper

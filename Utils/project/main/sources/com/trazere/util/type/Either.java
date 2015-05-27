@@ -15,12 +15,12 @@
  */
 package com.trazere.util.type;
 
-import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.ObjectUtils;
-import com.trazere.core.text.Describable;
-import com.trazere.core.text.Description;
-import com.trazere.core.text.TextUtils;
 import com.trazere.util.function.Function1;
+import com.trazere.util.lang.HashCode;
+import com.trazere.util.lang.LangUtils;
+import com.trazere.util.text.Describable;
+import com.trazere.util.text.Description;
+import com.trazere.util.text.TextUtils;
 import java.io.Serializable;
 
 /**
@@ -31,9 +31,7 @@ import java.io.Serializable;
  * 
  * @param <L> Type of the left value.
  * @param <R> Type of the right value.
- * @deprecated Use {@link com.trazere.core.util.Either}.
  */
-@Deprecated
 public abstract class Either<L, R>
 implements Serializable, Describable {
 	private static final long serialVersionUID = 1L;
@@ -212,14 +210,14 @@ implements Serializable, Describable {
 				return true;
 			} else if (null != object && getClass().equals(object.getClass())) {
 				final Left<?, ?> either = (Left<?, ?>) object;
-				return ObjectUtils.safeEquals(_left, either._left);
+				return LangUtils.safeEquals(_left, either._left);
 			} else {
 				return false;
 			}
 		}
 		
 		@Override
-		public void appendDescription(final Description description) {
+		public void fillDescription(final Description description) {
 			description.append("Left", _left);
 		}
 	}
@@ -358,14 +356,14 @@ implements Serializable, Describable {
 				return true;
 			} else if (null != object && getClass().equals(object.getClass())) {
 				final Right<?, ?> either = (Right<?, ?>) object;
-				return ObjectUtils.safeEquals(_right, either._right);
+				return LangUtils.safeEquals(_right, either._right);
 			} else {
 				return false;
 			}
 		}
 		
 		@Override
-		public void appendDescription(final Description description) {
+		public void fillDescription(final Description description) {
 			description.append("Right", _right);
 		}
 	}
@@ -488,6 +486,6 @@ implements Serializable, Describable {
 	
 	@Override
 	public final String toString() {
-		return TextUtils.description(this);
+		return TextUtils.computeDescription(this);
 	}
 }

@@ -15,7 +15,7 @@
  */
 package com.trazere.util.io;
 
-import com.trazere.core.lang.MutableLong;
+import com.trazere.util.lang.MutableLong;
 import java.io.IOException;
 import java.io.InputStream;
 

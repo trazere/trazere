@@ -22,6 +22,7 @@ import com.trazere.util.type.Maybe;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 /**
  * The {@link Iterators} class provides various factories of iterators.
@@ -29,6 +30,107 @@ import java.util.ListIterator;
  * @see Iterator
  */
 public class Iterators {
+	/**
+	 * Builds an empty iterator.
+	 * 
+	 * @param <V> Type of the the values.
+	 * @return The built iterator.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <V> Iterator<V> empty() {
+		return (Iterator<V>) _EMPTY;
+	}
+	
+	private static final Iterator<?> _EMPTY = new Iterator<Object>() {
+		@Override
+		public boolean hasNext() {
+			return false;
+		}
+		
+		@Override
+		public Object next()
+		throws NoSuchElementException {
+			throw new NoSuchElementException();
+		}
+		
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
+	};
+	
+	/**
+	 * Builds an iterator over the given value.
+	 * 
+	 * @param <V> Type of the the value.
+	 * @param value The value. May be <code>null</code>.
+	 * @return The built iterator.
+	 */
+	public static <V> Iterator<V> fromValue(final V value) {
+		return new Iterator<V>() {
+			protected boolean _next = true;
+			
+			@Override
+			public boolean hasNext() {
+				return _next;
+			}
+			
+			@Override
+			public V next()
+			throws NoSuchElementException {
+				if (_next) {
+					_next = false;
+					return value;
+				} else {
+					throw new NoSuchElementException();
+				}
+			}
+			
+			@Override
+			public void remove() {
+				throw new UnsupportedOperationException();
+			}
+		};
+	}
+	
+	/**
+	 * Builds an iterator over the given values.
+	 * 
+	 * @param <T> Type of the the values.
+	 * @param values The values.
+	 * @return The built iterator.
+	 */
+	public static <T> Iterator<T> fromValues(final T... values) {
+		assert null != values;
+		
+		return new Iterator<T>() {
+			protected int _index = 0;
+			
+			@Override
+			public boolean hasNext() {
+				return _index < values.length;
+			}
+			
+			@Override
+			public T next()
+			throws NoSuchElementException {
+				if (_index < values.length) {
+					final T value = values[_index];
+					_index += 1;
+					
+					return value;
+				} else {
+					throw new NoSuchElementException();
+				}
+			}
+			
+			@Override
+			public void remove() {
+				throw new UnsupportedOperationException();
+			}
+		};
+	}
+	
 	/**
 	 * Filters the given iterator using the given predicate.
 	 * 
@@ -78,6 +180,21 @@ public class Iterators {
 				return function.evaluate(value);
 			}
 		};
+	}
+	
+	/**
+	 * Filters and transforms the given iterator using the given extractor.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <R> Type of the transformed values.
+	 * @param extractor The extractor.
+	 * @param iterator The iterator.
+	 * @return The built iterator over the filtered and transformed values.
+	 * @deprecated Use {@link #extract(Function1, Iterator)}.
+	 */
+	@Deprecated
+	public static <T, R> Iterator<R> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, ? extends RuntimeException> extractor, final Iterator<? extends T> iterator) {
+		return extract(extractor, iterator);
 	}
 	
 	/**

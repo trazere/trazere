@@ -15,7 +15,6 @@
  */
 package com.trazere.util.lang;
 
-import com.trazere.core.lang.ThrowableFactory;
 import com.trazere.util.function.Function1;
 import com.trazere.util.type.Maybe;
 
@@ -103,7 +102,7 @@ extends RuntimeException {
 	public static ThrowableFactory<WrapException> factory(final ThrowableFactory<?> throwableFactory) {
 		assert null != throwableFactory;
 		
-		return new ThrowableFactory<WrapException>() {
+		return new BaseThrowableFactory<WrapException>() {
 			@Override
 			public WrapException build() {
 				return new WrapException(throwableFactory.build());

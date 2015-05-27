@@ -15,14 +15,14 @@
  */
 package com.trazere.parser.core;
 
-import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.ObjectUtils;
 import com.trazere.parser.BaseParser;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserHandler;
 import com.trazere.parser.ParserState;
+import com.trazere.util.lang.HashCode;
+import com.trazere.util.lang.LangUtils;
 import java.util.Collections;
 import java.util.List;
 
@@ -78,7 +78,7 @@ extends BaseParser<Token, Result> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final ChoiceParser<?, ?> parser = (ChoiceParser<?, ?>) object;
-			return ObjectUtils.safeEquals(_description, parser._description) && _subParsers.equals(parser._subParsers);
+			return LangUtils.safeEquals(_description, parser._description) && _subParsers.equals(parser._subParsers);
 		} else {
 			return false;
 		}

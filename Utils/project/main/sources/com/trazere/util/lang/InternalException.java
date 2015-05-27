@@ -15,8 +15,6 @@
  */
 package com.trazere.util.lang;
 
-import com.trazere.core.lang.ThrowableFactory;
-
 /**
  * {@link InternalException} exceptions are thrown when internal errors occur.
  * <p>
@@ -62,7 +60,7 @@ extends RuntimeException {
 	}
 	
 	/** Factory of {@link InternalException}. */
-	public static final ThrowableFactory<InternalException> FACTORY = new ThrowableFactory<InternalException>() {
+	public static final ThrowableFactory<InternalException> FACTORY = new BaseThrowableFactory<InternalException>() {
 		@Override
 		public InternalException build() {
 			return new InternalException();

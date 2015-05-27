@@ -15,7 +15,8 @@
  */
 package com.trazere.util.reference;
 
-import com.trazere.core.lang.ThrowableFactory;
+import com.trazere.util.lang.BaseThrowableFactory;
+import com.trazere.util.lang.ThrowableFactory;
 
 /**
  * {@link ReferenceNotSetException} exceptions are thrown when trying to reset some reference which has not been set.
@@ -65,7 +66,7 @@ extends ReferenceException {
 	
 	/** Factory of {@link ReferenceNotSetException}. */
 	@SuppressWarnings("hiding")
-	public static final ThrowableFactory<ReferenceNotSetException> FACTORY = new ThrowableFactory<ReferenceNotSetException>() {
+	public static final ThrowableFactory<ReferenceNotSetException> FACTORY = new BaseThrowableFactory<ReferenceNotSetException>() {
 		@Override
 		public ReferenceNotSetException build() {
 			return new ReferenceNotSetException();

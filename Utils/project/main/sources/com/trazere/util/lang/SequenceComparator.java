@@ -15,7 +15,6 @@
  */
 package com.trazere.util.lang;
 
-import com.trazere.core.lang.HashCode;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -27,9 +26,7 @@ import java.util.List;
  * The next comparator of the sequence refines the order of the previous one in case of equality.
  * 
  * @param <T> Type of the values.
- * @deprecated Use {@link com.trazere.core.util.SequenceComparator}.
  */
-@Deprecated
 public class SequenceComparator<T>
 implements Comparator<T> {
 	/**

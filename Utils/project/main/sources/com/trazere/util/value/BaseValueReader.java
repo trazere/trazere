@@ -15,11 +15,11 @@
  */
 package com.trazere.util.value;
 
-import com.trazere.core.text.Describable;
-import com.trazere.core.text.Description;
-import com.trazere.core.text.TextUtils;
 import com.trazere.util.record.BaseParametrable;
 import com.trazere.util.record.Record;
+import com.trazere.util.text.Describable;
+import com.trazere.util.text.Description;
+import com.trazere.util.text.TextUtils;
 
 /**
  * The {@link BaseValueReader} abstract class provides a skeleton implementation of {@link ValueReader value readers}.
@@ -75,11 +75,11 @@ implements ValueReader<T>, Describable {
 	
 	@Override
 	public String toString() {
-		return TextUtils.description(this);
+		return TextUtils.computeDescription(this);
 	}
 	
 	@Override
-	public void appendDescription(final Description description) {
+	public void fillDescription(final Description description) {
 		description.append("Type", _valueClass.getName());
 		description.append("Nullable", _nullable);
 	}

@@ -15,13 +15,13 @@
  */
 package com.trazere.util.value;
 
-import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.ObjectUtils;
-import com.trazere.core.text.Description;
+import com.trazere.util.lang.HashCode;
+import com.trazere.util.lang.LangUtils;
 import com.trazere.util.record.Record;
 import com.trazere.util.record.RecordSignature;
 import com.trazere.util.record.RecordSignatureBuilder;
 import com.trazere.util.record.SimpleRecordSignature;
+import com.trazere.util.text.Description;
 
 /**
  * The {@link ConstantValueReader} class reads constant values.
@@ -103,15 +103,15 @@ extends BaseValueReader<T> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final ConstantValueReader<?> reader = (ConstantValueReader<?>) object;
-			return _valueClass.equals(reader._valueClass) && ObjectUtils.safeEquals(_value, reader._value);
+			return _valueClass.equals(reader._valueClass) && LangUtils.safeEquals(_value, reader._value);
 		} else {
 			return false;
 		}
 	}
 	
 	@Override
-	public void appendDescription(final Description description) {
-		super.appendDescription(description);
+	public void fillDescription(final Description description) {
+		super.fillDescription(description);
 		description.append("Value", _value);
 	}
 }

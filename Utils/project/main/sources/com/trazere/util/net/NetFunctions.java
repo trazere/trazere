@@ -1,7 +1,7 @@
 package com.trazere.util.net;
 
-import com.trazere.core.lang.ThrowableFactory;
 import com.trazere.util.function.Function1;
+import com.trazere.util.lang.ThrowableFactory;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;

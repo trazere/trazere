@@ -15,7 +15,8 @@
  */
 package com.trazere.util.properties;
 
-import com.trazere.core.lang.ThrowableFactory;
+import com.trazere.util.lang.BaseThrowableFactory;
+import com.trazere.util.lang.ThrowableFactory;
 
 /**
  * {@link PropertiesException} exceptions are thrown when properties related errors occur.
@@ -60,7 +61,7 @@ extends Exception {
 	}
 	
 	/** Factory of {@link PropertiesException}. */
-	public static final ThrowableFactory<PropertiesException> FACTORY = new ThrowableFactory<PropertiesException>() {
+	public static final ThrowableFactory<PropertiesException> FACTORY = new BaseThrowableFactory<PropertiesException>() {
 		@Override
 		public PropertiesException build() {
 			return new PropertiesException();

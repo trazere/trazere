@@ -15,13 +15,6 @@
  */
 package com.trazere.parser.util;
 
-import com.trazere.core.functional.Function;
-import com.trazere.core.lang.InternalException;
-import com.trazere.core.reference.MutableReference;
-import com.trazere.core.reference.ReferenceNotSetException;
-import com.trazere.core.text.Joiners;
-import com.trazere.core.util.Either;
-import com.trazere.core.util.Maybe;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserFailure;
@@ -29,6 +22,13 @@ import com.trazere.parser.ParserPosition;
 import com.trazere.parser.ParserSource;
 import com.trazere.parser.core.CoreParsers;
 import com.trazere.parser.impl.ParserFailureImpl;
+import com.trazere.util.function.Procedure2;
+import com.trazere.util.lang.InternalException;
+import com.trazere.util.reference.MutableReference;
+import com.trazere.util.reference.ReferenceNotSetException;
+import com.trazere.util.text.TextUtils;
+import com.trazere.util.type.Either;
+import com.trazere.util.type.Maybe;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -254,7 +254,6 @@ public class ParserUtils {
 		}
 	}
 	
-	// TODO: use Result
 	public static <T> Either<T, String> parse(final Parser<Character, ? extends T> parser, final String representation)
 	throws ParserException {
 		assert null != parser;
@@ -263,7 +262,7 @@ public class ParserUtils {
 		final Parser<Character, T> parser_ = CoreParsers.first(parser, CoreParsers.<Character, Object>eof(), null);
 		final Either<List<T>, List<ParserFailure<Character>>> results = ParserUtils.parseSuccessesOrFailures(parser_, new StringParserSource(representation));
 		if (results.isLeft()) {
-			final List<T> successes = results.asLeft().getValue();
+			final List<T> successes = results.asLeft().getLeft();
 			if (successes.isEmpty()) {
 				return Either.right("Invalid representation \"" + representation + "\"");
 			} else if (1 == successes.size()) {
@@ -272,7 +271,7 @@ public class ParserUtils {
 				return Either.right("Ambiguous representation \"" + representation + "\"");
 			}
 		} else {
-			return Either.right("Invalid representation \"" + representation + "\" : expected " + ParserUtils.renderFailures(results.asRight().getValue()));
+			return Either.right("Invalid representation \"" + representation + "\" : expected " + ParserUtils.renderFailures(results.asRight().getRight()));
 		}
 	}
 	
@@ -281,13 +280,13 @@ public class ParserUtils {
 	}
 	
 	public static <Token> StringBuilder renderFailures(final List<ParserFailure<Token>> failures, final StringBuilder builder) {
-		return Joiners.joiner(RENDER_FAILURE, true, ", or ").join(failures, builder).get1();
+		return TextUtils.join(failures.iterator(), _RENDER_FAILURE, ", or ", builder);
 	}
 	
-	private static final Function<ParserFailure<?>, CharSequence> RENDER_FAILURE = new Function<ParserFailure<?>, CharSequence>() {
+	private static final Procedure2<StringBuilder, ParserFailure<?>, RuntimeException> _RENDER_FAILURE = new Procedure2<StringBuilder, ParserFailure<?>, RuntimeException>() {
 		@Override
-		public CharSequence evaluate(final ParserFailure<?> failure) {
-			return failure.getParser().getDescription() + " at " + failure.getPosition().getDescription();
+		public void execute(final StringBuilder builder, final ParserFailure<?> failure) {
+			builder.append(failure.getParser().getDescription()).append(" at ").append(failure.getPosition().getDescription());
 		}
 	};
 	

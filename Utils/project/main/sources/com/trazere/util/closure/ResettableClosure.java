@@ -15,15 +15,15 @@
  */
 package com.trazere.util.closure;
 
-import com.trazere.core.text.Describable;
-import com.trazere.core.text.Description;
-import com.trazere.core.text.TextUtils;
 import com.trazere.util.function.Function0;
 import com.trazere.util.lang.InternalException;
 import com.trazere.util.lang.Releasable;
 import com.trazere.util.reference.MutableReference;
 import com.trazere.util.reference.ReferenceAlreadySetException;
 import com.trazere.util.reference.ReferenceNotSetException;
+import com.trazere.util.text.Describable;
+import com.trazere.util.text.Description;
+import com.trazere.util.text.TextUtils;
 import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Maybe.None;
 import com.trazere.util.type.Maybe.Some;
@@ -55,8 +55,8 @@ implements Closure<T, X>, Releasable<RuntimeException>, Describable {
 			}
 			
 			@Override
-			public void appendDescription(final Description description) {
-				super.appendDescription(description);
+			public void fillDescription(final Description description) {
+				super.fillDescription(description);
 				description.append("Value", value);
 			}
 		};
@@ -79,8 +79,8 @@ implements Closure<T, X>, Releasable<RuntimeException>, Describable {
 			}
 			
 			@Override
-			public void appendDescription(final Description description) {
-				super.appendDescription(description);
+			public void fillDescription(final Description description) {
+				super.fillDescription(description);
 				description.append("Function", function);
 			}
 		};
@@ -177,12 +177,12 @@ implements Closure<T, X>, Releasable<RuntimeException>, Describable {
 			}
 			return String.valueOf(value);
 		} else {
-			return TextUtils.description(this);
+			return TextUtils.computeDescription(this);
 		}
 	}
 	
 	@Override
-	public void appendDescription(final Description description) {
+	public void fillDescription(final Description description) {
 		// Nothing to do.
 	}
 }

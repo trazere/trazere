@@ -15,12 +15,9 @@
  */
 package com.trazere.util.type;
 
-import com.trazere.core.lang.ComparableUtils;
-import com.trazere.core.lang.HashCode;
-import com.trazere.core.lang.ObjectUtils;
-import com.trazere.core.util.FieldFunctions;
-import com.trazere.core.util.TupleComparators;
 import com.trazere.util.function.Function1;
+import com.trazere.util.lang.HashCode;
+import com.trazere.util.lang.LangUtils;
 
 /**
  * The {@link Tuple4} class represents a 4-tuple (quadruplet) data type which stores sequences of 4 values.
@@ -29,9 +26,7 @@ import com.trazere.util.function.Function1;
  * @param <T2> Type of the second value.
  * @param <T3> Type of the third value.
  * @param <T4> Type of the fourth value.
- * @deprecated Use {@link com.trazere.core.util.Tuple4}.
  */
-@Deprecated
 public class Tuple4<T1, T2, T3, T4>
 extends Tuple3<T1, T2, T3> {
 	private static final long serialVersionUID = 1L;
@@ -77,9 +72,7 @@ extends Tuple3<T1, T2, T3> {
 	 * Gets the fourth value of the receiver tuple.
 	 * 
 	 * @return The value. May be <code>null</code>.
-	 * @deprecated Use {@link com.trazere.core.util.Tuple4#get4()}.
 	 */
-	@Deprecated
 	public T4 getFourth() {
 		return _fourth;
 	}
@@ -90,9 +83,7 @@ extends Tuple3<T1, T2, T3> {
 	 * @param <T4> Type of the fourth values of the tuples.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
-	 * @deprecated Use {@link FieldFunctions#get4()}.
 	 */
-	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T4, X extends Exception> Function1<Tuple4<?, ?, ?, ? extends T4>, T4, X> getFourthFunction() {
 		return (Function1<Tuple4<?, ?, ?, ? extends T4>, T4, X>) _GET_FOURTH_FUNCTION;
@@ -120,16 +111,14 @@ extends Tuple3<T1, T2, T3> {
 	 * @param tuple2 The second tuple.
 	 * @return The result of the comparison as defined by the {@link Comparable#compareTo(Object)} method.
 	 * @see Comparable#compareTo(Object)
-	 * @deprecated Use {@link TupleComparators#tuple4(java.util.Comparator, java.util.Comparator, java.util.Comparator, java.util.Comparator)}.
 	 */
-	@Deprecated
 	public static <T1 extends Comparable<T1>, T2 extends Comparable<T2>, T3 extends Comparable<T3>, T4 extends Comparable<T4>> int compare(final Tuple4<T1, T2, T3, T4> tuple1, final Tuple4<T1, T2, T3, T4> tuple2) {
 		assert null != tuple1;
 		assert null != tuple2;
 		
 		// Compare.
 		final int comp = Tuple3.compare(tuple1, tuple2);
-		return 0 != comp ? comp : ComparableUtils.safeCompareTo(tuple1._fourth, tuple2._fourth);
+		return 0 != comp ? comp : LangUtils.safeCompare(tuple1._fourth, tuple2._fourth);
 	}
 	
 	// Object.
@@ -150,7 +139,7 @@ extends Tuple3<T1, T2, T3> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final Tuple4<?, ?, ?, ?> tuple = (Tuple4<?, ?, ?, ?>) object;
-			return ObjectUtils.safeEquals(_first, tuple._first) && ObjectUtils.safeEquals(_second, tuple._second) && ObjectUtils.safeEquals(_third, tuple._third) && ObjectUtils.safeEquals(_fourth, tuple._fourth);
+			return LangUtils.safeEquals(_first, tuple._first) && LangUtils.safeEquals(_second, tuple._second) && LangUtils.safeEquals(_third, tuple._third) && LangUtils.safeEquals(_fourth, tuple._fourth);
 		} else {
 			return false;
 		}

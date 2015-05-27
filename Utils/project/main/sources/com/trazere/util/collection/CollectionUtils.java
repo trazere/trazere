@@ -15,9 +15,9 @@
  */
 package com.trazere.util.collection;
 
-import com.trazere.core.lang.ThrowableFactory;
 import com.trazere.util.function.Function1;
 import com.trazere.util.lang.Counter;
+import com.trazere.util.lang.ThrowableFactory;
 import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Tuple2;
 import java.util.ArrayList;

@@ -15,7 +15,8 @@
  */
 package com.trazere.util.properties;
 
-import com.trazere.core.lang.ThrowableFactory;
+import com.trazere.util.lang.BaseThrowableFactory;
+import com.trazere.util.lang.ThrowableFactory;
 
 /**
  * {@link MissingPropertyException} exceptions are thrown some property are missing.
@@ -61,7 +62,7 @@ extends PropertiesException {
 	
 	/** Factory of {@link MissingPropertyException}. */
 	@SuppressWarnings("hiding")
-	public static final ThrowableFactory<MissingPropertyException> FACTORY = new ThrowableFactory<MissingPropertyException>() {
+	public static final ThrowableFactory<MissingPropertyException> FACTORY = new BaseThrowableFactory<MissingPropertyException>() {
 		@Override
 		public MissingPropertyException build() {
 			return new MissingPropertyException();

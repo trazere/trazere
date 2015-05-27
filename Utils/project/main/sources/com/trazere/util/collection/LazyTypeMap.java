@@ -15,7 +15,7 @@
  */
 package com.trazere.util.collection;
 
-import com.trazere.core.lang.ThrowableFactory;
+import com.trazere.util.lang.ThrowableFactory;
 import com.trazere.util.type.Maybe;
 import java.util.Collection;
 

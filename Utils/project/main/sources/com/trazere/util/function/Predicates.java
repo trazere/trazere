@@ -15,8 +15,8 @@
  */
 package com.trazere.util.function;
 
-import com.trazere.core.lang.ObjectUtils;
 import com.trazere.util.collection.CollectionUtils;
+import com.trazere.util.lang.LangUtils;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -410,7 +410,7 @@ public class Predicates {
 		return new Predicate1<T, X>() {
 			@Override
 			public boolean evaluate(final T value_) {
-				return ObjectUtils.safeEquals(value, value_);
+				return LangUtils.safeEquals(value, value_);
 			}
 		};
 	}

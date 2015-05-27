@@ -15,9 +15,9 @@
  */
 package com.trazere.util.value;
 
-import com.trazere.core.text.Describable;
-import com.trazere.core.text.Description;
-import com.trazere.core.text.TextUtils;
+import com.trazere.util.text.Describable;
+import com.trazere.util.text.Description;
+import com.trazere.util.text.TextUtils;
 
 /**
  * The {@link BaseValueSerializer} abstract class implements skeletons of {@link ValueSerializer value serializers}.
@@ -65,11 +65,11 @@ implements ValueSerializer<T, R, X>, Describable {
 	
 	@Override
 	public String toString() {
-		return TextUtils.description(this);
+		return TextUtils.computeDescription(this);
 	}
 	
 	@Override
-	public void appendDescription(final Description description) {
+	public void fillDescription(final Description description) {
 		description.append("Type", _valueClass.getName());
 		description.append("Representation", _representationClass.getName());
 	}

@@ -15,10 +15,10 @@
  */
 package com.trazere.util.reference;
 
-import com.trazere.core.text.Describable;
-import com.trazere.core.text.Description;
-import com.trazere.core.text.TextUtils;
 import com.trazere.util.function.Function0;
+import com.trazere.util.text.Describable;
+import com.trazere.util.text.Description;
+import com.trazere.util.text.TextUtils;
 import com.trazere.util.type.Maybe;
 
 /**
@@ -253,11 +253,11 @@ implements ReleasableReference<T, RuntimeException>, Describable {
 	
 	@Override
 	public final String toString() {
-		return TextUtils.description(this);
+		return TextUtils.computeDescription(this);
 	}
 	
 	@Override
-	public void appendDescription(final Description description) {
+	public void fillDescription(final Description description) {
 		if (_value.isSome()) {
 			description.append("Value", _value.asSome().getValue());
 		}

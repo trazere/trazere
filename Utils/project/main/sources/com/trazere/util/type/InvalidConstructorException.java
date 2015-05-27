@@ -15,16 +15,13 @@
  */
 package com.trazere.util.type;
 
-import com.trazere.core.text.TextUtils;
+import com.trazere.util.text.TextUtils;
 
 /**
  * {@link InvalidConstructorException} exceptions are thrown when trying to cast some instance of some algebraic data type according to a wrong constructor.
  * <p>
  * These exceptions are runtime exceptions in order to reduce clutter.
- * 
- * @deprecated Use {@link com.trazere.core.util.InvalidConstructorException}.
  */
-@Deprecated
 public class InvalidConstructorException
 extends RuntimeException {
 	private static final long serialVersionUID = 1L;
@@ -33,7 +30,7 @@ extends RuntimeException {
 		assert null != object;
 		assert null != type;
 		
-		return new InvalidConstructorException(object + " is not a " + TextUtils.className(type));
+		return new InvalidConstructorException(object + " is not a " + TextUtils.computeClassName(type));
 	}
 	
 	private InvalidConstructorException(final String message) {

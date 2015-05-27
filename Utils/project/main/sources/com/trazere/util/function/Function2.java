@@ -22,9 +22,7 @@ package com.trazere.util.function;
  * @param <T2> Type of the second argument values.
  * @param <R> Type of the result values.
  * @param <X> Type of the exceptions.
- * @deprecated Use {@link com.trazere.core.functional.Function2}.
  */
-@Deprecated
 public interface Function2<T1, T2, R, X extends Exception> {
 	/**
 	 * Evaluates the receiver function with the given argument values.

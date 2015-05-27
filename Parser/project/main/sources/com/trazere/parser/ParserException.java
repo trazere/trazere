@@ -15,7 +15,8 @@
  */
 package com.trazere.parser;
 
-import com.trazere.core.lang.ThrowableFactory;
+import com.trazere.util.lang.BaseThrowableFactory;
+import com.trazere.util.lang.ThrowableFactory;
 
 /**
  * {@link ParserException} exceptions are thrown when parser related errors occur.
@@ -60,7 +61,7 @@ extends Exception {
 	}
 	
 	/** Factory of {@link ParserException}. */
-	public static final ThrowableFactory<ParserException> FACTORY = new ThrowableFactory<ParserException>() {
+	public static final ThrowableFactory<ParserException> FACTORY = new BaseThrowableFactory<ParserException>() {
 		@Override
 		public ParserException build() {
 			return new ParserException();

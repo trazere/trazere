@@ -15,16 +15,12 @@
  */
 package com.trazere.util.function;
 
-import com.trazere.core.functional.Predicate;
-
 /**
  * The {@link Predicate1} interface defines one argument predicate functions.
  * 
  * @param <T> Type of the argument values.
  * @param <X> Type of the exceptions.
- * @deprecated Use {@link Predicate}.
  */
-@Deprecated
 public interface Predicate1<T, X extends Exception> {
 	/**
 	 * Evaluates the receiver predicate with the given argument value.

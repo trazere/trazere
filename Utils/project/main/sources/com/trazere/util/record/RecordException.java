@@ -15,7 +15,8 @@
  */
 package com.trazere.util.record;
 
-import com.trazere.core.lang.ThrowableFactory;
+import com.trazere.util.lang.BaseThrowableFactory;
+import com.trazere.util.lang.ThrowableFactory;
 
 /**
  * {@link RecordException} exceptions are thrown when record related errors occur.
@@ -60,7 +61,7 @@ extends Exception {
 	}
 	
 	/** Factory of {@link RecordException}. */
-	public static final ThrowableFactory<RecordException> FACTORY = new ThrowableFactory<RecordException>() {
+	public static final ThrowableFactory<RecordException> FACTORY = new BaseThrowableFactory<RecordException>() {
 		@Override
 		public RecordException build() {
 			return new RecordException();
