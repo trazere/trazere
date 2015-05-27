@@ -15,7 +15,6 @@
  */
 package com.trazere.util.accumulator;
 
-
 /**
  * The {@link BaseAccumulator1} abstract class provides a skeleton implementation of {@link Accumulator1 accumulators}.
  * 
