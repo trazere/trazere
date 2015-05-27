@@ -16,7 +16,7 @@
 package com.trazere.core.text;
 
 import com.trazere.core.imperative.IteratorUtils;
-import com.trazere.core.math.IntSequence;
+import com.trazere.core.lang.FiniteIntSequence;
 import java.util.Iterator;
 
 /**
@@ -37,7 +37,7 @@ public class TextIterables {
 		return new Iterable<Character>() {
 			@Override
 			public Iterator<Character> iterator() {
-				return IteratorUtils.map(new IntSequence(0, s.length()).iterator(), i -> s.charAt(i));
+				return IteratorUtils.map(new FiniteIntSequence(0, s.length()).iterator(), i -> s.charAt(i));
 			}
 		};
 	}
