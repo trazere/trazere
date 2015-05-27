@@ -139,7 +139,7 @@ implements Cache<K, V>, Describable {
 	 * @return The previous value of the entry, or nothing when no entries was associated to the key.
 	 */
 	protected abstract Maybe<V> setEntry(final K key, final V value);
-
+	
 	/**
 	 * Gets the value of the entry associated to the given key.
 	 * 
@@ -147,7 +147,7 @@ implements Cache<K, V>, Describable {
 	 * @return The value of the entry associated to the key, or nothing when no entries is associated to the key.
 	 */
 	protected abstract Maybe<V> getEntry(final K key);
-
+	
 	/**
 	 * Removes the entry associated to the given key.
 	 * 
@@ -155,7 +155,7 @@ implements Cache<K, V>, Describable {
 	 * @return The value of the removed entry, or nothing when no entries is associated to the key.
 	 */
 	protected abstract Maybe<V> removeEntry(final K key);
-
+	
 	/**
 	 * Dispose the given value which has been removed from the receiver cache.
 	 * <p>
