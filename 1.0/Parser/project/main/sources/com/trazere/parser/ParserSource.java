@@ -15,10 +15,9 @@
  */
 package com.trazere.parser;
 
-public interface ParserSource<Token> {
-	public boolean hasNext()
-	throws ParserException;
-	
-	public Token next()
-	throws ParserException;
+import java.util.Iterator;
+
+public interface ParserSource<Token>
+extends Iterator<Token> {
+	// Nothing to do.
 }

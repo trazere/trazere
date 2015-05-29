@@ -15,7 +15,6 @@
  */
 package com.trazere.parser.util;
 
-import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserSource;
 
 /**
@@ -34,14 +33,12 @@ implements ParserSource<Character> {
 	}
 	
 	@Override
-	public boolean hasNext()
-	throws ParserException {
+	public boolean hasNext() {
 		return _position < _string.length();
 	}
 	
 	@Override
-	public Character next()
-	throws ParserException {
+	public Character next() {
 		final char c = _string.charAt(_position);
 		_position += 1;
 		

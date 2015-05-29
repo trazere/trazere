@@ -37,22 +37,19 @@ implements ParserSource<Character> {
 	}
 	
 	@Override
-	public boolean hasNext()
-	throws ParserException {
+	public boolean hasNext() {
 		lookAhead();
 		return -1 != _next;
 	}
 	
 	@Override
-	public Character next()
-	throws ParserException {
+	public Character next() {
 		lookAhead();
 		_lookAhead = false;
 		return Character.valueOf((char) _next);
 	}
 	
-	protected void lookAhead()
-	throws ParserException {
+	protected void lookAhead() {
 		if (!_lookAhead) {
 			try {
 				_next = _reader.read();

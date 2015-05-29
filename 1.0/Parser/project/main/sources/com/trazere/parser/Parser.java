@@ -30,15 +30,13 @@ public interface Parser<Token, Result> {
 	 * 
 	 * @return The description.
 	 */
-	public String getDescription();
+	String getDescription();
 	
 	/**
 	 * Run the receiver parser.
 	 * 
 	 * @param closure The parsing closure.
 	 * @param state The parsing state to use.
-	 * @throws ParserException On failure.
 	 */
-	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
-	throws ParserException;
+	void run(ParserClosure<Token, Result> closure, ParserState<Token> state);
 }

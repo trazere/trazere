@@ -15,7 +15,7 @@
  */
 package com.trazere.parser;
 
+@FunctionalInterface
 public interface ParserHandler<Token, Result> {
-	public void result(final Result result, final ParserState<Token> state)
-	throws ParserException;
+	void result(Result result, ParserState<Token> state);
 }

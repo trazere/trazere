@@ -16,7 +16,7 @@
 package com.trazere.parser;
 
 public interface ParserFailure<Token> {
-	public Parser<Token, ?> getParser();
+	Parser<Token, ?> getParser();
 	
-	public ParserPosition<Token> getPosition();
+	ParserPosition<Token> getPosition();
 }

@@ -15,25 +15,24 @@
  */
 package com.trazere.parser.text;
 
+import com.trazere.core.lang.HashCode;
+import com.trazere.core.lang.ObjectUtils;
+import com.trazere.core.text.CharPredicate;
 import com.trazere.parser.BaseParser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserContinuation;
-import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserState;
-import com.trazere.util.lang.HashCode;
-import com.trazere.util.lang.LangUtils;
-import com.trazere.util.text.CharPredicate;
 
 /**
  * DOCME
  */
 public class EscapedStringParser
 extends BaseParser<Character, String> {
-	protected final CharPredicate<? extends ParserException> _filter;
-	protected final CharPredicate<? extends ParserException> _escapeFilter;
+	protected final CharPredicate _filter;
+	protected final CharPredicate _escapeFilter;
 	protected final boolean _empty;
 	
-	public EscapedStringParser(final CharPredicate<? extends ParserException> filter, final CharPredicate<? extends ParserException> escapeFilter, final boolean empty, final String description) {
+	public EscapedStringParser(final CharPredicate filter, final CharPredicate escapeFilter, final boolean empty, final String description) {
 		super(description);
 		
 		// Checks.
@@ -49,8 +48,7 @@ extends BaseParser<Character, String> {
 	// Parser.
 	
 	@Override
-	public void run(final ParserClosure<Character, String> closure, final ParserState<Character> state)
-	throws ParserException {
+	public void run(final ParserClosure<Character, String> closure, final ParserState<Character> state) {
 		// Zero.
 		final StringBuilder result = new StringBuilder();
 		if (_empty) {
@@ -64,8 +62,7 @@ extends BaseParser<Character, String> {
 	protected ParserContinuation<Character> buildContinuation(final ParserClosure<Character, String> closure, final StringBuilder builder) {
 		return new ParserContinuation<Character>() {
 			@Override
-			public void token(final Character token, final ParserState<Character> state)
-			throws ParserException {
+			public void token(final Character token, final ParserState<Character> state) {
 				final char c = token.charValue();
 				if (_escapeFilter.evaluate(c)) {
 					// Escape.
@@ -86,8 +83,7 @@ extends BaseParser<Character, String> {
 			}
 			
 			@Override
-			public void eof(final ParserState<Character> state)
-			throws ParserException {
+			public void eof(final ParserState<Character> state) {
 				// Failure.
 				closure.failure(state);
 			}
@@ -97,8 +93,7 @@ extends BaseParser<Character, String> {
 	protected ParserContinuation<Character> buildEscapeContinuation(final ParserClosure<Character, String> closure, final StringBuilder builder) {
 		return new ParserContinuation<Character>() {
 			@Override
-			public void token(final Character token, final ParserState<Character> state)
-			throws ParserException {
+			public void token(final Character token, final ParserState<Character> state) {
 				// Accumulate the char.
 				builder.append(token.charValue());
 				
@@ -110,8 +105,7 @@ extends BaseParser<Character, String> {
 			}
 			
 			@Override
-			public void eof(final ParserState<Character> state)
-			throws ParserException {
+			public void eof(final ParserState<Character> state) {
 				// Failure.
 				closure.failure(state);
 			}
@@ -136,7 +130,7 @@ extends BaseParser<Character, String> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final EscapedStringParser parser = (EscapedStringParser) object;
-			return LangUtils.safeEquals(_description, parser._description) && _filter.equals(parser._filter) && _escapeFilter.equals(parser._escapeFilter) && _empty == parser._empty;
+			return ObjectUtils.safeEquals(_description, parser._description) && _filter.equals(parser._filter) && _escapeFilter.equals(parser._escapeFilter) && _empty == parser._empty;
 		} else {
 			return false;
 		}
