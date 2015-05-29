@@ -17,7 +17,10 @@ package com.trazere.util.trigger;
 
 /**
  * The {@link Trigger} class represents triggers.
+ * 
+ * @deprecated To be removed.
  */
+@Deprecated
 public interface Trigger {
 	/**
 	 * Indicate whether the receiver trigger is set.

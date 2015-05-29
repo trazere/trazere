@@ -22,7 +22,9 @@ import java.util.Iterator;
  * 
  * @param <T> Type of the values of the feed.
  * @param <R> Type of the extracted values.
+ * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#map(java.util.Iterator, com.trazere.core.functional.Function)}.
  */
+@Deprecated
 public abstract class MapIterator<T, R>
 extends CheckedMapIterator<T, R, RuntimeException>
 implements Iterator<R> {

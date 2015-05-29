@@ -17,7 +17,10 @@ package com.trazere.util.closure;
 
 /**
  * The {@link ClosureUtils} class provides helpers regarding the closures.
+ * 
+ * @deprecated Use core.
  */
+@Deprecated
 public class ClosureUtils {
 	/**
 	 * Evaluates the given closure in a thread safe way.
@@ -27,7 +30,9 @@ public class ClosureUtils {
 	 * @param closure The closure.
 	 * @return The value of the closure.
 	 * @throws X When the evaluation of the closure fails.
+	 * @deprecated Use {@link com.trazere.core.functional.ThunkUtils#synchronizedEvaluate(com.trazere.core.functional.Thunk)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> T synchronizedEvaluate(final Closure<T, ? extends X> closure)
 	throws X {
 		assert null != closure;
@@ -41,7 +46,9 @@ public class ClosureUtils {
 	 * Resets the given closure in a thread safe way.
 	 * 
 	 * @param closure The closure.
+	 * @deprecated Use {@link com.trazere.core.functional.ThunkUtils#synchronizedReset(com.trazere.core.functional.ResettableThunk)}.
 	 */
+	@Deprecated
 	public static void synchronizedReset(final ResettableClosure<?, ?> closure) {
 		assert null != closure;
 		

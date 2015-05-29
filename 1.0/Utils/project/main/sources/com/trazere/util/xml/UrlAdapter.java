@@ -21,7 +21,10 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * The {@link UrlAdapter} class provides JAXB adpaters for URLs.
+ * 
+ * @deprecated Use {@link com.trazere.xml.UrlAdapter}.
  */
+@Deprecated
 public class UrlAdapter
 extends XmlAdapter<String, URL> {
 	@Override
@@ -58,7 +61,9 @@ extends XmlAdapter<String, URL> {
 	 * 
 	 * @param value Url to format.
 	 * @return The representation.
+	 * @deprecated Use {@link com.trazere.xml.UrlAdapter#format(URL)}.
 	 */
+	@Deprecated
 	public static String print(final URL value) {
 		assert null != value;
 		

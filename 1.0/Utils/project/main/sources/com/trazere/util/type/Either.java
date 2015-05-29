@@ -31,7 +31,9 @@ import java.io.Serializable;
  * 
  * @param <L> Type of the left value.
  * @param <R> Type of the right value.
+ * @deprecated Use {@link com.trazere.core.util.Either}.
  */
+@Deprecated
 public abstract class Either<L, R>
 implements Serializable, Describable {
 	private static final long serialVersionUID = 1L;
@@ -55,7 +57,9 @@ implements Serializable, Describable {
 	 * @param <R> Type of the right values.
 	 * @param <X> The of the exceptions.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.util.EitherFunctions#left()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <L, R, X extends Exception> Function1<L, Either<L, R>, X> leftFunction() {
 		return (Function1<L, Either<L, R>, X>) _LEFT_FUNCTION;
@@ -87,7 +91,9 @@ implements Serializable, Describable {
 	 * @param <R> Type of the right values.
 	 * @param <X> The of the exceptions.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.util.EitherFunctions#right()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <L, R, X extends Exception> Function1<R, Either<L, R>, X> rightFunction() {
 		return (Function1<R, Either<L, R>, X>) _RIGHT_FUNCTION;
@@ -104,7 +110,10 @@ implements Serializable, Describable {
 	
 	/**
 	 * The {@link Either.Constructor} enumeration represents the constructors of the algebraic data type.
+	 * 
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public static enum Constructor {
 		LEFT,
 		RIGHT,
@@ -114,7 +123,9 @@ implements Serializable, Describable {
 	 * Gets the constructor of the receiver instance.
 	 * 
 	 * @return The constructor.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public abstract Constructor getConstructor();
 	
 	// Left.
@@ -124,7 +135,9 @@ implements Serializable, Describable {
 	 * 
 	 * @param <L> Type of the left value.
 	 * @param <R> Type of the right value.
+	 * @deprecated Use {@link com.trazere.core.util.Either.Left}.
 	 */
+	@Deprecated
 	public final static class Left<L, R>
 	extends Either<L, R> {
 		private static final long serialVersionUID = 1L;
@@ -248,7 +261,9 @@ implements Serializable, Describable {
 	 * @param <L> Type of the left value.
 	 * @param <X> Type of the exceptions.
 	 * @return The built extractor.
+	 * @deprecated Use {@link com.trazere.core.util.EitherExtractors#getLeft()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <L, X extends Exception> Function1<Either<? extends L, ?>, Maybe<L>, X> getLeftExtractor() {
 		return (Function1<Either<? extends L, ?>, Maybe<L>, X>) _GET_LEFT_EXTRACTOR;
@@ -270,7 +285,9 @@ implements Serializable, Describable {
 	 * 
 	 * @param <L> Type of the left value.
 	 * @param <R> Type of the right value.
+	 * @deprecated Use {@link com.trazere.core.util.Either.Right}.
 	 */
+	@Deprecated
 	public final static class Right<L, R>
 	extends Either<L, R> {
 		private static final long serialVersionUID = 1L;
@@ -394,7 +411,9 @@ implements Serializable, Describable {
 	 * @param <R> Type of the right value.
 	 * @param <X> Type of the exceptions.
 	 * @return The built extractor.
+	 * @deprecated Use {@link com.trazere.core.util.EitherExtractors#getRight()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <R, X extends Exception> Function1<Either<?, ? extends R>, Maybe<R>, X> getRightExtractor() {
 		return (Function1<Either<?, ? extends R>, Maybe<R>, X>) _GET_RIGHT_EXTRACTOR;
@@ -419,7 +438,9 @@ implements Serializable, Describable {
 	 * @param <RT> Type of the result.
 	 * @param <X> Type of the exceptions.
 	 * @see Either#match(Matcher)
+	 * @deprecated Use {@link com.trazere.core.util.Either.Matcher}.
 	 */
+	@Deprecated
 	public interface Matcher<L, R, RT, X extends Exception> {
 		/**
 		 * Matches the given <code>Left</code> instance.
@@ -466,7 +487,9 @@ implements Serializable, Describable {
 	 * @param function The mapping function.
 	 * @return An instance containing the mapped value.
 	 * @throws X When the mapping fails.
+	 * @deprecated Use {@link com.trazere.core.util.Either#mapLeft(com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public abstract <RL, X extends Exception> Either<RL, R> mapLeft(final Function1<? super L, ? extends RL, ? extends X> function)
 	throws X;
 	
@@ -478,7 +501,9 @@ implements Serializable, Describable {
 	 * @param function The mapping function.
 	 * @return An instance containing the mapped value.
 	 * @throws X When the mapping fails.
+	 * @deprecated Use {@link com.trazere.core.util.Either#mapRight(com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public abstract <RR, X extends Exception> Either<L, RR> mapRight(final Function1<? super R, ? extends RR, ? extends X> function)
 	throws X;
 	

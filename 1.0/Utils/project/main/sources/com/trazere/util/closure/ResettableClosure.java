@@ -36,7 +36,9 @@ import com.trazere.util.type.Maybe.Some;
  * 
  * @param <T> Type of the value.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link com.trazere.core.functional.ResettableThunk}.
  */
+@Deprecated
 public abstract class ResettableClosure<T, X extends Exception>
 implements Closure<T, X>, Releasable<RuntimeException>, Describable {
 	/**
@@ -46,7 +48,9 @@ implements Closure<T, X>, Releasable<RuntimeException>, Describable {
 	 * @param <X> Type of the exceptions.
 	 * @param value Value. May be <code>null</code>.
 	 * @return The closure.
+	 * @deprecated Use {@link com.trazere.core.functional.Thunks#constant(Object)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> ResettableClosure<T, X> build(final T value) {
 		return new ResettableClosure<T, X>() {
 			@Override
@@ -69,7 +73,9 @@ implements Closure<T, X>, Releasable<RuntimeException>, Describable {
 	 * @param <X> Type of the exceptions.
 	 * @param function The function computing the value.
 	 * @return The closure.
+	 * @deprecated {@link com.trazere.core.functional.ThunkUtils#resettable(com.trazere.core.functional.Thunk)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> ResettableClosure<T, X> build(final Function0<? extends T, ? extends X> function) {
 		return new ResettableClosure<T, X>() {
 			@Override

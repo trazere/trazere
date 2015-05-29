@@ -24,7 +24,9 @@ import com.trazere.util.type.Tuple2;
  * The {@link ObservableMutableObject} class represents mutable object values whose changes can be observed.
  * 
  * @param <T> Type of the value.
+ * @deprecated Use {@link com.trazere.core.reactive.ObservableMutableObject}.
  */
+@Deprecated
 public class ObservableMutableObject<T>
 extends MutableObject<T>
 implements ObservableValue<T> {

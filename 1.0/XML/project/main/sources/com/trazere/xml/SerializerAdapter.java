@@ -32,7 +32,7 @@ extends XmlAdapter<String, T> {
 	/**
 	 * Instantiates a new adapter.
 	 * 
-	 * @param serializer
+	 * @param serializer Serializer to use.
 	 */
 	public SerializerAdapter(final Serializer<T, String> serializer) {
 		assert null != serializer;

@@ -26,7 +26,9 @@ import com.trazere.util.type.Tuple2;
  * The {@link MutableReference} class represents mutable, observable refererences.
  * 
  * @param <T> Type of the referenced values.
+ * @deprecated Use {@link com.trazere.core.reactive.ObservableMutableReference}.
  */
+@Deprecated
 public class ObservableMutableReference<T>
 extends MutableReference<T>
 implements ObservableReference<T> {
@@ -99,6 +101,11 @@ implements ObservableReference<T> {
 	
 	protected final SimpleObservable<Maybe<T>> _observable = buildObservable();
 	
+	/**
+	 * @deprecated To be removed.
+	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	protected SimpleObservable<Maybe<T>> buildObservable() {
 		return new SimpleObservable<Maybe<T>>();
 	}

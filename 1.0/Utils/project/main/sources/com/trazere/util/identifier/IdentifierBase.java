@@ -25,7 +25,9 @@ import com.trazere.util.function.Function1;
  * 
  * @param <V> Type of the values of the identifier.
  * @param <I> Type of the identifiers.
+ * @deprecated To be removed.
  */
+@Deprecated
 public abstract class IdentifierBase<V, I extends Identifier<V>> {
 	/** Identifiers identified by their values. */
 	private final LazyMap<V, I, RuntimeException> _identifiers = new LazyMap<V, I, RuntimeException>() {

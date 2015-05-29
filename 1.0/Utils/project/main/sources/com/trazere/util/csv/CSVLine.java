@@ -24,10 +24,18 @@ import java.util.Map;
  * The {@link CSVLine} class represents lines of CSV files.
  * <p>
  * CSV lines are defined as records of the values of the fields identified by the headers of the fields.
+ * 
+ * @deprecated Use {@link com.trazere.core.record.Record}.
  */
+@Deprecated
 public class CSVLine
 extends SimpleRecord<String, String> {
-	/** Empty line. */
+	/**
+	 * Empty line.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.record.Records#empty()}.
+	 */
+	@Deprecated
 	public static final CSVLine EMPTY = new CSVLine(Collections.<String, String>emptyMap());
 	
 	/**
@@ -36,7 +44,9 @@ extends SimpleRecord<String, String> {
 	 * @param header Header of the field.
 	 * @param value Value of the field. May be <code>null</code>.
 	 * @return The built CSV line.
+	 * @deprecated Use {@link com.trazere.core.record.Records#fromKeyAndValue(com.trazere.core.record.FieldKey, Object)}.
 	 */
+	@Deprecated
 	public static CSVLine build(final String header, final String value) {
 		assert null != header;
 		
@@ -52,7 +62,11 @@ extends SimpleRecord<String, String> {
 	 * @param header2 Header of the second field.
 	 * @param value2 Value of the second field.
 	 * @return The built CSV line.
+	 * @deprecated Use
+	 *             {@link com.trazere.core.record.Records#fromKeysAndValues(com.trazere.core.record.FieldKey, Object, com.trazere.core.record.FieldKey, Object)}
+	 *             .
 	 */
+	@Deprecated
 	public static CSVLine build(final String header1, final String value1, final String header2, final String value2) {
 		assert null != header1;
 		assert null != header2;

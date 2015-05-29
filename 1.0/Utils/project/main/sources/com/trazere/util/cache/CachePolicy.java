@@ -22,7 +22,9 @@ import java.util.Collection;
  * 
  * @param <K> Type of the keys.
  * @see Cache
+ * @deprecated Use {@link com.trazere.core.cache.CachePolicy}.
  */
+@Deprecated
 public interface CachePolicy<K> {
 	/**
 	 * Notifies the receiver cache policy that the value associated to the given key has been accessed.
@@ -52,11 +54,16 @@ public interface CachePolicy<K> {
 	 * Notifies the receiver cache policy that the value associated to the given key has been removed.
 	 * 
 	 * @param key The key.
+	 * @deprecated Use {@link com.trazere.core.cache.CachePolicy.State#clearedEntry(Object)}.
 	 */
+	@Deprecated
 	public void removedEntry(final K key);
 	
 	/**
 	 * Notifies the receiver cache policy that all values have been removed.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.cache.CachePolicy.State#clearedAllEntries()}.
 	 */
+	@Deprecated
 	public void removedAllEntries();
 }

@@ -20,7 +20,10 @@ import com.trazere.util.accumulator.BaseAccumulator1;
 
 /**
  * The {@link ReferenceAccumulators} class provides various factories of accumulators related to references.
+ * 
+ * @deprecated Use core.
  */
+@Deprecated
 public class ReferenceAccumulators {
 	/**
 	 * Builds an accumulator that updates the given reference.
@@ -30,7 +33,9 @@ public class ReferenceAccumulators {
 	 * @param <X> Type of the exceptions.
 	 * @param reference The reference to set.
 	 * @return The built accumulator.
+	 * @deprecated Use {@link com.trazere.core.reference.ReferenceAccumulators#update(com.trazere.core.reference.MutableReference)}.
 	 */
+	@Deprecated
 	public static <T, R extends MutableReference<T>, X extends Exception> Accumulator1<T, R, X> update(final R reference) {
 		assert null != reference;
 		

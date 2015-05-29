@@ -20,7 +20,9 @@ package com.trazere.util.function;
  * 
  * @param <R> Type of the result values.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link com.trazere.core.functional.Thunk}.
  */
+@Deprecated
 public interface Function0<R, X extends Exception> {
 	/**
 	 * Evaluates the receiver function.

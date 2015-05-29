@@ -7,7 +7,9 @@ import com.trazere.util.type.Maybe;
  * The {@link LangExtractors} class provides various factories of extractors related to the language.
  * 
  * @see Function1
+ * @deprecated Use core.
  */
+@Deprecated
 public class LangExtractors {
 	/**
 	 * Builds an extractor that matches the values according to the given type.
@@ -18,7 +20,9 @@ public class LangExtractors {
 	 * @param type The type.
 	 * @return The built extractor.
 	 * @see LangUtils#match(Object, Class)
+	 * @deprecated Use {@link com.trazere.core.lang.ObjectExtractors#match(Class)}.
 	 */
+	@Deprecated
 	public static <T, R extends T, X extends Exception> Function1<T, Maybe<R>, X> match(final Class<R> type) {
 		assert null != type;
 		

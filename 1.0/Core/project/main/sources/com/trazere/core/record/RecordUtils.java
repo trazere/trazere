@@ -36,6 +36,8 @@ import java.util.Set;
  * @see Record
  */
 public class RecordUtils {
+	// TODO: fields (similar to MapUtils.bindings(...)) for lazy manipulations.
+	
 	/**
 	 * Executes the given procedure with each field of the given record.
 	 * 
@@ -122,6 +124,7 @@ public class RecordUtils {
 		return IterableUtils.count(record.fields(), filter);
 	}
 	
+	// TODO: rename to append
 	/**
 	 * Builds the union of the given records.
 	 * <p>
@@ -194,6 +197,7 @@ public class RecordUtils {
 		};
 	}
 	
+	// TODO: rename to append
 	/**
 	 * Builds the union of the given records.
 	 * <p>
@@ -212,6 +216,8 @@ public class RecordUtils {
 		builder.completeAll(record2);
 		return builder.build();
 	}
+	
+	// TODO: add a lazy filter (no factory arg)
 	
 	/**
 	 * Filters the fields of the given record using the given filter.
@@ -233,6 +239,8 @@ public class RecordUtils {
 		return builder.build();
 	}
 	
+	// TODO: add a lazy map (no factory arg)
+	
 	/**
 	 * Transforms the fields of the given record using the given function.
 	 *
@@ -253,6 +261,8 @@ public class RecordUtils {
 		}
 		return builder.build();
 	}
+	
+	// TODO: add a lazy extract (no factory arg)
 	
 	/**
 	 * Extracts the fields of the given record using the given extractor.

@@ -33,7 +33,10 @@ import javax.xml.transform.stream.StreamSource;
 
 /**
  * The {@link IOUtils} class provides various utilities regarding I/O.
+ * 
+ * @deprecated Use core.
  */
+@Deprecated
 public class IOUtils {
 	/**
 	 * Builds a function which builds files.
@@ -54,7 +57,9 @@ public class IOUtils {
 	 * @param output Output stream to write into.
 	 * @throws IOException When the input cannot be read.
 	 * @throws IOException When the output cannot be written.
+	 * @deprecated Use {@link com.trazere.core.io.InputStreamUtils#copy(InputStream, OutputStream)}.
 	 */
+	@Deprecated
 	public static void copyStream(final InputStream input, final OutputStream output)
 	throws IOException {
 		assert null != input;
@@ -79,7 +84,9 @@ public class IOUtils {
 	 * @param writer Writer to write into.
 	 * @throws IOException When the reader cannot be read.
 	 * @throws IOException When the writer cannot be written.
+	 * @deprecated Use {@link com.trazere.core.io.ReaderUtils#copy(Reader, Writer)}.
 	 */
+	@Deprecated
 	public static void copyText(final Reader reader, final Writer writer)
 	throws IOException {
 		assert null != reader;
@@ -103,7 +110,9 @@ public class IOUtils {
 	 * @param reader Reader to read from.
 	 * @return The read text.
 	 * @throws IOException The
+	 * @deprecated Use {@link com.trazere.core.io.ReaderUtils#read(Reader)}.
 	 */
+	@Deprecated
 	public static String readText(final Reader reader)
 	throws IOException {
 		final StringWriter result = new StringWriter();
@@ -117,7 +126,9 @@ public class IOUtils {
 	 * @param input The input providing the content to map.
 	 * @param transformation The input providing the contents of the XSLT.
 	 * @return The built input.
+	 * @deprecated Use {@link com.trazere.core.io.InputUtils#transform(com.trazere.core.io.Input, com.trazere.core.io.Input)}.
 	 */
+	@Deprecated
 	public static Input transform(final Input input, final Input transformation) {
 		assert null != input;
 		assert null != transformation;

@@ -27,7 +27,10 @@ import java.util.Map;
 
 /**
  * The {@link CollectionAccumulators} class provides various factories of accumulators related to collections.
+ * 
+ * @deprecated Use core.
  */
+@Deprecated
 public class CollectionAccumulators {
 	/**
 	 * Builds an accumulator that populates the given collection.
@@ -37,7 +40,9 @@ public class CollectionAccumulators {
 	 * @param <X> Type of the exceptions.
 	 * @param collection The collection to populate.
 	 * @return The built accumulator.
+	 * @deprecated Use {@link com.trazere.core.collection.CollectionAccumulators#add(Collection)}.
 	 */
+	@Deprecated
 	public static <T, C extends Collection<? super T>, X extends Exception> Accumulator1<T, C, X> add(final C collection) {
 		assert null != collection;
 		
@@ -66,7 +71,10 @@ public class CollectionAccumulators {
 	 * @param collection The collection to populate.
 	 * @param collectionFactory The collection factory to use to copy the collections.
 	 * @return The built accumulator.
+	 * @deprecated Use {@link com.trazere.core.collection.CollectionAccumulators#add(Collection)} and
+	 *             {@link com.trazere.core.imperative.AccumulatorUtils#mapState(com.trazere.core.imperative.Accumulator, com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public static <T, C extends Collection<? super T>, X extends Exception> Accumulator1<T, C, X> add(final Collection<T> collection, final CollectionFactory<T, ? extends C> collectionFactory) {
 		assert null != collection;
 		assert null != collectionFactory;
@@ -89,7 +97,9 @@ public class CollectionAccumulators {
 	 * @param <X> Type of the exceptions.
 	 * @param map The map to populate.
 	 * @return The built accumulator.
+	 * @deprecated Use {@link com.trazere.core.collection.MapAccumulators#put(Map)}.
 	 */
+	@Deprecated
 	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> Accumulator2<K, V, M, X> put(final M map) {
 		assert null != map;
 		
@@ -116,7 +126,9 @@ public class CollectionAccumulators {
 	 * @param <X> Type of the exceptions.
 	 * @param multimap The map to populate.
 	 * @return The built accumulator.
+	 * @deprecated Use {@link com.trazere.core.collection.MultimapAccumulators#put(com.trazere.core.collection.Multimap)}.
 	 */
+	@Deprecated
 	public static <K, V, M extends Multimap<? super K, ? super V, ?>, X extends Exception> Accumulator2<K, V, M, X> put(final M multimap) {
 		assert null != multimap;
 		

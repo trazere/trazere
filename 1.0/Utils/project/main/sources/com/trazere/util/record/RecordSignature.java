@@ -26,7 +26,9 @@ import java.util.Set;
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
+ * @deprecated To be removed.
  */
+@Deprecated
 public interface RecordSignature<K, V> {
 	/**
 	 * Tests whether the receiver record signature is empty or not.

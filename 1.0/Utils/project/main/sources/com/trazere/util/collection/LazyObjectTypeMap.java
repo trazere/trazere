@@ -30,11 +30,13 @@ import java.util.Set;
  * @param <T> Upper bound type.
  * @param <V> Type of the values.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link com.trazere.core.functional.BaseObjectTypeFunction}.
  */
+@Deprecated
 public abstract class LazyObjectTypeMap<T, V, X extends Exception>
 extends LazyTypeMap<Class<? extends T>, V, X>
 implements ObjectTypeMap<T, Maybe<? extends V>, X> {
-	// HACK: named buildObject to work around javac bug 
+	// HACK: named buildObject to work around javac bug
 	/**
 	 * Builds a new type map with no upper bounds and defaut values using the given function.
 	 * 
@@ -42,12 +44,14 @@ implements ObjectTypeMap<T, Maybe<? extends V>, X> {
 	 * @param <X> Type of the exceptions.
 	 * @param function The function.
 	 * @return The built map.
+	 * @deprecated Use {@link com.trazere.core.functional.BaseObjectTypeFunction#build(com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public static <V, X extends Exception> LazyObjectTypeMap<Object, V, X> buildObject(final Function1<? super Class<?>, ? extends Maybe<? extends V>, ? extends X> function) {
 		return buildObject(function, Object.class, Maybe.<V>none());
 	}
 	
-	// HACK: named buildObject to work around javac bug 
+	// HACK: named buildObject to work around javac bug
 	/**
 	 * Builds a new type map with no upper bounds and the given default value using the given function.
 	 * 
@@ -56,12 +60,14 @@ implements ObjectTypeMap<T, Maybe<? extends V>, X> {
 	 * @param function The function.
 	 * @param defaultValue The default value.
 	 * @return The built map.
+	 * @deprecated Use {@link com.trazere.core.functional.BaseObjectTypeFunction#build(com.trazere.core.functional.Function, com.trazere.core.util.Maybe)}.
 	 */
+	@Deprecated
 	public static <V, X extends Exception> LazyObjectTypeMap<Object, V, X> buildObject(final Function1<? super Class<?>, ? extends Maybe<? extends V>, ? extends X> function, final Maybe<? extends V> defaultValue) {
 		return buildObject(function, Object.class, defaultValue);
 	}
 	
-	// HACK: named buildObject to work around javac bug 
+	// HACK: named buildObject to work around javac bug
 	/**
 	 * Builds a new type map with the given upper bound and default value using the given function.
 	 * 
@@ -71,12 +77,14 @@ implements ObjectTypeMap<T, Maybe<? extends V>, X> {
 	 * @param function The function.
 	 * @param upperBound The upper bound.
 	 * @return The built map.
+	 * @deprecated Use {@link com.trazere.core.functional.BaseObjectTypeFunction#build(com.trazere.core.functional.Function, Class)}.
 	 */
+	@Deprecated
 	public static <T, V, X extends Exception> LazyObjectTypeMap<T, V, X> buildObject(final Function1<? super Class<? extends T>, ? extends Maybe<? extends V>, ? extends X> function, final Class<T> upperBound) {
 		return buildObject(function, upperBound, Maybe.<V>none());
 	}
 	
-	// HACK: named buildObject to work around javac bug 
+	// HACK: named buildObject to work around javac bug
 	/**
 	 * Builds a new type map with the given upper bound and default value using the given function.
 	 * 
@@ -87,7 +95,10 @@ implements ObjectTypeMap<T, Maybe<? extends V>, X> {
 	 * @param upperBound The upper bound.
 	 * @param defaultValue The default value.
 	 * @return The built map.
+	 * @deprecated Use
+	 *             {@link com.trazere.core.functional.BaseObjectTypeFunction#build(com.trazere.core.functional.Function, Class, com.trazere.core.util.Maybe)}.
 	 */
+	@Deprecated
 	public static <T, V, X extends Exception> LazyObjectTypeMap<T, V, X> buildObject(final Function1<? super Class<? extends T>, ? extends Maybe<? extends V>, ? extends X> function, final Class<T> upperBound, final Maybe<? extends V> defaultValue) {
 		return new LazyObjectTypeMap<T, V, X>(upperBound, defaultValue) {
 			@Override

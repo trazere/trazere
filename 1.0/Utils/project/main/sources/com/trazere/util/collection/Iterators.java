@@ -28,14 +28,18 @@ import java.util.NoSuchElementException;
  * The {@link Iterators} class provides various factories of iterators.
  * 
  * @see Iterator
+ * @deprecated Use core.
  */
+@Deprecated
 public class Iterators {
 	/**
 	 * Builds an empty iterator.
 	 * 
 	 * @param <V> Type of the the values.
 	 * @return The built iterator.
+	 * @deprecated Use {@link com.trazere.core.imperative.Iterators#empty()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <V> Iterator<V> empty() {
 		return (Iterator<V>) _EMPTY;
@@ -65,7 +69,9 @@ public class Iterators {
 	 * @param <V> Type of the the value.
 	 * @param value The value. May be <code>null</code>.
 	 * @return The built iterator.
+	 * @deprecated Use {@link com.trazere.core.imperative.Iterators#fromElement(Object)}.
 	 */
+	@Deprecated
 	public static <V> Iterator<V> fromValue(final V value) {
 		return new Iterator<V>() {
 			protected boolean _next = true;
@@ -99,7 +105,9 @@ public class Iterators {
 	 * @param <T> Type of the the values.
 	 * @param values The values.
 	 * @return The built iterator.
+	 * @deprecated Use {@link com.trazere.core.imperative.Iterators#fromElements(Object...)}.
 	 */
+	@Deprecated
 	public static <T> Iterator<T> fromValues(final T... values) {
 		assert null != values;
 		
@@ -138,7 +146,9 @@ public class Iterators {
 	 * @param predicate The predicate.
 	 * @param iterator The iterator.
 	 * @return The built iterator over the filtered values.
+	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#filter(Iterator, com.trazere.core.functional.Predicate)}.
 	 */
+	@Deprecated
 	public static <T> Iterator<T> filter(final Predicate1<? super T, ? extends RuntimeException> predicate, final Iterator<? extends T> iterator) {
 		assert null != predicate;
 		assert null != iterator;
@@ -164,7 +174,9 @@ public class Iterators {
 	 * @param function The function.
 	 * @param iterator The iterator.
 	 * @return The built iterator over the transformed values.
+	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#map(Iterator, com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public static <T, R> Iterator<R> map(final Function1<? super T, ? extends R, ? extends RuntimeException> function, final Iterator<? extends T> iterator) {
 		assert null != function;
 		assert null != iterator;
@@ -205,7 +217,9 @@ public class Iterators {
 	 * @param extractor The extractor.
 	 * @param iterator The iterator.
 	 * @return The built iterator over the filtered and transformed values.
+	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#extract(Iterator, com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public static <T, R> Iterator<R> extract(final Function1<? super T, ? extends Maybe<? extends R>, ? extends RuntimeException> extractor, final Iterator<? extends T> iterator) {
 		assert null != extractor;
 		assert null != iterator;
@@ -242,7 +256,9 @@ public class Iterators {
 	 * @param <T> Type of the values.
 	 * @param list List to iterate.
 	 * @return The built iterator.
+	 * @deprecated Use {@link com.trazere.core.collection.ListUtils#backwardIterator(List)}.
 	 */
+	@Deprecated
 	public static <T> Iterator<T> reversed(final List<? extends T> list) {
 		assert null != list;
 		
@@ -269,7 +285,9 @@ public class Iterators {
 	 * Builds an iterator over the natural integers.
 	 * 
 	 * @return The built iterator.
+	 * @deprecated Use {@link com.trazere.core.lang.InfiniteIntSequence#iterator()}.
 	 */
+	@Deprecated
 	public static Iterator<Integer> counter() {
 		return counter(0, 1);
 	}
@@ -279,7 +297,9 @@ public class Iterators {
 	 * 
 	 * @param start First value.
 	 * @return The built iterator.
+	 * @deprecated Use {@link com.trazere.core.lang.InfiniteIntSequence#iterator()}.
 	 */
+	@Deprecated
 	public static Iterator<Integer> counter(final int start) {
 		return counter(start, 1);
 	}
@@ -290,7 +310,9 @@ public class Iterators {
 	 * @param start First value.
 	 * @param increment Increment.
 	 * @return The built iterator.
+	 * @deprecated Use {@link com.trazere.core.lang.InfiniteIntSequence#iterator()}.
 	 */
+	@Deprecated
 	public static Iterator<Integer> counter(final int start, final int increment) {
 		final Counter counter = new Counter(start, increment);
 		return new Iterator<Integer>() {

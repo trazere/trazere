@@ -22,19 +22,25 @@ import java.util.Set;
 
 /**
  * The {@link CachePolicies} class provides various factories of cache policies.
+ * 
+ * @deprecated Use core.
  */
+@Deprecated
 public class CachePolicies {
 	/**
 	 * Builds a cache policy that keeps all entries.
 	 * 
 	 * @param <K> Type of the keys.
 	 * @return The built policy.
+	 * @deprecated Use {@link com.trazere.core.cache.CachePolicies#all()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <K> CachePolicy<K> all() {
 		return (CachePolicy<K>) _ALL;
 	}
 	
+	@Deprecated
 	private static final CachePolicy<?> _ALL = new AllCachePolicy<Object>();
 	
 	/**
@@ -44,7 +50,9 @@ public class CachePolicies {
 	 * @param policy1 The first policy.
 	 * @param policy2 The second policy.
 	 * @return The built policy.
+	 * @deprecated Use {@link com.trazere.core.cache.CachePolicies#or(com.trazere.core.cache.CachePolicy, com.trazere.core.cache.CachePolicy)}.
 	 */
+	@Deprecated
 	public static <K> CachePolicy<K> or(final CachePolicy<K> policy1, final CachePolicy<K> policy2) {
 		assert null != policy1;
 		assert null != policy2;
@@ -85,7 +93,9 @@ public class CachePolicies {
 	 * @param policy1 The first policy.
 	 * @param policy2 The second policy.
 	 * @return The built policy.
+	 * @deprecated Use {@link com.trazere.core.cache.CachePolicies#and(com.trazere.core.cache.CachePolicy, com.trazere.core.cache.CachePolicy)}.
 	 */
+	@Deprecated
 	public static <K> CachePolicy<K> and(final CachePolicy<K> policy1, final CachePolicy<K> policy2) {
 		assert null != policy1;
 		assert null != policy2;

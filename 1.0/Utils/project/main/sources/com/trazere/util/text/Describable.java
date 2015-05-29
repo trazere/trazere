@@ -19,12 +19,16 @@ package com.trazere.util.text;
  * The {@link Describable} interface defines descriptable elements.
  * 
  * @see TextUtils#computeDescription(Describable)
+ * @deprecated Use {@link com.trazere.core.text.Describable}.
  */
+@Deprecated
 public interface Describable {
 	/**
 	 * Complete the given description according to the receiver object.
 	 * 
 	 * @param description The description.
+	 * @deprecated Use {@link com.trazere.core.text.Describable#appendDescription(com.trazere.core.text.Description)}.
 	 */
+	@Deprecated
 	public void fillDescription(final Description description);
 }

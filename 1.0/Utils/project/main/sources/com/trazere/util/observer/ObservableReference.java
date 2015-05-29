@@ -22,7 +22,9 @@ import com.trazere.util.type.Maybe;
  * The {@link ObservableReference} interface defines references whose value can be observed.
  * 
  * @param <T> Type of the referenced value.
+ * @deprecated Use {@link com.trazere.core.reactive.ObservableReference}.
  */
+@Deprecated
 public interface ObservableReference<T>
 extends Reference<T>, ObservableValue<Maybe<T>> {
 	// Nothing to do.

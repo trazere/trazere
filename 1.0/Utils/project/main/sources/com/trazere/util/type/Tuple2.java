@@ -25,7 +25,9 @@ import com.trazere.util.lang.LangUtils;
  * 
  * @param <T1> Type of the first value.
  * @param <T2> Type of the second value.
+ * @deprecated Use {@link com.trazere.core.util.Tuple2}.
  */
+@Deprecated
 public class Tuple2<T1, T2>
 extends Tuple1<T1> {
 	private static final long serialVersionUID = 1L;
@@ -38,7 +40,9 @@ extends Tuple1<T1> {
 	 * @param first The first value. May be <code>null</code>.
 	 * @param second The second value. May be <code>null</code>.
 	 * @return The built tuple.
+	 * @deprecated {@link com.trazere.core.util.Tuples#tuple2(Object, Object)}.
 	 */
+	@Deprecated
 	public static <T1, T2> Tuple2<T1, T2> build(final T1 first, final T2 second) {
 		return new Tuple2<T1, T2>(first, second);
 	}
@@ -50,7 +54,9 @@ extends Tuple1<T1> {
 	 * @param <T2> Type of the second value.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
+	 * @deprecated {@link com.trazere.core.util.TupleFunctions#tuple2()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T1, T2, X extends Exception> Function2<T1, T2, Tuple2<T1, T2>, X> buildFunction() {
 		return (Function2<T1, T2, Tuple2<T1, T2>, X>) _BUILD_FUNCTION;
@@ -85,7 +91,9 @@ extends Tuple1<T1> {
 	 * Gets the second value of the receiver tuple.
 	 * 
 	 * @return The value. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.util.Field2#get2()}.
 	 */
+	@Deprecated
 	public T2 getSecond() {
 		return _second;
 	}
@@ -96,7 +104,9 @@ extends Tuple1<T1> {
 	 * @param <T2> Type of the second values of the tuples.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
+	 * @deprecated {@link com.trazere.core.util.FieldFunctions#get2()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T2, X extends Exception> Function1<Tuple2<?, ? extends T2>, T2, X> getSecondFunction() {
 		return (Function1<Tuple2<?, ? extends T2>, T2, X>) _GET_SECOND_FUNCTION;
@@ -122,7 +132,9 @@ extends Tuple1<T1> {
 	 * @param tuple2 The second tuple.
 	 * @return The result of the comparison as defined by the {@link Comparable#compareTo(Object)} method.
 	 * @see Comparable#compareTo(Object)
+	 * @deprecated Use {@link com.trazere.core.util.TupleComparators#tuple2(java.util.Comparator, java.util.Comparator)}.
 	 */
+	@Deprecated
 	public static <T1 extends Comparable<T1>, T2 extends Comparable<T2>> int compare(final Tuple2<T1, T2> tuple1, final Tuple2<T1, T2> tuple2) {
 		assert null != tuple1;
 		assert null != tuple2;

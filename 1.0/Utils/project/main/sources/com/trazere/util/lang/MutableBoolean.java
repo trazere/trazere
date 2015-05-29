@@ -21,7 +21,10 @@ import com.trazere.util.text.TextUtils;
 
 /**
  * The {@link MutableBoolean} class represents mutable boolean values.
+ * 
+ * @deprecated Use {@link com.trazere.core.lang.MutableBoolean}.
  */
+@Deprecated
 public class MutableBoolean
 implements Describable {
 	/** The value. */

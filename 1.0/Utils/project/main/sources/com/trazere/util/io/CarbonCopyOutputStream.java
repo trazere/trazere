@@ -20,7 +20,10 @@ import java.io.OutputStream;
 
 /**
  * The {@link CarbonCopyOutputStream} class carbon copies the data written to a destination output stream to another output stream.
+ * 
+ * @deprecated Use {@link com.trazere.core.io.CarbonCopyOutputStream}.
  */
+@Deprecated
 public class CarbonCopyOutputStream
 extends DecoratorOutputStream {
 	/** The output stream receiving the copy of the data. */

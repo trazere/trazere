@@ -20,7 +20,10 @@ import com.trazere.util.lang.ThrowableFactory;
 
 /**
  * {@link ReferenceException} exceptions are thrown when reference related errors occur.
+ * 
+ * @deprecated Use {@link com.trazere.core.reference.ReferenceException}.
  */
+@Deprecated
 public class ReferenceException
 extends RuntimeException {
 	private static final long serialVersionUID = 1L;

@@ -30,7 +30,9 @@ import java.util.Set;
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  * @param <R> Type of the records.
+ * @deprecated Use {@link com.trazere.core.record.BaseRecordBuilder}.
  */
+@Deprecated
 public abstract class BaseRecordBuilder<K, V, R extends Record<K, V>>
 implements RecordBuilder<K, V, R>, Describable {
 	/** Values of the fields identified by their keys. */

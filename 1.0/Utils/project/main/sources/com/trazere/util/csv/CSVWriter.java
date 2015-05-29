@@ -28,7 +28,10 @@ import java.util.Set;
 
 /**
  * The {@link CSVWriter} class provides support for writing CSV files.
+ * 
+ * @deprecated Use {@link com.trazere.csv.CSVWriter}.
  */
+@Deprecated
 public class CSVWriter {
 	/** Writer receiving the CSV output. */
 	protected final Writer _writer;

@@ -22,7 +22,10 @@ import java.io.InputStream;
  * The {@link Input} interface defines data inputs.
  * <p>
  * It is basically a factory of input stream.
+ * 
+ * @deprecated Use {@link com.trazere.core.io.Input}.
  */
+@Deprecated
 public interface Input {
 	/**
 	 * Indicated whether the underlying data exist so that the stream can be opened.

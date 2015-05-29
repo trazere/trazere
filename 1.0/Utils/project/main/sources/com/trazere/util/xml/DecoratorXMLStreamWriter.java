@@ -22,7 +22,10 @@ import javax.xml.stream.XMLStreamWriter;
 
 /**
  * The {@link DecoratorXMLStreamWriter} class implements decorators of XML stream writers.
+ * 
+ * @deprecated Use {@link com.trazere.xml.DecoratorXMLStreamWriter}.
  */
+@Deprecated
 public class DecoratorXMLStreamWriter
 extends Decorator<XMLStreamWriter>
 implements XMLStreamWriter {

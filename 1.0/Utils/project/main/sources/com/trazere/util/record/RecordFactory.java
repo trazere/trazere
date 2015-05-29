@@ -25,7 +25,9 @@ import java.util.Map;
  * @param <V> Type of the values.
  * @param <R> Type of the records.
  * @see Record
+ * @deprecated Use {@link com.trazere.core.record.RecordFactory}.
  */
+@Deprecated
 public interface RecordFactory<K, V, R extends Record<K, V>>
 extends Factory<R, RecordException> {
 	/**
@@ -44,7 +46,9 @@ extends Factory<R, RecordException> {
 	 * @param fields Values of the fields identified by their keys.
 	 * @return The built record builder.
 	 * @throws RecordException When the record cannot be built.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public R build(final Map<? extends K, ? extends V> fields)
 	throws RecordException;
 	

@@ -38,7 +38,7 @@ implements Field<T>, Serializable {
 		return _value;
 	}
 	
-	// TODO: add getValueFunction
+	// TODO: add getValueFunction in ValueFunctions
 	
 	// Object.
 	

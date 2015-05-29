@@ -24,7 +24,10 @@ import java.util.Map;
 
 /**
  * The {@link CSVLineBuilder} class implements builders of {@link CSVLine CSV lines}.
+ * 
+ * @deprecated Use {@link com.trazere.core.record.SimpleRecordBuilder}.
  */
+@Deprecated
 public class CSVLineBuilder
 extends BaseRecordBuilder<String, String, CSVLine> {
 	/**
@@ -48,7 +51,9 @@ extends BaseRecordBuilder<String, String, CSVLine> {
 	 * 
 	 * @param record Record containing the initial fields of the new record builder.
 	 * @throws InvalidFieldException When the some field of the given record cannot be read.
+	 * @deprecated Use {@link com.trazere.core.record.SimpleRecordBuilder#addAll(com.trazere.core.record.Record)}.
 	 */
+	@Deprecated
 	public CSVLineBuilder(final Record<String, String> record)
 	throws InvalidFieldException {
 		super(record);
@@ -58,7 +63,9 @@ extends BaseRecordBuilder<String, String, CSVLine> {
 	 * Instantiate a new CSV line builder populated with the fields of the given record builder.
 	 * 
 	 * @param builder Record builder containing the initial fields of the new record builder.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public CSVLineBuilder(final RecordBuilder<String, String, ?> builder) {
 		super(builder);
 	}

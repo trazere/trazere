@@ -34,7 +34,10 @@ import java.util.UUID;
 
 /**
  * The {@link TextUtils} class provides various helpers regarding the manipulation of text.
+ * 
+ * @deprecated Use core.
  */
+@Deprecated
 public class TextUtils {
 	/**
 	 * Compares the given string ignoring case.
@@ -45,7 +48,9 @@ public class TextUtils {
 	 * @param string2 The second string to compare. May be <code>null</code>.
 	 * @return The result of the comparison as defined by the {@link String#compareToIgnoreCase(String)} method.
 	 * @see String#compareToIgnoreCase(String)
+	 * @deprecated Use {@link com.trazere.core.util.ComparatorUtils#safeCompare(java.util.Comparator, Object, Object)}.
 	 */
+	@Deprecated
 	public static int safeCompareIgnoreCase(final String string1, final String string2) {
 		return LangUtils.safeCompare(String.CASE_INSENSITIVE_ORDER, string1, string2);
 	}
@@ -58,7 +63,9 @@ public class TextUtils {
 	 * @param s The string.
 	 * @return <code>true</code> when the string contains some character accepted by the filter.
 	 * @throws X When some filter evaluation fails.
+	 * @deprecated Use {@link com.trazere.core.text.TextUtils#contains(CharSequence, com.trazere.core.text.CharPredicate)}.
 	 */
+	@Deprecated
 	public static <X extends Exception> boolean contains(final CharPredicate<? extends X> filter, final String s)
 	throws X {
 		assert null != filter;
@@ -80,7 +87,9 @@ public class TextUtils {
 	 * @param s The string.
 	 * @return <code>true</code> when the string contains some character accepted by the filter.
 	 * @throws X When some filter evaluation fails.
+	 * @deprecated Use {@link com.trazere.core.text.TextUtils#matches(CharSequence, com.trazere.core.text.CharPredicate)}.
 	 */
+	@Deprecated
 	public static <X extends Exception> boolean matches(final CharPredicate<? extends X> filter, final String s)
 	throws X {
 		assert null != filter;
@@ -102,7 +111,9 @@ public class TextUtils {
 	 * @param s The string.
 	 * @return The filtered string.
 	 * @throws X When some filter evaluation fails.
+	 * @deprecated Use {@link com.trazere.core.text.TextUtils#filter(CharSequence, com.trazere.core.text.CharPredicate)}.
 	 */
+	@Deprecated
 	public static <X extends Exception> String filter(final CharPredicate<? extends X> filter, final String s)
 	throws X {
 		assert null != filter;
@@ -126,7 +137,9 @@ public class TextUtils {
 	 * @param s The string to trim.
 	 * @return The trimmed string.
 	 * @throws X When some predicate evaluation fails.
+	 * @deprecated Use {@link com.trazere.core.text.TextUtils#trim(CharSequence, com.trazere.core.text.CharPredicate)}.
 	 */
+	@Deprecated
 	public static <X extends Exception> String trim(final CharPredicate<? extends X> filter, final String s)
 	throws X {
 		assert null != filter;
@@ -152,7 +165,9 @@ public class TextUtils {
 	 * @param s The string to trim.
 	 * @return The trimmed string.
 	 * @throws X When some predicate evaluation fails.
+	 * @deprecated Use {@link com.trazere.core.text.TextUtils#trimHeading(CharSequence, com.trazere.core.text.CharPredicate)}.
 	 */
+	@Deprecated
 	public static <X extends Exception> String trimHeading(final CharPredicate<? extends X> filter, final String s)
 	throws X {
 		assert null != filter;
@@ -174,7 +189,9 @@ public class TextUtils {
 	 * @param s The string to trim.
 	 * @return The trimmed string.
 	 * @throws X When some predicate evaluation fails.
+	 * @deprecated Use {@link com.trazere.core.text.TextUtils#trimTrailing(CharSequence, com.trazere.core.text.CharPredicate)}.
 	 */
+	@Deprecated
 	public static <X extends Exception> String trimTrailing(final CharPredicate<? extends X> filter, final String s)
 	throws X {
 		assert null != filter;
@@ -196,7 +213,9 @@ public class TextUtils {
 	 * @param s String to adjust.
 	 * @param length Desired length, or <code>0</code> to leave the string as it is.
 	 * @return The adjusted string.
+	 * @deprecated Use {@link com.trazere.core.text.TextUtils#adjust(String, int)}.
 	 */
+	@Deprecated
 	public static String adjust(final String s, final int length) {
 		final int currentLength = s.length();
 		if (length <= 0 || currentLength == length) {
@@ -223,7 +242,9 @@ public class TextUtils {
 	 * @param ignoreEmpty Indicates whether the empty tokens are ignored or not.
 	 * @param results The collection to fill with the tokens.
 	 * @return The given result collection.
+	 * @deprecated Use {@link com.trazere.core.text.TextUtils#split(CharSequence, CharSequence, boolean)}.
 	 */
+	@Deprecated
 	public static <C extends Collection<? super String>> C split(final String string, final String delimiter, final boolean trim, final boolean ignoreEmpty, final C results) {
 		assert null != string;
 		assert null != delimiter;
@@ -245,7 +266,9 @@ public class TextUtils {
 	 * @param string The string.
 	 * @param sub The substring.
 	 * @return The number of occurences.
+	 * @deprecated Use {@link com.trazere.core.text.TextUtils#count(CharSequence, CharSequence)}.
 	 */
+	@Deprecated
 	public static int occurences(final String string, final String sub) {
 		assert null != string;
 		assert null != sub;
@@ -266,7 +289,9 @@ public class TextUtils {
 	 * @param tokens The tokens.
 	 * @param delimiter The delimiter.
 	 * @return The resulting string.
+	 * @deprecated Use {@link com.trazere.core.text.TextUtils#join(Iterable, CharSequence)}.
 	 */
+	@Deprecated
 	public static String join(final Iterable<String> tokens, final String delimiter) {
 		return join(tokens, delimiter, new StringBuilder()).toString();
 	}
@@ -278,7 +303,9 @@ public class TextUtils {
 	 * @param delimiter The delimiter.
 	 * @param builder The string builder to fill.
 	 * @return The given string builder.
+	 * @deprecated Use {@link com.trazere.core.text.Joiner#join(Iterable, Appendable)}.
 	 */
+	@Deprecated
 	public static StringBuilder join(final Iterable<String> tokens, final String delimiter, final StringBuilder builder) {
 		assert null != tokens;
 		
@@ -291,7 +318,9 @@ public class TextUtils {
 	 * @param tokens The tokens.
 	 * @param delimiter The delimiter.
 	 * @return The resulting string.
+	 * @deprecated Use {@link com.trazere.core.text.TextUtils#join(Iterable, CharSequence)}.
 	 */
+	@Deprecated
 	public static String join(final Iterator<String> tokens, final String delimiter) {
 		return join(tokens, delimiter, new StringBuilder()).toString();
 	}
@@ -303,7 +332,9 @@ public class TextUtils {
 	 * @param delimiter The delimiter.
 	 * @param builder The string builder to fill.
 	 * @return The given string builder.
+	 * @deprecated Use {@link com.trazere.core.text.Joiner#join(Iterable, Appendable)}.
 	 */
+	@Deprecated
 	public static StringBuilder join(final Iterator<String> tokens, final String delimiter, final StringBuilder builder) {
 		return join(tokens, Functions.<String, InternalException>identity(), delimiter, builder);
 	}
@@ -318,7 +349,9 @@ public class TextUtils {
 	 * @param delimiter The delimiter.
 	 * @return The resulting string.
 	 * @throws X When some rendering fails.
+	 * @deprecated Use {@link com.trazere.core.text.TextUtils#join(Iterable, com.trazere.core.functional.Function, CharSequence)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> String join(final Iterable<T> tokens, final Function1<? super T, String, ? extends X> renderer, final String delimiter)
 	throws X {
 		return join(tokens, renderer, delimiter, new StringBuilder()).toString();
@@ -335,7 +368,9 @@ public class TextUtils {
 	 * @param builder The string builder to fill.
 	 * @return The given string builder.
 	 * @throws X When some rendering fails.
+	 * @deprecated Use {@link com.trazere.core.text.Joiner#join(Iterable, Appendable)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> StringBuilder join(final Iterable<T> tokens, final Function1<? super T, String, ? extends X> renderer, final String delimiter, final StringBuilder builder)
 	throws X {
 		assert null != tokens;
@@ -354,7 +389,9 @@ public class TextUtils {
 	 * @param builder The string builder to fill.
 	 * @return The given string builder.
 	 * @throws X When some rendering fails.
+	 * @deprecated Use {@link com.trazere.core.text.TextUtils#join(Iterable, com.trazere.core.functional.Function, CharSequence)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> StringBuilder join(final Iterator<T> tokens, final Function1<? super T, String, ? extends X> renderer, final String delimiter, final StringBuilder builder)
 	throws X {
 		assert null != renderer;
@@ -379,7 +416,9 @@ public class TextUtils {
 	 * @param builder The string builder to fill.
 	 * @return The given string builder.
 	 * @throws X When some rendering fails.
+	 * @deprecated Use {@link com.trazere.core.text.Joiner#join(Iterable, Appendable)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> StringBuilder join(final Iterator<T> tokens, final Procedure2<StringBuilder, ? super T, ? extends X> renderer, final String delimiter, final StringBuilder builder)
 	throws X {
 		assert null != tokens;
@@ -406,7 +445,9 @@ public class TextUtils {
 	 * 
 	 * @param s The string to capitalize.
 	 * @return The capitalized string.
+	 * @deprecated Use {@link com.trazere.core.text.TextUtils#capitalize(CharSequence)}.
 	 */
+	@Deprecated
 	public static String capitalize(final String s) {
 		assert null != s;
 		
@@ -417,7 +458,12 @@ public class TextUtils {
 		}
 	}
 	
-	/** Array of the hexadecimal digits characters (upper case). */
+	/**
+	 * Array of the hexadecimal digits characters (upper case).
+	 * 
+	 * @deprecated Use {@link com.trazere.core.text.TextUtils#HEX_DIGITS}.
+	 */
+	@Deprecated
 	public static final char[] HEX_DIGITS = {
 		'0',
 		'1',
@@ -444,7 +490,9 @@ public class TextUtils {
 	 * 
 	 * @param bytes Bytes representing the hexadecimal value.
 	 * @return The string representation.
+	 * @deprecated Use {@link com.trazere.core.text.TextUtils#toHex(byte[])}.
 	 */
+	@Deprecated
 	public static String toHexString(final byte[] bytes) {
 		assert null != bytes;
 		
@@ -462,7 +510,9 @@ public class TextUtils {
 	 * 
 	 * @param s The string.
 	 * @return The regular expression.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public static String regexp(final String s) {
 		assert null != s;
 		
@@ -474,7 +524,9 @@ public class TextUtils {
 	 * 
 	 * @param class_ The class.
 	 * @return The name of the class.
+	 * @deprecated Use {@link com.trazere.core.text.TextUtils#className(Class)}.
 	 */
+	@Deprecated
 	public static String computeClassName(final Class<?> class_) {
 		assert null != class_;
 		
@@ -490,7 +542,9 @@ public class TextUtils {
 	 * 
 	 * @param object The object.
 	 * @return The description.
+	 * @deprecated Use {@link com.trazere.core.text.TextUtils#description(com.trazere.core.text.Describable)}.
 	 */
+	@Deprecated
 	public static String computeDescription(final Describable object) {
 		assert null != object;
 		
@@ -507,7 +561,9 @@ public class TextUtils {
 	 * @param format The number format.
 	 * @param number The number to format.
 	 * @return The number representation.
+	 * @deprecated Use {@link com.trazere.core.text.TextUtils#formatNumber(NumberFormat, Number)}.
 	 */
+	@Deprecated
 	public static String formatNumber(final NumberFormat format, final Number number) {
 		assert null != format;
 		assert null != number;
@@ -529,7 +585,9 @@ public class TextUtils {
 	 * @param representation The representation to parse.
 	 * @return The parsed number.
 	 * @throws CX When the conversion to the result type fails.
+	 * @deprecated Use {@link com.trazere.core.text.TextUtils#parseNumber(NumberFormat, com.trazere.core.functional.Function, String)}.
 	 */
+	@Deprecated
 	public static <T extends Number, CX extends Exception> Maybe<T> parseNumber(final NumberFormat format, final Function1<? super Number, ? extends T, ? extends CX> converter, final String representation)
 	throws CX {
 		assert null != format;
@@ -555,7 +613,9 @@ public class TextUtils {
 	 * @param format The date format.
 	 * @param date The date to format.
 	 * @return The date representation.
+	 * @deprecated Use {@link com.trazere.core.text.TextUtils#formatDate(DateFormat, Date)}.
 	 */
+	@Deprecated
 	public static String formatDate(final DateFormat format, final Date date) {
 		assert null != format;
 		assert null != date;
@@ -573,7 +633,9 @@ public class TextUtils {
 	 * @param format The date format.
 	 * @param representation The representation to parse.
 	 * @return The parsed number.
+	 * @deprecated Use {@link com.trazere.core.text.TextUtils#parseDate(DateFormat, String)}.
 	 */
+	@Deprecated
 	public static Maybe<Date> parseDate(final DateFormat format, final String representation) {
 		assert null != format;
 		assert null != representation;
@@ -594,7 +656,9 @@ public class TextUtils {
 	 * 
 	 * @param uuid The UUID to format.
 	 * @return The UUID representation.
+	 * @deprecated Use {@link com.trazere.core.text.TextUtils#formatUuid(UUID)}.
 	 */
+	@Deprecated
 	public static String formatUuid(final UUID uuid) {
 		assert null != uuid;
 		
@@ -606,7 +670,9 @@ public class TextUtils {
 	 * 
 	 * @param representation The representation to parse.
 	 * @return The parsed UUID.
+	 * @deprecated Use {@link com.trazere.core.text.TextUtils#parseUuid(String)}.
 	 */
+	@Deprecated
 	public static Maybe<UUID> parseUuid(final String representation) {
 		assert null != representation;
 		

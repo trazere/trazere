@@ -40,7 +40,10 @@ import java.util.Set;
  * <li>the set must contain at least one enabled flag, or some flags are required when no flags are enabled,
  * <li>the set must contain no forbidden flags.
  * </ul>
+ * 
+ * @deprecated To be removed.
  */
+@Deprecated
 public class FlagPredicate
 implements Predicate1<Collection<String>, RuntimeException>, Describable {
 	/** The required flags. */

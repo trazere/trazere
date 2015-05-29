@@ -24,7 +24,9 @@ import java.util.Map;
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  * @param <M> Type of the maps.
+ * @deprecated Use {@link com.trazere.core.collection.MapFactory}.
  */
+@Deprecated
 public abstract class BaseMapFactory<K, V, M extends Map<? super K, ? super V>>
 extends BaseFactory<M, RuntimeException>
 implements MapFactory<K, V, M> {

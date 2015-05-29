@@ -25,7 +25,10 @@ import java.io.Reader;
  * It provides various methods to scan the upcoming characters with infinite look ahead. Scanning operations are defined as reading the appropriate characters
  * and matching them against some filter. When the matches (scans) are successful, the read characters are consumed. Otherwise, no characters are consumed, even
  * when the match was partially successful.
+ * 
+ * @deprecated Use {@link com.trazere.core.text.Scanner}.
  */
+@Deprecated
 public class Scanner {
 	/** Reader providing the character stream. */
 	protected final PushbackReader _reader;
@@ -79,7 +82,9 @@ public class Scanner {
 	 * 
 	 * @return <code>true</code> if the eof has been reached, <code>false</code> if characters are still available.
 	 * @throws IOException On failure.
+	 * @deprecated Use {@link com.trazere.core.text.Scanner#isEof()}.
 	 */
+	@Deprecated
 	public boolean eof()
 	throws IOException {
 		final int i = _reader.read();
@@ -143,7 +148,9 @@ public class Scanner {
 	 * @param chars Set of characters to scan.
 	 * @return The sequence of scanned characters.
 	 * @throws IOException On failure.
+	 * @deprecated Use {@link com.trazere.core.text.Scanner#scanChars(com.trazere.core.text.CharPredicate)}.
 	 */
+	@Deprecated
 	public String scanChars(final String chars)
 	throws IOException {
 		final CharPredicate<IOException> filter = new CharPredicate<IOException>() {
@@ -193,7 +200,9 @@ public class Scanner {
 	 * @param string Sequence of characters.
 	 * @return <code>true</code> if the scan is succesful, <code>false</code> otherwise.
 	 * @throws IOException On failure.
+	 * @deprecated Use {@link com.trazere.core.text.Scanner#scanSeq(CharSequence)}.
 	 */
+	@Deprecated
 	public boolean scanString(final String string)
 	throws IOException {
 		assert null != string;
@@ -223,7 +232,9 @@ public class Scanner {
 	 * 
 	 * @return The sequence of scanned characters.
 	 * @throws IOException On failure.
+	 * @deprecated Use {@link com.trazere.core.text.Scanner#scanToEOF()}.
 	 */
+	@Deprecated
 	public String scanUpToEOF()
 	throws IOException {
 		// Scan.
@@ -249,7 +260,9 @@ public class Scanner {
 	 * @param c Stopping character.
 	 * @return The sequence of scanned characters.
 	 * @throws IOException On failure.
+	 * @deprecated Use {@link com.trazere.core.text.Scanner#scanToChar(char)}.
 	 */
+	@Deprecated
 	public String scanUpToChar(final char c)
 	throws IOException {
 		// Scan.
@@ -281,7 +294,9 @@ public class Scanner {
 	 * @param chars Stopping character set.
 	 * @return The sequence of scanned characters.
 	 * @throws IOException On failure.
+	 * @deprecated Use {@link com.trazere.core.text.Scanner#scanToChar(com.trazere.core.text.CharPredicate)}.
 	 */
+	@Deprecated
 	public String scanUpToAnyChar(final String chars)
 	throws IOException {
 		final CharPredicate<IOException> filter = new CharPredicate<IOException>() {
@@ -302,7 +317,9 @@ public class Scanner {
 	 * @param filter Filter defining the stopping characters.
 	 * @return The sequence of scanned characters.
 	 * @throws IOException On failure.
+	 * @deprecated Use {@link com.trazere.core.text.Scanner#scanToChar(com.trazere.core.text.CharPredicate)}.
 	 */
+	@Deprecated
 	public String scanUpToAnyChar(final CharPredicate<IOException> filter)
 	throws IOException {
 		assert null != filter;
@@ -336,7 +353,9 @@ public class Scanner {
 	 * @param string Stopping sequence of characters.
 	 * @return The sequence of scanned characters.
 	 * @throws IOException On failure.
+	 * @deprecated Use {@link com.trazere.core.text.Scanner#scanToSeq(CharSequence)}.
 	 */
+	@Deprecated
 	public String scanUpToString(final String string)
 	throws IOException {
 		assert null != string;

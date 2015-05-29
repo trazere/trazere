@@ -23,7 +23,9 @@ import com.trazere.util.text.TextUtils;
  * The {@link MutableObject} class represents mutable object values.
  * 
  * @param <T> Type of the value.
+ * @deprecated Use {@link com.trazere.core.lang.MutableObject}.
  */
+@Deprecated
 public class MutableObject<T>
 implements Describable {
 	/** The value. May be <code>null</code>. */

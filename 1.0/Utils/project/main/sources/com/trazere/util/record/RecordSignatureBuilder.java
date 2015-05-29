@@ -26,7 +26,9 @@ import java.util.Set;
  * @param <V> Type of the values.
  * @param <R> Type of the records.
  * @see RecordSignature
+ * @deprecated To be removed.
  */
+@Deprecated
 public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	/**
 	 * Add the field signature corresponding to the given key and type to the receiver record signature builder.

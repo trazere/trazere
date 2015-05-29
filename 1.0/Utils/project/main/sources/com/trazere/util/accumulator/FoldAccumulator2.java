@@ -22,7 +22,9 @@ package com.trazere.util.accumulator;
  * @param <V1> Type of the first values.
  * @param <V2> Type of the second values.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link com.trazere.core.imperative.FoldAccumulator2}.
  */
+@Deprecated
 public abstract class FoldAccumulator2<R, V1, V2, X extends Exception>
 extends BaseAccumulator2<V1, V2, R, X> {
 	/** The current value. */

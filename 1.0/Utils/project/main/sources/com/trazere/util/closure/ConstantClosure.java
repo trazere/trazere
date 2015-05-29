@@ -22,7 +22,9 @@ import com.trazere.util.type.Maybe;
  * 
  * @param <T> Type of the value.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link com.trazere.core.functional.Thunks#constant(Object)}.
  */
+@Deprecated
 public class ConstantClosure<T, X extends Exception>
 implements Closure<T, X> {
 	/**
@@ -32,7 +34,9 @@ implements Closure<T, X> {
 	 * @param <X> Type of the exceptions.
 	 * @param value The value. May be <code>null</code>.
 	 * @return The closure.
+	 * @deprecated Use {@link com.trazere.core.functional.Thunks#constant(Object)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> ConstantClosure<T, X> build(final T value) {
 		return new ConstantClosure<T, X>(value);
 	}

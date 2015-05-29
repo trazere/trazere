@@ -23,7 +23,9 @@ import com.trazere.util.function.Procedure1;
  * @param <T> Type of the values.
  * @param <S> Type of the states.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link com.trazere.core.imperative.Accumulator}.
  */
+@Deprecated
 public interface Accumulator1<T, S, X extends Exception>
 extends Procedure1<T, X> {
 	/**
