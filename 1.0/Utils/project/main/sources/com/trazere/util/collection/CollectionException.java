@@ -20,7 +20,10 @@ import com.trazere.util.lang.ThrowableFactory;
 
 /**
  * {@link CollectionException} exceptions are thrown when collection related errors occur.
+ * 
+ * @deprecated Use {@link RuntimeException}.
  */
+@Deprecated
 public class CollectionException
 extends Exception {
 	private static final long serialVersionUID = 1L;

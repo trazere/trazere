@@ -9,7 +9,10 @@ import java.net.URL;
 
 /**
  * The {@link NetFunctions} class provides factories of functions related to the net.
+ * 
+ * @deprecated Use core.
  */
+@Deprecated
 public class NetFunctions {
 	/**
 	 * Builds a function that build URL from their string representation.
@@ -17,7 +20,9 @@ public class NetFunctions {
 	 * @param <X> Type of the thrown exceptions.
 	 * @param throwableFactory Factory that builds the thrown exceptions.
 	 * @return A function that makes a URL from its string representation.
+	 * @deprecated Use {@link com.trazere.core.net.NetFunctions#url(com.trazere.core.lang.ThrowableFactory)}.
 	 */
+	@Deprecated
 	public static <X extends Exception> Function1<String, URL, X> url(final ThrowableFactory<? extends X> throwableFactory) {
 		assert null != throwableFactory;
 		
@@ -40,7 +45,9 @@ public class NetFunctions {
 	 * @param <X> Type of the thrown exceptions.
 	 * @param throwableFactory Factory that builds the thrown exceptions.
 	 * @return A function that makes a URI from its string representation.
+	 * @deprecated Use {@link com.trazere.core.net.NetFunctions#uri(com.trazere.core.lang.ThrowableFactory)}.
 	 */
+	@Deprecated
 	public static <X extends Exception> Function1<String, URI, X> uri(final ThrowableFactory<? extends X> throwableFactory) {
 		assert null != throwableFactory;
 		

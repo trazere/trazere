@@ -20,7 +20,10 @@ import com.trazere.util.lang.ThrowableFactory;
 
 /**
  * {@link NullFieldException} exceptions are thrown when some non-nullable record field is <code>null</code>.
+ * 
+ * @deprecated Use {@link com.trazere.core.record.NullFieldException}.
  */
+@Deprecated
 public class NullFieldException
 extends RecordException {
 	private static final long serialVersionUID = 1L;

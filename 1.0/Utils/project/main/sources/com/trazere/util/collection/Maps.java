@@ -23,7 +23,10 @@ import java.util.Map;
 
 /**
  * The {@link Maps} class provides various factories of maps.
+ * 
+ * @deprecated Use core.
  */
+@Deprecated
 public class Maps {
 	/**
 	 * Builds a map containing the binding of the given key and value.
@@ -35,7 +38,9 @@ public class Maps {
 	 * @param key The key. May be <code>null</code>.
 	 * @param value The value. May be <code>null</code>.
 	 * @return The built map.
+	 * @deprecated Use {@link com.trazere.core.collection.Maps#fromBinding(Object, Object)}.
 	 */
+	@Deprecated
 	public static <K, V> Map<K, V> fromBinding(final K key, final V value) {
 		final Map<K, V> result = new HashMap<K, V>();
 		result.put(key, value);
@@ -54,7 +59,9 @@ public class Maps {
 	 * @param key2 The second key. May be <code>null</code>.
 	 * @param value2 The second value. May be <code>null</code>.
 	 * @return The built map.
+	 * @deprecated Use {@link com.trazere.core.collection.Maps#fromBindings(Object, Object, Object, Object)}.
 	 */
+	@Deprecated
 	public static <K, V> Map<K, V> fromBindings(final K key1, final V value1, final K key2, final V value2) {
 		final Map<K, V> result = new HashMap<K, V>();
 		result.put(key1, value1);
@@ -76,7 +83,9 @@ public class Maps {
 	 * @param key3 The third key. May be <code>null</code>.
 	 * @param value3 The third value. May be <code>null</code>.
 	 * @return The built map.
+	 * @deprecated Use {@link com.trazere.core.collection.Maps#fromBindings(Object, Object, Object, Object, Object, Object)}.
 	 */
+	@Deprecated
 	public static <K, V> Map<K, V> fromBindings(final K key1, final V value1, final K key2, final V value2, final K key3, final V value3) {
 		final Map<K, V> result = new HashMap<K, V>();
 		result.put(key1, value1);
@@ -94,7 +103,9 @@ public class Maps {
 	 * @param <V> Type of the values.
 	 * @param bindings The bindings.
 	 * @return The built map.
+	 * @deprecated Use {@link com.trazere.core.collection.Maps#fromBindings(com.trazere.core.util.Tuple2...)}.
 	 */
+	@Deprecated
 	public static <K, V> Map<K, V> fromBindings(final Tuple2<? extends K, ? extends V>... bindings) {
 		assert null != bindings;
 		
@@ -110,7 +121,9 @@ public class Maps {
 	 * @param <V> Type of the values.
 	 * @param bindings The bindings.
 	 * @return The built map.
+	 * @deprecated Use {@link com.trazere.core.collection.Maps#fromBindings(Iterable)}.
 	 */
+	@Deprecated
 	public static <K, V> Map<K, V> fromBindings(final Collection<? extends Tuple2<? extends K, ? extends V>> bindings) {
 		assert null != bindings;
 		

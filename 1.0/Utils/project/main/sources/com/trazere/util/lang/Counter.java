@@ -17,7 +17,10 @@ package com.trazere.util.lang;
 
 /**
  * The {@link Counter} class represents counters.
+ * 
+ * @deprecated Use {@link com.trazere.core.imperative.IntCounter}.
  */
+@Deprecated
 public class Counter {
 	/** Start value. */
 	protected final int _start;

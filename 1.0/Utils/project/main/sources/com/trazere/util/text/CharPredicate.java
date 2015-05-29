@@ -19,7 +19,9 @@ package com.trazere.util.text;
  * The {@link CharPredicate} interface defines predicate functions over characters.
  * 
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link com.trazere.core.text.CharPredicate}.
  */
+@Deprecated
 public interface CharPredicate<X extends Exception> {
 	/**
 	 * Evaluate the receiver predicate with the given argument character.

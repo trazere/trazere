@@ -22,7 +22,9 @@ import com.trazere.util.lang.MutableObject;
  * 
  * @param <T> Type of the values.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link com.trazere.core.functional.FixedPoint}.
  */
+@Deprecated
 public abstract class FixedPoint<T, X extends Exception>
 implements Function1<T, T, X> {
 	/**
@@ -33,7 +35,9 @@ implements Function1<T, T, X> {
 	 * @param step The convergence function.
 	 * @param done The termination predicate.
 	 * @return The fixed point function.
+	 * @deprecated Use {@link com.trazere.core.functional.FixedPoint#build(com.trazere.core.functional.Function, com.trazere.core.functional.Predicate2)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> FixedPoint<T, X> build(final Function1<? super T, ? extends T, ? extends X> step, final Predicate2<? super T, ? super T, ? extends X> done) {
 		assert null != step;
 		assert null != done;

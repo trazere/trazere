@@ -22,7 +22,9 @@ import java.util.Comparator;
  * 
  * @param <T> Type of the values.
  * @param <V> Type of the mapped values.
+ * @deprecated Use {@link com.trazere.core.util.MapComparator}.
  */
+@Deprecated
 public abstract class MapComparator<T, V>
 implements Comparator<T> {
 	/** The comparator to use. */

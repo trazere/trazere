@@ -25,7 +25,9 @@ import com.trazere.util.type.Maybe;
  * The {@link MutableReference} class represents mutable refererences.
  * 
  * @param <T> Type of the referenced values.
+ * @deprecated Use {@link com.trazere.core.reference.MutableReference}.
  */
+@Deprecated
 public class MutableReference<T>
 implements ReleasableReference<T, RuntimeException>, Describable {
 	/**
@@ -223,7 +225,9 @@ implements ReleasableReference<T, RuntimeException>, Describable {
 	 * @param value Value to set.
 	 * @return The current or set value.
 	 * @throws X When the value cannot be evaluated.
+	 * @deprecated Use {@link com.trazere.core.reference.MutableReference#getOrSet(com.trazere.core.functional.Thunk)}.
 	 */
+	@Deprecated
 	public <X extends Exception> T getOrSet(final Function0<? extends T, X> value)
 	throws X {
 		assert null != value;

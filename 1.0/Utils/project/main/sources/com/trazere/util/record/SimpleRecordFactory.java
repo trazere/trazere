@@ -24,7 +24,9 @@ import java.util.Map;
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  * @see SimpleRecord
+ * @deprecated Use {@link com.trazere.core.record.RecordFactories#simple()}.
  */
+@Deprecated
 public class SimpleRecordFactory<K, V>
 extends BaseFactory<SimpleRecord<K, V>, RecordException>
 implements RecordFactory<K, V, SimpleRecord<K, V>> {

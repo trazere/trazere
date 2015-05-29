@@ -26,7 +26,9 @@ import com.trazere.util.type.Maybe;
  * 
  * @param <S> Type of the subjects.
  * @param <E> Type of the events.
+ * @deprecated Use {@link com.trazere.core.reactive.SimpleObservatory}.
  */
+@Deprecated
 public class SimpleObservatory<S, E>
 implements Observatory<S, E> {
 	protected final LazyMap<S, SimpleObservable<E>, RuntimeException> _subjectObservables = new LazyMap<S, SimpleObservable<E>, RuntimeException>() {

@@ -9,7 +9,10 @@ import java.util.List;
 
 /**
  * The {@link RecordComparators} class provides various factories of record comparators.
+ * 
+ * @deprecated Use core.
  */
+@Deprecated
 public class RecordComparators {
 	/**
 	 * Build a record comparator according to the values of the fields identified by the given keys and the given order using the given comparator.
@@ -23,7 +26,9 @@ public class RecordComparators {
 	 * @param ascending <code>true</code> to sort in the ascending order, <code>false</code> to sort in the descending order.
 	 * @param comparator Comparator of the values of the fields.
 	 * @return The comparator.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public static <K, V, R extends Record<? super K, ? extends V>> Comparator<R> criterion(final List<K> criterion, final boolean ascending, final Comparator<V> comparator) {
 		assert null != criterion;
 		assert null != comparator;
@@ -47,7 +52,9 @@ public class RecordComparators {
 	 * @param criterion List of the keys of the fields used for compararison and of their order in the order of importance.
 	 * @param comparator Comparator of the values of the fields.
 	 * @return The comparator.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public static <K, V, R extends Record<? super K, ? extends V>> Comparator<R> criterion(final List<Tuple2<K, Boolean>> criterion, final Comparator<V> comparator) {
 		assert null != criterion;
 		

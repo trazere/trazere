@@ -32,7 +32,9 @@ import java.util.Set;
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  * @param <R> Type of the records.
+ * @deprecated To be removed.
  */
+@Deprecated
 public abstract class BaseRecordSignatureBuilder<K, V, R extends SimpleRecordSignature<K, V>>
 implements RecordSignatureBuilder<K, V, R>, Describable {
 	/** Signatures of the fields identified by their keys. */

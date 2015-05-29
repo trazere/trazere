@@ -25,8 +25,10 @@ import java.util.Set;
  * @param <V> Type of the values.
  * @param <R> Type of the records.
  * @see Record
+ * @deprecated {@link com.trazere.core.record.RecordBuilder}.
  */
 // TODO: extends Accumulator or provide an accumulator factory for add
+@Deprecated
 public interface RecordBuilder<K, V, R extends Record<K, V>> {
 	/**
 	 * Adds a field identified by the given key and containing the given value to the receiver record builder.
@@ -37,6 +39,7 @@ public interface RecordBuilder<K, V, R extends Record<K, V>> {
 	 * @param value The value of the field to add.
 	 * @throws DuplicateFieldException When some field is already identified by the given key.
 	 */
+	@Deprecated
 	public void add(final K key, final V value)
 	throws DuplicateFieldException;
 	
@@ -50,7 +53,9 @@ public interface RecordBuilder<K, V, R extends Record<K, V>> {
 	 * @param value The value of the field to add.
 	 * @throws DuplicateFieldException When some field is already identified by the key of the given signature.
 	 * @throws NullFieldException When the value is <code>null</code> and the field is not nullable.
+	 * @deprecated Use {@link com.trazere.core.record.RecordBuilder#add(com.trazere.core.record.FieldKey, Object)}.
 	 */
+	@Deprecated
 	public <T extends V> void add(final FieldSignature<K, T> field, final T value)
 	throws DuplicateFieldException, NullFieldException;
 	
@@ -61,7 +66,9 @@ public interface RecordBuilder<K, V, R extends Record<K, V>> {
 	 * 
 	 * @param fields The values of the fields to add identified by their keys.
 	 * @throws DuplicateFieldException When some field is already identified by the key of any given field.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public void addAll(final Map<? extends K, ? extends V> fields)
 	throws DuplicateFieldException;
 	
@@ -90,6 +97,7 @@ public interface RecordBuilder<K, V, R extends Record<K, V>> {
 	 * @param key The key of the field.
 	 * @return <code>true</code> when some field is identified by the given key, <code>false</code> otherwise.
 	 */
+	@Deprecated
 	public boolean contains(final K key);
 	
 	/**
@@ -97,14 +105,18 @@ public interface RecordBuilder<K, V, R extends Record<K, V>> {
 	 * 
 	 * @param field The signature of the field.
 	 * @return <code>true</code> when some field is identified by the key of the given signature, <code>false</code> otherwise.
+	 * @deprecated Use {@link com.trazere.core.record.RecordBuilder#contains(com.trazere.core.record.FieldKey)}.
 	 */
+	@Deprecated
 	public boolean contains(final FieldSignature<K, ? extends V> field);
 	
 	/**
 	 * Gets the keys identifying the fields of the receiver record builder.
 	 * 
 	 * @return An unmodiable set of the keys.
+	 * @deprecated Use {@link com.trazere.core.record.RecordBuilder#keys()}.
 	 */
+	@Deprecated
 	public Set<K> getKeys();
 	
 	/**
@@ -113,7 +125,9 @@ public interface RecordBuilder<K, V, R extends Record<K, V>> {
 	 * @param key The key of the field to replace.
 	 * @param value The new value of the field.
 	 * @return <code>true</code> when some value was replaced, <code>false</code> when the field was added.
+	 * @deprecated Use {@link com.trazere.core.record.RecordBuilder#set(com.trazere.core.record.FieldKey, Object)}.
 	 */
+	@Deprecated
 	public boolean replace(final K key, final V value);
 	
 	/**
@@ -124,7 +138,9 @@ public interface RecordBuilder<K, V, R extends Record<K, V>> {
 	 * @param value The new value of the field.
 	 * @return <code>true</code> when some value was replaced, <code>false</code> when the field was added.
 	 * @throws NullFieldException When the value is <code>null</code> and the field is not nullable.
+	 * @deprecated Use {@link com.trazere.core.record.RecordBuilder#set(com.trazere.core.record.FieldKey, Object)}.
 	 */
+	@Deprecated
 	public <T extends V> boolean replace(final FieldSignature<K, T> field, final T value)
 	throws NullFieldException;
 	
@@ -134,6 +150,7 @@ public interface RecordBuilder<K, V, R extends Record<K, V>> {
 	 * @param key The key of the field to remove.
 	 * @return <code>true</code> when some field was removed, <code>false</code> otherwise.
 	 */
+	@Deprecated
 	public boolean remove(final K key);
 	
 	/**
@@ -150,8 +167,10 @@ public interface RecordBuilder<K, V, R extends Record<K, V>> {
 	 * @param builder The record builder to populate.
 	 * @return The given record builder.
 	 * @throws DuplicateFieldException When some field is already identified by the key identifying any populated field.
+	 * @deprecated To be removed.
 	 */
 	// TODO: use Accumulator ?
+	@Deprecated
 	public <B extends RecordBuilder<? super K, ? super V, ?>> B populate(final B builder)
 	throws DuplicateFieldException;
 	
@@ -167,8 +186,10 @@ public interface RecordBuilder<K, V, R extends Record<K, V>> {
 	 * @return The given record builder.
 	 * @throws MissingFieldException When some field is missing.
 	 * @throws DuplicateFieldException When some field is already identified by any given key.
+	 * @deprecated To be removed.
 	 */
 	// TODO: use Accumulator ?
+	@Deprecated
 	public <B extends RecordBuilder<? super K, ? super V, ?>> B populate(final B builder, final Set<? extends K> keys)
 	throws MissingFieldException, DuplicateFieldException;
 	

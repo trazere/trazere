@@ -20,7 +20,10 @@ import com.trazere.util.lang.ThrowableFactory;
 
 /**
  * {@link InvalidPropertyException} exceptions are thrown some property is invalid.
+ * 
+ * @deprecated Use {@link com.trazere.core.record.InvalidFieldException}.
  */
+@Deprecated
 public class InvalidPropertyException
 extends PropertiesException {
 	private static final long serialVersionUID = 1L;

@@ -22,7 +22,10 @@ import java.util.Collection;
 
 /**
  * The {@link FeedUtils} class provides various utilities regarding feeds.
+ * 
+ * @deprecated Use core.
  */
+@Deprecated
 public class FeedUtils {
 	// TODO: rename to head
 	/**
@@ -33,7 +36,9 @@ public class FeedUtils {
 	 * @param feed The feed.
 	 * @return The next value.
 	 * @throws X When the retrieval of the next value fails.
+	 * @deprecated Use {@link com.trazere.core.collection.FeedUtils#head(com.trazere.core.collection.Feed)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Maybe<T> next(final Feed<? extends T, ? extends X> feed)
 	throws X {
 		assert null != feed;
@@ -52,7 +57,9 @@ public class FeedUtils {
 	 * @param results The collection to populate with the elements.
 	 * @return The result collection.
 	 * @throws X When the retrieval of some value fails.
+	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#drain(java.util.Iterator, Collection)}.
 	 */
+	@Deprecated
 	public static <T, C extends Collection<? super T>, X extends Exception> C drain(final Feed<? extends T, ? extends X> feed, final C results)
 	throws X {
 		assert null != feed;
@@ -73,7 +80,9 @@ public class FeedUtils {
 	 * @param results The collection to populate with the elements.
 	 * @return The result collection.
 	 * @throws X When the retrieval of some value fails.
+	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#drain(java.util.Iterator, int, Collection)}.
 	 */
+	@Deprecated
 	public static <T, C extends Collection<? super T>, X extends Exception> C drain(final int n, final Feed<? extends T, ? extends X> feed, final C results)
 	throws X {
 		assert null != feed;

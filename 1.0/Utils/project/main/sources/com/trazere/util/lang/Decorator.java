@@ -19,7 +19,9 @@ package com.trazere.util.lang;
  * The {@link Decorator} abstract class provides a skeleton to implement decorators.
  * 
  * @param <T> Type of the decorated object.
+ * @deprecated Use {@link com.trazere.core.design.Decorator}.
  */
+@Deprecated
 public abstract class Decorator<T> {
 	/** The decorated object. */
 	protected final T _decorated;

@@ -24,7 +24,10 @@ import com.trazere.util.text.TextUtils;
  * <p>
  * This class works as an accumulator, each instance can only be used to compute a single hash code. The computation methods relies on the concrete class of the
  * object whose hash code is computed and a list of explicitely given values.
+ * 
+ * @deprecated Use {@link com.trazere.core.lang.HashCode}.
  */
+@Deprecated
 public class HashCode
 implements Describable {
 	/** Hash code accumulator. */

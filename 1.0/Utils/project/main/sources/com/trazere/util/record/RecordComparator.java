@@ -28,7 +28,9 @@ import java.util.Comparator;
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  * @param <R> Type of the records.
+ * @deprecated Use {@link com.trazere.core.record.RecordComparators#mandatoryFieldValue(com.trazere.core.record.FieldKey, Comparator)}.
  */
+@Deprecated
 public class RecordComparator<K, V, R extends Record<? super K, ? extends V>>
 extends MapComparator<R, V>
 implements Describable {

@@ -33,7 +33,9 @@ import java.util.Set;
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link com.trazere.core.functional.MemoizedFunction} or {@link com.trazere.core.functional.ResettableFunction}.
  */
+@Deprecated
 public abstract class LazyMap<K, V, X extends Exception>
 implements Function1<K, V, X> {
 	/**
@@ -44,7 +46,10 @@ implements Function1<K, V, X> {
 	 * @param <X> Type of the exceptions.
 	 * @param function The function.
 	 * @return The built lazy map.
+	 * @deprecated Use {@link com.trazere.core.functional.FunctionUtils#memoize(com.trazere.core.functional.Function)} or
+	 *             {@link com.trazere.core.functional.FunctionUtils#resettable(com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public static <K, V, X extends Exception> LazyMap<K, V, X> build(final Function1<? super K, ? extends V, ? extends X> function) {
 		assert null != function;
 		
@@ -87,7 +92,9 @@ implements Function1<K, V, X> {
 	 * The map is empty when no values have been computed or set for any key.
 	 * 
 	 * @return <code>true</code> if the map is empty, <code>false</code> otherwise.
+	 * @deprecated Use {@link com.trazere.core.functional.ResettableFunction#memoizedArgs()}.
 	 */
+	@Deprecated
 	public boolean isEmpty() {
 		return _mappings.isEmpty();
 	}
@@ -99,7 +106,9 @@ implements Function1<K, V, X> {
 	 * 
 	 * @param key Key which the value is associated to. May be <code>null</code>.
 	 * @return <code>true</code> when some value is associated to the given key, <code>false</code> otherwise.
+	 * @deprecated Use {@link com.trazere.core.functional.MemoizedFunction#isMemoized(Object)}.
 	 */
+	@Deprecated
 	public boolean containsKey(final K key) {
 		return _mappings.containsKey(key);
 	}
@@ -108,7 +117,9 @@ implements Function1<K, V, X> {
 	 * Gets a view of the keys of the receiver map.
 	 * 
 	 * @return An unmodifiable set of the keys.
+	 * @deprecated Use {@link com.trazere.core.functional.ResettableFunction#memoizedArgs()}.
 	 */
+	@Deprecated
 	public Set<K> keySet() {
 		return Collections.unmodifiableSet(_mappings.keySet());
 	}
@@ -119,7 +130,9 @@ implements Function1<K, V, X> {
 	 * The number of mappings corresponding to the number of computed and set values.
 	 * 
 	 * @return The number of mappings.
+	 * @deprecated Use {@link com.trazere.core.functional.ResettableFunction#memoizedArgs()}.
 	 */
+	@Deprecated
 	public int size() {
 		return _mappings.size();
 	}
@@ -130,7 +143,9 @@ implements Function1<K, V, X> {
 	 * @param key The key. May be <code>null</code>.
 	 * @param value The value. May be <code>null</code>.
 	 * @return The value previously mapped to the key, or <code>null</code> when no values were mapped to the key.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public V put(final K key, final V value) {
 		return _mappings.put(key, value);
 	}
@@ -139,7 +154,9 @@ implements Function1<K, V, X> {
 	 * Copies the given mappings into the receiver map.
 	 * 
 	 * @param mappings The mappings.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public void putAll(final Map<? extends K, ? extends V> mappings) {
 		assert null != mappings;
 		
@@ -153,7 +170,10 @@ implements Function1<K, V, X> {
 	 * 
 	 * @param key The key. May be <code>null</code>.
 	 * @return The value or nothing when it has not been computed yet.
+	 * @deprecated Use {@link com.trazere.core.functional.MemoizedFunction#isMemoized(Object)} and
+	 *             {@link com.trazere.core.functional.MemoizedFunction#get(Object)}.
 	 */
+	@Deprecated
 	public Maybe<V> probe(final K key) {
 		return CollectionUtils.get(_mappings, key);
 	}
@@ -166,7 +186,9 @@ implements Function1<K, V, X> {
 	 * @param key The key. May be <code>null</code>.
 	 * @return The value. May be <code>null</code>.
 	 * @throws X When the value cannot be computed.
+	 * @deprecated Use {@link com.trazere.core.functional.MemoizedFunction#get(Object)}.
 	 */
+	@Deprecated
 	public V get(final K key)
 	throws X {
 		// Check the entries.
@@ -195,7 +217,9 @@ implements Function1<K, V, X> {
 	 * Gets a view of the values of the receiver map.
 	 * 
 	 * @return An unmodifiable collection of the values.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public Collection<V> values() {
 		return Collections.unmodifiableCollection(_mappings.values());
 	}
@@ -204,7 +228,9 @@ implements Function1<K, V, X> {
 	 * Gets a view of the receiver map.
 	 * 
 	 * @return An unmodifiable map.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public Map<K, V> asMap() {
 		return Collections.unmodifiableMap(_mappings);
 	}
@@ -214,7 +240,9 @@ implements Function1<K, V, X> {
 	 * 
 	 * @param key The key. May be <code>null</code>.
 	 * @return The value mapped to the key, or <code>null</code> when no values were mapped to the key.
+	 * @deprecated Use {@link com.trazere.core.functional.ResettableFunction#reset(Object)}.
 	 */
+	@Deprecated
 	public V remove(final K key) {
 		return _mappings.remove(key);
 	}
@@ -225,7 +253,9 @@ implements Function1<K, V, X> {
 	 * @param <PX> Type of the exceptions.
 	 * @param predicate The predicate.
 	 * @throws PX On failure.
+	 * @deprecated Use {@link com.trazere.core.functional.ResettableFunction#reset(com.trazere.core.functional.Predicate)}.
 	 */
+	@Deprecated
 	public <PX extends Exception> void retain(final Predicate2<? super K, ? super V, PX> predicate)
 	throws PX {
 		FunctionUtils.retain(predicate, _mappings);
@@ -233,7 +263,10 @@ implements Function1<K, V, X> {
 	
 	/**
 	 * Clears the receiver map.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.functional.ResettableFunction#resetAll()}.
 	 */
+	@Deprecated
 	public void clear() {
 		_mappings.clear();
 	}

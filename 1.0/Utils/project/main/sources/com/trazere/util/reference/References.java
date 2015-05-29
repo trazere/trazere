@@ -21,14 +21,18 @@ import com.trazere.util.type.Maybe;
  * The {@link References} class provides various factories of references.
  * 
  * @see Reference
+ * @deprecated Use core.
  */
+@Deprecated
 public class References {
 	/**
 	 * Builds a unset reference.
 	 * 
 	 * @param <T> Type of the referenced value.
 	 * @return The built reference.
+	 * @deprecated Use {@link com.trazere.core.reference.References#empty()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T> Reference<T> empty() {
 		return (Reference<T>) _EMTPY;
@@ -58,7 +62,9 @@ public class References {
 	 * @param <T> Type of the value.
 	 * @param value Referenced value.
 	 * @return The built reference.
+	 * @deprecated Use {@link com.trazere.core.reference.References#fromValue(Object)}.
 	 */
+	@Deprecated
 	public static <T> Reference<T> fromValue(final T value) {
 		return new BaseReference<T>() {
 			@Override
@@ -84,7 +90,9 @@ public class References {
 	 * @param <T> Type of the value.
 	 * @param value Referenced value.
 	 * @return The built reference.
+	 * @deprecated Use {@link com.trazere.core.reference.References#fromValue(com.trazere.core.util.Maybe)}.
 	 */
+	@Deprecated
 	public static <T> Reference<T> fromValue(final Maybe<T> value) {
 		assert null != value;
 		

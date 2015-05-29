@@ -21,14 +21,18 @@ package com.trazere.util.function;
  * @see Procedure0
  * @see Procedure1
  * @see Procedure2
+ * @deprecated Use core.
  */
+@Deprecated
 public class Procedures {
 	/**
 	 * Builds a zero arguments procedure which does nothing.
 	 * 
 	 * @param <X> Type of the exceptions.
 	 * @return The built procedure.
+	 * @deprecated Use {@link com.trazere.core.imperative.Effects#nop()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> Procedure0<X> nop0() {
 		return (Procedure0<X>) _NOP0;
@@ -47,7 +51,9 @@ public class Procedures {
 	 * @param <T> Type of the argument values.
 	 * @param <X> Type of the exceptions.
 	 * @return The built procedure.
+	 * @deprecated Use {@link com.trazere.core.imperative.Procedures#nop()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T, X extends Exception> Procedure1<T, X> nop1() {
 		return (Procedure1<T, X>) _NOP1;
@@ -67,7 +73,9 @@ public class Procedures {
 	 * @param <T2> Type of the second argument values.
 	 * @param <X> Type of the exceptions.
 	 * @return The built procedure.
+	 * @deprecated Use {@link com.trazere.core.imperative.Procedures#nop2()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T1, T2, X extends Exception> Procedure2<T1, T2, X> nop2() {
 		return (Procedure2<T1, T2, X>) _NOP2;
@@ -82,11 +90,13 @@ public class Procedures {
 	
 	// TODO: sequence
 	
+	@Deprecated
 	/**
 	 * Builds a procedure which executes its zero arguments procedure arguments.
 	 * 
 	 * @param <X> Type of the exceptions.
 	 * @return The built procedure.
+	 * @deprecated Use {@link com.trazere.core.imperative.EffectProcedures#execute()}.
 	 */
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> Procedure1<Procedure0<? extends X>, X> execute() {
@@ -120,7 +130,9 @@ public class Procedures {
 	 * @param <X> Type of the exceptions.
 	 * @param value The argument value. May be <code>null</code>.
 	 * @return The built procedure.
+	 * @deprecated Use {@link com.trazere.core.imperative.Procedures#execute(Object)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Procedure1<Procedure1<? super T, ? extends X>, X> execute(final T value) {
 		return new Procedure1<Procedure1<? super T, ? extends X>, X>() {
 			@Override
@@ -154,7 +166,9 @@ public class Procedures {
 	 * @param value1 The first argument value. May be <code>null</code>.
 	 * @param value2 The second argument value. May be <code>null</code>.
 	 * @return The built procedure.
+	 * @deprecated Use {@link com.trazere.core.imperative.Procedures#execute(Object, Object)}.
 	 */
+	@Deprecated
 	public static <T1, T2, X extends Exception> Procedure1<Procedure2<? super T1, ? super T2, ? extends X>, X> execute(final T1 value1, final T2 value2) {
 		return new Procedure1<Procedure2<? super T1, ? super T2, ? extends X>, X>() {
 			@Override

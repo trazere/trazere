@@ -27,7 +27,9 @@ import java.util.ListIterator;
  * The {@link Lists} class provides various factories of lists.
  * 
  * @see List
+ * @deprecated Use core.
  */
+@Deprecated
 public class Lists {
 	/**
 	 * Builds a new list containing the given value if any.
@@ -37,7 +39,9 @@ public class Lists {
 	 * @param <V> Type of the the value.
 	 * @param value The value.
 	 * @return The built list.
+	 * @deprecated {@link com.trazere.core.collection.Lists#fromIterable(Iterable)}.
 	 */
+	@Deprecated
 	public static <V> List<V> fromValue(final Maybe<V> value) {
 		assert null != value;
 		
@@ -56,7 +60,9 @@ public class Lists {
 	 * @param <V> Type of the the value.
 	 * @param value The value. May be <code>null</code>.
 	 * @return The built list.
+	 * @deprecated Use {@link com.trazere.core.collection.Lists#fromElement(Object)}.
 	 */
+	@Deprecated
 	public static <V> List<V> fromValue(final V value) {
 		final List<V> list = new ArrayList<V>(1);
 		list.add(value);
@@ -72,7 +78,9 @@ public class Lists {
 	 * @param value1 The first value. May be <code>null</code>.
 	 * @param value2 The second value. May be <code>null</code>.
 	 * @return The built list.
+	 * @deprecated Use {@link com.trazere.core.collection.Lists#fromElements(Object, Object)}.
 	 */
+	@Deprecated
 	public static <V> List<V> fromValues(final V value1, final V value2) {
 		final List<V> list = new ArrayList<V>(2);
 		list.add(value1);
@@ -90,7 +98,9 @@ public class Lists {
 	 * @param value2 The second value. May be <code>null</code>.
 	 * @param value3 The third value. May be <code>null</code>.
 	 * @return The built list.
+	 * @deprecated Use {@link com.trazere.core.collection.Lists#fromElements(Object, Object, Object)}.
 	 */
+	@Deprecated
 	public static <V> List<V> fromValues(final V value1, final V value2, final V value3) {
 		final List<V> list = new ArrayList<V>(3);
 		list.add(value1);
@@ -107,7 +117,9 @@ public class Lists {
 	 * @param <V> Type of the the values.
 	 * @param values The values. May be <code>null</code>.
 	 * @return The built list.
+	 * @deprecated Use {@link com.trazere.core.collection.Lists#fromElements(Object...)}.
 	 */
+	@Deprecated
 	public static <V> List<V> fromValues(final V... values) {
 		assert null != values;
 		
@@ -126,7 +138,9 @@ public class Lists {
 	 * @param <E> Type of the elements.
 	 * @param list List to wrap.
 	 * @return The built list.
+	 * @deprecated Use {@link com.trazere.core.collection.ListUtils#reversed(List)}.
 	 */
+	@Deprecated
 	public static <E> List<E> reversed(final List<E> list) {
 		assert null != list;
 		

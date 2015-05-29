@@ -22,14 +22,19 @@ import java.util.Map;
 
 /**
  * The {@link XMLUtils} class provides various utilities regarding the manipulation of XML.
+ * 
+ * @deprecated Use core.
  */
+@Deprecated
 public class XMLUtils {
 	/**
 	 * Escapes the XML entities of the given string.
 	 * 
 	 * @param s The string.
 	 * @return The escaped string.
+	 * @deprecated Use {@link com.trazere.xml.XMLUtils#escape(CharSequence)}. Careful, new version escapes apos.
 	 */
+	@Deprecated
 	public static String escapeEntities(final String s) {
 		return escapeEntities(s, new StringBuilder()).toString();
 	}
@@ -40,7 +45,10 @@ public class XMLUtils {
 	 * @param s The string.
 	 * @param result The builder to fill.
 	 * @return The given builder.
+	 * @deprecated Use {@link com.trazere.xml.XMLUtils#escape(CharSequence, Appendable, com.trazere.core.lang.ThrowableFactory)}. Careful, new version escapes
+	 *             apos.
 	 */
+	@Deprecated
 	public static StringBuilder escapeEntities(final String s, final StringBuilder result) {
 		assert null != s;
 		assert null != result;
@@ -73,7 +81,9 @@ public class XMLUtils {
 	 * 
 	 * @param s The string.
 	 * @return The escaped string.
+	 * @deprecated Use {@link com.trazere.xml.XMLUtils#unescape(CharSequence)}.
 	 */
+	@Deprecated
 	public static String unescapeEntities(final String s) {
 		return unescapeEntities(s, new StringBuilder()).toString();
 	}
@@ -84,7 +94,9 @@ public class XMLUtils {
 	 * @param s The string.
 	 * @param result The builder to fill.
 	 * @return The given builder.
+	 * @deprecated Use {@link com.trazere.xml.XMLUtils#unescape(CharSequence, Appendable, com.trazere.core.lang.ThrowableFactory)}.
 	 */
+	@Deprecated
 	public static StringBuilder unescapeEntities(final String s, final StringBuilder result) {
 		assert null != s;
 		assert null != result;
@@ -123,8 +135,22 @@ public class XMLUtils {
 		_CHARACTERS = chars;
 	}
 	
+	/**
+	 * @deprecated Use {@link com.trazere.xml.XMLUtils#DATE_FORMAT}.
+	 */
+	@Deprecated
 	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-ddZ");
+	
+	/**
+	 * @deprecated Use {@link com.trazere.xml.XMLUtils#DATE_TIME_FORMAT}.
+	 */
+	@Deprecated
 	public static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+	
+	/**
+	 * @deprecated Use {@link com.trazere.xml.XMLUtils#TIME_FORMAT}.
+	 */
+	@Deprecated
 	public static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm:ss.SSSZ");
 	
 	private XMLUtils() {

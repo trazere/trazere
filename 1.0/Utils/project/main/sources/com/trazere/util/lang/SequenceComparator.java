@@ -26,7 +26,9 @@ import java.util.List;
  * The next comparator of the sequence refines the order of the previous one in case of equality.
  * 
  * @param <T> Type of the values.
+ * @deprecated Use {@link com.trazere.core.util.SequenceComparator}.
  */
+@Deprecated
 public class SequenceComparator<T>
 implements Comparator<T> {
 	/**

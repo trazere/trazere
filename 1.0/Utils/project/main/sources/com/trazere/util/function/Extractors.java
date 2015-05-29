@@ -25,7 +25,9 @@ import java.util.Map;
  * An extractor is function that combines a map and a filter operation.
  * 
  * @see Function1
+ * @deprecated Use core.
  */
+@Deprecated
 public class Extractors {
 	/**
 	 * Builds an identity extractor.
@@ -33,7 +35,9 @@ public class Extractors {
 	 * @param <T> Type of the values.
 	 * @param <X> Type of the exceptions.
 	 * @return The built extractor.
+	 * @deprecated Use {@link com.trazere.core.functional.Extractors#identity()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T, X extends Exception> Function1<T, Maybe<T>, X> identity() {
 		return (Function1<T, Maybe<T>, X>) _IDENTITY;
@@ -56,7 +60,9 @@ public class Extractors {
 	 * @param g The outer extractor.
 	 * @param f The inned extractor.
 	 * @return The built extractor.
+	 * @deprecated Use {@link com.trazere.core.functional.Extractors#compose(com.trazere.core.functional.Function, com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public static <T1, T2, T3, X extends Exception> Function1<T1, Maybe<T3>, X> compose(final Function1<? super T2, ? extends Maybe<? extends T3>, ? extends X> g, final Function1<? super T1, ? extends Maybe<? extends T2>, ? extends X> f) {
 		return Functions.compose(Maybe.extractFunction(g), f);
 	}
@@ -71,7 +77,9 @@ public class Extractors {
 	 * @param <X> Type of the exceptions.
 	 * @param filter The filter.
 	 * @return The built extractor.
+	 * @deprecated Use {@link com.trazere.core.functional.Extractors#fromPredicate(com.trazere.core.functional.Predicate)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Function1<T, Maybe<T>, X> fromPredicate(final Predicate1<? super T, ? extends X> filter) {
 		assert null != filter;
 		
@@ -92,7 +100,9 @@ public class Extractors {
 	 * @param <X> Type of the exceptions.
 	 * @param function The function.
 	 * @return The built extractor.
+	 * @deprecated Use {@link com.trazere.core.functional.Extractors#fromFunction(com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public static <V, R, X extends Exception> Function1<V, Maybe<R>, X> fromFunction(final Function1<? super V, ? extends R, ? extends X> function) {
 		assert null != function;
 		
@@ -116,7 +126,9 @@ public class Extractors {
 	 * @param <X> Type of the exceptions.
 	 * @param map The map.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.collection.MapExtractors#get(Map)}.
 	 */
+	@Deprecated
 	public static <K, V, X extends Exception> Function1<K, Maybe<V>, X> fromMap(final Map<? super K, ? extends V> map) {
 		assert null != map;
 		

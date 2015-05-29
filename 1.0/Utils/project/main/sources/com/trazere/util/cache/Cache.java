@@ -26,7 +26,9 @@ import java.util.Set;
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
+ * @deprecated Use {@link com.trazere.core.cache.Cache}.
  */
+@Deprecated
 public interface Cache<K, V> {
 	/**
 	 * Tests whether a value is associated to the given key in the receiver cache.
@@ -40,7 +42,9 @@ public interface Cache<K, V> {
 	 * Gets all keys which values are associated to in the receiver cache.
 	 * 
 	 * @return The keys.
+	 * @deprecated Use {@link com.trazere.core.cache.Cache#keys()}.
 	 */
+	@Deprecated
 	public Set<K> getKeys();
 	
 	/**

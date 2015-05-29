@@ -22,7 +22,9 @@ import com.trazere.util.lang.InternalException;
  * The {@link BaseReference} class provides a skeleton implementation of references.
  * 
  * @param <T> Type of the referenced value.
+ * @deprecated Use {@link com.trazere.core.reference.Reference}.
  */
+@Deprecated
 public abstract class BaseReference<T>
 implements Reference<T> {
 	@Override

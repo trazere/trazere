@@ -22,7 +22,9 @@ import com.trazere.util.lang.Releasable;
  * 
  * @param <T> Type of the referenced values.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link com.trazere.core.reference.ReleasableReference}.
  */
+@Deprecated
 public interface ReleasableReference<T, X extends Exception>
 extends Reference<T>, Releasable<X> {
 	// Nothing to do.

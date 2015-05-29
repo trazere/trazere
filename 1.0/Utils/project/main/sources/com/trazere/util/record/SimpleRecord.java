@@ -36,12 +36,15 @@ import java.util.Set;
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  * @see SimpleRecordBuilder
+ * @deprecated Use {@link com.trazere.core.record.SimpleRecord}.
  */
+@Deprecated
 public class SimpleRecord<K, V>
 implements Record<K, V>, Describable {
 	private static final SimpleRecord<?, ?> EMPTY = new SimpleRecord<Object, Object>(Collections.emptyMap());
 	
 	// TODO: move to Records
+	@Deprecated
 	/**
 	 * Builds an empty record.
 	 * <p>
@@ -50,6 +53,7 @@ implements Record<K, V>, Describable {
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @return The empty record.
+	 * @deprecated Use {@link com.trazere.core.record.Records#empty()}.
 	 */
 	@SuppressWarnings("unchecked")
 	public static <K, V> SimpleRecord<K, V> build() {
@@ -65,7 +69,9 @@ implements Record<K, V>, Describable {
 	 * @param key Key identifying the field.
 	 * @param value Value of the field.
 	 * @return The built record.
+	 * @deprecated Use {@link com.trazere.core.record.Records#fromKeyAndValue(com.trazere.core.record.FieldKey, Object)}.
 	 */
+	@Deprecated
 	public static <K, V> SimpleRecord<K, V> build(final K key, final V value) {
 		assert null != key;
 		
@@ -84,7 +90,11 @@ implements Record<K, V>, Describable {
 	 * @param key2 Key identifying the second field.
 	 * @param value2 Value of the second field. May be <code>null</code>.
 	 * @return The built record.
+	 * @deprecated Use
+	 *             {@link com.trazere.core.record.Records#fromKeysAndValues(com.trazere.core.record.FieldKey, Object, com.trazere.core.record.FieldKey, Object)}
+	 *             .
 	 */
+	@Deprecated
 	public static <K, V> SimpleRecord<K, V> build(final K key1, final V value1, final K key2, final V value2) {
 		assert null != key1;
 		assert null != key2;
@@ -103,7 +113,9 @@ implements Record<K, V>, Describable {
 	 * @param <V> Type of the values.
 	 * @param fields Values of the fields identified by their keys.
 	 * @return The built record.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public static <K, V> SimpleRecord<K, V> build(final Map<? extends K, ? extends V> fields) {
 		assert null != fields;
 		
@@ -119,7 +131,9 @@ implements Record<K, V>, Describable {
 	 * @param record Record to copy.
 	 * @return The built record.
 	 * @throws InvalidFieldException When some field cannot be computed.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public static <K, V> SimpleRecord<K, V> build(final Record<? extends K, ? extends V> record)
 	throws InvalidFieldException {
 		assert null != record;

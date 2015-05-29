@@ -20,7 +20,10 @@ import com.trazere.util.lang.ThrowableFactory;
 
 /**
  * {@link InvalidFieldException} exceptions are thrown when some record field is invalid or cannot be computed.
+ * 
+ * @deprecated Use {@link com.trazere.core.record.InvalidFieldException}.
  */
+@Deprecated
 public class InvalidFieldException
 extends RecordException {
 	private static final long serialVersionUID = 1L;

@@ -5,7 +5,10 @@ import com.trazere.util.type.Maybe;
 
 /**
  * The {@link Closures} class provides various factories of closures.
+ * 
+ * @deprecated Use core.
  */
+@Deprecated
 public class Closures {
 	/**
 	 * Builds a closure evaluating to the given value.
@@ -14,7 +17,9 @@ public class Closures {
 	 * @param <X> Type of the exceptions.
 	 * @param value Value. May be <code>null</code>.
 	 * @return The closure.
+	 * @deprecated Use {@link com.trazere.core.functional.Thunks#constant(Object)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Closure<T, X> constant(final T value) {
 		return new ConstantClosure<T, X>(value);
 	}
@@ -26,7 +31,9 @@ public class Closures {
 	 * @param <X> Type of the exceptions.
 	 * @param function Function computing the value.
 	 * @return The closure.
+	 * @deprecated Use {@link com.trazere.core.functional.ThunkUtils#memoize(com.trazere.core.functional.Thunk)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Closure<T, X> fromFunction(final Function0<? extends T, ? extends X> function) {
 		return new LinearClosure<T, X>(function);
 	}
@@ -38,7 +45,9 @@ public class Closures {
 	 * @param <X> Type of the exceptions.
 	 * @param closure Closure to synchronize.
 	 * @return The synchronized closure.
+	 * @deprecated Use {@link com.trazere.core.functional.ThunkUtils#synchronize(com.trazere.core.functional.Thunk)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Closure<T, X> synchronize(final Closure<T, ? extends X> closure) {
 		return new Closure<T, X>() {
 			@Override

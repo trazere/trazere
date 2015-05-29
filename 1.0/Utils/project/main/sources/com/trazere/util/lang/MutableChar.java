@@ -21,7 +21,10 @@ import com.trazere.util.text.TextUtils;
 
 /**
  * The {@link MutableChar} class represents mutable char values.
+ * 
+ * @deprecated Use {@link com.trazere.core.lang.MutableChar}.
  */
+@Deprecated
 public class MutableChar
 implements Describable {
 	/** The value. */

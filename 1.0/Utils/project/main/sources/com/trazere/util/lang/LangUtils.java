@@ -25,7 +25,10 @@ import java.util.Iterator;
 
 /**
  * The {@link LangUtils} class provides various helpers regarding the manipulation of objets.
+ * 
+ * @deprecated Use core.
  */
+@Deprecated
 public class LangUtils {
 	/**
 	 * Gets the Java class the given object.
@@ -33,7 +36,9 @@ public class LangUtils {
 	 * @param <T> Type of the object.
 	 * @param object The object.
 	 * @return The class.
+	 * @deprecated Use {@link com.trazere.core.lang.ObjectUtils#getClass(Object)}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T> Class<? extends T> getClass(final T object) {
 		assert null != object;
@@ -52,7 +57,9 @@ public class LangUtils {
 	 * @param factory Factory that build the value.
 	 * @return The built value.
 	 * @throws X When the factory evaluation fails.
+	 * @deprecated Use {@link com.trazere.core.lang.LangUtils#rec(com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> T rec(final Function1<? super Reference<T>, ? extends T, ? extends X> factory)
 	throws X {
 		final MutableReference<T> ref = new MutableReference<T>();
@@ -68,7 +75,9 @@ public class LangUtils {
 	 * @param <R> Target type.
 	 * @param object The object. May be <code>null</code>.
 	 * @return The casted object. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.lang.ObjectUtils#cast(Object)}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <R> R cast(final Object object) {
 		return (R) object;
@@ -84,7 +93,9 @@ public class LangUtils {
 	 * @param <R> Target type.
 	 * @param object The object. May be <code>null</code>.
 	 * @return The casted object. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.lang.ObjectUtils#downcast(Object)}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T, R extends T> R downcast(final T object) {
 		return (R) object;
@@ -99,7 +110,9 @@ public class LangUtils {
 	 * @param object The object. May be <code>null</code>.
 	 * @param type The type.
 	 * @return The given matched object.
+	 * @deprecated Use {@link com.trazere.core.lang.ObjectUtils#match(Object, Class)}.
 	 */
+	@Deprecated
 	public static <T> Maybe<T> match(final Object object, final Class<T> type) {
 		assert null != type;
 		
@@ -122,7 +135,9 @@ public class LangUtils {
 	 * @param throwableFactory The throwable factory to use.
 	 * @return The given matched object.
 	 * @throws X When the given object is not assignable to the given type.
+	 * @deprecated Use {@link com.trazere.core.lang.ObjectUtils#match(Object, Class, com.trazere.core.lang.ThrowableFactory)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> T match(final Object object, final Class<T> type, final ThrowableFactory<X> throwableFactory)
 	throws X {
 		assert null != type;
@@ -142,7 +157,9 @@ public class LangUtils {
 	 * @param value The wrapper. May be <code>null</code>.
 	 * @param defaultValue The default value.
 	 * @return The value of the wrapper or the default value when it is <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.lang.LangUtils#safeUnbox(Boolean, boolean)}.
 	 */
+	@Deprecated
 	public static boolean get(final Boolean value, final boolean defaultValue) {
 		return null != value ? value.booleanValue() : defaultValue;
 	}
@@ -154,7 +171,9 @@ public class LangUtils {
 	 * @param value The wrapper. May be <code>null</code>.
 	 * @param defaultValue The default value.
 	 * @return The value of the wrapper or the default value when it is <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.lang.LangUtils#safeUnbox(Byte, byte)}.
 	 */
+	@Deprecated
 	public static int get(final Byte value, final byte defaultValue) {
 		return null != value ? value.byteValue() : defaultValue;
 	}
@@ -166,7 +185,9 @@ public class LangUtils {
 	 * @param value The wrapper. May be <code>null</code>.
 	 * @param defaultValue The default value.
 	 * @return The value of the wrapper or the default value when it is <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.lang.LangUtils#safeUnbox(Short, short)}.
 	 */
+	@Deprecated
 	public static int get(final Short value, final short defaultValue) {
 		return null != value ? value.shortValue() : defaultValue;
 	}
@@ -178,7 +199,9 @@ public class LangUtils {
 	 * @param value The wrapper. May be <code>null</code>.
 	 * @param defaultValue The default value.
 	 * @return The value of the wrapper or the default value when it is <code>null</code>.
+	 * @deprecated {@link com.trazere.core.lang.LangUtils#safeUnbox(Integer, int)}.
 	 */
+	@Deprecated
 	public static int get(final Integer value, final int defaultValue) {
 		return null != value ? value.intValue() : defaultValue;
 	}
@@ -190,7 +213,9 @@ public class LangUtils {
 	 * @param value The wrapper. May be <code>null</code>.
 	 * @param defaultValue The default value.
 	 * @return The value of the wrapper or the default value when it is <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.lang.LangUtils#safeUnbox(Long, long)}.
 	 */
+	@Deprecated
 	public static long get(final Long value, final long defaultValue) {
 		return null != value ? value.longValue() : defaultValue;
 	}
@@ -202,7 +227,9 @@ public class LangUtils {
 	 * @param value The wrapper. May be <code>null</code>.
 	 * @param defaultValue The default value.
 	 * @return The value of the wrapper or the default value when it is <code>null</code>.
+	 * @deprecated {@link com.trazere.core.lang.LangUtils#safeUnbox(Float, float)}.
 	 */
+	@Deprecated
 	public static float get(final Float value, final float defaultValue) {
 		return null != value ? value.floatValue() : defaultValue;
 	}
@@ -214,7 +241,9 @@ public class LangUtils {
 	 * @param value The wrapper. May be <code>null</code>.
 	 * @param defaultValue The default value.
 	 * @return The value of the wrapper or the default value when it is <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.lang.LangUtils#safeUnbox(Double, double)}.
 	 */
+	@Deprecated
 	public static double get(final Double value, final double defaultValue) {
 		return null != value ? value.doubleValue() : defaultValue;
 	}
@@ -226,7 +255,9 @@ public class LangUtils {
 	 * @param value The wrapper. May be <code>null</code>.
 	 * @param defaultValue The default value.
 	 * @return The value of the wrapper or the default value when it is <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.lang.LangUtils#safeUnbox(Character, char)}.
 	 */
+	@Deprecated
 	public static char get(final Character value, final char defaultValue) {
 		return null != value ? value.charValue() : defaultValue;
 	}
@@ -239,7 +270,9 @@ public class LangUtils {
 	 * @param value The object. May be <code>null</code>.
 	 * @param defaultValue The default value. May be <code>null</code>.
 	 * @return The object or the default value when it is <code>null</code>. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.lang.ObjectUtils#safe(Object, Object)}.
 	 */
+	@Deprecated
 	public static <T> T get(final T value, final T defaultValue) {
 		return null != value ? value : defaultValue;
 	}
@@ -254,7 +287,9 @@ public class LangUtils {
 	 * @param object2 The second value. May be <code>null</code>.
 	 * @return <code>true</code> if the values are both <code>null</code> or both not <code>null</code> and equal.
 	 * @see Comparable#compareTo(Object)
+	 * @deprecated Use {@link com.trazere.core.lang.ObjectUtils#safeEquals(Object, Object)}.
 	 */
+	@Deprecated
 	public static <T extends Object> boolean safeEquals(final T object1, final T object2) {
 		return object1 == object2 || null != object1 && object1.equals(object2);
 	}
@@ -270,7 +305,9 @@ public class LangUtils {
 	 * @param object2 The second value. May be <code>null</code>.
 	 * @return The result of the comparison as defined by the {@link Comparable#compareTo(Object)} method.
 	 * @see Comparable#compareTo(Object)
+	 * @deprecated Use {@link com.trazere.core.lang.ComparableUtils#safeCompareTo(Comparable, Comparable)}.
 	 */
+	@Deprecated
 	public static <T extends Comparable<T>> int safeCompare(final T object1, final T object2) {
 		if (null == object1) {
 			return null == object2 ? 0 : -1;
@@ -291,7 +328,9 @@ public class LangUtils {
 	 * @param object2 The second value. May be <code>null</code>.
 	 * @return The result of the comparison as defined by the {@link Comparator#compare(Object, Object)} method.
 	 * @see Comparable#compareTo(Object)
+	 * @deprecated Use {@link com.trazere.core.util.ComparatorUtils#safeCompare(Comparator, Object, Object)}.
 	 */
+	@Deprecated
 	public static <T> int safeCompare(final Comparator<T> comparator, final T object1, final T object2) {
 		assert null != comparator;
 		
@@ -311,7 +350,9 @@ public class LangUtils {
 	 * @param value1 The first value.
 	 * @param value2 The second value.
 	 * @return The least value.
+	 * @deprecated Use {@link com.trazere.core.util.ComparatorUtils#least(Comparator, Object, Object)}.
 	 */
+	@Deprecated
 	public static <T> T least(final Comparator<? super T> comparator, final T value1, final T value2) {
 		assert null != comparator;
 		
@@ -326,7 +367,9 @@ public class LangUtils {
 	 * @param comparator The comparator.
 	 * @param values The values.
 	 * @return The least value.
+	 * @deprecated Use {@link com.trazere.core.lang.IterableUtils#least(Iterable, Comparator)}.
 	 */
+	@Deprecated
 	public static <T> Maybe<T> least(final Comparator<? super T> comparator, final Collection<? extends T> values) {
 		assert null != values;
 		
@@ -341,7 +384,9 @@ public class LangUtils {
 	 * @param comparator The comparator.
 	 * @param values The values.
 	 * @return The least value.
+	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#least(Iterator, Comparator)}.
 	 */
+	@Deprecated
 	public static <T> Maybe<T> least(final Comparator<? super T> comparator, final Iterator<? extends T> values) {
 		assert null != comparator;
 		assert null != values;
@@ -371,7 +416,9 @@ public class LangUtils {
 	 * @param value1 The first value.
 	 * @param value2 The second value.
 	 * @return The greatest value.
+	 * @deprecated Use {@link com.trazere.core.util.ComparatorUtils#greatest(Comparator, Object, Object)}.
 	 */
+	@Deprecated
 	public static <T> T greatest(final Comparator<? super T> comparator, final T value1, final T value2) {
 		assert null != comparator;
 		
@@ -386,7 +433,9 @@ public class LangUtils {
 	 * @param comparator The comparator.
 	 * @param values The values.
 	 * @return The greatest value.
+	 * @deprecated Use {@link com.trazere.core.lang.IterableUtils#greatest(Iterable, Comparator)}.
 	 */
+	@Deprecated
 	public static <T> Maybe<T> greatest(final Comparator<? super T> comparator, final Collection<? extends T> values) {
 		assert null != values;
 		
@@ -401,7 +450,9 @@ public class LangUtils {
 	 * @param comparator The comparator.
 	 * @param values The values.
 	 * @return The greatest value.
+	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#greatest(Iterator, Comparator)}.
 	 */
+	@Deprecated
 	public static <T> Maybe<T> greatest(final Comparator<? super T> comparator, final Iterator<? extends T> values) {
 		assert null != comparator;
 		assert null != values;
@@ -432,7 +483,9 @@ public class LangUtils {
 	 * @param throwableFactory The exception factory for interruptions.
 	 * @throws X When the sleep is interrupted.
 	 * @see Thread#sleep(long)
+	 * @deprecated Use {@link com.trazere.core.lang.ThreadUtils#sleep(java.time.Duration, com.trazere.core.lang.ThrowableFactory)}.
 	 */
+	@Deprecated
 	public static <X extends Exception> void sleep(final long timeout, final ThrowableFactory<X> throwableFactory)
 	throws X {
 		assert null != throwableFactory;
@@ -455,7 +508,9 @@ public class LangUtils {
 	 * @param throwableFactory The exception factory for interruptions.
 	 * @throws X When the sleep is interrupted.
 	 * @see Thread#sleep(long)
+	 * @deprecated Use {@link com.trazere.core.lang.ThreadUtils#wait(Object, java.time.Duration, com.trazere.core.lang.ThrowableFactory)}.
 	 */
+	@Deprecated
 	public static <X extends Exception> void wait(final Object object, final long timeout, final ThrowableFactory<X> throwableFactory)
 	throws X {
 		assert null != object;
@@ -481,7 +536,11 @@ public class LangUtils {
 	 * @param throwableFactory The exception factory for interruptions.
 	 * @throws X When the sleep is interrupted.
 	 * @see Thread#sleep(long)
+	 * @deprecated Use
+	 *             {@link com.trazere.core.lang.ThreadUtils#waitOrSleep(com.trazere.core.util.Maybe, java.time.Duration, com.trazere.core.lang.ThrowableFactory)}
+	 *             .
 	 */
+	@Deprecated
 	public static <X extends Exception> void waitOrSleep(final Maybe<?> object, final long timeout, final ThrowableFactory<X> throwableFactory)
 	throws X {
 		assert null != object;

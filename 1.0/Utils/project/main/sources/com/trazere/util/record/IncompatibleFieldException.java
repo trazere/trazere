@@ -20,7 +20,10 @@ import com.trazere.util.lang.ThrowableFactory;
 
 /**
  * {@link IncompatibleFieldException} exceptions are thrown when some record field does not have the appropriate type.
+ * 
+ * @deprecated To be removed.
  */
+@Deprecated
 public class IncompatibleFieldException
 extends RecordException {
 	private static final long serialVersionUID = 1L;

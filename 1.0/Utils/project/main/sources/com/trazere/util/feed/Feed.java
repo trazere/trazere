@@ -25,7 +25,9 @@ import java.util.NoSuchElementException;
  * 
  * @param <T> Type of the elements.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link com.trazere.core.collection.Feed}.
  */
+@Deprecated
 public interface Feed<T, X extends Exception>
 extends Function0<Maybe<? extends Tuple2<? extends T, ? extends Feed<? extends T, ? extends X>>>, X> {
 	/**

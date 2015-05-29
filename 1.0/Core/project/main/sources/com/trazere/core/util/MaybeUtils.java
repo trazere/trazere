@@ -132,7 +132,7 @@ public class MaybeUtils {
 	}
 	
 	/**
-	 * Gets the short value of the given {@link Maybe} instance.
+	 * Gets the float value of the given {@link Maybe} instance.
 	 * <p>
 	 * This method returns the wrapped value for the instances built using the {@link Some} constructor and the given default value for instances built using
 	 * the {@link Maybe.None} constructor.

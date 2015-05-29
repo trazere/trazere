@@ -21,7 +21,10 @@ import com.trazere.util.type.Maybe;
 /**
  * The {@link WrapException} exceptions aim to wrap checked throwables into unchecked exceptions in order to propagate them out through code that does not
  * provide support them.
+ * 
+ * @deprecated Use {@link RuntimeException}.
  */
+@Deprecated
 public class WrapException
 extends RuntimeException {
 	private static final long serialVersionUID = 1L;
@@ -68,7 +71,9 @@ extends RuntimeException {
 	 * @param <T> Type of the extracted throwable.
 	 * @param extractor Extractor of the throwable to unwrap.
 	 * @throws T The unwrapped throwable.
+	 * @deprecated Use {@link com.trazere.core.lang.ThrowableUtils#throwCause(Throwable, com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public <T extends Throwable> void unwrap(final Function1<? super Throwable, ? extends Maybe<? extends T>, ? extends RuntimeException> extractor)
 	throws T {
 		assert null != extractor;
@@ -87,7 +92,9 @@ extends RuntimeException {
 	 * @param <T> Type of the extracted throwable.
 	 * @param type Type of the throwable to unwrap.
 	 * @throws T The unwrapped throwable.
+	 * @deprecated Use {@link com.trazere.core.lang.ThrowableUtils#throwCause(Throwable, Class)}.
 	 */
+	@Deprecated
 	public <T extends Throwable> void unwrap(final Class<T> type)
 	throws T {
 		unwrap(LangExtractors.<Throwable, T, InternalException>match(type));

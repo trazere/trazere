@@ -20,7 +20,10 @@ import com.trazere.util.lang.ThrowableFactory;
 
 /**
  * {@link RecordException} exceptions are thrown when record related errors occur.
+ * 
+ * @deprecated Use {@link com.trazere.core.record.RecordException}.
  */
+@Deprecated
 public class RecordException
 extends Exception {
 	private static final long serialVersionUID = 1L;

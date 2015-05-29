@@ -27,7 +27,9 @@ import com.trazere.util.value.ValueException;
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  * @see Record
+ * @deprecated To be removed.
  */
+@Deprecated
 public abstract class RecordClosure<K, V>
 extends ResettableClosure<Record<K, V>, RecordException> {
 	private static final RecordClosure<?, ?> _EMPTY = build(SimpleRecord.<String, Object>build());

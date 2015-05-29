@@ -21,7 +21,10 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * The {@link UriAdapter} class provides JAXB adpaters for URIs.
+ * 
+ * @deprecated Use {@link com.trazere.xml.UriAdapter}.
  */
+@Deprecated
 public class UriAdapter
 extends XmlAdapter<String, URI> {
 	@Override
@@ -58,7 +61,9 @@ extends XmlAdapter<String, URI> {
 	 * 
 	 * @param value Uri to format.
 	 * @return The representation.
+	 * @deprecated Use {@link com.trazere.xml.UriAdapter#format(URI)}.
 	 */
+	@Deprecated
 	public static String print(final URI value) {
 		assert null != value;
 		

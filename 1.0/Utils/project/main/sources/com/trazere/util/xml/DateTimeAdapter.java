@@ -23,7 +23,10 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * The {@link DateTimeAdapter} class provides JAXB adpater for dates with time.
+ * 
+ * @deprecated Use {@link com.trazere.xml.DateTimeAdapter}.
  */
+@Deprecated
 public class DateTimeAdapter
 extends XmlAdapter<String, Date> {
 	@Override
@@ -55,7 +58,9 @@ extends XmlAdapter<String, Date> {
 	 * 
 	 * @param value Date and time to format.
 	 * @return The representation.
+	 * @deprecated Use {@link com.trazere.xml.DateTimeAdapter#format(Date)}.
 	 */
+	@Deprecated
 	public static String print(final Date value) {
 		assert null != value;
 		

@@ -25,7 +25,9 @@ import com.trazere.util.text.TextUtils;
  * The {@link BaseValueReader} abstract class provides a skeleton implementation of {@link ValueReader value readers}.
  * 
  * @param <T> Type of the values.
+ * @deprecated To be removed.
  */
+@Deprecated
 public abstract class BaseValueReader<T>
 extends BaseParametrable<String, Object>
 implements ValueReader<T>, Describable {

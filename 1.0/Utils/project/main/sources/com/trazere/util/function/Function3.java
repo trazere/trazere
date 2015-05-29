@@ -23,7 +23,9 @@ package com.trazere.util.function;
  * @param <T3> Type of the third argument values.
  * @param <R> Type of the result values.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link com.trazere.core.functional.Function3}.
  */
+@Deprecated
 public interface Function3<T1, T2, T3, R, X extends Exception> {
 	/**
 	 * Evaluates the receiver function with the given argument values.

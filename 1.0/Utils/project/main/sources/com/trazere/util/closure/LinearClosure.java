@@ -27,7 +27,9 @@ import com.trazere.util.type.Maybe;
  * 
  * @param <T> Type of the value.
  * @param <X> Type of the exceptions.
+ * @deprecated To be removed.
  */
+@Deprecated
 public class LinearClosure<T, X extends Exception>
 implements Closure<T, X> {
 	/**
@@ -37,7 +39,9 @@ implements Closure<T, X> {
 	 * @param <X> Type of the exceptions.
 	 * @param function The function computing the value.
 	 * @return The closure.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> LinearClosure<T, X> build(final Function0<? extends T, ? extends X> function) {
 		return new LinearClosure<T, X>(function);
 	}

@@ -25,7 +25,9 @@ import com.trazere.util.record.SimpleRecordBuilder;
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
+ * @deprecated To be removed.
  */
+@Deprecated
 public abstract class BaseRecordReader<K, V>
 extends BaseParametrable<String, Object>
 implements RecordReader<K, V> {

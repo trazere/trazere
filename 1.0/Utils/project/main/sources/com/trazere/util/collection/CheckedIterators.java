@@ -24,7 +24,10 @@ import java.util.NoSuchElementException;
 
 /**
  * The {@link CheckedIterators} class provides various factories of checked iterators.
+ * 
+ * @deprecated Use core.
  */
+@Deprecated
 public class CheckedIterators {
 	/**
 	 * Builds a checked iterator over no values.
@@ -32,12 +35,15 @@ public class CheckedIterators {
 	 * @param <V> Type of the the values.
 	 * @param <X> Type of the exceptions.
 	 * @return The built iterator.
+	 * @deprecated Use {@link com.trazere.core.imperative.Iterators#empty()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <V, X extends Exception> CheckedIterator<V, X> empty() {
 		return (CheckedIterator<V, X>) _EMPTY;
 	}
 	
+	@Deprecated
 	private static final CheckedIterator<?, ?> _EMPTY = new CheckedIterator<Object, RuntimeException>() {
 		@Override
 		public boolean hasNext() {
@@ -58,7 +64,9 @@ public class CheckedIterators {
 	 * @param <X> Type of the exceptions.
 	 * @param value The value. May be <code>null</code>.
 	 * @return The built iterator.
+	 * @deprecated Use {@link com.trazere.core.imperative.Iterators#fromElement(Object)}.
 	 */
+	@Deprecated
 	public static <V, X extends Exception> CheckedIterator<V, X> fromValue(final V value) {
 		return new CheckedIterator<V, X>() {
 			protected boolean _next = true;
@@ -88,7 +96,9 @@ public class CheckedIterators {
 	 * @param <X> Type of the exceptions.
 	 * @param values The values.
 	 * @return The built iterator.
+	 * @deprecated Use {@link com.trazere.core.imperative.Iterators#fromElements(Object...)}.
 	 */
+	@Deprecated
 	public static <V, X extends Exception> CheckedIterator<V, X> fromValues(final V... values) {
 		assert null != values;
 		
@@ -136,7 +146,9 @@ public class CheckedIterators {
 	 * @param <X> Type of the exceptions.
 	 * @param collection The collection.
 	 * @return The built iterator.
+	 * @deprecated Use {@link Iterable#iterator()}.
 	 */
+	@Deprecated
 	public static <V, X extends Exception> CheckedIterator<V, X> fromIterable(final Iterable<? extends V> collection) {
 		assert null != collection;
 		
@@ -150,7 +162,9 @@ public class CheckedIterators {
 	 * @param <X> Type of the exceptions.
 	 * @param iterator The iterator providing the values.
 	 * @return The built iterator.
+	 * @deprecated Use {@link Iterator}.
 	 */
+	@Deprecated
 	public static <V, X extends Exception> CheckedIterator<V, X> fromIterator(final Iterator<? extends V> iterator) {
 		assert null != iterator;
 		
@@ -175,7 +189,9 @@ public class CheckedIterators {
 	 * @param <X> Type of the exceptions.
 	 * @param feed The feed.
 	 * @return The built iterator.
+	 * @deprecated Use {@link com.trazere.core.collection.Feed#iterator()}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> CheckedIterator<T, X> fromFeed(final Feed<T, ? extends X> feed) {
 		assert null != feed;
 		
@@ -206,7 +222,9 @@ public class CheckedIterators {
 	 * @param predicate The predicate.
 	 * @param iterator The iterator.
 	 * @return The built iterator over the filtered values.
+	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#filter(Iterator, com.trazere.core.functional.Predicate)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> CheckedIterator<T, X> filter(final Predicate1<? super T, ? extends X> predicate, final CheckedIterator<? extends T, ? extends X> iterator) {
 		assert null != predicate;
 		assert null != iterator;
@@ -235,7 +253,9 @@ public class CheckedIterators {
 	 * @param function The function.
 	 * @param iterator The iterator.
 	 * @return The built iterator over the transformed values.
+	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#map(Iterator, com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public static <T, R, X extends Exception> CheckedIterator<R, X> map(final Function1<? super T, ? extends R, ? extends X> function, final CheckedIterator<? extends T, ? extends X> iterator) {
 		assert null != function;
 		assert null != iterator;
@@ -280,7 +300,9 @@ public class CheckedIterators {
 	 * @param extractor The extractor.
 	 * @param iterator The iterator.
 	 * @return The built iterator over the filtered and transformed values.
+	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#extract(Iterator, com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public static <T, R, X extends Exception> CheckedIterator<R, X> extract(final Function1<? super T, ? extends Maybe<? extends R>, ? extends X> extractor, final CheckedIterator<? extends T, ? extends X> iterator) {
 		assert null != extractor;
 		assert null != iterator;

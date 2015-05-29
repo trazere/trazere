@@ -20,7 +20,10 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * The {@link UUIDAdapter} class provides JAXB adpaters for UUIDs.
+ * 
+ * @deprecated Use {@link com.trazere.xml.UUIDAdapter}.
  */
+@Deprecated
 public class UUIDAdapter
 extends XmlAdapter<String, UUID> {
 	@Override
@@ -52,7 +55,9 @@ extends XmlAdapter<String, UUID> {
 	 * 
 	 * @param value UUID to format.
 	 * @return The representation.
+	 * @deprecated Use {@link com.trazere.xml.UUIDAdapter#format(UUID)}.
 	 */
+	@Deprecated
 	public static String print(final UUID value) {
 		assert null != value;
 		

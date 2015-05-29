@@ -26,7 +26,9 @@ import com.trazere.util.type.Maybe;
  * @param <S> Type of the success values.
  * @param <F> Type of the failure values.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link com.trazere.core.functional.RetryThunk}.
  */
+@Deprecated
 public abstract class RetryFunction0<S, F, X extends Exception>
 implements Function0<Either<S, F>, X> {
 	@Override
@@ -55,7 +57,10 @@ implements Function0<Either<S, F>, X> {
 	 * @param failureCount The number of failures.
 	 * @return The succes or failure result.
 	 * @throws X On failure.
+	 * @deprecated Use {@link com.trazere.core.functional.RetryThunk#attemptEvaluate(int)}.
 	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	protected abstract Either<S, F> evaluateStep(final int failureCount)
 	throws X;
 	
@@ -80,7 +85,9 @@ implements Function0<Either<S, F>, X> {
 	 * @return The result.
 	 * @throws F When the evaluation fails repeatedly.
 	 * @throws X On failure.
+	 * @deprecated {@link com.trazere.core.functional.RetryThunk#evaluate(com.trazere.core.functional.RetryThunk, com.trazere.core.lang.ThrowableFactory)}.
 	 */
+	@Deprecated
 	public static <S, F extends Throwable, X extends Exception> S evaluate(final RetryFunction0<S, F, X> function)
 	throws F, X {
 		final Either<S, F> result = function.evaluate();

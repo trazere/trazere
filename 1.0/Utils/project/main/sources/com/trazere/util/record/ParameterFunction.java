@@ -24,7 +24,9 @@ import com.trazere.util.function.Function1;
  * @param <V> Type of the values of the parameters.
  * @param <T> Type of the result values.
  * @param <X> Type of the exceptions.
+ * @deprecated To be removed.
  */
+@Deprecated
 public interface ParameterFunction<K, V, T, X extends Exception>
 extends Function1<Record<K, V>, T, X>, Parametrable<K, V> {
 	// Nothing to do.

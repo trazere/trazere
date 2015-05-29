@@ -30,7 +30,9 @@ import java.util.Set;
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
+ * @deprecated To be removed.
  */
+@Deprecated
 public class SimpleRecordReaderBuilder<K, V>
 extends BaseFactory<SimpleRecordReader<K, V>, RecordException>
 implements RecordReaderBuilder<K, V, SimpleRecordReader<K, V>> {

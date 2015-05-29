@@ -22,7 +22,10 @@ import com.trazere.util.accumulator.FoldAccumulator1;
 
 /**
  * The {@link FunctionAccumulators} class provides various factories of accumulators related to functions.
+ * 
+ * @deprecated Use core.
  */
+@Deprecated
 public class FunctionAccumulators {
 	/**
 	 * Builds an accumulator that left folds the accumulated values using the given binary operator and initial result.
@@ -33,7 +36,9 @@ public class FunctionAccumulators {
 	 * @param operator The operator.
 	 * @param initialResult The initial result.
 	 * @return The built accumulator.
+	 * @deprecated Use {@link com.trazere.core.functional.FunctionAccumulators#fold(com.trazere.core.functional.Function2, Object)}.
 	 */
+	@Deprecated
 	public static <R, V, X extends Exception> Accumulator1<V, R, X> fold(final Function2<? super R, ? super V, ? extends R, ? extends X> operator, final R initialResult) {
 		assert null != operator;
 		
@@ -56,7 +61,10 @@ public class FunctionAccumulators {
 	 * @param projector The projection function.
 	 * @param results The accumulator to populate.
 	 * @return The built accumulator.
+	 * @deprecated Use {@link com.trazere.core.imperative.AccumulatorUtils#map(com.trazere.core.imperative.Accumulator, com.trazere.core.functional.Function)}
+	 *             and {@link com.trazere.core.imperative.Accumulators#uncurry(com.trazere.core.imperative.Accumulator2)}.
 	 */
+	@Deprecated
 	public static <K, V, S, X extends Exception> Accumulator1<V, S, X> projectValues(final Function1<? super V, ? extends K, ? extends X> projector, final Accumulator2<? super K, ? super V, S, ? extends X> results) {
 		assert null != projector;
 		assert null != results;

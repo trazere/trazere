@@ -29,7 +29,9 @@ import com.trazere.util.text.TextUtils;
  * 
  * @param <K> Type of the key.
  * @param <V> Type of the values.
+ * @deprecated Use {@link com.trazere.core.record.FieldKey}.
  */
+@Deprecated
 public final class FieldSignature<K, V>
 implements Describable {
 	/**
@@ -40,7 +42,9 @@ implements Describable {
 	 * @param key The key of the field.
 	 * @param type The type of the value of the field.
 	 * @return The built signature.
+	 * @deprecated Use {@link com.trazere.core.record.FieldKey#FieldKey(String, Class)}.
 	 */
+	@Deprecated
 	public static <K, V> FieldSignature<K, V> build(final K key, final Class<V> type) {
 		return new FieldSignature<K, V>(key, type);
 	}
@@ -54,7 +58,9 @@ implements Describable {
 	 * @param type The type of the value of the field.
 	 * @param nullable The flag indicating whether the value of the field can be <code>null</code> or not.
 	 * @return The built signature.
+	 * @deprecated Use {@link com.trazere.core.record.FieldKey#FieldKey(String, Class, boolean)}.
 	 */
+	@Deprecated
 	public static <K, V> FieldSignature<K, V> build(final K key, final Class<V> type, final boolean nullable) {
 		return new FieldSignature<K, V>(key, type, nullable);
 	}
@@ -99,7 +105,9 @@ implements Describable {
 	 * Get the key of the record field described by the receiver signature.
 	 * 
 	 * @return The key.
+	 * @deprecated Use {@link com.trazere.core.record.FieldKey#getLabel()}.
 	 */
+	@Deprecated
 	public K getKey() {
 		return _key;
 	}
@@ -110,7 +118,9 @@ implements Describable {
 	 * @param <K> Type of the keys.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <K, X extends Exception> Function1<FieldSignature<K, ?>, K, X> getKeyFunction() {
 		return (Function1<FieldSignature<K, ?>, K, X>) _GET_KEY_FUNCTION;
@@ -140,7 +150,9 @@ implements Describable {
 	 * @param <V> Type of the values.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <V, X extends Exception> Function1<FieldSignature<?, V>, Class<V>, X> getTypeFunction() {
 		return (Function1<FieldSignature<?, V>, Class<V>, X>) _GET_TYPE_FUNCTION;
@@ -169,7 +181,9 @@ implements Describable {
 	 * 
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> Predicate1<FieldSignature<?, ?>, X> getNullableFunction() {
 		return (Predicate1<FieldSignature<?, ?>, X>) _GET_NULLABLE_FUNCTION;
@@ -190,7 +204,9 @@ implements Describable {
 	 * 
 	 * @param value The value. May be <code>null</code>.
 	 * @return <code>true</code> when the value is accepted, <code>false</code> otherwise.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public boolean acceptsValue(final Object value) {
 		if (null == value) {
 			return _nullable;
@@ -208,7 +224,9 @@ implements Describable {
 	 * @param type The type.
 	 * @param nullable The flag indicating whether the value of the field can be <code>null</code> or not.
 	 * @return <code>true</code> when the type is accepted, <code>false</code> otherwise.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public boolean accepts(final Class<?> type, final boolean nullable) {
 		assert null != type;
 		

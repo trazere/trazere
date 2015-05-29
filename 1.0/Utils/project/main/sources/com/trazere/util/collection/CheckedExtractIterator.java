@@ -28,7 +28,9 @@ import java.util.NoSuchElementException;
  * @param <T> Type of the values of the feed.
  * @param <R> Type of the extracted values.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#extract(java.util.Iterator, com.trazere.core.functional.Function)}.
  */
+@Deprecated
 public abstract class CheckedExtractIterator<T, R, X extends Exception>
 implements CheckedIterator<R, X> {
 	// Iterator.

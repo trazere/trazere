@@ -20,7 +20,10 @@ import com.trazere.util.lang.ThrowableFactory;
 
 /**
  * {@link DuplicateFieldException} exceptions are thrown when some record field already exists.
+ * 
+ * @deprecated Use {@link com.trazere.core.record.DuplicateFieldException}.
  */
+@Deprecated
 public class DuplicateFieldException
 extends RecordException {
 	private static final long serialVersionUID = 1L;

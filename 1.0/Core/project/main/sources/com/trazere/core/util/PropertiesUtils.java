@@ -87,11 +87,8 @@ public class PropertiesUtils {
 	public static Properties loadProperties(final Properties properties, final Input input, final boolean optional)
 	throws IOException {
 		if (!optional || input.exists()) {
-			final InputStream stream = input.open();
-			try {
+			try (final InputStream stream = input.open()) {
 				properties.load(stream);
-			} finally {
-				stream.close();
 			}
 		}
 		return properties;
@@ -313,7 +310,7 @@ public class PropertiesUtils {
 	 * 
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
-	 * @param defaultValue The default value.
+	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
@@ -329,7 +326,7 @@ public class PropertiesUtils {
 	 * 
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
-	 * @param defaultValue The default value.
+	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
@@ -345,7 +342,7 @@ public class PropertiesUtils {
 	 * 
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
-	 * @param defaultValue The default value.
+	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
@@ -361,7 +358,7 @@ public class PropertiesUtils {
 	 * 
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
-	 * @param defaultValue The default value.
+	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
@@ -377,7 +374,7 @@ public class PropertiesUtils {
 	 * 
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
-	 * @param defaultValue The default value.
+	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
@@ -393,7 +390,7 @@ public class PropertiesUtils {
 	 * 
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
-	 * @param defaultValue The default value.
+	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
@@ -409,7 +406,7 @@ public class PropertiesUtils {
 	 * 
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
-	 * @param defaultValue The default value.
+	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
@@ -425,7 +422,7 @@ public class PropertiesUtils {
 	 * 
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
-	 * @param defaultValue The default value.
+	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
@@ -441,7 +438,7 @@ public class PropertiesUtils {
 	 * 
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
-	 * @param defaultValue The default value.
+	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
@@ -457,7 +454,7 @@ public class PropertiesUtils {
 	 * 
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
-	 * @param defaultValue The default value.
+	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
@@ -473,7 +470,7 @@ public class PropertiesUtils {
 	 * 
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
-	 * @param defaultValue The default value.
+	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
@@ -525,7 +522,7 @@ public class PropertiesUtils {
 	 * 
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
-	 * @param defaultValue The function computing the default value.
+	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
@@ -541,7 +538,7 @@ public class PropertiesUtils {
 	 * 
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
-	 * @param defaultValue The function computing the default value.
+	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
@@ -557,7 +554,7 @@ public class PropertiesUtils {
 	 * 
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
-	 * @param defaultValue The function computing the default value.
+	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
@@ -573,7 +570,7 @@ public class PropertiesUtils {
 	 * 
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
-	 * @param defaultValue The function computing the default value.
+	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
@@ -589,7 +586,7 @@ public class PropertiesUtils {
 	 * 
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
-	 * @param defaultValue The function computing the default value.
+	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
@@ -605,7 +602,7 @@ public class PropertiesUtils {
 	 * 
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
-	 * @param defaultValue The function computing the default value.
+	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
@@ -621,7 +618,7 @@ public class PropertiesUtils {
 	 * 
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
-	 * @param defaultValue The function computing the default value.
+	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
@@ -637,7 +634,7 @@ public class PropertiesUtils {
 	 * 
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
-	 * @param defaultValue The function computing the default value.
+	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
@@ -653,7 +650,7 @@ public class PropertiesUtils {
 	 * 
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
-	 * @param defaultValue The function computing the default value.
+	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
@@ -669,7 +666,7 @@ public class PropertiesUtils {
 	 * 
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
-	 * @param defaultValue The function computing the default value.
+	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */
@@ -685,7 +682,7 @@ public class PropertiesUtils {
 	 * 
 	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
-	 * @param defaultValue The function computing the default value.
+	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
 	 */

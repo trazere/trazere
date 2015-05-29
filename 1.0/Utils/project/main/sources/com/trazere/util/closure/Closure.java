@@ -29,7 +29,9 @@ import com.trazere.util.type.Maybe.Some;
  * 
  * @param <T> Type of the value.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link com.trazere.core.functional.MemoizedThunk}.
  */
+@Deprecated
 public interface Closure<T, X extends Exception>
 extends Function0<T, X> {
 	/**
@@ -46,13 +48,17 @@ extends Function0<T, X> {
 	 * Indicate whether the receiver closure has been evaluated.
 	 * 
 	 * @return <code>true</code> if the closure has been evaluated, <code>false</code> otherwise.
+	 * @deprecated Use {@link com.trazere.core.functional.MemoizedThunk#isMemoized()}.
 	 */
+	@Deprecated
 	public boolean isEvaluated();
 	
 	/**
 	 * Get a view of the value of the receiver closure as an instance of {@link Maybe}.
 	 * 
 	 * @return The evaluated value wrapped in {@link Some}, or {@link None} when the closure has not been evaluated yet.
+	 * @deprecated Use {@link com.trazere.core.functional.MemoizedThunk#get()}.
 	 */
+	@Deprecated
 	public Maybe<T> asMaybe();
 }

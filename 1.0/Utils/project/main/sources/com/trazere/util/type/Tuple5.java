@@ -27,7 +27,9 @@ import com.trazere.util.lang.LangUtils;
  * @param <T3> Type of the third value.
  * @param <T4> Type of the fourth value.
  * @param <T5> Type of the fifth value.
+ * @deprecated Use {@link com.trazere.core.util.Tuple5}.
  */
+@Deprecated
 public class Tuple5<T1, T2, T3, T4, T5>
 extends Tuple4<T1, T2, T3, T4> {
 	private static final long serialVersionUID = 1L;
@@ -46,7 +48,9 @@ extends Tuple4<T1, T2, T3, T4> {
 	 * @param fourth The fourth value. May be <code>null</code>.
 	 * @param fifth The tifth value. May be <code>null</code>.
 	 * @return The built tuple.
+	 * @deprecated Use {@link com.trazere.core.util.Tuples#tuple5(Object, Object, Object, Object, Object)}.
 	 */
+	@Deprecated
 	public static <T1, T2, T3, T4, T5> Tuple5<T1, T2, T3, T4, T5> build(final T1 first, final T2 second, final T3 third, final T4 fourth, final T5 fifth) {
 		return new Tuple5<T1, T2, T3, T4, T5>(first, second, third, fourth, fifth);
 	}
@@ -76,7 +80,9 @@ extends Tuple4<T1, T2, T3, T4> {
 	 * Gets the fifth value of the receiver tuple.
 	 * 
 	 * @return The value. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.util.Field5#get5()}.
 	 */
+	@Deprecated
 	public T5 getFifth() {
 		return _fifth;
 	}
@@ -87,7 +93,9 @@ extends Tuple4<T1, T2, T3, T4> {
 	 * @param <T5> Type of the fifth values of the tuples.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.util.FieldFunctions#get5()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T5, X extends Exception> Function1<Tuple5<?, ?, ?, ?, ? extends T5>, T5, X> getFifthFunction() {
 		return (Function1<Tuple5<?, ?, ?, ?, ? extends T5>, T5, X>) _GET_FIFTH_FUNCTION;
@@ -116,7 +124,11 @@ extends Tuple4<T1, T2, T3, T4> {
 	 * @param tuple2 The second tuple.
 	 * @return The result of the comparison as defined by the {@link Comparable#compareTo(Object)} method.
 	 * @see Comparable#compareTo(Object)
+	 * @deprecated Use
+	 *             {@link com.trazere.core.util.TupleComparators#tuple5(java.util.Comparator, java.util.Comparator, java.util.Comparator, java.util.Comparator, java.util.Comparator)}
+	 *             .
 	 */
+	@Deprecated
 	public static <T1 extends Comparable<T1>, T2 extends Comparable<T2>, T3 extends Comparable<T3>, T4 extends Comparable<T4>, T5 extends Comparable<T5>> int compare(final Tuple5<T1, T2, T3, T4, T5> tuple1, final Tuple5<T1, T2, T3, T4, T5> tuple2) {
 		assert null != tuple1;
 		assert null != tuple2;

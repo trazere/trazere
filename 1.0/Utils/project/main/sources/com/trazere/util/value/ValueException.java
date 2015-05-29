@@ -20,7 +20,10 @@ import com.trazere.util.lang.ThrowableFactory;
 
 /**
  * {@link ValueException} exceptions are thrown when value related errors occur.
+ * 
+ * @deprecated To be removed.
  */
+@Deprecated
 public class ValueException
 extends Exception {
 	private static final long serialVersionUID = 1L;

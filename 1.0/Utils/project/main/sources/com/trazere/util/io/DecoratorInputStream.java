@@ -20,7 +20,10 @@ import java.io.InputStream;
 
 /**
  * DOCME
+ * 
+ * @deprecated Use {@link com.trazere.core.io.DecoratorInputStream}.
  */
+@Deprecated
 public class DecoratorInputStream
 extends InputStream {
 	private final InputStream _stream;

@@ -19,7 +19,10 @@ package com.trazere.util.lang;
  * {@link UncheckedException} exceptions are thrown when internal errors occur.
  * <p>
  * These exceptions aim to indicate problems in the code (like situations supposed to be impossible) rather than runtime issues.
+ * 
+ * @deprecated Use {@link RuntimeException}.
  */
+@Deprecated
 public class UncheckedException
 extends RuntimeException {
 	private static final long serialVersionUID = 1L;

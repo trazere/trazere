@@ -32,7 +32,10 @@ import java.util.Properties;
 
 /**
  * The {@link PropertiesUtils} class provides various utilities regarding the manipulation of properties.
+ * 
+ * @deprecated Use core.
  */
+@Deprecated
 public class PropertiesUtils {
 	/**
 	 * Loads and merges the property files provided by the given inputs.
@@ -42,7 +45,9 @@ public class PropertiesUtils {
 	 * @param inputs Input of the property files to load paired with flags indicating whether they are optional.
 	 * @return The loaded properties.
 	 * @throws IOException When the property file cannot be loaded.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#loadProperties(Iterable)}.
 	 */
+	@Deprecated
 	public static Properties loadProperties(final Iterable<? extends Tuple2<? extends Input, Boolean>> inputs)
 	throws IOException {
 		return loadProperties(new Properties(), inputs);
@@ -57,7 +62,9 @@ public class PropertiesUtils {
 	 * @param inputs Inputs of the property files to load paired with flags indicating whether they are optional.
 	 * @return The given properties.
 	 * @throws IOException When the property file cannot be loaded.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#loadProperties(Properties, Iterable)}.
 	 */
+	@Deprecated
 	public static Properties loadProperties(final Properties properties, final Iterable<? extends Tuple2<? extends Input, Boolean>> inputs)
 	throws IOException {
 		assert null != properties;
@@ -79,7 +86,9 @@ public class PropertiesUtils {
 	 * @param optional Flag indicating whether the property file is optional.
 	 * @return The given properties.
 	 * @throws IOException When the property file cannot be loaded.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#loadProperties(Properties, com.trazere.core.io.Input, boolean)}.
 	 */
+	@Deprecated
 	public static Properties loadProperties(final Properties properties, final Input input, final boolean optional)
 	throws IOException {
 		assert null != properties;
@@ -102,7 +111,9 @@ public class PropertiesUtils {
 	 * @param delimiter Delimiter.
 	 * @param parts Parts.
 	 * @return The property name.
+	 * @deprecated Use {@link com.trazere.core.text.TextUtils#join(Iterable, CharSequence)}.
 	 */
+	@Deprecated
 	public static String computePropertyName(final String delimiter, final String... parts) {
 		assert null != delimiter;
 		assert null != parts;
@@ -128,7 +139,9 @@ public class PropertiesUtils {
 	 * @param reader The value reader function.
 	 * @return The value of the property.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#get(Properties, String, com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public static <T> Maybe<T> getProperty(final Properties properties, final String name, final Function1<? super String, ? extends T, ? extends InvalidPropertyException> reader)
 	throws InvalidPropertyException {
 		assert null != properties;
@@ -145,7 +158,9 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @return The value of the property.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getString(Properties, String)}.
 	 */
+	@Deprecated
 	public static Maybe<String> getStringProperty(final Properties properties, final String name)
 	throws InvalidPropertyException {
 		return getProperty(properties, name, Functions.<String, InvalidPropertyException>identity());
@@ -158,7 +173,9 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @return The value of the property.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getBoolean(Properties, String)}.
 	 */
+	@Deprecated
 	public static Maybe<Boolean> getBooleanProperty(final Properties properties, final String name)
 	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_BOOLEAN_FUNCTION);
@@ -171,7 +188,9 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @return The value of the property.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getInteger(Properties, String)}.
 	 */
+	@Deprecated
 	public static Maybe<Integer> getIntegerProperty(final Properties properties, final String name)
 	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_INTEGER_FUNCTION);
@@ -184,7 +203,9 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @return The value of the property.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getLong(Properties, String)}.
 	 */
+	@Deprecated
 	public static Maybe<Long> getLongProperty(final Properties properties, final String name)
 	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_LONG_FUNCTION);
@@ -197,7 +218,9 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @return The value of the property.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getFloat(Properties, String)}.
 	 */
+	@Deprecated
 	public static Maybe<Float> getFloatProperty(final Properties properties, final String name)
 	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_FLOAT_FUNCTION);
@@ -210,7 +233,9 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @return The value of the property.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @deprecated {@link com.trazere.core.util.PropertiesUtils#getDouble(Properties, String)}.
 	 */
+	@Deprecated
 	public static Maybe<Double> getDoubleProperty(final Properties properties, final String name)
 	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_DOUBLE_FUNCTION);
@@ -223,7 +248,9 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @return The value of the property.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getFile(Properties, String)}.
 	 */
+	@Deprecated
 	public static Maybe<File> getFileProperty(final Properties properties, final String name)
 	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_FILE_FUNCTION);
@@ -236,7 +263,9 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @return The value of the property.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getUri(Properties, String)}.
 	 */
+	@Deprecated
 	public static Maybe<URI> getUriProperty(final Properties properties, final String name)
 	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_URI_FUNCTION);
@@ -249,7 +278,9 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @return The value of the property.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getUrlProperty(Properties, String)}.
 	 */
+	@Deprecated
 	public static Maybe<URL> getUrlProperty(final Properties properties, final String name)
 	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_URL_FUNCTION);
@@ -268,7 +299,11 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 * @throws InvalidPropertyException When the default value cannot be evaluated.
+	 * @deprecated Use
+	 *             {@link com.trazere.core.util.PropertiesUtils#getOptional(Properties, String, com.trazere.core.functional.Function, com.trazere.core.functional.Thunk)}
+	 *             .
 	 */
+	@Deprecated
 	public static <T> T getProperty(final Properties properties, final String name, final Function1<? super String, ? extends T, ? extends InvalidPropertyException> reader, final Function0<? extends T, ? extends InvalidPropertyException> defaultValue)
 	throws InvalidPropertyException {
 		assert null != defaultValue;
@@ -287,7 +322,9 @@ public class PropertiesUtils {
 	 * @param defaultValue The default value.
 	 * @return The value of the property.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getOptionalString(Properties, String, String)}.
 	 */
+	@Deprecated
 	public static String getStringProperty(final Properties properties, final String name, final String defaultValue)
 	throws InvalidPropertyException {
 		return getStringProperty(properties, name, Functions.<String, InvalidPropertyException>constant0(defaultValue));
@@ -304,7 +341,9 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 * @throws InvalidPropertyException When the default value cannot be evaluated.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getOptionalString(Properties, String, com.trazere.core.functional.Thunk)}.
 	 */
+	@Deprecated
 	public static String getStringProperty(final Properties properties, final String name, final Function0<? extends String, ? extends InvalidPropertyException> defaultValue)
 	throws InvalidPropertyException {
 		return getProperty(properties, name, Functions.<String, InvalidPropertyException>identity(), defaultValue);
@@ -320,7 +359,9 @@ public class PropertiesUtils {
 	 * @param defaultValue The default value.
 	 * @return The value of the property.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getOptionalBoolean(Properties, String, boolean)}.
 	 */
+	@Deprecated
 	public static boolean getBooleanProperty(final Properties properties, final String name, final boolean defaultValue)
 	throws InvalidPropertyException {
 		return getBooleanProperty(properties, name, Functions.<Boolean, InvalidPropertyException>constant0(defaultValue));
@@ -337,7 +378,9 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 * @throws InvalidPropertyException When the default value cannot be evaluated.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getOptionalBoolean(Properties, String, com.trazere.core.functional.Thunk)}.
 	 */
+	@Deprecated
 	public static boolean getBooleanProperty(final Properties properties, final String name, final Function0<? extends Boolean, ? extends InvalidPropertyException> defaultValue)
 	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_BOOLEAN_FUNCTION, defaultValue).booleanValue();
@@ -353,7 +396,9 @@ public class PropertiesUtils {
 	 * @param defaultValue The default value.
 	 * @return The value of the property.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getOptionalInteger(Properties, String, int)}.
 	 */
+	@Deprecated
 	public static int getIntegerProperty(final Properties properties, final String name, final int defaultValue)
 	throws InvalidPropertyException {
 		return getIntegerProperty(properties, name, Functions.<Integer, InvalidPropertyException>constant0(defaultValue));
@@ -370,7 +415,9 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 * @throws InvalidPropertyException When the default value cannot be evaluated.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getOptionalInteger(Properties, String, com.trazere.core.functional.Thunk)}.
 	 */
+	@Deprecated
 	public static int getIntegerProperty(final Properties properties, final String name, final Function0<? extends Integer, ? extends InvalidPropertyException> defaultValue)
 	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_INTEGER_FUNCTION, defaultValue).intValue();
@@ -386,7 +433,9 @@ public class PropertiesUtils {
 	 * @param defaultValue The default value.
 	 * @return The value of the property.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getOptionalLong(Properties, String, long)}.
 	 */
+	@Deprecated
 	public static long getLongProperty(final Properties properties, final String name, final long defaultValue)
 	throws InvalidPropertyException {
 		return getLongProperty(properties, name, Functions.<Long, InvalidPropertyException>constant0(defaultValue));
@@ -403,7 +452,9 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 * @throws InvalidPropertyException When the default value cannot be evaluated.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getOptionalLong(Properties, String, com.trazere.core.functional.Thunk)}.
 	 */
+	@Deprecated
 	public static long getLongProperty(final Properties properties, final String name, final Function0<? extends Long, ? extends InvalidPropertyException> defaultValue)
 	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_LONG_FUNCTION, defaultValue).longValue();
@@ -419,7 +470,9 @@ public class PropertiesUtils {
 	 * @param defaultValue The default value.
 	 * @return The value of the property.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getOptionalFloat(Properties, String, float)}.
 	 */
+	@Deprecated
 	public static float getFloatProperty(final Properties properties, final String name, final float defaultValue)
 	throws InvalidPropertyException {
 		return getFloatProperty(properties, name, Functions.<Float, InvalidPropertyException>constant0(defaultValue));
@@ -436,7 +489,9 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 * @throws InvalidPropertyException When the default value cannot be evaluated.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getOptionalFloat(Properties, String, com.trazere.core.functional.Thunk)}.
 	 */
+	@Deprecated
 	public static float getFloatProperty(final Properties properties, final String name, final Function0<? extends Float, ? extends InvalidPropertyException> defaultValue)
 	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_FLOAT_FUNCTION, defaultValue).floatValue();
@@ -452,7 +507,9 @@ public class PropertiesUtils {
 	 * @param defaultValue The default value.
 	 * @return The value of the property.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getOptionalDouble(Properties, String, double)}.
 	 */
+	@Deprecated
 	public static double getDoubleProperty(final Properties properties, final String name, final double defaultValue)
 	throws InvalidPropertyException {
 		return getDoubleProperty(properties, name, Functions.<Double, InvalidPropertyException>constant0(defaultValue));
@@ -469,7 +526,9 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 * @throws InvalidPropertyException When the default value cannot be evaluated.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getOptionalDouble(Properties, String, com.trazere.core.functional.Thunk)}.
 	 */
+	@Deprecated
 	public static double getDoubleProperty(final Properties properties, final String name, final Function0<? extends Double, ? extends InvalidPropertyException> defaultValue)
 	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_DOUBLE_FUNCTION, defaultValue).doubleValue();
@@ -485,7 +544,9 @@ public class PropertiesUtils {
 	 * @param defaultValue The default value.
 	 * @return The value of the property.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getOptionalFile(Properties, String, File)}.
 	 */
+	@Deprecated
 	public static File getFileProperty(final Properties properties, final String name, final File defaultValue)
 	throws InvalidPropertyException {
 		assert null != defaultValue;
@@ -504,7 +565,9 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 * @throws InvalidPropertyException When the default value cannot be evaluated.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getOptionalFile(Properties, String, com.trazere.core.functional.Thunk)}.
 	 */
+	@Deprecated
 	public static File getFileProperty(final Properties properties, final String name, final Function0<? extends File, ? extends InvalidPropertyException> defaultValue)
 	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_FILE_FUNCTION, defaultValue);
@@ -520,7 +583,9 @@ public class PropertiesUtils {
 	 * @param defaultValue The default value.
 	 * @return The value of the property.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getOptionalUri(Properties, String, URI)}.
 	 */
+	@Deprecated
 	public static URI getUriProperty(final Properties properties, final String name, final URI defaultValue)
 	throws InvalidPropertyException {
 		assert null != defaultValue;
@@ -539,7 +604,9 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 * @throws InvalidPropertyException When the default value cannot be evaluated.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getOptionalUri(Properties, String, com.trazere.core.functional.Thunk)}.
 	 */
+	@Deprecated
 	public static URI getUriProperty(final Properties properties, final String name, final Function0<? extends URI, ? extends InvalidPropertyException> defaultValue)
 	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_URI_FUNCTION, defaultValue);
@@ -555,7 +622,9 @@ public class PropertiesUtils {
 	 * @param defaultValue The default value.
 	 * @return The value of the property.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getOptionalUrl(Properties, String, URL)}.
 	 */
+	@Deprecated
 	public static URL getUrlProperty(final Properties properties, final String name, final URL defaultValue)
 	throws InvalidPropertyException {
 		assert null != defaultValue;
@@ -574,7 +643,9 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
 	 * @throws InvalidPropertyException When the default value cannot be evaluated.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getOptionalUrl(Properties, String, com.trazere.core.functional.Thunk)}.
 	 */
+	@Deprecated
 	public static URL getUrlProperty(final Properties properties, final String name, final Function0<? extends URL, ? extends InvalidPropertyException> defaultValue)
 	throws InvalidPropertyException {
 		return getProperty(properties, name, READ_URL_FUNCTION, defaultValue);
@@ -592,7 +663,9 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws MissingPropertyException When the property does not exist.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getMandatory(Properties, String, com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public static <T> T getMandatoryProperty(final Properties properties, final String name, final Function1<? super String, ? extends T, ? extends InvalidPropertyException> reader)
 	throws MissingPropertyException, InvalidPropertyException {
 		final Maybe<T> value = getProperty(properties, name, reader);
@@ -613,7 +686,9 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws MissingPropertyException When the property does not exist.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getMandatoryString(Properties, String)}.
 	 */
+	@Deprecated
 	public static String getMandatoryStringProperty(final Properties properties, final String name)
 	throws MissingPropertyException, InvalidPropertyException {
 		return getMandatoryProperty(properties, name, Functions.<String, InvalidPropertyException>identity());
@@ -629,7 +704,9 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws MissingPropertyException When the property does not exist.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getMandatoryBoolean(Properties, String)}.
 	 */
+	@Deprecated
 	public static boolean getMandatoryBooleanProperty(final Properties properties, final String name)
 	throws MissingPropertyException, InvalidPropertyException {
 		return getMandatoryProperty(properties, name, READ_BOOLEAN_FUNCTION).booleanValue();
@@ -645,7 +722,9 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws MissingPropertyException When the property does not exist.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getMandatoryInteger(Properties, String)}.
 	 */
+	@Deprecated
 	public static int getMandatoryIntegerProperty(final Properties properties, final String name)
 	throws MissingPropertyException, InvalidPropertyException {
 		return getMandatoryProperty(properties, name, READ_INTEGER_FUNCTION).intValue();
@@ -661,7 +740,9 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws MissingPropertyException When the property does not exist.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @deprecated {@link com.trazere.core.util.PropertiesUtils#getMandatoryLong(Properties, String)}.
 	 */
+	@Deprecated
 	public static long getMandatoryLongProperty(final Properties properties, final String name)
 	throws MissingPropertyException, InvalidPropertyException {
 		return getMandatoryProperty(properties, name, READ_LONG_FUNCTION).longValue();
@@ -677,7 +758,9 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws MissingPropertyException When the property does not exist.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getMandatoryFloat(Properties, String)}.
 	 */
+	@Deprecated
 	public static float getMandatoryFloatProperty(final Properties properties, final String name)
 	throws MissingPropertyException, InvalidPropertyException {
 		return getMandatoryProperty(properties, name, READ_FLOAT_FUNCTION).floatValue();
@@ -693,7 +776,9 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws MissingPropertyException When the property does not exist.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @deprecated {@link com.trazere.core.util.PropertiesUtils#getMandatoryDouble(Properties, String)}.
 	 */
+	@Deprecated
 	public static double getMandatoryDoubleProperty(final Properties properties, final String name)
 	throws MissingPropertyException, InvalidPropertyException {
 		return getMandatoryProperty(properties, name, READ_DOUBLE_FUNCTION).doubleValue();
@@ -709,7 +794,9 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws MissingPropertyException When the property does not exist.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getMandatoryFile(Properties, String)}.
 	 */
+	@Deprecated
 	public static File getMandatoryFileProperty(final Properties properties, final String name)
 	throws MissingPropertyException, InvalidPropertyException {
 		return getMandatoryProperty(properties, name, READ_FILE_FUNCTION);
@@ -725,7 +812,9 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws MissingPropertyException When the property does not exist.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getMandatoryUri(Properties, String)}.
 	 */
+	@Deprecated
 	public static URI getMandatoryUriProperty(final Properties properties, final String name)
 	throws MissingPropertyException, InvalidPropertyException {
 		return getMandatoryProperty(properties, name, READ_URI_FUNCTION);
@@ -741,7 +830,9 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws MissingPropertyException When the property does not exist.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getMandatoryUrl(Properties, String)}.
 	 */
+	@Deprecated
 	public static URL getMandatoryUrlProperty(final Properties properties, final String name)
 	throws MissingPropertyException, InvalidPropertyException {
 		return getMandatoryProperty(properties, name, READ_URL_FUNCTION);
@@ -753,7 +844,9 @@ public class PropertiesUtils {
 	 * @param representation The representation.
 	 * @return The value.
 	 * @throws InvalidPropertyException When the representation is invalid.
+	 * @deprecated Use {@link com.trazere.core.text.TextSerializers#boolean_()}.
 	 */
+	@Deprecated
 	public static boolean readBoolean(final String representation)
 	throws InvalidPropertyException {
 		assert null != representation;
@@ -761,7 +854,12 @@ public class PropertiesUtils {
 		return Boolean.parseBoolean(representation);
 	}
 	
-	/** Function that reads boolean property values. */
+	/**
+	 * Function that reads boolean property values.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.text.TextSerializers#boolean_()}.
+	 */
+	@Deprecated
 	public static final Function1<String, Boolean, InvalidPropertyException> READ_BOOLEAN_FUNCTION = new Function1<String, Boolean, InvalidPropertyException>() {
 		@Override
 		public Boolean evaluate(final String representation) {
@@ -777,7 +875,9 @@ public class PropertiesUtils {
 	 * @param representation The representation.
 	 * @return The value.
 	 * @throws InvalidPropertyException When the representation is invalid.
+	 * @deprecated Use {@link com.trazere.core.text.TextSerializers#integer()}.
 	 */
+	@Deprecated
 	public static int readInteger(final String representation)
 	throws InvalidPropertyException {
 		assert null != representation;
@@ -789,7 +889,12 @@ public class PropertiesUtils {
 		}
 	}
 	
-	/** Function that reads integer property values. */
+	/**
+	 * Function that reads integer property values.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.text.TextSerializers#integer()}.
+	 */
+	@Deprecated
 	public static final Function1<String, Integer, InvalidPropertyException> READ_INTEGER_FUNCTION = new Function1<String, Integer, InvalidPropertyException>() {
 		@Override
 		public Integer evaluate(final String representation)
@@ -804,7 +909,9 @@ public class PropertiesUtils {
 	 * @param representation The representation.
 	 * @return The value.
 	 * @throws InvalidPropertyException When the representation is invalid.
+	 * @deprecated Use {@link com.trazere.core.text.TextSerializers#long_()}.
 	 */
+	@Deprecated
 	public static long readLong(final String representation)
 	throws InvalidPropertyException {
 		assert null != representation;
@@ -816,7 +923,12 @@ public class PropertiesUtils {
 		}
 	}
 	
-	/** Function that reads long property values. */
+	/**
+	 * Function that reads long property values.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.text.TextSerializers#long_()}.
+	 */
+	@Deprecated
 	public static final Function1<String, Long, InvalidPropertyException> READ_LONG_FUNCTION = new Function1<String, Long, InvalidPropertyException>() {
 		@Override
 		public Long evaluate(final String representation)
@@ -831,7 +943,9 @@ public class PropertiesUtils {
 	 * @param representation The representation.
 	 * @return The value.
 	 * @throws InvalidPropertyException When the representation is invalid.
+	 * @deprecated Use {@link com.trazere.core.text.TextSerializers#float_()}.
 	 */
+	@Deprecated
 	public static float readFloat(final String representation)
 	throws InvalidPropertyException {
 		assert null != representation;
@@ -843,7 +957,12 @@ public class PropertiesUtils {
 		}
 	}
 	
-	/** Function that reads long property values. */
+	/**
+	 * Function that reads long property values.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.text.TextSerializers#float_()}.
+	 */
+	@Deprecated
 	public static final Function1<String, Float, InvalidPropertyException> READ_FLOAT_FUNCTION = new Function1<String, Float, InvalidPropertyException>() {
 		@Override
 		public Float evaluate(final String representation)
@@ -858,7 +977,9 @@ public class PropertiesUtils {
 	 * @param representation The representation.
 	 * @return The value.
 	 * @throws InvalidPropertyException When the representation is invalid.
+	 * @deprecated Use {@link com.trazere.core.text.TextSerializers#double_()}.
 	 */
+	@Deprecated
 	public static double readDouble(final String representation)
 	throws InvalidPropertyException {
 		assert null != representation;
@@ -870,7 +991,12 @@ public class PropertiesUtils {
 		}
 	}
 	
-	/** Function that reads double property values. */
+	/**
+	 * Function that reads double property values.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.text.TextSerializers#double_()}.
+	 */
+	@Deprecated
 	public static final Function1<String, Double, InvalidPropertyException> READ_DOUBLE_FUNCTION = new Function1<String, Double, InvalidPropertyException>() {
 		@Override
 		public Double evaluate(final String representation)
@@ -885,7 +1011,9 @@ public class PropertiesUtils {
 	 * @param representation The representation.
 	 * @return The value.
 	 * @throws InvalidPropertyException When the representation is invalid.
+	 * @deprecated Use {@link com.trazere.core.text.TextSerializers#file()}.
 	 */
+	@Deprecated
 	public static File readFile(final String representation)
 	throws InvalidPropertyException {
 		assert null != representation;
@@ -893,7 +1021,12 @@ public class PropertiesUtils {
 		return new File(representation);
 	}
 	
-	/** Function that reads file property values. */
+	/**
+	 * Function that reads file property values.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.text.TextSerializers#file()}.
+	 */
+	@Deprecated
 	public static final Function1<String, File, InvalidPropertyException> READ_FILE_FUNCTION = new Function1<String, File, InvalidPropertyException>() {
 		@Override
 		public File evaluate(final String representation)
@@ -908,7 +1041,9 @@ public class PropertiesUtils {
 	 * @param representation The representation.
 	 * @return The value.
 	 * @throws InvalidPropertyException When the representation is invalid.
+	 * @deprecated Use {@link com.trazere.core.text.TextSerializers#uri()}.
 	 */
+	@Deprecated
 	public static URI readUri(final String representation)
 	throws InvalidPropertyException {
 		assert null != representation;
@@ -920,7 +1055,12 @@ public class PropertiesUtils {
 		}
 	}
 	
-	/** Function that reads URI property values. */
+	/**
+	 * Function that reads URI property values.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.text.TextSerializers#uri()}.
+	 */
+	@Deprecated
 	public static final Function1<String, URI, InvalidPropertyException> READ_URI_FUNCTION = new Function1<String, URI, InvalidPropertyException>() {
 		@Override
 		public URI evaluate(final String representation)
@@ -935,7 +1075,9 @@ public class PropertiesUtils {
 	 * @param representation The representation.
 	 * @return The value.
 	 * @throws InvalidPropertyException When the representation is invalid.
+	 * @deprecated Use {@link com.trazere.core.text.TextSerializers#url()}.
 	 */
+	@Deprecated
 	public static URL readUrl(final String representation)
 	throws InvalidPropertyException {
 		assert null != representation;
@@ -947,7 +1089,12 @@ public class PropertiesUtils {
 		}
 	}
 	
-	/** Function that reads URL property values. */
+	/**
+	 * Function that reads URL property values.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.text.TextSerializers#url()}.
+	 */
+	@Deprecated
 	public static final Function1<String, URL, InvalidPropertyException> READ_URL_FUNCTION = new Function1<String, URL, InvalidPropertyException>() {
 		@Override
 		public URL evaluate(final String representation)

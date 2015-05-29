@@ -18,6 +18,12 @@ package com.trazere.util.io;
 import java.io.IOException;
 import java.io.OutputStream;
 
+/**
+ * DOCME
+ * 
+ * @deprecated Use {@link com.trazere.core.io.DecoratorOutputStream}.
+ */
+@Deprecated
 public class DecoratorOutputStream
 extends OutputStream {
 	protected final OutputStream _stream;

@@ -22,7 +22,9 @@ import java.util.LinkedList;
  * The {@link LRUCachePolicy} class provides cache policies based on the Least Recently Used algorithm.
  * 
  * @param <K> Type of the keys.
+ * @deprecated Use {@link com.trazere.core.cache.LRUCachePolicy}.
  */
+@Deprecated
 public class LRUCachePolicy<K>
 implements CachePolicy<K> {
 	/**

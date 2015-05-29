@@ -29,7 +29,9 @@ import java.util.NoSuchElementException;
  * The {@link Feeds} class provides various common feeds.
  * 
  * @see Feed
+ * @deprecated Use core.
  */
+@Deprecated
 public class Feeds {
 	/**
 	 * Builds a feed using the given head and tail.
@@ -39,7 +41,9 @@ public class Feeds {
 	 * @param head The head.
 	 * @param tail The tail.
 	 * @return The built feed.
+	 * @deprecated Use {@link com.trazere.core.collection.Feeds#feed(Object, com.trazere.core.collection.Feed)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Feed<T, X> build(final T head, final Feed<T, ? extends X> tail) {
 		assert null != head;
 		assert null != tail;
@@ -77,7 +81,9 @@ public class Feeds {
 	 * @param <T> Type of the elements.
 	 * @param <X> Type of the exceptions.
 	 * @return The built feed.
+	 * @deprecated Use {@link com.trazere.core.collection.Feeds#empty()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T, X extends Exception> Feed<T, X> empty() {
 		return (Feed<T, X>) EMPTY;
@@ -118,7 +124,9 @@ public class Feeds {
 	 * @param <X> Type of the exceptions.
 	 * @param value The value.
 	 * @return The built feed.
+	 * @deprecated Use {@link com.trazere.core.collection.Feeds#fromElement(Object)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Feed<T, X> fromValue(final T value) {
 		assert null != value;
 		
@@ -132,7 +140,9 @@ public class Feeds {
 	 * @param <X> Type of the exceptions.
 	 * @param values The values.
 	 * @return The built feed.
+	 * @deprecated Use {@link com.trazere.core.collection.Feeds#fromElements(Object...)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Feed<T, X> fromValues(final T... values) {
 		assert null != values;
 		
@@ -188,7 +198,9 @@ public class Feeds {
 	 * @param <X> Type of the exceptions.
 	 * @param collection The collection.
 	 * @return The built feed.
+	 * @deprecated Use {@link com.trazere.core.collection.Feeds#fromIterable(Iterable)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Feed<T, X> fromCollection(final Collection<? extends T> collection) {
 		assert null != collection;
 		
@@ -202,7 +214,9 @@ public class Feeds {
 	 * @param <X> Type of the exceptions.
 	 * @param iterator The iterator.
 	 * @return The built feed.
+	 * @deprecated Use {@link com.trazere.core.collection.Feeds#fromIterator(Iterator)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Feed<T, X> fromIterator(final Iterator<? extends T> iterator) {
 		assert null != iterator;
 		
@@ -225,7 +239,9 @@ public class Feeds {
 	 * @param <X> Type of the exceptions.
 	 * @param iterator The iterator.
 	 * @return The built feed.
+	 * @deprecated Use {@link com.trazere.core.collection.Feeds#fromIterator(Iterator)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Feed<T, X> fromCheckedIterator(final CheckedIterator<? extends T, ? extends X> iterator) {
 		assert null != iterator;
 		
@@ -249,7 +265,9 @@ public class Feeds {
 	 * @param <X> Type of the exceptions.
 	 * @param feed The feed.
 	 * @return The built feed.
+	 * @deprecated Use {@link com.trazere.core.collection.FeedUtils#memoize(com.trazere.core.collection.Feed)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Feed<T, X> memoize(final Feed<T, ? extends X> feed) {
 		assert null != feed;
 		
@@ -270,7 +288,9 @@ public class Feeds {
 	 * @param predicate The predicate.
 	 * @param feed The feed.
 	 * @return The built feed over the filtered elements.
+	 * @deprecated Use {@link com.trazere.core.collection.FeedUtils#filter(com.trazere.core.collection.Feed, com.trazere.core.functional.Predicate)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Feed<T, X> filter(final Predicate1<? super T, ? extends X> predicate, final Feed<? extends T, ? extends X> feed) {
 		assert null != predicate;
 		assert null != feed;
@@ -304,7 +324,9 @@ public class Feeds {
 	 * @param function The function.
 	 * @param feed The feed.
 	 * @return The built feed over the transformed elements.
+	 * @deprecated Use {@link com.trazere.core.collection.FeedUtils#map(com.trazere.core.collection.Feed, com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public static <T, R, X extends Exception> Feed<R, X> map(final Function1<? super T, ? extends R, ? extends X> function, final Feed<? extends T, ? extends X> feed) {
 		assert null != function;
 		assert null != feed;
@@ -371,7 +393,9 @@ public class Feeds {
 	 * @param extractor The extractor.
 	 * @param feed The feed.
 	 * @return The built feed over the filtered and transformed elements.
+	 * @deprecated Use {@link com.trazere.core.collection.FeedUtils#extract(com.trazere.core.collection.Feed, com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public static <T, R, X extends Exception> Feed<R, X> extract(final Function1<? super T, ? extends Maybe<? extends R>, ? extends X> extractor, final Feed<? extends T, ? extends X> feed) {
 		assert null != extractor;
 		assert null != feed;
@@ -404,7 +428,9 @@ public class Feeds {
 	 * @param feed1 First feed.
 	 * @param feed2 Second feed.
 	 * @return The built feed appending the given feeds.
+	 * @deprecated Use {@link com.trazere.core.collection.FeedUtils#append(com.trazere.core.collection.Feed, com.trazere.core.collection.Feed)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Feed<T, X> append(final Feed<? extends T, ? extends X> feed1, final Feed<? extends T, ? extends X> feed2) {
 		assert null != feed1;
 		assert null != feed2;
@@ -429,7 +455,9 @@ public class Feeds {
 	 * @param <X> Type of the exceptions.
 	 * @param start Start value.
 	 * @return The built feed.
+	 * @deprecated {@link com.trazere.core.lang.LangFeeds#integer(int)}.
 	 */
+	@Deprecated
 	public static <X extends Exception> Feed<Integer, X> integer(final int start) {
 		return integer(start, 1);
 	}
@@ -441,7 +469,9 @@ public class Feeds {
 	 * @param start Start value.
 	 * @param increment Increment.
 	 * @return The built feed.
+	 * @deprecated {@link com.trazere.core.lang.LangFeeds#integer(int, int)}.
 	 */
+	@Deprecated
 	public static <X extends Exception> Feed<Integer, X> integer(final int start, final int increment) {
 		return new BaseFeed<Integer, X>() {
 			@Override
@@ -457,7 +487,9 @@ public class Feeds {
 	 * 
 	 * @param <X> Type of the exceptions.
 	 * @return The built feed.
+	 * @deprecated {@link com.trazere.core.lang.LangFeeds#natural()}.
 	 */
+	@Deprecated
 	public static <X extends Exception> Feed<Integer, X> natural() {
 		return integer(0, 1);
 	}

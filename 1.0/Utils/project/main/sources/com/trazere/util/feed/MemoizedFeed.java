@@ -23,7 +23,9 @@ import com.trazere.util.type.Tuple2;
  * 
  * @param <T> Type of the elements.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link com.trazere.core.collection.MemoizedFeed}.
  */
+@Deprecated
 public abstract class MemoizedFeed<T, X extends Exception>
 extends BaseFeed<T, X> {
 	/** Indicates whether the feed has been computed. */

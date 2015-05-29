@@ -26,18 +26,23 @@ import java.util.TreeSet;
  * The {@link CollectionFactories} class provides various factories of collection factories.
  * 
  * @see CollectionFactory
+ * @deprecated Use core.
  */
+@Deprecated
 public class CollectionFactories {
 	/**
 	 * Builds a collection factory which produces {@link ArrayList}s.
 	 * 
 	 * @param <T> Type of the elements.
 	 * @return The factory.
+	 * @deprecated Use {@link com.trazere.core.collection.CollectionFactories#arrayList()}.
 	 */
+	@Deprecated
 	public static <T> CollectionFactory<T, ArrayList<T>> arrayList() {
 		return LangUtils.cast(_ARRAYLIST);
 	}
 	
+	@Deprecated
 	private static final CollectionFactory<?, ?> _ARRAYLIST = new BaseCollectionFactory<Object, ArrayList<Object>>() {
 		@Override
 		public ArrayList<Object> build() {
@@ -60,11 +65,14 @@ public class CollectionFactories {
 	 * 
 	 * @param <T> Type of the elements.
 	 * @return The factory.
+	 * @deprecated Use {@link com.trazere.core.collection.CollectionFactories#hashSet()}.
 	 */
+	@Deprecated
 	public static <T> CollectionFactory<T, HashSet<T>> hashSet() {
 		return LangUtils.cast(_HASHSET);
 	}
 	
+	@Deprecated
 	private static final CollectionFactory<?, ?> _HASHSET = new BaseCollectionFactory<Object, HashSet<Object>>() {
 		@Override
 		public HashSet<Object> build() {
@@ -87,11 +95,14 @@ public class CollectionFactories {
 	 * 
 	 * @param <T> Type of the elements.
 	 * @return The factory.
+	 * @deprecated Use {@link com.trazere.core.collection.CollectionFactories#linkedList()}.
 	 */
+	@Deprecated
 	public static <T> CollectionFactory<T, LinkedList<T>> linkedList() {
 		return LangUtils.cast(_LINKEDLIST);
 	}
 	
+	@Deprecated
 	private static final CollectionFactory<?, ?> _LINKEDLIST = new BaseCollectionFactory<Object, LinkedList<Object>>() {
 		@Override
 		public LinkedList<Object> build() {
@@ -114,11 +125,14 @@ public class CollectionFactories {
 	 * 
 	 * @param <T> Type of the elements.
 	 * @return The factory.
+	 * @deprecated Use {@link com.trazere.core.collection.CollectionFactories#treeSet()}.
 	 */
+	@Deprecated
 	public static <T> CollectionFactory<T, TreeSet<T>> treeSet() {
 		return LangUtils.cast(_TREESET);
 	}
 	
+	@Deprecated
 	private static final CollectionFactory<?, ?> _TREESET = new BaseCollectionFactory<Object, TreeSet<Object>>() {
 		@Override
 		public TreeSet<Object> build() {

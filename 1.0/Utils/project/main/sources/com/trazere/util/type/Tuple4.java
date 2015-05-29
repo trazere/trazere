@@ -26,7 +26,9 @@ import com.trazere.util.lang.LangUtils;
  * @param <T2> Type of the second value.
  * @param <T3> Type of the third value.
  * @param <T4> Type of the fourth value.
+ * @deprecated Use {@link com.trazere.core.util.Tuple4}.
  */
+@Deprecated
 public class Tuple4<T1, T2, T3, T4>
 extends Tuple3<T1, T2, T3> {
 	private static final long serialVersionUID = 1L;
@@ -43,7 +45,9 @@ extends Tuple3<T1, T2, T3> {
 	 * @param third The third value. May be <code>null</code>.
 	 * @param fourth The fourth value. May be <code>null</code>.
 	 * @return The built tuple.
+	 * @deprecated Use {@link com.trazere.core.util.Tuples#tuple4(Object, Object, Object, Object)}.
 	 */
+	@Deprecated
 	public static <T1, T2, T3, T4> Tuple4<T1, T2, T3, T4> build(final T1 first, final T2 second, final T3 third, final T4 fourth) {
 		return new Tuple4<T1, T2, T3, T4>(first, second, third, fourth);
 	}
@@ -72,7 +76,9 @@ extends Tuple3<T1, T2, T3> {
 	 * Gets the fourth value of the receiver tuple.
 	 * 
 	 * @return The value. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.util.Field4#get4()}.
 	 */
+	@Deprecated
 	public T4 getFourth() {
 		return _fourth;
 	}
@@ -83,7 +89,9 @@ extends Tuple3<T1, T2, T3> {
 	 * @param <T4> Type of the fourth values of the tuples.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.util.FieldFunctions#get4()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T4, X extends Exception> Function1<Tuple4<?, ?, ?, ? extends T4>, T4, X> getFourthFunction() {
 		return (Function1<Tuple4<?, ?, ?, ? extends T4>, T4, X>) _GET_FOURTH_FUNCTION;
@@ -111,7 +119,11 @@ extends Tuple3<T1, T2, T3> {
 	 * @param tuple2 The second tuple.
 	 * @return The result of the comparison as defined by the {@link Comparable#compareTo(Object)} method.
 	 * @see Comparable#compareTo(Object)
+	 * @deprecated Use
+	 *             {@link com.trazere.core.util.TupleComparators#tuple4(java.util.Comparator, java.util.Comparator, java.util.Comparator, java.util.Comparator)}
+	 *             .
 	 */
+	@Deprecated
 	public static <T1 extends Comparable<T1>, T2 extends Comparable<T2>, T3 extends Comparable<T3>, T4 extends Comparable<T4>> int compare(final Tuple4<T1, T2, T3, T4> tuple1, final Tuple4<T1, T2, T3, T4> tuple2) {
 		assert null != tuple1;
 		assert null != tuple2;

@@ -21,7 +21,9 @@ package com.trazere.util.function;
  * @param <T1> Type of the first argument values.
  * @param <T2> Type of the second argument values.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link com.trazere.core.functional.Predicate2}.
  */
+@Deprecated
 public interface Predicate2<T1, T2, X extends Exception> {
 	/**
 	 * Evaluates the receiver predicate with the given argument values.

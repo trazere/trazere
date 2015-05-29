@@ -37,7 +37,9 @@ import java.util.Set;
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
+ * @deprecated To be removed.
  */
+@Deprecated
 public class SimpleRecordReader<K, V>
 extends BaseRecordReader<K, V> {
 	/** Field readers. */

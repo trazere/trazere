@@ -27,7 +27,9 @@ import java.util.Set;
  * 
  * @see Predicate1
  * @see Predicate2
+ * @deprecated Use core.
  */
+@Deprecated
 public class Predicates {
 	/**
 	 * Builds a one argument predicate that evaluates to the given result for all values.
@@ -36,7 +38,9 @@ public class Predicates {
 	 * @param <X> Type of the exceptions.
 	 * @param result The result.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.functional.Predicates#constant(boolean)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Predicate1<T, X> constant(final boolean result) {
 		return new Predicate1<T, X>() {
 			@Override
@@ -54,7 +58,9 @@ public class Predicates {
 	 * @param <X> Type of the exceptions.
 	 * @param result The result.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.functional.Predicates#constant2(boolean)}.
 	 */
+	@Deprecated
 	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> constant2(final boolean result) {
 		return new Predicate2<T1, T2, X>() {
 			@Override
@@ -70,7 +76,9 @@ public class Predicates {
 	 * @param <T> Type of the argument values.
 	 * @param <X> Type of the exceptions.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.functional.Predicates#all()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T, X extends Exception> Predicate1<T, X> all() {
 		return (Predicate1<T, X>) _ALL;
@@ -85,7 +93,9 @@ public class Predicates {
 	 * @param <T2> Type of the second argument values.
 	 * @param <X> Type of the exceptions.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.functional.Predicates#all2()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> all2() {
 		return (Predicate2<T1, T2, X>) _ALL2;
@@ -99,7 +109,9 @@ public class Predicates {
 	 * @param <T> Type of the argument values.
 	 * @param <X> Type of the exceptions.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.functional.Predicates#none()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T, X extends Exception> Predicate1<T, X> none() {
 		return (Predicate1<T, X>) _NONE;
@@ -114,7 +126,9 @@ public class Predicates {
 	 * @param <T2> Type of the second argument values.
 	 * @param <X> Type of the exceptions.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.functional.Predicates#none2()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> none2() {
 		return (Predicate2<T1, T2, X>) _NONE2;
@@ -129,7 +143,9 @@ public class Predicates {
 	 * @param <X> Type of the exceptions.
 	 * @param predicate The predicate.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.functional.Predicates#not(com.trazere.core.functional.Predicate)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Predicate1<T, X> not(final Predicate1<? super T, ? extends X> predicate) {
 		assert null != predicate;
 		
@@ -150,7 +166,9 @@ public class Predicates {
 	 * @param <X> Type of the exceptions.
 	 * @param predicate The predicate.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.functional.Predicates#not2(com.trazere.core.functional.Predicate2)}.
 	 */
+	@Deprecated
 	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> not(final Predicate2<? super T1, ? super T2, ? extends X> predicate) {
 		assert null != predicate;
 		
@@ -171,7 +189,9 @@ public class Predicates {
 	 * @param predicate1 The first predicate.
 	 * @param predicate2 The second predicate.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.functional.Predicates#and(com.trazere.core.functional.Predicate, com.trazere.core.functional.Predicate)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Predicate1<T, X> and(final Predicate1<? super T, ? extends X> predicate1, final Predicate1<? super T, ? extends X> predicate2) {
 		assert null != predicate1;
 		assert null != predicate2;
@@ -194,7 +214,9 @@ public class Predicates {
 	 * @param predicate1 The first predicate.
 	 * @param predicate2 The second predicate.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.functional.Predicates#and2(com.trazere.core.functional.Predicate2, com.trazere.core.functional.Predicate2)}.
 	 */
+	@Deprecated
 	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> and(final Predicate2<? super T1, ? super T2, ? extends X> predicate1, final Predicate2<? super T1, ? super T2, ? extends X> predicate2) {
 		assert null != predicate1;
 		assert null != predicate2;
@@ -215,7 +237,9 @@ public class Predicates {
 	 * @param <X> Type of the exceptions.
 	 * @param predicates The predicates.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.functional.Predicates#and(Collection)}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T, X extends Exception> Predicate1<T, X> and(final Collection<? extends Predicate1<? super T, ? extends X>> predicates) {
 		assert null != predicates;
@@ -246,7 +270,9 @@ public class Predicates {
 	 * @param <X> Type of the exceptions.
 	 * @param predicates The predicates.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.functional.Predicates#and2(Collection)}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> and2(final Collection<? extends Predicate2<? super T1, ? super T2, ? extends X>> predicates) {
 		assert null != predicates;
@@ -277,7 +303,9 @@ public class Predicates {
 	 * @param predicate1 The first predicate.
 	 * @param predicate2 The second predicate.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.functional.Predicates#or(com.trazere.core.functional.Predicate, com.trazere.core.functional.Predicate)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Predicate1<T, X> or(final Predicate1<? super T, ? extends X> predicate1, final Predicate1<? super T, ? extends X> predicate2) {
 		assert null != predicate1;
 		assert null != predicate2;
@@ -300,7 +328,9 @@ public class Predicates {
 	 * @param predicate1 The first predicate.
 	 * @param predicate2 The second predicate.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.functional.Predicates#or2(Collection)}.
 	 */
+	@Deprecated
 	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> or(final Predicate2<? super T1, ? super T2, ? extends X> predicate1, final Predicate2<? super T1, ? super T2, ? extends X> predicate2) {
 		assert null != predicate1;
 		assert null != predicate2;
@@ -321,7 +351,9 @@ public class Predicates {
 	 * @param <X> Type of the exceptions.
 	 * @param predicates The predicates.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.functional.Predicates#or(Collection)}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T, X extends Exception> Predicate1<T, X> or(final Collection<? extends Predicate1<? super T, ? extends X>> predicates) {
 		assert null != predicates;
@@ -352,7 +384,9 @@ public class Predicates {
 	 * @param <X> Type of the exceptions.
 	 * @param predicates The predicates.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.functional.Predicates#or2(Collection)}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> or2(final Collection<? extends Predicate2<? super T1, ? super T2, ? extends X>> predicates) {
 		assert null != predicates;
@@ -384,7 +418,9 @@ public class Predicates {
 	 * @param function The (inner) function.
 	 * @param predicate The (outer) predicate.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.functional.PredicateUtils#map(com.trazere.core.functional.Predicate, com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public static <T1, T2, X extends Exception> Predicate1<T1, X> map(final Function1<? super T1, ? extends T2, ? extends X> function, final Predicate1<? super T2, ? extends X> predicate) {
 		assert null != predicate;
 		assert null != function;
@@ -405,7 +441,9 @@ public class Predicates {
 	 * @param <X> Type of the exceptions.
 	 * @param value The value. May be <code>null</code>.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.functional.Predicates#value(Object)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Predicate1<T, X> value(final T value) {
 		return new Predicate1<T, X>() {
 			@Override
@@ -422,7 +460,9 @@ public class Predicates {
 	 * @param <X> Type of the exceptions.
 	 * @param values The values.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.functional.Predicates#values(Object...)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Predicate1<T, X> values(final T... values) {
 		assert null != values;
 		
@@ -436,7 +476,9 @@ public class Predicates {
 	 * @param <X> Type of the exceptions.
 	 * @param values The values.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.functional.Predicates#values(Collection)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Predicate1<T, X> values(final Collection<? extends T> values) {
 		assert null != values;
 		
@@ -454,7 +496,9 @@ public class Predicates {
 	 * @param <T> Type of the values.
 	 * @param <X> Type of the exceptions.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.imperative.ImperativePredicates#normalizer()}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Predicate1<T, X> normalizer() {
 		return new Predicate1<T, X>() {
 			private final Set<T> _visitedValues = new HashSet<T>();
@@ -472,7 +516,9 @@ public class Predicates {
 	 * 
 	 * @param <X> Type of the exceptions.
 	 * @return The built predicate.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> Predicate1<Boolean, X> identity() {
 		return (Predicate1<Boolean, X>) _IDENTITY;
@@ -494,7 +540,9 @@ public class Predicates {
 	 * @param <X> Type of the exceptions.
 	 * @param function The lifted function.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.functional.Predicates#fromFunction(com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public static final <T, X extends Exception> Predicate1<T, X> fromFunction(final Function1<? super T, Boolean, ? extends X> function) {
 		assert null != function;
 		
@@ -515,7 +563,9 @@ public class Predicates {
 	 * @param <X> Type of the exceptions.
 	 * @param function The lifted function.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.functional.Predicates#fromFunction(com.trazere.core.functional.Function2)}.
 	 */
+	@Deprecated
 	public static final <T1, T2, X extends Exception> Predicate2<T1, T2, X> fromFunction(final Function2<? super T1, ? super T2, Boolean, ? extends X> function) {
 		assert null != function;
 		
@@ -536,7 +586,9 @@ public class Predicates {
 	 * @param <X> Type of the exceptions.
 	 * @param predicate The lifted predicate for the first values.
 	 * @return The built predicate.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> lift2(final Predicate1<? super T1, ? extends X> predicate) {
 		assert null != predicate;
 		
@@ -557,7 +609,9 @@ public class Predicates {
 	 * @param <X> Type of the exceptions.
 	 * @param predicate The lifted predicate for the second values.
 	 * @return The built predicate.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public static <T1, T2, X extends Exception> Predicate2<T1, T2, X> lift2Second(final Predicate1<? super T2, ? extends X> predicate) {
 		assert null != predicate;
 		

@@ -30,7 +30,9 @@ import com.trazere.util.lang.LangUtils;
  * @param <T6> Type of the sixth value.
  * @param <T7> Type of the seventh value.
  * @param <T8> Type of the eighth value.
+ * @deprecated Use {@link com.trazere.core.util.Tuple8}.
  */
+@Deprecated
 public class Tuple8<T1, T2, T3, T4, T5, T6, T7, T8>
 extends Tuple7<T1, T2, T3, T4, T5, T6, T7> {
 	private static final long serialVersionUID = 1L;
@@ -55,7 +57,9 @@ extends Tuple7<T1, T2, T3, T4, T5, T6, T7> {
 	 * @param seventh The seventh value. May be <code>null</code>.
 	 * @param eighth The eighth value. May be <code>null</code>.
 	 * @return The built tuple.
+	 * @deprecated Use {@link com.trazere.core.util.Tuples#tuple8(Object, Object, Object, Object, Object, Object, Object, Object)}.
 	 */
+	@Deprecated
 	public static <T1, T2, T3, T4, T5, T6, T7, T8> Tuple8<T1, T2, T3, T4, T5, T6, T7, T8> build(final T1 first, final T2 second, final T3 third, final T4 fourth, final T5 fifth, final T6 sixth, final T7 seventh, final T8 eighth) {
 		return new Tuple8<T1, T2, T3, T4, T5, T6, T7, T8>(first, second, third, fourth, fifth, sixth, seventh, eighth);
 	}
@@ -88,7 +92,9 @@ extends Tuple7<T1, T2, T3, T4, T5, T6, T7> {
 	 * Gets the eighth value of the receiver tuple.
 	 * 
 	 * @return The value. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.util.Field8#get8()}.
 	 */
+	@Deprecated
 	public T8 getEighth() {
 		return _eighth;
 	}
@@ -99,7 +105,9 @@ extends Tuple7<T1, T2, T3, T4, T5, T6, T7> {
 	 * @param <T8> Type of the eighth value of the tuples.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.util.FieldFunctions#get8()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T8, X extends Exception> Function1<Tuple8<?, ?, ?, ?, ?, ?, ?, ? extends T8>, T8, X> getEighthFunction() {
 		return (Function1<Tuple8<?, ?, ?, ?, ?, ?, ?, ? extends T8>, T8, X>) _GET_EIGHTH_FUNCTION;
@@ -131,7 +139,11 @@ extends Tuple7<T1, T2, T3, T4, T5, T6, T7> {
 	 * @param tuple2 The second tuple.
 	 * @return The result of the comparison as defined by the {@link Comparable#compareTo(Object)} method.
 	 * @see Comparable#compareTo(Object)
+	 * @deprecated Use
+	 *             {@link com.trazere.core.util.TupleComparators#tuple8(java.util.Comparator, java.util.Comparator, java.util.Comparator, java.util.Comparator, java.util.Comparator, java.util.Comparator, java.util.Comparator, java.util.Comparator)}
+	 *             .
 	 */
+	@Deprecated
 	public static <T1 extends Comparable<T1>, T2 extends Comparable<T2>, T3 extends Comparable<T3>, T4 extends Comparable<T4>, T5 extends Comparable<T5>, T6 extends Comparable<T6>, T7 extends Comparable<T7>, T8 extends Comparable<T8>> int compare(final Tuple8<T1, T2, T3, T4, T5, T6, T7, T8> tuple1, final Tuple8<T1, T2, T3, T4, T5, T6, T7, T8> tuple2) {
 		assert null != tuple1;
 		assert null != tuple2;
