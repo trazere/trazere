@@ -24,7 +24,9 @@ import java.util.Map;
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  * @see SimpleRecordSignature
+ * @deprecated To be removed.
  */
+@Deprecated
 public class SimpleRecordSignatureBuilder<K, V>
 extends BaseRecordSignatureBuilder<K, V, SimpleRecordSignature<K, V>> {
 	/**

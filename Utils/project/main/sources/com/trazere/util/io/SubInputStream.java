@@ -21,7 +21,10 @@ import java.io.InputStream;
 
 /**
  * The {@link SubInputStream} class provide input stream combinators which truncate the content after some maximal length.
+ * 
+ * @deprecated Use {@link com.trazere.core.io.TruncatedInputStream}.
  */
+@Deprecated
 public class SubInputStream
 extends DecoratorInputStream {
 	private final MutableLong _remaining;

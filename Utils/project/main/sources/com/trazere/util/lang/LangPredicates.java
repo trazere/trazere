@@ -4,7 +4,10 @@ import com.trazere.util.function.Predicate1;
 
 /**
  * The {@link LangPredicates} class provides various factories of predicates related to the language.
+ * 
+ * @deprecated Use core.
  */
+@Deprecated
 public class LangPredicates {
 	/**
 	 * Builds a predicate that test the membership for the given type.
@@ -13,7 +16,9 @@ public class LangPredicates {
 	 * @param <X> Type of the exceptions.
 	 * @param type The type to match.
 	 * @return The built predicate.
+	 * @deprecated Use {@link LangPredicates#isInstanceOf(Class)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Predicate1<T, X> isInstanceOf(final Class<? extends T> type) {
 		assert null != type;
 		

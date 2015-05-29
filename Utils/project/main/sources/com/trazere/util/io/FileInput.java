@@ -23,7 +23,10 @@ import java.io.InputStream;
 
 /**
  * The {@link FileInput} class implements data inputs based on files.
+ * 
+ * @deprecated Use {@link com.trazere.core.io.FileInput}.
  */
+@Deprecated
 public class FileInput
 implements Input {
 	/** File to read. */

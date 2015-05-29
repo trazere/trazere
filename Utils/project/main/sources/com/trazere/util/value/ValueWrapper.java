@@ -10,7 +10,9 @@ import java.io.Serializable;
  * The {@link ValueWrapper} class implements wrappers of single values.
  * 
  * @param <T> Type of the wrapped value.
+ * @deprecated Use {@link com.trazere.core.util.Value}.
  */
+@Deprecated
 public class ValueWrapper<T>
 implements Describable, Serializable {
 	private static final long serialVersionUID = 1L;
@@ -36,7 +38,9 @@ implements Describable, Serializable {
 	 * Gets the wrapped value.
 	 * 
 	 * @return The value.
+	 * @deprecated Use {@link com.trazere.core.util.Value#get()}.
 	 */
+	@Deprecated
 	public T getValue() {
 		return _value;
 	}

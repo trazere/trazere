@@ -6,7 +6,10 @@ import java.util.Date;
 
 /**
  * The {@link LangFunctions} class provides various factories of functions related to the language.
+ * 
+ * @deprecated Use core.
  */
+@Deprecated
 public class LangFunctions {
 	// Objects.
 	
@@ -20,7 +23,9 @@ public class LangFunctions {
 	 * @param throwableFactory The throwable factory to use.
 	 * @return The built extractor.
 	 * @see LangUtils#match(Object, Class, ThrowableFactory)
+	 * @deprecated Use {@link com.trazere.core.lang.ObjectFunctions#match(Class, com.trazere.core.lang.ThrowableFactory)}.
 	 */
+	@Deprecated
 	public static <L, T extends L, X extends Exception> Function1<L, T, X> match(final Class<T> type, final ThrowableFactory<? extends X> throwableFactory) {
 		assert null != type;
 		assert null != throwableFactory;
@@ -39,7 +44,9 @@ public class LangFunctions {
 	 * 
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.lang.ObjectFunctions#getClass_()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> Function1<Object, Class<?>, X> getClass_() {
 		return (Function1<Object, Class<?>, X>) GET_CLASS;
@@ -58,7 +65,9 @@ public class LangFunctions {
 	 * @param <T> Type of the values.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.lang.ObjectFunctions#hashCode_()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T, X extends Exception> Function1<T, Integer, X> hashCode_() {
 		return (Function1<T, Integer, X>) HASH_CODE;
@@ -77,7 +86,9 @@ public class LangFunctions {
 	 * @param <T> Type of the values.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.lang.ObjectFunctions#toString_()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T, X extends Exception> Function1<T, String, X> toString_() {
 		return (Function1<T, String, X>) TO_STRING;
@@ -92,11 +103,13 @@ public class LangFunctions {
 	
 	// Booleans.
 	
+	@Deprecated
 	/**
 	 * Builds a functions which negates boolean values.
 	 * 
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.lang.LangFunctions#not()}.
 	 */
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> Function1<Boolean, Boolean, X> not() {
@@ -121,7 +134,9 @@ public class LangFunctions {
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
 	 * @see Number#byteValue()
+	 * @deprecated Use {@link com.trazere.core.lang.LangFunctions#byteValue()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <N extends Number, X extends Exception> Function1<N, Short, X> byteValue() {
 		return (Function1<N, Short, X>) BYTE_VALUE;
@@ -141,7 +156,9 @@ public class LangFunctions {
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
 	 * @see Number#shortValue()
+	 * @deprecated Use {@link com.trazere.core.lang.LangFunctions#shortValue()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <N extends Number, X extends Exception> Function1<N, Short, X> shortValue() {
 		return (Function1<N, Short, X>) SHORT_VALUE;
@@ -161,7 +178,9 @@ public class LangFunctions {
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
 	 * @see Number#intValue()
+	 * @deprecated Use {@link com.trazere.core.lang.LangFunctions#intValue()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <N extends Number, X extends Exception> Function1<N, Integer, X> intValue() {
 		return (Function1<N, Integer, X>) INT_VALUE;
@@ -181,7 +200,9 @@ public class LangFunctions {
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
 	 * @see Number#longValue()
+	 * @deprecated Use {@link com.trazere.core.lang.LangFunctions#longValue()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <N extends Number, X extends Exception> Function1<N, Long, X> longValue() {
 		return (Function1<N, Long, X>) LONG_VALUE;
@@ -201,7 +222,9 @@ public class LangFunctions {
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
 	 * @see Number#floatValue()
+	 * @deprecated Use {@link com.trazere.core.lang.LangFunctions#floatValue()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <N extends Number, X extends Exception> Function1<N, Float, X> floatValue() {
 		return (Function1<N, Float, X>) FLOAT_VALUE;
@@ -221,7 +244,9 @@ public class LangFunctions {
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
 	 * @see Number#doubleValue()
+	 * @deprecated Use {@link com.trazere.core.lang.LangFunctions#doubleValue()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <N extends Number, X extends Exception> Function1<N, Double, X> doubleValue() {
 		return (Function1<N, Double, X>) DOUBLE_VALUE;
@@ -242,7 +267,9 @@ public class LangFunctions {
 	 * @param <E> Type of the enumeration.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.lang.LangFunctions#name()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <E extends Enum<E>, X extends Exception> Function1<E, String, X> name() {
 		return (Function1<E, String, X>) NAME;
@@ -263,7 +290,9 @@ public class LangFunctions {
 	 * 
 	 * @param <X> Type of the exception.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.util.CalendarFunctions#getTime()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> Function1<Calendar, Date, X> getTime() {
 		return (Function1<Calendar, Date, X>) GET_TIME;

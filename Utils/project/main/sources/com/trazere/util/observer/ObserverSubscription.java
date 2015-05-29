@@ -20,7 +20,9 @@ package com.trazere.util.observer;
  * 
  * @see Observable
  * @see Observer
+ * @deprecated Use {@link com.trazere.core.reactive.ObserverSubscription}.
  */
+@Deprecated
 public interface ObserverSubscription {
 	/**
 	 * Cancels the receiver subscription.

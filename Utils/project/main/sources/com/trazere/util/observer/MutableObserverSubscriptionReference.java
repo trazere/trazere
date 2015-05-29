@@ -21,7 +21,10 @@ import com.trazere.util.reference.MutableReference;
  * The {@link MutableObserverSubscriptionReference} class represents mutable references of {@link ObserverSubscription observer subscriptions}.
  * <p>
  * The subscriptions are automatically cancelled when the reference is modified.
+ * 
+ * @deprecated Use {@link com.trazere.core.reactive.ObserverSubscriptionMutableReference}.
  */
+@Deprecated
 public class MutableObserverSubscriptionReference
 extends MutableReference<ObserverSubscription> {
 	@Override

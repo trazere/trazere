@@ -22,7 +22,10 @@ import java.io.InputStream;
 
 /**
  * The {@link FileInput} class implements data inputs based on URLs.
+ * 
+ * @deprecated Use {@link com.trazere.core.io.ResourceInput}.
  */
+@Deprecated
 public class ResourceInput
 implements Input {
 	/** Base class. */

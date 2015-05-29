@@ -26,7 +26,9 @@ import com.trazere.util.lang.MutableObject;
  * for every transition. The workflow is therefore effeciently provides through polymorphism.
  * 
  * @param <S> Type of the states.
+ * @deprecated Use {@link com.trazere.core.design.Automaton}.
  */
+@Deprecated
 public class Automaton<S> {
 	/**
 	 * Instantiates a new automaton.
@@ -52,7 +54,10 @@ public class Automaton<S> {
 	 * @param transition Transition to perform.
 	 * @return The new state.
 	 * @throws X When the transition evalution fails.
+	 * @deprecated Use {@link com.trazere.core.design.Automaton#transition(com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	protected <X extends Exception> S performTransition(final Function1<? super S, ? extends S, X> transition)
 	throws X {
 		assert null != transition;

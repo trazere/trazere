@@ -24,7 +24,9 @@ import com.trazere.util.lang.ThrowableFactory;
  * These exceptions are runtime exceptions in order to reduce clutter when using computations which cannot fail.
  * 
  * @see MutableReference
+ * @deprecated Use {@link com.trazere.core.reference.ReferenceAlreadySetException}.
  */
+@Deprecated
 public class ReferenceAlreadySetException
 extends ReferenceException {
 	private static final long serialVersionUID = 1L;

@@ -27,7 +27,10 @@ import java.util.UUID;
 
 /**
  * The {@link ValueSerializers} class provides common value serializers.
+ * 
+ * @deprecated Use core.
  */
+@Deprecated
 public class ValueSerializers {
 	/**
 	 * Builds an identity serializer.
@@ -36,7 +39,9 @@ public class ValueSerializers {
 	 * @param <X> Type of the exceptions.
 	 * @param valueClass Java class of the values.
 	 * @return The built serializer.
+	 * @deprecated Use {@link com.trazere.core.util.Serializers#identity()}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> ValueSerializer<T, T, X> identity(final Class<T> valueClass) {
 		assert null != valueClass;
 		
@@ -67,7 +72,9 @@ public class ValueSerializers {
 	 * @param g The outer value serializer.
 	 * @param f The inner value serializer.
 	 * @return The built value serializer.
+	 * @deprecated Use {@link com.trazere.core.util.Serializers#compose(com.trazere.core.util.Serializer, com.trazere.core.util.Serializer)}.
 	 */
+	@Deprecated
 	public static <T, IR, R, X extends Exception> ValueSerializer<T, R, X> compose(final ValueSerializer<IR, R, ? extends X> g, final ValueSerializer<T, IR, ? extends X> f) {
 		assert null != f;
 		assert null != g;
@@ -92,7 +99,9 @@ public class ValueSerializers {
 	 * 
 	 * @param <X> Type of the exceptions.
 	 * @return The built serializer.
+	 * @deprecated Use {@link com.trazere.core.text.TextSerializers#boolean_()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> ValueSerializer<Boolean, String, X> booleanToString() {
 		return (ValueSerializer<Boolean, String, X>) _BOOLEAN;
@@ -121,7 +130,9 @@ public class ValueSerializers {
 	 * @param format The format of the dates.
 	 * @param exceptionFactory The exception factory to use.
 	 * @return The built serializer.
+	 * @deprecated Use {@link com.trazere.core.text.TextSerializers#date(DateFormat)}.
 	 */
+	@Deprecated
 	public static <X extends Exception> ValueSerializer<Date, String, X> dateToString(final DateFormat format, final ThrowableFactory<? extends X> exceptionFactory) {
 		assert null != format;
 		assert null != exceptionFactory;
@@ -161,7 +172,9 @@ public class ValueSerializers {
 	 * @param format The format of the dates.
 	 * @param exceptionFactory The exception factory to use.
 	 * @return The built serializer.
+	 * @deprecated Use {@link com.trazere.core.text.TextSerializers#number(NumberFormat, com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public static <T extends Number, X extends Exception> ValueSerializer<T, String, X> numberToString(final Class<T> type, final Function1<Number, T, RuntimeException> converter, final NumberFormat format, final ThrowableFactory<? extends X> exceptionFactory) {
 		assert null != converter;
 		assert null != format;
@@ -197,7 +210,9 @@ public class ValueSerializers {
 	 * 
 	 * @param <X> Type of the exceptions.
 	 * @return The built serializer.
+	 * @deprecated Use {@link com.trazere.core.text.TextSerializers#string()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> ValueSerializer<String, String, X> stringToString() {
 		return (ValueSerializer<String, String, X>) _STRING;
@@ -213,7 +228,9 @@ public class ValueSerializers {
 	 * @param maxLength The max length of the strings or <code>0</code> when unlimited.
 	 * @param exceptionFactory The exception factory to use.
 	 * @return The built serializer.
+	 * @deprecated Use {@link com.trazere.core.text.TextSerializers#string(int, int, com.trazere.core.lang.ThrowableFactory)}.
 	 */
+	@Deprecated
 	public static <X extends Exception> ValueSerializer<String, String, X> stringToString(final int minLength, final int maxLength, final ThrowableFactory<? extends X> exceptionFactory) {
 		assert minLength >= 0;
 		assert maxLength >= 0;
@@ -266,7 +283,9 @@ public class ValueSerializers {
 	 * @param <X> Type of the exceptions.
 	 * @param exceptionFactory The exception factory to use.
 	 * @return The built serializer.
+	 * @deprecated Use {@link com.trazere.core.text.TextSerializers#uuid()}.
 	 */
+	@Deprecated
 	public static <X extends Exception> ValueSerializer<UUID, String, X> uuidToString(final ThrowableFactory<? extends X> exceptionFactory) {
 		assert null != exceptionFactory;
 		

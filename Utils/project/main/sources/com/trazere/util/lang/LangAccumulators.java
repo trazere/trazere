@@ -24,7 +24,10 @@ import java.util.Comparator;
 
 /**
  * The {@link LangAccumulators} class provides various factories of accumulators related to the language.
+ * 
+ * @deprecated Use core.
  */
+@Deprecated
 public class LangAccumulators {
 	/**
 	 * Builds a logical accumulator corresponding to a conjonction.
@@ -32,7 +35,9 @@ public class LangAccumulators {
 	 * @param <X> Type of the exceptions.
 	 * @param initialResult The initial result.
 	 * @return The built accumulator.
+	 * @deprecated Use {@link com.trazere.core.lang.LangAccumulators#and(boolean)}.
 	 */
+	@Deprecated
 	public static <X extends Exception> Accumulator1<Boolean, Boolean, X> and(final boolean initialResult) {
 		return new FoldAccumulator1<Boolean, Boolean, X>(initialResult) {
 			@Override
@@ -48,7 +53,9 @@ public class LangAccumulators {
 	 * @param <X> Type of the exceptions.
 	 * @param initialResult The initial value.
 	 * @return The built accumulator.
+	 * @deprecated Use {@link com.trazere.core.lang.LangAccumulators#or(boolean)}.
 	 */
+	@Deprecated
 	public static <X extends Exception> Accumulator1<Boolean, Boolean, X> or(final boolean initialResult) {
 		return new FoldAccumulator1<Boolean, Boolean, X>(initialResult) {
 			@Override
@@ -64,7 +71,9 @@ public class LangAccumulators {
 	 * @param <X> Type of the exceptions.
 	 * @param initialResult The initial result.
 	 * @return The built accumulator.
+	 * @deprecated Use {@link com.trazere.core.lang.LangAccumulators#sum(int)}.
 	 */
+	@Deprecated
 	public static <X extends Exception> Accumulator1<Integer, Integer, X> sum(final int initialResult) {
 		return new BaseAccumulator1<Integer, Integer, X>() {
 			private final MutableInt _value = new MutableInt(initialResult);
@@ -90,7 +99,9 @@ public class LangAccumulators {
 	 * @param <X> Type of the exceptions.
 	 * @param initialResult The initial result.
 	 * @return The built accumulator.
+	 * @deprecated Use {@link com.trazere.core.lang.LangAccumulators#sum(long)}.
 	 */
+	@Deprecated
 	public static <X extends Exception> Accumulator1<Long, Long, X> sum(final long initialResult) {
 		return new BaseAccumulator1<Long, Long, X>() {
 			private final MutableLong _value = new MutableLong(initialResult);
@@ -118,7 +129,9 @@ public class LangAccumulators {
 	 * @param <X> Type of the exceptions.
 	 * @param comparator Comparator of the values.
 	 * @return The built accumulator.
+	 * @deprecated Use {@link com.trazere.core.util.ComparatorAccumulators#greatest(Comparator)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Accumulator1<T, Maybe<T>, X> greatest(final Comparator<? super T> comparator) {
 		assert null != comparator;
 		

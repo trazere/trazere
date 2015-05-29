@@ -33,7 +33,9 @@ import java.util.Set;
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  * @param <C> Type of the collections of values.
+ * @deprecated Use {@link com.trazere.core.collection.Multimap}.
  */
+@Deprecated
 public interface Multimap<K, V, C extends Collection<V>> {
 	/**
 	 * Associates the given value to the given key in the receiver multimap.
@@ -121,7 +123,9 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	 * 
 	 * @param key The key. May or may not be <code>null</code> according the implementation.
 	 * @return The removed values.
+	 * @deprecated Use {@link com.trazere.core.collection.Multimap#removeKey(Object)}.
 	 */
+	@Deprecated
 	public C remove(final K key);
 	
 	/**

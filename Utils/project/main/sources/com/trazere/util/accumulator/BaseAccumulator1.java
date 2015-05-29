@@ -21,7 +21,9 @@ package com.trazere.util.accumulator;
  * @param <T> Type of the values.
  * @param <S> Type of the states.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link com.trazere.core.imperative.Accumulator}.
  */
+@Deprecated
 public abstract class BaseAccumulator1<T, S, X extends Exception>
 implements Accumulator1<T, S, X> {
 	// Accumulator.

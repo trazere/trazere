@@ -23,7 +23,9 @@ import com.trazere.util.record.RecordException;
  * The {@link ValueReader} interface defines value reading functions.
  * 
  * @param <T> Type of the values.
+ * @deprecated To be removed.
  */
+@Deprecated
 public interface ValueReader<T>
 extends ParameterFunction<String, Object, T, ValueException> {
 	/**

@@ -22,7 +22,9 @@ import java.util.LinkedList;
  * The {@link FIFOCachePolicy} class provides cache policies based on the First In/First Out algorithm.
  * 
  * @param <K> Type of the keys.
+ * @deprecated Use {@link com.trazere.core.cache.FIFOCachePolicy}.
  */
+@Deprecated
 public class FIFOCachePolicy<K>
 implements CachePolicy<K> {
 	/**

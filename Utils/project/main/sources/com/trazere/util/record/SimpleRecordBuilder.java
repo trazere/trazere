@@ -24,7 +24,9 @@ import java.util.Map;
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  * @see SimpleRecord
+ * @deprecated Use {@link com.trazere.core.record.SimpleRecordBuilder}.
  */
+@Deprecated
 public class SimpleRecordBuilder<K, V>
 extends BaseRecordBuilder<K, V, SimpleRecord<K, V>> {
 	/**
@@ -38,7 +40,9 @@ extends BaseRecordBuilder<K, V, SimpleRecord<K, V>> {
 	 * Instantiates a new record builder populated with the given fields.
 	 * 
 	 * @param fields Values of the initial fields identified by their keys.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	protected SimpleRecordBuilder(final Map<? extends K, ? extends V> fields) {
 		super(fields);
 	}
@@ -48,7 +52,9 @@ extends BaseRecordBuilder<K, V, SimpleRecord<K, V>> {
 	 * 
 	 * @param record Record containing the initial fields of the new record builder.
 	 * @throws InvalidFieldException When the some field of the given record cannot be read.
+	 * @deprecated Use com.trazere.core.record.SimpleRecordBuilder#addAll(com.trazere.core.record.Record)}.
 	 */
+	@Deprecated
 	public SimpleRecordBuilder(final Record<? extends K, ? extends V> record)
 	throws InvalidFieldException {
 		super(record);
@@ -58,7 +64,9 @@ extends BaseRecordBuilder<K, V, SimpleRecord<K, V>> {
 	 * Instantiates a new record builder populated with the fields of the given record builder.
 	 * 
 	 * @param builder Record builder containing the initial fields of the new record builder.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public SimpleRecordBuilder(final RecordBuilder<? extends K, ? extends V, ?> builder) {
 		super(builder);
 	}

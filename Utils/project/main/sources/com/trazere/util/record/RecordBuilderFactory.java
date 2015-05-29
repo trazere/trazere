@@ -25,7 +25,9 @@ import com.trazere.util.lang.Factory;
  * @param <R> Type of the records.
  * @param <B> Type of the record builders.
  * @see RecordBuilder
+ * @deprecated To be removed.
  */
+@Deprecated
 public interface RecordBuilderFactory<K, V, R extends Record<K, V>, B extends RecordBuilder<K, V, R>>
 extends Factory<B, RecordException> {
 	/**

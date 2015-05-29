@@ -17,7 +17,10 @@ package com.trazere.util.trigger;
 
 /**
  * The {@link CountingTrigger} class provides simple triggers based on counting.
+ * 
+ * @deprecated To be removed.
  */
+@Deprecated
 public class CountingTrigger
 extends BaseTrigger {
 	/** Value. */

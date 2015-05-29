@@ -17,7 +17,10 @@ package com.trazere.util.lang;
 
 /**
  * The {@link Timer} class allows to measure time.
+ * 
+ * @deprecated Use {@link com.trazere.core.time.Timer}.
  */
+@Deprecated
 public class Timer {
 	/**
 	 * Builds a new timer.

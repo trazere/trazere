@@ -24,7 +24,9 @@ import com.trazere.util.type.Maybe.Some;
  * The {@link Reference} interface defines object references.
  * 
  * @param <T> Type of the referenced value.
+ * @deprecated Use {@link com.trazere.core.reference.Reference}.
  */
+@Deprecated
 public interface Reference<T> {
 	/**
 	 * Tests whether the receiver reference is set.
@@ -59,7 +61,9 @@ public interface Reference<T> {
 	 * @param defaultValue Default default.
 	 * @return The set value or the given default value when no values are set. Maybe <code>null</code>.
 	 * @throws X When the default value cannot be evaluated.
+	 * @deprecated Use {@link com.trazere.core.reference.Reference#get(com.trazere.core.functional.Thunk)}.
 	 */
+	@Deprecated
 	public <X extends Exception> T get(final Function0<? extends T, X> defaultValue)
 	throws X;
 	

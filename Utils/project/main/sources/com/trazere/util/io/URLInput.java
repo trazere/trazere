@@ -22,7 +22,10 @@ import java.net.URL;
 
 /**
  * The {@link FileInput} class implements data inputs based on URLs.
+ * 
+ * @deprecated Use {@link com.trazere.core.io.URLInput}.
  */
+@Deprecated
 public class URLInput
 implements Input {
 	/** URL to read. */

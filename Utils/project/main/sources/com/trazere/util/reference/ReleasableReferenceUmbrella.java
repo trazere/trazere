@@ -27,7 +27,9 @@ import java.util.Set;
  * 
  * @param <T> Type of the referenced values.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link com.trazere.core.reference.ReleasableReferenceUmbrella}.
  */
+@Deprecated
 public class ReleasableReferenceUmbrella<T, X extends Exception>
 implements Releasable<X> {
 	/** The value. */

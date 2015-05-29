@@ -30,7 +30,9 @@ import java.io.Serializable;
  * Equality of identifiers relies on their type and the logical equality of their underlying values.
  * 
  * @param <V> Type of the underlying values.
+ * @deprecated Use {@link com.trazere.core.util.Value}.
  */
+@Deprecated
 public abstract class Identifier<V>
 implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -56,7 +58,9 @@ implements Serializable {
 	 * Gets the value of the receiver identifier.
 	 * 
 	 * @return The value.
+	 * @deprecated Use {@link com.trazere.core.util.Value#get()}.
 	 */
+	@Deprecated
 	public V getValue() {
 		return _value;
 	}
@@ -68,7 +72,9 @@ implements Serializable {
 	 * @param <V> Type of the values.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <I extends Identifier<V>, V, X extends Exception> Function1<I, V, X> getValueFunction() {
 		return (Function1<I, V, X>) _GET_VALUE_FUNCTION;

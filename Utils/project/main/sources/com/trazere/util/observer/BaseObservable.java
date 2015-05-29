@@ -25,7 +25,9 @@ import java.util.List;
  * The {@link BaseObservable} class provides a skeleton implementation of {@link Observable observable event sources}.
  * 
  * @param <T> Type of the event values.
+ * @deprecated Use {@link com.trazere.core.reactive.BaseObservable}.
  */
+@Deprecated
 public abstract class BaseObservable<T>
 implements Observable<T> {
 	/**

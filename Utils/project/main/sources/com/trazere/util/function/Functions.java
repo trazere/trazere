@@ -29,7 +29,9 @@ import java.util.Map;
  * 
  * @see Function1
  * @see Function2
+ * @deprecated Use core.
  */
+@Deprecated
 public class Functions {
 	/**
 	 * Builds an identity function.
@@ -37,7 +39,9 @@ public class Functions {
 	 * @param <T> Type of the argument and result values.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.functional.Functions#identity()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T, X extends Exception> Function1<T, T, X> identity() {
 		return (Function1<T, T, X>) _IDENTITY;
@@ -60,7 +64,9 @@ public class Functions {
 	 * @param g The outer function.
 	 * @param f The inner function.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.functional.Functions#compose(com.trazere.core.functional.Function, com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public static <T1, T2, T3, X extends Exception> Function1<T1, T3, X> compose(final Function1<? super T2, ? extends T3, ? extends X> g, final Function1<? super T1, ? extends T2, ? extends X> f) {
 		assert null != g;
 		assert null != f;
@@ -82,7 +88,9 @@ public class Functions {
 	 * @param <X> Type of the exceptions.
 	 * @param result The result value. May be <code>null</code>.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.functional.Functions#constant(Object)}.
 	 */
+	@Deprecated
 	public static <T, R, X extends Exception> Function1<T, R, X> constant(final R result) {
 		return new Function1<T, R, X>() {
 			@Override
@@ -100,7 +108,9 @@ public class Functions {
 	 * @param <X> Type of the exceptions.
 	 * @param throwableFactory Throwable factory to use.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.functional.Functions#failure(com.trazere.core.lang.ThrowableFactory)}.
 	 */
+	@Deprecated
 	public static <T, R, X extends Exception> Function1<T, R, X> failure(final ThrowableFactory<? extends X> throwableFactory) {
 		assert null != throwableFactory;
 		
@@ -122,7 +132,9 @@ public class Functions {
 	 * @param throwableFactory Throwable factory to use.
 	 * @param message Message of the throwable.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.functional.Functions#failure(com.trazere.core.lang.ThrowableFactory, String)}.
 	 */
+	@Deprecated
 	public static <T, R, X extends Exception> Function1<T, R, X> failure(final ThrowableFactory<? extends X> throwableFactory, final String message) {
 		assert null != throwableFactory;
 		
@@ -145,7 +157,9 @@ public class Functions {
 	 * @param <X> Type of the exceptions.
 	 * @param map The map.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.collection.MapFunctions#get(Map, Object)}.
 	 */
+	@Deprecated
 	public static <K, V, X extends Exception> Function1<K, V, X> fromMap(final Map<? super K, ? extends V> map) {
 		assert null != map;
 		
@@ -168,7 +182,9 @@ public class Functions {
 	 * @param map The map.
 	 * @param defaultValue The default value. May be <code>null</code>.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.collection.MapFunctions#get(Map, Object)}.
 	 */
+	@Deprecated
 	public static <K, V, X extends Exception> Function1<K, V, X> fromMap(final Map<? super K, ? extends V> map, final V defaultValue) {
 		assert null != map;
 		
@@ -191,7 +207,9 @@ public class Functions {
 	 * @param map The map.
 	 * @param throwableFactory The throwable factory.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.collection.MapFunctions#getMandatory(Map, com.trazere.core.lang.ThrowableFactory)}.
 	 */
+	@Deprecated
 	public static <K, V, X extends Exception> Function1<K, V, X> fromMap(final Map<? super K, ? extends V> map, final ThrowableFactory<? extends X> throwableFactory) {
 		assert null != map;
 		assert null != throwableFactory;
@@ -213,7 +231,9 @@ public class Functions {
 	 * @param <X> Type of the exceptions.
 	 * @param map The multimap.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.collection.MultimapFunctions#get(com.trazere.core.collection.Multimap)}.
 	 */
+	@Deprecated
 	public static <K, C extends Collection<?>, X extends Exception> Function1<K, C, X> fromMultimap(final Multimap<? super K, ?, ? extends C> map) {
 		assert null != map;
 		
@@ -234,7 +254,9 @@ public class Functions {
 	 * @param <V> Type of the results (the values of the record).
 	 * @param record The record.
 	 * @return The built function.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public static <K, V> Function1<K, V, RecordException> fromRecord(final Record<? super K, ? extends V> record) {
 		assert null != record;
 		
@@ -258,7 +280,9 @@ public class Functions {
 	 * @param record The record.
 	 * @param defaultValue The default value. May be <code>null</code>.
 	 * @return The built function.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public static <K, V, RV extends V> Function1<K, V, RecordException> fromRecord(final Record<? super K, RV> record, final RV defaultValue) {
 		assert null != record;
 		
@@ -282,7 +306,9 @@ public class Functions {
 	 * @param record The record.
 	 * @param throwableFactory The throwable factory.
 	 * @return The built function.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public static <K, V, X extends Exception> Function1<K, V, X> fromRecord(final Record<? super K, ? extends V> record, final ThrowableFactory<? extends X> throwableFactory) {
 		assert null != record;
 		assert null != throwableFactory;
@@ -306,7 +332,9 @@ public class Functions {
 	 * @param <R> Type of the result values.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.functional.ThunkFunctions#evaluate()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <R, X extends Exception> Function1<Function0<? extends R, ? extends X>, R, X> evaluate() {
 		return (Function1<Function0<? extends R, ? extends X>, R, X>) _EVALUATE;
@@ -327,7 +355,9 @@ public class Functions {
 	 * @param <X> Type of the exceptions.
 	 * @param value The argument value. May be <code>null</code>.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.functional.Functions#evaluate(Object)}.
 	 */
+	@Deprecated
 	public static <T, R, X extends Exception> Function1<Function1<? super T, ? extends R, ? extends X>, R, X> evaluate(final T value) {
 		return new Function1<Function1<? super T, ? extends R, ? extends X>, R, X>() {
 			@Override
@@ -348,7 +378,9 @@ public class Functions {
 	 * @param value1 The first argument value. May be <code>null</code>.
 	 * @param value2 The second argument value. May be <code>null</code>.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.functional.Functions#evaluate(Object, Object)}.
 	 */
+	@Deprecated
 	public static <T1, T2, R, X extends Exception> Function1<Function2<? super T1, ? super T2, ? extends R, ? extends X>, R, X> evaluate(final T1 value1, final T2 value2) {
 		return new Function1<Function2<? super T1, ? super T2, ? extends R, ? extends X>, R, X>() {
 			@Override
@@ -368,7 +400,9 @@ public class Functions {
 	 * @param g The outer function.
 	 * @param f The inner function.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.functional.ThunkUtils#map(com.trazere.core.functional.Thunk, com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public static <T1, T2, X extends Exception> Function0<T2, X> compose(final Function1<? super T1, ? extends T2, ? extends X> g, final Function0<? extends T1, ? extends X> f) {
 		assert null != g;
 		assert null != f;
@@ -389,7 +423,9 @@ public class Functions {
 	 * @param <X> Type of the exceptions.
 	 * @param result The result value. May be <code>null</code>.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.functional.Thunks#constant(Object)}.
 	 */
+	@Deprecated
 	public static <R, X extends Exception> Function0<R, X> constant0(final R result) {
 		return new Function0<R, X>() {
 			@Override
@@ -408,7 +444,9 @@ public class Functions {
 	 * @param <X> Type of the exceptions.
 	 * @param result The result value. May be <code>null</code>.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.functional.Functions#constant2(Object)}.
 	 */
+	@Deprecated
 	public static <T1, T2, R, X extends Exception> Function2<T1, T2, R, X> constant2(final R result) {
 		return new Function2<T1, T2, R, X>() {
 			@Override
@@ -428,7 +466,9 @@ public class Functions {
 	 * @param <X> Type of the exceptions.
 	 * @param result The result value. May be <code>null</code>.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.functional.Functions#constant3(Object)}.
 	 */
+	@Deprecated
 	public static <T1, T2, T3, R, X extends Exception> Function3<T1, T2, T3, R, X> constant3(final R result) {
 		return new Function3<T1, T2, T3, R, X>() {
 			@Override
@@ -445,7 +485,9 @@ public class Functions {
 	 * @param <X> Type of the exceptions.
 	 * @param throwableFactory Throwable factory to use.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.functional.Thunks#failure(com.trazere.core.lang.ThrowableFactory)}.
 	 */
+	@Deprecated
 	public static <R, X extends Exception> Function0<R, X> failure0(final ThrowableFactory<? extends X> throwableFactory) {
 		assert null != throwableFactory;
 		
@@ -466,7 +508,9 @@ public class Functions {
 	 * @param throwableFactory Throwable factory to use.
 	 * @param message Message of the throwable.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.functional.Thunks#failure(com.trazere.core.lang.ThrowableFactory, String)}.
 	 */
+	@Deprecated
 	public static <R, X extends Exception> Function0<R, X> failure0(final ThrowableFactory<? extends X> throwableFactory, final String message) {
 		assert null != throwableFactory;
 		
@@ -488,7 +532,9 @@ public class Functions {
 	 * @param <X> Type of the exceptions.
 	 * @param throwableFactory Throwable factory to use.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.functional.Functions#failure2(com.trazere.core.lang.ThrowableFactory)}.
 	 */
+	@Deprecated
 	public static <T1, T2, R, X extends Exception> Function2<T1, T2, R, X> failure2(final ThrowableFactory<? extends X> throwableFactory) {
 		assert null != throwableFactory;
 		
@@ -511,7 +557,9 @@ public class Functions {
 	 * @param throwableFactory Throwable factory to use.
 	 * @param message Message of the throwable.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.functional.Functions#failure2(com.trazere.core.lang.ThrowableFactory, String)}.
 	 */
+	@Deprecated
 	public static <T1, T2, R, X extends Exception> Function2<T1, T2, R, X> failure2(final ThrowableFactory<? extends X> throwableFactory, final String message) {
 		assert null != throwableFactory;
 		
@@ -534,7 +582,9 @@ public class Functions {
 	 * @param <X> Type of the exceptions.
 	 * @param throwableFactory Throwable factory to use.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.functional.Functions#failure3(com.trazere.core.lang.ThrowableFactory)}.
 	 */
+	@Deprecated
 	public static <T1, T2, T3, R, X extends Exception> Function3<T1, T2, T3, R, X> failure3(final ThrowableFactory<? extends X> throwableFactory) {
 		assert null != throwableFactory;
 		
@@ -558,7 +608,9 @@ public class Functions {
 	 * @param throwableFactory Throwable factory to use.
 	 * @param message Message of the throwable.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.functional.Functions#failure3(com.trazere.core.lang.ThrowableFactory, String)}.
 	 */
+	@Deprecated
 	public static <T1, T2, T3, R, X extends Exception> Function3<T1, T2, T3, R, X> failure3(final ThrowableFactory<? extends X> throwableFactory, final String message) {
 		assert null != throwableFactory;
 		
@@ -579,7 +631,9 @@ public class Functions {
 	 * @param <X> Type of the exceptions.
 	 * @param function The lifted function.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.functional.Functions#fromThunk(com.trazere.core.functional.Thunk)}.
 	 */
+	@Deprecated
 	public static <T, R, X extends Exception> Function1<T, R, X> lift(final Function0<? extends R, ? extends X> function) {
 		assert null != function;
 		
@@ -601,7 +655,9 @@ public class Functions {
 	 * @param <X> Type of the exceptions.
 	 * @param function The lifted function.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.functional.Functions#fromThunk2(com.trazere.core.functional.Thunk)}.
 	 */
+	@Deprecated
 	public static <T1, T2, R, X extends Exception> Function2<T1, T2, R, X> lift2(final Function0<? extends R, ? extends X> function) {
 		assert null != function;
 		
@@ -623,7 +679,9 @@ public class Functions {
 	 * @param <X> Type of the exceptions.
 	 * @param function The lifted function.
 	 * @return The built function.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public static <T1, T2, R, X extends Exception> Function2<T1, T2, R, X> lift2(final Function1<? super T1, ? extends R, ? extends X> function) {
 		assert null != function;
 		
@@ -646,7 +704,9 @@ public class Functions {
 	 * @param <X> Type of the exceptions.
 	 * @param function The lifted function.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.functional.Functions#fromThunk3(com.trazere.core.functional.Thunk)}.
 	 */
+	@Deprecated
 	public static <T1, T2, T3, R, X extends Exception> Function3<T1, T2, T3, R, X> lift3(final Function0<? extends R, ? extends X> function) {
 		assert null != function;
 		
@@ -669,7 +729,9 @@ public class Functions {
 	 * @param <X> Type of the exceptions.
 	 * @param function The lifted function.
 	 * @return The built function.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public static <T1, T2, T3, R, X extends Exception> Function3<T1, T2, T3, R, X> lift3(final Function1<? super T1, ? extends R, ? extends X> function) {
 		assert null != function;
 		
@@ -692,7 +754,9 @@ public class Functions {
 	 * @param <X> Type of the exceptions.
 	 * @param function The lifted function.
 	 * @return The built function.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public static <T1, T2, T3, R, X extends Exception> Function3<T1, T2, T3, R, X> lift3(final Function2<? super T1, ? super T2, ? extends R, ? extends X> function) {
 		assert null != function;
 		
@@ -712,7 +776,9 @@ public class Functions {
 	 * @param <X> Type of the exceptions.
 	 * @param predicate The lifted predicate.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.functional.Functions#fromPredicate(com.trazere.core.functional.Predicate)}.
 	 */
+	@Deprecated
 	public static final <T, X extends Exception> Function1<T, Boolean, X> fromPredicate(final Predicate1<? super T, ? extends X> predicate) {
 		assert null != predicate;
 		
@@ -733,7 +799,9 @@ public class Functions {
 	 * @param <X> Type of the exceptions.
 	 * @param predicate The lifted predicate.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.functional.Functions#fromPredicate2(com.trazere.core.functional.Predicate2)}.
 	 */
+	@Deprecated
 	public static final <T1, T2, X extends Exception> Function2<T1, T2, Boolean, X> fromPredicate(final Predicate2<? super T1, ? super T2, ? extends X> predicate) {
 		assert null != predicate;
 		
@@ -755,7 +823,9 @@ public class Functions {
 	 * @param <X> Type of the exceptions.
 	 * @param predicate The lifted predicate.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.functional.Functions#fromPredicate3(com.trazere.core.functional.Predicate3)}.
 	 */
+	@Deprecated
 	public static final <T1, T2, T3, X extends Exception> Function3<T1, T2, T3, Boolean, X> fromPredicate(final Predicate3<? super T1, ? super T2, ? super T3, ? extends X> predicate) {
 		assert null != predicate;
 		
@@ -774,7 +844,9 @@ public class Functions {
 	 * @param <X> Type of the exceptions.
 	 * @param procedure The lifted procedure.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.imperative.ImperativeThunks#fromEffect(com.trazere.core.imperative.Effect)}.
 	 */
+	@Deprecated
 	public static <X extends Exception> Function0<Void, X> fromProcedure(final Procedure0<? extends X> procedure) {
 		return new Function0<Void, X>() {
 			@Override
@@ -793,7 +865,9 @@ public class Functions {
 	 * @param <X> Type of the exceptions.
 	 * @param procedure The lifted procedure.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.imperative.ImperativeFunctions#fromProcedure(com.trazere.core.imperative.Procedure)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Function1<T, Void, X> fromProcedure(final Procedure1<? super T, ? extends X> procedure) {
 		assert null != procedure;
 		
@@ -815,7 +889,9 @@ public class Functions {
 	 * @param <X> Type of the exceptions.
 	 * @param procedure The lifted procedure.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.imperative.ImperativeFunctions#fromProcedure2(com.trazere.core.imperative.Procedure2)}.
 	 */
+	@Deprecated
 	public static <T1, T2, X extends Exception> Function2<T1, T2, Void, X> fromProcedure(final Procedure2<? super T1, ? super T2, ? extends X> procedure) {
 		return new Function2<T1, T2, Void, X>() {
 			@Override
@@ -838,7 +914,9 @@ public class Functions {
 	 * @param <X> Type of the exceptions.
 	 * @param hash Function that hash the values.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.imperative.ImperativeFunctions#normalizer(com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public static <T, H, X extends Exception> Function1<T, T, X> normalizer(final Function1<? super T, H, ? extends X> hash) {
 		assert null != hash;
 		

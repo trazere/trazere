@@ -19,8 +19,10 @@ package com.trazere.util.observer;
  * The {@link SimpleObservable} class implements observable sources whose events can be raised externally.
  * 
  * @param <T> Type of the event values.
+ * @deprecated Use {@link com.trazere.core.reactive.Broadcaster}.
  */
 // TODO: implement Observer and rename to Broadcaster or something else
+@Deprecated
 public class SimpleObservable<T>
 extends BaseObservable<T> {
 	@Override
@@ -33,6 +35,10 @@ extends BaseObservable<T> {
 		super.unsubscribeAll();
 	}
 	
+	/**
+	 * @deprecated Use {@link com.trazere.core.reactive.Broadcaster#fire(Object)}.
+	 */
+	@Deprecated
 	@Override
 	public void notify(final T value) {
 		super.notify(value);

@@ -24,7 +24,9 @@ import java.util.NoSuchElementException;
  * 
  * @param <T> Type of the elements.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link com.trazere.core.collection.Feed}.
  */
+@Deprecated
 public abstract class BaseFeed<T, X extends Exception>
 implements Feed<T, X> {
 	@Override

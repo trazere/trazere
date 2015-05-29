@@ -22,11 +22,10 @@ import com.trazere.util.type.Maybe;
  * 
  * @param <F> Type of the failures.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link com.trazere.core.util.FailureHandler}.
  */
+@Deprecated
 public interface FailureHandler<F, X extends Exception> {
-	/**
-	 * Handles a failed attempt at evaluating the receiver function.
-	 */
 	/**
 	 * Handles the given failure.
 	 * 

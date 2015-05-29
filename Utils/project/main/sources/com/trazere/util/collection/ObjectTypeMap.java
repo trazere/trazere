@@ -23,7 +23,9 @@ import com.trazere.util.function.Function1;
  * @param <T> Upper bound type.
  * @param <V> Type of the values.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link com.trazere.core.functional.ObjectTypeFunction}.
  */
+@Deprecated
 public interface ObjectTypeMap<T, V, X extends Exception>
 extends Function1<Class<? extends T>, V, X> {
 	/**
@@ -32,7 +34,9 @@ extends Function1<Class<? extends T>, V, X> {
 	 * @param type The type.
 	 * @return The value. May be <code>null</code>.
 	 * @throws X When the value cannot be got.
+	 * @deprecated Use {@link com.trazere.core.functional.ObjectTypeFunction#evaluate(Object)}.
 	 */
+	@Deprecated
 	public V get(final Class<? extends T> type)
 	throws X;
 }

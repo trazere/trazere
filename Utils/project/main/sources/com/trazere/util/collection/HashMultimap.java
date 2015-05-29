@@ -30,14 +30,20 @@ import java.util.Set;
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  * @param <C> Type of the collections of values.
+ * @deprecated Use {@link com.trazere.core.collection.MapMultimap}.
  */
+@Deprecated
 public class HashMultimap<K, V, C extends Collection<V>>
 implements Multimap<K, V, C> {
 	/**
 	 * Instantiates a new multimap.
 	 * 
 	 * @param collectionFactory The collection factory.
+	 * @deprecated Use
+	 *             {@link com.trazere.core.collection.MapMultimap#MapMultimap(com.trazere.core.collection.MapFactory, com.trazere.core.collection.ExtendedAbstractCollectionFactory)}
+	 *             .
 	 */
+	@Deprecated
 	public HashMultimap(final CollectionFactory<V, ? extends C> collectionFactory) {
 		assert null != collectionFactory;
 		
@@ -50,7 +56,11 @@ implements Multimap<K, V, C> {
 	 * 
 	 * @param collectionFactory The collection factory.
 	 * @param multimap The multimap to copy.
+	 * @deprecated Use
+	 *             {@link com.trazere.core.collection.MapMultimap#MapMultimap(com.trazere.core.collection.MapFactory, com.trazere.core.collection.ExtendedAbstractCollectionFactory, com.trazere.core.collection.Multimap)}
+	 *             .
 	 */
+	@Deprecated
 	public HashMultimap(final CollectionFactory<V, ? extends C> collectionFactory, final Multimap<? extends K, ? extends V, ?> multimap) {
 		this(collectionFactory);
 		

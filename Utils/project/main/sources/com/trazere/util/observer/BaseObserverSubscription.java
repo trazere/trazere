@@ -20,7 +20,10 @@ package com.trazere.util.observer;
  * <p>
  * This class keeps a strong reference to the observer corresponding to the subscription. That way, the subscribers which keep a reference to their
  * subscriptions don't have keep another reference to the observers in order to prevent their garbage collection.
+ * 
+ * @deprecated Use {@link com.trazere.core.reactive.BaseObserverSubscription}.
  */
+@Deprecated
 public abstract class BaseObserverSubscription
 implements ObserverSubscription {
 	/**

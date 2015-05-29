@@ -29,7 +29,9 @@ import java.util.Set;
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
+ * @deprecated To be removed.
  */
+@Deprecated
 public interface RecordReader<K, V>
 extends ParameterFunction<String, Object, Record<K, V>, ValueException> {
 	/**

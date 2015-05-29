@@ -25,7 +25,9 @@ import java.util.Set;
  * The {@link CharPredicates} class provides various common character predicate functions.
  * 
  * @see CharPredicate
+ * @deprecated Use core.
  */
+@Deprecated
 public class CharPredicates {
 	/**
 	 * Builds a predicate that evaluates to the given result for all characters.
@@ -33,7 +35,9 @@ public class CharPredicates {
 	 * @param <X> Type of the exceptions.
 	 * @param result Result to return.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.text.CharPredicates#constant(boolean)}.
 	 */
+	@Deprecated
 	public static <X extends Exception> CharPredicate<X> constant(final boolean result) {
 		return new CharPredicate<X>() {
 			@Override
@@ -48,7 +52,9 @@ public class CharPredicates {
 	 * 
 	 * @param <X> Type of the exceptions.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.text.CharPredicates#all()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> CharPredicate<X> all() {
 		return (CharPredicate<X>) ALL;
@@ -61,7 +67,9 @@ public class CharPredicates {
 	 * 
 	 * @param <X> Type of the exceptions.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.text.CharPredicates#none()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> CharPredicate<X> none() {
 		return (CharPredicate<X>) NONE;
@@ -75,7 +83,9 @@ public class CharPredicates {
 	 * @param <X> Type of the exceptions.
 	 * @param predicate Predicate to inverse.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.text.CharPredicates#not(com.trazere.core.text.CharPredicate)}.
 	 */
+	@Deprecated
 	public static <X extends Exception> CharPredicate<X> not(final CharPredicate<X> predicate) {
 		assert null != predicate;
 		
@@ -96,7 +106,9 @@ public class CharPredicates {
 	 * @param predicate1 First predicate.
 	 * @param predicate2 Second predicate.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.text.CharPredicates#and(com.trazere.core.text.CharPredicate, com.trazere.core.text.CharPredicate)}.
 	 */
+	@Deprecated
 	public static <X extends Exception> CharPredicate<X> and(final CharPredicate<? extends X> predicate1, final CharPredicate<? extends X> predicate2) {
 		assert null != predicate1;
 		assert null != predicate2;
@@ -117,7 +129,9 @@ public class CharPredicates {
 	 * @param <X> Type of the exceptions.
 	 * @param predicates Predicates to combine.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.text.CharPredicates#and(Collection)}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> CharPredicate<X> and(final Collection<? extends CharPredicate<? extends X>> predicates) {
 		assert null != predicates;
@@ -147,7 +161,9 @@ public class CharPredicates {
 	 * @param predicate1 First predicate.
 	 * @param predicate2 Second predicate.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.text.CharPredicates#or(com.trazere.core.text.CharPredicate, com.trazere.core.text.CharPredicate)}.
 	 */
+	@Deprecated
 	public static <X extends Exception> CharPredicate<X> or(final CharPredicate<? extends X> predicate1, final CharPredicate<? extends X> predicate2) {
 		assert null != predicate1;
 		assert null != predicate2;
@@ -168,7 +184,9 @@ public class CharPredicates {
 	 * @param <X> Type of the exceptions.
 	 * @param predicates Predicates to combine.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.text.CharPredicates#or(Collection)}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> CharPredicate<X> or(final Collection<? extends CharPredicate<? extends X>> predicates) {
 		assert null != predicates;
@@ -197,7 +215,9 @@ public class CharPredicates {
 	 * @param <X> Type of the exceptions.
 	 * @param value Character to accept.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.text.CharPredicates#value(char)}.
 	 */
+	@Deprecated
 	public static <X extends Exception> CharPredicate<X> value(final char value) {
 		return new CharPredicate<X>() {
 			@Override
@@ -213,7 +233,9 @@ public class CharPredicates {
 	 * @param <X> Type of the exceptions.
 	 * @param values Characters to accept.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.text.CharPredicates#values(char...)}.
 	 */
+	@Deprecated
 	public static <X extends Exception> CharPredicate<X> values(final char... values) {
 		assert null != values;
 		
@@ -230,7 +252,9 @@ public class CharPredicates {
 	 * @param <X> Type of the exceptions.
 	 * @param values Characters to accept.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.text.CharPredicates#values(char...)}.
 	 */
+	@Deprecated
 	public static <X extends Exception> CharPredicate<X> values(final Character... values) {
 		assert null != values;
 		
@@ -243,7 +267,9 @@ public class CharPredicates {
 	 * @param <X> Type of the exceptions.
 	 * @param values Characters to accept.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.text.CharPredicates#values(Collection)}.
 	 */
+	@Deprecated
 	public static <X extends Exception> CharPredicate<X> values(final Collection<Character> values) {
 		assert null != values;
 		
@@ -261,7 +287,9 @@ public class CharPredicates {
 	 * @param <X> Type of the exceptions.
 	 * @param chars Characters to accept.
 	 * @return The built predicate.
+	 * @deprecated Use {@link com.trazere.core.text.CharPredicates#values(CharSequence)}.
 	 */
+	@Deprecated
 	public static <X extends Exception> CharPredicate<X> values(final String chars) {
 		assert null != chars;
 		
@@ -279,7 +307,9 @@ public class CharPredicates {
 	 * @param <X> Type of the exceptions.
 	 * @return The built predicate.
 	 * @see Character#isWhitespace(char)
+	 * @deprecated Use {@link com.trazere.core.text.CharPredicates#whitespace()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> CharPredicate<X> isWhitespace() {
 		return (CharPredicate<X>) WHITESPACE;
@@ -298,7 +328,9 @@ public class CharPredicates {
 	 * @param <X> Type of the exceptions.
 	 * @return The built predicate.
 	 * @see Character#isDigit(char)
+	 * @deprecated Use {@link com.trazere.core.text.CharPredicates#digit()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> CharPredicate<X> isDigit() {
 		return (CharPredicate<X>) DIGIT;
@@ -317,7 +349,9 @@ public class CharPredicates {
 	 * @param <X> Type of the exceptions.
 	 * @return The built predicate.
 	 * @see Character#isLetter(char)
+	 * @deprecated Use {@link com.trazere.core.text.CharPredicates#letter()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> CharPredicate<X> isLetter() {
 		return (CharPredicate<X>) LETTER;
@@ -336,7 +370,9 @@ public class CharPredicates {
 	 * @param <X> Type of the exceptions.
 	 * @return The built predicate.
 	 * @see Character#isLetterOrDigit(char)
+	 * @deprecated Use {@link com.trazere.core.text.CharPredicates#alphanumeric()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> CharPredicate<X> isAlphanumeric() {
 		return (CharPredicate<X>) ALPHANUMERIC;

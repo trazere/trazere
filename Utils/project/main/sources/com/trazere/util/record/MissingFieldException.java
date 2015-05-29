@@ -20,7 +20,10 @@ import com.trazere.util.lang.ThrowableFactory;
 
 /**
  * {@link MissingFieldException} exceptions are thrown when some record field is missing.
+ * 
+ * @deprecated Use {@link com.trazere.core.record.MissingFieldException}.
  */
+@Deprecated
 public class MissingFieldException
 extends RecordException {
 	private static final long serialVersionUID = 1L;

@@ -19,7 +19,9 @@ package com.trazere.util.function;
  * The {@link Procedure0} interface defines zero arguments procedures (zero arguments functions which return no results).
  * 
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link com.trazere.core.imperative.Effect}.
  */
+@Deprecated
 public interface Procedure0<X extends Exception> {
 	/**
 	 * Executes the receiver procedure.

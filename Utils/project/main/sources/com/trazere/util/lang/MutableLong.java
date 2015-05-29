@@ -21,7 +21,10 @@ import com.trazere.util.text.TextUtils;
 
 /**
  * The {@link MutableLong} class represents mutable long integer values.
+ * 
+ * @deprecated Use {@link com.trazere.core.lang.MutableLong}.
  */
+@Deprecated
 public class MutableLong
 implements Describable {
 	/** The value. */

@@ -26,7 +26,10 @@ import com.trazere.util.type.Tuple2;
 
 /**
  * The {@link Accumulators} class provides various factories of accumulators.
+ * 
+ * @deprecated Use core.
  */
+@Deprecated
 public class Accumulators {
 	/**
 	 * Builds an accumulator that counts the accumulations (number of times some value is accumulated).
@@ -34,7 +37,9 @@ public class Accumulators {
 	 * @param <T> Type of the values.
 	 * @param <X> Type of the exceptions.
 	 * @return The built accumulator.
+	 * @deprecated Use {@link com.trazere.core.imperative.Accumulators#counter()}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Accumulator1<T, Integer, X> counter() {
 		return new BaseAccumulator1<T, Integer, X>() {
 			private final Counter _result = new Counter();
@@ -59,7 +64,9 @@ public class Accumulators {
 	 * @param <X> Type of the exceptions.
 	 * @param accumulator Delegate accumulator.
 	 * @return The built accumulator.
+	 * @deprecated Use {@link com.trazere.core.imperative.AccumulatorUtils#delegate(com.trazere.core.imperative.Accumulator)}.
 	 */
+	@Deprecated
 	public static <T, A extends Accumulator1<? super T, ?, ? extends X>, X extends Exception> Accumulator1<T, A, X> delegate(final A accumulator) {
 		return new BaseAccumulator1<T, A, X>() {
 			@Override
@@ -90,7 +97,9 @@ public class Accumulators {
 	 * @param <X> Type of the exceptions.
 	 * @param accumulator Delegate accumulator.
 	 * @return The built accumulator.
+	 * @deprecated Use {@link com.trazere.core.imperative.AccumulatorUtils#delegate2(com.trazere.core.imperative.Accumulator2)}.
 	 */
+	@Deprecated
 	public static <T1, T2, A extends Accumulator2<? super T1, ? super T2, ?, ? extends X>, X extends Exception> Accumulator2<T1, T2, A, X> delegate(final A accumulator) {
 		return new BaseAccumulator2<T1, T2, A, X>() {
 			@Override
@@ -121,7 +130,10 @@ public class Accumulators {
 	 * @param predicate Filter predicate to use.
 	 * @param accumulator Accumulator to filter.
 	 * @return The built accumulator.
+	 * @deprecated Use
+	 *             {@link com.trazere.core.imperative.AccumulatorUtils#filter(com.trazere.core.imperative.Accumulator, com.trazere.core.functional.Predicate)}.
 	 */
+	@Deprecated
 	public static <T, S, X extends Exception> Accumulator1<T, S, X> filter(final Predicate1<? super T, ? extends X> predicate, final Accumulator1<? super T, ? extends S, ? extends X> accumulator) {
 		assert null != predicate;
 		assert null != accumulator;
@@ -152,7 +164,11 @@ public class Accumulators {
 	 * @param predicate Filter predicate to use.
 	 * @param accumulator The accumulator to filter.
 	 * @return The built accumulator.
+	 * @deprecated Use
+	 *             {@link com.trazere.core.imperative.AccumulatorUtils#filter2(com.trazere.core.imperative.Accumulator2, com.trazere.core.functional.Predicate2)}
+	 *             .
 	 */
+	@Deprecated
 	public static <T1, T2, S, X extends Exception> Accumulator2<T1, T2, S, X> filter(final Predicate2<? super T1, ? super T2, ? extends X> predicate, final Accumulator2<? super T1, ? super T2, ? extends S, ? extends X> accumulator) {
 		assert null != predicate;
 		assert null != accumulator;
@@ -183,7 +199,9 @@ public class Accumulators {
 	 * @param function Mapping function to use.
 	 * @param accumulator Accumulator to map.
 	 * @return The built accumulator.
+	 * @deprecated Use {@link com.trazere.core.imperative.AccumulatorUtils#map(com.trazere.core.imperative.Accumulator, com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public static <T, RT, S, X extends Exception> Accumulator1<T, S, X> map(final Function1<? super T, ? extends RT, ? extends X> function, final Accumulator1<? super RT, ? extends S, ? extends X> accumulator) {
 		assert null != function;
 		assert null != accumulator;
@@ -212,7 +230,11 @@ public class Accumulators {
 	 * @param function Mapping function to use.
 	 * @param accumulator Accumulator to map.
 	 * @return The built accumulator.
+	 * @deprecated Use
+	 *             {@link com.trazere.core.imperative.AccumulatorUtils#extractAll(com.trazere.core.imperative.Accumulator, com.trazere.core.functional.Function)}
+	 *             .
 	 */
+	@Deprecated
 	public static <T, RT, S, X extends Exception> Accumulator1<T, S, X> flatMap(final Function1<? super T, ? extends Iterable<? extends RT>, ? extends X> function, final Accumulator1<? super RT, ? extends S, ? extends X> accumulator) {
 		assert null != function;
 		assert null != accumulator;
@@ -258,7 +280,10 @@ public class Accumulators {
 	 * @param extractor Extractor to use.
 	 * @param accumulator Accumulator to transform.
 	 * @return The built accumulator.
+	 * @deprecated Use
+	 *             {@link com.trazere.core.imperative.AccumulatorUtils#extract(com.trazere.core.imperative.Accumulator, com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public static <T, RT, S, X extends Exception> Accumulator1<T, S, X> extract(final Function1<? super T, ? extends Maybe<? extends RT>, ? extends X> extractor, final Accumulator1<? super RT, ? extends S, ? extends X> accumulator) {
 		assert null != extractor;
 		assert null != accumulator;
@@ -289,7 +314,9 @@ public class Accumulators {
 	 * @param <X> Type of the exceptions.
 	 * @param accumulator Accumulator to curry.
 	 * @return The built accumulator.
+	 * @deprecated Use {@link com.trazere.core.imperative.Accumulators#curry(com.trazere.core.imperative.Accumulator)}.
 	 */
+	@Deprecated
 	public static <T1, T2, S, X extends Exception> Accumulator2<T1, T2, S, X> curry(final Accumulator1<? super Tuple2<? super T1, ? super T2>, ? extends S, ? extends X> accumulator) {
 		assert null != accumulator;
 		
@@ -316,7 +343,9 @@ public class Accumulators {
 	 * @param <X> Type of the exceptions.
 	 * @param accumulator Accumulator to uncurry.
 	 * @return The built accumulator.
+	 * @deprecated Use {@link com.trazere.core.imperative.Accumulators#uncurry(com.trazere.core.imperative.Accumulator2)}.
 	 */
+	@Deprecated
 	public static <T1, T2, S, X extends Exception> Accumulator1<Tuple2<T1, T2>, S, X> uncurry(final Accumulator2<? super T1, ? super T2, ? extends S, ? extends X> accumulator) {
 		assert null != accumulator;
 		
@@ -342,7 +371,9 @@ public class Accumulators {
 	 * @param <X> Type of the exceptions.
 	 * @param state State of the accumulator. May be <code>null</code>.
 	 * @return The built accumulator.
+	 * @deprecated Use {@link com.trazere.core.imperative.Accumulators#constant(Object)}.
 	 */
+	@Deprecated
 	public static <T, S, X extends Exception> Accumulator1<T, S, X> constant(final S state) {
 		return new BaseAccumulator1<T, S, X>() {
 			@Override
@@ -381,7 +412,9 @@ public class Accumulators {
 	 * @param <X> Type of the exceptions.
 	 * @param state State of the accumulator. May be <code>null</code>.
 	 * @return The built accumulator.
+	 * @deprecated Use {@link com.trazere.core.imperative.Accumulators#constant2(Object)}.
 	 */
+	@Deprecated
 	public static <T1, T2, S, X extends Exception> Accumulator2<T1, T2, S, X> constant2(final S state) {
 		return new BaseAccumulator2<T1, T2, S, X>() {
 			@Override
@@ -406,7 +439,10 @@ public class Accumulators {
 	 * @param function Mapping function to use.
 	 * @param accumulator Accumulator to map.
 	 * @return The built accumulator.
+	 * @deprecated Use
+	 *             {@link com.trazere.core.imperative.AccumulatorUtils#mapState(com.trazere.core.imperative.Accumulator, com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public static <T, S, RS, X extends Exception> Accumulator1<T, RS, X> mapState(final Function1<? super S, ? extends RS, ? extends RuntimeException> function, final Accumulator1<? super T, ? extends S, ? extends X> accumulator) {
 		assert null != function;
 		assert null != accumulator;
@@ -436,7 +472,11 @@ public class Accumulators {
 	 * @param function Mapping function to use.
 	 * @param accumulator Accumulator to map.
 	 * @return The built accumulator.
+	 * @deprecated Use
+	 *             {@link com.trazere.core.imperative.AccumulatorUtils#mapState2(com.trazere.core.imperative.Accumulator2, com.trazere.core.functional.Function)}
+	 *             .
 	 */
+	@Deprecated
 	public static <T1, T2, S, RS, X extends Exception> Accumulator2<T1, T2, RS, X> mapState(final Function1<? super S, ? extends RS, ? extends RuntimeException> function, final Accumulator2<? super T1, ? super T2, ? extends S, ? extends X> accumulator) {
 		assert null != function;
 		assert null != accumulator;
@@ -461,7 +501,9 @@ public class Accumulators {
 	 * @param <T> Type of the values.
 	 * @param <X> Type of the exceptions.
 	 * @return The built accumulator.
+	 * @deprecated Use {@link com.trazere.core.imperative.Accumulators#first()}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Accumulator1<T, Maybe<T>, X> first() {
 		return new BaseAccumulator1<T, Maybe<T>, X>() {
 			private final MutableReference<T> _value = new MutableReference<T>();
@@ -490,7 +532,9 @@ public class Accumulators {
 	 * @param accumulator Accumulator to populate with the normalized values.
 	 * @return The built accumulator.
 	 * @see Predicates#normalizer()
+	 * @deprecated Use {@link com.trazere.core.imperative.AccumulatorUtils#normalize(com.trazere.core.imperative.Accumulator)}.
 	 */
+	@Deprecated
 	public static <T, S, X extends Exception> Accumulator1<T, S, X> normalizer(final Accumulator1<? super T, ? extends S, ? extends X> accumulator) {
 		return filter(Predicates.<T, X>normalizer(), accumulator);
 	}

@@ -16,6 +16,27 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>com.trazere</groupId>
+			<artifactId>core</artifactId>
+			<version>${project.version}</version>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>com.trazere</groupId>
+			<artifactId>csv</artifactId>
+			<version>${project.version}</version>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>com.trazere</groupId>
+			<artifactId>xml</artifactId>
+			<version>${project.version}</version>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>${tools.org.slf4j.version}</version>

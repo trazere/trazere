@@ -17,7 +17,10 @@ package com.trazere.util.lang;
 
 /**
  * {@link TypeCheckException} exceptions are thrown when some type checking fails.
+ * 
+ * @deprecated To be removed.
  */
+@Deprecated
 public class TypeCheckException
 extends Exception {
 	private static final long serialVersionUID = 1L;

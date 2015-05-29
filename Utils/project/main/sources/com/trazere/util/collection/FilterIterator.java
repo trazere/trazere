@@ -21,7 +21,9 @@ import java.util.Iterator;
  * The {@link FilterIterator} abstract class represents iterator combinators which filter their values.
  * 
  * @param <T> Type of the values.
+ * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#filter(java.util.Iterator, com.trazere.core.functional.Predicate)}.
  */
+@Deprecated
 public abstract class FilterIterator<T>
 extends CheckedFilterIterator<T, RuntimeException>
 implements Iterator<T> {

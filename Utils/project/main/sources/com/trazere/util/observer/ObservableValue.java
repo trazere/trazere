@@ -24,7 +24,9 @@ import com.trazere.util.type.Tuple2;
  * Every event corresponds to a new value and is raised when the observed values changes.
  * 
  * @param <T> Type of the values.
+ * @deprecated Use {@link com.trazere.core.reactive.ObservableValue}.
  */
+@Deprecated
 public interface ObservableValue<T>
 extends Observable<T> {
 	/**
@@ -48,7 +50,10 @@ extends Observable<T> {
 	 * 
 	 * @param observer The observer.
 	 * @return The current value and the corresponding subcription.
+	 * @deprecated Use {@link com.trazere.core.reactive.ObservableValue#subscribeToValue(com.trazere.core.reactive.Observer)} and
+	 *             {@link com.trazere.core.reactive.ObserverUtils#once(com.trazere.core.reactive.Observer)}.
 	 */
+	@Deprecated
 	public Tuple2<T, ObserverSubscription> subscribeOnceToValue(final Observer<? super T> observer);
 	
 	/**
@@ -57,6 +62,9 @@ extends Observable<T> {
 	 * @param observer The observer.
 	 * @param condition The condition.
 	 * @return The current value and the corresponding subcription.
+	 * @deprecated Use {@link com.trazere.core.reactive.ObservableValue#subscribeToValue(com.trazere.core.reactive.Observer)} and
+	 *             {@link com.trazere.core.reactive.ObserverUtils#while_(com.trazere.core.reactive.Observer, com.trazere.core.functional.Predicate)}.
 	 */
+	@Deprecated
 	public Tuple2<T, ObserverSubscription> subscribeWhileToValue(final Observer<? super T> observer, final Predicate1<? super T, RuntimeException> condition);
 }

@@ -26,7 +26,9 @@ import com.trazere.util.lang.LangUtils;
  * @param <T1> Type of the first value.
  * @param <T2> Type of the second value.
  * @param <T3> Type of the third value.
+ * @deprecated Use {@link com.trazere.core.util.Tuple3}.
  */
+@Deprecated
 public class Tuple3<T1, T2, T3>
 extends Tuple2<T1, T2> {
 	private static final long serialVersionUID = 1L;
@@ -41,7 +43,9 @@ extends Tuple2<T1, T2> {
 	 * @param second Second value. May be <code>null</code>.
 	 * @param third Third value. May be <code>null</code>.
 	 * @return The built tuple.
+	 * @deprecated Use {@link com.trazere.core.util.Tuples#tuple3(Object, Object, Object)}.
 	 */
+	@Deprecated
 	public static <T1, T2, T3> Tuple3<T1, T2, T3> build(final T1 first, final T2 second, final T3 third) {
 		return new Tuple3<T1, T2, T3>(first, second, third);
 	}
@@ -54,7 +58,9 @@ extends Tuple2<T1, T2> {
 	 * @param <T3> Type of the third value.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.util.TupleFunctions#tuple3()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T1, T2, T3, X extends Exception> Function3<T1, T2, T3, Tuple3<T1, T2, T3>, X> buildFunction() {
 		return (Function3<T1, T2, T3, Tuple3<T1, T2, T3>, X>) _BUILD_FUNCTION;
@@ -90,7 +96,9 @@ extends Tuple2<T1, T2> {
 	 * Gets the third value of the receiver tuple.
 	 * 
 	 * @return The value. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.util.Field3#get3()}.
 	 */
+	@Deprecated
 	public T3 getThird() {
 		return _third;
 	}
@@ -101,7 +109,9 @@ extends Tuple2<T1, T2> {
 	 * @param <T3> Type of the third values of the tuples.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.util.FieldFunctions#get3()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T3, X extends Exception> Function1<Tuple3<?, ?, ? extends T3>, T3, X> getThirdFunction() {
 		return (Function1<Tuple3<?, ?, ? extends T3>, T3, X>) _GET_THIRD_FUNCTION;
@@ -128,7 +138,9 @@ extends Tuple2<T1, T2> {
 	 * @param tuple2 The second tuple.
 	 * @return The result of the comparison as defined by the {@link Comparable#compareTo(Object)} method.
 	 * @see Comparable#compareTo(Object)
+	 * @deprecated Use {@link com.trazere.core.util.TupleComparators#tuple3(java.util.Comparator, java.util.Comparator, java.util.Comparator)}.
 	 */
+	@Deprecated
 	public static <T1 extends Comparable<T1>, T2 extends Comparable<T2>, T3 extends Comparable<T3>> int compare(final Tuple3<T1, T2, T3> tuple1, final Tuple3<T1, T2, T3> tuple2) {
 		assert null != tuple1;
 		assert null != tuple2;

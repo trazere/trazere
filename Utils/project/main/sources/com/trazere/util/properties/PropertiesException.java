@@ -20,7 +20,10 @@ import com.trazere.util.lang.ThrowableFactory;
 
 /**
  * {@link PropertiesException} exceptions are thrown when properties related errors occur.
+ * 
+ * @deprecated Use {@link com.trazere.core.record.RecordException}.
  */
+@Deprecated
 public class PropertiesException
 extends Exception {
 	private static final long serialVersionUID = 1L;

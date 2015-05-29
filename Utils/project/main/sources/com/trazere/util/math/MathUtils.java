@@ -17,7 +17,10 @@ package com.trazere.util.math;
 
 /**
  * The {@link MathUtils} class provides various math related helpers.
+ * 
+ * @deprecated Use core.
  */
+@Deprecated
 public class MathUtils {
 	/**
 	 * Computes the greatest common denomitor of the given values.
@@ -25,7 +28,9 @@ public class MathUtils {
 	 * @param a The first value.
 	 * @param b The second value.
 	 * @return The greatest common denominator.
+	 * @deprecated Use {@link com.trazere.core.math.MathUtils#gcd(int, int)}.
 	 */
+	@Deprecated
 	public static int gcd(final int a, final int b) {
 		return 0 == b ? a : gcd(b, a % b);
 	}
@@ -36,7 +41,9 @@ public class MathUtils {
 	 * @param a The first value.
 	 * @param b The second value.
 	 * @return The greatest common denominator.
+	 * @deprecated Use {@link com.trazere.core.math.MathUtils#gcd(long, long)}.
 	 */
+	@Deprecated
 	public static long gcd(final long a, final long b) {
 		return 0 == b ? a : gcd(b, a % b);
 	}
@@ -47,7 +54,9 @@ public class MathUtils {
 	 * @param a The first value.
 	 * @param b The second value.
 	 * @return The least common multiple.
+	 * @deprecated Use {@link com.trazere.core.math.MathUtils#lcm(int, int)}.
 	 */
+	@Deprecated
 	public static int lcm(final int a, final int b) {
 		return 0 == a ? 0 : (a / gcd(a, b)) * b;
 	}
@@ -58,7 +67,9 @@ public class MathUtils {
 	 * @param a The first value.
 	 * @param b The second value.
 	 * @return The least common multiple.
+	 * @deprecated Use {@link com.trazere.core.math.MathUtils#lcm(long, long)}.
 	 */
+	@Deprecated
 	public static long lcm(final long a, final long b) {
 		return 0 == a ? 0 : (a / gcd(a, b)) * b;
 	}

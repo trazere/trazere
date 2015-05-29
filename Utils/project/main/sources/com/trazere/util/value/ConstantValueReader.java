@@ -29,7 +29,9 @@ import com.trazere.util.text.Description;
  * This reader does not use the parameters it is given. It has therefore no requirements over them.
  * 
  * @param <T> Type of the value.
+ * @deprecated To be removed.
  */
+@Deprecated
 public class ConstantValueReader<T>
 extends BaseValueReader<T> {
 	/**

@@ -20,7 +20,9 @@ package com.trazere.util.function;
  * 
  * @param <T> Type of the argument values.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link com.trazere.core.imperative.Procedure}.
  */
+@Deprecated
 public interface Procedure1<T, X extends Exception> {
 	/**
 	 * Executes the receiver procedure with the given argument value.

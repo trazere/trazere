@@ -17,17 +17,40 @@ package com.trazere.util.csv;
 
 /**
  * The {@link CSVReaderOption} enumeration represents options of {@link CSVReader CSV readers}.
+ * 
+ * @deprecated Use {@link com.trazere.csv.CSVOption}.
  */
+@Deprecated
 public enum CSVReaderOption {
-	/** Option indicating whether the fields should be trimed or not. */
+	/**
+	 * Option indicating whether the fields should be trimed or not.
+	 * 
+	 * @deprecated Use {@link com.trazere.csv.CSVOption#TRIM_FIELDS}.
+	 */
+	@Deprecated
 	TRIM_FIELDS,
 	
-	/** Option indicating whether the empty fields should be striped or not. */
+	/**
+	 * Option indicating whether the empty fields should be striped or not.
+	 * 
+	 * @deprecated To be removed.
+	 */
+	@Deprecated
 	STRIP_EMPTY_FIELDS,
 	
-	/** Option indicating whether the cardinality of the data line should be checked or not. */
+	/**
+	 * Option indicating whether the cardinality of the data line should be checked or not.
+	 * 
+	 * @deprecated Use {@link com.trazere.csv.CSVOption#CHECK_CARDINALITY}.
+	 */
+	@Deprecated
 	CHECK_CARDINALITY,
 	
-	/** Option indicating whether the invalid CSV lines should be skipped or not. */
+	/**
+	 * Option indicating whether the invalid CSV lines should be skipped or not.
+	 * 
+	 * @deprecated Use {@link com.trazere.csv.CSVOption#IGNORE_INVALID_LINES}.
+	 */
+	@Deprecated
 	SKIP_INVALID_LINES,
 }

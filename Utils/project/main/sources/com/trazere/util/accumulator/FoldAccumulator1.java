@@ -21,7 +21,9 @@ package com.trazere.util.accumulator;
  * @param <R> Type of the result.
  * @param <V> Type of the values.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link com.trazere.core.imperative.FoldAccumulator}.
  */
+@Deprecated
 public abstract class FoldAccumulator1<R, V, X extends Exception>
 extends BaseAccumulator1<V, R, X> {
 	/** The current value. */

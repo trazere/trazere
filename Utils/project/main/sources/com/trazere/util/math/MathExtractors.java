@@ -24,7 +24,9 @@ import java.math.BigInteger;
  * The {@link MathExtractors} class provides various factories of extractors related to maths.
  * 
  * @see Function1
+ * @deprecated Use core.
  */
+@Deprecated
 public class MathExtractors {
 	/**
 	 * Builds an extractor that converts big integers into bytes.
@@ -33,7 +35,9 @@ public class MathExtractors {
 	 * 
 	 * @param <X> Type of the exception.
 	 * @return The built extractor.
+	 * @deprecated Use {@link com.trazere.core.math.BigIntegerExtractors#byteValue()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> Function1<BigInteger, Maybe<Byte>, X> byteFromBigInteger() {
 		return (Function1<BigInteger, Maybe<Byte>, X>) _BYTE_FROM_BIG_INTEGER;
@@ -59,7 +63,9 @@ public class MathExtractors {
 	 * 
 	 * @param <X> Type of the exception.
 	 * @return The built extractor.
+	 * @deprecated Use {@link com.trazere.core.math.BigIntegerExtractors#shortValue()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> Function1<BigInteger, Maybe<Short>, X> shortFromBigInteger() {
 		return (Function1<BigInteger, Maybe<Short>, X>) _SHORT_FROM_BIG_INTEGER;
@@ -85,7 +91,9 @@ public class MathExtractors {
 	 * 
 	 * @param <X> Type of the exception.
 	 * @return The built extractor.
+	 * @deprecated Use {@link com.trazere.core.math.BigIntegerExtractors#integerValue()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> Function1<BigInteger, Maybe<Integer>, X> integerFromBigInteger() {
 		return (Function1<BigInteger, Maybe<Integer>, X>) _INTEGER_FROM_BIG_INTEGER;
@@ -111,7 +119,9 @@ public class MathExtractors {
 	 * 
 	 * @param <X> Type of the exception.
 	 * @return The built extractor.
+	 * @deprecated Use {@link com.trazere.core.math.BigIntegerExtractors#longValue()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> Function1<BigInteger, Maybe<Long>, X> longFromBigInteger() {
 		return (Function1<BigInteger, Maybe<Long>, X>) _LONG_FROM_BIG_INTEGER;
@@ -137,7 +147,9 @@ public class MathExtractors {
 	 * 
 	 * @param <X> Type of the exception.
 	 * @return The built extractor.
+	 * @deprecated Use {@link com.trazere.core.math.BigDecimalExtractors#byteValue()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> Function1<BigDecimal, Maybe<Byte>, X> byteFromBigDecimal() {
 		return (Function1<BigDecimal, Maybe<Byte>, X>) _BYTE_FROM_BIG_DECIMAL;
@@ -163,7 +175,9 @@ public class MathExtractors {
 	 * 
 	 * @param <X> Type of the exception.
 	 * @return The built extractor.
+	 * @deprecated Use {@link com.trazere.core.math.BigDecimalExtractors#shortValue()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> Function1<BigDecimal, Maybe<Short>, X> shortFromBigDecimal() {
 		return (Function1<BigDecimal, Maybe<Short>, X>) _SHORT_FROM_BIG_DECIMAL;
@@ -189,7 +203,9 @@ public class MathExtractors {
 	 * 
 	 * @param <X> Type of the exception.
 	 * @return The built extractor.
+	 * @deprecated Use {@link com.trazere.core.math.BigDecimalExtractors#integerValue()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> Function1<BigDecimal, Maybe<Integer>, X> integerFromBigDecimal() {
 		return (Function1<BigDecimal, Maybe<Integer>, X>) _INTEGER_FROM_BIG_DECIMAL;
@@ -215,7 +231,9 @@ public class MathExtractors {
 	 * 
 	 * @param <X> Type of the exception.
 	 * @return The built extractor.
+	 * @deprecated Use {@link com.trazere.core.math.BigDecimalExtractors#longValue()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> Function1<BigDecimal, Maybe<Long>, X> longFromBigDecimal() {
 		return (Function1<BigDecimal, Maybe<Long>, X>) _LONG_FROM_BIG_DECIMAL;
@@ -241,7 +259,9 @@ public class MathExtractors {
 	 * 
 	 * @param <X> Type of the exception.
 	 * @return The built extractor.
+	 * @deprecated Use {@link com.trazere.core.math.BigDecimalExtractors#floatValue()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> Function1<BigDecimal, Maybe<Float>, X> floatFromBigDecimal() {
 		return (Function1<BigDecimal, Maybe<Float>, X>) _FLOAT_FROM_BIG_DECIMAL;
@@ -267,7 +287,9 @@ public class MathExtractors {
 	 * 
 	 * @param <X> Type of the exception.
 	 * @return The built extractor.
+	 * @deprecated Use {@link com.trazere.core.math.BigDecimalExtractors#doubleValue()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> Function1<BigDecimal, Maybe<Double>, X> doubleFromBigDecimal() {
 		return (Function1<BigDecimal, Maybe<Double>, X>) _DOUBLE_FROM_BIG_DECIMAL;

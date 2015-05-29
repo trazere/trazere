@@ -36,7 +36,9 @@ import java.util.Set;
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
+ * @deprecated Use {@link com.trazere.core.cache.SimpleCache}.
  */
+@Deprecated
 public class SimpleCache<K, V>
 implements Cache<K, V>, Describable {
 	public SimpleCache(final CachePolicy<K> policy) {

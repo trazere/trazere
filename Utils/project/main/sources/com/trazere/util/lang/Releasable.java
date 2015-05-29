@@ -19,7 +19,9 @@ package com.trazere.util.lang;
  * The {@link Releasable} interface defines items which can be released.
  * 
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link com.trazere.core.lang.Releasable}.
  */
+@Deprecated
 public interface Releasable<X extends Exception> {
 	/**
 	 * Releases the receiver releasable.

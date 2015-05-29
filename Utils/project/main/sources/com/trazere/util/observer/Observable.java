@@ -29,7 +29,9 @@ import com.trazere.util.function.Predicate1;
  * @param <T> Type of the event values.
  * @see Observer
  * @see ObserverSubscription
+ * @deprecated Use {@link com.trazere.core.reactive.Observable}.
  */
+@Deprecated
 public interface Observable<T> {
 	/**
 	 * Subcribes the given observer to the receiver observable for all events.
@@ -44,7 +46,10 @@ public interface Observable<T> {
 	 * 
 	 * @param observer The observer.
 	 * @return The corresponding subcription.
+	 * @deprecated Use {@link com.trazere.core.reactive.Observable#subscribe(com.trazere.core.reactive.Observer)} and
+	 *             {@link com.trazere.core.reactive.ObserverUtils#once(com.trazere.core.reactive.Observer)}.
 	 */
+	@Deprecated
 	public ObserverSubscription subscribeOnce(final Observer<? super T> observer);
 	
 	/**
@@ -53,6 +58,9 @@ public interface Observable<T> {
 	 * @param observer The observer.
 	 * @param condition The condition.
 	 * @return The corresponding subcription.
+	 * @deprecated Use {@link com.trazere.core.reactive.Observable#subscribe(com.trazere.core.reactive.Observer)} and
+	 *             {@link com.trazere.core.reactive.ObserverUtils#while_(com.trazere.core.reactive.Observer, com.trazere.core.functional.Predicate)}.
 	 */
+	@Deprecated
 	public ObserverSubscription subscribeWhile(final Observer<? super T> observer, final Predicate1<? super T, RuntimeException> condition);
 }

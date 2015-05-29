@@ -21,7 +21,10 @@ import javax.xml.stream.XMLStreamWriter;
 
 /**
  * The {@link IndentingXMLStreamWriter} class represents decorators of XML stream writers which indent output according to the document structure.
+ * 
+ * @deprecated Use {@link com.trazere.xml.IndentingXMLStreamWriter}.
  */
+@Deprecated
 public class IndentingXMLStreamWriter
 extends DecoratorXMLStreamWriter {
 	private final String _indentation;

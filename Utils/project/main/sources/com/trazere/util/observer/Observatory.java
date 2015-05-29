@@ -22,7 +22,9 @@ package com.trazere.util.observer;
  * 
  * @param <S> Type of the subjects.
  * @param <E> Type of the events.
+ * @deprecated Use {@link com.trazere.core.reactive.Observatory}.
  */
+@Deprecated
 public interface Observatory<S, E> {
 	/**
 	 * Gets an observable that allows to subscribe to events routed by the reveiver observatory for the given subject.

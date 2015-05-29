@@ -21,7 +21,9 @@ import com.trazere.util.function.Function0;
  * The {@link Factories} class provides factories of factories.
  * 
  * @see Factory
+ * @deprecated Use core.
  */
+@Deprecated
 public class Factories {
 	/**
 	 * Builds a factory producing the given value.
@@ -30,7 +32,9 @@ public class Factories {
 	 * @param <X> Type of the exceptions.
 	 * @param value The value. May be <code>null</code>.
 	 * @return The built factory.
+	 * @deprecated Use {@link com.trazere.core.design.Factories#fromValue(Object)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Factory<T, X> fromValue(final T value) {
 		return new BaseFactory<T, X>() {
 			@Override
@@ -47,7 +51,9 @@ public class Factories {
 	 * @param <X> Type of the exceptions.
 	 * @param function The function.
 	 * @return The built factory.
+	 * @deprecated Use {@link com.trazere.core.design.Factories#fromThunk(com.trazere.core.functional.Thunk)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Factory<T, X> fromFunction(final Function0<? extends T, ? extends X> function) {
 		assert null != function;
 		

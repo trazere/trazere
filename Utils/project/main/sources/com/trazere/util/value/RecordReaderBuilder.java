@@ -28,8 +28,10 @@ import java.util.Set;
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  * @param <R> Type of the record readers.
+ * @deprecated To be removed.
  */
 // TODO: extends RecordBuilder
+@Deprecated
 public interface RecordReaderBuilder<K, V, R extends RecordReader<K, V>>
 extends Factory<R, RecordException> {
 	/**

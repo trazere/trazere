@@ -19,7 +19,10 @@ import com.trazere.util.lang.MutableBoolean;
 
 /**
  * The {@link BaseTrigger} abstract class provides skeletons for writing triggers.
+ * 
+ * @deprecated To be removed.
  */
+@Deprecated
 public abstract class BaseTrigger
 implements Trigger {
 	/** State of the trigger. */

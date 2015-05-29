@@ -5,7 +5,10 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * The {@link XMLAdapters} class provides various factories of JAXB type adapters.
+ * 
+ * @deprecated Use core.
  */
+@Deprecated
 public class XMLAdapters {
 	/**
 	 * Builds an adapter using the given value serializer.
@@ -14,7 +17,9 @@ public class XMLAdapters {
 	 * @param <R> Type of the JAXB representations.
 	 * @param serializer The serializer to use.
 	 * @return The built adapter.
+	 * @deprecated Use {@link com.trazere.xml.SerializerAdapter}.
 	 */
+	@Deprecated
 	public static <T, R> XmlAdapter<R, T> fromValueSerializer(final ValueSerializer<T, R, ?> serializer) {
 		assert null != serializer;
 		

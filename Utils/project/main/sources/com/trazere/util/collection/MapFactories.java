@@ -24,7 +24,9 @@ import java.util.TreeMap;
  * The {@link MapFactories} class provides various factories of map factories.
  * 
  * @see MapFactory
+ * @deprecated Use core.
  */
+@Deprecated
 public class MapFactories {
 	/**
 	 * Builds a map factory which produces {@link HashMap}s.
@@ -32,11 +34,14 @@ public class MapFactories {
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @return The factory.
+	 * @deprecated Use {@link com.trazere.core.collection.MapFactories#hashMap()}.
 	 */
+	@Deprecated
 	public static <K, V> MapFactory<K, V, HashMap<K, V>> hashMap() {
 		return LangUtils.cast(_HASHMAP);
 	}
 	
+	@Deprecated
 	private static final MapFactory<?, ?, ?> _HASHMAP = new BaseMapFactory<Object, Object, HashMap<Object, Object>>() {
 		@Override
 		public HashMap<Object, Object> build() {
@@ -60,11 +65,14 @@ public class MapFactories {
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @return The factory.
+	 * @deprecated Use {@link com.trazere.core.collection.MapFactories#treeMap()}.
 	 */
+	@Deprecated
 	public static <K, V> MapFactory<K, V, TreeMap<K, V>> treeMap() {
 		return LangUtils.cast(_TREEMAP);
 	}
 	
+	@Deprecated
 	private static final MapFactory<?, ?, ?> _TREEMAP = new BaseMapFactory<Object, Object, TreeMap<Object, Object>>() {
 		@Override
 		public TreeMap<Object, Object> build() {

@@ -23,7 +23,9 @@ import java.util.Map;
  * The {@link IdleCachePolicy} class provides a cache policy based on an idle time.
  * 
  * @param <K> Type of the keys.
+ * @deprecated Use {@link com.trazere.core.cache.IdleCachePolicy}.
  */
+@Deprecated
 public class IdleCachePolicy<K>
 implements CachePolicy<K> {
 	/**

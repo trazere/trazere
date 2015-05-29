@@ -20,7 +20,9 @@ package com.trazere.util.lang;
  * 
  * @param <T> Type of the built values.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link com.trazere.core.design.Factory}.
  */
+@Deprecated
 public abstract class BaseFactory<T, X extends Exception>
 implements Factory<T, X> {
 	// Function.

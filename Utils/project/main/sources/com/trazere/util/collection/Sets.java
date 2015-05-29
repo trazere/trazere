@@ -21,7 +21,10 @@ import java.util.Set;
 
 /**
  * The {@link Sets} class provides various factories of sets.
+ * 
+ * @deprecated Use core.
  */
+@Deprecated
 public class Sets {
 	/**
 	 * Builds a set containing the given value if any.
@@ -31,7 +34,9 @@ public class Sets {
 	 * @param <T> Type of the the value.
 	 * @param value The value.
 	 * @return The built set.
+	 * @deprecated Use {@link com.trazere.core.collection.Sets#fromIterable(Iterable)}.
 	 */
+	@Deprecated
 	public static <T> Set<T> fromValue(final Maybe<T> value) {
 		assert null != value;
 		
@@ -50,7 +55,9 @@ public class Sets {
 	 * @param <T> Type of the the value.
 	 * @param value The value. May be <code>null</code>.
 	 * @return The built set.
+	 * @deprecated Use {@link com.trazere.core.collection.Sets#fromElement(Object)}.
 	 */
+	@Deprecated
 	public static <T> Set<T> fromValue(final T value) {
 		final Set<T> set = new HashSet<T>(1);
 		set.add(value);
@@ -66,7 +73,9 @@ public class Sets {
 	 * @param value1 The first value. May be <code>null</code>.
 	 * @param value2 The second value. May be <code>null</code>.
 	 * @return The built set.
+	 * @deprecated Use {@link com.trazere.core.collection.Sets#fromElements(Object, Object)}.
 	 */
+	@Deprecated
 	public static <T> Set<T> fromValues(final T value1, final T value2) {
 		final Set<T> set = new HashSet<T>(2);
 		set.add(value1);
@@ -84,7 +93,9 @@ public class Sets {
 	 * @param value2 The second value. May be <code>null</code>.
 	 * @param value3 The third value. May be <code>null</code>.
 	 * @return The built set.
+	 * @deprecated Use {@link com.trazere.core.collection.Sets#fromElements(Object, Object, Object)}.
 	 */
+	@Deprecated
 	public static <T> Set<T> fromValues(final T value1, final T value2, final T value3) {
 		final Set<T> set = new HashSet<T>(3);
 		set.add(value1);
@@ -101,7 +112,9 @@ public class Sets {
 	 * @param <T> Type of the the values.
 	 * @param values The values. May be <code>null</code>.
 	 * @return The built set.
+	 * @deprecated Use {@link com.trazere.core.collection.Sets#fromElements(Object...)}.
 	 */
+	@Deprecated
 	public static <T> Set<T> fromValues(final T... values) {
 		assert null != values;
 		

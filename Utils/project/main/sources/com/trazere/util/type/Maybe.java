@@ -38,7 +38,9 @@ import java.util.Iterator;
  * This class aims to improve the reliability of the code by avoiding uses of <code>null</code> values.
  * 
  * @param <T> Type of the value.
+ * @deprecated Use {@link com.trazere.core.util.Maybe}.
  */
+@Deprecated
 public abstract class Maybe<T>
 implements Iterable<T>, Serializable, Describable {
 	private static final long serialVersionUID = 1L;
@@ -73,7 +75,9 @@ implements Iterable<T>, Serializable, Describable {
 	 * @param <T> Type of the values.
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.util.MaybeFunctions#some()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T, X extends Exception> Function1<T, Maybe<T>, X> someFunction() {
 		return (Function1<T, Maybe<T>, X>) _SOME_FUNCTION;
@@ -97,7 +101,9 @@ implements Iterable<T>, Serializable, Describable {
 	 * @param <T> Type of the value.
 	 * @param value The value to wrap. May be <code>null</code>.
 	 * @return The instance.
+	 * @deprecated Use {@link com.trazere.core.util.MaybeUtils#fromNullable(Object)}.
 	 */
+	@Deprecated
 	public static <T> Maybe<T> fromValue(final T value) {
 		if (null != value) {
 			return some(value);
@@ -113,7 +119,9 @@ implements Iterable<T>, Serializable, Describable {
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
 	 * @see #fromValue(Object)
+	 * @deprecated Use {@link com.trazere.core.util.MaybeFunctions#fromNullable()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T, X extends Exception> Function1<T, Maybe<T>, X> fromValueFunction() {
 		return (Function1<T, Maybe<T>, X>) _FROM_VALUE_FUNCTION;
@@ -136,7 +144,9 @@ implements Iterable<T>, Serializable, Describable {
 	 * @param <T> Type of the value.
 	 * @param maybe The instance to unwrap.
 	 * @return The wrapped value or <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.util.MaybeUtils#toNullable(com.trazere.core.util.Maybe)}.
 	 */
+	@Deprecated
 	public static <T> T toValue(final Maybe<T> maybe) {
 		assert null != maybe;
 		
@@ -150,7 +160,9 @@ implements Iterable<T>, Serializable, Describable {
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
 	 * @see #toValue(Maybe)
+	 * @deprecated Use {@link com.trazere.core.util.MaybeFunctions#toNullable()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T, X extends Exception> Function1<Maybe<T>, T, X> toValueFunction() {
 		return (Function1<Maybe<T>, T, X>) _TO_VALUE_FUNCTION;
@@ -167,7 +179,10 @@ implements Iterable<T>, Serializable, Describable {
 	
 	/**
 	 * The {@link Constructor} enumeration represents the constructors of the algebraic data type.
+	 * 
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public static enum Constructor {
 		NONE,
 		SOME,
@@ -177,7 +192,9 @@ implements Iterable<T>, Serializable, Describable {
 	 * Gets the constructor of the receiver instance.
 	 * 
 	 * @return The constructor.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public abstract Constructor getConstructor();
 	
 	// None.
@@ -186,7 +203,9 @@ implements Iterable<T>, Serializable, Describable {
 	 * The {@link Maybe.None} class represents the instances built using the <code>None</code> constructor.
 	 * 
 	 * @param <T> Type of the value.
+	 * @deprecated Use {@link com.trazere.core.util.Maybe.None}.
 	 */
+	@Deprecated
 	public static final class None<T>
 	extends Maybe<T> {
 		private static final long serialVersionUID = 1L;
@@ -310,7 +329,9 @@ implements Iterable<T>, Serializable, Describable {
 	 * The {@link Maybe.Some} class represents the instances built using the <code>Some</code> constructor.
 	 * 
 	 * @param <T> Type of the value.
+	 * @deprecated Use {@link com.trazere.core.util.Maybe.Some}.
 	 */
+	@Deprecated
 	public static final class Some<T>
 	extends Maybe<T> {
 		private static final long serialVersionUID = 1L;
@@ -472,7 +493,9 @@ implements Iterable<T>, Serializable, Describable {
 	 * @param defaultValue The default value. May be <code>null</code>.
 	 * @return The value. May be <code>null</code>.
 	 * @throws X When the evaluation of the default value fails.
+	 * @deprecated Use {@link com.trazere.core.util.Maybe#get(com.trazere.core.functional.Thunk)}.
 	 */
+	@Deprecated
 	public abstract <X extends Exception> T get(final Function0<? extends T, ? extends X> defaultValue)
 	throws X;
 	
@@ -485,7 +508,9 @@ implements Iterable<T>, Serializable, Describable {
 	 * @param maybe The {@link Maybe} instance.
 	 * @param defaultValue The default value. May be <code>null</code>.
 	 * @return The value. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.util.MaybeUtils#get(com.trazere.core.util.Maybe, Object)}.
 	 */
+	@Deprecated
 	public static <T> T get(final Maybe<? extends T> maybe, final T defaultValue) {
 		assert null != maybe;
 		
@@ -501,7 +526,9 @@ implements Iterable<T>, Serializable, Describable {
 	 * @param defaultValue The default value. May be <code>null</code>.
 	 * @return The value. May be <code>null</code>.
 	 * @throws X When the evaluation of the default value fails.
+	 * @deprecated Use {@link com.trazere.core.util.MaybeUtils#get(com.trazere.core.util.Maybe, com.trazere.core.functional.Thunk)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> T get(final Maybe<? extends T> maybe, final Function0<? extends T, ? extends X> defaultValue)
 	throws X {
 		assert null != maybe;
@@ -565,7 +592,9 @@ implements Iterable<T>, Serializable, Describable {
 	 * @param function The function.
 	 * @return An instance containing the mapped value.
 	 * @throws X When the mapping fails.
+	 * @deprecated Use {@link com.trazere.core.util.Maybe#map(com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public abstract <R, X extends Exception> Maybe<R> map(final Function1<? super T, ? extends R, ? extends X> function)
 	throws X;
 	
@@ -577,7 +606,9 @@ implements Iterable<T>, Serializable, Describable {
 	 * @param <X> Type of the exceptions.
 	 * @param function The function.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.util.MaybeFunctions#map(com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public static <T, R, X extends Exception> Function1<Maybe<? extends T>, Maybe<R>, X> mapFunction(final Function1<? super T, ? extends R, ? extends X> function) {
 		assert null != function;
 		
@@ -599,7 +630,9 @@ implements Iterable<T>, Serializable, Describable {
 	 * @param predicate The predicate.
 	 * @return An instance containing the filtered value.
 	 * @throws X When the filtering fails.
+	 * @deprecated Use {@link com.trazere.core.util.Maybe#filter(com.trazere.core.functional.Predicate)}.
 	 */
+	@Deprecated
 	public abstract <X extends Exception> Maybe<T> filter(final Predicate1<? super T, ? extends X> predicate)
 	throws X;
 	
@@ -610,7 +643,9 @@ implements Iterable<T>, Serializable, Describable {
 	 * @param <X> Type of the exceptions.
 	 * @param predicate The predicate.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.util.MaybeFunctions#filter(com.trazere.core.functional.Predicate)}.
 	 */
+	@Deprecated
 	public static <T, X extends Exception> Function1<Maybe<? extends T>, Maybe<? extends T>, X> filterFunction(final Predicate1<? super T, ? extends X> predicate) {
 		assert null != predicate;
 		
@@ -649,7 +684,9 @@ implements Iterable<T>, Serializable, Describable {
 	 * @param function The mapping function.
 	 * @return An instance containing the mapped value.
 	 * @throws X When the mapping fails.
+	 * @deprecated Use {@link com.trazere.core.util.Maybe#flatMap(com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public abstract <R, X extends Exception> Maybe<R> extract(final Function1<? super T, ? extends Maybe<? extends R>, ? extends X> function)
 	throws X;
 	
@@ -676,7 +713,9 @@ implements Iterable<T>, Serializable, Describable {
 	 * @param <X> Type of the exceptions.
 	 * @param function The function.
 	 * @return The built function.
+	 * @deprecated Use {@link com.trazere.core.util.MaybeFunctions#flatMap(com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	public static <T, R, X extends Exception> Function1<Maybe<? extends T>, Maybe<R>, X> extractFunction(final Function1<? super T, ? extends Maybe<? extends R>, ? extends X> function) {
 		assert null != function;
 		

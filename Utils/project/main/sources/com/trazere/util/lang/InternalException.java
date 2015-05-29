@@ -19,7 +19,10 @@ package com.trazere.util.lang;
  * {@link InternalException} exceptions are thrown when internal errors occur.
  * <p>
  * These exceptions aim to indicate problems in the code (like situations supposed to be impossible) rather than runtime issues.
+ * 
+ * @deprecated Use {@link com.trazere.core.lang.InternalException}.
  */
+@Deprecated
 public class InternalException
 extends RuntimeException {
 	private static final long serialVersionUID = 1L;

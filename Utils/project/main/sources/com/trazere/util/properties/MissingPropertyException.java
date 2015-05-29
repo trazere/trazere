@@ -20,7 +20,10 @@ import com.trazere.util.lang.ThrowableFactory;
 
 /**
  * {@link MissingPropertyException} exceptions are thrown some property are missing.
+ * 
+ * @deprecated {@link com.trazere.core.record.MissingFieldException}.
  */
+@Deprecated
 public class MissingPropertyException
 extends PropertiesException {
 	private static final long serialVersionUID = 1L;

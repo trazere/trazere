@@ -21,7 +21,9 @@ import java.util.Collection;
  * The {@link AllCachePolicy} class provides cache policies which keeps all entries.
  * 
  * @param <K> Type of the keys.
+ * @deprecated Use {@link com.trazere.core.cache.CachePolicies#all()}.
  */
+@Deprecated
 public class AllCachePolicy<K>
 implements CachePolicy<K> {
 	@Override

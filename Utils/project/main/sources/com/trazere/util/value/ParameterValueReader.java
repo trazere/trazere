@@ -31,7 +31,9 @@ import com.trazere.util.text.Description;
  * has no requirements and produce a null value when the parameter is missing.
  * 
  * @param <T> Type of the value.
+ * @deprecated To be removed.
  */
+@Deprecated
 public class ParameterValueReader<T>
 extends BaseValueReader<T> {
 	/**

@@ -25,7 +25,9 @@ import java.util.Collection;
  * @param <T> Type of the types.
  * @param <V> Type of the values.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link com.trazere.core.functional.BaseTypeFunction}.
  */
+@Deprecated
 public abstract class LazyTypeMap<T, V, X extends Exception>
 extends LazyMap<T, Maybe<? extends V>, X> {
 	/** The type upper bound. */
@@ -91,7 +93,9 @@ extends LazyMap<T, Maybe<? extends V>, X> {
 	 * @return The value. May be <code>null</code>.
 	 * @throws X When the value cannot be computed.
 	 * @throws X When the type is associated to no values.
+	 * @deprecated Use {@link com.trazere.core.functional.BaseTypeFunction#get(Object)}.
 	 */
+	@Deprecated
 	public V getStrict(final T type, final ThrowableFactory<? extends X> throwableFactory)
 	throws X {
 		final Maybe<? extends V> result = get(type);

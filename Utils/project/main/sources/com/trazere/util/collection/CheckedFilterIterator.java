@@ -22,7 +22,9 @@ import com.trazere.util.type.Maybe;
  * 
  * @param <T> Type of the values.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#filter(java.util.Iterator, com.trazere.core.functional.Predicate)}.
  */
+@Deprecated
 public abstract class CheckedFilterIterator<T, X extends Exception>
 extends CheckedExtractIterator<T, T, X> {
 	// Iterator.

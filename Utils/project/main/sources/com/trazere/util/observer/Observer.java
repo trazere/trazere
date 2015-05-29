@@ -22,13 +22,17 @@ import java.util.Observable;
  * 
  * @param <T> Type of the observed event values.
  * @see Observable
+ * @deprecated Use {@link com.trazere.core.reactive.Observer}.
  */
+@Deprecated
 public interface Observer<T> {
 	/**
 	 * Notifies the receiver observer with the given event.
 	 * 
 	 * @param value The event value. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.reactive.Observer#onEvent(Object)}.
 	 */
 	// TODO: rename to onEvent(T event)
+	@Deprecated
 	public void notify(final T value);
 }

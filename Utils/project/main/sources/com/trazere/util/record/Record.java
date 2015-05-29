@@ -28,7 +28,9 @@ import java.util.Set;
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  * @see RecordBuilder
+ * @deprecated Use {@link com.trazere.core.record.Record}.
  */
+@Deprecated
 public interface Record<K, V> {
 	/**
 	 * Test whether the receiver record is empty or not.
@@ -43,13 +45,16 @@ public interface Record<K, V> {
 	 * @param key Key of the field to test.
 	 * @return <code>true</code> when some field is identified by the given key, <code>false</code> otherwise.
 	 */
+	@Deprecated
 	public boolean contains(final K key);
 	
 	/**
 	 * Get the keys identifying the fields of the receiver record.
 	 * 
 	 * @return An unmodiable set of the keys.
+	 * @deprecated Use {@link com.trazere.core.record.Record#keys()}.
 	 */
+	@Deprecated
 	public Set<K> getKeys();
 	
 	/**
@@ -59,7 +64,9 @@ public interface Record<K, V> {
 	 * @return The value of the field. May be <code>null</code>.
 	 * @throws MissingFieldException When no fields are identified by the given key.
 	 * @throws InvalidFieldException When the value of the field cannot be read.
+	 * @deprecated Use {@link com.trazere.core.record.Record#getMandatory(com.trazere.core.record.FieldKey)}.
 	 */
+	@Deprecated
 	public V get(final K key)
 	throws MissingFieldException, InvalidFieldException;
 	
@@ -70,7 +77,9 @@ public interface Record<K, V> {
 	 * @param defaultValue Default value of the field. May be <code>null</code>.
 	 * @return The value of the field or the given default value when no fields are identified by the given key. May be <code>null</code>.
 	 * @throws InvalidFieldException When the value of the field cannot be read.
+	 * @deprecated Use {@link com.trazere.core.record.Record#getOptional(com.trazere.core.record.FieldKey, Object)}.
 	 */
+	@Deprecated
 	public V get(final K key, final V defaultValue)
 	throws InvalidFieldException;
 	
@@ -80,7 +89,9 @@ public interface Record<K, V> {
 	 * @param key Key of the field.
 	 * @return The value of the field.
 	 * @throws InvalidFieldException When the value of the field cannot be read.
+	 * @deprecated Use {@link com.trazere.core.record.Record#get(com.trazere.core.record.FieldKey)}.
 	 */
+	@Deprecated
 	public Maybe<V> getMaybe(final K key)
 	throws InvalidFieldException;
 	
@@ -94,7 +105,10 @@ public interface Record<K, V> {
 	 * @throws MissingFieldException When no fields are identified by the given key.
 	 * @throws InvalidFieldException When the value of the field cannot be read.
 	 * @throws IncompatibleFieldException When the value of the field is not compatible with the given type.
+	 * @deprecated Use {@link com.trazere.core.record.Record#getMandatory(com.trazere.core.record.FieldKey).
 	 */
+	@SuppressWarnings("javadoc")
+	@Deprecated
 	public <T extends V> T getTyped(final K key, final Class<T> type)
 	throws MissingFieldException, InvalidFieldException, IncompatibleFieldException;
 	
@@ -108,7 +122,9 @@ public interface Record<K, V> {
 	 * @return The value of the field or the given default value when no fields are identified by the given key. May be <code>null</code>.
 	 * @throws InvalidFieldException When the value of the field cannot be read.
 	 * @throws IncompatibleFieldException When the value of the field is not compatible with the given type.
+	 * @deprecated Use {@link com.trazere.core.record.Record#getOptional(com.trazere.core.record.FieldKey, Object)}.
 	 */
+	@Deprecated
 	public <T extends V> T getTyped(final K key, final Class<T> type, final T defaultValue)
 	throws InvalidFieldException, IncompatibleFieldException;
 	
@@ -121,7 +137,9 @@ public interface Record<K, V> {
 	 * @return The value of the field.
 	 * @throws InvalidFieldException When the value of the field cannot be read.
 	 * @throws IncompatibleFieldException When the value of the field is not compatible with the given type.
+	 * @deprecated Use {@link com.trazere.core.record.Record#get(com.trazere.core.record.FieldKey)}.
 	 */
+	@Deprecated
 	public <T extends V> Maybe<T> getTypedMaybe(final K key, final Class<T> type)
 	throws InvalidFieldException, IncompatibleFieldException;
 	
@@ -135,7 +153,9 @@ public interface Record<K, V> {
 	 * @throws InvalidFieldException When the value of the field cannot be read.
 	 * @throws IncompatibleFieldException When the value of the field is not compatible with the given type.
 	 * @throws NullFieldException When the value is null and the field is not nullable.
+	 * @deprecated Use {@link com.trazere.core.record.Record#getMandatory(com.trazere.core.record.FieldKey)}.
 	 */
+	@Deprecated
 	public <T extends V> T getTyped(final FieldSignature<? extends K, T> signature)
 	throws MissingFieldException, InvalidFieldException, IncompatibleFieldException, NullFieldException;
 	
@@ -149,7 +169,9 @@ public interface Record<K, V> {
 	 * @throws InvalidFieldException When the value of the field cannot be read.
 	 * @throws IncompatibleFieldException When the value of the field is not compatible with the given type.
 	 * @throws NullFieldException When the value is null and the field is not nullable.
+	 * @deprecated Use {@link com.trazere.core.record.Record#getOptional(com.trazere.core.record.FieldKey, Object)}.
 	 */
+	@Deprecated
 	public <T extends V> T getTyped(final FieldSignature<? extends K, T> signature, final T defaultValue)
 	throws InvalidFieldException, IncompatibleFieldException, NullFieldException;
 	
@@ -162,7 +184,9 @@ public interface Record<K, V> {
 	 * @throws InvalidFieldException When the value of the field cannot be read.
 	 * @throws IncompatibleFieldException When the value of the field is not compatible with the given type.
 	 * @throws NullFieldException When the value is null and the field is not nullable.
+	 * @deprecated Use {@link com.trazere.core.record.Record#get(com.trazere.core.record.FieldKey)}.
 	 */
+	@Deprecated
 	public <T extends V> Maybe<T> getTypedMaybe(final FieldSignature<? extends K, T> signature)
 	throws InvalidFieldException, IncompatibleFieldException, NullFieldException;
 	
@@ -171,7 +195,9 @@ public interface Record<K, V> {
 	 * 
 	 * @return An unmodiable collection of the values of the fields.
 	 * @throws InvalidFieldException When the value of some field cannot be read.
+	 * @deprecated Use {@link com.trazere.core.record.Record#fields()}.
 	 */
+	@Deprecated
 	public Collection<V> getValues()
 	throws InvalidFieldException;
 	
@@ -182,7 +208,9 @@ public interface Record<K, V> {
 	 * 
 	 * @return An unmodiable map of the values of the fields identified by their keys.
 	 * @throws InvalidFieldException When some field cannot be read.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public Map<K, V> asMap()
 	throws InvalidFieldException;
 }

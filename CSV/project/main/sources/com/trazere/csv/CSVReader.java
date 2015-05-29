@@ -46,6 +46,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+// TODO: location support (line number)
+
 /**
  * The {@link CSVReader} class implements readers of a CSV formatted table.
  * <p>

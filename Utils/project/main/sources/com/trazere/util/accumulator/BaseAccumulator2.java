@@ -24,7 +24,9 @@ import com.trazere.util.type.Tuple2;
  * @param <T2> Type of the second values.
  * @param <S> Type of the states.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link com.trazere.core.imperative.Accumulator2}.
  */
+@Deprecated
 public abstract class BaseAccumulator2<T1, T2, S, X extends Exception>
 implements Accumulator2<T1, T2, S, X> {
 	// Accumulator.

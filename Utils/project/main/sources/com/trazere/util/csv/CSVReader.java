@@ -42,7 +42,9 @@ import org.slf4j.LoggerFactory;
  * This reader also supports the self-describing CSV inputs. When no headers are provided, the first CSV line is read and used as header list.
  * 
  * @see CSVLine
+ * @deprecated {@link com.trazere.csv.CSVReader}.
  */
+@Deprecated
 public class CSVReader {
 	private static final Logger _LOGGER = LoggerFactory.getLogger(CSVReader.class);
 	
@@ -332,7 +334,9 @@ public class CSVReader {
 	 * Get the line number of the current CSV entry (the entry returned by the last call to {@link #next()}.
 	 * 
 	 * @return The line number, or <code>-1</code> if {@link #next()} has never been called.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public int getLine() {
 		return _line;
 	}

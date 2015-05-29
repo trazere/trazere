@@ -23,7 +23,9 @@ import java.util.Collection;
  * 
  * @param <T> Type of the elements.
  * @param <C> Type of the collections.
+ * @deprecated Use {@link com.trazere.core.collection.CollectionFactory}.
  */
+@Deprecated
 public interface CollectionFactory<T, C extends Collection<? super T>>
 extends Factory<C, RuntimeException> {
 	@Override

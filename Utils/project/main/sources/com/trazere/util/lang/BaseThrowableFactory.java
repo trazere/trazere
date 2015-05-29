@@ -19,7 +19,9 @@ package com.trazere.util.lang;
  * The {@link BaseThrowableFactory} abstract class provides a skeleton implementation of {@link ThrowableFactory throwable factories}.
  * 
  * @param <T> Type of the throwables.
+ * @deprecated Use {@link com.trazere.core.lang.ThrowableFactory}.
  */
+@Deprecated
 public abstract class BaseThrowableFactory<T extends Throwable>
 extends BaseFactory<T, InternalException>
 implements ThrowableFactory<T> {

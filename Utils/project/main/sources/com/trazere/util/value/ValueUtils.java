@@ -25,7 +25,10 @@ import com.trazere.util.record.RecordSignatureBuilder;
 
 /**
  * The {@link ValueUtils} class provides various helpers regarding values.
+ * 
+ * @deprecated Use core.
  */
+@Deprecated
 public class ValueUtils {
 	/**
 	 * Check the type of the values of the given value reader.
@@ -35,7 +38,9 @@ public class ValueUtils {
 	 * @param valueClass The excepted type of values.
 	 * @return The typed value reader.
 	 * @throws TypeCheckException When the value type of the value reader is not compatible with the excepted type.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T> ValueReader<? extends T> typeCheckUpperBound(final ValueReader<?> reader, final Class<T> valueClass)
 	throws TypeCheckException {
@@ -59,7 +64,9 @@ public class ValueUtils {
 	 * @param valueClass The excepted type of values.
 	 * @return The typed value serializer.
 	 * @throws TypeCheckException When the value type of the value serializer is not compatible with the excepted type.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <T, R, X extends Exception> ValueSerializer<T, R, X> typeCheckValue(final ValueSerializer<?, R, X> serializer, final Class<T> valueClass)
 	throws TypeCheckException {
@@ -83,7 +90,9 @@ public class ValueUtils {
 	 * @param function The mapping function.
 	 * @param valueReader The value reader.
 	 * @return The build value reader.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public static <T, R> ValueReader<R> map(final Class<R> type, final boolean nullable, final Function1<? super T, ? extends R, ? extends ValueException> function, final ValueReader<T> valueReader) {
 		assert null != valueReader;
 		assert null != function;
@@ -119,7 +128,9 @@ public class ValueUtils {
 	 * @return A reduced value reader if the requirements were met, or the given value reader.
 	 * @throws InvalidFieldException When some parameter cannot be read.
 	 * @throws ValueException When the value cannot be read.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public static <T> ValueReader<T> reduce(final ValueReader<T> reader, final Record<String, Object> parameters)
 	throws InvalidFieldException, ValueException {
 		assert null != reader;

@@ -20,7 +20,9 @@ package com.trazere.util.record;
  * 
  * @param <K> Type of the keys of the parameters.
  * @param <V> Type of the values of the parameters.
+ * @deprecated To be removed.
  */
+@Deprecated
 public interface Parametrable<K, V> {
 	/**
 	 * Gets the requirements of the receiver parametrable over its parameters.

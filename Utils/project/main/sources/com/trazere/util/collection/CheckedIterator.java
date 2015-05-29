@@ -15,6 +15,7 @@
  */
 package com.trazere.util.collection;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
@@ -22,7 +23,9 @@ import java.util.NoSuchElementException;
  * 
  * @param <T> Type of the values.
  * @param <X> Type of the exceptions.
+ * @deprecated Use {@link Iterator}.
  */
+@Deprecated
 public interface CheckedIterator<T, X extends Exception> {
 	/**
 	 * Indicates whether the receiver iterator contains another value.
