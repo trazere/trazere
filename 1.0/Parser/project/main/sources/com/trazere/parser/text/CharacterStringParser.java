@@ -15,15 +15,15 @@
  */
 package com.trazere.parser.text;
 
+import com.trazere.core.lang.HashCode;
+import com.trazere.core.lang.MutableBoolean;
+import com.trazere.core.lang.ObjectUtils;
 import com.trazere.parser.BaseParser;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserHandler;
 import com.trazere.parser.ParserState;
-import com.trazere.util.lang.HashCode;
-import com.trazere.util.lang.LangUtils;
-import com.trazere.util.lang.MutableBoolean;
 
 /**
  * DOCME
@@ -49,8 +49,7 @@ extends BaseParser<Character, String> {
 	// Parser.
 	
 	@Override
-	public void run(final ParserClosure<Character, String> closure, final ParserState<Character> state)
-	throws ParserException {
+	public void run(final ParserClosure<Character, String> closure, final ParserState<Character> state) {
 		// Zero.
 		final StringBuilder result = new StringBuilder();
 		if (_empty) {
@@ -66,8 +65,7 @@ extends BaseParser<Character, String> {
 			private final MutableBoolean _done = new MutableBoolean(false);
 			
 			@Override
-			public void result(final Character character, final ParserState<Character> state)
-			throws ParserException {
+			public void result(final Character character, final ParserState<Character> state) {
 				// Check that this is the first result.
 				if (!_done.get()) {
 					_done.set(true);
@@ -104,7 +102,7 @@ extends BaseParser<Character, String> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final CharacterStringParser parser = (CharacterStringParser) object;
-			return LangUtils.safeEquals(_description, parser._description) && _characterParser.equals(parser._characterParser) && _empty == parser._empty;
+			return ObjectUtils.safeEquals(_description, parser._description) && _characterParser.equals(parser._characterParser) && _empty == parser._empty;
 		} else {
 			return false;
 		}

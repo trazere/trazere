@@ -18,7 +18,6 @@ package com.trazere.parser.core;
 import com.trazere.parser.BaseParser;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
-import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserHandler;
 import com.trazere.parser.ParserState;
 
@@ -49,13 +48,11 @@ extends BaseParser<Token, Result> {
 	// Parser.
 	
 	@Override
-	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
-	throws ParserException {
+	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state) {
 		run(closure, 0, _initialResult, state);
 	}
 	
-	private void run(final ParserClosure<Token, Result> closure, final int count, final Result result, final ParserState<Token> state)
-	throws ParserException {
+	private void run(final ParserClosure<Token, Result> closure, final int count, final Result result, final ParserState<Token> state) {
 		// Success.
 		if (count >= _min) {
 			closure.success(result, state);
@@ -68,19 +65,14 @@ extends BaseParser<Token, Result> {
 	}
 	
 	protected ParserHandler<Token, Value> buildMoreHandler(final ParserClosure<Token, Result> closure, final int previousCount, final Result previousResult) {
-		return new ParserHandler<Token, Value>() {
-			@Override
-			public void result(final Value value, final ParserState<Token> state)
-			throws ParserException {
-				// Fold the result.
-				final Result result = fold(previousResult, value);
-				
-				// Continue.
-				run(closure, previousCount + 1, result, state);
-			}
+		return (final Value value, final ParserState<Token> state) -> {
+			// Fold the result.
+			final Result result = fold(previousResult, value);
+			
+			// Continue.
+			run(closure, previousCount + 1, result, state);
 		};
 	}
 	
-	protected abstract Result fold(final Result previousResult, final Value value)
-	throws ParserException;
+	protected abstract Result fold(Result previousResult, Value value);
 }

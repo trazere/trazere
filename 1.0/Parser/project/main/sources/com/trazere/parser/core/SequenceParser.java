@@ -18,7 +18,6 @@ package com.trazere.parser.core;
 import com.trazere.parser.BaseParser;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
-import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserHandler;
 import com.trazere.parser.ParserState;
 import java.util.ArrayList;
@@ -42,14 +41,12 @@ extends BaseParser<Token, Result> {
 	// Parser.
 	
 	@Override
-	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
-	throws ParserException {
+	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state) {
 		// Start.
 		run(closure, new ArrayList<SubResult>(), state);
 	}
 	
-	protected void run(final ParserClosure<Token, Result> closure, final List<SubResult> subResults, final ParserState<Token> state)
-	throws ParserException {
+	protected void run(final ParserClosure<Token, Result> closure, final List<SubResult> subResults, final ParserState<Token> state) {
 		if (subResults.size() < _subParsers.size()) {
 			// Continue.
 			state.parse(_subParsers.get(subResults.size()), buildHandler(closure, subResults), closure);
@@ -60,20 +57,15 @@ extends BaseParser<Token, Result> {
 	}
 	
 	protected ParserHandler<Token, SubResult> buildHandler(final ParserClosure<Token, Result> closure, final List<SubResult> previousSubResults) {
-		return new ParserHandler<Token, SubResult>() {
-			@Override
-			public void result(final SubResult subResult, final ParserState<Token> state)
-			throws ParserException {
-				// Accumulate the result.
-				final List<SubResult> subResults = new ArrayList<SubResult>(previousSubResults);
-				subResults.add(subResult);
-				run(closure, subResults, state);
-			}
+		return (final SubResult subResult, final ParserState<Token> state) -> {
+			// Accumulate the result.
+			final List<SubResult> subResults = new ArrayList<>(previousSubResults);
+			subResults.add(subResult);
+			run(closure, subResults, state);
 		};
 	}
 	
-	protected abstract Result combine(final List<SubResult> subResults)
-	throws ParserException;
+	protected abstract Result combine(List<SubResult> subResults);
 	
 	// Object.
 	

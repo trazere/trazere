@@ -15,42 +15,34 @@
  */
 package com.trazere.parser.util;
 
+import com.trazere.core.util.Maybe;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserContinuation;
-import com.trazere.parser.ParserException;
-import com.trazere.parser.ParserHandler;
 import com.trazere.parser.ParserPosition;
 import com.trazere.parser.ParserSource;
 import com.trazere.parser.ParserState;
 import com.trazere.parser.impl.ParserClosureImpl;
 import com.trazere.parser.impl.ParserStateImpl;
-import com.trazere.util.type.Maybe;
 import java.util.List;
 
 public class SuccessParserEngine {
 	public static final SuccessParserEngine INSTANCE = new SuccessParserEngine();
 	
 	public interface Handler<Token, Result> {
-		public void success(final Result result, final ParserPosition<Token> position)
-		throws ParserException;
+		void success(Result result, ParserPosition<Token> position);
 	}
 	
-	public <Token, Result> void parse(final Parser<Token, Result> parser, final ParserSource<Token> source, final ParserPosition<Token> position, final Handler<Token, Result> handler)
-	throws ParserException {
+	public <Token, Result> void parse(final Parser<Token, Result> parser, final ParserSource<Token> source, final ParserPosition<Token> position, final Handler<Token, Result> handler) {
 		assert null != parser;
 		assert null != source;
 		assert null != handler;
 		
 		// Initialization.
 		final ParserStateImpl<Token> rootState = buildState(position);
-		rootState.parse(parser, new ParserHandler<Token, Result>() {
-			@Override
-			public void result(final Result result, final ParserState<Token> state)
-			throws ParserException {
-				handler.success(result, state.getPosition());
-			}
-		}, Maybe.<ParserClosure<Token, ?>>none());
+		rootState.parse(parser, (final Result result, final ParserState<Token> state) -> {
+			handler.success(result, state.getPosition());
+		}, Maybe.none());
 		
 		// Parse the tokens.
 		ParserPosition<Token> currentPosition = position;
@@ -76,7 +68,7 @@ public class SuccessParserEngine {
 	}
 	
 	protected <Token> ParserStateImpl<Token> buildState(final ParserPosition<Token> position) {
-		return new SuccessParserState<Token>(position);
+		return new SuccessParserState<>(position);
 	}
 	
 	protected static class SuccessParserState<Token>
@@ -87,7 +79,7 @@ public class SuccessParserEngine {
 		
 		@Override
 		protected <Result> ParserClosureImpl<Token, Result> buildClosure(final Parser<Token, Result> parser, final Maybe<ParserClosure<Token, ?>> parent) {
-			return new SuccessParserClosure<Token, Result>(parser, _position);
+			return new SuccessParserClosure<>(parser, _position);
 		}
 	}
 	

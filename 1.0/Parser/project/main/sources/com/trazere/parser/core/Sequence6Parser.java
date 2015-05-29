@@ -18,7 +18,6 @@ package com.trazere.parser.core;
 import com.trazere.parser.BaseParser;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
-import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserHandler;
 import com.trazere.parser.ParserState;
 
@@ -54,80 +53,54 @@ extends BaseParser<Token, Result> {
 	// Parser.
 	
 	@Override
-	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
-	throws ParserException {
+	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state) {
 		// Part 1.
 		state.parse(_subParser1, buildHandler1(closure), closure);
 	}
 	
 	protected ParserHandler<Token, SubResult1> buildHandler1(final ParserClosure<Token, Result> closure) {
-		return new ParserHandler<Token, SubResult1>() {
-			@Override
-			public void result(final SubResult1 subResult1, final ParserState<Token> state)
-			throws ParserException {
-				// Part 2.
-				state.parse(_subParser2, buildHandler2(closure, subResult1), closure);
-			}
+		return (final SubResult1 subResult1, final ParserState<Token> state) -> {
+			// Part 2.
+			state.parse(_subParser2, buildHandler2(closure, subResult1), closure);
 		};
 	}
 	
 	protected ParserHandler<Token, SubResult2> buildHandler2(final ParserClosure<Token, Result> closure, final SubResult1 subResult1) {
-		return new ParserHandler<Token, SubResult2>() {
-			@Override
-			public void result(final SubResult2 subResult2, final ParserState<Token> state)
-			throws ParserException {
-				// Part 3.
-				state.parse(_subParser3, buildHandler3(closure, subResult1, subResult2), closure);
-			}
+		return (final SubResult2 subResult2, final ParserState<Token> state) -> {
+			// Part 3.
+			state.parse(_subParser3, buildHandler3(closure, subResult1, subResult2), closure);
 		};
 	}
 	
 	protected ParserHandler<Token, SubResult3> buildHandler3(final ParserClosure<Token, Result> closure, final SubResult1 subResult1, final SubResult2 subResult2) {
-		return new ParserHandler<Token, SubResult3>() {
-			@Override
-			public void result(final SubResult3 subResult3, final ParserState<Token> state)
-			throws ParserException {
-				// Part 4.
-				state.parse(_subParser4, buildHandler4(closure, subResult1, subResult2, subResult3), closure);
-			}
+		return (final SubResult3 subResult3, final ParserState<Token> state) -> {
+			// Part 4.
+			state.parse(_subParser4, buildHandler4(closure, subResult1, subResult2, subResult3), closure);
 		};
 	}
 	
 	protected ParserHandler<Token, SubResult4> buildHandler4(final ParserClosure<Token, Result> closure, final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3) {
-		return new ParserHandler<Token, SubResult4>() {
-			@Override
-			public void result(final SubResult4 subResult4, final ParserState<Token> state)
-			throws ParserException {
-				// Part 5.
-				state.parse(_subParser5, buildHandler5(closure, subResult1, subResult2, subResult3, subResult4), closure);
-			}
+		return (final SubResult4 subResult4, final ParserState<Token> state) -> {
+			// Part 5.
+			state.parse(_subParser5, buildHandler5(closure, subResult1, subResult2, subResult3, subResult4), closure);
 		};
 	}
 	
 	protected ParserHandler<Token, SubResult5> buildHandler5(final ParserClosure<Token, Result> closure, final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3, final SubResult4 subResult4) {
-		return new ParserHandler<Token, SubResult5>() {
-			@Override
-			public void result(final SubResult5 subResult5, final ParserState<Token> state)
-			throws ParserException {
-				// Part 6.
-				state.parse(_subParser6, buildHandler6(closure, subResult1, subResult2, subResult3, subResult4, subResult5), closure);
-			}
+		return (final SubResult5 subResult5, final ParserState<Token> state) -> {
+			// Part 6.
+			state.parse(_subParser6, buildHandler6(closure, subResult1, subResult2, subResult3, subResult4, subResult5), closure);
 		};
 	}
 	
 	protected ParserHandler<Token, SubResult6> buildHandler6(final ParserClosure<Token, Result> closure, final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3, final SubResult4 subResult4, final SubResult5 subResult5) {
-		return new ParserHandler<Token, SubResult6>() {
-			@Override
-			public void result(final SubResult6 subResult6, final ParserState<Token> state)
-			throws ParserException {
-				// Success.
-				closure.success(combine(subResult1, subResult2, subResult3, subResult4, subResult5, subResult6), state);
-			}
+		return (final SubResult6 subResult6, final ParserState<Token> state) -> {
+			// Success.
+			closure.success(combine(subResult1, subResult2, subResult3, subResult4, subResult5, subResult6), state);
 		};
 	}
 	
-	protected abstract Result combine(final SubResult1 subResult1, final SubResult2 subResult2, final SubResult3 subResult3, final SubResult4 subResult4, final SubResult5 subResult5, final SubResult6 subResult6)
-	throws ParserException;
+	protected abstract Result combine(SubResult1 subResult1, SubResult2 subResult2, SubResult3 subResult3, SubResult4 subResult4, SubResult5 subResult5, SubResult6 subResult6);
 	
 	// Object.
 	

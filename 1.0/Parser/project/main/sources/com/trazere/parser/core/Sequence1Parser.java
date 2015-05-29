@@ -18,7 +18,6 @@ package com.trazere.parser.core;
 import com.trazere.parser.BaseParser;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
-import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserHandler;
 import com.trazere.parser.ParserState;
 
@@ -39,23 +38,17 @@ extends BaseParser<Token, Result> {
 	// Parser.
 	
 	@Override
-	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
-	throws ParserException {
+	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state) {
 		// Part 1.
 		state.parse(_subParser1, buildHandler1(closure), closure);
 	}
 	
 	protected ParserHandler<Token, SubResult1> buildHandler1(final ParserClosure<Token, Result> closure) {
-		return new ParserHandler<Token, SubResult1>() {
-			@Override
-			public void result(final SubResult1 subResult1, final ParserState<Token> state)
-			throws ParserException {
-				// Success.
-				closure.success(combine(subResult1), state);
-			}
+		return (final SubResult1 subResult1, final ParserState<Token> state) -> {
+			// Success.
+			closure.success(combine(subResult1), state);
 		};
 	}
 	
-	protected abstract Result combine(final SubResult1 subResult1)
-	throws ParserException;
+	protected abstract Result combine(SubResult1 subResult1);
 }

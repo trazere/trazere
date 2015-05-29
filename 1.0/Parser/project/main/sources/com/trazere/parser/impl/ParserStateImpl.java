@@ -15,14 +15,13 @@
  */
 package com.trazere.parser.impl;
 
+import com.trazere.core.util.Maybe;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserContinuation;
-import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserHandler;
 import com.trazere.parser.ParserPosition;
 import com.trazere.parser.ParserState;
-import com.trazere.util.type.Maybe;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -33,7 +32,7 @@ public abstract class ParserStateImpl<Token>
 implements ParserState<Token> {
 	// FIXME: implement parser graph comparison function
 	private static class ClosureMap<Token> {
-		protected final Map<Parser<Token, ?>, ParserClosure<Token, ?>> _closures = new HashMap<Parser<Token, ?>, ParserClosure<Token, ?>>();
+		protected final Map<Parser<Token, ?>, ParserClosure<Token, ?>> _closures = new HashMap<>();
 		
 		public boolean containsKey(final Parser<Token, ?> parser) {
 			return _closures.containsKey(parser);
@@ -50,8 +49,8 @@ implements ParserState<Token> {
 	}
 	
 	protected final ParserPosition<Token> _position;
-	protected final ClosureMap<Token> _closures = new ClosureMap<Token>();
-	protected final List<ParserContinuation<Token>> _continuations = new ArrayList<ParserContinuation<Token>>();
+	protected final ClosureMap<Token> _closures = new ClosureMap<>();
+	protected final List<ParserContinuation<Token>> _continuations = new ArrayList<>();
 	
 	public ParserStateImpl(final ParserPosition<Token> position) {
 		assert null != position;
@@ -66,15 +65,13 @@ implements ParserState<Token> {
 	}
 	
 	@Override
-	public <Result> void parse(final Parser<Token, Result> parser, final ParserHandler<Token, ? super Result> handler, final ParserClosure<Token, ?> parent)
-	throws ParserException {
+	public <Result> void parse(final Parser<Token, Result> parser, final ParserHandler<Token, ? super Result> handler, final ParserClosure<Token, ?> parent) {
 		assert null != parent;
 		
 		parse(parser, handler, Maybe.<ParserClosure<Token, ?>>some(parent));
 	}
 	
-	public <Result> void parse(final Parser<Token, Result> parser, final ParserHandler<Token, ? super Result> handler, final Maybe<ParserClosure<Token, ?>> parent)
-	throws ParserException {
+	public <Result> void parse(final Parser<Token, Result> parser, final ParserHandler<Token, ? super Result> handler, final Maybe<ParserClosure<Token, ?>> parent) {
 		assert null != parser;
 		assert null != handler;
 		assert null != parent;
@@ -98,12 +95,10 @@ implements ParserState<Token> {
 		}
 	}
 	
-	protected abstract <Result> ParserClosureImpl<Token, Result> buildClosure(final Parser<Token, Result> parser, final Maybe<ParserClosure<Token, ?>> parent)
-	throws ParserException;
+	protected abstract <Result> ParserClosureImpl<Token, Result> buildClosure(Parser<Token, Result> parser, Maybe<ParserClosure<Token, ?>> parent);
 	
 	@Override
-	public void read(final ParserContinuation<Token> continuation)
-	throws ParserException {
+	public void read(final ParserContinuation<Token> continuation) {
 		assert null != continuation;
 		
 		// Add the continuation.

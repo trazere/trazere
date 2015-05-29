@@ -15,13 +15,12 @@
  */
 package com.trazere.parser.core;
 
+import com.trazere.core.reference.MutableReference;
+import com.trazere.core.reference.ReferenceNotSetException;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserState;
-import com.trazere.util.lang.InternalException;
-import com.trazere.util.reference.MutableReference;
-import com.trazere.util.reference.ReferenceNotSetException;
 
 // TODO: improve parser comparison to handle recursive parsers
 
@@ -29,7 +28,7 @@ public class ParserReference<Token, Result>
 implements Parser<Token, Result> {
 	// Parser.
 	
-	protected MutableReference<Parser<Token, Result>> _parser = new MutableReference<Parser<Token, Result>>();
+	protected MutableReference<Parser<Token, Result>> _parser = new MutableReference<>();
 	
 	public <P extends Parser<Token, Result>> P set(final P parser) {
 		assert null != parser;
@@ -38,32 +37,22 @@ implements Parser<Token, Result> {
 		return parser;
 	}
 	
-	protected Parser<Token, Result> get()
-	throws ReferenceNotSetException {
-		return _parser.get();
+	protected Parser<Token, Result> get() {
+		try {
+			return _parser.get();
+		} catch (final ReferenceNotSetException exception) {
+			throw new ParserException("Parser reference has not been set");
+		}
 	}
 	
 	@Override
 	public String getDescription() {
-		if (_parser.isSet()) {
-			try {
-				return get().getDescription();
-			} catch (final ReferenceNotSetException exception) {
-				throw new InternalException(exception);
-			}
-		} else {
-			return "?";
-		}
+		return _parser.asMaybe().map(p -> p.getDescription()).get("?");
 	}
 	
 	@Override
-	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
-	throws ParserException {
-		try {
-			get().run(closure, state);
-		} catch (final ReferenceNotSetException exception) {
-			throw new ParserException("Parser reference has not been set");
-		}
+	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state) {
+		get().run(closure, state);
 	}
 	
 	// // Object.

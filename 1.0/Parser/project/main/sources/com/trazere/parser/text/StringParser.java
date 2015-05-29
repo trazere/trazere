@@ -15,13 +15,12 @@
  */
 package com.trazere.parser.text;
 
+import com.trazere.core.lang.HashCode;
+import com.trazere.core.lang.ObjectUtils;
 import com.trazere.parser.BaseParser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserContinuation;
-import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserState;
-import com.trazere.util.lang.HashCode;
-import com.trazere.util.lang.LangUtils;
 
 /**
  * DOCME
@@ -49,14 +48,12 @@ extends BaseParser<Character, String> {
 	// Parser.
 	
 	@Override
-	public void run(final ParserClosure<Character, String> closure, final ParserState<Character> state)
-	throws ParserException {
+	public void run(final ParserClosure<Character, String> closure, final ParserState<Character> state) {
 		// Start.
 		run(closure, 0, state);
 	}
 	
-	protected void run(final ParserClosure<Character, String> closure, final int index, final ParserState<Character> state)
-	throws ParserException {
+	protected void run(final ParserClosure<Character, String> closure, final int index, final ParserState<Character> state) {
 		if (index < _string.length()) {
 			// Continue.
 			state.read(buildContinuation(closure, index));
@@ -69,8 +66,7 @@ extends BaseParser<Character, String> {
 	protected ParserContinuation<Character> buildContinuation(final ParserClosure<Character, String> closure, final int index) {
 		return new ParserContinuation<Character>() {
 			@Override
-			public void token(final Character token, final ParserState<Character> state)
-			throws ParserException {
+			public void token(final Character token, final ParserState<Character> state) {
 				// Get the next char.
 				final char stringChar;
 				final char tokenChar;
@@ -93,8 +89,7 @@ extends BaseParser<Character, String> {
 			}
 			
 			@Override
-			public void eof(final ParserState<Character> state)
-			throws ParserException {
+			public void eof(final ParserState<Character> state) {
 				// Failure.
 				closure.failure(state);
 			}
@@ -117,7 +112,7 @@ extends BaseParser<Character, String> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final StringParser parser = (StringParser) object;
-			return LangUtils.safeEquals(_description, parser._description) && _string.equals(parser._string);
+			return ObjectUtils.safeEquals(_description, parser._description) && _string.equals(parser._string);
 		} else {
 			return false;
 		}

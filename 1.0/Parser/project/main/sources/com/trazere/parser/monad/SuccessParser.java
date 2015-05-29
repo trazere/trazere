@@ -15,12 +15,11 @@
  */
 package com.trazere.parser.monad;
 
+import com.trazere.core.lang.HashCode;
+import com.trazere.core.lang.ObjectUtils;
 import com.trazere.parser.BaseParser;
 import com.trazere.parser.ParserClosure;
-import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserState;
-import com.trazere.util.lang.HashCode;
-import com.trazere.util.lang.LangUtils;
 
 public class SuccessParser<Token, Result>
 extends BaseParser<Token, Result> {
@@ -36,8 +35,7 @@ extends BaseParser<Token, Result> {
 	// Parser.
 	
 	@Override
-	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
-	throws ParserException {
+	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state) {
 		// Success.
 		closure.success(_result, state);
 	}
@@ -58,7 +56,7 @@ extends BaseParser<Token, Result> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final SuccessParser<?, ?> parser = (SuccessParser<?, ?>) object;
-			return LangUtils.safeEquals(_description, parser._description) && _result.equals(parser._result);
+			return ObjectUtils.safeEquals(_description, parser._description) && _result.equals(parser._result);
 		} else {
 			return false;
 		}

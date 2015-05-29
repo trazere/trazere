@@ -22,13 +22,11 @@ package com.trazere.parser;
  * @param <Result> Type of the result values.
  */
 public interface ParserClosure<Token, Result> {
-	public Parser<Token, ?> getParser();
+	Parser<Token, ?> getParser();
 	
-	public ParserPosition<Token> getPosition();
+	ParserPosition<Token> getPosition();
 	
-	public void success(final Result result, final ParserState<Token> state)
-	throws ParserException;
+	void success(Result result, ParserState<Token> state);
 	
-	public void failure(final ParserState<Token> state)
-	throws ParserException;
+	void failure(ParserState<Token> state);
 }

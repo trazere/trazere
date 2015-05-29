@@ -16,11 +16,9 @@
 package com.trazere.parser;
 
 public interface ParserState<Token> {
-	public ParserPosition<Token> getPosition();
+	ParserPosition<Token> getPosition();
 	
-	public <Result> void parse(final Parser<Token, Result> parser, final ParserHandler<Token, ? super Result> handler, final ParserClosure<Token, ?> parent)
-	throws ParserException;
+	<Result> void parse(Parser<Token, Result> parser, ParserHandler<Token, ? super Result> handler, ParserClosure<Token, ?> parent);
 	
-	public void read(final ParserContinuation<Token> continuation)
-	throws ParserException;
+	void read(ParserContinuation<Token> continuation);
 }

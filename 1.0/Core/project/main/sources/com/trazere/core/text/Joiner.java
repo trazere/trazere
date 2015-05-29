@@ -102,7 +102,7 @@ public abstract class Joiner<T> {
 	 * @param <A> Type of the appendable to populate with representation of the joined tokens.
 	 * @param tokens Tokens to join.
 	 * @param appendable Appendable to populate with the representation of the joined tokens.
-	 * @return The given appendable.
+	 * @return The given appendable and a boolean indicating whether some token was joined.
 	 */
 	public <A extends Appendable> Tuple2<A, Boolean> join(final Iterable<? extends T> tokens, final A appendable) {
 		return join(tokens, appendable, true);
@@ -115,7 +115,7 @@ public abstract class Joiner<T> {
 	 * @param tokens Tokens to join.
 	 * @param appendable Appendable to populate with the representation of the joined tokens.
 	 * @param first Indicates whether the next appended token will be the first one or not.
-	 * @return The given appendable.
+	 * @return The given appendable and a boolean indicating whether some token was joined.
 	 */
 	public <A extends Appendable> Tuple2<A, Boolean> join(final Iterable<? extends T> tokens, final A appendable, final boolean first) {
 		try {
@@ -140,7 +140,7 @@ public abstract class Joiner<T> {
 	 * @param token Token to join.
 	 * @param appendable Appendable to populate with the representation of the joined tokens.
 	 * @param first Indicates whether the next appended token will be the first one or not.
-	 * @return The given appendable.
+	 * @return The given appendable and a boolean indicating whether the token was joined.
 	 */
 	public <A extends Appendable> Tuple2<A, Boolean> join(final T token, final A appendable, final boolean first) {
 		try {
@@ -172,5 +172,5 @@ public abstract class Joiner<T> {
 	 * @param token Token to render.
 	 * @return The string representation of the token.
 	 */
-	protected abstract CharSequence render(final T token);
+	protected abstract CharSequence render(T token);
 }

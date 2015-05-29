@@ -15,14 +15,13 @@
  */
 package com.trazere.parser.core;
 
+import com.trazere.core.lang.HashCode;
+import com.trazere.core.lang.ObjectUtils;
 import com.trazere.parser.BaseParser;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
-import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserHandler;
 import com.trazere.parser.ParserState;
-import com.trazere.util.lang.HashCode;
-import com.trazere.util.lang.LangUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -52,13 +51,11 @@ extends BaseParser<Token, List<Value>> {
 	// Parser.
 	
 	@Override
-	public void run(final ParserClosure<Token, List<Value>> closure, final ParserState<Token> state)
-	throws ParserException {
+	public void run(final ParserClosure<Token, List<Value>> closure, final ParserState<Token> state) {
 		run(closure, 0, Collections.<Value>emptyList(), state);
 	}
 	
-	public void run(final ParserClosure<Token, List<Value>> closure, final int count, final List<Value> values, final ParserState<Token> state)
-	throws ParserException {
+	public void run(final ParserClosure<Token, List<Value>> closure, final int count, final List<Value> values, final ParserState<Token> state) {
 		// Success.
 		if (count >= _min) {
 			closure.success(Collections.unmodifiableList(values), state);
@@ -71,17 +68,13 @@ extends BaseParser<Token, List<Value>> {
 	}
 	
 	protected ParserHandler<Token, Value> buildMoreHandler(final ParserClosure<Token, List<Value>> closure, final int previousCount, final List<Value> previousValues) {
-		return new ParserHandler<Token, Value>() {
-			@Override
-			public void result(final Value value, final ParserState<Token> state)
-			throws ParserException {
-				// Add the value.
-				final List<Value> values = new ArrayList<Value>(previousValues);
-				values.add(value);
-				
-				// Continue.
-				run(closure, previousCount + 1, values, state);
-			}
+		return (final Value value, final ParserState<Token> state) -> {
+			// Add the value.
+			final List<Value> values = new ArrayList<>(previousValues);
+			values.add(value);
+			
+			// Continue.
+			run(closure, previousCount + 1, values, state);
 		};
 	}
 	
@@ -103,7 +96,7 @@ extends BaseParser<Token, List<Value>> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final ManyParser<?, ?> parser = (ManyParser<?, ?>) object;
-			return LangUtils.safeEquals(_description, parser._description) && _valueParser.equals(parser._valueParser) && _min == parser._min && _max == parser._max;
+			return ObjectUtils.safeEquals(_description, parser._description) && _valueParser.equals(parser._valueParser) && _min == parser._min && _max == parser._max;
 		} else {
 			return false;
 		}
