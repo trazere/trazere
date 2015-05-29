@@ -15,13 +15,12 @@
  */
 package com.trazere.parser.core;
 
+import com.trazere.core.lang.HashCode;
+import com.trazere.core.lang.ObjectUtils;
 import com.trazere.parser.BaseParser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserContinuation;
-import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserState;
-import com.trazere.util.lang.HashCode;
-import com.trazere.util.lang.LangUtils;
 
 public class EOFParser<Token, Result>
 extends BaseParser<Token, Result> {
@@ -32,23 +31,20 @@ extends BaseParser<Token, Result> {
 	// Parser.
 	
 	@Override
-	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
-	throws ParserException {
+	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state) {
 		state.read(buildContinuation(closure));
 	}
 	
 	protected ParserContinuation<Token> buildContinuation(final ParserClosure<Token, Result> closure) {
 		return new ParserContinuation<Token>() {
 			@Override
-			public void token(final Token token, final ParserState<Token> state)
-			throws ParserException {
+			public void token(final Token token, final ParserState<Token> state) {
 				// Failure.
 				closure.failure(state);
 			}
 			
 			@Override
-			public void eof(final ParserState<Token> state)
-			throws ParserException {
+			public void eof(final ParserState<Token> state) {
 				// Success.
 				closure.success(null, state);
 			}
@@ -70,7 +66,7 @@ extends BaseParser<Token, Result> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final EOFParser<?, ?> parser = (EOFParser<?, ?>) object;
-			return LangUtils.safeEquals(_description, parser._description);
+			return ObjectUtils.safeEquals(_description, parser._description);
 		} else {
 			return false;
 		}

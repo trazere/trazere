@@ -16,9 +16,7 @@
 package com.trazere.parser;
 
 public interface ParserContinuation<Token> {
-	public void token(final Token token, final ParserState<Token> state)
-	throws ParserException;
+	void token(Token token, ParserState<Token> state);
 	
-	public void eof(final ParserState<Token> state)
-	throws ParserException;
+	void eof(ParserState<Token> state);
 }

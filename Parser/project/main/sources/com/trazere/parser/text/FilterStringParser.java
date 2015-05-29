@@ -15,24 +15,23 @@
  */
 package com.trazere.parser.text;
 
+import com.trazere.core.lang.HashCode;
+import com.trazere.core.lang.ObjectUtils;
+import com.trazere.core.text.CharPredicate;
 import com.trazere.parser.BaseParser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserContinuation;
-import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserState;
-import com.trazere.util.lang.HashCode;
-import com.trazere.util.lang.LangUtils;
-import com.trazere.util.text.CharPredicate;
 
 /**
  * DOCME
  */
 public class FilterStringParser
 extends BaseParser<Character, String> {
-	protected final CharPredicate<? extends ParserException> _filter;
+	protected final CharPredicate _filter;
 	protected final boolean _empty;
 	
-	public FilterStringParser(final CharPredicate<? extends ParserException> filter, final boolean empty, final String description) {
+	public FilterStringParser(final CharPredicate filter, final boolean empty, final String description) {
 		super(description);
 		
 		// Checks.
@@ -46,8 +45,7 @@ extends BaseParser<Character, String> {
 	// Parser.
 	
 	@Override
-	public void run(final ParserClosure<Character, String> closure, final ParserState<Character> state)
-	throws ParserException {
+	public void run(final ParserClosure<Character, String> closure, final ParserState<Character> state) {
 		// Zero.
 		final StringBuilder result = new StringBuilder();
 		if (_empty) {
@@ -61,8 +59,7 @@ extends BaseParser<Character, String> {
 	protected ParserContinuation<Character> buildContinuation(final ParserClosure<Character, String> closure, final StringBuilder builder) {
 		return new ParserContinuation<Character>() {
 			@Override
-			public void token(final Character token, final ParserState<Character> state)
-			throws ParserException {
+			public void token(final Character token, final ParserState<Character> state) {
 				if (_filter.evaluate(token.charValue())) {
 					// Accumulate the result.
 					builder.append(token.charValue());
@@ -79,8 +76,7 @@ extends BaseParser<Character, String> {
 			}
 			
 			@Override
-			public void eof(final ParserState<Character> state)
-			throws ParserException {
+			public void eof(final ParserState<Character> state) {
 				// Failure.
 				closure.failure(state);
 			}
@@ -104,7 +100,7 @@ extends BaseParser<Character, String> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final FilterStringParser parser = (FilterStringParser) object;
-			return LangUtils.safeEquals(_description, parser._description) && _filter.equals(parser._filter) && _empty == parser._empty;
+			return ObjectUtils.safeEquals(_description, parser._description) && _filter.equals(parser._filter) && _empty == parser._empty;
 		} else {
 			return false;
 		}

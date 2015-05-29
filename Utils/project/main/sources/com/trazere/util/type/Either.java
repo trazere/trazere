@@ -177,7 +177,9 @@ implements Serializable, Describable {
 		 * Gets the left value wrapped in the receiver instance.
 		 * 
 		 * @return The wrapped left value. May be <code>null</code>.
+		 * @deprecated Use {@link com.trazere.core.util.Either.Left#getValue()}.
 		 */
+		@Deprecated
 		public L getLeft() {
 			return _left;
 		}
@@ -327,7 +329,9 @@ implements Serializable, Describable {
 		 * Gets the right value wrapped in the receiver instance.
 		 * 
 		 * @return The wrapped value. May be <code>null</code>.
+		 * @deprecated Use {@link com.trazere.core.util.Either.Right#getValue()}.
 		 */
+		@Deprecated
 		public R getRight() {
 			return _right;
 		}

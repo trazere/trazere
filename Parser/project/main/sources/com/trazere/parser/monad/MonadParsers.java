@@ -20,11 +20,11 @@ package com.trazere.parser.monad;
  */
 public class MonadParsers {
 	public static <Token, Result> FailureParser<Token, Result> failure(final String description) {
-		return new FailureParser<Token, Result>(description);
+		return new FailureParser<>(description);
 	}
 	
 	public static <Token, Result> SuccessParser<Token, Result> success(final Result result, final String description) {
-		return new SuccessParser<Token, Result>(result, description);
+		return new SuccessParser<>(result, description);
 	}
 	
 	private MonadParsers() {

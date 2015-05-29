@@ -15,23 +15,22 @@
  */
 package com.trazere.parser.text;
 
+import com.trazere.core.lang.HashCode;
+import com.trazere.core.lang.ObjectUtils;
+import com.trazere.core.text.CharPredicate;
 import com.trazere.parser.BaseParser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserContinuation;
-import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserState;
-import com.trazere.util.lang.HashCode;
-import com.trazere.util.lang.LangUtils;
-import com.trazere.util.text.CharPredicate;
 
 /**
  * DOCME
  */
 public class FilterCharParser
 extends BaseParser<Character, Character> {
-	protected final CharPredicate<? extends ParserException> _filter;
+	protected final CharPredicate _filter;
 	
-	public FilterCharParser(final CharPredicate<? extends ParserException> filter, final String description) {
+	public FilterCharParser(final CharPredicate filter, final String description) {
 		super(description);
 		
 		// Checks.
@@ -44,8 +43,7 @@ extends BaseParser<Character, Character> {
 	// Parser.
 	
 	@Override
-	public void run(final ParserClosure<Character, Character> closure, final ParserState<Character> state)
-	throws ParserException {
+	public void run(final ParserClosure<Character, Character> closure, final ParserState<Character> state) {
 		// Char.
 		state.read(buildContinuation(closure));
 	}
@@ -53,8 +51,7 @@ extends BaseParser<Character, Character> {
 	protected ParserContinuation<Character> buildContinuation(final ParserClosure<Character, Character> closure) {
 		return new ParserContinuation<Character>() {
 			@Override
-			public void token(final Character token, final ParserState<Character> state)
-			throws ParserException {
+			public void token(final Character token, final ParserState<Character> state) {
 				if (_filter.evaluate(token.charValue())) {
 					// Success.
 					closure.success(token, state);
@@ -65,8 +62,7 @@ extends BaseParser<Character, Character> {
 			}
 			
 			@Override
-			public void eof(final ParserState<Character> state)
-			throws ParserException {
+			public void eof(final ParserState<Character> state) {
 				// Failure.
 				closure.failure(state);
 			}
@@ -89,7 +85,7 @@ extends BaseParser<Character, Character> {
 			return true;
 		} else if (null != object && getClass().equals(object.getClass())) {
 			final FilterCharParser parser = (FilterCharParser) object;
-			return LangUtils.safeEquals(_description, parser._description) && _filter.equals(parser._filter);
+			return ObjectUtils.safeEquals(_description, parser._description) && _filter.equals(parser._filter);
 		} else {
 			return false;
 		}

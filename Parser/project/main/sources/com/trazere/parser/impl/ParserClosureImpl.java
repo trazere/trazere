@@ -17,7 +17,6 @@ package com.trazere.parser.impl;
 
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
-import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserHandler;
 import com.trazere.parser.ParserPosition;
 import com.trazere.parser.ParserState;
@@ -57,11 +56,10 @@ implements ParserClosure<Token, Result> {
 		return _position;
 	}
 	
-	protected final Collection<ParserHandler<Token, ? super Result>> _handlers = new ArrayList<ParserHandler<Token, ? super Result>>();
-	protected final Collection<Result> _results = new ArrayList<Result>();
+	protected final Collection<ParserHandler<Token, ? super Result>> _handlers = new ArrayList<>();
+	protected final Collection<Result> _results = new ArrayList<>();
 	
-	public void handle(final ParserHandler<Token, ? super Result> handler, final ParserState<Token> state)
-	throws ParserException {
+	public void handle(final ParserHandler<Token, ? super Result> handler, final ParserState<Token> state) {
 		assert null != handler;
 		assert null != state;
 		
@@ -76,8 +74,7 @@ implements ParserClosure<Token, Result> {
 	}
 	
 	@Override
-	public void success(final Result result, final ParserState<Token> state)
-	throws ParserException {
+	public void success(final Result result, final ParserState<Token> state) {
 		assert null != state;
 		
 		// Add the result.

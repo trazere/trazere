@@ -15,18 +15,16 @@
  */
 package com.trazere.parser.util;
 
+import com.trazere.core.lang.MutableObject;
+import com.trazere.core.util.Maybe;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
 import com.trazere.parser.ParserContinuation;
-import com.trazere.parser.ParserException;
-import com.trazere.parser.ParserHandler;
 import com.trazere.parser.ParserPosition;
 import com.trazere.parser.ParserSource;
 import com.trazere.parser.ParserState;
 import com.trazere.parser.impl.ParserClosureImpl;
 import com.trazere.parser.impl.ParserStateImpl;
-import com.trazere.util.lang.MutableObject;
-import com.trazere.util.type.Maybe;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -35,33 +33,26 @@ public class FailureParserEngine {
 	public static final FailureParserEngine INSTANCE = new FailureParserEngine();
 	
 	public interface Handler<Token, Result> {
-		public void success(final Result result, final ParserPosition<Token> position)
-		throws ParserException;
+		public void success(final Result result, final ParserPosition<Token> position);
 		
-		public void failure(final Parser<Token, ?> parser, final ParserPosition<Token> position)
-		throws ParserException;
+		public void failure(final Parser<Token, ?> parser, final ParserPosition<Token> position);
 	}
 	
-	public <Token, Result> void parse(final Parser<Token, Result> parser, final ParserSource<Token> source, final ParserPosition<Token> position, final Handler<Token, Result> handler)
-	throws ParserException {
+	public <Token, Result> void parse(final Parser<Token, Result> parser, final ParserSource<Token> source, final ParserPosition<Token> position, final Handler<Token, Result> handler) {
 		assert null != parser;
 		assert null != source;
 		assert null != handler;
 		
 		// Initialization.
-		final List<FailureParserClosure<Token, ?>> failures = new ArrayList<FailureParserClosure<Token, ?>>();
+		final List<FailureParserClosure<Token, ?>> failures = new ArrayList<>();
 		final ParserStateImpl<Token> rootState = buildState(position, failures);
-		rootState.parse(parser, new ParserHandler<Token, Result>() {
-			@Override
-			public void result(final Result result, final ParserState<Token> state)
-			throws ParserException {
-				handler.success(result, state.getPosition());
-			}
-		}, Maybe.<ParserClosure<Token, ?>>none());
+		rootState.parse(parser, (final Result result, final ParserState<Token> state) -> {
+			handler.success(result, state.getPosition());
+		}, Maybe.none());
 		
 		// Parse the tokens.
-		final MutableObject<ParserPosition<Token>> currentPosition = new MutableObject<ParserPosition<Token>>(position);
-		final MutableObject<List<ParserContinuation<Token>>> continuations = new MutableObject<List<ParserContinuation<Token>>>(rootState.getContinuations());
+		final MutableObject<ParserPosition<Token>> currentPosition = new MutableObject<>(position);
+		final MutableObject<List<ParserContinuation<Token>>> continuations = new MutableObject<>(rootState.getContinuations());
 		while (source.hasNext() && !continuations.get().isEmpty()) {
 			final Token token = source.next();
 			currentPosition.set(currentPosition.get().next(token));
@@ -91,7 +82,7 @@ public class FailureParserEngine {
 		return new ParserStateImpl<Token>(position) {
 			@Override
 			protected <Result> FailureParserClosure<Token, Result> buildClosure(final Parser<Token, Result> parser, final Maybe<ParserClosure<Token, ?>> parent) {
-				return new FailureParserClosure<Token, Result>(parser, _position, parent, failures);
+				return new FailureParserClosure<>(parser, _position, parent, failures);
 			}
 		};
 	}
@@ -112,7 +103,7 @@ public class FailureParserEngine {
 		
 		@Override
 		protected <Result> FailureParserClosure<Token, Result> buildClosure(final Parser<Token, Result> parser, final Maybe<ParserClosure<Token, ?>> parent) {
-			return new FailureParserClosure<Token, Result>(parser, _position, parent, _failures);
+			return new FailureParserClosure<>(parser, _position, parent, _failures);
 		}
 	}
 	
@@ -133,8 +124,7 @@ public class FailureParserEngine {
 		protected final List<FailureParserClosure<Token, ?>> _failures;
 		
 		@Override
-		public void success(final Result result, final ParserState<Token> state)
-		throws ParserException {
+		public void success(final Result result, final ParserState<Token> state) {
 			// Success.
 			super.success(result, state);
 			

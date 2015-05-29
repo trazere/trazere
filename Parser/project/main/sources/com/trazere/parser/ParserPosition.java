@@ -17,8 +17,7 @@ package com.trazere.parser;
 
 public interface ParserPosition<Token>
 extends Comparable<ParserPosition<Token>> {
-	public String getDescription();
+	String getDescription();
 	
-	public ParserPosition<Token> next(final Token token)
-	throws ParserException;
+	ParserPosition<Token> next(Token token);
 }

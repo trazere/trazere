@@ -15,14 +15,13 @@
  */
 package com.trazere.parser;
 
-import com.trazere.util.lang.BaseThrowableFactory;
-import com.trazere.util.lang.ThrowableFactory;
+import com.trazere.core.lang.ThrowableFactory;
 
 /**
  * {@link ParserException} exceptions are thrown when parser related errors occur.
  */
 public class ParserException
-extends Exception {
+extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 	
 	/**
@@ -61,7 +60,7 @@ extends Exception {
 	}
 	
 	/** Factory of {@link ParserException}. */
-	public static final ThrowableFactory<ParserException> FACTORY = new BaseThrowableFactory<ParserException>() {
+	public static final ThrowableFactory<ParserException> FACTORY = new ThrowableFactory<ParserException>() {
 		@Override
 		public ParserException build() {
 			return new ParserException();

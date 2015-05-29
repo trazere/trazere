@@ -40,7 +40,7 @@ implements ParserPosition<Token> {
 	
 	@Override
 	public ParserPosition<Token> next(final Token token) {
-		return new IndexParserPosition<Token>(_index + 1);
+		return new IndexParserPosition<>(_index + 1);
 	}
 	
 	@Override

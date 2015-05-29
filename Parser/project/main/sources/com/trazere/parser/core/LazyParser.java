@@ -15,51 +15,41 @@
  */
 package com.trazere.parser.core;
 
+import com.trazere.core.functional.ResettableThunk;
+import com.trazere.core.functional.Thunk;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
-import com.trazere.parser.ParserException;
 import com.trazere.parser.ParserState;
-import com.trazere.util.closure.Closure;
-import com.trazere.util.closure.ResettableClosure;
-import com.trazere.util.function.Function0;
 
 public abstract class LazyParser<Token, Result>
 implements Parser<Token, Result> {
-	public static <Token, Result> LazyParser<Token, Result> build(final Function0<? extends Parser<Token, Result>, ? extends ParserException> parser) {
+	public static <Token, Result> LazyParser<Token, Result> build(final Thunk<? extends Parser<Token, Result>> parser) {
 		assert null != parser;
 		
 		return new LazyParser<Token, Result>() {
 			@Override
-			protected Parser<Token, Result> compute()
-			throws ParserException {
+			protected Parser<Token, Result> compute() {
 				return parser.evaluate();
 			}
 		};
 	}
 	
-	protected final Closure<Parser<Token, Result>, ParserException> _parser = new ResettableClosure<Parser<Token, Result>, ParserException>() {
+	protected final Thunk<Parser<Token, Result>> _parser = new ResettableThunk<Parser<Token, Result>>() {
 		@Override
-		protected Parser<Token, Result> compute()
-		throws ParserException {
+		protected Parser<Token, Result> compute() {
 			return LazyParser.this.compute();
 		}
 	};
 	
-	protected abstract Parser<Token, Result> compute()
-	throws ParserException;
+	protected abstract Parser<Token, Result> compute();
 	
 	@Override
 	public String getDescription() {
-		try {
-			return _parser.evaluate().getDescription();
-		} catch (final ParserException exception) {
-			throw new RuntimeException(exception);
-		}
+		return _parser.evaluate().getDescription();
 	}
 	
 	@Override
-	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state)
-	throws ParserException {
+	public void run(final ParserClosure<Token, Result> closure, final ParserState<Token> state) {
 		_parser.evaluate().run(closure, state);
 	}
 }
