@@ -32,7 +32,9 @@ implements CachePolicy<K> {
 	 * Instanciates a new cache policy.
 	 * 
 	 * @param timeout The timeout.
+	 * @deprecated Use {@link com.trazere.core.cache.IdleCachePolicy#IdleCachePolicy(java.time.Duration)}.
 	 */
+	@Deprecated
 	public IdleCachePolicy(final long timeout) {
 		assert timeout > 0;
 		

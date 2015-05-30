@@ -16,6 +16,8 @@
 package com.trazere.core.cache;
 
 import com.trazere.core.imperative.Accumulator;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -29,10 +31,11 @@ implements CachePolicy<K> {
 	/**
 	 * Instanciates a new cache policy.
 	 * 
-	 * @param timeout Timeout of the idle entries in milliseconds.
+	 * @param timeout Timeout of the idle entries.
 	 */
-	public IdleCachePolicy(final long timeout) {
-		assert timeout > 0;
+	public IdleCachePolicy(final Duration timeout) {
+		assert null != timeout;
+		assert !timeout.isNegative();
 		
 		// Initialization.
 		_timeout = timeout;
@@ -40,15 +43,15 @@ implements CachePolicy<K> {
 	
 	// Timeout.
 	
-	/** Timeout of the idle entries in milliseconds. */
-	protected final long _timeout;
+	/** Timeout of the idle entries. */
+	protected final Duration _timeout;
 	
 	/**
 	 * Get the timeout the idle entries of the receiver policy.
 	 * 
-	 * @return Timeout in milliseconds.
+	 * @return The timeout.
 	 */
-	public long getTimeout() {
+	public Duration getTimeout() {
 		return _timeout;
 	}
 	
@@ -59,7 +62,7 @@ implements CachePolicy<K> {
 		return new CachePolicy.State<K>() {
 			// Note: LinkedHashMap allows to optimize finding dirty entries.
 			/** Access dates of the entries. */
-			private final LinkedHashMap<K, Long> _dates = new LinkedHashMap<>();
+			private final LinkedHashMap<K, Instant> _dates = new LinkedHashMap<>();
 			
 			@Override
 			public <A extends Accumulator<? super K, ?>> A updatedEntry(final K key, final A dirtyEntries) {
@@ -72,7 +75,7 @@ implements CachePolicy<K> {
 			}
 			
 			private <A extends Accumulator<? super K, ?>> A touchEntry(final K key, final A dirtyEntries) {
-				final long now = System.currentTimeMillis();
+				final Instant now = Instant.now();
 				
 				// Update the date.
 				// Note: date is removed first to maintain the order of the LinkedHashMap
@@ -80,8 +83,8 @@ implements CachePolicy<K> {
 				_dates.put(key, now);
 				
 				// Find the dirty entries.
-				for (final Map.Entry<K, Long> entry : _dates.entrySet()) {
-					if ((now - entry.getValue().longValue()) >= _timeout) {
+				for (final Map.Entry<K, Instant> entry : _dates.entrySet()) {
+					if (Duration.between(entry.getValue(), now).compareTo(_timeout) >= 0) {
 						dirtyEntries.add(entry.getKey());
 					} else {
 						break;

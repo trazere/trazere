@@ -19,6 +19,7 @@ import com.trazere.core.collection.CollectionAccumulators;
 import com.trazere.core.functional.Predicates;
 import com.trazere.core.imperative.Accumulator;
 import com.trazere.core.imperative.AccumulatorUtils;
+import java.time.Duration;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -166,10 +167,10 @@ public class CachePolicies {
 	 * Builds a cache policy based on idle access time.
 	 * 
 	 * @param <K> Type of the keys.
-	 * @param timeout Timeout of the idle entries in milliseconds.
+	 * @param timeout Timeout of the idle entries.
 	 * @return The built policy.
 	 */
-	public <K> CachePolicy<K> idle(final long timeout) {
+	public <K> CachePolicy<K> idle(final Duration timeout) {
 		return new IdleCachePolicy<>(timeout);
 	}
 	

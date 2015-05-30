@@ -16,6 +16,7 @@
 package com.trazere.core.util;
 
 import com.trazere.core.functional.Function;
+import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -33,6 +34,17 @@ public class CalendarFunctions {
 	}
 	
 	private static final Function<Calendar, Date> GET_TIME = Calendar::getTime;
+	
+	/**
+	 * Builds a function that gets the instant of the argument calendars.
+	 *
+	 * @return The built function.
+	 */
+	public static Function<Calendar, Instant> toInstant() {
+		return TO_INSTANT;
+	}
+	
+	private static final Function<Calendar, Instant> TO_INSTANT = Calendar::toInstant;
 	
 	private CalendarFunctions() {
 		// Prevent instantiation.

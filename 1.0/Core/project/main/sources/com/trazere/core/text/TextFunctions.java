@@ -19,6 +19,9 @@ import com.trazere.core.functional.Function;
 import com.trazere.core.util.Maybe;
 import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalQuery;
 import java.util.Date;
 import java.util.UUID;
 
@@ -155,6 +158,38 @@ public class TextFunctions {
 		assert null != format;
 		
 		return representation -> TextUtils.parseDate(format, representation);
+	}
+	
+	// Temporals.
+	
+	/**
+	 * Builds a function that formats temporals.
+	 *
+	 * @param <T> Type of the temporals.
+	 * @param formatter Formatter of the temporals.
+	 * @return The built function.
+	 * @see TextUtils#formatTemporal(DateTimeFormatter, TemporalAccessor)
+	 */
+	public static <T extends TemporalAccessor> Function<T, String> formatTemporal(final DateTimeFormatter formatter) {
+		assert null != formatter;
+		
+		return value -> TextUtils.formatTemporal(formatter, value);
+	}
+	
+	/**
+	 * Builds a function that parses temporal representations.
+	 *
+	 * @param <T> Type of the temporals.
+	 * @param formatter Formatter of the temporals.
+	 * @param query Query that defines the type of the temporal.
+	 * @return The built function.
+	 * @see TextUtils#parseTemporal(DateTimeFormatter, TemporalQuery, String)
+	 */
+	public static <T extends TemporalAccessor> Function<String, Maybe<T>> parseTemporal(final DateTimeFormatter formatter, final TemporalQuery<T> query) {
+		assert null != formatter;
+		assert null != query;
+		
+		return representation -> TextUtils.parseTemporal(formatter, query, representation);
 	}
 	
 	// UUIDs.
