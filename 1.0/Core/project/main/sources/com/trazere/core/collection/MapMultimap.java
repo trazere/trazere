@@ -39,7 +39,7 @@ extends BaseMultimap<K, V, C> {
 	 * @param mapFactory Factory of the backing map.
 	 * @param valuesFactory Factory of the collections of values.
 	 */
-	public MapMultimap(final MapFactory<K, CC, ? extends Map<K, CC>> mapFactory, final ExtendedAbstractCollectionFactory<V, ? extends C, CC> valuesFactory) {
+	public MapMultimap(final MapFactory<K, CC, ? extends Map<K, CC>> mapFactory, final ExtendedAbstractCollectionFactory<V, C, CC> valuesFactory) {
 		this(mapFactory.build(), valuesFactory);
 	}
 	
@@ -50,11 +50,11 @@ extends BaseMultimap<K, V, C> {
 	 * @param valuesFactory Factory of the collections of values.
 	 * @param multimap Multimap to copy.
 	 */
-	public MapMultimap(final MapFactory<K, CC, ? extends Map<K, CC>> mapFactory, final ExtendedAbstractCollectionFactory<V, ? extends C, CC> valuesFactory, final Multimap<? extends K, ? extends V, ?> multimap) {
+	public MapMultimap(final MapFactory<K, CC, ? extends Map<K, CC>> mapFactory, final ExtendedAbstractCollectionFactory<V, C, CC> valuesFactory, final Multimap<? extends K, ? extends V, ?> multimap) {
 		this(copy(mapFactory.build(), valuesFactory, multimap), valuesFactory);
 	}
 	
-	private static <K, V, CC extends Collection<V>, M extends Map<? super K, CC>> M copy(final M bindings, final ExtendedAbstractCollectionFactory<V, ?, CC> valuesFactory, final Multimap<K, ? extends V, ?> multimap) {
+	private static <K, V, C extends Collection<V>, CC extends C, M extends Map<? super K, CC>> M copy(final M bindings, final ExtendedAbstractCollectionFactory<V, C, CC> valuesFactory, final Multimap<K, ? extends V, ?> multimap) {
 		for (final K key : multimap.keySet()) {
 			bindings.put(key, valuesFactory.build(multimap.get(key)));
 		}
@@ -65,28 +65,28 @@ extends BaseMultimap<K, V, C> {
 	 * Instantiates a new multimap.
 	 * 
 	 * @param bindings Backing map of the bindings.
-	 * @param valuesFactory Factory of the collections of values.
+	 * @param collectionFactory Factory of the collections of values.
 	 */
-	protected MapMultimap(final Map<K, CC> bindings, final ExtendedAbstractCollectionFactory<V, ? extends C, CC> valuesFactory) {
+	protected MapMultimap(final Map<K, CC> bindings, final ExtendedAbstractCollectionFactory<V, C, CC> collectionFactory) {
 		assert null != bindings;
-		assert null != valuesFactory;
+		assert null != collectionFactory;
 		
 		// Initialization.
 		_bindings = bindings;
-		_collectionFactory = valuesFactory;
+		_collectionFactory = collectionFactory;
 	}
 	
 	// Values factory.
 	
 	/** Factory of the collections of values. */
-	protected final ExtendedAbstractCollectionFactory<V, ? extends C, CC> _collectionFactory;
+	protected final ExtendedAbstractCollectionFactory<V, C, CC> _collectionFactory;
 	
 	/**
 	 * Gets the factory of the collections of values of this multimap.
 	 * 
 	 * @return The collection factory.
 	 */
-	public ExtendedAbstractCollectionFactory<V, ? extends C, CC> getCollectionFactory() {
+	public ExtendedAbstractCollectionFactory<V, C, CC> getCollectionFactory() {
 		return _collectionFactory;
 	}
 	
