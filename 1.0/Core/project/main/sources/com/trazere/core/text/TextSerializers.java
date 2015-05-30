@@ -27,6 +27,10 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalQuery;
 import java.util.Date;
 import java.util.UUID;
 
@@ -353,6 +357,38 @@ public class TextSerializers {
 					return value.asSome().getValue();
 				} else {
 					throw new IllegalArgumentException("Invalid date representation \"" + representation + "\" (" + TextUtils.formatDate(format, new Date()) + ").");
+				}
+			}
+		};
+	}
+	
+	/**
+	 * Builds a serializer of temporals to text.
+	 * 
+	 * @param <T> Type of the temporals.
+	 * @param formatter Format of the temporals.
+	 * @param query Query that defines the type of the temporals.
+	 * @return The built serializer.
+	 * @see TextUtils#formatTemporal(DateTimeFormatter, TemporalAccessor)
+	 * @see TextUtils#parseTemporal(DateTimeFormatter, TemporalQuery, String)
+	 */
+	public static <T extends TemporalAccessor> Serializer<T, String> temporal(final DateTimeFormatter formatter, final TemporalQuery<T> query) {
+		assert null != formatter;
+		assert null != query;
+		
+		return new Serializer<T, String>() {
+			@Override
+			public String serialize(final T value) {
+				return TextUtils.formatTemporal(formatter, value);
+			}
+			
+			@Override
+			public T deserialize(final String representation) {
+				final Maybe<T> value = TextUtils.parseTemporal(formatter, query, representation);
+				if (value.isSome()) {
+					return value.asSome().getValue();
+				} else {
+					throw new IllegalArgumentException("Invalid temporal representation \"" + representation + "\" (" + TextUtils.formatTemporal(formatter, Instant.now()) + ").");
 				}
 			}
 		};

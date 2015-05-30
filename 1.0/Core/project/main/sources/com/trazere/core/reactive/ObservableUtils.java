@@ -15,8 +15,12 @@
  */
 package com.trazere.core.reactive;
 
+import com.trazere.core.lang.ThreadUtils;
+import com.trazere.core.lang.ThrowableFactories;
 import com.trazere.core.reference.MutableReference;
 import com.trazere.core.util.Maybe;
+import java.time.Duration;
+import java.time.Instant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -105,11 +109,11 @@ public class ObservableUtils {
 	 *
 	 * @param <E> Type of the event.
 	 * @param observable Observable to observe.
-	 * @param timeout Delay during which the value should be waited for in milliseconds.
+	 * @param timeout Delay during which the value should be waited for.
 	 * @return The raised event, or nothing when no event is raised during the delay.
 	 */
-	public static <E> Maybe<E> wait(final Observable<? extends E> observable, final long timeout) {
-		final long deadline = System.currentTimeMillis() + timeout;
+	public static <E> Maybe<E> wait(final Observable<? extends E> observable, final Duration timeout) {
+		final Instant deadline = Instant.now().plus(timeout);
 		
 		// Observe the future.
 		final MutableReference<E> eventHolder = new MutableReference<>();
@@ -131,15 +135,11 @@ public class ObservableUtils {
 			// Wait for the value.
 			while (true) {
 				synchronized (eventHolder) {
-					final long now = System.currentTimeMillis();
-					if (eventHolder.isSet() || now >= deadline) {
+					final Instant now = Instant.now();
+					if (eventHolder.isSet() || now.compareTo(deadline) >= 0) {
 						return eventHolder.asMaybe();
 					} else {
-						try {
-							eventHolder.wait(deadline - now);
-						} catch (final InterruptedException exception) {
-							throw new RuntimeException(exception);
-						}
+						ThreadUtils.wait(eventHolder, Duration.between(now, deadline), ThrowableFactories.RUNTIME_EXCEPTION);
 					}
 				}
 			}

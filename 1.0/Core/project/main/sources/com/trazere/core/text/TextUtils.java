@@ -23,6 +23,10 @@ import com.trazere.core.util.Maybe;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalQuery;
 import java.util.Date;
 import java.util.UUID;
 import java.util.regex.Pattern;
@@ -526,6 +530,41 @@ public class TextUtils {
 			} else {
 				return Maybe.none();
 			}
+		}
+	}
+	
+	// Temporals.
+	
+	/**
+	 * Formats the given temporal using the given format.
+	 * <p>
+	 * This method synchronizes the format to ensure reentrancy.
+	 *
+	 * @param formatter Format of the temporal.
+	 * @param value Temporal to format.
+	 * @return The representation of the temporal.
+	 */
+	public static String formatTemporal(final DateTimeFormatter formatter, final TemporalAccessor value) {
+		return formatter.format(value);
+	}
+	
+	/**
+	 * Parses the given temporal representation according to the given format.
+	 * <p>
+	 * This method synchronizes the format to ensure reentrancy.
+	 * 
+	 * @param <T> Type of the temporal.
+	 * @param formatter Formatter of the temporal.
+	 * @param query Query that defines the type of the temporal.
+	 * @param representation Representation of the temporal to parse.
+	 * @return The parsed temporal, or nothing when the representation is not valid.
+	 */
+	// TODO: return Result
+	public static <T extends TemporalAccessor> Maybe<T> parseTemporal(final DateTimeFormatter formatter, final TemporalQuery<T> query, final String representation) {
+		try {
+			return Maybe.some(formatter.parse(representation, query));
+		} catch (final DateTimeParseException exception) {
+			return Maybe.none();
 		}
 	}
 	

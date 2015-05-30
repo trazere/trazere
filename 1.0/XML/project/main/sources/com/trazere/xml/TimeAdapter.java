@@ -15,8 +15,9 @@
  */
 package com.trazere.xml;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.OffsetTime;
+import java.time.ZoneId;
 import java.util.GregorianCalendar;
 import javax.xml.bind.DatatypeConverter;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
@@ -25,14 +26,14 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
  * The {@link TimeAdapter} class implements JAXB adpaters for times.
  */
 public class TimeAdapter
-extends XmlAdapter<String, Date> {
+extends XmlAdapter<String, OffsetTime> {
 	@Override
-	public Date unmarshal(final String value) {
+	public OffsetTime unmarshal(final String value) {
 		return null != value ? parse(value) : null;
 	}
 	
 	@Override
-	public String marshal(final Date value) {
+	public String marshal(final OffsetTime value) {
 		return null != value ? format(value) : null;
 	}
 	
@@ -43,20 +44,18 @@ extends XmlAdapter<String, Date> {
 	 * @return The parsed time.
 	 * @throws IllegalArgumentException When the representation is invalid.
 	 */
-	public static Date parse(final String representation)
+	public static OffsetTime parse(final String representation)
 	throws IllegalArgumentException {
-		return DatatypeConverter.parseTime(representation).getTime();
+		return OffsetTime.ofInstant(DatatypeConverter.parseDate(representation).toInstant(), ZoneId.systemDefault());
 	}
 	
 	/**
 	 * Formats the given time.
 	 * 
-	 * @param date Time to format.
+	 * @param value Time to format.
 	 * @return The formatted representation.
 	 */
-	public static String format(final Date date) {
-		final Calendar cal = new GregorianCalendar();
-		cal.setTime(date);
-		return DatatypeConverter.printTime(cal);
+	public static String format(final OffsetTime value) {
+		return DatatypeConverter.printDate(GregorianCalendar.from(value.atDate(LocalDate.now()).toZonedDateTime()));
 	}
 }

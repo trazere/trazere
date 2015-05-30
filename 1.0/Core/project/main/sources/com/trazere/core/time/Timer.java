@@ -23,11 +23,11 @@ import java.time.Instant;
  */
 public class Timer {
 	/**
-	 * Builds a new timer.
+	 * Starts a new timer.
 	 * 
 	 * @return The built timer.
 	 */
-	public static Timer build() {
+	public static Timer start() {
 		return new Timer();
 	}
 	
