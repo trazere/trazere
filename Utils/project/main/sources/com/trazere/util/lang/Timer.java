@@ -26,7 +26,9 @@ public class Timer {
 	 * Builds a new timer.
 	 * 
 	 * @return The timer.
+	 * @deprecated Use {@link com.trazere.core.time.Timer#start()}.
 	 */
+	@Deprecated
 	public static Timer build() {
 		return new Timer();
 	}

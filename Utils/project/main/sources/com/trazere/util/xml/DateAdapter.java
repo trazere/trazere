@@ -58,7 +58,7 @@ extends XmlAdapter<String, Date> {
 	 * 
 	 * @param value Date to format.
 	 * @return The representation.
-	 * @deprecated Use {@link com.trazere.xml.DateAdapter#format(Date)}.
+	 * @deprecated Use {@link com.trazere.xml.DateAdapter#format(java.time.OffsetDateTime)}.
 	 */
 	@Deprecated
 	public static String print(final Date value) {
