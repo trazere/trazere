@@ -35,7 +35,7 @@ public class MultimapFactories {
 	 * @param valuesFactory Factory of the collections of values.
 	 * @return The built factory.
 	 */
-	public static <K, V, C extends Collection<V>, CC extends C> ExtendedMultimapFactory<K, V, C, MapMultimap<K, V, C, CC>> mapMultimap(final MapFactory<K, CC, ? extends Map<K, CC>> mapFactory, final ExtendedAbstractCollectionFactory<V, ? extends C, CC> valuesFactory) {
+	public static <K, V, C extends Collection<V>, CC extends C> ExtendedMultimapFactory<K, V, C, MapMultimap<K, V, C, CC>> mapMultimap(final MapFactory<K, CC, ? extends Map<K, CC>> mapFactory, final ExtendedAbstractCollectionFactory<V, C, CC> valuesFactory) {
 		assert null != mapFactory;
 		assert null != valuesFactory;
 		
