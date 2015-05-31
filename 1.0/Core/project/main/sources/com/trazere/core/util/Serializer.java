@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ package com.trazere.core.util;
  * 
  * @param <V> Type of the values.
  * @param <R> Type of the representations.
+ * @since 1.0
  */
 public interface Serializer<V, R> {
 	/**
@@ -27,6 +28,7 @@ public interface Serializer<V, R> {
 	 * 
 	 * @param value Value to serialize.
 	 * @return The representation of the value.
+	 * @since 1.0
 	 */
 	R serialize(V value);
 	
@@ -35,6 +37,7 @@ public interface Serializer<V, R> {
 	 * 
 	 * @param representation Representation of the value to deserialize.
 	 * @return The value.
+	 * @since 1.0
 	 */
 	V deserialize(R representation);
 }

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,11 +19,15 @@ package com.trazere.core.imperative;
  * The {@link Effect} interface defines abstract effects.
  * <p>
  * Effects represent no-arguments procedures whose execution solely relies on the captured context. They provide an abstraction for lazy side effects.
+ * 
+ * @since 1.0
  */
 @FunctionalInterface
 public interface Effect {
 	/**
-	 * Executes the receiver effect.
+	 * Executes this effect.
+	 * 
+	 * @since 1.0
 	 */
 	public void execute();
 }

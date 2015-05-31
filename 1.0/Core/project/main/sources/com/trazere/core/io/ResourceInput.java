@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,20 +22,17 @@ import java.io.InputStream;
 
 /**
  * The {@link ResourceInput} class implements inputs for the content of some resource.
+ * 
+ * @since 1.0
  */
 public class ResourceInput
 implements Input {
-	/** Base class. */
-	protected final Class<?> _base;
-	
-	/** Name of the resource. */
-	protected final String _name;
-	
 	/**
 	 * Instanciates a new input.
 	 * 
 	 * @param base Base class
 	 * @param name Name of the resource.
+	 * @since 1.0
 	 */
 	public ResourceInput(final Class<?> base, final String name) {
 		assert null != base;
@@ -46,23 +43,45 @@ implements Input {
 		_name = name;
 	}
 	
+	// Base.
+	
+	/**
+	 * Base class.
+	 * 
+	 * @since 1.0
+	 */
+	protected final Class<?> _base;
+	
 	/**
 	 * Gets the base class of the resource containing the data provided by this input.
 	 * 
 	 * @return The base class.
+	 * @since 1.0
 	 */
 	public Class<?> getBase() {
 		return _base;
 	}
 	
+	// Name.
+	
+	/**
+	 * Name of the resource.
+	 * 
+	 * @since 1.0
+	 */
+	protected final String _name;
+	
 	/**
 	 * Gets the name of the resource containing the data provided by this input.
 	 * 
 	 * @return The name.
+	 * @since 1.0
 	 */
 	public String getName() {
 		return _name;
 	}
+	
+	// Input.
 	
 	@Override
 	public boolean exists()

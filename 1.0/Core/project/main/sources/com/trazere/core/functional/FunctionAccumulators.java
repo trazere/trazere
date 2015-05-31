@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,7 +21,11 @@ import com.trazere.core.imperative.FoldAccumulator;
 import com.trazere.core.imperative.FoldAccumulator2;
 
 /**
- * The {@link FunctionAccumulators} class provides various factories of accumulators related to functions.
+ * The {@link FunctionAccumulators} class provides various factories of {@link Accumulator accumulators} related to {@link Function functions}.
+ * 
+ * @see Accumulator
+ * @see Function
+ * @since 1.0
  */
 public class FunctionAccumulators {
 	/**
@@ -32,6 +36,7 @@ public class FunctionAccumulators {
 	 * @param operator Binary operator.
 	 * @param initialState Initial state.
 	 * @return The built accumulator.
+	 * @since 1.0
 	 */
 	public static <E, S> Accumulator<E, S> fold(final Function2<? super S, ? super E, ? extends S> operator, final S initialState) {
 		assert null != operator;
@@ -44,6 +49,7 @@ public class FunctionAccumulators {
 		};
 	}
 	
+	// TODO
 	//	/**
 	//	 * Builds an accumulator that populates the given map by projecting the values.
 	//	 *
@@ -54,6 +60,7 @@ public class FunctionAccumulators {
 	//	 * @param projector The projection function.
 	//	 * @param results The accumulator to populate.
 	//	 * @return The built accumulator.
+	//	 * @since 1.0
 	//	 */
 	//	public static <K, V, S, X extends Exception> Accumulator1<V, S, X> projectValues(final Function1<? super V, ? extends K, ? extends X> projector, final Accumulator2<? super K, ? super V, S, ? extends X> results) {
 	//		assert null != projector;
@@ -82,6 +89,7 @@ public class FunctionAccumulators {
 	 * @param operator Binary operator.
 	 * @param initialState Initial state.
 	 * @return The built accumulator.
+	 * @since 1.0
 	 */
 	public static <E1, E2, S> Accumulator2<E1, E2, S> fold2(final Function3<? super S, ? super E1, ? super E2, ? extends S> operator, final S initialState) {
 		assert null != operator;

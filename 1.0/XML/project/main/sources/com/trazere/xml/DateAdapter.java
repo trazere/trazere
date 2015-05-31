@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -23,6 +23,8 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * The {@link DateAdapter} class implements JAXB adpaters for dates.
+ * 
+ * @since 1.0
  */
 public class DateAdapter
 extends XmlAdapter<String, OffsetDateTime> {
@@ -42,6 +44,7 @@ extends XmlAdapter<String, OffsetDateTime> {
 	 * @param representation Representation to parse.
 	 * @return The parsed date.
 	 * @throws IllegalArgumentException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static OffsetDateTime parse(final String representation)
 	throws IllegalArgumentException {
@@ -53,6 +56,7 @@ extends XmlAdapter<String, OffsetDateTime> {
 	 * 
 	 * @param value Date to format.
 	 * @return The formatted representation.
+	 * @since 1.0
 	 */
 	public static String format(final OffsetDateTime value) {
 		return DatatypeConverter.printDate(GregorianCalendar.from(value.toZonedDateTime()));

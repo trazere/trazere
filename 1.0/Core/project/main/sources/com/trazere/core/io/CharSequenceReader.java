@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -23,6 +23,8 @@ import java.io.Reader;
 
 /**
  * The {@link CharSequenceReader} class implements {@link Reader readers} of {@link CharSequence character sequences}.
+ * 
+ * @since 1.0
  */
 public class CharSequenceReader
 extends Reader {
@@ -35,8 +37,8 @@ extends Reader {
 	
 	// Read.
 	
-	protected final CharSequence _sequence;
-	protected final MutableInt _index = new MutableInt(0);
+	private final CharSequence _sequence;
+	private final MutableInt _index = new MutableInt(0);
 	
 	@Override
 	public boolean ready() {
@@ -82,7 +84,7 @@ extends Reader {
 	
 	// Mark.
 	
-	protected final MutableReference<Integer> _mark = new MutableReference<>();
+	private final MutableReference<Integer> _mark = new MutableReference<>();
 	
 	@Override
 	public boolean markSupported() {

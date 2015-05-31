@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,10 +21,11 @@ import com.trazere.core.util.MaybeFunctions;
 /**
  * The {@link Extractors} class provides various factories of extractors.
  * <p>
- * An extractor is function that combines a map and a filter operation.
+ * An extractor is {@link Function function} that combines a map operation and a filter operation.
  * 
  * @see Function
  * @see Maybe
+ * @since 1.0
  */
 public class Extractors {
 	/**
@@ -32,6 +33,7 @@ public class Extractors {
 	 * 
 	 * @param <T> Type of the values.
 	 * @return The built extractor.
+	 * @since 1.0
 	 */
 	public static <T> Function<T, Maybe<T>> identity() {
 		return MaybeFunctions.some();
@@ -46,6 +48,7 @@ public class Extractors {
 	 * @param g Outer extractor.
 	 * @param f Inner extractor.
 	 * @return The built extractor.
+	 * @since 1.0
 	 */
 	public static <A, I, R> Function<A, Maybe<R>> compose(final Function<? super I, ? extends Maybe<? extends R>> g, final Function<? super A, ? extends Maybe<? extends I>> f) {
 		assert null != f;
@@ -60,6 +63,7 @@ public class Extractors {
 	 * @param <T> Type of the values.
 	 * @param predicate Predicate to lift.
 	 * @return The built extractor.
+	 * @since 1.0
 	 */
 	public static <T> Function<T, Maybe<T>> fromPredicate(final Predicate<? super T> predicate) {
 		assert null != predicate;
@@ -74,6 +78,7 @@ public class Extractors {
 	 * @param <R> Type of the results.
 	 * @param function Function to lift.
 	 * @return The built extractor.
+	 * @since 1.0
 	 */
 	public static <A, R> Function<A, Maybe<R>> fromFunction(final Function<? super A, ? extends R> function) {
 		assert null != function;

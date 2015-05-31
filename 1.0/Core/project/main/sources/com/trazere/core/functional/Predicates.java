@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -20,7 +20,11 @@ import com.trazere.core.lang.ObjectUtils;
 import java.util.Collection;
 
 /**
- * The {@link Predicates} class provides various factories of predicates.
+ * The {@link Predicates} class provides various factories of {@link Predicate predicates}.
+ * 
+ * @see Predicate
+ * @see Predicate2
+ * @since 1.0
  */
 public class Predicates {
 	/**
@@ -28,6 +32,7 @@ public class Predicates {
 	 * 
 	 * @param <A> Type of the arguments.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <A> Predicate<A> all() {
@@ -41,6 +46,7 @@ public class Predicates {
 	 * 
 	 * @param <A> Type of the arguments.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <A> Predicate<A> none() {
@@ -55,6 +61,7 @@ public class Predicates {
 	 * @param <A> Type of the arguments.
 	 * @param result Result of the predicate.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	public static <A> Predicate<A> constant(final boolean result) {
 		return result ? all() : none();
@@ -66,6 +73,7 @@ public class Predicates {
 	 * @param <A> Type of the arguments.
 	 * @param predicate Predicate to inverse.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	public static <A> Predicate<A> not(final Predicate<? super A> predicate) {
 		assert null != predicate;
@@ -80,6 +88,7 @@ public class Predicates {
 	 * @param predicate1 First predicate to combine.
 	 * @param predicate2 Second predicate to combine.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	public static <A> Predicate<A> and(final Predicate<? super A> predicate1, final Predicate<? super A> predicate2) {
 		assert null != predicate1;
@@ -94,6 +103,7 @@ public class Predicates {
 	 * @param <A> Type of the arguments.
 	 * @param predicates Predicates to combine.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <A> Predicate<A> and(final Collection<? extends Predicate<? super A>> predicates) {
@@ -120,6 +130,7 @@ public class Predicates {
 	 * @param predicate1 First predicate to combine.
 	 * @param predicate2 Second predicate to combine.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	public static <A> Predicate<A> or(final Predicate<? super A> predicate1, final Predicate<? super A> predicate2) {
 		assert null != predicate1;
@@ -134,6 +145,7 @@ public class Predicates {
 	 * @param <A> Type of the arguments.
 	 * @param predicates Predicates to combine.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <A> Predicate<A> or(final Collection<? extends Predicate<? super A>> predicates) {
@@ -160,6 +172,7 @@ public class Predicates {
 	 * @param <A> Type of the arguments.
 	 * @param value Value to accept.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	public static <A> Predicate<A> value(final A value) {
 		return arg -> ObjectUtils.safeEquals(arg, value);
@@ -172,6 +185,7 @@ public class Predicates {
 	 * @param <A> Type of the arguments.
 	 * @param values Values to accept.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	@SafeVarargs
 	public static <A> Predicate<A> values(final A... values) {
@@ -187,6 +201,7 @@ public class Predicates {
 	 * @param <A> Type of the arguments.
 	 * @param values Values to accept.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	public static <A> Predicate<A> values(final Collection<? extends A> values) {
 		assert null != values;
@@ -200,6 +215,7 @@ public class Predicates {
 	 * @param <A> Type of the arguments.
 	 * @param function Function to lift.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	public static final <A> Predicate<A> fromFunction(final Function<? super A, Boolean> function) {
 		assert null != function;
@@ -207,12 +223,14 @@ public class Predicates {
 		return arg -> function.evaluate(arg).booleanValue();
 	}
 	
+	// TODO
 	//	// TODO: LangPredicates ?
 	//	/**
 	//	 * Builds a predicate that evaluates to the given value.
 	//	 *
 	//	 * @param <X> Type of the exceptions.
 	//	 * @return The built predicate.
+	//	 * @since 1.0
 	//	 */
 	//	@SuppressWarnings("unchecked")
 	//	public static <X extends Exception> Predicate1<Boolean, X> identity() {
@@ -235,6 +253,7 @@ public class Predicates {
 	 * @param <A2> Type of the second arguments.
 	 * @param result Result of the predicate.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	public static <A1, A2> Predicate2<A1, A2> constant2(final boolean result) {
 		return result ? all2() : none2();
@@ -246,6 +265,7 @@ public class Predicates {
 	 * @param <A1> Type of the first arguments.
 	 * @param <A2> Type of the second arguments.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <A1, A2> Predicate2<A1, A2> all2() {
@@ -260,6 +280,7 @@ public class Predicates {
 	 * @param <A1> Type of the first arguments.
 	 * @param <A2> Type of the second arguments.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <A1, A2> Predicate2<A1, A2> none2() {
@@ -275,6 +296,7 @@ public class Predicates {
 	 * @param <A2> Type of the second arguments.
 	 * @param predicate Predicate to inverse.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	public static <A1, A2> Predicate2<A1, A2> not2(final Predicate2<? super A1, ? super A2> predicate) {
 		assert null != predicate;
@@ -290,6 +312,7 @@ public class Predicates {
 	 * @param predicate1 First predicate to combine.
 	 * @param predicate2 Second predicate to combine.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	public static <A1, A2> Predicate2<A1, A2> and2(final Predicate2<? super A1, ? super A2> predicate1, final Predicate2<? super A1, ? super A2> predicate2) {
 		assert null != predicate1;
@@ -305,6 +328,7 @@ public class Predicates {
 	 * @param <A2> Type of the second arguments.
 	 * @param predicates Predicates to combine.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <A1, A2> Predicate2<A1, A2> and2(final Collection<? extends Predicate2<? super A1, ? super A2>> predicates) {
@@ -332,6 +356,7 @@ public class Predicates {
 	 * @param predicate1 First predicate to combine.
 	 * @param predicate2 Second predicate to combine.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	public static <A1, A2> Predicate2<A1, A2> or2(final Predicate2<? super A1, ? super A2> predicate1, final Predicate2<? super A1, ? super A2> predicate2) {
 		assert null != predicate1;
@@ -347,6 +372,7 @@ public class Predicates {
 	 * @param <A2> Type of the second arguments.
 	 * @param predicates Predicates to combine.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <A1, A2> Predicate2<A1, A2> or2(final Collection<? extends Predicate2<? super A1, ? super A2>> predicates) {
@@ -373,6 +399,7 @@ public class Predicates {
 	 * @param <A2> Type of the second arguments.
 	 * @param function Function to lift.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	public static final <A1, A2> Predicate2<A1, A2> fromFunction(final Function2<? super A1, ? super A2, Boolean> function) {
 		assert null != function;

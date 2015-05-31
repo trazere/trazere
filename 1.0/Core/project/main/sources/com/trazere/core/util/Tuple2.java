@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import java.io.Serializable;
  * 
  * @param <E1> Type of the first element.
  * @param <E2> Type of the second element.
+ * @since 1.0
  */
 public class Tuple2<E1, E2>
 implements Field1<E1>, Field2<E2>, Serializable {
@@ -35,6 +36,7 @@ implements Field1<E1>, Field2<E2>, Serializable {
 	 * 
 	 * @param e1 First element.
 	 * @param e2 Second element.
+	 * @since 1.0
 	 */
 	public Tuple2(final E1 e1, final E2 e2) {
 		_e1 = e1;
@@ -43,13 +45,18 @@ implements Field1<E1>, Field2<E2>, Serializable {
 	
 	// First element.
 	
-	/** First element. */
+	/**
+	 * First element.
+	 * 
+	 * @since 1.0
+	 */
 	protected final E1 _e1;
 	
 	/**
 	 * Gets the first element of this tuple.
 	 * 
 	 * @return The first element.
+	 * @since 1.0
 	 */
 	@Override
 	public E1 get1() {
@@ -62,6 +69,7 @@ implements Field1<E1>, Field2<E2>, Serializable {
 	 * @param <NE1> Type of the new first element.
 	 * @param ne1 New first element.
 	 * @return The derived tuple.
+	 * @since 1.0
 	 */
 	public <NE1> Tuple2<NE1, E2> with1(final NE1 ne1) {
 		return new Tuple2<>(ne1, _e2);
@@ -73,6 +81,7 @@ implements Field1<E1>, Field2<E2>, Serializable {
 	 * @param <NE1> Type of the new first element.
 	 * @param function Mapping function to use.
 	 * @return The derived tuple.
+	 * @since 1.0
 	 */
 	public <NE1> Tuple2<NE1, E2> map1(final Function<? super E1, ? extends NE1> function) {
 		return new Tuple2<>(function.evaluate(_e1), _e2);
@@ -80,13 +89,18 @@ implements Field1<E1>, Field2<E2>, Serializable {
 	
 	// Second element.
 	
-	/** Second element. */
+	/**
+	 * Second element.
+	 * 
+	 * @since 1.0
+	 */
 	protected final E2 _e2;
 	
 	/**
 	 * Gets the second element of this tuple.
 	 * 
 	 * @return The second element.
+	 * @since 1.0
 	 */
 	@Override
 	public E2 get2() {
@@ -99,6 +113,7 @@ implements Field1<E1>, Field2<E2>, Serializable {
 	 * @param <NE2> Type of the new second element.
 	 * @param ne2 New second element.
 	 * @return The derived tuple.
+	 * @since 1.0
 	 */
 	public <NE2> Tuple2<E1, NE2> with2(final NE2 ne2) {
 		return new Tuple2<>(_e1, ne2);
@@ -110,6 +125,7 @@ implements Field1<E1>, Field2<E2>, Serializable {
 	 * @param <NE2> Type of the new second element.
 	 * @param function Mapping function to use.
 	 * @return The derived tuple.
+	 * @since 1.0
 	 */
 	public <NE2> Tuple2<E1, NE2> map2(final Function<? super E2, ? extends NE2> function) {
 		return new Tuple2<>(_e1, function.evaluate(_e2));

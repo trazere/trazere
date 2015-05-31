@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,30 +25,34 @@ import com.trazere.core.util.Tuple2;
  * @param <E1> Type of the first element of the accumulated pairs.
  * @param <E2> Type of the second element of the accumulated pairs.
  * @param <S> Type of the state.
+ * @since 1.0
  */
 public interface Accumulator2<E1, E2, S>
 extends Procedure2<E1, E2> {
 	/**
-	 * Accumulates the given pair of elements into the receiver accumulator.
+	 * Accumulates the given pair of elements into this accumulator.
 	 * 
 	 * @param element1 First element of the pair to accumulate.
 	 * @param element2 Second element of the pair to accumulate.
+	 * @since 1.0
 	 */
 	void add(E1 element1, E2 element2);
 	
 	/**
-	 * Accumulates the given pair element into the receiver accumulator.
+	 * Accumulates the given pair element into this accumulator.
 	 * 
 	 * @param elementPair Pair element to accumulate.
+	 * @since 1.0
 	 */
 	default void add(final Tuple2<? extends E1, ? extends E2> elementPair) {
 		add(elementPair.get1(), elementPair.get2());
 	}
 	
 	/**
-	 * Accumulates the pair elements into the receiver accumulator.
+	 * Accumulates the pair elements into this accumulator.
 	 * 
 	 * @param elements Pair elements to accumulate.
+	 * @since 1.0
 	 */
 	default void addAll(final Iterable<? extends Tuple2<? extends E1, ? extends E2>> elements) {
 		for (final Tuple2<? extends E1, ? extends E2> element : elements) {
@@ -57,9 +61,10 @@ extends Procedure2<E1, E2> {
 	}
 	
 	/**
-	 * Gets the current state of the receiver accumulator.
+	 * Gets the current state of this accumulator.
 	 * 
 	 * @return The state.
+	 * @since 1.0
 	 */
 	S get();
 	

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -16,12 +16,16 @@
 package com.trazere.core.lang;
 
 import com.trazere.core.collection.Feed;
+import com.trazere.core.collection.Feeds;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 import com.trazere.core.util.Tuples;
 
 /**
- * The {@link LangFeeds} class provides various factories of feeds related to the language.
+ * The {@link LangFeeds} class provides various factories of {@link Feeds feeds} related to the Java language.
+ * 
+ * @see Feed
+ * @since 1.0
  */
 public class LangFeeds {
 	/**
@@ -29,6 +33,7 @@ public class LangFeeds {
 	 * 
 	 * @param start Start value.
 	 * @return The built feed.
+	 * @since 1.0
 	 */
 	public static Feed<Integer> integer(final int start) {
 		return integer(start, 1);
@@ -40,6 +45,7 @@ public class LangFeeds {
 	 * @param start Start value.
 	 * @param increment Increment.
 	 * @return The built feed.
+	 * @since 1.0
 	 */
 	public static Feed<Integer> integer(final int start, final int increment) {
 		return () -> Maybe.some(Tuples.tuple2(start, integer(start + increment, increment)));
@@ -49,6 +55,7 @@ public class LangFeeds {
 	 * Builds a feed of the natural integers.
 	 * 
 	 * @return The built feed.
+	 * @since 1.0
 	 */
 	public static Feed<Integer> natural() {
 		return integer(0, 1);
@@ -59,6 +66,7 @@ public class LangFeeds {
 	 * 
 	 * @param s String.
 	 * @return The built feed.
+	 * @since 1.0
 	 */
 	public static final Feed<Character> fromString(final String s) {
 		return fromString(s, 0);

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@ package com.trazere.core.lang;
 
 /**
  * The {@link BaseIntSequence} class implements finite sequences of integers.
+ * 
+ * @since 1.0
  */
 public abstract class BaseIntSequence
 implements IntSequence {
@@ -25,6 +27,7 @@ implements IntSequence {
 	 * 
 	 * @param start Starting value of the sequence.
 	 * @param increment Increment between consecutive values of the sequence.
+	 * @since 1.0
 	 */
 	protected BaseIntSequence(final int start, final int increment) {
 		_start = start;
@@ -36,6 +39,8 @@ implements IntSequence {
 	
 	/**
 	 * The {@link Logic} interface defines the logic of integer sequences.
+	 * 
+	 * @since 1.0
 	 */
 	protected static interface Logic {
 		/**
@@ -57,7 +62,11 @@ implements IntSequence {
 		boolean isOver(int value, int bound);
 	}
 	
-	/** Logic for increasing sequences. */
+	/**
+	 * Logic for increasing sequences.
+	 * 
+	 * @since 1.0
+	 */
 	protected static final Logic INCREASING = new Logic() {
 		@Override
 		public int computeDistance(final int start, final int value) {
@@ -70,7 +79,11 @@ implements IntSequence {
 		}
 	};
 	
-	/** Logic for decreasing sequences. */
+	/**
+	 * Logic for decreasing sequences.
+	 * 
+	 * @since 1.0
+	 */
 	protected static final Logic DECREASING = new Logic() {
 		@Override
 		public int computeDistance(final int start, final int value) {
@@ -83,12 +96,20 @@ implements IntSequence {
 		}
 	};
 	
-	/** Logic of the sequence. */
+	/**
+	 * Logic of the sequence.
+	 * 
+	 * @since 1.0
+	 */
 	protected final Logic _logic;
 	
 	// Start.
 	
-	/** Starting value of the sequence. */
+	/**
+	 * Starting value of the sequence.
+	 * 
+	 * @since 1.0
+	 */
 	protected final int _start;
 	
 	@Override
@@ -98,7 +119,11 @@ implements IntSequence {
 	
 	// Increment.
 	
-	/** Increment between consecutive values. */
+	/**
+	 * Increment between consecutive values.
+	 * 
+	 * @since 1.0
+	 */
 	protected final int _increment;
 	
 	@Override

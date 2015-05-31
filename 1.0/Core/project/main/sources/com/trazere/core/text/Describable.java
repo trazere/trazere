@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,12 +21,14 @@ package com.trazere.core.text;
  * The {@link Describable} interface defines objects that can describe themselves in a {@link Description description}.
  * 
  * @see TextUtils#description(Describable)
+ * @since 1.0
  */
 public interface Describable {
 	/**
-	 * Appends the description of the receiver object in the given description.
+	 * Appends the description of this object in the given description.
 	 * 
 	 * @param description The description to populate.
+	 * @since 1.0
 	 */
 	void appendDescription(Description description);
 }

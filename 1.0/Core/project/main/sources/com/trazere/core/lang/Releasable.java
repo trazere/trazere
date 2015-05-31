@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,11 +17,15 @@ package com.trazere.core.lang;
 
 /**
  * The {@link Releasable} interface defines object that can be released.
+ * 
+ * @since 1.0
  */
 @FunctionalInterface
 public interface Releasable {
 	/**
 	 * Releases this releasable.
+	 * 
+	 * @since 1.0
 	 */
 	public void release();
 }

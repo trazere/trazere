@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -41,6 +41,7 @@ import java.util.Set;
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  * @param <C> Type of the collections of values.
+ * @since 1.0
  */
 public abstract class BaseMultimap<K, V, C extends Collection<V>>
 implements Multimap<K, V, C> {
@@ -183,5 +184,4 @@ implements Multimap<K, V, C> {
 			return false;
 		}
 	}
-	
 }

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,16 +24,23 @@ import com.trazere.core.text.TextUtils;
  * The {@link MutableInt} class represents mutable integer values.
  * <p>
  * This class can be used instead of non-final variables to help tagging side effects.
+ * 
+ * @since 1.0
  */
 public class MutableInt
 implements Describable {
-	/** Current value. */
+	/**
+	 * Current value.
+	 * 
+	 * @since 1.0
+	 */
 	protected int _value;
 	
 	/**
 	 * Instantiates a new mutable integer.
 	 * 
 	 * @param value Initial value.
+	 * @since 1.0
 	 */
 	public MutableInt(final int value) {
 		_value = value;
@@ -43,6 +50,7 @@ implements Describable {
 	 * Gets the value of this mutable integer.
 	 * 
 	 * @return The value.
+	 * @since 1.0
 	 */
 	public int get() {
 		return _value;
@@ -53,6 +61,7 @@ implements Describable {
 	 * 
 	 * @param value New value.
 	 * @return The given new value.
+	 * @since 1.0
 	 */
 	public int set(final int value) {
 		_value = value;
@@ -64,6 +73,7 @@ implements Describable {
 	 * 
 	 * @param function Function to use to compute the new value.
 	 * @return The computed new value.
+	 * @since 1.0
 	 */
 	public int update(final Function<? super Integer, ? extends Integer> function) {
 		return set(function.evaluate(_value).intValue());
@@ -73,6 +83,7 @@ implements Describable {
 	 * Negates the value of this mutable integer.
 	 * 
 	 * @return The resulting value.
+	 * @since 1.0
 	 */
 	public int neg() {
 		return set(-_value);
@@ -83,6 +94,7 @@ implements Describable {
 	 * 
 	 * @param value Value to add.
 	 * @return The resulting value.
+	 * @since 1.0
 	 */
 	public int add(final int value) {
 		return set(_value + value);
@@ -93,6 +105,7 @@ implements Describable {
 	 * 
 	 * @param value Value to substract.
 	 * @return The resulting value.
+	 * @since 1.0
 	 */
 	public int sub(final int value) {
 		return set(_value - value);
@@ -103,6 +116,7 @@ implements Describable {
 	 * 
 	 * @param value Value to multiply by.
 	 * @return The resulting value.
+	 * @since 1.0
 	 */
 	public int mul(final int value) {
 		return set(_value * value);
@@ -113,6 +127,7 @@ implements Describable {
 	 * 
 	 * @param value Value to divide by.
 	 * @return The resulting value.
+	 * @since 1.0
 	 */
 	public int div(final int value) {
 		return set(_value / value);
@@ -123,6 +138,7 @@ implements Describable {
 	 * 
 	 * @param value Value to divide by.
 	 * @return The resulting value.
+	 * @since 1.0
 	 */
 	public int mod(final int value) {
 		return set(_value % value);
@@ -133,6 +149,7 @@ implements Describable {
 	 * 
 	 * @param position Number of bits to shift.
 	 * @return The resulting value.
+	 * @since 1.0
 	 */
 	public int shiftl(final int position) {
 		return set(_value << position);
@@ -143,6 +160,7 @@ implements Describable {
 	 * 
 	 * @param position Number of bits to shift.
 	 * @return The resulting value.
+	 * @since 1.0
 	 */
 	public int shiftr(final int position) {
 		return set(_value >> position);

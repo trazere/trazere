@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@ import java.util.Set;
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  * @param <C> Type of the collections of values.
+ * @since 1.0
  */
 public interface Multimap<K, V, C extends Collection<V>> {
 	/**
@@ -43,6 +44,7 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	 * @param key Key of the binding.
 	 * @param value Value of the binding.
 	 * @return <code>true</code> when the multimap has changed, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	boolean put(K key, V value);
 	
@@ -55,6 +57,7 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	 * @param key Key of the bindings.
 	 * @param values Values of the bindings.
 	 * @return <code>true</code> when the multimap has changed, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	boolean putAll(K key, Collection<? extends V> values);
 	
@@ -65,6 +68,7 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	 * 
 	 * @param multimap Multimap containing the bindings.
 	 * @return <code>true</code> when the multimap has changed, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	boolean putAll(Multimap<? extends K, ? extends V, ?> multimap);
 	
@@ -72,6 +76,7 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	 * Indicates whether this multimap is empty or not.
 	 * 
 	 * @return <code>true</code> if the multi is empty, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	boolean isEmpty();
 	
@@ -79,6 +84,7 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	 * Gets the number of bindings of this multimap.
 	 * 
 	 * @return The number of bindings.
+	 * @since 1.0
 	 */
 	int size();
 	
@@ -87,6 +93,7 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	 * 
 	 * @param key Key to test.
 	 * @return <code>true</code> when the multimap contains bindings with the given key, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	boolean containsKey(K key);
 	
@@ -94,6 +101,7 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	 * Gets the keys of the bindings of this multimap.
 	 * 
 	 * @return An unmodifiable set of the keys.
+	 * @since 1.0
 	 */
 	Set<K> keySet();
 	
@@ -103,6 +111,7 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	 * @param key Key of the binding to test.
 	 * @param value Value of the binding to test.
 	 * @return <code>true</code> when the multimap contains the binding, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	boolean contains(K key, V value);
 	
@@ -110,6 +119,7 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	 * Gets the entries corresponding to the bindings of this multimap.
 	 * 
 	 * @return An unmodifiable set of the entries.
+	 * @since 1.0
 	 */
 	Set<Map.Entry<K, V>> entrySet();
 	
@@ -118,6 +128,7 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	 * 
 	 * @param key The key. May or may not be <code>null</code> according the implementation.
 	 * @return An unmodifiable collection of the values.
+	 * @since 1.0
 	 */
 	C get(K key);
 	
@@ -126,11 +137,14 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	 * 
 	 * @param value Value to test.
 	 * @return <code>true</code> when the multimap contains bindings with the given value, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	boolean containsValue(V value);
 	
 	/**
 	 * Clears this multimap.
+	 * 
+	 * @since 1.0
 	 */
 	void clear();
 	
@@ -140,6 +154,7 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	 * @param key Key of the binding to remove.
 	 * @param value Value of the binding to remove.
 	 * @return <code>true</code> when the multimap has changed, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	boolean remove(K key, V value);
 	
@@ -150,6 +165,7 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	 * @param key Key of the bindings to remove.
 	 * @param values Values of the bindings to remove.
 	 * @return <code>true</code> when the multimap has changed, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	boolean removeAll(K key, Collection<? extends V> values);
 	
@@ -158,6 +174,7 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	 * 
 	 * @param key Key of the bindings to remove.
 	 * @return An unmodifiable collection of the removed values.
+	 * @since 1.0
 	 */
 	C removeKey(K key);
 	
@@ -166,6 +183,7 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	 * 
 	 * @param value Value of the binding to remove.
 	 * @return <code>true</code> when the multimap has changed, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	boolean removeValue(V value);
 	
@@ -180,6 +198,7 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	 *
 	 * @return The hash code value.
 	 * @see java.util.Map.Entry#hashCode()
+	 * @since 1.0
 	 */
 	@Override
 	int hashCode();
@@ -192,6 +211,7 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	 *
 	 * @param o Object to be compared for equality.
 	 * @return <tt>true</tt> if the given object is equal to this multimap, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	@Override
 	boolean equals(Object o);

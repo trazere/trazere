@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -29,6 +29,7 @@ package com.trazere.core.record;
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the value of the field.
+ * @since 1.0
  */
 public abstract class FieldKey<K extends FieldKey<K, V>, V> {
 	/**
@@ -36,6 +37,7 @@ public abstract class FieldKey<K extends FieldKey<K, V>, V> {
 	 * 
 	 * @param label Label of the field.
 	 * @param type Type of the value of the field.
+	 * @since 1.0
 	 */
 	public FieldKey(final String label, final Class<V> type) {
 		this(label, type, false);
@@ -47,6 +49,7 @@ public abstract class FieldKey<K extends FieldKey<K, V>, V> {
 	 * @param label Label of the field.
 	 * @param type Type of the value of the field.
 	 * @param nullable Flag indicating whether the value of the field is nullable of not.
+	 * @since 1.0
 	 */
 	public FieldKey(final String label, final Class<V> type, final boolean nullable) {
 		assert null != label;
@@ -67,6 +70,7 @@ public abstract class FieldKey<K extends FieldKey<K, V>, V> {
 	 * Gets the label of the field identified by this key.
 	 * 
 	 * @return The key.
+	 * @since 1.0
 	 */
 	public String getLabel() {
 		return _label;
@@ -81,6 +85,7 @@ public abstract class FieldKey<K extends FieldKey<K, V>, V> {
 	 * Gets the type of the value of the fields identified by this key.
 	 * 
 	 * @return The type.
+	 * @since 1.0
 	 */
 	public Class<V> getType() {
 		return _type;
@@ -95,6 +100,7 @@ public abstract class FieldKey<K extends FieldKey<K, V>, V> {
 	 * Indicates whether the value of the fields identified by this key is nullable or not.
 	 * 
 	 * @return <code>true</code> when the value is nullable, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	public boolean isNullable() {
 		return _nullable;
@@ -119,6 +125,7 @@ public abstract class FieldKey<K extends FieldKey<K, V>, V> {
 		return _label + " :: " + _type + (_nullable ? "?" : "");
 	}
 	
+	// TODO
 	//	// Signature.
 	//
 	//	/**

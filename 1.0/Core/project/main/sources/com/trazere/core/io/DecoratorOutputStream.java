@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,16 +22,22 @@ import java.io.OutputStream;
  * The {@link DecoratorOutputStream} class implements decorators of {@link OutputStream output streams}.
  * 
  * @see OutputStream
+ * @since 1.0
  */
 public abstract class DecoratorOutputStream
 extends OutputStream {
-	/** Decorated output stream. */
+	/**
+	 * Decorated output stream.
+	 * 
+	 * @since 1.0
+	 */
 	protected final OutputStream _decorated;
 	
 	/**
 	 * Instantiates a new decorator.
 	 * 
 	 * @param decorated Decorated output stream.
+	 * @since 1.0
 	 */
 	public DecoratorOutputStream(final OutputStream decorated) {
 		assert null != decorated;

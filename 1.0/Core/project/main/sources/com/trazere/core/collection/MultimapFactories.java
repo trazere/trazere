@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import java.util.Map;
  * The {@link MultimapFactories} class provides various factories of {@link MultimapFactory multimap factories}.
  * 
  * @see MultimapFactory
+ * @since 1.0
  */
 public class MultimapFactories {
 	/**
@@ -34,6 +35,7 @@ public class MultimapFactories {
 	 * @param mapFactory Factory of the backing maps.
 	 * @param valuesFactory Factory of the collections of values.
 	 * @return The built factory.
+	 * @since 1.0
 	 */
 	public static <K, V, C extends Collection<V>, CC extends C> ExtendedMultimapFactory<K, V, C, MapMultimap<K, V, C, CC>> mapMultimap(final MapFactory<K, CC, ? extends Map<K, CC>> mapFactory, final ExtendedAbstractCollectionFactory<V, C, CC> valuesFactory) {
 		assert null != mapFactory;

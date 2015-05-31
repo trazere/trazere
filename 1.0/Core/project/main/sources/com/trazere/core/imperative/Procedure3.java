@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,15 +21,17 @@ package com.trazere.core.imperative;
  * @param <A1> Type of the first arguments.
  * @param <A2> Type of the second arguments.
  * @param <A3> Type of the third arguments.
+ * @since 1.0
  */
 @FunctionalInterface
 public interface Procedure3<A1, A2, A3> {
 	/**
-	 * Executes the receiver procedure with the given arguments.
+	 * Executes this procedure with the given arguments.
 	 * 
 	 * @param arg1 First argument to execute the procedure with.
 	 * @param arg2 Second argument to execute the procedure with.
 	 * @param arg3 Third argument to execute the procedure with.
+	 * @since 1.0
 	 */
 	void execute(A1 arg1, A2 arg2, A3 arg3);
 }

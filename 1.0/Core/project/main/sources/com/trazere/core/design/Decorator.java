@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,15 +19,21 @@ package com.trazere.core.design;
  * The {@link Decorator} class provides a skeleton implementation of decorators.
  * 
  * @param <T> Type of the decorated object.
+ * @since 1.0
  */
 public abstract class Decorator<T> {
-	/** Decorated object. */
+	/**
+	 * Decorated object.
+	 * 
+	 * @since 1.0
+	 */
 	protected final T _decorated;
 	
 	/**
 	 * Instantiates a new decorator.
 	 * 
 	 * @param decorated Decorated object.
+	 * @since 1.0
 	 */
 	public Decorator(final T decorated) {
 		assert null != decorated;

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,16 +24,23 @@ import com.trazere.core.text.TextUtils;
  * The {@link MutableFloat} class represents mutable float values.
  * <p>
  * This class can be used instead of non-final variables to help tagging side effects.
+ * 
+ * @since 1.0
  */
 public class MutableFloat
 implements Describable {
-	/** Current value. */
+	/**
+	 * Current value.
+	 * 
+	 * @since 1.0
+	 */
 	protected float _value;
 	
 	/**
 	 * Instantiates a new mutable float.
 	 * 
 	 * @param value Initial value.
+	 * @since 1.0
 	 */
 	public MutableFloat(final float value) {
 		_value = value;
@@ -43,6 +50,7 @@ implements Describable {
 	 * Gets the current value of this mutable float.
 	 * 
 	 * @return The current value.
+	 * @since 1.0
 	 */
 	public float get() {
 		return _value;
@@ -53,6 +61,7 @@ implements Describable {
 	 * 
 	 * @param value New value.
 	 * @return The given new value.
+	 * @since 1.0
 	 */
 	public float set(final float value) {
 		_value = value;
@@ -64,6 +73,7 @@ implements Describable {
 	 * 
 	 * @param function Function to use to compute the new value.
 	 * @return The computed new value.
+	 * @since 1.0
 	 */
 	public float update(final Function<? super Float, ? extends Float> function) {
 		return set(function.evaluate(_value).floatValue());
@@ -73,6 +83,7 @@ implements Describable {
 	 * Negates the value of this mutable float.
 	 * 
 	 * @return The resulting value.
+	 * @since 1.0
 	 */
 	public float neg() {
 		return set(-_value);
@@ -83,6 +94,7 @@ implements Describable {
 	 * 
 	 * @param value Value to add.
 	 * @return The resulting value.
+	 * @since 1.0
 	 */
 	public float add(final float value) {
 		return set(_value + value);
@@ -93,6 +105,7 @@ implements Describable {
 	 * 
 	 * @param value Value to substract.
 	 * @return The resulting value.
+	 * @since 1.0
 	 */
 	public float sub(final float value) {
 		return set(_value - value);
@@ -103,6 +116,7 @@ implements Describable {
 	 * 
 	 * @param value Value to multiply by.
 	 * @return The resulting value.
+	 * @since 1.0
 	 */
 	public float mul(final float value) {
 		return set(_value * value);
@@ -113,6 +127,7 @@ implements Describable {
 	 * 
 	 * @param value Value to divide by.
 	 * @return The resulting value.
+	 * @since 1.0
 	 */
 	public float div(final float value) {
 		return set(_value / value);

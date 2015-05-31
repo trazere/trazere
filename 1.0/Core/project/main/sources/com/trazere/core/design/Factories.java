@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import com.trazere.core.functional.Thunk;
  * The {@link Factories} class provides various factories of {@link Factory factories}.
  * 
  * @see Factory
+ * @since 1.0
  */
 public class Factories {
 	/**
@@ -29,8 +30,8 @@ public class Factories {
 	 * @param <T> Type of the built values.
 	 * @param value Value to build.
 	 * @return The built factory.
+	 * @since 1.0
 	 */
-	// TODO: constant ?
 	public static <T> Factory<T> fromValue(final T value) {
 		return () -> value;
 	}
@@ -41,6 +42,7 @@ public class Factories {
 	 * @param <T> Type of the built values.
 	 * @param thunk Thunk to lift.
 	 * @return The built factory.
+	 * @since 1.0
 	 */
 	public static <T> Factory<T> fromThunk(final Thunk<? extends T> thunk) {
 		assert null != thunk;

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -18,7 +18,11 @@ package com.trazere.core.reference;
 import com.trazere.core.imperative.Accumulator;
 
 /**
- * The {@link ReferenceAccumulators} class provides various factories of accumulators related to references.
+ * The {@link ReferenceAccumulators} class provides various factories of {@link Accumulator accumulators} related to {@link Reference references}.
+ * 
+ * @see Accumulator
+ * @see Reference
+ * @since 1.0
  */
 public class ReferenceAccumulators {
 	/**
@@ -29,6 +33,7 @@ public class ReferenceAccumulators {
 	 * @param reference Reference to update.
 	 * @return The built accumulator.
 	 * @see MutableReference#update(com.trazere.core.util.Maybe)
+	 * @since 1.0
 	 */
 	public static <T, R extends MutableReference<T>> Accumulator<T, R> update(final R reference) {
 		assert null != reference;

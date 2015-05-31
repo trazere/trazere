@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,16 +24,23 @@ import com.trazere.core.text.TextUtils;
  * The {@link MutableShort} class represents mutable short integer values.
  * <p>
  * This class can be used instead of non-final variables to help tagging side effects.
+ * 
+ * @since 1.0
  */
 public class MutableShort
 implements Describable {
-	/** Current value. */
+	/**
+	 * Current value.
+	 * 
+	 * @since 1.0
+	 */
 	protected short _value;
 	
 	/**
 	 * Instantiates a new mutable short integer.
 	 * 
 	 * @param value Initial value.
+	 * @since 1.0
 	 */
 	public MutableShort(final short value) {
 		_value = value;
@@ -43,6 +50,7 @@ implements Describable {
 	 * Gets the value of this mutable short integer.
 	 * 
 	 * @return The value.
+	 * @since 1.0
 	 */
 	public short get() {
 		return _value;
@@ -53,6 +61,7 @@ implements Describable {
 	 * 
 	 * @param value New value.
 	 * @return The given new value.
+	 * @since 1.0
 	 */
 	public short set(final short value) {
 		_value = value;
@@ -64,6 +73,7 @@ implements Describable {
 	 * 
 	 * @param function Function to use to compute the new value.
 	 * @return The computed new value.
+	 * @since 1.0
 	 */
 	public short update(final Function<? super Short, ? extends Short> function) {
 		return set(function.evaluate(_value).shortValue());
@@ -73,6 +83,7 @@ implements Describable {
 	 * Negates the value of this mutable short integer.
 	 * 
 	 * @return The resulting value.
+	 * @since 1.0
 	 */
 	public short neg() {
 		return set((short) -_value);
@@ -83,6 +94,7 @@ implements Describable {
 	 * 
 	 * @param value Value to add.
 	 * @return The resulting value.
+	 * @since 1.0
 	 */
 	public short add(final short value) {
 		return set((short) (_value + value));
@@ -93,6 +105,7 @@ implements Describable {
 	 * 
 	 * @param value Value to substract.
 	 * @return The resulting value.
+	 * @since 1.0
 	 */
 	public short sub(final short value) {
 		return set((short) (_value - value));
@@ -103,6 +116,7 @@ implements Describable {
 	 * 
 	 * @param value Value to multiply by.
 	 * @return The resulting value.
+	 * @since 1.0
 	 */
 	public short mul(final short value) {
 		return set((short) (_value * value));
@@ -113,6 +127,7 @@ implements Describable {
 	 * 
 	 * @param value Value to divide by.
 	 * @return The resulting value.
+	 * @since 1.0
 	 */
 	public short div(final short value) {
 		return set((short) (_value / value));
@@ -123,6 +138,7 @@ implements Describable {
 	 * 
 	 * @param value Value to divide by.
 	 * @return The resulting value.
+	 * @since 1.0
 	 */
 	public short mod(final short value) {
 		return set((short) (_value % value));
@@ -133,6 +149,7 @@ implements Describable {
 	 * 
 	 * @param position Number of bits to shift.
 	 * @return The resulting value.
+	 * @since 1.0
 	 */
 	public short shiftl(final int position) {
 		return set((short) (_value << position));
@@ -143,6 +160,7 @@ implements Describable {
 	 * 
 	 * @param position Number of bits to shift.
 	 * @return The resulting value.
+	 * @since 1.0
 	 */
 	public short shiftr(final int position) {
 		return set((short) (_value >> position));

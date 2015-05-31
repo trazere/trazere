@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -18,7 +18,11 @@ package com.trazere.core.util;
 import java.util.Comparator;
 
 /**
- * The {@link MaybeComparators} class provides various comparators related to {@link Maybe}s.
+ * The {@link MaybeComparators} class provides various factories of {@link Comparator comparators} related to {@link Maybe maybes}.
+ * 
+ * @see Comparator
+ * @see Maybe
+ * @since 1.0
  */
 public class MaybeComparators {
 	/**
@@ -30,6 +34,7 @@ public class MaybeComparators {
 	 * @param comparator Comparator of the values.
 	 * @return The built comparator.
 	 * @see ComparatorUtils#compare(Comparator, Maybe, Maybe)
+	 * @since 1.0
 	 */
 	public static <T> Comparator<Maybe<T>> maybe(final Comparator<? super T> comparator) {
 		assert null != comparator;

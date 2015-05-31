@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,7 +19,11 @@ import com.trazere.core.functional.Predicate;
 import java.util.Collection;
 
 /**
- * The {@link CollectionPredicates} class provides various factories of predicates related to collections.
+ * The {@link CollectionPredicates} class provides various factories of {@link Predicate predicates} related to {@link Collection collections}.
+ * 
+ * @see Predicate
+ * @see Collection
+ * @since 1.0
  */
 public class CollectionPredicates {
 	/**
@@ -27,6 +31,7 @@ public class CollectionPredicates {
 	 * 
 	 * @param <C> Type of the collections.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <C extends Collection<?>> Predicate<C> isEmpty() {
@@ -42,6 +47,7 @@ public class CollectionPredicates {
 	 * @param <C> Type of the collections.
 	 * @param element Element whose presence is to be tested.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	public static <E, C extends Collection<? super E>> Predicate<C> contains(final E element) {
 		return collection -> collection.contains(element);

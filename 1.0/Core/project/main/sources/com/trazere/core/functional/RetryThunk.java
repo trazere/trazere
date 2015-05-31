@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ import com.trazere.core.util.ResultUtils;
  * 
  * @param <T> Type of the value.
  * @see Thunk
+ * @since 1.0
  */
 public abstract class RetryThunk<T>
 implements Thunk<Result<T>>, FailureHandler<T> {
@@ -50,10 +51,11 @@ implements Thunk<Result<T>>, FailureHandler<T> {
 	}
 	
 	/**
-	 * Attempts to evaluate the receiver thunk.
+	 * Attempts to evaluate this thunk.
 	 * 
 	 * @param failureCount Number of failures.
 	 * @return The result of the evaluation attempt.
+	 * @since 1.0
 	 */
 	protected abstract Result<T> attemptEvaluate(int failureCount);
 	
@@ -65,6 +67,7 @@ implements Thunk<Result<T>>, FailureHandler<T> {
 	 * @param failureFactory Factory of the failure.
 	 * @return The value of the thunk.
 	 * @throws RuntimeException When the evaluation fails repeatedly.
+	 * @since 1.0
 	 */
 	public static <T> T evaluate(final RetryThunk<T> thunk, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		return ResultUtils.get(thunk.evaluate(), failureFactory);

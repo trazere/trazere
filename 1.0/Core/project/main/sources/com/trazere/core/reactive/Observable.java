@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ package com.trazere.core.reactive;
  * @param <E> Type of the events.
  * @see Observer
  * @see ObserverSubscription
+ * @since 1.0
  */
 public interface Observable<E> {
 	/**
@@ -36,6 +37,7 @@ public interface Observable<E> {
 	 * 
 	 * @param observer Observer to subscribe.
 	 * @return The resulting subcription.
+	 * @since 1.0
 	 */
 	ObserverSubscription subscribe(Observer<? super E> observer);
 }

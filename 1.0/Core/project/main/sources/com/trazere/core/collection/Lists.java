@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import java.util.List;
  * The {@link Lists} class provides various factories of {@link List lists}.
  * 
  * @see List
+ * @since 1.0
  */
 public class Lists {
 	/**
@@ -30,6 +31,7 @@ public class Lists {
 	 * 
 	 * @param <E> Type of the elements.
 	 * @return The built list.
+	 * @since 1.0
 	 */
 	public static <E> List<E> empty() {
 		return Collections.emptyList();
@@ -41,6 +43,7 @@ public class Lists {
 	 * @param <E> Type of the element.
 	 * @param element Element of the list to build.
 	 * @return The built list.
+	 * @since 1.0
 	 */
 	public static <E> List<E> fromElement(final E element) {
 		final List<E> list = new ArrayList<>(1);
@@ -55,6 +58,7 @@ public class Lists {
 	 * @param element1 First element of the list to build.
 	 * @param element2 Second element of the list to build.
 	 * @return The built list.
+	 * @since 1.0
 	 */
 	public static <E> List<E> fromElements(final E element1, final E element2) {
 		final List<E> list = new ArrayList<>(2);
@@ -71,6 +75,7 @@ public class Lists {
 	 * @param element2 Second element of the list to build.
 	 * @param element3 Third element of the list to build.
 	 * @return The built list.
+	 * @since 1.0
 	 */
 	public static <E> List<E> fromElements(final E element1, final E element2, final E element3) {
 		final List<E> list = new ArrayList<>(3);
@@ -89,6 +94,7 @@ public class Lists {
 	 * @param element3 Third element of the list to build.
 	 * @param element4 Fourth element of the list to build.
 	 * @return The built list.
+	 * @since 1.0
 	 */
 	public static <E> List<E> fromElements(final E element1, final E element2, final E element3, final E element4) {
 		final List<E> list = new ArrayList<>(4);
@@ -109,6 +115,7 @@ public class Lists {
 	 * @param element4 Fourth element of the list to build.
 	 * @param element5 Fifth element of the list to build.
 	 * @return The built list.
+	 * @since 1.0
 	 */
 	public static <E> List<E> fromElements(final E element1, final E element2, final E element3, final E element4, final E element5) {
 		final List<E> list = new ArrayList<>(5);
@@ -126,6 +133,7 @@ public class Lists {
 	 * @param <E> Type of the elements.
 	 * @param elements Elements of the list to build
 	 * @return The built list.
+	 * @since 1.0
 	 */
 	@SafeVarargs
 	public static <E> List<E> fromElements(final E... elements) {
@@ -142,6 +150,7 @@ public class Lists {
 	 * @param <E> Type of the elements.
 	 * @param iterable Iterable providing the elements of the list to build.
 	 * @return The built list.
+	 * @since 1.0
 	 */
 	public static <E> List<E> fromIterable(final Iterable<? extends E> iterable) {
 		final List<E> list = new ArrayList<>();

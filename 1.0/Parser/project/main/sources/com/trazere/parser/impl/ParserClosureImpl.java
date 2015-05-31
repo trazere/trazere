@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -67,7 +67,7 @@ implements ParserClosure<Token, Result> {
 		_handlers.add(handler);
 		
 		// Call the handlers.
-		// FIXME: proove that it is not possible to add a result to the receiver closure while calling the handlers or iterate over a copy of the results.
+		// FIXME: proove that it is not possible to add a result to this closure while calling the handlers or iterate over a copy of the results.
 		for (final Result result : _results) {
 			handler.result(result, state);
 		}
@@ -81,7 +81,7 @@ implements ParserClosure<Token, Result> {
 		_results.add(result);
 		
 		// Call the handlers.
-		// FIXME: proove that it is not possible to add a handler to the receiver closure while calling the handlers or iterate over a copy of the handler.
+		// FIXME: proove that it is not possible to add a handler to this closure while calling the handlers or iterate over a copy of the handler.
 		for (final ParserHandler<Token, ? super Result> handler : _handlers) {
 			handler.result(result, state);
 		}

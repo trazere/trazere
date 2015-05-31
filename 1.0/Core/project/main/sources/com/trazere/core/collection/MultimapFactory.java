@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ import java.util.Collection;
  * @param <C> Type of the collections of values.
  * @param <M> Type of the multimaps.
  * @see Multimap
+ * @since 1.0
  */
 public interface MultimapFactory<K, V, C extends Collection<V>, M extends Multimap<K, V, C>>
 extends Factory<M> {
@@ -34,6 +35,7 @@ extends Factory<M> {
 	 * Builds an empty multimap.
 	 * 
 	 * @return The built multimap.
+	 * @since 1.0
 	 */
 	@Override
 	M build();
@@ -43,6 +45,7 @@ extends Factory<M> {
 	 * 
 	 * @param bindings Bindings.
 	 * @return The built multimap.
+	 * @since 1.0
 	 */
 	default M build(@SuppressWarnings("unchecked") final Tuple2<? extends K, ? extends V>... bindings) {
 		final M multimap = build();
@@ -55,6 +58,7 @@ extends Factory<M> {
 	 * 
 	 * @param bindings Bindings.
 	 * @return The built multimap.
+	 * @since 1.0
 	 */
 	default M build(final Iterable<? extends Tuple2<? extends K, ? extends V>> bindings) {
 		final M multimap = build();
@@ -67,6 +71,7 @@ extends Factory<M> {
 	 * 
 	 * @param bindings Values.
 	 * @return The built multimap.
+	 * @since 1.0
 	 */
 	M build(Multimap<? extends K, ? extends V, ?> bindings);
 }

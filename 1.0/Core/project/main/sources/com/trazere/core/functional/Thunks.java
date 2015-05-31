@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import com.trazere.core.util.Maybe;
  * The {@link Thunks} class provides various factories of {@link Thunk thunks}.
  * 
  * @see Thunk
+ * @since 1.0
  */
 public class Thunks {
 	/**
@@ -31,6 +32,7 @@ public class Thunks {
 	 * @param <T> Type of the value.
 	 * @param value Value of the thunk.
 	 * @return The built thunk.
+	 * @since 1.0
 	 */
 	public static <T> MemoizedThunk<T> constant(final T value) {
 		return new MemoizedThunk<T>() {
@@ -57,6 +59,7 @@ public class Thunks {
 	 * @param <T> Type of the value.
 	 * @param exception Exception to throw.
 	 * @return The built thunk.
+	 * @since 1.0
 	 */
 	public static <T> Thunk<T> failure(final RuntimeException exception) {
 		assert null != exception;
@@ -72,6 +75,7 @@ public class Thunks {
 	 * @param <T> Type of the value.
 	 * @param throwableFactory Throwable factory to use.
 	 * @return The built thunk.
+	 * @since 1.0
 	 */
 	public static <T> Thunk<T> failure(final ThrowableFactory<? extends RuntimeException> throwableFactory) {
 		assert null != throwableFactory;
@@ -88,6 +92,7 @@ public class Thunks {
 	 * @param throwableFactory Throwable factory to use.
 	 * @param message Message of the throwable.
 	 * @return The built thunk.
+	 * @since 1.0
 	 */
 	public static <T> Thunk<T> failure(final ThrowableFactory<? extends RuntimeException> throwableFactory, final String message) {
 		assert null != throwableFactory;
@@ -103,6 +108,7 @@ public class Thunks {
 	 * @param <T> Type of the value.
 	 * @param factory Factory to lift.
 	 * @return The built thunk.
+	 * @since 1.0
 	 */
 	public static <T> Thunk<T> fromFactory(final Factory<T> factory) {
 		assert null != factory;

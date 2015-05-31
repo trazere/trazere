@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,9 +17,15 @@ package com.trazere.core.util;
 
 /**
  * The {@link Unit} class implements a data type which represents an empty value (sequence of 0 elements).
+ * 
+ * @since 1.0
  */
 public final class Unit {
-	/** Singleton instance. */
+	/**
+	 * Singleton instance.
+	 * 
+	 * @since 1.0
+	 */
 	public static final Unit UNIT = new Unit();
 	
 	private Unit() {

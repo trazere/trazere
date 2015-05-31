@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,12 +21,14 @@ import com.trazere.core.functional.Predicate;
  * The {@link TextPredicates} class provides various factories of {@link Predicate predicates} related to text.
  * 
  * @see Predicate
+ * @since 1.0
  */
 public class TextPredicates {
 	/**
 	 * Builds a predicate that evaluates to <code>true</code> for empty char sequences.
 	 * 
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	public static Predicate<CharSequence> isEmpty() {
 		return IS_EMPTY;

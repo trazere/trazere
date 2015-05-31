@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,12 +21,14 @@ package com.trazere.core.util;
  * The {@link Tag1} interface defines sum types that support a case associated to a first tag.
  * 
  * @param <T> Type of the case.
+ * @since 1.0
  */
 public interface Tag1<T extends Tag1<T>> {
 	/**
 	 * Indicates whether this object is an instance of the case associated to the first tag.
 	 * 
 	 * @return <code>true</code> when the object is an instance of the case associated to the first tag, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	default boolean is1() {
 		return false;
@@ -37,6 +39,7 @@ public interface Tag1<T extends Tag1<T>> {
 	 * 
 	 * @return The view.
 	 * @throws InvalidConstructorException When the object is not an instance of the case associated to the first tag.
+	 * @since 1.0
 	 */
 	default T as1()
 	throws InvalidConstructorException {

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import com.trazere.core.util.Tuple2;
  * The {@link ObservableMutableObject} class represents mutable object values whose changes can be observed.
  * 
  * @param <T> Type of the value.
+ * @since 1.0
  */
 public class ObservableMutableObject<T>
 extends MutableObject<T>
@@ -31,6 +32,7 @@ implements ObservableValue<T> {
 	 * Instantiates a new observable object with the given initial value.
 	 * 
 	 * @param value Initial value.
+	 * @since 1.0
 	 */
 	public ObservableMutableObject(final T value) {
 		this(value, new Broadcaster<T>());
@@ -41,6 +43,7 @@ implements ObservableValue<T> {
 	 * 
 	 * @param value Initial value.
 	 * @param broadcaster Broadcaster to use to fire the change events.
+	 * @since 1.0
 	 */
 	public ObservableMutableObject(final T value, final Broadcaster<T> broadcaster) {
 		super(value);
@@ -70,7 +73,11 @@ implements ObservableValue<T> {
 	
 	// Observable.
 	
-	/** Broadcaster to use to fire the change events. */
+	/**
+	 * Broadcaster to use to fire the change events.
+	 * 
+	 * @since 1.0
+	 */
 	protected final Broadcaster<T> _broadcaster;
 	
 	@Override

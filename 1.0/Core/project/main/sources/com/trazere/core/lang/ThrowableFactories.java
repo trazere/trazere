@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,9 +19,14 @@ package com.trazere.core.lang;
  * The {@link ThrowableFactories} class provides various {@link ThrowableFactory throwable factories}.
  * 
  * @see ThrowableFactory
+ * @since 1.0
  */
 public class ThrowableFactories {
-	/** Factory of {@link Exception} exceptions. */
+	/**
+	 * Factory of {@link Exception} exceptions.
+	 * 
+	 * @since 1.0
+	 */
 	public static final ThrowableFactory<Exception> EXCEPTION = new ThrowableFactory<Exception>() {
 		@Override
 		public Exception build() {
@@ -44,7 +49,11 @@ public class ThrowableFactories {
 		}
 	};
 	
-	/** Factory of {@link RuntimeException} exceptions. */
+	/**
+	 * Factory of {@link RuntimeException} exceptions.
+	 * 
+	 * @since 1.0
+	 */
 	public static final ThrowableFactory<RuntimeException> RUNTIME_EXCEPTION = new ThrowableFactory<RuntimeException>() {
 		@Override
 		public RuntimeException build() {
@@ -67,7 +76,11 @@ public class ThrowableFactories {
 		}
 	};
 	
-	/** Factory of {@link RuntimeException} exceptions. */
+	/**
+	 * Factory of {@link RuntimeException} exceptions.
+	 * 
+	 * @since 1.0
+	 */
 	public static final ThrowableFactory<IllegalArgumentException> ILLEGAL_ARGUMENT_EXCEPTION = new ThrowableFactory<IllegalArgumentException>() {
 		@Override
 		public IllegalArgumentException build() {

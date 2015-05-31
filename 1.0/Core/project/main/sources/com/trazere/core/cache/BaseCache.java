@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@ import java.util.Set;
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
+ * @since 1.0
  */
 public abstract class BaseCache<K, V>
 implements Cache<K, V>, Describable {
@@ -46,16 +47,25 @@ implements Cache<K, V>, Describable {
 	
 	// Retention.
 	
-	/** Retention policy of the cache. */
+	/**
+	 * Retention policy of the cache.
+	 * 
+	 * @since 1.0
+	 */
 	protected final CachePolicy<K> _policy;
 	
-	/** Retention state of the cache. */
+	/**
+	 * Retention state of the cache.
+	 * 
+	 * @since 1.0
+	 */
 	protected final CachePolicy.State<K> _policyState;
 	
 	/**
-	 * Gets the retention policy of the receiver cache.
+	 * Gets the retention policy of this cache.
 	 * 
 	 * @return The retention policy.
+	 * @since 1.0
 	 */
 	public CachePolicy<K> getPolicy() {
 		return _policy;
@@ -137,6 +147,7 @@ implements Cache<K, V>, Describable {
 	 * @param key Key of the entry.
 	 * @param value Value of the entry.
 	 * @return The previous value of the entry, or nothing when no entries was associated to the key.
+	 * @since 1.0
 	 */
 	protected abstract Maybe<V> setEntry(final K key, final V value);
 	
@@ -145,6 +156,7 @@ implements Cache<K, V>, Describable {
 	 * 
 	 * @param key Key of the entry to read.
 	 * @return The value of the entry associated to the key, or nothing when no entries is associated to the key.
+	 * @since 1.0
 	 */
 	protected abstract Maybe<V> getEntry(final K key);
 	
@@ -153,15 +165,17 @@ implements Cache<K, V>, Describable {
 	 * 
 	 * @param key Key of the entry to remove.
 	 * @return The value of the removed entry, or nothing when no entries is associated to the key.
+	 * @since 1.0
 	 */
 	protected abstract Maybe<V> removeEntry(final K key);
 	
 	/**
-	 * Dispose the given value which has been removed from the receiver cache.
+	 * Dispose the given value which has been removed from this cache.
 	 * <p>
 	 * This method is called whenever a value is removed from the cache.
 	 * 
 	 * @param value The value. May be <code>null</code>.
+	 * @since 1.0
 	 */
 	protected void dispose(final V value) {
 		// Nothing to do.

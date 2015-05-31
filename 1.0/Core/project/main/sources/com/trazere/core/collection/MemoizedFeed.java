@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,13 +22,22 @@ import com.trazere.core.util.Tuple2;
  * The {@link MemoizedFeed} class provides a skeleton implementation of feeds that memoize their value.
  * 
  * @param <E> Type of the elements.
+ * @since 1.0
  */
 public abstract class MemoizedFeed<E>
 implements Feed<E> {
-	/** Indicates whether the feed has been computed or not. */
+	/**
+	 * Indicates whether the feed has been computed or not.
+	 * 
+	 * @since 1.0
+	 */
 	protected boolean _evaluated = false;
 	
-	/** Head and tail of the feed. */
+	/**
+	 * Head and tail of the feed.
+	 * 
+	 * @since 1.0
+	 */
 	protected Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> _feed = null;
 	
 	@Override
@@ -44,6 +53,7 @@ implements Feed<E> {
 	 * Computes the head and tail of this feed.
 	 * 
 	 * @return The computed head and tail.
+	 * @since 1.0
 	 */
 	protected abstract Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> compute();
 }

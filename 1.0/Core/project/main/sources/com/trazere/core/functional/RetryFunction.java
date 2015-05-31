@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -28,6 +28,7 @@ import com.trazere.core.util.ResultUtils;
  * @param <A> Type of the arguments.
  * @param <R> Type of the results.
  * @see Function
+ * @since 1.0
  */
 public abstract class RetryFunction<A, R>
 implements Function<A, Result<R>>, FailureHandler<R> {
@@ -51,11 +52,12 @@ implements Function<A, Result<R>>, FailureHandler<R> {
 	}
 	
 	/**
-	 * Attempts to evaluate the receiver function.
+	 * Attempts to evaluate this function.
 	 * 
 	 * @param arg Argument to evaluate the function with.
 	 * @param failureCount Number of failures.
 	 * @return The result of the evaluation attempt.
+	 * @since 1.0
 	 */
 	protected abstract Result<R> attemptEvaluate(A arg, int failureCount);
 	
@@ -69,6 +71,7 @@ implements Function<A, Result<R>>, FailureHandler<R> {
 	 * @param failureFactory Factory of the failure.
 	 * @return The result.
 	 * @throws RuntimeException When the evaluation fails repeatedly.
+	 * @since 1.0
 	 */
 	public static <A, R> R evaluate(final RetryFunction<A, R> function, final A arg, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		return ResultUtils.get(function.evaluate(arg), failureFactory);

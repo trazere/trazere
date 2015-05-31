@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,16 +15,20 @@
  */
 package com.trazere.core.util;
 
+// TODO: rename to avoid confusion with record.Field ?
+
 /**
  * The {@link Field} interface defines abstract containers or providers of some value.
  * 
  * @param <T> Type of the value.
+ * @since 1.0
  */
 public interface Field<T> {
 	/**
 	 * Gets the value of the field.
 	 * 
 	 * @return The value.
+	 * @since 1.0
 	 */
 	T get();
 }

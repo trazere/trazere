@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -26,16 +26,28 @@ import com.trazere.core.util.Maybe;
  * The {@link Description} class helps to compute descriptions.
  * <p>
  * This class works as an accumulator of named properties that populates some string builder.
+ * 
+ * @since 1.0
  */
 public class Description {
-	/** String to populate with the description. */
+	/**
+	 * String to populate with the description.
+	 * 
+	 * @since 1.0
+	 */
 	protected final StringBuilder _builder;
 	
-	/** Indicates whether the description is still empty. */
+	/**
+	 * Indicates whether the description is still empty.
+	 * 
+	 * @since 1.0
+	 */
 	protected final MutableBoolean _empty;
 	
 	/**
 	 * Instantiates a new empty description.
+	 * 
+	 * @since 1.0
 	 */
 	public Description() {
 		this(new StringBuilder("["), true);
@@ -45,6 +57,7 @@ public class Description {
 	 * Instantiates a new description with the given header.
 	 * 
 	 * @param header Header of the description.
+	 * @since 1.0
 	 */
 	public Description(final String header) {
 		this(new StringBuilder("[").append(header), false);
@@ -55,6 +68,7 @@ public class Description {
 	 * 
 	 * @param builder Builder to populate.
 	 * @param empty Indicates whether the description is still empty.
+	 * @since 1.0
 	 */
 	public Description(final StringBuilder builder, final boolean empty) {
 		assert null != builder;
@@ -65,10 +79,11 @@ public class Description {
 	}
 	
 	/**
-	 * Appends the given empty property to the receiver description.
+	 * Appends the given empty property to this description.
 	 * 
 	 * @param name Name of the property.
-	 * @return The receiver description.
+	 * @return this description.
+	 * @since 1.0
 	 */
 	public Description append(final String name) {
 		if (_empty.get()) {
@@ -82,11 +97,12 @@ public class Description {
 	}
 	
 	/**
-	 * Appends the given property to the receiver description.
+	 * Appends the given property to this description.
 	 * 
 	 * @param name Name of the property.
 	 * @param value Value of the property.
-	 * @return The receiver description.
+	 * @return this description.
+	 * @since 1.0
 	 */
 	public Description append(final String name, final Object value) {
 		append(name);
@@ -96,90 +112,98 @@ public class Description {
 	}
 	
 	/**
-	 * Appends the given boolean property to the receiver description.
+	 * Appends the given boolean property to this description.
 	 * 
 	 * @param name Name of the property.
 	 * @param value Value of the property.
-	 * @return The receiver description.
+	 * @return this description.
+	 * @since 1.0
 	 */
 	public Description append(final String name, final boolean value) {
 		return append(name, Boolean.valueOf(value));
 	}
 	
 	/**
-	 * Appends the given byte property to the receiver description.
+	 * Appends the given byte property to this description.
 	 * 
 	 * @param name Name of the property.
 	 * @param value Value of the property.
-	 * @return The receiver description.
+	 * @return this description.
+	 * @since 1.0
 	 */
 	public Description append(final String name, final byte value) {
 		return append(name, Byte.valueOf(value));
 	}
 	
 	/**
-	 * Appends the given integer property to the receiver description.
+	 * Appends the given integer property to this description.
 	 * 
 	 * @param name Name of the property.
 	 * @param value Value of the property.
-	 * @return The receiver description.
+	 * @return this description.
+	 * @since 1.0
 	 */
 	public Description append(final String name, final int value) {
 		return append(name, Integer.valueOf(value));
 	}
 	
 	/**
-	 * Appends the given long integer property to the receiver description.
+	 * Appends the given long integer property to this description.
 	 * 
 	 * @param name Name of the property.
 	 * @param value Value of the property.
-	 * @return The receiver description.
+	 * @return this description.
+	 * @since 1.0
 	 */
 	public Description append(final String name, final long value) {
 		return append(name, Long.valueOf(value));
 	}
 	
 	/**
-	 * Appends the given float property to the receiver description.
+	 * Appends the given float property to this description.
 	 * 
 	 * @param name Name of the property.
 	 * @param value Value of the property.
-	 * @return The receiver description.
+	 * @return this description.
+	 * @since 1.0
 	 */
 	public Description append(final String name, final float value) {
 		return append(name, Float.valueOf(value));
 	}
 	
 	/**
-	 * Appends the given double property to the receiver description.
+	 * Appends the given double property to this description.
 	 * 
 	 * @param name Name of the property.
 	 * @param value Value of the property.
-	 * @return The receiver description.
+	 * @return this description.
+	 * @since 1.0
 	 */
 	public Description append(final String name, final double value) {
 		return append(name, Double.valueOf(value));
 	}
 	
 	/**
-	 * Appends the given char property to the receiver description.
+	 * Appends the given char property to this description.
 	 * 
 	 * @param name Name of the property.
 	 * @param value Value of the property.
-	 * @return The receiver description.
+	 * @return this description.
+	 * @since 1.0
 	 */
 	public Description append(final String name, final char value) {
 		return append(name, Character.valueOf(value));
 	}
 	
 	/**
-	 * Appends the given optional property to the receiver description.
+	 * Appends the given optional property to this description.
 	 * <p>
 	 * Nothing is appended when the property has no values.
 	 * 
 	 * @param name Name of the property.
 	 * @param value Value of the property.
-	 * @return The receiver description.
+	 * @return this description.
+	 * @since 1.0
 	 */
 	public Description append(final String name, final Maybe<?> value) {
 		assert null != name;
@@ -195,9 +219,10 @@ public class Description {
 	// TODO: append(String, Iterable)
 	
 	/**
-	 * Gets the resulting representation of the receiver description.
+	 * Gets the resulting representation of this description.
 	 * 
 	 * @return The string representation.
+	 * @since 1.0
 	 */
 	@Override
 	public String toString() {

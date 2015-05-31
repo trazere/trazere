@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,7 +19,11 @@ import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Predicate;
 
 /**
- * The {@link MaybeFunctions} class provides various functions related to {@link Maybe}s.
+ * The {@link MaybeFunctions} class provides various factories of {@link Function functions} related to {@link Maybe maybes}.
+ * 
+ * @see Function
+ * @see Maybe
+ * @since 1.0
  */
 public class MaybeFunctions {
 	/**
@@ -28,6 +32,7 @@ public class MaybeFunctions {
 	 * @param <T> Type of the values.
 	 * @return The built function.
 	 * @see Maybe#some(Object)
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<T, Maybe<T>> some() {
@@ -42,6 +47,7 @@ public class MaybeFunctions {
 	 * @param <T> Type of the values.
 	 * @return The built function.
 	 * @see MaybeUtils#fromNullable(Object)
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<T, Maybe<T>> fromNullable() {
@@ -56,6 +62,7 @@ public class MaybeFunctions {
 	 * @param <T> Type of the values.
 	 * @return The built function.
 	 * @see MaybeUtils#toNullable(Maybe)
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<Maybe<T>, T> toNullable() {
@@ -71,6 +78,7 @@ public class MaybeFunctions {
 	 * @param filter Predicate to use to filter the value.
 	 * @return The built function.
 	 * @see Maybe#filter(Predicate)
+	 * @since 1.0
 	 */
 	public static <T> Function<Maybe<? extends T>, Maybe<? extends T>> filter(final Predicate<? super T> filter) {
 		assert null != filter;
@@ -86,6 +94,7 @@ public class MaybeFunctions {
 	 * @param function Function to use to transform the value.
 	 * @return The built function.
 	 * @see Maybe#map(Function)
+	 * @since 1.0
 	 */
 	public static <T, R> Function<Maybe<? extends T>, Maybe<R>> map(final Function<? super T, ? extends R> function) {
 		assert null != function;
@@ -101,6 +110,7 @@ public class MaybeFunctions {
 	 * @param function Function to use to transform the value.
 	 * @return The built function.
 	 * @see Maybe#flatMap(Function)
+	 * @since 1.0
 	 */
 	public static <T, R> Function<Maybe<? extends T>, Maybe<R>> flatMap(final Function<? super T, ? extends Maybe<? extends R>> function) {
 		assert null != function;

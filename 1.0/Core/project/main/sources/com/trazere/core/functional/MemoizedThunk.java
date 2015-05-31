@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ import com.trazere.core.util.Maybe;
  * Memoized thunks simulate the call-by-need evaluation strategy whereas non-memoized thunks simulate the call-by-name evaluation strategy.
  * 
  * @param <T> Type of the value.
+ * @since 1.0
  */
 public interface MemoizedThunk<T>
 extends Thunk<T> {
@@ -31,6 +32,7 @@ extends Thunk<T> {
 	 * Indicates whether the value of this thunk has already been evaluated and memoized.
 	 * 
 	 * @return <code>true</code> when the value has been evaluated and memoized, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	boolean isMemoized();
 	
@@ -38,6 +40,7 @@ extends Thunk<T> {
 	 * Gets the memoized value of this thunk without evaluation.
 	 * 
 	 * @return The memoized value, or nothing when the value has not been evaluated and memoized yet.
+	 * @since 1.0
 	 */
 	Maybe<T> get();
 }

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ import java.util.Map;
  * The {@link Maps} class provides various factories of {@link Map maps}.
  * 
  * @see Map
+ * @since 1.0
  */
 public class Maps {
 	/**
@@ -32,6 +33,7 @@ public class Maps {
 	 * @param <K> Type of the key.
 	 * @param <V> Type of the value.
 	 * @return The built map.
+	 * @since 1.0
 	 */
 	public static <K, V> Map<K, V> empty() {
 		return Collections.emptyMap();
@@ -45,6 +47,7 @@ public class Maps {
 	 * @param key Key of the binding of the map to build.
 	 * @param value Value of the binding of the map to build.
 	 * @return The built map.
+	 * @since 1.0
 	 */
 	public static <K, V> Map<K, V> fromBinding(final K key, final V value) {
 		final Map<K, V> map = new HashMap<>();
@@ -62,6 +65,7 @@ public class Maps {
 	 * @param key2 Key of the second binding of the map to build.
 	 * @param value2 Value of the second binding of the map to build.
 	 * @return The built map.
+	 * @since 1.0
 	 */
 	public static <K, V> Map<K, V> fromBindings(final K key1, final V value1, final K key2, final V value2) {
 		final Map<K, V> map = new HashMap<>(2);
@@ -82,6 +86,7 @@ public class Maps {
 	 * @param key3 Key of the third binding of the map to build.
 	 * @param value3 Value of the third binding of the map to build.
 	 * @return The built map.
+	 * @since 1.0
 	 */
 	public static <K, V> Map<K, V> fromBindings(final K key1, final V value1, final K key2, final V value2, final K key3, final V value3) {
 		final Map<K, V> map = new HashMap<>(3);
@@ -105,6 +110,7 @@ public class Maps {
 	 * @param key4 Key of the fourth binding of the map to build.
 	 * @param value4 Value of the fourth binding of the map to build.
 	 * @return The built map.
+	 * @since 1.0
 	 */
 	public static <K, V> Map<K, V> fromBindings(final K key1, final V value1, final K key2, final V value2, final K key3, final V value3, final K key4, final V value4) {
 		final Map<K, V> map = new HashMap<>(4);
@@ -131,6 +137,7 @@ public class Maps {
 	 * @param key5 Key of the fifth binding of the map to build.
 	 * @param value5 Value of the fifth binding of the map to build.
 	 * @return The built map.
+	 * @since 1.0
 	 */
 	public static <K, V> Map<K, V> fromBindings(final K key1, final V value1, final K key2, final V value2, final K key3, final V value3, final K key4, final V value4, final K key5, final V value5) {
 		final Map<K, V> map = new HashMap<>(5);
@@ -149,6 +156,7 @@ public class Maps {
 	 * @param <V> Type of the values.
 	 * @param bindings Bindings of the map to build.
 	 * @return The built map.
+	 * @since 1.0
 	 */
 	@SafeVarargs
 	public static <K, V> Map<K, V> fromBindings(final Tuple2<? extends K, ? extends V>... bindings) {
@@ -166,6 +174,7 @@ public class Maps {
 	 * @param <V> Type of the values.
 	 * @param iterable Iterable providing the bindings of the map to build.
 	 * @return The built map.
+	 * @since 1.0
 	 */
 	public static <K, V> Map<K, V> fromBindings(final Iterable<? extends Tuple2<? extends K, ? extends V>> iterable) {
 		final Map<K, V> map = new HashMap<>();

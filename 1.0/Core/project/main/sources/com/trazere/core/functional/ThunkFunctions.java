@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -16,7 +16,11 @@
 package com.trazere.core.functional;
 
 /**
- * The {@link ThunkFunctions} class provides various factories of functions related to {@link Thunk thunks}.
+ * The {@link ThunkFunctions} class provides various factories of {@link Function functions} related to {@link Thunk thunks}.
+ * 
+ * @see Function
+ * @see Thunk
+ * @since 1.0
  */
 public class ThunkFunctions {
 	/**
@@ -24,6 +28,7 @@ public class ThunkFunctions {
 	 *
 	 * @param <T> Type of the values.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<Thunk<? extends T>, T> evaluate() {

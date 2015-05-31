@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import java.util.Set;
  * The {@link Multimaps} class provides various factories of {@link Multimap multimaps}.
  * 
  * @see Multimap
+ * @since 1.0
  */
 public class Multimaps {
 	/**
@@ -35,6 +36,7 @@ public class Multimaps {
 	 * @param <C> Type of the collections of values.
 	 * @param valuesFactory Factory of the collections of values.
 	 * @return The built multimap.
+	 * @since 1.0
 	 */
 	public static <K, V, C extends Collection<V>> Multimap<K, V, C> empty(final ExtendedAbstractCollectionFactory<?, ? extends C, ?> valuesFactory) {
 		assert null != valuesFactory;
@@ -156,6 +158,7 @@ public class Multimaps {
 	 * @param key Key of the binding of the multimap to build.
 	 * @param value Value of the binding of the multimap to build.
 	 * @return The built multimap.
+	 * @since 1.0
 	 */
 	public static <K, V, C extends Collection<V>> Multimap<K, V, C> fromBinding(final ExtendedAbstractCollectionFactory<V, C, ?> valuesFactory, final K key, final V value) {
 		final Multimap<K, V, C> multimap = new MapMultimap<>(MapFactories.hashMap(), valuesFactory);
@@ -175,6 +178,7 @@ public class Multimaps {
 	 * @param key2 Key of the second binding of the multimap to build.
 	 * @param value2 Value of the second binding of the multimap to build.
 	 * @return The built multimap.
+	 * @since 1.0
 	 */
 	public static <K, V, C extends Collection<V>> Multimap<K, V, C> fromBindings(final ExtendedAbstractCollectionFactory<V, C, ?> valuesFactory, final K key1, final V value1, final K key2, final V value2) {
 		final Multimap<K, V, C> multimap = new MapMultimap<>(MapFactories.hashMap(), valuesFactory);
@@ -197,6 +201,7 @@ public class Multimaps {
 	 * @param key3 Key of the third binding of the multimap to build.
 	 * @param value3 Value of the third binding of the multimap to build.
 	 * @return The built multimap.
+	 * @since 1.0
 	 */
 	public static <K, V, C extends Collection<V>> Multimap<K, V, C> fromBindings(final ExtendedAbstractCollectionFactory<V, C, ?> valuesFactory, final K key1, final V value1, final K key2, final V value2, final K key3, final V value3) {
 		final Multimap<K, V, C> multimap = new MapMultimap<>(MapFactories.hashMap(), valuesFactory);
@@ -222,6 +227,7 @@ public class Multimaps {
 	 * @param key4 Key of the fourth binding of the multimap to build.
 	 * @param value4 Value of the fourth binding of the multimap to build.
 	 * @return The built multimap.
+	 * @since 1.0
 	 */
 	public static <K, V, C extends Collection<V>> Multimap<K, V, C> fromBindings(final ExtendedAbstractCollectionFactory<V, C, ?> valuesFactory, final K key1, final V value1, final K key2, final V value2, final K key3, final V value3, final K key4, final V value4) {
 		final Multimap<K, V, C> multimap = new MapMultimap<>(MapFactories.hashMap(), valuesFactory);
@@ -250,6 +256,7 @@ public class Multimaps {
 	 * @param key5 Key of the fifth binding of the multimap to build.
 	 * @param value5 Value of the fifth binding of the multimap to build.
 	 * @return The built multimap.
+	 * @since 1.0
 	 */
 	public static <K, V, C extends Collection<V>> Multimap<K, V, C> fromBindings(final ExtendedAbstractCollectionFactory<V, C, ?> valuesFactory, final K key1, final V value1, final K key2, final V value2, final K key3, final V value3, final K key4, final V value4, final K key5, final V value5) {
 		final Multimap<K, V, C> multimap = new MapMultimap<>(MapFactories.hashMap(), valuesFactory);
@@ -270,6 +277,7 @@ public class Multimaps {
 	 * @param valuesFactory Factory of the collections of values.
 	 * @param bindings Bindings of the multimap to build.
 	 * @return The built multimap.
+	 * @since 1.0
 	 */
 	@SafeVarargs
 	public static <K, V, C extends Collection<V>> Multimap<K, V, C> fromBindings(final ExtendedAbstractCollectionFactory<V, C, ?> valuesFactory, final Tuple2<? extends K, ? extends V>... bindings) {
@@ -289,6 +297,7 @@ public class Multimaps {
 	 * @param valuesFactory Factory of the collections of values.
 	 * @param iterable Iterable providing the bindings of the multimap to build.
 	 * @return The built multimap.
+	 * @since 1.0
 	 */
 	public static <K, V, C extends Collection<V>> Multimap<K, V, C> fromBindings(final ExtendedAbstractCollectionFactory<V, C, ?> valuesFactory, final Iterable<? extends Tuple2<? extends K, ? extends V>> iterable) {
 		final Multimap<K, V, C> multimap = new MapMultimap<>(MapFactories.hashMap(), valuesFactory);

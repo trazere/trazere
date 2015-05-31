@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -20,7 +20,11 @@ import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 
 /**
- * The {@link Accumulators} class provides various factories of accumulators.
+ * The {@link Accumulators} class provides various factories of {@link Accumulator accumulators}.
+ * 
+ * @see Accumulator
+ * @see Accumulator2
+ * @since 1.0
  */
 public class Accumulators {
 	/**
@@ -30,6 +34,7 @@ public class Accumulators {
 	 * @param <S> Type of the state.
 	 * @param state State of the accumulator.
 	 * @return The built accumulator.
+	 * @since 1.0
 	 */
 	public static <E, S> Accumulator<E, S> constant(final S state) {
 		return new Accumulator<E, S>() {
@@ -50,6 +55,7 @@ public class Accumulators {
 	 *
 	 * @param <E> Type of the accumulated elements.
 	 * @return The built accumulator.
+	 * @since 1.0
 	 */
 	public static <E> Accumulator<E, Maybe<E>> first() {
 		return new Accumulator<E, Maybe<E>>() {
@@ -74,6 +80,7 @@ public class Accumulators {
 	 *
 	 * @param <E> Type of the accumulated elements.
 	 * @return The built accumulator.
+	 * @since 1.0
 	 */
 	public static <E> Accumulator<E, Integer> counter() {
 		return new Accumulator<E, Integer>() {
@@ -99,6 +106,7 @@ public class Accumulators {
 	 * @param <S> Type of the state.
 	 * @param state State of the accumulator.
 	 * @return The built accumulator.
+	 * @since 1.0
 	 */
 	public static <E1, E2, S> Accumulator2<E1, E2, S> constant2(final S state) {
 		return new Accumulator2<E1, E2, S>() {
@@ -120,6 +128,7 @@ public class Accumulators {
 	 * @param <E1> Type of the first element of the accumulated pairs.
 	 * @param <E2> Type of the second element of the accumulated pairs.
 	 * @return The built accumulator.
+	 * @since 1.0
 	 */
 	public static <E1, E2> Accumulator2<E1, E2, Maybe<Tuple2<E1, E2>>> first2() {
 		return new Accumulator2<E1, E2, Maybe<Tuple2<E1, E2>>>() {
@@ -145,6 +154,7 @@ public class Accumulators {
 	 * @param <E1> Type of the first element of the accumulated pairs.
 	 * @param <E2> Type of the second element of the accumulated pairs.
 	 * @return The built accumulator.
+	 * @since 1.0
 	 */
 	public static <E1, E2> Accumulator2<E1, E2, Integer> counter2() {
 		return new Accumulator2<E1, E2, Integer>() {
@@ -170,6 +180,7 @@ public class Accumulators {
 	 * @param <S> Type of the state.
 	 * @param accumulator Accumulator to curry.
 	 * @return The built accumulator.
+	 * @since 1.0
 	 */
 	public static <E1, E2, S> Accumulator2<E1, E2, S> curry(final Accumulator<? super Tuple2<E1, E2>, ? extends S> accumulator) {
 		assert null != accumulator;
@@ -195,6 +206,7 @@ public class Accumulators {
 	 * @param <S> Type of the state.
 	 * @param accumulator Accumulator to uncurry.
 	 * @return The built accumulator.
+	 * @since 1.0
 	 */
 	public static <E1, E2, S> Accumulator<Tuple2<E1, E2>, S> uncurry(final Accumulator2<? super E1, ? super E2, ? extends S> accumulator) {
 		assert null != accumulator;

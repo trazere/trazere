@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ package com.trazere.core.functional;
  * 
  * @param <T> Upper bound type.
  * @param <R> Type of the results.
+ * @since 1.0
  */
 public interface ObjectTypeFunction<T, R>
 extends Function<Class<? extends T>, R> {

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import java.util.TreeSet;
  * The {@link CollectionFactories} class provides various factories of {@link CollectionFactory collection factories}.
  * 
  * @see CollectionFactory
+ * @since 1.0
  */
 public class CollectionFactories {
 	/**
@@ -33,6 +34,7 @@ public class CollectionFactories {
 	 * @param <E> Type of the elements.
 	 * @return The built factory.
 	 * @see ArrayList
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <E> ExtendedListFactory<E, ArrayList<E>> arrayList() {
@@ -62,6 +64,7 @@ public class CollectionFactories {
 	 * @param <E> Type of the elements.
 	 * @return The built factory.
 	 * @see LinkedList
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <E> ExtendedListFactory<E, LinkedList<E>> linkedList() {
@@ -86,6 +89,7 @@ public class CollectionFactories {
 	 * @param <E> Type of the elements.
 	 * @return The built factory.
 	 * @see HashSet
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <E> ExtendedSetFactory<E, HashSet<E>> hashSet() {
@@ -115,6 +119,7 @@ public class CollectionFactories {
 	 * @param <E> Type of the elements.
 	 * @return The built factory.
 	 * @see TreeSet
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <E> ExtendedSetFactory<E, TreeSet<E>> treeSet() {

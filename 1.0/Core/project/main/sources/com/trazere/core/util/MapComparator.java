@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,16 +22,22 @@ import java.util.Comparator;
  * 
  * @param <T> Type of the values.
  * @param <V> Type of the mapped values.
+ * @since 1.0
  */
 public abstract class MapComparator<T, V>
 implements Comparator<T> {
-	/** The comparator to use. */
+	/**
+	 * The comparator to use.
+	 * 
+	 * @since 1.0
+	 */
 	protected final Comparator<? super V> _comparator;
 	
 	/**
 	 * Instantiates a new comparator.
 	 * 
 	 * @param comparator Comparator to use.
+	 * @since 1.0
 	 */
 	public MapComparator(final Comparator<? super V> comparator) {
 		assert null != comparator;
@@ -50,6 +56,7 @@ implements Comparator<T> {
 	 * 
 	 * @param object Object to map.
 	 * @return The comparison value.
+	 * @since 1.0
 	 */
 	protected abstract V mapValue(final T object);
 }

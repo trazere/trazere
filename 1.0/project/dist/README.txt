@@ -14,7 +14,7 @@ This project aims at providing various generic tools:
 Licensing
 ---------
 
-  Copyright 2006-2013 Julien Dufour
+  Copyright 2006-2015 Julien Dufour
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.

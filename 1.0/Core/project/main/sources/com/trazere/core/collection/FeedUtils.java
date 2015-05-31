@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -28,7 +28,10 @@ import java.util.Comparator;
 import java.util.NoSuchElementException;
 
 /**
- * The {@link FeedUtils} class provides various utilities regarding feeds.
+ * The {@link FeedUtils} class provides various utilities regarding {@link Feed feeds}.
+ * 
+ * @see Feed
+ * @since 1.0
  */
 public class FeedUtils {
 	/**
@@ -39,6 +42,7 @@ public class FeedUtils {
 	 * @param <E> Type of the elements.
 	 * @param feed Feed to read.
 	 * @return The head element, or nothing when the feed is empty.
+	 * @since 1.0
 	 */
 	public static <E> Maybe<E> head(final Feed<? extends E> feed) {
 		return !feed.isEmpty() ? Maybe.<E>some(feed.getHead()) : Maybe.<E>none();
@@ -52,6 +56,7 @@ public class FeedUtils {
 	 * @param <E> Type of the elements.
 	 * @param feed Feed to read.
 	 * @return The of the feed, or an empty feed when the feed is empty.
+	 * @since 1.0
 	 */
 	public static <E> Feed<? extends E> tail(final Feed<? extends E> feed) {
 		return !feed.isEmpty() ? feed.getTail() : Feeds.<E>empty();
@@ -63,6 +68,7 @@ public class FeedUtils {
 	 * @param <E> Type of the elements.
 	 * @param feed Feed of elements.
 	 * @param procedure Procedure to execute.
+	 * @since 1.0
 	 */
 	public static <E> void foreach(final Feed<? extends E> feed, final Procedure<? super E> procedure) {
 		IteratorUtils.foreach(feed.iterator(), procedure);
@@ -77,6 +83,7 @@ public class FeedUtils {
 	 * @param operator Binary operator to use.
 	 * @param initialState Initial state.
 	 * @return The folded state.
+	 * @since 1.0
 	 */
 	public static <E, S> S fold(final Feed<? extends E> feed, final Function2<? super S, ? super E, ? extends S> operator, final S initialState) {
 		return IteratorUtils.fold(feed.iterator(), operator, initialState);
@@ -89,6 +96,7 @@ public class FeedUtils {
 	 * @param feed Feed of the elements to test.
 	 * @param filter Predicate to use to filter the elements.
 	 * @return The first accepted element.
+	 * @since 1.0
 	 */
 	public static <E> Maybe<E> first(final Feed<? extends E> feed, final Predicate<? super E> filter) {
 		return IteratorUtils.first(feed.iterator(), filter);
@@ -102,6 +110,7 @@ public class FeedUtils {
 	 * @param collection Collection containing the elements to extract from.
 	 * @param extractor Function to use to extract the elements.
 	 * @return The first extracted element.
+	 * @since 1.0
 	 */
 	public static <E, EE> Maybe<EE> extractFirst(final Iterable<? extends E> collection, final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
 		return IteratorUtils.extractFirst(collection.iterator(), extractor);
@@ -114,6 +123,7 @@ public class FeedUtils {
 	 * @param feed Feed of the elements to test.
 	 * @param filter Predicate to use to filter the elements.
 	 * @return <code>true</code> when some element is accepted, <code>false</code> when all elements are rejected.
+	 * @since 1.0
 	 */
 	public static <E> boolean isAny(final Feed<? extends E> feed, final Predicate<? super E> filter) {
 		return IteratorUtils.isAny(feed.iterator(), filter);
@@ -126,6 +136,7 @@ public class FeedUtils {
 	 * @param feed Feed of the elements to test.
 	 * @param filter Predicate to use to filter the elements.
 	 * @return <code>true</code> when all elements are accepted, <code>false</code> when some element is rejected.
+	 * @since 1.0
 	 */
 	public static <E> boolean areAll(final Feed<? extends E> feed, final Predicate<? super E> filter) {
 		return IteratorUtils.areAll(feed.iterator(), filter);
@@ -138,6 +149,7 @@ public class FeedUtils {
 	 * @param feed Feed of the elements to count.
 	 * @param filter Predicate to use to filter the elements.
 	 * @return The number of accepted elements.
+	 * @since 1.0
 	 */
 	public static <E> int count(final Feed<? extends E> feed, final Predicate<? super E> filter) {
 		return IteratorUtils.count(feed.iterator(), filter);
@@ -149,6 +161,7 @@ public class FeedUtils {
 	 * @param <E> Type of the elements.
 	 * @param feed Feed of the elements.
 	 * @return The least element.
+	 * @since 1.0
 	 */
 	public static <E extends Comparable<E>> Maybe<E> least(final Feed<? extends E> feed) {
 		return IteratorUtils.least(feed.iterator());
@@ -161,6 +174,7 @@ public class FeedUtils {
 	 * @param feed Feed of the elements.
 	 * @param comparator Comparator to use.
 	 * @return The least element.
+	 * @since 1.0
 	 */
 	public static <E> Maybe<E> least(final Feed<? extends E> feed, final Comparator<? super E> comparator) {
 		return IteratorUtils.least(feed.iterator(), comparator);
@@ -172,6 +186,7 @@ public class FeedUtils {
 	 * @param <E> Type of the elements.
 	 * @param feed Feed of the elements.
 	 * @return The greatest element.
+	 * @since 1.0
 	 */
 	public static <E extends Comparable<E>> Maybe<E> greatest(final Feed<? extends E> feed) {
 		return IteratorUtils.greatest(feed.iterator());
@@ -184,6 +199,7 @@ public class FeedUtils {
 	 * @param feed Feed of the elements.
 	 * @param comparator Comparator to use.
 	 * @return The greatest element.
+	 * @since 1.0
 	 */
 	public static <E> Maybe<E> greatest(final Feed<? extends E> feed, final Comparator<? super E> comparator) {
 		return IteratorUtils.greatest(feed.iterator(), comparator);
@@ -195,6 +211,7 @@ public class FeedUtils {
 	 * @param <E> Type of the elements.
 	 * @param feed Feed to memoize.
 	 * @return The built feed.
+	 * @since 1.0
 	 */
 	public static <E> Feed<E> memoize(final Feed<? extends E> feed) {
 		assert null != feed;
@@ -220,6 +237,7 @@ public class FeedUtils {
 	 * @param feed First feed.
 	 * @param appendedFeed Second feed.
 	 * @return The built feed.
+	 * @since 1.0
 	 */
 	public static <E> Feed<E> append(final Feed<? extends E> feed, final Feed<? extends E> appendedFeed) {
 		assert null != feed;
@@ -245,6 +263,7 @@ public class FeedUtils {
 	 * @param <E> Type of the elements.
 	 * @param feed Feed of the feeds of the elements to flatten.
 	 * @return A feed of the flatten elements.
+	 * @since 1.0
 	 */
 	public static <E> Feed<E> flatten(final Feed<? extends Feed<? extends E>> feed) {
 		assert null != feed;
@@ -279,6 +298,7 @@ public class FeedUtils {
 	 * @param feed Feed to take from.
 	 * @param n Number of elements to take.
 	 * @return A feed of the taken elements.
+	 * @since 1.0
 	 */
 	public static <E> Feed<E> take(final Feed<? extends E> feed, final int n) {
 		assert null != feed;
@@ -308,6 +328,7 @@ public class FeedUtils {
 	 * @param feed Feed to take from.
 	 * @param predicate Filter predicate.
 	 * @return A feed of the taken elements.
+	 * @since 1.0
 	 */
 	public static <E> Feed<E> takeWhile(final Feed<? extends E> feed, final Predicate<? super E> predicate) {
 		assert null != feed;
@@ -339,6 +360,7 @@ public class FeedUtils {
 	 * @param feed Feed to drop from.
 	 * @param n Number of elements to drop.
 	 * @return A feed of the remaining elements.
+	 * @since 1.0
 	 */
 	public static <E> Feed<E> drop(final Feed<? extends E> feed, final int n) {
 		assert null != feed;
@@ -372,6 +394,7 @@ public class FeedUtils {
 	 * @param feed Feed to drop from.
 	 * @param predicate Filter predicate.
 	 * @return A feed of the remaining elements.
+	 * @since 1.0
 	 */
 	public static <E> Feed<E> dropWhile(final Feed<? extends E> feed, final Predicate<? super E> predicate) {
 		assert null != feed;
@@ -407,6 +430,7 @@ public class FeedUtils {
 	 * @param n Number of elements of each batch.
 	 * @param batchFactory Factory of the batch collections.
 	 * @return A feed of the groups of elements.
+	 * @since 1.0
 	 */
 	public static <E, B extends Collection<? super E>> Feed<B> group(final Feed<? extends E> feed, final int n, final CollectionFactory<? super E, B> batchFactory) {
 		assert null != feed;
@@ -445,6 +469,7 @@ public class FeedUtils {
 	 * @param feed Feed of the elements to filter.
 	 * @param filter Predicate to use to filter the elements.
 	 * @return A feed of the filtered elements.
+	 * @since 1.0
 	 */
 	public static <E> Feed<E> filter(final Feed<? extends E> feed, final Predicate<? super E> filter) {
 		assert null != feed;
@@ -480,6 +505,7 @@ public class FeedUtils {
 	 * @param feed Feed of the elements to transform.
 	 * @param function Function to use to transform the elements.
 	 * @return A feed of the transformed elements.
+	 * @since 1.0
 	 */
 	public static <E, TE> Feed<TE> map(final Feed<? extends E> feed, final Function<? super E, ? extends TE> function) {
 		assert null != feed;
@@ -522,6 +548,7 @@ public class FeedUtils {
 	 * @param feed Feed of the elements to transform.
 	 * @param function Function to use to transform the elements.
 	 * @return An feed of the flatten, transformed elements.
+	 * @since 1.0
 	 */
 	public static <E, TE> Feed<TE> flatMap(final Feed<? extends E> feed, final Function<? super E, ? extends Feed<? extends TE>> function) {
 		return flatten(map(feed, function));
@@ -535,6 +562,7 @@ public class FeedUtils {
 	 * @param feed Feed of the elements to extract from.
 	 * @param extractor Function to use to extract the elements.
 	 * @return A feed of the extracted elements.
+	 * @since 1.0
 	 */
 	public static <E, EE> Feed<EE> extract(final Feed<? extends E> feed, final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
 		assert null != extractor;
@@ -553,6 +581,7 @@ public class FeedUtils {
 	 * @param feed1 Feed containing the first elements of the pairs.
 	 * @param feed2 Feed containing the second elements of the pairs.
 	 * @return A feed of the pairs of elements.
+	 * @since 1.0
 	 */
 	public static <E1, E2> Feed<Tuple2<E1, E2>> zip(final Feed<? extends E1> feed1, final Feed<? extends E2> feed2) {
 		return new MemoizedFeed<Tuple2<E1, E2>>() {

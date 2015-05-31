@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,10 +15,15 @@
  */
 package com.trazere.core.collection;
 
+import com.trazere.core.imperative.Accumulator;
 import com.trazere.core.imperative.Accumulator2;
 
 /**
- * The {@link MultimapAccumulators} class provides various factories of accumulators related to collections.
+ * The {@link MultimapAccumulators} class provides various factories of {@link Accumulator accumulators} related to {@link Multimap multimaps}.
+ * 
+ * @see Accumulator
+ * @see Multimap
+ * @since 1.0
  */
 public class MultimapAccumulators {
 	/**
@@ -30,6 +35,7 @@ public class MultimapAccumulators {
 	 * @param multimap Multimap to populate.
 	 * @return The built accumulator.
 	 * @see Multimap#put(Object, Object)
+	 * @since 1.0
 	 */
 	public static <K, V, M extends Multimap<? super K, ? super V, ?>> Accumulator2<K, V, M> put(final M multimap) {
 		assert null != multimap;

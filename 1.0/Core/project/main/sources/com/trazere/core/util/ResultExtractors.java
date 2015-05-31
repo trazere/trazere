@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -18,7 +18,14 @@ package com.trazere.core.util;
 import com.trazere.core.functional.Function;
 
 /**
- * The {@link ResultExtractors} class provides various extractors related to {@link Result}s.
+ * The {@link ResultExtractors} class provides various extractors related to {@link Result results}.
+ * <p>
+ * An extractor is {@link Function function} that combines a map operation and a filter operation.
+ * 
+ * @see Function
+ * @see Maybe
+ * @see Result
+ * @since 1.0
  */
 public class ResultExtractors {
 	/**
@@ -26,6 +33,7 @@ public class ResultExtractors {
 	 * 
 	 * @param <T> Type of the success values.
 	 * @return The built extractor.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<Result<? extends T>, Maybe<T>> getSuccess() {
@@ -39,6 +47,7 @@ public class ResultExtractors {
 	 * 
 	 * @param <T> Type of the success values.
 	 * @return The built extractor.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<Result<? extends T>, Maybe<Throwable>> getFailure() {

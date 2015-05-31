@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import java.util.TreeMap;
  * The {@link MapFactories} class provides various factories of {@link MapFactory map factories}.
  * 
  * @see MapFactory
+ * @since 1.0
  */
 public class MapFactories {
 	/**
@@ -31,6 +32,7 @@ public class MapFactories {
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @return The built factory.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <K, V> ExtendedMapFactory<K, V, HashMap<K, V>> hashMap() {
@@ -60,6 +62,7 @@ public class MapFactories {
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @return The built factory.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <K, V> ExtendedMapFactory<K, V, TreeMap<K, V>> treeMap() {
