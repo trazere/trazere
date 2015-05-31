@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -20,7 +20,11 @@ import com.trazere.core.imperative.FoldAccumulator;
 import com.trazere.core.util.Maybe;
 
 /**
- * The {@link ComparableAccumulators} class provides various factories of accumulators related to {@link Comparable comparables}.
+ * The {@link ComparableAccumulators} class provides various factories of {@link Accumulator accumulators} related to {@link Comparable comparables}.
+ * 
+ * @see Accumulator
+ * @see Comparable
+ * @since 1.0
  */
 public class ComparableAccumulators {
 	/**
@@ -28,6 +32,7 @@ public class ComparableAccumulators {
 	 *
 	 * @param <T> Type of the values.
 	 * @return The built accumulator.
+	 * @since 1.0
 	 */
 	public static <T extends Comparable<T>> Accumulator<T, Maybe<T>> least() {
 		return least(Maybe.<T>none());
@@ -39,6 +44,7 @@ public class ComparableAccumulators {
 	 * @param <T> Type of the values.
 	 * @param initialState Initial state.
 	 * @return The built accumulator.
+	 * @since 1.0
 	 */
 	public static <T extends Comparable<T>> Accumulator<T, Maybe<T>> least(final T initialState) {
 		return least(Maybe.some(initialState));
@@ -50,6 +56,7 @@ public class ComparableAccumulators {
 	 * @param <T> Type of the values.
 	 * @param initialState Initial state.
 	 * @return The built accumulator.
+	 * @since 1.0
 	 */
 	public static <T extends Comparable<T>> Accumulator<T, Maybe<T>> least(final Maybe<T> initialState) {
 		return new FoldAccumulator<T, Maybe<T>>(initialState) {
@@ -65,6 +72,7 @@ public class ComparableAccumulators {
 	 *
 	 * @param <T> Type of the values.
 	 * @return The built accumulator.
+	 * @since 1.0
 	 */
 	public static <T extends Comparable<T>> Accumulator<T, Maybe<T>> greatest() {
 		return greatest(Maybe.<T>none());
@@ -76,6 +84,7 @@ public class ComparableAccumulators {
 	 * @param <T> Type of the values.
 	 * @param initialState Initial state.
 	 * @return The built accumulator.
+	 * @since 1.0
 	 */
 	public static <T extends Comparable<T>> Accumulator<T, Maybe<T>> greatest(final T initialState) {
 		return greatest(Maybe.some(initialState));
@@ -87,6 +96,7 @@ public class ComparableAccumulators {
 	 * @param <T> Type of the values.
 	 * @param initialState Initial state.
 	 * @return The built accumulator.
+	 * @since 1.0
 	 */
 	public static <T extends Comparable<T>> Accumulator<T, Maybe<T>> greatest(final Maybe<T> initialState) {
 		return new FoldAccumulator<T, Maybe<T>>(initialState) {

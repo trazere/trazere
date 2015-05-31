@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -20,7 +20,11 @@ import com.trazere.core.util.Either.Left;
 import com.trazere.core.util.Either.Right;
 
 /**
- * The {@link EitherFunctions} class provides functions related to {@link Either}s.
+ * The {@link EitherFunctions} class provides various factories of {@link Function functions} related to {@link Either eithers}.
+ * 
+ * @see Function
+ * @see Either
+ * @since 1.0
  */
 public class EitherFunctions {
 	/**
@@ -30,6 +34,7 @@ public class EitherFunctions {
 	 * @param <R> Type of the right values.
 	 * @return The built function.
 	 * @see Either#left(Object)
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <L, R> Function<L, Either<L, R>> left() {
@@ -45,6 +50,7 @@ public class EitherFunctions {
 	 * @param <R> Type of the right values.
 	 * @return The built function.
 	 * @see Either#right(Object)
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <L, R> Function<R, Either<L, R>> right() {
@@ -62,6 +68,7 @@ public class EitherFunctions {
 	 * @param function Mapping function to use.
 	 * @return The built function.
 	 * @see Either#mapLeft(Function)
+	 * @since 1.0
 	 */
 	public static <L, R, RL> Function<Either<? extends L, R>, Either<RL, R>> mapLeft(final Function<? super L, ? extends RL> function) {
 		assert null != function;
@@ -78,6 +85,7 @@ public class EitherFunctions {
 	 * @param function Mapping function to use.
 	 * @return The built function.
 	 * @see Either#mapRight(Function)
+	 * @since 1.0
 	 */
 	public static <L, R, RR> Function<Either<L, ? extends R>, Either<L, RR>> mapRight(final Function<? super R, ? extends RR> function) {
 		assert null != function;

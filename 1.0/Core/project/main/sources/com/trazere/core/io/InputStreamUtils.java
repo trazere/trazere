@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ import java.io.OutputStream;
  * The {@link InputStreamUtils} class provides various utilities regarding {@link InputStream input streams}.
  * 
  * @see InputStream
+ * @since 1.0
  */
 public class InputStreamUtils {
 	/**
@@ -35,6 +36,7 @@ public class InputStreamUtils {
 	 * @param output Output stream into which the data should be writen.
 	 * @throws IOException When some data cannot be read.
 	 * @throws IOException When some data cannot be written.
+	 * @since 1.0
 	 */
 	public static void copy(final InputStream input, final OutputStream output)
 	throws IOException {
@@ -55,6 +57,7 @@ public class InputStreamUtils {
 	 * @param input Input stream from which the data should be read.
 	 * @return The read text.
 	 * @throws IOException When some text cannot be read.
+	 * @since 1.0
 	 */
 	public static byte[] read(final InputStream input)
 	throws IOException {

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,7 +19,10 @@ import com.trazere.core.functional.Functions;
 import com.trazere.core.lang.ThrowableFactory;
 
 /**
- * The {@link ResultUtils} class provides various utilities regarding {@link Result}s.
+ * The {@link ResultUtils} class provides various utilities regarding {@link Result results}.
+ * 
+ * @see Result
+ * @since 1.0
  */
 public class ResultUtils {
 	/**
@@ -30,6 +33,7 @@ public class ResultUtils {
 	 * @param failureFactory Factory of the failure.
 	 * @return The success value.
 	 * @throws RuntimeException An exceptioned caused the given result when it is a failure.
+	 * @since 1.0
 	 */
 	public static <T> T get(final Result<T> result, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		if (result.isSuccess()) {
@@ -45,6 +49,7 @@ public class ResultUtils {
 	 * @param <T> Type of the success value.
 	 * @param result {@link Result} instance containing the {@link Result} instance to flatten.
 	 * @return A {@link Result} instance containing the flatten success value.
+	 * @since 1.0
 	 */
 	public static <T> Result<T> flatten(final Result<? extends Result<? extends T>> result) {
 		return result.flatMap(Functions.<Result<? extends T>>identity());

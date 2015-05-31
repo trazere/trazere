@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,7 +19,10 @@ import com.trazere.core.util.Maybe;
 import java.time.Duration;
 
 /**
- * The {@link LangUtils} class provides various utilities regarding threads.
+ * The {@link LangUtils} class provides various utilities regarding {@link Thread threads}.
+ * 
+ * @see Thread
+ * @since 1.0
  */
 public class ThreadUtils {
 	/**
@@ -31,6 +34,7 @@ public class ThreadUtils {
 	 * @param throwableFactory Exception factory to use for interruptions.
 	 * @throws RuntimeException When the sleep is interrupted.
 	 * @see Thread#sleep(long)
+	 * @since 1.0
 	 */
 	public static void sleep(final Duration timeout, final ThrowableFactory<? extends RuntimeException> throwableFactory) {
 		try {
@@ -50,6 +54,7 @@ public class ThreadUtils {
 	 * @param throwableFactory Exception factory to use for interruptions.
 	 * @throws RuntimeException When the sleep is interrupted.
 	 * @see Object#wait(long)
+	 * @since 1.0
 	 */
 	public static void wait(final Object object, final Duration timeout, final ThrowableFactory<? extends RuntimeException> throwableFactory) {
 		try {
@@ -72,6 +77,7 @@ public class ThreadUtils {
 	 * @throws RuntimeException When the sleep is interrupted.
 	 * @see #wait(Object, Duration, ThrowableFactory)
 	 * @see #sleep(Duration, ThrowableFactory)
+	 * @since 1.0
 	 */
 	public static void waitOrSleep(final Maybe<?> object, final Duration timeout, final ThrowableFactory<? extends RuntimeException> throwableFactory) {
 		if (object.isSome()) {

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ import com.trazere.core.util.Tuple2;
  * @see Function
  * @see Function2
  * @see Function3
+ * @since 1.0
  */
 public class Functions {
 	/**
@@ -31,6 +32,7 @@ public class Functions {
 	 * 
 	 * @param <T> Type of the values.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<T, T> identity() {
@@ -48,6 +50,7 @@ public class Functions {
 	 * @param g Outer function.
 	 * @param f Inner function.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A, I, R> Function<A, R> compose(final Function<? super I, ? extends R> g, final Function<? super A, ? extends I> f) {
 		return FunctionUtils.map(f, g);
@@ -60,6 +63,7 @@ public class Functions {
 	 * @param <R> Type of the results.
 	 * @param result Result of the function.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A, R> Function<A, R> constant(final R result) {
 		return arg -> result;
@@ -72,6 +76,7 @@ public class Functions {
 	 * @param <R> Type of the results.
 	 * @param exception Exception to throw.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A, R> Function<A, R> failure(final RuntimeException exception) {
 		assert null != exception;
@@ -88,6 +93,7 @@ public class Functions {
 	 * @param <R> Type of the results.
 	 * @param throwableFactory Throwable factory to use.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A, R> Function<A, R> failure(final ThrowableFactory<? extends RuntimeException> throwableFactory) {
 		assert null != throwableFactory;
@@ -105,6 +111,7 @@ public class Functions {
 	 * @param throwableFactory Throwable factory to use.
 	 * @param message Message of the throwable.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A, R> Function<A, R> failure(final ThrowableFactory<? extends RuntimeException> throwableFactory, final String message) {
 		assert null != throwableFactory;
@@ -121,6 +128,7 @@ public class Functions {
 	 * @param <R> Type of the results.
 	 * @param thunk Thunk to lift.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A, R> Function<A, R> fromThunk(final Thunk<? extends R> thunk) {
 		assert null != thunk;
@@ -134,6 +142,7 @@ public class Functions {
 	 * @param <A> Type of the arguments.
 	 * @param predicate Predicate to lift.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static final <A> Function<A, Boolean> fromPredicate(final Predicate<? super A> predicate) {
 		assert null != predicate;
@@ -148,6 +157,7 @@ public class Functions {
 	 * @param <R> Type of the results.
 	 * @param arg Argument to use to evaluate the functions.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A, R> Function<Function<? super A, ? extends R>, R> evaluate(final A arg) {
 		return function -> function.evaluate(arg);
@@ -162,6 +172,7 @@ public class Functions {
 	 * @param arg1 First argument to use to evaluate the functions.
 	 * @param arg2 Second argument to use to evaluate the functions.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A1, A2, R> Function<Function2<? super A1, ? super A2, ? extends R>, R> evaluate(final A1 arg1, final A2 arg2) {
 		return function -> function.evaluate(arg1, arg2);
@@ -178,6 +189,7 @@ public class Functions {
 	 * @param arg2 Second argument to use to evaluate the functions.
 	 * @param arg3 Third argument to use to evaluate the functions.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A1, A2, A3, R> Function<Function3<? super A1, ? super A2, ? super A3, ? extends R>, R> evaluate(final A1 arg1, final A2 arg2, final A3 arg3) {
 		return function -> function.evaluate(arg1, arg2, arg3);
@@ -196,6 +208,7 @@ public class Functions {
 	 * @param arg3 Third argument to use to evaluate the functions.
 	 * @param arg4 Fourth argument to use to evaluate the functions.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A1, A2, A3, A4, R> Function<Function4<? super A1, ? super A2, ? super A3, ? super A4, ? extends R>, R> evaluate(final A1 arg1, final A2 arg2, final A3 arg3, final A4 arg4) {
 		return function -> function.evaluate(arg1, arg2, arg3, arg4);
@@ -216,6 +229,7 @@ public class Functions {
 	 * @param arg4 Fourth argument to use to evaluate the functions.
 	 * @param arg5 Fifth argument to use to evaluate the functions.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A1, A2, A3, A4, A5, R> Function<Function5<? super A1, ? super A2, ? super A3, ? super A4, ? super A5, ? extends R>, R> evaluate(final A1 arg1, final A2 arg2, final A3 arg3, final A4 arg4, final A5 arg5) {
 		return function -> function.evaluate(arg1, arg2, arg3, arg4, arg5);
@@ -229,6 +243,7 @@ public class Functions {
 	 * @param <R> Type of the results.
 	 * @param result Result of the function.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A1, A2, R> Function2<A1, A2, R> constant2(final R result) {
 		return (arg1, arg2) -> result;
@@ -242,6 +257,7 @@ public class Functions {
 	 * @param <R> Type of the results.
 	 * @param exception Exception to throw.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A1, A2, R> Function2<A1, A2, R> failure2(final RuntimeException exception) {
 		assert null != exception;
@@ -259,6 +275,7 @@ public class Functions {
 	 * @param <R> Type of the results.
 	 * @param throwableFactory Throwable factory to use.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A1, A2, R> Function2<A1, A2, R> failure2(final ThrowableFactory<? extends RuntimeException> throwableFactory) {
 		assert null != throwableFactory;
@@ -277,6 +294,7 @@ public class Functions {
 	 * @param throwableFactory Throwable factory to use.
 	 * @param message Message of the throwable.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A1, A2, R> Function2<A1, A2, R> failure2(final ThrowableFactory<? extends RuntimeException> throwableFactory, final String message) {
 		assert null != throwableFactory;
@@ -294,6 +312,7 @@ public class Functions {
 	 * @param <R> Type of the results.
 	 * @param thunk Thunk to lift.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A1, A2, R> Function2<A1, A2, R> fromThunk2(final Thunk<? extends R> thunk) {
 		assert null != thunk;
@@ -308,6 +327,7 @@ public class Functions {
 	 * @param <A2> Type of the second arguments.
 	 * @param predicate Predicate to lift.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A1, A2> Function2<A1, A2, Boolean> fromPredicate2(final Predicate2<? super A1, ? super A2> predicate) {
 		assert null != predicate;
@@ -324,6 +344,7 @@ public class Functions {
 	 * @param <R> Type of the results.
 	 * @param result Result of the function.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A1, A2, A3, R> Function3<A1, A2, A3, R> constant3(final R result) {
 		return (arg1, arg2, arg3) -> result;
@@ -338,6 +359,7 @@ public class Functions {
 	 * @param <R> Type of the results.
 	 * @param exception Exception to throw.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A1, A2, A3, R> Function3<A1, A2, A3, R> failure3(final RuntimeException exception) {
 		assert null != exception;
@@ -356,6 +378,7 @@ public class Functions {
 	 * @param <R> Type of the results.
 	 * @param throwableFactory Throwable factory to use.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A1, A2, A3, R> Function3<A1, A2, A3, R> failure3(final ThrowableFactory<? extends RuntimeException> throwableFactory) {
 		assert null != throwableFactory;
@@ -375,6 +398,7 @@ public class Functions {
 	 * @param throwableFactory Throwable factory to use.
 	 * @param message Message of the throwable.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A1, A2, A3, R> Function3<A1, A2, A3, R> failure3(final ThrowableFactory<? extends RuntimeException> throwableFactory, final String message) {
 		assert null != throwableFactory;
@@ -393,6 +417,7 @@ public class Functions {
 	 * @param <R> Type of the results.
 	 * @param thunk Thunk to lift.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A1, A2, A3, R> Function3<A1, A2, A3, R> fromThunk3(final Thunk<? extends R> thunk) {
 		assert null != thunk;
@@ -408,6 +433,7 @@ public class Functions {
 	 * @param <A3> Type of the third arguments.
 	 * @param predicate Predicate to lift.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A1, A2, A3> Function3<A1, A2, A3, Boolean> fromPredicate3(final Predicate3<? super A1, ? super A2, ? super A3> predicate) {
 		assert null != predicate;
@@ -423,6 +449,7 @@ public class Functions {
 	 * @param <R> Type of the results.
 	 * @param function Function to curry.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A1, A2, R> Function2<A1, A2, R> curry(final Function<? super Tuple2<A1, A2>, ? extends R> function) {
 		assert null != function;
@@ -438,6 +465,7 @@ public class Functions {
 	 * @param <R> Type of the results.
 	 * @param function Function to uncurry.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A1, A2, R> Function<Tuple2<A1, A2>, R> uncurry(final Function2<? super A1, ? super A2, ? extends R> function) {
 		assert null != function;

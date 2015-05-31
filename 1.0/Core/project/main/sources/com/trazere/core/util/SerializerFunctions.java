@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -18,10 +18,11 @@ package com.trazere.core.util;
 import com.trazere.core.functional.Function;
 
 /**
- * The {@link SerializerFunctions} class provides various factories of functions related to {@link Serializer serializers}.
+ * The {@link SerializerFunctions} class provides various factories of {@link Function functions} related to {@link Serializer serializers}.
  * 
  * @see Function
  * @see Serializer
+ * @since 1.0
  */
 public class SerializerFunctions {
 	/**
@@ -31,6 +32,7 @@ public class SerializerFunctions {
 	 * @param <R> Type of the representations.
 	 * @param serializer Serializer to use.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <T, R> Function<T, R> serialize(final Serializer<? super T, ? extends R> serializer) {
 		return serializer::serialize;
@@ -43,6 +45,7 @@ public class SerializerFunctions {
 	 * @param <R> Type of the representations.
 	 * @param serializer Deserializer to use.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <T, R> Function<R, T> deserialize(final Serializer<? extends T, ? super R> serializer) {
 		return serializer::deserialize;

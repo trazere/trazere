@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -29,7 +29,10 @@ import com.trazere.core.util.SerializerFunctions;
 import java.util.Collection;
 
 /**
- * The {@link FieldUtils} class provides utilities related to fields.
+ * The {@link FieldUtils} class provides utilities related to {@link Field fields}.
+ * 
+ * @see Field
+ * @since 1.0
  */
 public class FieldUtils {
 	/**
@@ -41,6 +44,7 @@ public class FieldUtils {
 	 * @param description Description of the field to read (for error messages).
 	 * @param representation Representation of the field to read.
 	 * @return The read value, or nothing when there is no representation.
+	 * @since 1.0
 	 */
 	public static <V> Maybe<V> read(final String description, final Maybe<? extends V> representation) {
 		return read(description, representation, Functions.<V>identity());
@@ -56,6 +60,7 @@ public class FieldUtils {
 	 * @param deserializer Function to use to deserialize the representation.
 	 * @return The read value, or nothing when there is no representation.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static <R, V> Maybe<V> read(final String description, final Maybe<? extends R> representation, final Function<? super R, ? extends V> deserializer)
 	throws InvalidFieldException {
@@ -76,6 +81,7 @@ public class FieldUtils {
 	 * @param deserializer Serializer to use to deserialize the representation.
 	 * @return The read value, or nothing when there is no representation.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static <R, V> Maybe<V> read(final String description, final Maybe<? extends R> representation, final Serializer<? extends V, ? super R> deserializer)
 	throws InvalidFieldException {
@@ -90,6 +96,7 @@ public class FieldUtils {
 	 * @param representation Representation of the field to read.
 	 * @param defaultValue Default value when the field is missing.
 	 * @return The read value, or the default value when there is no representation.
+	 * @since 1.0
 	 */
 	public static <V> V readOptional(final String description, final Maybe<? extends V> representation, final V defaultValue) {
 		return readOptional(description, representation, Functions.<V>identity(), defaultValue);
@@ -106,6 +113,7 @@ public class FieldUtils {
 	 * @param defaultValue Default value when the field is missing.
 	 * @return The read value, or the default value when there is no representation.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static <R, V> V readOptional(final String description, final Maybe<? extends R> representation, final Function<? super R, ? extends V> deserializer, final V defaultValue)
 	throws InvalidFieldException {
@@ -131,6 +139,7 @@ public class FieldUtils {
 	 * @param defaultValue Default value when the field is missing.
 	 * @return The read value, or the default value when there is no representation.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static <R, V> V readOptional(final String description, final Maybe<? extends R> representation, final Serializer<? extends V, ? super R> deserializer, final V defaultValue)
 	throws InvalidFieldException {
@@ -145,6 +154,7 @@ public class FieldUtils {
 	 * @param representation Representation of the field to read.
 	 * @param defaultValue Default value when the field is missing.
 	 * @return The read value, or the default value when there is no representation.
+	 * @since 1.0
 	 */
 	public static <V> V readOptional(final String description, final Maybe<? extends V> representation, final Thunk<? extends V> defaultValue) {
 		return readOptional(description, representation, Functions.<V>identity(), defaultValue);
@@ -161,6 +171,7 @@ public class FieldUtils {
 	 * @param defaultValue Default value when the field is missing.
 	 * @return The read value, or the default value when there is no representation.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static <R, V> V readOptional(final String description, final Maybe<? extends R> representation, final Function<? super R, ? extends V> deserializer, final Thunk<? extends V> defaultValue)
 	throws InvalidFieldException {
@@ -186,6 +197,7 @@ public class FieldUtils {
 	 * @param defaultValue Default value when the field is missing.
 	 * @return The read value, or the default value when there is no representation.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static <R, V> V readOptional(final String description, final Maybe<? extends R> representation, final Serializer<? extends V, ? super R> deserializer, final Thunk<? extends V> defaultValue)
 	throws InvalidFieldException {
@@ -200,6 +212,7 @@ public class FieldUtils {
 	 * @param representation Representation of the field to read.
 	 * @return The read value.
 	 * @throws MissingFieldException When the representation is missing.
+	 * @since 1.0
 	 */
 	public static <V> V readMandatory(final String description, final Maybe<? extends V> representation)
 	throws MissingFieldException {
@@ -217,6 +230,7 @@ public class FieldUtils {
 	 * @return The read value.
 	 * @throws MissingFieldException When the representation is missing.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static <R, V> V readMandatory(final String description, final Maybe<? extends R> representation, final Function<? super R, ? extends V> deserializer)
 	throws MissingFieldException, InvalidFieldException {
@@ -242,6 +256,7 @@ public class FieldUtils {
 	 * @return The read value.
 	 * @throws MissingFieldException When the representation is missing.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static <R, V> V readMandatory(final String description, final Maybe<? extends R> representation, final Serializer<? extends V, ? super R> deserializer)
 	throws MissingFieldException, InvalidFieldException {
@@ -257,6 +272,7 @@ public class FieldUtils {
 	 * @param representations Representations of the field to read.
 	 * @param factory Factory of the collection of values.
 	 * @return The read values.
+	 * @since 1.0
 	 */
 	public static <V, C extends Collection<? super V>> C readMultiple(final String description, final Iterable<? extends V> representations, final CollectionFactory<? super V, ? extends C> factory) {
 		return readMultiple(description, representations, Functions.<V>identity(), factory);
@@ -274,6 +290,7 @@ public class FieldUtils {
 	 * @param factory Factory of the collection of values.
 	 * @return The read values.
 	 * @throws InvalidFieldException When some representation is invalid.
+	 * @since 1.0
 	 */
 	public static <R, V, C extends Collection<? super V>> C readMultiple(final String description, final Iterable<? extends R> representations, final Function<? super R, ? extends V> deserializer, final CollectionFactory<? super V, ? extends C> factory)
 	throws InvalidFieldException {
@@ -292,6 +309,7 @@ public class FieldUtils {
 	 * @param factory Factory of the collection of values.
 	 * @return The read values.
 	 * @throws InvalidFieldException When some representation is invalid.
+	 * @since 1.0
 	 */
 	public static <R, V, C extends Collection<? super V>> C readMultiple(final String description, final Iterable<? extends R> representations, final Serializer<? extends V, ? super R> deserializer, final CollectionFactory<? super V, ? extends C> factory)
 	throws InvalidFieldException {
@@ -307,6 +325,7 @@ public class FieldUtils {
 	 * @param representations Representations of the field to read.
 	 * @param results Accumulator to populate with the read values.
 	 * @return The given accumulator of the read values.
+	 * @since 1.0
 	 */
 	public static <V, A extends Accumulator<? super V, ?>> A readMultiple(final String description, final Iterable<? extends V> representations, final A results) {
 		return readMultiple(description, representations, Functions.<V>identity(), results);
@@ -324,6 +343,7 @@ public class FieldUtils {
 	 * @param results Accumulator to populate with the read values.
 	 * @return The given accumulator of the read values.
 	 * @throws InvalidFieldException When some representation is invalid.
+	 * @since 1.0
 	 */
 	public static <R, V, A extends Accumulator<? super V, ?>> A readMultiple(final String description, final Iterable<? extends R> representations, final Function<? super R, ? extends V> deserializer, final A results)
 	throws InvalidFieldException {
@@ -352,6 +372,7 @@ public class FieldUtils {
 	 * @param results Accumulator to populate with the read values.
 	 * @return The given accumulator of the read values.
 	 * @throws InvalidFieldException When some representation is invalid.
+	 * @since 1.0
 	 */
 	public static <R, V, A extends Accumulator<? super V, ?>> A readMultiple(final String description, final Iterable<? extends R> representations, final Serializer<? extends V, ? super R> deserializer, final A results)
 	throws InvalidFieldException {
@@ -367,6 +388,7 @@ public class FieldUtils {
 	 * @param description Description of the field to read (for error messages).
 	 * @param representation Representation of the field to read. May be <code>null</code> when no representations.
 	 * @return The read value, or nothing when there is no representation.
+	 * @since 1.0
 	 */
 	public static <V> Maybe<V> readNullable(final String description, final V representation) {
 		return read(description, MaybeUtils.fromNullable(representation));
@@ -382,6 +404,7 @@ public class FieldUtils {
 	 * @param deserializer Function to use to deserialize the representation.
 	 * @return The read value, or nothing when there is no representation.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static <R, V> Maybe<V> readNullable(final String description, final R representation, final Function<? super R, ? extends V> deserializer)
 	throws InvalidFieldException {
@@ -398,6 +421,7 @@ public class FieldUtils {
 	 * @param deserializer Serializer to use to deserialize the representation.
 	 * @return The read value, or nothing when there is no representation.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static <R, V> Maybe<V> readNullable(final String description, final R representation, final Serializer<? extends V, ? super R> deserializer)
 	throws InvalidFieldException {
@@ -412,6 +436,7 @@ public class FieldUtils {
 	 * @param representation Representation of the field to read. May be <code>null</code> when no representations.
 	 * @param defaultValue Default value when the field is missing.
 	 * @return The read value, or the default value when there is no representation.
+	 * @since 1.0
 	 */
 	public static <V> V readOptionalNullable(final String description, final V representation, final V defaultValue) {
 		return readOptional(description, MaybeUtils.fromNullable(representation), defaultValue);
@@ -428,6 +453,7 @@ public class FieldUtils {
 	 * @param defaultValue Default value when the field is missing.
 	 * @return The read value, or the default value when there is no representation.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static <R, V> V readOptionalNullable(final String description, final R representation, final Function<? super R, ? extends V> deserializer, final V defaultValue)
 	throws InvalidFieldException {
@@ -445,6 +471,7 @@ public class FieldUtils {
 	 * @param defaultValue Default value when the field is missing.
 	 * @return The read value, or the default value when there is no representation.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static <R, V> V readOptionalNullable(final String description, final R representation, final Serializer<? extends V, ? super R> deserializer, final V defaultValue)
 	throws InvalidFieldException {
@@ -459,6 +486,7 @@ public class FieldUtils {
 	 * @param representation Representation of the field to read. May be <code>null</code> when no representations.
 	 * @param defaultValue Default value when the field is missing.
 	 * @return The read value, or the default value when there is no representation.
+	 * @since 1.0
 	 */
 	public static <V> V readOptionalNullable(final String description, final V representation, final Thunk<? extends V> defaultValue) {
 		return readOptional(description, MaybeUtils.fromNullable(representation), defaultValue);
@@ -475,6 +503,7 @@ public class FieldUtils {
 	 * @param defaultValue Default value when the field is missing.
 	 * @return The read value, or the default value when there is no representation.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static <R, V> V readOptionalNullable(final String description, final R representation, final Function<? super R, ? extends V> deserializer, final Thunk<? extends V> defaultValue)
 	throws InvalidFieldException {
@@ -492,6 +521,7 @@ public class FieldUtils {
 	 * @param defaultValue Default value when the field is missing.
 	 * @return The read value, or the default value when there is no representation.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static <R, V> V readOptionalNullable(final String description, final R representation, final Serializer<? extends V, ? super R> deserializer, final Thunk<? extends V> defaultValue)
 	throws InvalidFieldException {
@@ -506,6 +536,7 @@ public class FieldUtils {
 	 * @param representation Representation of the field to read. May be <code>null</code> when no representations.
 	 * @return The read value.
 	 * @throws MissingFieldException When the representation is missing.
+	 * @since 1.0
 	 */
 	public static <V> V readMandatoryNullable(final String description, final V representation)
 	throws MissingFieldException {
@@ -523,6 +554,7 @@ public class FieldUtils {
 	 * @return The read value.
 	 * @throws MissingFieldException When the representation is missing.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static <R, V> V readMandatoryNullable(final String description, final R representation, final Function<? super R, ? extends V> deserializer)
 	throws MissingFieldException, InvalidFieldException {
@@ -540,6 +572,7 @@ public class FieldUtils {
 	 * @return The read value.
 	 * @throws MissingFieldException When the representation is missing.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static <R, V> V readMandatoryNullable(final String description, final R representation, final Serializer<? extends V, ? super R> deserializer)
 	throws MissingFieldException, InvalidFieldException {
@@ -555,6 +588,7 @@ public class FieldUtils {
 	 * @param representations Representations of the field to read. May be <code>null</code> when no representations.
 	 * @param factory Factory of the collection of values.
 	 * @return The read values.
+	 * @since 1.0
 	 */
 	public static <V, C extends Collection<? super V>> C readMultipleNullable(final String description, final Iterable<? extends V> representations, final CollectionFactory<? super V, ? extends C> factory) {
 		return readMultiple(description, MaybeUtils.fromNullable(representations).get(Iterables.empty()), factory);
@@ -572,6 +606,7 @@ public class FieldUtils {
 	 * @param factory Factory of the collection of values.
 	 * @return The read values.
 	 * @throws InvalidFieldException When some representation is invalid.
+	 * @since 1.0
 	 */
 	public static <R, V, C extends Collection<? super V>> C readMultipleNullable(final String description, final Iterable<? extends R> representations, final Function<? super R, ? extends V> deserializer, final CollectionFactory<? super V, ? extends C> factory)
 	throws InvalidFieldException {
@@ -590,6 +625,7 @@ public class FieldUtils {
 	 * @param factory Factory of the collection of values.
 	 * @return The read values.
 	 * @throws InvalidFieldException When some representation is invalid.
+	 * @since 1.0
 	 */
 	public static <R, V, C extends Collection<? super V>> C readMultipleNullable(final String description, final Iterable<? extends R> representations, final Serializer<? extends V, ? super R> deserializer, final CollectionFactory<? super V, ? extends C> factory)
 	throws InvalidFieldException {
@@ -605,6 +641,7 @@ public class FieldUtils {
 	 * @param representations Representations of the field to read. May be <code>null</code> when no representations.
 	 * @param results Accumulator to populate with the read values.
 	 * @return The given accumulator of the read values.
+	 * @since 1.0
 	 */
 	public static <V, A extends Accumulator<? super V, ?>> A readMultipleNullable(final String description, final Iterable<? extends V> representations, final A results) {
 		return readMultiple(description, MaybeUtils.fromNullable(representations).get(Iterables.empty()), results);
@@ -622,6 +659,7 @@ public class FieldUtils {
 	 * @param results Accumulator to populate with the read values.
 	 * @return The given accumulator of the read values.
 	 * @throws InvalidFieldException When some representation is invalid.
+	 * @since 1.0
 	 */
 	public static <R, V, A extends Accumulator<? super V, ?>> A readMultipleNullable(final String description, final Iterable<? extends R> representations, final Function<? super R, ? extends V> deserializer, final A results)
 	throws InvalidFieldException {
@@ -640,6 +678,7 @@ public class FieldUtils {
 	 * @param results Accumulator to populate with the read values.
 	 * @return The given accumulator of the read values.
 	 * @throws InvalidFieldException When some representation is invalid.
+	 * @since 1.0
 	 */
 	public static <R, V, A extends Accumulator<? super V, ?>> A readMultipleNullable(final String description, final Iterable<? extends R> representations, final Serializer<? extends V, ? super R> deserializer, final A results)
 	throws InvalidFieldException {

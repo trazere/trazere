@@ -1,5 +1,5 @@
 /*
-. *  Copyright 2006-2013 Julien Dufour
+. *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,14 +19,19 @@ import com.trazere.core.imperative.Accumulator;
 import com.trazere.core.imperative.FoldAccumulator;
 
 /**
- * The {@link LangAccumulators} class provides various factories of {@link Accumulator accumulators} related to the language.
+ * The {@link LangAccumulators} class provides various factories of {@link Accumulator accumulators} related to the Java language.
+ * 
+ * @see Accumulator
+ * @since 1.0
  */
 public class LangAccumulators {
+	// TODO: version with true initialState
 	/**
 	 * Builds a logical accumulator corresponding to a conjonction.
 	 * 
 	 * @param initialState Initial state.
 	 * @return The built accumulator.
+	 * @since 1.0
 	 */
 	public static Accumulator<Boolean, Boolean> and(final boolean initialState) {
 		return new FoldAccumulator<Boolean, Boolean>(initialState) {
@@ -37,11 +42,13 @@ public class LangAccumulators {
 		};
 	}
 	
+	// TODO: version with false initialState
 	/**
 	 * Builds a logical accumulator corresponding to a disjunction.
 	 * 
 	 * @param initialState Initial value.
 	 * @return The built accumulator.
+	 * @since 1.0
 	 */
 	public static Accumulator<Boolean, Boolean> or(final boolean initialState) {
 		return new FoldAccumulator<Boolean, Boolean>(initialState) {
@@ -57,6 +64,7 @@ public class LangAccumulators {
 	 *
 	 * @param initialState Initial state.
 	 * @return The built accumulator.
+	 * @since 1.0
 	 */
 	public static Accumulator<Integer, Integer> sum(final int initialState) {
 		return new Accumulator<Integer, Integer>() {
@@ -79,6 +87,7 @@ public class LangAccumulators {
 	 *
 	 * @param initialState Initial state.
 	 * @return The built accumulator.
+	 * @since 1.0
 	 */
 	public static Accumulator<Long, Long> sum(final long initialState) {
 		return new Accumulator<Long, Long>() {

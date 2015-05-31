@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,16 +24,23 @@ import com.trazere.core.text.TextUtils;
  * The {@link MutableDouble} class represents mutable double values.
  * <p>
  * This class can be used instead of non-final variables to help tagging side effects.
+ * 
+ * @since 1.0
  */
 public class MutableDouble
 implements Describable {
-	/** Current value. */
+	/**
+	 * Current value.
+	 * 
+	 * @since 1.0
+	 */
 	protected double _value;
 	
 	/**
 	 * Instantiates a new mutable double.
 	 * 
 	 * @param value Initial value.
+	 * @since 1.0
 	 */
 	public MutableDouble(final double value) {
 		_value = value;
@@ -43,6 +50,7 @@ implements Describable {
 	 * Gets the current value of this mutable double.
 	 * 
 	 * @return The current value.
+	 * @since 1.0
 	 */
 	public double get() {
 		return _value;
@@ -53,6 +61,7 @@ implements Describable {
 	 * 
 	 * @param value New value.
 	 * @return The given new value.
+	 * @since 1.0
 	 */
 	public double set(final double value) {
 		_value = value;
@@ -64,6 +73,7 @@ implements Describable {
 	 * 
 	 * @param function Function to use to compute the new value.
 	 * @return The computed new value.
+	 * @since 1.0
 	 */
 	public double update(final Function<? super Double, ? extends Double> function) {
 		return set(function.evaluate(_value).doubleValue());
@@ -73,6 +83,7 @@ implements Describable {
 	 * Negates the value of this mutable double.
 	 * 
 	 * @return The resulting value.
+	 * @since 1.0
 	 */
 	public double neg() {
 		return set(-_value);
@@ -83,6 +94,7 @@ implements Describable {
 	 * 
 	 * @param value Value to add.
 	 * @return The resulting value.
+	 * @since 1.0
 	 */
 	public double add(final double value) {
 		return set(_value + value);
@@ -93,6 +105,7 @@ implements Describable {
 	 * 
 	 * @param value Value to substract.
 	 * @return The resulting value.
+	 * @since 1.0
 	 */
 	public double sub(final double value) {
 		return set(_value - value);
@@ -103,6 +116,7 @@ implements Describable {
 	 * 
 	 * @param value Value to multiply by.
 	 * @return The resulting value.
+	 * @since 1.0
 	 */
 	public double mul(final double value) {
 		return set(_value * value);
@@ -113,6 +127,7 @@ implements Describable {
 	 * 
 	 * @param value Value to divide by.
 	 * @return The resulting value.
+	 * @since 1.0
 	 */
 	public double div(final double value) {
 		return set(_value / value);

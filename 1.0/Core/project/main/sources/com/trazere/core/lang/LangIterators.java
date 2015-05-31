@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -18,13 +18,17 @@ package com.trazere.core.lang;
 import java.util.Iterator;
 
 /**
- * The {@link LangIterators} class provides various factories of {@link Iterator} regarding the Java language.
+ * The {@link LangIterators} class provides various factories of {@link Iterator iterators} regarding the Java language.
+ * 
+ * @see Iterator
+ * @since 1.0
  */
 public class LangIterators {
 	/**
 	 * Builds an iterator over the natural integers.
 	 * 
 	 * @return The built iterator.
+	 * @since 1.0
 	 */
 	public static Iterator<Integer> natural() {
 		return InfiniteIntSequence.NATURAL.iterator();

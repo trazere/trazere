@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,13 +19,15 @@ package com.trazere.core.imperative;
  * The {@link Procedure} interface defines procedures (functions that return no results).
  * 
  * @param <A> Type of the arguments.
+ * @since 1.0
  */
 @FunctionalInterface
 public interface Procedure<A> {
 	/**
-	 * Executes the receiver procedure with the given argument.
+	 * Executes this procedure with the given argument.
 	 * 
 	 * @param arg Argument to execute the procedure with.
+	 * @since 1.0
 	 */
 	void execute(A arg);
 }

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,6 +21,8 @@ import com.trazere.core.reference.Reference;
 
 /**
  * The {@link LangUtils} class provides various utilities regarding the Java language.
+ * 
+ * @since 1.0
  */
 public class LangUtils {
 	/**
@@ -30,6 +32,7 @@ public class LangUtils {
 	 *
 	 * @param value Unsafe wrapper to unbox. May be <code>null</code>.
 	 * @return The unboxed value or <code>false</code> when the wrapper is <code>null</code>.
+	 * @since 1.0
 	 */
 	public static boolean safeUnbox(final Boolean value) {
 		return safeUnbox(value, false);
@@ -43,6 +46,7 @@ public class LangUtils {
 	 * @param value Unsafe wrapper to unbox. May be <code>null</code>.
 	 * @param nullReplacement Value to use for <code>null</code> wrappers.
 	 * @return The unboxed value or the default value when the wrapper is <code>null</code>.
+	 * @since 1.0
 	 */
 	public static boolean safeUnbox(final Boolean value, final boolean nullReplacement) {
 		return null != value ? value.booleanValue() : nullReplacement;
@@ -55,6 +59,7 @@ public class LangUtils {
 	 *
 	 * @param value Unsafe wrapper to unbox. May be <code>null</code>.
 	 * @return The unboxed value or <code>0</code> when the wrapper is <code>null</code>.
+	 * @since 1.0
 	 */
 	public static int safeUnbox(final Byte value) {
 		return safeUnbox(value, (byte) 0);
@@ -68,6 +73,7 @@ public class LangUtils {
 	 * @param value Unsafe wrapper to unbox. May be <code>null</code>.
 	 * @param nullReplacement Value to use for <code>null</code> wrappers.
 	 * @return The unboxed value or the default value when the wrapper is <code>null</code>.
+	 * @since 1.0
 	 */
 	public static int safeUnbox(final Byte value, final byte nullReplacement) {
 		return null != value ? value.byteValue() : nullReplacement;
@@ -80,6 +86,7 @@ public class LangUtils {
 	 *
 	 * @param value Unsafe wrapper to unbox. May be <code>null</code>.
 	 * @return The unboxed value or <code>0</code> when the wrapper is <code>null</code>.
+	 * @since 1.0
 	 */
 	public static int safeUnbox(final Short value) {
 		return safeUnbox(value, (short) 0);
@@ -93,6 +100,7 @@ public class LangUtils {
 	 * @param value Unsafe wrapper to unbox. May be <code>null</code>.
 	 * @param nullReplacement Value to use for <code>null</code> wrappers.
 	 * @return The unboxed value or the default value when the wrapper is <code>null</code>.
+	 * @since 1.0
 	 */
 	public static int safeUnbox(final Short value, final short nullReplacement) {
 		return null != value ? value.shortValue() : nullReplacement;
@@ -105,6 +113,7 @@ public class LangUtils {
 	 *
 	 * @param value Unsafe wrapper to unbox. May be <code>null</code>.
 	 * @return The unboxed value or <code>0</code> when the wrapper is <code>null</code>.
+	 * @since 1.0
 	 */
 	public static int safeUnbox(final Integer value) {
 		return safeUnbox(value, 0);
@@ -118,6 +127,7 @@ public class LangUtils {
 	 * @param value Unsafe wrapper to unbox. May be <code>null</code>.
 	 * @param nullReplacement Value to use for <code>null</code> wrappers.
 	 * @return The unboxed value or the default value when the wrapper is <code>null</code>.
+	 * @since 1.0
 	 */
 	public static int safeUnbox(final Integer value, final int nullReplacement) {
 		return null != value ? value.intValue() : nullReplacement;
@@ -130,6 +140,7 @@ public class LangUtils {
 	 *
 	 * @param value Unsafe wrapper to unbox. May be <code>null</code>.
 	 * @return The unboxed value or <code>0</code> when the wrapper is <code>null</code>.
+	 * @since 1.0
 	 */
 	public static long safeUnbox(final Long value) {
 		return safeUnbox(value, 0L);
@@ -143,6 +154,7 @@ public class LangUtils {
 	 * @param value Unsafe wrapper to unbox. May be <code>null</code>.
 	 * @param nullReplacement Value to use for <code>null</code> wrappers.
 	 * @return The unboxed value or the default value when the wrapper is <code>null</code>.
+	 * @since 1.0
 	 */
 	public static long safeUnbox(final Long value, final long nullReplacement) {
 		return null != value ? value.longValue() : nullReplacement;
@@ -155,6 +167,7 @@ public class LangUtils {
 	 *
 	 * @param value Unsafe wrapper to unbox. May be <code>null</code>.
 	 * @return The unboxed value or <code>0</code> when the wrapper is <code>null</code>.
+	 * @since 1.0
 	 */
 	public static float safeUnbox(final Float value) {
 		return safeUnbox(value, 0f);
@@ -168,6 +181,7 @@ public class LangUtils {
 	 * @param value Unsafe wrapper to unbox. May be <code>null</code>.
 	 * @param nullReplacement Value to use for <code>null</code> wrappers.
 	 * @return The unboxed value or the default value when the wrapper is <code>null</code>.
+	 * @since 1.0
 	 */
 	public static float safeUnbox(final Float value, final float nullReplacement) {
 		return null != value ? value.floatValue() : nullReplacement;
@@ -180,6 +194,7 @@ public class LangUtils {
 	 *
 	 * @param value Unsafe wrapper to unbox. May be <code>null</code>.
 	 * @return The unboxed value or <code>0</code> when the wrapper is <code>null</code>.
+	 * @since 1.0
 	 */
 	public static double safeUnbox(final Double value) {
 		return safeUnbox(value, 0d);
@@ -193,6 +208,7 @@ public class LangUtils {
 	 * @param value Unsafe wrapper to unbox. May be <code>null</code>.
 	 * @param nullReplacement Value to use for <code>null</code> wrappers.
 	 * @return The unboxed value or the default value when the wrapper is <code>null</code>.
+	 * @since 1.0
 	 */
 	public static double safeUnbox(final Double value, final double nullReplacement) {
 		return null != value ? value.doubleValue() : nullReplacement;
@@ -206,6 +222,7 @@ public class LangUtils {
 	 * @param value Unsafe wrapper to unbox. May be <code>null</code>.
 	 * @param nullReplacement Value to use for <code>null</code> wrappers.
 	 * @return The unboxed value or the default value when the wrapper is <code>null</code>.
+	 * @since 1.0
 	 */
 	public static char safeUnbox(final Character value, final char nullReplacement) {
 		return null != value ? value.charValue() : nullReplacement;
@@ -220,6 +237,7 @@ public class LangUtils {
 	 * @param <T> Type of the value.
 	 * @param factory Factory that builds the value.
 	 * @return The built value.
+	 * @since 1.0
 	 */
 	public static <T> T rec(final Function<? super Reference<T>, ? extends T> factory) {
 		final MutableReference<T> ref = new MutableReference<>();

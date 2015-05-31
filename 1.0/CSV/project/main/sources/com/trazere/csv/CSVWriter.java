@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -32,6 +32,8 @@ import java.util.Set;
 
 /**
  * The {@link CSVWriter} class implements writers of a CSV formatted table.
+ * 
+ * @since 1.0
  */
 public class CSVWriter
 implements Closeable {
@@ -42,6 +44,7 @@ implements Closeable {
 	 * @param delimiter Delimiter of the CSV fields.
 	 * @param headers Headers of the CSV fields.
 	 * @param options Options.
+	 * @since 1.0
 	 */
 	public CSVWriter(final Writer writer, final String delimiter, final List<? extends CSVHeader<?>> headers, final Set<CSVOption> options) {
 		assert null != writer;
@@ -63,13 +66,19 @@ implements Closeable {
 	
 	// Output.
 	
-	/** CSV output writer. */
+	/**
+	 * CSV output writer.
+	 * 
+	 * @since 1.0
+	 */
 	protected final Writer _writer;
 	
 	/**
 	 * Flushes the pending output of this writer.
 	 * <p>
 	 * This methods simply flushes the underlying writer.
+	 * 
+	 * @since 1.0
 	 */
 	public void flush() {
 		try {
@@ -83,6 +92,8 @@ implements Closeable {
 	 * Closes this writer.
 	 * <p>
 	 * This methods simply closes the underlying writer.
+	 * 
+	 * @since 1.0
 	 */
 	@Override
 	public void close() {
@@ -95,13 +106,18 @@ implements Closeable {
 	
 	// Delimiter.
 	
-	/** Delimiter of the CSV fields. */
+	/**
+	 * Delimiter of the CSV fields.
+	 * 
+	 * @since 1.0
+	 */
 	protected final String _delimiter;
 	
 	/**
 	 * Gets the CSV field delimiter of this writer.
 	 * 
 	 * @return The delimiter.
+	 * @since 1.0
 	 */
 	public String getDelimiter() {
 		return _delimiter;
@@ -109,13 +125,18 @@ implements Closeable {
 	
 	// Headers.
 	
-	/** Headers of the CSV fields. */
+	/**
+	 * Headers of the CSV fields.
+	 * 
+	 * @since 1.0
+	 */
 	protected final List<? extends CSVHeader<?>> _headers;
 	
 	/**
 	 * Gets the headers of this writer.
 	 * 
 	 * @return An unmodifiable collection of the headers.
+	 * @since 1.0
 	 */
 	public List<? extends CSVHeader<?>> getHeaders() {
 		return _headers;
@@ -123,13 +144,18 @@ implements Closeable {
 	
 	// Options.
 	
-	/** Options. */
+	/**
+	 * Options.
+	 * 
+	 * @since 1.0
+	 */
 	protected final Set<CSVOption> _options;
 	
 	/**
 	 * Gets the options of this writer.
 	 * 
 	 * @return An unmodifiable set of the options.
+	 * @since 1.0
 	 */
 	public Set<CSVOption> getOptions() {
 		return _options;
@@ -139,6 +165,8 @@ implements Closeable {
 	
 	/**
 	 * Writes a CSV line containing the headers.
+	 * 
+	 * @since 1.0
 	 */
 	public void writeHeaders() {
 		writeLine(header -> header.getLabel());
@@ -148,6 +176,7 @@ implements Closeable {
 	 * Writes the given CSV line.
 	 * 
 	 * @param line Line to write.
+	 * @since 1.0
 	 */
 	public void writeLine(final Record<CSVHeader<?>> line) {
 		writeLine(header -> serializeField(line, header));
@@ -157,6 +186,12 @@ implements Closeable {
 		return line.get(header).map(value -> header.getSerializer().serialize(value)).get("");
 	}
 	
+	/**
+	 * Writes the given CSV line.
+	 * 
+	 * @param representations Representations of the fields.
+	 * @since 1.0
+	 */
 	protected void writeLine(final Function<? super CSVHeader<?>, String> representations) {
 		// Write the fields.
 		final Joiner<CSVHeader<?>> joiner = Joiners.joiner(header -> renderField(representations.evaluate(header)), false, _delimiter, CSVException.FACTORY);
@@ -170,6 +205,13 @@ implements Closeable {
 		}
 	}
 	
+	/**
+	 * Render the given CSV field.
+	 * 
+	 * @param representation Representation of the field.
+	 * @return The renderered representation of the field.
+	 * @since 1.0
+	 */
 	protected final String renderField(final String representation) {
 		// Trim.
 		final String trimmedRepresentation;

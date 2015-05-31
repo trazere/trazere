@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -55,6 +55,8 @@ import java.util.Set;
  * <p>
  * Each CSV line is represented as a record of fields identified by their corresponding column header. Missing and empty values are excluded from the records.
  * Available values are deserialized as defined by the column header.
+ * 
+ * @since 1.0
  */
 public class CSVReader
 implements Iterator<Record<CSVHeader<?>>>, Closeable {
@@ -66,6 +68,7 @@ implements Iterator<Record<CSVHeader<?>>>, Closeable {
 	 * @param options Options.
 	 * @return The built reader.
 	 * @throws CSVException When the headers cannot be computed.
+	 * @since 1.0
 	 */
 	public static CSVReader build(final Reader reader, final String delimiter, final Set<CSVOption> options)
 	throws CSVException {
@@ -81,6 +84,7 @@ implements Iterator<Record<CSVHeader<?>>>, Closeable {
 	 * @param options Options.
 	 * @return The built reader.
 	 * @throws CSVException When the headers cannot be computed.
+	 * @since 1.0
 	 */
 	public static CSVReader build(final Reader reader, final String delimiter, final Function<? super String, ? extends Maybe<? extends CSVHeader<?>>> userHeaders, final Set<CSVOption> options)
 	throws CSVException {
@@ -97,6 +101,7 @@ implements Iterator<Record<CSVHeader<?>>>, Closeable {
 	 * @param options Options.
 	 * @return The built reader.
 	 * @throws CSVException When the headers cannot be computed.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("resource")
 	public static CSVReader build(final Reader reader, final int lineNumber, final String delimiter, final Function<? super String, ? extends Maybe<? extends CSVHeader<?>>> userHeaders, final Set<CSVOption> options)
@@ -145,6 +150,7 @@ implements Iterator<Record<CSVHeader<?>>>, Closeable {
 	 * @param headers Headers of the CSV fields.
 	 * @param delimiter Delimiter of the CSV fields.
 	 * @param options Options.
+	 * @since 1.0
 	 */
 	public CSVReader(final Reader reader, final String delimiter, final List<? extends CSVHeader<?>> headers, final Set<CSVOption> options) {
 		this(reader, 1, delimiter, headers, options);
@@ -158,6 +164,7 @@ implements Iterator<Record<CSVHeader<?>>>, Closeable {
 	 * @param headers Headers of the CSV fields.
 	 * @param delimiter Delimiter of the CSV fields.
 	 * @param options Options.
+	 * @since 1.0
 	 */
 	public CSVReader(final Reader reader, final int lineNumber, final String delimiter, final List<? extends CSVHeader<?>> headers, final Set<CSVOption> options) {
 		this(new FieldReader(reader, lineNumber, delimiter), headers, options);
@@ -169,6 +176,7 @@ implements Iterator<Record<CSVHeader<?>>>, Closeable {
 	 * @param reader Reader providing the CSV fields.
 	 * @param headers Headers of the CSV fields.
 	 * @param options Options.
+	 * @since 1.0
 	 */
 	protected CSVReader(final FieldReader reader, final List<? extends CSVHeader<?>> headers, final Set<CSVOption> options) {
 		assert null != reader;
@@ -188,14 +196,20 @@ implements Iterator<Record<CSVHeader<?>>>, Closeable {
 	
 	// Fields.
 	
+	/**
+	 * The {@link FieldReader} class implements the logic for reading CSV fields.
+	 *
+	 * @since 1.0
+	 */
 	protected static class FieldReader
 	implements Closeable {
 		/**
-		 * Instantiates a new CSV reader.
+		 * Instantiates a new CSV field reader.
 		 *
 		 * @param reader Reader providing the CSV input.
 		 * @param lineNumber Line number of the text input.
 		 * @param delimiter Delimiter of the CSV fields.
+		 * @since 1.0
 		 */
 		public FieldReader(final Reader reader, final int lineNumber, final String delimiter) {
 			assert null != delimiter;
@@ -239,16 +253,25 @@ implements Iterator<Record<CSVHeader<?>>>, Closeable {
 		
 		// Input.
 		
-		/** CSV input. */
+		/**
+		 * CSV input.
+		 * 
+		 * @since 1.0
+		 */
 		protected final Scanner _input;
 		
-		/** Line number of the text input. */
+		/**
+		 * Line number of the text input.
+		 * 
+		 * @since 1.0
+		 */
 		protected final IntCounter _lineNumber;
 		
 		/**
 		 * Indicates whether the input has been exhausted or not.
 		 * 
 		 * @return <code>true</code> when the input has been exhausted, <code>false</code> otherwise.
+		 * @since 1.0
 		 */
 		public boolean isEof() {
 			return _input.isEof();
@@ -256,6 +279,8 @@ implements Iterator<Record<CSVHeader<?>>>, Closeable {
 		
 		/**
 		 * Closes the underlying reader providing the input to this reader.
+		 * 
+		 * @since 1.0
 		 */
 		@Override
 		public void close() {
@@ -264,19 +289,28 @@ implements Iterator<Record<CSVHeader<?>>>, Closeable {
 		
 		// Delimiter.
 		
-		/** Delimiter of the CSV fields. */
+		/**
+		 * Delimiter of the CSV fields.
+		 * 
+		 * @since 1.0
+		 */
 		protected final String _delimiter;
 		
 		/**
 		 * Gets the CSV field delimiter of this reader.
 		 * 
 		 * @return The delimiter.
+		 * @since 1.0
 		 */
 		public String getDelimiter() {
 			return _delimiter;
 		}
 		
-		/** Head character of the delimiter. */
+		/**
+		 * Head character of the delimiter.
+		 * 
+		 * @since 1.0
+		 */
 		protected final char _delimiterHead;
 		
 		// Fields.
@@ -285,6 +319,7 @@ implements Iterator<Record<CSVHeader<?>>>, Closeable {
 		 * Reads the fields until the end of the line.
 		 * 
 		 * @return The read field and a flag indicating whether the line has ended or not.
+		 * @since 1.0
 		 */
 		protected Tuple2<List<Tuple2<String, Integer>>, Integer> readFields() {
 			// Get the line number.
@@ -312,6 +347,7 @@ implements Iterator<Record<CSVHeader<?>>>, Closeable {
 		 * Reads the next field.
 		 * 
 		 * @return The read field and a flag indicating whether the line has ended or not.
+		 * @since 1.0
 		 */
 		protected Tuple2<String, Boolean> readField() {
 			if (_input.scanChar('"')) {
@@ -373,6 +409,12 @@ implements Iterator<Record<CSVHeader<?>>>, Closeable {
 			}
 		}
 		
+		/**
+		 * Reads an end of line.
+		 * 
+		 * @return <code>true</code> when an end of line has been read, <code>false</code> otherwise.
+		 * @since 1.0
+		 */
 		protected boolean readEndOfLine() {
 			if (_input.scanChar('\r')) {
 				// EOL (Windows/Mac).
@@ -389,6 +431,11 @@ implements Iterator<Record<CSVHeader<?>>>, Closeable {
 			}
 		}
 		
+		/**
+		 * Skips an end of line.
+		 * 
+		 * @since 1.0
+		 */
 		protected void skipEndOfLine() {
 			_input.scanToChar(c -> '\r' == c || '\n' == c);
 			_input.scanChar('\r');
@@ -396,11 +443,17 @@ implements Iterator<Record<CSVHeader<?>>>, Closeable {
 		}
 	}
 	
-	/** Field reader. */
+	/**
+	 * Field reader.
+	 * 
+	 * @since 1.0
+	 */
 	protected final FieldReader _reader;
 	
 	/**
 	 * Closes the underlying reader providing the input to this reader.
+	 * 
+	 * @since 1.0
 	 */
 	@Override
 	public void close() {
@@ -413,6 +466,7 @@ implements Iterator<Record<CSVHeader<?>>>, Closeable {
 	 * Gets the CSV field delimiter of this reader.
 	 *
 	 * @return The delimiter.
+	 * @since 1.0
 	 */
 	public String getDelimiter() {
 		return _reader.getDelimiter();
@@ -420,13 +474,18 @@ implements Iterator<Record<CSVHeader<?>>>, Closeable {
 	
 	// Headers.
 	
-	/** Headers of the CSV fields. */
+	/**
+	 * Headers of the CSV fields.
+	 * 
+	 * @since 1.0
+	 */
 	protected final List<? extends CSVHeader<?>> _headers;
 	
 	/**
 	 * Gets the headers of this reader.
 	 * 
 	 * @return An unmodifiable collection of the headers.
+	 * @since 1.0
 	 */
 	public List<? extends CSVHeader<?>> getHeaders() {
 		return _headers;
@@ -434,13 +493,18 @@ implements Iterator<Record<CSVHeader<?>>>, Closeable {
 	
 	// Options.
 	
-	/** Options. */
+	/**
+	 * Options.
+	 * 
+	 * @since 1.0
+	 */
 	protected final Set<CSVOption> _options;
 	
 	/**
 	 * Gets the options of this reader.
 	 * 
 	 * @return An unmodifiable set of the options.
+	 * @since 1.0
 	 */
 	public Set<CSVOption> getOptions() {
 		return _options;
@@ -448,7 +512,11 @@ implements Iterator<Record<CSVHeader<?>>>, Closeable {
 	
 	// Lines.
 	
-	/** Lines of the CSV table. */
+	/**
+	 * Lines of the CSV table.
+	 * 
+	 * @since 1.0
+	 */
 	protected final Iterator<Record<CSVHeader<?>>> _lines = new LookAheadIterator<Record<CSVHeader<?>>>() {
 		@Override
 		protected Maybe<? extends Record<CSVHeader<?>>> pull() {
@@ -460,6 +528,7 @@ implements Iterator<Record<CSVHeader<?>>>, Closeable {
 	 * Indicates whether another CSV line is available or not
 	 *
 	 * @return <code>true</code> when another line is available, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	@Override
 	public boolean hasNext() {
@@ -471,6 +540,7 @@ implements Iterator<Record<CSVHeader<?>>>, Closeable {
 	 *
 	 * @return The record of the field composing the CSV line.
 	 * @throws NoSuchElementException When no lines are available.
+	 * @since 1.0
 	 */
 	@Override
 	public Record<CSVHeader<?>> next() {
@@ -483,6 +553,7 @@ implements Iterator<Record<CSVHeader<?>>>, Closeable {
 	 * This methods ignores invalid lines
 	 * 
 	 * @return The next valid line, or nothing the input has ended.
+	 * @since 1.0
 	 */
 	protected Maybe<Record<CSVHeader<?>>> readNextLine() {
 		while (true) {
@@ -512,6 +583,7 @@ implements Iterator<Record<CSVHeader<?>>>, Closeable {
 	 * Reads the next line.
 	 * 
 	 * @return The read line, or nothing the input has ended.
+	 * @since 1.0
 	 */
 	protected Record<CSVHeader<?>> readLine() {
 		// Read the fields.
@@ -538,6 +610,16 @@ implements Iterator<Record<CSVHeader<?>>>, Closeable {
 		}
 	}
 	
+	/**
+	 * Deserializes a field.
+	 * 
+	 * @param <V> Type of the value.
+	 * @param header Header of the field.
+	 * @param representation Reprensentation of the value.
+	 * @param lineNumber Line number of the field.
+	 * @return The deserialized value, or nothing when the field is empty.
+	 * @since 1.0
+	 */
 	protected <V> Maybe<Field<CSVHeader<V>, V>> deserializeField(final CSVHeader<V> header, final String representation, final int lineNumber) {
 		// Trim.
 		final String trimmedRepresentation;

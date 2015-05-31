@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,15 +21,17 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * The {@link CharPredicates} class provides various factories of character predicates.
+ * The {@link CharPredicates} class provides various factories of {@link CharPredicate character predicates}.
  * 
  * @see CharPredicate
+ * @since 1.0
  */
 public class CharPredicates {
 	/**
 	 * Builds a character predicate that evaluates to <code>true</code> for all characters.
 	 * 
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	public static CharPredicate all() {
 		return ALL;
@@ -41,6 +43,7 @@ public class CharPredicates {
 	 * Builds a character predicate that evaluates to <code>false</code> for all characters.
 	 * 
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	public static CharPredicate none() {
 		return NONE;
@@ -53,6 +56,7 @@ public class CharPredicates {
 	 * 
 	 * @param result Result of the predicate.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	public static CharPredicate constant(final boolean result) {
 		return result ? all() : none();
@@ -63,6 +67,7 @@ public class CharPredicates {
 	 * 
 	 * @param predicate Predicate to inverse.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	public static CharPredicate not(final CharPredicate predicate) {
 		assert null != predicate;
@@ -76,6 +81,7 @@ public class CharPredicates {
 	 * @param predicate1 First predicate to combine.
 	 * @param predicate2 Second predicate to combine.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	public static CharPredicate and(final CharPredicate predicate1, final CharPredicate predicate2) {
 		assert null != predicate1;
@@ -89,6 +95,7 @@ public class CharPredicates {
 	 * 
 	 * @param predicates Predicates to combine.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	public static CharPredicate and(final Collection<? extends CharPredicate> predicates) {
 		if (predicates.isEmpty()) {
@@ -113,6 +120,7 @@ public class CharPredicates {
 	 * @param predicate1 First predicate to combine.
 	 * @param predicate2 Second predicate to combine.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	public static CharPredicate or(final CharPredicate predicate1, final CharPredicate predicate2) {
 		assert null != predicate1;
@@ -126,6 +134,7 @@ public class CharPredicates {
 	 * 
 	 * @param predicates Predicates to combine.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	public static CharPredicate or(final Collection<? extends CharPredicate> predicates) {
 		if (predicates.isEmpty()) {
@@ -150,6 +159,7 @@ public class CharPredicates {
 	 * 
 	 * @param c Character to accept.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	public static CharPredicate value(final char c) {
 		return cArg -> cArg == c;
@@ -161,6 +171,7 @@ public class CharPredicates {
 	 * 
 	 * @param cs Characters to accept.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	public static CharPredicate values(final char... cs) {
 		final Set<Character> cs_ = new HashSet<>();
@@ -176,6 +187,7 @@ public class CharPredicates {
 	 * 
 	 * @param cs Characters to accept.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	public static CharPredicate values(final Collection<Character> cs) {
 		assert null != cs;
@@ -189,6 +201,7 @@ public class CharPredicates {
 	 * 
 	 * @param s Sequence containing the characters to accept.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	public static CharPredicate values(final CharSequence s) {
 		final Set<Character> cs = new HashSet<>();
@@ -204,6 +217,7 @@ public class CharPredicates {
 	 * @param start Starting character of the range (included).
 	 * @param end Ending character of the range (included).
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	public static CharPredicate range(final char start, final char end) {
 		return c -> c >= start && c <= end;
@@ -214,6 +228,7 @@ public class CharPredicates {
 	 * 
 	 * @return The built predicate.
 	 * @see Character#isWhitespace(char)
+	 * @since 1.0
 	 */
 	public static CharPredicate whitespace() {
 		return WHITESPACE;
@@ -226,6 +241,7 @@ public class CharPredicates {
 	 * 
 	 * @return The built predicate.
 	 * @see Character#isDigit(char)
+	 * @since 1.0
 	 */
 	public static CharPredicate digit() {
 		return DIGIT;
@@ -238,6 +254,7 @@ public class CharPredicates {
 	 * 
 	 * @return The built predicate.
 	 * @see Character#isLetter(char)
+	 * @since 1.0
 	 */
 	public static CharPredicate letter() {
 		return LETTER;
@@ -250,6 +267,7 @@ public class CharPredicates {
 	 * 
 	 * @return The built predicate.
 	 * @see Character#isLetterOrDigit(char)
+	 * @since 1.0
 	 */
 	public static CharPredicate alphanumeric() {
 		return ALPHANUMERIC;

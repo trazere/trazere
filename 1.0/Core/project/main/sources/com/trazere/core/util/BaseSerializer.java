@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,14 +22,21 @@ import com.trazere.core.lang.ThrowableFactory;
  * 
  * @param <V> Type of the values.
  * @param <R> Type of the representations.
+ * @since 1.0
  */
 public abstract class BaseSerializer<V, R>
 implements Serializer<V, R> {
-	/** Factory of the serialization/deserialization failures. */
+	/**
+	 * Factory of the serialization/deserialization failures.
+	 * 
+	 * @since 1.0
+	 */
 	protected final ThrowableFactory<? extends RuntimeException> _failureFactory;
 	
 	/**
 	 * Instantiates a new serializer.
+	 * 
+	 * @since 1.0
 	 */
 	public BaseSerializer() {
 		this(SerializerException.FACTORY);
@@ -39,6 +46,7 @@ implements Serializer<V, R> {
 	 * Instantiates a new serializer.
 	 * 
 	 * @param failureFactory Factory of the serialization/deserialization failures.
+	 * @since 1.0
 	 */
 	public BaseSerializer(final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		assert null != failureFactory;
@@ -62,6 +70,7 @@ implements Serializer<V, R> {
 	 * @param value Value to serialize.
 	 * @return The representation of the value.
 	 * @throws Exception When the serialization fails.
+	 * @since 1.0
 	 */
 	protected abstract R innerSerialize(V value)
 	throws Exception;
@@ -81,6 +90,7 @@ implements Serializer<V, R> {
 	 * @param representation Representation of the value to deserialize.
 	 * @return The value.
 	 * @throws Exception When the deserialization fails.
+	 * @since 1.0
 	 */
 	protected abstract V innerDeserialize(R representation)
 	throws Exception;

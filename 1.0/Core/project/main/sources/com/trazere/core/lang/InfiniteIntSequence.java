@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,16 +19,23 @@ import java.util.Iterator;
 
 /**
  * The {@link InfiniteIntSequence} class implements infinite sequences of integers.
+ * 
+ * @since 1.0
  */
 public class InfiniteIntSequence
 extends BaseIntSequence {
-	/** Sequence of the natural integers. */
+	/**
+	 * Sequence of the natural integers.
+	 * 
+	 * @since 1.0
+	 */
 	public static final InfiniteIntSequence NATURAL = new InfiniteIntSequence(0);
 	
 	/**
 	 * Instanciates a new increasing sequence of consecutive integers.
 	 * 
 	 * @param start Starting value of the sequence.
+	 * @since 1.0
 	 */
 	public InfiniteIntSequence(final int start) {
 		this(start, 1);
@@ -39,6 +46,7 @@ extends BaseIntSequence {
 	 * 
 	 * @param start Starting value of the sequence.
 	 * @param increment Increment between consecutive the values of the sequences. Must not be <code>0</code>.
+	 * @since 1.0
 	 */
 	protected InfiniteIntSequence(final int start, final int increment) {
 		super(start, increment);

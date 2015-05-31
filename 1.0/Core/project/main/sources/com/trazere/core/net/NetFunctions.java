@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import java.net.URL;
  * The {@link NetFunctions} class provides various factories of {@link Function functions} related to networks.
  * 
  * @see Function
+ * @since 1.0
  */
 public class NetFunctions {
 	/**
@@ -33,6 +34,7 @@ public class NetFunctions {
 	 * 
 	 * @param failureFactory Factory of the failures.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static Function<String, URL> url(final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		assert null != failureFactory;
@@ -51,6 +53,7 @@ public class NetFunctions {
 	 * 
 	 * @param failureFactory Factory of the failures.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static Function<String, URI> uri(final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		assert null != failureFactory;

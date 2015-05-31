@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,7 +21,11 @@ import com.trazere.core.util.Tuple2;
 import java.util.Collection;
 
 /**
- * The {@link CollectionAccumulators} class provides various factories of accumulators related to collections.
+ * The {@link CollectionAccumulators} class provides various factories of {@link Accumulator accumulators} related to {@link Collection collections}.
+ * 
+ * @see Accumulator
+ * @see Collection
+ * @since 1.0
  */
 public class CollectionAccumulators {
 	/**
@@ -32,6 +36,7 @@ public class CollectionAccumulators {
 	 * @param collection Collection to populate.
 	 * @return The built accumulator.
 	 * @see Collection#add(Object)
+	 * @since 1.0
 	 */
 	public static <E, C extends Collection<? super E>> Accumulator<E, C> add(final C collection) {
 		assert null != collection;
@@ -58,6 +63,7 @@ public class CollectionAccumulators {
 	 * @param collection Collection to populate.
 	 * @return The built accumulator.
 	 * @see Collection#add(Object)
+	 * @since 1.0
 	 */
 	public static <E1, E2, C extends Collection<? super Tuple2<? extends E1, ? extends E2>>> Accumulator2<E1, E2, C> add2(final C collection) {
 		assert null != collection;

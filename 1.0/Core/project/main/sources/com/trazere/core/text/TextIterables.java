@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import java.util.Iterator;
  * The {@link TextIterables} class provides various factories of {@link Iterable iterable} regarding text.
  * 
  * @see Iterable
+ * @since 1.0
  */
 public class TextIterables {
 	/**
@@ -30,6 +31,7 @@ public class TextIterables {
 	 * 
 	 * @param s Sequence of characters to iterate over.
 	 * @return The built iterable.
+	 * @since 1.0
 	 */
 	public static Iterable<Character> fromCharSequence(final CharSequence s) {
 		assert null != s;

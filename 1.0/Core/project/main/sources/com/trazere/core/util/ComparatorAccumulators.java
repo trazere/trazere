@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -20,7 +20,11 @@ import com.trazere.core.imperative.FoldAccumulator;
 import java.util.Comparator;
 
 /**
- * The {@link ComparatorAccumulators} class provides various factories of accumulators related to {@link Comparator comparators}.
+ * The {@link ComparatorAccumulators} class provides various factories of {@link Accumulator accumulators} related to {@link Comparator comparators}.
+ * 
+ * @see Accumulator
+ * @see Comparators
+ * @since 1.0
  */
 public class ComparatorAccumulators {
 	/**
@@ -30,6 +34,7 @@ public class ComparatorAccumulators {
 	 * @param comparator Comparator of the values.
 	 * @return The built accumulator.
 	 * @see ComparatorUtils#least(Comparator, Object, Object)
+	 * @since 1.0
 	 */
 	public static <T> Accumulator<T, Maybe<T>> least(final Comparator<? super T> comparator) {
 		return least(comparator, Maybe.<T>none());
@@ -43,6 +48,7 @@ public class ComparatorAccumulators {
 	 * @param initialState Initial state.
 	 * @return The built accumulator.
 	 * @see ComparatorUtils#least(Comparator, Object, Object)
+	 * @since 1.0
 	 */
 	public static <T> Accumulator<T, Maybe<T>> least(final Comparator<? super T> comparator, final T initialState) {
 		return least(comparator, Maybe.some(initialState));
@@ -56,6 +62,7 @@ public class ComparatorAccumulators {
 	 * @param initialState Initial state.
 	 * @return The built accumulator.
 	 * @see ComparatorUtils#least(Comparator, Object, Object)
+	 * @since 1.0
 	 */
 	public static <T> Accumulator<T, Maybe<T>> least(final Comparator<? super T> comparator, final Maybe<T> initialState) {
 		assert null != comparator;
@@ -75,6 +82,7 @@ public class ComparatorAccumulators {
 	 * @param comparator Comparator of the values.
 	 * @return The built accumulator.
 	 * @see ComparatorUtils#greatest(Comparator, Object, Object)
+	 * @since 1.0
 	 */
 	public static <T> Accumulator<T, Maybe<T>> greatest(final Comparator<? super T> comparator) {
 		return greatest(comparator, Maybe.<T>none());
@@ -88,6 +96,7 @@ public class ComparatorAccumulators {
 	 * @param initialState Initial state.
 	 * @return The built accumulator.
 	 * @see ComparatorUtils#greatest(Comparator, Object, Object)
+	 * @since 1.0
 	 */
 	public static <T> Accumulator<T, Maybe<T>> greatest(final Comparator<? super T> comparator, final T initialState) {
 		return greatest(comparator, Maybe.some(initialState));
@@ -101,6 +110,7 @@ public class ComparatorAccumulators {
 	 * @param initialState Initial state.
 	 * @return The built accumulator.
 	 * @see ComparatorUtils#greatest(Comparator, Object, Object)
+	 * @since 1.0
 	 */
 	public static <T> Accumulator<T, Maybe<T>> greatest(final Comparator<? super T> comparator, final Maybe<T> initialState) {
 		assert null != comparator;

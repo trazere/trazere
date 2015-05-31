@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,16 +22,22 @@ import java.io.InputStream;
  * The {@link DecoratorInputStream} class implements decorators of {@link InputStream input streams}.
  * 
  * @see InputStream
+ * @since 1.0
  */
 public abstract class DecoratorInputStream
 extends InputStream {
-	/** Decorated input stream. */
+	/**
+	 * Decorated input stream.
+	 * 
+	 * @since 1.0
+	 */
 	protected final InputStream _decorated;
 	
 	/**
 	 * Instantiates a new decorator.
 	 * 
 	 * @param decorated Decorated input stream.
+	 * @since 1.0
 	 */
 	public DecoratorInputStream(final InputStream decorated) {
 		assert null != decorated;

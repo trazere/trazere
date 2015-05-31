@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,8 +19,10 @@ package com.trazere.core.record;
  * The {@link Fields} class provides various factories of {@link Field fields}.
  * 
  * @see Field
+ * @since 1.0
  */
 public class Fields {
+	// TODO
 	//	/**
 	//	 * Builds a field with the given value according to the given signature.
 	//	 * <p>
@@ -50,6 +52,7 @@ public class Fields {
 	 * @param value Value of the field. May be <code>null</code>.
 	 * @return The built field.
 	 * @throws NullFieldException When the value is <code>null</code> and the field is not nullable.
+	 * @since 1.0
 	 */
 	// TODO: find a better name ?
 	public static <K extends FieldKey<? extends K, ?>, V> Field<K, V> fromKeyAndValue(final FieldKey<? extends K, V> key, final V value)

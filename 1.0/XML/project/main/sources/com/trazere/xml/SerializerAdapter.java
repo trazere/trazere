@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -23,16 +23,22 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
  * 
  * @param <T> Type of the values.
  * @see Serializer
+ * @since 1.0
  */
 public class SerializerAdapter<T>
 extends XmlAdapter<String, T> {
-	/** Serializer to use. */
+	/**
+	 * Serializer to use.
+	 * 
+	 * @since 1.0
+	 */
 	protected final Serializer<T, String> _serializer;
 	
 	/**
 	 * Instantiates a new adapter.
 	 * 
 	 * @param serializer Serializer to use.
+	 * @since 1.0
 	 */
 	public SerializerAdapter(final Serializer<T, String> serializer) {
 		assert null != serializer;

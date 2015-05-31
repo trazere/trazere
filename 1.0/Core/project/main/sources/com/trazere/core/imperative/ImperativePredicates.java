@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import java.util.Set;
  * The {@link ImperativePredicates} class provides various factories of {@link Predicate predicates} with imperative features.
  * 
  * @see Predicate
+ * @since 1.0
  */
 public class ImperativePredicates {
 	/**
@@ -30,6 +31,7 @@ public class ImperativePredicates {
 	 *
 	 * @param <A> Type of the arguments.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	public static <A> Predicate<A> normalizer() {
 		final Set<A> visited = new HashSet<>();

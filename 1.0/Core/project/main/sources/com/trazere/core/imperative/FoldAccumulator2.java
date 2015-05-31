@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ package com.trazere.core.imperative;
  * @param <E1> Type of the first element of the accumulated pairs.
  * @param <E2> Type of the second element of the accumulated pairs.
  * @param <S> Type of the states.
+ * @since 1.0
  */
 public abstract class FoldAccumulator2<E1, E2, S>
 implements Accumulator2<E1, E2, S> {
@@ -34,6 +35,7 @@ implements Accumulator2<E1, E2, S> {
 	 * Instantiates a new accumulator.
 	 * 
 	 * @param initialState Initial state.
+	 * @since 1.0
 	 */
 	public FoldAccumulator2(final S initialState) {
 		_state = initialState;
@@ -51,6 +53,7 @@ implements Accumulator2<E1, E2, S> {
 	 * @param element1 First element of the accumulated pair.
 	 * @param element2 Second element of the accumulated pair.
 	 * @return The new state.
+	 * @since 1.0
 	 */
 	protected abstract S fold(S state, E1 element1, E2 element2);
 	

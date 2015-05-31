@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -33,6 +33,8 @@ import java.util.Map;
 
 /**
  * The {@link XMLUtils} class provides various utilities regarding XML.
+ * 
+ * @since 1.0
  */
 public class XMLUtils {
 	// Entities.
@@ -42,6 +44,7 @@ public class XMLUtils {
 	 * 
 	 * @param s Text to escape.
 	 * @return The escaped text.
+	 * @since 1.0
 	 */
 	public static CharSequence escape(final CharSequence s) {
 		return escape(s, new StringBuilder(), ThrowableFactories.RUNTIME_EXCEPTION);
@@ -55,6 +58,7 @@ public class XMLUtils {
 	 * @param appendable Appendable to populate with the XML representation.
 	 * @param failureFactory Factory of the failures.
 	 * @return The given appendable.
+	 * @since 1.0
 	 */
 	public static <A extends Appendable> A escape(final CharSequence s, final A appendable, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		return escape(new CharSequenceReader(s), appendable, failureFactory);
@@ -68,6 +72,7 @@ public class XMLUtils {
 	 * @param appendable Appendable to populate with the XML representation.
 	 * @param failureFactory Factory of the failures.
 	 * @return The given appendable.
+	 * @since 1.0
 	 */
 	public static <A extends Appendable> A escape(final Reader reader, final A appendable, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		try {
@@ -107,6 +112,7 @@ public class XMLUtils {
 	 *
 	 * @param s XML representation to unescape.
 	 * @return The unescaped text.
+	 * @since 1.0
 	 */
 	public static CharSequence unescape(final CharSequence s) {
 		return unescape(s, new StringBuilder(), TextException.FACTORY);
@@ -120,6 +126,7 @@ public class XMLUtils {
 	 * @param appendable Appendable to populate with the unescaped text.
 	 * @param failureFactory Factory of the failures.
 	 * @return The given appendable.
+	 * @since 1.0
 	 */
 	public static <A extends Appendable> A unescape(final CharSequence s, final A appendable, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		return unescapeEntities(new CharSequenceReader(s), appendable, failureFactory);
@@ -133,6 +140,7 @@ public class XMLUtils {
 	 * @param appendable Appendable to populate with the unescaped text.
 	 * @param failureFactory Factory of the failures.
 	 * @return The given appendable.
+	 * @since 1.0
 	 */
 	public static <A extends Appendable> A unescapeEntities(final Reader reader, final A appendable, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		try {
@@ -194,27 +202,37 @@ public class XMLUtils {
 	// Dates.
 	
 	/**
-	 * Format for dates.
+	 * Format of dates.
 	 * <p>
 	 * Not strict, not thread safe !
+	 * 
+	 * @since 1.0
 	 */
 	public static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-ddX");
 	
 	/**
-	 * Format for date and times.
+	 * Format of date and times.
 	 * <p>
 	 * Not strict, not thread safe !
+	 * 
+	 * @since 1.0
 	 */
 	public static final DateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
 	
 	/**
-	 * Format for times.
+	 * Format of times.
 	 * <p>
 	 * Not strict, not thread safe !
+	 * 
+	 * @since 1.0
 	 */
 	public static final DateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm:ss.SSSX");
 	
-	/** Formatter for dates. */
+	/**
+	 * Formatter of dates.
+	 * 
+	 * @since 1.0
+	 */
 	public static final DateTimeFormatter DATE_FORMATTER;
 	static {
 		DATE_FORMATTER = new DateTimeFormatterBuilder().parseCaseInsensitive().parseStrict() //
@@ -225,7 +243,11 @@ public class XMLUtils {
 		.toFormatter();
 	}
 	
-	/** Formatter for date and times. */
+	/**
+	 * Formatter of date and times.
+	 * 
+	 * @since 1.0
+	 */
 	public static final DateTimeFormatter DATE_TIME_FORMATTER;
 	static {
 		DATE_TIME_FORMATTER = new DateTimeFormatterBuilder().parseCaseInsensitive().parseStrict() //
@@ -240,7 +262,11 @@ public class XMLUtils {
 		.toFormatter();
 	}
 	
-	/** Formatter for times. */
+	/**
+	 * Formatter of times.
+	 * 
+	 * @since 1.0
+	 */
 	public static final DateTimeFormatter TIME_FORMATTER;
 	static {
 		TIME_FORMATTER = new DateTimeFormatterBuilder().parseCaseInsensitive().parseStrict() //

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import java.util.Iterator;
  * The {@link Iterables} class provides various factories of {@link Iterable iterables}.
  * 
  * @see Iterable
+ * @since 1.0
  */
 public class Iterables {
 	/**
@@ -29,6 +30,7 @@ public class Iterables {
 	 * 
 	 * @param <E> Type of the elements.
 	 * @return The built iterable.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <E> Iterable<E> empty() {
@@ -48,6 +50,7 @@ public class Iterables {
 	 * @param <E> Type of the the element.
 	 * @param element Element provided by the iterable to build.
 	 * @return The built iterable.
+	 * @since 1.0
 	 */
 	public static <E> Iterable<E> fromElement(final E element) {
 		return new Iterable<E>() {
@@ -64,6 +67,7 @@ public class Iterables {
 	 * @param <E> Type of the the elements.
 	 * @param elements Elements provided by the iterable to build.
 	 * @return The built iterable.
+	 * @since 1.0
 	 */
 	@SafeVarargs
 	public static <E> Iterable<E> fromElements(final E... elements) {
@@ -76,6 +80,8 @@ public class Iterables {
 			}
 		};
 	}
+	
+	// TODO: unmodifiable
 	
 	private Iterables() {
 		// Prevent instantiation.

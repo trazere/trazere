@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -18,7 +18,14 @@ package com.trazere.core.util;
 import com.trazere.core.functional.Function;
 
 /**
- * The {@link EitherExtractors} class provides various extractors related to {@link Either}s.
+ * The {@link EitherExtractors} class provides various factories of extractors related to {@link Either eithers}.
+ * <p>
+ * An extractor is {@link Function function} that combines a map operation and a filter operation.
+ * 
+ * @see Function
+ * @see Maybe
+ * @see Either
+ * @since 1.0
  */
 public class EitherExtractors {
 	/**
@@ -26,6 +33,7 @@ public class EitherExtractors {
 	 * 
 	 * @param <L> Type of the left value.
 	 * @return The built extractor.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <L> Function<Either<? extends L, ?>, Maybe<L>> getLeft() {
@@ -39,6 +47,7 @@ public class EitherExtractors {
 	 * 
 	 * @param <R> Type of the right value.
 	 * @return The built extractor.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <R> Function<Either<?, ? extends R>, Maybe<R>> getRight() {

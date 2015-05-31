@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -23,16 +23,16 @@ import java.io.InputStream;
 
 /**
  * The {@link FileInput} class implements inputs for the content of some file.
+ * 
+ * @since 1.0
  */
 public class FileInput
 implements Input {
-	/** File containing the data. */
-	protected final File _file;
-	
 	/**
 	 * Instanciates a new input.
 	 * 
 	 * @param file File containing the data.
+	 * @since 1.0
 	 */
 	public FileInput(final File file) {
 		assert null != file;
@@ -41,14 +41,26 @@ implements Input {
 		_file = file;
 	}
 	
+	// File.
+	
+	/**
+	 * File containing the data.
+	 * 
+	 * @since 1.0
+	 */
+	protected final File _file;
+	
 	/**
 	 * Gets the file containing the data provided by this input.
 	 * 
 	 * @return The file.
+	 * @since 1.0
 	 */
 	public File getFile() {
 		return _file;
 	}
+	
+	// Input.
 	
 	@Override
 	public boolean exists()

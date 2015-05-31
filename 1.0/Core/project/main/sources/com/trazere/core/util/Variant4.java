@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import com.trazere.core.lang.ObjectUtils;
  * @param <T2> Type of the value wrapped in the second case.
  * @param <T3> Type of the value wrapped in the third case.
  * @param <T4> Type of the value wrapped in the fourth case.
+ * @since 1.0
  */
 public abstract class Variant4<T1, T2, T3, T4>
 implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3, T4>>, Tag3<Variant4.Case3<T1, T2, T3, T4>>, Tag4<Variant4.Case4<T1, T2, T3, T4>> {
@@ -43,6 +44,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 	 * @param value Value to wrap.
 	 * @return The built instance.
 	 * @see Case1
+	 * @since 1.0
 	 */
 	public static <T1, T2, T3, T4> Variant4<T1, T2, T3, T4> case1(final T1 value) {
 		return new Case1<>(value);
@@ -58,6 +60,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 	 * @param value Value to wrap.
 	 * @return The built instance.
 	 * @see Case2
+	 * @since 1.0
 	 */
 	public static <T1, T2, T3, T4> Variant4<T1, T2, T3, T4> case2(final T2 value) {
 		return new Case2<>(value);
@@ -73,6 +76,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 	 * @param value Value to wrap.
 	 * @return The built instance.
 	 * @see Case3
+	 * @since 1.0
 	 */
 	public static <T1, T2, T3, T4> Variant4<T1, T2, T3, T4> case3(final T3 value) {
 		return new Case3<>(value);
@@ -87,7 +91,8 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 	 * @param <T4> Type of the value wrapped in the fourth case.
 	 * @param value Value to wrap.
 	 * @return The built instance.
-	 * @see Case3
+	 * @see Case4
+	 * @since 1.0
 	 */
 	public static <T1, T2, T3, T4> Variant4<T1, T2, T3, T4> case4(final T4 value) {
 		return new Case4<>(value);
@@ -101,6 +106,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 	 * @param <T3> Type of the value wrapped in the third case.
 	 * @param <T4> Type of the value wrapped in the fourth case.
 	 * @param <T> Type of the wrapped value.
+	 * @since 1.0
 	 */
 	private static abstract class BaseCase<T1, T2, T3, T4, T>
 	extends Variant4<T1, T2, T3, T4>
@@ -109,6 +115,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 		 * Instantiates a new variant.
 		 * 
 		 * @param value Value to wrap.
+		 * @since 1.0
 		 */
 		public BaseCase(final T value) {
 			_value = value;
@@ -116,13 +123,18 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 		
 		// Value.
 		
-		/** Wrapped value. */
+		/**
+		 * Wrapped value.
+		 * 
+		 * @since 1.0
+		 */
 		protected final T _value;
 		
 		/**
 		 * Gets the wrapped value.
 		 * 
 		 * @return The wrapped value.
+		 * @since 1.0
 		 */
 		@Override
 		public T get() {
@@ -165,6 +177,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 	 * @param <T2> Type of the value wrapped in the second case.
 	 * @param <T3> Type of the value wrapped in the third case.
 	 * @param <T4> Type of the value wrapped in the fourth case.
+	 * @since 1.0
 	 */
 	public static final class Case1<T1, T2, T3, T4>
 	extends BaseCase<T1, T2, T3, T4, T1> {
@@ -172,6 +185,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 		 * Instantiates a new variant.
 		 * 
 		 * @param value Value to wrap.
+		 * @since 1.0
 		 */
 		public Case1(final T1 value) {
 			super(value);
@@ -226,6 +240,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 	 * Indicates whether this variant is an instance of the first case.
 	 * 
 	 * @return <code>true</code> when the variant is an instance of the first case, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	@Override
 	public boolean is1() {
@@ -237,6 +252,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 	 * 
 	 * @return The view.
 	 * @throws InvalidConstructorException When the variant is not an instance of the first case.
+	 * @since 1.0
 	 */
 	@Override
 	public Case1<T1, T2, T3, T4> as1()
@@ -253,6 +269,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 	 * @param <T2> Type of the value wrapped in the second case.
 	 * @param <T3> Type of the value wrapped in the third case.
 	 * @param <T4> Type of the value wrapped in the fourth case.
+	 * @since 1.0
 	 */
 	public static final class Case2<T1, T2, T3, T4>
 	extends BaseCase<T1, T2, T3, T4, T2> {
@@ -260,6 +277,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 		 * Instantiates a new variant.
 		 * 
 		 * @param value Value to wrap.
+		 * @since 1.0
 		 */
 		public Case2(final T2 value) {
 			super(value);
@@ -314,6 +332,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 	 * Indicates whether this variant is an instance of the second case.
 	 * 
 	 * @return <code>true</code> when the variant is an instance of the second case, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	@Override
 	public boolean is2() {
@@ -325,6 +344,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 	 * 
 	 * @return The view.
 	 * @throws InvalidConstructorException When the variant is not an instance of the second case.
+	 * @since 1.0
 	 */
 	@Override
 	public Case2<T1, T2, T3, T4> as2()
@@ -341,6 +361,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 	 * @param <T2> Type of the value wrapped in the second case.
 	 * @param <T3> Type of the value wrapped in the third case.
 	 * @param <T4> Type of the value wrapped in the fourth case.
+	 * @since 1.0
 	 */
 	public static final class Case3<T1, T2, T3, T4>
 	extends BaseCase<T1, T2, T3, T4, T3> {
@@ -348,6 +369,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 		 * Instantiates a new variant.
 		 * 
 		 * @param value Value to wrap.
+		 * @since 1.0
 		 */
 		public Case3(final T3 value) {
 			super(value);
@@ -402,6 +424,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 	 * Indicates whether this variant is an instance of the third case.
 	 * 
 	 * @return <code>true</code> when the variant is an instance of the third case, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	@Override
 	public boolean is3() {
@@ -413,6 +436,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 	 * 
 	 * @return The view.
 	 * @throws InvalidConstructorException When the variant is not an instance of the third case.
+	 * @since 1.0
 	 */
 	@Override
 	public Case3<T1, T2, T3, T4> as3()
@@ -429,6 +453,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 	 * @param <T2> Type of the value wrapped in the second case.
 	 * @param <T3> Type of the value wrapped in the third case.
 	 * @param <T4> Type of the value wrapped in the fourth case.
+	 * @since 1.0
 	 */
 	public static final class Case4<T1, T2, T3, T4>
 	extends BaseCase<T1, T2, T3, T4, T4> {
@@ -436,6 +461,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 		 * Instantiates a new variant.
 		 * 
 		 * @param value Value to wrap.
+		 * @since 1.0
 		 */
 		public Case4(final T4 value) {
 			super(value);
@@ -490,6 +516,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 	 * Indicates whether this variant is an instance of the fourth case.
 	 * 
 	 * @return <code>true</code> when the variant is an instance of the fourth case, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	@Override
 	public boolean is4() {
@@ -501,6 +528,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 	 * 
 	 * @return The view.
 	 * @throws InvalidConstructorException When the variant is not an instance of the fourth case.
+	 * @since 1.0
 	 */
 	@Override
 	public Case4<T1, T2, T3, T4> as4()
@@ -519,6 +547,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 	 * @param <T4> Type of the value wrapped in the fourth case.
 	 * @param <R> Type of the result.
 	 * @see Variant4#match(Matcher)
+	 * @since 1.0
 	 */
 	public interface Matcher<T1, T2, T3, T4, R> {
 		/**
@@ -526,6 +555,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 		 * 
 		 * @param case1 First case instance to match.
 		 * @return The result of the matching function evaluation.
+		 * @since 1.0
 		 */
 		R case1(Case1<? extends T1, ? extends T2, ? extends T3, ? extends T4> case1);
 		
@@ -534,6 +564,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 		 * 
 		 * @param case2 Second case instance to match.
 		 * @return The result of the matching function evaluation.
+		 * @since 1.0
 		 */
 		R case2(Case2<? extends T1, ? extends T2, ? extends T3, ? extends T4> case2);
 		
@@ -542,6 +573,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 		 * 
 		 * @param case3 Third case instance to match.
 		 * @return The result of the matching function evaluation.
+		 * @since 1.0
 		 */
 		R case3(Case3<? extends T1, ? extends T2, ? extends T3, ? extends T4> case3);
 		
@@ -550,6 +582,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 		 * 
 		 * @param case4 Fourth case instance to match.
 		 * @return The result of the matching function evaluation.
+		 * @since 1.0
 		 */
 		R case4(Case4<? extends T1, ? extends T2, ? extends T3, ? extends T4> case4);
 	}
@@ -562,6 +595,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 	 * @param <R> Type of the result.
 	 * @param matcher Matching function to apply.
 	 * @return The result of the matching function evaluation.
+	 * @since 1.0
 	 */
 	public abstract <R> R match(Matcher<? super T1, ? super T2, ? super T3, ? super T4, ? extends R> matcher);
 	
@@ -573,6 +607,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 	 * @param <R1> Type of the mapped value wrapped in the first case.
 	 * @param function Function to use to map the wrapped value.
 	 * @return The mapped {@link Variant4} instance.
+	 * @since 1.0
 	 */
 	public abstract <R1> Variant4<R1, T2, T3, T4> map1(Function<? super T1, ? extends R1> function);
 	
@@ -582,6 +617,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 	 * @param <R2> Type of the mapped value wrapped in the second case.
 	 * @param function Function to use to map the wrapped value.
 	 * @return The mapped {@link Variant4} instance.
+	 * @since 1.0
 	 */
 	public abstract <R2> Variant4<T1, R2, T3, T4> map2(Function<? super T2, ? extends R2> function);
 	
@@ -591,6 +627,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 	 * @param <R3> Type of the mapped value wrapped in the third case.
 	 * @param function Function to use to map the wrapped value.
 	 * @return The mapped {@link Variant4} instance.
+	 * @since 1.0
 	 */
 	public abstract <R3> Variant4<T1, T2, R3, T4> map3(Function<? super T3, ? extends R3> function);
 	
@@ -600,6 +637,7 @@ implements Tag1<Variant4.Case1<T1, T2, T3, T4>>, Tag2<Variant4.Case2<T1, T2, T3,
 	 * @param <R4> Type of the mapped value wrapped in the fourth case.
 	 * @param function Function to use to map the wrapped value.
 	 * @return The mapped {@link Variant4} instance.
+	 * @since 1.0
 	 */
 	public abstract <R4> Variant4<T1, T2, T3, R4> map4(Function<? super T4, ? extends R4> function);
 }

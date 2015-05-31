@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import java.util.NoSuchElementException;
  * The {@link LookAheadIterator} class implements iterators that look ahead the next element.
  * 
  * @param <E> Type of the elements.
+ * @since 1.0
  */
 public abstract class LookAheadIterator<E>
 implements Iterator<E> {
@@ -62,6 +63,7 @@ implements Iterator<E> {
 	 * Pulls the next element from the feed.
 	 * 
 	 * @return The next element.
+	 * @since 1.0
 	 */
 	protected abstract Maybe<? extends E> pull();
 }

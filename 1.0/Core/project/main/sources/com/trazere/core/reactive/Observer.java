@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import java.util.Observable;
  * 
  * @param <E> Type of the observed events.
  * @see Observable
+ * @since 1.0
  */
 public interface Observer<E> {
 	/**
@@ -29,6 +30,7 @@ public interface Observer<E> {
 	 * 
 	 * @param event Raised event.
 	 * @return <code>true</code> to hold the subscription corresponding to this notification, <code>false</code> to cancel it.
+	 * @since 1.0
 	 */
 	boolean onEvent(final E event);
 }

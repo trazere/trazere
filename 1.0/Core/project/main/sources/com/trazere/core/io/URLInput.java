@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -27,19 +27,16 @@ import java.net.URLConnection;
 
 /**
  * The {@link URLInput} class implements inputs for the content accessible at some URL.
+ * 
+ * @since 1.0
  */
 public class URLInput
 implements Input {
-	/** URL of the data. */
-	protected final URL _url;
-	
-	/** URL connection providing the data. */
-	protected final Thunk<URLConnection> _connection;
-	
 	/**
 	 * Instanciates a new input.
 	 * 
 	 * @param url URL of the data.
+	 * @since 1.0
 	 */
 	public URLInput(final URL url) {
 		assert null != url;
@@ -59,6 +56,7 @@ implements Input {
 	 * Instanciates a new input.
 	 * 
 	 * @param connection URL connection providing the data.
+	 * @since 1.0
 	 */
 	public URLInput(final URLConnection connection) {
 		assert null != connection;
@@ -68,20 +66,40 @@ implements Input {
 		_connection = Thunks.constant(connection);
 	}
 	
+	// Url.
+	
+	/**
+	 * URL of the data.
+	 * 
+	 * @since 1.0
+	 */
+	protected final URL _url;
+	
 	/**
 	 * Gets the URL of data provided by this input.
 	 * 
 	 * @return The url.
+	 * @since 1.0
 	 */
 	public URL getUrl() {
 		return _url;
 	}
+	
+	// Connection.
+	
+	/**
+	 * URL connection providing the data.
+	 * 
+	 * @since 1.0
+	 */
+	protected final Thunk<URLConnection> _connection;
 	
 	/**
 	 * Gets the URL connection providing the data.
 	 * 
 	 * @return The URL connection.
 	 * @throws IOException When the connection cannot be opened.
+	 * @since 1.0
 	 */
 	protected URLConnection getConnection()
 	throws IOException {
@@ -92,6 +110,8 @@ implements Input {
 			throw exception;
 		}
 	}
+	
+	// Input.
 	
 	@Override
 	public boolean exists()

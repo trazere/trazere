@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -16,9 +16,11 @@
 package com.trazere.core.imperative;
 
 /**
- * The {@link Procedures} class provides various factories of procedures.
+ * The {@link Procedures} class provides various factories of {@link Procedure procedures}.
  * 
  * @see Procedure
+ * @see Procedure2
+ * @since 1.0
  */
 public class Procedures {
 	/**
@@ -26,6 +28,7 @@ public class Procedures {
 	 * 
 	 * @param <A> Type of the arguments.
 	 * @return The built procedure.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <A> Procedure<A> nop() {
@@ -44,6 +47,7 @@ public class Procedures {
 	 * @param <A> Type of the arguments.
 	 * @param arg Argument to use to execute the procedures.
 	 * @return The built procedure.
+	 * @since 1.0
 	 */
 	public static <A> Procedure<Procedure<? super A>> execute(final A arg) {
 		return procedure -> procedure.execute(arg);
@@ -57,6 +61,7 @@ public class Procedures {
 	 * @param arg1 First argument to use to execute the procedures.
 	 * @param arg2 Second argument to use to execute the procedures.
 	 * @return The built procedure.
+	 * @since 1.0
 	 */
 	public static <A1, A2> Procedure<Procedure2<? super A1, ? super A2>> execute(final A1 arg1, final A2 arg2) {
 		return procedure -> procedure.execute(arg1, arg2);
@@ -72,6 +77,7 @@ public class Procedures {
 	 * @param arg2 Second argument to use to execute the procedures.
 	 * @param arg3 Third argument to use to execute the procedures.
 	 * @return The built procedure.
+	 * @since 1.0
 	 */
 	public static <A1, A2, A3> Procedure<Procedure3<? super A1, ? super A2, ? super A3>> execute(final A1 arg1, final A2 arg2, final A3 arg3) {
 		return procedure -> procedure.execute(arg1, arg2, arg3);
@@ -89,6 +95,7 @@ public class Procedures {
 	 * @param arg3 Third argument to use to execute the procedures.
 	 * @param arg4 Fourth argument to use to execute the procedures.
 	 * @return The built procedure.
+	 * @since 1.0
 	 */
 	public static <A1, A2, A3, A4> Procedure<Procedure4<? super A1, ? super A2, ? super A3, ? super A4>> execute(final A1 arg1, final A2 arg2, final A3 arg3, final A4 arg4) {
 		return procedure -> procedure.execute(arg1, arg2, arg3, arg4);
@@ -108,6 +115,7 @@ public class Procedures {
 	 * @param arg4 Fourth argument to use to execute the procedures.
 	 * @param arg5 Fifth argument to use to execute the procedures.
 	 * @return The built procedure.
+	 * @since 1.0
 	 */
 	public static <A1, A2, A3, A4, A5> Procedure<Procedure5<? super A1, ? super A2, ? super A3, ? super A4, ? super A5>> execute(final A1 arg1, final A2 arg2, final A3 arg3, final A4 arg4, final A5 arg5) {
 		return procedure -> procedure.execute(arg1, arg2, arg3, arg4, arg5);
@@ -119,6 +127,7 @@ public class Procedures {
 	 * @param <A1> Type of the first arguments.
 	 * @param <A2> Type of the second arguments.
 	 * @return The built procedure.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <A1, A2> Procedure2<A1, A2> nop2() {

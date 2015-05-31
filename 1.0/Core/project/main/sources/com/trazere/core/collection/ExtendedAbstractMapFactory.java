@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import java.util.Map;
  * @param <AM> Type of the abstract maps.
  * @param <M> Type of the maps.
  * @see Map
+ * @since 1.0
  */
 public interface ExtendedAbstractMapFactory<K, V, AM extends Map<K, V>, M extends AM>
 extends MapFactory<K, V, M> {
@@ -33,6 +34,7 @@ extends MapFactory<K, V, M> {
 	 * Builds an unmodifiable view of an empty map.
 	 * 
 	 * @return The built unmodifiable view.
+	 * @since 1.0
 	 */
 	AM empty();
 	
@@ -41,6 +43,7 @@ extends MapFactory<K, V, M> {
 	 * 
 	 * @param map Map to wrap.
 	 * @return The built unmodifiable view.
+	 * @since 1.0
 	 */
 	AM unmodifiable(M map);
 	
@@ -49,6 +52,7 @@ extends MapFactory<K, V, M> {
 	 * 
 	 * @param map Map to wrap.
 	 * @return The built synchronized view.
+	 * @since 1.0
 	 */
 	AM synchronize(M map);
 }

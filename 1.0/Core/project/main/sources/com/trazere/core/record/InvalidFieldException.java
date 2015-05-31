@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,6 +19,8 @@ import com.trazere.core.lang.ThrowableFactory;
 
 /**
  * {@link InvalidFieldException} exceptions are thrown when some field is invalid or cannot be computed.
+ * 
+ * @since 1.0
  */
 public class InvalidFieldException
 extends RecordException {
@@ -26,6 +28,8 @@ extends RecordException {
 	
 	/**
 	 * Instantiates a new exception.
+	 * 
+	 * @since 1.0
 	 */
 	public InvalidFieldException() {
 		super();
@@ -35,6 +39,7 @@ extends RecordException {
 	 * Instantiates a new exception using the given message.
 	 * 
 	 * @param message Details about the exception.
+	 * @since 1.0
 	 */
 	public InvalidFieldException(final String message) {
 		super(message);
@@ -44,6 +49,7 @@ extends RecordException {
 	 * Instantiates a new exception using the given cause.
 	 * 
 	 * @param cause Cause of the exception.
+	 * @since 1.0
 	 */
 	public InvalidFieldException(final Throwable cause) {
 		super(cause);
@@ -54,12 +60,17 @@ extends RecordException {
 	 * 
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
+	 * @since 1.0
 	 */
 	public InvalidFieldException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 	
-	/** Factory of {@link InvalidFieldException}. */
+	/**
+	 * Factory of {@link InvalidFieldException}.
+	 * 
+	 * @since 1.0
+	 */
 	@SuppressWarnings("hiding")
 	public static final ThrowableFactory<InvalidFieldException> FACTORY = new ThrowableFactory<InvalidFieldException>() {
 		@Override

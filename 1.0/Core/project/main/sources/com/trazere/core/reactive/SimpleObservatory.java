@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -26,9 +26,15 @@ import com.trazere.core.util.Maybe;
  * 
  * @param <S> Type of the subjects.
  * @param <E> Type of the events.
+ * @since 1.0
  */
 public class SimpleObservatory<S, E>
 implements Observatory<S, E> {
+	/**
+	 * Event broadcasters by subjects.
+	 * 
+	 * @since 1.0
+	 */
 	protected final ResettableFunction<S, Broadcaster<E>> _subjectBroadcasters = new ResettableFunction<S, Broadcaster<E>>() {
 		@Override
 		protected Broadcaster<E> compute(final S subject) {
@@ -76,6 +82,11 @@ implements Observatory<S, E> {
 		};
 	}
 	
+	/**
+	 * Event broadcaster for all subjects.
+	 * 
+	 * @since 1.0
+	 */
 	protected final Broadcaster<E> _allBroadcaster = new Broadcaster<>();
 	
 	@Override

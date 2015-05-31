@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import java.util.LinkedList;
  * The {@link FIFOCachePolicy} class implements cache policies with a bounded capacity based on the First In/First Out algorithm.
  * 
  * @param <K> Type of the keys.
+ * @since 1.0
  */
 public class FIFOCachePolicy<K>
 implements CachePolicy<K> {
@@ -29,6 +30,7 @@ implements CachePolicy<K> {
 	 * Instanciates a new cache policy.
 	 * 
 	 * @param capacity Capacity of the cache.
+	 * @since 1.0
 	 */
 	public FIFOCachePolicy(final int capacity) {
 		assert capacity > 0;
@@ -39,13 +41,18 @@ implements CachePolicy<K> {
 	
 	// Capacity.
 	
-	/** Capacity of the cache. */
+	/**
+	 * Capacity of the cache.
+	 * 
+	 * @since 1.0
+	 */
 	protected final int _capacity;
 	
 	/**
 	 * Gets the capacity of the cache.
 	 * 
-	 * @return Capacity.
+	 * @return The capacity.
+	 * @since 1.0
 	 */
 	public int getCapacity() {
 		return _capacity;

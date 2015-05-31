@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,9 +19,11 @@ import com.trazere.core.functional.Function;
 import java.util.Iterator;
 
 /**
- * The {@link IterableFunctions} class provides various factories of function related to {@link Iterable iterables}.
+ * The {@link IterableFunctions} class provides various factories of {@link Function functions} related to {@link Iterable iterables}.
  * 
+ * @see Function
  * @see Iterable
+ * @since 1.0
  */
 public class IterableFunctions {
 	/**
@@ -29,6 +31,7 @@ public class IterableFunctions {
 	 * 
 	 * @param <E> Type of the elements.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <E> Function<Iterable<? extends E>, Iterator<? extends E>> iterator() {

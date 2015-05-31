@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import java.util.Set;
  * 
  * @param <K> Type of the field keys.
  * @see Field
+ * @since 1.0
  */
 public interface Record<K extends FieldKey<? extends K, ?>> {
 	/**
@@ -34,6 +35,7 @@ public interface Record<K extends FieldKey<? extends K, ?>> {
 	 * The size of a record corresponds to the number of fields it contains.
 	 * 
 	 * @return The size of the record.
+	 * @since 1.0
 	 */
 	default int size() {
 		return keys().size();
@@ -45,6 +47,7 @@ public interface Record<K extends FieldKey<? extends K, ?>> {
 	 * A record is empty when it contains no fields.
 	 * 
 	 * @return <code>true</code> when the record is empty, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	default boolean isEmpty() {
 		return 0 == size();
@@ -55,6 +58,7 @@ public interface Record<K extends FieldKey<? extends K, ?>> {
 	 * 
 	 * @param key Key of the field to look for.
 	 * @return <code>true</code> when the record contains a field identified by the given key, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	default boolean contains(final FieldKey<? extends K, ?> key) {
 		return keys().contains(key);
@@ -64,6 +68,7 @@ public interface Record<K extends FieldKey<? extends K, ?>> {
 	 * Gets a view of the keys identifying the fields of this record.
 	 * 
 	 * @return An unmodiable set of the field keys.
+	 * @since 1.0
 	 */
 	Set<? extends FieldKey<? extends K, ?>> keys();
 	
@@ -74,6 +79,7 @@ public interface Record<K extends FieldKey<? extends K, ?>> {
 	 * @param key Key of the field to get.
 	 * @return The value of the field, or nothing when the record contains no fields are identified by the key.
 	 * @throws InvalidFieldException When the value of the field cannot be read.
+	 * @since 1.0
 	 */
 	<V> Maybe<V> get(FieldKey<? extends K, V> key)
 	throws InvalidFieldException;
@@ -86,6 +92,7 @@ public interface Record<K extends FieldKey<? extends K, ?>> {
 	 * @param defaultValue Default value of the field. May be <code>null</code>.
 	 * @return The value of the field, or the given default value when no fields are identified by the given key. May be <code>null</code>.
 	 * @throws InvalidFieldException When the value of the field cannot be read.
+	 * @since 1.0
 	 */
 	default <V> V getOptional(final FieldKey<? extends K, V> key, final V defaultValue)
 	throws InvalidFieldException {
@@ -100,6 +107,7 @@ public interface Record<K extends FieldKey<? extends K, ?>> {
 	 * @return The value of the field. May be <code>null</code>.
 	 * @throws MissingFieldException When no fields are identified by the given key in the record.
 	 * @throws InvalidFieldException When the value of the field cannot be read.
+	 * @since 1.0
 	 */
 	default <V> V getMandatory(final FieldKey<? extends K, V> key)
 	throws MissingFieldException, InvalidFieldException {
@@ -115,9 +123,11 @@ public interface Record<K extends FieldKey<? extends K, ?>> {
 	 * Gets a view of the fields of this record.
 	 * 
 	 * @return An unmodiable collection of the fields.
+	 * @since 1.0
 	 */
 	Collection<Field<? extends K, ?>> fields();
 	
+	// TODO
 	//	/**
 	//	 * Populates the given record builder with the fields of this record.
 	//	 *

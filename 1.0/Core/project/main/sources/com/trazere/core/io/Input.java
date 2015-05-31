@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,6 +22,8 @@ import java.io.InputStream;
  * The {@link Input} interface defines abstract data inputs.
  * <p>
  * Inputs may or may not be opened several times depending on the implementation.
+ * 
+ * @since 1.0
  */
 public interface Input {
 	/**
@@ -31,6 +33,7 @@ public interface Input {
 	 * 
 	 * @return <code>true</code> when the source exists, <code>false</code> otherwise.
 	 * @throws IOException When the test fails.
+	 * @since 1.0
 	 */
 	public boolean exists()
 	throws IOException;
@@ -42,6 +45,7 @@ public interface Input {
 	 * 
 	 * @return An input stream providing the data.
 	 * @throws IOException When the input cannot be opened.
+	 * @since 1.0
 	 */
 	public InputStream open()
 	throws IOException;

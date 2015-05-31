@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import java.util.NoSuchElementException;
  * The {@link Feed} interface defines lazy sequences of elements.
  * 
  * @param <E> Type of the elements.
+ * @since 1.0
  */
 @FunctionalInterface
 public interface Feed<E>
@@ -33,6 +34,7 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * Tests whether this feed is empty.
 	 * 
 	 * @return <code>true</code> when the feed is empty, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	default boolean isEmpty() {
 		return evaluate().isNone();
@@ -43,6 +45,7 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * 
 	 * @return The head element and tail.
 	 * @throws NoSuchElementException When the feed is emtpy.
+	 * @since 1.0
 	 */
 	default Tuple2<? extends E, ? extends Feed<? extends E>> get()
 	throws NoSuchElementException {
@@ -59,6 +62,7 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * 
 	 * @return The element.
 	 * @throws NoSuchElementException When the feed is empty.
+	 * @since 1.0
 	 */
 	default E getHead()
 	throws NoSuchElementException {
@@ -70,6 +74,7 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * 
 	 * @return The tail.
 	 * @throws NoSuchElementException When the feed is empty.
+	 * @since 1.0
 	 */
 	default Feed<? extends E> getTail()
 	throws NoSuchElementException {

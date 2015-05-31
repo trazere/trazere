@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,10 +24,13 @@ import com.trazere.core.reference.ReferenceAlreadySetException;
  * The {@link Promise} class implements placeholders for values that will be set in the future.
  * 
  * @param <T> Type of the value.
+ * @since 1.0
  */
 public class Promise<T> {
 	/**
 	 * Instantiates a new promise.
+	 * 
+	 * @since 1.0
 	 */
 	public Promise() {
 		this(new PromiseFuture<>());
@@ -37,6 +40,7 @@ public class Promise<T> {
 	 * Instantiates a new promise.
 	 * 
 	 * @param future Future providing the value.
+	 * @since 1.0
 	 */
 	protected Promise(final PromiseFuture<T> future) {
 		assert null != future;
@@ -51,19 +55,25 @@ public class Promise<T> {
 	 * The {@link Promise.PromiseFuture} class implements futures of promises.
 	 * 
 	 * @param <T> Type of the value.
+	 * @since 1.0
 	 */
 	protected static class PromiseFuture<T>
 	extends BaseFuture<T> {
 		// Nothing to do.
 	}
 	
-	/** Future providing the value. */
+	/**
+	 * Future providing the value.
+	 * 
+	 * @since 1.0
+	 */
 	protected final PromiseFuture<T> _future;
 	
 	/**
 	 * Gets the future providing the value of this promise.
 	 * 
 	 * @return The future.
+	 * @since 1.0
 	 */
 	public Future<T> getFuture() {
 		return _future;
@@ -75,6 +85,7 @@ public class Promise<T> {
 	 * Indicates whether this promise has been fulfilled (ie, the value of the promise has been set) or not.
 	 * 
 	 * @return <code>true</code> when the pro
+	 * @since 1.0
 	 */
 	public boolean isFulfilled() {
 		return _future.isAvailable();
@@ -87,6 +98,7 @@ public class Promise<T> {
 	 * 
 	 * @param value Value with which the promise should be fulfilled.
 	 * @throws ReferenceAlreadySetException When the promise has already been fulfilled.
+	 * @since 1.0
 	 */
 	public void fulfil(final T value) {
 		_future.set(value);
@@ -99,6 +111,7 @@ public class Promise<T> {
 	 * 
 	 * @param observable Observable providing the value with which the promise should be fulfilled.
 	 * @return The subscription.
+	 * @since 1.0
 	 */
 	public ObserverSubscription fulfil(final Observable<? extends T> observable) {
 		return observable.subscribe((final T value) -> {
@@ -112,6 +125,7 @@ public class Promise<T> {
 	 * 
 	 * @param value Value with which the promise should be fulfilled.
 	 * @return <code>true</code> when the promise has been fulfilled with the value, <code>false</code> when it was already fulfilled.
+	 * @since 1.0
 	 */
 	public boolean fulfilIfNot(final T value) {
 		return _future.setIfNot(value);
@@ -122,6 +136,7 @@ public class Promise<T> {
 	 * 
 	 * @param observable Observable providing the value with which the promise should be fulfilled.
 	 * @return The subscription.
+	 * @since 1.0
 	 */
 	public ObserverSubscription fulfilIfNot(final Observable<? extends T> observable) {
 		return observable.subscribe((final T value) -> {
