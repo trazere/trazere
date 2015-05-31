@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,13 +21,15 @@ package com.trazere.core.functional;
  * Thunks represent no-arguments functions whose evaluation solely relies on the captured context. They provide an abstraction for lazy evaluation.
  * 
  * @param <T> Type of the value.
+ * @since 1.0
  */
 @FunctionalInterface
 public interface Thunk<T> {
 	/**
-	 * Evaluates the receiver thunk.
+	 * Evaluates this thunk.
 	 * 
 	 * @return The value of the thunk.
+	 * @since 1.0
 	 */
 	T evaluate();
 }

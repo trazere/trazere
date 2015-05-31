@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,14 +17,28 @@ package com.trazere.csv;
 
 /**
  * The {@link CSVOption} enumeration represents options for CSV {@link CSVReader readers} and {@link CSVWriter writers}.
+ * 
+ * @since 1.0
  */
 public enum CSVOption {
-	/** Indicates that the fields should be trimed (heading and trailing white spaces). */
+	/**
+	 * Indicates that the fields should be trimed (heading and trailing white spaces).
+	 * 
+	 * @since 1.0
+	 */
 	TRIM_FIELDS,
 	
-	/** Indicates that the cardinality of the lines should be checked. */
+	/**
+	 * Indicates that the cardinality of the lines should be checked.
+	 * 
+	 * @since 1.0
+	 */
 	CHECK_CARDINALITY,
 	
-	/** Indicates that the invalid lines should be ignored. */
+	/**
+	 * Indicates that the invalid lines should be ignored.
+	 * 
+	 * @since 1.0
+	 */
 	IGNORE_INVALID_LINES,
 }

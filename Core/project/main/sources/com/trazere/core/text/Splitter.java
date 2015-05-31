@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,6 +24,8 @@ import com.trazere.core.util.Tuple2;
 
 /**
  * The {@link Splitter} class helps to split the sequences of characters according to some delimiter.
+ * 
+ * @since 1.0
  */
 public abstract class Splitter {
 	/**
@@ -32,6 +34,7 @@ public abstract class Splitter {
 	 * @param includeDelimiters Indicates whether to include the delimiters as tokens or not.
 	 * @param trimFilter Filter to use to trim the tokens.
 	 * @param ignoreEmpty Indicates whether the empty tokens are ignored.
+	 * @since 1.0
 	 */
 	public Splitter(final boolean includeDelimiters, final Maybe<? extends CharPredicate> trimFilter, final boolean ignoreEmpty) {
 		assert null != trimFilter;
@@ -50,18 +53,24 @@ public abstract class Splitter {
 	 * @param s Sequence of characters to look into.
 	 * @param offset Index from which the search should start.
 	 * @return The range of the delimiter, or nothing when no delimiters are found.
+	 * @since 1.0
 	 */
 	protected abstract Maybe<FiniteIntSequence> findDelimiter(final CharSequence s, final int offset);
 	
 	// Include delimiters.
 	
-	/** Indicates whether to include the delimiters as tokens or not. */
+	/**
+	 * Indicates whether to include the delimiters as tokens or not.
+	 * 
+	 * @since 1.0
+	 */
 	protected final boolean _includeDelimiters;
 	
 	/**
 	 * Indicates whether this splitter includes the delimiters as tokens or not.
 	 * 
 	 * @return <code>true</code> when the delimiters are included as tokens, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	public boolean isIncludingDelimiters() {
 		return _includeDelimiters;
@@ -69,13 +78,18 @@ public abstract class Splitter {
 	
 	// Trim filter.
 	
-	/** Filter to use to trim the tokens. */
+	/**
+	 * Filter to use to trim the tokens.
+	 * 
+	 * @since 1.0
+	 */
 	protected final Maybe<? extends CharPredicate> _trimFilter;
 	
 	/**
 	 * Gets the filter used by this splitter to trim the tokens.
 	 * 
 	 * @return The filter, or nothing when the tokens are not trimmed.
+	 * @since 1.0
 	 */
 	public Maybe<? extends CharPredicate> getTrimFilter() {
 		return _trimFilter;
@@ -83,13 +97,18 @@ public abstract class Splitter {
 	
 	// Ignore empty.
 	
-	/** Indicates whether the empty tokens are ignored. */
+	/**
+	 * Indicates whether the empty tokens are ignored.
+	 * 
+	 * @since 1.0
+	 */
 	protected final boolean _ignoreEmpty;
 	
 	/**
 	 * Indicates whether the empty token representations are ignored by this splitter.
 	 * 
 	 * @return <code>true</code> when the empty token representations are ignored, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	public boolean isIgnoringEmpty() {
 		return _ignoreEmpty;
@@ -102,6 +121,7 @@ public abstract class Splitter {
 	 * 
 	 * @param s Sequence of characeters to split.
 	 * @return A feed of the split tokens.
+	 * @since 1.0
 	 */
 	public Feed<CharSequence> split(final CharSequence s) {
 		// Split.
@@ -126,6 +146,7 @@ public abstract class Splitter {
 	 * @param s Sequence of characeters to split.
 	 * @param offset Index from which the sequence of characters should be split.
 	 * @return A feed of the raw split tokens.
+	 * @since 1.0
 	 */
 	protected Feed<CharSequence> rawSplit(final CharSequence s, final int offset) {
 		assert null != s;

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import java.util.Comparator;
  * The {@link InverseComparator} class implements comparators according to the inverse order of some other comparator.
  * 
  * @param <T> Type of the values.
+ * @since 1.0
  */
 public class InverseComparator<T>
 implements Comparator<T> {
@@ -29,6 +30,7 @@ implements Comparator<T> {
 	 * Instantiates a new inversed comparator.
 	 * 
 	 * @param comparator Comparator to inverse.
+	 * @since 1.0
 	 */
 	public InverseComparator(final Comparator<? super T> comparator) {
 		assert null != comparator;
@@ -39,13 +41,18 @@ implements Comparator<T> {
 	
 	// Comparator.
 	
-	/** The inversed comparator. */
+	/**
+	 * The inversed comparator.
+	 * 
+	 * @since 1.0
+	 */
 	protected final Comparator<? super T> _comparator;
 	
 	/**
 	 * Gets the inversed comparator.
 	 * 
 	 * @return The inversed comparator.
+	 * @since 1.0
 	 */
 	public Comparator<? super T> getComparator() {
 		return _comparator;

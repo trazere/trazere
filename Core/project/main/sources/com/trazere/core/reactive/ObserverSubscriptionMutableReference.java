@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,6 +21,8 @@ import com.trazere.core.reference.MutableReference;
  * The {@link ObserverSubscriptionMutableReference} class implements mutable references of {@link ObserverSubscription observer subscriptions}.
  * <p>
  * The referenced subscriptions are cancelled when the reference is modified.
+ * 
+ * @since 1.0
  */
 public class ObserverSubscriptionMutableReference
 extends MutableReference<ObserverSubscription> {

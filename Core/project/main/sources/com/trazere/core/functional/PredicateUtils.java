@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -16,7 +16,10 @@
 package com.trazere.core.functional;
 
 /**
- * The {@link PredicateUtils} class provides various utilities regarding predicates.
+ * The {@link PredicateUtils} class provides various utilities regarding {@link Predicate predicates}.
+ * 
+ * @see Predicate
+ * @since 1.0
  */
 public class PredicateUtils {
 	// TODO: rename to ???
@@ -28,6 +31,7 @@ public class PredicateUtils {
 	 * @param predicate Predicate to transform.
 	 * @param function Function to use to transform the arguments.
 	 * @return The built predicate.
+	 * @since 1.0
 	 */
 	public static <A, TA> Predicate<A> map(final Predicate<? super TA> predicate, final Function<? super A, ? extends TA> function) {
 		assert null != predicate;

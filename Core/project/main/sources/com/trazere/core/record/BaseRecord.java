@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -31,6 +31,7 @@ import java.util.Set;
  * The {@link BaseRecord} class provides a skeleton implementation of {@link Record records}.
  * 
  * @param <K> Type of the field keys.
+ * @since 1.0
  */
 public abstract class BaseRecord<K extends FieldKey<? extends K, ?>>
 implements Record<K> {

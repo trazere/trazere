@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -31,6 +31,8 @@ import com.trazere.core.functional.Predicate;
  * <ul>
  * <li>The starting value of increasing sequences is less than their ending value, and their increment is positive.
  * <li>The starting value of increasing sequences is greater than their ending value, and their increment is negative.
+ * 
+ * @since 1.0
  */
 public interface IntSequence
 extends Predicate<Integer>, Iterable<Integer> {
@@ -40,6 +42,7 @@ extends Predicate<Integer>, Iterable<Integer> {
 	 * Gets the starting value of this sequence.
 	 * 
 	 * @return The starting value.
+	 * @since 1.0
 	 */
 	int getStart();
 	
@@ -49,13 +52,16 @@ extends Predicate<Integer>, Iterable<Integer> {
 	 * Indicates whether this sequence is finite or not.
 	 * 
 	 * @return <code>true</code> when the sequence is finite, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	boolean isFinite();
 	
+	// TODO
 	//	/**
 	//	 * Gets the ending value of this sequence.
 	//	 *
 	//	 * @return The ending value.
+	//	 * @since 1.0
 	//	 */
 	//	Maybe<Integer> getEnd();
 	
@@ -65,6 +71,7 @@ extends Predicate<Integer>, Iterable<Integer> {
 	 * Empty sequences contains no values. Infinite sequences are never empty.
 	 * 
 	 * @return <code>true</code> when the sequence is empty, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	boolean isEmpty();
 	
@@ -76,6 +83,7 @@ extends Predicate<Integer>, Iterable<Integer> {
 	 * The increment of the increasing sequences is positive, and the one of decreasing sequences is negative.
 	 * 
 	 * @return The increment.
+	 * @since 1.0
 	 */
 	int getIncrement();
 	
@@ -87,6 +95,7 @@ extends Predicate<Integer>, Iterable<Integer> {
 	 * The interval is equivalent to the absolute value of the increment, it is always positive.
 	 * 
 	 * @return The increment.
+	 * @since 1.0
 	 */
 	int getInterval();
 	
@@ -97,6 +106,7 @@ extends Predicate<Integer>, Iterable<Integer> {
 	 * 
 	 * @param value Value to test.
 	 * @return <code>true</code> when the value belongs to the sequence, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	boolean includes(int value);
 }

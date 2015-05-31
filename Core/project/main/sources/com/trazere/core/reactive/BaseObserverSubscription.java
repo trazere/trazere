@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -20,6 +20,8 @@ package com.trazere.core.reactive;
  * <p>
  * This class keeps a strong reference to the observer corresponding to the subscription. That way, the subscribers which keep a reference to their
  * subscriptions don't have keep another reference to the observers in order to prevent their garbage collection.
+ * 
+ * @since 1.0
  */
 public abstract class BaseObserverSubscription
 implements ObserverSubscription {
@@ -27,6 +29,7 @@ implements ObserverSubscription {
 	 * Instantiates a new subscription with the given observer.
 	 * 
 	 * @param observer Subscribed observer.
+	 * @since 1.0
 	 */
 	public BaseObserverSubscription(final Observer<?> observer) {
 		assert null != observer;
@@ -37,13 +40,18 @@ implements ObserverSubscription {
 	
 	// Observer.
 	
-	/** Subscribed observer. */
+	/**
+	 * Subscribed observer.
+	 * 
+	 * @since 1.0
+	 */
 	protected final Observer<?> _observer;
 	
 	/**
 	 * Gets the observer corresponding to this subscription.
 	 * 
 	 * @return The subscribed observer.
+	 * @since 1.0
 	 */
 	public Observer<?> getObserver() {
 		return _observer;

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -20,7 +20,10 @@ import com.trazere.core.util.Either;
 import com.trazere.core.util.Maybe;
 
 /**
- * The {@link ThunkUtils} class provides various utilities regarding {@link Thunk}s.
+ * The {@link ThunkUtils} class provides various utilities regarding {@link Thunk thunks}.
+ * 
+ * @see Thunk
+ * @since 1.0
  */
 public class ThunkUtils {
 	/**
@@ -31,6 +34,7 @@ public class ThunkUtils {
 	 * @param thunk Thunk to map.
 	 * @param function Mapping function.
 	 * @return The built thunk.
+	 * @since 1.0
 	 */
 	public static <T, R> Thunk<R> map(final Thunk<? extends T> thunk, final Function<? super T, ? extends R> function) {
 		assert null != thunk;
@@ -45,6 +49,7 @@ public class ThunkUtils {
 	 * @param <T> Type of the value.
 	 * @param thunk Thunk to memoize.
 	 * @return The built thunk.
+	 * @since 1.0
 	 */
 	public static <T> MemoizedThunk<T> memoize(final Thunk<? extends T> thunk) {
 		assert null != thunk;
@@ -97,6 +102,7 @@ public class ThunkUtils {
 	 * @param <T> Type of the value.
 	 * @param thunk Thunk to memoize.
 	 * @return The build thunk.
+	 * @since 1.0
 	 */
 	public static <T> ResettableThunk<T> resettable(final Thunk<? extends T> thunk) {
 		return new ResettableThunk<T>() {
@@ -119,6 +125,7 @@ public class ThunkUtils {
 	 * @param <T> Type of the value.
 	 * @param thunk Thunk to synchronize.
 	 * @return The built thunk.
+	 * @since 1.0
 	 */
 	public static <T> Thunk<T> synchronize(final Thunk<? extends T> thunk) {
 		assert null != thunk;
@@ -132,6 +139,7 @@ public class ThunkUtils {
 	 * @param <T> Type of the value.
 	 * @param thunk Thunk to evaluate.
 	 * @return The value of the thunk.
+	 * @since 1.0
 	 */
 	public static <T> T synchronizedEvaluate(final Thunk<? extends T> thunk) {
 		synchronized (thunk) {
@@ -143,6 +151,7 @@ public class ThunkUtils {
 	 * Resets the given thunk in a thread safe way.
 	 * 
 	 * @param thunk Thunk to reset.
+	 * @since 1.0
 	 */
 	public static void synchronizedReset(final ResettableThunk<?> thunk) {
 		synchronized (thunk) {

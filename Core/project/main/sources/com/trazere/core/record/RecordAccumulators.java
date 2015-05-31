@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,6 +19,10 @@ import com.trazere.core.imperative.Accumulator;
 
 /**
  * The {@link RecordAccumulators} class provides various factories of {@link Accumulator accumulators} related to {@link Record records}.
+ * 
+ * @see Accumulator
+ * @see Record
+ * @since 1.0
  */
 public class RecordAccumulators {
 	/**
@@ -30,6 +34,7 @@ public class RecordAccumulators {
 	 * @return The built accumulator.
 	 * @see RecordBuilder#add(Field)
 	 * @see RecordBuilder#addAll(Iterable)
+	 * @since 1.0
 	 */
 	public static <K extends FieldKey<? extends K, ?>, B extends RecordBuilder<K, ?>> Accumulator<Field<? extends K, ?>, B> add(final B builder) {
 		assert null != builder;
@@ -61,6 +66,7 @@ public class RecordAccumulators {
 	 * @return The built accumulator.
 	 * @see RecordBuilder#complete(Field)
 	 * @see RecordBuilder#completeAll(Iterable)
+	 * @since 1.0
 	 */
 	public static <K extends FieldKey<? extends K, ?>, B extends RecordBuilder<K, ?>> Accumulator<Field<? extends K, ?>, B> complete(final B builder) {
 		assert null != builder;
@@ -91,6 +97,7 @@ public class RecordAccumulators {
 	 * @param builder Record builder to populate.
 	 * @return The built accumulator.
 	 * @see RecordBuilder#set(Field)
+	 * @since 1.0
 	 */
 	public static <K extends FieldKey<? extends K, ?>, B extends RecordBuilder<K, ?>> Accumulator<Field<? extends K, ?>, B> set(final B builder) {
 		assert null != builder;

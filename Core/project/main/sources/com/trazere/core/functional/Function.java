@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,14 +22,16 @@ package com.trazere.core.functional;
  * 
  * @param <A> Type of the arguments.
  * @param <R> Type of the results.
+ * @since 1.0
  */
 @FunctionalInterface
 public interface Function<A, R> {
 	/**
-	 * Evaluates the receiver function with the given argument.
+	 * Evaluates this function with the given argument.
 	 * 
 	 * @param arg Argument to evaluate the function with.
 	 * @return The result of the function evaluation.
+	 * @since 1.0
 	 */
 	R evaluate(A arg);
 }

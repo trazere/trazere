@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,6 +22,9 @@ import java.util.regex.Pattern;
 
 /**
  * The {@link Splitters} class provides various factories of {@link Splitter splitters}.
+ * 
+ * @see Splitter
+ * @since 1.0
  */
 public class Splitters {
 	/**
@@ -32,6 +35,7 @@ public class Splitters {
 	 * @param trimFilter Filter to use to trim the tokens.
 	 * @param ignoreEmpty Indicates whether the empty tokens are ignored.
 	 * @return The built splitter.
+	 * @since 1.0
 	 */
 	public static Splitter delimiter(final char delimiter, final boolean includeDelimiters, final Maybe<? extends CharPredicate> trimFilter, final boolean ignoreEmpty) {
 		return new Splitter(includeDelimiters, trimFilter, ignoreEmpty) {
@@ -55,6 +59,7 @@ public class Splitters {
 	 * @param trimFilter Filter to use to trim the tokens.
 	 * @param ignoreEmpty Indicates whether the empty tokens are ignored.
 	 * @return The built splitter.
+	 * @since 1.0
 	 */
 	public static Splitter delimiter(final CharPredicate delimiter, final boolean includeDelimiters, final Maybe<? extends CharPredicate> trimFilter, final boolean ignoreEmpty) {
 		assert null != delimiter;
@@ -80,6 +85,7 @@ public class Splitters {
 	 * @param trimFilter Filter to use to trim the tokens.
 	 * @param ignoreEmpty Indicates whether the empty tokens are ignored.
 	 * @return The built splitter.
+	 * @since 1.0
 	 */
 	public static Splitter delimiter(final CharSequence delimiter, final boolean includeDelimiters, final Maybe<? extends CharPredicate> trimFilter, final boolean ignoreEmpty) {
 		assert null != delimiter;
@@ -106,6 +112,7 @@ public class Splitters {
 	 * @param trimFilter Filter to use to trim the tokens.
 	 * @param ignoreEmpty Indicates whether the empty tokens are ignored.
 	 * @return The built splitter.
+	 * @since 1.0
 	 */
 	public static Splitter delimiter(final Pattern delimiter, final boolean includeDelimiters, final Maybe<? extends CharPredicate> trimFilter, final boolean ignoreEmpty) {
 		assert null != delimiter;
@@ -132,6 +139,7 @@ public class Splitters {
 	 * @param trimFilter Filter to use to trim the tokens.
 	 * @param ignoreEmpty Indicates whether the empty tokens are ignored.
 	 * @return The built splitter.
+	 * @since 1.0
 	 */
 	public static Splitter length(final int n, final Maybe<? extends CharPredicate> trimFilter, final boolean ignoreEmpty) {
 		assert n > 0;

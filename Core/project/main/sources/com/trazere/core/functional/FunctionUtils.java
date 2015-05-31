@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -18,7 +18,13 @@ package com.trazere.core.functional;
 import com.trazere.core.util.Maybe;
 
 /**
- * The {@link FunctionUtils} class provides various utilities regarding functions.
+ * The {@link FunctionUtils} class provides various utilities regarding {@link Function functions}.
+ * 
+ * @see Function
+ * @see ResettableFunction
+ * @see Function2
+ * @see Function3
+ * @since 1.0
  */
 public class FunctionUtils {
 	/**
@@ -29,6 +35,7 @@ public class FunctionUtils {
 	 * @param function Function to filter.
 	 * @param filter Predicate to use to filter the results.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A, R> Function<A, Maybe<R>> filter(final Function<? super A, ? extends R> function, final Predicate<? super R> filter) {
 		assert null != function;
@@ -48,6 +55,7 @@ public class FunctionUtils {
 	 * @param function Function to transform.
 	 * @param mapFunction Function to use to transform the results.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A, R, TR> Function<A, TR> map(final Function<? super A, ? extends R> function, final Function<? super R, ? extends TR> mapFunction) {
 		assert null != function;
@@ -63,6 +71,7 @@ public class FunctionUtils {
 	 * @param <R> Type of the results.
 	 * @param function Function to memoize.
 	 * @return The built thunk.
+	 * @since 1.0
 	 */
 	public static <A, R> MemoizedFunction<A, R> memoize(final Function<? super A, ? extends R> function) {
 		assert null != function;
@@ -82,6 +91,7 @@ public class FunctionUtils {
 	 * @param <R> Type of the results.
 	 * @param function Function to memoize.
 	 * @return The build function.
+	 * @since 1.0
 	 */
 	public static <A, R> ResettableFunction<A, R> resettable(final Function<? super A, ? extends R> function) {
 		assert null != function;
@@ -101,6 +111,7 @@ public class FunctionUtils {
 	 * @param <R> Type of the results.
 	 * @param function Function to synchronize.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A, R> Function<A, R> synchronize(final Function<? super A, ? extends R> function) {
 		assert null != function;
@@ -116,6 +127,7 @@ public class FunctionUtils {
 	 * @param function Thunk to evaluate.
 	 * @param arg Argument to evaluate the function with.
 	 * @return The result of the function evaluation.
+	 * @since 1.0
 	 */
 	public static <A, R> R synchronizedEvaluate(final Function<? super A, ? extends R> function, final A arg) {
 		synchronized (function) {
@@ -129,6 +141,7 @@ public class FunctionUtils {
 	 * @param <A> Type of the arguments.
 	 * @param arg Argument corresponding to the evaluation to reset.
 	 * @param function Function to reset.
+	 * @since 1.0
 	 */
 	public static <A> void synchronizedReset(final ResettableFunction<? super A, ?> function, final A arg) {
 		synchronized (function) {
@@ -145,6 +158,7 @@ public class FunctionUtils {
 	 * @param function Function to filter.
 	 * @param filter Predicate to use to filter the results.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A1, A2, R> Function2<A1, A2, Maybe<R>> filter2(final Function2<? super A1, ? super A2, ? extends R> function, final Predicate<? super R> filter) {
 		assert null != function;
@@ -165,6 +179,7 @@ public class FunctionUtils {
 	 * @param function Function to transform.
 	 * @param mapFunction Function to use to transform the results.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A1, A2, R, TR> Function2<A1, A2, TR> map2(final Function2<? super A1, ? super A2, ? extends R> function, final Function<? super R, ? extends TR> mapFunction) {
 		assert null != function;
@@ -183,6 +198,7 @@ public class FunctionUtils {
 	 * @param function Function to filter.
 	 * @param filter Predicate to use to filter the results.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A1, A2, A3, R> Function3<A1, A2, A3, Maybe<R>> filter3(final Function3<? super A1, ? super A2, ? super A3, ? extends R> function, final Predicate<? super R> filter) {
 		assert null != function;
@@ -204,6 +220,7 @@ public class FunctionUtils {
 	 * @param function Function to transform.
 	 * @param mapFunction Function to use to transform the results.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A1, A2, A3, R, TR> Function3<A1, A2, A3, TR> map3(final Function3<? super A1, ? super A2, ? super A3, ? extends R> function, final Function<? super R, ? extends TR> mapFunction) {
 		assert null != function;

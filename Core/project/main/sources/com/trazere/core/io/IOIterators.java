@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,9 +24,10 @@ import java.io.Reader;
 import java.util.Iterator;
 
 /**
- * The {@link IOIterators} class provides various factories of {@link Iterator iterators} regarding IOs.
+ * The {@link IOIterators} class provides various factories of {@link Iterator iterators} regarding I/Os.
  * 
  * @see Iterator
+ * @since 1.0
  */
 public class IOIterators {
 	/**
@@ -35,6 +36,7 @@ public class IOIterators {
 	 * @param stream Stream to read.
 	 * @param failureFactory Factory of the failures.
 	 * @return The built iterator.
+	 * @since 1.0
 	 */
 	public Iterator<Byte> fromStream(final InputStream stream, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		assert null != stream;
@@ -59,6 +61,7 @@ public class IOIterators {
 	 * @param reader Reader to read.
 	 * @param failureFactory Factory of the failures.
 	 * @return The built iterator.
+	 * @since 1.0
 	 */
 	public Iterator<Character> fromReader(final Reader reader, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		assert null != reader;

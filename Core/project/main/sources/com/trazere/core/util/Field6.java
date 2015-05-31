@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,12 +19,14 @@ package com.trazere.core.util;
  * The {@link Field6} interface defines product types that contain a sixth field.
  * 
  * @param <T> Type of the value of the field.
+ * @since 1.0
  */
 public interface Field6<T> {
 	/**
 	 * Gets the value of the sixth field.
 	 * 
 	 * @return The value.
+	 * @since 1.0
 	 */
 	T get6();
 }

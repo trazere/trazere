@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -35,9 +35,10 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
- * The {@link TextSerializers} class provides various factories of serializers related to text.
+ * The {@link TextSerializers} class provides various factories of {@link Serializer serializers} related to text.
  * 
  * @see Serializer
+ * @since 1.0
  */
 public class TextSerializers {
 	/**
@@ -46,6 +47,7 @@ public class TextSerializers {
 	 * This serializer is an identity.
 	 * 
 	 * @return The built serializer.
+	 * @since 1.0
 	 */
 	public static Serializer<String, String> string() {
 		return STRING;
@@ -60,6 +62,7 @@ public class TextSerializers {
 	 * @param maxLength Max length of the strings, or <code>0</code> for unlimited length.
 	 * @param failureFactory Factory of failures.
 	 * @return The built serializer.
+	 * @since 1.0
 	 */
 	public static Serializer<String, String> string(final int minLength, final int maxLength, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		assert minLength >= 0;
@@ -100,6 +103,7 @@ public class TextSerializers {
 	 * @return The built serializer.
 	 * @see Boolean#toString()
 	 * @see Boolean#valueOf(String)
+	 * @since 1.0
 	 */
 	public static Serializer<Boolean, String> boolean_() {
 		return BOOLEAN;
@@ -123,6 +127,7 @@ public class TextSerializers {
 	 * @return The built serializer.
 	 * @see Byte#toString()
 	 * @see Byte#parseByte(String)
+	 * @since 1.0
 	 */
 	public static Serializer<Byte, String> byte_() {
 		return BYTE;
@@ -146,6 +151,7 @@ public class TextSerializers {
 	 * @return The built serializer.
 	 * @see Short#toString()
 	 * @see Short#parseShort(String)
+	 * @since 1.0
 	 */
 	public static Serializer<Short, String> short_() {
 		return SHORT;
@@ -169,6 +175,7 @@ public class TextSerializers {
 	 * @return The built serializer.
 	 * @see Integer#toString()
 	 * @see Integer#parseInt(String)
+	 * @since 1.0
 	 */
 	public static Serializer<Integer, String> integer() {
 		return INTEGER;
@@ -192,6 +199,7 @@ public class TextSerializers {
 	 * @return The built serializer.
 	 * @see Integer#toString()
 	 * @see Integer#parseUnsignedInt(String)
+	 * @since 1.0
 	 */
 	public static Serializer<Integer, String> unsignedInteger() {
 		return UNSIGNED_INTEGER;
@@ -215,6 +223,7 @@ public class TextSerializers {
 	 * @return The built serializer.
 	 * @see Long#toString()
 	 * @see Long#parseLong(String)
+	 * @since 1.0
 	 */
 	public static Serializer<Long, String> long_() {
 		return LONG;
@@ -238,6 +247,7 @@ public class TextSerializers {
 	 * @return The built serializer.
 	 * @see Long#toString()
 	 * @see Long#parseUnsignedLong(String)
+	 * @since 1.0
 	 */
 	public static Serializer<Long, String> unsignedLong() {
 		return UNSIGNED_LONG;
@@ -261,6 +271,7 @@ public class TextSerializers {
 	 * @return The built serializer.
 	 * @see Float#toString()
 	 * @see Float#parseFloat(String)
+	 * @since 1.0
 	 */
 	public static Serializer<Float, String> float_() {
 		return FLOAT;
@@ -284,6 +295,7 @@ public class TextSerializers {
 	 * @return The built serializer.
 	 * @see Double#toString()
 	 * @see Double#parseDouble(String)
+	 * @since 1.0
 	 */
 	public static Serializer<Double, String> double_() {
 		return DOUBLE;
@@ -310,6 +322,7 @@ public class TextSerializers {
 	 * @return The built serializer.
 	 * @see TextUtils#formatNumber(NumberFormat, Number)
 	 * @see TextUtils#parseNumber(NumberFormat, Function, String)
+	 * @since 1.0
 	 */
 	public static <N extends Number> Serializer<N, String> number(final NumberFormat format, final Function<Number, N> converter) {
 		assert null != converter;
@@ -340,6 +353,7 @@ public class TextSerializers {
 	 * @return The built serializer.
 	 * @see TextUtils#formatDate(DateFormat, Date)
 	 * @see TextUtils#parseDate(DateFormat, String)
+	 * @since 1.0
 	 */
 	public static Serializer<Date, String> date(final DateFormat format) {
 		assert null != format;
@@ -371,6 +385,7 @@ public class TextSerializers {
 	 * @return The built serializer.
 	 * @see TextUtils#formatTemporal(DateTimeFormatter, TemporalAccessor)
 	 * @see TextUtils#parseTemporal(DateTimeFormatter, TemporalQuery, String)
+	 * @since 1.0
 	 */
 	public static <T extends TemporalAccessor> Serializer<T, String> temporal(final DateTimeFormatter formatter, final TemporalQuery<T> query) {
 		assert null != formatter;
@@ -400,6 +415,7 @@ public class TextSerializers {
 	 * @return The built serializer.
 	 * @see UUID#toString()
 	 * @see UUID#fromString(String)
+	 * @since 1.0
 	 */
 	public static Serializer<UUID, String> uuid() {
 		return UUID;
@@ -423,6 +439,7 @@ public class TextSerializers {
 	 * @return The built serializer.
 	 * @see File#toString()
 	 * @see File#File(String)
+	 * @since 1.0
 	 */
 	public static Serializer<File, String> file() {
 		return FILE;
@@ -446,6 +463,7 @@ public class TextSerializers {
 	 * @return The built serializer.
 	 * @see URI#toString()
 	 * @see URI#URI(String)
+	 * @since 1.0
 	 */
 	public static Serializer<URI, String> uri() {
 		return URI;
@@ -473,6 +491,7 @@ public class TextSerializers {
 	 * @return The built serializer.
 	 * @see URL#toString()
 	 * @see URL#URL(String)
+	 * @since 1.0
 	 */
 	public static Serializer<URL, String> url() {
 		return URL;

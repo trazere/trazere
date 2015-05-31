@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,7 +21,10 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * The {@link Comparators} class provides various standard comparators.
+ * The {@link Comparators} class provides various standard {@link Comparator comparators}.
+ * 
+ * @see Comparator
+ * @since 1.0
  */
 public class Comparators {
 	/**
@@ -30,6 +33,7 @@ public class Comparators {
 	 * @param <T> Type of the values.
 	 * @return The built comparator.
 	 * @see Comparable#compareTo(Object)
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Comparable<T>> Comparator<T> natural() {
@@ -46,6 +50,7 @@ public class Comparators {
 	 * @param <T> Type of the values.
 	 * @return The built comparator.
 	 * @see Comparable#compareTo(Object)
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Comparable<T>> Comparator<T> safeNatural() {
@@ -63,6 +68,7 @@ public class Comparators {
 	 * @param comparators The sequence of comparators.
 	 * @return The built comparator.
 	 * @see SequenceComparator
+	 * @since 1.0
 	 */
 	public static <T> Comparator<T> sequence(final List<? extends Comparator<? super T>> comparators) {
 		return new SequenceComparator<>(comparators);
@@ -75,6 +81,7 @@ public class Comparators {
 	 * @param comparators The sequence of comparators.
 	 * @return The built comparator.
 	 * @see SequenceComparator
+	 * @since 1.0
 	 */
 	@SafeVarargs
 	public static <T> Comparator<T> sequence(final Comparator<? super T>... comparators) {

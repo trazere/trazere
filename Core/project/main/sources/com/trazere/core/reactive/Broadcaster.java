@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,10 +22,13 @@ package com.trazere.core.reactive;
  * The {@link Broadcaster} class implements distribution points of events that can be observed.
  * 
  * @param <E> Type of the events.
+ * @since 1.0
  */
 public class Broadcaster<E> {
 	/**
 	 * Instantiates a new broadcaster.
+	 * 
+	 * @since 1.0
 	 */
 	public Broadcaster() {
 		this(new BroadcasterObservable<>());
@@ -35,6 +38,7 @@ public class Broadcaster<E> {
 	 * Instantiates a new broadcaster.
 	 * 
 	 * @param observable Observable of the fired events.
+	 * @since 1.0
 	 */
 	protected Broadcaster(final BroadcasterObservable<E> observable) {
 		assert null != observable;
@@ -49,19 +53,25 @@ public class Broadcaster<E> {
 	 * The {@link Broadcaster.BroadcasterObservable} class implements observables of events of broadcasters.
 	 * 
 	 * @param <E> Type of the events.
+	 * @since 1.0
 	 */
 	protected static class BroadcasterObservable<E>
 	extends BaseObservable<E> {
 		// Nothing to do.
 	}
 	
-	/** Observable of the fired events. */
+	/**
+	 * Observable of the fired events.
+	 * 
+	 * @since 1.0
+	 */
 	protected final BroadcasterObservable<E> _observable;
 	
 	/**
 	 * Gets the observable of the events fired by this broadcaster.
 	 * 
 	 * @return The observable.
+	 * @since 1.0
 	 */
 	public Observable<E> getObservable() {
 		return _observable;
@@ -71,6 +81,7 @@ public class Broadcaster<E> {
 	 * Indicates whether this broadcaster is currently being observed.
 	 * 
 	 * @return <code>true</code> when the broadcaster is being observed by at least one live observer, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	public boolean isObserved() {
 		return _observable.isObserved();
@@ -78,6 +89,8 @@ public class Broadcaster<E> {
 	
 	/**
 	 * Unsubscribes all observers from this broadcaster at once.
+	 * 
+	 * @since 1.0
 	 */
 	public void unsubscribeAll() {
 		_observable.unsubscribeAll();
@@ -89,6 +102,7 @@ public class Broadcaster<E> {
 	 * Fires the given event.
 	 * 
 	 * @param event Event to fire.
+	 * @since 1.0
 	 */
 	public void fire(final E event) {
 		_observable.notify(event);
@@ -99,6 +113,7 @@ public class Broadcaster<E> {
 	 * 
 	 * @param observable Observable providing the events to fire.
 	 * @return The subscription.
+	 * @since 1.0
 	 */
 	public ObserverSubscription fire(final Observable<? extends E> observable) {
 		return observable.subscribe((final E event) -> {

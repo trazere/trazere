@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -27,11 +27,14 @@ import com.trazere.core.util.Maybe;
  * This class can be used instead of non-final variables to help tagging side effects.
  * 
  * @param <T> Type of the referenced value.
+ * @since 1.0
  */
 public class MutableReference<T>
 implements ReleasableReference<T>, Describable {
 	/**
 	 * Instantiates an new unset reference.
+	 * 
+	 * @since 1.0
 	 */
 	public MutableReference() {
 		this(Maybe.<T>none());
@@ -41,6 +44,7 @@ implements ReleasableReference<T>, Describable {
 	 * Instantiates a new reference set to the given value.
 	 * 
 	 * @param value Value to set.
+	 * @since 1.0
 	 */
 	public MutableReference(final T value) {
 		this(Maybe.some(value));
@@ -50,6 +54,7 @@ implements ReleasableReference<T>, Describable {
 	 * Instantiates a new reference set to the given value if any.
 	 * 
 	 * @param value Value to set.
+	 * @since 1.0
 	 */
 	public MutableReference(final Maybe<T> value) {
 		assert null != value;
@@ -60,7 +65,11 @@ implements ReleasableReference<T>, Describable {
 	
 	// Value.
 	
-	/** Referenced value. */
+	/**
+	 * Referenced value.
+	 * 
+	 * @since 1.0
+	 */
 	protected Maybe<T> _value;
 	
 	@Override
@@ -77,6 +86,7 @@ implements ReleasableReference<T>, Describable {
 	 * @param value Value to set.
 	 * @return The given value.
 	 * @throws ReferenceAlreadySetException When the reference is already set.
+	 * @since 1.0
 	 */
 	public <V extends T> V set(final V value)
 	throws ReferenceAlreadySetException {
@@ -100,6 +110,7 @@ implements ReleasableReference<T>, Describable {
 	 * @param value Value to set.
 	 * @return The given value.
 	 * @throws ReferenceAlreadySetException When the reference is already set.
+	 * @since 1.0
 	 */
 	public <V extends T> Maybe<V> set(final Maybe<V> value)
 	throws ReferenceAlreadySetException {
@@ -113,6 +124,8 @@ implements ReleasableReference<T>, Describable {
 	
 	/**
 	 * Resets this reference.
+	 * 
+	 * @since 1.0
 	 */
 	public void reset() {
 		if (_value.isSome()) {
@@ -132,6 +145,7 @@ implements ReleasableReference<T>, Describable {
 	 * @param <V> Type of the value.
 	 * @param value Value to set.
 	 * @return The given value.
+	 * @since 1.0
 	 */
 	public <V extends T> V update(final V value) {
 		// Dispose of the current value.
@@ -153,6 +167,7 @@ implements ReleasableReference<T>, Describable {
 	 * @param <V> Type of the value.
 	 * @param value Value to set.
 	 * @return The given value.
+	 * @since 1.0
 	 */
 	public <V extends T> Maybe<V> update(final Maybe<V> value) {
 		if (value.isSome()) {
@@ -169,9 +184,10 @@ implements ReleasableReference<T>, Describable {
 	/**
 	 * Disposes of the given value.
 	 * <p>
-	 * This methods is called when the receiver set reference is reset or replaced. The defaut implementation does nothing.
+	 * This methods is called when this set reference is reset or replaced. The defaut implementation does nothing.
 	 * 
 	 * @param value Value to dispose of.
+	 * @since 1.0
 	 */
 	protected void dispose(final T value) {
 		// Nothing to do.
@@ -202,6 +218,7 @@ implements ReleasableReference<T>, Describable {
 	 * 
 	 * @param value Value to set when the reference is not set.
 	 * @return The referenced or set value.
+	 * @since 1.0
 	 */
 	public T getOrSet(final T value) {
 		if (_value.isSome()) {
@@ -219,6 +236,7 @@ implements ReleasableReference<T>, Describable {
 	 * 
 	 * @param value Value to set when the reference is not set.
 	 * @return The current or set value.
+	 * @since 1.0
 	 */
 	public T getOrSet(final Thunk<? extends T> value) {
 		if (_value.isSome()) {

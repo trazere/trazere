@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,6 +24,9 @@ import java.io.IOException;
 
 /**
  * The {@link TextAccumulators} class provides various factories of {@link Accumulator accumulators} related to text.
+ * 
+ * @see Accumulator
+ * @since 1.0
  */
 public class TextAccumulators {
 	/**
@@ -33,6 +36,7 @@ public class TextAccumulators {
 	 * @param appendable Appendable that should be appended to.
 	 * @return The built accumulator.
 	 * @see Appendable#append(CharSequence)
+	 * @since 1.0
 	 */
 	public static <A extends Appendable> Accumulator<CharSequence, A> append(final A appendable) {
 		return append(appendable, TextException.FACTORY);
@@ -46,6 +50,7 @@ public class TextAccumulators {
 	 * @param failureFactory Factory of the append failures.
 	 * @return The built accumulator.
 	 * @see Appendable#append(CharSequence)
+	 * @since 1.0
 	 */
 	public static <A extends Appendable> Accumulator<CharSequence, A> append(final A appendable, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		return new Accumulator<CharSequence, A>() {
@@ -70,6 +75,7 @@ public class TextAccumulators {
 	 * 
 	 * @param initialState The initial character sequence.
 	 * @return The built accumulator.
+	 * @since 1.0
 	 */
 	public static Accumulator<CharSequence, CharSequence> concat(final CharSequence initialState) {
 		return AccumulatorUtils.mapState(append(new StringBuilder(initialState)), Functions.identity());
@@ -85,6 +91,7 @@ public class TextAccumulators {
 	 * @param first Indicates whether the next appended token will be the first one or not.
 	 * @return The built accumulator.
 	 * @see Joiner#join(Object, Appendable, boolean)
+	 * @since 1.0
 	 */
 	public static <T, A extends Appendable> Accumulator<T, A> join(final Joiner<? super T> joiner, final A appendable, final boolean first) {
 		assert null != joiner;

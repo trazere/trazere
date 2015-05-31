@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -28,6 +28,7 @@ import com.trazere.core.util.Tuple2;
  * The {@link ThrowableUtils} class provides various utilities regarding {@link Throwable throwables}.
  * 
  * @see Throwable
+ * @since 1.0
  */
 public class ThrowableUtils {
 	/**
@@ -35,6 +36,7 @@ public class ThrowableUtils {
 	 * 
 	 * @param throwable Throwable to explore.
 	 * @return The chain of causes.
+	 * @since 1.0
 	 */
 	public static Feed<Throwable> getCauseChain(final Throwable throwable) {
 		return Feeds.feed(throwable, getCauseTail(throwable));
@@ -47,6 +49,7 @@ public class ThrowableUtils {
 	 * 
 	 * @param throwable Throwable to explore.
 	 * @return The chain of causes.
+	 * @since 1.0
 	 */
 	public static Feed<Throwable> getCauseTail(final Throwable throwable) {
 		assert null != throwable;
@@ -66,6 +69,7 @@ public class ThrowableUtils {
 	 * @param filter Predicate to use to filter the throwables.
 	 * @return The first accepted throwable.
 	 * @see #getCauseChain(Throwable)
+	 * @since 1.0
 	 */
 	public static Maybe<Throwable> findCause(final Throwable throwable, final Predicate<? super Throwable> filter) {
 		return FeedUtils.first(getCauseChain(throwable), filter);
@@ -79,6 +83,7 @@ public class ThrowableUtils {
 	 * @param type Type of the throwable to match.
 	 * @return The first extracted throwable.
 	 * @see #getCauseChain(Throwable)
+	 * @since 1.0
 	 */
 	public static <T extends Throwable> Maybe<T> findCause(final Throwable throwable, final Class<T> type) {
 		return extractCause(throwable, ObjectExtractors.match(type));
@@ -92,6 +97,7 @@ public class ThrowableUtils {
 	 * @param extractor Function to use to extract the elements.
 	 * @return The first extracted element.
 	 * @see #getCauseChain(Throwable)
+	 * @since 1.0
 	 */
 	public static <E> Maybe<E> extractCause(final Throwable throwable, final Function<? super Throwable, ? extends Maybe<? extends E>> extractor) {
 		return FeedUtils.extractFirst(getCauseChain(throwable), extractor);
@@ -105,6 +111,7 @@ public class ThrowableUtils {
 	 * @param type Type of the throwable to match.
 	 * @throws T The matched throwable.
 	 * @see #getCauseChain(Throwable)
+	 * @since 1.0
 	 */
 	public static <T extends Throwable> void throwCause(final Throwable throwable, final Class<T> type)
 	throws T {
@@ -119,6 +126,7 @@ public class ThrowableUtils {
 	 * @param extractor Function to use to extract the throwable.
 	 * @throws T The extracted throwable.
 	 * @see #getCauseChain(Throwable)
+	 * @since 1.0
 	 */
 	public static <T extends Throwable> void throwCause(final Throwable throwable, final Function<? super Throwable, ? extends Maybe<? extends T>> extractor)
 	throws T {

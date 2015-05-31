@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,12 +17,16 @@ package com.trazere.core.reactive;
 
 /**
  * The {@link ObserverSubscriptions} class provides various factories of {@link ObserverSubscription observer subscriptions}.
+ * 
+ * @see ObserverSubscription
+ * @since 1.0
  */
 public class ObserverSubscriptions {
 	/**
 	 * Builds an observer subscription that does nothing.
 	 * 
 	 * @return The built subscription.
+	 * @since 1.0
 	 */
 	public static ObserverSubscription nop() {
 		return NOP;

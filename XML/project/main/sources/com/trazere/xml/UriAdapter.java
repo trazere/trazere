@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,6 +21,8 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * The {@link UriAdapter} class implements JAXB adpaters for URIs.
+ * 
+ * @since 1.0
  */
 public class UriAdapter
 extends XmlAdapter<String, URI> {
@@ -41,6 +43,7 @@ extends XmlAdapter<String, URI> {
 	 * @param representation Representation to parse.
 	 * @return The parsed URI.
 	 * @throws IllegalArgumentException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static URI parse(final String representation)
 	throws IllegalArgumentException {
@@ -56,6 +59,7 @@ extends XmlAdapter<String, URI> {
 	 * 
 	 * @param value URI to format.
 	 * @return The formatted representation.
+	 * @since 1.0
 	 */
 	public static String format(final URI value) {
 		return value.toString();

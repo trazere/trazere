@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import com.trazere.core.lang.ThrowableFactory;
  * {@link ReferenceNotSetException} exceptions are thrown when trying to access some reference which has not been set.
  * 
  * @see Reference
+ * @since 1.0
  */
 public class ReferenceNotSetException
 extends ReferenceException {
@@ -28,6 +29,8 @@ extends ReferenceException {
 	
 	/**
 	 * Instantiates a new exception.
+	 * 
+	 * @since 1.0
 	 */
 	public ReferenceNotSetException() {
 		super();
@@ -37,6 +40,7 @@ extends ReferenceException {
 	 * Instantiates a new exception using the given message.
 	 * 
 	 * @param message Details about the exception.
+	 * @since 1.0
 	 */
 	public ReferenceNotSetException(final String message) {
 		super(message);
@@ -46,6 +50,7 @@ extends ReferenceException {
 	 * Instantiates a new exception using the given cause.
 	 * 
 	 * @param cause Cause of the exception.
+	 * @since 1.0
 	 */
 	public ReferenceNotSetException(final Throwable cause) {
 		super(cause);
@@ -56,12 +61,17 @@ extends ReferenceException {
 	 * 
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
+	 * @since 1.0
 	 */
 	public ReferenceNotSetException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 	
-	/** Factory of {@link ReferenceNotSetException}. */
+	/**
+	 * Factory of {@link ReferenceNotSetException}.
+	 * 
+	 * @since 1.0
+	 */
 	@SuppressWarnings("hiding")
 	public static final ThrowableFactory<ReferenceNotSetException> FACTORY = new ThrowableFactory<ReferenceNotSetException>() {
 		@Override

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,16 +25,22 @@ import java.util.Set;
  * The {@link SimpleRecord} class provides a simple implementation of records.
  * 
  * @param <K> Witness type of the field keys.
+ * @since 1.0
  */
 public class SimpleRecord<K extends FieldKey<? extends K, ?>>
 extends BaseRecord<K> {
-	/** Fields identified by their keys. */
+	/**
+	 * Fields identified by their keys.
+	 * 
+	 * @since 1.0
+	 */
 	protected Map<FieldKey<? extends K, ?>, Field<? extends K, ?>> _fields;
 	
 	/**
 	 * Instantiates a new record with the given fields.
 	 * 
 	 * @param fields Values of the fields identified by their keys.
+	 * @since 1.0
 	 */
 	protected SimpleRecord(final Map<FieldKey<? extends K, ?>, Field<? extends K, ?>> fields) {
 		assert null != fields;

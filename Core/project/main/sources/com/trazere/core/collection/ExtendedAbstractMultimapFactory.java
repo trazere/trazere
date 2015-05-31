@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ import java.util.Collection;
  * @param <AM> Type of the abstract multimaps.
  * @param <M> Type of the multimaps.
  * @see Multimap
+ * @since 1.0
  */
 public interface ExtendedAbstractMultimapFactory<K, V, C extends Collection<V>, AM extends Multimap<K, V, C>, M extends AM>
 extends MultimapFactory<K, V, C, M> {
@@ -34,6 +35,7 @@ extends MultimapFactory<K, V, C, M> {
 	 * Builds an unmodifiable view of an empty multimap.
 	 * 
 	 * @return The built unmodifiable view.
+	 * @since 1.0
 	 */
 	AM empty();
 	
@@ -42,6 +44,7 @@ extends MultimapFactory<K, V, C, M> {
 	 * 
 	 * @param multimap Multimap to wrap.
 	 * @return The built unmodifiable view.
+	 * @since 1.0
 	 */
 	AM unmodifiable(M multimap);
 }

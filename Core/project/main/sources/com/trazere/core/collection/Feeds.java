@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,9 +22,10 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * The {@link Feeds} class provides various factories of feeds.
+ * The {@link Feeds} class provides various factories of {@link Feed feeds}.
  * 
  * @see Feed
+ * @since 1.0
  */
 public class Feeds {
 	/**
@@ -34,6 +35,7 @@ public class Feeds {
 	 * @param head Head element of the feed.
 	 * @param tail Tail of the feed.
 	 * @return The built feed.
+	 * @since 1.0
 	 */
 	public static <E> Feed<E> feed(final E head, final Feed<? extends E> tail) {
 		assert null != head;
@@ -71,6 +73,7 @@ public class Feeds {
 	 * 
 	 * @param <E> Type of the elements.
 	 * @return The built feed.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <E> Feed<E> empty() {
@@ -118,6 +121,7 @@ public class Feeds {
 	 * @param <E> Type of the elements.
 	 * @param element Element of the feed to build.
 	 * @return The built feed.
+	 * @since 1.0
 	 */
 	public static <E> Feed<E> fromElement(final E element) {
 		return feed(element, Feeds.<E>empty());
@@ -129,6 +133,7 @@ public class Feeds {
 	 * @param <E> Type of the elements.
 	 * @param elements Elements of the feed to build.
 	 * @return The built feed.
+	 * @since 1.0
 	 */
 	@SafeVarargs
 	public static <E> Feed<E> fromElements(final E... elements) {
@@ -184,6 +189,7 @@ public class Feeds {
 	 * @param <E> Type of the elements.
 	 * @param iterator Iterator providing the elements.
 	 * @return The built feed.
+	 * @since 1.0
 	 */
 	public static <E> Feed<E> fromIterator(final Iterator<? extends E> iterator) {
 		assert null != iterator;
@@ -206,6 +212,7 @@ public class Feeds {
 	 * @param <E> Type of the elements.
 	 * @param iterable Iterable providing the elements.
 	 * @return The built feed.
+	 * @since 1.0
 	 */
 	public static <E> Feed<E> fromIterable(final Iterable<? extends E> iterable) {
 		return fromIterator(iterable.iterator());
@@ -217,6 +224,7 @@ public class Feeds {
 	 * @param <T> Type of the wrapped value.
 	 * @param maybe {@link Maybe} instance wrapping the value.
 	 * @return The built feed.
+	 * @since 1.0
 	 */
 	public static <T> Feed<T> fromMaybe(final Maybe<? extends T> maybe) {
 		return maybe.isSome() ? fromElement(maybe.asSome().getValue()) : empty();

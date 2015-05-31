@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,14 +21,16 @@ package com.trazere.core.functional;
  * TODO: compare to first order logic predicates
  * 
  * @param <A> Type of the arguments.
+ * @since 1.0
  */
 @FunctionalInterface
 public interface Predicate<A> {
 	/**
-	 * Evaluates the receiver predicate with the given argument.
+	 * Evaluates this predicate with the given argument.
 	 * 
 	 * @param arg Argument to evaluate the predicate with.
 	 * @return The result of the predicate evaluation.
+	 * @since 1.0
 	 */
 	boolean evaluate(A arg);
 }

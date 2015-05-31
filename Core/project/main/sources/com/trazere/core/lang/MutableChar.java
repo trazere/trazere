@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,16 +24,23 @@ import com.trazere.core.text.TextUtils;
  * The {@link MutableChar} class represents mutable char values.
  * <p>
  * This class can be used instead of non-final variables to help tagging side effects.
+ * 
+ * @since 1.0
  */
 public class MutableChar
 implements Describable {
-	/** Current value. */
+	/**
+	 * Current value.
+	 * 
+	 * @since 1.0
+	 */
 	protected char _value;
 	
 	/**
 	 * Instantiates a new mutable char.
 	 * 
 	 * @param value Initial value.
+	 * @since 1.0
 	 */
 	public MutableChar(final char value) {
 		_value = value;
@@ -43,6 +50,7 @@ implements Describable {
 	 * Gets the current value of this mutable char.
 	 * 
 	 * @return The current value.
+	 * @since 1.0
 	 */
 	public char get() {
 		return _value;
@@ -53,6 +61,7 @@ implements Describable {
 	 * 
 	 * @param value New value.
 	 * @return The given new value.
+	 * @since 1.0
 	 */
 	public char set(final char value) {
 		_value = value;
@@ -64,6 +73,7 @@ implements Describable {
 	 * 
 	 * @param function Function to use to compute the new value.
 	 * @return The computed new value.
+	 * @since 1.0
 	 */
 	public char update(final Function<? super Character, ? extends Character> function) {
 		return set(function.evaluate(_value).charValue());

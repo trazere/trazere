@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import java.util.Collection;
  * @param <C> Type of the collections of values.
  * @param <M> Type of the multimaps.
  * @see Multimap
+ * @since 1.0
  */
 public interface ExtendedMultimapFactory<K, V, C extends Collection<V>, M extends Multimap<K, V, C>>
 extends ExtendedAbstractMultimapFactory<K, V, C, Multimap<K, V, C>, M> {

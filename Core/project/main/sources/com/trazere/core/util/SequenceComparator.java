@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ import java.util.List;
  * The succequents comparators of the sequence refine the order of the previous ones in case of equality.
  * 
  * @param <T> Type of the values.
+ * @since 1.0
  */
 public class SequenceComparator<T>
 implements Comparator<T> {
@@ -34,6 +35,7 @@ implements Comparator<T> {
 	 * Instantiates a new comparator with the given comparators.
 	 * 
 	 * @param comparators The sequence of comparators.
+	 * @since 1.0
 	 */
 	public SequenceComparator(final List<? extends Comparator<? super T>> comparators) {
 		assert null != comparators;
@@ -46,6 +48,7 @@ implements Comparator<T> {
 	 * Instantiates a new comparator with the given comparators.
 	 * 
 	 * @param comparators The sequence of comparators.
+	 * @since 1.0
 	 */
 	@SafeVarargs
 	public SequenceComparator(final Comparator<? super T>... comparators) {
@@ -54,7 +57,11 @@ implements Comparator<T> {
 	
 	// Comparator.
 	
-	/** The comparators ordered by priority. */
+	/**
+	 * The comparators ordered by priority.
+	 * 
+	 * @since 1.0
+	 */
 	protected final List<? extends Comparator<? super T>> _comparators;
 	
 	@Override

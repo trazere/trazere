@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ import com.trazere.core.util.Maybe;
  * Events are raised when the reference is updated, providing the new referenced value.
  * 
  * @param <T> Type of the referenced value.
+ * @since 1.0
  */
 public interface ObservableReference<T>
 extends Reference<T>, ObservableValue<Maybe<T>> {

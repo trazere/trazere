@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,11 +22,12 @@ import java.math.BigInteger;
 /**
  * The {@link BigIntegerExtractors} class provides various factories of extractors related to {@link BigInteger big integers}.
  * <p>
- * An extractor is function that combines a map and a filter operation.
+ * An extractor is {@link Function function} that combines a map operation and a filter operation.
  * 
  * @see Function
  * @see Maybe
  * @see BigInteger
+ * @since 1.0
  */
 public class BigIntegerExtractors {
 	/**
@@ -35,6 +36,7 @@ public class BigIntegerExtractors {
 	 * The extractors control that the values fit in bytes.
 	 * 
 	 * @return The built extractor.
+	 * @since 1.0
 	 */
 	public static Function<BigInteger, Maybe<Byte>> byteValue() {
 		return BYTE_VALUE;
@@ -48,6 +50,7 @@ public class BigIntegerExtractors {
 	 * The extractors control that the values fit in short integers.
 	 * 
 	 * @return The built extractor.
+	 * @since 1.0
 	 */
 	public static Function<BigInteger, Maybe<Short>> shortValue() {
 		return SHORT_VALUE;
@@ -61,6 +64,7 @@ public class BigIntegerExtractors {
 	 * The extractors control that the values fit in integers.
 	 * 
 	 * @return The built extractor.
+	 * @since 1.0
 	 */
 	public static Function<BigInteger, Maybe<Integer>> integerValue() {
 		return INTEGER_VALUE;
@@ -74,6 +78,7 @@ public class BigIntegerExtractors {
 	 * The extractors control that the values fit in long integers.
 	 * 
 	 * @return The built extractor.
+	 * @since 1.0
 	 */
 	public static Function<BigInteger, Maybe<Long>> longValue() {
 		return LONG_VALUE;

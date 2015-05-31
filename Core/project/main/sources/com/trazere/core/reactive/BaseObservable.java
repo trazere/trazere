@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ import java.util.List;
  * The {@link BaseObservable} class provides a skeleton implementation of {@link Observable observables}.
  * 
  * @param <E> Type of the events.
+ * @since 1.0
  */
 public abstract class BaseObservable<E>
 implements Observable<E> {
@@ -33,12 +34,15 @@ implements Observable<E> {
 	 * The {@link BaseObservable.ObserverRef} class represents references to subscribed observers.
 	 * <p>
 	 * The instances keep a weak reference to the observers in order to allow and handle their garbage collection.
+	 * 
+	 * @since 1.0
 	 */
 	protected class ObserverRef {
 		/**
 		 * Instantiates a new reference.
 		 * 
 		 * @param observer Observer to reference.
+		 * @since 1.0
 		 */
 		public ObserverRef(final Observer<? super E> observer) {
 			assert null != observer;
@@ -49,13 +53,18 @@ implements Observable<E> {
 		
 		// Observer.
 		
-		/** Reference to the observer. */
+		/**
+		 * Reference to the observer.
+		 * 
+		 * @since 1.0
+		 */
 		protected final WeakReference<Observer<? super E>> _observer;
 		
 		/**
 		 * Indicates whether the referenced observer is alive or has been garbage collected.
 		 * 
 		 * @return <code>true</code> when the observer is alive, <code>false</code> when it has been garbage collected.
+		 * @since 1.0
 		 */
 		public boolean isAlive() {
 			return null != _observer.get();
@@ -67,6 +76,7 @@ implements Observable<E> {
 		 * @param event Raised event.
 		 * @return <code>true</code> to hold the subscription corresponding to this notification, <code>false</code> to cancel it.
 		 * @see Observer#onEvent(Object)
+		 * @since 1.0
 		 */
 		public boolean notify(final E event) {
 			final Observer<? super E> observer = _observer.get();
@@ -84,13 +94,18 @@ implements Observable<E> {
 		}
 	}
 	
-	/** References to the subscribed observers. */
+	/**
+	 * References to the subscribed observers.
+	 * 
+	 * @since 1.0
+	 */
 	protected final List<ObserverRef> _observers = new ArrayList<>();
 	
 	/**
 	 * Indicates whether this observable is currently being observed.
 	 * 
 	 * @return <code>true</code> when the observable is being observed by at least one live observer, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	public synchronized boolean isObserved() {
 		return IterableUtils.isAny(_observers, observer -> observer.isAlive());
@@ -102,6 +117,7 @@ implements Observable<E> {
 	 * This method is called every time an observer is being subscribed.
 	 * 
 	 * @param observer Observer to subscribe.
+	 * @since 1.0
 	 */
 	protected synchronized void subscribe(final ObserverRef observer) {
 		assert null != observer;
@@ -116,6 +132,7 @@ implements Observable<E> {
 	 * {@link #unsubscribeAll()}).
 	 * 
 	 * @param observer Observer to unsubscribe.
+	 * @since 1.0
 	 */
 	protected synchronized void unsubscribe(final ObserverRef observer) {
 		assert null != observer;
@@ -127,6 +144,8 @@ implements Observable<E> {
 	 * Unsubscribes all observers from this observable at once.
 	 * <p>
 	 * This method is called every time all observers are unsubscribed at once.
+	 * 
+	 * @since 1.0
 	 */
 	protected synchronized void unsubscribeAll() {
 		_observers.clear();
@@ -134,6 +153,8 @@ implements Observable<E> {
 	
 	/**
 	 * The {@link ObserverSubscriptionImpl} class implements the subscriptions of the observers.
+	 * 
+	 * @since 1.0
 	 */
 	protected class ObserverSubscriptionImpl
 	extends BaseObserverSubscription {
@@ -142,6 +163,7 @@ implements Observable<E> {
 		 * 
 		 * @param observer Subscribed observer.
 		 * @param reference Reference to the subscribed observer.
+		 * @since 1.0
 		 */
 		public ObserverSubscriptionImpl(final Observer<? super E> observer, final ObserverRef reference) {
 			super(observer);
@@ -155,7 +177,11 @@ implements Observable<E> {
 		
 		// Subscription.
 		
-		/** Observer reference. */
+		/**
+		 * Observer reference.
+		 * 
+		 * @since 1.0
+		 */
 		protected final ObserverRef _reference;
 		
 		@Override
@@ -182,6 +208,7 @@ implements Observable<E> {
 	 * Notifies the observers subscribed to this observable that the given event has been raised.
 	 *
 	 * @param event Raised event.
+	 * @since 1.0
 	 */
 	protected void notify(final E event) {
 		// Note: copy the observers to prevent concurrent modifications and for thread safety.
@@ -206,6 +233,7 @@ implements Observable<E> {
 	 * @param observer Observer to notify.
 	 * @param event Value of the future.
 	 * @return <code>true</code> to hold the subscription corresponding to this notification, <code>false</code> to cancel it.
+	 * @since 1.0
 	 */
 	protected boolean notify(final Observer<? super E> observer, final E event) {
 		return ObservableUtils.notify(observer, event);

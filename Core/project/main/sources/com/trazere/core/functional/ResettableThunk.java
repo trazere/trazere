@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,10 +25,15 @@ import com.trazere.core.util.Maybe;
  * The {@link ResettableThunk} class implements memoized thunks that can be re-evaluated.
  * 
  * @param <T> Type of the value.
+ * @since 1.0
  */
 public abstract class ResettableThunk<T>
 implements MemoizedThunk<T>, Releasable, Describable {
-	/** Memoized value. */
+	/**
+	 * Memoized value.
+	 * 
+	 * @since 1.0
+	 */
 	protected Maybe<T> _value = Maybe.none();
 	
 	@Override
@@ -46,6 +51,7 @@ implements MemoizedThunk<T>, Releasable, Describable {
 	 * Computes the value of this thunk.
 	 * 
 	 * @return The computed value.
+	 * @since 1.0
 	 */
 	protected abstract T compute();
 	
@@ -61,6 +67,8 @@ implements MemoizedThunk<T>, Releasable, Describable {
 	
 	/**
 	 * Resets this thunk, discarding its possibly memoized value. The value will be computed (again) the next time this thunk is evaluated.
+	 * 
+	 * @since 1.0
 	 */
 	public void reset() {
 		if (_value.isSome()) {
@@ -75,6 +83,7 @@ implements MemoizedThunk<T>, Releasable, Describable {
 	 * This methods is called when this evaluated thunk is reset. The defaut implementation does nothing.
 	 * 
 	 * @param value Value to dispose.
+	 * @since 1.0
 	 */
 	protected void dispose(final T value) {
 		// Nothing to do.

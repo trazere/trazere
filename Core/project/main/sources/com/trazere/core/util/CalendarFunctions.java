@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,13 +21,18 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * The {@link CalendarFunctions} class provides various factories of functions related {@link Calendar calendars}.
+ * The {@link CalendarFunctions} class provides various factories of {@link Function functions} related {@link Calendar calendars}.
+ * 
+ * @see Function
+ * @see Calendar
+ * @since 1.0
  */
 public class CalendarFunctions {
 	/**
 	 * Builds a function that gets the time of the argument calendars.
 	 *
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static Function<Calendar, Date> getTime() {
 		return GET_TIME;
@@ -39,6 +44,7 @@ public class CalendarFunctions {
 	 * Builds a function that gets the instant of the argument calendars.
 	 *
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static Function<Calendar, Instant> toInstant() {
 		return TO_INSTANT;

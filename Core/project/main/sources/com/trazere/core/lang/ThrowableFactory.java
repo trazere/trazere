@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import com.trazere.core.design.Factory;
  * The {@link ThrowableFactory} interface defines factories of {@link Throwable throwables}.
  * 
  * @param <T> Type of the throwables.
+ * @since 1.0
  */
 public interface ThrowableFactory<T extends Throwable>
 extends Factory<T> {
@@ -28,6 +29,7 @@ extends Factory<T> {
 	 * Build a new throwable instance.
 	 * 
 	 * @return The built throwable.
+	 * @since 1.0
 	 */
 	@Override
 	T build();
@@ -37,6 +39,7 @@ extends Factory<T> {
 	 * 
 	 * @param message Message.
 	 * @return The built throwable.
+	 * @since 1.0
 	 */
 	T build(String message);
 	
@@ -45,6 +48,7 @@ extends Factory<T> {
 	 * 
 	 * @param cause Cause.
 	 * @return The built throwable.
+	 * @since 1.0
 	 */
 	T build(Throwable cause);
 	
@@ -54,6 +58,7 @@ extends Factory<T> {
 	 * @param message Message.
 	 * @param cause Cause.
 	 * @return The built throwable.
+	 * @since 1.0
 	 */
 	T build(String message, Throwable cause);
 }

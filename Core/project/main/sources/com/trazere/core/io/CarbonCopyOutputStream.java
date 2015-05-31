@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -23,14 +23,12 @@ import java.io.OutputStream;
  */
 public class CarbonCopyOutputStream
 extends DecoratorOutputStream {
-	/** Output stream receiving the copy of the data. */
-	protected final OutputStream _copy;
-	
 	/**
 	 * Instantiates a new carbon copy stream.
 	 * 
 	 * @param target Output stream receiving the data.
 	 * @param copy Output stream receiving the copy of the written data.
+	 * @since 1.0
 	 */
 	public CarbonCopyOutputStream(final OutputStream target, final OutputStream copy) {
 		super(target);
@@ -42,14 +40,26 @@ extends DecoratorOutputStream {
 		_copy = copy;
 	}
 	
+	// Copy.
+	
+	/**
+	 * Output stream receiving the copy of the data.
+	 * 
+	 * @since 1.0
+	 */
+	protected final OutputStream _copy;
+	
 	/**
 	 * Gets the output stream receiving the copy of the data written in this stream.
 	 * 
 	 * @return The copy output stream.
+	 * @since 1.0
 	 */
 	public OutputStream getCopy() {
 		return _copy;
 	}
+	
+	// Output stream.
 	
 	@Override
 	public void write(final int b)

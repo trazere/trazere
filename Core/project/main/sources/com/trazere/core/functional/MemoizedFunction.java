@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import com.trazere.core.util.Maybe;
  * 
  * @param <A> Type of the arguments.
  * @param <R> Type of the results.
+ * @since 1.0
  */
 public interface MemoizedFunction<A, R>
 extends Function<A, R> {
@@ -34,6 +35,7 @@ extends Function<A, R> {
 	 * 
 	 * @param arg Argument whose memoized evaluation should be tested.
 	 * @return <code>true</code> when the evaluation is memoized, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	boolean isMemoized(A arg);
 	
@@ -42,6 +44,7 @@ extends Function<A, R> {
 	 * 
 	 * @param arg Argument whose memoized evaluation should be read.
 	 * @return The memoized evaluation result, or nothing when the evaluation is not memoized.
+	 * @since 1.0
 	 */
 	Maybe<R> get(A arg);
 }

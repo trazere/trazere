@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ import java.util.Map;
  * @see Function
  * @see Function2
  * @see Function3
+ * @since 1.0
  */
 public class ImperativeFunctions {
 	/**
@@ -35,6 +36,7 @@ public class ImperativeFunctions {
 	 * @param <A> Type of the arguments.
 	 * @param procedure Procedure to lift.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A> Function<A, Void> fromProcedure(final Procedure<? super A> procedure) {
 		return fromProcedure(procedure, (Void) null);
@@ -48,6 +50,7 @@ public class ImperativeFunctions {
 	 * @param procedure Procedure to lift.
 	 * @param result Result of the function.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A, R> Function<A, R> fromProcedure(final Procedure<? super A> procedure, final R result) {
 		assert null != procedure;
@@ -68,6 +71,7 @@ public class ImperativeFunctions {
 	 * @param <H> Type of the hash values.
 	 * @param hashFunction Function that hashes the arguments.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A, H> Function<A, A> normalizer(final Function<? super A, ? extends H> hashFunction) {
 		assert null != hashFunction;
@@ -91,6 +95,7 @@ public class ImperativeFunctions {
 	 * @param <A2> Type of the second arguments.
 	 * @param procedure Procedure to lift.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A1, A2> Function2<A1, A2, Void> fromProcedure2(final Procedure2<? super A1, ? super A2> procedure) {
 		return fromProcedure2(procedure, (Void) null);
@@ -105,6 +110,7 @@ public class ImperativeFunctions {
 	 * @param procedure Procedure to lift.
 	 * @param result Result of the function.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A1, A2, R> Function2<A1, A2, R> fromProcedure2(final Procedure2<? super A1, ? super A2> procedure, final R result) {
 		assert null != procedure;
@@ -123,6 +129,7 @@ public class ImperativeFunctions {
 	 * @param <A3> Type of the third arguments.
 	 * @param procedure Procedure to lift.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A1, A2, A3> Function3<A1, A2, A3, Void> fromProcedure3(final Procedure3<? super A1, ? super A2, ? super A3> procedure) {
 		return fromProcedure3(procedure, (Void) null);
@@ -138,6 +145,7 @@ public class ImperativeFunctions {
 	 * @param procedure Procedure to lift.
 	 * @param result Result of the function.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	public static <A1, A2, A3, R> Function3<A1, A2, A3, R> fromProcedure3(final Procedure3<? super A1, ? super A2, ? super A3> procedure, final R result) {
 		assert null != procedure;

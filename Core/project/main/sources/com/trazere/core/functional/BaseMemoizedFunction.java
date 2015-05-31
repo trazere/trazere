@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,10 +25,15 @@ import java.util.Map;
  * 
  * @param <A> Type of the arguments.
  * @param <R> Type of the results.
+ * @since 1.0
  */
 public abstract class BaseMemoizedFunction<A, R>
 implements MemoizedFunction<A, R> {
-	/** Memoized results. */
+	/**
+	 * Memoized results.
+	 * 
+	 * @since 1.0
+	 */
 	protected final Map<A, R> _results = new HashMap<>();
 	
 	@Override
@@ -43,10 +48,11 @@ implements MemoizedFunction<A, R> {
 	}
 	
 	/**
-	 * Computes the result of the evaluation of the receiver function with the given argument.
+	 * Computes the result of the evaluation of this function with the given argument.
 	 * 
 	 * @param arg Argument to evaluate the function with.
 	 * @return The result of the function evaluation.
+	 * @since 1.0
 	 */
 	protected abstract R compute(A arg);
 	

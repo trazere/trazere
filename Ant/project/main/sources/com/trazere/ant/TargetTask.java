@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,17 +21,32 @@ import org.apache.tools.ant.Task;
 import org.apache.tools.ant.TaskContainer;
 
 /**
- * DOCME
+ * The {@link TargetTask} class implements an Ant task container that executes tasks conditionnally.
+ * 
+ * @since 1.0
  */
 public class TargetTask
 extends Task
 implements TaskContainer {
+	/** Target to execute. */
 	protected final Target _target = new Target();
 	
+	/**
+	 * Sets the name of the property that must be set for the exection to happen.
+	 * 
+	 * @param if_ Name of the property.
+	 * @since 1.0
+	 */
 	public void setIf(final String if_) {
 		_target.setIf(if_);
 	}
 	
+	/**
+	 * Sets the name of the property that must not be set for the exection to happen.
+	 * 
+	 * @param unless Name of the property.
+	 * @since 1.0
+	 */
 	public void setUnless(final String unless) {
 		_target.setUnless(unless);
 	}

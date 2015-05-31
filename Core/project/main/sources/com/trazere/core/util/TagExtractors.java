@@ -1,9 +1,35 @@
+/*
+ *  Copyright 2006-2015 Julien Dufour
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
 package com.trazere.core.util;
 
 import com.trazere.core.functional.Function;
 
 /**
- * The {@link TagExtractors} class provides various extractors related to tags.
+ * The {@link TagExtractors} class provides various factories of extractors related to tags.
+ * <p>
+ * An extractor is {@link Function function} that combines a map operation and a filter operation.
+ * 
+ * @see Function
+ * @see Maybe
+ * @see Tag1
+ * @see Tag2
+ * @see Tag3
+ * @see Tag4
+ * @see Tag5
+ * @since 1.0
  */
 public class TagExtractors {
 	/**
@@ -11,6 +37,7 @@ public class TagExtractors {
 	 * 
 	 * @param <T> Type of the case.
 	 * @return The built extractor.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Tag1<T>> Function<Tag1<T>, Maybe<T>> as1() {
@@ -24,6 +51,7 @@ public class TagExtractors {
 	 * 
 	 * @param <T> Type of the case.
 	 * @return The built extractor.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Tag2<T>> Function<Tag2<T>, Maybe<T>> as2() {
@@ -37,6 +65,7 @@ public class TagExtractors {
 	 * 
 	 * @param <T> Type of the case.
 	 * @return The built extractor.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Tag3<T>> Function<Tag3<T>, Maybe<T>> as3() {
@@ -50,6 +79,7 @@ public class TagExtractors {
 	 * 
 	 * @param <T> Type of the case.
 	 * @return The built extractor.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Tag4<T>> Function<Tag4<T>, Maybe<T>> as4() {
@@ -63,6 +93,7 @@ public class TagExtractors {
 	 * 
 	 * @param <T> Type of the case.
 	 * @return The built extractor.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Tag5<T>> Function<Tag5<T>, Maybe<T>> as5() {

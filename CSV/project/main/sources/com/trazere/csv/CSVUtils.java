@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -20,9 +20,15 @@ import org.slf4j.LoggerFactory;
 
 /**
  * The {@link CSVUtils} class provides various utilities related to CSV.
+ * 
+ * @since 1.0
  */
 public class CSVUtils {
-	/** Logger. */
+	/**
+	 * Logger.
+	 * 
+	 * @since 1.0
+	 */
 	public static final Logger LOGGER = LoggerFactory.getLogger(CSVUtils.class.getPackage().getName());
 	
 	private CSVUtils() {

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,6 +17,9 @@ package com.trazere.core.record;
 
 /**
  * The {@link RecordFactories} class provides various factories of {@link RecordFactory record factories}.
+ * 
+ * @see RecordFactory
+ * @since 1.0
  */
 public class RecordFactories {
 	/**
@@ -24,6 +27,7 @@ public class RecordFactories {
 	 * 
 	 * @param <K> Type of the field keys.
 	 * @return The built record factory.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <K extends FieldKey<? extends K, ?>> RecordFactory<K, Record<K>> simple() {

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -23,14 +23,16 @@ import com.trazere.core.util.Tuple2;
  * Events are raised when the observed value changes, providing the new value.
  * 
  * @param <T> Type of the values.
+ * @since 1.0
  */
 public interface ObservableValue<T>
 extends Observable<T> {
 	/**
-	 * Subscribes the given observer to the receiver observable value for all events and immediately notifies the given observer with the current value.
+	 * Subscribes the given observer to this observable value for all events and immediately notifies the given observer with the current value.
 	 * 
 	 * @param observer The observer.
 	 * @return The corresponding subcription.
+	 * @since 1.0
 	 */
 	default ObserverSubscription subscribeAndNotify(final Observer<? super T> observer) {
 		// Subscribe.
@@ -43,10 +45,11 @@ extends Observable<T> {
 	}
 	
 	/**
-	 * Subscribes the given observer to the receiver observable value for all events.
+	 * Subscribes the given observer to this observable value for all events.
 	 * 
 	 * @param observer The observer.
 	 * @return The current value and corresponding subcription.
+	 * @since 1.0
 	 */
 	Tuple2<T, ObserverSubscription> subscribeToValue(Observer<? super T> observer);
 }

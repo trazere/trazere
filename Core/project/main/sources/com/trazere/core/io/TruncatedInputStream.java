@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,6 +21,8 @@ import java.io.InputStream;
 
 /**
  * The {@link TruncatedInputStream} class implements input streams that truncate the read data after some maximal length.
+ * 
+ * @since 1.0
  */
 public class TruncatedInputStream
 extends DecoratorInputStream {
@@ -32,6 +34,7 @@ extends DecoratorInputStream {
 	 * 
 	 * @param stream Input stream providing the data.
 	 * @param length Maximal length of data to read.
+	 * @since 1.0
 	 */
 	public TruncatedInputStream(final InputStream stream, final long length) {
 		super(stream);

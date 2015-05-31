@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -26,14 +26,14 @@ package com.trazere.parser;
  */
 public interface Parser<Token, Result> {
 	/**
-	 * Get the description of the receiver parser.
+	 * Get the description of this parser.
 	 * 
 	 * @return The description.
 	 */
 	String getDescription();
 	
 	/**
-	 * Run the receiver parser.
+	 * Run this parser.
 	 * 
 	 * @param closure The parsing closure.
 	 * @param state The parsing state to use.

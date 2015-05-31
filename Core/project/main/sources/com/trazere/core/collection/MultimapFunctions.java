@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -20,7 +20,11 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * The {@link MultimapFunctions} class provides various factories of functions related to {@link Map maps}.
+ * The {@link MultimapFunctions} class provides various factories of {@link Function functions} related to {@link Multimap multimaps}.
+ * 
+ * @see Function
+ * @see Multimap
+ * @since 1.0
  */
 public class MultimapFunctions {
 	/**
@@ -31,6 +35,7 @@ public class MultimapFunctions {
 	 * @param multimap Multimap to read.
 	 * @return The built function.
 	 * @see MapUtils#get(Map, Object)
+	 * @since 1.0
 	 */
 	public static <K, C extends Collection<?>> Function<K, C> get(final Multimap<? super K, ?, ? extends C> multimap) {
 		assert null != multimap;

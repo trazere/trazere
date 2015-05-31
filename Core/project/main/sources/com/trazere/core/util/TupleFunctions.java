@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,7 +22,20 @@ import com.trazere.core.functional.Function4;
 import com.trazere.core.functional.Function5;
 
 /**
- * The {@link TupleFunctions} class provides various functions related to tuples.
+ * The {@link TupleFunctions} class provides various factories of {@link Function functions} related to tuples.
+ * 
+ * @see Function
+ * @see Tuple1
+ * @see Tuple2
+ * @see Tuple3
+ * @see Tuple4
+ * @see Tuple5
+ * @see Tuple6
+ * @see Tuple7
+ * @see Tuple8
+ * @see Tuple9
+ * @see Tuple10
+ * @since 1.0
  */
 public class TupleFunctions {
 	/**
@@ -30,6 +43,7 @@ public class TupleFunctions {
 	 * 
 	 * @param <E1> Type of the first element.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <E1> Function<E1, Tuple1<E1>> tuple1() {
@@ -44,6 +58,7 @@ public class TupleFunctions {
 	 * @param <E1> Type of the first element.
 	 * @param <E2> Type of the second element.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <E1, E2> Function2<E1, E2, Tuple2<E1, E2>> tuple2() {
@@ -59,6 +74,7 @@ public class TupleFunctions {
 	 * @param <E2> Type of the second element.
 	 * @param <E3> Type of the third element.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <E1, E2, E3> Function3<E1, E2, E3, Tuple3<E1, E2, E3>> tuple3() {
@@ -75,6 +91,7 @@ public class TupleFunctions {
 	 * @param <E3> Type of the third element.
 	 * @param <E4> Type of the fourth element.
 	 * @return The built function.
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <E1, E2, E3, E4> Function4<E1, E2, E3, E4, Tuple4<E1, E2, E3, E4>> tuple4() {
@@ -91,6 +108,7 @@ public class TupleFunctions {
 	 * @param <E3> Type of the third element.
 	 * @param <E4> Type of the fourth element.
 	 * @param <E5> Type of the fifth element.
+	 * @since 1.0
 	 * @return The built function.
 	 */
 	@SuppressWarnings("unchecked")

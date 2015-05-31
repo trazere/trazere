@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import com.trazere.core.functional.Thunk;
  * The {@link ImperativeThunks} class provides various factories of {@link Thunk thunks} with imperative features.
  * 
  * @see Thunk
+ * @since 1.0
  */
 public class ImperativeThunks {
 	/**
@@ -28,6 +29,7 @@ public class ImperativeThunks {
 	 *
 	 * @param effect Effect to lift.
 	 * @return The built thunk.
+	 * @since 1.0
 	 */
 	public static Thunk<Void> fromEffect(final Effect effect) {
 		return fromEffect(effect, (Void) null);
@@ -40,6 +42,7 @@ public class ImperativeThunks {
 	 * @param effect Effect to lift.
 	 * @param value Value of the thunk.
 	 * @return The built thunk.
+	 * @since 1.0
 	 */
 	public static <T> Thunk<T> fromEffect(final Effect effect, final T value) {
 		assert null != effect;

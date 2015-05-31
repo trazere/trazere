@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -33,6 +33,8 @@ import java.util.regex.Pattern;
 
 /**
  * The {@link TextUtils} class provides various utilities regarding text.
+ * 
+ * @since 1.0
  */
 public class TextUtils {
 	// Sequences of characters.
@@ -42,6 +44,7 @@ public class TextUtils {
 	 *
 	 * @param s Sequence of characters to capitalize.
 	 * @return The capitalized sequence of characters.
+	 * @since 1.0
 	 */
 	public static CharSequence capitalize(final CharSequence s) {
 		if (s.length() > 0) {
@@ -60,6 +63,7 @@ public class TextUtils {
 	 * @param s Sequence of characters to test.
 	 * @param c Character to look for.
 	 * @return <code>true</code> when the sequence contains the character, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	public static boolean contains(final CharSequence s, final char c) {
 		for (final int i : new FiniteIntSequence(0, s.length())) {
@@ -76,6 +80,7 @@ public class TextUtils {
 	 * @param s Sequence of characters to test.
 	 * @param filter Predicate to use to filter the characters.
 	 * @return <code>true</code> when any character of the sequence is accepted by the filter, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	public static boolean contains(final CharSequence s, final CharPredicate filter) {
 		for (final int i : new FiniteIntSequence(0, s.length())) {
@@ -92,6 +97,7 @@ public class TextUtils {
 	 * @param s Sequence of characters to test.
 	 * @param sub Sub-sequence of characters to look for.
 	 * @return <code>true</code> when the sequence contains the sub-sequence, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	public static boolean contains(final CharSequence s, final CharSequence sub) {
 		for (final int i : new FiniteIntSequence(0, s.length())) {
@@ -108,6 +114,7 @@ public class TextUtils {
 	 * @param s Sequence of characters to test.
 	 * @param filter Predicate to use to filter the characters.
 	 * @return <code>true</code> when all characters of the sequence is accepted by the filter, <code>false</code> otherwise.
+	 * @since 1.0
 	 */
 	public static boolean matches(final CharSequence s, final CharPredicate filter) {
 		for (final int i : new FiniteIntSequence(0, s.length())) {
@@ -124,6 +131,7 @@ public class TextUtils {
 	 * @param s Sequence of characters to test.
 	 * @param c Character to look for.
 	 * @return The index of the first accepted character, or <code>-1</code> when no characters is accepted by the filter.
+	 * @since 1.0
 	 */
 	public static int indexOf(final CharSequence s, final char c) {
 		return indexOf(s, c, 0);
@@ -136,6 +144,7 @@ public class TextUtils {
 	 * @param c Character to look for.
 	 * @param offset Index at which the search should start.
 	 * @return The index of the first accepted character, or <code>-1</code> when no characters is accepted by the filter.
+	 * @since 1.0
 	 */
 	public static int indexOf(final CharSequence s, final char c, final int offset) {
 		for (final int i : new FiniteIntSequence(offset, s.length())) {
@@ -152,6 +161,7 @@ public class TextUtils {
 	 * @param s Sequence of characters to test.
 	 * @param filter Predicate to use to filter the characters.
 	 * @return The index of the first accepted character, or <code>-1</code> when no characters is accepted by the filter.
+	 * @since 1.0
 	 */
 	public static int indexOf(final CharSequence s, final CharPredicate filter) {
 		return indexOf(s, filter, 0);
@@ -164,6 +174,7 @@ public class TextUtils {
 	 * @param filter Predicate to use to filter the characters.
 	 * @param offset Index at which the search should start.
 	 * @return The index of the first accepted character, or <code>-1</code> when no characters is accepted by the filter.
+	 * @since 1.0
 	 */
 	public static int indexOf(final CharSequence s, final CharPredicate filter, final int offset) {
 		for (final int i : new FiniteIntSequence(offset, s.length())) {
@@ -180,6 +191,7 @@ public class TextUtils {
 	 * @param s Sequence of characters to test.
 	 * @param sub Sub-sequence of characters to look for.
 	 * @return The index of the first accepted character, or <code>-1</code> when no characters is accepted by the filter.
+	 * @since 1.0
 	 */
 	public static int indexOf(final CharSequence s, final CharSequence sub) {
 		return indexOf(s, sub, 0);
@@ -192,6 +204,7 @@ public class TextUtils {
 	 * @param sub Character to look for.
 	 * @param offset Index at which the search should start.
 	 * @return The index of the first accepted character, or <code>-1</code> when no characters is accepted by the filter.
+	 * @since 1.0
 	 */
 	public static int indexOf(final CharSequence s, final CharSequence sub, final int offset) {
 		for (final int i : new FiniteIntSequence(0, s.length())) {
@@ -210,6 +223,7 @@ public class TextUtils {
 	 * @param s String containing the substring occurences to count.
 	 * @param sub Substring whose occurences should be counter.
 	 * @return The number of occurences.
+	 * @since 1.0
 	 */
 	public static int count(final CharSequence s, final CharSequence sub) {
 		final IntCounter count = new IntCounter();
@@ -236,6 +250,7 @@ public class TextUtils {
 	 * @param s Sequence of characters to filter.
 	 * @param filter Predicate to use to filter the characters.
 	 * @return A sequence of the accepted characters.
+	 * @since 1.0
 	 */
 	public static CharSequence filter(final CharSequence s, final CharPredicate filter) {
 		final StringBuilder result = new StringBuilder();
@@ -254,6 +269,7 @@ public class TextUtils {
 	 * @param s Sequence of characters to trim.
 	 * @param filter Predicate to use to filter the characters.
 	 * @return A trimmed sequence of characters.
+	 * @since 1.0
 	 */
 	public static CharSequence trim(final CharSequence s, final CharPredicate filter) {
 		final int length = s.length();
@@ -274,6 +290,7 @@ public class TextUtils {
 	 * @param s Sequence of characters to trim.
 	 * @param filter Predicate to use to filter the characters.
 	 * @return A trimmed sequence of characters.
+	 * @since 1.0
 	 */
 	public static CharSequence trimHeading(final CharSequence s, final CharPredicate filter) {
 		final int length = s.length();
@@ -290,6 +307,7 @@ public class TextUtils {
 	 * @param s Sequence of characters to trim.
 	 * @param filter Predicate to use to filter the characters.
 	 * @return A trimmed sequence of characters.
+	 * @since 1.0
 	 */
 	public static CharSequence trimTrailing(final CharSequence s, final CharPredicate filter) {
 		final int length = s.length();
@@ -309,6 +327,7 @@ public class TextUtils {
 	 * @param s String to adjust.
 	 * @param length Desired length, or <code>0</code> to leave the string as it is.
 	 * @return The adjusted string.
+	 * @since 1.0
 	 */
 	public static String adjust(final String s, final int length) {
 		final int currentLength = s.length();
@@ -332,6 +351,7 @@ public class TextUtils {
 	 * @param tokens Tokens to join.
 	 * @param delimiter Delimiter to insert between the tokens.
 	 * @return The representation of the joined tokens.
+	 * @since 1.0
 	 */
 	public static CharSequence join(final Iterable<? extends CharSequence> tokens, final CharSequence delimiter) {
 		return Joiners.joiner(true, delimiter).join(tokens);
@@ -345,6 +365,7 @@ public class TextUtils {
 	 * @param renderer Function to use to compute the string representation of the tokens.
 	 * @param delimiter Delimiter to insert between the tokens.
 	 * @return The representation of the joined tokens.
+	 * @since 1.0
 	 */
 	public static <T> CharSequence join(final Iterable<? extends T> tokens, final Function<? super T, ? extends CharSequence> renderer, final CharSequence delimiter) {
 		return Joiners.joiner(renderer, true, delimiter).join(tokens);
@@ -357,6 +378,7 @@ public class TextUtils {
 	 * @param delimiter Delimiter to use.
 	 * @param trim Indicates whether to trim the whitespaces of the tokens.
 	 * @return A feed of the split tokens.
+	 * @since 1.0
 	 */
 	public static Feed<CharSequence> split(final CharSequence s, final char delimiter, final boolean trim) {
 		return Splitters.delimiter(delimiter, false, trim ? Maybe.some(CharPredicates.whitespace()) : Maybe.<CharPredicate>none(), true).split(s);
@@ -369,6 +391,7 @@ public class TextUtils {
 	 * @param delimiter Delimiter to use.
 	 * @param trim Indicates whether to trim the whitespaces of the tokens.
 	 * @return A feed of the split tokens.
+	 * @since 1.0
 	 */
 	public static Feed<CharSequence> split(final CharSequence s, final CharSequence delimiter, final boolean trim) {
 		return Splitters.delimiter(delimiter, false, trim ? Maybe.some(CharPredicates.whitespace()) : Maybe.<CharPredicate>none(), true).split(s);
@@ -381,6 +404,7 @@ public class TextUtils {
 	 * @param delimiter Delimiter to use.
 	 * @param trim Indicates whether to trim the whitespaces of the tokens.
 	 * @return A feed of the split tokens.
+	 * @since 1.0
 	 */
 	public static Feed<CharSequence> split(final CharSequence s, final Pattern delimiter, final boolean trim) {
 		return Splitters.delimiter(delimiter, false, trim ? Maybe.some(CharPredicates.whitespace()) : Maybe.<CharPredicate>none(), true).split(s);
@@ -394,6 +418,7 @@ public class TextUtils {
 	 * 
 	 * @param class_ Class to compute the name of.
 	 * @return The name of the class.
+	 * @since 1.0
 	 */
 	public static String className(final Class<?> class_) {
 		final String fullName = class_.getName();
@@ -408,6 +433,7 @@ public class TextUtils {
 	 * 
 	 * @param object The object.
 	 * @return The description.
+	 * @since 1.0
 	 */
 	public static String description(final Describable object) {
 		final Description description = new Description(className(object.getClass()));
@@ -417,7 +443,11 @@ public class TextUtils {
 	
 	// Bytes.
 	
-	/** Array of the hexadecimal digits characters (upper case). */
+	/**
+	 * Array of the hexadecimal digits characters (upper case).
+	 * 
+	 * @since 1.0
+	 */
 	public static final char[] HEX_DIGITS = {
 		'0',
 		'1',
@@ -442,6 +472,7 @@ public class TextUtils {
 	 *
 	 * @param bytes Bytes to render.
 	 * @return The text representation.
+	 * @since 1.0
 	 */
 	public static CharSequence toHex(final byte[] bytes) {
 		final StringBuilder builder = new StringBuilder();
@@ -463,6 +494,7 @@ public class TextUtils {
 	 * @param format Format of the number.
 	 * @param value Number to format.
 	 * @return The representation of the number.
+	 * @since 1.0
 	 */
 	public static String formatNumber(final NumberFormat format, final Number value) {
 		synchronized (format) {
@@ -480,6 +512,7 @@ public class TextUtils {
 	 * @param converter Function to use to convert the parsed number to the excepted type.
 	 * @param representation Representation of the number to parse.
 	 * @return The parsed number, or nothing when the representation is not valid.
+	 * @since 1.0
 	 */
 	// TODO: return Result
 	public static <N extends Number> Maybe<N> parseNumber(final NumberFormat format, final Function<? super Number, ? extends N> converter, final String representation) {
@@ -504,6 +537,7 @@ public class TextUtils {
 	 * @param format Format of the date.
 	 * @param value Date to format.
 	 * @return The representation of the date.
+	 * @since 1.0
 	 */
 	public static String formatDate(final DateFormat format, final Date value) {
 		synchronized (format) {
@@ -519,6 +553,7 @@ public class TextUtils {
 	 * @param format Format of the date.
 	 * @param representation Representation of the date to parse.
 	 * @return The parsed date, or nothing when the representation is not valid.
+	 * @since 1.0
 	 */
 	// TODO: return Result
 	public static Maybe<Date> parseDate(final DateFormat format, final String representation) {
@@ -543,6 +578,7 @@ public class TextUtils {
 	 * @param formatter Format of the temporal.
 	 * @param value Temporal to format.
 	 * @return The representation of the temporal.
+	 * @since 1.0
 	 */
 	public static String formatTemporal(final DateTimeFormatter formatter, final TemporalAccessor value) {
 		return formatter.format(value);
@@ -558,6 +594,7 @@ public class TextUtils {
 	 * @param query Query that defines the type of the temporal.
 	 * @param representation Representation of the temporal to parse.
 	 * @return The parsed temporal, or nothing when the representation is not valid.
+	 * @since 1.0
 	 */
 	// TODO: return Result
 	public static <T extends TemporalAccessor> Maybe<T> parseTemporal(final DateTimeFormatter formatter, final TemporalQuery<T> query, final String representation) {
@@ -575,6 +612,7 @@ public class TextUtils {
 	 *
 	 * @param value UUID to format.
 	 * @return The representation of the UUID.
+	 * @since 1.0
 	 */
 	public static String formatUuid(final UUID value) {
 		return value.toString();
@@ -585,6 +623,7 @@ public class TextUtils {
 	 *
 	 * @param representation Representation of the UUID to parse.
 	 * @return The parsed UUID, or nothing when the representation is not valid.
+	 * @since 1.0
 	 */
 	// TODO: return Result
 	public static Maybe<UUID> parseUuid(final String representation) {

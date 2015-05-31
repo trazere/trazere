@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006-2013 Julien Dufour
+ *  Copyright 2006-2015 Julien Dufour
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@ import java.util.Properties;
  * The {@link PropertiesUtils} class provides various utilities regarding {@link Properties properties}.
  * 
  * @see Properties
+ * @since 1.0
  */
 public class PropertiesUtils {
 	/**
@@ -43,6 +44,7 @@ public class PropertiesUtils {
 	 * @param inputs Input providing the property files to load paired with flags indicating whether they are optional or not.
 	 * @return The loaded properties.
 	 * @throws IOException When some property file cannot be loaded.
+	 * @since 1.0
 	 */
 	public static Properties loadProperties(final Iterable<? extends Tuple2<? extends Input, Boolean>> inputs)
 	throws IOException {
@@ -61,6 +63,7 @@ public class PropertiesUtils {
 	 * @return The given properties.
 	 * @throws IOException When some property file cannot be loaded.
 	 * @see Properties#load(InputStream)
+	 * @since 1.0
 	 */
 	public static Properties loadProperties(final Properties properties, final Iterable<? extends Tuple2<? extends Input, Boolean>> inputs)
 	throws IOException {
@@ -83,6 +86,7 @@ public class PropertiesUtils {
 	 * @return The given properties.
 	 * @throws IOException When the property file cannot be loaded.
 	 * @see Properties#load(InputStream)
+	 * @since 1.0
 	 */
 	public static Properties loadProperties(final Properties properties, final Input input, final boolean optional)
 	throws IOException {
@@ -103,6 +107,7 @@ public class PropertiesUtils {
 	 * @param deserializer Function to use to deserialize the representation.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static <T> Maybe<T> get(final Properties properties, final String name, final Function<? super String, ? extends T> deserializer)
 	throws InvalidFieldException {
@@ -118,6 +123,7 @@ public class PropertiesUtils {
 	 * @param deserializer Serializer to use to deserialize the representation.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static <T> Maybe<T> get(final Properties properties, final String name, final Serializer<? extends T, ? super String> deserializer)
 	throws InvalidFieldException {
@@ -131,6 +137,7 @@ public class PropertiesUtils {
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static Maybe<String> getString(final Properties properties, final String name)
 	throws InvalidFieldException {
@@ -144,6 +151,7 @@ public class PropertiesUtils {
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static Maybe<Boolean> getBoolean(final Properties properties, final String name)
 	throws InvalidFieldException {
@@ -157,6 +165,7 @@ public class PropertiesUtils {
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static Maybe<Integer> getInteger(final Properties properties, final String name)
 	throws InvalidFieldException {
@@ -170,6 +179,7 @@ public class PropertiesUtils {
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static Maybe<Integer> getUnsignedInteger(final Properties properties, final String name)
 	throws InvalidFieldException {
@@ -183,6 +193,7 @@ public class PropertiesUtils {
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static Maybe<Long> getLong(final Properties properties, final String name)
 	throws InvalidFieldException {
@@ -196,6 +207,7 @@ public class PropertiesUtils {
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static Maybe<Long> getUnsignedLong(final Properties properties, final String name)
 	throws InvalidFieldException {
@@ -209,6 +221,7 @@ public class PropertiesUtils {
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static Maybe<Float> getFloat(final Properties properties, final String name)
 	throws InvalidFieldException {
@@ -222,6 +235,7 @@ public class PropertiesUtils {
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static Maybe<Double> getDouble(final Properties properties, final String name)
 	throws InvalidFieldException {
@@ -235,6 +249,7 @@ public class PropertiesUtils {
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static Maybe<File> getFile(final Properties properties, final String name)
 	throws InvalidFieldException {
@@ -248,6 +263,7 @@ public class PropertiesUtils {
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static Maybe<URI> getUri(final Properties properties, final String name)
 	throws InvalidFieldException {
@@ -261,6 +277,7 @@ public class PropertiesUtils {
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static Maybe<URL> getUrlProperty(final Properties properties, final String name)
 	throws InvalidFieldException {
@@ -279,6 +296,7 @@ public class PropertiesUtils {
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static <T> T getOptional(final Properties properties, final String name, final Function<? super String, ? extends T> deserializer, final T defaultValue)
 	throws InvalidFieldException {
@@ -297,6 +315,7 @@ public class PropertiesUtils {
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static <T> T getOptional(final Properties properties, final String name, final Serializer<? extends T, ? super String> deserializer, final T defaultValue)
 	throws InvalidFieldException {
@@ -313,6 +332,7 @@ public class PropertiesUtils {
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static String getOptionalString(final Properties properties, final String name, final String defaultValue)
 	throws InvalidFieldException {
@@ -329,6 +349,7 @@ public class PropertiesUtils {
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static boolean getOptionalBoolean(final Properties properties, final String name, final boolean defaultValue)
 	throws InvalidFieldException {
@@ -345,6 +366,7 @@ public class PropertiesUtils {
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static int getOptionalInteger(final Properties properties, final String name, final int defaultValue)
 	throws InvalidFieldException {
@@ -361,6 +383,7 @@ public class PropertiesUtils {
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static int getOptionalUnsignedInteger(final Properties properties, final String name, final int defaultValue)
 	throws InvalidFieldException {
@@ -377,6 +400,7 @@ public class PropertiesUtils {
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static long getOptionalLong(final Properties properties, final String name, final long defaultValue)
 	throws InvalidFieldException {
@@ -393,6 +417,7 @@ public class PropertiesUtils {
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static long getOptionaUnsignedlLong(final Properties properties, final String name, final long defaultValue)
 	throws InvalidFieldException {
@@ -409,6 +434,7 @@ public class PropertiesUtils {
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static float getOptionalFloat(final Properties properties, final String name, final float defaultValue)
 	throws InvalidFieldException {
@@ -425,6 +451,7 @@ public class PropertiesUtils {
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static double getOptionalDouble(final Properties properties, final String name, final double defaultValue)
 	throws InvalidFieldException {
@@ -441,6 +468,7 @@ public class PropertiesUtils {
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static File getOptionalFile(final Properties properties, final String name, final File defaultValue)
 	throws InvalidFieldException {
@@ -457,6 +485,7 @@ public class PropertiesUtils {
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static URI getOptionalUri(final Properties properties, final String name, final URI defaultValue)
 	throws InvalidFieldException {
@@ -473,6 +502,7 @@ public class PropertiesUtils {
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static URL getOptionalUrl(final Properties properties, final String name, final URL defaultValue)
 	throws InvalidFieldException {
@@ -491,6 +521,7 @@ public class PropertiesUtils {
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static <T> T getOptional(final Properties properties, final String name, final Function<? super String, ? extends T> deserializer, final Thunk<? extends T> defaultValue)
 	throws InvalidFieldException {
@@ -509,6 +540,7 @@ public class PropertiesUtils {
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static <T> T getOptional(final Properties properties, final String name, final Serializer<? extends T, ? super String> deserializer, final Thunk<? extends T> defaultValue)
 	throws InvalidFieldException {
@@ -525,6 +557,7 @@ public class PropertiesUtils {
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static String getOptionalString(final Properties properties, final String name, final Thunk<? extends String> defaultValue)
 	throws InvalidFieldException {
@@ -541,6 +574,7 @@ public class PropertiesUtils {
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static boolean getOptionalBoolean(final Properties properties, final String name, final Thunk<? extends Boolean> defaultValue)
 	throws InvalidFieldException {
@@ -557,6 +591,7 @@ public class PropertiesUtils {
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static int getOptionalInteger(final Properties properties, final String name, final Thunk<? extends Integer> defaultValue)
 	throws InvalidFieldException {
@@ -573,6 +608,7 @@ public class PropertiesUtils {
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static int getOptionalUnsignedInteger(final Properties properties, final String name, final Thunk<? extends Integer> defaultValue)
 	throws InvalidFieldException {
@@ -589,6 +625,7 @@ public class PropertiesUtils {
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static long getOptionalLong(final Properties properties, final String name, final Thunk<? extends Long> defaultValue)
 	throws InvalidFieldException {
@@ -605,6 +642,7 @@ public class PropertiesUtils {
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static long getOptionalUnsignedLong(final Properties properties, final String name, final Thunk<? extends Long> defaultValue)
 	throws InvalidFieldException {
@@ -621,6 +659,7 @@ public class PropertiesUtils {
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static float getOptionalFloat(final Properties properties, final String name, final Thunk<? extends Float> defaultValue)
 	throws InvalidFieldException {
@@ -637,6 +676,7 @@ public class PropertiesUtils {
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static double getOptionalDouble(final Properties properties, final String name, final Thunk<? extends Double> defaultValue)
 	throws InvalidFieldException {
@@ -653,6 +693,7 @@ public class PropertiesUtils {
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static File getOptionalFile(final Properties properties, final String name, final Thunk<? extends File> defaultValue)
 	throws InvalidFieldException {
@@ -669,6 +710,7 @@ public class PropertiesUtils {
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static URI getOptionalUri(final Properties properties, final String name, final Thunk<? extends URI> defaultValue)
 	throws InvalidFieldException {
@@ -685,6 +727,7 @@ public class PropertiesUtils {
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static URL getOptionalUrl(final Properties properties, final String name, final Thunk<? extends URL> defaultValue)
 	throws InvalidFieldException {
@@ -703,6 +746,7 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static <T> T getMandatory(final Properties properties, final String name, final Function<? super String, ? extends T> deserializer)
 	throws MissingFieldException, InvalidFieldException {
@@ -721,6 +765,7 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static <T> T getMandatory(final Properties properties, final String name, final Serializer<? extends T, ? super String> deserializer)
 	throws MissingFieldException, InvalidFieldException {
@@ -737,6 +782,7 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static String getMandatoryString(final Properties properties, final String name)
 	throws MissingFieldException, InvalidFieldException {
@@ -753,6 +799,7 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static boolean getMandatoryBoolean(final Properties properties, final String name)
 	throws MissingFieldException, InvalidFieldException {
@@ -769,6 +816,7 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static int getMandatoryInteger(final Properties properties, final String name)
 	throws MissingFieldException, InvalidFieldException {
@@ -785,6 +833,7 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static int getMandatoryUnsignedInteger(final Properties properties, final String name)
 	throws MissingFieldException, InvalidFieldException {
@@ -801,6 +850,7 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static long getMandatoryLong(final Properties properties, final String name)
 	throws MissingFieldException, InvalidFieldException {
@@ -817,6 +867,7 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static long getMandatoryUnsignedLong(final Properties properties, final String name)
 	throws MissingFieldException, InvalidFieldException {
@@ -833,6 +884,7 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static float getMandatoryFloat(final Properties properties, final String name)
 	throws MissingFieldException, InvalidFieldException {
@@ -849,6 +901,7 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static double getMandatoryDouble(final Properties properties, final String name)
 	throws MissingFieldException, InvalidFieldException {
@@ -865,6 +918,7 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static File getMandatoryFile(final Properties properties, final String name)
 	throws MissingFieldException, InvalidFieldException {
@@ -881,6 +935,7 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static URI getMandatoryUri(final Properties properties, final String name)
 	throws MissingFieldException, InvalidFieldException {
@@ -897,6 +952,7 @@ public class PropertiesUtils {
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @since 1.0
 	 */
 	public static URL getMandatoryUrl(final Properties properties, final String name)
 	throws MissingFieldException, InvalidFieldException {
