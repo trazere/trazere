@@ -64,7 +64,7 @@ implements Thunk<Result<T>>, FailureHandler<T> {
 	 * 
 	 * @param <T> Type of the value.
 	 * @param thunk Thunk to evaluate.
-	 * @param failureFactory Factory of the failure.
+	 * @param failureFactory Factory of the exceptions for the failures.
 	 * @return The value of the thunk.
 	 * @throws RuntimeException When the evaluation fails repeatedly.
 	 * @since 1.0

@@ -91,15 +91,15 @@ public class Functions {
 	 *
 	 * @param <A> Type of the arguments.
 	 * @param <R> Type of the results.
-	 * @param throwableFactory Throwable factory to use.
+	 * @param failureFactory Factory of the exceptions for the failures.
 	 * @return The built function.
 	 * @since 1.0
 	 */
-	public static <A, R> Function<A, R> failure(final ThrowableFactory<? extends RuntimeException> throwableFactory) {
-		assert null != throwableFactory;
+	public static <A, R> Function<A, R> failure(final ThrowableFactory<? extends RuntimeException> failureFactory) {
+		assert null != failureFactory;
 		
 		return arg -> {
-			throw throwableFactory.build("Failed argument \"" + arg + "\"");
+			throw failureFactory.build("Failed argument \"" + arg + "\"");
 		};
 	}
 	
@@ -108,16 +108,16 @@ public class Functions {
 	 * 
 	 * @param <A> Type of the arguments.
 	 * @param <R> Type of the results.
-	 * @param throwableFactory Throwable factory to use.
+	 * @param failureFactory Factory of the exceptions for the failures.
 	 * @param message Message of the throwable.
 	 * @return The built function.
 	 * @since 1.0
 	 */
-	public static <A, R> Function<A, R> failure(final ThrowableFactory<? extends RuntimeException> throwableFactory, final String message) {
-		assert null != throwableFactory;
+	public static <A, R> Function<A, R> failure(final ThrowableFactory<? extends RuntimeException> failureFactory, final String message) {
+		assert null != failureFactory;
 		
 		return arg -> {
-			throw throwableFactory.build(message);
+			throw failureFactory.build(message);
 		};
 	}
 	
@@ -273,15 +273,15 @@ public class Functions {
 	 * @param <A1> Type of the first arguments.
 	 * @param <A2> Type of the second arguments.
 	 * @param <R> Type of the results.
-	 * @param throwableFactory Throwable factory to use.
+	 * @param failureFactory Factory of the exceptions for the failures.
 	 * @return The built function.
 	 * @since 1.0
 	 */
-	public static <A1, A2, R> Function2<A1, A2, R> failure2(final ThrowableFactory<? extends RuntimeException> throwableFactory) {
-		assert null != throwableFactory;
+	public static <A1, A2, R> Function2<A1, A2, R> failure2(final ThrowableFactory<? extends RuntimeException> failureFactory) {
+		assert null != failureFactory;
 		
 		return (arg1, arg2) -> {
-			throw throwableFactory.build();
+			throw failureFactory.build();
 		};
 	}
 	
@@ -291,16 +291,16 @@ public class Functions {
 	 * @param <A1> Type of the first arguments.
 	 * @param <A2> Type of the second arguments.
 	 * @param <R> Type of the results.
-	 * @param throwableFactory Throwable factory to use.
+	 * @param failureFactory Factory of the exceptions for the failures.
 	 * @param message Message of the throwable.
 	 * @return The built function.
 	 * @since 1.0
 	 */
-	public static <A1, A2, R> Function2<A1, A2, R> failure2(final ThrowableFactory<? extends RuntimeException> throwableFactory, final String message) {
-		assert null != throwableFactory;
+	public static <A1, A2, R> Function2<A1, A2, R> failure2(final ThrowableFactory<? extends RuntimeException> failureFactory, final String message) {
+		assert null != failureFactory;
 		
 		return (arg1, arg2) -> {
-			throw throwableFactory.build(message);
+			throw failureFactory.build(message);
 		};
 	}
 	
@@ -376,15 +376,15 @@ public class Functions {
 	 * @param <A2> Type of the second arguments.
 	 * @param <A3> Type of the third arguments.
 	 * @param <R> Type of the results.
-	 * @param throwableFactory Throwable factory to use.
+	 * @param failureFactory Factory of the exceptions for the failures.
 	 * @return The built function.
 	 * @since 1.0
 	 */
-	public static <A1, A2, A3, R> Function3<A1, A2, A3, R> failure3(final ThrowableFactory<? extends RuntimeException> throwableFactory) {
-		assert null != throwableFactory;
+	public static <A1, A2, A3, R> Function3<A1, A2, A3, R> failure3(final ThrowableFactory<? extends RuntimeException> failureFactory) {
+		assert null != failureFactory;
 		
 		return (arg1, arg2, arg3) -> {
-			throw throwableFactory.build();
+			throw failureFactory.build();
 		};
 	}
 	
@@ -395,16 +395,16 @@ public class Functions {
 	 * @param <A2> Type of the second arguments.
 	 * @param <A3> Type of the third arguments.
 	 * @param <R> Type of the results.
-	 * @param throwableFactory Throwable factory to use.
+	 * @param failureFactory Factory of the exceptions for the failures.
 	 * @param message Message of the throwable.
 	 * @return The built function.
 	 * @since 1.0
 	 */
-	public static <A1, A2, A3, R> Function3<A1, A2, A3, R> failure3(final ThrowableFactory<? extends RuntimeException> throwableFactory, final String message) {
-		assert null != throwableFactory;
+	public static <A1, A2, A3, R> Function3<A1, A2, A3, R> failure3(final ThrowableFactory<? extends RuntimeException> failureFactory, final String message) {
+		assert null != failureFactory;
 		
 		return (arg1, arg2, arg3) -> {
-			throw throwableFactory.build(message);
+			throw failureFactory.build(message);
 		};
 	}
 	

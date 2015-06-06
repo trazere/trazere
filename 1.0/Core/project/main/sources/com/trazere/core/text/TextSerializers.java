@@ -60,24 +60,24 @@ public class TextSerializers {
 	 * 
 	 * @param minLength Min length of the strings.
 	 * @param maxLength Max length of the strings, or <code>0</code> for unlimited length.
-	 * @param failureFactory Factory of failures.
+	 * @param invalidFactory Factory of exceptions for the invalid values or representations.
 	 * @return The built serializer.
 	 * @since 1.0
 	 */
-	public static Serializer<String, String> string(final int minLength, final int maxLength, final ThrowableFactory<? extends RuntimeException> failureFactory) {
+	public static Serializer<String, String> string(final int minLength, final int maxLength, final ThrowableFactory<? extends RuntimeException> invalidFactory) {
 		assert minLength >= 0;
 		assert maxLength >= 0;
 		assert minLength <= maxLength;
-		assert null != failureFactory;
+		assert null != invalidFactory;
 		
 		return new Serializer<String, String>() {
 			@Override
 			public String serialize(final String value) {
 				final int length = value.length();
 				if (length < minLength) {
-					throw failureFactory.build("Value \"" + value + "\" is too short (" + minLength + " min)");
+					throw invalidFactory.build("Value \"" + value + "\" is too short (" + minLength + " min)");
 				} else if (maxLength > 0 && length > maxLength) {
-					throw failureFactory.build("Value \"" + value + "\" is too long (" + minLength + " max)");
+					throw invalidFactory.build("Value \"" + value + "\" is too long (" + minLength + " max)");
 				} else {
 					return value;
 				}
@@ -87,9 +87,9 @@ public class TextSerializers {
 			public String deserialize(final String representation) {
 				final int length = representation.length();
 				if (length < minLength) {
-					throw failureFactory.build("Representation \"" + representation + "\" is too short (" + minLength + " min)");
+					throw invalidFactory.build("Representation \"" + representation + "\" is too short (" + minLength + " min)");
 				} else if (maxLength > 0 && length > maxLength) {
-					throw failureFactory.build("Representation \"" + representation + "\" is too long (" + minLength + " max)");
+					throw invalidFactory.build("Representation \"" + representation + "\" is too long (" + minLength + " max)");
 				} else {
 					return representation;
 				}

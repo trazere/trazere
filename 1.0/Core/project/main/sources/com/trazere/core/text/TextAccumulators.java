@@ -47,7 +47,7 @@ public class TextAccumulators {
 	 * 
 	 * @param <A> Type of the appendable.
 	 * @param appendable Appendable that should be appended to.
-	 * @param failureFactory Factory of the append failures.
+	 * @param failureFactory Factory of the exceptions for the failures while appending.
 	 * @return The built accumulator.
 	 * @see Appendable#append(CharSequence)
 	 * @since 1.0

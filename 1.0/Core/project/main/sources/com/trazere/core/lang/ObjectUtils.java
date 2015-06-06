@@ -137,21 +137,21 @@ public class ObjectUtils {
 	/**
 	 * Matches the given object against the given type.
 	 * <p>
-	 * This methods tests that the given object is not <code>null</code> and is assignable to the given type.
+	 * This methods returns the given object when is not <code>null</code> and is assignable to the given type, or throws an exception when it is not.
 	 *
 	 * @param <T> Type of the match.
 	 * @param object Object to match. May be <code>null</code>.
 	 * @param type Type against which to match.
-	 * @param throwableFactory Throwable factory to use.
+	 * @param mismatchFactory Factory of the exceptions for the mismatches.
 	 * @return The given matched object.
 	 * @throws RuntimeException When the given object is null or is not assignable to the given type.
 	 * @since 1.0
 	 */
-	public static <T> T match(final Object object, final Class<T> type, final ThrowableFactory<? extends RuntimeException> throwableFactory) {
+	public static <T> T match(final Object object, final Class<T> type, final ThrowableFactory<? extends RuntimeException> mismatchFactory) {
 		if (null != object && type.isInstance(object)) {
 			return type.cast(object);
 		} else {
-			throw throwableFactory.build("Invalid object \"" + object + "\"");
+			throw mismatchFactory.build("Invalid object \"" + object + "\"");
 		}
 	}
 	
