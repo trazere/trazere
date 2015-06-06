@@ -15,6 +15,7 @@
  */
 package com.trazere.util.text;
 
+import com.trazere.core.functional.Predicate;
 import com.trazere.util.function.Function1;
 import com.trazere.util.function.Functions;
 import com.trazere.util.function.Procedure2;
@@ -23,6 +24,7 @@ import com.trazere.util.lang.InternalException;
 import com.trazere.util.lang.LangUtils;
 import com.trazere.util.lang.MutableBoolean;
 import com.trazere.util.lang.MutableInt;
+import com.trazere.util.lang.WrapException;
 import com.trazere.util.type.Maybe;
 import java.text.DateFormat;
 import java.text.NumberFormat;
@@ -681,6 +683,48 @@ public class TextUtils {
 		} catch (final IllegalArgumentException exception) {
 			return Maybe.none();
 		}
+	}
+	
+	/**
+	 * Adapts the given util char predicate to a core char predicate.
+	 * 
+	 * @param predicate Util char predicate to adapt.
+	 * @return The adapted core char predicate.
+	 * @deprecated Use {@link CharPredicate}.
+	 */
+	@Deprecated
+	public static com.trazere.core.text.CharPredicate toCharPredicate(final CharPredicate<?> predicate) {
+		assert null != predicate;
+		
+		return new com.trazere.core.text.CharPredicate() {
+			@Override
+			public boolean evaluate(final char c) {
+				try {
+					return predicate.evaluate(c);
+				} catch (final Exception exception) {
+					throw new WrapException(exception);
+				}
+			}
+		};
+	}
+	
+	/**
+	 * Adapts the given core char predicate to an util char predicate.
+	 * 
+	 * @param predicate Core char predicate to adapt.
+	 * @return The adapted util char predicate.
+	 * @deprecated Use {@link Predicate}.
+	 */
+	@Deprecated
+	public static CharPredicate<RuntimeException> fromCharPredicate(final com.trazere.core.text.CharPredicate predicate) {
+		assert null != predicate;
+		
+		return new CharPredicate<RuntimeException>() {
+			@Override
+			public boolean evaluate(final char c) {
+				return predicate.evaluate(c);
+			}
+		};
 	}
 	
 	private TextUtils() {

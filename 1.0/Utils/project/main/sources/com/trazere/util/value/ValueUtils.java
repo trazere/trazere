@@ -15,8 +15,10 @@
  */
 package com.trazere.util.value;
 
+import com.trazere.core.util.Serializer;
 import com.trazere.util.function.Function1;
 import com.trazere.util.lang.TypeCheckException;
+import com.trazere.util.lang.WrapException;
 import com.trazere.util.record.IncompatibleFieldException;
 import com.trazere.util.record.InvalidFieldException;
 import com.trazere.util.record.Record;
@@ -140,6 +142,68 @@ public class ValueUtils {
 		} else {
 			return reader;
 		}
+	}
+	
+	/**
+	 * Adpats the given value serializer to a serializer.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <R> Type of the representations.
+	 * @param serializer Value serializer to adapt.
+	 * @return The adapter serializer.
+	 * @deprecated Use {@link Serializer}.
+	 */
+	@Deprecated
+	public static <T, R> Serializer<T, R> toSerializer(final ValueSerializer<T, R, ?> serializer) {
+		assert null != serializer;
+		
+		return new Serializer<T, R>() {
+			@Override
+			public R serialize(final T value) {
+				try {
+					return serializer.serialize(value);
+				} catch (final Exception exception) {
+					throw new WrapException(exception);
+				}
+			}
+			
+			@Override
+			public T deserialize(final R representation) {
+				try {
+					return serializer.deserialize(representation);
+				} catch (final Exception exception) {
+					throw new WrapException(exception);
+				}
+			}
+		};
+	}
+	
+	/**
+	 * Adapts the given serializer to a value serializer.
+	 * 
+	 * @param <V> Type of the values.
+	 * @param <R> Type of the representations.
+	 * @param serializer Serializer to adapt.
+	 * @param valueClass Type of the values.
+	 * @param representationClass Type of the representations.
+	 * @return The adapted value serializer.
+	 * @deprecated Use {@link Serializer}.
+	 */
+	@Deprecated
+	public static <V, R> ValueSerializer<V, R, RuntimeException> fromSerializer(final Serializer<V, R> serializer, final Class<V> valueClass, final Class<R> representationClass) {
+		assert null != serializer;
+		
+		return new BaseValueSerializer<V, R, RuntimeException>(valueClass, representationClass) {
+			@Override
+			public R serialize(final V value) {
+				return serializer.serialize(value);
+			}
+			
+			@Override
+			public V deserialize(final R representation) {
+				return serializer.deserialize(representation);
+			}
+		};
 	}
 	
 	private ValueUtils() {
