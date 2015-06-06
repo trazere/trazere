@@ -15,6 +15,11 @@
  */
 package com.trazere.util.closure;
 
+import com.trazere.core.functional.MemoizedThunk;
+import com.trazere.util.lang.WrapException;
+import com.trazere.util.type.Maybe;
+import com.trazere.util.type.TypeUtils;
+
 /**
  * The {@link ClosureUtils} class provides helpers regarding the closures.
  * 
@@ -55,6 +60,70 @@ public class ClosureUtils {
 		synchronized (closure) {
 			closure.reset();
 		}
+	}
+	
+	/**
+	 * Adapts the given closure to a memoized thunk.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param closure Closure to adapt.
+	 * @return The adapted memoized thunk.
+	 * @deprecated Use {@link MemoizedThunk}.
+	 */
+	@Deprecated
+	public static <T> MemoizedThunk<T> toMemoizedThunk(final Closure<? extends T, ?> closure) {
+		assert null != closure;
+		
+		return new MemoizedThunk<T>() {
+			@Override
+			public T evaluate() {
+				try {
+					return closure.evaluate();
+				} catch (final Exception exception) {
+					throw new WrapException(exception);
+				}
+			}
+			
+			@Override
+			public boolean isMemoized() {
+				return closure.isEvaluated();
+			}
+			
+			@Override
+			public com.trazere.core.util.Maybe<T> get() {
+				return TypeUtils.toMaybe(closure.asMaybe());
+			}
+		};
+	}
+	
+	/**
+	 * Adapts the given memoized thunk to a closure.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param thunk Memoized thunk to adapt.
+	 * @return The adapted closure.
+	 * @deprecated Use {@link MemoizedThunk}.
+	 */
+	@Deprecated
+	public static <T> Closure<T, RuntimeException> fromMemoizedThunk(final MemoizedThunk<? extends T> thunk) {
+		assert null != thunk;
+		
+		return new Closure<T, RuntimeException>() {
+			@Override
+			public T evaluate() {
+				return thunk.evaluate();
+			}
+			
+			@Override
+			public boolean isEvaluated() {
+				return thunk.isMemoized();
+			}
+			
+			@Override
+			public Maybe<T> asMaybe() {
+				return TypeUtils.fromMaybe(thunk.get());
+			}
+		};
 	}
 	
 	private ClosureUtils() {

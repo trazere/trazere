@@ -15,6 +15,9 @@
  */
 package com.trazere.util.function;
 
+import com.trazere.core.functional.Predicate;
+import com.trazere.core.functional.Thunk;
+import com.trazere.core.imperative.Effect;
 import com.trazere.util.accumulator.Accumulator1;
 import com.trazere.util.accumulator.Accumulator2;
 import com.trazere.util.collection.CheckedIterator;
@@ -24,8 +27,10 @@ import com.trazere.util.collection.Multimap;
 import com.trazere.util.feed.Feed;
 import com.trazere.util.lang.Counter;
 import com.trazere.util.lang.InternalException;
+import com.trazere.util.lang.WrapException;
 import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Tuple2;
+import com.trazere.util.type.TypeUtils;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
@@ -2056,6 +2061,510 @@ public class FunctionUtils {
 				procedure.execute(key, value);
 			}
 		}
+	}
+	
+	/**
+	 * Adapts the given util predicate to a core predicate.
+	 * 
+	 * @param <T> Type of the argument values.
+	 * @param predicate Util predicate to adapt.
+	 * @return The adapted core predicate.
+	 * @deprecated Use {@link Predicate}.
+	 */
+	@Deprecated
+	public static <T> Predicate<T> toPredicate(final Predicate1<? super T, ?> predicate) {
+		assert null != predicate;
+		
+		return new Predicate<T>() {
+			@Override
+			public boolean evaluate(final T arg) {
+				try {
+					return predicate.evaluate(arg);
+				} catch (final Exception exception) {
+					throw new WrapException(exception);
+				}
+			}
+		};
+	}
+	
+	/**
+	 * Adapts the given core predicate to an util predicate.
+	 * 
+	 * @param <A> Type of the arguments.
+	 * @param predicate Core predicate to adapt.
+	 * @return The adapted util predicate.
+	 * @deprecated Use {@link Predicate}.
+	 */
+	@Deprecated
+	public static <A> Predicate1<A, RuntimeException> fromPredicate(final Predicate<? super A> predicate) {
+		assert null != predicate;
+		
+		return new Predicate1<A, RuntimeException>() {
+			@Override
+			public boolean evaluate(final A value) {
+				return predicate.evaluate(value);
+			}
+		};
+	}
+	
+	/**
+	 * Adapts the given util predicate to a core predicate.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param predicate Util predicate to adapt.
+	 * @return The adapted core predicate.
+	 * @deprecated Use {@link Predicate}.
+	 */
+	@Deprecated
+	public static <T1, T2> com.trazere.core.functional.Predicate2<T1, T2> toPredicate2(final Predicate2<? super T1, ? super T2, ?> predicate) {
+		assert null != predicate;
+		
+		return new com.trazere.core.functional.Predicate2<T1, T2>() {
+			@Override
+			public boolean evaluate(final T1 arg1, final T2 arg2) {
+				try {
+					return predicate.evaluate(arg1, arg2);
+				} catch (final Exception exception) {
+					throw new WrapException(exception);
+				}
+			}
+		};
+	}
+	
+	/**
+	 * Adapts the given core predicate to an util predicate.
+	 * 
+	 * @param <A1> Type of the first arguments.
+	 * @param <A2> Type of the second arguments.
+	 * @param predicate Core predicate to adapt.
+	 * @return The adapted util predicate.
+	 * @deprecated Use {@link Predicate}.
+	 */
+	@Deprecated
+	public static <A1, A2> Predicate2<A1, A2, RuntimeException> fromPredicate2(final com.trazere.core.functional.Predicate2<? super A1, ? super A2> predicate) {
+		assert null != predicate;
+		
+		return new Predicate2<A1, A2, RuntimeException>() {
+			@Override
+			public boolean evaluate(final A1 value1, final A2 value2) {
+				return predicate.evaluate(value1, value2);
+			}
+		};
+	}
+	
+	/**
+	 * Adapts the given util predicate to a core predicate.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <T3> Type of the third argument values.
+	 * @param predicate Util predicate to adapt.
+	 * @return The adapted core predicate.
+	 * @deprecated Use {@link Predicate}.
+	 */
+	@Deprecated
+	public static <T1, T2, T3> com.trazere.core.functional.Predicate3<T1, T2, T3> toPredicate3(final Predicate3<? super T1, ? super T2, ? super T3, ?> predicate) {
+		assert null != predicate;
+		
+		return new com.trazere.core.functional.Predicate3<T1, T2, T3>() {
+			@Override
+			public boolean evaluate(final T1 arg1, final T2 arg2, final T3 arg3) {
+				try {
+					return predicate.evaluate(arg1, arg2, arg3);
+				} catch (final Exception exception) {
+					throw new WrapException(exception);
+				}
+			}
+		};
+	}
+	
+	/**
+	 * Adapts the given core predicate to an util predicate.
+	 * 
+	 * @param <A1> Type of the first arguments.
+	 * @param <A2> Type of the second arguments.
+	 * @param <A3> Type of the third arguments.
+	 * @param predicate Core predicate to adapt.
+	 * @return The adapted util predicate.
+	 * @deprecated Use {@link Predicate}.
+	 */
+	@Deprecated
+	public static <A1, A2, A3> Predicate3<A1, A2, A3, RuntimeException> fromPredicate3(final com.trazere.core.functional.Predicate3<? super A1, ? super A2, ? super A3> predicate) {
+		assert null != predicate;
+		
+		return new Predicate3<A1, A2, A3, RuntimeException>() {
+			@Override
+			public boolean evaluate(final A1 value1, final A2 value2, final A3 value3) {
+				return predicate.evaluate(value1, value2, value3);
+			}
+		};
+	}
+	
+	/**
+	 * Adapts the given function to a thunk.
+	 * 
+	 * @param <R> Type of the result values.
+	 * @param function Function to adapt.
+	 * @return The adapted thunk.
+	 * @deprecated Use {@link Thunk}.
+	 */
+	@Deprecated
+	public static <R> Thunk<R> toThunk(final Function0<? extends R, ?> function) {
+		assert null != function;
+		
+		return new Thunk<R>() {
+			@Override
+			public R evaluate() {
+				try {
+					return function.evaluate();
+				} catch (final Exception exception) {
+					throw new WrapException(exception);
+				}
+			}
+		};
+	}
+	
+	/**
+	 * Adapts the given thunk to a function.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param thunk Thunk to adapt.
+	 * @return The adapted function.
+	 * @deprecated Use {@link Thunk}.
+	 */
+	@Deprecated
+	public static <T> Function0<T, RuntimeException> fromThunk(final Thunk<? extends T> thunk) {
+		assert null != thunk;
+		
+		return new Function0<T, RuntimeException>() {
+			@Override
+			public T evaluate() {
+				return thunk.evaluate();
+			}
+		};
+	}
+	
+	/**
+	 * Adapts the given util function to a core function.
+	 * 
+	 * @param <T> Type of the argument values.
+	 * @param <R> Type of the result values.
+	 * @param function Util function to adapt.
+	 * @return The adapted core function.
+	 * @deprecated Use {@link com.trazere.core.functional.Function}.
+	 */
+	@Deprecated
+	public static <T, R> com.trazere.core.functional.Function<T, R> toFunction(final Function1<? super T, ? extends R, ?> function) {
+		assert null != function;
+		
+		return new com.trazere.core.functional.Function<T, R>() {
+			@Override
+			public R evaluate(final T arg) {
+				try {
+					return function.evaluate(arg);
+				} catch (final Exception exception) {
+					throw new WrapException(exception);
+				}
+			}
+		};
+	}
+	
+	/**
+	 * Adapts the given core function to an util function.
+	 * 
+	 * @param <A> Type of the arguments.
+	 * @param <R> Type of the results.
+	 * @param function Core function to adapt.
+	 * @return The adapted util function.
+	 * @deprecated Use {@link com.trazere.core.functional.Function}.
+	 */
+	@Deprecated
+	public static <A, R> Function1<A, R, RuntimeException> fromFunction(final com.trazere.core.functional.Function<? super A, ? extends R> function) {
+		assert null != function;
+		
+		return new Function1<A, R, RuntimeException>() {
+			@Override
+			public R evaluate(final A value) {
+				return function.evaluate(value);
+			}
+		};
+	}
+	
+	/**
+	 * Adapts the given util extractor to a core extractor.
+	 * 
+	 * @param <T> Type of the argument values.
+	 * @param <R> Type of the result values.
+	 * @param extractor Util extractor to adapt.
+	 * @return The adapted core extractor.
+	 * @deprecated Use {@link com.trazere.core.functional.Function}.
+	 */
+	@Deprecated
+	public static <T, R> com.trazere.core.functional.Function<T, com.trazere.core.util.Maybe<R>> toExtractor(final Function1<? super T, ? extends Maybe<? extends R>, ?> extractor) {
+		assert null != extractor;
+		
+		return new com.trazere.core.functional.Function<T, com.trazere.core.util.Maybe<R>>() {
+			@Override
+			public com.trazere.core.util.Maybe<R> evaluate(final T arg) {
+				try {
+					return TypeUtils.toMaybe(extractor.evaluate(arg));
+				} catch (final Exception exception) {
+					throw new WrapException(exception);
+				}
+			}
+		};
+	}
+	
+	/**
+	 * Adapts the given core extractor to an util extractor.
+	 * 
+	 * @param <A> Type of the arguments.
+	 * @param <R> Type of the results.
+	 * @param extractor Core extractor to adapt.
+	 * @return The adapted util extractor.
+	 * @deprecated Use {@link com.trazere.core.functional.Function}.
+	 */
+	@Deprecated
+	public static <A, R> Function1<A, Maybe<R>, RuntimeException> fromExtractor(final com.trazere.core.functional.Function<? super A, ? extends com.trazere.core.util.Maybe<? extends R>> extractor) {
+		assert null != extractor;
+		
+		return new Function1<A, Maybe<R>, RuntimeException>() {
+			@Override
+			public Maybe<R> evaluate(final A value) {
+				return TypeUtils.fromMaybe(extractor.evaluate(value));
+			}
+		};
+	}
+	
+	/**
+	 * Adapts the given util function to a core function.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <R> Type of the result values.
+	 * @param function Util function to adapt.
+	 * @return The adapted core function.
+	 * @deprecated Use {@link com.trazere.core.functional.Function2}.
+	 */
+	@Deprecated
+	public static <T1, T2, R> com.trazere.core.functional.Function2<T1, T2, R> toFunction2(final Function2<? super T1, ? super T2, ? extends R, ?> function) {
+		assert null != function;
+		
+		return new com.trazere.core.functional.Function2<T1, T2, R>() {
+			@Override
+			public R evaluate(final T1 arg1, final T2 arg2) {
+				try {
+					return function.evaluate(arg1, arg2);
+				} catch (final Exception exception) {
+					throw new WrapException(exception);
+				}
+			}
+		};
+	}
+	
+	/**
+	 * Adapts the given core function to an util function.
+	 * 
+	 * @param <A1> Type of the first arguments.
+	 * @param <A2> Type of the second arguments.
+	 * @param <R> Type of the results.
+	 * @param function Core function to adapt.
+	 * @return The adapted util function.
+	 * @deprecated Use {@link com.trazere.core.functional.Function2}.
+	 */
+	@Deprecated
+	public static <A1, A2, R> Function2<A1, A2, R, RuntimeException> fromFunction2(final com.trazere.core.functional.Function2<? super A1, ? super A2, ? extends R> function) {
+		assert null != function;
+		
+		return new Function2<A1, A2, R, RuntimeException>() {
+			@Override
+			public R evaluate(final A1 value1, final A2 value2) {
+				return function.evaluate(value1, value2);
+			}
+		};
+	}
+	
+	/**
+	 * Adapts the given util function to a core function.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param <T3> Type of the third argument values.
+	 * @param <R> Type of the result values.
+	 * @param function Util function to adapt.
+	 * @return The adapted core function.
+	 * @deprecated Use {@link com.trazere.core.functional.Function3}.
+	 */
+	@Deprecated
+	public static <T1, T2, T3, R> com.trazere.core.functional.Function3<T1, T2, T3, R> toFunction3(final Function3<? super T1, ? super T2, ? super T3, ? extends R, ?> function) {
+		assert null != function;
+		
+		return new com.trazere.core.functional.Function3<T1, T2, T3, R>() {
+			@Override
+			public R evaluate(final T1 arg1, final T2 arg2, final T3 arg3) {
+				try {
+					return function.evaluate(arg1, arg2, arg3);
+				} catch (final Exception exception) {
+					throw new WrapException(exception);
+				}
+			}
+		};
+	}
+	
+	/**
+	 * Adapts the given core function to an util function.
+	 * 
+	 * @param <A1> Type of the first arguments.
+	 * @param <A2> Type of the second arguments.
+	 * @param <A3> Type of the third arguments.
+	 * @param <R> Type of the results.
+	 * @param function Core function to adapt.
+	 * @return The adapted util function.
+	 * @deprecated Use {@link com.trazere.core.functional.Function3}.
+	 */
+	@Deprecated
+	public static <A1, A2, A3, R> Function3<A1, A2, A3, R, RuntimeException> fromFunction3(final com.trazere.core.functional.Function3<? super A1, ? super A2, ? super A3, ? extends R> function) {
+		assert null != function;
+		
+		return new Function3<A1, A2, A3, R, RuntimeException>() {
+			@Override
+			public R evaluate(final A1 value1, final A2 value2, final A3 value3) {
+				return function.evaluate(value1, value2, value3);
+			}
+		};
+	}
+	
+	/**
+	 * Adapts the given procedure to an effect.
+	 * 
+	 * @param procedure Procedure to adapt.
+	 * @return The adapted effect.
+	 * @deprecated Use {@link Effect}.
+	 */
+	@Deprecated
+	public static Effect toEffect(final Procedure0<?> procedure) {
+		assert null != procedure;
+		
+		return new Effect() {
+			@Override
+			public void execute() {
+				try {
+					procedure.execute();
+				} catch (final Exception exception) {
+					throw new WrapException(exception);
+				}
+			}
+		};
+	}
+	
+	/**
+	 * Adapts the given effect to a procedure.
+	 * 
+	 * @param effect Effect to adapt.
+	 * @return The adapted procedure.
+	 * @deprecated Use {@link Effect}.
+	 */
+	@Deprecated
+	public static Procedure0<RuntimeException> fromEffect(final Effect effect) {
+		assert null != effect;
+		
+		return new Procedure0<RuntimeException>() {
+			@Override
+			public void execute() {
+				effect.execute();
+			}
+		};
+	}
+	
+	/**
+	 * Adapts the given util procedure to a core procedure.
+	 * 
+	 * @param <T> Type of the argument values.
+	 * @param procedure Util procedure to adapt.
+	 * @return The adapted core procedure.
+	 * @deprecated Use {@link com.trazere.core.imperative.Procedure}.
+	 */
+	@Deprecated
+	public static <T> com.trazere.core.imperative.Procedure<T> toProcedure(final Procedure1<? super T, ?> procedure) {
+		assert null != procedure;
+		
+		return new com.trazere.core.imperative.Procedure<T>() {
+			@Override
+			public void execute(final T arg) {
+				try {
+					procedure.execute(arg);
+				} catch (final Exception exception) {
+					throw new WrapException(exception);
+				}
+			}
+		};
+	}
+	
+	/**
+	 * Adapts the given core procedure to an util procedure.
+	 * 
+	 * @param <A> Type of the arguments.
+	 * @param procedure Core procedure to adapt.
+	 * @return The adapted util procedure.
+	 * @deprecated Use {@link com.trazere.core.imperative.Procedure}.
+	 */
+	@Deprecated
+	public static <A> Procedure1<A, RuntimeException> fromProcedure(final com.trazere.core.imperative.Procedure<? super A> procedure) {
+		assert null != procedure;
+		
+		return new Procedure1<A, RuntimeException>() {
+			@Override
+			public void execute(final A value) {
+				procedure.execute(value);
+			}
+		};
+	}
+	
+	/**
+	 * Adapts the given util procedure to a core procedure.
+	 * 
+	 * @param <T1> Type of the first argument values.
+	 * @param <T2> Type of the second argument values.
+	 * @param procedure Util procedure to adapt.
+	 * @return The adapted core procedure.
+	 * @deprecated Use {@link com.trazere.core.imperative.Procedure2}.
+	 */
+	@Deprecated
+	public static <T1, T2> com.trazere.core.imperative.Procedure2<T1, T2> toProcedure2(final Procedure2<? super T1, ? super T2, ?> procedure) {
+		assert null != procedure;
+		
+		return new com.trazere.core.imperative.Procedure2<T1, T2>() {
+			@Override
+			public void execute(final T1 arg1, final T2 arg2) {
+				try {
+					procedure.execute(arg1, arg2);
+				} catch (final Exception exception) {
+					throw new WrapException(exception);
+				}
+			}
+		};
+	}
+	
+	/**
+	 * Adapts the given core procedure to an util procedure.
+	 * 
+	 * @param <A1> Type of the first arguments.
+	 * @param <A2> Type of the second arguments.
+	 * @param procedure Core procedure to adapt.
+	 * @return The adapted util procedure.
+	 * @deprecated Use {@link com.trazere.core.imperative.Procedure2}.
+	 */
+	@Deprecated
+	public static <A1, A2> Procedure2<A1, A2, RuntimeException> fromProcedure2(final com.trazere.core.imperative.Procedure2<? super A1, ? super A2> procedure) {
+		assert null != procedure;
+		
+		return new Procedure2<A1, A2, RuntimeException>() {
+			@Override
+			public void execute(final A1 value1, final A2 value2) {
+				procedure.execute(value1, value2);
+			}
+		};
 	}
 	
 	private FunctionUtils() {
