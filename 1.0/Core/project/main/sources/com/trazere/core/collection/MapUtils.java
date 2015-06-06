@@ -73,8 +73,8 @@ public class MapUtils {
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param map Map to read.
-	 * @param key Key whose associated value should be got.
-	 * @return The associated value, or nothing when no value is associated to the key in the map.
+	 * @param key Key of the binding to read.
+	 * @return The associated value, or nothing when the map contains no bindings for the key.
 	 * @since 1.0
 	 */
 	public static <K, V> Maybe<V> get(final Map<? super K, ? extends V> map, final K key) {
@@ -86,13 +86,15 @@ public class MapUtils {
 	// TODO: add a version that uses a thunk as default value
 	/**
 	 * Gets the optional value associated to the given key in the given map.
+	 * <p>
+	 * This method returns the associated value, or the default value when the map contains no bindings for the key.
 	 *
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param map Map to read.
-	 * @param key Key whose associated value should be got.
-	 * @param defaultValue Default value.
-	 * @return The associated value, or the default value when no value is associated to the key in the map.
+	 * @param key Key of the binding to read.
+	 * @param defaultValue Default value for the missing bindings.
+	 * @return The associated value, or the default value when the map contains no bindings for the key.
 	 * @since 1.0
 	 */
 	public static <K, V> V get(final Map<? super K, ? extends V> map, final K key, final V defaultValue) {
@@ -102,21 +104,23 @@ public class MapUtils {
 	
 	/**
 	 * Gets the mandatory value associated to the given key in the given map.
+	 * <p>
+	 * This method returns the associated value, or throws an exception when the map contains no bindings for the key.
 	 *
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param map Map to read.
-	 * @param key Key whose associated value should be got.
-	 * @param throwableFactory Throwable factory to use.
+	 * @param key Key of the binding to read.
+	 * @param missingBindingFactory Factory of the exceptions for the missing bindings.
 	 * @return The associated value.
-	 * @throws RuntimeException When no value is associated to the given key in the map.
+	 * @throws RuntimeException When the map contains no bindings for the key.
 	 * @since 1.0
 	 */
-	public static <K, V> V getMandatory(final Map<? super K, ? extends V> map, final K key, final ThrowableFactory<? extends RuntimeException> throwableFactory) {
+	public static <K, V> V getMandatory(final Map<? super K, ? extends V> map, final K key, final ThrowableFactory<? extends RuntimeException> missingBindingFactory) {
 		if (map.containsKey(key)) {
 			return map.get(key);
 		} else {
-			throw throwableFactory.build("No value for key \"" + key + "\"");
+			throw missingBindingFactory.build("No binding for key \"" + key + "\"");
 		}
 	}
 	
@@ -126,9 +130,9 @@ public class MapUtils {
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param map Map to modify.
-	 * @param key Key which the value should be associated to.
-	 * @param value Value to associate to the key.
-	 * @return The presiously associated value, or nothing when no value was associated to the key.
+	 * @param key Key of the binding to set.
+	 * @param value Value of the binding to set.
+	 * @return The presiously associated value, or nothing when the map contained no bindings for the key.
 	 * @since 1.0
 	 */
 	public static <K, V> Maybe<V> put(final Map<? super K, V> map, final K key, final V value) {
@@ -143,8 +147,8 @@ public class MapUtils {
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param map Map to modify.
-	 * @param key Key which the value should be associated to.
-	 * @param value Value to associate to the key.
+	 * @param key Key of the binding to set.
+	 * @param value Value of the binding to set.
 	 * @since 1.0
 	 */
 	public static <K, V> void put(final Map<? super K, ? super V> map, final K key, final Maybe<? extends V> value) {
@@ -185,13 +189,13 @@ public class MapUtils {
 	}
 	
 	/**
-	 * Removes the value associated to the given key from the given map.
+	 * Removes the binding for the given key from the given map.
 	 *
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param map Map to modify.
-	 * @param key Key whose associated value should be removed.
-	 * @return The removed value, or nothing when no value is associated to the key in the map.
+	 * @param key Key of the binding to remove.
+	 * @return The associated removed value, or nothing when the map contains no bindings for the key.
 	 * @since 1.0
 	 */
 	public static <K, V> Maybe<V> remove(final Map<? super K, ? extends V> map, final K key) {
@@ -227,7 +231,7 @@ public class MapUtils {
 	// TODO: removeAll
 	
 	/**
-	 * Retains the bindings in the given map using the given filter.
+	 * Retains the bindings in the given map according to the given filter.
 	 * <p>
 	 * This method does modify the given map.
 	 *
@@ -235,7 +239,7 @@ public class MapUtils {
 	 * @param <V> Type of the values.
 	 * @param <M> Type of the map.
 	 * @param map Map to filter.
-	 * @param filter Predicate to use to filter the bindings.
+	 * @param filter Predicate to use to filter the bindings to retain.
 	 * @return The given filtered map.
 	 * @since 1.0
 	 */

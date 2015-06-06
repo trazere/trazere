@@ -31,16 +31,16 @@ public class ThreadUtils {
 	 * This method throws an exception when the sleep is interrupted.
 	 * 
 	 * @param timeout Timeout.
-	 * @param throwableFactory Exception factory to use for interruptions.
+	 * @param interruptionFactory Factory of the exceptions for the interruptions.
 	 * @throws RuntimeException When the sleep is interrupted.
 	 * @see Thread#sleep(long)
 	 * @since 1.0
 	 */
-	public static void sleep(final Duration timeout, final ThrowableFactory<? extends RuntimeException> throwableFactory) {
+	public static void sleep(final Duration timeout, final ThrowableFactory<? extends RuntimeException> interruptionFactory) {
 		try {
 			Thread.sleep(timeout.toMillis());
 		} catch (final InterruptedException exception) {
-			throw throwableFactory.build(exception);
+			throw interruptionFactory.build(exception);
 		}
 	}
 	
@@ -51,18 +51,18 @@ public class ThreadUtils {
 	 * 
 	 * @param object Object to monitor.
 	 * @param timeout Timeout.
-	 * @param throwableFactory Exception factory to use for interruptions.
+	 * @param interruptionFactory Factory of the exceptions for the interruptions.
 	 * @throws RuntimeException When the sleep is interrupted.
 	 * @see Object#wait(long)
 	 * @since 1.0
 	 */
-	public static void wait(final Object object, final Duration timeout, final ThrowableFactory<? extends RuntimeException> throwableFactory) {
+	public static void wait(final Object object, final Duration timeout, final ThrowableFactory<? extends RuntimeException> interruptionFactory) {
 		try {
 			synchronized (object) {
 				object.wait(timeout.toMillis());
 			}
 		} catch (final InterruptedException exception) {
-			throw throwableFactory.build(exception);
+			throw interruptionFactory.build(exception);
 		}
 	}
 	
@@ -73,17 +73,17 @@ public class ThreadUtils {
 	 * 
 	 * @param object Object to monitor.
 	 * @param timeout Timeout.
-	 * @param throwableFactory Exception factory to use for interruptions.
+	 * @param interruptionFactory Factory of the exceptions for the interruptions.
 	 * @throws RuntimeException When the sleep is interrupted.
 	 * @see #wait(Object, Duration, ThrowableFactory)
 	 * @see #sleep(Duration, ThrowableFactory)
 	 * @since 1.0
 	 */
-	public static void waitOrSleep(final Maybe<?> object, final Duration timeout, final ThrowableFactory<? extends RuntimeException> throwableFactory) {
+	public static void waitOrSleep(final Maybe<?> object, final Duration timeout, final ThrowableFactory<? extends RuntimeException> interruptionFactory) {
 		if (object.isSome()) {
-			wait(object.asSome().getValue(), timeout, throwableFactory);
+			wait(object.asSome().getValue(), timeout, interruptionFactory);
 		} else {
-			sleep(timeout, throwableFactory);
+			sleep(timeout, interruptionFactory);
 		}
 	}
 	

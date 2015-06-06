@@ -27,7 +27,7 @@ import com.trazere.core.lang.ThrowableFactory;
 public abstract class BaseSerializer<V, R>
 implements Serializer<V, R> {
 	/**
-	 * Factory of the serialization/deserialization failures.
+	 * Factory of the exceptions of the serialization/deserialization failures.
 	 * 
 	 * @since 1.0
 	 */
@@ -45,7 +45,7 @@ implements Serializer<V, R> {
 	/**
 	 * Instantiates a new serializer.
 	 * 
-	 * @param failureFactory Factory of the serialization/deserialization failures.
+	 * @param failureFactory Factory of the exceptions of the serialization/deserialization failures.
 	 * @since 1.0
 	 */
 	public BaseSerializer(final ThrowableFactory<? extends RuntimeException> failureFactory) {

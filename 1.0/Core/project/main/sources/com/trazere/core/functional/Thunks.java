@@ -73,15 +73,15 @@ public class Thunks {
 	 * Builds a thunk that throws an exception.
 	 *
 	 * @param <T> Type of the value.
-	 * @param throwableFactory Throwable factory to use.
+	 * @param failureFactory Factory of the exceptions for the failures.
 	 * @return The built thunk.
 	 * @since 1.0
 	 */
-	public static <T> Thunk<T> failure(final ThrowableFactory<? extends RuntimeException> throwableFactory) {
-		assert null != throwableFactory;
+	public static <T> Thunk<T> failure(final ThrowableFactory<? extends RuntimeException> failureFactory) {
+		assert null != failureFactory;
 		
 		return () -> {
-			throw throwableFactory.build();
+			throw failureFactory.build();
 		};
 	}
 	
@@ -89,16 +89,16 @@ public class Thunks {
 	 * Builds a thunk that throws an exception.
 	 *
 	 * @param <T> Type of the value.
-	 * @param throwableFactory Throwable factory to use.
+	 * @param failureFactory Factory of the exceptions for the failures.
 	 * @param message Message of the throwable.
 	 * @return The built thunk.
 	 * @since 1.0
 	 */
-	public static <T> Thunk<T> failure(final ThrowableFactory<? extends RuntimeException> throwableFactory, final String message) {
-		assert null != throwableFactory;
+	public static <T> Thunk<T> failure(final ThrowableFactory<? extends RuntimeException> failureFactory, final String message) {
+		assert null != failureFactory;
 		
 		return () -> {
-			throw throwableFactory.build(message);
+			throw failureFactory.build(message);
 		};
 	}
 	

@@ -56,7 +56,7 @@ public class XMLUtils {
 	 * @param <A> Type of the appendable.
 	 * @param s Text to escape.
 	 * @param appendable Appendable to populate with the XML representation.
-	 * @param failureFactory Factory of the failures.
+	 * @param failureFactory Factory of the exceptions for the failures while appending.
 	 * @return The given appendable.
 	 * @since 1.0
 	 */
@@ -70,7 +70,7 @@ public class XMLUtils {
 	 * @param <A> Type of the appendable.
 	 * @param reader Reader providing the text to escape.
 	 * @param appendable Appendable to populate with the XML representation.
-	 * @param failureFactory Factory of the failures.
+	 * @param failureFactory Factory of the exceptions for the failures while appending.
 	 * @return The given appendable.
 	 * @since 1.0
 	 */
@@ -124,7 +124,7 @@ public class XMLUtils {
 	 * @param <A> Type of the appendable.
 	 * @param s XML representation to unescape.
 	 * @param appendable Appendable to populate with the unescaped text.
-	 * @param failureFactory Factory of the failures.
+	 * @param failureFactory Factory of the exceptions for the failures while appending.
 	 * @return The given appendable.
 	 * @since 1.0
 	 */
@@ -138,7 +138,7 @@ public class XMLUtils {
 	 * @param <A> Type of the appendable.
 	 * @param reader Reader providing the XML representation to unescape.
 	 * @param appendable Appendable to populate with the unescaped text.
-	 * @param failureFactory Factory of the failures.
+	 * @param failureFactory Factory of the exceptions for the failures while appending.
 	 * @return The given appendable.
 	 * @since 1.0
 	 */

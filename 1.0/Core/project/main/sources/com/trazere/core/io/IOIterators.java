@@ -34,7 +34,7 @@ public class IOIterators {
 	 * Builds an iterator of the bytes read from the given input stream.
 	 * 
 	 * @param stream Stream to read.
-	 * @param failureFactory Factory of the failures.
+	 * @param failureFactory Factory of the exceptions for the IO failures.
 	 * @return The built iterator.
 	 * @since 1.0
 	 */
@@ -59,7 +59,7 @@ public class IOIterators {
 	 * Builds an iterator of the characters read from the given reader.
 	 * 
 	 * @param reader Reader to read.
-	 * @param failureFactory Factory of the failures.
+	 * @param failureFactory Factory of the exceptions for the IO failures.
 	 * @return The built iterator.
 	 * @since 1.0
 	 */
