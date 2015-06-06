@@ -32,18 +32,18 @@ public class NetFunctions {
 	/**
 	 * Builds a function that builds URLs from string representations.
 	 * 
-	 * @param failureFactory Factory of the failures.
+	 * @param invalidFactory Factory of the exceptions for the invalid URLs.
 	 * @return The built function.
 	 * @since 1.0
 	 */
-	public static Function<String, URL> url(final ThrowableFactory<? extends RuntimeException> failureFactory) {
-		assert null != failureFactory;
+	public static Function<String, URL> url(final ThrowableFactory<? extends RuntimeException> invalidFactory) {
+		assert null != invalidFactory;
 		
 		return (final String representation) -> {
 			try {
 				return new URL(representation);
 			} catch (final MalformedURLException exception) {
-				throw failureFactory.build("Invalid URL \"" + representation + "\"", exception);
+				throw invalidFactory.build("Invalid URL \"" + representation + "\"", exception);
 			}
 		};
 	}
@@ -51,18 +51,18 @@ public class NetFunctions {
 	/**
 	 * Builds a function that builds URIs from string representations.
 	 * 
-	 * @param failureFactory Factory of the failures.
+	 * @param invalidFactory Factory of the exceptions for the invalid URIs.
 	 * @return The built function.
 	 * @since 1.0
 	 */
-	public static Function<String, URI> uri(final ThrowableFactory<? extends RuntimeException> failureFactory) {
-		assert null != failureFactory;
+	public static Function<String, URI> uri(final ThrowableFactory<? extends RuntimeException> invalidFactory) {
+		assert null != invalidFactory;
 		
 		return (final String representation) -> {
 			try {
 				return new URI(representation);
 			} catch (final URISyntaxException exception) {
-				throw failureFactory.build("Invalid URI \"" + representation + "\"", exception);
+				throw invalidFactory.build("Invalid URI \"" + representation + "\"", exception);
 			}
 		};
 	}

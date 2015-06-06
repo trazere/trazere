@@ -26,11 +26,11 @@ import com.trazere.core.lang.ThrowableFactory;
  */
 public class ResultUtils {
 	/**
-	 * Gets the success value of the given result, or throws an exception cause by its failure.
+	 * Gets the success value of the given result, or throws an exception caused by its failure.
 	 * 
 	 * @param <T> Type of the success value.
 	 * @param result Result instance to read.
-	 * @param failureFactory Factory of the failure.
+	 * @param failureFactory Factory of the exceptions for the failures.
 	 * @return The success value.
 	 * @throws RuntimeException An exceptioned caused the given result when it is a failure.
 	 * @since 1.0

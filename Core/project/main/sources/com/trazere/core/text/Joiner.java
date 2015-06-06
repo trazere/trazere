@@ -28,7 +28,7 @@ import com.trazere.core.util.Tuple2;
  */
 public abstract class Joiner<T> {
 	/**
-	 * Factory of the failures.
+	 * Factory of the exceptions for the failures.
 	 * 
 	 * @since 1.0
 	 */
@@ -50,7 +50,7 @@ public abstract class Joiner<T> {
 	 *
 	 * @param ignoreEmpty Indicates whether the empty token representations are ignored.
 	 * @param delimiter Delimiter to insert between the tokens.
-	 * @param failureFactory Factory of the failures.
+	 * @param failureFactory Factory of the exceptions for the failures
 	 * @since 1.0
 	 */
 	public Joiner(final boolean ignoreEmpty, final CharSequence delimiter, final ThrowableFactory<? extends RuntimeException> failureFactory) {

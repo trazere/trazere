@@ -46,7 +46,7 @@ public class Joiners {
 	 * @param renderer Function to use to compute the string representation of the tokens.
 	 * @param ignoreEmpty Indicates whether the empty token representations are ignored.
 	 * @param delimiter Delimiter to insert between the tokens.
-	 * @param failureFactory Factory of the failures.
+	 * @param failureFactory Factory of the exceptions for the failures
 	 * @return The built joiner.
 	 * @since 1.0
 	 */
@@ -78,7 +78,7 @@ public class Joiners {
 	 * 
 	 * @param ignoreEmpty Indicates whether the empty token representations are ignored.
 	 * @param delimiter Delimiter to insert between the tokens.
-	 * @param failureFactory Factory of the failures.
+	 * @param failureFactory Factory of the exceptions for the failures
 	 * @return The built joiner.
 	 * @since 1.0
 	 */

@@ -68,7 +68,7 @@ implements Function<A, Result<R>>, FailureHandler<R> {
 	 * @param <R> Type of the results.
 	 * @param function Function to evaluate.
 	 * @param arg Argument to evaluate the function with.
-	 * @param failureFactory Factory of the failure.
+	 * @param failureFactory Factory of the exceptions for the failures.
 	 * @return The result.
 	 * @throws RuntimeException When the evaluation fails repeatedly.
 	 * @since 1.0

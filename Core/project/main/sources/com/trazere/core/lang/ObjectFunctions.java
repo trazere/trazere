@@ -70,20 +70,22 @@ public class ObjectFunctions {
 	// TODO: move to LangFunctions ?
 	/**
 	 * Builds a function that matches objects against the given type.
+	 * <p>
+	 * The built function evaluates to matched argument object, or throws an exception when the argument object does not match the given type.
 	 * 
 	 * @param <T> Type of the arguments.
 	 * @param <R> Type of the match.
 	 * @param type Type against which to match.
-	 * @param throwableFactory Throwable factory to use.
+	 * @param mismatchFactory Factory of the exceptions for the mismatches.
 	 * @return The built extractor.
 	 * @see ObjectUtils#match(Object, Class, ThrowableFactory)
 	 * @since 1.0
 	 */
-	public static <T, R extends T> Function<T, R> match(final Class<R> type, final ThrowableFactory<? extends RuntimeException> throwableFactory) {
+	public static <T, R extends T> Function<T, R> match(final Class<R> type, final ThrowableFactory<? extends RuntimeException> mismatchFactory) {
 		assert null != type;
-		assert null != throwableFactory;
+		assert null != mismatchFactory;
 		
-		return object -> ObjectUtils.match(object, type, throwableFactory);
+		return object -> ObjectUtils.match(object, type, mismatchFactory);
 	}
 	
 	private ObjectFunctions() {
