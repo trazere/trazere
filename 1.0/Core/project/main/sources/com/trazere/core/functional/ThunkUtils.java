@@ -18,6 +18,8 @@ package com.trazere.core.functional;
 import com.trazere.core.text.Description;
 import com.trazere.core.util.Either;
 import com.trazere.core.util.Maybe;
+import java.util.concurrent.Callable;
+import java.util.function.Supplier;
 
 /**
  * The {@link ThunkUtils} class provides various utilities regarding {@link Thunk thunks}.
@@ -29,8 +31,8 @@ public class ThunkUtils {
 	/**
 	 * Maps the given thunk using the given function.
 	 * 
-	 * @param <T> Type of the value.
-	 * @param <R> Type of the transformed value.
+	 * @param <T> Type of the values.
+	 * @param <R> Type of the transformed values.
 	 * @param thunk Thunk to map.
 	 * @param function Mapping function.
 	 * @return The built thunk.
@@ -46,7 +48,7 @@ public class ThunkUtils {
 	/**
 	 * Builds a thunk that memoizes the value of the given thunk.
 	 * 
-	 * @param <T> Type of the value.
+	 * @param <T> Type of the values.
 	 * @param thunk Thunk to memoize.
 	 * @return The built thunk.
 	 * @since 1.0
@@ -99,7 +101,7 @@ public class ThunkUtils {
 	/**
 	 * Builds a thunk that memoizes the value of the given thunk and can be reset.
 	 * 
-	 * @param <T> Type of the value.
+	 * @param <T> Type of the values.
 	 * @param thunk Thunk to memoize.
 	 * @return The build thunk.
 	 * @since 1.0
@@ -122,7 +124,7 @@ public class ThunkUtils {
 	/**
 	 * Builds a synchronized thunk that evaluates to the given thunk.
 	 * 
-	 * @param <T> Type of the value.
+	 * @param <T> Type of the values.
 	 * @param thunk Thunk to synchronize.
 	 * @return The built thunk.
 	 * @since 1.0
@@ -134,9 +136,37 @@ public class ThunkUtils {
 	}
 	
 	/**
+	 * Builds a callable that lifts the given thunk.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param thunk Thunk to lift.
+	 * @return The built callable.
+	 * @since 1.0
+	 */
+	public static <T> Callable<T> toCallable(final Thunk<? extends T> thunk) {
+		assert null != thunk;
+		
+		return () -> thunk.evaluate();
+	}
+	
+	/**
+	 * Builds a supplier that lifts the given thunk.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param thunk Thunk to lift.
+	 * @return The built supplier.
+	 * @since 1.0
+	 */
+	public static <T> Supplier<T> toSupplier(final Thunk<? extends T> thunk) {
+		assert null != thunk;
+		
+		return () -> thunk.evaluate();
+	}
+	
+	/**
 	 * Evaluates the given thunk in a thread safe way.
 	 * 
-	 * @param <T> Type of the value.
+	 * @param <T> Type of the values.
 	 * @param thunk Thunk to evaluate.
 	 * @return The value of the thunk.
 	 * @since 1.0

@@ -22,6 +22,8 @@ import com.trazere.core.functional.Predicate2;
 import com.trazere.core.functional.PredicateUtils;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * The {@link AccumulatorUtils} class provides various utilities regarding {@link Accumulator accumulators}.
@@ -236,6 +238,20 @@ public class AccumulatorUtils {
 	}
 	
 	/**
+	 * Builds a consumer that lifts the given accumulator.
+	 * 
+	 * @param <E> Type of the accumulated elements.
+	 * @param accumulator Accumulator to lift.
+	 * @return The built consumer.
+	 * @since 1.0
+	 */
+	public static <E> Consumer<E> toConsumer(final Accumulator<? super E, ?> accumulator) {
+		assert null != accumulator;
+		
+		return t -> accumulator.add(t);
+	}
+	
+	/**
 	 * Builds a accumulators that forwards the accumulated elements and results to the given accumulator.
 	 * 
 	 * @param <E1> Type of the first elements.
@@ -381,6 +397,21 @@ public class AccumulatorUtils {
 				return function.evaluate(accumulator.get());
 			}
 		};
+	}
+	
+	/**
+	 * Builds a bi-consumer that lifts the given two argument accumulator.
+	 * 
+	 * @param <E1> Type of the first element of the accumulated pairs.
+	 * @param <E2> Type of the second element of the accumulated pairs.
+	 * @param accumulator Accumulator to lift.
+	 * @return The built bi-consumer.
+	 * @since 1.0
+	 */
+	public static <E1, E2> BiConsumer<E1, E2> toBiConsumer(final Accumulator2<? super E1, ? super E2, ?> accumulator) {
+		assert null != accumulator;
+		
+		return (t, u) -> accumulator.add(t, u);
 	}
 	
 	private AccumulatorUtils() {

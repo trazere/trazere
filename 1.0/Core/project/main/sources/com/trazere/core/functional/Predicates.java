@@ -18,6 +18,7 @@ package com.trazere.core.functional;
 import com.trazere.core.collection.Sets;
 import com.trazere.core.lang.ObjectUtils;
 import java.util.Collection;
+import java.util.function.BiPredicate;
 
 /**
  * The {@link Predicates} class provides various factories of {@link Predicate predicates}.
@@ -210,6 +211,20 @@ public class Predicates {
 	}
 	
 	/**
+	 * Builds a predicate that lifts the given Java 8 predicate.
+	 * 
+	 * @param <A> Type of the arguments.
+	 * @param predicate Java 8 predicate to lift.
+	 * @return The build predicate.
+	 * @since 1.0
+	 */
+	public static <A> Predicate<A> fromPredicate(final java.util.function.Predicate<? super A> predicate) {
+		assert null != predicate;
+		
+		return arg -> predicate.test(arg);
+	}
+	
+	/**
 	 * Builds a predicate that lifts the given function.
 	 * 
 	 * @param <A> Type of the arguments.
@@ -217,7 +232,7 @@ public class Predicates {
 	 * @return The built predicate.
 	 * @since 1.0
 	 */
-	public static final <A> Predicate<A> fromFunction(final Function<? super A, Boolean> function) {
+	public static <A> Predicate<A> fromFunction(final Function<? super A, Boolean> function) {
 		assert null != function;
 		
 		return arg -> function.evaluate(arg).booleanValue();
@@ -393,6 +408,21 @@ public class Predicates {
 	}
 	
 	/**
+	 * Builds a two arguments predicate that lifts the given bi-predicate.
+	 * 
+	 * @param <A1> Type of the first arguments.
+	 * @param <A2> Type of the second arguments.
+	 * @param predicate Bi-predicate to lift.
+	 * @return The built predicate.
+	 * @since 1.0
+	 */
+	public static <A1, A2> Predicate2<A1, A2> fromBiPredicate(final BiPredicate<? super A1, ? super A2> predicate) {
+		assert null != predicate;
+		
+		return (arg1, arg2) -> predicate.test(arg1, arg2);
+	}
+	
+	/**
 	 * Builds a two arguments predicate that lifts the given two arguments function.
 	 * 
 	 * @param <A1> Type of the first arguments.
@@ -401,7 +431,7 @@ public class Predicates {
 	 * @return The built predicate.
 	 * @since 1.0
 	 */
-	public static final <A1, A2> Predicate2<A1, A2> fromFunction(final Function2<? super A1, ? super A2, Boolean> function) {
+	public static <A1, A2> Predicate2<A1, A2> fromFunction(final Function2<? super A1, ? super A2, Boolean> function) {
 		assert null != function;
 		
 		return (arg1, arg2) -> function.evaluate(arg1, arg2).booleanValue();

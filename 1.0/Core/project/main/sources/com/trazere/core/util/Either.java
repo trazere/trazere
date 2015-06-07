@@ -39,6 +39,7 @@ public abstract class Either<L, R>
 implements Serializable, Describable {
 	private static final long serialVersionUID = 1L;
 	
+	// TODO: move to Eithers ?
 	/**
 	 * Builds a {@link Either} instance using the {@link Left} constructor.
 	 * 
@@ -53,6 +54,7 @@ implements Serializable, Describable {
 		return new Left<>(left);
 	}
 	
+	// TODO: move to Eithers ?
 	/**
 	 * Builds a {@link Either} instance using the {@link Right} constructor.
 	 * 

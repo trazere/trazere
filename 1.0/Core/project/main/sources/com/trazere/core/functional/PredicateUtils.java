@@ -15,6 +15,8 @@
  */
 package com.trazere.core.functional;
 
+import java.util.function.BiPredicate;
+
 /**
  * The {@link PredicateUtils} class provides various utilities regarding {@link Predicate predicates}.
  * 
@@ -38,6 +40,35 @@ public class PredicateUtils {
 		assert null != function;
 		
 		return arg -> predicate.evaluate(function.evaluate(arg));
+	}
+	
+	/**
+	 * Builds a Java 8 predicate that lifts the given predicate.
+	 * 
+	 * @param <A> Type of the arguments.
+	 * @param predicate Predicate to lift.
+	 * @return The built Java 8 predicate.
+	 * @since 1.0
+	 */
+	public static <A> java.util.function.Predicate<A> toPredicate(final Predicate<? super A> predicate) {
+		assert null != predicate;
+		
+		return t -> predicate.evaluate(t);
+	}
+	
+	/**
+	 * Builds a bi-predicate that lifts the given two arguments predicate.
+	 * 
+	 * @param <A1> Type of the first arguments.
+	 * @param <A2> Type of the second arguments.
+	 * @param predicate Predicate to lift.
+	 * @return The built bi-predicate.
+	 * @since 1.0
+	 */
+	public static <A1, A2> BiPredicate<A1, A2> toBiPredicate(final Predicate2<? super A1, ? super A2> predicate) {
+		assert null != predicate;
+		
+		return (t, u) -> predicate.evaluate(t, u);
 	}
 	
 	private PredicateUtils() {
