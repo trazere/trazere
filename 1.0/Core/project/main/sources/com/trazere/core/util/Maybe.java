@@ -45,6 +45,7 @@ public abstract class Maybe<T>
 implements Iterable<T>, Serializable, Describable {
 	private static final long serialVersionUID = 1L;
 	
+	// TODO: move to Maybes ?
 	/**
 	 * Builds a {@link Maybe} instance using the {@link None} constructor.
 	 * 
@@ -60,6 +61,7 @@ implements Iterable<T>, Serializable, Describable {
 	
 	private static final None<?> NONE = new None<>();
 	
+	// TODO: move to Maybes ?
 	/**
 	 * Builds a {@link Maybe} instance using the {@link Some} constructor.
 	 * 

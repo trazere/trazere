@@ -15,6 +15,9 @@
  */
 package com.trazere.core.imperative;
 
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+
 /**
  * The {@link Procedures} class provides various factories of {@link Procedure procedures}.
  * 
@@ -40,6 +43,22 @@ public class Procedures {
 	};
 	
 	// TODO: sequence
+	
+	/**
+	 * Builds a procedure that lifts the given consumer.
+	 * 
+	 * @param <A> Type of the arguments.
+	 * @param consumer Consumer to lift.
+	 * @return The built procedure.
+	 * @since 1.0
+	 */
+	public static <A> Procedure<A> fromConsumer(final Consumer<? super A> consumer) {
+		assert null != consumer;
+		
+		return arg -> {
+			consumer.accept(arg);
+		};
+	}
 	
 	/**
 	 * Builds a procedure that executes the argument procedures with the given argument.
@@ -139,6 +158,23 @@ public class Procedures {
 	};
 	
 	// TODO: sequence2
+	
+	/**
+	 * Builds a two arguments procedure that lifts the given bi-consumer.
+	 * 
+	 * @param <A1> Type of the first arguments.
+	 * @param <A2> Type of the second arguments.
+	 * @param consumer Bi-consumer to lift.
+	 * @return The built procedure.
+	 * @since 1.0
+	 */
+	public static <A1, A2> Procedure2<A1, A2> fromBiConsumer(final BiConsumer<? super A1, ? super A2> consumer) {
+		assert null != consumer;
+		
+		return (arg1, arg2) -> {
+			consumer.accept(arg1, arg2);
+		};
+	}
 	
 	private Procedures() {
 		// Prevents instantiation.

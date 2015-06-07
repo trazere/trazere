@@ -17,6 +17,9 @@ package com.trazere.core.functional;
 
 import com.trazere.core.lang.ThrowableFactory;
 import com.trazere.core.util.Tuple2;
+import java.util.function.BiFunction;
+import java.util.function.BinaryOperator;
+import java.util.function.UnaryOperator;
 
 /**
  * The {@link Functions} class provides various factories of {@link Function functions}.
@@ -121,6 +124,38 @@ public class Functions {
 		};
 	}
 	
+	/**
+	 * Builds a function that lifts the given Java 8 function.
+	 * 
+	 * @param <A> Type of the arguments.
+	 * @param <R> Type of the results.
+	 * @param function Java 8 function to lift.
+	 * @return The built function.
+	 * @since 1.0
+	 */
+	public static <A, R> Function<A, R> fromFunction(final java.util.function.Function<? super A, ? extends R> function) {
+		assert null != function;
+		
+		return arg -> function.apply(arg);
+	}
+	
+	/**
+	 * Builds a function that lifts the given unary operator.
+	 * 
+	 * @param <V> Type of the arguments and results.
+	 * @param operator Unary operator to lift.
+	 * @return The built function.
+	 * @since 1.0
+	 */
+	public static <V> Function<V, V> fromUnaryOperator(final UnaryOperator<V> operator) {
+		assert null != operator;
+		
+		return arg -> operator.apply(arg);
+	}
+	
+	/**
+	 * Builds a function that lifts the given Java unary
+	 */
 	/**
 	 * Builds a function that lifts the given thunk.
 	 *
@@ -302,6 +337,36 @@ public class Functions {
 		return (arg1, arg2) -> {
 			throw failureFactory.build(message);
 		};
+	}
+	
+	/**
+	 * Builds a two arguments function that lifts the given bi-function.
+	 * 
+	 * @param <A1> Type of the first arguments.
+	 * @param <A2> Type of the second arguments.
+	 * @param <R> Type of the results.
+	 * @param function Bi-function to lift.
+	 * @return The built function.
+	 * @since 1.0
+	 */
+	public static <A1, A2, R> Function2<A1, A2, R> fromBiFunction(final BiFunction<? super A1, ? super A2, ? extends R> function) {
+		assert null != function;
+		
+		return (arg1, arg2) -> function.apply(arg1, arg2);
+	}
+	
+	/**
+	 * Builds a two arguments function that lifts the given binary operator.
+	 * 
+	 * @param <V> Type of the arguments and results.
+	 * @param operator Binary operator to lift.
+	 * @return The built function.
+	 * @since 1.0
+	 */
+	public static <V> Function2<V, V, V> fromBinaryOperator(final BinaryOperator<V> operator) {
+		assert null != operator;
+		
+		return (arg1, arg2) -> operator.apply(arg1, arg2);
 	}
 	
 	/**

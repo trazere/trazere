@@ -18,6 +18,9 @@ package com.trazere.core.imperative;
 import com.trazere.core.reference.MutableReference;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
+import com.trazere.core.util.Unit;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * The {@link Accumulators} class provides various factories of {@link Accumulator accumulators}.
@@ -99,6 +102,30 @@ public class Accumulators {
 	}
 	
 	/**
+	 * Builds an accumulator that lifts the given consumer.
+	 * 
+	 * @param <E> Type of the accumulated elements.
+	 * @param consumer Consumer to lift.
+	 * @return The built accumulator.
+	 * @since 1.0
+	 */
+	public static <E> Accumulator<E, Unit> fromConsumer(final Consumer<? super E> consumer) {
+		assert null != consumer;
+		
+		return new Accumulator<E, Unit>() {
+			@Override
+			public void add(final E element) {
+				consumer.accept(element);
+			}
+			
+			@Override
+			public Unit get() {
+				return Unit.UNIT;
+			}
+		};
+	}
+	
+	/**
 	 * Builds an accumulator that ignores the accumulated pairs of elements and keeps a constant state.
 	 *
 	 * @param <E1> Type of the first element of the accumulated pairs.
@@ -168,6 +195,31 @@ public class Accumulators {
 			@Override
 			public Integer get() {
 				return _result.get();
+			}
+		};
+	}
+	
+	/**
+	 * Builds an accumulator of pairs of elements that lifts the given bi-consumer.
+	 * 
+	 * @param <E1> Type of the first element of the accumulated pairs.
+	 * @param <E2> Type of the second element of the accumulated pairs.
+	 * @param consumer Bi-consumer to lift.
+	 * @return The built accumulator.
+	 * @since 1.0
+	 */
+	public static <E1, E2> Accumulator2<E1, E2, Unit> fromBiConsumer(final BiConsumer<? super E1, ? super E2> consumer) {
+		assert null != consumer;
+		
+		return new Accumulator2<E1, E2, Unit>() {
+			@Override
+			public void add(final E1 element1, final E2 element2) {
+				consumer.accept(element1, element2);
+			}
+			
+			@Override
+			public Unit get() {
+				return Unit.UNIT;
 			}
 		};
 	}
