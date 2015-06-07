@@ -16,6 +16,9 @@
 package com.trazere.core.functional;
 
 import com.trazere.core.util.Maybe;
+import java.util.function.BiFunction;
+import java.util.function.BinaryOperator;
+import java.util.function.UnaryOperator;
 
 /**
  * The {@link FunctionUtils} class provides various utilities regarding {@link Function functions}.
@@ -120,6 +123,35 @@ public class FunctionUtils {
 	}
 	
 	/**
+	 * Builds a Java 8 function that lifts the given function.
+	 * 
+	 * @param <A> Type of the arguments.
+	 * @param <R> Type of the results.
+	 * @param function Function to lift.
+	 * @return The built Java 8 function.
+	 * @since 1.0
+	 */
+	public static <A, R> java.util.function.Function<A, R> toFunction(final Function<? super A, ? extends R> function) {
+		assert null != function;
+		
+		return t -> function.evaluate(t);
+	}
+	
+	/**
+	 * Builds an unary operator that lifts the given function.
+	 * 
+	 * @param <V> Type of the arguments and results.
+	 * @param function Function to lift.
+	 * @return The built unary operator.
+	 * @since 1.0
+	 */
+	public static <V> UnaryOperator<V> toUnaryOperator(final Function<? super V, ? extends V> function) {
+		assert null != function;
+		
+		return t -> function.evaluate(t);
+	}
+	
+	/**
 	 * Evaluates the given function in a thread safe way.
 	 * 
 	 * @param <A> Type of the arguments.
@@ -186,6 +218,36 @@ public class FunctionUtils {
 		assert null != mapFunction;
 		
 		return (arg1, arg2) -> mapFunction.evaluate(function.evaluate(arg1, arg2));
+	}
+	
+	/**
+	 * Builds a bi-function that lifts the given two arguments function.
+	 * 
+	 * @param <A1> Type of the first arguments.
+	 * @param <A2> Type of the second arguments.
+	 * @param <R> Type of the results.
+	 * @param function Function to lift.
+	 * @return The built bi-function.
+	 * @since 1.0
+	 */
+	public static <A1, A2, R> BiFunction<A1, A2, R> toBiFunction(final Function2<? super A1, ? super A2, ? extends R> function) {
+		assert null != function;
+		
+		return (t, u) -> function.evaluate(t, u);
+	}
+	
+	/**
+	 * Builds a binary operator that lifts the given two arguments function.
+	 * 
+	 * @param <V> Type of the arguments and results.
+	 * @param function Function to lift.
+	 * @return The built binary operator.
+	 * @since 1.0
+	 */
+	public static <V> BinaryOperator<V> toBinaryOperator(final Function2<? super V, ? super V, ? extends V> function) {
+		assert null != function;
+		
+		return (t, u) -> function.evaluate(t, u);
 	}
 	
 	/**

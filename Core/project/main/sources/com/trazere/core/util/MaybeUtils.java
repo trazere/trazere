@@ -19,6 +19,7 @@ import com.trazere.core.functional.Functions;
 import com.trazere.core.functional.Thunk;
 import com.trazere.core.util.Maybe.None;
 import com.trazere.core.util.Maybe.Some;
+import java.util.Optional;
 
 /**
  * The {@link MaybeUtils} class provides various utilities regarding {@link Maybe maybes}.
@@ -27,6 +28,7 @@ import com.trazere.core.util.Maybe.Some;
  * @since 1.0
  */
 public class MaybeUtils {
+	// TODO: move to Maybes ?
 	/**
 	 * Builds an instance of {@link Maybe} from the given nullable value according to the following rules:
 	 * <ul>
@@ -50,7 +52,7 @@ public class MaybeUtils {
 	
 	// TODO: move to Maybe ?
 	/**
-	 * Convert the given {@link Maybe} instance to a nullable value according to the following rules:
+	 * Converts the given {@link Maybe} instance to a nullable value according to the following rules:
 	 * <ul>
 	 * <li>absents values ({@link None}) are translated to <code>null</code>,
 	 * <li>available values ({@link Some}) are unwrapped.
@@ -64,6 +66,43 @@ public class MaybeUtils {
 	 */
 	public static <T> T toNullable(final Maybe<T> maybe) {
 		return maybe.get((T) null);
+	}
+	
+	/**
+	 * Builds an instance of {@link Maybe} from the given instance of {@link Optional}.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param optional Instance of {@link Optional} to convert.
+	 * @return The built instance.
+	 * @since 1.0
+	 */
+	// TODO: move to Maybes ?
+	public static <T> Maybe<T> fromOptional(final Optional<? extends T> optional) {
+		assert null != optional;
+		
+		if (optional.isPresent()) {
+			return Maybe.some(optional.get());
+		} else {
+			return Maybe.none();
+		}
+	}
+	
+	/**
+	 * Converts the given instance of {@link Maybe} to an instance of {@link Optional}.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param maybe Instance to convert.
+	 * @return The instance of {@link Optional}.
+	 * @since 1.0
+	 */
+	public static <T> Optional<T> toOptional(final Maybe<? extends T> maybe) {
+		assert null != maybe;
+		
+		if (maybe.isSome()) {
+			return Optional.of(maybe.asSome().getValue());
+		} else {
+			return Optional.empty();
+		}
 	}
 	
 	/**

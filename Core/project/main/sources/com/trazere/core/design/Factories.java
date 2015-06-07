@@ -16,6 +16,9 @@
 package com.trazere.core.design;
 
 import com.trazere.core.functional.Thunk;
+import com.trazere.core.lang.ThrowableFactory;
+import java.util.concurrent.Callable;
+import java.util.function.Supplier;
 
 /**
  * The {@link Factories} class provides various factories of {@link Factory factories}.
@@ -37,7 +40,7 @@ public class Factories {
 	}
 	
 	/**
-	 * Build a factory that lifts the given thunks.
+	 * Builds a factory that lifts the given thunks.
 	 * 
 	 * @param <T> Type of the built values.
 	 * @param thunk Thunk to lift.
@@ -48,6 +51,42 @@ public class Factories {
 		assert null != thunk;
 		
 		return () -> thunk.evaluate();
+	}
+	
+	/**
+	 * Builds a factory that lifts the given callable.
+	 * 
+	 * @param <T> Type of the built values.
+	 * @param callable Callable to lift.
+	 * @param failureFactory Factory of the exceptions for the failures.
+	 * @return The built factory.
+	 * @since 1.0
+	 */
+	public static <T> Factory<T> fromCallable(final Callable<? extends T> callable, final ThrowableFactory<? extends RuntimeException> failureFactory) {
+		assert null != callable;
+		assert null != failureFactory;
+		
+		return () -> {
+			try {
+				return callable.call();
+			} catch (final Exception exception) {
+				throw failureFactory.build(exception);
+			}
+		};
+	}
+	
+	/**
+	 * Builds a factory that lifts the given supplier.
+	 * 
+	 * @param <T> Type of the built values.
+	 * @param supplier Supplier to lift.
+	 * @return The build factory.
+	 * @since 1.0
+	 */
+	public static <T> Factory<T> fromSupplier(final Supplier<? extends T> supplier) {
+		assert null != supplier;
+		
+		return () -> supplier.get();
 	}
 	
 	private Factories() {

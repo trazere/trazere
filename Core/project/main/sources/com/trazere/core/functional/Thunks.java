@@ -18,6 +18,8 @@ package com.trazere.core.functional;
 import com.trazere.core.design.Factory;
 import com.trazere.core.lang.ThrowableFactory;
 import com.trazere.core.util.Maybe;
+import java.util.concurrent.Callable;
+import java.util.function.Supplier;
 
 /**
  * The {@link Thunks} class provides various factories of {@link Thunk thunks}.
@@ -56,7 +58,7 @@ public class Thunks {
 	/**
 	 * Builds a thunk that throws the given exception.
 	 *
-	 * @param <T> Type of the value.
+	 * @param <T> Type of the values.
 	 * @param exception Exception to throw.
 	 * @return The built thunk.
 	 * @since 1.0
@@ -72,7 +74,7 @@ public class Thunks {
 	/**
 	 * Builds a thunk that throws an exception.
 	 *
-	 * @param <T> Type of the value.
+	 * @param <T> Type of the values.
 	 * @param failureFactory Factory of the exceptions for the failures.
 	 * @return The built thunk.
 	 * @since 1.0
@@ -88,7 +90,7 @@ public class Thunks {
 	/**
 	 * Builds a thunk that throws an exception.
 	 *
-	 * @param <T> Type of the value.
+	 * @param <T> Type of the values.
 	 * @param failureFactory Factory of the exceptions for the failures.
 	 * @param message Message of the throwable.
 	 * @return The built thunk.
@@ -105,7 +107,7 @@ public class Thunks {
 	/**
 	 * Builds a thunk that lifts the given factory.
 	 * 
-	 * @param <T> Type of the value.
+	 * @param <T> Type of the values.
 	 * @param factory Factory to lift.
 	 * @return The built thunk.
 	 * @since 1.0
@@ -114,6 +116,42 @@ public class Thunks {
 		assert null != factory;
 		
 		return () -> factory.build();
+	}
+	
+	/**
+	 * Builds a thunk that lifts the given callable.
+	 * 
+	 * @param <T> Type of the built values.
+	 * @param callable Callable to lift.
+	 * @param failureFactory Factory of the exceptions for the failures.
+	 * @return The built thunk.
+	 * @since 1.0
+	 */
+	public static <T> Thunk<T> fromCallable(final Callable<? extends T> callable, final ThrowableFactory<? extends RuntimeException> failureFactory) {
+		assert null != callable;
+		assert null != failureFactory;
+		
+		return () -> {
+			try {
+				return callable.call();
+			} catch (final Exception exception) {
+				throw failureFactory.build(exception);
+			}
+		};
+	}
+	
+	/**
+	 * Builds a thunk that lifts the given supplier.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param supplier Supplier to lift.
+	 * @return The built thunk.
+	 * @since 1.0
+	 */
+	public static <T> Thunk<T> fromSupplier(final Supplier<? extends T> supplier) {
+		assert null != supplier;
+		
+		return () -> supplier.get();
 	}
 	
 	private Thunks() {
