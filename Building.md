@@ -1,0 +1,63 @@
+This page documents the build process of the distribution from the source code.
+
+# Requirements #
+
+The following tools are required:
+  * [JDK 1.5](http://java.sun.com/javase/downloads/index.jsp) or later.
+  * [Ant 1.8.0](http://ant.apache.org/bindownload.cgi) or later.
+
+# Configuration #
+
+The following environment variables must be set.
+
+| **Variable** | **Description** |
+|:-------------|:----------------|
+| `ANT_HOME`   | Installation path of Ant. |
+
+# Building #
+
+Execute the following command in the root `project` folder to build the distribution:
+
+UNIX:
+```
+build.sh build
+```
+
+Windows:
+```
+build.bat build
+```
+
+The distribution is generated in the folder `project/dist/trazere-x.x.x` corresponding to the version number of the sources.
+
+# Cleaning #
+
+The building process generates lots of files scattered within the source tree.
+
+## Intermediate files ##
+
+Execute the following command in the root `project` folder to clean the intermediate files (the distribution is not affected):
+
+UNIX:
+```
+build.sh clean
+```
+
+Windows:
+```
+build.bat clean
+```
+
+## Distribution ##
+
+Execute the following command in the root `project` folder to clean the distribution (the intermediate files are not affected):
+
+UNIX:
+```
+build.sh distclean
+```
+
+Windows:
+```
+build.bat distclean
+```
