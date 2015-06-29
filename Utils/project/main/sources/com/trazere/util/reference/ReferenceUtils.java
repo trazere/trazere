@@ -21,7 +21,7 @@ import com.trazere.util.type.TypeUtils;
 /**
  * The {@link ReferenceUtils} class provides various utilities regarding references.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class ReferenceUtils {

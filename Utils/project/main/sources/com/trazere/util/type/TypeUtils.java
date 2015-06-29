@@ -20,7 +20,7 @@ import java.util.Comparator;
 /**
  * The {@link TypeUtils} class provides various helpers regarding types.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class TypeUtils {

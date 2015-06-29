@@ -78,7 +78,10 @@ implements Function1<T, T, X> {
 	 * @param value The value.
 	 * @return The next value.
 	 * @throws X When the evaluation fails.
+	 * @deprecated Use {@link com.trazere.core.functional.FixedPoint#evaluateStep(Object)}.
 	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	protected abstract T evaluateStep(final T value)
 	throws X;
 	
@@ -89,7 +92,10 @@ implements Function1<T, T, X> {
 	 * @param value The current value.
 	 * @return <code>true</code> when the fixed point has been reached, <code>false</code> to continue to converge.
 	 * @throws X When the computation fails.
+	 * @deprecated Use {@link com.trazere.core.functional.FixedPoint#isDone(Object, Object)}.
 	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	protected abstract boolean isDone(final T previousValue, final T value)
 	throws X;
 }

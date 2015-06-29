@@ -29,7 +29,9 @@ public interface CharPredicate<X extends Exception> {
 	 * @param c Argument character.
 	 * @return The result of the predicate evaluation.
 	 * @throws X When the predicate evaluation fails.
+	 * @deprecated Use {@link com.trazere.core.text.CharPredicate#evaluate(char)}.
 	 */
+	@Deprecated
 	public boolean evaluate(final char c)
 	throws X;
 }

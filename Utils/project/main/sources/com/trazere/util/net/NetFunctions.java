@@ -25,7 +25,7 @@ import java.net.URL;
 /**
  * The {@link NetFunctions} class provides factories of functions related to the net.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class NetFunctions {

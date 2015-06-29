@@ -27,7 +27,10 @@ extends Exception {
 	
 	/**
 	 * Instantiates a new exception.
+	 * 
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public TypeCheckException() {
 		super();
 	}
@@ -36,7 +39,9 @@ extends Exception {
 	 * Instantiates a new exception using the given message.
 	 * 
 	 * @param message Details about the exception.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public TypeCheckException(final String message) {
 		super(message);
 	}
@@ -45,7 +50,9 @@ extends Exception {
 	 * Instantiates a new exception using the given cause.
 	 * 
 	 * @param cause Cause of the exception.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public TypeCheckException(final Throwable cause) {
 		super(cause);
 	}
@@ -55,12 +62,19 @@ extends Exception {
 	 * 
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public TypeCheckException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 	
-	/** Factory of {@link TypeCheckException}. */
+	/**
+	 * Factory of {@link TypeCheckException}.
+	 * 
+	 * @deprecated To be removed.
+	 */
+	@Deprecated
 	public static final ThrowableFactory<TypeCheckException> FACTORY = new BaseThrowableFactory<TypeCheckException>() {
 		@Override
 		public TypeCheckException build() {

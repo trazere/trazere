@@ -30,7 +30,10 @@ extends Exception {
 	
 	/**
 	 * Instantiates a new exception.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.record.RecordException#RecordException()}.
 	 */
+	@Deprecated
 	public PropertiesException() {
 		super();
 	}
@@ -39,7 +42,9 @@ extends Exception {
 	 * Instantiates a new exception using the given message.
 	 * 
 	 * @param message Details about the exception.
+	 * @deprecated Use {@link com.trazere.core.record.RecordException#RecordException(String)}.
 	 */
+	@Deprecated
 	public PropertiesException(final String message) {
 		super(message);
 	}
@@ -48,7 +53,9 @@ extends Exception {
 	 * Instantiates a new exception using the given cause.
 	 * 
 	 * @param cause Cause of the exception.
+	 * @deprecated Use {@link com.trazere.core.record.RecordException#RecordException(Throwable)}.
 	 */
+	@Deprecated
 	public PropertiesException(final Throwable cause) {
 		super(cause);
 	}
@@ -58,12 +65,19 @@ extends Exception {
 	 * 
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
+	 * @deprecated Use {@link com.trazere.core.record.RecordException#RecordException(String, Throwable)}.
 	 */
+	@Deprecated
 	public PropertiesException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 	
-	/** Factory of {@link PropertiesException}. */
+	/**
+	 * Factory of {@link PropertiesException}.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.record.RecordException#FACTORY}.
+	 */
+	@Deprecated
 	public static final ThrowableFactory<PropertiesException> FACTORY = new BaseThrowableFactory<PropertiesException>() {
 		@Override
 		public PropertiesException build() {

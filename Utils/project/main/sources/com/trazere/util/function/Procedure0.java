@@ -27,7 +27,9 @@ public interface Procedure0<X extends Exception> {
 	 * Executes the receiver procedure.
 	 * 
 	 * @throws X When the procedure execution fails.
+	 * @deprecated Use {@link com.trazere.core.imperative.Effect#execute()}.
 	 */
+	@Deprecated
 	public void execute()
 	throws X;
 }

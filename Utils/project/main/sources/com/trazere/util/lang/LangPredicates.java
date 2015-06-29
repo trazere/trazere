@@ -20,7 +20,7 @@ import com.trazere.util.function.Predicate1;
 /**
  * The {@link LangPredicates} class provides various factories of predicates related to the language.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class LangPredicates {

@@ -34,7 +34,9 @@ implements Describable {
 	 * Instantiates a new mutable float with the given value.
 	 * 
 	 * @param value The initial value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableFloat#MutableFloat(float)}.
 	 */
+	@Deprecated
 	public MutableFloat(final float value) {
 		// Initialization.
 		_value = value;
@@ -44,7 +46,9 @@ implements Describable {
 	 * Gets the value of the receiver mutable float.
 	 * 
 	 * @return The value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableFloat#get()}.
 	 */
+	@Deprecated
 	public float get() {
 		return _value;
 	}
@@ -54,7 +58,9 @@ implements Describable {
 	 * 
 	 * @param value The value.
 	 * @return The given value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableFloat#set(float)}.
 	 */
+	@Deprecated
 	public float set(final float value) {
 		_value = value;
 		return value;
@@ -64,7 +70,9 @@ implements Describable {
 	 * Negates the value of the receiver mutable float.
 	 * 
 	 * @return The resulting value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableFloat#neg()}.
 	 */
+	@Deprecated
 	public float neg() {
 		_value = -_value;
 		return _value;
@@ -75,7 +83,9 @@ implements Describable {
 	 * 
 	 * @param value The value
 	 * @return The resulting value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableFloat#add(float)}.
 	 */
+	@Deprecated
 	public float add(final float value) {
 		_value = _value + value;
 		return _value;
@@ -86,7 +96,9 @@ implements Describable {
 	 * 
 	 * @param value The value
 	 * @return The resulting value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableFloat#sub(float)}.
 	 */
+	@Deprecated
 	public float sub(final float value) {
 		_value = _value - value;
 		return _value;
@@ -97,7 +109,9 @@ implements Describable {
 	 * 
 	 * @param value The value
 	 * @return The resulting value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableFloat#mul(float)}.
 	 */
+	@Deprecated
 	public float mul(final float value) {
 		_value = _value * value;
 		return _value;
@@ -108,7 +122,9 @@ implements Describable {
 	 * 
 	 * @param value The value
 	 * @return The resulting value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableFloat#div(float)}.
 	 */
+	@Deprecated
 	public float div(final float value) {
 		_value = _value / value;
 		return _value;

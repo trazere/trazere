@@ -23,7 +23,7 @@ import java.util.Set;
 /**
  * The {@link CachePolicies} class provides various factories of cache policies.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class CachePolicies {

@@ -93,7 +93,9 @@ implements CheckedIterator<R, X> {
 	 * 
 	 * @return The next value.
 	 * @throws X When the next value cannot be pulled.
+	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#extract(java.util.Iterator, com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	protected abstract Maybe<T> pull()
 	throws X;
 	
@@ -103,7 +105,9 @@ implements CheckedIterator<R, X> {
 	 * @param value Value to filter. May be <code>null</code>.
 	 * @return <code>true</code> when the value is accepted, <code>false</code> otherwise.
 	 * @throws X When the extraction fails.
+	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#extract(java.util.Iterator, com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	protected abstract Maybe<? extends R> extract(final T value)
 	throws X;
 }

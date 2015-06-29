@@ -25,7 +25,7 @@ import java.util.Comparator;
 /**
  * The {@link LangAccumulators} class provides various factories of accumulators related to the language.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class LangAccumulators {

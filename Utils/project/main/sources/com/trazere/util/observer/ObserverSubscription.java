@@ -26,6 +26,9 @@ package com.trazere.util.observer;
 public interface ObserverSubscription {
 	/**
 	 * Cancels the receiver subscription.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.reactive.ObserverSubscription#unsubscribe()}.
 	 */
+	@Deprecated
 	public void unsubscribe();
 }

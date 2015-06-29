@@ -34,7 +34,10 @@ extends BaseTrigger {
 	
 	/**
 	 * Instantiate a new trigger with <code>0</code> bounds.
+	 * 
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public CountingTrigger() {
 		this(0, 0);
 	}
@@ -44,7 +47,9 @@ extends BaseTrigger {
 	 * 
 	 * @param setBound Set bound.
 	 * @param resetBound Reset bound.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public CountingTrigger(final int setBound, final int resetBound) {
 		assert setBound >= 0;
 		assert resetBound >= 0;

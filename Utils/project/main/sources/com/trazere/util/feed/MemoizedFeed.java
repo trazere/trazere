@@ -49,7 +49,10 @@ extends BaseFeed<T, X> {
 	 * 
 	 * @return The computed head and tail.
 	 * @throws X On failure.
+	 * @deprecated Use {@link com.trazere.core.collection.MemoizedFeed#compute()}.
 	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	protected abstract Maybe<? extends Tuple2<? extends T, ? extends Feed<? extends T, ? extends X>>> compute()
 	throws X;
 }

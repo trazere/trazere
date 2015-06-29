@@ -34,7 +34,10 @@ public class Automaton<S> {
 	 * Instantiates a new automaton.
 	 * 
 	 * @param initialState Initial state of the automaton.
+	 * @deprecated Use {@link com.trazere.core.design.Automaton#Automaton(Object)}.
 	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	protected Automaton(final S initialState) {
 		assert null != initialState;
 		
@@ -44,7 +47,13 @@ public class Automaton<S> {
 	
 	// State.
 	
-	/** Current state of the automaton. */
+	/**
+	 * Current state of the automaton.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.design.Automaton#_state}.
+	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	protected MutableObject<S> _state;
 	
 	/**

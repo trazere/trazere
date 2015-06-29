@@ -40,7 +40,9 @@ implements RecordFactory<K, V, SimpleRecord<K, V>> {
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @return The factory.
+	 * @deprecated Use {@link com.trazere.core.record.RecordFactories#simple()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <K, V> SimpleRecordFactory<K, V> factory() {
 		return (SimpleRecordFactory<K, V>) _FACTORY;

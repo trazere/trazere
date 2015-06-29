@@ -48,7 +48,9 @@ implements Trigger {
 	 * Begin a session.
 	 * 
 	 * @return <code>true</code> when the trigger is set, <code>false</code> otherwise.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	protected abstract boolean doBegin();
 	
 	@Override
@@ -66,6 +68,8 @@ implements Trigger {
 	 * End a session.
 	 * 
 	 * @return <code>true</code> when the trigger is set, <code>false</code> otherwise.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	protected abstract boolean doEnd();
 }

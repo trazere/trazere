@@ -28,7 +28,7 @@ import java.util.UUID;
 /**
  * The {@link ValueSerializers} class provides common value serializers.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class ValueSerializers {

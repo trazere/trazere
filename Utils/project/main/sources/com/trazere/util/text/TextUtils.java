@@ -37,7 +37,7 @@ import java.util.UUID;
 /**
  * The {@link TextUtils} class provides various helpers regarding the manipulation of text.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class TextUtils {

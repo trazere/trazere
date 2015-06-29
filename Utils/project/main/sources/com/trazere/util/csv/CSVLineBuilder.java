@@ -32,7 +32,10 @@ public class CSVLineBuilder
 extends BaseRecordBuilder<String, String, CSVLine> {
 	/**
 	 * Instantiate a new empty CSV line builder.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.record.SimpleRecordBuilder#SimpleRecordBuilder()}.
 	 */
+	@Deprecated
 	public CSVLineBuilder() {
 		super();
 	}
@@ -41,7 +44,9 @@ extends BaseRecordBuilder<String, String, CSVLine> {
 	 * Instantiate a new CSV line builder populated with the given fields.
 	 * 
 	 * @param fields Values of the initial fields identified by their keys.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	protected CSVLineBuilder(final Map<String, String> fields) {
 		super(fields);
 	}

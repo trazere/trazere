@@ -51,7 +51,9 @@ implements CachePolicy<K> {
 	 * Get the timeout of the receiver policy.
 	 * 
 	 * @return The timeout in milliseconds.
+	 * @deprecated Use {@link com.trazere.core.cache.IdleCachePolicy#getTimeout()}.
 	 */
+	@Deprecated
 	public long getTimeout() {
 		return _timeout;
 	}

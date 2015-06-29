@@ -43,7 +43,9 @@ extends BaseValueReader<T> {
 	 * @param name The name of the parameter to read.
 	 * @param type The type of the value.
 	 * @return The built reader.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public static <T> ParameterValueReader<T> build(final String name, final Class<T> type) {
 		return new ParameterValueReader<T>(name, type, true);
 	}
@@ -56,7 +58,9 @@ extends BaseValueReader<T> {
 	 * @param type The type of the value.
 	 * @param nullable The flag indicating whether the value of the parameter can be <code>null</code> or not.
 	 * @return The built reader.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public static <T> ParameterValueReader<T> build(final String name, final Class<T> type, final boolean nullable) {
 		return new ParameterValueReader<T>(name, type, nullable);
 	}
@@ -67,7 +71,9 @@ extends BaseValueReader<T> {
 	 * @param <T> Type of the value.
 	 * @param signature The signature of the parameter.
 	 * @return The built reader.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public static <T> ParameterValueReader<T> build(final FieldSignature<String, T> signature) {
 		return new ParameterValueReader<T>(signature);
 	}
@@ -81,7 +87,9 @@ extends BaseValueReader<T> {
 	 * @param name The name of the parameter to read.
 	 * @param type The type of the value.
 	 * @param nullable The flag indicating whether the value of the parameter can be <code>null</code> or not.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public ParameterValueReader(final String name, final Class<T> type, final boolean nullable) {
 		super(type, nullable);
 		
@@ -96,7 +104,9 @@ extends BaseValueReader<T> {
 	 * Instanciate a new parameter reader with the given field signature.
 	 * 
 	 * @param signature The signature of the parameter.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public ParameterValueReader(final FieldSignature<String, T> signature) {
 		this(signature.getKey(), signature.getType(), signature.isNullable());
 	}
@@ -105,7 +115,9 @@ extends BaseValueReader<T> {
 	 * Get the name of the parameter to read.
 	 * 
 	 * @return The name.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public String getName() {
 		return _name;
 	}

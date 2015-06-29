@@ -34,7 +34,9 @@ implements Describable {
 	 * Instantiates a new mutable double with the given value.
 	 * 
 	 * @param value The initial value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableDouble#MutableDouble(double)}.
 	 */
+	@Deprecated
 	public MutableDouble(final double value) {
 		// Initialization.
 		_value = value;
@@ -44,7 +46,9 @@ implements Describable {
 	 * Gets the value of the receiver mutable double.
 	 * 
 	 * @return The value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableDouble#get()}.
 	 */
+	@Deprecated
 	public double get() {
 		return _value;
 	}
@@ -54,7 +58,9 @@ implements Describable {
 	 * 
 	 * @param value The value.
 	 * @return The given value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableDouble#set(double)}.
 	 */
+	@Deprecated
 	public double set(final double value) {
 		_value = value;
 		return value;
@@ -64,7 +70,9 @@ implements Describable {
 	 * Negates the value of the receiver mutable double.
 	 * 
 	 * @return The resulting value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableDouble#neg()}.
 	 */
+	@Deprecated
 	public double neg() {
 		_value = -_value;
 		return _value;
@@ -75,7 +83,9 @@ implements Describable {
 	 * 
 	 * @param value The value
 	 * @return The resulting value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableDouble#add(double)}.
 	 */
+	@Deprecated
 	public double add(final double value) {
 		_value = _value + value;
 		return _value;
@@ -86,7 +96,9 @@ implements Describable {
 	 * 
 	 * @param value The value
 	 * @return The resulting value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableDouble#sub(double)}.
 	 */
+	@Deprecated
 	public double sub(final double value) {
 		_value = _value - value;
 		return _value;
@@ -97,7 +109,9 @@ implements Describable {
 	 * 
 	 * @param value The value
 	 * @return The resulting value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableDouble#mul(double)}.
 	 */
+	@Deprecated
 	public double mul(final double value) {
 		_value = _value * value;
 		return _value;
@@ -108,7 +122,9 @@ implements Describable {
 	 * 
 	 * @param value The value
 	 * @return The resulting value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableDouble#div(double)}.
 	 */
+	@Deprecated
 	public double div(final double value) {
 		_value = _value / value;
 		return _value;

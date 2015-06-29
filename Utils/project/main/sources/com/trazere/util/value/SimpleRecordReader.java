@@ -49,7 +49,9 @@ extends BaseRecordReader<K, V> {
 	 * Instanciate a new record reader with the given field readers.
 	 * 
 	 * @param fields Field readers.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public SimpleRecordReader(final Map<K, ValueReader<? extends V>> fields) {
 		assert null != fields;
 		

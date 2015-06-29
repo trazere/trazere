@@ -35,7 +35,9 @@ extends DecoratorInputStream {
 	 * 
 	 * @param stream The input stream providing the data.
 	 * @param copy The output stream receiving the copy of the data.
+	 * @deprecated Use {@link com.trazere.core.io.CarbonCopyInputStream#CarbonCopyInputStream(InputStream, OutputStream)}.
 	 */
+	@Deprecated
 	public CarbonCopyInputStream(final InputStream stream, final OutputStream copy) {
 		super(stream);
 		
@@ -50,7 +52,9 @@ extends DecoratorInputStream {
 	 * Get the copy output stream receiving the copy of the data.
 	 * 
 	 * @return The output stream.
+	 * @deprecated Use {@link com.trazere.core.io.CarbonCopyInputStream#getCopy()}.
 	 */
+	@Deprecated
 	public OutputStream getCopy() {
 		return _copy;
 	}

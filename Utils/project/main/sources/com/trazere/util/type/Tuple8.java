@@ -75,7 +75,9 @@ extends Tuple7<T1, T2, T3, T4, T5, T6, T7> {
 	 * @param sixth The sixth value. May be <code>null</code>.
 	 * @param seventh The seventh value. May be <code>null</code>.
 	 * @param eighth The eighth value. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.util.Tuple8#Tuple8(Object, Object, Object, Object, Object, Object, Object, Object)}.
 	 */
+	@Deprecated
 	public Tuple8(final T1 first, final T2 second, final T3 third, final T4 fourth, final T5 fifth, final T6 sixth, final T7 seventh, final T8 eighth) {
 		super(first, second, third, fourth, fifth, sixth, seventh);
 		

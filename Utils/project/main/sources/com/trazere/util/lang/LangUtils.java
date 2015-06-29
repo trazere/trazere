@@ -26,7 +26,7 @@ import java.util.Iterator;
 /**
  * The {@link LangUtils} class provides various helpers regarding the manipulation of objets.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class LangUtils {

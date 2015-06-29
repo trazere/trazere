@@ -45,7 +45,9 @@ extends XmlAdapter<String, Date> {
 	 * @param representation Representation to parse.
 	 * @return The date.
 	 * @throws IllegalArgumentException When the representation is invalid.
+	 * @deprecated Use {@link com.trazere.xml.DateAdapter#parse(String)}.
 	 */
+	@Deprecated
 	public static Date parse(final String representation)
 	throws IllegalArgumentException {
 		assert null != representation;

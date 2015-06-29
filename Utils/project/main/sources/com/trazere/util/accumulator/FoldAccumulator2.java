@@ -34,7 +34,9 @@ extends BaseAccumulator2<V1, V2, R, X> {
 	 * Instantiates a new accumulator with the given initial result.
 	 * 
 	 * @param initialResult The initial result. Maybe be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.imperative.FoldAccumulator2#FoldAccumulator2(Object)}.
 	 */
+	@Deprecated
 	public FoldAccumulator2(final R initialResult) {
 		// Initialization.
 		_result = initialResult;
@@ -54,7 +56,10 @@ extends BaseAccumulator2<V1, V2, R, X> {
 	 * @param value2 The second value.
 	 * @return The next result.
 	 * @throws X When the folding fails.
+	 * @deprecated {@link com.trazere.core.imperative.FoldAccumulator2#fold(Object, Object, Object)}.
 	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	protected abstract R fold(final R result, final V1 value1, final V2 value2)
 	throws X;
 	

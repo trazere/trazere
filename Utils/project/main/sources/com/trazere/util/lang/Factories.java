@@ -21,7 +21,7 @@ import com.trazere.util.function.Function0;
  * The {@link Factories} class provides factories of factories.
  * 
  * @see Factory
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class Factories {

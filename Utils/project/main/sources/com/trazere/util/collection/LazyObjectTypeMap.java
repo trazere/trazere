@@ -113,7 +113,9 @@ implements ObjectTypeMap<T, Maybe<? extends V>, X> {
 	 * Instantiates a new type map with no upper bounds and defaut values.
 	 * 
 	 * @param upperBound The upper bound.
+	 * @deprecated Use {@link com.trazere.core.functional.BaseObjectTypeFunction#BaseObjectTypeFunction(Class)}.
 	 */
+	@Deprecated
 	public LazyObjectTypeMap(final Class<T> upperBound) {
 		this(upperBound, Maybe.<V>none());
 	}
@@ -123,7 +125,9 @@ implements ObjectTypeMap<T, Maybe<? extends V>, X> {
 	 * 
 	 * @param upperBound The upper bound.
 	 * @param defaultValue The default value.
+	 * @deprecated Use {@link com.trazere.core.functional.BaseObjectTypeFunction#BaseObjectTypeFunction(Class, com.trazere.core.util.Maybe)}.
 	 */
+	@Deprecated
 	public LazyObjectTypeMap(final Class<T> upperBound, final Maybe<? extends V> defaultValue) {
 		super(Maybe.some(upperBound), defaultValue);
 	}

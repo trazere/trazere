@@ -66,7 +66,9 @@ implements Comparator<T> {
 	 * Instantiates a new inversed comparator.
 	 * 
 	 * @param comparator The comparator to inverse.
+	 * @deprecated Use {@link com.trazere.core.util.InverseComparator#InverseComparator(Comparator)}.
 	 */
+	@Deprecated
 	public InverseComparator(final Comparator<? super T> comparator) {
 		assert null != comparator;
 		
@@ -78,7 +80,9 @@ implements Comparator<T> {
 	 * Gets the inversed comparator.
 	 * 
 	 * @return The inversed comparator.
+	 * @deprecated Use {@link com.trazere.core.util.InverseComparator#getComparator()}.
 	 */
+	@Deprecated
 	public Comparator<? super T> getComparator() {
 		return _comparator;
 	}

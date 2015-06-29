@@ -36,7 +36,9 @@ public interface Record<K, V> {
 	 * Test whether the receiver record is empty or not.
 	 * 
 	 * @return <code>true</code> when empty, <code>false</code> otherwise.
+	 * @deprecated Use {@link com.trazere.core.record.Record#isEmpty()}.
 	 */
+	@Deprecated
 	public boolean isEmpty();
 	
 	/**
@@ -44,6 +46,7 @@ public interface Record<K, V> {
 	 * 
 	 * @param key Key of the field to test.
 	 * @return <code>true</code> when some field is identified by the given key, <code>false</code> otherwise.
+	 * @deprecated Use {@link com.trazere.core.record.Record#contains(com.trazere.core.record.FieldKey)}.
 	 */
 	@Deprecated
 	public boolean contains(final K key);
@@ -107,8 +110,8 @@ public interface Record<K, V> {
 	 * @throws IncompatibleFieldException When the value of the field is not compatible with the given type.
 	 * @deprecated Use {@link com.trazere.core.record.Record#getMandatory(com.trazere.core.record.FieldKey).
 	 */
-	@SuppressWarnings("javadoc")
 	@Deprecated
+	@SuppressWarnings("javadoc")
 	public <T extends V> T getTyped(final K key, final Class<T> type)
 	throws MissingFieldException, InvalidFieldException, IncompatibleFieldException;
 	

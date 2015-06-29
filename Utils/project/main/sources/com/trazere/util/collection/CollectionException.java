@@ -30,7 +30,10 @@ extends Exception {
 	
 	/**
 	 * Instantiates a new exception.
+	 * 
+	 * @deprecated Use {@link RuntimeException#RuntimeException()}.
 	 */
+	@Deprecated
 	public CollectionException() {
 		super();
 	}
@@ -39,7 +42,9 @@ extends Exception {
 	 * Instantiates a new exception using the given message.
 	 * 
 	 * @param message Details about the exception.
+	 * @deprecated Use {@link RuntimeException#RuntimeException(String)}.
 	 */
+	@Deprecated
 	public CollectionException(final String message) {
 		super(message);
 	}
@@ -48,7 +53,9 @@ extends Exception {
 	 * Instantiates a new exception using the given cause.
 	 * 
 	 * @param cause Cause of the exception.
+	 * @deprecated Use {@link RuntimeException#RuntimeException(Throwable)}.
 	 */
+	@Deprecated
 	public CollectionException(final Throwable cause) {
 		super(cause);
 	}
@@ -58,12 +65,19 @@ extends Exception {
 	 * 
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
+	 * @deprecated Use {@link RuntimeException#RuntimeException(String, Throwable)}.
 	 */
+	@Deprecated
 	public CollectionException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 	
-	/** Factory of {@link CollectionException}. */
+	/**
+	 * Factory of {@link CollectionException}.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.lang.ThrowableFactories#RUNTIME_EXCEPTION}.
+	 */
+	@Deprecated
 	public static final ThrowableFactory<CollectionException> FACTORY = new BaseThrowableFactory<CollectionException>() {
 		@Override
 		public CollectionException build() {

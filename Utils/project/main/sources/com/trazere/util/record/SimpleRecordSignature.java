@@ -42,6 +42,7 @@ implements RecordSignature<K, V>, Describable {
 	private static final SimpleRecordSignature<?, ?> EMPTY = new SimpleRecordSignature<Object, Object>(Collections.<Object, FieldSignature<Object, Object>>emptyMap());
 	
 	// TODO: move to RecordSignatures
+	@Deprecated
 	/**
 	 * Builds an empty record signature.
 	 * <p>
@@ -50,6 +51,7 @@ implements RecordSignature<K, V>, Describable {
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @return The record signature.
+	 * @deprecated To be removed.
 	 */
 	@SuppressWarnings("unchecked")
 	public static <K, V> SimpleRecordSignature<K, V> build() {
@@ -64,7 +66,9 @@ implements RecordSignature<K, V>, Describable {
 	 * @param <V> Type of the values.
 	 * @param fields Signatures of the fields.
 	 * @return The record signature.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public static <K, V> SimpleRecordSignature<K, V> build(final Collection<? extends FieldSignature<K, ? extends V>> fields) {
 		assert null != fields;
 		
@@ -84,7 +88,9 @@ implements RecordSignature<K, V>, Describable {
 	 * @param <V> Type of the values.
 	 * @param fields Signatures of the fields.
 	 * @return The record signature.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public static <K, V> SimpleRecordSignature<K, V> build(final FieldSignature<K, ? extends V>... fields) {
 		assert null != fields;
 		
@@ -103,7 +109,9 @@ implements RecordSignature<K, V>, Describable {
 	 * Instantiates a new record signature with the given field signatures.
 	 * 
 	 * @param signatures Signatures of the fields identified by their keys.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	protected SimpleRecordSignature(final Map<K, ? extends FieldSignature<K, ? extends V>> signatures) {
 		assert null != signatures;
 		

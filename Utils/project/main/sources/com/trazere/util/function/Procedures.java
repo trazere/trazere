@@ -21,7 +21,7 @@ package com.trazere.util.function;
  * @see Procedure0
  * @see Procedure1
  * @see Procedure2
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class Procedures {
@@ -90,7 +90,6 @@ public class Procedures {
 	
 	// TODO: sequence
 	
-	@Deprecated
 	/**
 	 * Builds a procedure which executes its zero arguments procedure arguments.
 	 * 
@@ -98,6 +97,7 @@ public class Procedures {
 	 * @return The built procedure.
 	 * @deprecated Use {@link com.trazere.core.imperative.EffectProcedures#execute()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <X extends Exception> Procedure1<Procedure0<? extends X>, X> execute() {
 		return (Procedure1<Procedure0<? extends X>, X>) _EXECUTE;

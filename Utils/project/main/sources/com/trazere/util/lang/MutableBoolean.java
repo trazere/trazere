@@ -34,7 +34,9 @@ implements Describable {
 	 * Instantiates a new mutable boolean with the given value.
 	 * 
 	 * @param value The initial value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableBoolean#MutableBoolean(boolean)}.
 	 */
+	@Deprecated
 	public MutableBoolean(final boolean value) {
 		// Initialization.
 		_value = value;
@@ -44,7 +46,9 @@ implements Describable {
 	 * Gets the value of the receiver mutable boolean.
 	 * 
 	 * @return The value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableBoolean#get()}.
 	 */
+	@Deprecated
 	public boolean get() {
 		return _value;
 	}
@@ -54,7 +58,9 @@ implements Describable {
 	 * 
 	 * @param value The value.
 	 * @return The given value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableBoolean#set(boolean)}.
 	 */
+	@Deprecated
 	public boolean set(final boolean value) {
 		_value = value;
 		return value;
@@ -64,7 +70,9 @@ implements Describable {
 	 * Inverses the value of the receiver mutable boolean.
 	 * 
 	 * @return The resulting value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableBoolean#not()}.
 	 */
+	@Deprecated
 	public boolean not() {
 		_value = !_value;
 		return _value;
@@ -75,7 +83,9 @@ implements Describable {
 	 * 
 	 * @param value The value.
 	 * @return The resulting value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableBoolean#and(boolean)}.
 	 */
+	@Deprecated
 	public boolean and(final boolean value) {
 		_value = _value && value;
 		return _value;
@@ -86,7 +96,9 @@ implements Describable {
 	 * 
 	 * @param value The value.
 	 * @return The resulting value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableBoolean#or(boolean)}.
 	 */
+	@Deprecated
 	public boolean or(final boolean value) {
 		_value = _value || value;
 		return _value;

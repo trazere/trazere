@@ -33,7 +33,10 @@ extends ReferenceException {
 	
 	/**
 	 * Instantiates a new exception.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.reference.ReferenceNotSetException#ReferenceNotSetException()}.
 	 */
+	@Deprecated
 	public ReferenceNotSetException() {
 		super();
 	}
@@ -42,7 +45,9 @@ extends ReferenceException {
 	 * Instantiates a new exception using the given message.
 	 * 
 	 * @param message Details about the exception.
+	 * @deprecated Use {@link com.trazere.core.reference.ReferenceNotSetException#ReferenceNotSetException(String)}.
 	 */
+	@Deprecated
 	public ReferenceNotSetException(final String message) {
 		super(message);
 	}
@@ -51,7 +56,9 @@ extends ReferenceException {
 	 * Instantiates a new exception using the given cause.
 	 * 
 	 * @param cause Cause of the exception.
+	 * @deprecated Use {@link com.trazere.core.reference.ReferenceNotSetException#ReferenceNotSetException(Throwable)}.
 	 */
+	@Deprecated
 	public ReferenceNotSetException(final Throwable cause) {
 		super(cause);
 	}
@@ -61,12 +68,19 @@ extends ReferenceException {
 	 * 
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
+	 * @deprecated Use {@link com.trazere.core.reference.ReferenceNotSetException#ReferenceNotSetException(String, Throwable)}.
 	 */
+	@Deprecated
 	public ReferenceNotSetException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 	
-	/** Factory of {@link ReferenceNotSetException}. */
+	/**
+	 * Factory of {@link ReferenceNotSetException}.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.reference.ReferenceNotSetException#FACTORY}.
+	 */
+	@Deprecated
 	@SuppressWarnings("hiding")
 	public static final ThrowableFactory<ReferenceNotSetException> FACTORY = new BaseThrowableFactory<ReferenceNotSetException>() {
 		@Override

@@ -41,7 +41,9 @@ extends BaseValueReader<T> {
 	 * @param value The produced value. May be <code>null</code>.
 	 * @param type Type of the produced value.
 	 * @return The built reader.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public static <T> ConstantValueReader<T> build(final T value, final Class<T> type) {
 		return new ConstantValueReader<T>(value, type);
 	}
@@ -54,7 +56,9 @@ extends BaseValueReader<T> {
 	 * 
 	 * @param value The produced value. May be <code>null</code>.
 	 * @param type Type of the produced value.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public ConstantValueReader(final T value, final Class<T> type) {
 		super(type, null == value);
 		
@@ -66,7 +70,9 @@ extends BaseValueReader<T> {
 	 * Get the value produced by the receiver reader.
 	 * 
 	 * @return The value. May be <code>null</code>.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public T getValue() {
 		return _value;
 	}

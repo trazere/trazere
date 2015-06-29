@@ -18,7 +18,7 @@ package com.trazere.util.math;
 /**
  * The {@link MathUtils} class provides various math related helpers.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class MathUtils {

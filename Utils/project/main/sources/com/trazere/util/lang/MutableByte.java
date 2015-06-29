@@ -34,7 +34,9 @@ implements Describable {
 	 * Instantiates a new mutable byte with the given value.
 	 * 
 	 * @param value The initial value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableByte#MutableByte(byte)}.
 	 */
+	@Deprecated
 	public MutableByte(final byte value) {
 		// Initialization.
 		_value = value;
@@ -44,7 +46,9 @@ implements Describable {
 	 * Gets the value of the receiver mutable byte.
 	 * 
 	 * @return The value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableByte#get()}.
 	 */
+	@Deprecated
 	public byte get() {
 		return _value;
 	}
@@ -54,7 +58,9 @@ implements Describable {
 	 * 
 	 * @param value The value.
 	 * @return The given value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableByte#set(byte)}.
 	 */
+	@Deprecated
 	public byte set(final byte value) {
 		_value = value;
 		return value;

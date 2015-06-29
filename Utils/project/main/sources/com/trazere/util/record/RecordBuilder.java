@@ -25,7 +25,7 @@ import java.util.Set;
  * @param <V> Type of the values.
  * @param <R> Type of the records.
  * @see Record
- * @deprecated {@link com.trazere.core.record.RecordBuilder}.
+ * @deprecated Use {@link com.trazere.core.record.RecordBuilder}.
  */
 // TODO: extends Accumulator or provide an accumulator factory for add
 @Deprecated
@@ -38,6 +38,7 @@ public interface RecordBuilder<K, V, R extends Record<K, V>> {
 	 * @param key The key identifying the field to add.
 	 * @param value The value of the field to add.
 	 * @throws DuplicateFieldException When some field is already identified by the given key.
+	 * @deprecated To be removed.
 	 */
 	@Deprecated
 	public void add(final K key, final V value)
@@ -80,7 +81,9 @@ public interface RecordBuilder<K, V, R extends Record<K, V>> {
 	 * @param record The record containing the fields to add.
 	 * @throws InvalidFieldException When the some field of the given record cannot be read.
 	 * @throws DuplicateFieldException When some field is already identified by the key identifying any field of the given record.
+	 * @deprecated Use {@link com.trazere.core.record.RecordBuilder#addAll(com.trazere.core.record.Record)}.
 	 */
+	@Deprecated
 	public void addAll(final Record<? extends K, ? extends V> record)
 	throws InvalidFieldException, DuplicateFieldException;
 	
@@ -88,7 +91,9 @@ public interface RecordBuilder<K, V, R extends Record<K, V>> {
 	 * Test whether the receiver record builder is empty or not.
 	 * 
 	 * @return <code>true</code> when empty, <code>false</code> otherwise.
+	 * @deprecated Use {@link com.trazere.core.record.RecordBuilder#isEmpty()}.
 	 */
+	@Deprecated
 	public boolean isEmpty();
 	
 	/**
@@ -96,6 +101,7 @@ public interface RecordBuilder<K, V, R extends Record<K, V>> {
 	 * 
 	 * @param key The key of the field.
 	 * @return <code>true</code> when some field is identified by the given key, <code>false</code> otherwise.
+	 * @deprecated To be removed.
 	 */
 	@Deprecated
 	public boolean contains(final K key);
@@ -149,13 +155,17 @@ public interface RecordBuilder<K, V, R extends Record<K, V>> {
 	 * 
 	 * @param key The key of the field to remove.
 	 * @return <code>true</code> when some field was removed, <code>false</code> otherwise.
+	 * @deprecated To be removed.
 	 */
 	@Deprecated
 	public boolean remove(final K key);
 	
 	/**
 	 * Removes all fields from the receiver record builder.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.record.RecordBuilder#clear()}.
 	 */
+	@Deprecated
 	public void clear();
 	
 	/**
@@ -198,7 +208,9 @@ public interface RecordBuilder<K, V, R extends Record<K, V>> {
 	 * 
 	 * @return The built record.
 	 * @throws RecordException When the record cannot be built.
+	 * @deprecated Use {@link com.trazere.core.record.RecordBuilder#build()}.
 	 */
+	@Deprecated
 	public R build()
 	throws RecordException;
 }

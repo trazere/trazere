@@ -22,7 +22,7 @@ import java.util.Date;
 /**
  * The {@link LangFunctions} class provides various factories of functions related to the language.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class LangFunctions {

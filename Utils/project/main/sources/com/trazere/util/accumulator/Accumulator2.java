@@ -36,7 +36,9 @@ extends Procedure2<T1, T2, X> {
 	 * @param value1 First value of the pair to accumulate. May be <code>null</code>.
 	 * @param value2 Second value of the pair to accumulate. May be <code>null</code>.
 	 * @throws X When the accumulation fails.
+	 * @deprecated Use {@link com.trazere.core.imperative.Accumulator2#add(Object, Object)}.
 	 */
+	@Deprecated
 	public void add(final T1 value1, T2 value2)
 	throws X;
 	
@@ -45,7 +47,9 @@ extends Procedure2<T1, T2, X> {
 	 * 
 	 * @param value Pair to accumulate. May be <code>null</code>.
 	 * @throws X When the accumulation fails.
+	 * @deprecated Use {@link com.trazere.core.imperative.Accumulator2#add(com.trazere.core.util.Tuple2)}.
 	 */
+	@Deprecated
 	public void add(final Tuple2<? extends T1, ? extends T2> value)
 	throws X;
 	
@@ -54,7 +58,9 @@ extends Procedure2<T1, T2, X> {
 	 * 
 	 * @param values Pairs to accumulate. May be <code>null</code>.
 	 * @throws X When the accumulation fails.
+	 * @deprecated Use {@link com.trazere.core.imperative.Accumulator2#addAll(Iterable)}.
 	 */
+	@Deprecated
 	public void addAll(final Iterable<? extends Tuple2<? extends T1, ? extends T2>> values)
 	throws X;
 	
@@ -62,6 +68,8 @@ extends Procedure2<T1, T2, X> {
 	 * Gets the current result of the receiver accumulator.
 	 * 
 	 * @return The result. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.imperative.Accumulator2#get()}.
 	 */
+	@Deprecated
 	public S get();
 }

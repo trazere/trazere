@@ -35,7 +35,9 @@ implements Describable {
 	 * Instantiates a new mutable object with the given value.
 	 * 
 	 * @param value The initial value. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableObject#MutableObject(Object)}.
 	 */
+	@Deprecated
 	public MutableObject(final T value) {
 		// Initialization.
 		_value = value;
@@ -47,7 +49,9 @@ implements Describable {
 	 * @param <V> Type of the value.
 	 * @param value The value. May be <code>null</code>.
 	 * @return The given value. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableObject#set(Object)}.
 	 */
+	@Deprecated
 	public <V extends T> V set(final V value) {
 		_value = value;
 		return value;
@@ -57,7 +61,9 @@ implements Describable {
 	 * Gets the value of the receiver mutable object.
 	 * 
 	 * @return The value. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableObject#get()}.
 	 */
+	@Deprecated
 	public T get() {
 		return _value;
 	}

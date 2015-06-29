@@ -27,7 +27,7 @@ import java.util.Set;
 /**
  * The {@link RecordUtils} class provides various utilities regarding record manipulatation.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class RecordUtils {

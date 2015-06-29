@@ -86,7 +86,9 @@ public class CSVReader {
 	 * @param delimiter Delimiter of the CSV fields.
 	 * @param options Options.
 	 * @throws IOException On failure.
+	 * @deprecated {@link com.trazere.csv.CSVReader#build(Reader, String, Set)}.
 	 */
+	@Deprecated
 	public CSVReader(final Reader reader, final String delimiter, final EnumSet<CSVReaderOption> options)
 	throws IOException {
 		assert null != reader;
@@ -118,7 +120,10 @@ public class CSVReader {
 	 * @param delimiter Delimiter of the CSV fields.
 	 * @param headers Headers of the CSV input.
 	 * @param options Options.
+	 * @deprecated {@link com.trazere.csv.CSVReader#CSVReader(Reader, String, List, Set)} or
+	 *             {@link com.trazere.csv.CSVReader#build(Reader, String, com.trazere.core.functional.Function, Set)}.
 	 */
+	@Deprecated
 	public CSVReader(final Reader reader, final String delimiter, final List<String> headers, final Set<CSVReaderOption> options) {
 		assert null != reader;
 		assert null != delimiter;
@@ -139,7 +144,9 @@ public class CSVReader {
 	 * Get the delimiter of the CSV fields of the receiver reader.
 	 * 
 	 * @return The delimiter string.
+	 * @deprecated {@link com.trazere.csv.CSVReader#getDelimiter()}.
 	 */
+	@Deprecated
 	public String getDelimiter() {
 		return _delimiter;
 	}
@@ -148,7 +155,9 @@ public class CSVReader {
 	 * Get the headers of the CSV input of the receiver reader.
 	 * 
 	 * @return An unmodifiable list of the headers.
+	 * @deprecated {@link com.trazere.csv.CSVReader#getHeaders()}.
 	 */
+	@Deprecated
 	public List<String> getHeaders() {
 		return _headers;
 	}
@@ -157,7 +166,9 @@ public class CSVReader {
 	 * Get the options of the receiver reader.
 	 * 
 	 * @return An unmodifiable set of the options.
+	 * @deprecated {@link com.trazere.csv.CSVReader#getOptions()}.
 	 */
+	@Deprecated
 	public Set<CSVReaderOption> getOptions() {
 		return _options;
 	}
@@ -170,7 +181,9 @@ public class CSVReader {
 	 * @return <code>true</code> if another entry is available, <code>false</code> if the input has been exausted or if the reader hangs because of an invalid
 	 *         line.
 	 * @throws IOException On failure.
+	 * @deprecated {@link com.trazere.csv.CSVReader#hasNext()}.
 	 */
+	@Deprecated
 	public boolean hasNext()
 	throws IOException {
 		readEntry();
@@ -315,7 +328,9 @@ public class CSVReader {
 	 * 
 	 * @return A map of the values of the CSV fields identified by their corresponding headers, or <code>null</code> if the entry is invalid.
 	 * @throws IOException On failure.
+	 * @deprecated {@link com.trazere.csv.CSVReader#next()}.
 	 */
+	@Deprecated
 	public CSVLine next()
 	throws IOException {
 		// Read one line ahead.
@@ -345,7 +360,9 @@ public class CSVReader {
 	 * Close the underlying reader.
 	 * 
 	 * @throws IOException On failure.
+	 * @deprecated {@link com.trazere.csv.CSVReader#close()}.
 	 */
+	@Deprecated
 	public void close()
 	throws IOException {
 		_scanner.close();

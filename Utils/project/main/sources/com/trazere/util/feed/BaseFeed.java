@@ -35,6 +35,11 @@ implements Feed<T, X> {
 		return evaluate().isNone();
 	}
 	
+	/**
+	 * @deprecated Use {@link com.trazere.core.collection.Feed#get()}.
+	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	public Tuple2<? extends T, ? extends Feed<? extends T, ? extends X>> get()
 	throws NoSuchElementException, X {
 		final Maybe<? extends Tuple2<? extends T, ? extends Feed<? extends T, ? extends X>>> value = evaluate();

@@ -63,7 +63,9 @@ extends Tuple4<T1, T2, T3, T4> {
 	 * @param third The third value. May be <code>null</code>.
 	 * @param fourth The fourth value. May be <code>null</code>.
 	 * @param fifth The tifth value. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.util.Tuple5#Tuple5(Object, Object, Object, Object, Object)}.
 	 */
+	@Deprecated
 	public Tuple5(final T1 first, final T2 second, final T3 third, final T4 fourth, final T5 fifth) {
 		super(first, second, third, fourth);
 		

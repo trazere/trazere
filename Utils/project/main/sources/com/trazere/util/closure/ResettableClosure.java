@@ -126,7 +126,10 @@ implements Closure<T, X>, Releasable<RuntimeException>, Describable {
 	 * 
 	 * @return The computed value. May be <code>null</code>.
 	 * @throws X When the computation fails.
+	 * @deprecated Use {@link com.trazere.core.functional.ResettableThunk#compute()}.
 	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	protected abstract T compute()
 	throws X;
 	
@@ -136,7 +139,10 @@ implements Closure<T, X>, Releasable<RuntimeException>, Describable {
 	 * This methods is called when the receiver evaluated closure is reset. The defaut implementation does nothing.
 	 * 
 	 * @param value The value. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.functional.ResettableThunk#dispose(Object)}.
 	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	protected void dispose(final T value) {
 		// Nothing to do.
 	}
@@ -148,7 +154,10 @@ implements Closure<T, X>, Releasable<RuntimeException>, Describable {
 	
 	/**
 	 * Reset the value memoized in the receiver closure. The value will be computed (again) during the next call to {@link #evaluate()}.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.functional.ResettableThunk#reset()}.
 	 */
+	@Deprecated
 	public void reset() {
 		_value.reset();
 	}

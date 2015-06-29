@@ -32,7 +32,9 @@ public interface Reference<T> {
 	 * Tests whether the receiver reference is set.
 	 * 
 	 * @return <code>true</code> when the reference is set, <code>false</code> otherwise.
+	 * @deprecated Use {@link com.trazere.core.reference.Reference#isSet()}.
 	 */
+	@Deprecated
 	public boolean isSet();
 	
 	/**
@@ -42,7 +44,9 @@ public interface Reference<T> {
 	 * 
 	 * @return The set value.
 	 * @throws ReferenceNotSetException When the reference is not set.
+	 * @deprecated Use {@link com.trazere.core.reference.Reference#get()}.
 	 */
+	@Deprecated
 	public T get()
 	throws ReferenceNotSetException;
 	
@@ -51,7 +55,9 @@ public interface Reference<T> {
 	 * 
 	 * @param defaultValue Default default. Maybe <code>null</code>.
 	 * @return The set value or the given default value when the reference is not set. Maybe <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.reference.Reference#get(Object)}.
 	 */
+	@Deprecated
 	public T get(final T defaultValue);
 	
 	/**
@@ -71,6 +77,8 @@ public interface Reference<T> {
 	 * Gets a view of the value set in the receiver reference as an instance of {@link Maybe}.
 	 * 
 	 * @return The set value wrapped in {@link Some}, or {@link None} when the reference is not set.
+	 * @deprecated Use {@link com.trazere.core.reference.Reference#asMaybe()}.
 	 */
+	@Deprecated
 	public Maybe<T> asMaybe();
 }

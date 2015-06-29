@@ -58,5 +58,5 @@ implements Comparator<T> {
 	 * @return The comparison value.
 	 * @since 1.0
 	 */
-	protected abstract V mapValue(final T object);
+	protected abstract V mapValue(T object);
 }

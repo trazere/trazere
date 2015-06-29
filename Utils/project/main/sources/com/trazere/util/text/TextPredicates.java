@@ -21,7 +21,7 @@ import com.trazere.util.function.Predicate1;
  * The {@link TextPredicates} class provides various factories of predicates related to text.
  * 
  * @see Predicate1
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class TextPredicates {

@@ -30,7 +30,10 @@ extends RuntimeException {
 	
 	/**
 	 * Instantiates a new exception.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.reference.ReferenceException#ReferenceException()}.
 	 */
+	@Deprecated
 	public ReferenceException() {
 		super();
 	}
@@ -39,7 +42,9 @@ extends RuntimeException {
 	 * Instantiates a new exception using the given message.
 	 * 
 	 * @param message Details about the exception.
+	 * @deprecated Use {@link com.trazere.core.reference.ReferenceException#ReferenceException(String)}.
 	 */
+	@Deprecated
 	public ReferenceException(final String message) {
 		super(message);
 	}
@@ -48,7 +53,9 @@ extends RuntimeException {
 	 * Instantiates a new exception using the given cause.
 	 * 
 	 * @param cause Cause of the exception.
+	 * @deprecated Use {@link com.trazere.core.reference.ReferenceException#ReferenceException(Throwable)}.
 	 */
+	@Deprecated
 	public ReferenceException(final Throwable cause) {
 		super(cause);
 	}
@@ -58,12 +65,19 @@ extends RuntimeException {
 	 * 
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
+	 * @deprecated Use {@link com.trazere.core.reference.ReferenceException#ReferenceException(String, Throwable)}.
 	 */
+	@Deprecated
 	public ReferenceException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 	
-	/** Factory of {@link ReferenceException}. */
+	/**
+	 * Factory of {@link ReferenceException}.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.reference.ReferenceException#FACTORY}.
+	 */
+	@Deprecated
 	public static final ThrowableFactory<ReferenceException> FACTORY = new BaseThrowableFactory<ReferenceException>() {
 		@Override
 		public ReferenceException build() {

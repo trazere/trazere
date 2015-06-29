@@ -40,7 +40,9 @@ public class Scanner {
 	 * Instantiate a new scanner with the given reader.
 	 * 
 	 * @param reader Reader providing the character stream.
+	 * @deprecated Use {@link com.trazere.core.text.Scanner#Scanner(Reader)}.
 	 */
+	@Deprecated
 	public Scanner(final Reader reader) {
 		this(reader, 0);
 	}
@@ -50,7 +52,9 @@ public class Scanner {
 	 * 
 	 * @param reader Reader providing the character stream.
 	 * @param position Initial scanning position.
+	 * @deprecated Use {@link com.trazere.core.text.Scanner#Scanner(Reader, int)}.
 	 */
+	@Deprecated
 	public Scanner(final Reader reader, final int position) {
 		assert null != reader;
 		
@@ -63,7 +67,9 @@ public class Scanner {
 	 * Get the reader of the receiver scanner.
 	 * 
 	 * @return The reader.
+	 * @deprecated Use {@link com.trazere.core.text.Scanner#getReader()}.
 	 */
+	@Deprecated
 	public Reader getReader() {
 		return _reader;
 	}
@@ -72,7 +78,9 @@ public class Scanner {
 	 * Get the current scanning position of the receiver scanner.
 	 * 
 	 * @return The position.
+	 * @deprecated Use {@link com.trazere.core.text.Scanner#getPosition()}.
 	 */
+	@Deprecated
 	public int getPosition() {
 		return _position;
 	}
@@ -82,6 +90,7 @@ public class Scanner {
 	 * 
 	 * @return <code>true</code> if the eof has been reached, <code>false</code> if characters are still available.
 	 * @throws IOException On failure.
+	 * @deprecated Use {@link com.trazere.core.text.Scanner#isEof()}.
 	 * @deprecated Use {@link com.trazere.core.text.Scanner#isEof()}.
 	 */
 	@Deprecated
@@ -103,7 +112,9 @@ public class Scanner {
 	 * 
 	 * @return The scanned character, or <code>null</code> if the eof has been reached.
 	 * @throws IOException On failure.
+	 * @deprecated Use {@link com.trazere.core.text.Scanner#scanChar()}.
 	 */
+	@Deprecated
 	public Character scanChar()
 	throws IOException {
 		final int i = _reader.read();
@@ -123,7 +134,9 @@ public class Scanner {
 	 * @param c Character to scan.
 	 * @return <code>true</code> if the scan is succesful, <code>false</code> otherwise.
 	 * @throws IOException On failure.
+	 * @deprecated Use {@link com.trazere.core.text.Scanner#scanChar(char)}.
 	 */
+	@Deprecated
 	public boolean scanChar(final char c)
 	throws IOException {
 		final int i = _reader.read();
@@ -170,7 +183,9 @@ public class Scanner {
 	 * @param filter Filter defining the accepted characters.
 	 * @return The sequence of scanned characters.
 	 * @throws IOException On failure.
+	 * @deprecated Use {@link com.trazere.core.text.Scanner#scanChars(com.trazere.core.text.CharPredicate)}.
 	 */
+	@Deprecated
 	public String scanChars(final CharPredicate<? extends IOException> filter)
 	throws IOException {
 		final StringBuffer buffer = new StringBuffer();
@@ -402,7 +417,9 @@ public class Scanner {
 	 * Close the reader of the receiver scanner.
 	 * 
 	 * @throws IOException On failure.
+	 * @deprecated Use {@link com.trazere.core.text.Scanner#close()}.
 	 */
+	@Deprecated
 	public void close()
 	throws IOException {
 		_reader.close();

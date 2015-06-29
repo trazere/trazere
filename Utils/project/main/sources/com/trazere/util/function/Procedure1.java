@@ -29,7 +29,9 @@ public interface Procedure1<T, X extends Exception> {
 	 * 
 	 * @param value The argument value.
 	 * @throws X When the procedure execution fails.
+	 * @deprecated Use {@link com.trazere.core.imperative.Procedure#execute(Object)}.
 	 */
+	@Deprecated
 	public void execute(final T value)
 	throws X;
 }

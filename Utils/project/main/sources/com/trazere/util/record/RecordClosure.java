@@ -40,7 +40,9 @@ extends ResettableClosure<Record<K, V>, RecordException> {
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @return The built closure.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <K, V> RecordClosure<K, V> build() {
 		return (RecordClosure<K, V>) _EMPTY;
@@ -53,7 +55,9 @@ extends ResettableClosure<Record<K, V>, RecordException> {
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @return The built closure.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public static <K, V> RecordClosure<K, V> build(final Record<K, V> value) {
 		assert null != value;
 		
@@ -79,7 +83,9 @@ extends ResettableClosure<Record<K, V>, RecordException> {
 	 * @param reader The record reader.
 	 * @param parameters The parameters.
 	 * @return The built closure.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public static <K, V> RecordClosure<K, V> build(final RecordReader<K, V> reader, final Record<String, Object> parameters) {
 		assert null != reader;
 		assert null != parameters;

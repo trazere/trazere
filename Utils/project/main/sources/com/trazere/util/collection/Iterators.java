@@ -28,7 +28,7 @@ import java.util.NoSuchElementException;
  * The {@link Iterators} class provides various factories of iterators.
  * 
  * @see Iterator
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class Iterators {

@@ -39,7 +39,9 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * @param type The type of the values.
 	 * @param nullable The flag indicating whether the values can be <code>null</code> or not.
 	 * @throws DuplicateFieldException When the field is already signed.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public void add(final K key, final Class<? extends V> type, final boolean nullable)
 	throws DuplicateFieldException;
 	
@@ -50,7 +52,9 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * 
 	 * @param field Field signature to add.
 	 * @throws DuplicateFieldException When the field is already signed.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public void add(final FieldSignature<K, ? extends V> field)
 	throws DuplicateFieldException;
 	
@@ -61,7 +65,9 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * 
 	 * @param fields Field signatures to add.
 	 * @throws DuplicateFieldException When some field is already signed.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public void addAll(final Collection<? extends FieldSignature<K, ? extends V>> fields)
 	throws DuplicateFieldException;
 	
@@ -73,7 +79,9 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * @param signature Record signature containing the field signatures to add.
 	 * @throws InvalidFieldException When the some field of the given signature record cannot be read.
 	 * @throws DuplicateFieldException When some field is already signed.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public void addAll(final RecordSignature<K, ? extends V> signature)
 	throws InvalidFieldException, DuplicateFieldException;
 	
@@ -86,7 +94,9 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * @param type The type of the values.
 	 * @param nullable The flag indicating whether the values can be <code>null</code> or not.
 	 * @throws IncompatibleFieldException When the given and current signature of the field are not compatible.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public void unify(final K key, final Class<? extends V> type, final boolean nullable)
 	throws IncompatibleFieldException;
 	
@@ -97,7 +107,9 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * 
 	 * @param field Field signature to unify.
 	 * @throws IncompatibleFieldException When the given and current signature of the field are not compatible.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public void unify(final FieldSignature<K, ? extends V> field)
 	throws IncompatibleFieldException;
 	
@@ -108,7 +120,9 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * 
 	 * @param fields Field signatures to unify.
 	 * @throws IncompatibleFieldException When the given and current signature of some field are not compatible.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public void unifyAll(final Collection<? extends FieldSignature<K, ? extends V>> fields)
 	throws IncompatibleFieldException;
 	
@@ -120,7 +134,9 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * @param signature Record signature to unify.
 	 * @throws InvalidFieldException When the some field of the given signature record cannot be read.
 	 * @throws IncompatibleFieldException When the given and current signature of some field are not compatible.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public void unifyAll(final RecordSignature<K, ? extends V> signature)
 	throws InvalidFieldException, IncompatibleFieldException;
 	
@@ -136,7 +152,9 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * @throws InvalidFieldException When the some field of the given signature record cannot be read.
 	 * @throws IncompatibleFieldException When the given and current signature of some field are not compatible.
 	 * @throws FX When some filter evaluation fails.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public <FX extends Exception> void unifyAll(final Predicate1<? super FieldSignature<K, ? extends V>, FX> filter, final RecordSignature<K, ? extends V> signature)
 	throws IncompatibleFieldException, FX, InvalidFieldException, FX;
 	
@@ -144,7 +162,9 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * Test whether the receiver record signature builder is empty or not.
 	 * 
 	 * @return <code>true</code> when empty, <code>false</code> otherwise.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public boolean isEmpty();
 	
 	/**
@@ -152,14 +172,18 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * 
 	 * @param key Key of the field.
 	 * @return <code>true</code> when the field is signed, <code>false</code> otherwise.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public boolean contains(final K key);
 	
 	/**
 	 * Get the keys identifying the fields signed in the receiver record signature builder.
 	 * 
 	 * @return An unmodiable set of the keys.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public Set<K> getKeys();
 	
 	/**
@@ -169,13 +193,18 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * 
 	 * @param key Key of the field signature to remove.
 	 * @throws MissingFieldException When the field identified by the given key is not signed.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public void remove(final K key)
 	throws MissingFieldException;
 	
 	/**
 	 * Remove all field signatures from the receiver record signature builder.
+	 * 
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public void clear();
 	
 	/**
@@ -183,7 +212,9 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * 
 	 * @return The built record signature.
 	 * @throws RecordException When the record signature cannot be built.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public R build()
 	throws RecordException;
 }

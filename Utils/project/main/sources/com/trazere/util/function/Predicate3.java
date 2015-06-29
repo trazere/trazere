@@ -34,7 +34,9 @@ public interface Predicate3<T1, T2, T3, X extends Exception> {
 	 * @param value3 The third argument value.
 	 * @return The result of the predicate evaluation.
 	 * @throws X When the predicate evaluation fails.
+	 * @deprecated Use {@link com.trazere.core.functional.Predicate3#evaluate(Object, Object, Object)}.
 	 */
+	@Deprecated
 	public boolean evaluate(final T1 value1, final T2 value2, final T3 value3)
 	throws X;
 }

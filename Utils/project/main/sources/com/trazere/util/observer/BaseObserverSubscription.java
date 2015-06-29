@@ -30,7 +30,9 @@ implements ObserverSubscription {
 	 * Instantiates a new subscription for the given observer.
 	 * 
 	 * @param observer The observer.
+	 * @deprecated Use {@link com.trazere.core.reactive.BaseObserverSubscription#BaseObserverSubscription(com.trazere.core.reactive.Observer)}.
 	 */
+	@Deprecated
 	public BaseObserverSubscription(final Observer<?> observer) {
 		assert null != observer;
 		
@@ -47,7 +49,9 @@ implements ObserverSubscription {
 	 * Gets the observer corresponding to the receiver subscription.
 	 * 
 	 * @return The observer.
+	 * @deprecated Use {@link com.trazere.core.reactive.BaseObserverSubscription#getObserver()}.
 	 */
+	@Deprecated
 	public Observer<?> getObserver() {
 		return _observer;
 	}

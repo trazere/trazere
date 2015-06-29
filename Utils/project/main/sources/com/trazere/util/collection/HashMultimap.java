@@ -86,7 +86,9 @@ implements Multimap<K, V, C> {
 	 * Gets the collection factory of the receiver multimap.
 	 * 
 	 * @return The collection factory.
+	 * @deprecated Use {@link com.trazere.core.collection.MapMultimap#getCollectionFactory()}.
 	 */
+	@Deprecated
 	public CollectionFactory<V, ? extends C> getCollectionFactory() {
 		return _collectionFactory;
 	}
@@ -101,7 +103,10 @@ implements Multimap<K, V, C> {
 	 * 
 	 * @param key The key.
 	 * @return The collection.
+	 * @deprecated Use {@link com.trazere.core.collection.MapMultimap#getCollection(Object)}.
 	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	protected C makeCollection(final K key) {
 		// Look for the family.
 		final C currentFamily = _values.get(key);

@@ -33,7 +33,7 @@ import java.util.Properties;
 /**
  * The {@link PropertiesUtils} class provides various utilities regarding the manipulation of properties.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class PropertiesUtils {

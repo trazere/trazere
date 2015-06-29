@@ -68,7 +68,10 @@ implements Function1<K, V, X> {
 	
 	/**
 	 * Instantiates a new empty lazy map.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.functional.MemoizedFunction} or {@link com.trazere.core.functional.ResettableFunction#ResettableFunction()}.
 	 */
+	@Deprecated
 	public LazyMap() {
 		// Initialization.
 		_mappings = new HashMap<K, V>();
@@ -78,7 +81,9 @@ implements Function1<K, V, X> {
 	 * Instantiates a new lazy map containing the given mappings.
 	 * 
 	 * @param mappings Entries of the map.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public LazyMap(final Map<? extends K, ? extends V> mappings) {
 		assert null != mappings;
 		
@@ -209,7 +214,10 @@ implements Function1<K, V, X> {
 	 * @param key The key. May be <code>null</code>.
 	 * @return The computed value. May be <code>null</code>.
 	 * @throws X When the value cannot be computed.
+	 * @deprecated Use {@link com.trazere.core.functional.BaseMemoizedFunction#compute(Object)}.
 	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	protected abstract V compute(final K key)
 	throws X;
 	

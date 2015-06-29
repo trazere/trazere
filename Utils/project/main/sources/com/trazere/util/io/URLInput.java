@@ -35,7 +35,9 @@ implements Input {
 	 * Instanciate a new data input with the given URL.
 	 * 
 	 * @param url URL to read.
+	 * @deprecated Use {@link com.trazere.core.io.URLInput#URLInput(URL)}.
 	 */
+	@Deprecated
 	public URLInput(final URL url) {
 		assert null != url;
 		
@@ -47,7 +49,9 @@ implements Input {
 	 * Get the URL read by the receiver data input.
 	 * 
 	 * @return The url.
+	 * @deprecated Use {@link com.trazere.core.io.URLInput#getUrl()}.
 	 */
+	@Deprecated
 	public URL getUrl() {
 		return _url;
 	}

@@ -42,7 +42,9 @@ extends XmlAdapter<String, UUID> {
 	 * @param representation Representation to parse.
 	 * @return The UUID.
 	 * @throws IllegalArgumentException When the representation is invalid.
+	 * @deprecated Use {@link com.trazere.xml.UUIDAdapter#parse(String)}.
 	 */
+	@Deprecated
 	public static UUID parse(final String representation)
 	throws IllegalArgumentException {
 		assert null != representation;

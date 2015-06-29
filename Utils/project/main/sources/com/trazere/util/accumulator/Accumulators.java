@@ -27,7 +27,7 @@ import com.trazere.util.type.Tuple2;
 /**
  * The {@link Accumulators} class provides various factories of accumulators.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class Accumulators {

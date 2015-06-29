@@ -21,7 +21,7 @@ import com.trazere.util.lang.WrapException;
 /**
  * The {@link AccumulatorUtils} class provides various utilities regarding accumulators.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class AccumulatorUtils {

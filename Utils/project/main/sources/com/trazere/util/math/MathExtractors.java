@@ -24,7 +24,7 @@ import java.math.BigInteger;
  * The {@link MathExtractors} class provides various factories of extractors related to maths.
  * 
  * @see Function1
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class MathExtractors {

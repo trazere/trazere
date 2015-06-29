@@ -41,7 +41,9 @@ implements Serializable {
 	 * Instantiates an identifier with the given value.
 	 * 
 	 * @param value The value.
+	 * @deprecated Use {@link com.trazere.core.util.Value#Value(Object)}.
 	 */
+	@Deprecated
 	protected Identifier(final V value) {
 		assert null != value;
 		

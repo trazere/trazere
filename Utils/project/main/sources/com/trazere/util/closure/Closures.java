@@ -21,7 +21,7 @@ import com.trazere.util.type.Maybe;
 /**
  * The {@link Closures} class provides various factories of closures.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class Closures {

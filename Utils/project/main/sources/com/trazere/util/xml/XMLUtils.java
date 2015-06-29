@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * The {@link XMLUtils} class provides various utilities regarding the manipulation of XML.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class XMLUtils {

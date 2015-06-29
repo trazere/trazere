@@ -25,7 +25,7 @@ import com.trazere.util.text.TextUtils;
  * @param <T> Type of the values.
  * @param <R> Type of the representations.
  * @param <X> Type of the exceptions.
- * @deprecated To be removed.
+ * @deprecated Use {@link com.trazere.core.util.BaseSerializer}.
  */
 @Deprecated
 public abstract class BaseValueSerializer<T, R, X extends Exception>
@@ -35,7 +35,9 @@ implements ValueSerializer<T, R, X>, Describable {
 	 * 
 	 * @param valueClass The type of the values.
 	 * @param representationClass The type of the representations.
+	 * @deprecated Use {@link com.trazere.core.util.BaseSerializer#BaseSerializer(com.trazere.core.lang.ThrowableFactory)}.
 	 */
+	@Deprecated
 	public BaseValueSerializer(final Class<T> valueClass, final Class<R> representationClass) {
 		assert null != valueClass;
 		assert null != representationClass;

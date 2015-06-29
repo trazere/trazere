@@ -55,7 +55,9 @@ extends RuntimeException {
 	 * The wrapped throwable is stored as cause.
 	 * 
 	 * @param cause Throwable to wrap.
+	 * @deprecated Use {@link RuntimeException#RuntimeException(Throwable)}.
 	 */
+	@Deprecated
 	public WrapException(final Throwable cause) {
 		super(cause);
 		
@@ -105,7 +107,9 @@ extends RuntimeException {
 	 * 
 	 * @param throwableFactory Factory of the throwables to wrap.
 	 * @return The built factory.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public static ThrowableFactory<WrapException> factory(final ThrowableFactory<?> throwableFactory) {
 		assert null != throwableFactory;
 		

@@ -32,7 +32,9 @@ public interface Input {
 	 * 
 	 * @return <code>true</code> when the data exist, <code>false</code> otherwise.
 	 * @throws IOException When the test cannot be done.
+	 * @deprecated Use {@link com.trazere.core.io.Input#exists()}.
 	 */
+	@Deprecated
 	public boolean exists()
 	throws IOException;
 	
@@ -41,7 +43,9 @@ public interface Input {
 	 * 
 	 * @return The built input stream.
 	 * @throws IOException When the input stream cannot be built.
+	 * @deprecated Use {@link com.trazere.core.io.Input#open()}.
 	 */
+	@Deprecated
 	public InputStream open()
 	throws IOException;
 }

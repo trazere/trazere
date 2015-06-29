@@ -42,7 +42,9 @@ public abstract class IdentifierBase<V, I extends Identifier<V>> {
 	 * 
 	 * @param value The value.
 	 * @return The built identifier.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	protected abstract I build(final V value);
 	
 	/**
@@ -50,7 +52,9 @@ public abstract class IdentifierBase<V, I extends Identifier<V>> {
 	 * 
 	 * @param value The value.
 	 * @return The identifier.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public final I fromValue(final V value) {
 		assert null != value;
 		
@@ -62,7 +66,9 @@ public abstract class IdentifierBase<V, I extends Identifier<V>> {
 	 * 
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public <X extends Exception> Function1<V, I, X> fromValueFunction() {
 		return new Function1<V, I, X>() {
 			@Override

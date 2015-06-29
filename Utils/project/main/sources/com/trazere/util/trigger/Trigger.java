@@ -26,20 +26,26 @@ public interface Trigger {
 	 * Indicate whether the receiver trigger is set.
 	 * 
 	 * @return <code>true</code> when the trigger is set, <code>false</code> otherwise.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public boolean isSet();
 	
 	/**
 	 * Begin a session.
 	 * 
 	 * @return <code>true</code> when the trigger is being set, <code>false</code> when its state does not changed.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public boolean begin();
 	
 	/**
 	 * End a session.
 	 * 
 	 * @return <code>true</code> when the trigger is being reset, <code>false</code> when its state does not changed.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public boolean end();
 }

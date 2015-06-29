@@ -62,7 +62,9 @@ implements Predicate1<Collection<String>, RuntimeException>, Describable {
 	 * prefixed with a minus (<tt>-</tt>). Active flags are prefixed with neither.
 	 * 
 	 * @param representation The representation of the mask.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public FlagPredicate(final String representation) {
 		this(representation, ",");
 	}
@@ -75,7 +77,9 @@ implements Predicate1<Collection<String>, RuntimeException>, Describable {
 	 * 
 	 * @param representation The representation of the mask.
 	 * @param delimeter The delimiter of the flags.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public FlagPredicate(final String representation, final String delimeter) {
 		this(TextUtils.split(representation, delimeter, false, true, new ArrayList<String>()));
 	}
@@ -87,7 +91,9 @@ implements Predicate1<Collection<String>, RuntimeException>, Describable {
 	 * neither.
 	 * 
 	 * @param flags The flags composing the mask.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public FlagPredicate(final List<String> flags) {
 		assert null != flags;
 		
@@ -126,7 +132,9 @@ implements Predicate1<Collection<String>, RuntimeException>, Describable {
 	 * Gets the required flags of the receiver set.
 	 * 
 	 * @return The required flags.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public Set<String> getRequired() {
 		return _required;
 	}
@@ -135,7 +143,9 @@ implements Predicate1<Collection<String>, RuntimeException>, Describable {
 	 * Gets the enabled flags of the receiver set.
 	 * 
 	 * @return The enabled flags.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public Set<String> getEnabled() {
 		return _enabled;
 	}
@@ -144,7 +154,9 @@ implements Predicate1<Collection<String>, RuntimeException>, Describable {
 	 * Gets the forbidden flags of the receiver set.
 	 * 
 	 * @return The forbidden flags.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public Set<String> getForbidden() {
 		return _forbidden;
 	}
@@ -154,7 +166,9 @@ implements Predicate1<Collection<String>, RuntimeException>, Describable {
 	 * 
 	 * @param flags Flags to test.
 	 * @return <code>true</code> when the flags are accepted, <code>false</code> otherwise.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public boolean test(final Collection<String> flags) {
 		return flags.containsAll(_required) && (CollectionUtils.intersects(flags, _enabled) || _enabled.isEmpty() && !_required.isEmpty()) && !CollectionUtils.intersects(flags, _forbidden);
 	}
@@ -164,7 +178,9 @@ implements Predicate1<Collection<String>, RuntimeException>, Describable {
 	 * 
 	 * @param flags Flags to test.
 	 * @return <code>true</code> when the flags are accepted, <code>false</code> otherwise.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public boolean test(final String... flags) {
 		assert null != flags;
 		

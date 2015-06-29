@@ -21,7 +21,7 @@ import com.trazere.util.accumulator.BaseAccumulator1;
 /**
  * The {@link ReferenceAccumulators} class provides various factories of accumulators related to references.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class ReferenceAccumulators {

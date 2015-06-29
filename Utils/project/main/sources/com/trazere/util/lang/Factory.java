@@ -32,7 +32,9 @@ extends Function0<T, X> {
 	 * 
 	 * @return The built value. May be <code>null</code>.
 	 * @throws X When the value cannot be built.
+	 * @deprecated Use {@link com.trazere.core.design.Factory#build()}.
 	 */
+	@Deprecated
 	public T build()
 	throws X;
 }

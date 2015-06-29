@@ -29,7 +29,10 @@ extends RuntimeException {
 	
 	/**
 	 * Instantiates a new exception.
+	 * 
+	 * @deprecated Use {@link RuntimeException#RuntimeException()}.
 	 */
+	@Deprecated
 	public UncheckedException() {
 		super();
 	}
@@ -38,7 +41,9 @@ extends RuntimeException {
 	 * Instantiates a new exception using the given message.
 	 * 
 	 * @param message Details about the exception.
+	 * @deprecated Use {@link RuntimeException#RuntimeException(String)}.
 	 */
+	@Deprecated
 	public UncheckedException(final String message) {
 		super(message);
 	}
@@ -47,7 +52,9 @@ extends RuntimeException {
 	 * Instantiates a new exception using the given cause.
 	 * 
 	 * @param cause Cause of the exception.
+	 * @deprecated Use {@link RuntimeException#RuntimeException(Throwable)}.
 	 */
+	@Deprecated
 	public UncheckedException(final Throwable cause) {
 		super(cause);
 	}
@@ -57,7 +64,9 @@ extends RuntimeException {
 	 * 
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
+	 * @deprecated Use {@link RuntimeException#RuntimeException(String, Throwable)}.
 	 */
+	@Deprecated
 	public UncheckedException(final String message, final Throwable cause) {
 		super(message, cause);
 	}

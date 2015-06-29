@@ -25,7 +25,7 @@ import java.util.Map;
  * An extractor is function that combines a map and a filter operation.
  * 
  * @see Function1
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class Extractors {

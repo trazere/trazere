@@ -33,7 +33,9 @@ public interface FailureHandler<F, X extends Exception> {
 	 * @param failureCount Number of failures.
 	 * @return The extracted failure.
 	 * @throws X On failure.
+	 * @deprecated Use {@link com.trazere.core.util.FailureHandler#handleFailure(Throwable, int)}.
 	 */
+	@Deprecated
 	public Maybe<? extends F> handleFailure(final F failure, final int failureCount)
 	throws X;
 }

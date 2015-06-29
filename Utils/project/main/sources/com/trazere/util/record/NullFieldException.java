@@ -30,7 +30,10 @@ extends RecordException {
 	
 	/**
 	 * Instantiates a new exception.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.record.NullFieldException#NullFieldException()}.
 	 */
+	@Deprecated
 	public NullFieldException() {
 		super();
 	}
@@ -39,7 +42,9 @@ extends RecordException {
 	 * Instantiates a new exception using the given message.
 	 * 
 	 * @param message Details about the exception.
+	 * @deprecated Use {@link com.trazere.core.record.NullFieldException#NullFieldException(String)}.
 	 */
+	@Deprecated
 	public NullFieldException(final String message) {
 		super(message);
 	}
@@ -48,7 +53,9 @@ extends RecordException {
 	 * Instantiates a new exception using the given cause.
 	 * 
 	 * @param cause Cause of the exception.
+	 * @deprecated Use {@link com.trazere.core.record.NullFieldException#NullFieldException(Throwable)}.
 	 */
+	@Deprecated
 	public NullFieldException(final Throwable cause) {
 		super(cause);
 	}
@@ -58,12 +65,19 @@ extends RecordException {
 	 * 
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
+	 * @deprecated Use {@link com.trazere.core.record.NullFieldException#NullFieldException(String, Throwable)}.
 	 */
+	@Deprecated
 	public NullFieldException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 	
-	/** Factory of {@link NullFieldException}. */
+	/**
+	 * Factory of {@link NullFieldException}.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.record.NullFieldException#FACTORY}.
+	 */
+	@Deprecated
 	@SuppressWarnings("hiding")
 	public static final ThrowableFactory<NullFieldException> FACTORY = new BaseThrowableFactory<NullFieldException>() {
 		@Override

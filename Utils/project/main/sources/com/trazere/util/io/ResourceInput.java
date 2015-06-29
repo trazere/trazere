@@ -39,7 +39,9 @@ implements Input {
 	 * 
 	 * @param base Base class
 	 * @param name Name of the resource.
+	 * @deprecated Use {@link com.trazere.core.io.ResourceInput#ResourceInput(Class, String)}.
 	 */
+	@Deprecated
 	public ResourceInput(final Class<?> base, final String name) {
 		assert null != base;
 		assert null != name;
@@ -49,10 +51,20 @@ implements Input {
 		_name = name;
 	}
 	
+	/**
+	 * @deprecated Use {@link com.trazere.core.io.ResourceInput#getBase()}.
+	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	public Class<?> getBase() {
 		return _base;
 	}
 	
+	/**
+	 * @deprecated Use {@link com.trazere.core.io.ResourceInput#getName()}.
+	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	public String getName() {
 		return _name;
 	}

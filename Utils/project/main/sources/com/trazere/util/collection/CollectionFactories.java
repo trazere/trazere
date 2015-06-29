@@ -26,7 +26,7 @@ import java.util.TreeSet;
  * The {@link CollectionFactories} class provides various factories of collection factories.
  * 
  * @see CollectionFactory
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class CollectionFactories {

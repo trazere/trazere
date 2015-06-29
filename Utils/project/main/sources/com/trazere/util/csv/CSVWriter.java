@@ -52,7 +52,9 @@ public class CSVWriter {
 	 * @param delimiter Delimiter of the CSV fields.
 	 * @param headers Headers of the CSV output.
 	 * @param options Options.
+	 * @deprecated Use {@link com.trazere.csv.CSVWriter#CSVWriter(Writer, String, List, Set)}.
 	 */
+	@Deprecated
 	public CSVWriter(final Writer writer, final String delimiter, final List<String> headers, final EnumSet<CSVWriterOption> options) {
 		assert null != writer;
 		assert null != delimiter;
@@ -70,7 +72,9 @@ public class CSVWriter {
 	 * Get the delimiter of the CSV fields of the receiver writer.
 	 * 
 	 * @return The delimiter string.
+	 * @deprecated Use {@link com.trazere.csv.CSVWriter#getDelimiter()}.
 	 */
+	@Deprecated
 	public String getDelimiter() {
 		return _delimiter;
 	}
@@ -79,7 +83,9 @@ public class CSVWriter {
 	 * Get the headers of the CSV output of receiver writer.
 	 * 
 	 * @return The headers.
+	 * @deprecated Use {@link com.trazere.csv.CSVWriter#getHeaders()}.
 	 */
+	@Deprecated
 	public List<String> getHeaders() {
 		return _headers;
 	}
@@ -88,7 +94,9 @@ public class CSVWriter {
 	 * Get the options of the receiver writer.
 	 * 
 	 * @return An unmodifiable set of the options.
+	 * @deprecated Use {@link com.trazere.csv.CSVWriter#getOptions()}.
 	 */
+	@Deprecated
 	public Set<CSVWriterOption> getOptions() {
 		return _options;
 	}
@@ -97,7 +105,9 @@ public class CSVWriter {
 	 * Write a line containing the headers of the CSV output.
 	 * 
 	 * @throws IOException On failure.
+	 * @deprecated Use {@link com.trazere.csv.CSVWriter#writeHeaders()}.
 	 */
+	@Deprecated
 	public void writeHeaders()
 	throws IOException {
 		boolean first = true;
@@ -122,7 +132,9 @@ public class CSVWriter {
 	 * 
 	 * @param line Values of the CSV fields of the line identified by their header.
 	 * @throws IOException On failure.
+	 * @deprecated Use {@link com.trazere.csv.CSVWriter#writeLine(com.trazere.core.record.Record)}.
 	 */
+	@Deprecated
 	public void writeLine(final CSVLine line)
 	throws IOException {
 		final MutableBoolean first = new MutableBoolean(true);
@@ -153,7 +165,9 @@ public class CSVWriter {
 	 * 
 	 * @param value Value to escape.
 	 * @return The escapted value.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public final String escapeValue(final String value) {
 		assert null != value;
 		
@@ -172,7 +186,9 @@ public class CSVWriter {
 	 * Flush the underlying writer of the receiver CSV writer.
 	 * 
 	 * @throws IOException On failure.
+	 * @deprecated Use {@link com.trazere.csv.CSVWriter#flush()}.
 	 */
+	@Deprecated
 	public void flush()
 	throws IOException {
 		_writer.flush();
@@ -182,7 +198,9 @@ public class CSVWriter {
 	 * Close the underlying writer of the receiver CSV writer.
 	 * 
 	 * @throws IOException On failure.
+	 * @deprecated Use {@link com.trazere.csv.CSVWriter#close()}.
 	 */
+	@Deprecated
 	public void close()
 	throws IOException {
 		_writer.close();

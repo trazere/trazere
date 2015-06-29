@@ -79,7 +79,9 @@ extends SimpleRecord<String, String> {
 	 * Instantiate a new line with the given fields.
 	 * 
 	 * @param fields Values of the fields identified by their headers.
+	 * @deprecated Use {@link com.trazere.core.record.RecordBuilder}.
 	 */
+	@Deprecated
 	protected CSVLine(final Map<String, String> fields) {
 		super(fields);
 	}

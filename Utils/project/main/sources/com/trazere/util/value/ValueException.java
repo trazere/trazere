@@ -30,7 +30,10 @@ extends Exception {
 	
 	/**
 	 * Instantiates a new exception.
+	 * 
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public ValueException() {
 		super();
 	}
@@ -39,7 +42,9 @@ extends Exception {
 	 * Instantiates a new exception using the given message.
 	 * 
 	 * @param message Details about the exception.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public ValueException(final String message) {
 		super(message);
 	}
@@ -48,7 +53,9 @@ extends Exception {
 	 * Instantiates a new exception using the given cause.
 	 * 
 	 * @param cause Cause of the exception.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public ValueException(final Throwable cause) {
 		super(cause);
 	}
@@ -58,12 +65,19 @@ extends Exception {
 	 * 
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public ValueException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 	
-	/** Factory of {@link ValueException}. */
+	/**
+	 * Factory of {@link ValueException}.
+	 * 
+	 * @deprecated To be removed.
+	 */
+	@Deprecated
 	public static final ThrowableFactory<ValueException> FACTORY = new BaseThrowableFactory<ValueException>() {
 		@Override
 		public ValueException build() {

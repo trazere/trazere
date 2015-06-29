@@ -20,7 +20,7 @@ import com.trazere.util.function.Function1;
 /**
  * The {@link ValueFunctions} class provides various factories of functions related to values.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class ValueFunctions {

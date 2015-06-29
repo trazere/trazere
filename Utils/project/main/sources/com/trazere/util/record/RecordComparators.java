@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * The {@link RecordComparators} class provides various factories of record comparators.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class RecordComparators {

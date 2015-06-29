@@ -37,7 +37,9 @@ extends Factory<T, InternalException> {
 	 * 
 	 * @param message The message.
 	 * @return The built throwable.
+	 * @deprecated Use {@link com.trazere.core.lang.ThrowableFactory#build(String)}.
 	 */
+	@Deprecated
 	public T build(final String message);
 	
 	/**
@@ -45,7 +47,9 @@ extends Factory<T, InternalException> {
 	 * 
 	 * @param cause The throwable.
 	 * @return The built throwable.
+	 * @deprecated Use {@link com.trazere.core.lang.ThrowableFactory#build(Throwable)}.
 	 */
+	@Deprecated
 	public T build(final Throwable cause);
 	
 	/**
@@ -54,6 +58,8 @@ extends Factory<T, InternalException> {
 	 * @param message The message.
 	 * @param cause The throwable.
 	 * @return The built throwable.
+	 * @deprecated Use {@link com.trazere.core.lang.ThrowableFactory#build(String, Throwable)}.
 	 */
+	@Deprecated
 	public T build(final String message, final Throwable cause);
 }

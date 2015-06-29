@@ -21,7 +21,7 @@ import java.util.Collection;
 /**
  * The {@link CollectionPredicates} class provides various factories of predicates related to collections.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class CollectionPredicates {

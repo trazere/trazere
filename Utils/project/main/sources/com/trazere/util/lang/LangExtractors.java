@@ -22,7 +22,7 @@ import com.trazere.util.type.Maybe;
  * The {@link LangExtractors} class provides various factories of extractors related to the language.
  * 
  * @see Function1
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class LangExtractors {

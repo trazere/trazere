@@ -42,7 +42,10 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 	
 	/**
 	 * Instantiate a new empty builder.
+	 * 
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public BaseRecordSignatureBuilder() {
 		// Initialization.
 		_fields = new HashMap<K, FieldSignature<K, ? extends V>>();
@@ -52,7 +55,9 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 	 * Instantiate a new builder populated with the given field signatures.
 	 * 
 	 * @param fields Initial field signatures identified by their keys.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public BaseRecordSignatureBuilder(final Map<K, ? extends FieldSignature<K, ? extends V>> fields) {
 		assert null != fields;
 		
@@ -65,7 +70,9 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 	 * 
 	 * @param signature Record signature containing the initial field signatures.
 	 * @throws InvalidFieldException When some field signature cannot be read.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public BaseRecordSignatureBuilder(final RecordSignature<K, ? extends V> signature)
 	throws InvalidFieldException {
 		assert null != signature;

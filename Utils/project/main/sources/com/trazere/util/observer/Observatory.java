@@ -31,14 +31,18 @@ public interface Observatory<S, E> {
 	 * 
 	 * @param subject The subject.
 	 * @return The observable.
+	 * @deprecated Use {@link com.trazere.core.reactive.Observatory#observe(Object)}.
 	 */
+	@Deprecated
 	public Observable<E> observe(final S subject);
 	
 	/**
 	 * Gets an observable that allows to subscribe to all events routed by the reveiver observatory.
 	 * 
 	 * @return The observable.
+	 * @deprecated Use {@link com.trazere.core.reactive.Observatory#observeAll()}.
 	 */
+	@Deprecated
 	public Observable<E> observeAll();
 	
 	/**
@@ -46,6 +50,8 @@ public interface Observatory<S, E> {
 	 * 
 	 * @param subject The subject.
 	 * @param event The event.
+	 * @deprecated Use {@link com.trazere.core.reactive.Observatory#notify(Object, Object)}.
 	 */
+	@Deprecated
 	public void notify(final S subject, final E event);
 }

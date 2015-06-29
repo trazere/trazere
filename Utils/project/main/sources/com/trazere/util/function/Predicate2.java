@@ -32,7 +32,9 @@ public interface Predicate2<T1, T2, X extends Exception> {
 	 * @param value2 The second argument value.
 	 * @return The result of the predicate evaluation.
 	 * @throws X When the predicate evaluation fails.
+	 * @deprecated Use {@link com.trazere.core.functional.Predicate2#evaluate(Object, Object)}.
 	 */
+	@Deprecated
 	public boolean evaluate(final T1 value1, final T2 value2)
 	throws X;
 }

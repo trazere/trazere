@@ -38,7 +38,7 @@ import java.util.Set;
 /**
  * The {@link CollectionUtils} class provides various utilities regarding the manipulation of collections and maps.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class CollectionUtils {

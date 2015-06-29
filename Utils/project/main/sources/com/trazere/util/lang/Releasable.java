@@ -27,7 +27,9 @@ public interface Releasable<X extends Exception> {
 	 * Releases the receiver releasable.
 	 * 
 	 * @throws X When the release fails.
+	 * @deprecated Use {@link com.trazere.core.lang.Releasable#release()}.
 	 */
+	@Deprecated
 	public void release()
 	throws X;
 }

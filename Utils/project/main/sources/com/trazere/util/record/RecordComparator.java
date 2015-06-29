@@ -42,7 +42,9 @@ implements Describable {
 	 * 
 	 * @param key Key identifying the field used for comparison.
 	 * @param comparator Comparator of the values of the field.
+	 * @deprecated Use {@link com.trazere.core.record.RecordComparators#mandatoryFieldValue(com.trazere.core.record.FieldKey, Comparator)}.
 	 */
+	@Deprecated
 	public RecordComparator(final K key, final Comparator<V> comparator) {
 		super(comparator);
 		
@@ -57,7 +59,9 @@ implements Describable {
 	 * Get the key identifying the field used for comparison.
 	 * 
 	 * @return The key.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public K getKey() {
 		return _key;
 	}

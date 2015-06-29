@@ -32,7 +32,10 @@ public class MutableReference<T>
 implements ReleasableReference<T, RuntimeException>, Describable {
 	/**
 	 * Instantiates an unset reference.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.reference.MutableReference#MutableReference()}.
 	 */
+	@Deprecated
 	public MutableReference() {
 		this(Maybe.<T>none());
 	}
@@ -41,7 +44,9 @@ implements ReleasableReference<T, RuntimeException>, Describable {
 	 * Instantiates a reference set to the given value.
 	 * 
 	 * @param value Value to set. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.reference.MutableReference#MutableReference(Object)}.
 	 */
+	@Deprecated
 	public MutableReference(final T value) {
 		this(Maybe.some(value));
 	}
@@ -50,7 +55,9 @@ implements ReleasableReference<T, RuntimeException>, Describable {
 	 * Instantiates a reference set to the given value.
 	 * 
 	 * @param value Value to set.
+	 * @deprecated Use {@link com.trazere.core.reference.MutableReference#MutableReference(com.trazere.core.util.Maybe)}.
 	 */
+	@Deprecated
 	public MutableReference(final Maybe<T> value) {
 		assert null != value;
 		
@@ -77,7 +84,9 @@ implements ReleasableReference<T, RuntimeException>, Describable {
 	 * @param value Value to set. May be <code>null</code>.
 	 * @return The given value. May be <code>null</code>.
 	 * @throws ReferenceAlreadySetException When the reference is already set.
+	 * @deprecated Use {@link com.trazere.core.reference.MutableReference#set(Object)}.
 	 */
+	@Deprecated
 	public <V extends T> V set(final V value)
 	throws ReferenceAlreadySetException {
 		// Check that the reference is not set.
@@ -100,7 +109,9 @@ implements ReleasableReference<T, RuntimeException>, Describable {
 	 * @param value Value to set.
 	 * @return The given value.
 	 * @throws ReferenceAlreadySetException When the reference is already been set.
+	 * @deprecated Use {@link com.trazere.core.reference.MutableReference#set(com.trazere.core.util.Maybe)}.
 	 */
+	@Deprecated
 	public <V extends T> Maybe<V> set(final Maybe<V> value)
 	throws ReferenceAlreadySetException {
 		assert null != value;
@@ -115,7 +126,10 @@ implements ReleasableReference<T, RuntimeException>, Describable {
 	
 	/**
 	 * Resets the receiver reference.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.reference.MutableReference#reset()}.
 	 */
+	@Deprecated
 	public void reset() {
 		if (_value.isSome()) {
 			// Dispose.
@@ -134,7 +148,9 @@ implements ReleasableReference<T, RuntimeException>, Describable {
 	 * @param <V> Type of the value.
 	 * @param value Value to set. May be <code>null</code>.
 	 * @return The given value. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.reference.MutableReference#update(Object)}.
 	 */
+	@Deprecated
 	public <V extends T> V update(final V value) {
 		// Dispose the current value.
 		if (_value.isSome()) {
@@ -155,7 +171,9 @@ implements ReleasableReference<T, RuntimeException>, Describable {
 	 * @param <V> Type of the value.
 	 * @param value Value to set.
 	 * @return The given value.
+	 * @deprecated Use {@link com.trazere.core.reference.MutableReference#update(com.trazere.core.util.Maybe)}.
 	 */
+	@Deprecated
 	public <V extends T> Maybe<V> update(final Maybe<V> value) {
 		assert null != value;
 		
@@ -174,7 +192,10 @@ implements ReleasableReference<T, RuntimeException>, Describable {
 	 * This methods is called when the receiver set reference is reset or updated. The defaut implementation does nothing.
 	 * 
 	 * @param value The value. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.reference.MutableReference#dispose(Object)}.
 	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	protected void dispose(final T value) {
 		// Nothing to do.
 	}
@@ -207,7 +228,9 @@ implements ReleasableReference<T, RuntimeException>, Describable {
 	 * @param value Value to set. Maybe <code>null</code>.
 	 * @return The current or set value. Maybe <code>null</code>.
 	 * @throws X When the value cannot be evaluated.
+	 * @deprecated Use {@link com.trazere.core.reference.MutableReference#getOrSet(Object)}.
 	 */
+	@Deprecated
 	public <X extends Exception> T getOrSet(final T value)
 	throws X {
 		if (_value.isSome()) {

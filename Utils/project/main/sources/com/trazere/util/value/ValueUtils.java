@@ -28,7 +28,7 @@ import com.trazere.util.record.RecordSignatureBuilder;
 /**
  * The {@link ValueUtils} class provides various helpers regarding values.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class ValueUtils {

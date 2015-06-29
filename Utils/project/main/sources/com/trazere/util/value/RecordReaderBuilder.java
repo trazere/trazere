@@ -40,7 +40,9 @@ extends Factory<R, RecordException> {
 	 * @param key Key identifying the field to add.
 	 * @param value Reader of the field to add.
 	 * @throws DuplicateFieldException When some field is already identified by the given key.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public void add(final K key, final ValueReader<? extends V> value)
 	throws DuplicateFieldException;
 	
@@ -51,7 +53,9 @@ extends Factory<R, RecordException> {
 	 * @param field Signature of the field to add.
 	 * @param value Reader of the field to add.
 	 * @throws DuplicateFieldException When some field is already identified by the given key.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public <T extends V> void add(final FieldSignature<K, T> field, final ValueReader<? extends T> value)
 	throws DuplicateFieldException;
 	
@@ -62,7 +66,9 @@ extends Factory<R, RecordException> {
 	 * 
 	 * @param fields Values of the fields to add identified by their keys.
 	 * @throws DuplicateFieldException When fields are already identified by given keys.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public void addAll(final Map<? extends K, ? extends ValueReader<? extends V>> fields)
 	throws DuplicateFieldException;
 	
@@ -71,14 +77,18 @@ extends Factory<R, RecordException> {
 	 * 
 	 * @param key Key of the field.
 	 * @return <code>true</code> when some field is identified by the given key, <code>false</code> otherwise.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public boolean contains(final K key);
 	
 	/**
 	 * Get the keys identifying the fields of the receiver record reader builder.
 	 * 
 	 * @return An unmodiable set of the keys.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public Set<K> getKeys();
 	
 	/**
@@ -90,7 +100,9 @@ extends Factory<R, RecordException> {
 	 * @param builder Record reader builder to populate.
 	 * @return The given record reader builder.
 	 * @throws DuplicateFieldException When fields are already identified by keys identifying the populated fields.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public <B extends RecordReaderBuilder<? super K, ? super V, ?>> B populate(final B builder)
 	throws DuplicateFieldException;
 	

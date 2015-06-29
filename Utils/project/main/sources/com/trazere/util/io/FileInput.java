@@ -36,7 +36,9 @@ implements Input {
 	 * Instanciate a new data input with the given file.
 	 * 
 	 * @param file File to read.
+	 * @deprecated Use {@link com.trazere.core.io.FileInput#FileInput(File)}.
 	 */
+	@Deprecated
 	public FileInput(final File file) {
 		assert null != file;
 		
@@ -48,7 +50,9 @@ implements Input {
 	 * Get the file read by the receiver data input.
 	 * 
 	 * @return The file.
+	 * @deprecated Use {@link com.trazere.core.io.FileInput#getFile()}.
 	 */
+	@Deprecated
 	public File getFile() {
 		return _file;
 	}

@@ -36,7 +36,9 @@ implements Describable, Serializable {
 	 * Instantiates a new value.
 	 * 
 	 * @param value Wrapped value.
+	 * @deprecated Use {@link com.trazere.core.util.Value#Value(Object)}.
 	 */
+	@Deprecated
 	public ValueWrapper(final T value) {
 		assert null != value;
 		

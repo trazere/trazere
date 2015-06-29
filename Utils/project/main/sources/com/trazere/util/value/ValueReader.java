@@ -32,14 +32,18 @@ extends ParameterFunction<String, Object, T, ValueException> {
 	 * Get the type of the values produced by the receiver reader.
 	 * 
 	 * @return The Java type of the values.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public Class<T> getValueClass();
 	
 	/**
 	 * Indicates whether the values produced by the receiver reader of can be <code>null</code> or not.
 	 * 
 	 * @return <code>true</code> when the values can be <code>null</code>, <code>false</code> otherwise.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public boolean isNullable();
 	
 	/**
@@ -48,7 +52,9 @@ extends ParameterFunction<String, Object, T, ValueException> {
 	 * @param parameters Parameters to use.
 	 * @return The produced value. May be <code>null</code>.
 	 * @throws ValueException When the value cannot be read.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public T read(final Record<String, Object> parameters)
 	throws ValueException;
 	
@@ -58,7 +64,9 @@ extends ParameterFunction<String, Object, T, ValueException> {
 	 * @param reader The record reader.
 	 * @return The composed value reader.
 	 * @throws RecordException When the value reader cannot be composed.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public ValueReader<T> compose(final RecordReader<String, Object> reader)
 	throws RecordException;
 }

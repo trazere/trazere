@@ -41,7 +41,9 @@ extends CheckedExtractIterator<T, T, X> {
 	 * @param value The value to filter. May be <code>null</code>.
 	 * @return <code>true</code> when the value is accepted, <code>false</code> otherwise.
 	 * @throws X When the filtering fails.
+	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#filter(java.util.Iterator, com.trazere.core.functional.Predicate)}.
 	 */
+	@Deprecated
 	protected abstract boolean filter(final T value)
 	throws X;
 }

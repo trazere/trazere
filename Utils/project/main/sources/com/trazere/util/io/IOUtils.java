@@ -34,7 +34,7 @@ import javax.xml.transform.stream.StreamSource;
 /**
  * The {@link IOUtils} class provides various utilities regarding I/O.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class IOUtils {

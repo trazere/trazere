@@ -53,7 +53,9 @@ implements Closure<T, X> {
 	 * Instantiate a closure using the given function.
 	 * 
 	 * @param function The function computing the value.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public LinearClosure(final Function0<? extends T, ? extends X> function) {
 		assert null != function;
 		

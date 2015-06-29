@@ -35,7 +35,11 @@ implements Observable<T> {
 	 * <p>
 	 * The instances keep a weak reference to the real observer in order to allow and handle their garbage collection. They also provide control over the life
 	 * span of the subscription.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.reactive.BaseObservable.ObserverRef}.
 	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	protected abstract class LiveObserver {
 		public LiveObserver(final Observer<? super T> observer) {
 			assert null != observer;
@@ -71,7 +75,9 @@ implements Observable<T> {
 	 * Indicates whether the receiver observable is being observed.
 	 * 
 	 * @return <code>true</code> when the observable is observed by at least one observer, <code>false</code> otherwise.
+	 * @deprecated Use {@link com.trazere.core.reactive.BaseObservable#isObserved()}.
 	 */
+	@Deprecated
 	public boolean isObserved() {
 		return FunctionUtils.isAny(_LIVE_OBSERVER_FILTER, _observers);
 	}
@@ -89,7 +95,10 @@ implements Observable<T> {
 	 * This method is called every time a observer is being subscribed.
 	 * 
 	 * @param observer The observer.
+	 * @deprecated Use {@link com.trazere.core.reactive.BaseObservable#subscribe(com.trazere.core.reactive.BaseObservable.ObserverRef)}.
 	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	protected void subscribe(final LiveObserver observer) {
 		assert null != observer;
 		
@@ -102,7 +111,10 @@ implements Observable<T> {
 	 * This method is called every time a observer is being unsubscribed (either implicitely or explicitely).
 	 * 
 	 * @param observer The observer.
+	 * @deprecated Use {@link com.trazere.core.reactive.BaseObservable#unsubscribe(com.trazere.core.reactive.BaseObservable.ObserverRef)}.
 	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	protected void unsubscribe(final LiveObserver observer) {
 		assert null != observer;
 		
@@ -113,14 +125,22 @@ implements Observable<T> {
 	 * Unsubscribes all observers at once.
 	 * <p>
 	 * Note: the {@link #unsubscribe(LiveObserver)} method is not called when calling this method.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.reactive.BaseObservable#unsubscribeAll()}.
 	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	protected void unsubscribeAll() {
 		_observers.clear();
 	}
 	
 	/**
 	 * The {@link Subscription} class represents the subscriptions of the observers.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.reactive.BaseObservable.ObserverSubscriptionImpl}.
 	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	protected class Subscription
 	extends BaseObserverSubscription {
 		/**
@@ -128,7 +148,11 @@ implements Observable<T> {
 		 * 
 		 * @param observer The observer.
 		 * @param liveObserver The subscribed observer.
+		 * @deprecated Use
+		 *             {@link com.trazere.core.reactive.BaseObservable.ObserverSubscriptionImpl#ObserverSubscriptionImpl(com.trazere.core.reactive.Observer, com.trazere.core.reactive.BaseObservable.ObserverRef)}
+		 *             .
 		 */
+		@Deprecated
 		public Subscription(final Observer<? super T> observer, final LiveObserver liveObserver) {
 			super(observer);
 			
@@ -209,7 +233,10 @@ implements Observable<T> {
 	 * Notifies the observers of the receiver observable with the given event.
 	 * 
 	 * @param value The event value. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.reactive.BaseObservable#notify(Object)}.
 	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	protected void notify(final T value) {
 		// Note: copy the observers to prevent concurrent modifications.
 		for (final LiveObserver observer : new ArrayList<LiveObserver>(_observers)) {

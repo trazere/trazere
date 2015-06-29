@@ -35,7 +35,9 @@ public interface Cache<K, V> {
 	 * 
 	 * @param key The key.
 	 * @return <code>true</code> when a value is associated to the key, <code>false</code> otherwise.
+	 * @deprecated Use {@link com.trazere.core.cache.Cache#contains(Object)}.
 	 */
+	@Deprecated
 	public boolean contains(final K key);
 	
 	/**
@@ -51,7 +53,9 @@ public interface Cache<K, V> {
 	 * Gets the size of the receiver cache.
 	 * 
 	 * @return The number of entries.
+	 * @deprecated Use {@link com.trazere.core.cache.Cache#size()}.
 	 */
+	@Deprecated
 	public int size();
 	
 	/**
@@ -62,7 +66,9 @@ public interface Cache<K, V> {
 	 * @param key The key.
 	 * @param value The value. May be <code>null</code>.
 	 * @return The previously associated value.
+	 * @deprecated Use {@link com.trazere.core.cache.Cache#fill(Object, Object)}.
 	 */
+	@Deprecated
 	public Maybe<V> fill(final K key, final V value);
 	
 	/**
@@ -70,7 +76,9 @@ public interface Cache<K, V> {
 	 * 
 	 * @param key The key.
 	 * @return The associated value.
+	 * @deprecated Use {@link com.trazere.core.cache.Cache#get(Object)}.
 	 */
+	@Deprecated
 	public Maybe<V> get(final K key);
 	
 	/**
@@ -78,7 +86,9 @@ public interface Cache<K, V> {
 	 * 
 	 * @param key The key.
 	 * @return The cleared value.
+	 * @deprecated Use {@link com.trazere.core.cache.Cache#clear(Object)}.
 	 */
+	@Deprecated
 	public Maybe<V> clear(final K key);
 	
 	/**
@@ -87,12 +97,17 @@ public interface Cache<K, V> {
 	 * @param <X> Type of the exceptions.
 	 * @param filter The filter.
 	 * @throws X When some filter evaluation fails.
+	 * @deprecated Use {@link com.trazere.core.cache.Cache#clear(com.trazere.core.functional.Predicate)}.
 	 */
+	@Deprecated
 	public <X extends Exception> void clear(final Predicate1<? super K, X> filter)
 	throws X;
 	
 	/**
 	 * Clears the receiver cache.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.cache.Cache#clear()}.
 	 */
+	@Deprecated
 	public void clear();
 }

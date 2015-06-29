@@ -34,7 +34,9 @@ implements Describable {
 	 * Instantiates a new mutable char with the given value.
 	 * 
 	 * @param value The initial value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableChar#MutableChar(char)}.
 	 */
+	@Deprecated
 	public MutableChar(final char value) {
 		// Initialization.
 		_value = value;
@@ -44,7 +46,9 @@ implements Describable {
 	 * Gets the value of the receiver mutable char.
 	 * 
 	 * @return The value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableChar#get()}.
 	 */
+	@Deprecated
 	public char get() {
 		return _value;
 	}
@@ -54,7 +58,9 @@ implements Describable {
 	 * 
 	 * @param value The value.
 	 * @return The given value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableChar#set(char)}.
 	 */
+	@Deprecated
 	public char set(final char value) {
 		_value = value;
 		return value;

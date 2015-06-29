@@ -36,7 +36,9 @@ implements ValueReader<T>, Describable {
 	 * 
 	 * @param valueClass The type of the values.
 	 * @param nullable The flag indicating whether the values can be <code>null</code> or not.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	protected BaseValueReader(final Class<T> valueClass, final boolean nullable) {
 		assert null != valueClass;
 		

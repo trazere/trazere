@@ -40,7 +40,10 @@ implements RecordBuilder<K, V, R>, Describable {
 	
 	/**
 	 * Instantiate a new empty record builder.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.record.BaseRecordBuilder#BaseRecordBuilder()}.
 	 */
+	@Deprecated
 	public BaseRecordBuilder() {
 		// Initialization.
 		_fields = new HashMap<K, V>();
@@ -50,7 +53,9 @@ implements RecordBuilder<K, V, R>, Describable {
 	 * Instantiate a new record builder populated with the given fields.
 	 * 
 	 * @param fields Values of the initial fields identified by their keys.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public BaseRecordBuilder(final Map<? extends K, ? extends V> fields) {
 		assert null != fields;
 		
@@ -63,7 +68,9 @@ implements RecordBuilder<K, V, R>, Describable {
 	 * 
 	 * @param record Record containing the initial fields of the new record builder.
 	 * @throws InvalidFieldException When the some field of the given record cannot be read.
+	 * @deprecated Use {@link com.trazere.core.record.BaseRecordBuilder#addAll(com.trazere.core.record.Record)}.
 	 */
+	@Deprecated
 	public BaseRecordBuilder(final Record<? extends K, ? extends V> record)
 	throws InvalidFieldException {
 		assert null != record;
@@ -76,7 +83,9 @@ implements RecordBuilder<K, V, R>, Describable {
 	 * Instantiate a new record builder populated with the fields of the given record builder.
 	 * 
 	 * @param builder Record builder containing the initial fields of the new record builder.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public BaseRecordBuilder(final RecordBuilder<? extends K, ? extends V, ?> builder) {
 		assert null != builder;
 		

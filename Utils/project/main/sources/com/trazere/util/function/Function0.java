@@ -29,7 +29,9 @@ public interface Function0<R, X extends Exception> {
 	 * 
 	 * @return The result of the function evaluation.
 	 * @throws X When the function evaluation fails.
+	 * @deprecated Use {@link com.trazere.core.functional.Thunk#evaluate()}.
 	 */
+	@Deprecated
 	public R evaluate()
 	throws X;
 }

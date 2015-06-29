@@ -44,7 +44,9 @@ extends XmlAdapter<String, URI> {
 	 * @param representation Representation to parse.
 	 * @return The uri.
 	 * @throws IllegalArgumentException When the representation is invalid.
+	 * @deprecated Use {@link com.trazere.xml.UriAdapter#parse(String)}.
 	 */
+	@Deprecated
 	public static URI parse(final String representation)
 	throws IllegalArgumentException {
 		assert null != representation;

@@ -29,7 +29,7 @@ import java.util.Map;
  * 
  * @see Function1
  * @see Function2
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class Functions {

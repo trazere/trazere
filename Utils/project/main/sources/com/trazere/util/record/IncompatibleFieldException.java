@@ -30,7 +30,10 @@ extends RecordException {
 	
 	/**
 	 * Instantiates a new exception.
+	 * 
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public IncompatibleFieldException() {
 		super();
 	}
@@ -39,7 +42,9 @@ extends RecordException {
 	 * Instantiates a new exception using the given message.
 	 * 
 	 * @param message Details about the exception.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public IncompatibleFieldException(final String message) {
 		super(message);
 	}
@@ -48,7 +53,9 @@ extends RecordException {
 	 * Instantiates a new exception using the given cause.
 	 * 
 	 * @param cause Cause of the exception.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public IncompatibleFieldException(final Throwable cause) {
 		super(cause);
 	}
@@ -58,12 +65,19 @@ extends RecordException {
 	 * 
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public IncompatibleFieldException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 	
-	/** Factory of {@link NullFieldException}. */
+	/**
+	 * Factory of {@link NullFieldException}.
+	 * 
+	 * @deprecated To be removed.
+	 */
+	@Deprecated
 	@SuppressWarnings("hiding")
 	public static final ThrowableFactory<NullFieldException> FACTORY = new BaseThrowableFactory<NullFieldException>() {
 		@Override

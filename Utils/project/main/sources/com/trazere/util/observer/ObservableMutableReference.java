@@ -34,7 +34,10 @@ extends MutableReference<T>
 implements ObservableReference<T> {
 	/**
 	 * Instantiates an unset reference.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.reactive.ObservableMutableReference#ObservableMutableReference()}.
 	 */
+	@Deprecated
 	public ObservableMutableReference() {
 		super();
 	}
@@ -43,7 +46,9 @@ implements ObservableReference<T> {
 	 * Instantiates a reference set to the given value.
 	 * 
 	 * @param value The value. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.reactive.ObservableMutableReference#ObservableMutableReference(Object)}.
 	 */
+	@Deprecated
 	public ObservableMutableReference(final T value) {
 		super(value);
 	}
@@ -52,7 +57,9 @@ implements ObservableReference<T> {
 	 * Instantiates a reference set to the given value.
 	 * 
 	 * @param value The value.
+	 * @deprecated Use {@link com.trazere.core.reactive.ObservableMutableReference#ObservableMutableReference(com.trazere.core.util.Maybe)}.
 	 */
+	@Deprecated
 	public ObservableMutableReference(final Maybe<T> value) {
 		super(value);
 	}

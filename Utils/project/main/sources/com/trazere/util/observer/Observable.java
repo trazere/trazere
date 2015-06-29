@@ -38,7 +38,9 @@ public interface Observable<T> {
 	 * 
 	 * @param observer The observer.
 	 * @return The corresponding subcription.
+	 * @deprecated Use {@link com.trazere.core.reactive.Observable#subscribe(com.trazere.core.reactive.Observer)}.
 	 */
+	@Deprecated
 	public ObserverSubscription subscribe(final Observer<? super T> observer);
 	
 	/**

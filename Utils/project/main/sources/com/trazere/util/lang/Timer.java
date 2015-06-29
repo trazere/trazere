@@ -38,7 +38,10 @@ public class Timer {
 	
 	/**
 	 * Instantiates a new timer.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.time.Timer#Timer()}.
 	 */
+	@Deprecated
 	public Timer() {
 		_start = System.currentTimeMillis();
 	}
@@ -48,7 +51,9 @@ public class Timer {
 	 * 
 	 * @return The elapsed number of milliseconds.
 	 * @see System#currentTimeMillis()
+	 * @deprecated Use {@link com.trazere.core.time.Timer#read()}.
 	 */
+	@Deprecated
 	public long read() {
 		return System.currentTimeMillis() - _start;
 	}

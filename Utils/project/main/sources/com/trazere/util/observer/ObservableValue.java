@@ -34,7 +34,9 @@ extends Observable<T> {
 	 * 
 	 * @param observer The observer.
 	 * @return The corresponding subcription.
+	 * @deprecated Use {@link com.trazere.core.reactive.ObservableValue#subscribeAndNotify(com.trazere.core.reactive.Observer)}.
 	 */
+	@Deprecated
 	public ObserverSubscription subscribeAndNotify(Observer<? super T> observer);
 	
 	/**
@@ -42,7 +44,9 @@ extends Observable<T> {
 	 * 
 	 * @param observer The observer.
 	 * @return The current value and corresponding subcription.
+	 * @deprecated Use {@link com.trazere.core.reactive.ObservableValue#subscribeToValue(com.trazere.core.reactive.Observer)}.
 	 */
+	@Deprecated
 	public Tuple2<T, ObserverSubscription> subscribeToValue(final Observer<? super T> observer);
 	
 	/**

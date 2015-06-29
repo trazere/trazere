@@ -27,7 +27,7 @@ import java.util.ListIterator;
  * The {@link Lists} class provides various factories of lists.
  * 
  * @see List
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class Lists {

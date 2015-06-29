@@ -32,7 +32,9 @@ public interface CheckedIterator<T, X extends Exception> {
 	 * 
 	 * @return <code>true</code> when another value is available, <code>false</code> otherwise.
 	 * @throws X When the availability test fails.
+	 * @deprecated Use {@link Iterator#hasNext()}.
 	 */
+	@Deprecated
 	public boolean hasNext()
 	throws X;
 	
@@ -44,7 +46,9 @@ public interface CheckedIterator<T, X extends Exception> {
 	 * @return The next item.
 	 * @throws NoSuchElementException When no more values are available.
 	 * @throws X When the retrieval of the next value fails.
+	 * @deprecated Use {@link Iterator#next()}.
 	 */
+	@Deprecated
 	public T next()
 	throws NoSuchElementException, X;
 }

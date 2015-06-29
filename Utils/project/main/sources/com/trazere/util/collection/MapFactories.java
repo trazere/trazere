@@ -24,7 +24,7 @@ import java.util.TreeMap;
  * The {@link MapFactories} class provides various factories of map factories.
  * 
  * @see MapFactory
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class MapFactories {

@@ -28,7 +28,9 @@ public interface Parametrable<K, V> {
 	 * Gets the requirements of the receiver parametrable over its parameters.
 	 * 
 	 * @return The signature of the requirements.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public RecordSignature<K, V> getRequirements();
 	
 	/**
@@ -38,7 +40,9 @@ public interface Parametrable<K, V> {
 	 * @param builder The builder within which the requirements should be unified.
 	 * @return The given signature builder.
 	 * @throws IncompatibleFieldException When the unification fails.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public <B extends RecordSignatureBuilder<K, V, ?>> B unifyRequirements(final B builder)
 	throws IncompatibleFieldException;
 }

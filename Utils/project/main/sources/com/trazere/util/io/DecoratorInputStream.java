@@ -28,6 +28,11 @@ public class DecoratorInputStream
 extends InputStream {
 	private final InputStream _stream;
 	
+	/**
+	 * @deprecated Use {@link com.trazere.core.io.DecoratorInputStream#DecoratorInputStream(InputStream)}.
+	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	public DecoratorInputStream(final InputStream stream) {
 		assert null != stream;
 		
@@ -35,6 +40,11 @@ extends InputStream {
 		_stream = stream;
 	}
 	
+	/**
+	 * @deprecated To be removed.
+	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	public InputStream getStream() {
 		return _stream;
 	}

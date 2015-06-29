@@ -46,7 +46,7 @@ import java.util.Map;
  * @see Function2
  * @see Procedure1
  * @see Procedure2
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class FunctionUtils {

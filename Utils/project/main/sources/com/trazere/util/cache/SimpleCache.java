@@ -41,6 +41,11 @@ import java.util.Set;
 @Deprecated
 public class SimpleCache<K, V>
 implements Cache<K, V>, Describable {
+	/**
+	 * @deprecated Use {@link com.trazere.core.cache.SimpleCache#SimpleCache(com.trazere.core.cache.CachePolicy)}.
+	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	public SimpleCache(final CachePolicy<K> policy) {
 		assert null != policy;
 		
@@ -57,7 +62,9 @@ implements Cache<K, V>, Describable {
 	 * Gets the policy of the receiver cache.
 	 * 
 	 * @return The policy.
+	 * @deprecated Use {@link com.trazere.core.cache.SimpleCache#getPolicy()}.
 	 */
+	@Deprecated
 	public CachePolicy<K> getPolicy() {
 		return _policy;
 	}

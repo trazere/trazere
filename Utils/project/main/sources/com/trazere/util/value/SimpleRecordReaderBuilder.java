@@ -41,7 +41,10 @@ implements RecordReaderBuilder<K, V, SimpleRecordReader<K, V>> {
 	
 	/**
 	 * Instantiate a new empty record reader builder.
+	 * 
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public SimpleRecordReaderBuilder() {
 		// Initialization.
 		_fields = new HashMap<K, ValueReader<? extends V>>();
@@ -51,7 +54,9 @@ implements RecordReaderBuilder<K, V, SimpleRecordReader<K, V>> {
 	 * Instantiate a new record reader builder populated with the given fields.
 	 * 
 	 * @param fields Values of the initial fields identified by their keys.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public SimpleRecordReaderBuilder(final Map<? extends K, ? extends ValueReader<? extends V>> fields) {
 		assert null != fields;
 		
@@ -63,7 +68,9 @@ implements RecordReaderBuilder<K, V, SimpleRecordReader<K, V>> {
 	 * Instantiate a new record reader builder populated with the fields of the given record reader builder.
 	 * 
 	 * @param builder Record builder containing the initial fields of the new record builder.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public SimpleRecordReaderBuilder(final RecordReaderBuilder<? extends K, ? extends V, ?> builder) {
 		assert null != builder;
 		

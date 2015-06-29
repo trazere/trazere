@@ -21,7 +21,7 @@ import java.io.File;
 /**
  * The {@link IOFunctions} class provides factories of functions regarding I/O.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class IOFunctions {

@@ -27,7 +27,7 @@ import java.util.Set;
  * 
  * @see Predicate1
  * @see Predicate2
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class Predicates {

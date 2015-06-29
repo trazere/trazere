@@ -34,7 +34,9 @@ implements ObservableValue<T> {
 	 * Instantiates a new observable object with the given initial value.
 	 * 
 	 * @param value The value. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.reactive.ObservableMutableObject#ObservableMutableObject(Object)}.
 	 */
+	@Deprecated
 	public ObservableMutableObject(final T value) {
 		super(value);
 	}

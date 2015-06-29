@@ -42,7 +42,9 @@ extends CheckedExtractIterator<T, R, X> {
 	 * @param value The value to transform. May be <code>null</code>.
 	 * @return The transformed value.
 	 * @throws X When the transformation fails.
+	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#map(java.util.Iterator, com.trazere.core.functional.Function)}.
 	 */
+	@Deprecated
 	protected abstract R map(final T value)
 	throws X;
 }

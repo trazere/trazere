@@ -31,7 +31,9 @@ implements CachePolicy<K> {
 	 * Instanciates a new cache policy.
 	 * 
 	 * @param capacity The capacity of the cache.
+	 * @deprecated Use {@link com.trazere.core.cache.FIFOCachePolicy#FIFOCachePolicy(int)}.
 	 */
+	@Deprecated
 	public FIFOCachePolicy(final int capacity) {
 		assert capacity > 0;
 		
@@ -48,7 +50,9 @@ implements CachePolicy<K> {
 	 * Gets the capacity of the cache.
 	 * 
 	 * @return The capacity.
+	 * @deprecated Use {@link com.trazere.core.cache.FIFOCachePolicy#getCapacity()}.
 	 */
+	@Deprecated
 	public int getCapacity() {
 		return _capacity;
 	}

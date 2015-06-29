@@ -45,7 +45,9 @@ implements Serializable, Describable {
 	 * @param <R> Type of the right value.
 	 * @param left The left value to wrap. May be <code>null</code>.
 	 * @return The built instance.
+	 * @deprecated Use {@link com.trazere.core.util.Either#left(Object)}.
 	 */
+	@Deprecated
 	public static <L, R> Either<L, R> left(final L left) {
 		return new Left<L, R>(left);
 	}
@@ -79,7 +81,9 @@ implements Serializable, Describable {
 	 * @param <R> Type of the right value.
 	 * @param right The right value to wrap. May be <code>null</code>.
 	 * @return The built instance.
+	 * @deprecated Use {@link com.trazere.core.util.Either#right(Object)}.
 	 */
+	@Deprecated
 	public static <L, R> Either<L, R> right(final R right) {
 		return new Right<L, R>(right);
 	}
@@ -146,7 +150,9 @@ implements Serializable, Describable {
 		 * Instantiates a new instance wrapping the given left value.
 		 * 
 		 * @param left The left value. May be <code>null</code>.
+		 * @deprecated Use {@link com.trazere.core.util.Either.Left#Left(Object)}.
 		 */
+		@Deprecated
 		public Left(final L left) {
 			_left = left;
 		}
@@ -241,7 +247,9 @@ implements Serializable, Describable {
 	 * Tests whether the receiver instance has been built using the <code>Left</code> constructor.
 	 * 
 	 * @return <code>true</code> when the instance has been built with the <code>Left</code> constructor, <code>false</code> otherwise.
+	 * @deprecated Use {@link com.trazere.core.util.Either#isLeft()}.
 	 */
+	@Deprecated
 	public boolean isLeft() {
 		return false;
 	}
@@ -251,7 +259,9 @@ implements Serializable, Describable {
 	 * 
 	 * @return The instance.
 	 * @throws InvalidConstructorException when the receiver instance has not been built with the <code>Left</code> constructor.
+	 * @deprecated Use {@link com.trazere.core.util.Either#asLeft()}.
 	 */
+	@Deprecated
 	public Left<L, R> asLeft()
 	throws InvalidConstructorException {
 		throw InvalidConstructorException.build(this, Left.class);
@@ -298,7 +308,9 @@ implements Serializable, Describable {
 		 * Instantiates a new instance wrapping the given right value.
 		 * 
 		 * @param right The value to wrap. May be <code>null</code>.
+		 * @deprecated Use {@link com.trazere.core.util.Either.Right#Right(Object)}.
 		 */
+		@Deprecated
 		public Right(final R right) {
 			_right = right;
 		}
@@ -393,7 +405,9 @@ implements Serializable, Describable {
 	 * Tests whether the receiver instance has been built using the <code>Right</code> constructor.
 	 * 
 	 * @return <code>true</code> when the instance has been built with the <code>Right</code> constructor, <code>false</code> otherwise.
+	 * @deprecated Use {@link com.trazere.core.util.Either#isRight()}.
 	 */
+	@Deprecated
 	public boolean isRight() {
 		return false;
 	}
@@ -403,7 +417,9 @@ implements Serializable, Describable {
 	 * 
 	 * @return The instance.
 	 * @throws InvalidConstructorException when the receiver instance has not been built with the <code>Right</code> constructor.
+	 * @deprecated Use {@link com.trazere.core.util.Either#asRight()}.
 	 */
+	@Deprecated
 	public Right<L, R> asRight()
 	throws InvalidConstructorException {
 		throw InvalidConstructorException.build(this, Right.class);
@@ -452,7 +468,9 @@ implements Serializable, Describable {
 		 * @param left The instance.
 		 * @return The result of the function evaluation.
 		 * @throws X When the evaluation fails.
+		 * @deprecated Use {@link com.trazere.core.util.Either.Matcher#left(com.trazere.core.util.Either.Left)}.
 		 */
+		@Deprecated
 		public RT left(final Left<? extends L, ? extends R> left)
 		throws X;
 		
@@ -462,7 +480,9 @@ implements Serializable, Describable {
 		 * @param right The instance.
 		 * @return The result of the function evaluation.
 		 * @throws X When the evaluation fails.
+		 * @deprecated Use {@link com.trazere.core.util.Either.Matcher#right(com.trazere.core.util.Either.Right)}.
 		 */
+		@Deprecated
 		public RT right(final Right<? extends L, ? extends R> right)
 		throws X;
 	}
@@ -477,7 +497,9 @@ implements Serializable, Describable {
 	 * @param matcher The matching function.
 	 * @return The result of the match.
 	 * @throws X When the match fails.
+	 * @deprecated Use {@link com.trazere.core.util.Either#match(com.trazere.core.util.Either.Matcher)}.
 	 */
+	@Deprecated
 	public abstract <RT, X extends Exception> RT match(final Matcher<? super L, ? super R, RT, ? extends X> matcher)
 	throws X;
 	

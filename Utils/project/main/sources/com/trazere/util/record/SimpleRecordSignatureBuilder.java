@@ -31,7 +31,10 @@ public class SimpleRecordSignatureBuilder<K, V>
 extends BaseRecordSignatureBuilder<K, V, SimpleRecordSignature<K, V>> {
 	/**
 	 * Instantiates a new empty builder.
+	 * 
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public SimpleRecordSignatureBuilder() {
 		super();
 	}
@@ -40,7 +43,9 @@ extends BaseRecordSignatureBuilder<K, V, SimpleRecordSignature<K, V>> {
 	 * Instantiates a new builder populated with the given field signatures.
 	 * 
 	 * @param fields Initial field signatures identified by their keys.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public SimpleRecordSignatureBuilder(final Map<K, ? extends FieldSignature<K, ? extends V>> fields) {
 		super(fields);
 	}
@@ -50,7 +55,9 @@ extends BaseRecordSignatureBuilder<K, V, SimpleRecordSignature<K, V>> {
 	 * 
 	 * @param signature Record signature containing the initial field signatures.
 	 * @throws InvalidFieldException When some field signature cannot be read.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public SimpleRecordSignatureBuilder(final RecordSignature<K, ? extends V> signature)
 	throws InvalidFieldException {
 		super(signature);

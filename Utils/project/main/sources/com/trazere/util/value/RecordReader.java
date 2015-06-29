@@ -38,7 +38,9 @@ extends ParameterFunction<String, Object, Record<K, V>, ValueException> {
 	 * Test whether the records produced by the receiver reader are empty or not.
 	 * 
 	 * @return <code>true</code> when empty, <code>false</code> otherwise.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public boolean isEmpty();
 	
 	/**
@@ -46,14 +48,18 @@ extends ParameterFunction<String, Object, Record<K, V>, ValueException> {
 	 * 
 	 * @param key Key of the field to test.
 	 * @return <code>true</code> when some field is identified by the given key, <code>false</code> otherwise.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public boolean contains(final K key);
 	
 	/**
 	 * Get the keys identifying the fields of the records produced by the receiver reader.
 	 * 
 	 * @return An unmodiable set of the keys.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public Set<K> getKeys();
 	
 	/**
@@ -63,7 +69,9 @@ extends ParameterFunction<String, Object, Record<K, V>, ValueException> {
 	 * @return The value reader of the field.
 	 * @throws MissingFieldException When no fields are identified by the given key.
 	 * @throws InvalidFieldException When the value of the field cannot be read.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public ValueReader<? extends V> get(final K key)
 	throws MissingFieldException, InvalidFieldException;
 	
@@ -71,7 +79,9 @@ extends ParameterFunction<String, Object, Record<K, V>, ValueException> {
 	 * Get the signature of the records produced by the receiver reader.
 	 * 
 	 * @return The signature of the record.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public RecordSignature<K, V> getSignature();
 	
 	/**
@@ -80,7 +90,9 @@ extends ParameterFunction<String, Object, Record<K, V>, ValueException> {
 	 * @param parameters Parameters to use.
 	 * @return The produced record.
 	 * @throws ValueException When the record cannot be read.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public Record<K, V> read(final Record<String, Object> parameters)
 	throws ValueException;
 	
@@ -92,7 +104,9 @@ extends ParameterFunction<String, Object, Record<K, V>, ValueException> {
 	 * @param builder Record builder to populate.
 	 * @return The produced record.
 	 * @throws ValueException When the record cannot be read.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public <B extends RecordBuilder<K, V, ?>> B read(final Record<String, Object> parameters, final B builder)
 	throws ValueException;
 	
@@ -102,7 +116,9 @@ extends ParameterFunction<String, Object, Record<K, V>, ValueException> {
 	 * @param reader The record reader.
 	 * @return The composed value reader.
 	 * @throws ValueException When the value reader cannot be composed.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	public RecordReader<K, V> compose(final RecordReader<String, Object> reader)
 	throws ValueException;
 }

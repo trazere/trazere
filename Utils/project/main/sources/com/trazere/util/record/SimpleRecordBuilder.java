@@ -31,7 +31,10 @@ public class SimpleRecordBuilder<K, V>
 extends BaseRecordBuilder<K, V, SimpleRecord<K, V>> {
 	/**
 	 * Instantiates a new empty record builder.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.record.SimpleRecordBuilder#SimpleRecordBuilder()}.
 	 */
+	@Deprecated
 	public SimpleRecordBuilder() {
 		super();
 	}

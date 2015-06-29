@@ -44,7 +44,6 @@ implements Record<K, V>, Describable {
 	private static final SimpleRecord<?, ?> EMPTY = new SimpleRecord<Object, Object>(Collections.emptyMap());
 	
 	// TODO: move to Records
-	@Deprecated
 	/**
 	 * Builds an empty record.
 	 * <p>
@@ -55,6 +54,7 @@ implements Record<K, V>, Describable {
 	 * @return The empty record.
 	 * @deprecated Use {@link com.trazere.core.record.Records#empty()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <K, V> SimpleRecord<K, V> build() {
 		return (SimpleRecord<K, V>) EMPTY;
@@ -149,7 +149,10 @@ implements Record<K, V>, Describable {
 	 * Instantiate a new record with the given fields.
 	 * 
 	 * @param fields Values of the fields identified by their keys.
+	 * @deprecated Use {@link com.trazere.core.record.SimpleRecord#SimpleRecord(Map)}.
 	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	protected SimpleRecord(final Map<? extends K, ? extends V> fields) {
 		assert null != fields;
 		

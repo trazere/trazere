@@ -41,12 +41,21 @@ public class Description {
 	private final StringBuilder _builder;
 	private final MutableBoolean _first;
 	
+	/**
+	 * @deprecated Use {@link com.trazere.core.text.Description#Description()}.
+	 */
+	@Deprecated
 	public Description() {
 		// Initialization.
 		_builder = new StringBuilder("[");
 		_first = new MutableBoolean(true);
 	}
 	
+	/**
+	 * @deprecated Use {@link com.trazere.core.text.Description#Description(String)}.
+	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	public Description(final String head) {
 		assert null != head;
 		
@@ -56,6 +65,11 @@ public class Description {
 		_first = new MutableBoolean(false);
 	}
 	
+	/**
+	 * @deprecated Use {@link com.trazere.core.text.Description#Description(StringBuilder, boolean)}.
+	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	public Description(final StringBuilder builder, final boolean first) {
 		assert null != builder;
 		

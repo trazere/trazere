@@ -34,7 +34,9 @@ implements Describable {
 	 * Instantiates a new mutable short with the given value.
 	 * 
 	 * @param value The initial value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableShort#MutableShort(short)}.
 	 */
+	@Deprecated
 	public MutableShort(final short value) {
 		// Initialization.
 		_value = value;
@@ -44,7 +46,9 @@ implements Describable {
 	 * Gets the value of the receiver mutable short.
 	 * 
 	 * @return The value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableShort#get()}.
 	 */
+	@Deprecated
 	public short get() {
 		return _value;
 	}
@@ -54,7 +58,9 @@ implements Describable {
 	 * 
 	 * @param value The value.
 	 * @return The given value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableShort#set(short)}.
 	 */
+	@Deprecated
 	public short set(final short value) {
 		_value = value;
 		return value;

@@ -26,7 +26,7 @@ import java.util.UUID;
  * The {@link TextFunctions} class provides various factories of functions related to text.
  * 
  * @see Function1
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class TextFunctions {

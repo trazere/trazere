@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * The {@link Maps} class provides various factories of maps.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class Maps {

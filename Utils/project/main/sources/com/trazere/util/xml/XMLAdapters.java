@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 /**
  * The {@link XMLAdapters} class provides various factories of JAXB type adapters.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class XMLAdapters {

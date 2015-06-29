@@ -42,7 +42,10 @@ implements Releasable<X> {
 	 * method.
 	 * 
 	 * @param value The value.
+	 * @deprecated Use
+	 *             {@link com.trazere.core.reference.ReleasableReferenceUmbrella#ReleasableReferenceUmbrella(com.trazere.core.reference.ReleasableReference)}.
 	 */
+	@Deprecated
 	public ReleasableReferenceUmbrella(final ReleasableReference<T, X> value) {
 		assert null != value;
 		
@@ -63,7 +66,9 @@ implements Releasable<X> {
 	 * 
 	 * @return The reference.
 	 * @throws ReferenceNotSetException When the value has already been release.
+	 * @deprecated Use {@link com.trazere.core.reference.ReleasableReferenceUmbrella#getReference()}.
 	 */
+	@Deprecated
 	public ReleasableReference<T, X> getReference()
 	throws ReferenceNotSetException {
 		// Get the service instance.
@@ -114,7 +119,10 @@ implements Releasable<X> {
 	 * 
 	 * @param reference The reference to remove.
 	 * @throws X When the release of the value fails.
+	 * @deprecated Use {@link com.trazere.core.reference.ReleasableReferenceUmbrella#removeReference(com.trazere.core.reference.ReleasableReference)}.
 	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	protected void removeReference(final ReleasableReference<T, X> reference)
 	throws X {
 		if (_references.remove(reference)) {

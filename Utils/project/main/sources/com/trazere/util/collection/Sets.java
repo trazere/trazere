@@ -22,7 +22,7 @@ import java.util.Set;
 /**
  * The {@link Sets} class provides various factories of sets.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class Sets {

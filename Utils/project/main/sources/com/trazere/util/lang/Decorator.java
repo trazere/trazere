@@ -30,7 +30,9 @@ public abstract class Decorator<T> {
 	 * Instantiates a new decorator.
 	 * 
 	 * @param decorated The decorated object.
+	 * @deprecated Use {@link com.trazere.core.design.Decorator#Decorator(Object)}.
 	 */
+	@Deprecated
 	public Decorator(final T decorated) {
 		assert null != decorated;
 		

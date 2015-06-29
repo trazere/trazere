@@ -69,7 +69,9 @@ implements Serializable {
 	 * Instantiates a new instance with the given value.
 	 * 
 	 * @param first First value. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.util.Tuple1#Tuple1(Object)}.
 	 */
+	@Deprecated
 	public Tuple1(final T1 first) {
 		// Initialization.
 		_first = first;

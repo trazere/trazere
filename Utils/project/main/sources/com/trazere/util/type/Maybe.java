@@ -50,7 +50,9 @@ implements Iterable<T>, Serializable, Describable {
 	 * 
 	 * @param <Value> Type of the value.
 	 * @return The built instance.
+	 * @deprecated Use {@link com.trazere.core.util.Maybe#none()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <Value> None<Value> none() {
 		return (None<Value>) _NONE;
@@ -64,7 +66,9 @@ implements Iterable<T>, Serializable, Describable {
 	 * @param <Value> Type of the value.
 	 * @param value The value to wrap. May be <code>null</code>.
 	 * @return The built instance.
+	 * @deprecated Use {@link com.trazere.core.util.Maybe#some(Object)}.
 	 */
+	@Deprecated
 	public static <Value> Some<Value> some(final Value value) {
 		return new Some<Value>(value);
 	}
@@ -307,7 +311,9 @@ implements Iterable<T>, Serializable, Describable {
 	 * Tests whether the receiver instance has been built using the {@link None} constructor.
 	 * 
 	 * @return <code>true</code> when the instance has been built with the <code>None</code> constructor, <code>false</code> otherwise.
+	 * @deprecated Use {@link com.trazere.core.util.Maybe#isNone()}.
 	 */
+	@Deprecated
 	public boolean isNone() {
 		return false;
 	}
@@ -317,7 +323,9 @@ implements Iterable<T>, Serializable, Describable {
 	 * 
 	 * @return The view.
 	 * @throws InvalidConstructorException when the receiver instance has not been built with the <code>None</code> constructor.
+	 * @deprecated Use {@link com.trazere.core.util.Maybe#asNone()}.
 	 */
+	@Deprecated
 	public None<T> asNone()
 	throws InvalidConstructorException {
 		throw InvalidConstructorException.build(this, None.class);
@@ -340,7 +348,9 @@ implements Iterable<T>, Serializable, Describable {
 		 * Instantiates a new instance wrapping the given value.
 		 * 
 		 * @param value The value. May be <code>null</code>.
+		 * @deprecated Use {@link com.trazere.core.util.Maybe.Some#Some(Object)}.
 		 */
+		@Deprecated
 		public Some(final T value) {
 			_value = value;
 		}
@@ -371,7 +381,9 @@ implements Iterable<T>, Serializable, Describable {
 		 * Gets the value wrapped in the receiver instance.
 		 * 
 		 * @return The wrapped value. May be <code>null</code>.
+		 * @deprecated Use {@link com.trazere.core.util.Maybe.Some#getValue()}.
 		 */
+		@Deprecated
 		public T getValue() {
 			return _value;
 		}
@@ -460,7 +472,9 @@ implements Iterable<T>, Serializable, Describable {
 	 * Tests whether the receiver instance has been built using the <code>Some</code> constructor.
 	 * 
 	 * @return <code>true</code> when the instance has been built with the <code>Some</code> constructor, <code>false</code> otherwise.
+	 * @deprecated Use {@link com.trazere.core.util.Maybe#isSome()}.
 	 */
+	@Deprecated
 	public boolean isSome() {
 		return false;
 	}
@@ -470,7 +484,9 @@ implements Iterable<T>, Serializable, Describable {
 	 * 
 	 * @return The view.
 	 * @throws InvalidConstructorException when the receiver instance has not been built with the <code>Some</code> constructor.
+	 * @deprecated Use {@link com.trazere.core.util.Maybe#asSome()}.
 	 */
+	@Deprecated
 	public Some<T> asSome()
 	throws InvalidConstructorException {
 		throw InvalidConstructorException.build(this, Some.class);
@@ -483,7 +499,9 @@ implements Iterable<T>, Serializable, Describable {
 	 * 
 	 * @param defaultValue The default value. May be <code>null</code>.
 	 * @return The value. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.util.Maybe#get(Object)}.
 	 */
+	@Deprecated
 	public abstract T get(final T defaultValue);
 	
 	/**
@@ -545,7 +563,9 @@ implements Iterable<T>, Serializable, Describable {
 	 * @param <R> Type of the result.
 	 * @param <X> Type of the exceptions.
 	 * @see Maybe#match(Matcher)
+	 * @deprecated Use {@link com.trazere.core.util.Maybe.Matcher}.
 	 */
+	@Deprecated
 	public interface Matcher<T, R, X extends Exception> {
 		/**
 		 * Matches the given <code>None</code> instance.
@@ -553,7 +573,9 @@ implements Iterable<T>, Serializable, Describable {
 		 * @param none The instance.
 		 * @return The result of the function evaluation.
 		 * @throws X When the evaluation fails.
+		 * @deprecated Use {@link com.trazere.core.util.Maybe.Matcher#none(com.trazere.core.util.Maybe.None)}.
 		 */
+		@Deprecated
 		public R none(final None<? extends T> none)
 		throws X;
 		
@@ -563,7 +585,9 @@ implements Iterable<T>, Serializable, Describable {
 		 * @param some The instance.
 		 * @return The result of the function evaluation.
 		 * @throws X When the evaluation fails.
+		 * @deprecated Use {@link com.trazere.core.util.Maybe.Matcher#some(com.trazere.core.util.Maybe.Some)}.
 		 */
+		@Deprecated
 		public R some(final Some<? extends T> some)
 		throws X;
 	}
@@ -578,7 +602,9 @@ implements Iterable<T>, Serializable, Describable {
 	 * @param matcher The matching function.
 	 * @return The result of the match.
 	 * @throws X When the match fails.
+	 * @deprecated Use {@link com.trazere.core.util.Maybe#match(com.trazere.core.util.Maybe.Matcher)}.
 	 */
+	@Deprecated
 	public abstract <R, X extends Exception> R match(final Matcher<? super T, R, ? extends X> matcher)
 	throws X;
 	

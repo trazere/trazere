@@ -21,7 +21,7 @@ import java.util.Comparator;
  * The {@link TextComparators} class provides various factories of comparators related to text.
  * 
  * @see Comparator
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class TextComparators {

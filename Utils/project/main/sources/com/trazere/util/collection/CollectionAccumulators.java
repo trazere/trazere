@@ -28,7 +28,7 @@ import java.util.Map;
 /**
  * The {@link CollectionAccumulators} class provides various factories of accumulators related to collections.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class CollectionAccumulators {

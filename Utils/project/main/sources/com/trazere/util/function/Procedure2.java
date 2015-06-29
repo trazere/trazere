@@ -31,7 +31,9 @@ public interface Procedure2<T1, T2, X extends Exception> {
 	 * @param value1 The first argument value.
 	 * @param value2 The second argument value.
 	 * @throws X When the procedure execution fails.
+	 * @deprecated Use {@link com.trazere.core.imperative.Procedure2#execute(Object, Object)}.
 	 */
+	@Deprecated
 	public void execute(final T1 value1, final T2 value2)
 	throws X;
 }

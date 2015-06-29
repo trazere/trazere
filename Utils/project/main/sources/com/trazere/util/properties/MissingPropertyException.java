@@ -30,7 +30,10 @@ extends PropertiesException {
 	
 	/**
 	 * Instantiates a new exception.
+	 * 
+	 * @deprecated {@link com.trazere.core.record.MissingFieldException#MissingFieldException()}.
 	 */
+	@Deprecated
 	public MissingPropertyException() {
 		super();
 	}
@@ -39,7 +42,9 @@ extends PropertiesException {
 	 * Instantiates a new exception using the given message.
 	 * 
 	 * @param message Details about the exception.
+	 * @deprecated {@link com.trazere.core.record.MissingFieldException#MissingFieldException(String)}.
 	 */
+	@Deprecated
 	public MissingPropertyException(final String message) {
 		super(message);
 	}
@@ -48,7 +53,9 @@ extends PropertiesException {
 	 * Instantiates a new exception using the given cause.
 	 * 
 	 * @param cause Cause of the exception.
+	 * @deprecated {@link com.trazere.core.record.MissingFieldException#MissingFieldException(Throwable)}.
 	 */
+	@Deprecated
 	public MissingPropertyException(final Throwable cause) {
 		super(cause);
 	}
@@ -58,12 +65,19 @@ extends PropertiesException {
 	 * 
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
+	 * @deprecated {@link com.trazere.core.record.MissingFieldException#MissingFieldException(String, Throwable)}.
 	 */
+	@Deprecated
 	public MissingPropertyException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 	
-	/** Factory of {@link MissingPropertyException}. */
+	/**
+	 * Factory of {@link MissingPropertyException}.
+	 * 
+	 * @deprecated {@link com.trazere.core.record.MissingFieldException#FACTORY}.
+	 */
+	@Deprecated
 	@SuppressWarnings("hiding")
 	public static final ThrowableFactory<MissingPropertyException> FACTORY = new BaseThrowableFactory<MissingPropertyException>() {
 		@Override

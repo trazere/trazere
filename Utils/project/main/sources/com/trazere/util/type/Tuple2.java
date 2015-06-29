@@ -74,7 +74,9 @@ extends Tuple1<T1> {
 	 * 
 	 * @param first First value. May be <code>null</code>.
 	 * @param second Second value. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.util.Tuple2#Tuple2(Object, Object)}.
 	 */
+	@Deprecated
 	public Tuple2(final T1 first, final T2 second) {
 		super(first);
 		

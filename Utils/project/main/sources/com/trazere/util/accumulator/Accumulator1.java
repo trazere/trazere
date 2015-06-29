@@ -33,7 +33,9 @@ extends Procedure1<T, X> {
 	 * 
 	 * @param value Value to accumulate. May be <code>null</code>.
 	 * @throws X When the accumulation fails.
+	 * @deprecated Use {@link com.trazere.core.imperative.Accumulator#add(Object)}.
 	 */
+	@Deprecated
 	public void add(final T value)
 	throws X;
 	
@@ -42,7 +44,9 @@ extends Procedure1<T, X> {
 	 * 
 	 * @param values Values to accumulate. May be <code>null</code>.
 	 * @throws X When the accumulation fails.
+	 * @deprecated Use {@link com.trazere.core.imperative.Accumulator#addAll(Iterable)}.
 	 */
+	@Deprecated
 	public void addAll(final Iterable<? extends T> values)
 	throws X;
 	
@@ -50,6 +54,8 @@ extends Procedure1<T, X> {
 	 * Gets the current state of the receiver accumulator.
 	 * 
 	 * @return The state. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.imperative.Accumulator#get()}.
 	 */
+	@Deprecated
 	public S get();
 }

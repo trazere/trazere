@@ -35,7 +35,9 @@ extends DecoratorInputStream {
 	 * 
 	 * @param stream The stream.
 	 * @param length The maximal length.
+	 * @deprecated Use {@link com.trazere.core.io.TruncatedInputStream#TruncatedInputStream(InputStream, long)}.
 	 */
+	@Deprecated
 	public SubInputStream(final InputStream stream, final long length) {
 		super(stream);
 		

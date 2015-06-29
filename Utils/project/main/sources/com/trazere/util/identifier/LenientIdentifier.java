@@ -30,7 +30,9 @@ extends Identifier<V> {
 	 * Instantiates an identifier with the given value.
 	 * 
 	 * @param value The value.
+	 * @deprecated Use {@link Identifier#Identifier(Object)}.
 	 */
+	@Deprecated
 	protected LenientIdentifier(final V value) {
 		super(value);
 	}

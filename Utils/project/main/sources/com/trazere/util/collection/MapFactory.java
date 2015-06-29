@@ -32,7 +32,17 @@ extends Factory<M, RuntimeException> {
 	@Override
 	public M build();
 	
+	/**
+	 * @deprecated Use {@link com.trazere.core.collection.MapFactory#build(int)}.
+	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	public M build(final int capacity);
 	
+	/**
+	 * @deprecated Use {@link com.trazere.core.collection.MapFactory#build(Map)}.
+	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	public M build(final Map<? extends K, ? extends V> bindings);
 }

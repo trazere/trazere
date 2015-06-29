@@ -18,7 +18,7 @@ package com.trazere.util.lang;
 /**
  * The {@link ThrowableFactories} class provides various throwable factories.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class ThrowableFactories {

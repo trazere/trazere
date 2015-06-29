@@ -58,7 +58,9 @@ extends Factory<R, RecordException> {
 	 * @param record Record to copy.
 	 * @return The built record builder.
 	 * @throws RecordException When the record cannot be built.
+	 * @deprecated Use {@link com.trazere.core.record.RecordFactory#build(com.trazere.core.record.Record)}.
 	 */
+	@Deprecated
 	public R build(final Record<? extends K, ? extends V> record)
 	throws RecordException;
 }

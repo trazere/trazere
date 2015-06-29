@@ -37,7 +37,9 @@ implements Describable {
 	 * Instantiates a new hash code computation for the given object.
 	 * 
 	 * @param object Object whose hash code should be computed.
+	 * @deprecated Use {@link com.trazere.core.lang.HashCode#HashCode(Object)}.
 	 */
+	@Deprecated
 	public HashCode(final Object object) {
 		assert null != object;
 		
@@ -50,7 +52,9 @@ implements Describable {
 	 * 
 	 * @param value Value to append.
 	 * @return The receiver hash code.
+	 * @deprecated Use {@link com.trazere.core.lang.HashCode#append(boolean)}.
 	 */
+	@Deprecated
 	public HashCode append(final boolean value) {
 		_hashCode = _hashCode * 31 + (value ? 1 : 0);
 		return this;
@@ -61,7 +65,9 @@ implements Describable {
 	 * 
 	 * @param value Value to append.
 	 * @return The receiver hash code.
+	 * @deprecated Use {@link com.trazere.core.lang.HashCode#append(byte)}.
 	 */
+	@Deprecated
 	public HashCode append(final byte value) {
 		_hashCode = _hashCode * 31 + value;
 		return this;
@@ -72,7 +78,9 @@ implements Describable {
 	 * 
 	 * @param value Value to append.
 	 * @return The receiver hash code.
+	 * @deprecated Use {@link com.trazere.core.lang.HashCode#append(int)}.
 	 */
+	@Deprecated
 	public HashCode append(final int value) {
 		_hashCode = _hashCode * 31 + value;
 		return this;
@@ -83,7 +91,9 @@ implements Describable {
 	 * 
 	 * @param value Value to append.
 	 * @return The receiver hash code.
+	 * @deprecated Use {@link com.trazere.core.lang.HashCode#append(long)}.
 	 */
+	@Deprecated
 	public HashCode append(final long value) {
 		_hashCode = _hashCode * 31 + (int) (value >> 32);
 		_hashCode = _hashCode * 31 + (int) (value & 0xFFFFFFFF);
@@ -95,7 +105,9 @@ implements Describable {
 	 * 
 	 * @param value Value to append. May be <code>null</code>.
 	 * @return The receiver hash code.
+	 * @deprecated Use {@link com.trazere.core.lang.HashCode#append(Object)}.
 	 */
+	@Deprecated
 	public HashCode append(final Object value) {
 		_hashCode = _hashCode * 31 + (null != value ? value.hashCode() : 0);
 		return this;
@@ -105,7 +117,9 @@ implements Describable {
 	 * Gets the computed hash code.
 	 * 
 	 * @return The hash code.
+	 * @deprecated Use {@link com.trazere.core.lang.HashCode#get()}.
 	 */
+	@Deprecated
 	public int get() {
 		return _hashCode;
 	}

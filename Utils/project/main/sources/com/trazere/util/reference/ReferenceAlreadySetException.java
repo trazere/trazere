@@ -33,7 +33,10 @@ extends ReferenceException {
 	
 	/**
 	 * Instantiates a new exception.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.reference.ReferenceAlreadySetException#ReferenceAlreadySetException()}.
 	 */
+	@Deprecated
 	public ReferenceAlreadySetException() {
 		super();
 	}
@@ -42,7 +45,9 @@ extends ReferenceException {
 	 * Instantiates a new exception using the given message.
 	 * 
 	 * @param message Details about the exception.
+	 * @deprecated Use {@link com.trazere.core.reference.ReferenceAlreadySetException#ReferenceAlreadySetException(String)}.
 	 */
+	@Deprecated
 	public ReferenceAlreadySetException(final String message) {
 		super(message);
 	}
@@ -51,7 +56,9 @@ extends ReferenceException {
 	 * Instantiates a new exception using the given cause.
 	 * 
 	 * @param cause Cause of the exception.
+	 * @deprecated Use {@link com.trazere.core.reference.ReferenceAlreadySetException#ReferenceAlreadySetException(Throwable)}.
 	 */
+	@Deprecated
 	public ReferenceAlreadySetException(final Throwable cause) {
 		super(cause);
 	}
@@ -61,12 +68,19 @@ extends ReferenceException {
 	 * 
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
+	 * @deprecated Use {@link com.trazere.core.reference.ReferenceAlreadySetException#ReferenceAlreadySetException(String, Throwable)}.
 	 */
+	@Deprecated
 	public ReferenceAlreadySetException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 	
-	/** Factory of {@link ReferenceAlreadySetException}. */
+	/**
+	 * Factory of {@link ReferenceAlreadySetException}.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.reference.ReferenceAlreadySetException#FACTORY}.
+	 */
+	@Deprecated
 	@SuppressWarnings("hiding")
 	public static final ThrowableFactory<ReferenceAlreadySetException> FACTORY = new BaseThrowableFactory<ReferenceAlreadySetException>() {
 		@Override

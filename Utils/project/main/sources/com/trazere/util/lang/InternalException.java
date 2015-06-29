@@ -29,7 +29,10 @@ extends RuntimeException {
 	
 	/**
 	 * Instantiates a new exception.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.lang.InternalException#InternalException()}.
 	 */
+	@Deprecated
 	public InternalException() {
 		super();
 	}
@@ -38,7 +41,9 @@ extends RuntimeException {
 	 * Instantiates a new exception using the given message.
 	 * 
 	 * @param message Details about the exception.
+	 * @deprecated Use {@link com.trazere.core.lang.InternalException#InternalException(String)}.
 	 */
+	@Deprecated
 	public InternalException(final String message) {
 		super(message);
 	}
@@ -47,7 +52,9 @@ extends RuntimeException {
 	 * Instantiates a new exception using the given cause.
 	 * 
 	 * @param cause Cause of the exception.
+	 * @deprecated Use {@link com.trazere.core.lang.InternalException#InternalException(Throwable)}.
 	 */
+	@Deprecated
 	public InternalException(final Throwable cause) {
 		super(cause);
 	}
@@ -57,12 +64,19 @@ extends RuntimeException {
 	 * 
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
+	 * @deprecated Use {@link com.trazere.core.lang.InternalException#InternalException(String, Throwable)}.
 	 */
+	@Deprecated
 	public InternalException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 	
-	/** Factory of {@link InternalException}. */
+	/**
+	 * Factory of {@link InternalException}.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.lang.InternalException#FACTORY}.
+	 */
+	@Deprecated
 	public static final ThrowableFactory<InternalException> FACTORY = new BaseThrowableFactory<InternalException>() {
 		@Override
 		public InternalException build() {

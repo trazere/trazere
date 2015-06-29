@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * The {@link Comparators} class provides various standard comparators.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class Comparators {

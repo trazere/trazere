@@ -48,7 +48,9 @@ implements Closure<T, X> {
 	 * Instantiate a closure using the given value.
 	 * 
 	 * @param value The value. May be <code>null</code>.
+	 * @deprecated Use {@link com.trazere.core.functional.Thunks#constant(Object)}.
 	 */
+	@Deprecated
 	public ConstantClosure(final T value) {
 		_value = value;
 	}

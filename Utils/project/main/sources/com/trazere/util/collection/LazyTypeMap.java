@@ -38,7 +38,10 @@ extends LazyMap<T, Maybe<? extends V>, X> {
 	
 	/**
 	 * Instantiates a new type map with no upper bounds and defaut values.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.functional.BaseTypeFunction#BaseTypeFunction()}.
 	 */
+	@Deprecated
 	public LazyTypeMap() {
 		this(Maybe.<V>none());
 	}
@@ -47,7 +50,9 @@ extends LazyMap<T, Maybe<? extends V>, X> {
 	 * Instantiates a new type map with no upper bounds and the given default value.
 	 * 
 	 * @param defaultValue The default value.
+	 * @deprecated Use {@link com.trazere.core.functional.BaseTypeFunction#BaseTypeFunction(com.trazere.core.util.Maybe)}.
 	 */
+	@Deprecated
 	public LazyTypeMap(final Maybe<? extends V> defaultValue) {
 		this(Maybe.<T>none(), defaultValue);
 	}
@@ -57,7 +62,9 @@ extends LazyMap<T, Maybe<? extends V>, X> {
 	 * 
 	 * @param upperBound The upper bound.
 	 * @param defaultValue The default value.
+	 * @deprecated Use {@link com.trazere.core.functional.BaseTypeFunction#BaseTypeFunction(com.trazere.core.util.Maybe, com.trazere.core.util.Maybe)}.
 	 */
+	@Deprecated
 	public LazyTypeMap(final Maybe<? extends T> upperBound, final Maybe<? extends V> defaultValue) {
 		// Checks.
 		assert null != upperBound;
@@ -74,7 +81,10 @@ extends LazyMap<T, Maybe<? extends V>, X> {
 	 * @param type1 The first type.
 	 * @param type2 The second type.
 	 * @return <code>true</code> when the first type is a sub type of the second type, <code>false</code> otherwise.
+	 * @deprecated Use {@link com.trazere.core.functional.BaseTypeFunction#isSubTypeOf(Object, Object)}.
 	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	protected abstract boolean isSubTypeOf(final T type1, final T type2);
 	
 	/**
@@ -82,7 +92,10 @@ extends LazyMap<T, Maybe<? extends V>, X> {
 	 * 
 	 * @param type The type.
 	 * @return The super types.
+	 * @deprecated Use {@link com.trazere.core.functional.BaseTypeFunction#getSuperTypes(Object)}.
 	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	protected abstract Collection<? extends T> getSuperTypes(final T type);
 	
 	/**
@@ -137,7 +150,10 @@ extends LazyMap<T, Maybe<? extends V>, X> {
 	 * @param type The type.
 	 * @return The computed value. May be <code>null</code>.
 	 * @throws X When the value cannot be computed.
+	 * @deprecated Use {@link com.trazere.core.functional.BaseTypeFunction#computeDiscrete(Object)}.
 	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	protected abstract Maybe<? extends V> computeDiscrete(final T type)
 	throws X;
 }

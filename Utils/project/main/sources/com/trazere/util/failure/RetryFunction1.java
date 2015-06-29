@@ -73,7 +73,9 @@ implements Function1<T, Either<S, F>, X> {
 	 * @param failureCount The number of failures.
 	 * @return Some failure value to end the evaluation with, or nothing to perform another evaluation attempt.
 	 * @throws X On failure.
+	 * @deprecated Use {@link com.trazere.core.functional.RetryThunk#handleFailure(Throwable, int)}.
 	 */
+	@Deprecated
 	protected abstract Maybe<? extends F> handleFailure(final F failure, final int failureCount)
 	throws X;
 	

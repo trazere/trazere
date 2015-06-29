@@ -34,7 +34,9 @@ implements Describable {
 	 * Instantiates a new mutable long with the given value.
 	 * 
 	 * @param value The initial value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableLong#MutableLong(long)}.
 	 */
+	@Deprecated
 	public MutableLong(final long value) {
 		// Initialization.
 		_value = value;
@@ -44,7 +46,9 @@ implements Describable {
 	 * Gets the value of the receiver mutable long integer.
 	 * 
 	 * @return The value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableLong#get()}.
 	 */
+	@Deprecated
 	public long get() {
 		return _value;
 	}
@@ -54,7 +58,9 @@ implements Describable {
 	 * 
 	 * @param value The value.
 	 * @return The given value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableLong#set(long)}.
 	 */
+	@Deprecated
 	public long set(final long value) {
 		_value = value;
 		return value;
@@ -64,7 +70,9 @@ implements Describable {
 	 * Negates the value of the receiver mutable long integer.
 	 * 
 	 * @return The resulting value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableLong#neg()}.
 	 */
+	@Deprecated
 	public long neg() {
 		_value = -_value;
 		return _value;
@@ -75,7 +83,9 @@ implements Describable {
 	 * 
 	 * @param value The value
 	 * @return The resulting value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableLong#add(long)}.
 	 */
+	@Deprecated
 	public long add(final long value) {
 		_value = _value + value;
 		return _value;
@@ -86,7 +96,9 @@ implements Describable {
 	 * 
 	 * @param value The value
 	 * @return The resulting value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableLong#sub(long)}.
 	 */
+	@Deprecated
 	public long sub(final long value) {
 		_value = _value - value;
 		return _value;
@@ -97,7 +109,9 @@ implements Describable {
 	 * 
 	 * @param value The value
 	 * @return The resulting value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableLong#mul(long)}.
 	 */
+	@Deprecated
 	public long mul(final long value) {
 		_value = _value * value;
 		return _value;
@@ -108,7 +122,9 @@ implements Describable {
 	 * 
 	 * @param value The value
 	 * @return The resulting value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableLong#div(long)}.
 	 */
+	@Deprecated
 	public long div(final long value) {
 		_value = _value / value;
 		return _value;
@@ -119,7 +135,9 @@ implements Describable {
 	 * 
 	 * @param value The value
 	 * @return The resulting value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableLong#mod(long)}.
 	 */
+	@Deprecated
 	public long mod(final long value) {
 		_value = _value % value;
 		return _value;
@@ -130,7 +148,9 @@ implements Describable {
 	 * 
 	 * @param position The value
 	 * @return The resulting value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableLong#shiftl(int)}.
 	 */
+	@Deprecated
 	public long shiftl(final int position) {
 		_value = _value << position;
 		return _value;
@@ -141,7 +161,9 @@ implements Describable {
 	 * 
 	 * @param position The value
 	 * @return The resulting value.
+	 * @deprecated Use {@link com.trazere.core.lang.MutableLong#shiftr(int)}.
 	 */
+	@Deprecated
 	public long shiftr(final int position) {
 		_value = _value >> position;
 		return _value;

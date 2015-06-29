@@ -29,7 +29,7 @@ import java.util.NoSuchElementException;
  * The {@link Feeds} class provides various common feeds.
  * 
  * @see Feed
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class Feeds {

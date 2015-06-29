@@ -26,7 +26,7 @@ import java.util.NoSuchElementException;
 /**
  * The {@link FeedUtils} class provides various utilities regarding feeds.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class FeedUtils {

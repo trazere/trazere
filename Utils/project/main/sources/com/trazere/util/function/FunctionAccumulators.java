@@ -23,7 +23,7 @@ import com.trazere.util.accumulator.FoldAccumulator1;
 /**
  * The {@link FunctionAccumulators} class provides various factories of accumulators related to functions.
  * 
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class FunctionAccumulators {

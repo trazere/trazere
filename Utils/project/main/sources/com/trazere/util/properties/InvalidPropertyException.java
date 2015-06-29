@@ -30,7 +30,10 @@ extends PropertiesException {
 	
 	/**
 	 * Instantiates a new exception.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.record.InvalidFieldException#InvalidFieldException()}.
 	 */
+	@Deprecated
 	public InvalidPropertyException() {
 		super();
 	}
@@ -39,7 +42,9 @@ extends PropertiesException {
 	 * Instantiates a new exception using the given message.
 	 * 
 	 * @param message Details about the exception.
+	 * @deprecated Use {@link com.trazere.core.record.InvalidFieldException#InvalidFieldException(String)}.
 	 */
+	@Deprecated
 	public InvalidPropertyException(final String message) {
 		super(message);
 	}
@@ -48,7 +53,9 @@ extends PropertiesException {
 	 * Instantiates a new exception using the given cause.
 	 * 
 	 * @param cause Cause of the exception.
+	 * @deprecated Use {@link com.trazere.core.record.InvalidFieldException#InvalidFieldException(Throwable)}.
 	 */
+	@Deprecated
 	public InvalidPropertyException(final Throwable cause) {
 		super(cause);
 	}
@@ -58,12 +65,19 @@ extends PropertiesException {
 	 * 
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
+	 * @deprecated Use {@link com.trazere.core.record.InvalidFieldException#InvalidFieldException(String, Throwable)}.
 	 */
+	@Deprecated
 	public InvalidPropertyException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 	
-	/** Factory of {@link InvalidPropertyException}. */
+	/**
+	 * Factory of {@link InvalidPropertyException}.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.record.InvalidFieldException#FACTORY}.
+	 */
+	@Deprecated
 	@SuppressWarnings("hiding")
 	public static final ThrowableFactory<InvalidPropertyException> FACTORY = new BaseThrowableFactory<InvalidPropertyException>() {
 		@Override

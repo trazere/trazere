@@ -35,7 +35,9 @@ implements Comparator<T> {
 	 * Instantiates a new comparator with the given comparators.
 	 * 
 	 * @param comparators The sequence of comparators.
+	 * @deprecated Use {@link com.trazere.core.util.SequenceComparator#SequenceComparator(List)}.
 	 */
+	@Deprecated
 	public SequenceComparator(final List<? extends Comparator<? super T>> comparators) {
 		assert null != comparators;
 		
@@ -47,7 +49,9 @@ implements Comparator<T> {
 	 * Instantiates a new comparator with the given comparators.
 	 * 
 	 * @param comparators The sequence of comparators.
+	 * @deprecated Use {@link com.trazere.core.util.SequenceComparator#SequenceComparator(Comparator...)}.
 	 */
+	@Deprecated
 	public SequenceComparator(final Comparator<? super T>... comparators) {
 		this(Arrays.asList(comparators));
 	}

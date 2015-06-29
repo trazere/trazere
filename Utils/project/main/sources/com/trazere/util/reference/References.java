@@ -21,7 +21,7 @@ import com.trazere.util.type.Maybe;
  * The {@link References} class provides various factories of references.
  * 
  * @see Reference
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class References {

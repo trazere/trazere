@@ -35,7 +35,9 @@ public interface CachePolicy<K> {
 	 * @param key The key.
 	 * @param dirtyEntries The dirty key collection to populate.
 	 * @return The given dirty key collection.
+	 * @deprecated Use {@link com.trazere.core.cache.CachePolicy.State#accessedEntry(Object, com.trazere.core.imperative.Accumulator)}.
 	 */
+	@Deprecated
 	public <C extends Collection<? super K>> C accessedEntry(final K key, final C dirtyEntries);
 	
 	/**
@@ -47,7 +49,9 @@ public interface CachePolicy<K> {
 	 * @param key The key.
 	 * @param dirtyEntries The dirty key collection to populate.
 	 * @return The given dirty key collection.
+	 * @deprecated Use {@link com.trazere.core.cache.CachePolicy.State#updatedEntry(Object, com.trazere.core.imperative.Accumulator)}.
 	 */
+	@Deprecated
 	public <C extends Collection<? super K>> C updatedEntry(final K key, final C dirtyEntries);
 	
 	/**

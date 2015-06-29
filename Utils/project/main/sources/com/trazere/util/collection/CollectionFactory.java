@@ -31,7 +31,17 @@ extends Factory<C, RuntimeException> {
 	@Override
 	public C build();
 	
+	/**
+	 * @deprecated Use {@link com.trazere.core.collection.CollectionFactory#build(int)}.
+	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	public C build(final int capacity);
 	
+	/**
+	 * @deprecated Use {@link com.trazere.core.collection.CollectionFactory#build(Collection)}.
+	 */
+	@Deprecated
+	@SuppressWarnings("javadoc")
 	public C build(final Collection<? extends T> values);
 }

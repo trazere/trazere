@@ -79,7 +79,9 @@ implements Describable {
 	 * 
 	 * @param key The key of the field.
 	 * @param type The type of the value of the field.
+	 * @deprecated Use {@link com.trazere.core.record.FieldKey#FieldKey(String, Class, boolean)} with <code>false</code> for nullable.
 	 */
+	@Deprecated
 	public FieldSignature(final K key, final Class<V> type) {
 		this(key, type, true);
 	}
@@ -90,7 +92,9 @@ implements Describable {
 	 * @param key The key of the field.
 	 * @param type The type of the value of the field.
 	 * @param nullable The flag indicating whether the value of the field can be <code>null</code> or not.
+	 * @deprecated Use {@link com.trazere.core.record.FieldKey#FieldKey(String, Class, boolean)}.
 	 */
+	@Deprecated
 	public FieldSignature(final K key, final Class<V> type, final boolean nullable) {
 		assert null != key;
 		assert null != type;
@@ -139,7 +143,9 @@ implements Describable {
 	 * Get the type of the values of the record field described by the receiver signature.
 	 * 
 	 * @return The Java class of the type.
+	 * @deprecated Use {@link com.trazere.core.record.FieldKey#getType()}.
 	 */
+	@Deprecated
 	public Class<V> getType() {
 		return _type;
 	}
@@ -171,7 +177,9 @@ implements Describable {
 	 * Indicates whether the value of the field can be <code>null</code> or not.
 	 * 
 	 * @return <code>true</code> when the value of the field can be <code>null</code>, <code>false</code> otherwise.
+	 * @deprecated Use {@link com.trazere.core.record.FieldKey#isNullable()}.
 	 */
+	@Deprecated
 	public boolean isNullable() {
 		return _nullable;
 	}

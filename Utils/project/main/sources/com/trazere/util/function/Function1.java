@@ -31,7 +31,9 @@ public interface Function1<T, R, X extends Exception> {
 	 * @param value The argument value.
 	 * @return The result of the function evaluation.
 	 * @throws X When the function evaluation fails.
+	 * @deprecated Use {@link com.trazere.core.functional.Function#evaluate(Object)}.
 	 */
+	@Deprecated
 	public R evaluate(final T value)
 	throws X;
 }

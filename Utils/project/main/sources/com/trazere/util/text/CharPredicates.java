@@ -25,7 +25,7 @@ import java.util.Set;
  * The {@link CharPredicates} class provides various common character predicate functions.
  * 
  * @see CharPredicate
- * @deprecated Use core.
+ * @deprecated Use {@link com.trazere.core}.
  */
 @Deprecated
 public class CharPredicates {

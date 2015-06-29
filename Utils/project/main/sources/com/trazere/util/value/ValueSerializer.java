@@ -49,7 +49,9 @@ public interface ValueSerializer<T, R, X extends Exception> {
 	 * @param value The value.
 	 * @return The representation of the value.
 	 * @throws X When the serialization fails.
+	 * @deprecated Use {@link com.trazere.core.util.Serializer#serialize(Object)}.
 	 */
+	@Deprecated
 	public R serialize(final T value)
 	throws X;
 	
@@ -59,7 +61,9 @@ public interface ValueSerializer<T, R, X extends Exception> {
 	 * @param representation The representation of the value.
 	 * @return The value.
 	 * @throws X When the deserialization fails.
+	 * @deprecated Use {@link com.trazere.core.util.Serializer#deserialize(Object)}.
 	 */
+	@Deprecated
 	public T deserialize(final R representation)
 	throws X;
 }
