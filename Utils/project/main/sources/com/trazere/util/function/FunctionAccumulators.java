@@ -62,7 +62,7 @@ public class FunctionAccumulators {
 	 * @param results The accumulator to populate.
 	 * @return The built accumulator.
 	 * @deprecated Use {@link com.trazere.core.imperative.AccumulatorUtils#map(com.trazere.core.imperative.Accumulator, com.trazere.core.functional.Function)}
-	 *             and {@link com.trazere.core.imperative.Accumulators#uncurry(com.trazere.core.imperative.Accumulator2)}.
+	 *             and {@link com.trazere.core.imperative.AccumulatorUtils#uncurry(com.trazere.core.imperative.Accumulator2)}.
 	 */
 	@Deprecated
 	public static <K, V, S, X extends Exception> Accumulator1<V, S, X> projectValues(final Function1<? super V, ? extends K, ? extends X> projector, final Accumulator2<? super K, ? super V, S, ? extends X> results) {

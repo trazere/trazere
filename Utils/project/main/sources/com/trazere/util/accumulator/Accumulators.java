@@ -64,7 +64,7 @@ public class Accumulators {
 	 * @param <X> Type of the exceptions.
 	 * @param accumulator Delegate accumulator.
 	 * @return The built accumulator.
-	 * @deprecated Use {@link com.trazere.core.imperative.AccumulatorUtils#delegate(com.trazere.core.imperative.Accumulator)}.
+	 * @deprecated Use {@link com.trazere.core.imperative.AccumulatorUtils#delegated(com.trazere.core.imperative.Accumulator)}.
 	 */
 	@Deprecated
 	public static <T, A extends Accumulator1<? super T, ?, ? extends X>, X extends Exception> Accumulator1<T, A, X> delegate(final A accumulator) {
@@ -97,7 +97,7 @@ public class Accumulators {
 	 * @param <X> Type of the exceptions.
 	 * @param accumulator Delegate accumulator.
 	 * @return The built accumulator.
-	 * @deprecated Use {@link com.trazere.core.imperative.AccumulatorUtils#delegate2(com.trazere.core.imperative.Accumulator2)}.
+	 * @deprecated Use {@link com.trazere.core.imperative.AccumulatorUtils#delegated2(com.trazere.core.imperative.Accumulator2)}.
 	 */
 	@Deprecated
 	public static <T1, T2, A extends Accumulator2<? super T1, ? super T2, ?, ? extends X>, X extends Exception> Accumulator2<T1, T2, A, X> delegate(final A accumulator) {
@@ -314,7 +314,7 @@ public class Accumulators {
 	 * @param <X> Type of the exceptions.
 	 * @param accumulator Accumulator to curry.
 	 * @return The built accumulator.
-	 * @deprecated Use {@link com.trazere.core.imperative.Accumulators#curry(com.trazere.core.imperative.Accumulator)}.
+	 * @deprecated Use {@link com.trazere.core.imperative.AccumulatorUtils#curry(com.trazere.core.imperative.Accumulator)}.
 	 */
 	@Deprecated
 	public static <T1, T2, S, X extends Exception> Accumulator2<T1, T2, S, X> curry(final Accumulator1<? super Tuple2<? super T1, ? super T2>, ? extends S, ? extends X> accumulator) {
@@ -343,7 +343,7 @@ public class Accumulators {
 	 * @param <X> Type of the exceptions.
 	 * @param accumulator Accumulator to uncurry.
 	 * @return The built accumulator.
-	 * @deprecated Use {@link com.trazere.core.imperative.Accumulators#uncurry(com.trazere.core.imperative.Accumulator2)}.
+	 * @deprecated Use {@link com.trazere.core.imperative.AccumulatorUtils#uncurry(com.trazere.core.imperative.Accumulator2)}.
 	 */
 	@Deprecated
 	public static <T1, T2, S, X extends Exception> Accumulator1<Tuple2<T1, T2>, S, X> uncurry(final Accumulator2<? super T1, ? super T2, ? extends S, ? extends X> accumulator) {
@@ -532,7 +532,7 @@ public class Accumulators {
 	 * @param accumulator Accumulator to populate with the normalized values.
 	 * @return The built accumulator.
 	 * @see Predicates#normalizer()
-	 * @deprecated Use {@link com.trazere.core.imperative.AccumulatorUtils#normalize(com.trazere.core.imperative.Accumulator)}.
+	 * @deprecated Use {@link com.trazere.core.imperative.AccumulatorUtils#normalized(com.trazere.core.imperative.Accumulator)}.
 	 */
 	@Deprecated
 	public static <T, S, X extends Exception> Accumulator1<T, S, X> normalizer(final Accumulator1<? super T, ? extends S, ? extends X> accumulator) {

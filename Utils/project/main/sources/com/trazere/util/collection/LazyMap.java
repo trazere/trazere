@@ -46,7 +46,7 @@ implements Function1<K, V, X> {
 	 * @param <X> Type of the exceptions.
 	 * @param function The function.
 	 * @return The built lazy map.
-	 * @deprecated Use {@link com.trazere.core.functional.FunctionUtils#memoize(com.trazere.core.functional.Function)} or
+	 * @deprecated Use {@link com.trazere.core.functional.FunctionUtils#memoized(com.trazere.core.functional.Function)} or
 	 *             {@link com.trazere.core.functional.FunctionUtils#resettable(com.trazere.core.functional.Function)}.
 	 */
 	@Deprecated

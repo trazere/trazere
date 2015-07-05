@@ -265,7 +265,7 @@ public class Feeds {
 	 * @param <X> Type of the exceptions.
 	 * @param feed The feed.
 	 * @return The built feed.
-	 * @deprecated Use {@link com.trazere.core.collection.FeedUtils#memoize(com.trazere.core.collection.Feed)}.
+	 * @deprecated Use {@link com.trazere.core.collection.FeedUtils#memoized(com.trazere.core.collection.Feed)}.
 	 */
 	@Deprecated
 	public static <T, X extends Exception> Feed<T, X> memoize(final Feed<T, ? extends X> feed) {

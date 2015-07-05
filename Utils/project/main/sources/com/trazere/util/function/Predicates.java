@@ -563,7 +563,7 @@ public class Predicates {
 	 * @param <X> Type of the exceptions.
 	 * @param function The lifted function.
 	 * @return The built predicate.
-	 * @deprecated Use {@link com.trazere.core.functional.Predicates#fromFunction(com.trazere.core.functional.Function2)}.
+	 * @deprecated Use {@link com.trazere.core.functional.Predicates#fromFunction2(com.trazere.core.functional.Function2)}.
 	 */
 	@Deprecated
 	public static final <T1, T2, X extends Exception> Predicate2<T1, T2, X> fromFunction(final Function2<? super T1, ? super T2, Boolean, ? extends X> function) {

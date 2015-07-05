@@ -767,7 +767,7 @@ public class CollectionUtils {
 	 * @param collection2 The second collection.
 	 * @param results The collection to populate with the results.
 	 * @return The given result collection.
-	 * @deprecated Use {@link com.trazere.core.collection.CollectionUtils#intersection(Collection, Collection, com.trazere.core.collection.CollectionFactory)}.
+	 * @deprecated Use {@link com.trazere.core.collection.CollectionUtils#intersect(Collection, Collection, com.trazere.core.collection.CollectionFactory)}.
 	 */
 	@Deprecated
 	public static <T, C extends Collection<? super T>> C intersection(final Collection<? extends T> collection1, final Collection<? extends T> collection2, final C results) {
@@ -795,7 +795,7 @@ public class CollectionUtils {
 	 * @param collection2 The second collection.
 	 * @param results The collection to populate with the results.
 	 * @return The given result collection.
-	 * @deprecated Use {@link com.trazere.core.collection.CollectionUtils#exclusion(Collection, Collection, com.trazere.core.collection.CollectionFactory)}.
+	 * @deprecated Use {@link com.trazere.core.collection.CollectionUtils#exclude(Collection, Collection, com.trazere.core.collection.CollectionFactory)}.
 	 */
 	@Deprecated
 	public static <T, C extends Collection<? super T>> C exclusion(final Collection<? extends T> collection1, final Collection<? extends T> collection2, final C results) {

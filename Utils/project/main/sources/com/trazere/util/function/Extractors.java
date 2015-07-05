@@ -60,7 +60,7 @@ public class Extractors {
 	 * @param g The outer extractor.
 	 * @param f The inned extractor.
 	 * @return The built extractor.
-	 * @deprecated Use {@link com.trazere.core.functional.Extractors#compose(com.trazere.core.functional.Function, com.trazere.core.functional.Function)}.
+	 * @deprecated Use {@link com.trazere.core.functional.ExtractorUtils#compose(com.trazere.core.functional.Function, com.trazere.core.functional.Function)}.
 	 */
 	@Deprecated
 	public static <T1, T2, T3, X extends Exception> Function1<T1, Maybe<T3>, X> compose(final Function1<? super T2, ? extends Maybe<? extends T3>, ? extends X> g, final Function1<? super T1, ? extends Maybe<? extends T2>, ? extends X> f) {

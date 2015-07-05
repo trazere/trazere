@@ -256,7 +256,7 @@ public class Iterators {
 	 * @param <T> Type of the values.
 	 * @param list List to iterate.
 	 * @return The built iterator.
-	 * @deprecated Use {@link com.trazere.core.collection.ListUtils#backwardIterator(List)}.
+	 * @deprecated Use {@link com.trazere.core.collection.ListIterators#backward(List)}.
 	 */
 	@Deprecated
 	public static <T> Iterator<T> reversed(final List<? extends T> list) {

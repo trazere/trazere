@@ -46,7 +46,7 @@ public class Closures {
 	 * @param <X> Type of the exceptions.
 	 * @param function Function computing the value.
 	 * @return The closure.
-	 * @deprecated Use {@link com.trazere.core.functional.ThunkUtils#memoize(com.trazere.core.functional.Thunk)}.
+	 * @deprecated Use {@link com.trazere.core.functional.ThunkUtils#memoized(com.trazere.core.functional.Thunk)}.
 	 */
 	@Deprecated
 	public static <T, X extends Exception> Closure<T, X> fromFunction(final Function0<? extends T, ? extends X> function) {
@@ -60,7 +60,7 @@ public class Closures {
 	 * @param <X> Type of the exceptions.
 	 * @param closure Closure to synchronize.
 	 * @return The synchronized closure.
-	 * @deprecated Use {@link com.trazere.core.functional.ThunkUtils#synchronize(com.trazere.core.functional.Thunk)}.
+	 * @deprecated Use {@link com.trazere.core.functional.ThunkUtils#synchronized_(com.trazere.core.functional.Thunk)}.
 	 */
 	@Deprecated
 	public static <T, X extends Exception> Closure<T, X> synchronize(final Closure<T, ? extends X> closure) {
