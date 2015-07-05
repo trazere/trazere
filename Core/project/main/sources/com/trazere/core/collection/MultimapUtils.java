@@ -15,6 +15,7 @@
  */
 package com.trazere.core.collection;
 
+import com.trazere.core.design.Decorator;
 import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Function3;
@@ -468,104 +469,114 @@ public class MultimapUtils {
 	public static <K, V, C extends Collection<V>> Multimap<K, V, C> unmodifiable(final Multimap<K, V, C> multimap) {
 		assert null != multimap;
 		
-		return new Multimap<K, V, C>() {
-			@Override
-			public boolean put(final K key, final V value) {
-				throw new UnsupportedOperationException();
-			}
-			
-			@Override
-			public boolean putAll(final K key, final Collection<? extends V> values) {
-				throw new UnsupportedOperationException();
-			}
-			
-			@Override
-			public boolean putAll(final Multimap<? extends K, ? extends V, ?> multimap_) {
-				throw new UnsupportedOperationException();
-			}
-			
-			@Override
-			public boolean isEmpty() {
-				return multimap.isEmpty();
-			}
-			
-			@Override
-			public int size() {
-				return multimap.size();
-			}
-			
-			@Override
-			public boolean containsKey(final K key) {
-				return multimap.containsKey(key);
-			}
-			
-			@Override
-			public Set<K> keySet() {
-				return multimap.keySet();
-			}
-			
-			@Override
-			public boolean contains(final K key, final V value) {
-				return multimap.contains(key, value);
-			}
-			
-			@Override
-			public Set<Map.Entry<K, V>> entrySet() {
-				return multimap.entrySet();
-			}
-			
-			@Override
-			public C get(final K key) {
-				return multimap.get(key);
-			}
-			
-			@Override
-			public boolean containsValue(final V value) {
-				return multimap.containsValue(value);
-			}
-			
-			@Override
-			public void clear() {
-				throw new UnsupportedOperationException();
-			}
-			
-			@Override
-			public boolean remove(final K key, final V value) {
-				throw new UnsupportedOperationException();
-			}
-			
-			@Override
-			public boolean removeAll(final K key, final Collection<? extends V> values) {
-				throw new UnsupportedOperationException();
-			}
-			
-			@Override
-			public C removeKey(final K key) {
-				throw new UnsupportedOperationException();
-			}
-			
-			@Override
-			public boolean removeValue(final V value) {
-				throw new UnsupportedOperationException();
-			}
-			
-			// Object.
-			
-			@Override
-			public int hashCode() {
-				return multimap.hashCode();
-			}
-			
-			@Override
-			public boolean equals(final Object o) {
-				return multimap.equals(o);
-			}
-			
-			@Override
-			public String toString() {
-				return multimap.toString();
-			}
-		};
+		return multimap instanceof UnmodifiableMutimap ? multimap : new UnmodifiableMutimap<>(multimap);
+	}
+	
+	private static class UnmodifiableMutimap<K, V, C extends Collection<V>>
+	extends Decorator<Multimap<K, V, C>>
+	implements Multimap<K, V, C> {
+		public UnmodifiableMutimap(final Multimap<K, V, C> decorated) {
+			super(decorated);
+		}
+		
+		// Multimap.
+		
+		@Override
+		public boolean put(final K key, final V value) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean putAll(final K key, final Collection<? extends V> values) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean putAll(final Multimap<? extends K, ? extends V, ?> multimap_) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean isEmpty() {
+			return _decorated.isEmpty();
+		}
+		
+		@Override
+		public int size() {
+			return _decorated.size();
+		}
+		
+		@Override
+		public boolean containsKey(final K key) {
+			return _decorated.containsKey(key);
+		}
+		
+		@Override
+		public Set<K> keySet() {
+			return _decorated.keySet();
+		}
+		
+		@Override
+		public boolean contains(final K key, final V value) {
+			return _decorated.contains(key, value);
+		}
+		
+		@Override
+		public Set<Map.Entry<K, V>> entrySet() {
+			return _decorated.entrySet();
+		}
+		
+		@Override
+		public C get(final K key) {
+			return _decorated.get(key);
+		}
+		
+		@Override
+		public boolean containsValue(final V value) {
+			return _decorated.containsValue(value);
+		}
+		
+		@Override
+		public void clear() {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean remove(final K key, final V value) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean removeAll(final K key, final Collection<? extends V> values) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public C removeKey(final K key) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean removeValue(final V value) {
+			throw new UnsupportedOperationException();
+		}
+		
+		// Object.
+		
+		@Override
+		public int hashCode() {
+			return _decorated.hashCode();
+		}
+		
+		@Override
+		public boolean equals(final Object o) {
+			return _decorated.equals(o);
+		}
+		
+		@Override
+		public String toString() {
+			return _decorated.toString();
+		}
 	}
 	
 	private MultimapUtils() {

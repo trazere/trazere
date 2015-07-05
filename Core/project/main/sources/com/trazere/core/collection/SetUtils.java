@@ -15,6 +15,7 @@
  */
 package com.trazere.core.collection;
 
+import java.util.Collections;
 import java.util.Set;
 
 /**
@@ -24,7 +25,19 @@ import java.util.Set;
  * @since 1.0
  */
 public class SetUtils {
-	// TODO: add unmodifiable
+	/**
+	 * Builds an unmodifiable view of the given set.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param set Set to wrap.
+	 * @return An unmodifiable view of the given set, or the given set when is it already unmodifiable.
+	 * @since 1.0
+	 */
+	public static <E> Set<E> unmutable(final Set<E> set) {
+		return UNMUTABLE_SET_CLASS.isInstance(set) ? set : Collections.unmodifiableSet(set);
+	}
+	
+	private static Class<?> UNMUTABLE_SET_CLASS = Collections.unmodifiableSet(Collections.emptySet()).getClass();
 	
 	private SetUtils() {
 		// Prevent instantiation.

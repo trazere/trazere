@@ -20,6 +20,7 @@ import com.trazere.core.collection.CollectionFactory;
 import com.trazere.core.collection.MapAccumulators;
 import com.trazere.core.collection.Multimap;
 import com.trazere.core.collection.MultimapAccumulators;
+import com.trazere.core.design.Decorator;
 import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Function3;
@@ -978,6 +979,62 @@ public class IteratorUtils {
 	 */
 	public static <E1, E2, EE> Iterator<EE> extractAll(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Function2<? super E1, ? super E2, ? extends Iterable<? extends EE>> extractor) {
 		return flatMap(iterator, FunctionUtils.map2(extractor, IterableFunctions.iterator()));
+	}
+	
+	/**
+	 * Builds an unmodifiable view of the given iterator.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param iterator Iterator to wrap.
+	 * @return An unmodifiable view of the given iterator, or the given iterator when is it already unmodifiable.
+	 * @since 1.0
+	 */
+	public static <E> Iterator<E> unmutable(final Iterator<E> iterator) {
+		assert null != iterator;
+		
+		return iterator instanceof UnmodifiableIterator ? iterator : new UnmodifiableIterator<>(iterator);
+	}
+	
+	private static class UnmodifiableIterator<E>
+	extends Decorator<Iterator<E>>
+	implements Iterator<E> {
+		public UnmodifiableIterator(final Iterator<E> decorated) {
+			super(decorated);
+		}
+		
+		// Iterator.
+		
+		@Override
+		public boolean hasNext() {
+			return _decorated.hasNext();
+		}
+		
+		@Override
+		public E next() {
+			return _decorated.next();
+		}
+		
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
+		
+		// Object.
+		
+		@Override
+		public int hashCode() {
+			return _decorated.hashCode();
+		}
+		
+		@Override
+		public boolean equals(final Object o) {
+			return _decorated.equals(o);
+		}
+		
+		@Override
+		public String toString() {
+			return _decorated.toString();
+		}
 	}
 	
 	/**

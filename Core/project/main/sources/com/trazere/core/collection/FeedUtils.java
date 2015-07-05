@@ -554,22 +554,25 @@ public class FeedUtils {
 	 * @see MemoizedFeed
 	 * @since 1.0
 	 */
-	public static <E> Feed<E> memoized(final Feed<? extends E> feed) {
+	public static <E> Feed<E> memoized(final Feed<E> feed) {
 		assert null != feed;
 		
-		// TODO: check that the feed is not memoized already
-		return new MemoizedFeed<E>() {
-			@Override
-			protected Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> compute() {
-				final Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> maybeItem = feed.evaluate();
-				if (maybeItem.isSome()) {
-					final Tuple2<? extends E, ? extends Feed<? extends E>> item = maybeItem.asSome().getValue();
-					return Maybe.some(new Tuple2<E, Feed<E>>(item.get1(), memoized(item.get2())));
-				} else {
-					return Maybe.none();
+		if (feed instanceof MemoizedFeed) {
+			return feed;
+		} else {
+			return new MemoizedFeed<E>() {
+				@Override
+				protected Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> compute() {
+					final Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> maybeItem = feed.evaluate();
+					if (maybeItem.isSome()) {
+						final Tuple2<? extends E, ? extends Feed<? extends E>> item = maybeItem.asSome().getValue();
+						return Maybe.some(new Tuple2<>(item.get1(), memoized(item.get2())));
+					} else {
+						return Maybe.none();
+					}
 				}
-			}
-		};
+			};
+		}
 	}
 	
 	/**

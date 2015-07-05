@@ -26,6 +26,7 @@ import com.trazere.core.lang.LangAccumulators;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 
@@ -531,7 +532,19 @@ public class CollectionUtils {
 	
 	// TODO: extractAll(...) ?
 	
-	// TODO: add unmodifiable
+	/**
+	 * Builds an unmodifiable view of the given collection.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param collection Collection to wrap.
+	 * @return An unmodifiable view of the given collection, or the given collection when is it already unmodifiable.
+	 * @since 1.0
+	 */
+	public static <E> Collection<E> unmutable(final Collection<E> collection) {
+		return UNMUTABLE_COLLECTION_CLASS.isInstance(collection) ? collection : Collections.unmodifiableCollection(collection);
+	}
+	
+	private static Class<?> UNMUTABLE_COLLECTION_CLASS = Collections.unmodifiableCollection(Collections.emptyList()).getClass();
 	
 	/**
 	 * Composes pairs with the elements of the given collections.

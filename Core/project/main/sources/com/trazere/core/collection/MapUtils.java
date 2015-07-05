@@ -27,6 +27,7 @@ import com.trazere.core.util.Comparators;
 import com.trazere.core.util.FieldComparators;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Map;
@@ -552,7 +553,20 @@ public class MapUtils {
 	
 	// TODO: extractAll to Multimap ?
 	
-	// TODO: add unmodifiable
+	/**
+	 * Builds an unmodifiable view of the given map.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param map Map to wrap.
+	 * @return An unmodifiable view of the given map, or the given map when is it already unmodifiable.
+	 * @since 1.0
+	 */
+	public static <K, V> Map<K, V> unmutable(final Map<K, V> map) {
+		return UNMUTABLE_MAP_CLASS.isInstance(map) ? map : Collections.unmodifiableMap(map);
+	}
+	
+	private static Class<?> UNMUTABLE_MAP_CLASS = Collections.unmodifiableMap(Collections.emptyMap()).getClass();
 	
 	private MapUtils() {
 		// Prevent instantiation.

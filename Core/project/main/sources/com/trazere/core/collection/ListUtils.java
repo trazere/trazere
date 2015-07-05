@@ -371,7 +371,19 @@ public class ListUtils {
 		}
 	}
 	
-	// TODO: add unmodifiable
+	/**
+	 * Builds an unmodifiable view of the given list.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param list List to wrap.
+	 * @return An unmodifiable view of the given list, or the given list when is it already unmodifiable.
+	 * @since 1.0
+	 */
+	public static <E> List<E> unmutable(final List<E> list) {
+		return UNMUTABLE_LIST_CLASS.isInstance(list) ? list : Collections.unmodifiableList(list);
+	}
+	
+	private static Class<?> UNMUTABLE_LIST_CLASS = Collections.unmodifiableList(Collections.emptyList()).getClass();
 	
 	/**
 	 * Builds a view of the given list in the reversed order.

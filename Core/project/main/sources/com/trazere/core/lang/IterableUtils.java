@@ -16,6 +16,7 @@
 package com.trazere.core.lang;
 
 import com.trazere.core.collection.CollectionFactory;
+import com.trazere.core.design.Decorator;
 import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Function3;
@@ -28,6 +29,7 @@ import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Iterator;
 
 /**
  * The {@link IterableUtils} class provides various utilities regarding {@link Iterable iterables}.
@@ -473,6 +475,52 @@ public class IterableUtils {
 	}
 	
 	// TODO: extract(...) and extractAll(...) methods although they are redundant with flatMap(...) ? => optimized version for Maybe
+	
+	/**
+	 * Builds an unmodifiable view of the given iterable.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param iterable Iterable to wrap.
+	 * @return An unmodifiable view of the given iterable, or the given iterable when is it already unmodifiable.
+	 * @since 1.0
+	 */
+	public static <E> Iterable<E> unmutable(final Iterable<E> iterable) {
+		assert null != iterable;
+		
+		return iterable instanceof UnmodifiableIterable ? iterable : new UnmodifiableIterable<>(iterable);
+	}
+	
+	private static class UnmodifiableIterable<E>
+	extends Decorator<Iterable<E>>
+	implements Iterable<E> {
+		public UnmodifiableIterable(final Iterable<E> decorated) {
+			super(decorated);
+		}
+		
+		// Iterable.
+		
+		@Override
+		public Iterator<E> iterator() {
+			return IteratorUtils.unmutable(_decorated.iterator());
+		}
+		
+		// Object.
+		
+		@Override
+		public int hashCode() {
+			return _decorated.hashCode();
+		}
+		
+		@Override
+		public boolean equals(final Object o) {
+			return _decorated.equals(o);
+		}
+		
+		@Override
+		public String toString() {
+			return _decorated.toString();
+		}
+	}
 	
 	/**
 	 * Composes pairs with the elements provided by the given iterables.
