@@ -21,6 +21,7 @@ import com.trazere.util.lang.WrapException;
 import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Tuple2;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
@@ -120,6 +121,18 @@ public class FeedUtils {
 				}
 			}
 			
+			// Note: project is still 1.6
+			@Override
+			public com.trazere.core.util.Tuple2<? extends T, ? extends com.trazere.core.collection.Feed<? extends T>> get()
+			throws NoSuchElementException {
+				final com.trazere.core.util.Maybe<? extends com.trazere.core.util.Tuple2<? extends T, ? extends com.trazere.core.collection.Feed<? extends T>>> value = evaluate();
+				if (value.isSome()) {
+					return value.asSome().getValue();
+				} else {
+					throw new NoSuchElementException();
+				}
+			}
+			
 			@Override
 			public T getHead()
 			throws NoSuchElementException {
@@ -157,6 +170,28 @@ public class FeedUtils {
 				} catch (final Exception exception) {
 					throw new WrapException(exception);
 				}
+			}
+			
+			// Note: project is still 1.6
+			@Override
+			public Iterator<T> iterator() {
+				final com.trazere.core.collection.Feed<? extends T> this_ = this;
+				return new Iterator<T>() {
+					private com.trazere.core.collection.Feed<? extends T> _tail = this_;
+					
+					@Override
+					public boolean hasNext() {
+						return !_tail.isEmpty();
+					}
+					
+					@Override
+					public T next()
+					throws NoSuchElementException {
+						final T head = _tail.getHead();
+						_tail = _tail.getTail();
+						return head;
+					}
+				};
 			}
 		};
 	}

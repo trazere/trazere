@@ -16,6 +16,7 @@
 package com.trazere.util.accumulator;
 
 import com.trazere.core.imperative.Accumulator;
+import com.trazere.core.util.Tuple2;
 import com.trazere.util.lang.WrapException;
 
 /**
@@ -48,9 +49,23 @@ public class AccumulatorUtils {
 				}
 			}
 			
+			// Note: project is still 1.6
+			@Override
+			public void addAll(final Iterable<? extends T> elements) {
+				for (final T element : elements) {
+					add(element);
+				}
+			}
+			
 			@Override
 			public S get() {
 				return accumulator.get();
+			}
+			
+			// Note: project is still 1.6
+			@Override
+			public void execute(final T element) {
+				add(element);
 			}
 		};
 	}
@@ -105,9 +120,29 @@ public class AccumulatorUtils {
 				}
 			}
 			
+			// Note: project is still 1.6
+			@Override
+			public void add(final Tuple2<? extends T1, ? extends T2> elementPair) {
+				add(elementPair.get1(), elementPair.get2());
+			}
+			
+			// Note: project is still 1.6
+			@Override
+			public void addAll(final Iterable<? extends Tuple2<? extends T1, ? extends T2>> elements) {
+				for (final Tuple2<? extends T1, ? extends T2> element : elements) {
+					add(element);
+				}
+			}
+			
 			@Override
 			public S get() {
 				return accumulator.get();
+			}
+			
+			// Note: project is still 1.6
+			@Override
+			public void execute(final T1 element1, final T2 element2) {
+				add(element1, element2);
 			}
 		};
 	}
