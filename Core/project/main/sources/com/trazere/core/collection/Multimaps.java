@@ -19,6 +19,7 @@ import com.trazere.core.util.Tuple2;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -84,6 +85,11 @@ public class Multimaps {
 			
 			@Override
 			public Set<Map.Entry<K, V>> entrySet() {
+				return Collections.emptySet();
+			}
+			
+			@Override
+			public Set<Entry<K, C>> collectionEntrySet() {
 				return Collections.emptySet();
 			}
 			

@@ -16,7 +16,6 @@
 package com.trazere.core.collection;
 
 import com.trazere.core.design.Decorator;
-import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Function3;
 import com.trazere.core.functional.FunctionAccumulators;
@@ -36,6 +35,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -54,13 +54,14 @@ public class MultimapUtils {
 	 * @return The bindings.
 	 * @since 1.0
 	 */
-	// TODO: optimize to avoid instantiating Map.Entry
-	@SuppressWarnings("unchecked")
 	public static <K, V> Iterable<Tuple2<K, V>> bindings(final Multimap<? extends K, ? extends V, ?> multimap) {
-		return IterableUtils.map(multimap.entrySet(), (Function<Map.Entry<? extends K, ? extends V>, Tuple2<K, V>>) BINDING);
+		return IterableUtils.flatMap(multimap.collectionEntrySet(), (final Map.Entry<? extends K, ? extends Collection<? extends V>> entry) -> {
+			final K key = entry.getKey();
+			return IterableUtils.map(entry.getValue(), (final V value) -> {
+				return new Tuple2<>(key, value);
+			});
+		});
 	}
-	
-	private static final Function<? extends Map.Entry<?, ?>, ? extends Tuple2<?, ?>> BINDING = entry -> new Tuple2<>(entry.getKey(), entry.getValue());
 	
 	/**
 	 * Gets a binding from the given multimap.
@@ -524,6 +525,11 @@ public class MultimapUtils {
 		@Override
 		public Set<Map.Entry<K, V>> entrySet() {
 			return _decorated.entrySet();
+		}
+		
+		@Override
+		public Set<Entry<K, C>> collectionEntrySet() {
+			return _decorated.collectionEntrySet();
 		}
 		
 		@Override

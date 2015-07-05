@@ -15,7 +15,6 @@
  */
 package com.trazere.core.collection;
 
-import com.trazere.core.functional.Function;
 import com.trazere.core.imperative.Accumulator;
 import com.trazere.core.imperative.IteratorUtils;
 import com.trazere.core.lang.LangAccumulators;
@@ -25,6 +24,7 @@ import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -138,16 +138,73 @@ implements Multimap<K, V, C> {
 			
 			@Override
 			public Iterator<Map.Entry<K, V>> iterator() {
-				return IteratorUtils.flatMap(BaseMultimap.this.keySet().iterator(), new Function<K, Iterator<Map.Entry<K, V>>>() {
-					@Override
-					public Iterator<Map.Entry<K, V>> evaluate(final K key) {
-						return IteratorUtils.map(BaseMultimap.this.get(key).iterator(), new Function<V, Map.Entry<K, V>>() {
-							@Override
-							public Map.Entry<K, V> evaluate(final V value) {
-								return new AbstractMap.SimpleEntry<>(key, value);
-							}
-						});
-					}
+				return IteratorUtils.flatMap(BaseMultimap.this.keySet().iterator(), (final K key) -> {
+					return IteratorUtils.map(BaseMultimap.this.get(key).iterator(), (final V value) -> {
+						return new AbstractMap.SimpleEntry<>(key, value);
+					});
+				});
+			}
+		};
+	}
+	
+	@Override
+	public Set<Entry<K, C>> collectionEntrySet() {
+		return new AbstractSet<Map.Entry<K, C>>() {
+			@Override
+			public boolean add(final Map.Entry<K, C> e) {
+				throw new UnsupportedOperationException();
+			}
+			
+			@Override
+			public boolean addAll(final Collection<? extends Map.Entry<K, C>> c) {
+				throw new UnsupportedOperationException();
+			}
+			
+			@Override
+			public boolean isEmpty() {
+				return BaseMultimap.this.isEmpty();
+			}
+			
+			@Override
+			public int size() {
+				return BaseMultimap.this.size();
+			}
+			
+			@Override
+			public boolean contains(final Object o) {
+				if (o instanceof Map.Entry<?, ?>) {
+					@SuppressWarnings("unchecked")
+					final Map.Entry<K, C> entry = (Map.Entry<K, C>) o;
+					return BaseMultimap.this.get(entry.getKey()).equals(entry.getValue());
+				} else {
+					return false;
+				}
+			}
+			
+			@Override
+			public void clear() {
+				throw new UnsupportedOperationException();
+			}
+			
+			@Override
+			public boolean remove(final Object o) {
+				throw new UnsupportedOperationException();
+			}
+			
+			@Override
+			public boolean removeAll(final Collection<?> c) {
+				throw new UnsupportedOperationException();
+			}
+			
+			@Override
+			public boolean retainAll(final Collection<?> c) {
+				throw new UnsupportedOperationException();
+			}
+			
+			@Override
+			public Iterator<Map.Entry<K, C>> iterator() {
+				return IteratorUtils.map(BaseMultimap.this.keySet().iterator(), (final K key) -> {
+					return new AbstractMap.SimpleEntry<>(key, BaseMultimap.this.get(key));
 				});
 			}
 		};

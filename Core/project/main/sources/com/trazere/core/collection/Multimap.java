@@ -124,6 +124,14 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	Set<Map.Entry<K, V>> entrySet();
 	
 	/**
+	 * Gets the entries corresponding to the binding groups of this multimap.
+	 * 
+	 * @return An unmodifiable set of the entries of the values.
+	 * @since 1.0
+	 */
+	Set<Map.Entry<K, C>> collectionEntrySet();
+	
+	/**
 	 * Gets the values associated to the given key in this multimap.
 	 * 
 	 * @param key The key. May or may not be <code>null</code> according the implementation.
