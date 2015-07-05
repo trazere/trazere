@@ -42,7 +42,7 @@ public class AccumulatorUtils {
 	 * @return The built accumulator.
 	 * @since 1.0
 	 */
-	public static <E, A extends Accumulator<? super E, ?>> Accumulator<E, A> delegate(final A accumulator) {
+	public static <E, A extends Accumulator<? super E, ?>> Accumulator<E, A> delegated(final A accumulator) {
 		return new Accumulator<E, A>() {
 			@Override
 			public void add(final E element) {
@@ -90,37 +90,7 @@ public class AccumulatorUtils {
 		};
 	}
 	
-	/**
-	 * Normalizes the elements accumulated into the given accumulator.
-	 * 
-	 * @param <E> Type of the accumulated elements.
-	 * @param <S> Type of the state.
-	 * @param accumulator Accumulator of the normalized elements.
-	 * @return The built accumulator.
-	 * @since 1.0
-	 */
-	public static <E, S> Accumulator<E, S> normalize(final Accumulator<? super E, ? extends S> accumulator) {
-		return AccumulatorUtils.filter(accumulator, ImperativePredicates.normalizer());
-	}
-	
-	/**
-	 * Normalizes the elements accumulated into the given accumulator according to the given hash function.
-	 * <p>
-	 * At most one element will be accumulated for each hash value.
-	 * 
-	 * @param <E> Type of the accumulated elements.
-	 * @param <H> Type of the hash values.
-	 * @param <S> Type of the state.
-	 * @param accumulator Accumulator of the normalized elements.
-	 * @param hashFunction Function that hashes the elements.
-	 * @return The built accumulator.
-	 * @since 1.0
-	 */
-	public static <E, H, S> Accumulator<E, S> normalize(final Accumulator<? super E, ? extends S> accumulator, final Function<? super E, H> hashFunction) {
-		return AccumulatorUtils.filter(accumulator, PredicateUtils.map(ImperativePredicates.normalizer(), hashFunction));
-	}
-	
-	// TODO: rename to ???
+	// TODO: rename to something else (map over arg vs map over result, covariant vs contravariant)
 	/**
 	 * Transforms the elements accumulated into the given accumulator using the given function.
 	 *
@@ -149,6 +119,7 @@ public class AccumulatorUtils {
 		};
 	}
 	
+	// TODO: rename to something else (covariant vs contravariant)
 	/**
 	 * Extracts the elements accumulated into the given accumulator using the given extractor.
 	 *
@@ -180,6 +151,7 @@ public class AccumulatorUtils {
 		};
 	}
 	
+	// TODO: rename to something else (covariant vs contravariant)
 	/**
 	 * Extracts and flattens the elements accumulated into the given accumulator using the given extractor.
 	 *
@@ -238,6 +210,63 @@ public class AccumulatorUtils {
 	}
 	
 	/**
+	 * Builds an accumulator that normalizes the elements accumulated into the given accumulator.
+	 * 
+	 * @param <E> Type of the accumulated elements.
+	 * @param <S> Type of the state.
+	 * @param accumulator Accumulator of the normalized elements.
+	 * @return The built accumulator.
+	 * @since 1.0
+	 */
+	public static <E, S> Accumulator<E, S> normalized(final Accumulator<? super E, ? extends S> accumulator) {
+		return AccumulatorUtils.filter(accumulator, ImperativePredicates.normalizer());
+	}
+	
+	/**
+	 * Builds an accumulator that normalizes the elements accumulated into the given accumulator according to the given hash function.
+	 * <p>
+	 * At most one element will be accumulated for each hash value.
+	 * 
+	 * @param <E> Type of the accumulated elements.
+	 * @param <H> Type of the hash values.
+	 * @param <S> Type of the state.
+	 * @param accumulator Accumulator of the normalized elements.
+	 * @param hashFunction Function that hashes the elements.
+	 * @return The built accumulator.
+	 * @since 1.0
+	 */
+	public static <E, H, S> Accumulator<E, S> normalized(final Accumulator<? super E, ? extends S> accumulator, final Function<? super E, H> hashFunction) {
+		return AccumulatorUtils.filter(accumulator, PredicateUtils.map(ImperativePredicates.normalizer(), hashFunction));
+	}
+	
+	// TODO: rename to something else (covariant vs contravariant)
+	/**
+	 * Curries the given accumulator of pair of elements.
+	 *
+	 * @param <E1> Type of the first element of the accumulated pairs.
+	 * @param <E2> Type of the second element of the accumulated pairs.
+	 * @param <S> Type of the state.
+	 * @param accumulator Accumulator to curry.
+	 * @return The built accumulator.
+	 * @since 1.0
+	 */
+	public static <E1, E2, S> Accumulator2<E1, E2, S> curry(final Accumulator<? super Tuple2<E1, E2>, ? extends S> accumulator) {
+		assert null != accumulator;
+		
+		return new Accumulator2<E1, E2, S>() {
+			@Override
+			public void add(final E1 element1, final E2 element2) {
+				accumulator.add(new Tuple2<>(element1, element2));
+			}
+			
+			@Override
+			public S get() {
+				return accumulator.get();
+			}
+		};
+	}
+	
+	/**
 	 * Builds a consumer that lifts the given accumulator.
 	 * 
 	 * @param <E> Type of the accumulated elements.
@@ -261,7 +290,7 @@ public class AccumulatorUtils {
 	 * @return The built accumulator.
 	 * @since 1.0
 	 */
-	public static <E1, E2, A extends Accumulator2<? super E1, ? super E2, ?>> Accumulator2<E1, E2, A> delegate2(final A accumulator) {
+	public static <E1, E2, A extends Accumulator2<? super E1, ? super E2, ?>> Accumulator2<E1, E2, A> delegated2(final A accumulator) {
 		return new Accumulator2<E1, E2, A>() {
 			@Override
 			public void add(final E1 element1, final E2 element2) {
@@ -395,6 +424,33 @@ public class AccumulatorUtils {
 			@Override
 			public TS get() {
 				return function.evaluate(accumulator.get());
+			}
+		};
+	}
+	
+	// TODO: rename to something else (covariant vs contravariant)
+	/**
+	 * Uncurries the given accumulator of pair of elements.
+	 *
+	 * @param <E1> Type of the first element of the accumulated pairs.
+	 * @param <E2> Type of the second element of the accumulated pairs.
+	 * @param <S> Type of the state.
+	 * @param accumulator Accumulator to uncurry.
+	 * @return The built accumulator.
+	 * @since 1.0
+	 */
+	public static <E1, E2, S> Accumulator<Tuple2<E1, E2>, S> uncurry(final Accumulator2<? super E1, ? super E2, ? extends S> accumulator) {
+		assert null != accumulator;
+		
+		return new Accumulator<Tuple2<E1, E2>, S>() {
+			@Override
+			public void add(final Tuple2<E1, E2> element) {
+				accumulator.add(element.get1(), element.get2());
+			}
+			
+			@Override
+			public S get() {
+				return accumulator.get();
 			}
 		};
 	}

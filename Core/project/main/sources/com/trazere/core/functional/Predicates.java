@@ -431,7 +431,7 @@ public class Predicates {
 	 * @return The built predicate.
 	 * @since 1.0
 	 */
-	public static <A1, A2> Predicate2<A1, A2> fromFunction(final Function2<? super A1, ? super A2, Boolean> function) {
+	public static <A1, A2> Predicate2<A1, A2> fromFunction2(final Function2<? super A1, ? super A2, Boolean> function) {
 		assert null != function;
 		
 		return (arg1, arg2) -> function.evaluate(arg1, arg2).booleanValue();

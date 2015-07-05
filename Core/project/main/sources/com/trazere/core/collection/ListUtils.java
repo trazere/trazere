@@ -129,193 +129,6 @@ public class ListUtils {
 		}
 	}
 	
-	// TODO: move to ListIterators ?
-	/**
-	 * Builds an iterator that iterates the given list from the last element to the first one.
-	 * 
-	 * @param <E> Type of the elements.
-	 * @param list List to iterate.
-	 * @return The built iterator.
-	 * @since 1.0
-	 */
-	public static <E> Iterator<E> backwardIterator(final List<? extends E> list) {
-		final ListIterator<? extends E> iterator = list.listIterator(list.size());
-		return new Iterator<E>() {
-			@Override
-			public boolean hasNext() {
-				return iterator.hasPrevious();
-			}
-			
-			@Override
-			public E next() {
-				return iterator.previous();
-			}
-			
-			@Override
-			public void remove() {
-				iterator.remove();
-			}
-		};
-	}
-	
-	/**
-	 * Reverses the order of the elements in the given list.
-	 * <p>
-	 * This method does modify the given list.
-	 * 
-	 * @param <E> Type of the elements.
-	 * @param <L> Type of the list.
-	 * @param list List to reverse.
-	 * @return The given reversed list.
-	 * @since 1.0
-	 */
-	public static <E, L extends List<E>> L reverse(final L list) {
-		assert null != list;
-		
-		Collections.reverse(list);
-		return list;
-	}
-	
-	/**
-	 * Builds a view of the given list in the reversed order.
-	 * <p>
-	 * The built list is backed by the given list, any modification to one list is reported on the other.
-	 * 
-	 * @param <E> Type of the elements.
-	 * @param list List to view.
-	 * @return The built list.
-	 * @since 1.0
-	 */
-	public static <E> List<E> reversed(final List<E> list) {
-		assert null != list;
-		
-		return new AbstractList<E>() {
-			@Override
-			public int size() {
-				return list.size();
-			}
-			
-			@Override
-			public Iterator<E> iterator() {
-				return backwardIterator(list);
-			}
-			
-			@Override
-			public boolean add(final E e) {
-				list.add(0, e);
-				return true;
-			}
-			
-			@Override
-			public boolean remove(final Object o) {
-				return list.remove(o);
-			}
-			
-			@Override
-			public boolean addAll(final int index, final Collection<? extends E> c) {
-				if (c.isEmpty()) {
-					return false;
-				} else {
-					final int addIndex = computeAddIndex(index);
-					for (final E e : c) {
-						add(addIndex, e);
-					}
-					return true;
-				}
-			}
-			
-			@Override
-			public void clear() {
-				list.clear();
-			}
-			
-			@Override
-			public E get(final int index) {
-				return list.get(computeIndex(index));
-			}
-			
-			@Override
-			public E set(final int index, final E element) {
-				return list.set(computeIndex(index), element);
-			}
-			
-			@Override
-			public void add(final int index, final E element) {
-				list.add(computeAddIndex(index) + 1, element);
-			}
-			
-			@Override
-			public E remove(final int index) {
-				return list.remove(computeIndex(index));
-			}
-			
-			@Override
-			public ListIterator<E> listIterator(final int index) {
-				final ListIterator<E> iterator = list.listIterator(computeAddIndex(index));
-				return new ListIterator<E>() {
-					@Override
-					public boolean hasNext() {
-						return iterator.hasPrevious();
-					}
-					
-					@Override
-					public E next() {
-						return iterator.previous();
-					}
-					
-					@Override
-					public boolean hasPrevious() {
-						return iterator.hasNext();
-					}
-					
-					@Override
-					public E previous() {
-						return iterator.next();
-					}
-					
-					@Override
-					public int nextIndex() {
-						return computeIndex(iterator.previousIndex());
-					}
-					
-					@Override
-					public int previousIndex() {
-						return computeIndex(iterator.nextIndex());
-					}
-					
-					@Override
-					public void remove() {
-						iterator.remove();
-					}
-					
-					@Override
-					public void set(final E e) {
-						iterator.set(e);
-					}
-					
-					@Override
-					public void add(final E e) {
-						iterator.add(e);
-						iterator.previous();
-					}
-				};
-			}
-			
-			@Override
-			public List<E> subList(final int fromIndex, final int toIndex) {
-				return reversed(list.subList(fromIndex, toIndex));
-			}
-			
-			private int computeIndex(final int index) {
-				return list.size() - index - 1;
-			}
-			
-			private int computeAddIndex(final int index) {
-				return list.size() - index;
-			}
-		};
-	}
-	
 	/**
 	 * Sorts the elements in the given list according to their natural order.
 	 * <p>
@@ -351,6 +164,24 @@ public class ListUtils {
 		assert null != comparator;
 		
 		Collections.sort(list, comparator);
+		return list;
+	}
+	
+	/**
+	 * Reverses the order of the elements in the given list.
+	 * <p>
+	 * This method does modify the given list.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param <L> Type of the list.
+	 * @param list List to reverse.
+	 * @return The given reversed list.
+	 * @since 1.0
+	 */
+	public static <E, L extends List<E>> L reverse(final L list) {
+		assert null != list;
+		
+		Collections.reverse(list);
 		return list;
 	}
 	
@@ -538,6 +369,148 @@ public class ListUtils {
 			}
 			return resultDependencies;
 		}
+	}
+	
+	// TODO: add unmodifiable
+	
+	/**
+	 * Builds a view of the given list in the reversed order.
+	 * <p>
+	 * The built list is backed by the given list, any modification to one list is reported on the other.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param list List to view.
+	 * @return The built list.
+	 * @since 1.0
+	 */
+	public static <E> List<E> reversed(final List<E> list) {
+		assert null != list;
+		
+		return new AbstractList<E>() {
+			@Override
+			public int size() {
+				return list.size();
+			}
+			
+			@Override
+			public Iterator<E> iterator() {
+				return ListIterators.backward(list);
+			}
+			
+			@Override
+			public boolean add(final E e) {
+				list.add(0, e);
+				return true;
+			}
+			
+			@Override
+			public boolean remove(final Object o) {
+				return list.remove(o);
+			}
+			
+			@Override
+			public boolean addAll(final int index, final Collection<? extends E> c) {
+				if (c.isEmpty()) {
+					return false;
+				} else {
+					final int addIndex = computeAddIndex(index);
+					for (final E e : c) {
+						add(addIndex, e);
+					}
+					return true;
+				}
+			}
+			
+			@Override
+			public void clear() {
+				list.clear();
+			}
+			
+			@Override
+			public E get(final int index) {
+				return list.get(computeIndex(index));
+			}
+			
+			@Override
+			public E set(final int index, final E element) {
+				return list.set(computeIndex(index), element);
+			}
+			
+			@Override
+			public void add(final int index, final E element) {
+				list.add(computeAddIndex(index) + 1, element);
+			}
+			
+			@Override
+			public E remove(final int index) {
+				return list.remove(computeIndex(index));
+			}
+			
+			@Override
+			public ListIterator<E> listIterator(final int index) {
+				final ListIterator<E> iterator = list.listIterator(computeAddIndex(index));
+				return new ListIterator<E>() {
+					@Override
+					public boolean hasNext() {
+						return iterator.hasPrevious();
+					}
+					
+					@Override
+					public E next() {
+						return iterator.previous();
+					}
+					
+					@Override
+					public boolean hasPrevious() {
+						return iterator.hasNext();
+					}
+					
+					@Override
+					public E previous() {
+						return iterator.next();
+					}
+					
+					@Override
+					public int nextIndex() {
+						return computeIndex(iterator.previousIndex());
+					}
+					
+					@Override
+					public int previousIndex() {
+						return computeIndex(iterator.nextIndex());
+					}
+					
+					@Override
+					public void remove() {
+						iterator.remove();
+					}
+					
+					@Override
+					public void set(final E e) {
+						iterator.set(e);
+					}
+					
+					@Override
+					public void add(final E e) {
+						iterator.add(e);
+						iterator.previous();
+					}
+				};
+			}
+			
+			@Override
+			public List<E> subList(final int fromIndex, final int toIndex) {
+				return reversed(list.subList(fromIndex, toIndex));
+			}
+			
+			private int computeIndex(final int index) {
+				return list.size() - index - 1;
+			}
+			
+			private int computeAddIndex(final int index) {
+				return list.size() - index;
+			}
+		};
 	}
 	
 	private ListUtils() {

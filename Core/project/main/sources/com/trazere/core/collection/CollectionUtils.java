@@ -385,7 +385,7 @@ public class CollectionUtils {
 	 * @return A collection containing the common elements.
 	 * @since 1.0
 	 */
-	public static <E, C extends Collection<? super E>> C intersection(final Collection<? extends E> collection1, final Collection<? extends E> collection2, final CollectionFactory<? super E, C> resultFactory) {
+	public static <E, C extends Collection<? super E>> C intersect(final Collection<? extends E> collection1, final Collection<? extends E> collection2, final CollectionFactory<? super E, C> resultFactory) {
 		final C results = resultFactory.build();
 		for (final E value : collection1) {
 			if (collection2.contains(value)) {
@@ -409,7 +409,7 @@ public class CollectionUtils {
 	 * @return A collection containing the excluded elements.
 	 * @since 1.0
 	 */
-	public static <E, C extends Collection<? super E>> C exclusion(final Collection<? extends E> collection1, final Collection<? extends E> collection2, final CollectionFactory<? super E, C> resultFactory) {
+	public static <E, C extends Collection<? super E>> C exclude(final Collection<? extends E> collection1, final Collection<? extends E> collection2, final CollectionFactory<? super E, C> resultFactory) {
 		final C results = resultFactory.build();
 		for (final E value : collection1) {
 			if (!collection2.contains(value)) {
@@ -530,6 +530,8 @@ public class CollectionUtils {
 	}
 	
 	// TODO: extractAll(...) ?
+	
+	// TODO: add unmodifiable
 	
 	/**
 	 * Composes pairs with the elements of the given collections.

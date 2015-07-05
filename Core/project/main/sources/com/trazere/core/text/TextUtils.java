@@ -319,6 +319,7 @@ public class TextUtils {
 	}
 	
 	// TODO: arg for padding
+	// TODO: arg for aligment
 	/**
 	 * Adjusts the length of the given string.
 	 * <p>

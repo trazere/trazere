@@ -224,58 +224,6 @@ public class Accumulators {
 		};
 	}
 	
-	/**
-	 * Curries the given accumulator of pair of elements.
-	 *
-	 * @param <E1> Type of the first element of the accumulated pairs.
-	 * @param <E2> Type of the second element of the accumulated pairs.
-	 * @param <S> Type of the state.
-	 * @param accumulator Accumulator to curry.
-	 * @return The built accumulator.
-	 * @since 1.0
-	 */
-	public static <E1, E2, S> Accumulator2<E1, E2, S> curry(final Accumulator<? super Tuple2<E1, E2>, ? extends S> accumulator) {
-		assert null != accumulator;
-		
-		return new Accumulator2<E1, E2, S>() {
-			@Override
-			public void add(final E1 element1, final E2 element2) {
-				accumulator.add(new Tuple2<>(element1, element2));
-			}
-			
-			@Override
-			public S get() {
-				return accumulator.get();
-			}
-		};
-	}
-	
-	/**
-	 * Uncurries the given accumulator of pair of elements.
-	 *
-	 * @param <E1> Type of the first element of the accumulated pairs.
-	 * @param <E2> Type of the second element of the accumulated pairs.
-	 * @param <S> Type of the state.
-	 * @param accumulator Accumulator to uncurry.
-	 * @return The built accumulator.
-	 * @since 1.0
-	 */
-	public static <E1, E2, S> Accumulator<Tuple2<E1, E2>, S> uncurry(final Accumulator2<? super E1, ? super E2, ? extends S> accumulator) {
-		assert null != accumulator;
-		
-		return new Accumulator<Tuple2<E1, E2>, S>() {
-			@Override
-			public void add(final Tuple2<E1, E2> element) {
-				accumulator.add(element.get1(), element.get2());
-			}
-			
-			@Override
-			public S get() {
-				return accumulator.get();
-			}
-		};
-	}
-	
 	private Accumulators() {
 		// Prevents instantiation.
 	}

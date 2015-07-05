@@ -206,31 +206,6 @@ public class FeedUtils {
 	}
 	
 	/**
-	 * Memoizes the given feed.
-	 * 
-	 * @param <E> Type of the elements.
-	 * @param feed Feed to memoize.
-	 * @return The built feed.
-	 * @since 1.0
-	 */
-	public static <E> Feed<E> memoize(final Feed<? extends E> feed) {
-		assert null != feed;
-		
-		return new MemoizedFeed<E>() {
-			@Override
-			protected Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> compute() {
-				final Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> maybeItem = feed.evaluate();
-				if (maybeItem.isSome()) {
-					final Tuple2<? extends E, ? extends Feed<? extends E>> item = maybeItem.asSome().getValue();
-					return Maybe.some(new Tuple2<E, Feed<E>>(item.get1(), memoize(item.get2())));
-				} else {
-					return Maybe.none();
-				}
-			}
-		};
-	}
-	
-	/**
 	 * Appends the given feeds together.
 	 * 
 	 * @param <E> Type of the elements.
@@ -571,7 +546,34 @@ public class FeedUtils {
 	}
 	
 	/**
-	 * Composes pairs with the elements of the given feeds.
+	 * Builds a memoized view of the the given feed.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param feed Feed to memoize.
+	 * @return The built feed.
+	 * @see MemoizedFeed
+	 * @since 1.0
+	 */
+	public static <E> Feed<E> memoized(final Feed<? extends E> feed) {
+		assert null != feed;
+		
+		// TODO: check that the feed is not memoized already
+		return new MemoizedFeed<E>() {
+			@Override
+			protected Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> compute() {
+				final Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> maybeItem = feed.evaluate();
+				if (maybeItem.isSome()) {
+					final Tuple2<? extends E, ? extends Feed<? extends E>> item = maybeItem.asSome().getValue();
+					return Maybe.some(new Tuple2<E, Feed<E>>(item.get1(), memoized(item.get2())));
+				} else {
+					return Maybe.none();
+				}
+			}
+		};
+	}
+	
+	/**
+	 * Builds a feed of pairs composed with the elements of the given feeds.
 	 * <p>
 	 * The pairs are composed of an element of each feed according in order. The extra values of the longest feed are dropped when the given feeds don't contain
 	 * the same number of elements.
@@ -599,6 +601,8 @@ public class FeedUtils {
 			}
 		};
 	}
+	
+	// TODO: unzip
 	
 	private FeedUtils() {
 		// Prevent instantiation.

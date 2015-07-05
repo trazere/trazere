@@ -46,14 +46,14 @@ public class ThunkUtils {
 	}
 	
 	/**
-	 * Builds a thunk that memoizes the value of the given thunk.
+	 * Builds a memoized view of the the given thunk.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param thunk Thunk to memoize.
 	 * @return The built thunk.
 	 * @since 1.0
 	 */
-	public static <T> MemoizedThunk<T> memoize(final Thunk<? extends T> thunk) {
+	public static <T> MemoizedThunk<T> memoized(final Thunk<? extends T> thunk) {
 		assert null != thunk;
 		
 		return new MemoizedThunk<T>() {
@@ -122,14 +122,14 @@ public class ThunkUtils {
 	}
 	
 	/**
-	 * Builds a synchronized thunk that evaluates to the given thunk.
+	 * Builds a thunk that evaluates to the given thunk in a thread safe way.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param thunk Thunk to synchronize.
 	 * @return The built thunk.
 	 * @since 1.0
 	 */
-	public static <T> Thunk<T> synchronize(final Thunk<? extends T> thunk) {
+	public static <T> Thunk<T> synchronized_(final Thunk<? extends T> thunk) {
 		assert null != thunk;
 		
 		return () -> synchronizedEvaluate(thunk);

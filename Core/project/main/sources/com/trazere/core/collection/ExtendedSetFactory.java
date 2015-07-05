@@ -39,7 +39,7 @@ extends ExtendedAbstractCollectionFactory<E, Set<E>, S> {
 	}
 	
 	@Override
-	default Set<E> synchronize(final S set) {
+	default Set<E> synchronized_(final S set) {
 		return Collections.synchronizedSet(set);
 	}
 }

@@ -54,5 +54,5 @@ extends MapFactory<K, V, M> {
 	 * @return The built synchronized view.
 	 * @since 1.0
 	 */
-	AM synchronize(M map);
+	AM synchronized_(M map);
 }

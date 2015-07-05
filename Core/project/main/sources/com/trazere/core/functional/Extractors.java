@@ -40,24 +40,6 @@ public class Extractors {
 	}
 	
 	/**
-	 * Builds an extractor corresponding to the composition of the given extractors (g . f).
-	 * 
-	 * @param <A> Type of the arguments.
-	 * @param <I> Type of the intermediate values.
-	 * @param <R> Type of the results.
-	 * @param g Outer extractor.
-	 * @param f Inner extractor.
-	 * @return The built extractor.
-	 * @since 1.0
-	 */
-	public static <A, I, R> Function<A, Maybe<R>> compose(final Function<? super I, ? extends Maybe<? extends R>> g, final Function<? super A, ? extends Maybe<? extends I>> f) {
-		assert null != f;
-		assert null != g;
-		
-		return arg -> f.evaluate(arg).flatMap(g);
-	}
-	
-	/**
 	 * Builds an extractor that lifts the given predicate.
 	 * 
 	 * @param <T> Type of the values.

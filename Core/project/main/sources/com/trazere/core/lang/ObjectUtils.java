@@ -115,6 +115,7 @@ public class ObjectUtils {
 		return object1 == object2 || null != object1 && object1.equals(object2);
 	}
 	
+	// TODO: move to LangUtils (sic) ?
 	/**
 	 * Matches the given object against the given type.
 	 * <p>
@@ -134,6 +135,7 @@ public class ObjectUtils {
 		}
 	}
 	
+	// TODO: move to LangUtils (sic) ?
 	/**
 	 * Matches the given object against the given type.
 	 * <p>

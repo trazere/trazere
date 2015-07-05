@@ -39,7 +39,7 @@ extends ExtendedAbstractCollectionFactory<E, Collection<E>, L> {
 	}
 	
 	@Override
-	default Collection<E> synchronize(final L collection) {
+	default Collection<E> synchronized_(final L collection) {
 		return Collections.synchronizedCollection(collection);
 	}
 }

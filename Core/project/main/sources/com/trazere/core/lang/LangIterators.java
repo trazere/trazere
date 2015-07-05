@@ -24,6 +24,9 @@ import java.util.Iterator;
  * @since 1.0
  */
 public class LangIterators {
+	// TODO: integer(int)
+	// TODO: integer(int, int)
+	
 	/**
 	 * Builds an iterator over the natural integers.
 	 * 

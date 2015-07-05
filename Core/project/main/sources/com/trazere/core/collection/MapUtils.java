@@ -552,6 +552,8 @@ public class MapUtils {
 	
 	// TODO: extractAll to Multimap ?
 	
+	// TODO: add unmodifiable
+	
 	private MapUtils() {
 		// Prevent instantiation.
 	}

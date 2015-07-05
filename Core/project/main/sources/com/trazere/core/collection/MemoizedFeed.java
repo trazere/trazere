@@ -18,6 +18,8 @@ package com.trazere.core.collection;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 
+// TODO: rename to BaseMemoized and inherit from a MemoizedFeed interface that extends Feed and MemoizedThunk
+// TODO: add BaseMemoizedThunk and extends it
 /**
  * The {@link MemoizedFeed} class provides a skeleton implementation of feeds that memoize their value.
  * 

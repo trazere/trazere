@@ -24,7 +24,7 @@ import java.util.function.BiPredicate;
  * @since 1.0
  */
 public class PredicateUtils {
-	// TODO: rename to ???
+	// TODO: rename to something else (map over arg vs map over result, covariant vs contravariant)
 	/**
 	 * Transforms the given predicate using the given function.
 	 * 
@@ -41,6 +41,8 @@ public class PredicateUtils {
 		
 		return arg -> predicate.evaluate(function.evaluate(arg));
 	}
+	
+	// TODO: synchronized_
 	
 	/**
 	 * Builds a Java 8 predicate that lifts the given predicate.

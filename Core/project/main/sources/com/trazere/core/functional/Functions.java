@@ -16,7 +16,6 @@
 package com.trazere.core.functional;
 
 import com.trazere.core.lang.ThrowableFactory;
-import com.trazere.core.util.Tuple2;
 import java.util.function.BiFunction;
 import java.util.function.BinaryOperator;
 import java.util.function.UnaryOperator;
@@ -43,21 +42,6 @@ public class Functions {
 	}
 	
 	private static final Function<?, ?> IDENTITY = arg -> arg;
-	
-	/**
-	 * Builds a function corresponding to the composition of the given functions (g . f).
-	 *
-	 * @param <A> Type of the arguments.
-	 * @param <I> Type of the intermediate values
-	 * @param <R> Type of the results.
-	 * @param g Outer function.
-	 * @param f Inner function.
-	 * @return The built function.
-	 * @since 1.0
-	 */
-	public static <A, I, R> Function<A, R> compose(final Function<? super I, ? extends R> g, final Function<? super A, ? extends I> f) {
-		return FunctionUtils.map(f, g);
-	}
 	
 	/**
 	 * Builds a function that evaluates to the given result for all arguments.
@@ -504,38 +488,6 @@ public class Functions {
 		assert null != predicate;
 		
 		return (arg1, arg2, arg3) -> predicate.evaluate(arg1, arg2, arg3);
-	}
-	
-	/**
-	 * Curries the given function which takes pairs of elements into a function that takes two arguments.
-	 *
-	 * @param <A1> Type of the first element of the argument pairs.
-	 * @param <A2> Type of the second element of the argument pairs.
-	 * @param <R> Type of the results.
-	 * @param function Function to curry.
-	 * @return The built function.
-	 * @since 1.0
-	 */
-	public static <A1, A2, R> Function2<A1, A2, R> curry(final Function<? super Tuple2<A1, A2>, ? extends R> function) {
-		assert null != function;
-		
-		return (arg1, arg2) -> function.evaluate(new Tuple2<>(arg1, arg2));
-	}
-	
-	/**
-	 * Uncurries the given function which takes two arguments into a function that takes pairs of elements.
-	 *
-	 * @param <A1> Type of the first arguments.
-	 * @param <A2> Type of the second arguments.
-	 * @param <R> Type of the results.
-	 * @param function Function to uncurry.
-	 * @return The built function.
-	 * @since 1.0
-	 */
-	public static <A1, A2, R> Function<Tuple2<A1, A2>, R> uncurry(final Function2<? super A1, ? super A2, ? extends R> function) {
-		assert null != function;
-		
-		return (arg) -> function.evaluate(arg.get1(), arg.get2());
 	}
 	
 	private Functions() {

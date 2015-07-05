@@ -34,6 +34,7 @@ public class ObservableUtils {
 	/** Logger. */
 	public static final Logger LOGGER = LoggerFactory.getLogger(ObservableUtils.class.getPackage().getName());
 	
+	// TODO: logger as arg
 	/**
 	 * Notifies the given observer that the given event has been raised.
 	 * <p>

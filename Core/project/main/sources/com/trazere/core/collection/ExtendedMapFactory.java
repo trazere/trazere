@@ -40,7 +40,7 @@ extends ExtendedAbstractMapFactory<K, V, Map<K, V>, M> {
 	}
 	
 	@Override
-	default Map<K, V> synchronize(final M map) {
+	default Map<K, V> synchronized_(final M map) {
 		return Collections.synchronizedMap(map);
 	}
 }

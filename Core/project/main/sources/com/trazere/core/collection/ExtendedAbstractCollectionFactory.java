@@ -53,5 +53,5 @@ extends CollectionFactory<E, C> {
 	 * @return The built synchronized view.
 	 * @since 1.0
 	 */
-	AC synchronize(C collection);
+	AC synchronized_(C collection);
 }

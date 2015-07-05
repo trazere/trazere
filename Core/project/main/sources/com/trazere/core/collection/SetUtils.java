@@ -15,31 +15,18 @@
  */
 package com.trazere.core.collection;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.Set;
 
 /**
- * The {@link CollectionFactory} interface defines extended factories of {@link List lists}.
+ * The {@link SetUtils} class provides various utilities regarding {@link Set sets}.
  * 
- * @param <E> Type of the elements.
- * @param <L> Type of the lists.
- * @see List
+ * @see Set
  * @since 1.0
  */
-public interface ExtendedListFactory<E, L extends List<E>>
-extends ExtendedAbstractCollectionFactory<E, List<E>, L> {
-	@Override
-	default List<E> empty() {
-		return Collections.emptyList();
-	}
+public class SetUtils {
+	// TODO: add unmodifiable
 	
-	@Override
-	default List<E> unmodifiable(final L list) {
-		return Collections.unmodifiableList(list);
-	}
-	
-	@Override
-	default List<E> synchronized_(final L list) {
-		return Collections.synchronizedList(list);
+	private SetUtils() {
+		// Prevent instantiation.
 	}
 }

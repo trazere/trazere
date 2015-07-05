@@ -76,6 +76,8 @@ public class ThrowableFactories {
 		}
 	};
 	
+	// TODO: NULL_POINTER_EXCEPTION
+	
 	/**
 	 * Factory of {@link RuntimeException} exceptions.
 	 * 
