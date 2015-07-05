@@ -153,7 +153,7 @@ public class CharPredicates {
 		}
 	}
 	
-	// TODO: fromChar ?
+	// TODO: rename to char_ or fromChar ?
 	/**
 	 * Builds a character predicate that evaluates to <code>true</code> for the given character.
 	 * 
@@ -165,7 +165,7 @@ public class CharPredicates {
 		return cArg -> cArg == c;
 	}
 	
-	// TODO: fromChars ?
+	// TODO: rename to chars or fromChars ?
 	/**
 	 * Builds a character predicate that evaluates to <code>true</code> for the given characters.
 	 * 
@@ -181,7 +181,7 @@ public class CharPredicates {
 		return values(cs_);
 	}
 	
-	// TODO: fromChars ?
+	// TODO: rename to chars or fromChars or fromCollection ?
 	/**
 	 * Builds a character predicate that evaluates to <code>true</code> for the given characters.
 	 * 
@@ -211,6 +211,7 @@ public class CharPredicates {
 		return values(cs);
 	}
 	
+	// TODO: rename to fromRange ?
 	/**
 	 * Builds a character predicate that evaluates to <code>true</code> for the characters in the given range.
 	 * 

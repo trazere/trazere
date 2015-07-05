@@ -50,7 +50,6 @@ public class MaybeUtils {
 		}
 	}
 	
-	// TODO: move to Maybe ?
 	/**
 	 * Converts the given {@link Maybe} instance to a nullable value according to the following rules:
 	 * <ul>

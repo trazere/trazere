@@ -18,9 +18,12 @@ package com.trazere.core.reactive;
 import com.trazere.core.lang.Releasable;
 
 // TODO: extends/replace by Cancellable ?
+// TODO: rename to Subscription ? move to another package ?
 
 /**
  * The {@link ObserverSubscription} interface defines subscriptions of {@link Observer observers} to {@link Observable observables}.
+ * <p>
+ * TODO: move explaination in {@link Observable#subscribe(Observer)}
  * <p>
  * Observer subscriptions must keep a strong reference to the subscribed observers so that they can not be garbaged collected while their corresponding
  * subscription is alive. That allows the subscribers to prevent the subscriptions from being automatically cancelled without having to reference both the

@@ -36,7 +36,7 @@ extends Factory<R> {
 	@Override
 	R build();
 	
-	// TODO: build that that a iterable of fields
+	// TODO: build that take an iterable of fields
 	
 	/**
 	 * Builds a new record containing the fields of given record.

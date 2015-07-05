@@ -227,6 +227,8 @@ public class RecordUtils {
 		return builder.build();
 	}
 	
+	// TODO: flatten
+	
 	// TODO: add a lazy filter (no factory arg)
 	
 	/**

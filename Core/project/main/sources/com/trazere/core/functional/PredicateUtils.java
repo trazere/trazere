@@ -42,6 +42,8 @@ public class PredicateUtils {
 		return arg -> predicate.evaluate(function.evaluate(arg));
 	}
 	
+	// TODO: memoized
+	// TODO: resettable
 	// TODO: synchronized_
 	
 	/**

@@ -216,6 +216,7 @@ public class Description {
 		}
 	}
 	
+	// TODO: append(String, Collection)
 	// TODO: append(String, Iterable)
 	
 	/**

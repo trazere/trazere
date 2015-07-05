@@ -49,6 +49,8 @@ public class CollectionUtils {
 		return IteratorUtils.next(collection.iterator());
 	}
 	
+	// TODO: add(Collection, Maybe)
+	
 	/**
 	 * Adds all given elements to the given collection.
 	 * <p>

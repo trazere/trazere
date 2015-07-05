@@ -81,8 +81,6 @@ public class Iterables {
 		};
 	}
 	
-	// TODO: unmodifiable
-	
 	private Iterables() {
 		// Prevent instantiation.
 	}

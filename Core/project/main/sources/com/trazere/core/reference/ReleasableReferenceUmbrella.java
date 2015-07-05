@@ -105,7 +105,6 @@ implements Releasable {
 				removeReference(this);
 			}
 		};
-		// TODO: add CollectionUtils.add(Collection, Object): Object in CollectionUtils
 		_references.add(reference);
 		
 		return reference;

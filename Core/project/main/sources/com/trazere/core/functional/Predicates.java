@@ -166,7 +166,7 @@ public class Predicates {
 		}
 	}
 	
-	// TODO: fromValue ?
+	// TODO: rename to fromValue ?
 	/**
 	 * Builds a predicate that evaluates to <code>true</code> for the given value.
 	 * 
@@ -179,7 +179,7 @@ public class Predicates {
 		return arg -> ObjectUtils.safeEquals(arg, value);
 	}
 	
-	// TODO: fromValues ?
+	// TODO: rename to fromValues ?
 	/**
 	 * Builds a predicate that evaluates to <code>true</code> for the given values.
 	 * 
@@ -195,7 +195,7 @@ public class Predicates {
 		return values(Sets.fromElements(values));
 	}
 	
-	// TODO: fromValues or fromCollection ?
+	// TODO: rename to fromValues or fromCollection ?
 	/**
 	 * Builds a predicate that evaluates to <code>true</code> for the given values.
 	 * 
@@ -237,29 +237,6 @@ public class Predicates {
 		
 		return arg -> function.evaluate(arg).booleanValue();
 	}
-	
-	// TODO
-	//	// TODO: LangPredicates ?
-	//	/**
-	//	 * Builds a predicate that evaluates to the given value.
-	//	 *
-	//	 * @param <X> Type of the exceptions.
-	//	 * @return The built predicate.
-	//	 * @since 1.0
-	//	 */
-	//	@SuppressWarnings("unchecked")
-	//	public static <X extends Exception> Predicate1<Boolean, X> identity() {
-	//		return (Predicate1<Boolean, X>) _IDENTITY;
-	//	}
-	//
-	//	private static final Predicate1<Boolean, ?> _IDENTITY = new Predicate1<Boolean, RuntimeException>() {
-	//		@Override
-	//		public boolean evaluate(final Boolean value) {
-	//			assert null != value;
-	//
-	//			return value.booleanValue();
-	//		}
-	//	};
 	
 	/**
 	 * Builds a two arguments predicate that evaluates to the given result for all arguments.
