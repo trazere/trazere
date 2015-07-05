@@ -37,10 +37,10 @@ extends Thunk<T> {
 	boolean isMemoized();
 	
 	/**
-	 * Gets the memoized value of this thunk without evaluation.
+	 * Probes the memoized value of this thunk.
 	 * 
 	 * @return The memoized value, or nothing when the value has not been evaluated and memoized yet.
 	 * @since 1.0
 	 */
-	Maybe<T> get();
+	Maybe<T> probe();
 }

@@ -90,7 +90,7 @@ public class ClosureUtils {
 			}
 			
 			@Override
-			public com.trazere.core.util.Maybe<T> get() {
+			public com.trazere.core.util.Maybe<T> probe() {
 				return TypeUtils.toMaybe(closure.asMaybe());
 			}
 		};
@@ -121,7 +121,7 @@ public class ClosureUtils {
 			
 			@Override
 			public Maybe<T> asMaybe() {
-				return TypeUtils.fromMaybe(thunk.get());
+				return TypeUtils.fromMaybe(thunk.probe());
 			}
 		};
 	}

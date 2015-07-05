@@ -92,6 +92,7 @@ public class FunctionUtils {
 	 * @param <R> Type of the results.
 	 * @param function Function to memoize.
 	 * @return The built thunk.
+	 * @see MemoizedFunction
 	 * @since 1.0
 	 */
 	public static <A, R> MemoizedFunction<A, R> memoized(final Function<? super A, ? extends R> function) {
@@ -106,12 +107,13 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Builds a function that memoizes the evaluations of the given function and can be reset.
+	 * Builds a memoized, resettable view of the given function.
 	 * 
 	 * @param <A> Type of the arguments.
 	 * @param <R> Type of the results.
 	 * @param function Function to memoize.
 	 * @return The build function.
+	 * @see ResettableFunction
 	 * @since 1.0
 	 */
 	public static <A, R> ResettableFunction<A, R> resettable(final Function<? super A, ? extends R> function) {

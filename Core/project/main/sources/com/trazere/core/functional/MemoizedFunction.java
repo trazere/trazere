@@ -40,11 +40,11 @@ extends Function<A, R> {
 	boolean isMemoized(A arg);
 	
 	/**
-	 * Gets the memoized result of the evaluation of this function with the given argument.
+	 * Probes the memoized result of the evaluation of this function with the given argument.
 	 * 
 	 * @param arg Argument whose memoized evaluation should be read.
-	 * @return The memoized evaluation result, or nothing when the evaluation is not memoized.
+	 * @return The memoized evaluation result, or nothing when the result has not been evaluated and memoized yet.
 	 * @since 1.0
 	 */
-	Maybe<R> get(A arg);
+	Maybe<R> probe(A arg);
 }

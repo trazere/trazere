@@ -194,7 +194,7 @@ public class Feeds {
 	public static <E> Feed<E> fromIterator(final Iterator<? extends E> iterator) {
 		assert null != iterator;
 		
-		return new MemoizedFeed<E>() {
+		return new BaseMemoizedFeed<E>() {
 			@Override
 			protected Maybe<Tuple2<E, Feed<E>>> compute() {
 				if (iterator.hasNext()) {

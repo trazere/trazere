@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The {@link BaseMemoizedFunction} abstract class provides a skeleton implementation of memoized functions.
+ * The {@link BaseMemoizedFunction} abstract class provides a skeleton implementation of {@link MemoizedFunction memoized functions}.
  * 
  * @param <A> Type of the arguments.
  * @param <R> Type of the results.
@@ -62,7 +62,7 @@ implements MemoizedFunction<A, R> {
 	}
 	
 	@Override
-	public Maybe<R> get(final A arg) {
+	public Maybe<R> probe(final A arg) {
 		return MapUtils.get(_results, arg);
 	}
 }

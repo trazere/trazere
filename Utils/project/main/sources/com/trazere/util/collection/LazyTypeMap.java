@@ -106,7 +106,7 @@ extends LazyMap<T, Maybe<? extends V>, X> {
 	 * @return The value. May be <code>null</code>.
 	 * @throws X When the value cannot be computed.
 	 * @throws X When the type is associated to no values.
-	 * @deprecated Use {@link com.trazere.core.functional.BaseTypeFunction#get(Object)}.
+	 * @deprecated Use {@link com.trazere.core.functional.BaseTypeFunction#probe(Object)}.
 	 */
 	@Deprecated
 	public V getStrict(final T type, final ThrowableFactory<? extends X> throwableFactory)

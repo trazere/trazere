@@ -57,7 +57,7 @@ extends Function0<T, X> {
 	 * Get a view of the value of the receiver closure as an instance of {@link Maybe}.
 	 * 
 	 * @return The evaluated value wrapped in {@link Some}, or {@link None} when the closure has not been evaluated yet.
-	 * @deprecated Use {@link com.trazere.core.functional.MemoizedThunk#get()}.
+	 * @deprecated Use {@link com.trazere.core.functional.MemoizedThunk#probe()}.
 	 */
 	@Deprecated
 	public Maybe<T> asMaybe();

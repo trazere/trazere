@@ -49,7 +49,7 @@ public class Thunks {
 			}
 			
 			@Override
-			public Maybe<T> get() {
+			public Maybe<T> probe() {
 				return Maybe.some(value);
 			}
 		};

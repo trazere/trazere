@@ -176,7 +176,7 @@ implements Function1<K, V, X> {
 	 * @param key The key. May be <code>null</code>.
 	 * @return The value or nothing when it has not been computed yet.
 	 * @deprecated Use {@link com.trazere.core.functional.MemoizedFunction#isMemoized(Object)} and
-	 *             {@link com.trazere.core.functional.MemoizedFunction#get(Object)}.
+	 *             {@link com.trazere.core.functional.MemoizedFunction#probe(Object)}.
 	 */
 	@Deprecated
 	public Maybe<V> probe(final K key) {
@@ -191,7 +191,7 @@ implements Function1<K, V, X> {
 	 * @param key The key. May be <code>null</code>.
 	 * @return The value. May be <code>null</code>.
 	 * @throws X When the value cannot be computed.
-	 * @deprecated Use {@link com.trazere.core.functional.MemoizedFunction#get(Object)}.
+	 * @deprecated Use {@link com.trazere.core.functional.MemoizedFunction#probe(Object)}.
 	 */
 	@Deprecated
 	public V get(final K key)

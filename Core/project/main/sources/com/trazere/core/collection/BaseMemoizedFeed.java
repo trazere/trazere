@@ -15,17 +15,25 @@
  */
 package com.trazere.core.collection;
 
-import com.trazere.core.functional.MemoizedThunk;
+import com.trazere.core.functional.BaseMemoizedThunk;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 
 /**
- * The {@link MemoizedFeed} interface defines feeds that memoize their head and tail.
+ * The {@link BaseMemoizedFeed} class provides a skeleton implementation of feeds that memoize their head and tail.
  * 
  * @param <E> Type of the elements.
  * @since 1.0
  */
-public interface MemoizedFeed<E>
-extends Feed<E>, MemoizedThunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>> {
-	// Nothing to do.
+public abstract class BaseMemoizedFeed<E>
+extends BaseMemoizedThunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
+implements MemoizedFeed<E> {
+	/**
+	 * Computes the head and tail of this feed.
+	 * 
+	 * @return The computed head and tail.
+	 * @since 1.0
+	 */
+	@Override
+	protected abstract Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> compute();
 }

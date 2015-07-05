@@ -32,7 +32,7 @@ public abstract class ResettableFunction<A, R>
 extends BaseMemoizedFunction<A, R>
 implements Releasable {
 	/**
-	 * Gets the arguments whose evaluation is memoized.
+	 * Gets the arguments whose evaluation has been memoized.
 	 * 
 	 * @return An unmutable set of the arguments.
 	 * @since 1.0

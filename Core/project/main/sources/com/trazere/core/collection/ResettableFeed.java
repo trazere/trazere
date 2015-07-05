@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.core.functional;
+package com.trazere.core.collection;
 
 import com.trazere.core.lang.Releasable;
 import com.trazere.core.text.Describable;
@@ -21,40 +21,25 @@ import com.trazere.core.text.Description;
 import com.trazere.core.text.TextUtils;
 
 /**
- * The {@link ResettableThunk} class implements memoized thunks that can be re-evaluated.
+ * The {@link ResettableFeed} class implements memoized feeds that can be re-evaluated.
  * 
- * @param <T> Type of the value.
+ * @param <E> Type of the elements.
  * @since 1.0
  */
-public abstract class ResettableThunk<T>
-extends BaseMemoizedThunk<T>
+public abstract class ResettableFeed<E>
+extends BaseMemoizedFeed<E>
 implements Releasable, Describable {
 	/**
-	 * Resets this thunk, discarding its possibly memoized value. The value will be computed (again) the next time this thunk is evaluated.
+	 * Resets this feed, discarding its possibly memoized head and tail. The head and tail will be computed (again) the next time this feed is evaluated.
 	 * 
 	 * @since 1.0
 	 */
 	public void reset() {
 		if (_evaluated) {
-			// Dispose.
-			dispose(_value);
-			
 			// Reset.
 			_evaluated = false;
 			_value = null;
 		}
-	}
-	
-	/**
-	 * Disposes the given current value of this thunk.
-	 * <p>
-	 * This methods is called when this evaluated thunk is reset. The defaut implementation does nothing.
-	 * 
-	 * @param value Value to dispose.
-	 * @since 1.0
-	 */
-	protected void dispose(final T value) {
-		// Nothing to do.
 	}
 	
 	// Releasable.

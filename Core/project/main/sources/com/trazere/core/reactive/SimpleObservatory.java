@@ -102,13 +102,13 @@ implements Observatory<S, E> {
 		// Get the observable.
 		final Maybe<Broadcaster<E>> subjectBroadcaster;
 		synchronized (_subjectBroadcasters) {
-			subjectBroadcaster = _subjectBroadcasters.get(subject);
+			subjectBroadcaster = _subjectBroadcasters.probe(subject);
 		}
 		
 		// Notify.
-		if (subjectBroadcaster.isSome()) {
-			subjectBroadcaster.asSome().getValue().fire(event);
-		}
+		subjectBroadcaster.foreach(broadcaster -> {
+			broadcaster.fire(event);
+		});
 		
 		// Notify for all.
 		_allBroadcaster.fire(event);

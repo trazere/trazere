@@ -51,6 +51,7 @@ public class ThunkUtils {
 	 * @param <T> Type of the values.
 	 * @param thunk Thunk to memoize.
 	 * @return The built thunk.
+	 * @see MemoizedThunk
 	 * @since 1.0
 	 */
 	public static <T> MemoizedThunk<T> memoized(final Thunk<? extends T> thunk) {
@@ -77,7 +78,7 @@ public class ThunkUtils {
 			}
 			
 			@Override
-			public Maybe<T> get() {
+			public Maybe<T> probe() {
 				if (_value.isRight()) {
 					return Maybe.some(_value.asRight().getValue());
 				} else {
@@ -99,14 +100,17 @@ public class ThunkUtils {
 	}
 	
 	/**
-	 * Builds a thunk that memoizes the value of the given thunk and can be reset.
+	 * Builds a memoized, resettable view of the the given thunk.
 	 * 
 	 * @param <T> Type of the values.
 	 * @param thunk Thunk to memoize.
 	 * @return The build thunk.
+	 * @see ResettableThunk
 	 * @since 1.0
 	 */
 	public static <T> ResettableThunk<T> resettable(final Thunk<? extends T> thunk) {
+		assert null != thunk;
+		
 		return new ResettableThunk<T>() {
 			@Override
 			protected T compute() {
