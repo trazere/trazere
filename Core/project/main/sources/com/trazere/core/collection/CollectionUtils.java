@@ -542,11 +542,11 @@ public class CollectionUtils {
 	 * @return An unmodifiable view of the given collection, or the given collection when is it already unmodifiable.
 	 * @since 1.0
 	 */
-	public static <E> Collection<E> unmutable(final Collection<E> collection) {
-		return UNMUTABLE_COLLECTION_CLASS.isInstance(collection) ? collection : Collections.unmodifiableCollection(collection);
+	public static <E> Collection<E> unmodifiable(final Collection<E> collection) {
+		return UNMODIFIABLE_COLLECTION_CLASS.isInstance(collection) ? collection : Collections.unmodifiableCollection(collection);
 	}
 	
-	private static Class<?> UNMUTABLE_COLLECTION_CLASS = Collections.unmodifiableCollection(Collections.emptyList()).getClass();
+	private static Class<?> UNMODIFIABLE_COLLECTION_CLASS = Collections.unmodifiableCollection(Collections.emptyList()).getClass();
 	
 	/**
 	 * Composes pairs with the elements of the given collections.

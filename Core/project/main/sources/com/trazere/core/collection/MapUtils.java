@@ -579,11 +579,11 @@ public class MapUtils {
 	 * @return An unmodifiable view of the given map, or the given map when is it already unmodifiable.
 	 * @since 1.0
 	 */
-	public static <K, V> Map<K, V> unmutable(final Map<K, V> map) {
-		return UNMUTABLE_MAP_CLASS.isInstance(map) ? map : Collections.unmodifiableMap(map);
+	public static <K, V> Map<K, V> unmodifiable(final Map<K, V> map) {
+		return UNMODIFIABLE_MAP_CLASS.isInstance(map) ? map : Collections.unmodifiableMap(map);
 	}
 	
-	private static Class<?> UNMUTABLE_MAP_CLASS = Collections.unmodifiableMap(Collections.emptyMap()).getClass();
+	private static Class<?> UNMODIFIABLE_MAP_CLASS = Collections.unmodifiableMap(Collections.emptyMap()).getClass();
 	
 	private MapUtils() {
 		// Prevent instantiation.

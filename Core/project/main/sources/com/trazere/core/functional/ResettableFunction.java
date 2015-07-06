@@ -34,7 +34,7 @@ implements Releasable {
 	/**
 	 * Gets the arguments whose evaluation has been memoized.
 	 * 
-	 * @return An unmutable set of the arguments.
+	 * @return An unmodifiable set of the arguments.
 	 * @since 1.0
 	 */
 	public Set<A> memoizedArgs() {

@@ -33,11 +33,11 @@ public class SetUtils {
 	 * @return An unmodifiable view of the given set, or the given set when is it already unmodifiable.
 	 * @since 1.0
 	 */
-	public static <E> Set<E> unmutable(final Set<E> set) {
-		return UNMUTABLE_SET_CLASS.isInstance(set) ? set : Collections.unmodifiableSet(set);
+	public static <E> Set<E> unmodifiable(final Set<E> set) {
+		return UNMODIFIABLE_SET_CLASS.isInstance(set) ? set : Collections.unmodifiableSet(set);
 	}
 	
-	private static Class<?> UNMUTABLE_SET_CLASS = Collections.unmodifiableSet(Collections.emptySet()).getClass();
+	private static Class<?> UNMODIFIABLE_SET_CLASS = Collections.unmodifiableSet(Collections.emptySet()).getClass();
 	
 	private SetUtils() {
 		// Prevent instantiation.

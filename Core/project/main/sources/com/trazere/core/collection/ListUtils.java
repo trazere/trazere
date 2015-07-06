@@ -379,11 +379,11 @@ public class ListUtils {
 	 * @return An unmodifiable view of the given list, or the given list when is it already unmodifiable.
 	 * @since 1.0
 	 */
-	public static <E> List<E> unmutable(final List<E> list) {
-		return UNMUTABLE_LIST_CLASS.isInstance(list) ? list : Collections.unmodifiableList(list);
+	public static <E> List<E> unmodifiable(final List<E> list) {
+		return UNMODIFIABLE_LIST_CLASS.isInstance(list) ? list : Collections.unmodifiableList(list);
 	}
 	
-	private static Class<?> UNMUTABLE_LIST_CLASS = Collections.unmodifiableList(Collections.emptyList()).getClass();
+	private static Class<?> UNMODIFIABLE_LIST_CLASS = Collections.unmodifiableList(Collections.emptyList()).getClass();
 	
 	/**
 	 * Builds a view of the given list in the reversed order.

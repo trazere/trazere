@@ -484,7 +484,7 @@ public class IterableUtils {
 	 * @return An unmodifiable view of the given iterable, or the given iterable when is it already unmodifiable.
 	 * @since 1.0
 	 */
-	public static <E> Iterable<E> unmutable(final Iterable<E> iterable) {
+	public static <E> Iterable<E> unmodifiable(final Iterable<E> iterable) {
 		assert null != iterable;
 		
 		return iterable instanceof UnmodifiableIterable ? iterable : new UnmodifiableIterable<>(iterable);
@@ -501,7 +501,7 @@ public class IterableUtils {
 		
 		@Override
 		public Iterator<E> iterator() {
-			return IteratorUtils.unmutable(_decorated.iterator());
+			return IteratorUtils.unmodifiable(_decorated.iterator());
 		}
 		
 		// Object.

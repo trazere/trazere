@@ -989,7 +989,7 @@ public class IteratorUtils {
 	 * @return An unmodifiable view of the given iterator, or the given iterator when is it already unmodifiable.
 	 * @since 1.0
 	 */
-	public static <E> Iterator<E> unmutable(final Iterator<E> iterator) {
+	public static <E> Iterator<E> unmodifiable(final Iterator<E> iterator) {
 		assert null != iterator;
 		
 		return iterator instanceof UnmodifiableIterator ? iterator : new UnmodifiableIterator<>(iterator);
