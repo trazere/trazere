@@ -16,7 +16,9 @@
 package com.trazere.core.collection;
 
 import com.trazere.core.imperative.Accumulator;
+import com.trazere.core.lang.IterableUtils;
 import com.trazere.core.lang.LangAccumulators;
+import com.trazere.core.util.Tuple2;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -54,14 +56,7 @@ extends BaseMultimap<K, V, C> {
 	 * @since 1.0
 	 */
 	public MapMultimap(final MapFactory<K, CC, ? extends Map<K, CC>> mapFactory, final ExtendedAbstractCollectionFactory<V, C, CC> valuesFactory, final Multimap<? extends K, ? extends V, ?> multimap) {
-		this(copy(mapFactory.build(), valuesFactory, multimap), valuesFactory);
-	}
-	
-	private static <K, V, C extends Collection<V>, CC extends C, M extends Map<? super K, CC>> M copy(final M bindings, final ExtendedAbstractCollectionFactory<V, C, CC> valuesFactory, final Multimap<K, ? extends V, ?> multimap) {
-		for (final K key : multimap.keySet()) {
-			bindings.put(key, valuesFactory.build(multimap.get(key)));
-		}
-		return bindings;
+		this(mapFactory.build(IterableUtils.map(multimap.collectionEntrySet(), entry -> new Tuple2<>(entry.getKey(), valuesFactory.build(entry.getValue())))), valuesFactory);
 	}
 	
 	/**

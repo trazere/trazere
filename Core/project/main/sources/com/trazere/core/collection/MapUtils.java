@@ -472,7 +472,7 @@ public class MapUtils {
 	 * @since 1.0
 	 */
 	public static <K, V, M extends Map<? super K, ? super V>> M take(final Map<? extends K, ? extends V> map, final int n, final MapFactory<? super K, ? super V, M> resultFactory) {
-		return IteratorUtils.drain(IteratorUtils.take(bindings(map).iterator(), n), resultFactory.build(n));
+		return resultFactory.build(IterableUtils.take(bindings(map), n));
 	}
 	
 	/**
@@ -488,7 +488,7 @@ public class MapUtils {
 	 * @since 1.0
 	 */
 	public static <K, V, M extends Map<? super K, ? super V>> M drop(final Map<? extends K, ? extends V> map, final int n, final MapFactory<? super K, ? super V, M> resultFactory) {
-		return IteratorUtils.drain(IteratorUtils.drop(bindings(map).iterator(), n), resultFactory.build(Math.max(0, map.size() - n)));
+		return resultFactory.build(IterableUtils.drop(bindings(map), n));
 	}
 	
 	/**
@@ -504,7 +504,7 @@ public class MapUtils {
 	 * @since 1.0
 	 */
 	public static <K, V, M extends Map<? super K, ? super V>> M filter(final Map<? extends K, ? extends V> map, final Predicate2<? super K, ? super V> filter, final MapFactory<? super K, ? super V, M> resultFactory) {
-		//		return IteratorUtils.drain(IteratorUtils.filter(bindings(map).iterator(), filter), resultFactory.build());
+		//		return resultFactory.build(IterableUtils.filter(bindings(map), filter));
 		
 		final M result = resultFactory.build();
 		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
@@ -531,7 +531,7 @@ public class MapUtils {
 	 * @since 1.0
 	 */
 	public static <K, V, TV, M extends Map<? super K, ? super TV>> M map(final Map<? extends K, ? extends V> map, final Function2<? super K, ? super V, ? extends TV> function, final MapFactory<? super K, ? super TV, M> resultFactory) {
-		//		return IteratorUtils.drain(IteratorUtils.map(bindings(map).iterator(), (k, v) -> new Tuple2<K, TV>(k, function.evaluate(k, v))), resultFactory.build(map.size()));
+		//		return resultFactory.build(IterableUtils.map(bindings(map), (k, v) -> new Tuple2<>(k, function.evaluate(k, v))));
 		
 		final M results = resultFactory.build(map.size());
 		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
@@ -555,7 +555,7 @@ public class MapUtils {
 	 * @since 1.0
 	 */
 	public static <K, V, EV, M extends Map<? super K, ? super EV>> M extract(final Map<? extends K, ? extends V> map, final Function2<? super K, ? super V, ? extends Maybe<? extends EV>> extractor, final MapFactory<? super K, ? super EV, M> resultFactory) {
-		//		return IteratorUtils.drain(IteratorUtils.extract(bindings(map).iterator(), (k, v) -> extractor.evaluate(k, v).map(ev -> new Tuple2<K, EV>(k, ev))), resultFactory.build());
+		//		return resultFactory.build(IterableUtils.extract(bindings(map), (k, v) -> extractor.evaluate(k, v).map(ev -> new Tuple2<>(k, ev))));
 		
 		final M results = resultFactory.build(map.size());
 		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {

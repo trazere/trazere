@@ -82,6 +82,7 @@ implements Multimap<K, V, C> {
 		return get(key).contains(value);
 	}
 	
+	// TODO: add support for Iterator.remove
 	@Override
 	public Set<Map.Entry<K, V>> entrySet() {
 		return new AbstractSet<Map.Entry<K, V>>() {
@@ -147,6 +148,7 @@ implements Multimap<K, V, C> {
 		};
 	}
 	
+	// TODO: add support for Iterator.remove
 	@Override
 	public Set<Entry<K, C>> collectionEntrySet() {
 		return new AbstractSet<Map.Entry<K, C>>() {
