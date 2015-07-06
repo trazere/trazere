@@ -98,8 +98,6 @@ public class MultimapUtils {
 		}
 	}
 	
-	// TODO: putAll(MultiMap, K, Iterable<V>)
-	
 	/**
 	 * Puts all given bindings into the given multimap.
 	 *
@@ -132,8 +130,6 @@ public class MultimapUtils {
 	}
 	
 	// TODO: removeAny(Multimap, K)
-	
-	// TODO: removeAll(Multimap, K, Iterable<V>)
 	
 	/**
 	 * Removes all given bindings from the given multimap.
@@ -488,7 +484,7 @@ public class MultimapUtils {
 		}
 		
 		@Override
-		public boolean putAll(final K key, final Collection<? extends V> values) {
+		public boolean putAll(final K key, final Iterable<? extends V> values) {
 			throw new UnsupportedOperationException();
 		}
 		
@@ -553,7 +549,7 @@ public class MultimapUtils {
 		}
 		
 		@Override
-		public boolean removeAll(final K key, final Collection<? extends V> values) {
+		public boolean removeAll(final K key, final Iterable<? extends V> values) {
 			throw new UnsupportedOperationException();
 		}
 		

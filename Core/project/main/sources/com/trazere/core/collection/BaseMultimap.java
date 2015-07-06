@@ -46,7 +46,7 @@ import java.util.Set;
 public abstract class BaseMultimap<K, V, C extends Collection<V>>
 implements Multimap<K, V, C> {
 	@Override
-	public boolean putAll(final K key, final Collection<? extends V> values) {
+	public boolean putAll(final K key, final Iterable<? extends V> values) {
 		final Accumulator<Boolean, Boolean> changed = LangAccumulators.or(false);
 		for (final V value : values) {
 			changed.add(put(key, value));

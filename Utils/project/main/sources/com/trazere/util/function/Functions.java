@@ -157,7 +157,7 @@ public class Functions {
 	 * @param <X> Type of the exceptions.
 	 * @param map The map.
 	 * @return The built function.
-	 * @deprecated Use {@link com.trazere.core.collection.MapFunctions#get(Map, Object)}.
+	 * @deprecated Use {@link com.trazere.core.collection.MapFunctions#getOptional(Map, Object)}.
 	 */
 	@Deprecated
 	public static <K, V, X extends Exception> Function1<K, V, X> fromMap(final Map<? super K, ? extends V> map) {
@@ -182,7 +182,7 @@ public class Functions {
 	 * @param map The map.
 	 * @param defaultValue The default value. May be <code>null</code>.
 	 * @return The built function.
-	 * @deprecated Use {@link com.trazere.core.collection.MapFunctions#get(Map, Object)}.
+	 * @deprecated Use {@link com.trazere.core.collection.MapFunctions#getOptional(Map, Object)}.
 	 */
 	@Deprecated
 	public static <K, V, X extends Exception> Function1<K, V, X> fromMap(final Map<? super K, ? extends V> map, final V defaultValue) {

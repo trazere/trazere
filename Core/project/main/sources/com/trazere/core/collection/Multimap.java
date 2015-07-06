@@ -48,7 +48,6 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	 */
 	boolean put(K key, V value);
 	
-	// TODO: generalize to Iterable
 	/**
 	 * Puts the given bindings in this multimap.
 	 * <p>
@@ -59,7 +58,7 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	 * @return <code>true</code> when the multimap has changed, <code>false</code> otherwise.
 	 * @since 1.0
 	 */
-	boolean putAll(K key, Collection<? extends V> values);
+	boolean putAll(K key, Iterable<? extends V> values);
 	
 	/**
 	 * Puts the bindings of the given multimap in this multimap.
@@ -166,7 +165,6 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	 */
 	boolean remove(K key, V value);
 	
-	// TODO: generalize to Iterable
 	/**
 	 * Removes the given bindings from this multimap.
 	 * 
@@ -175,7 +173,7 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	 * @return <code>true</code> when the multimap has changed, <code>false</code> otherwise.
 	 * @since 1.0
 	 */
-	boolean removeAll(K key, Collection<? extends V> values);
+	boolean removeAll(K key, Iterable<? extends V> values);
 	
 	/**
 	 * Removes all bindings with the given key from this multimap.

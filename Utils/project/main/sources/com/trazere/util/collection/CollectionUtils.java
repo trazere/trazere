@@ -326,7 +326,7 @@ public class CollectionUtils {
 	 * @param key The key. May be <code>null</code>.
 	 * @param defaultValue The default value. May be <code>null</code>.
 	 * @return The associated value if any, or the default value. May be <code>null</code>.
-	 * @deprecated Use {@link com.trazere.core.collection.MapUtils#get(Map, Object, Object)}.
+	 * @deprecated Use {@link com.trazere.core.collection.MapUtils#getOptional(Map, Object, Object)}.
 	 */
 	@Deprecated
 	public static <K, V> V get(final Map<? super K, ? extends V> map, final K key, final V defaultValue) {

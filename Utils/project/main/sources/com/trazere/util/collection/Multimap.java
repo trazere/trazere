@@ -58,7 +58,7 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	 * @param key The key. May or may not be <code>null</code> according the implementation.
 	 * @param values The values. May or may not contain <code>null</code> according the implementation.
 	 * @return <code>true</code> when the multimap has changed, <code>false</code> otherwise.
-	 * @deprecated Use {@link com.trazere.core.collection.Multimap#putAll(Object, Collection)}.
+	 * @deprecated Use {@link com.trazere.core.collection.Multimap#putAll(Object, Iterable)}.
 	 */
 	@Deprecated
 	public boolean putAll(final K key, final Collection<? extends V> values);
@@ -166,7 +166,7 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	 * @param key The key. May or may not be <code>null</code> according the implementation.
 	 * @param values The values. May or may not contain <code>null</code> according the implementation.
 	 * @return <code>true</code> when the multimap has changed, <code>false</code> otherwise.
-	 * @deprecated Use {@link com.trazere.core.collection.Multimap#removeAll(Object, Collection)}.
+	 * @deprecated Use {@link com.trazere.core.collection.Multimap#removeAll(Object, Iterable)}.
 	 */
 	@Deprecated
 	public boolean removeAll(final K key, final Collection<? extends V> values);

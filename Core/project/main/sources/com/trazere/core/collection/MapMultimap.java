@@ -134,8 +134,8 @@ extends BaseMultimap<K, V, C> {
 	}
 	
 	@Override
-	public boolean putAll(final K key, final Collection<? extends V> values) {
-		return getCollection(key).addAll(values);
+	public boolean putAll(final K key, final Iterable<? extends V> values) {
+		return CollectionUtils.addAll(getCollection(key), values);
 	}
 	
 	@Override
@@ -202,10 +202,10 @@ extends BaseMultimap<K, V, C> {
 	}
 	
 	@Override
-	public boolean removeAll(final K key, final Collection<? extends V> values) {
+	public boolean removeAll(final K key, final Iterable<? extends V> values) {
 		if (_bindings.containsKey(key)) {
 			final C collection = _bindings.get(key);
-			final boolean result = collection.removeAll(values);
+			final boolean result = CollectionUtils.removeAll(collection, values);
 			if (collection.isEmpty()) {
 				_bindings.remove(key);
 			}

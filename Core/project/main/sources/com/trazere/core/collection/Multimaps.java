@@ -49,7 +49,7 @@ public class Multimaps {
 			}
 			
 			@Override
-			public boolean putAll(final K key, final Collection<? extends V> values) {
+			public boolean putAll(final K key, final Iterable<? extends V> values) {
 				throw new UnsupportedOperationException();
 			}
 			
@@ -114,7 +114,7 @@ public class Multimaps {
 			}
 			
 			@Override
-			public boolean removeAll(final K key, final Collection<? extends V> values) {
+			public boolean removeAll(final K key, final Iterable<? extends V> values) {
 				throw new UnsupportedOperationException();
 			}
 			
