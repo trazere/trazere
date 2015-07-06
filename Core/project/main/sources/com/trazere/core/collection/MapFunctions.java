@@ -39,13 +39,13 @@ public class MapFunctions {
 	 * @param map Map to read.
 	 * @param defaultValue Default value for the missing bindings.
 	 * @return The built function.
-	 * @see MapUtils#get(Map, Object, Object)
+	 * @see MapUtils#getOptional(Map, Object, Object)
 	 * @since 1.0
 	 */
-	public static <K, V> Function<K, V> get(final Map<? super K, ? extends V> map, final V defaultValue) {
+	public static <K, V> Function<K, V> getOptional(final Map<? super K, ? extends V> map, final V defaultValue) {
 		assert null != map;
 		
-		return key -> MapUtils.get(map, key, defaultValue);
+		return key -> MapUtils.getOptional(map, key, defaultValue);
 	}
 	
 	/**
@@ -82,7 +82,7 @@ public class MapFunctions {
 	 * @since 1.0
 	 */
 	public static <K, V> Function<K, V> fromBindings(final Iterable<? extends Tuple2<? extends K, ? extends V>> bindings, final V defaultValue) {
-		return get(Maps.fromBindings(bindings), defaultValue);
+		return getOptional(Maps.fromBindings(bindings), defaultValue);
 	}
 	
 	/**

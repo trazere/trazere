@@ -19,6 +19,7 @@ import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Function3;
 import com.trazere.core.functional.Predicate2;
+import com.trazere.core.functional.Thunk;
 import com.trazere.core.imperative.IteratorUtils;
 import com.trazere.core.imperative.Procedure2;
 import com.trazere.core.lang.IterableUtils;
@@ -83,8 +84,6 @@ public class MapUtils {
 		return null != value || map.containsKey(key) ? Maybe.some(value) : Maybe.<V>none();
 	}
 	
-	// TODO: rename to getOptional ?
-	// TODO: add a version that uses a thunk as default value
 	/**
 	 * Gets the optional value associated to the given key in the given map.
 	 * <p>
@@ -98,9 +97,27 @@ public class MapUtils {
 	 * @return The associated value, or the default value when the map contains no bindings for the key.
 	 * @since 1.0
 	 */
-	public static <K, V> V get(final Map<? super K, ? extends V> map, final K key, final V defaultValue) {
+	public static <K, V> V getOptional(final Map<? super K, ? extends V> map, final K key, final V defaultValue) {
 		final V value = map.get(key);
 		return null != value || map.containsKey(key) ? value : defaultValue;
+	}
+	
+	/**
+	 * Gets the optional value associated to the given key in the given map.
+	 * <p>
+	 * This method returns the associated value, or the default value when the map contains no bindings for the key.
+	 *
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param map Map to read.
+	 * @param key Key of the binding to read.
+	 * @param defaultValue Default value for the missing bindings.
+	 * @return The associated value, or the default value when the map contains no bindings for the key.
+	 * @since 1.0
+	 */
+	public static <K, V> V getOptional(final Map<? super K, ? extends V> map, final K key, final Thunk<? extends V> defaultValue) {
+		final V value = map.get(key);
+		return null != value || map.containsKey(key) ? value : defaultValue.evaluate();
 	}
 	
 	/**
