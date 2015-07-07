@@ -432,12 +432,26 @@ public class TextUtils {
 	 * <p>
 	 * This method aims to be used in {@link Object#toString()} implementations.
 	 * 
-	 * @param object The object.
+	 * @param object Object to describe.
 	 * @return The description.
 	 * @since 1.0
 	 */
 	public static String description(final Describable object) {
-		final DescriptionBuilder builder = new DescriptionBuilder(DescriptionFormats.BASIC, className(object.getClass()));
+		return description(object, DescriptionFormats.BASIC);
+	}
+	
+	/**
+	 * Computes the description of the given object.
+	 * <p>
+	 * This method aims to be used in {@link Object#toString()} implementations.
+	 * 
+	 * @param object Object to describe.
+	 * @param format Format to use.
+	 * @return The description.
+	 * @since 1.0
+	 */
+	public static String description(final Describable object, final DescriptionFormat format) {
+		final DescriptionBuilder builder = new DescriptionBuilder(format, className(object.getClass()));
 		object.appendDescription(builder);
 		return builder.toString();
 	}
