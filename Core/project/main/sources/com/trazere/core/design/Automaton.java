@@ -16,34 +16,22 @@
 package com.trazere.core.design;
 
 import com.trazere.core.functional.Function;
-import com.trazere.core.lang.MutableObject;
-
-// TODO: deport state initialization out of the constructor (optional ref + start method ?) -> voir ExportAutomaton
+import com.trazere.core.functional.Thunk;
+import com.trazere.core.reference.MutableReference;
+import com.trazere.core.util.Maybe;
 
 /**
  * The {@link Automaton} class provides a skeleton implementation of automatons.
  * <p>
- * This class provides the basis for a simple state machine. It does not provide any support to represent the corresponding graph. It has been designed so that
- * the state is reprensented as a continuation for the next step. A typical implementation of the continuations is an interface that provides a method for every
- * transition. The workflow is therefore effeciently provides through polymorphism.
+ * This class provides the basis for a simple state machine. It does not provide any support to represent the corresponding graph. The recommanded usage method
+ * is to delegate the transition logic to the states through polymorphism.
+ * <p>
+ * The automatons have to be started before they can be transitioned. They can be started again after they have stopped.
  * 
  * @param <S> Type of the states.
  * @since 1.0
  */
 public class Automaton<S> {
-	/**
-	 * Instantiates a new automaton.
-	 * 
-	 * @param initialState Initial state of the automaton.
-	 * @since 1.0
-	 */
-	protected Automaton(final S initialState) {
-		assert null != initialState;
-		
-		// Initialization.
-		_state = new MutableObject<>(initialState);
-	}
-	
 	// State.
 	
 	/**
@@ -51,26 +39,84 @@ public class Automaton<S> {
 	 * 
 	 * @since 1.0
 	 */
-	protected final MutableObject<S> _state;
+	private final MutableReference<S> _state = new MutableReference<>();
+	
+	/**
+	 * Indicates whether this automaton is started.
+	 * 
+	 * @return <code>true</code> when the automaton is started, <code>false</code> otherwise.
+	 * @since 1.0
+	 */
+	public boolean isStarted() {
+		return _state.isSet();
+	}
+	
+	/**
+	 * Starts this automaton with the given state.
+	 * 
+	 * @param transition Transition to the initial state to perform.
+	 * @return The initial state.
+	 * @throws IllegalStateException When the automaton is already started.
+	 * @since 1.0
+	 */
+	protected S start(final S transition)
+	throws IllegalStateException {
+		// Check that the automaton is not started.
+		if (_state.isSet()) {
+			throw new IllegalStateException("Automaton " + this + " is already started");
+		}
+		
+		// Start.
+		return _state.set(transition);
+	}
+	
+	/**
+	 * Starts this automaton with the given state.
+	 * 
+	 * @param transition Transition to the initial state to perform.
+	 * @return The initial state.
+	 * @throws IllegalStateException When the automaton is already started.
+	 * @since 1.0
+	 */
+	protected S start(final Thunk<? extends S> transition)
+	throws IllegalStateException {
+		// Check that the automaton is not started.
+		if (_state.isSet()) {
+			throw new IllegalStateException("Automaton " + this + " is already started");
+		}
+		
+		// Start.
+		return _state.set(transition.evaluate());
+	}
 	
 	/**
 	 * Gets the current state of this automaton.
 	 * 
-	 * @return The current state.
+	 * @return The current state, or nothing when the automaton is not started.
 	 * @since 1.0
 	 */
-	public S getState() {
-		return _state.get();
+	public Maybe<S> getState() {
+		return _state.asMaybe();
 	}
 	
 	/**
-	 * Performs the transition corresponding to the given state transformation function.
+	 * Performs a transition using the given state transformation function.
+	 * <p>
+	 * The transformation function takes the current state as argument and results to the new state, or nothing to stop the automaton.
 	 * 
-	 * @param transition Transition to perform.
-	 * @return The new state.
+	 * @param transition Function to use to transition the state.
+	 * @return The new state, or nothing when the automaton has been stopped.
+	 * @throws IllegalStateException When the automaton is not started.
 	 * @since 1.0
 	 */
-	protected S transition(final Function<? super S, ? extends S> transition) {
-		return _state.update(transition);
+	protected Maybe<? extends S> transition(final Function<? super S, ? extends Maybe<? extends S>> transition)
+	throws IllegalStateException {
+		// Check that the automaton is started.
+		if (!_state.isSet()) {
+			throw new IllegalStateException("Automaton " + this + " is not started");
+		}
+		
+		// Start.
+		return _state.update(transition.evaluate(_state.get()));
 	}
 }

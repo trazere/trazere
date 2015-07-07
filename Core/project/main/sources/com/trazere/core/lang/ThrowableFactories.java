@@ -105,6 +105,8 @@ public class ThrowableFactories {
 		}
 	};
 	
+	// TODO: ILLEGAL_STATE_EXCEPTION
+	
 	private ThrowableFactories() {
 		// Prevents instantiation.
 	}

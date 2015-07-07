@@ -169,7 +169,7 @@ implements ReleasableReference<T>, Describable {
 	 * @return The given value.
 	 * @since 1.0
 	 */
-	public <V extends T> Maybe<V> update(final Maybe<V> value) {
+	public <V extends T> Maybe<? extends V> update(final Maybe<? extends V> value) {
 		if (value.isSome()) {
 			// Update.
 			update(value.asSome().getValue());

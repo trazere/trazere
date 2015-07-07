@@ -97,6 +97,7 @@ public class XMLUtils {
 	}
 	
 	private static final Map<Character, String> ENTITY_NAMES;
+	
 	static {
 		final Map<Character, String> names = new HashMap<>();
 		names.put('&', "amp");
@@ -148,7 +149,7 @@ public class XMLUtils {
 			final Scanner scanner = new Scanner(reader);
 			while (!scanner.isEof()) {
 				// Copy normal text.
-				// TODO: escape
+				// TODO: escape chars according to xml specs
 				appendable.append(scanner.scanToChar('&')); // TODO: add scan methods with length limit in trazere
 				
 				// Scan for escaping.
@@ -189,6 +190,7 @@ public class XMLUtils {
 	}
 	
 	private static final Map<String, Character> ENTITY_VALUES;
+	
 	static {
 		final Map<String, Character> values = new HashMap<>();
 		values.put("amp", '&');
@@ -234,6 +236,7 @@ public class XMLUtils {
 	 * @since 1.0
 	 */
 	public static final DateTimeFormatter DATE_FORMATTER;
+	
 	static {
 		DATE_FORMATTER = new DateTimeFormatterBuilder().parseCaseInsensitive().parseStrict() //
 		.appendValue(ChronoField.YEAR, 4) // Year
@@ -249,6 +252,7 @@ public class XMLUtils {
 	 * @since 1.0
 	 */
 	public static final DateTimeFormatter DATE_TIME_FORMATTER;
+	
 	static {
 		DATE_TIME_FORMATTER = new DateTimeFormatterBuilder().parseCaseInsensitive().parseStrict() //
 		.appendValue(ChronoField.YEAR, 4) // Year
@@ -268,6 +272,7 @@ public class XMLUtils {
 	 * @since 1.0
 	 */
 	public static final DateTimeFormatter TIME_FORMATTER;
+	
 	static {
 		TIME_FORMATTER = new DateTimeFormatterBuilder().parseCaseInsensitive().parseStrict() //
 		.appendValue(ChronoField.HOUR_OF_DAY, 2) // Hour
