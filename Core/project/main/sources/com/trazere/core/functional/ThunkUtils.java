@@ -15,7 +15,7 @@
  */
 package com.trazere.core.functional;
 
-import com.trazere.core.text.Description;
+import com.trazere.core.text.DescriptionBuilder;
 import com.trazere.core.util.Either;
 import com.trazere.core.util.Maybe;
 import java.util.concurrent.Callable;
@@ -118,7 +118,7 @@ public class ThunkUtils {
 			}
 			
 			@Override
-			public void appendDescription(final Description description) {
+			public void appendDescription(final DescriptionBuilder description) {
 				super.appendDescription(description);
 				description.append("Thunk", thunk);
 			}

@@ -17,7 +17,7 @@ package com.trazere.core.functional;
 
 import com.trazere.core.lang.Releasable;
 import com.trazere.core.text.Describable;
-import com.trazere.core.text.Description;
+import com.trazere.core.text.DescriptionBuilder;
 import com.trazere.core.text.TextUtils;
 
 /**
@@ -76,7 +76,7 @@ implements Releasable, Describable {
 	}
 	
 	@Override
-	public void appendDescription(final Description description) {
+	public void appendDescription(final DescriptionBuilder description) {
 		// Nothing to do.
 	}
 }

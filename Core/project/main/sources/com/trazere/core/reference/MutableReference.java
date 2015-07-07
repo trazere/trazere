@@ -17,7 +17,7 @@ package com.trazere.core.reference;
 
 import com.trazere.core.functional.Thunk;
 import com.trazere.core.text.Describable;
-import com.trazere.core.text.Description;
+import com.trazere.core.text.DescriptionBuilder;
 import com.trazere.core.text.TextUtils;
 import com.trazere.core.util.Maybe;
 
@@ -270,7 +270,7 @@ implements ReleasableReference<T>, Describable {
 	}
 	
 	@Override
-	public void appendDescription(final Description description) {
+	public void appendDescription(final DescriptionBuilder description) {
 		if (_value.isSome()) {
 			description.append("Value", _value.asSome().getValue());
 		}

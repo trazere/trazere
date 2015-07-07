@@ -19,7 +19,7 @@ import com.trazere.core.functional.Function;
 import com.trazere.core.lang.HashCode;
 import com.trazere.core.lang.ObjectUtils;
 import com.trazere.core.text.Describable;
-import com.trazere.core.text.Description;
+import com.trazere.core.text.DescriptionBuilder;
 import com.trazere.core.text.TextUtils;
 import java.io.Serializable;
 
@@ -166,7 +166,7 @@ implements Serializable, Describable {
 		}
 		
 		@Override
-		public void appendDescription(final Description description) {
+		public void appendDescription(final DescriptionBuilder description) {
 			description.append("Left", _value);
 		}
 	}
@@ -300,7 +300,7 @@ implements Serializable, Describable {
 		}
 		
 		@Override
-		public void appendDescription(final Description description) {
+		public void appendDescription(final DescriptionBuilder description) {
 			description.append("Right", _value);
 		}
 	}

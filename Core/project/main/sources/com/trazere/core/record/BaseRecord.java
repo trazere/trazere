@@ -19,7 +19,8 @@ import com.trazere.core.collection.CollectionUtils;
 import com.trazere.core.imperative.IteratorUtils;
 import com.trazere.core.lang.HashCode;
 import com.trazere.core.lang.ObjectUtils;
-import com.trazere.core.text.Description;
+import com.trazere.core.text.DescriptionBuilder;
+import com.trazere.core.text.DescriptionFormats;
 import com.trazere.core.util.Maybe;
 import java.util.AbstractSet;
 import java.util.Collection;
@@ -93,7 +94,7 @@ implements Record<K> {
 	
 	@Override
 	public String toString() {
-		final Description description = new Description();
+		final DescriptionBuilder description = new DescriptionBuilder(DescriptionFormats.BASIC);
 		for (final Field<?, ?> field : fields()) {
 			description.append(field.getKey().getLabel(), field.getValue());
 		}

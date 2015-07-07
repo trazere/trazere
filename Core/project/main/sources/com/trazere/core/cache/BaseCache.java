@@ -22,7 +22,7 @@ import com.trazere.core.functional.Predicate;
 import com.trazere.core.functional.Predicates;
 import com.trazere.core.imperative.Accumulator;
 import com.trazere.core.text.Describable;
-import com.trazere.core.text.Description;
+import com.trazere.core.text.DescriptionBuilder;
 import com.trazere.core.text.TextUtils;
 import com.trazere.core.util.Maybe;
 import java.util.HashSet;
@@ -189,7 +189,7 @@ implements Cache<K, V>, Describable {
 	}
 	
 	@Override
-	public void appendDescription(final Description description) {
+	public void appendDescription(final DescriptionBuilder description) {
 		description.append("Policy", _policy);
 		description.append("Size", size());
 		description.append("Keys", keys());

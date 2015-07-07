@@ -16,7 +16,7 @@
 package com.trazere.core.lang;
 
 import com.trazere.core.text.Describable;
-import com.trazere.core.text.Description;
+import com.trazere.core.text.DescriptionBuilder;
 import com.trazere.core.text.TextUtils;
 
 // TODO: implement Accumulator1
@@ -143,7 +143,7 @@ implements Describable {
 	}
 	
 	@Override
-	public void appendDescription(final Description description) {
+	public void appendDescription(final DescriptionBuilder description) {
 		description.append("Hash code", _hashCode);
 	}
 }

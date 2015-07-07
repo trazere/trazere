@@ -17,6 +17,7 @@ package com.trazere.core.text;
 
 import com.trazere.core.functional.Functions;
 import com.trazere.core.imperative.Accumulator;
+import com.trazere.core.imperative.Accumulator2;
 import com.trazere.core.imperative.AccumulatorUtils;
 import com.trazere.core.lang.LangAccumulators;
 import com.trazere.core.lang.ThrowableFactory;
@@ -108,6 +109,29 @@ public class TextAccumulators {
 			@Override
 			public A get() {
 				return appendable;
+			}
+		};
+	}
+	
+	/**
+	 * Builds an accumulator that appends properties into the given description builder.
+	 * 
+	 * @param builder Description builder to populate.
+	 * @return The built accumulator.
+	 * @since 1.0
+	 */
+	public static Accumulator2<String, Object, DescriptionBuilder> append(final DescriptionBuilder builder) {
+		assert null != builder;
+		
+		return new Accumulator2<String, Object, DescriptionBuilder>() {
+			@Override
+			public void add(final String name, final Object value) {
+				builder.append(name, value);
+			}
+			
+			@Override
+			public DescriptionBuilder get() {
+				return builder;
 			}
 		};
 	}

@@ -15,10 +15,10 @@
  */
 package com.trazere.core.text;
 
-// TOOD: update usage so that classes dont inherit publicly (use constants ?)
+// TOOD: find some design to avoid inheriting this publicly
 
 /**
- * The {@link Describable} interface defines objects that can describe themselves in a {@link Description description}.
+ * The {@link Describable} interface defines objects that can describe themselves in a {@link DescriptionBuilder description}.
  * 
  * @see TextUtils#description(Describable)
  * @since 1.0
@@ -30,5 +30,5 @@ public interface Describable {
 	 * @param description The description to populate.
 	 * @since 1.0
 	 */
-	void appendDescription(Description description);
+	void appendDescription(DescriptionBuilder description);
 }

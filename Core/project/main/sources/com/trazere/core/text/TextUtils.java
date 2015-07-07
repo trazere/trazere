@@ -437,9 +437,9 @@ public class TextUtils {
 	 * @since 1.0
 	 */
 	public static String description(final Describable object) {
-		final Description description = new Description(className(object.getClass()));
-		object.appendDescription(description);
-		return description.toString();
+		final DescriptionBuilder builder = new DescriptionBuilder(DescriptionFormats.BASIC, className(object.getClass()));
+		object.appendDescription(builder);
+		return builder.toString();
 	}
 	
 	// Bytes.

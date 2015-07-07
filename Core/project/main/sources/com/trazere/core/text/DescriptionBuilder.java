@@ -17,19 +17,72 @@ package com.trazere.core.text;
 
 import com.trazere.core.lang.MutableBoolean;
 import com.trazere.core.util.Maybe;
-
-// TODO: rename to DescriptionBuilder
-// TODO: extends Accumulator2
-// TODO: generalize bounds and separator => generalize to or use some Joiner class ?
+import java.util.Collection;
 
 /**
- * The {@link Description} class helps to compute descriptions.
+ * The {@link DescriptionBuilder} class implements an utility to compute descriptions.
  * <p>
  * This class works as an accumulator of named properties that populates some string builder.
  * 
  * @since 1.0
  */
-public class Description {
+public class DescriptionBuilder {
+	/**
+	 * Instantiates a new empty description.
+	 * 
+	 * @param format Format of the description.
+	 * @since 1.0
+	 */
+	public DescriptionBuilder(final DescriptionFormat format) {
+		this(format, new StringBuilder(format.getOpening()), true);
+	}
+	
+	/**
+	 * Instantiates a new description with the given header.
+	 * 
+	 * @param format Format of the description.
+	 * @param header Header of the description.
+	 * @since 1.0
+	 */
+	public DescriptionBuilder(final DescriptionFormat format, final String header) {
+		this(format, new StringBuilder(format.getOpening()).append(header), false);
+	}
+	
+	/**
+	 * Instantiates a new description.
+	 * 
+	 * @param format Format of the description.
+	 * @param builder Builder to populate.
+	 * @param empty Indicates whether the description is still empty.
+	 * @since 1.0
+	 */
+	public DescriptionBuilder(final DescriptionFormat format, final StringBuilder builder, final boolean empty) {
+		assert null != format;
+		assert null != builder;
+		
+		// Initialization.
+		_format = format;
+		_builder = builder;
+		_empty = new MutableBoolean(empty);
+	}
+	
+	// Format.
+	
+	/** Format of the description. */
+	protected final DescriptionFormat _format;
+	
+	/**
+	 * Gets the format of this description.
+	 * 
+	 * @return The format.
+	 * @since 1.0
+	 */
+	public DescriptionFormat getFormat() {
+		return _format;
+	}
+	
+	// Builder.
+	
 	/**
 	 * String to populate with the description.
 	 * 
@@ -45,51 +98,17 @@ public class Description {
 	protected final MutableBoolean _empty;
 	
 	/**
-	 * Instantiates a new empty description.
-	 * 
-	 * @since 1.0
-	 */
-	public Description() {
-		this(new StringBuilder("["), true);
-	}
-	
-	/**
-	 * Instantiates a new description with the given header.
-	 * 
-	 * @param header Header of the description.
-	 * @since 1.0
-	 */
-	public Description(final String header) {
-		this(new StringBuilder("[").append(header), false);
-	}
-	
-	/**
-	 * Instantiates a new description.
-	 * 
-	 * @param builder Builder to populate.
-	 * @param empty Indicates whether the description is still empty.
-	 * @since 1.0
-	 */
-	public Description(final StringBuilder builder, final boolean empty) {
-		assert null != builder;
-		
-		// Initialization.
-		_builder = builder;
-		_empty = new MutableBoolean(empty);
-	}
-	
-	/**
 	 * Appends the given empty property to this description.
 	 * 
 	 * @param name Name of the property.
 	 * @return this description.
 	 * @since 1.0
 	 */
-	public Description append(final String name) {
+	public DescriptionBuilder append(final String name) {
 		if (_empty.get()) {
 			_empty.set(false);
 		} else {
-			_builder.append(" - ");
+			_builder.append(_format.getDelimiter());
 		}
 		_builder.append(name);
 		
@@ -104,9 +123,9 @@ public class Description {
 	 * @return this description.
 	 * @since 1.0
 	 */
-	public Description append(final String name, final Object value) {
+	public DescriptionBuilder append(final String name, final Object value) {
 		append(name);
-		_builder.append(" = ").append(value);
+		_builder.append(_format.getAssigment()).append(value);
 		
 		return this;
 	}
@@ -119,7 +138,7 @@ public class Description {
 	 * @return this description.
 	 * @since 1.0
 	 */
-	public Description append(final String name, final boolean value) {
+	public DescriptionBuilder append(final String name, final boolean value) {
 		return append(name, Boolean.valueOf(value));
 	}
 	
@@ -131,7 +150,7 @@ public class Description {
 	 * @return this description.
 	 * @since 1.0
 	 */
-	public Description append(final String name, final byte value) {
+	public DescriptionBuilder append(final String name, final byte value) {
 		return append(name, Byte.valueOf(value));
 	}
 	
@@ -143,7 +162,7 @@ public class Description {
 	 * @return this description.
 	 * @since 1.0
 	 */
-	public Description append(final String name, final int value) {
+	public DescriptionBuilder append(final String name, final int value) {
 		return append(name, Integer.valueOf(value));
 	}
 	
@@ -155,7 +174,7 @@ public class Description {
 	 * @return this description.
 	 * @since 1.0
 	 */
-	public Description append(final String name, final long value) {
+	public DescriptionBuilder append(final String name, final long value) {
 		return append(name, Long.valueOf(value));
 	}
 	
@@ -167,7 +186,7 @@ public class Description {
 	 * @return this description.
 	 * @since 1.0
 	 */
-	public Description append(final String name, final float value) {
+	public DescriptionBuilder append(final String name, final float value) {
 		return append(name, Float.valueOf(value));
 	}
 	
@@ -179,7 +198,7 @@ public class Description {
 	 * @return this description.
 	 * @since 1.0
 	 */
-	public Description append(final String name, final double value) {
+	public DescriptionBuilder append(final String name, final double value) {
 		return append(name, Double.valueOf(value));
 	}
 	
@@ -191,7 +210,7 @@ public class Description {
 	 * @return this description.
 	 * @since 1.0
 	 */
-	public Description append(final String name, final char value) {
+	public DescriptionBuilder append(final String name, final char value) {
 		return append(name, Character.valueOf(value));
 	}
 	
@@ -205,7 +224,7 @@ public class Description {
 	 * @return this description.
 	 * @since 1.0
 	 */
-	public Description append(final String name, final Maybe<?> value) {
+	public DescriptionBuilder append(final String name, final Maybe<?> value) {
 		assert null != name;
 		assert null != value;
 		
@@ -216,8 +235,30 @@ public class Description {
 		}
 	}
 	
-	// TODO: append(String, Collection)
-	// TODO: append(String, Iterable)
+	/**
+	 * Appends the given collection property to this description.
+	 * <p>
+	 * Nothing is appended when the property has no values.
+	 * 
+	 * @param name Name of the property.
+	 * @param values Values of the property.
+	 * @return this description.
+	 * @since 1.0
+	 */
+	public DescriptionBuilder append(final String name, final Collection<?> values) {
+		assert null != name;
+		assert null != values;
+		
+		if (!values.isEmpty()) {
+			return append(name, values);
+		} else {
+			return this;
+		}
+	}
+	
+	// TODO: append(String, Iterable) ?
+	
+	// Object.
 	
 	/**
 	 * Gets the resulting representation of this description.
@@ -227,6 +268,6 @@ public class Description {
 	 */
 	@Override
 	public String toString() {
-		return _builder.toString() + "]";
+		return _builder.toString() + _format.getClosing();
 	}
 }
