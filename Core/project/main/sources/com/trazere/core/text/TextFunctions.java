@@ -16,7 +16,7 @@
 package com.trazere.core.text;
 
 import com.trazere.core.functional.Function;
-import com.trazere.core.util.Maybe;
+import com.trazere.core.util.Result;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.time.format.DateTimeFormatter;
@@ -133,7 +133,7 @@ public class TextFunctions {
 	 * @see TextUtils#parseNumber(NumberFormat, Function, String)
 	 * @since 1.0
 	 */
-	public static <N extends Number> Function<String, Maybe<N>> parseNumber(final NumberFormat format, final Function<Number, N> converter) {
+	public static <N extends Number> Function<String, Result<N>> parseNumber(final NumberFormat format, final Function<Number, N> converter) {
 		assert null != format;
 		assert null != converter;
 		
@@ -165,7 +165,7 @@ public class TextFunctions {
 	 * @see TextUtils#parseDate(DateFormat, String)
 	 * @since 1.0
 	 */
-	public static Function<String, Maybe<Date>> parseDate(final DateFormat format) {
+	public static Function<String, Result<Date>> parseDate(final DateFormat format) {
 		assert null != format;
 		
 		return representation -> TextUtils.parseDate(format, representation);
@@ -198,7 +198,7 @@ public class TextFunctions {
 	 * @see TextUtils#parseTemporal(DateTimeFormatter, TemporalQuery, String)
 	 * @since 1.0
 	 */
-	public static <T extends TemporalAccessor> Function<String, Maybe<T>> parseTemporal(final DateTimeFormatter formatter, final TemporalQuery<T> query) {
+	public static <T extends TemporalAccessor> Function<String, Result<T>> parseTemporal(final DateTimeFormatter formatter, final TemporalQuery<T> query) {
 		assert null != formatter;
 		assert null != query;
 		
@@ -227,11 +227,11 @@ public class TextFunctions {
 	 * @see TextUtils#parseUuid(String)
 	 * @since 1.0
 	 */
-	public static Function<String, Maybe<UUID>> parseUuid() {
+	public static Function<String, Result<UUID>> parseUuid() {
 		return PARSE_UUID;
 	}
 	
-	private static final Function<String, Maybe<UUID>> PARSE_UUID = TextUtils::parseUuid;
+	private static final Function<String, Result<UUID>> PARSE_UUID = TextUtils::parseUuid;
 	
 	private TextFunctions() {
 		// Prevents instantiation.

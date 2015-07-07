@@ -20,8 +20,10 @@ import com.trazere.core.functional.Function;
 import com.trazere.core.imperative.IntCounter;
 import com.trazere.core.lang.FiniteIntSequence;
 import com.trazere.core.util.Maybe;
+import com.trazere.core.util.Result;
 import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.ParsePosition;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -529,15 +531,14 @@ public class TextUtils {
 	 * @return The parsed number, or nothing when the representation is not valid.
 	 * @since 1.0
 	 */
-	// TODO: return Result
-	public static <N extends Number> Maybe<N> parseNumber(final NumberFormat format, final Function<? super Number, ? extends N> converter, final String representation) {
+	public static <N extends Number> Result<N> parseNumber(final NumberFormat format, final Function<? super Number, ? extends N> converter, final String representation) {
 		synchronized (format) {
 			final ParsePosition position = new ParsePosition(0);
 			final Number number = format.parse(representation, position);
 			if (null != number && position.getIndex() == representation.length()) {
-				return Maybe.<N>some(converter.evaluate(number));
+				return Result.success(converter.evaluate(number));
 			} else {
-				return Maybe.none();
+				return Result.failure(new ParseException("Invalid number \"" + representation + "\"", position.getIndex()));
 			}
 		}
 	}
@@ -570,15 +571,14 @@ public class TextUtils {
 	 * @return The parsed date, or nothing when the representation is not valid.
 	 * @since 1.0
 	 */
-	// TODO: return Result
-	public static Maybe<Date> parseDate(final DateFormat format, final String representation) {
+	public static Result<Date> parseDate(final DateFormat format, final String representation) {
 		synchronized (format) {
 			final ParsePosition position = new ParsePosition(0);
 			final Date date = format.parse(representation, position);
 			if (null != date && position.getIndex() == representation.length()) {
-				return Maybe.some(date);
+				return Result.success(date);
 			} else {
-				return Maybe.none();
+				return Result.failure(new ParseException("Invalid date \"" + representation + "\"", position.getIndex()));
 			}
 		}
 	}
@@ -611,12 +611,11 @@ public class TextUtils {
 	 * @return The parsed temporal, or nothing when the representation is not valid.
 	 * @since 1.0
 	 */
-	// TODO: return Result
-	public static <T extends TemporalAccessor> Maybe<T> parseTemporal(final DateTimeFormatter formatter, final TemporalQuery<T> query, final String representation) {
+	public static <T extends TemporalAccessor> Result<T> parseTemporal(final DateTimeFormatter formatter, final TemporalQuery<T> query, final String representation) {
 		try {
-			return Maybe.some(formatter.parse(representation, query));
+			return Result.success(formatter.parse(representation, query));
 		} catch (final DateTimeParseException exception) {
-			return Maybe.none();
+			return Result.failure(exception);
 		}
 	}
 	
@@ -640,12 +639,11 @@ public class TextUtils {
 	 * @return The parsed UUID, or nothing when the representation is not valid.
 	 * @since 1.0
 	 */
-	// TODO: return Result
-	public static Maybe<UUID> parseUuid(final String representation) {
+	public static Result<UUID> parseUuid(final String representation) {
 		try {
-			return Maybe.some(UUID.fromString(representation));
+			return Result.success(UUID.fromString(representation));
 		} catch (final IllegalArgumentException exception) {
-			return Maybe.none();
+			return Result.failure(exception);
 		}
 	}
 	

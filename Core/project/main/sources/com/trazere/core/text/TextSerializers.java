@@ -17,7 +17,7 @@ package com.trazere.core.text;
 
 import com.trazere.core.functional.Function;
 import com.trazere.core.lang.ThrowableFactory;
-import com.trazere.core.util.Maybe;
+import com.trazere.core.util.Result;
 import com.trazere.core.util.Serializer;
 import com.trazere.core.util.Serializers;
 import java.io.File;
@@ -336,9 +336,9 @@ public class TextSerializers {
 			
 			@Override
 			public N deserialize(final String representation) {
-				final Maybe<N> value = TextUtils.parseNumber(format, converter, representation);
-				if (value.isSome()) {
-					return value.asSome().getValue();
+				final Result<N> value = TextUtils.parseNumber(format, converter, representation);
+				if (value.isSuccess()) {
+					return value.asSuccess().getValue();
 				} else {
 					throw new NumberFormatException("Invalid number representation \"" + representation + "\" (" + TextUtils.formatNumber(format, 123.456) + ").");
 				}
@@ -366,9 +366,9 @@ public class TextSerializers {
 			
 			@Override
 			public Date deserialize(final String representation) {
-				final Maybe<Date> value = TextUtils.parseDate(format, representation);
-				if (value.isSome()) {
-					return value.asSome().getValue();
+				final Result<Date> value = TextUtils.parseDate(format, representation);
+				if (value.isSuccess()) {
+					return value.asSuccess().getValue();
 				} else {
 					throw new IllegalArgumentException("Invalid date representation \"" + representation + "\" (" + TextUtils.formatDate(format, new Date()) + ").");
 				}
@@ -399,9 +399,9 @@ public class TextSerializers {
 			
 			@Override
 			public T deserialize(final String representation) {
-				final Maybe<T> value = TextUtils.parseTemporal(formatter, query, representation);
-				if (value.isSome()) {
-					return value.asSome().getValue();
+				final Result<T> value = TextUtils.parseTemporal(formatter, query, representation);
+				if (value.isSuccess()) {
+					return value.asSuccess().getValue();
 				} else {
 					throw new IllegalArgumentException("Invalid temporal representation \"" + representation + "\" (" + TextUtils.formatTemporal(formatter, Instant.now()) + ").");
 				}
