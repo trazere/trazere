@@ -130,7 +130,7 @@ public class MaybeUtils {
 	 * @return The value.
 	 * @since 1.0
 	 */
-	public static int get(final Maybe<Byte> value, final byte defaultValue) {
+	public static byte get(final Maybe<Byte> value, final byte defaultValue) {
 		return value.isSome() ? value.asSome().getValue().byteValue() : defaultValue;
 	}
 	
@@ -145,7 +145,7 @@ public class MaybeUtils {
 	 * @return The value.
 	 * @since 1.0
 	 */
-	public static int get(final Maybe<Short> value, final short defaultValue) {
+	public static short get(final Maybe<Short> value, final short defaultValue) {
 		return value.isSome() ? value.asSome().getValue().shortValue() : defaultValue;
 	}
 	
