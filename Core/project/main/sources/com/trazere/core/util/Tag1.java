@@ -15,6 +15,7 @@
  */
 package com.trazere.core.util;
 
+// TODO: rename to Label1, Labelable ?
 // TODO: extends Field1<Maybe<T>> ?
 
 /**

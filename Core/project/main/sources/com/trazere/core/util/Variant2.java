@@ -19,6 +19,9 @@ import com.trazere.core.functional.Function;
 import com.trazere.core.lang.HashCode;
 import com.trazere.core.lang.ObjectUtils;
 
+// TODO: tostring
+// TODO: include all features from Either
+
 /**
  * The {@link Variant2} class implements a generic tagged union data type that supports 2 cases.
  * 

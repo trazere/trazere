@@ -23,8 +23,6 @@ import com.trazere.core.text.DescriptionBuilder;
 import com.trazere.core.text.TextUtils;
 import java.io.Serializable;
 
-// TODO: replace by Variant2 ?
-
 /**
  * The {@link Either} class implements a tagged union data type that represents a binary disjonction.
  * <ul>

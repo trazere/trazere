@@ -15,7 +15,7 @@
  */
 package com.trazere.core.util;
 
-// TODO: rename to avoid confusion with record.Field ?
+// TODO: rename to avoid confusion with record.Field ? => Selector or Selectable ?
 
 /**
  * The {@link Field} interface defines abstract containers or providers of some value.
