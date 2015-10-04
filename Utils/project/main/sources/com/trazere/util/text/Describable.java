@@ -27,7 +27,7 @@ public interface Describable {
 	 * Complete the given description according to the receiver object.
 	 * 
 	 * @param description The description.
-	 * @deprecated Use {@link com.trazere.core.text.Describable#appendDescription(com.trazere.core.text.Description)}.
+	 * @deprecated Use {@link com.trazere.core.text.Describable#appendDescription(com.trazere.core.text.DescriptionBuilder)}.
 	 */
 	@Deprecated
 	public void fillDescription(final Description description);

@@ -23,7 +23,7 @@ import com.trazere.util.type.Maybe;
  * <p>
  * This class works as an accumulator of named properties, each instance can only be used to compute a single description.
  * 
- * @deprecated Use {@link com.trazere.core.text.Description}.
+ * @deprecated Use {@link com.trazere.core.text.DescriptionBuilder}.
  */
 @Deprecated
 public class Description {
@@ -42,7 +42,7 @@ public class Description {
 	private final MutableBoolean _first;
 	
 	/**
-	 * @deprecated Use {@link com.trazere.core.text.Description#Description()}.
+	 * @deprecated Use {@link com.trazere.core.text.DescriptionBuilder#DescriptionBuilder(com.trazere.core.text.DescriptionFormat)}.
 	 */
 	@Deprecated
 	public Description() {
