@@ -42,7 +42,7 @@ public class Promise<T> {
 	 * @param future Future providing the value.
 	 * @since 2.0
 	 */
-	protected Promise(final PromiseFuture<T> future) {
+	public Promise(final PromiseFuture<T> future) {
 		assert null != future;
 		
 		// Initialization.
@@ -57,7 +57,7 @@ public class Promise<T> {
 	 * @param <T> Type of the value.
 	 * @since 2.0
 	 */
-	protected static class PromiseFuture<T>
+	public static class PromiseFuture<T>
 	extends BaseFuture<T> {
 		// Nothing to do.
 	}

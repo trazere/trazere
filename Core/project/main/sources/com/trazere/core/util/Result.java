@@ -100,7 +100,7 @@ implements Serializable {
 		// Value.
 		
 		/** Success value. */
-		private final T _value;
+		protected final T _value;
 		
 		/**
 		 * Gets the value of this success.
@@ -235,7 +235,7 @@ implements Serializable {
 		// Cause.
 		
 		/** Cause of the failure. */
-		private final Throwable _cause;
+		protected final Throwable _cause;
 		
 		/**
 		 * Gets the cause of this failure.

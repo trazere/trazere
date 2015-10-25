@@ -40,7 +40,7 @@ public class Broadcaster<E> {
 	 * @param observable Observable of the fired events.
 	 * @since 2.0
 	 */
-	protected Broadcaster(final BroadcasterObservable<E> observable) {
+	public Broadcaster(final BroadcasterObservable<E> observable) {
 		assert null != observable;
 		
 		// Initialization.
@@ -55,7 +55,7 @@ public class Broadcaster<E> {
 	 * @param <E> Type of the events.
 	 * @since 2.0
 	 */
-	protected static class BroadcasterObservable<E>
+	public static class BroadcasterObservable<E>
 	extends BaseObservable<E> {
 		// Nothing to do.
 	}
