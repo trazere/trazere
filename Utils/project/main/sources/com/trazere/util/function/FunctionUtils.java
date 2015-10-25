@@ -173,7 +173,13 @@ public class FunctionUtils {
 	 * @deprecated Use {@link com.trazere.core.collection.MultimapUtils#isAny(com.trazere.core.collection.Multimap, com.trazere.core.functional.Predicate2)}.
 	 */
 	@Deprecated
-	public static <K, V, X extends Exception> boolean isAny(final Predicate2<? super K, ? super V, ? extends X> predicate, final Multimap<K, ? extends V, ?> bindings)
+	public static <K, V, X extends Exception> boolean isAny(final Predicate2<? super K, ? super V, ? extends X> predicate, final Multimap<? extends K, ? extends V, ?> bindings)
+	throws X {
+		return isAny_(predicate, bindings);
+	}
+	
+	@Deprecated
+	private static <K, V, X extends Exception> boolean isAny_(final Predicate2<? super K, ? super V, ? extends X> predicate, final Multimap<K, ? extends V, ?> bindings)
 	throws X {
 		assert null != predicate;
 		assert null != bindings;
@@ -313,7 +319,13 @@ public class FunctionUtils {
 	 * @deprecated Use {@link com.trazere.core.collection.MultimapUtils#areAll(com.trazere.core.collection.Multimap, com.trazere.core.functional.Predicate2)}.
 	 */
 	@Deprecated
-	public static <K, V, X extends Exception> boolean areAll(final Predicate2<? super K, ? super V, ? extends X> predicate, final Multimap<K, ? extends V, ?> bindings)
+	public static <K, V, X extends Exception> boolean areAll(final Predicate2<? super K, ? super V, ? extends X> predicate, final Multimap<? extends K, ? extends V, ?> bindings)
+	throws X {
+		return areAll_(predicate, bindings);
+	}
+	
+	@Deprecated
+	private static <K, V, X extends Exception> boolean areAll_(final Predicate2<? super K, ? super V, ? extends X> predicate, final Multimap<K, ? extends V, ?> bindings)
 	throws X {
 		assert null != predicate;
 		assert null != bindings;
@@ -456,7 +468,18 @@ public class FunctionUtils {
 	 * @deprecated Use {@link com.trazere.core.collection.MultimapUtils#first(com.trazere.core.collection.Multimap, com.trazere.core.functional.Predicate2)}.
 	 */
 	@Deprecated
-	public static <K, V, X extends Exception> Maybe<Tuple2<K, V>> first(final Predicate2<? super K, ? super V, ? extends X> predicate, final Multimap<K, ? extends V, ?> bindings)
+	public static <K, V, X extends Exception> Maybe<Tuple2<K, V>> first(final Predicate2<? super K, ? super V, ? extends X> predicate, final Multimap<? extends K, ? extends V, ?> bindings)
+	throws X {
+		return first_(predicate, bindings).map(new Function1<Tuple2<? extends K, V>, Tuple2<K, V>, InternalException>() {
+			@Override
+			public Tuple2<K, V> evaluate(final Tuple2<? extends K, V> value) {
+				return new Tuple2<K, V>(value.getFirst(), value.getSecond());
+			}
+		});
+	}
+	
+	@Deprecated
+	private static <K, V, X extends Exception> Maybe<Tuple2<K, V>> first_(final Predicate2<? super K, ? super V, ? extends X> predicate, final Multimap<K, ? extends V, ?> bindings)
 	throws X {
 		assert null != predicate;
 		assert null != bindings;
@@ -484,7 +507,7 @@ public class FunctionUtils {
 	 * @deprecated Use {@link com.trazere.core.lang.IterableUtils#extractFirst(Iterable, com.trazere.core.functional.Function)}.
 	 */
 	@Deprecated
-	public static <V, RV, X extends Exception> Maybe<RV> first(final Function1<? super V, ? extends Maybe<RV>, ? extends X> function, final Iterable<? extends V> values)
+	public static <V, RV, X extends Exception> Maybe<RV> first(final Function1<? super V, ? extends Maybe<? extends RV>, ? extends X> function, final Iterable<? extends V> values)
 	throws X {
 		assert null != values;
 		
@@ -504,7 +527,7 @@ public class FunctionUtils {
 	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#extractFirst(Iterator, com.trazere.core.functional.Function)}.
 	 */
 	@Deprecated
-	public static <V, RV, X extends Exception> Maybe<RV> first(final Function1<? super V, ? extends Maybe<RV>, ? extends X> function, final Iterator<? extends V> values)
+	public static <V, RV, X extends Exception> Maybe<RV> first(final Function1<? super V, ? extends Maybe<? extends RV>, ? extends X> function, final Iterator<? extends V> values)
 	throws X {
 		return first(function, CheckedIterators.<V, InternalException>fromIterator(values));
 	}
@@ -524,15 +547,15 @@ public class FunctionUtils {
 	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#extractFirst(Iterator, com.trazere.core.functional.Function)}.
 	 */
 	@Deprecated
-	public static <V, RV, X extends Exception, VX extends Exception> Maybe<RV> first(final Function1<? super V, ? extends Maybe<RV>, ? extends X> function, final CheckedIterator<? extends V, ? extends VX> values)
+	public static <V, RV, X extends Exception, VX extends Exception> Maybe<RV> first(final Function1<? super V, ? extends Maybe<? extends RV>, ? extends X> function, final CheckedIterator<? extends V, ? extends VX> values)
 	throws X, VX {
 		assert null != function;
 		assert null != values;
 		
 		while (values.hasNext()) {
-			final Maybe<RV> value = function.evaluate(values.next());
+			final Maybe<? extends RV> value = function.evaluate(values.next());
 			if (value.isSome()) {
-				return value;
+				return Maybe.<RV>some(value.asSome().getValue());
 			}
 		}
 		return Maybe.none();
@@ -553,7 +576,7 @@ public class FunctionUtils {
 	 * @deprecated Use {@link com.trazere.core.collection.FeedUtils#extractFirst(Iterable, com.trazere.core.functional.Function)}.
 	 */
 	@Deprecated
-	public static <V, RV, X extends Exception, VX extends Exception> Maybe<RV> first(final Function1<? super V, ? extends Maybe<RV>, ? extends X> function, final Feed<? extends V, ? extends VX> values)
+	public static <V, RV, X extends Exception, VX extends Exception> Maybe<RV> first(final Function1<? super V, ? extends Maybe<? extends RV>, ? extends X> function, final Feed<? extends V, ? extends VX> values)
 	throws X, VX {
 		return first(function, CheckedIterators.fromFeed(values));
 	}
@@ -774,7 +797,13 @@ public class FunctionUtils {
 	 * @deprecated Use {@link com.trazere.core.collection.MultimapUtils#count(com.trazere.core.collection.Multimap, com.trazere.core.functional.Predicate2)}.
 	 */
 	@Deprecated
-	public static <K, V, X extends Exception> int count(final Predicate2<? super K, ? super V, ? extends X> predicate, final Multimap<K, ? extends V, ?> bindings)
+	public static <K, V, X extends Exception> int count(final Predicate2<? super K, ? super V, ? extends X> predicate, final Multimap<? extends K, ? extends V, ?> bindings)
+	throws X {
+		return count_(predicate, bindings);
+	}
+	
+	@Deprecated
+	private static <K, V, X extends Exception> int count_(final Predicate2<? super K, ? super V, ? extends X> predicate, final Multimap<K, ? extends V, ?> bindings)
 	throws X {
 		assert null != predicate;
 		assert null != bindings;
@@ -914,7 +943,7 @@ public class FunctionUtils {
 	 *             .
 	 */
 	@Deprecated
-	public static <K, V, M extends Multimap<? super K, ? super V, ?>, X extends Exception> M filter(final Predicate2<? super K, ? super V, ? extends X> predicate, final Multimap<K, ? extends V, ?> bindings, final M results)
+	public static <K, V, M extends Multimap<? super K, ? super V, ?>, X extends Exception> M filter(final Predicate2<? super K, ? super V, ? extends X> predicate, final Multimap<? extends K, ? extends V, ?> bindings, final M results)
 	throws X {
 		return FunctionUtils.<K, V, Accumulator2<K, V, M, InternalException>, X, InternalException>filter(predicate, bindings, CollectionAccumulators.<K, V, M, InternalException>put(results)).get(); // HACK: explicit type argments to work around a bug of javac
 	}
@@ -940,7 +969,13 @@ public class FunctionUtils {
 	 *             .
 	 */
 	@Deprecated
-	public static <K, V, A extends Accumulator2<? super K, ? super V, ?, ? extends AX>, PX extends Exception, AX extends Exception> A filter(final Predicate2<? super K, ? super V, ? extends PX> predicate, final Multimap<K, ? extends V, ?> bindings, final A results)
+	public static <K, V, A extends Accumulator2<? super K, ? super V, ?, ? extends AX>, PX extends Exception, AX extends Exception> A filter(final Predicate2<? super K, ? super V, ? extends PX> predicate, final Multimap<? extends K, ? extends V, ?> bindings, final A results)
+	throws PX, AX {
+		return filter_(predicate, bindings, results);
+	}
+	
+	@Deprecated
+	private static <K, V, A extends Accumulator2<? super K, ? super V, ?, ? extends AX>, PX extends Exception, AX extends Exception> A filter_(final Predicate2<? super K, ? super V, ? extends PX> predicate, final Multimap<K, ? extends V, ?> bindings, final A results)
 	throws PX, AX {
 		assert null != predicate;
 		assert null != bindings;
@@ -1101,7 +1136,7 @@ public class FunctionUtils {
 	 * @deprecated Use {@link com.trazere.core.lang.IterableUtils#map(Iterable, com.trazere.core.functional.Function)}.
 	 */
 	@Deprecated
-	public static <V, RV, C extends Collection<? super RV>, X extends Exception> C map(final Function1<? super V, RV, ? extends X> function, final Iterable<? extends V> values, final C results)
+	public static <V, RV, C extends Collection<? super RV>, X extends Exception> C map(final Function1<? super V, ? extends RV, ? extends X> function, final Iterable<? extends V> values, final C results)
 	throws X {
 		return FunctionUtils.<V, RV, Accumulator1<RV, C, InternalException>, X, InternalException>map(function, values, CollectionAccumulators.<RV, C, InternalException>add(results)).get(); // HACK: explicit type argments to work around a bug of javac
 	}
@@ -1212,7 +1247,7 @@ public class FunctionUtils {
 	 *             .
 	 */
 	@Deprecated
-	public static <K, V, RV, M extends Multimap<? super K, ? super RV, ?>, X extends Exception> M map(final Function2<? super K, ? super V, RV, ? extends X> function, final Multimap<K, ? extends V, ?> bindings, final M results)
+	public static <K, V, RV, M extends Multimap<? super K, ? super RV, ?>, X extends Exception> M map(final Function2<? super K, ? super V, ? extends RV, ? extends X> function, final Multimap<? extends K, ? extends V, ?> bindings, final M results)
 	throws X {
 		return FunctionUtils.<K, V, RV, Accumulator2<K, RV, M, InternalException>, X, InternalException>map(function, bindings, CollectionAccumulators.<K, RV, M, InternalException>put(results)).get(); // HACK: explicit type argments to work around a bug of javac
 	}
@@ -1240,7 +1275,13 @@ public class FunctionUtils {
 	 *             .
 	 */
 	@Deprecated
-	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, ? extends AX>, FX extends Exception, AX extends Exception> A map(final Function2<? super K, ? super V, ? extends RV, ? extends FX> function, final Multimap<K, ? extends V, ?> bindings, final A results)
+	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, ? extends AX>, FX extends Exception, AX extends Exception> A map(final Function2<? super K, ? super V, ? extends RV, ? extends FX> function, final Multimap<? extends K, ? extends V, ?> bindings, final A results)
+	throws FX, AX {
+		return map_(function, bindings, results);
+	}
+	
+	@Deprecated
+	private static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, ? extends AX>, FX extends Exception, AX extends Exception> A map_(final Function2<? super K, ? super V, ? extends RV, ? extends FX> function, final Multimap<K, ? extends V, ?> bindings, final A results)
 	throws FX, AX {
 		assert null != function;
 		assert null != bindings;
@@ -1478,7 +1519,7 @@ public class FunctionUtils {
 	 * @deprecated {@link #extract(Function2, Multimap, Multimap)}.
 	 */
 	@Deprecated
-	public static <K, V, RV, M extends Multimap<? super K, ? super RV, ?>, X extends Exception> M mapFilter(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, ? extends X> extractor, final Multimap<K, ? extends V, ?> bindings, final M results)
+	public static <K, V, RV, M extends Multimap<? super K, ? super RV, ?>, X extends Exception> M mapFilter(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, ? extends X> extractor, final Multimap<? extends K, ? extends V, ?> bindings, final M results)
 	throws X {
 		return extract(extractor, bindings, results);
 	}
@@ -1504,7 +1545,7 @@ public class FunctionUtils {
 	 *             .
 	 */
 	@Deprecated
-	public static <K, V, RV, M extends Multimap<? super K, ? super RV, ?>, X extends Exception> M extract(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, ? extends X> extractor, final Multimap<K, ? extends V, ?> bindings, final M results)
+	public static <K, V, RV, M extends Multimap<? super K, ? super RV, ?>, X extends Exception> M extract(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, ? extends X> extractor, final Multimap<? extends K, ? extends V, ?> bindings, final M results)
 	throws X {
 		return FunctionUtils.<K, V, RV, Accumulator2<K, RV, M, InternalException>, X, InternalException>extract(extractor, bindings, CollectionAccumulators.<K, RV, M, InternalException>put(results)).get(); // HACK: explicit type argments to work around a bug of javac
 	}
@@ -1530,7 +1571,7 @@ public class FunctionUtils {
 	 * @deprecated Use {@link #extract(Function2, Multimap, Accumulator2)}.
 	 */
 	@Deprecated
-	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, ? extends AX>, EX extends Exception, AX extends Exception> A mapFilter(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, ? extends EX> extractor, final Multimap<K, ? extends V, ?> bindings, final A results)
+	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, ? extends AX>, EX extends Exception, AX extends Exception> A mapFilter(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, ? extends EX> extractor, final Multimap<? extends K, ? extends V, ?> bindings, final A results)
 	throws EX, AX {
 		return FunctionUtils.<K, V, RV, A, EX, AX>extract(extractor, bindings, results); // HACK: explicit type argments to work around a bug of javac
 	}
@@ -1558,7 +1599,13 @@ public class FunctionUtils {
 	 *             .
 	 */
 	@Deprecated
-	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, ? extends AX>, EX extends Exception, AX extends Exception> A extract(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, ? extends EX> extractor, final Multimap<K, ? extends V, ?> bindings, final A results)
+	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, ? extends AX>, EX extends Exception, AX extends Exception> A extract(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, ? extends EX> extractor, final Multimap<? extends K, ? extends V, ?> bindings, final A results)
+	throws EX, AX {
+		return extract_(extractor, bindings, results);
+	}
+	
+	@Deprecated
+	private static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, ? extends AX>, EX extends Exception, AX extends Exception> A extract_(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, ? extends EX> extractor, final Multimap<K, ? extends V, ?> bindings, final A results)
 	throws EX, AX {
 		assert null != extractor;
 		assert null != bindings;
@@ -1690,7 +1737,7 @@ public class FunctionUtils {
 	 * @deprecated Use {@link com.trazere.core.collection.MapExtractors#fromKeys(Iterable, com.trazere.core.functional.Function)}.
 	 */
 	@Deprecated
-	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M projectKeys(final Function1<? super K, V, ? extends X> function, final Iterable<? extends K> keys, final M results)
+	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M projectKeys(final Function1<? super K, ? extends V, ? extends X> function, final Iterable<? extends K> keys, final M results)
 	throws X {
 		assert null != function;
 		assert null != keys;
@@ -1721,7 +1768,7 @@ public class FunctionUtils {
 	 * @deprecated Use {@link com.trazere.core.collection.MapExtractors#fromValues(Iterable, com.trazere.core.functional.Function)}.
 	 */
 	@Deprecated
-	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M projectValues(final Function1<? super V, K, ? extends X> function, final Iterable<? extends V> values, final M results)
+	public static <K, V, M extends Map<? super K, ? super V>, X extends Exception> M projectValues(final Function1<? super V, ? extends K, ? extends X> function, final Iterable<? extends V> values, final M results)
 	throws X {
 		assert null != function;
 		assert null != values;
@@ -2051,7 +2098,13 @@ public class FunctionUtils {
 	 * @deprecated Use {@link com.trazere.core.collection.MultimapUtils#foreach(com.trazere.core.collection.Multimap, com.trazere.core.imperative.Procedure2)}.
 	 */
 	@Deprecated
-	public static <K, V, X extends Exception> void execute(final Procedure2<? super K, ? super V, ? extends X> procedure, final Multimap<K, ? extends V, ?> bindings)
+	public static <K, V, X extends Exception> void execute(final Procedure2<? super K, ? super V, ? extends X> procedure, final Multimap<? extends K, ? extends V, ?> bindings)
+	throws X {
+		execute_(procedure, bindings);
+	}
+	
+	@Deprecated
+	private static <K, V, X extends Exception> void execute_(final Procedure2<? super K, ? super V, ? extends X> procedure, final Multimap<K, ? extends V, ?> bindings)
 	throws X {
 		assert null != procedure;
 		assert null != bindings;

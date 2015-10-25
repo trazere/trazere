@@ -35,7 +35,7 @@ public class ResultUtils {
 	 * @throws RuntimeException An exceptioned caused the given result when it is a failure.
 	 * @since 2.0
 	 */
-	public static <T> T get(final Result<T> result, final ThrowableFactory<? extends RuntimeException> failureFactory) {
+	public static <T> T get(final Result<? extends T> result, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		if (result.isSuccess()) {
 			return result.asSuccess().getValue();
 		} else {
