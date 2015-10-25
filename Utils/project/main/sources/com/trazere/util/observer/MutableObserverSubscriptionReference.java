@@ -15,6 +15,7 @@
  */
 package com.trazere.util.observer;
 
+import com.trazere.core.reference.ReleasingMutableReference;
 import com.trazere.util.reference.MutableReference;
 
 /**
@@ -22,7 +23,7 @@ import com.trazere.util.reference.MutableReference;
  * <p>
  * The subscriptions are automatically cancelled when the reference is modified.
  * 
- * @deprecated Use {@link com.trazere.core.reactive.ObserverSubscriptionMutableReference}.
+ * @deprecated Use {@link ReleasingMutableReference}. (since 2.0)
  */
 @Deprecated
 public class MutableObserverSubscriptionReference

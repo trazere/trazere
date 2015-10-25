@@ -13,21 +13,24 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.core.reactive;
+package com.trazere.core.reference;
 
-import com.trazere.core.reference.MutableReference;
+import com.trazere.core.lang.Releasable;
 
 /**
- * The {@link ObserverSubscriptionMutableReference} class implements mutable references of {@link ObserverSubscription observer subscriptions}.
- * <p>
- * The referenced subscriptions are cancelled when the reference is modified.
+ * The {@link ReleasingMutableReference} class implements mutable references that release the referenced value on disposal.
  * 
+ * @param <T> Type of the referenced value.
  * @since 2.0
  */
-public class ObserverSubscriptionMutableReference
-extends MutableReference<ObserverSubscription> {
+public class ReleasingMutableReference<T extends Releasable>
+extends MutableReference<T> {
 	@Override
-	protected void dispose(final ObserverSubscription subscription) {
-		subscription.unsubscribe();
+	protected void dispose(final T value) {
+		// Release.
+		value.release();
+		
+		// Dispose.
+		super.dispose(value);
 	}
 }
