@@ -21,7 +21,7 @@ import java.util.function.BiPredicate;
  * The {@link PredicateUtils} class provides various utilities regarding {@link Predicate predicates}.
  * 
  * @see Predicate
- * @since 1.0
+ * @since 2.0
  */
 public class PredicateUtils {
 	// TODO: rename to something else (map over arg vs map over result, covariant vs contravariant)
@@ -33,7 +33,7 @@ public class PredicateUtils {
 	 * @param predicate Predicate to transform.
 	 * @param function Function to use to transform the arguments.
 	 * @return The built predicate.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A, TA> Predicate<A> map(final Predicate<? super TA> predicate, final Function<? super A, ? extends TA> function) {
 		assert null != predicate;
@@ -52,7 +52,7 @@ public class PredicateUtils {
 	 * @param <A> Type of the arguments.
 	 * @param predicate Predicate to lift.
 	 * @return The built Java 8 predicate.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A> java.util.function.Predicate<A> toPredicate(final Predicate<? super A> predicate) {
 		assert null != predicate;
@@ -67,7 +67,7 @@ public class PredicateUtils {
 	 * @param <A2> Type of the second arguments.
 	 * @param predicate Predicate to lift.
 	 * @return The built bi-predicate.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A1, A2> BiPredicate<A1, A2> toBiPredicate(final Predicate2<? super A1, ? super A2> predicate) {
 		assert null != predicate;

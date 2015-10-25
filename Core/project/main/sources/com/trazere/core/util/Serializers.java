@@ -19,7 +19,7 @@ package com.trazere.core.util;
  * The {@link Serializers} class provides various factories of {@link Serializer serializers}.
  * 
  * @see Serializer
- * @since 1.0
+ * @since 2.0
  */
 public class Serializers {
 	/**
@@ -27,7 +27,7 @@ public class Serializers {
 	 * 
 	 * @param <T> Type of the values.
 	 * @return The built serializer.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Serializer<T, T> identity() {
@@ -55,7 +55,7 @@ public class Serializers {
 	 * @param g Outer serializer.
 	 * @param f Inner serializer.
 	 * @return The built value serializer.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <V, I, R> Serializer<V, R> compose(final Serializer<I, R> g, final Serializer<V, I> f) {
 		assert null != f;

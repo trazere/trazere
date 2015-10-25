@@ -38,7 +38,7 @@ import java.util.Set;
  * The {@link ListUtils} class provides various utilities regarding {@link List lists}.
  * 
  * @see List
- * @since 1.0
+ * @since 2.0
  */
 public class ListUtils {
 	/**
@@ -47,7 +47,7 @@ public class ListUtils {
 	 * @param <E> Type of the elements.
 	 * @param list List to read.
 	 * @return The first element of the list, or nothing when the list is empty.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Maybe<E> first(final List<? extends E> list) {
 		return !list.isEmpty() ? Maybe.some(list.get(0)) : Maybe.<E>none();
@@ -59,7 +59,7 @@ public class ListUtils {
 	 * @param <E> Type of the elements.
 	 * @param list List to read.
 	 * @return The last element, or nothing when the list is empty.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Maybe<E> last(final List<? extends E> list) {
 		final int size = list.size();
@@ -73,7 +73,7 @@ public class ListUtils {
 	 * @param list List to read.
 	 * @param index Index of the element to get.
 	 * @return The specified element, or nothing when the index is out of bound.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Maybe<E> get(final List<? extends E> list, final int index) {
 		return index < list.size() ? Maybe.<E>some(list.get(index)) : Maybe.<E>none();
@@ -87,7 +87,7 @@ public class ListUtils {
 	 * @param index Index of the element to get.
 	 * @param defaultElement Default element.
 	 * @return The specified element, or the default element when the index is out of bound.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> E get(final List<? extends E> list, final int index, final E defaultElement) {
 		return index < list.size() ? list.get(index) : defaultElement;
@@ -101,7 +101,7 @@ public class ListUtils {
 	 * @param index Index at which the elements should be inserted.
 	 * @param elements Elements to insert.
 	 * @return <code>true</code> when the given list is modified, <code>false</code> otherwise.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> boolean addAll(final List<? super E> list, final int index, final Iterable<? extends E> elements) {
 		int iterIndex = index;
@@ -119,7 +119,7 @@ public class ListUtils {
 	 * @param list List to modify.
 	 * @param index Index of the element to remove.
 	 * @return The removed element, or nothing when the index is out of bound.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Maybe<E> remove(final List<? extends E> list, final int index) {
 		if (index < list.size()) {
@@ -138,7 +138,7 @@ public class ListUtils {
 	 * @param <L> Type of the list.
 	 * @param list List to sort.
 	 * @return The given sorted list.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E extends Comparable<? super E>, L extends List<E>> L sort(final L list) {
 		assert null != list;
@@ -157,7 +157,7 @@ public class ListUtils {
 	 * @param list List to sort.
 	 * @param comparator Comparator to use.
 	 * @return The given sorted list.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E, L extends List<E>> L sort(final L list, final Comparator<? super E> comparator) {
 		assert null != list;
@@ -176,7 +176,7 @@ public class ListUtils {
 	 * @param <L> Type of the list.
 	 * @param list List to reverse.
 	 * @return The given reversed list.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E, L extends List<E>> L reverse(final L list) {
 		assert null != list;
@@ -194,7 +194,7 @@ public class ListUtils {
 	 * @param <L> Type of the list.
 	 * @param list List to shuffle.
 	 * @return The given shuffled list.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E extends Comparable<? super E>, L extends List<E>> L shuffle(final L list) {
 		assert null != list;
@@ -213,7 +213,7 @@ public class ListUtils {
 	 * @param list List to shuffle.
 	 * @param random Source of randomness to use.
 	 * @return The given shuffled list.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E extends Comparable<? super E>, L extends List<E>> L shuffle(final L list, final Random random) {
 		assert null != list;
@@ -242,7 +242,7 @@ public class ListUtils {
 	 * @return A list containing the sorted elements.
 	 * @throws IllegalArgumentException When there is a cycle in the dependency graph.
 	 * @throws IllegalArgumentException When some dependency element does not belong to the elements to sort and is not included into the results.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E, L extends List<? super E>> L topologicalSort(final Iterable<? extends E> elements, final Function<? super E, ? extends Iterable<? extends E>> dependencies, final boolean includeDependencies, final CollectionFactory<? super E, L> resultFactory) {
 		final Accumulator<E, L> results = CollectionAccumulators.add(resultFactory.build());
@@ -293,7 +293,7 @@ public class ListUtils {
 	 * @return A list containing the sorted regions of elements.
 	 * @throws IllegalArgumentException When there is a cycle in the dependency graph.
 	 * @throws IllegalArgumentException When some dependency element does not belong to the elements to sort and is not included into the results.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E, R extends List<? super E>, L extends List<? super R>> L topologicalRegionSort(final Collection<? extends E> elements, final Function<? super E, ? extends Collection<? extends E>> dependencies, final boolean includeDependencies, final CollectionFactory<? super E, R> regionFactory, final CollectionFactory<? super R, L> resultFactory) {
 		final Accumulator<R, L> results = CollectionAccumulators.add(resultFactory.build());
@@ -377,7 +377,7 @@ public class ListUtils {
 	 * @param <E> Type of the elements.
 	 * @param list List to wrap.
 	 * @return An unmodifiable view of the given list, or the given list when is it already unmodifiable.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> List<E> unmodifiable(final List<E> list) {
 		return UNMODIFIABLE_LIST_CLASS.isInstance(list) ? list : Collections.unmodifiableList(list);
@@ -393,7 +393,7 @@ public class ListUtils {
 	 * @param <E> Type of the elements.
 	 * @param list List to view.
 	 * @return The built list.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> List<E> reversed(final List<E> list) {
 		assert null != list;

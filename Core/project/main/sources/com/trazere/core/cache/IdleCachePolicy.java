@@ -25,7 +25,7 @@ import java.util.Map;
  * The {@link IdleCachePolicy} class implements cache policies based on idle access time.
  * 
  * @param <K> Type of the keys.
- * @since 1.0
+ * @since 2.0
  */
 public class IdleCachePolicy<K>
 implements CachePolicy<K> {
@@ -33,7 +33,7 @@ implements CachePolicy<K> {
 	 * Instanciates a new cache policy.
 	 * 
 	 * @param timeout Timeout of the idle entries.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public IdleCachePolicy(final Duration timeout) {
 		assert null != timeout;
@@ -48,7 +48,7 @@ implements CachePolicy<K> {
 	/**
 	 * Timeout of the idle entries.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final Duration _timeout;
 	
@@ -56,7 +56,7 @@ implements CachePolicy<K> {
 	 * Get the timeout the idle entries of this policy.
 	 * 
 	 * @return The timeout.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Duration getTimeout() {
 		return _timeout;

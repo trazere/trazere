@@ -19,7 +19,7 @@ package com.trazere.core.imperative;
  * The {@link EffectUtils} class provides various utilities regarding {@link Effect effects}.
  * 
  * @see Effect
- * @since 1.0
+ * @since 2.0
  */
 public class EffectUtils {
 	/**
@@ -27,7 +27,7 @@ public class EffectUtils {
 	 * 
 	 * @param effect Effect to lift.
 	 * @return The built runnable.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Runnable toRunnable(final Effect effect) {
 		assert null != effect;

@@ -34,7 +34,7 @@ import java.util.Iterator;
  * The {@link CollectionUtils} class provides various utilities regarding the manipulation of {@link Collection collections}.
  * 
  * @see Collection
- * @since 1.0
+ * @since 2.0
  */
 public class CollectionUtils {
 	/**
@@ -43,7 +43,7 @@ public class CollectionUtils {
 	 * @param <E> Type of the elements.
 	 * @param collection Collection to read.
 	 * @return An element of the collection, or nothing when the collection is empty.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Maybe<E> any(final Collection<? extends E> collection) {
 		return IteratorUtils.next(collection.iterator());
@@ -60,7 +60,7 @@ public class CollectionUtils {
 	 * @param collection Collection to modify.
 	 * @param elements Elements to add.
 	 * @return <code>true</code> when the given collection is modified, <code>false</code> otherwise.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SafeVarargs
 	public static <E> boolean addAll(final Collection<? super E> collection, final E... elements) {
@@ -80,7 +80,7 @@ public class CollectionUtils {
 	 * @param collection Collection to modify.
 	 * @param elements Elements to add.
 	 * @return <code>true</code> when the given collection is modified, <code>false</code> otherwise.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> boolean addAll(final Collection<? super E> collection, final Iterable<? extends E> elements) {
 		final Accumulator<Boolean, Boolean> changed = LangAccumulators.or(false);
@@ -100,7 +100,7 @@ public class CollectionUtils {
 	 * @param <E> Type of the elements.
 	 * @param collection Collection to modify.
 	 * @return The removed element, or nothing when the collection is empty.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Maybe<E> removeAny(final Collection<? extends E> collection) {
 		final Iterator<? extends E> iterator = collection.iterator();
@@ -122,7 +122,7 @@ public class CollectionUtils {
 	 * @param collection Collection to modify.
 	 * @param elements Elements to remove.
 	 * @return <code>true</code> when the given collection is modified, <code>false</code> otherwise.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> boolean removeAll(final Collection<? super E> collection, final Iterable<? extends E> elements) {
 		final Accumulator<Boolean, Boolean> changed = LangAccumulators.or(false);
@@ -143,7 +143,7 @@ public class CollectionUtils {
 	 * @param collection Collection containing the elements to filter.
 	 * @param filter Predicate to use to filter the elements.
 	 * @return The first removed element.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Maybe<E> removeFirst(final Collection<? extends E> collection, final Predicate<? super E> filter) {
 		final Iterator<? extends E> iterator = collection.iterator();
@@ -167,7 +167,7 @@ public class CollectionUtils {
 	 * @param collection Collection to filter.
 	 * @param filter Predicate to use to filter the elements.
 	 * @return The given filtered collection.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E, C extends Collection<? extends E>> C retain(final C collection, final Predicate<? super E> filter) {
 		final Iterator<? extends E> elements = collection.iterator();
@@ -185,7 +185,7 @@ public class CollectionUtils {
 	 * @param <E> Type of the elements.
 	 * @param collection Collection of elements.
 	 * @param procedure Procedure to execute.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> void foreach(final Collection<? extends E> collection, final Procedure<? super E> procedure) {
 		IteratorUtils.foreach(collection.iterator(), procedure);
@@ -200,7 +200,7 @@ public class CollectionUtils {
 	 * @param operator Binary operator to use.
 	 * @param initialState Initial state.
 	 * @return The folded state.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E, S> S fold(final Collection<? extends E> collection, final Function2<? super S, ? super E, ? extends S> operator, final S initialState) {
 		return IteratorUtils.fold(collection.iterator(), operator, initialState);
@@ -213,7 +213,7 @@ public class CollectionUtils {
 	 * @param collection Collection containing the elements to filter.
 	 * @param filter Predicate to use to filter the elements.
 	 * @return The first accepted element.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Maybe<E> first(final Collection<? extends E> collection, final Predicate<? super E> filter) {
 		return IteratorUtils.first(collection.iterator(), filter);
@@ -227,7 +227,7 @@ public class CollectionUtils {
 	 * @param collection Collection containing the elements to extract from.
 	 * @param extractor Function to use to extract the elements.
 	 * @return The first extracted element.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E, EE> Maybe<EE> extractFirst(final Collection<? extends E> collection, final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
 		return IteratorUtils.extractFirst(collection.iterator(), extractor);
@@ -240,7 +240,7 @@ public class CollectionUtils {
 	 * @param collection Collection to test.
 	 * @param filter Predicate to use to filter the elements.
 	 * @return <code>true</code> when some element is accepted, <code>false</code> when all elements are rejected.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> boolean isAny(final Collection<? extends E> collection, final Predicate<? super E> filter) {
 		return IteratorUtils.isAny(collection.iterator(), filter);
@@ -253,7 +253,7 @@ public class CollectionUtils {
 	 * @param collection Collection to test.
 	 * @param filter Predicate to use to filter the elements.
 	 * @return <code>true</code> when all elements are accepted, <code>false</code> when some element is rejected.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> boolean areAll(final Collection<? extends E> collection, final Predicate<? super E> filter) {
 		return IteratorUtils.areAll(collection.iterator(), filter);
@@ -269,7 +269,7 @@ public class CollectionUtils {
 	 * @param collection1 First collection.
 	 * @param collection2 Second collection.
 	 * @return <code>true</code> if the collections intersect, <code>false</code> otherwise.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> boolean intersects(final Collection<? extends E> collection1, final Collection<? extends E> collection2) {
 		return isAny(collection1, Predicates.values(collection2));
@@ -282,7 +282,7 @@ public class CollectionUtils {
 	 * @param collection Collection containing the elements to count.
 	 * @param filter Predicate to use to filter the elements.
 	 * @return The number of accepted elements.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> int count(final Collection<? extends E> collection, final Predicate<? super E> filter) {
 		return IteratorUtils.count(collection.iterator(), filter);
@@ -294,7 +294,7 @@ public class CollectionUtils {
 	 * @param <E> Type of the elements.
 	 * @param collection Collection containing the elements to compare.
 	 * @return The least element.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E extends Comparable<E>> Maybe<E> least(final Collection<? extends E> collection) {
 		return IteratorUtils.least(collection.iterator());
@@ -307,7 +307,7 @@ public class CollectionUtils {
 	 * @param collection Collection providing the elements to compare.
 	 * @param comparator Comparator to use.
 	 * @return The least element.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Maybe<E> least(final Collection<? extends E> collection, final Comparator<? super E> comparator) {
 		return IteratorUtils.least(collection.iterator(), comparator);
@@ -319,7 +319,7 @@ public class CollectionUtils {
 	 * @param <E> Type of the elements.
 	 * @param collection Collection containing the elements to compare.
 	 * @return The greatest element.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E extends Comparable<E>> Maybe<E> greatest(final Collection<? extends E> collection) {
 		return IteratorUtils.greatest(collection.iterator());
@@ -332,7 +332,7 @@ public class CollectionUtils {
 	 * @param collection Collection containing the elements to compare.
 	 * @param comparator Comparator to use.
 	 * @return The greatest element.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Maybe<E> greatest(final Collection<? extends E> collection, final Comparator<? super E> comparator) {
 		return IteratorUtils.greatest(collection.iterator(), comparator);
@@ -347,7 +347,7 @@ public class CollectionUtils {
 	 * @param collection2 Second collection containing the elements to append.
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection containing the appended elements.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E, C extends Collection<? super E>> C append(final Collection<? extends E> collection1, final Collection<? extends E> collection2, final CollectionFactory<? super E, C> resultFactory) {
 		final C results = resultFactory.build(collection1.size() + collection2.size());
@@ -364,7 +364,7 @@ public class CollectionUtils {
 	 * @param collection Collection containing the collections containing the elements to flatten.
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection containing the flatten elements.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E, C extends Collection<? super E>> C flatten(final Collection<? extends Collection<? extends E>> collection, final CollectionFactory<? super E, C> resultFactory) {
 		final C results = resultFactory.build();
@@ -386,7 +386,7 @@ public class CollectionUtils {
 	 * @param collection2 Second collection.
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection containing the common elements.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E, C extends Collection<? super E>> C intersect(final Collection<? extends E> collection1, final Collection<? extends E> collection2, final CollectionFactory<? super E, C> resultFactory) {
 		final C results = resultFactory.build();
@@ -410,7 +410,7 @@ public class CollectionUtils {
 	 * @param collection2 Second collection.
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection containing the excluded elements.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E, C extends Collection<? super E>> C exclude(final Collection<? extends E> collection1, final Collection<? extends E> collection2, final CollectionFactory<? super E, C> resultFactory) {
 		final C results = resultFactory.build();
@@ -431,7 +431,7 @@ public class CollectionUtils {
 	 * @param n Number of elements to take.
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection containing the taken elements.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E, C extends Collection<? super E>> C take(final Collection<? extends E> collection, final int n, final CollectionFactory<? super E, C> resultFactory) {
 		return IteratorUtils.drain(IteratorUtils.take(collection.iterator(), n), resultFactory.build(n));
@@ -446,7 +446,7 @@ public class CollectionUtils {
 	 * @param n Number of elements to drop.
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection containing the remaining elements.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E, C extends Collection<? super E>> C drop(final Collection<? extends E> collection, final int n, final CollectionFactory<? super E, C> resultFactory) {
 		return IteratorUtils.drain(IteratorUtils.drop(collection.iterator(), n), resultFactory.build(Math.max(0, collection.size() - n)));
@@ -463,7 +463,7 @@ public class CollectionUtils {
 	 * @param batchFactory Factory of the batch collections.
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection of the groups of elements.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E, B extends Collection<? super E>, C extends Collection<? super B>> C group(final Collection<? extends E> collection, final int n, final CollectionFactory<? super E, B> batchFactory, final CollectionFactory<? super B, C> resultFactory) {
 		return IteratorUtils.drain(IteratorUtils.group(collection.iterator(), n, batchFactory), resultFactory.build((collection.size() + n - 1) / n));
@@ -478,7 +478,7 @@ public class CollectionUtils {
 	 * @param filter Predicate to use to filter the elements.
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection containing the filtered elements.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E, C extends Collection<? super E>> C filter(final Collection<? extends E> collection, final Predicate<? super E> filter, final CollectionFactory<? super E, C> resultFactory) {
 		return IteratorUtils.drain(IteratorUtils.filter(collection.iterator(), filter), resultFactory.build());
@@ -494,7 +494,7 @@ public class CollectionUtils {
 	 * @param function Function to use to transform the elements.
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection containing the transformed elements.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E, TE, C extends Collection<? super TE>> C map(final Collection<? extends E> collection, final Function<? super E, ? extends TE> function, final CollectionFactory<? super TE, C> resultFactory) {
 		return IteratorUtils.drain(IteratorUtils.map(collection.iterator(), function), resultFactory.build(collection.size()));
@@ -510,7 +510,7 @@ public class CollectionUtils {
 	 * @param function Function to use to transform the elements.
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection containing the flatten, transformed elements.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E, TE, C extends Collection<? super TE>> C flatMap(final Collection<? extends E> collection, final Function<? super E, ? extends Collection<? extends TE>> function, final CollectionFactory<? super TE, C> resultFactory) {
 		return IteratorUtils.drain(IteratorUtils.flatMap(collection.iterator(), arg -> function.evaluate(arg).iterator()), resultFactory.build());
@@ -526,7 +526,7 @@ public class CollectionUtils {
 	 * @param extractor Function to use to extract the elements.
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection containing the extracted elements.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E, EE, C extends Collection<? super EE>> C extract(final Collection<? extends E> collection, final Function<? super E, ? extends Maybe<? extends EE>> extractor, final CollectionFactory<? super EE, C> resultFactory) {
 		return IteratorUtils.drain(IteratorUtils.extract(collection.iterator(), extractor), resultFactory.build());
@@ -540,7 +540,7 @@ public class CollectionUtils {
 	 * @param <E> Type of the elements.
 	 * @param collection Collection to wrap.
 	 * @return An unmodifiable view of the given collection, or the given collection when is it already unmodifiable.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Collection<E> unmodifiable(final Collection<E> collection) {
 		return UNMODIFIABLE_COLLECTION_CLASS.isInstance(collection) ? collection : Collections.unmodifiableCollection(collection);
@@ -561,7 +561,7 @@ public class CollectionUtils {
 	 * @param collection2 Collection containing the second elements of the pairs.
 	 * @param resultFactory Factory of the pair collection.
 	 * @return A collection containing the pairs of elements.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E1, E2, C extends Collection<? super Tuple2<E1, E2>>> C zip(final Collection<? extends E1> collection1, final Collection<? extends E2> collection2, final CollectionFactory<? super Tuple2<E1, E2>, C> resultFactory) {
 		return IteratorUtils.drain(IteratorUtils.zip(collection1.iterator(), collection2.iterator()), resultFactory.build(Math.min(collection1.size(), collection2.size())));
@@ -578,7 +578,7 @@ public class CollectionUtils {
 	 * @param resultFactory1 Factory of the first element collection.
 	 * @param resultFactory2 Factory of the second element collection.
 	 * @return A collection containing the first elements of the pairs and a collection containing the second elements of the pairs.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E1, E2, C1 extends Collection<? super E1>, C2 extends Collection<? super E2>> Tuple2<C1, C2> unzip(final Collection<? extends Tuple2<E1, E2>> collection, final CollectionFactory<? super E1, C1> resultFactory1, final CollectionFactory<? super E2, C2> resultFactory2) {
 		final C1 results1 = resultFactory1.build(collection.size());

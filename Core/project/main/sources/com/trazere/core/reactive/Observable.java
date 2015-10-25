@@ -27,7 +27,7 @@ package com.trazere.core.reactive;
  * @param <E> Type of the events.
  * @see Observer
  * @see ObserverSubscription
- * @since 1.0
+ * @since 2.0
  */
 public interface Observable<E> {
 	/**
@@ -37,7 +37,7 @@ public interface Observable<E> {
 	 * 
 	 * @param observer Observer to subscribe.
 	 * @return The resulting subcription.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	ObserverSubscription subscribe(Observer<? super E> observer);
 }

@@ -21,7 +21,7 @@ import com.trazere.core.util.Maybe;
  * The {@link References} class provides various factories of {@link Reference references}.
  * 
  * @see Reference
- * @since 1.0
+ * @since 2.0
  */
 public class References {
 	/**
@@ -29,7 +29,7 @@ public class References {
 	 * 
 	 * @param <T> Type of the referenced value.
 	 * @return The built reference.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Reference<T> empty() {
@@ -60,7 +60,7 @@ public class References {
 	 * @param <T> Type of the referenced value.
 	 * @param value Value to set.
 	 * @return The built reference.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Reference<T> fromValue(final T value) {
 		return new Reference<T>() {
@@ -87,7 +87,7 @@ public class References {
 	 * @param <T> Type of the referenced value.
 	 * @param value Value to set.
 	 * @return The built reference.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Reference<T> fromValue(final Maybe<T> value) {
 		return value.isSome() ? fromValue(value.asSome().getValue()) : References.<T>empty();

@@ -20,7 +20,7 @@ package com.trazere.core.functional;
  * 
  * @param <T> Upper bound type.
  * @param <R> Type of the results.
- * @since 1.0
+ * @since 2.0
  */
 public interface ObjectTypeFunction<T, R>
 extends Function<Class<? extends T>, R> {

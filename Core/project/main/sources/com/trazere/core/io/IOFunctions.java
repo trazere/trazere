@@ -22,14 +22,14 @@ import java.io.File;
  * The {@link IOFunctions} class provides various factories of {@link Function functions} regarding I/Os.
  * 
  * @see Function
- * @since 1.0
+ * @since 2.0
  */
 public class IOFunctions {
 	/**
 	 * Builds a function that builds files from paths.
 	 * 
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Function<String, File> file() {
 		return FILE;

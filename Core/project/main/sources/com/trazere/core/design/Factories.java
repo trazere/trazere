@@ -24,7 +24,7 @@ import java.util.function.Supplier;
  * The {@link Factories} class provides various factories of {@link Factory factories}.
  * 
  * @see Factory
- * @since 1.0
+ * @since 2.0
  */
 public class Factories {
 	/**
@@ -33,7 +33,7 @@ public class Factories {
 	 * @param <T> Type of the built values.
 	 * @param value Value to build.
 	 * @return The built factory.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Factory<T> fromValue(final T value) {
 		return () -> value;
@@ -45,7 +45,7 @@ public class Factories {
 	 * @param <T> Type of the built values.
 	 * @param thunk Thunk to lift.
 	 * @return The built factory.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Factory<T> fromThunk(final Thunk<? extends T> thunk) {
 		assert null != thunk;
@@ -60,7 +60,7 @@ public class Factories {
 	 * @param callable Callable to lift.
 	 * @param failureFactory Factory of the exceptions for the failures.
 	 * @return The built factory.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Factory<T> fromCallable(final Callable<? extends T> callable, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		assert null != callable;
@@ -81,7 +81,7 @@ public class Factories {
 	 * @param <T> Type of the built values.
 	 * @param supplier Supplier to lift.
 	 * @return The build factory.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Factory<T> fromSupplier(final Supplier<? extends T> supplier) {
 		assert null != supplier;

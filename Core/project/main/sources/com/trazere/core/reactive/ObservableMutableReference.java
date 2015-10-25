@@ -25,7 +25,7 @@ import com.trazere.core.util.Tuple2;
  * The {@link ObservableMutableReference} class represents mutable, observable refererences.
  * 
  * @param <T> Type of the referenced values.
- * @since 1.0
+ * @since 2.0
  */
 public class ObservableMutableReference<T>
 extends MutableReference<T>
@@ -33,7 +33,7 @@ implements ObservableReference<T> {
 	/**
 	 * Instantiates an unset reference.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public ObservableMutableReference() {
 		this(new Broadcaster<>());
@@ -43,7 +43,7 @@ implements ObservableReference<T> {
 	 * Instantiates a reference set to the given value.
 	 * 
 	 * @param value Value to set.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public ObservableMutableReference(final T value) {
 		this(value, new Broadcaster<>());
@@ -53,7 +53,7 @@ implements ObservableReference<T> {
 	 * Instantiates a reference set to the given value.
 	 * 
 	 * @param value Value to set.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public ObservableMutableReference(final Maybe<T> value) {
 		this(value, new Broadcaster<>());
@@ -63,7 +63,7 @@ implements ObservableReference<T> {
 	 * Instantiates an unset reference.
 	 * 
 	 * @param broadcaster Broadcaster to use to fire the change events.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public ObservableMutableReference(final Broadcaster<Maybe<T>> broadcaster) {
 		super();
@@ -80,7 +80,7 @@ implements ObservableReference<T> {
 	 * 
 	 * @param value Value to set.
 	 * @param broadcaster Broadcaster to use to fire the change events.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public ObservableMutableReference(final T value, final Broadcaster<Maybe<T>> broadcaster) {
 		super(value);
@@ -97,7 +97,7 @@ implements ObservableReference<T> {
 	 * 
 	 * @param value Value to set.
 	 * @param broadcaster Broadcaster to use to fire the change events.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public ObservableMutableReference(final Maybe<T> value, final Broadcaster<Maybe<T>> broadcaster) {
 		super(value);
@@ -154,7 +154,7 @@ implements ObservableReference<T> {
 	/**
 	 * Broadcaster to use to fire the change events.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final Broadcaster<Maybe<T>> _broadcaster;
 	

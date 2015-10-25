@@ -31,7 +31,7 @@ import com.trazere.core.lang.Releasable;
  * 
  * @see Observable
  * @see Observer
- * @since 1.0
+ * @since 2.0
  */
 @FunctionalInterface
 public interface ObserverSubscription
@@ -39,7 +39,7 @@ extends Releasable {
 	/**
 	 * Cancels this subscription.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	void unsubscribe();
 	

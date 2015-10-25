@@ -20,7 +20,7 @@ import com.trazere.core.lang.ThrowableFactory;
 /**
  * {@link TextException} exceptions are thrown when text related errors occur.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public class TextException
 extends RuntimeException {
@@ -29,7 +29,7 @@ extends RuntimeException {
 	/**
 	 * Instantiates a new exception.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public TextException() {
 		super();
@@ -39,7 +39,7 @@ extends RuntimeException {
 	 * Instantiates a new exception using the given message.
 	 * 
 	 * @param message Details about the exception.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public TextException(final String message) {
 		super(message);
@@ -49,7 +49,7 @@ extends RuntimeException {
 	 * Instantiates a new exception using the given cause.
 	 * 
 	 * @param cause Cause of the exception.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public TextException(final Throwable cause) {
 		super(cause);
@@ -60,7 +60,7 @@ extends RuntimeException {
 	 * 
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public TextException(final String message, final Throwable cause) {
 		super(message, cause);
@@ -69,7 +69,7 @@ extends RuntimeException {
 	/**
 	 * Factory of {@link TextException}.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static final ThrowableFactory<TextException> FACTORY = new ThrowableFactory<TextException>() {
 		@Override

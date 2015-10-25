@@ -25,7 +25,7 @@ import com.trazere.core.functional.Function;
  * @see Function
  * @see Maybe
  * @see Either
- * @since 1.0
+ * @since 2.0
  */
 public class EitherExtractors {
 	/**
@@ -33,7 +33,7 @@ public class EitherExtractors {
 	 * 
 	 * @param <L> Type of the left value.
 	 * @return The built extractor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <L> Function<Either<? extends L, ?>, Maybe<L>> getLeft() {
@@ -47,7 +47,7 @@ public class EitherExtractors {
 	 * 
 	 * @param <R> Type of the right value.
 	 * @return The built extractor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <R> Function<Either<?, ? extends R>, Maybe<R>> getRight() {

@@ -23,7 +23,7 @@ import java.util.Set;
  * The {@link Sets} class provides various factories of {@link Set sets}.
  * 
  * @see Set
- * @since 1.0
+ * @since 2.0
  */
 public class Sets {
 	/**
@@ -31,7 +31,7 @@ public class Sets {
 	 * 
 	 * @param <E> Type of the elements.
 	 * @return The built set.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Set<E> empty() {
 		return Collections.emptySet();
@@ -43,7 +43,7 @@ public class Sets {
 	 * @param <E> Type of the the element.
 	 * @param element Element of the set to build.
 	 * @return The built set.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Set<E> fromElement(final E element) {
 		final Set<E> set = new HashSet<>(1);
@@ -58,7 +58,7 @@ public class Sets {
 	 * @param element1 First element of the set to build.
 	 * @param element2 Second element of the set to build.
 	 * @return The built set.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Set<E> fromElements(final E element1, final E element2) {
 		final Set<E> set = new HashSet<>(2);
@@ -75,7 +75,7 @@ public class Sets {
 	 * @param element2 Second element of the set to build.
 	 * @param element3 Third element of the set to build.
 	 * @return The built set.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Set<E> fromElements(final E element1, final E element2, final E element3) {
 		final Set<E> set = new HashSet<>(3);
@@ -94,7 +94,7 @@ public class Sets {
 	 * @param element3 Third element of the set to build.
 	 * @param element4 Fourth element of the set to build.
 	 * @return The built set.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Set<E> fromElements(final E element1, final E element2, final E element3, final E element4) {
 		final Set<E> set = new HashSet<>(4);
@@ -115,7 +115,7 @@ public class Sets {
 	 * @param element4 Fourth element of the set to build.
 	 * @param element5 Fifth element of the set to build.
 	 * @return The built set.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Set<E> fromElements(final E element1, final E element2, final E element3, final E element4, final E element5) {
 		final Set<E> set = new HashSet<>(5);
@@ -133,7 +133,7 @@ public class Sets {
 	 * @param <E> Type of the the elements.
 	 * @param elements Elements of the set to build
 	 * @return The built set.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SafeVarargs
 	public static <E> Set<E> fromElements(final E... elements) {
@@ -150,7 +150,7 @@ public class Sets {
 	 * @param <E> Type of the the elements.
 	 * @param iterable Iterable providing the elements of the set to build.
 	 * @return The built set.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Set<E> fromIterable(final Iterable<? extends E> iterable) {
 		final Set<E> set = new HashSet<>();

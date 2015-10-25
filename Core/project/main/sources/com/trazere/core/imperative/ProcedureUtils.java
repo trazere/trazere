@@ -23,7 +23,7 @@ import java.util.function.Consumer;
  * 
  * @see Procedure
  * @see Procedure2
- * @since 1.0
+ * @since 2.0
  */
 public class ProcedureUtils {
 	/**
@@ -32,7 +32,7 @@ public class ProcedureUtils {
 	 * @param <A> Type of the arguments.
 	 * @param procedure Procedure to lift.
 	 * @return The built consumer.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A> Consumer<A> toConsumer(final Procedure<? super A> procedure) {
 		assert null != procedure;
@@ -49,7 +49,7 @@ public class ProcedureUtils {
 	 * @param <A2> Type of the second arguments.
 	 * @param procedure Procedure to lift.
 	 * @return The built bi-consumer.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A1, A2> BiConsumer<A1, A2> toBiConsumer(final Procedure2<? super A1, ? super A2> procedure) {
 		assert null != procedure;

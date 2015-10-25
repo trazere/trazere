@@ -23,7 +23,7 @@ import javax.xml.stream.XMLStreamWriter;
 /**
  * The {@link DecoratorXMLStreamWriter} class implements decorators of XML stream writers.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public class DecoratorXMLStreamWriter
 extends Decorator<XMLStreamWriter>
@@ -32,7 +32,7 @@ implements XMLStreamWriter {
 	 * Instantiates a new stream writer decorator.
 	 * 
 	 * @param writer Decorated stream writer.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public DecoratorXMLStreamWriter(final XMLStreamWriter writer) {
 		super(writer);
@@ -42,7 +42,7 @@ implements XMLStreamWriter {
 	 * Gets the decorated stream writer.
 	 * 
 	 * @return The decorated stream writer.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public XMLStreamWriter getWriter() {
 		return _decorated;

@@ -21,7 +21,7 @@ import java.util.Iterator;
  * The {@link LangIterators} class provides various factories of {@link Iterator iterators} regarding the Java language.
  * 
  * @see Iterator
- * @since 1.0
+ * @since 2.0
  */
 public class LangIterators {
 	// TODO: integer(int)
@@ -31,7 +31,7 @@ public class LangIterators {
 	 * Builds an iterator over the natural integers.
 	 * 
 	 * @return The built iterator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Iterator<Integer> natural() {
 		return InfiniteIntSequence.NATURAL.iterator();

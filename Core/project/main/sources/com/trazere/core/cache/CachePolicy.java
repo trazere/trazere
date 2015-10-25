@@ -25,7 +25,7 @@ import com.trazere.core.imperative.Accumulator;
  * 
  * @param <K> Type of the keys.
  * @see Cache
- * @since 1.0
+ * @since 2.0
  */
 public interface CachePolicy<K>
 extends Factory<CachePolicy.State<K>> {
@@ -35,7 +35,7 @@ extends Factory<CachePolicy.State<K>> {
 	 * Each retention state is a stateful component that implements the retention logic of a single cache instance.
 	 * 
 	 * @param <K> Type of the keys.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public interface State<K> {
 		/**
@@ -47,7 +47,7 @@ extends Factory<CachePolicy.State<K>> {
 		 * @param key Key of the updated entry.
 		 * @param dirtyEntries Accumulator to populate with the keys of the dirty entries to clear from the cache.
 		 * @return The given dirty entry accumulator.
-		 * @since 1.0
+		 * @since 2.0
 		 */
 		<A extends Accumulator<? super K, ?>> A updatedEntry(K key, A dirtyEntries);
 		
@@ -60,7 +60,7 @@ extends Factory<CachePolicy.State<K>> {
 		 * @param key Key of the accessed entry.
 		 * @param dirtyEntries Accumulator to populate with the keys of the dirty entries to clear from the cache.
 		 * @return The given dirty entry accumulator.
-		 * @since 1.0
+		 * @since 2.0
 		 */
 		<A extends Accumulator<? super K, ?>> A accessedEntry(K key, A dirtyEntries);
 		
@@ -68,14 +68,14 @@ extends Factory<CachePolicy.State<K>> {
 		 * Notifies this cache policy state that the entry associated to the given key has been cleared from the cache.
 		 * 
 		 * @param key Key of the removed entry.
-		 * @since 1.0
+		 * @since 2.0
 		 */
 		void clearedEntry(K key);
 		
 		/**
 		 * Notifies this cache policy state that all values have been cleared from the cache.
 		 * 
-		 * @since 1.0
+		 * @since 2.0
 		 */
 		void clearedAllEntries();
 	}

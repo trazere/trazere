@@ -24,7 +24,7 @@ import com.trazere.core.text.TextUtils;
  * The {@link ResettableFeed} class implements memoized feeds that can be re-evaluated.
  * 
  * @param <E> Type of the elements.
- * @since 1.0
+ * @since 2.0
  */
 public abstract class ResettableFeed<E>
 extends BaseMemoizedFeed<E>
@@ -32,7 +32,7 @@ implements Releasable, Describable {
 	/**
 	 * Resets this feed, discarding its possibly memoized head and tail. The head and tail will be computed (again) the next time this feed is evaluated.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public void reset() {
 		if (_evaluated) {

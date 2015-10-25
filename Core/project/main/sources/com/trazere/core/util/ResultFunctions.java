@@ -22,7 +22,7 @@ import com.trazere.core.functional.Function;
  * 
  * @see Function
  * @see Result
- * @since 1.0
+ * @since 2.0
  */
 public class ResultFunctions {
 	/**
@@ -30,7 +30,7 @@ public class ResultFunctions {
 	 * 
 	 * @param <T> Type of the success values.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<T, Result<T>> success() {
@@ -44,7 +44,7 @@ public class ResultFunctions {
 	 * 
 	 * @param <T> Type of the success values.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<Throwable, Result<T>> failure() {
@@ -61,7 +61,7 @@ public class ResultFunctions {
 	 * @param function Function to use to transform the success values.
 	 * @return The built function.
 	 * @see Result#map(Function)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T, R> Function<Result<? extends T>, Result<R>> map(final Function<? super T, ? extends R> function) {
 		assert null != function;
@@ -77,7 +77,7 @@ public class ResultFunctions {
 	 * @param function Function to use to transform the success values.
 	 * @return The built function.
 	 * @see Result#flatMap(Function)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T, R> Function<Result<? extends T>, Result<R>> flatMap(final Function<? super T, ? extends Result<? extends R>> function) {
 		assert null != function;

@@ -24,7 +24,7 @@ import com.trazere.core.util.Maybe;
  * 
  * @see Function
  * @see Maybe
- * @since 1.0
+ * @since 2.0
  */
 public class ExtractorUtils {
 	/**
@@ -36,7 +36,7 @@ public class ExtractorUtils {
 	 * @param g Outer extractor.
 	 * @param f Inner extractor.
 	 * @return The built extractor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A, I, R> Function<A, Maybe<R>> compose(final Function<? super I, ? extends Maybe<? extends R>> g, final Function<? super A, ? extends Maybe<? extends I>> f) {
 		assert null != f;
@@ -53,7 +53,7 @@ public class ExtractorUtils {
 	 * @param extractor Extractor to transform.
 	 * @param filter Predicate to use to filter the results.
 	 * @return The built extractor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A, R> Function<A, Maybe<? extends R>> filter(final Function<? super A, ? extends Maybe<? extends R>> extractor, final Predicate<? super R> filter) {
 		assert null != extractor;
@@ -73,7 +73,7 @@ public class ExtractorUtils {
 	 * @param extractor Extractor to transform.
 	 * @param function Function to use to transform the results.
 	 * @return The built extractor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A, R, TR> Function<A, Maybe<TR>> map(final Function<? super A, ? extends Maybe<? extends R>> extractor, final Function<? super R, ? extends TR> function) {
 		assert null != extractor;

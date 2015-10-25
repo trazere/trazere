@@ -27,7 +27,7 @@ import com.trazere.core.text.TextUtils;
  * This class works as an accumulator, each instance can only be used to compute a single hash code. The computation methods relies on the concrete class of the
  * object whose hash code is computed and a list of explicitely given values.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public class HashCode
 implements Describable {
@@ -38,7 +38,7 @@ implements Describable {
 	 * Instantiates a new hash code computation for the given object.
 	 * 
 	 * @param object Object whose hash code should be computed.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public HashCode(final Object object) {
 		this(object.getClass());
@@ -48,7 +48,7 @@ implements Describable {
 	 * Instantiates a new hash code computation for the given class.
 	 * 
 	 * @param class_ Class of the object whose hash code should be computed.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public HashCode(final Class<?> class_) {
 		this(class_.hashCode());
@@ -58,7 +58,7 @@ implements Describable {
 	 * Instantiates a new hash code computation.
 	 * 
 	 * @param seed Seed hash code value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public HashCode(final int seed) {
 		_hashCode = seed;
@@ -69,7 +69,7 @@ implements Describable {
 	 * 
 	 * @param value Value to append.
 	 * @return this hash code.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public HashCode append(final boolean value) {
 		_hashCode = _hashCode * 31 + (value ? 1 : 0);
@@ -81,7 +81,7 @@ implements Describable {
 	 * 
 	 * @param value Value to append.
 	 * @return this hash code.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public HashCode append(final byte value) {
 		_hashCode = _hashCode * 31 + value;
@@ -93,7 +93,7 @@ implements Describable {
 	 * 
 	 * @param value Value to append.
 	 * @return this hash code.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public HashCode append(final int value) {
 		_hashCode = _hashCode * 31 + value;
@@ -105,7 +105,7 @@ implements Describable {
 	 * 
 	 * @param value Value to append.
 	 * @return this hash code.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public HashCode append(final long value) {
 		_hashCode = _hashCode * 31 + (int) (value >> 32);
@@ -118,7 +118,7 @@ implements Describable {
 	 * 
 	 * @param value Value to append. May be <code>null</code>.
 	 * @return this hash code.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public HashCode append(final Object value) {
 		_hashCode = _hashCode * 31 + (null != value ? value.hashCode() : 0);
@@ -129,7 +129,7 @@ implements Describable {
 	 * Gets the computed hash code.
 	 * 
 	 * @return The hash code.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public int get() {
 		return _hashCode;

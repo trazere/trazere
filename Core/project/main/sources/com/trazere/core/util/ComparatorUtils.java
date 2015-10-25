@@ -22,13 +22,13 @@ import java.util.Comparator;
  * The {@link ComparatorUtils} class provides various utilities regarding {@link Comparator comparators}.
  * 
  * @see Comparator
- * @since 1.0
+ * @since 2.0
  */
 public class ComparatorUtils {
 	/**
 	 * The {@link DummyComparable} interface provides a placeholder type for comparables.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public interface DummyComparable
 	extends Comparable<DummyComparable> {
@@ -46,7 +46,7 @@ public class ComparatorUtils {
 	 * @param value2 Second value to compare.
 	 * @return The result of the comparison as defined by the {@link Comparator#compare(Object, Object)} method.
 	 * @see Comparator#compare(Object, Object)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> int compare(final Comparator<T> comparator, final Maybe<? extends T> value1, final Maybe<? extends T> value2) {
 		if (value1.isNone()) {
@@ -67,7 +67,7 @@ public class ComparatorUtils {
 	 * @param value2 Second unsafe value to compare. May be <code>null</code>.
 	 * @return The result of the comparison as defined by the {@link Comparator#compare(Object, Object)} method.
 	 * @see Comparable#compareTo(Object)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> int safeCompare(final Comparator<T> comparator, final T value1, final T value2) {
 		assert null != comparator;
@@ -87,7 +87,7 @@ public class ComparatorUtils {
 	 * @param value1 First value.
 	 * @param value2 Second value.
 	 * @return The least value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> T least(final Comparator<? super T> comparator, final T value1, final T value2) {
 		return comparator.compare(value1, value2) <= 0 ? value1 : value2;
@@ -101,7 +101,7 @@ public class ComparatorUtils {
 	 * @param value1 First value.
 	 * @param value2 Second value.
 	 * @return The greatest value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> T greatest(final Comparator<? super T> comparator, final T value1, final T value2) {
 		return comparator.compare(value1, value2) >= 0 ? value1 : value2;
@@ -116,7 +116,7 @@ public class ComparatorUtils {
 	 * @param comparator Unsafe comparator to derive.
 	 * @return The built comparator.
 	 * @see ComparatorUtils#safeCompare(Comparator, Object, Object)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Comparator<T> safe(final Comparator<? super T> comparator) {
 		assert null != comparator;
@@ -131,7 +131,7 @@ public class ComparatorUtils {
 	 * @param comparator Comparator to inverse.
 	 * @return The built comparator.
 	 * @see InverseComparator
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Comparator<T> inverse(final Comparator<? super T> comparator) {
 		return new InverseComparator<>(comparator);
@@ -144,7 +144,7 @@ public class ComparatorUtils {
 	 * @param comparator Comparator to inverse.
 	 * @param inverse Indicates whether to inverse the order or not.
 	 * @return The built comparator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Comparator<T> inverse(final Comparator<T> comparator, final boolean inverse) {
 		return inverse ? inverse(comparator) : comparator;
@@ -159,7 +159,7 @@ public class ComparatorUtils {
 	 * @param function Mapping function to use.
 	 * @return The built comparator.
 	 * @see MapComparator
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T1, T2> Comparator<T1> map(final Comparator<? super T2> comparator, final Function<? super T1, ? extends T2> function) {
 		assert null != function;

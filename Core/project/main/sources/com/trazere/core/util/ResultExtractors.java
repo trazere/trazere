@@ -25,7 +25,7 @@ import com.trazere.core.functional.Function;
  * @see Function
  * @see Maybe
  * @see Result
- * @since 1.0
+ * @since 2.0
  */
 public class ResultExtractors {
 	/**
@@ -33,7 +33,7 @@ public class ResultExtractors {
 	 * 
 	 * @param <T> Type of the success values.
 	 * @return The built extractor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<Result<? extends T>, Maybe<T>> getSuccess() {
@@ -47,7 +47,7 @@ public class ResultExtractors {
 	 * 
 	 * @param <T> Type of the success values.
 	 * @return The built extractor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<Result<? extends T>, Maybe<Throwable>> getFailure() {

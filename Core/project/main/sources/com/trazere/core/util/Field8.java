@@ -19,14 +19,14 @@ package com.trazere.core.util;
  * The {@link Field8} interface defines product types that contain a eighth field.
  * 
  * @param <T> Type of the value of the field.
- * @since 1.0
+ * @since 2.0
  */
 public interface Field8<T> {
 	/**
 	 * Gets the value of the eighth field.
 	 * 
 	 * @return The value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	T get8();
 }

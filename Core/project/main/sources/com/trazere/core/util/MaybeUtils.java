@@ -25,7 +25,7 @@ import java.util.Optional;
  * The {@link MaybeUtils} class provides various utilities regarding {@link Maybe maybes}.
  * 
  * @see Maybe
- * @since 1.0
+ * @since 2.0
  */
 public class MaybeUtils {
 	// TODO: move to Maybes ?
@@ -40,7 +40,7 @@ public class MaybeUtils {
 	 * @param <T> Type of the value.
 	 * @param value Value to wrap.
 	 * @return The built instance.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Maybe<T> fromNullable(final T value) {
 		if (null != value) {
@@ -61,7 +61,7 @@ public class MaybeUtils {
 	 * @param <T> Type of the value.
 	 * @param maybe Instance to convert.
 	 * @return The resulting value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> T toNullable(final Maybe<T> maybe) {
 		return maybe.get((T) null);
@@ -73,7 +73,7 @@ public class MaybeUtils {
 	 * @param <T> Type of the value.
 	 * @param optional Instance of {@link Optional} to convert.
 	 * @return The built instance.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	// TODO: move to Maybes ?
 	public static <T> Maybe<T> fromOptional(final Optional<? extends T> optional) {
@@ -92,7 +92,7 @@ public class MaybeUtils {
 	 * @param <T> Type of the value.
 	 * @param maybe Instance to convert.
 	 * @return The instance of {@link Optional}.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Optional<T> toOptional(final Maybe<? extends T> maybe) {
 		assert null != maybe;
@@ -113,7 +113,7 @@ public class MaybeUtils {
 	 * @param value Instance to read.
 	 * @param defaultValue Default value.
 	 * @return The value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static boolean get(final Maybe<Boolean> value, final boolean defaultValue) {
 		return value.isSome() ? value.asSome().getValue().booleanValue() : defaultValue;
@@ -128,7 +128,7 @@ public class MaybeUtils {
 	 * @param value Instance to read.
 	 * @param defaultValue Default value.
 	 * @return The value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static byte get(final Maybe<Byte> value, final byte defaultValue) {
 		return value.isSome() ? value.asSome().getValue().byteValue() : defaultValue;
@@ -143,7 +143,7 @@ public class MaybeUtils {
 	 * @param value Instance to read.
 	 * @param defaultValue Default value.
 	 * @return The value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static short get(final Maybe<Short> value, final short defaultValue) {
 		return value.isSome() ? value.asSome().getValue().shortValue() : defaultValue;
@@ -158,7 +158,7 @@ public class MaybeUtils {
 	 * @param value Instance to read.
 	 * @param defaultValue Default value.
 	 * @return The value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static int get(final Maybe<Integer> value, final int defaultValue) {
 		return value.isSome() ? value.asSome().getValue().intValue() : defaultValue;
@@ -173,7 +173,7 @@ public class MaybeUtils {
 	 * @param value Instance to read.
 	 * @param defaultValue Default value.
 	 * @return The value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static long get(final Maybe<Long> value, final long defaultValue) {
 		return value.isSome() ? value.asSome().getValue().longValue() : defaultValue;
@@ -188,7 +188,7 @@ public class MaybeUtils {
 	 * @param value Instance to read.
 	 * @param defaultValue Default value.
 	 * @return The value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static float get(final Maybe<Float> value, final float defaultValue) {
 		return value.isSome() ? value.asSome().getValue().floatValue() : defaultValue;
@@ -203,7 +203,7 @@ public class MaybeUtils {
 	 * @param value Instance to read.
 	 * @param defaultValue Default value.
 	 * @return The value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static double get(final Maybe<Double> value, final double defaultValue) {
 		return value.isSome() ? value.asSome().getValue().doubleValue() : defaultValue;
@@ -218,7 +218,7 @@ public class MaybeUtils {
 	 * @param value Instance to read.
 	 * @param defaultValue Default value.
 	 * @return The value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static char get(final Maybe<Character> value, final char defaultValue) {
 		return value.isSome() ? value.asSome().getValue().charValue() : defaultValue;
@@ -236,7 +236,7 @@ public class MaybeUtils {
 	 * @param maybe {@link Maybe} instance to read.
 	 * @param defaultValue Default value.
 	 * @return The value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> T get(final Maybe<? extends T> maybe, final T defaultValue) {
 		return maybe.isSome() ? maybe.asSome().getValue() : defaultValue;
@@ -254,7 +254,7 @@ public class MaybeUtils {
 	 * @param maybe {@link Maybe} instance to read.
 	 * @param defaultValue Default value.
 	 * @return The value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> T get(final Maybe<? extends T> maybe, final Thunk<T> defaultValue) {
 		return maybe.isSome() ? maybe.asSome().getValue() : defaultValue.evaluate();
@@ -266,7 +266,7 @@ public class MaybeUtils {
 	 * @param <T> Type of the value.
 	 * @param maybe {@link Maybe} instance wrapping the {@link Maybe} instance to flatten.
 	 * @return A {@link Maybe} instance wrapping the flatten value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Maybe<T> flatten(final Maybe<? extends Maybe<? extends T>> maybe) {
 		return maybe.flatMap(Functions.<Maybe<? extends T>>identity());

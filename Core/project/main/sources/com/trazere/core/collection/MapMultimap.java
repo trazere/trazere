@@ -32,7 +32,7 @@ import java.util.Set;
  * @param <V> Type of the values.
  * @param <C> Type of the collections of values.
  * @param <CC> Type of the concrete collections of values.
- * @since 1.0
+ * @since 2.0
  */
 public class MapMultimap<K, V, C extends Collection<V>, CC extends C>
 extends BaseMultimap<K, V, C> {
@@ -41,7 +41,7 @@ extends BaseMultimap<K, V, C> {
 	 * 
 	 * @param mapFactory Factory of the backing map.
 	 * @param valuesFactory Factory of the collections of values.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public MapMultimap(final MapFactory<K, CC, ? extends Map<K, CC>> mapFactory, final ExtendedAbstractCollectionFactory<V, C, CC> valuesFactory) {
 		this(mapFactory.build(), valuesFactory);
@@ -53,7 +53,7 @@ extends BaseMultimap<K, V, C> {
 	 * @param mapFactory Factory of the backing map.
 	 * @param valuesFactory Factory of the collections of values.
 	 * @param multimap Multimap to copy.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public MapMultimap(final MapFactory<K, CC, ? extends Map<K, CC>> mapFactory, final ExtendedAbstractCollectionFactory<V, C, CC> valuesFactory, final Multimap<? extends K, ? extends V, ?> multimap) {
 		this(mapFactory.build(IterableUtils.map(multimap.collectionEntrySet(), entry -> new Tuple2<>(entry.getKey(), valuesFactory.build(entry.getValue())))), valuesFactory);
@@ -64,7 +64,7 @@ extends BaseMultimap<K, V, C> {
 	 * 
 	 * @param bindings Backing map of the bindings.
 	 * @param collectionFactory Factory of the collections of values.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected MapMultimap(final Map<K, CC> bindings, final ExtendedAbstractCollectionFactory<V, C, CC> collectionFactory) {
 		assert null != bindings;
@@ -80,7 +80,7 @@ extends BaseMultimap<K, V, C> {
 	/**
 	 * Factory of the collections of values.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final ExtendedAbstractCollectionFactory<V, C, CC> _collectionFactory;
 	
@@ -88,7 +88,7 @@ extends BaseMultimap<K, V, C> {
 	 * Gets the factory of the collections of values of this multimap.
 	 * 
 	 * @return The collection factory.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public ExtendedAbstractCollectionFactory<V, C, CC> getCollectionFactory() {
 		return _collectionFactory;
@@ -99,7 +99,7 @@ extends BaseMultimap<K, V, C> {
 	/**
 	 * Backing map of the bindings.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final Map<K, CC> _bindings;
 	
@@ -108,7 +108,7 @@ extends BaseMultimap<K, V, C> {
 	 * 
 	 * @param key Key of the bindings.
 	 * @return The collection of values.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected C getCollection(final K key) {
 		// Look for the current collection.

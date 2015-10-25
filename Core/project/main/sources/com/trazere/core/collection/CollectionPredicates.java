@@ -23,7 +23,7 @@ import java.util.Collection;
  * 
  * @see Predicate
  * @see Collection
- * @since 1.0
+ * @since 2.0
  */
 public class CollectionPredicates {
 	/**
@@ -31,7 +31,7 @@ public class CollectionPredicates {
 	 * 
 	 * @param <C> Type of the collections.
 	 * @return The built predicate.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <C extends Collection<?>> Predicate<C> isEmpty() {
@@ -47,7 +47,7 @@ public class CollectionPredicates {
 	 * @param <C> Type of the collections.
 	 * @param element Element whose presence is to be tested.
 	 * @return The built predicate.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E, C extends Collection<? super E>> Predicate<C> contains(final E element) {
 		return collection -> collection.contains(element);

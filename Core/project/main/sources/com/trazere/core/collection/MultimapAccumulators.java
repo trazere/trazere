@@ -23,7 +23,7 @@ import com.trazere.core.imperative.Accumulator2;
  * 
  * @see Accumulator
  * @see Multimap
- * @since 1.0
+ * @since 2.0
  */
 public class MultimapAccumulators {
 	/**
@@ -35,7 +35,7 @@ public class MultimapAccumulators {
 	 * @param multimap Multimap to populate.
 	 * @return The built accumulator.
 	 * @see Multimap#put(Object, Object)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V, M extends Multimap<? super K, ? super V, ?>> Accumulator2<K, V, M> put(final M multimap) {
 		assert null != multimap;

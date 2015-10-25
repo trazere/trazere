@@ -28,14 +28,14 @@ import com.trazere.core.text.TextUtils;
  * This class can be used instead of non-final variables to help tagging side effects.
  * 
  * @param <V> Type of the value.
- * @since 1.0
+ * @since 2.0
  */
 public class MutableObject<V>
 implements Describable {
 	/**
 	 * Current value.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected V _value;
 	
@@ -43,7 +43,7 @@ implements Describable {
 	 * Instantiates a new mutable object.
 	 * 
 	 * @param value Initial value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public MutableObject(final V value) {
 		_value = value;
@@ -53,7 +53,7 @@ implements Describable {
 	 * Gets the current value of this mutable object.
 	 * 
 	 * @return The current value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public V get() {
 		return _value;
@@ -65,7 +65,7 @@ implements Describable {
 	 * @param <NV> Type of the new value.
 	 * @param value New value.
 	 * @return The given new value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public <NV extends V> NV set(final NV value) {
 		_value = value;
@@ -78,7 +78,7 @@ implements Describable {
 	 * @param <NV> Type of the new value.
 	 * @param function Function to use to compute the new value.
 	 * @return The computed new value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public <NV extends V> NV update(final Function<? super V, ? extends NV> function) {
 		return set(function.evaluate(_value));

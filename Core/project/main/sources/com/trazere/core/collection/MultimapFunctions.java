@@ -24,7 +24,7 @@ import java.util.Map;
  * 
  * @see Function
  * @see Multimap
- * @since 1.0
+ * @since 2.0
  */
 public class MultimapFunctions {
 	/**
@@ -35,7 +35,7 @@ public class MultimapFunctions {
 	 * @param multimap Multimap to read.
 	 * @return The built function.
 	 * @see MapUtils#get(Map, Object)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, C extends Collection<?>> Function<K, C> get(final Multimap<? super K, ?, ? extends C> multimap) {
 		assert null != multimap;

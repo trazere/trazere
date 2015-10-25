@@ -19,14 +19,14 @@ package com.trazere.core.reactive;
  * The {@link ObserverSubscriptions} class provides various factories of {@link ObserverSubscription observer subscriptions}.
  * 
  * @see ObserverSubscription
- * @since 1.0
+ * @since 2.0
  */
 public class ObserverSubscriptions {
 	/**
 	 * Builds an observer subscription that does nothing.
 	 * 
 	 * @return The built subscription.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static ObserverSubscription nop() {
 		return NOP;

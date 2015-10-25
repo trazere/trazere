@@ -25,7 +25,7 @@ import java.util.Map;
  * @param <V> Type of the values.
  * @param <M> Type of the maps.
  * @see Map
- * @since 1.0
+ * @since 2.0
  */
 public interface ExtendedMapFactory<K, V, M extends Map<K, V>>
 extends ExtendedAbstractMapFactory<K, V, Map<K, V>, M> {

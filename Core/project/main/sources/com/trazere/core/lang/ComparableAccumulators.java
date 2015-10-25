@@ -24,7 +24,7 @@ import com.trazere.core.util.Maybe;
  * 
  * @see Accumulator
  * @see Comparable
- * @since 1.0
+ * @since 2.0
  */
 public class ComparableAccumulators {
 	/**
@@ -32,7 +32,7 @@ public class ComparableAccumulators {
 	 *
 	 * @param <T> Type of the values.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T extends Comparable<T>> Accumulator<T, Maybe<T>> least() {
 		return least(Maybe.<T>none());
@@ -44,7 +44,7 @@ public class ComparableAccumulators {
 	 * @param <T> Type of the values.
 	 * @param initialState Initial state.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T extends Comparable<T>> Accumulator<T, Maybe<T>> least(final T initialState) {
 		return least(Maybe.some(initialState));
@@ -56,7 +56,7 @@ public class ComparableAccumulators {
 	 * @param <T> Type of the values.
 	 * @param initialState Initial state.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T extends Comparable<T>> Accumulator<T, Maybe<T>> least(final Maybe<T> initialState) {
 		return new FoldAccumulator<T, Maybe<T>>(initialState) {
@@ -72,7 +72,7 @@ public class ComparableAccumulators {
 	 *
 	 * @param <T> Type of the values.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T extends Comparable<T>> Accumulator<T, Maybe<T>> greatest() {
 		return greatest(Maybe.<T>none());
@@ -84,7 +84,7 @@ public class ComparableAccumulators {
 	 * @param <T> Type of the values.
 	 * @param initialState Initial state.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T extends Comparable<T>> Accumulator<T, Maybe<T>> greatest(final T initialState) {
 		return greatest(Maybe.some(initialState));
@@ -96,7 +96,7 @@ public class ComparableAccumulators {
 	 * @param <T> Type of the values.
 	 * @param initialState Initial state.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T extends Comparable<T>> Accumulator<T, Maybe<T>> greatest(final Maybe<T> initialState) {
 		return new FoldAccumulator<T, Maybe<T>>(initialState) {

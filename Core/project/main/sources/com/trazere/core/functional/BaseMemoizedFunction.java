@@ -25,14 +25,14 @@ import java.util.Map;
  * 
  * @param <A> Type of the arguments.
  * @param <R> Type of the results.
- * @since 1.0
+ * @since 2.0
  */
 public abstract class BaseMemoizedFunction<A, R>
 implements MemoizedFunction<A, R> {
 	/**
 	 * Memoized results.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final Map<A, R> _results = new HashMap<>();
 	
@@ -52,7 +52,7 @@ implements MemoizedFunction<A, R> {
 	 * 
 	 * @param arg Argument to evaluate the function with.
 	 * @return The result of the function evaluation.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected abstract R compute(A arg);
 	

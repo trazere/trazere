@@ -22,14 +22,14 @@ import java.io.OutputStream;
  * The {@link DecoratorOutputStream} class implements decorators of {@link OutputStream output streams}.
  * 
  * @see OutputStream
- * @since 1.0
+ * @since 2.0
  */
 public abstract class DecoratorOutputStream
 extends OutputStream {
 	/**
 	 * Decorated output stream.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final OutputStream _decorated;
 	
@@ -37,7 +37,7 @@ extends OutputStream {
 	 * Instantiates a new decorator.
 	 * 
 	 * @param decorated Decorated output stream.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public DecoratorOutputStream(final OutputStream decorated) {
 		assert null != decorated;

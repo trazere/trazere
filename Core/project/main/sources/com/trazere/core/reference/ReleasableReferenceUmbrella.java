@@ -26,14 +26,14 @@ import java.util.Set;
  * This class implements some kind of reference counting mecanism over the releasable value. The value is released when all references to it have been released.
  * 
  * @param <T> Type of the referenced values.
- * @since 1.0
+ * @since 2.0
  */
 public class ReleasableReferenceUmbrella<T>
 implements Releasable {
 	/**
 	 * Value to reference.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final ReleasableReference<? extends T> _value;
 	
@@ -44,7 +44,7 @@ implements Releasable {
 	 * method.
 	 * 
 	 * @param value Releasable value to reference.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public ReleasableReferenceUmbrella(final ReleasableReference<? extends T> value) {
 		assert null != value;
@@ -59,7 +59,7 @@ implements Releasable {
 	/**
 	 * References.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final Set<Releasable> _references = new HashSet<>();
 	
@@ -70,7 +70,7 @@ implements Releasable {
 	 * 
 	 * @return The reference.
 	 * @throws ReferenceNotSetException When the value has already been release.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public ReleasableReference<T> getReference()
 	throws ReferenceNotSetException {
@@ -114,7 +114,7 @@ implements Releasable {
 	 * Removes the given reference to the value and releases the value if needed.
 	 * 
 	 * @param reference Reference to remove.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected void removeReference(final ReleasableReference<? extends T> reference) {
 		if (_references.remove(reference)) {
@@ -129,7 +129,7 @@ implements Releasable {
 	/**
 	 * Releases the implicit reference to the value of this umbrella.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@Override
 	public void release() {

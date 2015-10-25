@@ -24,13 +24,13 @@ import com.trazere.core.util.Tuple2;
  * The {@link Joiner} class helps to join the text representation of tokens using some delimiter.
  * 
  * @param <T> Type of the tokens to join.
- * @since 1.0
+ * @since 2.0
  */
 public abstract class Joiner<T> {
 	/**
 	 * Factory of the exceptions for the failures.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final ThrowableFactory<? extends RuntimeException> _failureFactory;
 	
@@ -39,7 +39,7 @@ public abstract class Joiner<T> {
 	 *
 	 * @param ignoreEmpty Indicates whether the empty token representations are ignored.
 	 * @param delimiter Delimiter to insert between the tokens.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Joiner(final boolean ignoreEmpty, final CharSequence delimiter) {
 		this(ignoreEmpty, delimiter, TextException.FACTORY);
@@ -51,7 +51,7 @@ public abstract class Joiner<T> {
 	 * @param ignoreEmpty Indicates whether the empty token representations are ignored.
 	 * @param delimiter Delimiter to insert between the tokens.
 	 * @param failureFactory Factory of the exceptions for the failures
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Joiner(final boolean ignoreEmpty, final CharSequence delimiter, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		assert null != delimiter;
@@ -68,7 +68,7 @@ public abstract class Joiner<T> {
 	/**
 	 * Indicates whether the empty token representations are ignored.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final boolean _ignoreEmpty;
 	
@@ -76,7 +76,7 @@ public abstract class Joiner<T> {
 	 * Indicates whether the empty token representations are ignored by this joiner.
 	 * 
 	 * @return <code>true</code> when the empty token representations are ignored, <code>false</code> otherwise.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public boolean isIgnoringEmpty() {
 		return _ignoreEmpty;
@@ -87,7 +87,7 @@ public abstract class Joiner<T> {
 	/**
 	 * Delimiter to insert between the tokens.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final CharSequence _delimiter;
 	
@@ -95,7 +95,7 @@ public abstract class Joiner<T> {
 	 * Gets the delimiter of this joiner to insert between the tokens.
 	 * 
 	 * @return The delimiter.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public CharSequence getDelimiter() {
 		return _delimiter;
@@ -108,7 +108,7 @@ public abstract class Joiner<T> {
 	 *
 	 * @param tokens Tokens to join.
 	 * @return The representation of the joined tokens.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public CharSequence join(final Iterable<? extends T> tokens) {
 		return join(tokens, new StringBuilder()).get1();
@@ -121,7 +121,7 @@ public abstract class Joiner<T> {
 	 * @param tokens Tokens to join.
 	 * @param appendable Appendable to populate with the representation of the joined tokens.
 	 * @return The given appendable and a boolean indicating whether some token was joined.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public <A extends Appendable> Tuple2<A, Boolean> join(final Iterable<? extends T> tokens, final A appendable) {
 		return join(tokens, appendable, true);
@@ -135,7 +135,7 @@ public abstract class Joiner<T> {
 	 * @param appendable Appendable to populate with the representation of the joined tokens.
 	 * @param first Indicates whether the next appended token will be the first one or not.
 	 * @return The given appendable and a boolean indicating whether some token was joined.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public <A extends Appendable> Tuple2<A, Boolean> join(final Iterable<? extends T> tokens, final A appendable, final boolean first) {
 		try {
@@ -161,7 +161,7 @@ public abstract class Joiner<T> {
 	 * @param appendable Appendable to populate with the representation of the joined tokens.
 	 * @param first Indicates whether the next appended token will be the first one or not.
 	 * @return The given appendable and a boolean indicating whether the token was joined.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public <A extends Appendable> Tuple2<A, Boolean> join(final T token, final A appendable, final boolean first) {
 		try {
@@ -192,7 +192,7 @@ public abstract class Joiner<T> {
 	 * 
 	 * @param token Token to render.
 	 * @return The string representation of the token.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected abstract CharSequence render(T token);
 }

@@ -22,7 +22,7 @@ import java.util.Iterator;
  * The {@link Iterables} class provides various factories of {@link Iterable iterables}.
  * 
  * @see Iterable
- * @since 1.0
+ * @since 2.0
  */
 public class Iterables {
 	/**
@@ -30,7 +30,7 @@ public class Iterables {
 	 * 
 	 * @param <E> Type of the elements.
 	 * @return The built iterable.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <E> Iterable<E> empty() {
@@ -50,7 +50,7 @@ public class Iterables {
 	 * @param <E> Type of the the element.
 	 * @param element Element provided by the iterable to build.
 	 * @return The built iterable.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Iterable<E> fromElement(final E element) {
 		return new Iterable<E>() {
@@ -67,7 +67,7 @@ public class Iterables {
 	 * @param <E> Type of the the elements.
 	 * @param elements Elements provided by the iterable to build.
 	 * @return The built iterable.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SafeVarargs
 	public static <E> Iterable<E> fromElements(final E... elements) {

@@ -25,14 +25,14 @@ import java.util.Date;
  * 
  * @see Function
  * @see Calendar
- * @since 1.0
+ * @since 2.0
  */
 public class CalendarFunctions {
 	/**
 	 * Builds a function that gets the time of the argument calendars.
 	 *
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Function<Calendar, Date> getTime() {
 		return GET_TIME;
@@ -44,7 +44,7 @@ public class CalendarFunctions {
 	 * Builds a function that gets the instant of the argument calendars.
 	 *
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Function<Calendar, Instant> toInstant() {
 		return TO_INSTANT;

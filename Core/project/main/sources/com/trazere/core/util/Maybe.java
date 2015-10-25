@@ -39,7 +39,7 @@ import java.util.Iterator;
  * This class aims to improve the reliability of the code by avoiding uses of <code>null</code>.
  * 
  * @param <T> Type of the value.
- * @since 1.0
+ * @since 2.0
  */
 public abstract class Maybe<T>
 implements Iterable<T>, Serializable, Describable {
@@ -52,7 +52,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * @param <T> Type of the value.
 	 * @return The built instance.
 	 * @see None
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Maybe<T> none() {
@@ -69,7 +69,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * @param value Value to wrap.
 	 * @return The built instance.
 	 * @see Some
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Maybe<T> some(final T value) {
 		return new Some<>(value);
@@ -81,7 +81,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * The {@link Maybe.None} class represents instances of {@link Maybe} that encode absent values.
 	 * 
 	 * @param <T> Type of the value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static final class None<T>
 	extends Maybe<T> {
@@ -198,7 +198,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * Tests whether this instance has been built using the {@link None} constructor.
 	 * 
 	 * @return <code>true</code> when the instance has been built using the {@link None} constructor, <code>false</code> otherwise.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public boolean isNone() {
 		return false;
@@ -209,7 +209,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * 
 	 * @return The view.
 	 * @throws InvalidConstructorException when this instance has not been built using the {@link None} constructor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public None<T> asNone()
 	throws InvalidConstructorException {
@@ -222,7 +222,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * The {@link Maybe.Some} class represents instances of {@link Maybe} that encode available values.
 	 * 
 	 * @param <T> Type of the value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static final class Some<T>
 	extends Maybe<T> {
@@ -232,7 +232,7 @@ implements Iterable<T>, Serializable, Describable {
 		 * Instantiates a new {@link Maybe} instance wrapping the given value.
 		 * 
 		 * @param value Value to wrap.
-		 * @since 1.0
+		 * @since 2.0
 		 */
 		public Some(final T value) {
 			_value = value;
@@ -257,7 +257,7 @@ implements Iterable<T>, Serializable, Describable {
 		 * Gets the value wrapped in this instance.
 		 * 
 		 * @return The wrapped value.
-		 * @since 1.0
+		 * @since 2.0
 		 */
 		public T getValue() {
 			return _value;
@@ -364,7 +364,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * Tests whether this instance has been built using the {@link Some} constructor.
 	 * 
 	 * @return <code>true</code> when the instance has been built using the {@link Some} constructor, <code>false</code> otherwise.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public boolean isSome() {
 		return false;
@@ -375,7 +375,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * 
 	 * @return The view.
 	 * @throws InvalidConstructorException when this instance has not been built using the {@link Some} constructor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Some<T> asSome()
 	throws InvalidConstructorException {
@@ -392,7 +392,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * 
 	 * @param defaultValue Default value.
 	 * @return The value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public abstract T get(final T defaultValue);
 	
@@ -404,7 +404,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * 
 	 * @param defaultValue Default value.
 	 * @return The value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public abstract T get(final Thunk<? extends T> defaultValue);
 	
@@ -416,7 +416,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * @param <T> Type of the value.
 	 * @param <R> Type of the result.
 	 * @see Maybe#match(Matcher)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public interface Matcher<T, R> {
 		/**
@@ -444,7 +444,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * @param <R> Type of the result.
 	 * @param matcher Matching function to apply.
 	 * @return The result of the matching function evaluation.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public abstract <R> R match(final Matcher<? super T, ? extends R> matcher);
 	
@@ -454,7 +454,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * Executes the given procedure with the value wrapped in this {@link Maybe} instance.
 	 * 
 	 * @param procedure Procedure to execute.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public abstract void foreach(final Procedure<? super T> procedure);
 	
@@ -467,7 +467,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * @param operator Binary operator to use.
 	 * @param initialState Initial state.
 	 * @return The folded state.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public abstract <S> S fold(final Function2<? super S, ? super T, ? extends S> operator, final S initialState);
 	
@@ -476,7 +476,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * 
 	 * @param filter Predicate to use to filter the value.
 	 * @return <code>true</code> when the wrapped value is accepted, <code>false</code> when no value is wrapped and when the wrapped value is rejected.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public abstract boolean isAny(final Predicate<? super T> filter);
 	
@@ -485,7 +485,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * 
 	 * @param filter Predicate to use to filter the value.
 	 * @return <code>true</code> when no value is wrapped and when the wrapped value is accepted, <code>false</code> when the wrapped value is rejected.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public abstract boolean areAll(final Predicate<? super T> filter);
 	
@@ -494,7 +494,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * 
 	 * @param filter Predicate to use to filter the value.
 	 * @return <tt>1</tt> when the wrapped value is accepted by the filter, <tt>0</tt> when no value is wrapped and when the wrapped value is rejected.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public abstract int count(final Predicate<? super T> filter);
 	
@@ -503,7 +503,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * 
 	 * @param filter Predicate to use to filter the value.
 	 * @return The {@link Maybe} instance wrapping the filtered value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public abstract Maybe<T> filter(final Predicate<? super T> filter);
 	
@@ -513,7 +513,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * @param <R> Type of the mapped value.
 	 * @param function Function to use to transform the value.
 	 * @return The {@link Maybe} instance wrapping the mapped value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public abstract <R> Maybe<R> map(final Function<? super T, ? extends R> function);
 	
@@ -523,7 +523,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * @param <R> Type of the extracted value.
 	 * @param function Function to use to transform the value.
 	 * @return The {@link Maybe} instance wrapping the extracted value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public abstract <R> Maybe<R> flatMap(final Function<? super T, ? extends Maybe<? extends R>> function);
 	

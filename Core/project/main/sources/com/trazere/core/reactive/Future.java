@@ -21,7 +21,7 @@ import com.trazere.core.util.Maybe;
  * The {@link Future} interface defines values that will be available in the future.
  * 
  * @param <T> Type of the value.
- * @since 1.0
+ * @since 2.0
  */
 public interface Future<T>
 extends Observable<T> {
@@ -33,7 +33,7 @@ extends Observable<T> {
 	 * 
 	 * @param observer Observer to subscribe.
 	 * @return The resulting subcription.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@Override
 	ObserverSubscription subscribe(Observer<? super T> observer);
@@ -42,7 +42,7 @@ extends Observable<T> {
 	 * Indicates whether the value of this future is already available or not.
 	 * 
 	 * @return <code>true</code> when the value is available, <code>false</code> otherwise.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	boolean isAvailable();
 	
@@ -50,7 +50,7 @@ extends Observable<T> {
 	 * Gets the value of this future.
 	 * 
 	 * @return The value of the future, or nothing when the value is not yet available.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	Maybe<T> get();
 }

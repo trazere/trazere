@@ -29,7 +29,7 @@ import com.trazere.core.functional.Function;
  * @see Tag3
  * @see Tag4
  * @see Tag5
- * @since 1.0
+ * @since 2.0
  */
 public class TagExtractors {
 	/**
@@ -37,7 +37,7 @@ public class TagExtractors {
 	 * 
 	 * @param <T> Type of the case.
 	 * @return The built extractor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Tag1<T>> Function<Tag1<T>, Maybe<T>> as1() {
@@ -51,7 +51,7 @@ public class TagExtractors {
 	 * 
 	 * @param <T> Type of the case.
 	 * @return The built extractor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Tag2<T>> Function<Tag2<T>, Maybe<T>> as2() {
@@ -65,7 +65,7 @@ public class TagExtractors {
 	 * 
 	 * @param <T> Type of the case.
 	 * @return The built extractor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Tag3<T>> Function<Tag3<T>, Maybe<T>> as3() {
@@ -79,7 +79,7 @@ public class TagExtractors {
 	 * 
 	 * @param <T> Type of the case.
 	 * @return The built extractor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Tag4<T>> Function<Tag4<T>, Maybe<T>> as4() {
@@ -93,7 +93,7 @@ public class TagExtractors {
 	 * 
 	 * @param <T> Type of the case.
 	 * @return The built extractor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Tag5<T>> Function<Tag5<T>, Maybe<T>> as5() {

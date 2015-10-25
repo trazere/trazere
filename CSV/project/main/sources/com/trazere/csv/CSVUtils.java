@@ -21,13 +21,13 @@ import org.slf4j.LoggerFactory;
 /**
  * The {@link CSVUtils} class provides various utilities related to CSV.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public class CSVUtils {
 	/**
 	 * Logger.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static final Logger LOGGER = LoggerFactory.getLogger(CSVUtils.class.getPackage().getName());
 	

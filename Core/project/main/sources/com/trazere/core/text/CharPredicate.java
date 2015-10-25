@@ -18,7 +18,7 @@ package com.trazere.core.text;
 /**
  * The {@link CharPredicate} interface defines predicate functions over characters.
  * 
- * @since 1.0
+ * @since 2.0
  */
 @FunctionalInterface
 public interface CharPredicate {
@@ -27,7 +27,7 @@ public interface CharPredicate {
 	 * 
 	 * @param c Character.
 	 * @return The result of the predicate evaluation.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	boolean evaluate(char c);
 }

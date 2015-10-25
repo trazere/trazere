@@ -21,14 +21,14 @@ package com.trazere.core.util;
  * The {@link Field} interface defines abstract containers or providers of some value.
  * 
  * @param <T> Type of the value.
- * @since 1.0
+ * @since 2.0
  */
 public interface Field<T> {
 	/**
 	 * Gets the value of the field.
 	 * 
 	 * @return The value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	T get();
 }

@@ -25,14 +25,14 @@ import java.util.Set;
  * The {@link SimpleRecord} class provides a simple implementation of records.
  * 
  * @param <K> Witness type of the field keys.
- * @since 1.0
+ * @since 2.0
  */
 public class SimpleRecord<K extends FieldKey<? extends K, ?>>
 extends BaseRecord<K> {
 	/**
 	 * Fields identified by their keys.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected Map<FieldKey<? extends K, ?>, Field<? extends K, ?>> _fields;
 	
@@ -40,7 +40,7 @@ extends BaseRecord<K> {
 	 * Instantiates a new record with the given fields.
 	 * 
 	 * @param fields Values of the fields identified by their keys.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected SimpleRecord(final Map<FieldKey<? extends K, ?>, Field<? extends K, ?>> fields) {
 		assert null != fields;

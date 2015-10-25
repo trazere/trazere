@@ -21,7 +21,7 @@ package com.trazere.core.functional;
  * TODO: compare to first order logic predicates
  * 
  * @param <A> Type of the arguments.
- * @since 1.0
+ * @since 2.0
  */
 @FunctionalInterface
 public interface Predicate<A> {
@@ -30,7 +30,7 @@ public interface Predicate<A> {
 	 * 
 	 * @param arg Argument to evaluate the predicate with.
 	 * @return The result of the predicate evaluation.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	boolean evaluate(A arg);
 }

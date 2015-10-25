@@ -19,7 +19,7 @@ package com.trazere.core.imperative;
  * The {@link Procedure} interface defines procedures (functions that return no results).
  * 
  * @param <A> Type of the arguments.
- * @since 1.0
+ * @since 2.0
  */
 @FunctionalInterface
 public interface Procedure<A> {
@@ -27,7 +27,7 @@ public interface Procedure<A> {
 	 * Executes this procedure with the given argument.
 	 * 
 	 * @param arg Argument to execute the procedure with.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	void execute(A arg);
 }

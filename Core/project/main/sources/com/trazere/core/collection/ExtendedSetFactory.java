@@ -24,7 +24,7 @@ import java.util.Set;
  * @param <E> Type of the elements.
  * @param <S> Type of the sets.
  * @see Set
- * @since 1.0
+ * @since 2.0
  */
 public interface ExtendedSetFactory<E, S extends Set<E>>
 extends ExtendedAbstractCollectionFactory<E, Set<E>, S> {

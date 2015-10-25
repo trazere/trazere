@@ -31,7 +31,7 @@ import java.io.Serializable;
  * 
  * @param <L> Type of the left value.
  * @param <R> Type of the right value.
- * @since 1.0
+ * @since 2.0
  */
 public abstract class Either<L, R>
 implements Serializable, Describable {
@@ -46,7 +46,7 @@ implements Serializable, Describable {
 	 * @param left Left value to wrap.
 	 * @return The built instance.
 	 * @see Left
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <L, R> Either<L, R> left(final L left) {
 		return new Left<>(left);
@@ -61,7 +61,7 @@ implements Serializable, Describable {
 	 * @param right Right value to wrap.
 	 * @return The built instance.
 	 * @see Right
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <L, R> Either<L, R> right(final R right) {
 		return new Right<>(right);
@@ -74,7 +74,7 @@ implements Serializable, Describable {
 	 * 
 	 * @param <L> Type of the left value.
 	 * @param <R> Type of the right value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static final class Left<L, R>
 	extends Either<L, R> {
@@ -84,7 +84,7 @@ implements Serializable, Describable {
 		 * Instantiates a new {@link Either} instance wrapping the given left value.
 		 * 
 		 * @param value Left value to wrap.
-		 * @since 1.0
+		 * @since 2.0
 		 */
 		public Left(final L value) {
 			_value = value;
@@ -116,7 +116,7 @@ implements Serializable, Describable {
 		 * Gets the left value wrapped in this instance.
 		 * 
 		 * @return The wrapped left value.
-		 * @since 1.0
+		 * @since 2.0
 		 */
 		public L getValue() {
 			return _value;
@@ -173,7 +173,7 @@ implements Serializable, Describable {
 	 * Tests whether this instance has been built using the {@link Left} constructor.
 	 * 
 	 * @return <code>true</code> when the instance has been built with the Left</code> constructor, <code>false</code> otherwise.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public boolean isLeft() {
 		return false;
@@ -184,7 +184,7 @@ implements Serializable, Describable {
 	 * 
 	 * @return The view.
 	 * @throws InvalidConstructorException when this instance has not been built using the {@link Left} constructor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Left<L, R> asLeft()
 	throws InvalidConstructorException {
@@ -195,7 +195,7 @@ implements Serializable, Describable {
 	 * Extracts the left value wrapped in this {@link Either} instance.
 	 * 
 	 * @return The wrapped left value, or nothing when the instance has not been built using the {@link Left} constructor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Maybe<L> getLeft() {
 		return Maybe.none();
@@ -208,7 +208,7 @@ implements Serializable, Describable {
 	 * 
 	 * @param <L> Type of the left value.
 	 * @param <R> Type of the right value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static final class Right<L, R>
 	extends Either<L, R> {
@@ -218,7 +218,7 @@ implements Serializable, Describable {
 		 * Instantiates a new {@link Either} instance wrapping the given right value.
 		 * 
 		 * @param value Right value to wrap.
-		 * @since 1.0
+		 * @since 2.0
 		 */
 		public Right(final R value) {
 			_value = value;
@@ -250,7 +250,7 @@ implements Serializable, Describable {
 		 * Gets the right value wrapped in this instance.
 		 * 
 		 * @return The wrapped right value.
-		 * @since 1.0
+		 * @since 2.0
 		 */
 		public R getValue() {
 			return _value;
@@ -307,7 +307,7 @@ implements Serializable, Describable {
 	 * Tests whether this instance has been built using the {@link Right} constructor.
 	 * 
 	 * @return <code>true</code> when the instance has been built using the {@link Right} constructor, <code>false</code> otherwise.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public boolean isRight() {
 		return false;
@@ -318,7 +318,7 @@ implements Serializable, Describable {
 	 * 
 	 * @return The view.
 	 * @throws InvalidConstructorException when this instance has not been built using the {@link Right} constructor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Right<L, R> asRight()
 	throws InvalidConstructorException {
@@ -329,7 +329,7 @@ implements Serializable, Describable {
 	 * Extracts the right value wrapped in this {@link Either} instance.
 	 * 
 	 * @return The wrapped right value, or nothing when the instance has not been built using the {@link Right} constructor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Maybe<R> getRight() {
 		return Maybe.none();
@@ -344,7 +344,7 @@ implements Serializable, Describable {
 	 * @param <R> Type of the right value.
 	 * @param <RT> Type of the result.
 	 * @see Either#match(Matcher)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public interface Matcher<L, R, RT> {
 		/**
@@ -372,7 +372,7 @@ implements Serializable, Describable {
 	 * @param <RT> Type of the result.
 	 * @param matcher Matching function to apply.
 	 * @return The result of the matching function evaluation.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public abstract <RT> RT match(final Matcher<? super L, ? super R, ? extends RT> matcher);
 	
@@ -384,7 +384,7 @@ implements Serializable, Describable {
 	 * @param <RL> Type of the mapped left value.
 	 * @param function Mapping function to use.
 	 * @return The {@link Either} instance wrapping the mapped left value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public abstract <RL> Either<RL, R> mapLeft(final Function<? super L, ? extends RL> function);
 	
@@ -394,7 +394,7 @@ implements Serializable, Describable {
 	 * @param <RR> Type of the mapped right value.
 	 * @param function Mapping function to use.
 	 * @return The {@link Either} instance wrapping the mapped right value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public abstract <RR> Either<L, RR> mapRight(final Function<? super R, ? extends RR> function);
 	

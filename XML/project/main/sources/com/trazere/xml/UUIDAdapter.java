@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 /**
  * The {@link UUIDAdapter} class implements JAXB adpaters for UUIDs.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public class UUIDAdapter
 extends XmlAdapter<String, UUID> {
@@ -41,7 +41,7 @@ extends XmlAdapter<String, UUID> {
 	 * @param representation Representation to parse.
 	 * @return The parsed UUID.
 	 * @throws IllegalArgumentException When the representation is invalid.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static UUID parse(final String representation)
 	throws IllegalArgumentException {
@@ -53,7 +53,7 @@ extends XmlAdapter<String, UUID> {
 	 * 
 	 * @param value UUID to format.
 	 * @return The formatted representation.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static String format(final UUID value) {
 		return value.toString();

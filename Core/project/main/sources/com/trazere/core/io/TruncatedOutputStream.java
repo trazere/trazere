@@ -22,7 +22,7 @@ import java.io.OutputStream;
 /**
  * The {@link TruncatedOutputStream} class implements output streams that truncate the written data after some maximal length.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public class TruncatedOutputStream
 extends DecoratorOutputStream {
@@ -33,7 +33,7 @@ extends DecoratorOutputStream {
 	 * 
 	 * @param stream Output stream receiving the data.
 	 * @param length Maximal length of data to write.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public TruncatedOutputStream(final OutputStream stream, final long length) {
 		super(stream);

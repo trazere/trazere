@@ -27,7 +27,7 @@ import java.util.List;
  * The succequents comparators of the sequence refine the order of the previous ones in case of equality.
  * 
  * @param <T> Type of the values.
- * @since 1.0
+ * @since 2.0
  */
 public class SequenceComparator<T>
 implements Comparator<T> {
@@ -35,7 +35,7 @@ implements Comparator<T> {
 	 * Instantiates a new comparator with the given comparators.
 	 * 
 	 * @param comparators The sequence of comparators.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public SequenceComparator(final List<? extends Comparator<? super T>> comparators) {
 		assert null != comparators;
@@ -48,7 +48,7 @@ implements Comparator<T> {
 	 * Instantiates a new comparator with the given comparators.
 	 * 
 	 * @param comparators The sequence of comparators.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SafeVarargs
 	public SequenceComparator(final Comparator<? super T>... comparators) {
@@ -60,7 +60,7 @@ implements Comparator<T> {
 	/**
 	 * The comparators ordered by priority.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final List<? extends Comparator<? super T>> _comparators;
 	

@@ -21,7 +21,7 @@ package com.trazere.core.functional;
  * Thunks represent no-arguments functions whose evaluation solely relies on the captured context. They provide an abstraction for lazy evaluation.
  * 
  * @param <T> Type of the values.
- * @since 1.0
+ * @since 2.0
  */
 @FunctionalInterface
 public interface Thunk<T> {
@@ -29,7 +29,7 @@ public interface Thunk<T> {
 	 * Evaluates this thunk.
 	 * 
 	 * @return The value of the thunk.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	T evaluate();
 }

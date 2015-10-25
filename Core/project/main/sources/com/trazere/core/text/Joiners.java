@@ -22,7 +22,7 @@ import com.trazere.core.lang.ThrowableFactory;
  * The {@link Joiners} class provides various factories of {@link Joiner joiners}.
  * 
  * @see Joiner
- * @since 1.0
+ * @since 2.0
  */
 public class Joiners {
 	/**
@@ -33,7 +33,7 @@ public class Joiners {
 	 * @param ignoreEmpty Indicates whether the empty token representations are ignored.
 	 * @param delimiter Delimiter to insert between the tokens.
 	 * @return The built joiner.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Joiner<T> joiner(final Function<? super T, ? extends CharSequence> renderer, final boolean ignoreEmpty, final CharSequence delimiter) {
 		return joiner(renderer, ignoreEmpty, delimiter, TextException.FACTORY);
@@ -48,7 +48,7 @@ public class Joiners {
 	 * @param delimiter Delimiter to insert between the tokens.
 	 * @param failureFactory Factory of the exceptions for the failures
 	 * @return The built joiner.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Joiner<T> joiner(final Function<? super T, ? extends CharSequence> renderer, final boolean ignoreEmpty, final CharSequence delimiter, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		assert null != renderer;
@@ -67,7 +67,7 @@ public class Joiners {
 	 * @param ignoreEmpty Indicates whether the empty token representations are ignored.
 	 * @param delimiter Delimiter to insert between the tokens.
 	 * @return The built joiner.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Joiner<CharSequence> joiner(final boolean ignoreEmpty, final CharSequence delimiter) {
 		return joiner(ignoreEmpty, delimiter, TextException.FACTORY);
@@ -80,7 +80,7 @@ public class Joiners {
 	 * @param delimiter Delimiter to insert between the tokens.
 	 * @param failureFactory Factory of the exceptions for the failures
 	 * @return The built joiner.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Joiner<CharSequence> joiner(final boolean ignoreEmpty, final CharSequence delimiter, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		return new Joiner<CharSequence>(ignoreEmpty, delimiter, failureFactory) {

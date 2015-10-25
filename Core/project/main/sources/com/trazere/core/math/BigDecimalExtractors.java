@@ -27,7 +27,7 @@ import java.math.BigDecimal;
  * @see Function
  * @see Maybe
  * @see BigDecimal
- * @since 1.0
+ * @since 2.0
  */
 public class BigDecimalExtractors {
 	/**
@@ -36,7 +36,7 @@ public class BigDecimalExtractors {
 	 * The extractors truncate the decimal part and control that the values fit in bytes.
 	 * 
 	 * @return The built extractor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Function<BigDecimal, Maybe<Byte>> byteValue() {
 		return BYTE_VALUE;
@@ -56,7 +56,7 @@ public class BigDecimalExtractors {
 	 * The extractors truncate the decimal part and control that the values fit in short integers.
 	 * 
 	 * @return The built extractor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Function<BigDecimal, Maybe<Short>> shortValue() {
 		return SHORT_VALUE;
@@ -76,7 +76,7 @@ public class BigDecimalExtractors {
 	 * The extractors truncate the decimal part and control that the values fit in integers.
 	 * 
 	 * @return The built extractor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Function<BigDecimal, Maybe<Integer>> integerValue() {
 		return INTEGER_VALUE;
@@ -96,7 +96,7 @@ public class BigDecimalExtractors {
 	 * The extractors truncate the decimal part and control that the values fit in long integers.
 	 * 
 	 * @return The built extractor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Function<BigDecimal, Maybe<Long>> longValue() {
 		return LONG_VALUE;
@@ -116,7 +116,7 @@ public class BigDecimalExtractors {
 	 * The extractors control that the values fit in floats.
 	 * 
 	 * @return The built extractor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Function<BigDecimal, Maybe<Float>> floatValue() {
 		return FLOAT_VALUE;
@@ -136,7 +136,7 @@ public class BigDecimalExtractors {
 	 * The extractors control that the values fit in doubles.
 	 * 
 	 * @return The built extractor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Function<BigDecimal, Maybe<Double>> doubleValue() {
 		return DOUBLE_VALUE;

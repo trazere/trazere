@@ -23,7 +23,7 @@ import com.trazere.core.lang.ObjectUtils;
  * 
  * @param <K> Type of the key.
  * @param <V> Type of the value.
- * @since 1.0
+ * @since 2.0
  */
 public abstract class BaseField<K extends FieldKey<? extends K, ?>, V>
 implements Field<K, V> {

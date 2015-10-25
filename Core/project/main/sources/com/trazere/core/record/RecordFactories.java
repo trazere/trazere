@@ -19,7 +19,7 @@ package com.trazere.core.record;
  * The {@link RecordFactories} class provides various factories of {@link RecordFactory record factories}.
  * 
  * @see RecordFactory
- * @since 1.0
+ * @since 2.0
  */
 public class RecordFactories {
 	/**
@@ -27,7 +27,7 @@ public class RecordFactories {
 	 * 
 	 * @param <K> Type of the field keys.
 	 * @return The built record factory.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <K extends FieldKey<? extends K, ?>> RecordFactory<K, Record<K>> simple() {

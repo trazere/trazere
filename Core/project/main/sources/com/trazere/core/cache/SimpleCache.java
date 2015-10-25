@@ -29,7 +29,7 @@ import java.util.Set;
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
- * @since 1.0
+ * @since 2.0
  */
 public class SimpleCache<K, V>
 extends BaseCache<K, V> {
@@ -42,7 +42,7 @@ extends BaseCache<K, V> {
 	/**
 	 * Entries of the cache.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final Map<K, V> _entries = new HashMap<>();
 	

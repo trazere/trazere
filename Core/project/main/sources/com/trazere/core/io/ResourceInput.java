@@ -23,7 +23,7 @@ import java.io.InputStream;
 /**
  * The {@link ResourceInput} class implements inputs for the content of some resource.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public class ResourceInput
 implements Input {
@@ -32,7 +32,7 @@ implements Input {
 	 * 
 	 * @param base Base class
 	 * @param name Name of the resource.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public ResourceInput(final Class<?> base, final String name) {
 		assert null != base;
@@ -48,7 +48,7 @@ implements Input {
 	/**
 	 * Base class.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final Class<?> _base;
 	
@@ -56,7 +56,7 @@ implements Input {
 	 * Gets the base class of the resource containing the data provided by this input.
 	 * 
 	 * @return The base class.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Class<?> getBase() {
 		return _base;
@@ -67,7 +67,7 @@ implements Input {
 	/**
 	 * Name of the resource.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final String _name;
 	
@@ -75,7 +75,7 @@ implements Input {
 	 * Gets the name of the resource containing the data provided by this input.
 	 * 
 	 * @return The name.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public String getName() {
 		return _name;

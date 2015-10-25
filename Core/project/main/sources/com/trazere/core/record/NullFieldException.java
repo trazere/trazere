@@ -20,7 +20,7 @@ import com.trazere.core.lang.ThrowableFactory;
 /**
  * {@link NullFieldException} exceptions are thrown when the value of some non-nullable field is <code>null</code>.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public class NullFieldException
 extends RecordException {
@@ -29,7 +29,7 @@ extends RecordException {
 	/**
 	 * Instantiates a new exception.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public NullFieldException() {
 		super();
@@ -39,7 +39,7 @@ extends RecordException {
 	 * Instantiates a new exception using the given message.
 	 * 
 	 * @param message Details about the exception.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public NullFieldException(final String message) {
 		super(message);
@@ -49,7 +49,7 @@ extends RecordException {
 	 * Instantiates a new exception using the given cause.
 	 * 
 	 * @param cause Cause of the exception.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public NullFieldException(final Throwable cause) {
 		super(cause);
@@ -60,7 +60,7 @@ extends RecordException {
 	 * 
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public NullFieldException(final String message, final Throwable cause) {
 		super(message, cause);
@@ -69,7 +69,7 @@ extends RecordException {
 	/**
 	 * Factory of {@link NullFieldException}.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("hiding")
 	public static final ThrowableFactory<NullFieldException> FACTORY = new ThrowableFactory<NullFieldException>() {

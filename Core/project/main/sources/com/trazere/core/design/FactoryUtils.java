@@ -22,7 +22,7 @@ import java.util.function.Supplier;
  * The {@link FactoryUtils} class provides various utilities regarding {@link Factory factories}.
  * 
  * @see Factory
- * @since 1.0
+ * @since 2.0
  */
 public class FactoryUtils {
 	/**
@@ -31,7 +31,7 @@ public class FactoryUtils {
 	 * @param <T> Type of the built values.
 	 * @param factory Factory to lift.
 	 * @return The built callable.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Callable<T> toCallable(final Factory<? extends T> factory) {
 		assert null != factory;
@@ -45,7 +45,7 @@ public class FactoryUtils {
 	 * @param <T> Type of the built values.
 	 * @param factory Factory to lift.
 	 * @return The built supplier.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Supplier<T> toSupplier(final Factory<? extends T> factory) {
 		assert null != factory;

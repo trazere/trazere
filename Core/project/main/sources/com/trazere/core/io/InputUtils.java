@@ -29,7 +29,7 @@ import javax.xml.transform.stream.StreamSource;
  * The {@link InputUtils} class provides various utilities regarding {@link Input inputs}.
  * 
  * @see Input
- * @since 1.0
+ * @since 2.0
  */
 public class InputUtils {
 	/**
@@ -38,7 +38,7 @@ public class InputUtils {
 	 * @param input Input providing the XML content to transform.
 	 * @param transformation Input providing the XSLT transformation to apply.
 	 * @return The built input.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Input transform(final Input input, final Input transformation) {
 		assert null != input;

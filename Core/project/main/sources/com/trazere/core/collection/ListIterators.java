@@ -24,7 +24,7 @@ import java.util.ListIterator;
  * 
  * @see Iterator
  * @see List
- * @since 1.0
+ * @since 2.0
  */
 public class ListIterators {
 	/**
@@ -33,7 +33,7 @@ public class ListIterators {
 	 * @param <E> Type of the elements.
 	 * @param list List to iterate.
 	 * @return The built iterator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Iterator<E> backward(final List<? extends E> list) {
 		final ListIterator<? extends E> iterator = list.listIterator(list.size());

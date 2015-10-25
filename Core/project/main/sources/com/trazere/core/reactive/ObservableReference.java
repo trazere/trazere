@@ -24,7 +24,7 @@ import com.trazere.core.util.Maybe;
  * Events are raised when the reference is updated, providing the new referenced value.
  * 
  * @param <T> Type of the referenced value.
- * @since 1.0
+ * @since 2.0
  */
 public interface ObservableReference<T>
 extends Reference<T>, ObservableValue<Maybe<T>> {

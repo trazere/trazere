@@ -29,7 +29,7 @@ import java.util.UUID;
  * The {@link TextFunctions} class provides various factories of {@link Function functions} related to text.
  * 
  * @see Function
- * @since 1.0
+ * @since 2.0
  */
 public class TextFunctions {
 	// Strings.
@@ -39,7 +39,7 @@ public class TextFunctions {
 	 * 
 	 * @return The built function.
 	 * @see String#toLowerCase()
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Function<String, String> toLowerCase() {
 		return TO_LOWER_CASE;
@@ -52,7 +52,7 @@ public class TextFunctions {
 	 * 
 	 * @return The built function.
 	 * @see String#toUpperCase()
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Function<String, String> toUpperCase() {
 		return TO_UPPER_CASE;
@@ -65,7 +65,7 @@ public class TextFunctions {
 	 * 
 	 * @return The built function.
 	 * @see TextUtils#capitalize(CharSequence)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Function<String, String> capitalize() {
 		return CAPITALIZE;
@@ -78,7 +78,7 @@ public class TextFunctions {
 	 *
 	 * @param filter Predicate to use to filter the characters to trim.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Function<String, String> trim(final CharPredicate filter) {
 		return s -> TextUtils.trim(s, filter).toString();
@@ -89,7 +89,7 @@ public class TextFunctions {
 	 *
 	 * @param filter Predicate to use to filter the characters to trim.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Function<String, String> trimHeading(final CharPredicate filter) {
 		return s -> TextUtils.trimHeading(s, filter).toString();
@@ -100,7 +100,7 @@ public class TextFunctions {
 	 *
 	 * @param filter Predicate to use to filter the characters to trim.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Function<String, String> trimTrailing(final CharPredicate filter) {
 		return s -> TextUtils.trimTrailing(s, filter).toString();
@@ -115,7 +115,7 @@ public class TextFunctions {
 	 * @param format Format of the numbers.
 	 * @return The built function.
 	 * @see TextUtils#formatNumber(NumberFormat, Number)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <N extends Number> Function<N, String> formatNumber(final NumberFormat format) {
 		assert null != format;
@@ -131,7 +131,7 @@ public class TextFunctions {
 	 * @param converter Function to use to convert the parsed numbers to the excepted type.
 	 * @return The built function.
 	 * @see TextUtils#parseNumber(NumberFormat, Function, String)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <N extends Number> Function<String, Result<N>> parseNumber(final NumberFormat format, final Function<Number, N> converter) {
 		assert null != format;
@@ -149,7 +149,7 @@ public class TextFunctions {
 	 * @param format Format of the dates.
 	 * @return The built function.
 	 * @see TextUtils#formatDate(DateFormat, Date)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <D extends Date> Function<D, String> formatDate(final DateFormat format) {
 		assert null != format;
@@ -163,7 +163,7 @@ public class TextFunctions {
 	 * @param format Format of the dates.
 	 * @return The built function.
 	 * @see TextUtils#parseDate(DateFormat, String)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Function<String, Result<Date>> parseDate(final DateFormat format) {
 		assert null != format;
@@ -180,7 +180,7 @@ public class TextFunctions {
 	 * @param formatter Formatter of the temporals.
 	 * @return The built function.
 	 * @see TextUtils#formatTemporal(DateTimeFormatter, TemporalAccessor)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T extends TemporalAccessor> Function<T, String> formatTemporal(final DateTimeFormatter formatter) {
 		assert null != formatter;
@@ -196,7 +196,7 @@ public class TextFunctions {
 	 * @param query Query that defines the type of the temporal.
 	 * @return The built function.
 	 * @see TextUtils#parseTemporal(DateTimeFormatter, TemporalQuery, String)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T extends TemporalAccessor> Function<String, Result<T>> parseTemporal(final DateTimeFormatter formatter, final TemporalQuery<T> query) {
 		assert null != formatter;
@@ -212,7 +212,7 @@ public class TextFunctions {
 	 *
 	 * @return The built function.
 	 * @see TextUtils#formatUuid(UUID)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Function<UUID, String> formatUuid() {
 		return FORMAT_UUID;
@@ -225,7 +225,7 @@ public class TextFunctions {
 	 *
 	 * @return The built function.
 	 * @see TextUtils#parseUuid(String)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Function<String, Result<UUID>> parseUuid() {
 		return PARSE_UUID;

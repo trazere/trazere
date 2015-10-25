@@ -28,7 +28,7 @@ extends DecoratorOutputStream {
 	 * 
 	 * @param target Output stream receiving the data.
 	 * @param copy Output stream receiving the copy of the written data.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public CarbonCopyOutputStream(final OutputStream target, final OutputStream copy) {
 		super(target);
@@ -45,7 +45,7 @@ extends DecoratorOutputStream {
 	/**
 	 * Output stream receiving the copy of the data.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final OutputStream _copy;
 	
@@ -53,7 +53,7 @@ extends DecoratorOutputStream {
 	 * Gets the output stream receiving the copy of the data written in this stream.
 	 * 
 	 * @return The copy output stream.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public OutputStream getCopy() {
 		return _copy;

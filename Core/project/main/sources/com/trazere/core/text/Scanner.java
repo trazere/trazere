@@ -27,21 +27,21 @@ import java.io.Reader;
  * Scanners provide various operations that read characters and match them against some filter with an infinite look aread. Upon success of the match, the read
  * characters are consumed and returned. Otherwise, no characters are consumed, even when the match was partially successful.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public class Scanner
 implements Closeable {
 	/**
 	 * Reader providing the character stream.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final PushbackReader _reader;
 	
 	/**
 	 * Current scanning position.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected int _position;
 	
@@ -49,7 +49,7 @@ implements Closeable {
 	 * Instantiates a new scanner with an initial <code>0</code> position.
 	 * 
 	 * @param reader Reader providing the character stream.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Scanner(final Reader reader) {
 		this(reader, 0);
@@ -60,7 +60,7 @@ implements Closeable {
 	 * 
 	 * @param reader Reader providing the character stream.
 	 * @param position Initial scanning position.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Scanner(final Reader reader, final int position) {
 		assert null != reader;
@@ -75,7 +75,7 @@ implements Closeable {
 	 * Gets the reader providing the character stream to this scanner.
 	 * 
 	 * @return The reader.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Reader getReader() {
 		return _reader;
@@ -85,7 +85,7 @@ implements Closeable {
 	 * Gets the current scanning position of this scanner.
 	 * 
 	 * @return The position.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public int getPosition() {
 		return _position;
@@ -95,7 +95,7 @@ implements Closeable {
 	 * Tests whether the end-of-file has been reached by this scanner.
 	 * 
 	 * @return <code>true</code> when the eof has been reached, <code>false</code> if characters are still available.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public boolean isEof() {
 		try {
@@ -117,7 +117,7 @@ implements Closeable {
 	 * Scans the upcoming character.
 	 * 
 	 * @return The scanned character, or nothing when the eof has been reached.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Maybe<Character> scanChar() {
 		try {
@@ -141,7 +141,7 @@ implements Closeable {
 	 * @param c Character to scan.
 	 * @return <code>true</code> when the given character has been scanned, <code>false</code> when the eof has been reached or when the next upcoming character
 	 *         was not the excepted one.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public boolean scanChar(final char c) {
 		try {
@@ -168,7 +168,7 @@ implements Closeable {
 	 * 
 	 * @param filter Predicate to use to filter the character.
 	 * @return The scanned character, or nothing when the eof has been reached or when the next upcoming character was not accepted by the filter.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Maybe<Character> scanChar(final CharPredicate filter) {
 		try {
@@ -200,7 +200,7 @@ implements Closeable {
 	 * 
 	 * @param filter Predicate to use to filter the character.
 	 * @return The sequence of scanned characters.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public CharSequence scanChars(final CharPredicate filter) {
 		try {
@@ -234,7 +234,7 @@ implements Closeable {
 	 * @param s Sequence of characters to scan.
 	 * @return <code>true</code> when the given sequence of characters has been scanned, or <code>false</code> when the eof has been reached or when the
 	 *         upcoming characters don't match the given sequence
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public boolean scanSeq(final CharSequence s) {
 		try {
@@ -267,7 +267,7 @@ implements Closeable {
 	 * empty.
 	 * 
 	 * @return The sequence of scanned characters.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public CharSequence scanToEOF() {
 		try {
@@ -295,7 +295,7 @@ implements Closeable {
 	 * 
 	 * @param c Character at which scanning should stop.
 	 * @return The sequence of scanned characters.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public CharSequence scanToChar(final char c) {
 		try {
@@ -330,7 +330,7 @@ implements Closeable {
 	 * 
 	 * @param filter Predicate to use to filter the character.
 	 * @return The sequence of scanned characters.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public CharSequence scanToChar(final CharPredicate filter) {
 		try {
@@ -365,7 +365,7 @@ implements Closeable {
 	 * 
 	 * @param s Stopping sequence of characters.
 	 * @return The sequence of scanned characters.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public CharSequence scanToSeq(final CharSequence s) {
 		try {
@@ -402,7 +402,7 @@ implements Closeable {
 	/**
 	 * Closes the underlying reader providing the characters to this scanner.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@Override
 	public void close() {

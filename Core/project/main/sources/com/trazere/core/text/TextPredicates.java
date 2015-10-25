@@ -21,14 +21,14 @@ import com.trazere.core.functional.Predicate;
  * The {@link TextPredicates} class provides various factories of {@link Predicate predicates} related to text.
  * 
  * @see Predicate
- * @since 1.0
+ * @since 2.0
  */
 public class TextPredicates {
 	/**
 	 * Builds a predicate that evaluates to <code>true</code> for empty char sequences.
 	 * 
 	 * @return The built predicate.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Predicate<CharSequence> isEmpty() {
 		return IS_EMPTY;

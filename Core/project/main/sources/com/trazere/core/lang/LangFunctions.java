@@ -21,7 +21,7 @@ import com.trazere.core.functional.Function;
  * The {@link LangFunctions} class provides various factories of {@link Function functions} related to the Java language.
  * 
  * @see Function
- * @since 1.0
+ * @since 2.0
  */
 public class LangFunctions {
 	// Booleans.
@@ -30,7 +30,7 @@ public class LangFunctions {
 	 * Builds a function that negates the boolean arguments.
 	 *
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Function<Boolean, Boolean> not() {
 		return NOT;
@@ -46,7 +46,7 @@ public class LangFunctions {
 	 * @param <N> Type of the numbers.
 	 * @return The built function.
 	 * @see Number#byteValue()
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <N extends Number> Function<N, Byte> byteValue() {
@@ -61,7 +61,7 @@ public class LangFunctions {
 	 * @param <N> Type of the numbers.
 	 * @return The built function.
 	 * @see Number#shortValue()
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <N extends Number> Function<N, Short> shortValue() {
@@ -76,7 +76,7 @@ public class LangFunctions {
 	 * @param <N> Type of the numbers.
 	 * @return The built function.
 	 * @see Number#intValue()
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <N extends Number> Function<N, Integer> intValue() {
@@ -91,7 +91,7 @@ public class LangFunctions {
 	 * @param <N> Type of the numbers.
 	 * @return The built function.
 	 * @see Number#longValue()
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <N extends Number> Function<N, Long> longValue() {
@@ -106,7 +106,7 @@ public class LangFunctions {
 	 * @param <N> Type of the numbers.
 	 * @return The built function.
 	 * @see Number#floatValue()
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <N extends Number> Function<N, Float> floatValue() {
@@ -121,7 +121,7 @@ public class LangFunctions {
 	 * @param <N> Type of the numbers.
 	 * @return The built function.
 	 * @see Number#doubleValue()
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <N extends Number> Function<N, Double> doubleValue() {
@@ -137,7 +137,7 @@ public class LangFunctions {
 	 * 
 	 * @param <E> Type of the enumeration.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <E extends Enum<E>> Function<E, String> name() {

@@ -30,7 +30,7 @@ import java.util.function.Consumer;
  * 
  * @see Accumulator
  * @see Accumulator2
- * @since 1.0
+ * @since 2.0
  */
 public class AccumulatorUtils {
 	/**
@@ -40,7 +40,7 @@ public class AccumulatorUtils {
 	 * @param <A> Type of the delegate accumulator.
 	 * @param accumulator Delegate accumulator.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E, A extends Accumulator<? super E, ?>> Accumulator<E, A> delegated(final A accumulator) {
 		return new Accumulator<E, A>() {
@@ -69,7 +69,7 @@ public class AccumulatorUtils {
 	 * @param accumulator Accumulator of the filtered elements.
 	 * @param filter Predicate to use to filter the elements.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E, S> Accumulator<E, S> filter(final Accumulator<? super E, ? extends S> accumulator, final Predicate<? super E> filter) {
 		assert null != accumulator;
@@ -100,7 +100,7 @@ public class AccumulatorUtils {
 	 * @param accumulator Accumulator of the transformed elements.
 	 * @param function Function to use to transform the elements.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E, TE, S> Accumulator<E, S> map(final Accumulator<? super TE, ? extends S> accumulator, final Function<? super E, ? extends TE> function) {
 		assert null != accumulator;
@@ -129,7 +129,7 @@ public class AccumulatorUtils {
 	 * @param accumulator Accumulator of the extracted elements.
 	 * @param extractor Function to use to extract the elements.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E, EE, S> Accumulator<E, S> extract(final Accumulator<? super EE, ? extends S> accumulator, final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
 		assert null != extractor;
@@ -161,7 +161,7 @@ public class AccumulatorUtils {
 	 * @param accumulator Accumulator of the extracted elements.
 	 * @param extractor Function to use to extract the elements.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E, EE, S> Accumulator<E, S> extractAll(final Accumulator<? super EE, ? extends S> accumulator, final Function<? super E, ? extends Iterable<? extends EE>> extractor) {
 		assert null != extractor;
@@ -190,7 +190,7 @@ public class AccumulatorUtils {
 	 * @param accumulator Accumulator to transform.
 	 * @param function Function to use to transform the state.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E, S, TS> Accumulator<E, TS> mapState(final Accumulator<? super E, ? extends S> accumulator, final Function<? super S, ? extends TS> function) {
 		assert null != accumulator;
@@ -216,7 +216,7 @@ public class AccumulatorUtils {
 	 * @param <S> Type of the state.
 	 * @param accumulator Accumulator of the normalized elements.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E, S> Accumulator<E, S> normalized(final Accumulator<? super E, ? extends S> accumulator) {
 		return AccumulatorUtils.filter(accumulator, ImperativePredicates.normalizer());
@@ -233,7 +233,7 @@ public class AccumulatorUtils {
 	 * @param accumulator Accumulator of the normalized elements.
 	 * @param hashFunction Function that hashes the elements.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E, H, S> Accumulator<E, S> normalized(final Accumulator<? super E, ? extends S> accumulator, final Function<? super E, H> hashFunction) {
 		return AccumulatorUtils.filter(accumulator, PredicateUtils.map(ImperativePredicates.normalizer(), hashFunction));
@@ -248,7 +248,7 @@ public class AccumulatorUtils {
 	 * @param <S> Type of the state.
 	 * @param accumulator Accumulator to curry.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E1, E2, S> Accumulator2<E1, E2, S> curry(final Accumulator<? super Tuple2<E1, E2>, ? extends S> accumulator) {
 		assert null != accumulator;
@@ -272,7 +272,7 @@ public class AccumulatorUtils {
 	 * @param <E> Type of the accumulated elements.
 	 * @param accumulator Accumulator to lift.
 	 * @return The built consumer.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Consumer<E> toConsumer(final Accumulator<? super E, ?> accumulator) {
 		assert null != accumulator;
@@ -288,7 +288,7 @@ public class AccumulatorUtils {
 	 * @param <A> Type of the delegate accumulator.
 	 * @param accumulator Delegate accumulator.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E1, E2, A extends Accumulator2<? super E1, ? super E2, ?>> Accumulator2<E1, E2, A> delegated2(final A accumulator) {
 		return new Accumulator2<E1, E2, A>() {
@@ -318,7 +318,7 @@ public class AccumulatorUtils {
 	 * @param accumulator Accumulator of the filtered paris of elements.
 	 * @param filter Predicate to use to filter the pairs of elements.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E1, E2, S> Accumulator2<E1, E2, S> filter2(final Accumulator2<? super E1, ? super E2, ? extends S> accumulator, final Predicate2<? super E1, ? super E2> filter) {
 		assert null != accumulator;
@@ -350,7 +350,7 @@ public class AccumulatorUtils {
 	 * @param accumulator Accumulator of the transformed pairs of elements.
 	 * @param function Function to use to transform the pairs of elements.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E1, E2, TE1, TE2, S> Accumulator2<E1, E2, S> map2(final Accumulator2<? super TE1, ? super TE2, ? extends S> accumulator, final Function2<? super E1, ? super E2, ? extends Tuple2<? extends TE1, ? extends TE2>> function) {
 		assert null != accumulator;
@@ -380,7 +380,7 @@ public class AccumulatorUtils {
 	 * @param accumulator Accumulator of the extracted pairs of elements.
 	 * @param extractor Function to use to extract the pairs of elements.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E1, E2, EE1, EE2, S> Accumulator2<E1, E2, S> extract2(final Accumulator2<? super EE1, ? super EE2, ? extends S> accumulator, final Function2<? super E1, ? super E2, ? extends Iterable<? extends Tuple2<? extends EE1, ? extends EE2>>> extractor) {
 		assert null != extractor;
@@ -409,7 +409,7 @@ public class AccumulatorUtils {
 	 * @param accumulator Accumulator to transform.
 	 * @param function Function to use to transform the state.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E1, E2, S, TS> Accumulator2<E1, E2, TS> mapState2(final Accumulator2<? super E1, ? super E2, ? extends S> accumulator, final Function<? super S, ? extends TS> function) {
 		assert null != accumulator;
@@ -437,7 +437,7 @@ public class AccumulatorUtils {
 	 * @param <S> Type of the state.
 	 * @param accumulator Accumulator to uncurry.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E1, E2, S> Accumulator<Tuple2<E1, E2>, S> uncurry(final Accumulator2<? super E1, ? super E2, ? extends S> accumulator) {
 		assert null != accumulator;
@@ -462,7 +462,7 @@ public class AccumulatorUtils {
 	 * @param <E2> Type of the second element of the accumulated pairs.
 	 * @param accumulator Accumulator to lift.
 	 * @return The built bi-consumer.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E1, E2> BiConsumer<E1, E2> toBiConsumer(final Accumulator2<? super E1, ? super E2, ?> accumulator) {
 		assert null != accumulator;

@@ -22,7 +22,7 @@ import com.trazere.core.imperative.Accumulator;
  * 
  * @see Accumulator
  * @see Reference
- * @since 1.0
+ * @since 2.0
  */
 public class ReferenceAccumulators {
 	/**
@@ -33,7 +33,7 @@ public class ReferenceAccumulators {
 	 * @param reference Reference to update.
 	 * @return The built accumulator.
 	 * @see MutableReference#update(com.trazere.core.util.Maybe)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T, R extends MutableReference<T>> Accumulator<T, R> update(final R reference) {
 		assert null != reference;

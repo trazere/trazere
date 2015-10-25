@@ -19,7 +19,7 @@ package com.trazere.core.lang;
  * The {@link ComparableUtils} class provides various utilities regarding {@link Comparable comparables}.
  * 
  * @see Comparable
- * @since 1.0
+ * @since 2.0
  */
 public class ComparableUtils {
 	/**
@@ -32,7 +32,7 @@ public class ComparableUtils {
 	 * @param object2 The second value. May be <code>null</code>.
 	 * @return The result of the comparison as defined by the {@link Comparable#compareTo(Object)} method.
 	 * @see Comparable#compareTo(Object)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T extends Comparable<T>> int safeCompareTo(final T object1, final T object2) {
 		if (null == object1) {
@@ -49,7 +49,7 @@ public class ComparableUtils {
 	 * @param value1 First value.
 	 * @param value2 Second value.
 	 * @return The least value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T extends Comparable<T>> T least(final T value1, final T value2) {
 		return value1.compareTo(value2) <= 0 ? value1 : value2;
@@ -62,7 +62,7 @@ public class ComparableUtils {
 	 * @param value1 First value.
 	 * @param value2 Second value.
 	 * @return The greatest value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T extends Comparable<T>> T greatest(final T value1, final T value2) {
 		return value1.compareTo(value2) >= 0 ? value1 : value2;

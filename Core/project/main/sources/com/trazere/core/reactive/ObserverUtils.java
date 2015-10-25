@@ -21,7 +21,7 @@ import com.trazere.core.functional.Predicate;
  * The {@link ObserverUtils} class provides various utilities regarding {@link Observer observers}.
  * 
  * @see Observer
- * @since 1.0
+ * @since 2.0
  */
 public class ObserverUtils {
 	/**
@@ -30,7 +30,7 @@ public class ObserverUtils {
 	 * @param <E> Type of the events.
 	 * @param observer Observer to derive.
 	 * @return The built observer.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Observer<E> once(final Observer<? super E> observer) {
 		assert null != observer;
@@ -51,7 +51,7 @@ public class ObserverUtils {
 	 * @param observer Observer to derive.
 	 * @param condition Handling condition.
 	 * @return The built observer.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Observer<E> while_(final Observer<? super E> observer, final Predicate<? super E> condition) {
 		assert null != observer;
@@ -76,7 +76,7 @@ public class ObserverUtils {
 	 * @param observer Observer to derive.
 	 * @param filter Filter of the events to handle.
 	 * @return The built observer.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Observer<E> filter(final Observer<? super E> observer, final Predicate<? super E> filter) {
 		assert null != observer;

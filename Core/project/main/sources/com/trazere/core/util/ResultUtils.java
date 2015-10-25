@@ -22,7 +22,7 @@ import com.trazere.core.lang.ThrowableFactory;
  * The {@link ResultUtils} class provides various utilities regarding {@link Result results}.
  * 
  * @see Result
- * @since 1.0
+ * @since 2.0
  */
 public class ResultUtils {
 	/**
@@ -33,7 +33,7 @@ public class ResultUtils {
 	 * @param failureFactory Factory of the exceptions for the failures.
 	 * @return The success value.
 	 * @throws RuntimeException An exceptioned caused the given result when it is a failure.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> T get(final Result<T> result, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		if (result.isSuccess()) {
@@ -49,7 +49,7 @@ public class ResultUtils {
 	 * @param <T> Type of the success value.
 	 * @param result {@link Result} instance containing the {@link Result} instance to flatten.
 	 * @return A {@link Result} instance containing the flatten success value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Result<T> flatten(final Result<? extends Result<? extends T>> result) {
 		return result.flatMap(Functions.<Result<? extends T>>identity());

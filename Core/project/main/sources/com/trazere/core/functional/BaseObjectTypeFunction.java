@@ -29,7 +29,7 @@ import java.util.Set;
  * 
  * @param <T> Upper bound type.
  * @param <R> Type of the results.
- * @since 1.0
+ * @since 2.0
  */
 public abstract class BaseObjectTypeFunction<T, R>
 extends BaseTypeFunction<Class<? extends T>, R>
@@ -40,7 +40,7 @@ implements ObjectTypeFunction<T, Maybe<R>> {
 	 * @param <R> Type of the values.
 	 * @param function The function.
 	 * @return The built map.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <R> BaseObjectTypeFunction<Object, R> build(final Function<? super Class<?>, ? extends Maybe<R>> function) {
 		return build(function, Object.class, Maybe.<R>none());
@@ -53,7 +53,7 @@ implements ObjectTypeFunction<T, Maybe<R>> {
 	 * @param function The function.
 	 * @param defaultValue The default value.
 	 * @return The built map.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <R> BaseObjectTypeFunction<Object, R> build(final Function<? super Class<?>, ? extends Maybe<R>> function, final Maybe<R> defaultValue) {
 		return build(function, Object.class, defaultValue);
@@ -67,7 +67,7 @@ implements ObjectTypeFunction<T, Maybe<R>> {
 	 * @param function The function.
 	 * @param upperBound The upper bound.
 	 * @return The built map.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T, R> BaseObjectTypeFunction<T, R> build(final Function<? super Class<? extends T>, ? extends Maybe<R>> function, final Class<T> upperBound) {
 		return build(function, upperBound, Maybe.<R>none());
@@ -82,7 +82,7 @@ implements ObjectTypeFunction<T, Maybe<R>> {
 	 * @param upperBound The upper bound.
 	 * @param defaultValue The default value.
 	 * @return The built map.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T, R> BaseObjectTypeFunction<T, R> build(final Function<? super Class<? extends T>, ? extends Maybe<R>> function, final Class<T> upperBound, final Maybe<R> defaultValue) {
 		return new BaseObjectTypeFunction<T, R>(upperBound, defaultValue) {
@@ -97,7 +97,7 @@ implements ObjectTypeFunction<T, Maybe<R>> {
 	 * Instantiates a new type map with the given upper bound and no defaut values.
 	 * 
 	 * @param upperBound Upper bound.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public BaseObjectTypeFunction(final Class<T> upperBound) {
 		this(upperBound, Maybe.<R>none());
@@ -108,7 +108,7 @@ implements ObjectTypeFunction<T, Maybe<R>> {
 	 * 
 	 * @param upperBound Upper bound.
 	 * @param defaultValue Default value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public BaseObjectTypeFunction(final Class<T> upperBound, final Maybe<R> defaultValue) {
 		super(Maybe.some(upperBound), defaultValue);

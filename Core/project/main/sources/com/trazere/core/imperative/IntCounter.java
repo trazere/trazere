@@ -18,13 +18,13 @@ package com.trazere.core.imperative;
 /**
  * The {@link IntCounter} class implements integer counters.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public class IntCounter {
 	/**
 	 * Instantiates a new counter starting at <code>0</code> and incrementing by <code>1</code>.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public IntCounter() {
 		this(0, 1);
@@ -34,7 +34,7 @@ public class IntCounter {
 	 * Instantiates a new counter starting at the given value and incrementing by <code>1</code>.
 	 * 
 	 * @param start Starting value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public IntCounter(final int start) {
 		this(start, 1);
@@ -45,7 +45,7 @@ public class IntCounter {
 	 * 
 	 * @param start Starting value.
 	 * @param increment Increment between consecutive values.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public IntCounter(final int start, final int increment) {
 		_start = start;
@@ -58,7 +58,7 @@ public class IntCounter {
 	/**
 	 * Starting value of the counter.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final int _start;
 	
@@ -66,7 +66,7 @@ public class IntCounter {
 	 * Gets the starting value of this counter.
 	 * 
 	 * @return The start value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public int getStart() {
 		return _start;
@@ -77,7 +77,7 @@ public class IntCounter {
 	/**
 	 * Increment between consecutive values.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final int _increment;
 	
@@ -85,7 +85,7 @@ public class IntCounter {
 	 * Gets the increment between consecutive values of this counter.
 	 * 
 	 * @return The increment.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public int getIncrement() {
 		return _increment;
@@ -96,7 +96,7 @@ public class IntCounter {
 	/**
 	 * Current value.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected int _value;
 	
@@ -104,7 +104,7 @@ public class IntCounter {
 	 * Gets the current value of this counter.
 	 * 
 	 * @return The current value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public int get() {
 		return _value;
@@ -114,7 +114,7 @@ public class IntCounter {
 	 * Indicates whether the current value of this counter is the starting value.
 	 * 
 	 * @return <code>true</code> when the current value is the starting value, <code>false</code> otherwise.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public boolean isStart() {
 		return _start == _value;
@@ -123,7 +123,7 @@ public class IntCounter {
 	/**
 	 * Resets this counter to its starting value.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public void reset() {
 		_value = _start;
@@ -133,7 +133,7 @@ public class IntCounter {
 	 * Increments this counter.
 	 * 
 	 * @return The incremented value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public int inc() {
 		_value += _increment;
@@ -145,7 +145,7 @@ public class IntCounter {
 	 * 
 	 * @param n Number of times to increment the counter.
 	 * @return The incremented value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public int inc(final int n) {
 		_value += _increment * n;
@@ -156,7 +156,7 @@ public class IntCounter {
 	 * Decrements this counter.
 	 * 
 	 * @return The decremented value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public int dec() {
 		_value -= _increment;
@@ -168,7 +168,7 @@ public class IntCounter {
 	 * 
 	 * @param n Number of times to decrement the counter.
 	 * @return The decremented value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public int dec(final int n) {
 		_value -= _increment * n;

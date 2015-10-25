@@ -22,7 +22,7 @@ package com.trazere.core.functional;
  * @param <A2> Type of the second arguments.
  * @param <A3> Type of the third arguments.
  * @param <A4> Type of the fourth arguments.
- * @since 1.0
+ * @since 2.0
  */
 @FunctionalInterface
 public interface Predicate4<A1, A2, A3, A4> {
@@ -34,7 +34,7 @@ public interface Predicate4<A1, A2, A3, A4> {
 	 * @param arg3 Third argument to evaluate the predicate with.
 	 * @param arg4 Fourth argument to evaluate the predicate with.
 	 * @return The result of the predicate evaluation.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	boolean evaluate(A1 arg1, A2 arg2, A3 arg3, A4 arg4);
 }

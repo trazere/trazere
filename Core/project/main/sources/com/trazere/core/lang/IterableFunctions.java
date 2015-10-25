@@ -23,7 +23,7 @@ import java.util.Iterator;
  * 
  * @see Function
  * @see Iterable
- * @since 1.0
+ * @since 2.0
  */
 public class IterableFunctions {
 	/**
@@ -31,7 +31,7 @@ public class IterableFunctions {
 	 * 
 	 * @param <E> Type of the elements.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <E> Function<Iterable<? extends E>, Iterator<? extends E>> iterator() {

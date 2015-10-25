@@ -22,7 +22,7 @@ import java.util.Comparator;
  * 
  * @see Comparator
  * @see Field
- * @since 1.0
+ * @since 2.0
  */
 public class FieldComparators {
 	/**
@@ -31,7 +31,7 @@ public class FieldComparators {
 	 * @param <T> Type of the values.
 	 * @param comparator Comparator of the values.
 	 * @return The built comparator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Comparator<Field<T>> field(final Comparator<? super T> comparator) {
 		return ComparatorUtils.map(comparator, FieldFunctions.get());
@@ -43,7 +43,7 @@ public class FieldComparators {
 	 * @param <T> Type of the values.
 	 * @param comparator Comparator of the values.
 	 * @return The built comparator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Comparator<Field1<T>> field1(final Comparator<? super T> comparator) {
 		return ComparatorUtils.map(comparator, FieldFunctions.get1());
@@ -55,7 +55,7 @@ public class FieldComparators {
 	 * @param <T> Type of the values.
 	 * @param comparator Comparator of the values.
 	 * @return The built comparator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Comparator<Field2<T>> field2(final Comparator<? super T> comparator) {
 		return ComparatorUtils.map(comparator, FieldFunctions.get2());
@@ -67,7 +67,7 @@ public class FieldComparators {
 	 * @param <T> Type of the values.
 	 * @param comparator Comparator of the values.
 	 * @return The built comparator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Comparator<Field3<T>> field3(final Comparator<? super T> comparator) {
 		return ComparatorUtils.map(comparator, FieldFunctions.get3());
@@ -79,7 +79,7 @@ public class FieldComparators {
 	 * @param <T> Type of the values.
 	 * @param comparator Comparator of the values.
 	 * @return The built comparator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Comparator<Field4<T>> field4(final Comparator<? super T> comparator) {
 		return ComparatorUtils.map(comparator, FieldFunctions.get4());
@@ -91,7 +91,7 @@ public class FieldComparators {
 	 * @param <T> Type of the values.
 	 * @param comparator Comparator of the values.
 	 * @return The built comparator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Comparator<Field5<T>> field5(final Comparator<? super T> comparator) {
 		return ComparatorUtils.map(comparator, FieldFunctions.get5());
@@ -103,7 +103,7 @@ public class FieldComparators {
 	 * @param <T> Type of the values.
 	 * @param comparator Comparator of the values.
 	 * @return The built comparator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Comparator<Field6<T>> field6(final Comparator<? super T> comparator) {
 		return ComparatorUtils.map(comparator, FieldFunctions.get6());
@@ -115,7 +115,7 @@ public class FieldComparators {
 	 * @param <T> Type of the values.
 	 * @param comparator Comparator of the values.
 	 * @return The built comparator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Comparator<Field7<T>> field7(final Comparator<? super T> comparator) {
 		return ComparatorUtils.map(comparator, FieldFunctions.get7());
@@ -127,7 +127,7 @@ public class FieldComparators {
 	 * @param <T> Type of the values.
 	 * @param comparator Comparator of the values.
 	 * @return The built comparator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Comparator<Field8<T>> field8(final Comparator<? super T> comparator) {
 		return ComparatorUtils.map(comparator, FieldFunctions.get8());
@@ -139,7 +139,7 @@ public class FieldComparators {
 	 * @param <T> Type of the values.
 	 * @param comparator Comparator of the values.
 	 * @return The built comparator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Comparator<Field9<T>> field9(final Comparator<? super T> comparator) {
 		return ComparatorUtils.map(comparator, FieldFunctions.get9());
@@ -151,7 +151,7 @@ public class FieldComparators {
 	 * @param <T> Type of the values.
 	 * @param comparator Comparator of the values.
 	 * @return The built comparator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Comparator<Field10<T>> field10(final Comparator<? super T> comparator) {
 		return ComparatorUtils.map(comparator, FieldFunctions.get10());

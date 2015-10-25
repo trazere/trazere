@@ -20,14 +20,14 @@ package com.trazere.core.imperative;
  * 
  * @see Procedure
  * @see Effect
- * @since 1.0
+ * @since 2.0
  */
 public class EffectProcedures {
 	/**
 	 * Builds a procedure that executes the argument effects.
 	 *
 	 * @return The built procedure.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Procedure<Effect> execute() {
 		return EXECUTE;

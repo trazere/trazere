@@ -22,7 +22,7 @@ import java.util.Observable;
  * 
  * @param <E> Type of the observed events.
  * @see Observable
- * @since 1.0
+ * @since 2.0
  */
 public interface Observer<E> {
 	/**
@@ -30,7 +30,7 @@ public interface Observer<E> {
 	 * 
 	 * @param event Raised event.
 	 * @return <code>true</code> to hold the subscription corresponding to this notification, <code>false</code> to cancel it.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	boolean onEvent(final E event);
 }

@@ -18,7 +18,7 @@ package com.trazere.core.math;
 /**
  * The {@link MathUtils} class provides various utilities regarding math.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public class MathUtils {
 	/**
@@ -27,7 +27,7 @@ public class MathUtils {
 	 * @param a The first value.
 	 * @param b The second value.
 	 * @return The greatest common denominator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static int gcd(final int a, final int b) {
 		return 0 == b ? a : gcd(b, a % b);
@@ -39,7 +39,7 @@ public class MathUtils {
 	 * @param a The first value.
 	 * @param b The second value.
 	 * @return The greatest common denominator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static long gcd(final long a, final long b) {
 		return 0 == b ? a : gcd(b, a % b);
@@ -51,7 +51,7 @@ public class MathUtils {
 	 * @param a The first value.
 	 * @param b The second value.
 	 * @return The least common multiple.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static int lcm(final int a, final int b) {
 		return 0 == a ? 0 : (a / gcd(a, b)) * b;
@@ -63,7 +63,7 @@ public class MathUtils {
 	 * @param a The first value.
 	 * @param b The second value.
 	 * @return The least common multiple.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static long lcm(final long a, final long b) {
 		return 0 == a ? 0 : (a / gcd(a, b)) * b;

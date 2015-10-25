@@ -19,14 +19,14 @@ package com.trazere.core.util;
  * The {@link Tag2} interface defines sum types that support a case associated to a second tag.
  * 
  * @param <T> Type of the case.
- * @since 1.0
+ * @since 2.0
  */
 public interface Tag2<T extends Tag2<T>> {
 	/**
 	 * Indicates whether this object is an instance of the case associated to the second tag.
 	 * 
 	 * @return <code>true</code> when the object is an instance of the case associated to the second tag, <code>false</code> otherwise.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	default boolean is2() {
 		return false;
@@ -37,7 +37,7 @@ public interface Tag2<T extends Tag2<T>> {
 	 * 
 	 * @return The view.
 	 * @throws InvalidConstructorException When the object is not an instance of the case associated to the second tag.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	default T as2()
 	throws InvalidConstructorException {

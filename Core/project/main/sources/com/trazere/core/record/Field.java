@@ -25,14 +25,14 @@ package com.trazere.core.record;
  * @param <K> Type of the key.
  * @param <V> Type of the value.
  * @see FieldKey
- * @since 1.0
+ * @since 2.0
  */
 public interface Field<K extends FieldKey<? extends K, ?>, V> {
 	/**
 	 * Gets the key of this field.
 	 * 
 	 * @return The key.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	FieldKey<? extends K, V> getKey();
 	
@@ -40,7 +40,7 @@ public interface Field<K extends FieldKey<? extends K, ?>, V> {
 	 * Gets the value of this field.
 	 * 
 	 * @return The value. May be <code>null</code>.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	V getValue();
 }

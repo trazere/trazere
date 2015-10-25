@@ -25,14 +25,14 @@ import com.trazere.core.text.TextUtils;
  * <p>
  * This class can be used instead of non-final variables to help tagging side effects.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public class MutableBoolean
 implements Describable {
 	/**
 	 * Current value.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected boolean _value;
 	
@@ -40,7 +40,7 @@ implements Describable {
 	 * Instantiates a new mutable boolean.
 	 * 
 	 * @param value Initial value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public MutableBoolean(final boolean value) {
 		_value = value;
@@ -50,7 +50,7 @@ implements Describable {
 	 * Gets the current value of this mutable boolean.
 	 * 
 	 * @return The current value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public boolean get() {
 		return _value;
@@ -61,7 +61,7 @@ implements Describable {
 	 * 
 	 * @param value New value.
 	 * @return The given new value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public boolean set(final boolean value) {
 		_value = value;
@@ -73,7 +73,7 @@ implements Describable {
 	 * 
 	 * @param function Function to use to compute the new value.
 	 * @return The computed new value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public boolean update(final Function<? super Boolean, ? extends Boolean> function) {
 		return set(function.evaluate(_value).booleanValue());
@@ -83,7 +83,7 @@ implements Describable {
 	 * Inverses the value of this mutable boolean.
 	 * 
 	 * @return The resulting new value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public boolean not() {
 		return set(!_value);
@@ -94,7 +94,7 @@ implements Describable {
 	 * 
 	 * @param value Value.
 	 * @return The resulting new value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public boolean and(final boolean value) {
 		return set(_value && value);
@@ -105,7 +105,7 @@ implements Describable {
 	 * 
 	 * @param value Value.
 	 * @return The resulting new value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public boolean or(final boolean value) {
 		return set(_value || value);

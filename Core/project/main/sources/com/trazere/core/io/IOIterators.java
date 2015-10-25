@@ -27,7 +27,7 @@ import java.util.Iterator;
  * The {@link IOIterators} class provides various factories of {@link Iterator iterators} regarding I/Os.
  * 
  * @see Iterator
- * @since 1.0
+ * @since 2.0
  */
 public class IOIterators {
 	/**
@@ -36,7 +36,7 @@ public class IOIterators {
 	 * @param stream Stream to read.
 	 * @param failureFactory Factory of the exceptions for the IO failures.
 	 * @return The built iterator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Iterator<Byte> fromStream(final InputStream stream, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		assert null != stream;
@@ -61,7 +61,7 @@ public class IOIterators {
 	 * @param reader Reader to read.
 	 * @param failureFactory Factory of the exceptions for the IO failures.
 	 * @return The built iterator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Iterator<Character> fromReader(final Reader reader, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		assert null != reader;

@@ -24,7 +24,7 @@ import java.util.Map;
  * 
  * @see Accumulator
  * @see Map
- * @since 1.0
+ * @since 2.0
  */
 public class MapAccumulators {
 	/**
@@ -36,7 +36,7 @@ public class MapAccumulators {
 	 * @param map Map to populate.
 	 * @return The built accumulator.
 	 * @see Map#put(Object, Object)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V, M extends Map<? super K, ? super V>> Accumulator2<K, V, M> put(final M map) {
 		assert null != map;

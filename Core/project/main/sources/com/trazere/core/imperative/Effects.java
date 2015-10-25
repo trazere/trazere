@@ -19,14 +19,14 @@ package com.trazere.core.imperative;
  * The {@link Effects} class provides various factories of {@link Effect effects}.
  * 
  * @see Effect
- * @since 1.0
+ * @since 2.0
  */
 public class Effects {
 	/**
 	 * Builds an effect that does nothing.
 	 * 
 	 * @return The built effect.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Effect nop() {
 		return NOP;
@@ -43,7 +43,7 @@ public class Effects {
 	 * 
 	 * @param runnable Runnable to lift.
 	 * @return The built effect.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Effect fromRunnable(final Runnable runnable) {
 		assert null != runnable;

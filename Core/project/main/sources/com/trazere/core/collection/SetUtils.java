@@ -22,7 +22,7 @@ import java.util.Set;
  * The {@link SetUtils} class provides various utilities regarding {@link Set sets}.
  * 
  * @see Set
- * @since 1.0
+ * @since 2.0
  */
 public class SetUtils {
 	/**
@@ -31,7 +31,7 @@ public class SetUtils {
 	 * @param <E> Type of the elements.
 	 * @param set Set to wrap.
 	 * @return An unmodifiable view of the given set, or the given set when is it already unmodifiable.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Set<E> unmodifiable(final Set<E> set) {
 		return UNMODIFIABLE_SET_CLASS.isInstance(set) ? set : Collections.unmodifiableSet(set);

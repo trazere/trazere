@@ -24,14 +24,14 @@ import java.util.Set;
  * 
  * @param <K> Type of the field keys.
  * @param <R> Type of the records.
- * @since 1.0
+ * @since 2.0
  */
 public abstract class BaseRecordBuilder<K extends FieldKey<? extends K, ?>, R extends Record<K>>
 implements RecordBuilder<K, R> {
 	/**
 	 * Fields identified by their keys.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected Map<FieldKey<? extends K, ?>, Field<? extends K, ?>> _fields = new HashMap<>();
 	

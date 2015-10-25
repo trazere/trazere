@@ -22,7 +22,7 @@ import com.trazere.core.util.Maybe;
  * The {@link ObjectUtils} class provides various utilities related to {@link Object objects}.
  * 
  * @see Object
- * @since 1.0
+ * @since 2.0
  */
 public class ObjectUtils {
 	/**
@@ -32,7 +32,7 @@ public class ObjectUtils {
 	 * @param object Object to read.
 	 * @return The Java class.
 	 * @see Object#getClass()
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Class<? extends T> getClass(final T object) {
@@ -48,7 +48,7 @@ public class ObjectUtils {
 	 * @param <R> Target type.
 	 * @param object Object to cast. May be <code>null</code>.
 	 * @return The given casted object. May be <code>null</code>.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <R> R cast(final Object object) {
@@ -66,7 +66,7 @@ public class ObjectUtils {
 	 * @param <R> Target type.
 	 * @param object Object to cast. May be <code>null</code>.
 	 * @return The given casted object. May be <code>null</code>.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T, R extends T> R downcast(final T object) {
@@ -80,7 +80,7 @@ public class ObjectUtils {
 	 * @param object Unsafe object to make safe. May be <code>null</code>.
 	 * @param nullReplacement Object to use instead of <code>null</code>.
 	 * @return The given object or the object to use instead of <code>null</code> when the given object is <code>null</code>.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> T safe(final T object, final T nullReplacement) {
 		return null != object ? object : nullReplacement;
@@ -93,7 +93,7 @@ public class ObjectUtils {
 	 * @param object Unsafe object to make safe. May be <code>null</code>.
 	 * @param nullReplacement Object to use instead of <code>null</code>.
 	 * @return The given object or the object to use instead of <code>null</code> when the given object is <code>null</code>.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> T safe(final T object, final Thunk<? extends T> nullReplacement) {
 		return null != object ? object : nullReplacement.evaluate();
@@ -109,7 +109,7 @@ public class ObjectUtils {
 	 * @param object2 The second unsafe object to test for equality. May be <code>null</code>.
 	 * @return <code>true</code> if the objects are both <code>null</code> or both not <code>null</code> and equal.
 	 * @see Object#equals(Object)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> boolean safeEquals(final T object1, final T object2) {
 		return object1 == object2 || null != object1 && object1.equals(object2);
@@ -125,7 +125,7 @@ public class ObjectUtils {
 	 * @param object Object to match. May be <code>null</code>.
 	 * @param type Type against which to match.
 	 * @return The given matched object.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Maybe<T> match(final Object object, final Class<T> type) {
 		if (null != object && type.isInstance(object)) {
@@ -147,7 +147,7 @@ public class ObjectUtils {
 	 * @param mismatchFactory Factory of the exceptions for the mismatches.
 	 * @return The given matched object.
 	 * @throws RuntimeException When the given object is null or is not assignable to the given type.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> T match(final Object object, final Class<T> type, final ThrowableFactory<? extends RuntimeException> mismatchFactory) {
 		if (null != object && type.isInstance(object)) {

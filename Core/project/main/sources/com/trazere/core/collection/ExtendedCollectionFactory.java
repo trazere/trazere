@@ -24,7 +24,7 @@ import java.util.Collections;
  * @param <E> Type of the elements.
  * @param <L> Type of the collections.
  * @see Collection
- * @since 1.0
+ * @since 2.0
  */
 public interface ExtendedCollectionFactory<E, L extends Collection<E>>
 extends ExtendedAbstractCollectionFactory<E, Collection<E>, L> {

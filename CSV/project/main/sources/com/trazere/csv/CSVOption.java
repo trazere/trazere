@@ -18,27 +18,27 @@ package com.trazere.csv;
 /**
  * The {@link CSVOption} enumeration represents options for CSV {@link CSVReader readers} and {@link CSVWriter writers}.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public enum CSVOption {
 	/**
 	 * Indicates that the fields should be trimed (heading and trailing white spaces).
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	TRIM_FIELDS,
 	
 	/**
 	 * Indicates that the cardinality of the lines should be checked.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	CHECK_CARDINALITY,
 	
 	/**
 	 * Indicates that the invalid lines should be ignored.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	IGNORE_INVALID_LINES,
 }

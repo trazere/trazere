@@ -27,7 +27,7 @@ import java.util.Set;
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
- * @since 1.0
+ * @since 2.0
  */
 public interface Cache<K, V> {
 	/**
@@ -38,7 +38,7 @@ public interface Cache<K, V> {
 	 * @param key Key of the entry.
 	 * @param value Value of the entry.
 	 * @return The previous value of the entry, or nothing when no entries was associated to the key.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	Maybe<V> fill(K key, V value);
 	
@@ -46,7 +46,7 @@ public interface Cache<K, V> {
 	 * Indicates whether this cache contains entries.
 	 * 
 	 * @return <code>true</code> when the cache contains no entries, <code>false</code> otherwise.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	boolean isEmpty();
 	
@@ -54,7 +54,7 @@ public interface Cache<K, V> {
 	 * Gets the number of entries of this cache.
 	 * 
 	 * @return The number of entries.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	int size();
 	
@@ -63,7 +63,7 @@ public interface Cache<K, V> {
 	 * 
 	 * @param key Key to test.
 	 * @return <code>true</code> when an entry is associated to the key, <code>false</code> otherwise.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	boolean contains(K key);
 	
@@ -71,7 +71,7 @@ public interface Cache<K, V> {
 	 * Gets the keys of all entries of this cache.
 	 * 
 	 * @return An unmodifiable set of the keys.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	Set<K> keys();
 	
@@ -80,7 +80,7 @@ public interface Cache<K, V> {
 	 * 
 	 * @param key Key whose associated value should be returned.
 	 * @return The value of the entry associated to the key, or nothing when no entries is associated to the key.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	Maybe<V> get(K key);
 	
@@ -88,7 +88,7 @@ public interface Cache<K, V> {
 	 * Clears the entry of this cache associated to the given key.
 	 * 
 	 * @param key Key of the entry to clear.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	void clear(K key);
 	
@@ -96,14 +96,14 @@ public interface Cache<K, V> {
 	 * Clears the entries of this cache associated to key accepted by the given filter.
 	 * 
 	 * @param filter Predicated to use to filter the entries to clear.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	void clear(Predicate<? super K> filter);
 	
 	/**
 	 * Clears all entries of this cache.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	void clear();
 }

@@ -22,7 +22,7 @@ import java.io.OutputStream;
 /**
  * The {@link CarbonCopyInputStream} class implements input streams that writes a copy of the data read from a source input stream to an output stream.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public class CarbonCopyInputStream
 extends DecoratorInputStream {
@@ -31,7 +31,7 @@ extends DecoratorInputStream {
 	 * 
 	 * @param source Input stream providing the data.
 	 * @param copy Output stream receiving the copy of the read data.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public CarbonCopyInputStream(final InputStream source, final OutputStream copy) {
 		super(source);
@@ -48,7 +48,7 @@ extends DecoratorInputStream {
 	/**
 	 * Output stream receiving the copy of the data.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final OutputStream _copy;
 	
@@ -56,7 +56,7 @@ extends DecoratorInputStream {
 	 * Gets the output stream receiving the copy of the data read from this stream.
 	 * 
 	 * @return The copy output stream.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public OutputStream getCopy() {
 		return _copy;

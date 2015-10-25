@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 /**
  * The {@link DateAdapter} class implements JAXB adpaters for dates.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public class DateAdapter
 extends XmlAdapter<String, OffsetDateTime> {
@@ -44,7 +44,7 @@ extends XmlAdapter<String, OffsetDateTime> {
 	 * @param representation Representation to parse.
 	 * @return The parsed date.
 	 * @throws IllegalArgumentException When the representation is invalid.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static OffsetDateTime parse(final String representation)
 	throws IllegalArgumentException {
@@ -56,7 +56,7 @@ extends XmlAdapter<String, OffsetDateTime> {
 	 * 
 	 * @param value Date to format.
 	 * @return The formatted representation.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static String format(final OffsetDateTime value) {
 		return DatatypeConverter.printDate(GregorianCalendar.from(value.toZonedDateTime()));

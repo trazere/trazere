@@ -23,7 +23,7 @@ import com.trazere.core.util.Tuple2;
  * The {@link MemoizedFeed} interface defines feeds that memoize their head and tail.
  * 
  * @param <E> Type of the elements.
- * @since 1.0
+ * @since 2.0
  */
 public interface MemoizedFeed<E>
 extends Feed<E>, MemoizedThunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>> {

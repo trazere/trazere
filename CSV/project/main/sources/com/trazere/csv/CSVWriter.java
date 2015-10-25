@@ -33,7 +33,7 @@ import java.util.Set;
 /**
  * The {@link CSVWriter} class implements writers of a CSV formatted table.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public class CSVWriter
 implements Closeable {
@@ -44,7 +44,7 @@ implements Closeable {
 	 * @param delimiter Delimiter of the CSV fields.
 	 * @param headers Headers of the CSV fields.
 	 * @param options Options.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public CSVWriter(final Writer writer, final String delimiter, final List<? extends CSVHeader<?>> headers, final Set<CSVOption> options) {
 		assert null != writer;
@@ -69,7 +69,7 @@ implements Closeable {
 	/**
 	 * CSV output writer.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final Writer _writer;
 	
@@ -78,7 +78,7 @@ implements Closeable {
 	 * <p>
 	 * This methods simply flushes the underlying writer.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public void flush() {
 		try {
@@ -93,7 +93,7 @@ implements Closeable {
 	 * <p>
 	 * This methods simply closes the underlying writer.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@Override
 	public void close() {
@@ -109,7 +109,7 @@ implements Closeable {
 	/**
 	 * Delimiter of the CSV fields.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final String _delimiter;
 	
@@ -117,7 +117,7 @@ implements Closeable {
 	 * Gets the CSV field delimiter of this writer.
 	 * 
 	 * @return The delimiter.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public String getDelimiter() {
 		return _delimiter;
@@ -128,7 +128,7 @@ implements Closeable {
 	/**
 	 * Headers of the CSV fields.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final List<? extends CSVHeader<?>> _headers;
 	
@@ -136,7 +136,7 @@ implements Closeable {
 	 * Gets the headers of this writer.
 	 * 
 	 * @return An unmodifiable collection of the headers.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public List<? extends CSVHeader<?>> getHeaders() {
 		return _headers;
@@ -147,7 +147,7 @@ implements Closeable {
 	/**
 	 * Options.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final Set<CSVOption> _options;
 	
@@ -155,7 +155,7 @@ implements Closeable {
 	 * Gets the options of this writer.
 	 * 
 	 * @return An unmodifiable set of the options.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Set<CSVOption> getOptions() {
 		return _options;
@@ -166,7 +166,7 @@ implements Closeable {
 	/**
 	 * Writes a CSV line containing the headers.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public void writeHeaders() {
 		writeLine(header -> header.getLabel());
@@ -176,7 +176,7 @@ implements Closeable {
 	 * Writes the given CSV line.
 	 * 
 	 * @param line Line to write.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public void writeLine(final Record<CSVHeader<?>> line) {
 		writeLine(header -> serializeField(line, header));
@@ -190,7 +190,7 @@ implements Closeable {
 	 * Writes the given CSV line.
 	 * 
 	 * @param representations Representations of the fields.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected void writeLine(final Function<? super CSVHeader<?>, String> representations) {
 		// Write the fields.
@@ -210,7 +210,7 @@ implements Closeable {
 	 * 
 	 * @param representation Representation of the field.
 	 * @return The renderered representation of the field.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final String renderField(final String representation) {
 		// Trim.

@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * The {@link ObservableUtils} class provides various helpers regarding {@link Observable observables}.
  * 
  * @see Observable
- * @since 1.0
+ * @since 2.0
  */
 public class ObservableUtils {
 	/** Logger. */
@@ -44,7 +44,7 @@ public class ObservableUtils {
 	 * @param observer Reference to the observer to notify.
 	 * @param event Raised event.
 	 * @return <code>true</code> to hold the subscription corresponding to this notification, <code>false</code> to cancel it.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> boolean notify(final Observer<? super E> observer, final E event) {
 		try {
@@ -66,7 +66,7 @@ public class ObservableUtils {
 	 * @param <E> Type of the event.
 	 * @param observable Observable to observe.
 	 * @return The raised event.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> E wait(final Observable<? extends E> observable) {
 		// Observe the future.
@@ -115,7 +115,7 @@ public class ObservableUtils {
 	 * @param observable Observable to observe.
 	 * @param timeout Delay during which the value should be waited for.
 	 * @return The raised event, or nothing when no event is raised during the delay.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Maybe<E> wait(final Observable<? extends E> observable, final Duration timeout) {
 		final Instant deadline = Instant.now().plus(timeout);

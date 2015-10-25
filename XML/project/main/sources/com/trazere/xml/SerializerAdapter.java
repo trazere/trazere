@@ -23,14 +23,14 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
  * 
  * @param <T> Type of the values.
  * @see Serializer
- * @since 1.0
+ * @since 2.0
  */
 public class SerializerAdapter<T>
 extends XmlAdapter<String, T> {
 	/**
 	 * Serializer to use.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final Serializer<T, String> _serializer;
 	
@@ -38,7 +38,7 @@ extends XmlAdapter<String, T> {
 	 * Instantiates a new adapter.
 	 * 
 	 * @param serializer Serializer to use.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public SerializerAdapter(final Serializer<T, String> serializer) {
 		assert null != serializer;

@@ -27,7 +27,7 @@ import java.util.function.Consumer;
  * 
  * @see Accumulator
  * @see Accumulator2
- * @since 1.0
+ * @since 2.0
  */
 public class Accumulators {
 	/**
@@ -37,7 +37,7 @@ public class Accumulators {
 	 * @param <S> Type of the state.
 	 * @param state State of the accumulator.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E, S> Accumulator<E, S> constant(final S state) {
 		return new Accumulator<E, S>() {
@@ -58,7 +58,7 @@ public class Accumulators {
 	 *
 	 * @param <E> Type of the accumulated elements.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Accumulator<E, Maybe<E>> first() {
 		return new Accumulator<E, Maybe<E>>() {
@@ -83,7 +83,7 @@ public class Accumulators {
 	 *
 	 * @param <E> Type of the accumulated elements.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Accumulator<E, Integer> counter() {
 		return new Accumulator<E, Integer>() {
@@ -107,7 +107,7 @@ public class Accumulators {
 	 * @param <E> Type of the accumulated elements.
 	 * @param consumer Consumer to lift.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Accumulator<E, Unit> fromConsumer(final Consumer<? super E> consumer) {
 		assert null != consumer;
@@ -133,7 +133,7 @@ public class Accumulators {
 	 * @param <S> Type of the state.
 	 * @param state State of the accumulator.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E1, E2, S> Accumulator2<E1, E2, S> constant2(final S state) {
 		return new Accumulator2<E1, E2, S>() {
@@ -155,7 +155,7 @@ public class Accumulators {
 	 * @param <E1> Type of the first element of the accumulated pairs.
 	 * @param <E2> Type of the second element of the accumulated pairs.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E1, E2> Accumulator2<E1, E2, Maybe<Tuple2<E1, E2>>> first2() {
 		return new Accumulator2<E1, E2, Maybe<Tuple2<E1, E2>>>() {
@@ -181,7 +181,7 @@ public class Accumulators {
 	 * @param <E1> Type of the first element of the accumulated pairs.
 	 * @param <E2> Type of the second element of the accumulated pairs.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E1, E2> Accumulator2<E1, E2, Integer> counter2() {
 		return new Accumulator2<E1, E2, Integer>() {
@@ -206,7 +206,7 @@ public class Accumulators {
 	 * @param <E2> Type of the second element of the accumulated pairs.
 	 * @param consumer Bi-consumer to lift.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E1, E2> Accumulator2<E1, E2, Unit> fromBiConsumer(final BiConsumer<? super E1, ? super E2> consumer) {
 		assert null != consumer;

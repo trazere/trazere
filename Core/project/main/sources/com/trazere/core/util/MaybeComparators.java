@@ -22,7 +22,7 @@ import java.util.Comparator;
  * 
  * @see Comparator
  * @see Maybe
- * @since 1.0
+ * @since 2.0
  */
 public class MaybeComparators {
 	/**
@@ -34,7 +34,7 @@ public class MaybeComparators {
 	 * @param comparator Comparator of the values.
 	 * @return The built comparator.
 	 * @see ComparatorUtils#compare(Comparator, Maybe, Maybe)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Comparator<Maybe<T>> maybe(final Comparator<? super T> comparator) {
 		assert null != comparator;

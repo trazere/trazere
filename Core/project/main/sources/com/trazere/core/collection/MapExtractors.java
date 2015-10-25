@@ -29,7 +29,7 @@ import java.util.Map;
  * @see Function
  * @see Maybe
  * @see Map
- * @since 1.0
+ * @since 2.0
  */
 public class MapExtractors {
 	/**
@@ -42,7 +42,7 @@ public class MapExtractors {
 	 * @param map Map to read.
 	 * @return The built extractor.
 	 * @see MapUtils#get(Map, Object)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V> Function<K, Maybe<V>> get(final Map<? super K, ? extends V> map) {
 		assert null != map;
@@ -59,7 +59,7 @@ public class MapExtractors {
 	 * @param <V> Type of the values.
 	 * @param bindings Bindings to use.
 	 * @return The built extractor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V> Function<K, Maybe<V>> fromBindings(final Iterable<? extends Tuple2<? extends K, ? extends V>> bindings) {
 		return get(Maps.fromBindings(bindings));
@@ -75,7 +75,7 @@ public class MapExtractors {
 	 * @param keys Keys of the bindings.
 	 * @param projection Projection function that computes the volue associated to each key.
 	 * @return The built extractor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V> Function<K, Maybe<V>> fromKeys(final Iterable<? extends K> keys, final Function<? super K, ? extends V> projection) {
 		return fromBindings(IterableUtils.<K, Tuple2<K, V>>map(keys, key -> new Tuple2<>(key, projection.evaluate(key))));
@@ -91,7 +91,7 @@ public class MapExtractors {
 	 * @param values Values of the bindings.
 	 * @param projection Projection function that computes the key associated to each value.
 	 * @return The built extractor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V> Function<K, Maybe<V>> fromValues(final Iterable<? extends V> values, final Function<? super V, ? extends K> projection) {
 		return fromBindings(IterableUtils.<V, Tuple2<K, V>>map(values, value -> new Tuple2<>(projection.evaluate(value), value)));

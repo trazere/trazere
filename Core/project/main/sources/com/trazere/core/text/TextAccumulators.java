@@ -27,7 +27,7 @@ import java.io.IOException;
  * The {@link TextAccumulators} class provides various factories of {@link Accumulator accumulators} related to text.
  * 
  * @see Accumulator
- * @since 1.0
+ * @since 2.0
  */
 public class TextAccumulators {
 	/**
@@ -37,7 +37,7 @@ public class TextAccumulators {
 	 * @param appendable Appendable that should be appended to.
 	 * @return The built accumulator.
 	 * @see Appendable#append(CharSequence)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A extends Appendable> Accumulator<CharSequence, A> append(final A appendable) {
 		return append(appendable, TextException.FACTORY);
@@ -51,7 +51,7 @@ public class TextAccumulators {
 	 * @param failureFactory Factory of the exceptions for the failures while appending.
 	 * @return The built accumulator.
 	 * @see Appendable#append(CharSequence)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A extends Appendable> Accumulator<CharSequence, A> append(final A appendable, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		return new Accumulator<CharSequence, A>() {
@@ -76,7 +76,7 @@ public class TextAccumulators {
 	 * 
 	 * @param initialState The initial character sequence.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Accumulator<CharSequence, CharSequence> concat(final CharSequence initialState) {
 		return AccumulatorUtils.mapState(append(new StringBuilder(initialState)), Functions.identity());
@@ -92,7 +92,7 @@ public class TextAccumulators {
 	 * @param first Indicates whether the next appended token will be the first one or not.
 	 * @return The built accumulator.
 	 * @see Joiner#join(Object, Appendable, boolean)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T, A extends Appendable> Accumulator<T, A> join(final Joiner<? super T> joiner, final A appendable, final boolean first) {
 		assert null != joiner;
@@ -118,7 +118,7 @@ public class TextAccumulators {
 	 * 
 	 * @param builder Description builder to populate.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Accumulator2<String, Object, DescriptionBuilder> append(final DescriptionBuilder builder) {
 		assert null != builder;

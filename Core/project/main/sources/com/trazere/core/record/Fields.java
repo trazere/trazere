@@ -19,7 +19,7 @@ package com.trazere.core.record;
  * The {@link Fields} class provides various factories of {@link Field fields}.
  * 
  * @see Field
- * @since 1.0
+ * @since 2.0
  */
 public class Fields {
 	// TODO
@@ -52,7 +52,7 @@ public class Fields {
 	 * @param value Value of the field. May be <code>null</code>.
 	 * @return The built field.
 	 * @throws NullFieldException When the value is <code>null</code> and the field is not nullable.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K extends FieldKey<? extends K, ?>, V> Field<K, V> fromKeyAndValue(final FieldKey<? extends K, V> key, final V value)
 	throws NullFieldException {

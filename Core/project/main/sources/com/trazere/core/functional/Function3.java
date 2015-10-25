@@ -22,7 +22,7 @@ package com.trazere.core.functional;
  * @param <A2> Type of the second arguments.
  * @param <A3> Type of the third arguments.
  * @param <R> Type of the results.
- * @since 1.0
+ * @since 2.0
  */
 @FunctionalInterface
 public interface Function3<A1, A2, A3, R> {
@@ -33,7 +33,7 @@ public interface Function3<A1, A2, A3, R> {
 	 * @param arg2 Second argument to evaluate the function with.
 	 * @param arg3 Third argument to evaluate the function with.
 	 * @return The result of the function evaluation.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	R evaluate(A1 arg1, A2 arg2, A3 arg3);
 }

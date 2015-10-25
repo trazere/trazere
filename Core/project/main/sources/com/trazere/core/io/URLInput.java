@@ -28,7 +28,7 @@ import java.net.URLConnection;
 /**
  * The {@link URLInput} class implements inputs for the content accessible at some URL.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public class URLInput
 implements Input {
@@ -36,7 +36,7 @@ implements Input {
 	 * Instanciates a new input.
 	 * 
 	 * @param url URL of the data.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public URLInput(final URL url) {
 		assert null != url;
@@ -56,7 +56,7 @@ implements Input {
 	 * Instanciates a new input.
 	 * 
 	 * @param connection URL connection providing the data.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public URLInput(final URLConnection connection) {
 		assert null != connection;
@@ -71,7 +71,7 @@ implements Input {
 	/**
 	 * URL of the data.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final URL _url;
 	
@@ -79,7 +79,7 @@ implements Input {
 	 * Gets the URL of data provided by this input.
 	 * 
 	 * @return The url.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public URL getUrl() {
 		return _url;
@@ -90,7 +90,7 @@ implements Input {
 	/**
 	 * URL connection providing the data.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final Thunk<URLConnection> _connection;
 	
@@ -99,7 +99,7 @@ implements Input {
 	 * 
 	 * @return The URL connection.
 	 * @throws IOException When the connection cannot be opened.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected URLConnection getConnection()
 	throws IOException {

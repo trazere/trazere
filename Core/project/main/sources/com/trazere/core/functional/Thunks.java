@@ -25,7 +25,7 @@ import java.util.function.Supplier;
  * The {@link Thunks} class provides various factories of {@link Thunk thunks}.
  * 
  * @see Thunk
- * @since 1.0
+ * @since 2.0
  */
 public class Thunks {
 	/**
@@ -34,7 +34,7 @@ public class Thunks {
 	 * @param <T> Type of the value.
 	 * @param value Value of the thunk.
 	 * @return The built thunk.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> MemoizedThunk<T> constant(final T value) {
 		return new MemoizedThunk<T>() {
@@ -61,7 +61,7 @@ public class Thunks {
 	 * @param <T> Type of the values.
 	 * @param exception Exception to throw.
 	 * @return The built thunk.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Thunk<T> failure(final RuntimeException exception) {
 		assert null != exception;
@@ -77,7 +77,7 @@ public class Thunks {
 	 * @param <T> Type of the values.
 	 * @param failureFactory Factory of the exceptions for the failures.
 	 * @return The built thunk.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Thunk<T> failure(final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		assert null != failureFactory;
@@ -94,7 +94,7 @@ public class Thunks {
 	 * @param failureFactory Factory of the exceptions for the failures.
 	 * @param message Message of the throwable.
 	 * @return The built thunk.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Thunk<T> failure(final ThrowableFactory<? extends RuntimeException> failureFactory, final String message) {
 		assert null != failureFactory;
@@ -110,7 +110,7 @@ public class Thunks {
 	 * @param <T> Type of the values.
 	 * @param factory Factory to lift.
 	 * @return The built thunk.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Thunk<T> fromFactory(final Factory<T> factory) {
 		assert null != factory;
@@ -125,7 +125,7 @@ public class Thunks {
 	 * @param callable Callable to lift.
 	 * @param failureFactory Factory of the exceptions for the failures.
 	 * @return The built thunk.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Thunk<T> fromCallable(final Callable<? extends T> callable, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		assert null != callable;
@@ -146,7 +146,7 @@ public class Thunks {
 	 * @param <T> Type of the values.
 	 * @param supplier Supplier to lift.
 	 * @return The built thunk.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Thunk<T> fromSupplier(final Supplier<? extends T> supplier) {
 		assert null != supplier;

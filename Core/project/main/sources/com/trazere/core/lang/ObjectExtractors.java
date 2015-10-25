@@ -26,7 +26,7 @@ import com.trazere.core.util.Maybe;
  * @see Function
  * @see Maybe
  * @see Object
- * @since 1.0
+ * @since 2.0
  */
 public class ObjectExtractors {
 	// TODO: move to LangExtractors ?
@@ -38,7 +38,7 @@ public class ObjectExtractors {
 	 * @param type The type.
 	 * @return The built extractor.
 	 * @see ObjectUtils#match(Object, Class)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T, R extends T> Function<T, Maybe<R>> match(final Class<R> type) {
 		assert null != type;

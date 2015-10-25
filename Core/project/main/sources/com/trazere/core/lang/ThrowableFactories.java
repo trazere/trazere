@@ -19,13 +19,13 @@ package com.trazere.core.lang;
  * The {@link ThrowableFactories} class provides various {@link ThrowableFactory throwable factories}.
  * 
  * @see ThrowableFactory
- * @since 1.0
+ * @since 2.0
  */
 public class ThrowableFactories {
 	/**
 	 * Factory of {@link Exception} exceptions.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static final ThrowableFactory<Exception> EXCEPTION = new ThrowableFactory<Exception>() {
 		@Override
@@ -52,7 +52,7 @@ public class ThrowableFactories {
 	/**
 	 * Factory of {@link RuntimeException} exceptions.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static final ThrowableFactory<RuntimeException> RUNTIME_EXCEPTION = new ThrowableFactory<RuntimeException>() {
 		@Override
@@ -81,7 +81,7 @@ public class ThrowableFactories {
 	/**
 	 * Factory of {@link RuntimeException} exceptions.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static final ThrowableFactory<IllegalArgumentException> ILLEGAL_ARGUMENT_EXCEPTION = new ThrowableFactory<IllegalArgumentException>() {
 		@Override

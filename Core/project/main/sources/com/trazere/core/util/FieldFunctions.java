@@ -22,7 +22,7 @@ import com.trazere.core.functional.Function;
  * 
  * @see Function
  * @see Field
- * @since 1.0
+ * @since 2.0
  */
 public class FieldFunctions {
 	/**
@@ -30,7 +30,7 @@ public class FieldFunctions {
 	 * 
 	 * @param <T> Type of the values.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<Field<? extends T>, T> get() {
@@ -44,7 +44,7 @@ public class FieldFunctions {
 	 * 
 	 * @param <T> Type of the values.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<Field1<? extends T>, T> get1() {
@@ -58,7 +58,7 @@ public class FieldFunctions {
 	 * 
 	 * @param <T> Type of the values.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<Field2<? extends T>, T> get2() {
@@ -72,7 +72,7 @@ public class FieldFunctions {
 	 * 
 	 * @param <T> Type of the values.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<Field3<? extends T>, T> get3() {
@@ -86,7 +86,7 @@ public class FieldFunctions {
 	 * 
 	 * @param <T> Type of the values.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<Field4<? extends T>, T> get4() {
@@ -100,7 +100,7 @@ public class FieldFunctions {
 	 * 
 	 * @param <T> Type of the values.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<Field5<? extends T>, T> get5() {
@@ -114,7 +114,7 @@ public class FieldFunctions {
 	 * 
 	 * @param <T> Type of the values.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<Field6<? extends T>, T> get6() {
@@ -128,7 +128,7 @@ public class FieldFunctions {
 	 * 
 	 * @param <T> Type of the values.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<Field7<? extends T>, T> get7() {
@@ -142,7 +142,7 @@ public class FieldFunctions {
 	 * 
 	 * @param <T> Type of the values.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<Field8<? extends T>, T> get8() {
@@ -156,7 +156,7 @@ public class FieldFunctions {
 	 * 
 	 * @param <T> Type of the values.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<Field9<? extends T>, T> get9() {
@@ -170,7 +170,7 @@ public class FieldFunctions {
 	 * 
 	 * @param <T> Type of the values.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<Field10<? extends T>, T> get10() {

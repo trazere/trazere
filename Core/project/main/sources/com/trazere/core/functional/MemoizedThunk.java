@@ -24,7 +24,7 @@ import com.trazere.core.util.Maybe;
  * Memoized thunks simulate the call-by-need evaluation strategy whereas non-memoized thunks simulate the call-by-name evaluation strategy.
  * 
  * @param <T> Type of the value.
- * @since 1.0
+ * @since 2.0
  */
 public interface MemoizedThunk<T>
 extends Thunk<T> {
@@ -32,7 +32,7 @@ extends Thunk<T> {
 	 * Indicates whether the value of this thunk has already been evaluated and memoized.
 	 * 
 	 * @return <code>true</code> when the value has been evaluated and memoized, <code>false</code> otherwise.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	boolean isMemoized();
 	
@@ -40,7 +40,7 @@ extends Thunk<T> {
 	 * Probes the memoized value of this thunk.
 	 * 
 	 * @return The memoized value, or nothing when the value has not been evaluated and memoized yet.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	Maybe<T> probe();
 }

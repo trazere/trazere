@@ -26,7 +26,7 @@ import java.net.URL;
  * The {@link NetFunctions} class provides various factories of {@link Function functions} related to networks.
  * 
  * @see Function
- * @since 1.0
+ * @since 2.0
  */
 public class NetFunctions {
 	/**
@@ -34,7 +34,7 @@ public class NetFunctions {
 	 * 
 	 * @param invalidFactory Factory of the exceptions for the invalid URLs.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Function<String, URL> url(final ThrowableFactory<? extends RuntimeException> invalidFactory) {
 		assert null != invalidFactory;
@@ -53,7 +53,7 @@ public class NetFunctions {
 	 * 
 	 * @param invalidFactory Factory of the exceptions for the invalid URIs.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Function<String, URI> uri(final ThrowableFactory<? extends RuntimeException> invalidFactory) {
 		assert null != invalidFactory;

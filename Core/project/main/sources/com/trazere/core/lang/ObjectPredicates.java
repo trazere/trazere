@@ -22,7 +22,7 @@ import com.trazere.core.functional.Predicate;
  * 
  * @see Predicate
  * @see Object
- * @since 1.0
+ * @since 2.0
  */
 public class ObjectPredicates {
 	// TODO: move to LangPredicates ?
@@ -32,7 +32,7 @@ public class ObjectPredicates {
 	 * @param <T> Type of the values.
 	 * @param type Type to test against.
 	 * @return The built predicate.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Predicate<T> isInstanceOf(final Class<? extends T> type) {
 		assert null != type;

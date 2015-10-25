@@ -28,7 +28,7 @@ import java.util.List;
  * <code>false</code> when {@link #isAvailable()} returns <code>true</code>.
  * 
  * @param <T> Type of the value.
- * @since 1.0
+ * @since 2.0
  */
 public abstract class BaseFuture<T>
 extends BaseObservable<T>
@@ -61,7 +61,7 @@ implements Future<T> {
 	/**
 	 * Value of the future.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final MutableReference<T> _value = new MutableReference<>();
 	
@@ -82,7 +82,7 @@ implements Future<T> {
 	 * 
 	 * @param value Value to set.
 	 * @throws ReferenceAlreadySetException When the value of the future is already set.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected void set(final T value) {
 		final List<ObserverRef> observers;
@@ -110,7 +110,7 @@ implements Future<T> {
 	 * 
 	 * @param value Value to set.
 	 * @return <code>true</code> when the value has been set, <code>false</code> when the value was already set.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected boolean setIfNot(final T value) {
 		final List<ObserverRef> observers;

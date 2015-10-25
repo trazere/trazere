@@ -20,7 +20,7 @@ import com.trazere.core.lang.ThrowableFactory;
 /**
  * {@link RecordException} exceptions are thrown when record related errors occur.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public class RecordException
 extends RuntimeException {
@@ -29,7 +29,7 @@ extends RuntimeException {
 	/**
 	 * Instantiates a new exception.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public RecordException() {
 		super();
@@ -39,7 +39,7 @@ extends RuntimeException {
 	 * Instantiates a new exception using the given message.
 	 * 
 	 * @param message Details about the exception.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public RecordException(final String message) {
 		super(message);
@@ -49,7 +49,7 @@ extends RuntimeException {
 	 * Instantiates a new exception using the given cause.
 	 * 
 	 * @param cause Cause of the exception.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public RecordException(final Throwable cause) {
 		super(cause);
@@ -60,7 +60,7 @@ extends RuntimeException {
 	 * 
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public RecordException(final String message, final Throwable cause) {
 		super(message, cause);
@@ -69,7 +69,7 @@ extends RuntimeException {
 	/**
 	 * Factory of {@link RecordException}.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static final ThrowableFactory<RecordException> FACTORY = new ThrowableFactory<RecordException>() {
 		@Override

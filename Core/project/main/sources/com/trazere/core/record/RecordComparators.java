@@ -25,7 +25,7 @@ import java.util.Comparator;
  * 
  * @see Comparator
  * @see Record
- * @since 1.0
+ * @since 2.0
  */
 public class RecordComparators {
 	/**
@@ -36,7 +36,7 @@ public class RecordComparators {
 	 * @param key Key identifying the field whose value to compare.
 	 * @param comparator Comparator of the values of the fields.
 	 * @return The built comparator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K extends FieldKey<? extends K, ?>, V> Comparator<Record<K>> fieldValue(final FieldKey<? extends K, V> key, final Comparator<? super V> comparator) {
 		assert null != key;
@@ -58,7 +58,7 @@ public class RecordComparators {
 	 * @param defaultValue Default value of the fields.
 	 * @param comparator Comparator of the values of the fields.
 	 * @return The built comparator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K extends FieldKey<? extends K, ?>, V> Comparator<Record<K>> optionalFieldValue(final FieldKey<? extends K, V> key, final V defaultValue, final Comparator<? super V> comparator) {
 		assert null != key;
@@ -79,7 +79,7 @@ public class RecordComparators {
 	 * @param key Key identifying the field whose value to compare.
 	 * @param comparator Comparator of the values of the fields.
 	 * @return The built comparator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K extends FieldKey<? extends K, ?>, V> Comparator<Record<K>> mandatoryFieldValue(final FieldKey<? extends K, V> key, final Comparator<? super V> comparator) {
 		assert null != key;

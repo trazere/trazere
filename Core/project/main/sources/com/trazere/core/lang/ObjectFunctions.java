@@ -22,7 +22,7 @@ import com.trazere.core.functional.Function;
  * 
  * @see Function
  * @see Object
- * @since 1.0
+ * @since 2.0
  */
 public class ObjectFunctions {
 	/**
@@ -30,7 +30,7 @@ public class ObjectFunctions {
 	 * 
 	 * @param <T> Type of the values.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<T, Class<? extends T>> getClass_() {
@@ -44,7 +44,7 @@ public class ObjectFunctions {
 	 * 
 	 * @param <T> Type of the values.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<T, Integer> hashCode_() {
@@ -58,7 +58,7 @@ public class ObjectFunctions {
 	 * 
 	 * @param <T> Type of the values.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<T, String> toString_() {
@@ -79,7 +79,7 @@ public class ObjectFunctions {
 	 * @param mismatchFactory Factory of the exceptions for the mismatches.
 	 * @return The built extractor.
 	 * @see ObjectUtils#match(Object, Class, ThrowableFactory)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T, R extends T> Function<T, R> match(final Class<R> type, final ThrowableFactory<? extends RuntimeException> mismatchFactory) {
 		assert null != type;

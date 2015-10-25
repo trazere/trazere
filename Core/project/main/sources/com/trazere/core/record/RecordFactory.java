@@ -23,7 +23,7 @@ import com.trazere.core.design.Factory;
  * @param <K> Type of the field keys.
  * @param <R> Type of the records.
  * @see Record
- * @since 1.0
+ * @since 2.0
  */
 public interface RecordFactory<K extends FieldKey<? extends K, ?>, R extends Record<K>>
 extends Factory<R> {
@@ -31,7 +31,7 @@ extends Factory<R> {
 	 * Builds a new empty record.
 	 * 
 	 * @return The built record.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@Override
 	R build();
@@ -43,7 +43,7 @@ extends Factory<R> {
 	 * 
 	 * @param record Record to copy.
 	 * @return The built record.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	default R build(final Record<? extends K> record) {
 		final RecordBuilder<K, R> builder = newBuilder();
@@ -55,7 +55,7 @@ extends Factory<R> {
 	 * Builds a new empty builder of record.
 	 * 
 	 * @return The built record builder.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	RecordBuilder<K, R> newBuilder();
 }

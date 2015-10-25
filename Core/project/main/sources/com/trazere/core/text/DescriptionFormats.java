@@ -3,13 +3,13 @@ package com.trazere.core.text;
 /**
  * The {@link DescriptionFormats} class provides various factories of {@link DescriptionFormat description formats}.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public class DescriptionFormats {
 	/**
 	 * Basic description format.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static final DescriptionFormat BASIC = simple("[", "]", " - ", " = ");
 	
@@ -21,7 +21,7 @@ public class DescriptionFormats {
 	 * @param delimiter Delimiter part of the description.
 	 * @param assignment Assigment part of the description.
 	 * @return The built format.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static DescriptionFormat simple(final CharSequence opening, final CharSequence closing, final CharSequence delimiter, final CharSequence assignment) {
 		assert null != opening;

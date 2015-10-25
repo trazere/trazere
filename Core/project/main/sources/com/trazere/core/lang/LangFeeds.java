@@ -25,7 +25,7 @@ import com.trazere.core.util.Tuples;
  * The {@link LangFeeds} class provides various factories of {@link Feeds feeds} related to the Java language.
  * 
  * @see Feed
- * @since 1.0
+ * @since 2.0
  */
 public class LangFeeds {
 	/**
@@ -33,7 +33,7 @@ public class LangFeeds {
 	 * 
 	 * @param start Start value.
 	 * @return The built feed.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Feed<Integer> integer(final int start) {
 		return integer(start, 1);
@@ -45,7 +45,7 @@ public class LangFeeds {
 	 * @param start Start value.
 	 * @param increment Increment.
 	 * @return The built feed.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Feed<Integer> integer(final int start, final int increment) {
 		return () -> Maybe.some(Tuples.tuple2(start, integer(start + increment, increment)));
@@ -55,7 +55,7 @@ public class LangFeeds {
 	 * Builds a feed of the natural integers.
 	 * 
 	 * @return The built feed.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Feed<Integer> natural() {
 		return integer(0, 1);
@@ -66,7 +66,7 @@ public class LangFeeds {
 	 * 
 	 * @param s String.
 	 * @return The built feed.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static final Feed<Character> fromString(final String s) {
 		return fromString(s, 0);

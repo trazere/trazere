@@ -21,14 +21,14 @@ import java.util.HashMap;
  * The {@link SimpleRecordBuilder} class provides a simple implementation of {@link RecordBuilder record builders}.
  * 
  * @param <K> Type of the keys.
- * @since 1.0
+ * @since 2.0
  */
 public class SimpleRecordBuilder<K extends FieldKey<? extends K, ?>>
 extends BaseRecordBuilder<K, Record<K>> {
 	/**
 	 * Instantiates a new empty record builder.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public SimpleRecordBuilder() {
 		super();

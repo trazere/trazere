@@ -25,7 +25,7 @@ import java.util.function.Supplier;
  * The {@link ThunkUtils} class provides various utilities regarding {@link Thunk thunks}.
  * 
  * @see Thunk
- * @since 1.0
+ * @since 2.0
  */
 public class ThunkUtils {
 	/**
@@ -36,7 +36,7 @@ public class ThunkUtils {
 	 * @param thunk Thunk to map.
 	 * @param function Mapping function.
 	 * @return The built thunk.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T, R> Thunk<R> map(final Thunk<? extends T> thunk, final Function<? super T, ? extends R> function) {
 		assert null != thunk;
@@ -52,7 +52,7 @@ public class ThunkUtils {
 	 * @param thunk Thunk to memoize.
 	 * @return The built thunk.
 	 * @see MemoizedThunk
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> MemoizedThunk<T> memoized(final Thunk<? extends T> thunk) {
 		assert null != thunk;
@@ -106,7 +106,7 @@ public class ThunkUtils {
 	 * @param thunk Thunk to memoize.
 	 * @return The build thunk.
 	 * @see ResettableThunk
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> ResettableThunk<T> resettable(final Thunk<? extends T> thunk) {
 		assert null != thunk;
@@ -131,7 +131,7 @@ public class ThunkUtils {
 	 * @param <T> Type of the values.
 	 * @param thunk Thunk to synchronize.
 	 * @return The built thunk.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Thunk<T> synchronized_(final Thunk<? extends T> thunk) {
 		assert null != thunk;
@@ -145,7 +145,7 @@ public class ThunkUtils {
 	 * @param <T> Type of the values.
 	 * @param thunk Thunk to lift.
 	 * @return The built callable.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Callable<T> toCallable(final Thunk<? extends T> thunk) {
 		assert null != thunk;
@@ -159,7 +159,7 @@ public class ThunkUtils {
 	 * @param <T> Type of the values.
 	 * @param thunk Thunk to lift.
 	 * @return The built supplier.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Supplier<T> toSupplier(final Thunk<? extends T> thunk) {
 		assert null != thunk;
@@ -173,7 +173,7 @@ public class ThunkUtils {
 	 * @param <T> Type of the values.
 	 * @param thunk Thunk to evaluate.
 	 * @return The value of the thunk.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> T synchronizedEvaluate(final Thunk<? extends T> thunk) {
 		synchronized (thunk) {
@@ -185,7 +185,7 @@ public class ThunkUtils {
 	 * Resets the given thunk in a thread safe way.
 	 * 
 	 * @param thunk Thunk to reset.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static void synchronizedReset(final ResettableThunk<?> thunk) {
 		synchronized (thunk) {

@@ -23,7 +23,7 @@ import com.trazere.core.util.Tuple2;
  * The {@link BaseMemoizedFeed} class provides a skeleton implementation of feeds that memoize their head and tail.
  * 
  * @param <E> Type of the elements.
- * @since 1.0
+ * @since 2.0
  */
 public abstract class BaseMemoizedFeed<E>
 extends BaseMemoizedThunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
@@ -32,7 +32,7 @@ implements MemoizedFeed<E> {
 	 * Computes the head and tail of this feed.
 	 * 
 	 * @return The computed head and tail.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@Override
 	protected abstract Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> compute();

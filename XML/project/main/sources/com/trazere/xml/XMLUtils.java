@@ -34,7 +34,7 @@ import java.util.Map;
 /**
  * The {@link XMLUtils} class provides various utilities regarding XML.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public class XMLUtils {
 	// Entities.
@@ -44,7 +44,7 @@ public class XMLUtils {
 	 * 
 	 * @param s Text to escape.
 	 * @return The escaped text.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static CharSequence escape(final CharSequence s) {
 		return escape(s, new StringBuilder(), ThrowableFactories.RUNTIME_EXCEPTION);
@@ -58,7 +58,7 @@ public class XMLUtils {
 	 * @param appendable Appendable to populate with the XML representation.
 	 * @param failureFactory Factory of the exceptions for the failures while appending.
 	 * @return The given appendable.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A extends Appendable> A escape(final CharSequence s, final A appendable, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		return escape(new CharSequenceReader(s), appendable, failureFactory);
@@ -72,7 +72,7 @@ public class XMLUtils {
 	 * @param appendable Appendable to populate with the XML representation.
 	 * @param failureFactory Factory of the exceptions for the failures while appending.
 	 * @return The given appendable.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A extends Appendable> A escape(final Reader reader, final A appendable, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		try {
@@ -113,7 +113,7 @@ public class XMLUtils {
 	 *
 	 * @param s XML representation to unescape.
 	 * @return The unescaped text.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static CharSequence unescape(final CharSequence s) {
 		return unescape(s, new StringBuilder(), TextException.FACTORY);
@@ -127,7 +127,7 @@ public class XMLUtils {
 	 * @param appendable Appendable to populate with the unescaped text.
 	 * @param failureFactory Factory of the exceptions for the failures while appending.
 	 * @return The given appendable.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A extends Appendable> A unescape(final CharSequence s, final A appendable, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		return unescapeEntities(new CharSequenceReader(s), appendable, failureFactory);
@@ -141,7 +141,7 @@ public class XMLUtils {
 	 * @param appendable Appendable to populate with the unescaped text.
 	 * @param failureFactory Factory of the exceptions for the failures while appending.
 	 * @return The given appendable.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A extends Appendable> A unescapeEntities(final Reader reader, final A appendable, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		try {
@@ -208,7 +208,7 @@ public class XMLUtils {
 	 * <p>
 	 * Not strict, not thread safe !
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-ddX");
 	
@@ -217,7 +217,7 @@ public class XMLUtils {
 	 * <p>
 	 * Not strict, not thread safe !
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static final DateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
 	
@@ -226,14 +226,14 @@ public class XMLUtils {
 	 * <p>
 	 * Not strict, not thread safe !
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static final DateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm:ss.SSSX");
 	
 	/**
 	 * Formatter of dates.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static final DateTimeFormatter DATE_FORMATTER;
 	
@@ -249,7 +249,7 @@ public class XMLUtils {
 	/**
 	 * Formatter of date and times.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static final DateTimeFormatter DATE_TIME_FORMATTER;
 	
@@ -269,7 +269,7 @@ public class XMLUtils {
 	/**
 	 * Formatter of times.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static final DateTimeFormatter TIME_FORMATTER;
 	

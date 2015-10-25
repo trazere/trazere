@@ -25,7 +25,7 @@ import com.trazere.core.functional.Function;
  * 
  * @see Function
  * @see Maybe
- * @since 1.0
+ * @since 2.0
  */
 public class VariantExtractors {
 	/**
@@ -33,7 +33,7 @@ public class VariantExtractors {
 	 * 
 	 * @param <T> Type of the value.
 	 * @return The built extractor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<Tag1<? extends Field<T>>, Maybe<T>> as1() {
@@ -47,7 +47,7 @@ public class VariantExtractors {
 	 * 
 	 * @param <T> Type of the value.
 	 * @return The built extractor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<Tag2<? extends Field<T>>, Maybe<T>> as2() {
@@ -61,7 +61,7 @@ public class VariantExtractors {
 	 * 
 	 * @param <T> Type of the value.
 	 * @return The built extractor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<Tag3<? extends Field<T>>, Maybe<T>> as3() {
@@ -75,7 +75,7 @@ public class VariantExtractors {
 	 * 
 	 * @param <T> Type of the value.
 	 * @return The built extractor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<Tag4<? extends Field<T>>, Maybe<T>> as4() {
@@ -89,7 +89,7 @@ public class VariantExtractors {
 	 * 
 	 * @param <T> Type of the value.
 	 * @return The built extractor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Function<Tag5<? extends Field<T>>, Maybe<T>> as5() {

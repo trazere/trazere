@@ -21,21 +21,21 @@ import com.trazere.core.util.Maybe;
  * The {@link BaseMemoizedThunk} class provides a skeleton implementation of {@link MemoizedThunk memoized thunks}.
  * 
  * @param <T> Type of the value.
- * @since 1.0
+ * @since 2.0
  */
 public abstract class BaseMemoizedThunk<T>
 implements MemoizedThunk<T> {
 	/**
 	 * Indicates whether the value has been computed or not.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected boolean _evaluated = false;
 	
 	/**
 	 * Value of the thunk.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected T _value = null;
 	
@@ -52,7 +52,7 @@ implements MemoizedThunk<T> {
 	 * Computes the value of this thunk.
 	 * 
 	 * @return The computed value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected abstract T compute();
 	

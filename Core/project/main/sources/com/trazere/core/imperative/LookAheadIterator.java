@@ -23,7 +23,7 @@ import java.util.NoSuchElementException;
  * The {@link LookAheadIterator} class implements iterators that look ahead the next element.
  * 
  * @param <E> Type of the elements.
- * @since 1.0
+ * @since 2.0
  */
 public abstract class LookAheadIterator<E>
 implements Iterator<E> {
@@ -63,7 +63,7 @@ implements Iterator<E> {
 	 * Pulls the next element from the feed.
 	 * 
 	 * @return The next element.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected abstract Maybe<? extends E> pull();
 }

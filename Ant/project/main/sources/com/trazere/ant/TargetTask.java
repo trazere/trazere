@@ -23,7 +23,7 @@ import org.apache.tools.ant.TaskContainer;
 /**
  * The {@link TargetTask} class implements an Ant task container that executes tasks conditionnally.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public class TargetTask
 extends Task
@@ -35,7 +35,7 @@ implements TaskContainer {
 	 * Sets the name of the property that must be set for the exection to happen.
 	 * 
 	 * @param if_ Name of the property.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public void setIf(final String if_) {
 		_target.setIf(if_);
@@ -45,7 +45,7 @@ implements TaskContainer {
 	 * Sets the name of the property that must not be set for the exection to happen.
 	 * 
 	 * @param unless Name of the property.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public void setUnless(final String unless) {
 		_target.setUnless(unless);

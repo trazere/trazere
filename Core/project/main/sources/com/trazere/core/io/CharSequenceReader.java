@@ -24,7 +24,7 @@ import java.io.Reader;
 /**
  * The {@link CharSequenceReader} class implements {@link Reader readers} of {@link CharSequence character sequences}.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public class CharSequenceReader
 extends Reader {

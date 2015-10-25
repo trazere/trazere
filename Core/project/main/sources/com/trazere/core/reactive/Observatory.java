@@ -22,7 +22,7 @@ package com.trazere.core.reactive;
  * 
  * @param <S> Type of the subjects.
  * @param <E> Type of the events.
- * @since 1.0
+ * @since 2.0
  */
 public interface Observatory<S, E> {
 	/**
@@ -30,7 +30,7 @@ public interface Observatory<S, E> {
 	 * 
 	 * @param subject The subject.
 	 * @return The observable.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	Observable<E> observe(S subject);
 	
@@ -38,7 +38,7 @@ public interface Observatory<S, E> {
 	 * Gets an observable that allows to subscribe to all events routed by the reveiver observatory.
 	 * 
 	 * @return The observable.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Observable<E> observeAll();
 	
@@ -47,7 +47,7 @@ public interface Observatory<S, E> {
 	 * 
 	 * @param subject The subject.
 	 * @param event The event.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	void notify(S subject, E event);
 }

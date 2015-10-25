@@ -18,7 +18,7 @@ package com.trazere.core.lang;
 /**
  * The {@link BaseIntSequence} class implements finite sequences of integers.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public abstract class BaseIntSequence
 implements IntSequence {
@@ -27,7 +27,7 @@ implements IntSequence {
 	 * 
 	 * @param start Starting value of the sequence.
 	 * @param increment Increment between consecutive values of the sequence.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected BaseIntSequence(final int start, final int increment) {
 		_start = start;
@@ -40,7 +40,7 @@ implements IntSequence {
 	/**
 	 * The {@link Logic} interface defines the logic of integer sequences.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected static interface Logic {
 		/**
@@ -65,7 +65,7 @@ implements IntSequence {
 	/**
 	 * Logic for increasing sequences.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected static final Logic INCREASING = new Logic() {
 		@Override
@@ -82,7 +82,7 @@ implements IntSequence {
 	/**
 	 * Logic for decreasing sequences.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected static final Logic DECREASING = new Logic() {
 		@Override
@@ -99,7 +99,7 @@ implements IntSequence {
 	/**
 	 * Logic of the sequence.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final Logic _logic;
 	
@@ -108,7 +108,7 @@ implements IntSequence {
 	/**
 	 * Starting value of the sequence.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final int _start;
 	
@@ -122,7 +122,7 @@ implements IntSequence {
 	/**
 	 * Increment between consecutive values.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final int _increment;
 	

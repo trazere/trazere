@@ -20,7 +20,7 @@ package com.trazere.core.util;
  * 
  * @param <V> Type of the values.
  * @param <R> Type of the representations.
- * @since 1.0
+ * @since 2.0
  */
 public interface Serializer<V, R> {
 	/**
@@ -28,7 +28,7 @@ public interface Serializer<V, R> {
 	 * 
 	 * @param value Value to serialize.
 	 * @return The representation of the value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	R serialize(V value);
 	
@@ -37,7 +37,7 @@ public interface Serializer<V, R> {
 	 * 
 	 * @param representation Representation of the value to deserialize.
 	 * @return The value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	V deserialize(R representation);
 }

@@ -24,7 +24,7 @@ import java.io.Writer;
  * The {@link ReaderUtils} class provides various utilities regarding {@link Reader readers}.
  * 
  * @see Reader
- * @since 1.0
+ * @since 2.0
  */
 public class ReaderUtils {
 	/**
@@ -36,7 +36,7 @@ public class ReaderUtils {
 	 * @param output Writer into which the text should be writen.
 	 * @throws IOException When some text cannot be read.
 	 * @throws IOException When some text cannot be written.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static void copy(final Reader input, final Writer output)
 	throws IOException {
@@ -57,7 +57,7 @@ public class ReaderUtils {
 	 * @param reader Reader from which the text should be read.
 	 * @return The read text.
 	 * @throws IOException When some text cannot be read.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static String read(final Reader reader)
 	throws IOException {

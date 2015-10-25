@@ -27,7 +27,7 @@ import java.io.Serializable;
  * @param <E2> Type of the second element.
  * @param <E3> Type of the third element.
  * @param <E4> Type of the fourth element.
- * @since 1.0
+ * @since 2.0
  */
 public class Tuple4<E1, E2, E3, E4>
 implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Serializable {
@@ -40,7 +40,7 @@ implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Serializable {
 	 * @param e2 Second element.
 	 * @param e3 Third element.
 	 * @param e4 Fourth element.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Tuple4(final E1 e1, final E2 e2, final E3 e3, final E4 e4) {
 		_e1 = e1;
@@ -54,7 +54,7 @@ implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Serializable {
 	/**
 	 * First element.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final E1 _e1;
 	
@@ -62,7 +62,7 @@ implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Serializable {
 	 * Gets the first element of this tuple.
 	 * 
 	 * @return The first element.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@Override
 	public E1 get1() {
@@ -75,7 +75,7 @@ implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Serializable {
 	 * @param <NE1> Type of the new first element.
 	 * @param ne1 New first element.
 	 * @return The derived tuple.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public <NE1> Tuple4<NE1, E2, E3, E4> with1(final NE1 ne1) {
 		return new Tuple4<>(ne1, _e2, _e3, _e4);
@@ -87,7 +87,7 @@ implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Serializable {
 	 * @param <NE1> Type of the new first element.
 	 * @param function Mapping function to use.
 	 * @return The derived tuple.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public <NE1> Tuple4<NE1, E2, E3, E4> map1(final Function<? super E1, ? extends NE1> function) {
 		return new Tuple4<>(function.evaluate(_e1), _e2, _e3, _e4);
@@ -98,7 +98,7 @@ implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Serializable {
 	/**
 	 * Second element.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final E2 _e2;
 	
@@ -106,7 +106,7 @@ implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Serializable {
 	 * Gets the second element of this tuple.
 	 * 
 	 * @return The second element.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@Override
 	public E2 get2() {
@@ -119,7 +119,7 @@ implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Serializable {
 	 * @param <NE2> Type of the new second element.
 	 * @param ne2 New second element.
 	 * @return The derived tuple.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public <NE2> Tuple4<E1, NE2, E3, E4> with2(final NE2 ne2) {
 		return new Tuple4<>(_e1, ne2, _e3, _e4);
@@ -131,7 +131,7 @@ implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Serializable {
 	 * @param <NE2> Type of the new second element.
 	 * @param function Mapping function to use.
 	 * @return The derived tuple.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public <NE2> Tuple4<E1, NE2, E3, E4> map2(final Function<? super E2, ? extends NE2> function) {
 		return new Tuple4<>(_e1, function.evaluate(_e2), _e3, _e4);
@@ -142,7 +142,7 @@ implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Serializable {
 	/**
 	 * Third element.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final E3 _e3;
 	
@@ -150,7 +150,7 @@ implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Serializable {
 	 * Gets the third element of this tuple.
 	 * 
 	 * @return The third element.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@Override
 	public E3 get3() {
@@ -163,7 +163,7 @@ implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Serializable {
 	 * @param <NE3> Type of the new third element.
 	 * @param ne3 New third element.
 	 * @return The derived tuple.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public <NE3> Tuple4<E1, E2, NE3, E4> with3(final NE3 ne3) {
 		return new Tuple4<>(_e1, _e2, ne3, _e4);
@@ -175,7 +175,7 @@ implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Serializable {
 	 * @param <NE3> Type of the new third element.
 	 * @param function Mapping function to use.
 	 * @return The derived tuple.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public <NE3> Tuple4<E1, E2, NE3, E4> map3(final Function<? super E3, ? extends NE3> function) {
 		return new Tuple4<>(_e1, _e2, function.evaluate(_e3), _e4);
@@ -186,7 +186,7 @@ implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Serializable {
 	/**
 	 * Fourth element.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final E4 _e4;
 	
@@ -194,7 +194,7 @@ implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Serializable {
 	 * Gets the fourth element of this tuple.
 	 * 
 	 * @return The fourth element.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@Override
 	public E4 get4() {
@@ -207,7 +207,7 @@ implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Serializable {
 	 * @param <NE4> Type of the new fourth element.
 	 * @param ne4 New fourth element.
 	 * @return The derived tuple.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public <NE4> Tuple4<E1, E2, E3, NE4> with4(final NE4 ne4) {
 		return new Tuple4<>(_e1, _e2, _e3, ne4);
@@ -219,7 +219,7 @@ implements Field1<E1>, Field2<E2>, Field3<E3>, Field4<E4>, Serializable {
 	 * @param <NE4> Type of the new fourth element.
 	 * @param function Mapping function to use.
 	 * @return The derived tuple.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public <NE4> Tuple4<E1, E2, E3, NE4> map4(final Function<? super E4, ? extends NE4> function) {
 		return new Tuple4<>(_e1, _e2, _e3, function.evaluate(_e4));

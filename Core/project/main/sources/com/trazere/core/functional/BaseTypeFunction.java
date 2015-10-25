@@ -27,28 +27,28 @@ import java.util.Collection;
  * 
  * @param <T> Type of the types.
  * @param <R> Type of the results.
- * @since 1.0
+ * @since 2.0
  */
 public abstract class BaseTypeFunction<T, R>
 extends BaseMemoizedFunction<T, Maybe<R>> {
 	/**
 	 * Upper bound.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final Maybe<? extends T> _upperBound;
 	
 	/**
 	 * Default value.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final Maybe<R> _defaultValue;
 	
 	/**
 	 * Instantiates a new type map with no upper bounds and defaut values.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public BaseTypeFunction() {
 		this(Maybe.<R>none());
@@ -58,7 +58,7 @@ extends BaseMemoizedFunction<T, Maybe<R>> {
 	 * Instantiates a new type map with no upper bounds and the given default value.
 	 * 
 	 * @param defaultValue Default value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public BaseTypeFunction(final Maybe<R> defaultValue) {
 		this(Maybe.<T>none(), defaultValue);
@@ -69,7 +69,7 @@ extends BaseMemoizedFunction<T, Maybe<R>> {
 	 * 
 	 * @param upperBound Upper bound.
 	 * @param defaultValue Default value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public BaseTypeFunction(final Maybe<? extends T> upperBound, final Maybe<R> defaultValue) {
 		assert null != upperBound;
@@ -86,7 +86,7 @@ extends BaseMemoizedFunction<T, Maybe<R>> {
 	 * @param type1 First type.
 	 * @param type2 Second type.
 	 * @return <code>true</code> when the first type is a sub type of the second type, <code>false</code> otherwise.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected abstract boolean isSubTypeOf(final T type1, final T type2);
 	
@@ -95,7 +95,7 @@ extends BaseMemoizedFunction<T, Maybe<R>> {
 	 * 
 	 * @param type Type.
 	 * @return The super types.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected abstract Collection<? extends T> getSuperTypes(final T type);
 	
@@ -106,7 +106,7 @@ extends BaseMemoizedFunction<T, Maybe<R>> {
 	 * 
 	 * @param type Type to evaluate the function with.
 	 * @return The result of the function evaluation.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@Override
 	protected Maybe<R> compute(final T type) {
@@ -137,7 +137,7 @@ extends BaseMemoizedFunction<T, Maybe<R>> {
 	 * 
 	 * @param type Type to evaluate the function with.
 	 * @return The result of the function evaluation.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected abstract Maybe<R> computeDiscrete(final T type);
 }

@@ -24,7 +24,7 @@ import java.io.Serializable;
  * This class aims at being subclassed in order to strengthen code typing (instead of using and reusing simple types all over place).
  * 
  * @param <T> Type of the wrapped value.
- * @since 1.0
+ * @since 2.0
  */
 public class Value<T>
 implements Field<T>, Serializable {
@@ -34,7 +34,7 @@ implements Field<T>, Serializable {
 	 * Instantiates a new value.
 	 * 
 	 * @param value Value to wrap.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Value(final T value) {
 		_value = value;
@@ -45,7 +45,7 @@ implements Field<T>, Serializable {
 	/**
 	 * Wrapped value.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final T _value;
 	
@@ -53,7 +53,7 @@ implements Field<T>, Serializable {
 	 * Gets the wrapped value.
 	 * 
 	 * @return The value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@Override
 	public T get() {

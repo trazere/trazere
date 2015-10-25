@@ -21,7 +21,7 @@ package com.trazere.core.design;
  * TODO: compare to factory design pattern
  * 
  * @param <T> Type of the built values.
- * @since 1.0
+ * @since 2.0
  */
 @FunctionalInterface
 public interface Factory<T> {
@@ -29,7 +29,7 @@ public interface Factory<T> {
 	 * Builds a new value.
 	 * 
 	 * @return The built value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	T build();
 }

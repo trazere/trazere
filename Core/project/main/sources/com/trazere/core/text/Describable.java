@@ -19,7 +19,7 @@ package com.trazere.core.text;
  * The {@link Describable} interface defines objects that can describe themselves in a {@link DescriptionBuilder description}.
  * 
  * @see TextUtils#description(Describable)
- * @since 1.0
+ * @since 2.0
  */
 @FunctionalInterface
 public interface Describable {
@@ -27,7 +27,7 @@ public interface Describable {
 	 * Appends the description of this object in the given description.
 	 * 
 	 * @param description The description to populate.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	void appendDescription(DescriptionBuilder description);
 }

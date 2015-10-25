@@ -26,14 +26,14 @@ import com.trazere.core.util.Maybe.Some;
  * References are placeholders for an optional value.
  * 
  * @param <T> Type of the referenced value.
- * @since 1.0
+ * @since 2.0
  */
 public interface Reference<T> {
 	/**
 	 * Tests whether this reference is set.
 	 * 
 	 * @return <code>true</code> when the reference is set, <code>false</code> otherwise.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	boolean isSet();
 	
@@ -44,7 +44,7 @@ public interface Reference<T> {
 	 * 
 	 * @return The referenced value.
 	 * @throws ReferenceNotSetException When the reference is not set.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	T get()
 	throws ReferenceNotSetException;
@@ -54,7 +54,7 @@ public interface Reference<T> {
 	 * 
 	 * @param defaultValue Default value.
 	 * @return The referenced value or the given default value when the reference is not set.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	default T get(final T defaultValue) {
 		if (isSet()) {
@@ -69,7 +69,7 @@ public interface Reference<T> {
 	 * 
 	 * @param defaultValue Default value.
 	 * @return The referenced value or the given default value when the reference is not set.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	default T get(final Thunk<? extends T> defaultValue) {
 		if (isSet()) {
@@ -86,7 +86,7 @@ public interface Reference<T> {
 	 * constructor when the reference is not set.
 	 * 
 	 * @return The view of the referenced value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	default Maybe<T> asMaybe() {
 		if (isSet()) {

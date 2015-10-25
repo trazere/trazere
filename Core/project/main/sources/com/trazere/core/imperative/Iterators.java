@@ -23,7 +23,7 @@ import java.util.NoSuchElementException;
  * The {@link Iterators} class provides various factories of {@link Iterator iterators}.
  * 
  * @see Iterator
- * @since 1.0
+ * @since 2.0
  */
 public class Iterators {
 	/**
@@ -31,7 +31,7 @@ public class Iterators {
 	 * 
 	 * @param <E> Type of the elements.
 	 * @return The built iterator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Iterator<E> empty() {
 		return Collections.emptyIterator();
@@ -43,7 +43,7 @@ public class Iterators {
 	 * @param <E> Type of the the element.
 	 * @param element Element provided by the iterator to build.
 	 * @return The built iterator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E> Iterator<E> fromElement(final E element) {
 		return new Iterator<E>() {
@@ -73,7 +73,7 @@ public class Iterators {
 	 * @param <E> Type of the the elements.
 	 * @param elements Elements provided by the iterator to build.
 	 * @return The built iterator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SafeVarargs
 	public static <E> Iterator<E> fromElements(final E... elements) {

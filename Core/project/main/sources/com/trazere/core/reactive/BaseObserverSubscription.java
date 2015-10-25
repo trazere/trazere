@@ -21,7 +21,7 @@ package com.trazere.core.reactive;
  * This class keeps a strong reference to the observer corresponding to the subscription. That way, the subscribers which keep a reference to their
  * subscriptions don't have keep another reference to the observers in order to prevent their garbage collection.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public abstract class BaseObserverSubscription
 implements ObserverSubscription {
@@ -29,7 +29,7 @@ implements ObserverSubscription {
 	 * Instantiates a new subscription with the given observer.
 	 * 
 	 * @param observer Subscribed observer.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public BaseObserverSubscription(final Observer<?> observer) {
 		assert null != observer;
@@ -43,7 +43,7 @@ implements ObserverSubscription {
 	/**
 	 * Subscribed observer.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final Observer<?> _observer;
 	
@@ -51,7 +51,7 @@ implements ObserverSubscription {
 	 * Gets the observer corresponding to this subscription.
 	 * 
 	 * @return The subscribed observer.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Observer<?> getObserver() {
 		return _observer;

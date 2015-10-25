@@ -26,14 +26,14 @@ import com.trazere.core.util.Maybe;
  * 
  * @param <S> Type of the subjects.
  * @param <E> Type of the events.
- * @since 1.0
+ * @since 2.0
  */
 public class SimpleObservatory<S, E>
 implements Observatory<S, E> {
 	/**
 	 * Event broadcasters by subjects.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final ResettableFunction<S, Broadcaster<E>> _subjectBroadcasters = new ResettableFunction<S, Broadcaster<E>>() {
 		@Override
@@ -85,7 +85,7 @@ implements Observatory<S, E> {
 	/**
 	 * Event broadcaster for all subjects.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final Broadcaster<E> _allBroadcaster = new Broadcaster<>();
 	

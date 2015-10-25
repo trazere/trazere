@@ -25,7 +25,7 @@ import java.util.Collection;
  * 
  * @see Accumulator
  * @see Collection
- * @since 1.0
+ * @since 2.0
  */
 public class CollectionAccumulators {
 	/**
@@ -36,7 +36,7 @@ public class CollectionAccumulators {
 	 * @param collection Collection to populate.
 	 * @return The built accumulator.
 	 * @see Collection#add(Object)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E, C extends Collection<? super E>> Accumulator<E, C> add(final C collection) {
 		assert null != collection;
@@ -63,7 +63,7 @@ public class CollectionAccumulators {
 	 * @param collection Collection to populate.
 	 * @return The built accumulator.
 	 * @see Collection#add(Object)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <E1, E2, C extends Collection<? super Tuple2<? extends E1, ? extends E2>>> Accumulator2<E1, E2, C> add2(final C collection) {
 		assert null != collection;

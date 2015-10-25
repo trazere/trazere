@@ -19,14 +19,14 @@ package com.trazere.core.util;
  * The {@link Tag5} interface defines sum types that support a case associated to a fifth tag.
  * 
  * @param <T> Type of the case.
- * @since 1.0
+ * @since 2.0
  */
 public interface Tag5<T extends Tag5<T>> {
 	/**
 	 * Indicates whether this object is an instance of the case associated to the fifth tag.
 	 * 
 	 * @return <code>true</code> when the object is an instance of the case associated to the fifth tag, <code>false</code> otherwise.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	default boolean is5() {
 		return false;
@@ -37,7 +37,7 @@ public interface Tag5<T extends Tag5<T>> {
 	 * 
 	 * @return The view.
 	 * @throws InvalidConstructorException When the object is not an instance of the case associated to the fifth tag.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	default T as5()
 	throws InvalidConstructorException {

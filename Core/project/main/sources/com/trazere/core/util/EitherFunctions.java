@@ -24,7 +24,7 @@ import com.trazere.core.util.Either.Right;
  * 
  * @see Function
  * @see Either
- * @since 1.0
+ * @since 2.0
  */
 public class EitherFunctions {
 	/**
@@ -34,7 +34,7 @@ public class EitherFunctions {
 	 * @param <R> Type of the right values.
 	 * @return The built function.
 	 * @see Either#left(Object)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <L, R> Function<L, Either<L, R>> left() {
@@ -50,7 +50,7 @@ public class EitherFunctions {
 	 * @param <R> Type of the right values.
 	 * @return The built function.
 	 * @see Either#right(Object)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <L, R> Function<R, Either<L, R>> right() {
@@ -68,7 +68,7 @@ public class EitherFunctions {
 	 * @param function Mapping function to use.
 	 * @return The built function.
 	 * @see Either#mapLeft(Function)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <L, R, RL> Function<Either<? extends L, R>, Either<RL, R>> mapLeft(final Function<? super L, ? extends RL> function) {
 		assert null != function;
@@ -85,7 +85,7 @@ public class EitherFunctions {
 	 * @param function Mapping function to use.
 	 * @return The built function.
 	 * @see Either#mapRight(Function)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <L, R, RR> Function<Either<L, ? extends R>, Either<L, RR>> mapRight(final Function<? super R, ? extends RR> function) {
 		assert null != function;

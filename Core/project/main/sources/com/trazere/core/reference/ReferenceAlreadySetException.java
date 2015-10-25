@@ -21,7 +21,7 @@ import com.trazere.core.lang.ThrowableFactory;
  * {@link ReferenceAlreadySetException} exceptions are thrown when trying to set some reference which has already been set.
  * 
  * @see MutableReference
- * @since 1.0
+ * @since 2.0
  */
 public class ReferenceAlreadySetException
 extends ReferenceException {
@@ -30,7 +30,7 @@ extends ReferenceException {
 	/**
 	 * Instantiates a new exception.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public ReferenceAlreadySetException() {
 		super();
@@ -40,7 +40,7 @@ extends ReferenceException {
 	 * Instantiates a new exception using the given message.
 	 * 
 	 * @param message Details about the exception.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public ReferenceAlreadySetException(final String message) {
 		super(message);
@@ -50,7 +50,7 @@ extends ReferenceException {
 	 * Instantiates a new exception using the given cause.
 	 * 
 	 * @param cause Cause of the exception.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public ReferenceAlreadySetException(final Throwable cause) {
 		super(cause);
@@ -61,7 +61,7 @@ extends ReferenceException {
 	 * 
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public ReferenceAlreadySetException(final String message, final Throwable cause) {
 		super(message, cause);
@@ -70,7 +70,7 @@ extends ReferenceException {
 	/**
 	 * Factory of {@link ReferenceAlreadySetException}.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("hiding")
 	public static final ThrowableFactory<ReferenceAlreadySetException> FACTORY = new ThrowableFactory<ReferenceAlreadySetException>() {

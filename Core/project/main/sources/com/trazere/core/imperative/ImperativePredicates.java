@@ -23,7 +23,7 @@ import java.util.Set;
  * The {@link ImperativePredicates} class provides various factories of {@link Predicate predicates} with imperative features.
  * 
  * @see Predicate
- * @since 1.0
+ * @since 2.0
  */
 public class ImperativePredicates {
 	/**
@@ -31,7 +31,7 @@ public class ImperativePredicates {
 	 *
 	 * @param <A> Type of the arguments.
 	 * @return The built predicate.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A> Predicate<A> normalizer() {
 		final Set<A> visited = new HashSet<>();

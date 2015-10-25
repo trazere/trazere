@@ -19,7 +19,7 @@ package com.trazere.core.util;
  * The {@link FailureHandler} interface defines handlers for failures.
  * 
  * @param <T> Type of the success value.
- * @since 1.0
+ * @since 2.0
  */
 @FunctionalInterface
 public interface FailureHandler<T> {
@@ -29,7 +29,7 @@ public interface FailureHandler<T> {
 	 * @param failure Failure to handle.
 	 * @param failureCount Number of failures.
 	 * @return The handling result.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Maybe<? extends Result<T>> handleFailure(final Throwable failure, final int failureCount);
 }

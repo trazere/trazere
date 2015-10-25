@@ -22,7 +22,7 @@ package com.trazere.core.imperative;
  * 
  * @param <E> Type of the accumulated elements.
  * @param <S> Type of the state.
- * @since 1.0
+ * @since 2.0
  */
 public interface Accumulator<E, S>
 extends Procedure<E> {
@@ -30,7 +30,7 @@ extends Procedure<E> {
 	 * Accumulates the given element into this accumulator.
 	 * 
 	 * @param element Element to accumulate.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	void add(E element);
 	
@@ -40,7 +40,7 @@ extends Procedure<E> {
 	 * Elements are accumulated in the order they are iterated.
 	 * 
 	 * @param elements Elements to accumulate.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	default void addAll(final Iterable<? extends E> elements) {
 		for (final E element : elements) {
@@ -52,7 +52,7 @@ extends Procedure<E> {
 	 * Gets the current state of this accumulator.
 	 * 
 	 * @return The state.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	S get();
 	

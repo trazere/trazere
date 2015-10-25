@@ -21,7 +21,7 @@ import com.trazere.core.text.TextUtils;
  * {@link InvalidConstructorException} exceptions are thrown when trying to get a view of some instance of some algebraic data type according to a wrong
  * constructor.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public class InvalidConstructorException
 extends RuntimeException {
@@ -34,7 +34,7 @@ extends RuntimeException {
 	 * @param object Viewed object.
 	 * @param type Type of the view.
 	 * @return The built exception.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> InvalidConstructorException build(final T object, final Class<? extends T> type) {
 		return new InvalidConstructorException(object + " is not a " + TextUtils.className(type));
@@ -44,7 +44,7 @@ extends RuntimeException {
 	 * Instantiates a new exception.
 	 * 
 	 * @param message Message.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	private InvalidConstructorException(final String message) {
 		super(message);

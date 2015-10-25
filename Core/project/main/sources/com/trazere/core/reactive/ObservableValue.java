@@ -23,7 +23,7 @@ import com.trazere.core.util.Tuple2;
  * Events are raised when the observed value changes, providing the new value.
  * 
  * @param <T> Type of the values.
- * @since 1.0
+ * @since 2.0
  */
 public interface ObservableValue<T>
 extends Observable<T> {
@@ -32,7 +32,7 @@ extends Observable<T> {
 	 * 
 	 * @param observer The observer.
 	 * @return The corresponding subcription.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	default ObserverSubscription subscribeAndNotify(final Observer<? super T> observer) {
 		// Subscribe.
@@ -49,7 +49,7 @@ extends Observable<T> {
 	 * 
 	 * @param observer The observer.
 	 * @return The current value and corresponding subcription.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	Tuple2<T, ObserverSubscription> subscribeToValue(Observer<? super T> observer);
 }

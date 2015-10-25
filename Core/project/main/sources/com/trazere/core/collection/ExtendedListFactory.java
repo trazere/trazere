@@ -24,7 +24,7 @@ import java.util.List;
  * @param <E> Type of the elements.
  * @param <L> Type of the lists.
  * @see List
- * @since 1.0
+ * @since 2.0
  */
 public interface ExtendedListFactory<E, L extends List<E>>
 extends ExtendedAbstractCollectionFactory<E, List<E>, L> {

@@ -24,7 +24,7 @@ import java.io.Serializable;
  * The {@link Tuple1} class implements a 1-tuple data type (single) that represents sequences of 1 element.
  * 
  * @param <E1> Type of the first element.
- * @since 1.0
+ * @since 2.0
  */
 public class Tuple1<E1>
 implements Field1<E1>, Serializable {
@@ -34,7 +34,7 @@ implements Field1<E1>, Serializable {
 	 * Instantiates a new 1-tuple.
 	 * 
 	 * @param e1 First element.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Tuple1(final E1 e1) {
 		_e1 = e1;
@@ -45,7 +45,7 @@ implements Field1<E1>, Serializable {
 	/**
 	 * First element.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final E1 _e1;
 	
@@ -53,7 +53,7 @@ implements Field1<E1>, Serializable {
 	 * Gets the first element of this tuple.
 	 * 
 	 * @return The first element.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@Override
 	public E1 get1() {
@@ -66,7 +66,7 @@ implements Field1<E1>, Serializable {
 	 * @param <NE1> Type of the new first element.
 	 * @param ne1 New first element.
 	 * @return The derived tuple.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public <NE1> Tuple1<NE1> with1(final NE1 ne1) {
 		return new Tuple1<>(ne1);
@@ -78,7 +78,7 @@ implements Field1<E1>, Serializable {
 	 * @param <NE1> Type of the new first element.
 	 * @param function Mapping function to use.
 	 * @return The derived tuple.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public <NE1> Tuple1<NE1> map1(final Function<? super E1, ? extends NE1> function) {
 		return new Tuple1<>(function.evaluate(_e1));

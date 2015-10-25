@@ -34,7 +34,7 @@ import java.util.Set;
  * The {@link RecordUtils} class provides various utilities regarding {@link Record records}.
  * 
  * @see Record
- * @since 1.0
+ * @since 2.0
  */
 public class RecordUtils {
 	// TODO: fields (similar to MapUtils.bindings(...)) for lazy manipulations.
@@ -45,7 +45,7 @@ public class RecordUtils {
 	 * @param <K> Type of the field keys.
 	 * @param record Record containing the fields to iterate.
 	 * @param procedure Procedure to execute.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K extends FieldKey<? extends K, ?>> void foreach(final Record<? extends K> record, final Procedure<? super Field<? extends K, ?>> procedure) {
 		IterableUtils.foreach(record.fields(), procedure);
@@ -60,7 +60,7 @@ public class RecordUtils {
 	 * @param operator Binary operator to use.
 	 * @param initialState Initial state.
 	 * @return The folded state.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K extends FieldKey<? extends K, ?>, S> S fold(final Record<? extends K> record, final Function2<? super S, ? super Field<? extends K, ?>, ? extends S> operator, final S initialState) {
 		return IterableUtils.fold(record.fields(), operator, initialState);
@@ -73,7 +73,7 @@ public class RecordUtils {
 	 * @param record Record containing the fields to filter.
 	 * @param filter Predicate to use to filter the fields.
 	 * @return The first accepted field.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K extends FieldKey<? extends K, ?>> Maybe<Field<? extends K, ?>> first(final Record<? extends K> record, final Predicate<? super Field<? extends K, ?>> filter) {
 		return IterableUtils.first(record.fields(), filter);
@@ -87,7 +87,7 @@ public class RecordUtils {
 	 * @param record Record containing the fields to extract from.
 	 * @param extractor Function to use to extract the fields.
 	 * @return The first extracted field.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K extends FieldKey<? extends K, ?>, EE> Maybe<? extends EE> extractFirst(final Record<? extends K> record, final Function<? super Field<? extends K, ?>, ? extends Maybe<? extends EE>> extractor) {
 		return IterableUtils.extractFirst(record.fields(), extractor);
@@ -100,7 +100,7 @@ public class RecordUtils {
 	 * @param record Record containing the fields to test.
 	 * @param filter Predicate to use to filter the fields.
 	 * @return <code>true</code> when some field is accepted, <code>false</code> when all fields are rejected.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K extends FieldKey<? extends K, ?>> boolean isAny(final Record<? extends K> record, final Predicate<? super Field<? extends K, ?>> filter) {
 		return IterableUtils.isAny(record.fields(), filter);
@@ -113,7 +113,7 @@ public class RecordUtils {
 	 * @param record Record containing the fields to test.
 	 * @param filter Predicate to use to filter the fields.
 	 * @return <code>true</code> when all fields are accepted, <code>false</code> when some field is rejected.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K extends FieldKey<? extends K, ?>> boolean areAll(final Record<? extends K> record, final Predicate<? super Field<? extends K, ?>> filter) {
 		return IterableUtils.areAll(record.fields(), filter);
@@ -126,7 +126,7 @@ public class RecordUtils {
 	 * @param record Record containing the fields to count.
 	 * @param filter Predicate to use to filter the fields.
 	 * @return The number of accepted fields.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K extends FieldKey<? extends K, ?>> int count(final Record<? extends K> record, final Predicate<? super Field<? extends K, ?>> filter) {
 		return IterableUtils.count(record.fields(), filter);
@@ -142,7 +142,7 @@ public class RecordUtils {
 	 * @param record1 First record.
 	 * @param record2 Second record.
 	 * @return A record containing the union of the fields.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K extends FieldKey<? extends K, ?>> Record<K> union(final Record<K> record1, final Record<K> record2) {
 		final Set<? extends FieldKey<? extends K, ?>> keys1 = record1.keys();
@@ -218,7 +218,7 @@ public class RecordUtils {
 	 * @param record2 Second record.
 	 * @param resultFactory Factory of the result record.
 	 * @return A record containing the union of the fields.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K extends FieldKey<? extends K, ?>, R extends Record<K>> R union(final Record<? extends K> record1, final Record<? extends K> record2, final RecordFactory<K, R> resultFactory) {
 		final RecordBuilder<K, R> builder = resultFactory.newBuilder();
@@ -240,7 +240,7 @@ public class RecordUtils {
 	 * @param filter Predicate to use to filter the fields.
 	 * @param resultFactory Factory of the result record.
 	 * @return A record containing the filtered fields.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K extends FieldKey<? extends K, ?>, R extends Record<K>> R filter(final Record<? extends K> record, final Predicate<? super Field<? extends K, ?>> filter, final RecordFactory<K, R> resultFactory) {
 		final RecordBuilder<K, R> builder = resultFactory.newBuilder();
@@ -265,7 +265,7 @@ public class RecordUtils {
 	 * @param resultFactory Factory of the result record.
 	 * @return A record containing the transformed fields.
 	 * @throws DuplicateFieldException When sereral transformed field are conflicting.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K extends FieldKey<? extends K, ?>, TK extends FieldKey<TK, ?>, R extends Record<TK>> R map(final Record<? extends K> record, final Function<? super Field<? extends K, ?>, ? extends Field<? extends TK, ?>> function, final RecordFactory<TK, R> resultFactory)
 	throws DuplicateFieldException {
@@ -289,7 +289,7 @@ public class RecordUtils {
 	 * @param resultFactory Factory of the result record.
 	 * @return A record containing the extracted fields.
 	 * @throws DuplicateFieldException When sereral extracted field are conflicting.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K extends FieldKey<? extends K, ?>, EK extends FieldKey<EK, ?>, R extends Record<EK>> R extract(final Record<? extends K> record, final Function<? super Field<? extends K, ?>, ? extends Maybe<? extends Field<? extends EK, ?>>> extractor, final RecordFactory<EK, R> resultFactory)
 	throws DuplicateFieldException {

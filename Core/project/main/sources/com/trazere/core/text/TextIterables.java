@@ -23,7 +23,7 @@ import java.util.Iterator;
  * The {@link TextIterables} class provides various factories of {@link Iterable iterable} regarding text.
  * 
  * @see Iterable
- * @since 1.0
+ * @since 2.0
  */
 public class TextIterables {
 	/**
@@ -31,7 +31,7 @@ public class TextIterables {
 	 * 
 	 * @param s Sequence of characters to iterate over.
 	 * @return The built iterable.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Iterable<Character> fromCharSequence(final CharSequence s) {
 		assert null != s;

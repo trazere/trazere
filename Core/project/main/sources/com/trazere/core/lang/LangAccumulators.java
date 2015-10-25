@@ -22,7 +22,7 @@ import com.trazere.core.imperative.FoldAccumulator;
  * The {@link LangAccumulators} class provides various factories of {@link Accumulator accumulators} related to the Java language.
  * 
  * @see Accumulator
- * @since 1.0
+ * @since 2.0
  */
 public class LangAccumulators {
 	// TODO: version with true initialState
@@ -31,7 +31,7 @@ public class LangAccumulators {
 	 * 
 	 * @param initialState Initial state.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Accumulator<Boolean, Boolean> and(final boolean initialState) {
 		return new FoldAccumulator<Boolean, Boolean>(initialState) {
@@ -48,7 +48,7 @@ public class LangAccumulators {
 	 * 
 	 * @param initialState Initial value.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Accumulator<Boolean, Boolean> or(final boolean initialState) {
 		return new FoldAccumulator<Boolean, Boolean>(initialState) {
@@ -64,7 +64,7 @@ public class LangAccumulators {
 	 *
 	 * @param initialState Initial state.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Accumulator<Integer, Integer> sum(final int initialState) {
 		return new Accumulator<Integer, Integer>() {
@@ -87,7 +87,7 @@ public class LangAccumulators {
 	 *
 	 * @param initialState Initial state.
 	 * @return The built accumulator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Accumulator<Long, Long> sum(final long initialState) {
 		return new Accumulator<Long, Long>() {

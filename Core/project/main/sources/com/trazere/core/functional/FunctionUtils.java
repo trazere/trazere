@@ -28,7 +28,7 @@ import java.util.function.UnaryOperator;
  * @see ResettableFunction
  * @see Function2
  * @see Function3
- * @since 1.0
+ * @since 2.0
  */
 public class FunctionUtils {
 	/**
@@ -40,7 +40,7 @@ public class FunctionUtils {
 	 * @param g Outer function.
 	 * @param f Inner function.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A, I, R> Function<A, R> compose(final Function<? super I, ? extends R> g, final Function<? super A, ? extends I> f) {
 		assert null != f;
@@ -57,7 +57,7 @@ public class FunctionUtils {
 	 * @param function Function to filter.
 	 * @param filter Predicate to use to filter the results.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A, R> Function<A, Maybe<R>> filter(final Function<? super A, ? extends R> function, final Predicate<? super R> filter) {
 		assert null != function;
@@ -79,7 +79,7 @@ public class FunctionUtils {
 	 * @param function Function to transform.
 	 * @param mapFunction Function to use to transform the results.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A, R, TR> Function<A, TR> map(final Function<? super A, ? extends R> function, final Function<? super R, ? extends TR> mapFunction) {
 		return compose(mapFunction, function);
@@ -93,7 +93,7 @@ public class FunctionUtils {
 	 * @param function Function to memoize.
 	 * @return The built thunk.
 	 * @see MemoizedFunction
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A, R> MemoizedFunction<A, R> memoized(final Function<? super A, ? extends R> function) {
 		assert null != function;
@@ -114,7 +114,7 @@ public class FunctionUtils {
 	 * @param function Function to memoize.
 	 * @return The build function.
 	 * @see ResettableFunction
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A, R> ResettableFunction<A, R> resettable(final Function<? super A, ? extends R> function) {
 		assert null != function;
@@ -134,7 +134,7 @@ public class FunctionUtils {
 	 * @param <R> Type of the results.
 	 * @param function Function to synchronize.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A, R> Function<A, R> synchronized_(final Function<? super A, ? extends R> function) {
 		assert null != function;
@@ -150,7 +150,7 @@ public class FunctionUtils {
 	 * @param <R> Type of the results.
 	 * @param function Function to curry.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A1, A2, R> Function2<A1, A2, R> curry(final Function<? super Tuple2<A1, A2>, ? extends R> function) {
 		assert null != function;
@@ -167,7 +167,7 @@ public class FunctionUtils {
 	 * @param <R> Type of the results.
 	 * @param function Function to lift.
 	 * @return The built Java 8 function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A, R> java.util.function.Function<A, R> toFunction(final Function<? super A, ? extends R> function) {
 		assert null != function;
@@ -181,7 +181,7 @@ public class FunctionUtils {
 	 * @param <V> Type of the arguments and results.
 	 * @param function Function to lift.
 	 * @return The built unary operator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <V> UnaryOperator<V> toUnaryOperator(final Function<? super V, ? extends V> function) {
 		assert null != function;
@@ -197,7 +197,7 @@ public class FunctionUtils {
 	 * @param function Thunk to evaluate.
 	 * @param arg Argument to evaluate the function with.
 	 * @return The result of the function evaluation.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A, R> R synchronizedEvaluate(final Function<? super A, ? extends R> function, final A arg) {
 		synchronized (function) {
@@ -211,7 +211,7 @@ public class FunctionUtils {
 	 * @param <A> Type of the arguments.
 	 * @param arg Argument corresponding to the evaluation to reset.
 	 * @param function Function to reset.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A> void synchronizedReset(final ResettableFunction<? super A, ?> function, final A arg) {
 		synchronized (function) {
@@ -228,7 +228,7 @@ public class FunctionUtils {
 	 * @param function Function to filter.
 	 * @param filter Predicate to use to filter the results.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A1, A2, R> Function2<A1, A2, Maybe<R>> filter2(final Function2<? super A1, ? super A2, ? extends R> function, final Predicate<? super R> filter) {
 		assert null != function;
@@ -251,7 +251,7 @@ public class FunctionUtils {
 	 * @param function Function to transform.
 	 * @param mapFunction Function to use to transform the results.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A1, A2, R, TR> Function2<A1, A2, TR> map2(final Function2<? super A1, ? super A2, ? extends R> function, final Function<? super R, ? extends TR> mapFunction) {
 		assert null != function;
@@ -268,7 +268,7 @@ public class FunctionUtils {
 	 * @param <R> Type of the results.
 	 * @param function Function to uncurry.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A1, A2, R> Function<Tuple2<A1, A2>, R> uncurry(final Function2<? super A1, ? super A2, ? extends R> function) {
 		assert null != function;
@@ -284,7 +284,7 @@ public class FunctionUtils {
 	 * @param <R> Type of the results.
 	 * @param function Function to lift.
 	 * @return The built bi-function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A1, A2, R> BiFunction<A1, A2, R> toBiFunction(final Function2<? super A1, ? super A2, ? extends R> function) {
 		assert null != function;
@@ -298,7 +298,7 @@ public class FunctionUtils {
 	 * @param <V> Type of the arguments and results.
 	 * @param function Function to lift.
 	 * @return The built binary operator.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <V> BinaryOperator<V> toBinaryOperator(final Function2<? super V, ? super V, ? extends V> function) {
 		assert null != function;
@@ -316,7 +316,7 @@ public class FunctionUtils {
 	 * @param function Function to filter.
 	 * @param filter Predicate to use to filter the results.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A1, A2, A3, R> Function3<A1, A2, A3, Maybe<R>> filter3(final Function3<? super A1, ? super A2, ? super A3, ? extends R> function, final Predicate<? super R> filter) {
 		assert null != function;
@@ -340,7 +340,7 @@ public class FunctionUtils {
 	 * @param function Function to transform.
 	 * @param mapFunction Function to use to transform the results.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <A1, A2, A3, R, TR> Function3<A1, A2, A3, TR> map3(final Function3<? super A1, ? super A2, ? super A3, ? extends R> function, final Function<? super R, ? extends TR> mapFunction) {
 		assert null != function;

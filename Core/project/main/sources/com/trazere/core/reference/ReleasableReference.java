@@ -21,7 +21,7 @@ import com.trazere.core.lang.Releasable;
  * The {@link ReleasableReference} interface defines refererences that can be released.
  * 
  * @param <T> Type of the referenced values.
- * @since 1.0
+ * @since 2.0
  */
 public interface ReleasableReference<T>
 extends Reference<T>, Releasable {

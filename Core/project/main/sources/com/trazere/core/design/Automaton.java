@@ -29,7 +29,7 @@ import com.trazere.core.util.Maybe;
  * The automatons have to be started before they can be transitioned. They can be started again after they have stopped.
  * 
  * @param <S> Type of the states.
- * @since 1.0
+ * @since 2.0
  */
 public class Automaton<S> {
 	// State.
@@ -37,7 +37,7 @@ public class Automaton<S> {
 	/**
 	 * Current state of the automaton.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	private final MutableReference<S> _state = new MutableReference<>();
 	
@@ -45,7 +45,7 @@ public class Automaton<S> {
 	 * Indicates whether this automaton is started.
 	 * 
 	 * @return <code>true</code> when the automaton is started, <code>false</code> otherwise.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public boolean isStarted() {
 		return _state.isSet();
@@ -57,7 +57,7 @@ public class Automaton<S> {
 	 * @param transition Transition to the initial state to perform.
 	 * @return The initial state.
 	 * @throws IllegalStateException When the automaton is already started.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected S start(final S transition)
 	throws IllegalStateException {
@@ -76,7 +76,7 @@ public class Automaton<S> {
 	 * @param transition Transition to the initial state to perform.
 	 * @return The initial state.
 	 * @throws IllegalStateException When the automaton is already started.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected S start(final Thunk<? extends S> transition)
 	throws IllegalStateException {
@@ -93,7 +93,7 @@ public class Automaton<S> {
 	 * Gets the current state of this automaton.
 	 * 
 	 * @return The current state, or nothing when the automaton is not started.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Maybe<S> getState() {
 		return _state.asMaybe();
@@ -107,7 +107,7 @@ public class Automaton<S> {
 	 * @param transition Function to use to transition the state.
 	 * @return The new state, or nothing when the automaton has been stopped.
 	 * @throws IllegalStateException When the automaton is not started.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected Maybe<? extends S> transition(final Function<? super S, ? extends Maybe<? extends S>> transition)
 	throws IllegalStateException {

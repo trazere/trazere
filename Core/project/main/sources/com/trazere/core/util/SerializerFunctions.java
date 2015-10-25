@@ -22,7 +22,7 @@ import com.trazere.core.functional.Function;
  * 
  * @see Function
  * @see Serializer
- * @since 1.0
+ * @since 2.0
  */
 public class SerializerFunctions {
 	/**
@@ -32,7 +32,7 @@ public class SerializerFunctions {
 	 * @param <R> Type of the representations.
 	 * @param serializer Serializer to use.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T, R> Function<T, R> serialize(final Serializer<? super T, ? extends R> serializer) {
 		return serializer::serialize;
@@ -45,7 +45,7 @@ public class SerializerFunctions {
 	 * @param <R> Type of the representations.
 	 * @param serializer Deserializer to use.
 	 * @return The built function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T, R> Function<R, T> deserialize(final Serializer<? extends T, ? super R> serializer) {
 		return serializer::deserialize;

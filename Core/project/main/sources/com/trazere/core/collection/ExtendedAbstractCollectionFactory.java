@@ -25,7 +25,7 @@ import java.util.Collection;
  * @param <AC> Type of the abstract collections.
  * @param <C> Type of the collections.
  * @see Collection
- * @since 1.0
+ * @since 2.0
  */
 public interface ExtendedAbstractCollectionFactory<E, AC extends Collection<E>, C extends AC>
 extends CollectionFactory<E, C> {
@@ -33,7 +33,7 @@ extends CollectionFactory<E, C> {
 	 * Builds an unmodifiable view of an empty collection.
 	 * 
 	 * @return The built unmodifiable view.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	AC empty();
 	
@@ -42,7 +42,7 @@ extends CollectionFactory<E, C> {
 	 * 
 	 * @param collection Collection to wrap.
 	 * @return The built unmodifiable view.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	AC unmodifiable(C collection);
 	
@@ -51,7 +51,7 @@ extends CollectionFactory<E, C> {
 	 * 
 	 * @param collection Collection to wrap.
 	 * @return The built synchronized view.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	AC synchronized_(C collection);
 }

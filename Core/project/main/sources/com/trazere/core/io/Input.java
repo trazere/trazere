@@ -23,7 +23,7 @@ import java.io.InputStream;
  * <p>
  * Inputs may or may not be opened several times depending on the implementation.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public interface Input {
 	/**
@@ -33,7 +33,7 @@ public interface Input {
 	 * 
 	 * @return <code>true</code> when the source exists, <code>false</code> otherwise.
 	 * @throws IOException When the test fails.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public boolean exists()
 	throws IOException;
@@ -45,7 +45,7 @@ public interface Input {
 	 * 
 	 * @return An input stream providing the data.
 	 * @throws IOException When the input cannot be opened.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public InputStream open()
 	throws IOException;

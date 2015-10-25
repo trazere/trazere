@@ -22,7 +22,7 @@ import com.trazere.core.reference.MutableReference;
  * <p>
  * The referenced subscriptions are cancelled when the reference is modified.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public class ObserverSubscriptionMutableReference
 extends MutableReference<ObserverSubscription> {

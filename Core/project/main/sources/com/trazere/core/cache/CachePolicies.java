@@ -27,7 +27,7 @@ import java.util.Set;
  * The {@link CachePolicies} class provides various factories of {@link CachePolicy cache policies}.
  * 
  * @see CachePolicy
- * @since 1.0
+ * @since 2.0
  */
 public class CachePolicies {
 	/**
@@ -35,7 +35,7 @@ public class CachePolicies {
 	 * 
 	 * @param <K> Type of the keys.
 	 * @return The built policy.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <K> CachePolicy<K> all() {
@@ -78,7 +78,7 @@ public class CachePolicies {
 	 * @param policy1 First policy to combine.
 	 * @param policy2 Second policy to combine.
 	 * @return The built policy.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K> CachePolicy<K> or(final CachePolicy<K> policy1, final CachePolicy<K> policy2) {
 		assert null != policy1;
@@ -127,7 +127,7 @@ public class CachePolicies {
 	 * @param policy1 First policy to combine.
 	 * @param policy2 Second policy to combine.
 	 * @return The built policy.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K> CachePolicy<K> and(final CachePolicy<K> policy1, final CachePolicy<K> policy2) {
 		assert null != policy1;
@@ -175,7 +175,7 @@ public class CachePolicies {
 	 * @param <K> Type of the keys.
 	 * @param timeout Timeout of the idle entries.
 	 * @return The built policy.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public <K> CachePolicy<K> idle(final Duration timeout) {
 		return new IdleCachePolicy<>(timeout);
@@ -187,7 +187,7 @@ public class CachePolicies {
 	 * @param <K> Type of the keys.
 	 * @param capacity Capacity of the cache.
 	 * @return The built policy.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public <K> CachePolicy<K> fifo(final int capacity) {
 		return new FIFOCachePolicy<>(capacity);
@@ -199,7 +199,7 @@ public class CachePolicies {
 	 * @param <K> Type of the keys.
 	 * @param capacity Capacity of the cache.
 	 * @return The built policy.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public <K> CachePolicy<K> lru(final int capacity) {
 		return new LRUCachePolicy<>(capacity);

@@ -22,7 +22,7 @@ import java.io.InputStream;
 /**
  * The {@link TruncatedInputStream} class implements input streams that truncate the read data after some maximal length.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public class TruncatedInputStream
 extends DecoratorInputStream {
@@ -34,7 +34,7 @@ extends DecoratorInputStream {
 	 * 
 	 * @param stream Input stream providing the data.
 	 * @param length Maximal length of data to read.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public TruncatedInputStream(final InputStream stream, final long length) {
 		super(stream);

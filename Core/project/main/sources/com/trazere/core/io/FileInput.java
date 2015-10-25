@@ -24,7 +24,7 @@ import java.io.InputStream;
 /**
  * The {@link FileInput} class implements inputs for the content of some file.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public class FileInput
 implements Input {
@@ -32,7 +32,7 @@ implements Input {
 	 * Instanciates a new input.
 	 * 
 	 * @param file File containing the data.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public FileInput(final File file) {
 		assert null != file;
@@ -46,7 +46,7 @@ implements Input {
 	/**
 	 * File containing the data.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final File _file;
 	
@@ -54,7 +54,7 @@ implements Input {
 	 * Gets the file containing the data provided by this input.
 	 * 
 	 * @return The file.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public File getFile() {
 		return _file;

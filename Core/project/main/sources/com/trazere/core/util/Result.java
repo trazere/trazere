@@ -28,7 +28,7 @@ import java.io.Serializable;
  * <li>Instances built using the {@link Failure} constrcutor encode failures.
  * 
  * @param <T> Type of the success value.
- * @since 1.0
+ * @since 2.0
  */
 public abstract class Result<T>
 implements Serializable {
@@ -40,7 +40,7 @@ implements Serializable {
 	 * @param <T> Type of the success value.
 	 * @param value Success value.
 	 * @return The built instance.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Result<T> success(final T value) {
 		return new Success<>(value);
@@ -52,7 +52,7 @@ implements Serializable {
 	 * @param <T> Type of the sucess value.
 	 * @param cause Cause of the failure.
 	 * @return The built instance.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <T> Result<T> failure(final Throwable cause) {
 		return new Failure<>(cause);
@@ -64,7 +64,7 @@ implements Serializable {
 	 * The {@link Result.Success} class represents the instances of {@link Result} that encode the successes.
 	 * 
 	 * @param <T> Type of the success value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static final class Success<T>
 	extends Result<T> {
@@ -74,7 +74,7 @@ implements Serializable {
 		 * Instantiates a new success.
 		 * 
 		 * @param value Success value.
-		 * @since 1.0
+		 * @since 2.0
 		 */
 		public Success(final T value) {
 			_value = value;
@@ -106,7 +106,7 @@ implements Serializable {
 		 * Gets the value of this success.
 		 * 
 		 * @return The success value.
-		 * @since 1.0
+		 * @since 2.0
 		 */
 		public T getValue() {
 			return _value;
@@ -162,7 +162,7 @@ implements Serializable {
 	 * Indicates whether this {@link Result} instance is a success.
 	 * 
 	 * @return <code>true</code> when the instance is a success, <code>false</code> otherwise.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public boolean isSuccess() {
 		return false;
@@ -173,7 +173,7 @@ implements Serializable {
 	 * 
 	 * @return The view.
 	 * @throws InvalidConstructorException When the instance is not a success.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Success<T> asSuccess()
 	throws InvalidConstructorException {
@@ -184,7 +184,7 @@ implements Serializable {
 	 * Extracts the success value of this {@link Result} instance.
 	 * 
 	 * @return The success value, or nothing when the instance is not a success.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Maybe<T> getSuccess() {
 		return Maybe.none();
@@ -196,7 +196,7 @@ implements Serializable {
 	 * The {@link Result.Failure} class represents the instances of {@link Result} that encode the failures.
 	 * 
 	 * @param <T> Type of the success value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static final class Failure<T>
 	extends Result<T> {
@@ -206,7 +206,7 @@ implements Serializable {
 		 * Instantiates a new failure.
 		 * 
 		 * @param cause Cause of the failure.
-		 * @since 1.0
+		 * @since 2.0
 		 */
 		public Failure(final Throwable cause) {
 			assert null != cause;
@@ -241,7 +241,7 @@ implements Serializable {
 		 * Gets the cause of this failure.
 		 * 
 		 * @return The cause.
-		 * @since 1.0
+		 * @since 2.0
 		 */
 		public Throwable getCause() {
 			return _cause;
@@ -299,7 +299,7 @@ implements Serializable {
 	 * Indicates whether this {@link Result} instance is a failure.
 	 * 
 	 * @return <code>true</code> when the instance is a failure, <code>false</code> otherwise.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public boolean isFailure() {
 		return false;
@@ -310,7 +310,7 @@ implements Serializable {
 	 * 
 	 * @return The view.
 	 * @throws InvalidConstructorException When the instance is not a failure.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Failure<T> asFailure()
 	throws InvalidConstructorException {
@@ -321,7 +321,7 @@ implements Serializable {
 	 * Gets the cause of this {@link Result} instance.
 	 * 
 	 * @return The cause of the failure, or nothing when the instance is not a failure.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Maybe<Throwable> getFailure() {
 		return Maybe.none();
@@ -334,7 +334,7 @@ implements Serializable {
 	 * 
 	 * @param <T> Type of the success value.
 	 * @param <R> Type of the result.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public interface Matcher<T, R> {
 		/**
@@ -342,7 +342,7 @@ implements Serializable {
 		 * 
 		 * @param success Success to match.
 		 * @return The result of the matching function evaluation.
-		 * @since 1.0
+		 * @since 2.0
 		 */
 		R success(Success<? extends T> success);
 		
@@ -351,7 +351,7 @@ implements Serializable {
 		 * 
 		 * @param failure Failure to match.
 		 * @return The result of the matching function evaluation.
-		 * @since 1.0
+		 * @since 2.0
 		 */
 		R failure(Failure<? extends T> failure);
 	}
@@ -364,7 +364,7 @@ implements Serializable {
 	 * @param <R> Type of the result.
 	 * @param matcher Matching function to apply.
 	 * @return The result of the matching function evaluation.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public abstract <R> R match(Matcher<? super T, ? extends R> matcher);
 	
@@ -376,7 +376,7 @@ implements Serializable {
 	 * @param <R> Type of the mapped success value.
 	 * @param function Function to use to transform the success value.
 	 * @return The {@link Result} instance containing the mapped success value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public abstract <R> Result<R> map(final Function<? super T, ? extends R> function);
 	
@@ -386,7 +386,7 @@ implements Serializable {
 	 * @param <R> Type of the extracted success value.
 	 * @param function Function to use to transform the success value.
 	 * @return The {@link Result} instance containing the extracted success value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public abstract <R> Result<R> flatMap(final Function<? super T, ? extends Result<? extends R>> function);
 }

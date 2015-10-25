@@ -18,13 +18,13 @@ package com.trazere.core.util;
 /**
  * The {@link Unit} class implements a data type which represents an empty value (sequence of 0 elements).
  * 
- * @since 1.0
+ * @since 2.0
  */
 public final class Unit {
 	/**
 	 * Singleton instance.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static final Unit UNIT = new Unit();
 	

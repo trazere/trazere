@@ -22,7 +22,7 @@ import java.util.LinkedList;
  * The {@link LRUCachePolicy} class provides cache policies with a bounded capacity based on the Least Recently Used algorithm.
  * 
  * @param <K> Type of the keys.
- * @since 1.0
+ * @since 2.0
  */
 public class LRUCachePolicy<K>
 implements CachePolicy<K> {
@@ -30,7 +30,7 @@ implements CachePolicy<K> {
 	 * Instanciates a new cache policy.
 	 * 
 	 * @param capacity Capacity of the cache.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public LRUCachePolicy(final int capacity) {
 		assert capacity > 0;
@@ -44,7 +44,7 @@ implements CachePolicy<K> {
 	/**
 	 * Capacity of this cache.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final int _capacity;
 	
@@ -52,7 +52,7 @@ implements CachePolicy<K> {
 	 * Gets the capacity of the cache.
 	 * 
 	 * @return The capacity.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public int getCapacity() {
 		return _capacity;

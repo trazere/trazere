@@ -26,7 +26,7 @@ import com.trazere.core.util.Maybe;
  * 
  * @param <A> Type of the arguments.
  * @param <R> Type of the results.
- * @since 1.0
+ * @since 2.0
  */
 public interface MemoizedFunction<A, R>
 extends Function<A, R> {
@@ -35,7 +35,7 @@ extends Function<A, R> {
 	 * 
 	 * @param arg Argument whose memoized evaluation should be tested.
 	 * @return <code>true</code> when the evaluation is memoized, <code>false</code> otherwise.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	boolean isMemoized(A arg);
 	
@@ -44,7 +44,7 @@ extends Function<A, R> {
 	 * 
 	 * @param arg Argument whose memoized evaluation should be read.
 	 * @return The memoized evaluation result, or nothing when the result has not been evaluated and memoized yet.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	Maybe<R> probe(A arg);
 }

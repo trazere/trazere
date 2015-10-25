@@ -22,14 +22,14 @@ import java.io.InputStream;
  * The {@link DecoratorInputStream} class implements decorators of {@link InputStream input streams}.
  * 
  * @see InputStream
- * @since 1.0
+ * @since 2.0
  */
 public abstract class DecoratorInputStream
 extends InputStream {
 	/**
 	 * Decorated input stream.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final InputStream _decorated;
 	
@@ -37,7 +37,7 @@ extends InputStream {
 	 * Instantiates a new decorator.
 	 * 
 	 * @param decorated Decorated input stream.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public DecoratorInputStream(final InputStream decorated) {
 		assert null != decorated;

@@ -24,7 +24,7 @@ import java.util.Set;
  * @param <K> Witness type of the field keys.
  * @param <R> Type of the records.
  * @see Record
- * @since 1.0
+ * @since 2.0
  */
 public interface RecordBuilder<K extends FieldKey<? extends K, ?>, R extends Record<K>>
 extends Factory<R> {
@@ -34,7 +34,7 @@ extends Factory<R> {
 	 * The size of a record corresponds to the number of fields it contains.
 	 * 
 	 * @return The size of the record.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	default int size() {
 		return keys().size();
@@ -46,7 +46,7 @@ extends Factory<R> {
 	 * A record is empty when it contains no fields.
 	 * 
 	 * @return <code>true</code> when the record is empty, <code>false</code> otherwise.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	default boolean isEmpty() {
 		return 0 == size();
@@ -57,7 +57,7 @@ extends Factory<R> {
 	 * 
 	 * @param key Key of the field to look for.
 	 * @return <code>true</code> when the record contains a field identified by the given key, <code>false</code> otherwise.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	default boolean contains(final FieldKey<? extends K, ?> key) {
 		return keys().contains(key);
@@ -67,7 +67,7 @@ extends Factory<R> {
 	 * Gets a view of the keys identifying the fields of record being built by this builder.
 	 * 
 	 * @return A set view of the field keys.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	Set<? extends FieldKey<? extends K, ?>> keys();
 	
@@ -81,7 +81,7 @@ extends Factory<R> {
 	 * @param value The value of the field to add.
 	 * @throws NullFieldException When the value is <code>null</code> and the field is not nullable.
 	 * @throws DuplicateFieldException When some field is already identified by the given key.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	default <V> void add(final FieldKey<? extends K, V> key, final V value)
 	throws NullFieldException, DuplicateFieldException {
@@ -95,7 +95,7 @@ extends Factory<R> {
 	 * 
 	 * @param field Field to add.
 	 * @throws DuplicateFieldException When some field is already identified by the key of the given field.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	void add(Field<? extends K, ?> field)
 	throws DuplicateFieldException;
@@ -107,7 +107,7 @@ extends Factory<R> {
 	 * 
 	 * @param fields Fields to add.
 	 * @throws DuplicateFieldException When some field is already identified by the key of some given field.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	default void addAll(final Iterable<? extends Field<? extends K, ?>> fields)
 	throws DuplicateFieldException {
@@ -123,7 +123,7 @@ extends Factory<R> {
 	 * 
 	 * @param record Record containing the fields to add.
 	 * @throws DuplicateFieldException When some field is already identified by some key of the given record.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	default void addAll(final Record<? extends K> record)
 	throws DuplicateFieldException {
@@ -139,7 +139,7 @@ extends Factory<R> {
 	 * @param key The key identifying the field to complete the record with.
 	 * @param value The value of the field to complete the record with.
 	 * @throws NullFieldException When the value is <code>null</code> and the field is not nullable.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	default <V> void complete(final FieldKey<? extends K, V> key, final V value)
 	throws NullFieldException {
@@ -152,7 +152,7 @@ extends Factory<R> {
 	 * The field is added only when the record does not already contain a field identified by the key of the given field.
 	 * 
 	 * @param field Field to complete the record with.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	void complete(Field<? extends K, ?> field);
 	
@@ -162,7 +162,7 @@ extends Factory<R> {
 	 * The fields are added only when the record does not already contain a field identified by their key.
 	 * 
 	 * @param fields Fields to complete the record with.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	default void completeAll(final Iterable<? extends Field<? extends K, ?>> fields) {
 		for (final Field<? extends K, ?> field : fields) {
@@ -176,7 +176,7 @@ extends Factory<R> {
 	 * The fields are added only when the record does not already contain a field identified by their key.
 	 * 
 	 * @param record Record containing the fields to complete the record with.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	default void completeAll(final Record<? extends K> record) {
 		completeAll(record.fields());
@@ -191,7 +191,7 @@ extends Factory<R> {
 	 * @param key The key identifying the field to set.
 	 * @param value The value of the field to set.
 	 * @throws NullFieldException When the value is <code>null</code> and the field is not nullable.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	default <V> void set(final FieldKey<? extends K, V> key, final V value) {
 		set(Fields.fromKeyAndValue(key, value));
@@ -203,7 +203,7 @@ extends Factory<R> {
 	 * The record may already contain a field identified by the key of the given field.
 	 * 
 	 * @param field Field to set.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	void set(Field<? extends K, ?> field);
 	
@@ -213,7 +213,7 @@ extends Factory<R> {
 	 * The record may already contain fields identified keys of the given fields.
 	 * 
 	 * @param fields Fields to set.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	default void setAll(final Iterable<? extends Field<? extends K, ?>> fields) {
 		for (final Field<? extends K, ?> field : fields) {
@@ -227,7 +227,7 @@ extends Factory<R> {
 	 * The record may already contain fields identified keys of the given record.
 	 * 
 	 * @param record Record containing the fields to set.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	default void setAll(final Record<? extends K> record) {
 		addAll(record.fields());
@@ -240,7 +240,7 @@ extends Factory<R> {
 	 * Removes the field identified by the given key from the record being built by this builder.
 	 * 
 	 * @param key Key of the field to remove.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	void remove(FieldKey<? extends K, ?> key);
 	
@@ -248,7 +248,7 @@ extends Factory<R> {
 	 * Removes the fields identified by the given keys from the record being built by this builder.
 	 * 
 	 * @param keys Keys of the fields to remove.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	default void removeAll(final Iterable<? extends FieldKey<? extends K, ?>> keys) {
 		for (final FieldKey<? extends K, ?> key : keys) {
@@ -259,7 +259,7 @@ extends Factory<R> {
 	/**
 	 * Removes all fields from the record being built by this builder.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	void clear();
 	
@@ -267,7 +267,7 @@ extends Factory<R> {
 	 * Builds the record.
 	 * 
 	 * @return The built record.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@Override
 	R build();

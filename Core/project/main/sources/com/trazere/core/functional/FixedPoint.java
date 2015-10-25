@@ -24,7 +24,7 @@ import com.trazere.core.lang.MutableObject;
  * between to successive steps is accepted by some predicate.
  * 
  * @param <V> Type of the values.
- * @since 1.0
+ * @since 2.0
  */
 public abstract class FixedPoint<V>
 implements Function<V, V> {
@@ -35,7 +35,7 @@ implements Function<V, V> {
 	 * @param step Convergence function to use.
 	 * @param done Termination predicate to use, evaluated with the previous and current value.
 	 * @return The built fixed point function.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <V> FixedPoint<V> build(final Function<? super V, ? extends V> step, final Predicate2<? super V, ? super V> done) {
 		assert null != step;
@@ -62,7 +62,7 @@ implements Function<V, V> {
 	 * @param done Termination predicate to use, evaluated with the previous and current value.
 	 * @param initialValue Initial value.
 	 * @return The fixed point value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <V> V compute(final Function<? super V, ? extends V> step, final Predicate2<? super V, ? super V> done, final V initialValue) {
 		return FixedPoint.<V>build(step, done).evaluate(initialValue);
@@ -87,7 +87,7 @@ implements Function<V, V> {
 	 * 
 	 * @param value Current value.
 	 * @return The next value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected abstract V evaluateStep(V value);
 	
@@ -97,7 +97,7 @@ implements Function<V, V> {
 	 * @param previousValue Previous value.
 	 * @param value Current value.
 	 * @return <code>true</code> when the fixed point has been reached, <code>false</code> to continue to converge.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected abstract boolean isDone(V previousValue, V value);
 }

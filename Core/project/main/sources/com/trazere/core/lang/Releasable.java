@@ -18,14 +18,14 @@ package com.trazere.core.lang;
 /**
  * The {@link Releasable} interface defines object that can be released.
  * 
- * @since 1.0
+ * @since 2.0
  */
 @FunctionalInterface
 public interface Releasable {
 	/**
 	 * Releases this releasable.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public void release();
 }

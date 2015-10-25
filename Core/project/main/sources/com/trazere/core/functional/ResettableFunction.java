@@ -26,7 +26,7 @@ import java.util.Set;
  * 
  * @param <A> Type of the arguments.
  * @param <R> Type of the results.
- * @since 1.0
+ * @since 2.0
  */
 public abstract class ResettableFunction<A, R>
 extends BaseMemoizedFunction<A, R>
@@ -35,7 +35,7 @@ implements Releasable {
 	 * Gets the arguments whose evaluation has been memoized.
 	 * 
 	 * @return An unmodifiable set of the arguments.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Set<A> memoizedArgs() {
 		return Collections.unmodifiableSet(_results.keySet());
@@ -46,7 +46,7 @@ implements Releasable {
 	 * time this function is evaluated with the given argument.
 	 * 
 	 * @param arg Argument whose evaluation should be reset.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public void reset(final A arg) {
 		if (_results.containsKey(arg)) {
@@ -59,7 +59,7 @@ implements Releasable {
 	 * computed (again) the next time this function is evaluated with the accepted arguments.
 	 * 
 	 * @param filter Predicate to use to filter the arguments whose evaluation should be reset.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public void reset(final Predicate<? super A> filter) {
 		final Iterator<Map.Entry<A, R>> entries = _results.entrySet().iterator();
@@ -77,7 +77,7 @@ implements Releasable {
 	 * Resets all evaluations of this function, discarding the possibly memoized results. The results will be computed (again) the next time this function is
 	 * evaluated.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public void resetAll() {
 		final Iterator<Map.Entry<A, R>> entries = _results.entrySet().iterator();
@@ -95,7 +95,7 @@ implements Releasable {
 	 * 
 	 * @param arg Argument whose evaluation produced the result to dispose.
 	 * @param result Result to dispose.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected void dispose(final A arg, final R result) {
 		// Nothing to do.

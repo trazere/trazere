@@ -23,7 +23,7 @@ package com.trazere.core.imperative;
  * 
  * @param <E> Type of the accumulated elements.
  * @param <S> Type of the state.
- * @since 1.0
+ * @since 2.0
  */
 public abstract class FoldAccumulator<E, S>
 implements Accumulator<E, S> {
@@ -34,7 +34,7 @@ implements Accumulator<E, S> {
 	 * Instantiates a new accumulator.
 	 * 
 	 * @param initialState Initial state.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public FoldAccumulator(final S initialState) {
 		_state = initialState;
@@ -51,7 +51,7 @@ implements Accumulator<E, S> {
 	 * @param state Current state.
 	 * @param element Accumulated element.
 	 * @return The new state.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected abstract S fold(S state, E element);
 	

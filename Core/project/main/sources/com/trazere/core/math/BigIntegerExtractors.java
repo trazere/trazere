@@ -27,7 +27,7 @@ import java.math.BigInteger;
  * @see Function
  * @see Maybe
  * @see BigInteger
- * @since 1.0
+ * @since 2.0
  */
 public class BigIntegerExtractors {
 	/**
@@ -36,7 +36,7 @@ public class BigIntegerExtractors {
 	 * The extractors control that the values fit in bytes.
 	 * 
 	 * @return The built extractor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Function<BigInteger, Maybe<Byte>> byteValue() {
 		return BYTE_VALUE;
@@ -50,7 +50,7 @@ public class BigIntegerExtractors {
 	 * The extractors control that the values fit in short integers.
 	 * 
 	 * @return The built extractor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Function<BigInteger, Maybe<Short>> shortValue() {
 		return SHORT_VALUE;
@@ -64,7 +64,7 @@ public class BigIntegerExtractors {
 	 * The extractors control that the values fit in integers.
 	 * 
 	 * @return The built extractor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Function<BigInteger, Maybe<Integer>> integerValue() {
 		return INTEGER_VALUE;
@@ -78,7 +78,7 @@ public class BigIntegerExtractors {
 	 * The extractors control that the values fit in long integers.
 	 * 
 	 * @return The built extractor.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static Function<BigInteger, Maybe<Long>> longValue() {
 		return LONG_VALUE;

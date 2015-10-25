@@ -23,7 +23,7 @@ import javax.xml.stream.XMLStreamWriter;
  * The {@link IndentingXMLStreamWriter} class implements decorators of {@link XMLStreamWriter XML stream writers} that properly indent the output according to
  * the document structure.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public class IndentingXMLStreamWriter
 extends DecoratorXMLStreamWriter {
@@ -50,7 +50,7 @@ extends DecoratorXMLStreamWriter {
 	 * Gets the indentation string.
 	 * 
 	 * @return The identation string.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public String getIndentation() {
 		return _indentation;
@@ -63,7 +63,7 @@ extends DecoratorXMLStreamWriter {
 	 * Gets the current indentation level.
 	 * 
 	 * @return The current level of indentation.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public int getLevel() {
 		return _level.get();
@@ -93,7 +93,7 @@ extends DecoratorXMLStreamWriter {
 	/**
 	 * Increases the level of indentation.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected void indent() {
 		// Increase the current indentation level.
@@ -103,7 +103,7 @@ extends DecoratorXMLStreamWriter {
 	/**
 	 * Decreases the level of indentation.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected void unindent() {
 		// Decrease the current indentation level.
@@ -120,7 +120,7 @@ extends DecoratorXMLStreamWriter {
 	 * Writes some indentation according to the current level.
 	 * 
 	 * @throws XMLStreamException On failure.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected void writeIndentation()
 	throws XMLStreamException {
@@ -133,7 +133,7 @@ extends DecoratorXMLStreamWriter {
 	/**
 	 * The {@link Write} interface defines write effects.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected static interface Write {
 		/**
@@ -150,7 +150,7 @@ extends DecoratorXMLStreamWriter {
 	 * 
 	 * @param content Content to write.
 	 * @throws XMLStreamException On failure.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected void writeIndentated(final Write content)
 	throws XMLStreamException {
@@ -169,7 +169,7 @@ extends DecoratorXMLStreamWriter {
 	 * 
 	 * @param content Content start to write.
 	 * @throws XMLStreamException On failure.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected void writeIndentatedStart(final Write content)
 	throws XMLStreamException {
@@ -191,7 +191,7 @@ extends DecoratorXMLStreamWriter {
 	 * 
 	 * @param content Content end to write.
 	 * @throws XMLStreamException On failure.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected void writeIndentatedEnd(final Write content)
 	throws XMLStreamException {

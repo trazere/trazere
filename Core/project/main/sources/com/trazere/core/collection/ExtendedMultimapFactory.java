@@ -25,7 +25,7 @@ import java.util.Collection;
  * @param <C> Type of the collections of values.
  * @param <M> Type of the multimaps.
  * @see Multimap
- * @since 1.0
+ * @since 2.0
  */
 public interface ExtendedMultimapFactory<K, V, C extends Collection<V>, M extends Multimap<K, V, C>>
 extends ExtendedAbstractMultimapFactory<K, V, C, Multimap<K, V, C>, M> {

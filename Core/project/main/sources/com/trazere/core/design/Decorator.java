@@ -19,13 +19,13 @@ package com.trazere.core.design;
  * The {@link Decorator} class provides a skeleton implementation of decorators.
  * 
  * @param <T> Type of the decorated object.
- * @since 1.0
+ * @since 2.0
  */
 public abstract class Decorator<T> {
 	/**
 	 * Decorated object.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final T _decorated;
 	
@@ -33,7 +33,7 @@ public abstract class Decorator<T> {
 	 * Instantiates a new decorator.
 	 * 
 	 * @param decorated Decorated object.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Decorator(final T decorated) {
 		assert null != decorated;

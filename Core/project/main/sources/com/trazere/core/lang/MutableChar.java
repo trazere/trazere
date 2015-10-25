@@ -25,14 +25,14 @@ import com.trazere.core.text.TextUtils;
  * <p>
  * This class can be used instead of non-final variables to help tagging side effects.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public class MutableChar
 implements Describable {
 	/**
 	 * Current value.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected char _value;
 	
@@ -40,7 +40,7 @@ implements Describable {
 	 * Instantiates a new mutable char.
 	 * 
 	 * @param value Initial value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public MutableChar(final char value) {
 		_value = value;
@@ -50,7 +50,7 @@ implements Describable {
 	 * Gets the current value of this mutable char.
 	 * 
 	 * @return The current value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public char get() {
 		return _value;
@@ -61,7 +61,7 @@ implements Describable {
 	 * 
 	 * @param value New value.
 	 * @return The given new value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public char set(final char value) {
 		_value = value;
@@ -73,7 +73,7 @@ implements Describable {
 	 * 
 	 * @param function Function to use to compute the new value.
 	 * @return The computed new value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public char update(final Function<? super Character, ? extends Character> function) {
 		return set(function.evaluate(_value).charValue());

@@ -24,7 +24,7 @@ import java.util.Collection;
  * @param <E> Type of the elements.
  * @param <C> Type of the collections.
  * @see Collection
- * @since 1.0
+ * @since 2.0
  */
 public interface CollectionFactory<E, C extends Collection<E>>
 extends Factory<C> {
@@ -32,7 +32,7 @@ extends Factory<C> {
 	 * Builds an empty collection.
 	 * 
 	 * @return The built collection.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@Override
 	C build();
@@ -42,7 +42,7 @@ extends Factory<C> {
 	 * 
 	 * @param capacity Initial capacity of the collection.
 	 * @return The built collection.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	default C build(final int capacity) {
 		return build();
@@ -53,7 +53,7 @@ extends Factory<C> {
 	 * 
 	 * @param elements Elements.
 	 * @return The built collection.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	default C build(@SuppressWarnings("unchecked") final E... elements) {
 		final C collection = build();
@@ -68,7 +68,7 @@ extends Factory<C> {
 	 * 
 	 * @param elements Elements.
 	 * @return The built collection.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	default C build(final Iterable<? extends E> elements) {
 		final C collection = build();
@@ -83,7 +83,7 @@ extends Factory<C> {
 	 * 
 	 * @param elements Elements.
 	 * @return The built collection.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	C build(Collection<? extends E> elements);
 }

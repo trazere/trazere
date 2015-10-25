@@ -21,7 +21,7 @@ import java.util.NoSuchElementException;
 /**
  * The {@link FiniteIntSequence} class implements finite sequences of integers.
  * 
- * @since 1.0
+ * @since 2.0
  */
 public class FiniteIntSequence
 extends BaseIntSequence {
@@ -30,7 +30,7 @@ extends BaseIntSequence {
 	 * 
 	 * @param start Starting value of the sequence.
 	 * @param end Ending value of the sequence.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public FiniteIntSequence(final int start, final int end) {
 		this(start, end, 1);
@@ -42,7 +42,7 @@ extends BaseIntSequence {
 	 * @param start Starting value of the sequence.
 	 * @param end Ending value of the sequence.
 	 * @param interval Interval between consecutive the values of the sequences. Must be strictly positive.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public FiniteIntSequence(final int start, final int end, final int interval) {
 		super(start, start >= end ? interval : -interval);
@@ -61,7 +61,7 @@ extends BaseIntSequence {
 	/**
 	 * Ending value of the sequence.
 	 * 
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected final int _end;
 	
@@ -69,7 +69,7 @@ extends BaseIntSequence {
 	 * Gets the ending value of this sequence.
 	 * 
 	 * @return The ending value.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public int getEnd() {
 		return _end;

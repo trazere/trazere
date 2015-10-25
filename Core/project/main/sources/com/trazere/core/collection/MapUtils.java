@@ -37,7 +37,7 @@ import java.util.Map;
  * The {@link MapUtils} class provides various utilities regarding {@link Map maps}.
  * 
  * @see Map
- * @since 1.0
+ * @since 2.0
  */
 public class MapUtils {
 	/**
@@ -47,7 +47,7 @@ public class MapUtils {
 	 * @param <V> Type of the values.
 	 * @param map Map to read.
 	 * @return The bindings.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <K, V> Iterable<Tuple2<K, V>> bindings(final Map<? extends K, ? extends V> map) {
@@ -63,7 +63,7 @@ public class MapUtils {
 	 * @param <V> Type of the values.
 	 * @param map Map to read.
 	 * @return A binding of the map, or nothing when the map is empty.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V> Maybe<Tuple2<K, V>> any(final Map<K, V> map) {
 		return IteratorUtils.next(bindings(map).iterator());
@@ -77,7 +77,7 @@ public class MapUtils {
 	 * @param map Map to read.
 	 * @param key Key of the binding to read.
 	 * @return The associated value, or nothing when the map contains no bindings for the key.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V> Maybe<V> get(final Map<? super K, ? extends V> map, final K key) {
 		final V value = map.get(key);
@@ -95,7 +95,7 @@ public class MapUtils {
 	 * @param key Key of the binding to read.
 	 * @param defaultValue Default value for the missing bindings.
 	 * @return The associated value, or the default value when the map contains no bindings for the key.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V> V getOptional(final Map<? super K, ? extends V> map, final K key, final V defaultValue) {
 		final V value = map.get(key);
@@ -113,7 +113,7 @@ public class MapUtils {
 	 * @param key Key of the binding to read.
 	 * @param defaultValue Default value for the missing bindings.
 	 * @return The associated value, or the default value when the map contains no bindings for the key.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V> V getOptional(final Map<? super K, ? extends V> map, final K key, final Thunk<? extends V> defaultValue) {
 		final V value = map.get(key);
@@ -132,7 +132,7 @@ public class MapUtils {
 	 * @param missingBindingFactory Factory of the exceptions for the missing bindings.
 	 * @return The associated value.
 	 * @throws RuntimeException When the map contains no bindings for the key.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V> V getMandatory(final Map<? super K, ? extends V> map, final K key, final ThrowableFactory<? extends RuntimeException> missingBindingFactory) {
 		if (map.containsKey(key)) {
@@ -151,7 +151,7 @@ public class MapUtils {
 	 * @param key Key of the binding to set.
 	 * @param value Value of the binding to set.
 	 * @return The presiously associated value, or nothing when the map contained no bindings for the key.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V> Maybe<V> put(final Map<? super K, V> map, final K key, final V value) {
 		final Maybe<V> currentValue = get(map, key);
@@ -167,7 +167,7 @@ public class MapUtils {
 	 * @param map Map to modify.
 	 * @param key Key of the binding to set.
 	 * @param value Value of the binding to set.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V> void put(final Map<? super K, ? super V> map, final K key, final Maybe<? extends V> value) {
 		if (value.isSome()) {
@@ -182,7 +182,7 @@ public class MapUtils {
 	 * @param <V> Type of the values.
 	 * @param map Map to modify.
 	 * @param bindings Bindings to put in the map.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@SafeVarargs
 	public static <K, V> void putAll(final Map<? super K, ? super V> map, final Tuple2<? extends K, ? extends V>... bindings) {
@@ -198,7 +198,7 @@ public class MapUtils {
 	 * @param <V> Type of the values.
 	 * @param map Map to modify.
 	 * @param bindings Bindings to put in the map.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V> void putAll(final Map<? super K, ? super V> map, final Iterable<? extends Tuple2<? extends K, ? extends V>> bindings) {
 		for (final Tuple2<? extends K, ? extends V> binding : bindings) {
@@ -214,7 +214,7 @@ public class MapUtils {
 	 * @param map Map to modify.
 	 * @param key Key of the binding to remove.
 	 * @return The associated removed value, or nothing when the map contains no bindings for the key.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V> Maybe<V> remove(final Map<? super K, ? extends V> map, final K key) {
 		if (map.containsKey(key)) {
@@ -233,7 +233,7 @@ public class MapUtils {
 	 * @param <V> Type of the values.
 	 * @param map Map to modify.
 	 * @return The removed binding, or nothing when the map is empty.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V> Maybe<Tuple2<K, V>> removeAny(final Map<? extends K, ? extends V> map) {
 		final Iterator<? extends Map.Entry<? extends K, ? extends V>> iterator = map.entrySet().iterator();
@@ -259,7 +259,7 @@ public class MapUtils {
 	 * @param map Map to filter.
 	 * @param filter Predicate to use to filter the bindings to retain.
 	 * @return The given filtered map.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V, M extends Map<? extends K, ? extends V>> M retain(final M map, final Predicate2<? super K, ? super V> filter) {
 		final Iterator<? extends Map.Entry<? extends K, ? extends V>> entries = map.entrySet().iterator();
@@ -279,7 +279,7 @@ public class MapUtils {
 	 * @param <V> Type of the values.
 	 * @param map Map containing the bindings.
 	 * @param procedure Procedure to execute.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V> void foreach(final Map<? extends K, ? extends V> map, final Procedure2<? super K, ? super V> procedure) {
 		IteratorUtils.foreach(bindings(map).iterator(), procedure);
@@ -295,7 +295,7 @@ public class MapUtils {
 	 * @param operator Operator to use.
 	 * @param initialState Initial state.
 	 * @return The folded state.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V, S> S fold(final Map<? extends K, ? extends V> map, final Function3<? super S, ? super K, ? super V, ? extends S> operator, final S initialState) {
 		return IteratorUtils.fold(bindings(map).iterator(), operator, initialState);
@@ -309,7 +309,7 @@ public class MapUtils {
 	 * @param map Map containing the bindings to filter.
 	 * @param filter Predicate to use to filter the binding.
 	 * @return The first accepted binding, or when no binding is accepted.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V> Maybe<Tuple2<K, V>> first(final Map<? extends K, ? extends V> map, final Predicate2<? super K, ? super V> filter) {
 		return IteratorUtils.first(bindings(map).iterator(), filter);
@@ -325,7 +325,7 @@ public class MapUtils {
 	 * @param map Map containing the bindings to test.
 	 * @param filter Predicate to use to filter the binding.
 	 * @return <code>true</code> when some binding is accepted, <code>false</code> when all bindings are rejected.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V> boolean isAny(final Map<? extends K, ? extends V> map, final Predicate2<? super K, ? super V> filter) {
 		return IteratorUtils.isAny(bindings(map).iterator(), filter);
@@ -339,7 +339,7 @@ public class MapUtils {
 	 * @param map Map containing the bindings to test.
 	 * @param filter Predicate to use to filter the binding.
 	 * @return <code>true</code> when all bindings are accepted, <code>false</code> when some binding is rejected.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V> boolean areAll(final Map<? extends K, ? extends V> map, final Predicate2<? super K, ? super V> filter) {
 		return IteratorUtils.areAll(bindings(map).iterator(), filter);
@@ -353,7 +353,7 @@ public class MapUtils {
 	 * @param map Map containing the bindings to count.
 	 * @param filter Predicate to use to filter the binding.
 	 * @return The number of accepted bindings.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V> int count(final Map<? extends K, ? extends V> map, final Predicate2<? super K, ? super V> filter) {
 		return IteratorUtils.count(bindings(map).iterator(), filter);
@@ -366,7 +366,7 @@ public class MapUtils {
 	 * @param <V> Type of the values.
 	 * @param map Map containing the values to compare.
 	 * @return The least element.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V extends Comparable<V>> Maybe<Tuple2<K, V>> least(final Map<? extends K, ? extends V> map) {
 		return least(map, Comparators.<V>natural());
@@ -380,7 +380,7 @@ public class MapUtils {
 	 * @param map Map containing the values to compare.
 	 * @param comparator Comparator to use.
 	 * @return The least element.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V> Maybe<Tuple2<K, V>> least(final Map<? extends K, ? extends V> map, final Comparator<? super V> comparator) {
 		return IteratorUtils.least(MapUtils.<K, V>bindings(map).iterator(), FieldComparators.field2(comparator));
@@ -393,7 +393,7 @@ public class MapUtils {
 	 * @param <V> Type of the values.
 	 * @param map Map containing the values to compare.
 	 * @return The greatest element.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V extends Comparable<V>> Maybe<Tuple2<K, V>> greatest(final Map<? extends K, ? extends V> map) {
 		return greatest(map, Comparators.<V>natural());
@@ -407,7 +407,7 @@ public class MapUtils {
 	 * @param map Map containing the values to compare.
 	 * @param comparator Comparator to use.
 	 * @return The greatest element.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V> Maybe<Tuple2<K, V>> greatest(final Map<? extends K, ? extends V> map, final Comparator<? super V> comparator) {
 		return IteratorUtils.greatest(MapUtils.<K, V>bindings(map).iterator(), FieldComparators.field2(comparator));
@@ -425,7 +425,7 @@ public class MapUtils {
 	 * @param map2 Second map containing the bindings to append.
 	 * @param resultFactory Factory of the result map.
 	 * @return A map containing the appended bindings.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V, M extends Map<? super K, ? super V>> M append(final Map<? extends K, ? extends V> map1, final Map<? extends K, ? extends V> map2, final MapFactory<? super K, ? super V, M> resultFactory) {
 		final M results = resultFactory.build(map1.size() + map2.size());
@@ -446,7 +446,7 @@ public class MapUtils {
 	 * @param map Map containing the maps containing the bindings to flatten.
 	 * @param resultFactory Factory of the result map.
 	 * @return A map containing the flatten bindings.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K1, K2, V, M extends Map<? super Tuple2<K1, K2>, ? super V>> M flatten(final Map<? extends K1, ? extends Map<? extends K2, ? extends V>> map, final MapFactory<? super Tuple2<K1, K2>, ? super V, M> resultFactory) {
 		final M results = resultFactory.build();
@@ -469,7 +469,7 @@ public class MapUtils {
 	 * @param n Number of bindings to take.
 	 * @param resultFactory Factory of the result map.
 	 * @return A map containing the taken bindings.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V, M extends Map<? super K, ? super V>> M take(final Map<? extends K, ? extends V> map, final int n, final MapFactory<? super K, ? super V, M> resultFactory) {
 		return resultFactory.build(IterableUtils.take(bindings(map), n));
@@ -485,7 +485,7 @@ public class MapUtils {
 	 * @param n Number of bindings to drop.
 	 * @param resultFactory Factory of the result map.
 	 * @return A map containing the remaining bindings.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V, M extends Map<? super K, ? super V>> M drop(final Map<? extends K, ? extends V> map, final int n, final MapFactory<? super K, ? super V, M> resultFactory) {
 		return resultFactory.build(IterableUtils.drop(bindings(map), n));
@@ -501,7 +501,7 @@ public class MapUtils {
 	 * @param filter Predicate to use to filter the bindings.
 	 * @param resultFactory Factory of the result map.
 	 * @return A map containing the filtered bindings.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V, M extends Map<? super K, ? super V>> M filter(final Map<? extends K, ? extends V> map, final Predicate2<? super K, ? super V> filter, final MapFactory<? super K, ? super V, M> resultFactory) {
 		//		return resultFactory.build(IterableUtils.filter(bindings(map), filter));
@@ -528,7 +528,7 @@ public class MapUtils {
 	 * @param function Function to use to transform the bindings.
 	 * @param resultFactory Factory of the result map.
 	 * @return A map containing the transformed bindings.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V, TV, M extends Map<? super K, ? super TV>> M map(final Map<? extends K, ? extends V> map, final Function2<? super K, ? super V, ? extends TV> function, final MapFactory<? super K, ? super TV, M> resultFactory) {
 		//		return resultFactory.build(IterableUtils.map(bindings(map), (k, v) -> new Tuple2<>(k, function.evaluate(k, v))));
@@ -552,7 +552,7 @@ public class MapUtils {
 	 * @param extractor Function to use to extract the bindings.
 	 * @param resultFactory Factory of the result map.
 	 * @return A map containing the extracted bindings.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V, EV, M extends Map<? super K, ? super EV>> M extract(final Map<? extends K, ? extends V> map, final Function2<? super K, ? super V, ? extends Maybe<? extends EV>> extractor, final MapFactory<? super K, ? super EV, M> resultFactory) {
 		//		return resultFactory.build(IterableUtils.extract(bindings(map), (k, v) -> extractor.evaluate(k, v).map(ev -> new Tuple2<>(k, ev))));
@@ -577,7 +577,7 @@ public class MapUtils {
 	 * @param <V> Type of the values.
 	 * @param map Map to wrap.
 	 * @return An unmodifiable view of the given map, or the given map when is it already unmodifiable.
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static <K, V> Map<K, V> unmodifiable(final Map<K, V> map) {
 		return UNMODIFIABLE_MAP_CLASS.isInstance(map) ? map : Collections.unmodifiableMap(map);
