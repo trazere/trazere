@@ -108,7 +108,7 @@ implements Observable<E> {
 	 * @since 2.0
 	 */
 	public synchronized boolean isObserved() {
-		return IterableUtils.isAny(_observers, observer -> observer.isAlive());
+		return IterableUtils.isAny(_observers, ObserverRef::isAlive);
 	}
 	
 	/**
@@ -128,8 +128,8 @@ implements Observable<E> {
 	/**
 	 * Unsubscribes the given observer from this observable.
 	 * <p>
-	 * This method is called every time an observer is being unsubscribed (either implicitely or explicitely), unless all observers are unsubscribes at once (@see
-	 * {@link #unsubscribeAll()}).
+	 * This method is called every time an observer is being unsubscribed (either implicitely or explicitely), unless all observers are unsubscribes at once
+	 * (@see {@link #unsubscribeAll()}).
 	 * 
 	 * @param observer Observer to unsubscribe.
 	 * @since 2.0

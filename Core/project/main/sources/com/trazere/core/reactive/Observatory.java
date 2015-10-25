@@ -40,7 +40,7 @@ public interface Observatory<S, E> {
 	 * @return The observable.
 	 * @since 2.0
 	 */
-	public Observable<E> observeAll();
+	Observable<E> observeAll();
 	
 	/**
 	 * Notifies the observers of the events routed by this observatory for the given subject with the given event.
