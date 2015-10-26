@@ -129,7 +129,7 @@ public class LangAccumulators {
 			public void add(final T value)
 			throws X {
 				if (_result.isSet()) {
-					if (comparator.compare(value, _result.get()) > 1) {
+					if (comparator.compare(value, _result.get()) > 0) {
 						_result.update(value);
 					}
 				} else {
