@@ -633,7 +633,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * @param function The mapping function.
 	 * @return An instance containing the mapped value.
 	 * @throws X When the mapping fails.
-	 * @deprecated Use {@link #extract(Function1)}.
+	 * @deprecated Use {@link #extract(Function1)}. (since 1.0)
 	 */
 	@Deprecated
 	public <R, X extends Exception> Maybe<R> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, ? extends X> function)
@@ -661,7 +661,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * @param <X> Type of the exceptions.
 	 * @param function The function.
 	 * @return The built function.
-	 * @deprecated Use {@link #extractFunction(Function1)}.
+	 * @deprecated Use {@link #extractFunction(Function1)}. (since 1.0)
 	 */
 	@Deprecated
 	public static <T, R, X extends Exception> Function1<Maybe<? extends T>, Maybe<R>, X> mapFilterFunction(final Function1<? super T, ? extends Maybe<? extends R>, ? extends X> function) {

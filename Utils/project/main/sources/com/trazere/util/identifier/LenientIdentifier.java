@@ -19,7 +19,7 @@ package com.trazere.util.identifier;
  * The {@link LenientIdentifier} class represents identifiers which need not to be normalized according to their values.
  * 
  * @param <V> Type of the underlying values.
- * @deprecated Use {@link Identifier}.
+ * @deprecated Use {@link Identifier}. (since 1.0)
  */
 @Deprecated
 public abstract class LenientIdentifier<V>

@@ -26,7 +26,7 @@ import com.trazere.util.text.Description;
  * 
  * @param <T> Type of the value.
  * @param <X> Type of the exceptions.
- * @deprecated Use {@link ResettableClosure}.
+ * @deprecated Use {@link ResettableClosure}. (since 1.0)
  */
 @Deprecated
 public abstract class ResetableClosure<T, X extends Exception>
@@ -38,7 +38,7 @@ extends ResettableClosure<T, X> {
 	 * @param <X> Type of the exceptions.
 	 * @param value Value. May be <code>null</code>.
 	 * @return The closure.
-	 * @deprecated Use {@link ResettableClosure#build(Object)}.
+	 * @deprecated Use {@link ResettableClosure#build(Object)}. (since 1.0)
 	 */
 	@Deprecated
 	public static <T, X extends Exception> ResetableClosure<T, X> build(final T value) {
@@ -63,7 +63,7 @@ extends ResettableClosure<T, X> {
 	 * @param <X> Type of the exceptions.
 	 * @param function The function computing the value.
 	 * @return The closure.
-	 * @deprecated Use {@link ResettableClosure#build(Function0)}.
+	 * @deprecated Use {@link ResettableClosure#build(Function0)}. (since 1.0)
 	 */
 	@Deprecated
 	public static <T, X extends Exception> ResetableClosure<T, X> build(final Function0<? extends T, ? extends X> function) {

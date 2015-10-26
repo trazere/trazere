@@ -40,7 +40,7 @@ public class IOUtils {
 	 * 
 	 * @param <X> Type of the exceptions.
 	 * @return The built function.
-	 * @deprecated Use {@link IOFunctions#file()}
+	 * @deprecated Use {@link IOFunctions#file()}. (since 1.0)
 	 */
 	@Deprecated
 	public static <X extends Exception> Function1<String, File, X> buildFileFunction() {

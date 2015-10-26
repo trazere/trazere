@@ -106,7 +106,7 @@ public class Procedures {
 	 * 
 	 * @param <X> Type of the exceptions.
 	 * @return The built procedure.
-	 * @deprecated Use {@link #execute()}.
+	 * @deprecated Use {@link #execute()}. (since 1.0)
 	 */
 	@Deprecated
 	public static <X extends Exception> Procedure1<Procedure0<? extends X>, X> execute0() {
@@ -138,7 +138,7 @@ public class Procedures {
 	 * @param <X> Type of the exceptions.
 	 * @param value The argument value. May be <code>null</code>.
 	 * @return The built procedure.
-	 * @deprecated Use {@link #execute(Object)}.
+	 * @deprecated Use {@link #execute(Object)}. (since 1.0)
 	 */
 	@Deprecated
 	public static <T, X extends Exception> Procedure1<Procedure1<? super T, ? extends X>, X> execute1(final T value) {
@@ -174,7 +174,7 @@ public class Procedures {
 	 * @param value1 The first argument value. May be <code>null</code>.
 	 * @param value2 The second argument value. May be <code>null</code>.
 	 * @return The built procedure.
-	 * @deprecated Use {@link #execute(Object, Object)}.
+	 * @deprecated Use {@link #execute(Object, Object)}. (since 1.0)
 	 */
 	@Deprecated
 	public static <T1, T2, X extends Exception> Procedure1<Procedure2<? super T1, ? super T2, ? extends X>, X> execute2(final T1 value1, final T2 value2) {

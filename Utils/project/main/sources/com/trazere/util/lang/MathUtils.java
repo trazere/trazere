@@ -18,7 +18,7 @@ package com.trazere.util.lang;
 /**
  * The {@link MathUtils} class provides various math related helpers.
  * 
- * @deprecated Use {@link com.trazere.util.math.MathUtils}.
+ * @deprecated Use {@link com.trazere.util.math.MathUtils}. (since 1.0)
  */
 @Deprecated
 public class MathUtils {
@@ -28,7 +28,7 @@ public class MathUtils {
 	 * @param a The first value.
 	 * @param b The second value.
 	 * @return The greatest common denominator.
-	 * @deprecated Use {@link com.trazere.util.math.MathUtils#gcd(int, int)}.
+	 * @deprecated Use {@link com.trazere.util.math.MathUtils#gcd(int, int)}. (since 1.0)
 	 */
 	@Deprecated
 	public static int gcd(final int a, final int b) {
@@ -41,7 +41,7 @@ public class MathUtils {
 	 * @param a The first value.
 	 * @param b The second value.
 	 * @return The greatest common denominator.
-	 * @deprecated Use {@link com.trazere.util.math.MathUtils#gcd(long, long)}.
+	 * @deprecated Use {@link com.trazere.util.math.MathUtils#gcd(long, long)}. (since 1.0)
 	 */
 	@Deprecated
 	public static long gcd(final long a, final long b) {
@@ -54,7 +54,7 @@ public class MathUtils {
 	 * @param a The first value.
 	 * @param b The second value.
 	 * @return The least common multiple.
-	 * @deprecated Use {@link com.trazere.util.math.MathUtils#lcm(int, int)}.
+	 * @deprecated Use {@link com.trazere.util.math.MathUtils#lcm(int, int)}. (since 1.0)
 	 */
 	@Deprecated
 	public static int lcm(final int a, final int b) {
@@ -67,7 +67,7 @@ public class MathUtils {
 	 * @param a The first value.
 	 * @param b The second value.
 	 * @return The least common multiple.
-	 * @deprecated Use {@link com.trazere.util.math.MathUtils#lcm(long, long)}.
+	 * @deprecated Use {@link com.trazere.util.math.MathUtils#lcm(long, long)}. (since 1.0)
 	 */
 	@Deprecated
 	public static long lcm(final long a, final long b) {
