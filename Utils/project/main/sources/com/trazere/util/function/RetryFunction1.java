@@ -22,7 +22,7 @@ package com.trazere.util.function;
  * @param <S> Type of the success values.
  * @param <F> Type of the failure values.
  * @param <X> Type of the exceptions.
- * @deprecated Use {@link com.trazere.util.failure.RetryFunction1}.
+ * @deprecated Use {@link com.trazere.util.failure.RetryFunction1}. (since 1.0)
  */
 @Deprecated
 public abstract class RetryFunction1<T, S, F, X extends Exception>

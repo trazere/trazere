@@ -29,7 +29,7 @@ public class DatatypeConverters {
 	 * @param representation The representation of the date.
 	 * @return The date.
 	 * @throws IllegalArgumentException When the representation is invalid.
-	 * @deprecated Use {@link DateAdapter#parse(String)}
+	 * @deprecated Use {@link DateAdapter#parse(String)}. (since 1.0)
 	 */
 	@Deprecated
 	public static Date parseDate(final String representation)
@@ -42,7 +42,7 @@ public class DatatypeConverters {
 	 * 
 	 * @param date The date.
 	 * @return The representation.
-	 * @deprecated Use {@link DateAdapter#print(Date)}
+	 * @deprecated Use {@link DateAdapter#print(Date)}. (since 1.0)
 	 */
 	@Deprecated
 	public static String printDate(final Date date) {
@@ -55,7 +55,7 @@ public class DatatypeConverters {
 	 * @param representation The representation of the time.
 	 * @return The time.
 	 * @throws IllegalArgumentException When the representation is invalid.
-	 * @deprecated Use {@link TimeAdapter#parse(String)}
+	 * @deprecated Use {@link TimeAdapter#parse(String)}. (since 1.0)
 	 */
 	@Deprecated
 	public static Date parseTime(final String representation)
@@ -68,7 +68,7 @@ public class DatatypeConverters {
 	 * 
 	 * @param date The time.
 	 * @return The representation.
-	 * @deprecated Use {@link TimeAdapter#print(Date)}
+	 * @deprecated Use {@link TimeAdapter#print(Date)}. (since 1.0)
 	 */
 	@Deprecated
 	public static String printTime(final Date date) {
@@ -81,7 +81,7 @@ public class DatatypeConverters {
 	 * @param representation The representation of the time.
 	 * @return The date and time.
 	 * @throws IllegalArgumentException When the representation is invalid.
-	 * @deprecated Use {@link DateTimeAdapter#parse(String)}
+	 * @deprecated Use {@link DateTimeAdapter#parse(String)}. (since 1.0)
 	 */
 	@Deprecated
 	public static Date parseDateTime(final String representation)
@@ -94,7 +94,7 @@ public class DatatypeConverters {
 	 * 
 	 * @param date The date and time.
 	 * @return The representation.
-	 * @deprecated Use {@link DateTimeAdapter#print(Date)}
+	 * @deprecated Use {@link DateTimeAdapter#print(Date)}. (since 1.0)
 	 */
 	@Deprecated
 	public static String printDateTime(final Date date) {
@@ -107,7 +107,7 @@ public class DatatypeConverters {
 	 * @param representation The representation of the time.
 	 * @return The UUID.
 	 * @throws IllegalArgumentException When the representation is invalid.
-	 * @deprecated Use {@link UUIDAdapter#parse(String)}
+	 * @deprecated Use {@link UUIDAdapter#parse(String)}. (since 1.0)
 	 */
 	@Deprecated
 	public static UUID parseUUID(final String representation)
@@ -120,7 +120,7 @@ public class DatatypeConverters {
 	 * 
 	 * @param uuid The UUID.
 	 * @return The representation.
-	 * @deprecated Use {@link UUIDAdapter#print(UUID)}
+	 * @deprecated Use {@link UUIDAdapter#print(UUID)}. (since 1.0)
 	 */
 	@Deprecated
 	public static String printUUID(final UUID uuid) {

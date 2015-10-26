@@ -123,6 +123,41 @@ public class LangAccumulators {
 	
 	// TODO: move to CollectionAccumulators or ComparatorAccumulators ?
 	/**
+	 * Builds an accumulator of the least value according to the given comparator.
+	 * 
+	 * @param <T> Type of the values.
+	 * @param <X> Type of the exceptions.
+	 * @param comparator Comparator of the values.
+	 * @return The built accumulator.
+	 * @since 1.0.1
+	 */
+	public static <T, X extends Exception> Accumulator1<T, Maybe<T>, X> least(final Comparator<? super T> comparator) {
+		assert null != comparator;
+		
+		return new BaseAccumulator1<T, Maybe<T>, X>() {
+			private final MutableReference<T> _result = new MutableReference<T>();
+			
+			@Override
+			public void add(final T value)
+			throws X {
+				if (_result.isSet()) {
+					if (comparator.compare(value, _result.get()) < 0) {
+						_result.update(value);
+					}
+				} else {
+					_result.set(value);
+				}
+			}
+			
+			@Override
+			public Maybe<T> get() {
+				return _result.asMaybe();
+			}
+		};
+	}
+	
+	// TODO: move to CollectionAccumulators or ComparatorAccumulators ?
+	/**
 	 * Builds an accumulator of the greatest value according to the given comparator.
 	 * 
 	 * @param <T> Type of the values.
@@ -142,7 +177,7 @@ public class LangAccumulators {
 			public void add(final T value)
 			throws X {
 				if (_result.isSet()) {
-					if (comparator.compare(value, _result.get()) > 1) {
+					if (comparator.compare(value, _result.get()) > 0) {
 						_result.update(value);
 					}
 				} else {

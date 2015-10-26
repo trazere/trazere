@@ -20,7 +20,7 @@ package com.trazere.util.collection;
  * 
  * @param <T> Type of the values of the feed.
  * @param <R> Type of the extracted values.
- * @deprecated Use {@link ExtractIterator}.
+ * @deprecated Use {@link ExtractIterator}. (since 1.0)
  */
 @Deprecated
 public abstract class MapFilterIterator<T, R>

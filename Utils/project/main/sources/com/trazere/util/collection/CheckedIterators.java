@@ -132,7 +132,7 @@ public class CheckedIterators {
 	 * @param <X> Type of the exceptions.
 	 * @param collection The collection.
 	 * @return The built iterator.
-	 * @deprecated Use {@link #fromIterable(Iterable)}
+	 * @deprecated Use {@link #fromIterable(Iterable)}. (since 1.0)
 	 */
 	@Deprecated
 	public static <V, X extends Exception> CheckedIterator<V, X> fromCollection(final Iterable<? extends V> collection) {
@@ -284,7 +284,7 @@ public class CheckedIterators {
 	 * @param extractor The extractor.
 	 * @param iterator The iterator.
 	 * @return The built iterator over the filtered and transformed values.
-	 * @deprecated Use {@link #extract(Function1, CheckedIterator)}.
+	 * @deprecated Use {@link #extract(Function1, CheckedIterator)}. (since 1.0)
 	 */
 	@Deprecated
 	public static <T, R, X extends Exception> CheckedIterator<R, X> mapFilter(final Function1<? super T, ? extends Maybe<? extends R>, ? extends X> extractor, final CheckedIterator<? extends T, ? extends X> iterator) {

@@ -969,9 +969,10 @@ public class FunctionUtils {
 	 *             .
 	 */
 	@Deprecated
+	@SuppressWarnings("unchecked")
 	public static <K, V, A extends Accumulator2<? super K, ? super V, ?, ? extends AX>, PX extends Exception, AX extends Exception> A filter(final Predicate2<? super K, ? super V, ? extends PX> predicate, final Multimap<? extends K, ? extends V, ?> bindings, final A results)
 	throws PX, AX {
-		return filter_(predicate, bindings, results);
+		return FunctionUtils.<K, V, A, PX, AX>filter_(predicate, (Multimap<K, ? extends V, ?>) bindings, results); // HACK: explicit type argments to work around a bug of javac
 	}
 	
 	@Deprecated
@@ -1275,9 +1276,10 @@ public class FunctionUtils {
 	 *             .
 	 */
 	@Deprecated
+	@SuppressWarnings("unchecked")
 	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, ? extends AX>, FX extends Exception, AX extends Exception> A map(final Function2<? super K, ? super V, ? extends RV, ? extends FX> function, final Multimap<? extends K, ? extends V, ?> bindings, final A results)
 	throws FX, AX {
-		return map_(function, bindings, results);
+		return FunctionUtils.<K, V, RV, A, FX, AX>map_(function, (Multimap<K, ? extends V, ?>) bindings, results); // HACK: explicit type argments to work around a bug of javac
 	}
 	
 	@Deprecated
@@ -1307,7 +1309,7 @@ public class FunctionUtils {
 	 * @param results The collection to populate with the result values.
 	 * @return The given result collection.
 	 * @throws X When some extractor evaluation fails.
-	 * @deprecated Use {@link #extract(Function1, Iterable, Collection)}.
+	 * @deprecated Use {@link #extract(Function1, Iterable, Collection)}. (since 1.0)
 	 */
 	@Deprecated
 	public static <V, RV, C extends Collection<? super RV>, X extends Exception> C mapFilter(final Function1<? super V, ? extends Maybe<? extends RV>, ? extends X> extractor, final Iterable<? extends V> values, final C results)
@@ -1349,7 +1351,7 @@ public class FunctionUtils {
 	 * @return The given accumulator.
 	 * @throws EX When some extractor evaluation fails.
 	 * @throws AX When some accumulation fails.
-	 * @deprecated Use {@link #extract(Function1, Iterable, Accumulator1)}.
+	 * @deprecated Use {@link #extract(Function1, Iterable, Accumulator1)}. (since 1.0)
 	 */
 	@Deprecated
 	public static <V, RV, A extends Accumulator1<? super RV, ?, ? extends AX>, EX extends Exception, AX extends Exception> A mapFilter(final Function1<? super V, ? extends Maybe<? extends RV>, ? extends EX> extractor, final Iterable<? extends V> values, final A results)
@@ -1405,7 +1407,7 @@ public class FunctionUtils {
 	 * @param results The map to populate with the result bindings.
 	 * @return The given result map.
 	 * @throws X When some extractor evaluation fails.
-	 * @deprecated Use {@link #extract(Function2, Map, Map)}.
+	 * @deprecated Use {@link #extract(Function2, Map, Map)}. (since 1.0)
 	 */
 	@Deprecated
 	public static <K, V, RV, M extends Map<? super K, ? super RV>, X extends Exception> M mapFilter(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, ? extends X> extractor, final Map<? extends K, ? extends V> bindings, final M results)
@@ -1455,7 +1457,7 @@ public class FunctionUtils {
 	 * @return The given accumulator.
 	 * @throws EX When some extractor evaluation fails.
 	 * @throws AX When some accumulation fails.
-	 * @deprecated Use {@link #extract(Function2, Map, Accumulator2)}.
+	 * @deprecated Use {@link #extract(Function2, Map, Accumulator2)}. (since 1.0)
 	 */
 	@Deprecated
 	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, ? extends AX>, EX extends Exception, AX extends Exception> A mapFilter(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, ? extends EX> extractor, final Map<? extends K, ? extends V> bindings, final A results)
@@ -1516,7 +1518,7 @@ public class FunctionUtils {
 	 * @param results The map to populate with the result bindings.
 	 * @return The given result map.
 	 * @throws X When some extractor evaluation fails.
-	 * @deprecated {@link #extract(Function2, Multimap, Multimap)}.
+	 * @deprecated {@link #extract(Function2, Multimap, Multimap)}. (since 1.0)
 	 */
 	@Deprecated
 	public static <K, V, RV, M extends Multimap<? super K, ? super RV, ?>, X extends Exception> M mapFilter(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, ? extends X> extractor, final Multimap<? extends K, ? extends V, ?> bindings, final M results)
@@ -1568,7 +1570,7 @@ public class FunctionUtils {
 	 * @return The given accumulator.
 	 * @throws EX When some extractor evaluation fails.
 	 * @throws AX When some accumulation fails.
-	 * @deprecated Use {@link #extract(Function2, Multimap, Accumulator2)}.
+	 * @deprecated Use {@link #extract(Function2, Multimap, Accumulator2)}. (since 1.0)
 	 */
 	@Deprecated
 	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, ? extends AX>, EX extends Exception, AX extends Exception> A mapFilter(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, ? extends EX> extractor, final Multimap<? extends K, ? extends V, ?> bindings, final A results)
@@ -1599,9 +1601,10 @@ public class FunctionUtils {
 	 *             .
 	 */
 	@Deprecated
+	@SuppressWarnings("unchecked")
 	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, ? extends AX>, EX extends Exception, AX extends Exception> A extract(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, ? extends EX> extractor, final Multimap<? extends K, ? extends V, ?> bindings, final A results)
 	throws EX, AX {
-		return extract_(extractor, bindings, results);
+		return FunctionUtils.<K, V, RV, A, EX, AX>extract_(extractor, (Multimap<K, ? extends V, ?>) bindings, results);
 	}
 	
 	@Deprecated

@@ -23,7 +23,7 @@ import java.util.Map;
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  * @param <R> Type of the records.
- * @deprecated Use {@link BaseRecordBuilder}.
+ * @deprecated Use {@link BaseRecordBuilder}. (since 1.0)
  */
 @Deprecated
 public abstract class BaseSimpleRecordBuilder<K, V, R extends Record<K, V>>
