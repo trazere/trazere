@@ -878,9 +878,10 @@ public class FunctionUtils {
 	 * @throws PX When some predicate evaluation fails.
 	 * @throws AX When some accumulation fails.
 	 */
+	@SuppressWarnings("unchecked")
 	public static <K, V, A extends Accumulator2<? super K, ? super V, ?, ? extends AX>, PX extends Exception, AX extends Exception> A filter(final Predicate2<? super K, ? super V, ? extends PX> predicate, final Multimap<? extends K, ? extends V, ?> bindings, final A results)
 	throws PX, AX {
-		return filter_(predicate, bindings, results);
+		return FunctionUtils.<K, V, A, PX, AX>filter_(predicate, (Multimap<K, ? extends V, ?>) bindings, results); // HACK: explicit type argments to work around a bug of javac
 	}
 	
 	private static <K, V, A extends Accumulator2<? super K, ? super V, ?, ? extends AX>, PX extends Exception, AX extends Exception> A filter_(final Predicate2<? super K, ? super V, ? extends PX> predicate, final Multimap<K, ? extends V, ?> bindings, final A results)
@@ -1159,9 +1160,10 @@ public class FunctionUtils {
 	 * @throws FX When some function evaluation fails.
 	 * @throws AX When some accumulation fails.
 	 */
+	@SuppressWarnings("unchecked")
 	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, ? extends AX>, FX extends Exception, AX extends Exception> A map(final Function2<? super K, ? super V, ? extends RV, ? extends FX> function, final Multimap<? extends K, ? extends V, ?> bindings, final A results)
 	throws FX, AX {
-		return map_(function, bindings, results);
+		return FunctionUtils.<K, V, RV, A, FX, AX>map_(function, (Multimap<K, ? extends V, ?>) bindings, results); // HACK: explicit type argments to work around a bug of javac
 	}
 	
 	private static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, ? extends AX>, FX extends Exception, AX extends Exception> A map_(final Function2<? super K, ? super V, ? extends RV, ? extends FX> function, final Multimap<K, ? extends V, ?> bindings, final A results)
@@ -1466,9 +1468,10 @@ public class FunctionUtils {
 	 * @throws EX When some extractor evaluation fails.
 	 * @throws AX When some accumulation fails.
 	 */
+	@SuppressWarnings("unchecked")
 	public static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, ? extends AX>, EX extends Exception, AX extends Exception> A extract(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, ? extends EX> extractor, final Multimap<? extends K, ? extends V, ?> bindings, final A results)
 	throws EX, AX {
-		return extract_(extractor, bindings, results);
+		return FunctionUtils.<K, V, RV, A, EX, AX>extract_(extractor, (Multimap<K, ? extends V, ?>) bindings, results);
 	}
 	
 	private static <K, V, RV, A extends Accumulator2<? super K, ? super RV, ?, ? extends AX>, EX extends Exception, AX extends Exception> A extract_(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, ? extends EX> extractor, final Multimap<K, ? extends V, ?> bindings, final A results)
