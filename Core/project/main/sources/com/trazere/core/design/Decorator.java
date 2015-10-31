@@ -41,4 +41,11 @@ public abstract class Decorator<T> {
 		// Initialization.
 		_decorated = decorated;
 	}
+	
+	// Object.
+	
+	@Override
+	public String toString() {
+		return _decorated.toString();
+	}
 }
