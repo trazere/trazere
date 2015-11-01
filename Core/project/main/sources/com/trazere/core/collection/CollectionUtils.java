@@ -563,7 +563,7 @@ public class CollectionUtils {
 	 * @return A collection containing the pairs of elements.
 	 * @since 2.0
 	 */
-	public static <E1, E2, C extends Collection<? super Tuple2<E1, E2>>> C zip(final Collection<? extends E1> collection1, final Collection<? extends E2> collection2, final CollectionFactory<? super Tuple2<E1, E2>, C> resultFactory) {
+	public static <E1, E2, C extends Collection<? super Tuple2<? extends E1, ? extends E2>>> C zip(final Collection<? extends E1> collection1, final Collection<? extends E2> collection2, final CollectionFactory<? super Tuple2<? extends E1, ? extends E2>, C> resultFactory) {
 		return IteratorUtils.drain(IteratorUtils.zip(collection1.iterator(), collection2.iterator()), resultFactory.build(Math.min(collection1.size(), collection2.size())));
 	}
 	

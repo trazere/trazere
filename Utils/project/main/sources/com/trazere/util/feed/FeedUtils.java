@@ -15,6 +15,7 @@
  */
 package com.trazere.util.feed;
 
+import com.trazere.core.lang.ThrowableFactory;
 import com.trazere.util.collection.CheckedIterators;
 import com.trazere.util.collection.CollectionUtils;
 import com.trazere.util.lang.WrapException;
@@ -234,6 +235,56 @@ public class FeedUtils {
 					return Maybe.some(new Tuple2<E, Feed<E, RuntimeException>>(item.get1(), fromFeed(item.get2())));
 				} else {
 					return Maybe.none();
+				}
+			}
+		};
+	}
+	
+	/**
+	 * Adapts the given core feed to an util feed.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param <X> Type of the exceptions.
+	 * @param feed Core feed to adapt.
+	 * @param throwableFactory Throwable factory to use.
+	 * @return The adapted util feed.
+	 * @deprecated Use {@link com.trazere.core.collection.Feed}.
+	 */
+	@Deprecated
+	public static <E, X extends Exception> Feed<E, X> fromFeed(final com.trazere.core.collection.Feed<? extends E> feed, final ThrowableFactory<? extends X> throwableFactory) {
+		assert null != feed;
+		
+		return new Feed<E, X>() {
+			@Override
+			public boolean isEmpty() {
+				return feed.isEmpty();
+			}
+			
+			@Override
+			public E getHead()
+			throws NoSuchElementException {
+				return feed.getHead();
+			}
+			
+			@Override
+			public Feed<? extends E, ? extends X> getTail()
+			throws NoSuchElementException {
+				return fromFeed(feed.getTail(), throwableFactory);
+			}
+			
+			@Override
+			public Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E, ? extends X>>> evaluate()
+			throws X {
+				try {
+					final com.trazere.core.util.Maybe<? extends com.trazere.core.util.Tuple2<? extends E, ? extends com.trazere.core.collection.Feed<? extends E>>> maybeItem = feed.evaluate();
+					if (maybeItem.isSome()) {
+						final com.trazere.core.util.Tuple2<? extends E, ? extends com.trazere.core.collection.Feed<? extends E>> item = maybeItem.asSome().getValue();
+						return Maybe.some(new Tuple2<E, Feed<E, X>>(item.get1(), fromFeed(item.get2(), throwableFactory)));
+					} else {
+						return Maybe.none();
+					}
+				} catch (final Exception exception) {
+					throw throwableFactory.build(exception);
 				}
 			}
 		};

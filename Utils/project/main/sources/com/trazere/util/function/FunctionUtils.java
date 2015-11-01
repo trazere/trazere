@@ -573,7 +573,7 @@ public class FunctionUtils {
 	 * @return The first accepted value.
 	 * @throws X When some predicate evaluation fails.
 	 * @throws VX When some feed iteration fails.
-	 * @deprecated Use {@link com.trazere.core.collection.FeedUtils#extractFirst(Iterable, com.trazere.core.functional.Function)}.
+	 * @deprecated Use {@link com.trazere.core.collection.FeedUtils#extractFirst(com.trazere.core.collection.Feed, com.trazere.core.functional.Function)}.
 	 */
 	@Deprecated
 	public static <V, RV, X extends Exception, VX extends Exception> Maybe<RV> first(final Function1<? super V, ? extends Maybe<? extends RV>, ? extends X> function, final Feed<? extends V, ? extends VX> values)

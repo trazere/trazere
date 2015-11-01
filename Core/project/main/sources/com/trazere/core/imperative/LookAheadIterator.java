@@ -16,7 +16,6 @@
 package com.trazere.core.imperative;
 
 import com.trazere.core.util.Maybe;
-import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
@@ -26,7 +25,7 @@ import java.util.NoSuchElementException;
  * @since 2.0
  */
 public abstract class LookAheadIterator<E>
-implements Iterator<E> {
+implements ExIterator<E> {
 	// Iterator.
 	
 	/** Flag indicating whether the next element has been looked ahead. */

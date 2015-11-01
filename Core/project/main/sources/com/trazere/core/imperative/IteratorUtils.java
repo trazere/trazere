@@ -106,6 +106,8 @@ public class IteratorUtils {
 		return drain(iterator, n, CollectionAccumulators.add(results)).get();
 	}
 	
+	// TODO: drain(Iterator, int, CollectionFactory)
+	
 	/**
 	 * Drains the next n pairs of elements provided by the given iterator and populates the given accumulator with them.
 	 * 
@@ -142,6 +144,8 @@ public class IteratorUtils {
 		return drain(iterator, n, MapAccumulators.put(results)).get();
 	}
 	
+	// TODO: drain(Iterator, int, MapFactory)
+	
 	/**
 	 * Drains the next n pairs of elements provided by the given iterator and puts the corresponding bindings into the given multimap.
 	 * 
@@ -157,6 +161,8 @@ public class IteratorUtils {
 	public static <E1, E2, M extends Multimap<? super E1, ? super E2, ?>> M drain(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final int n, final M results) {
 		return drain(iterator, n, MultimapAccumulators.put(results)).get();
 	}
+	
+	// TODO: drain(Iterator, int, MultimapFactory)
 	
 	/**
 	 * Drains all elements provided by the the given iterator.
@@ -201,6 +207,8 @@ public class IteratorUtils {
 		return drain(iterator, CollectionAccumulators.add(results)).get();
 	}
 	
+	// TODO: drain(Iterator, CollectionFactory)
+	
 	/**
 	 * Drains all pairs of elements provided by the the given iterator and populates the given accumulator with them.
 	 * 
@@ -234,6 +242,8 @@ public class IteratorUtils {
 		return drain(iterator, MapAccumulators.put(results)).get();
 	}
 	
+	// TODO: drain(Iterator, MapFactory)
+	
 	/**
 	 * Drains all pairs of elements provided by the the given iterator and puts the corresponding bindings into the given multimap.
 	 * 
@@ -248,6 +258,8 @@ public class IteratorUtils {
 	public static <E1, E2, M extends Multimap<? super E1, ? super E2, ?>> M drain(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final M results) {
 		return drain(iterator, MultimapAccumulators.put(results)).get();
 	}
+	
+	// TODO: drain(Iterator, MultimapFactory)
 	
 	/**
 	 * Executes the given procedure with each element provided by the given iterator.
@@ -352,7 +364,7 @@ public class IteratorUtils {
 	}
 	
 	/**
-	 * Get the first element extracted from the elements provided by the given iterator using the given extractor.
+	 * Gets the first element extracted from the elements provided by the given iterator using the given extractor.
 	 * 
 	 * @param <E> Type of the elements.
 	 * @param <EE> Type of the extracted elements.
@@ -372,7 +384,7 @@ public class IteratorUtils {
 	}
 	
 	/**
-	 * Get the first element extracted from the pairs of elements provided by the given iterator using the given extractor.
+	 * Gets the first element extracted from the pairs of elements provided by the given iterator using the given extractor.
 	 * 
 	 * @param <E1> Type of the first element of the pairs.
 	 * @param <E2> Type of the second element of the pairs.
@@ -570,11 +582,11 @@ public class IteratorUtils {
 	 * @return An iterator providing the appended elements.
 	 * @since 2.0
 	 */
-	public static <E> Iterator<E> append(final Iterator<? extends E> iterator1, final Iterator<? extends E> iterator2) {
+	public static <E> ExIterator<E> append(final Iterator<? extends E> iterator1, final Iterator<? extends E> iterator2) {
 		assert null != iterator1;
 		assert null != iterator2;
 		
-		return new Iterator<E>() {
+		return new ExIterator<E>() {
 			private boolean _appended = false;
 			
 			@Override
@@ -613,10 +625,10 @@ public class IteratorUtils {
 	 * @return An iterator providing the flatten elements.
 	 * @since 2.0
 	 */
-	public static <E> Iterator<E> flatten(final Iterator<? extends Iterator<? extends E>> iterator) {
+	public static <E> ExIterator<E> flatten(final Iterator<? extends Iterator<? extends E>> iterator) {
 		assert null != iterator;
 		
-		return new Iterator<E>() {
+		return new ExIterator<E>() {
 			private Iterator<? extends E> _iterator = Iterators.empty();
 			
 			@Override
@@ -650,10 +662,10 @@ public class IteratorUtils {
 	 * @return An iterator providing the taken elements.
 	 * @since 2.0
 	 */
-	public static <E> Iterator<E> take(final Iterator<? extends E> iterator, final int n) {
+	public static <E> ExIterator<E> take(final Iterator<? extends E> iterator, final int n) {
 		assert null != iterator;
 		
-		return new Iterator<E>() {
+		return new ExIterator<E>() {
 			private int _i = 0;
 			
 			@Override
@@ -689,10 +701,10 @@ public class IteratorUtils {
 	 * @return An iterator providing the remaining elements.
 	 * @since 2.0
 	 */
-	public static <E> Iterator<E> drop(final Iterator<? extends E> iterator, final int n) {
+	public static <E> ExIterator<E> drop(final Iterator<? extends E> iterator, final int n) {
 		assert null != iterator;
 		
-		return new Iterator<E>() {
+		return new ExIterator<E>() {
 			private int _droppedN = 0;
 			
 			@Override
@@ -733,10 +745,10 @@ public class IteratorUtils {
 	 * @return An iterator providing the groups of elements.
 	 * @since 2.0
 	 */
-	public static <E, B extends Collection<? super E>> Iterator<B> group(final Iterator<? extends E> iterator, final int n, final CollectionFactory<? super E, B> batchFactory) {
+	public static <E, B extends Collection<? super E>> ExIterator<B> group(final Iterator<? extends E> iterator, final int n, final CollectionFactory<? super E, B> batchFactory) {
 		assert null != iterator;
 		
-		return new Iterator<B>() {
+		return new ExIterator<B>() {
 			@Override
 			public boolean hasNext() {
 				return iterator.hasNext();
@@ -744,7 +756,7 @@ public class IteratorUtils {
 			
 			@Override
 			public B next() {
-				return drain(iterator, n, batchFactory.build(n));
+				return IteratorUtils.drain(iterator, n, batchFactory.build(n));
 			}
 		};
 	}
@@ -760,14 +772,14 @@ public class IteratorUtils {
 	 * @return An iterator providing the filtered elements.
 	 * @since 2.0
 	 */
-	public static <E> Iterator<E> filter(final Iterator<? extends E> iterator, final Predicate<? super E> filter) {
+	public static <E> ExIterator<E> filter(final Iterator<? extends E> iterator, final Predicate<? super E> filter) {
 		assert null != iterator;
 		assert null != filter;
 		
 		return new LookAheadIterator<E>() {
 			@Override
 			protected Maybe<? extends E> pull() {
-				return first(iterator, filter);
+				return IteratorUtils.first(iterator, filter);
 			}
 		};
 	}
@@ -784,14 +796,14 @@ public class IteratorUtils {
 	 * @return An iterator providing the filtered pairs of elements.
 	 * @since 2.0
 	 */
-	public static <E1, E2> Iterator<Tuple2<? extends E1, ? extends E2>> filter(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Predicate2<? super E1, ? super E2> filter) {
+	public static <E1, E2> PairIterator<E1, E2> filter(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Predicate2<? super E1, ? super E2> filter) {
 		assert null != iterator;
 		assert null != filter;
 		
-		return new LookAheadIterator<Tuple2<? extends E1, ? extends E2>>() {
+		return new LookAheadPairIterator<E1, E2>() {
 			@Override
 			protected Maybe<? extends Tuple2<? extends E1, ? extends E2>> pull() {
-				return first(iterator, filter);
+				return IteratorUtils.first(iterator, filter);
 			}
 		};
 	}
@@ -808,11 +820,11 @@ public class IteratorUtils {
 	 * @return An iterator providing the transformed elements.
 	 * @since 2.0
 	 */
-	public static <E, TE> Iterator<TE> map(final Iterator<? extends E> iterator, final Function<? super E, ? extends TE> function) {
+	public static <E, TE> ExIterator<TE> map(final Iterator<? extends E> iterator, final Function<? super E, ? extends TE> function) {
 		assert null != iterator;
 		assert null != function;
 		
-		return new Iterator<TE>() {
+		return new ExIterator<TE>() {
 			@Override
 			public boolean hasNext() {
 				return iterator.hasNext();
@@ -843,11 +855,11 @@ public class IteratorUtils {
 	 * @return An iterator providing the transformed elements.
 	 * @since 2.0
 	 */
-	public static <E1, E2, TE> Iterator<TE> map(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Function2<? super E1, ? super E2, ? extends TE> function) {
+	public static <E1, E2, TE> ExIterator<TE> map(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Function2<? super E1, ? super E2, ? extends TE> function) {
 		assert null != iterator;
 		assert null != function;
 		
-		return new Iterator<TE>() {
+		return new ExIterator<TE>() {
 			@Override
 			public boolean hasNext() {
 				return iterator.hasNext();
@@ -874,12 +886,12 @@ public class IteratorUtils {
 	 * @param <E> Type of the elements.
 	 * @param <TE> Type of the transformed elements.
 	 * @param iterator Iterator providing the elements to transform.
-	 * @param extractor Function to use to transform the elements.
+	 * @param function Function to use to transform the elements.
 	 * @return An iterator providing the flatten, transformed elements.
 	 * @since 2.0
 	 */
-	public static <E, TE> Iterator<TE> flatMap(final Iterator<? extends E> iterator, final Function<? super E, ? extends Iterator<? extends TE>> extractor) {
-		return flatten(map(iterator, extractor));
+	public static <E, TE> ExIterator<TE> flatMap(final Iterator<? extends E> iterator, final Function<? super E, ? extends Iterator<? extends TE>> function) {
+		return flatten(map(iterator, function));
 	}
 	
 	/**
@@ -895,7 +907,7 @@ public class IteratorUtils {
 	 * @return An iterator providing the flatten, transformed elements.
 	 * @since 2.0
 	 */
-	public static <E1, E2, TE> Iterator<TE> flatMap(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Function2<? super E1, ? super E2, ? extends Iterator<? extends TE>> function) {
+	public static <E1, E2, TE> ExIterator<TE> flatMap(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Function2<? super E1, ? super E2, ? extends Iterator<? extends TE>> function) {
 		return flatten(map(iterator, function));
 	}
 	
@@ -911,7 +923,7 @@ public class IteratorUtils {
 	 * @return An iterator providing the extracted elements.
 	 * @since 2.0
 	 */
-	public static <E, EE> Iterator<EE> extract(final Iterator<? extends E> iterator, final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
+	public static <E, EE> ExIterator<EE> extract(final Iterator<? extends E> iterator, final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
 		assert null != iterator;
 		assert null != extractor;
 		
@@ -936,7 +948,7 @@ public class IteratorUtils {
 	 * @return An iterator providing the extracted elements.
 	 * @since 2.0
 	 */
-	public static <E1, E2, EE> Iterator<EE> extract(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor) {
+	public static <E1, E2, EE> ExIterator<EE> extract(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor) {
 		assert null != iterator;
 		assert null != extractor;
 		
@@ -960,7 +972,7 @@ public class IteratorUtils {
 	 * @return An iterator providing the extracted elements.
 	 * @since 2.0
 	 */
-	public static <E, TE> Iterator<TE> extractAll(final Iterator<? extends E> iterator, final Function<? super E, ? extends Iterable<? extends TE>> extractor) {
+	public static <E, TE> ExIterator<TE> extractAll(final Iterator<? extends E> iterator, final Function<? super E, ? extends Iterable<? extends TE>> extractor) {
 		return flatMap(iterator, FunctionUtils.map(extractor, IterableFunctions.iterator()));
 	}
 	
@@ -977,7 +989,7 @@ public class IteratorUtils {
 	 * @return An iterator providing the extracted elements.
 	 * @since 2.0
 	 */
-	public static <E1, E2, EE> Iterator<EE> extractAll(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Function2<? super E1, ? super E2, ? extends Iterable<? extends EE>> extractor) {
+	public static <E1, E2, EE> ExIterator<EE> extractAll(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Function2<? super E1, ? super E2, ? extends Iterable<? extends EE>> extractor) {
 		return flatMap(iterator, FunctionUtils.map2(extractor, IterableFunctions.iterator()));
 	}
 	
@@ -989,15 +1001,15 @@ public class IteratorUtils {
 	 * @return An unmodifiable view of the given iterator, or the given iterator when is it already unmodifiable.
 	 * @since 2.0
 	 */
-	public static <E> Iterator<E> unmodifiable(final Iterator<E> iterator) {
+	public static <E> ExIterator<E> unmodifiable(final Iterator<E> iterator) {
 		assert null != iterator;
 		
-		return iterator instanceof UnmodifiableIterator ? iterator : new UnmodifiableIterator<>(iterator);
+		return iterator instanceof UnmodifiableIterator ? (UnmodifiableIterator<E>) iterator : new UnmodifiableIterator<>(iterator);
 	}
 	
 	private static class UnmodifiableIterator<E>
 	extends Decorator<Iterator<E>>
-	implements Iterator<E> {
+	implements ExIterator<E> {
 		public UnmodifiableIterator(final Iterator<E> decorated) {
 			super(decorated);
 		}
@@ -1030,10 +1042,28 @@ public class IteratorUtils {
 		public boolean equals(final Object o) {
 			return _decorated.equals(o);
 		}
+	}
+	
+	/**
+	 * Builds an unmodifiable view of the given iterator of pairs of elements.
+	 * 
+	 * @param <E1> Type of the first element of the pairs.
+	 * @param <E2> Type of the second element of the pairs.
+	 * @param iterator Iterator to wrap.
+	 * @return An unmodifiable view of the given iterator, or the given iterator when is it already unmodifiable.
+	 * @since 2.0
+	 */
+	public static <E1, E2> PairIterator<E1, E2> unmodifiable(final PairIterator<E1, E2> iterator) {
+		assert null != iterator;
 		
-		@Override
-		public String toString() {
-			return _decorated.toString();
+		return iterator instanceof UnmodifiablePairIterator ? iterator : new UnmodifiablePairIterator<>(iterator);
+	}
+	
+	private static class UnmodifiablePairIterator<E1, E2>
+	extends UnmodifiableIterator<Tuple2<? extends E1, ? extends E2>>
+	implements PairIterator<E1, E2> {
+		public UnmodifiablePairIterator(final Iterator<Tuple2<? extends E1, ? extends E2>> decorated) {
+			super(decorated);
 		}
 	}
 	
@@ -1050,11 +1080,11 @@ public class IteratorUtils {
 	 * @return An iterator providing the pairs of elements.
 	 * @since 2.0
 	 */
-	public static <E1, E2> Iterator<Tuple2<E1, E2>> zip(final Iterator<? extends E1> iterator1, final Iterator<? extends E2> iterator2) {
+	public static <E1, E2> PairIterator<E1, E2> zip(final Iterator<? extends E1> iterator1, final Iterator<? extends E2> iterator2) {
 		assert null != iterator1;
 		assert null != iterator2;
 		
-		return new Iterator<Tuple2<E1, E2>>() {
+		return new PairIterator<E1, E2>() {
 			@Override
 			public boolean hasNext() {
 				return iterator1.hasNext() && iterator2.hasNext();
