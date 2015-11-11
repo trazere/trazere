@@ -536,9 +536,9 @@ public class IterableUtils {
 	}
 	
 	private static class UnmodifiablePairIterable<E1, E2>
-	extends UnmodifiableIterable<Tuple2<? extends E1, ? extends E2>>
+	extends UnmodifiableIterable<Tuple2<E1, E2>>
 	implements PairIterable<E1, E2> {
-		public UnmodifiablePairIterable(final Iterable<Tuple2<? extends E1, ? extends E2>> decorated) {
+		public UnmodifiablePairIterable(final Iterable<Tuple2<E1, E2>> decorated) {
 			super(decorated);
 		}
 		

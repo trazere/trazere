@@ -20,6 +20,7 @@ import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Functions;
 import com.trazere.core.functional.Predicate;
 import com.trazere.core.functional.Thunk;
+import com.trazere.core.imperative.ExIterator;
 import com.trazere.core.imperative.Iterators;
 import com.trazere.core.imperative.Procedure;
 import com.trazere.core.lang.HashCode;
@@ -28,7 +29,6 @@ import com.trazere.core.text.Describable;
 import com.trazere.core.text.DescriptionBuilder;
 import com.trazere.core.text.TextUtils;
 import java.io.Serializable;
-import java.util.Iterator;
 
 /**
  * The {@link Maybe} class encodes a tagged union data type which represents an optional value.
@@ -165,7 +165,7 @@ implements Iterable<T>, Serializable, Describable {
 		// Iterable.
 		
 		@Override
-		public Iterator<T> iterator() {
+		public ExIterator<T> iterator() {
 			return Iterators.empty();
 		}
 		
@@ -329,7 +329,7 @@ implements Iterable<T>, Serializable, Describable {
 		// Iterable.
 		
 		@Override
-		public Iterator<T> iterator() {
+		public ExIterator<T> iterator() {
 			return Iterators.fromElement(_value);
 		}
 		

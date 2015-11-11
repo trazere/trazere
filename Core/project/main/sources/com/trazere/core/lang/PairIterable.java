@@ -16,7 +16,7 @@ import com.trazere.core.util.Tuple2;
  * @since 2.0
  */
 public interface PairIterable<E1, E2>
-extends ExIterable<Tuple2<? extends E1, ? extends E2>> {
+extends ExIterable<Tuple2<E1, E2>> {
 	/**
 	 * Builds an extended view of the given iterable.
 	 * 
@@ -27,7 +27,7 @@ extends ExIterable<Tuple2<? extends E1, ? extends E2>> {
 	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
-	public static <E1, E2> PairIterable<E1, E2> fromIterable(final Iterable<? extends Tuple2<? extends E1, ? extends E2>> iterable) {
+	public static <E1, E2> PairIterable<E1, E2> fromIterable(final Iterable<? extends Tuple2<E1, E2>> iterable) {
 		assert null != iterable;
 		
 		if (iterable instanceof PairIterable) {

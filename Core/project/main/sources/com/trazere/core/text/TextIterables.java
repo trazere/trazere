@@ -15,9 +15,9 @@
  */
 package com.trazere.core.text;
 
-import com.trazere.core.imperative.IteratorUtils;
+import com.trazere.core.imperative.ExIterator;
+import com.trazere.core.lang.ExIterable;
 import com.trazere.core.lang.FiniteIntSequence;
-import java.util.Iterator;
 
 /**
  * The {@link TextIterables} class provides various factories of {@link Iterable iterable} regarding text.
@@ -33,13 +33,13 @@ public class TextIterables {
 	 * @return The built iterable.
 	 * @since 2.0
 	 */
-	public static Iterable<Character> fromCharSequence(final CharSequence s) {
+	public static ExIterable<Character> fromCharSequence(final CharSequence s) {
 		assert null != s;
 		
-		return new Iterable<Character>() {
+		return new ExIterable<Character>() {
 			@Override
-			public Iterator<Character> iterator() {
-				return IteratorUtils.map(new FiniteIntSequence(0, s.length()).iterator(), i -> s.charAt(i));
+			public ExIterator<Character> iterator() {
+				return new FiniteIntSequence(0, s.length()).iterator().map(i -> s.charAt(i));
 			}
 		};
 	}

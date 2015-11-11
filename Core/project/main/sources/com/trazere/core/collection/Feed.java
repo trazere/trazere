@@ -19,12 +19,12 @@ import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Predicate;
 import com.trazere.core.functional.Thunk;
+import com.trazere.core.imperative.ExIterator;
 import com.trazere.core.imperative.Procedure;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
@@ -114,8 +114,8 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	// Iterable.
 	
 	@Override
-	default Iterator<E> iterator() {
-		return new Iterator<E>() {
+	default ExIterator<E> iterator() {
+		return new ExIterator<E>() {
 			private Feed<? extends E> _tail = Feed.this;
 			
 			@Override
@@ -173,12 +173,11 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * Gets the first element extracted from this feed by the given extractor.
 	 * 
 	 * @param <EE> Type of the extracted elements.
-	 * @param collection Collection containing the elements to extract from.
 	 * @param extractor Function to use to extract the elements.
 	 * @return The first extracted element.
 	 * @since 2.0
 	 */
-	default <EE> Maybe<EE> extractFirst(final Iterable<? extends E> collection, final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
+	default <EE> Maybe<EE> extractFirst(final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
 		return FeedUtils.extractFirst(this, extractor);
 	}
 	

@@ -15,6 +15,7 @@
  */
 package com.trazere.core.lang;
 
+import com.trazere.core.imperative.ExIterator;
 import java.util.Iterator;
 
 /**
@@ -33,7 +34,7 @@ public class LangIterators {
 	 * @return The built iterator.
 	 * @since 2.0
 	 */
-	public static Iterator<Integer> natural() {
+	public static ExIterator<Integer> natural() {
 		return InfiniteIntSequence.NATURAL.iterator();
 	}
 	

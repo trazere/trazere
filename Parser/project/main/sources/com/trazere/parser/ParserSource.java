@@ -15,9 +15,9 @@
  */
 package com.trazere.parser;
 
-import java.util.Iterator;
+import com.trazere.core.imperative.ExIterator;
 
 public interface ParserSource<Token>
-extends Iterator<Token> {
+extends ExIterator<Token> {
 	// Nothing to do.
 }

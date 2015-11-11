@@ -34,8 +34,9 @@ import com.trazere.core.functional.Predicate;
  * 
  * @since 2.0
  */
+// TODO: specialize functor methods from ExIterable
 public interface IntSequence
-extends Predicate<Integer>, Iterable<Integer> {
+extends Predicate<Integer>, ExIterable<Integer> {
 	// Start.
 	
 	/**

@@ -25,7 +25,7 @@ import com.trazere.core.util.Tuple2;
  * @since 2.0
  */
 public abstract class LookAheadPairIterator<E1, E2>
-extends LookAheadIterator<Tuple2<? extends E1, ? extends E2>>
+extends LookAheadIterator<Tuple2<E1, E2>>
 implements PairIterator<E1, E2> {
 	// Nothing to do.
 }

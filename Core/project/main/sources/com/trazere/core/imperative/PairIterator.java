@@ -17,7 +17,7 @@ import java.util.Map;
  * @since 2.0
  */
 public interface PairIterator<E1, E2>
-extends ExIterator<Tuple2<? extends E1, ? extends E2>> {
+extends ExIterator<Tuple2<E1, E2>> {
 	/**
 	 * Builds an extended iterator that wraps this iterator.
 	 * 
@@ -28,7 +28,7 @@ extends ExIterator<Tuple2<? extends E1, ? extends E2>> {
 	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
-	public static <E1, E2> PairIterator<E1, E2> fromIterator(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator) {
+	public static <E1, E2> PairIterator<E1, E2> fromIterator(final Iterator<? extends Tuple2<E1, E2>> iterator) {
 		assert null != iterator;
 		
 		if (iterator instanceof PairIterator) {
@@ -41,7 +41,7 @@ extends ExIterator<Tuple2<? extends E1, ? extends E2>> {
 				}
 				
 				@Override
-				public Tuple2<? extends E1, ? extends E2> next() {
+				public Tuple2<E1, E2> next() {
 					return iterator.next();
 				}
 				

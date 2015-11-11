@@ -20,10 +20,10 @@ import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Function3;
 import com.trazere.core.functional.Predicate2;
 import com.trazere.core.imperative.Accumulator;
-import com.trazere.core.imperative.IteratorUtils;
 import com.trazere.core.imperative.Procedure2;
 import com.trazere.core.lang.IterableUtils;
 import com.trazere.core.lang.LangAccumulators;
+import com.trazere.core.lang.PairIterable;
 import com.trazere.core.util.Comparators;
 import com.trazere.core.util.FieldComparators;
 import com.trazere.core.util.Maybe;
@@ -50,13 +50,11 @@ public class MultimapUtils {
 	 * @return The bindings.
 	 * @since 2.0
 	 */
-	public static <K, V> Iterable<Tuple2<K, V>> bindings(final Multimap<? extends K, ? extends V, ?> multimap) {
-		return IterableUtils.flatMap(multimap.collectionEntrySet(), (final Map.Entry<? extends K, ? extends Collection<? extends V>> entry) -> {
+	public static <K, V> PairIterable<K, V> bindings(final Multimap<? extends K, ? extends V, ?> multimap) {
+		return PairIterable.fromIterable(IterableUtils.flatMap(multimap.collectionEntrySet(), (final Map.Entry<? extends K, ? extends Collection<? extends V>> entry) -> {
 			final K key = entry.getKey();
-			return IterableUtils.map(entry.getValue(), (final V value) -> {
-				return new Tuple2<>(key, value);
-			});
-		});
+			return IterableUtils.map(entry.getValue(), value -> new Tuple2<>(key, value));
+		}));
 	}
 	
 	/**
@@ -69,7 +67,7 @@ public class MultimapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V> Maybe<Tuple2<K, V>> any(final Multimap<K, V, ?> multimap) {
-		return IteratorUtils.poll(bindings(multimap).iterator());
+		return bindings(multimap).any();
 	}
 	
 	/**
@@ -152,7 +150,7 @@ public class MultimapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V> void foreach(final Multimap<? extends K, ? extends V, ?> multimap, final Procedure2<? super K, ? super V> procedure) {
-		IteratorUtils.foreach(bindings(multimap).iterator(), procedure);
+		bindings(multimap).foreach(procedure);
 	}
 	
 	/**
@@ -168,7 +166,7 @@ public class MultimapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V, S> S fold(final Multimap<? extends K, ? extends V, ?> multimap, final Function3<? super S, ? super K, ? super V, ? extends S> operator, final S initialState) {
-		return IteratorUtils.fold(bindings(multimap).iterator(), operator, initialState);
+		return bindings(multimap).fold(operator, initialState);
 	}
 	
 	/**
@@ -182,7 +180,7 @@ public class MultimapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V> Maybe<Tuple2<K, V>> first(final Multimap<? extends K, ? extends V, ?> multimap, final Predicate2<? super K, ? super V> filter) {
-		return IteratorUtils.first(bindings(multimap).iterator(), filter);
+		return MultimapUtils.<K, V>bindings(multimap).first(filter);
 	}
 	
 	/**
@@ -196,7 +194,7 @@ public class MultimapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V> boolean isAny(final Multimap<? extends K, ? extends V, ?> multimap, final Predicate2<? super K, ? super V> filter) {
-		return IteratorUtils.isAny(bindings(multimap).iterator(), filter);
+		return bindings(multimap).isAny(filter);
 	}
 	
 	/**
@@ -210,7 +208,7 @@ public class MultimapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V> boolean areAll(final Multimap<? extends K, ? extends V, ?> multimap, final Predicate2<? super K, ? super V> filter) {
-		return IteratorUtils.areAll(bindings(multimap).iterator(), filter);
+		return bindings(multimap).areAll(filter);
 	}
 	
 	/**
@@ -224,7 +222,7 @@ public class MultimapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V> int count(final Multimap<? extends K, ? extends V, ?> multimap, final Predicate2<? super K, ? super V> filter) {
-		return IteratorUtils.count(bindings(multimap).iterator(), filter);
+		return bindings(multimap).count(filter);
 	}
 	
 	/**
@@ -251,7 +249,7 @@ public class MultimapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V> Maybe<Tuple2<K, V>> least(final Multimap<? extends K, ? extends V, ?> multimap, final Comparator<? super V> comparator) {
-		return IteratorUtils.least(MultimapUtils.<K, V>bindings(multimap).iterator(), FieldComparators.field2(comparator));
+		return MultimapUtils.<K, V>bindings(multimap).least(FieldComparators.field2(comparator));
 	}
 	
 	/**
@@ -278,7 +276,7 @@ public class MultimapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V> Maybe<Tuple2<K, V>> greatest(final Multimap<? extends K, ? extends V, ?> multimap, final Comparator<? super V> comparator) {
-		return IteratorUtils.greatest(MultimapUtils.<K, V>bindings(multimap).iterator(), FieldComparators.field2(comparator));
+		return MultimapUtils.<K, V>bindings(multimap).greatest(FieldComparators.field2(comparator));
 	}
 	
 	// TODO: append
@@ -297,7 +295,7 @@ public class MultimapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V, M extends Multimap<? super K, ? super V, ?>> M take(final Multimap<? extends K, ? extends V, ?> multimap, final int n, final MultimapFactory<? super K, ? super V, ?, M> resultFactory) {
-		return resultFactory.build(IterableUtils.take(bindings(multimap), n));
+		return resultFactory.build(bindings(multimap).take(n));
 	}
 	
 	/**
@@ -313,7 +311,7 @@ public class MultimapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V, M extends Multimap<? super K, ? super V, ?>> M drop(final Multimap<? extends K, ? extends V, ?> multimap, final int n, final MultimapFactory<? super K, ? super V, ?, M> resultFactory) {
-		return resultFactory.build(IterableUtils.drop(bindings(multimap), n));
+		return resultFactory.build(bindings(multimap).drop(n));
 	}
 	
 	/**

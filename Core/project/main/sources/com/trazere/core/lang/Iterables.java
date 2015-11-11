@@ -15,8 +15,8 @@
  */
 package com.trazere.core.lang;
 
+import com.trazere.core.imperative.ExIterator;
 import com.trazere.core.imperative.Iterators;
-import java.util.Iterator;
 
 /**
  * The {@link Iterables} class provides various factories of {@link Iterable iterables}.
@@ -33,13 +33,13 @@ public class Iterables {
 	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
-	public static <E> Iterable<E> empty() {
-		return (Iterable<E>) EMPTY;
+	public static <E> ExIterable<E> empty() {
+		return (ExIterable<E>) EMPTY;
 	}
 	
-	private static final Iterable<?> EMPTY = new Iterable<Object>() {
+	private static final ExIterable<?> EMPTY = new ExIterable<Object>() {
 		@Override
-		public Iterator<Object> iterator() {
+		public ExIterator<Object> iterator() {
 			return Iterators.empty();
 		}
 	};
@@ -52,10 +52,10 @@ public class Iterables {
 	 * @return The built iterable.
 	 * @since 2.0
 	 */
-	public static <E> Iterable<E> fromElement(final E element) {
-		return new Iterable<E>() {
+	public static <E> ExIterable<E> fromElement(final E element) {
+		return new ExIterable<E>() {
 			@Override
-			public Iterator<E> iterator() {
+			public ExIterator<E> iterator() {
 				return Iterators.fromElement(element);
 			}
 		};
@@ -70,12 +70,12 @@ public class Iterables {
 	 * @since 2.0
 	 */
 	@SafeVarargs
-	public static <E> Iterable<E> fromElements(final E... elements) {
+	public static <E> ExIterable<E> fromElements(final E... elements) {
 		assert null != elements;
 		
-		return new Iterable<E>() {
+		return new ExIterable<E>() {
 			@Override
-			public Iterator<E> iterator() {
+			public ExIterator<E> iterator() {
 				return Iterators.fromElements(elements);
 			}
 		};

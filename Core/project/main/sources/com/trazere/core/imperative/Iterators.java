@@ -15,7 +15,6 @@
  */
 package com.trazere.core.imperative;
 
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -33,9 +32,22 @@ public class Iterators {
 	 * @return The built iterator.
 	 * @since 2.0
 	 */
-	public static <E> Iterator<E> empty() {
-		return Collections.emptyIterator();
+	@SuppressWarnings("unchecked")
+	public static <E> ExIterator<E> empty() {
+		return (ExIterator<E>) EMPTY;
 	}
+	
+	private static final ExIterator<?> EMPTY = new ExIterator<Object>() {
+		@Override
+		public boolean hasNext() {
+			return false;
+		}
+		
+		@Override
+		public Object next() {
+			throw new NoSuchElementException();
+		}
+	};
 	
 	/**
 	 * Builds an iterator over the given element.
@@ -45,8 +57,8 @@ public class Iterators {
 	 * @return The built iterator.
 	 * @since 2.0
 	 */
-	public static <E> Iterator<E> fromElement(final E element) {
-		return new Iterator<E>() {
+	public static <E> ExIterator<E> fromElement(final E element) {
+		return new ExIterator<E>() {
 			protected boolean _next = true;
 			
 			@Override
@@ -76,10 +88,10 @@ public class Iterators {
 	 * @since 2.0
 	 */
 	@SafeVarargs
-	public static <E> Iterator<E> fromElements(final E... elements) {
+	public static <E> ExIterator<E> fromElements(final E... elements) {
 		assert null != elements;
 		
-		return new Iterator<E>() {
+		return new ExIterator<E>() {
 			protected int _index = 0;
 			
 			@Override

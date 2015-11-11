@@ -15,6 +15,7 @@
  */
 package com.trazere.core.collection;
 
+import com.trazere.core.imperative.ExIterator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -35,9 +36,9 @@ public class ListIterators {
 	 * @return The built iterator.
 	 * @since 2.0
 	 */
-	public static <E> Iterator<E> backward(final List<? extends E> list) {
+	public static <E> ExIterator<E> backward(final List<? extends E> list) {
 		final ListIterator<? extends E> iterator = list.listIterator(list.size());
-		return new Iterator<E>() {
+		return new ExIterator<E>() {
 			@Override
 			public boolean hasNext() {
 				return iterator.hasPrevious();

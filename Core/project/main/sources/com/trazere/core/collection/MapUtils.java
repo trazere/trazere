@@ -15,14 +15,13 @@
  */
 package com.trazere.core.collection;
 
-import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Function3;
 import com.trazere.core.functional.Predicate2;
 import com.trazere.core.functional.Thunk;
-import com.trazere.core.imperative.IteratorUtils;
+import com.trazere.core.imperative.PairIterator;
 import com.trazere.core.imperative.Procedure2;
-import com.trazere.core.lang.IterableUtils;
+import com.trazere.core.lang.PairIterable;
 import com.trazere.core.lang.ThrowableFactory;
 import com.trazere.core.util.Comparators;
 import com.trazere.core.util.FieldComparators;
@@ -49,12 +48,26 @@ public class MapUtils {
 	 * @return The bindings.
 	 * @since 2.0
 	 */
-	@SuppressWarnings("unchecked")
-	public static <K, V> Iterable<Tuple2<K, V>> bindings(final Map<? extends K, ? extends V> map) {
-		return IterableUtils.map(map.entrySet(), (Function<Map.Entry<? extends K, ? extends V>, Tuple2<K, V>>) BINDING);
+	public static <K, V> PairIterable<K, V> bindings(final Map<? extends K, ? extends V> map) {
+		return new PairIterable<K, V>() {
+			@Override
+			public PairIterator<K, V> iterator() {
+				final Iterator<? extends Map.Entry<? extends K, ? extends V>> iterator = map.entrySet().iterator();
+				return new PairIterator<K, V>() {
+					@Override
+					public boolean hasNext() {
+						return iterator.hasNext();
+					}
+					
+					@Override
+					public Tuple2<K, V> next() {
+						final Map.Entry<? extends K, ? extends V> entry = iterator.next();
+						return new Tuple2<>(entry.getKey(), entry.getValue());
+					}
+				};
+			}
+		};
 	}
-	
-	private static final Function<? extends Map.Entry<?, ?>, ? extends Tuple2<?, ?>> BINDING = entry -> new Tuple2<>(entry.getKey(), entry.getValue());
 	
 	/**
 	 * Gets a binding from the given map.
@@ -66,7 +79,7 @@ public class MapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V> Maybe<Tuple2<K, V>> any(final Map<K, V> map) {
-		return IteratorUtils.poll(bindings(map).iterator());
+		return bindings(map).any();
 	}
 	
 	/**
@@ -282,7 +295,7 @@ public class MapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V> void foreach(final Map<? extends K, ? extends V> map, final Procedure2<? super K, ? super V> procedure) {
-		IteratorUtils.foreach(bindings(map).iterator(), procedure);
+		bindings(map).foreach(procedure);
 	}
 	
 	/**
@@ -298,7 +311,7 @@ public class MapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V, S> S fold(final Map<? extends K, ? extends V> map, final Function3<? super S, ? super K, ? super V, ? extends S> operator, final S initialState) {
-		return IteratorUtils.fold(bindings(map).iterator(), operator, initialState);
+		return bindings(map).fold(operator, initialState);
 	}
 	
 	/**
@@ -312,7 +325,7 @@ public class MapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V> Maybe<Tuple2<K, V>> first(final Map<? extends K, ? extends V> map, final Predicate2<? super K, ? super V> filter) {
-		return IteratorUtils.first(bindings(map).iterator(), filter);
+		return MapUtils.<K, V>bindings(map).first(filter);
 	}
 	
 	// TODO: extractFirst
@@ -328,7 +341,7 @@ public class MapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V> boolean isAny(final Map<? extends K, ? extends V> map, final Predicate2<? super K, ? super V> filter) {
-		return IteratorUtils.isAny(bindings(map).iterator(), filter);
+		return bindings(map).isAny(filter);
 	}
 	
 	/**
@@ -342,7 +355,7 @@ public class MapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V> boolean areAll(final Map<? extends K, ? extends V> map, final Predicate2<? super K, ? super V> filter) {
-		return IteratorUtils.areAll(bindings(map).iterator(), filter);
+		return bindings(map).areAll(filter);
 	}
 	
 	/**
@@ -356,7 +369,7 @@ public class MapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V> int count(final Map<? extends K, ? extends V> map, final Predicate2<? super K, ? super V> filter) {
-		return IteratorUtils.count(bindings(map).iterator(), filter);
+		return bindings(map).count(filter);
 	}
 	
 	/**
@@ -383,7 +396,7 @@ public class MapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V> Maybe<Tuple2<K, V>> least(final Map<? extends K, ? extends V> map, final Comparator<? super V> comparator) {
-		return IteratorUtils.least(MapUtils.<K, V>bindings(map).iterator(), FieldComparators.field2(comparator));
+		return MapUtils.<K, V>bindings(map).least(FieldComparators.field2(comparator));
 	}
 	
 	/**
@@ -410,7 +423,7 @@ public class MapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V> Maybe<Tuple2<K, V>> greatest(final Map<? extends K, ? extends V> map, final Comparator<? super V> comparator) {
-		return IteratorUtils.greatest(MapUtils.<K, V>bindings(map).iterator(), FieldComparators.field2(comparator));
+		return MapUtils.<K, V>bindings(map).greatest(FieldComparators.field2(comparator));
 	}
 	
 	/**
@@ -472,7 +485,7 @@ public class MapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V, M extends Map<? super K, ? super V>> M take(final Map<? extends K, ? extends V> map, final int n, final MapFactory<? super K, ? super V, M> resultFactory) {
-		return resultFactory.build(IterableUtils.take(bindings(map), n));
+		return resultFactory.build(bindings(map).take(n));
 	}
 	
 	/**
@@ -488,7 +501,7 @@ public class MapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V, M extends Map<? super K, ? super V>> M drop(final Map<? extends K, ? extends V> map, final int n, final MapFactory<? super K, ? super V, M> resultFactory) {
-		return resultFactory.build(IterableUtils.drop(bindings(map), n));
+		return resultFactory.build(bindings(map).drop(n));
 	}
 	
 	/**

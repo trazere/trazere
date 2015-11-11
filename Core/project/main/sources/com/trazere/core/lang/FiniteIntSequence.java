@@ -15,7 +15,7 @@
  */
 package com.trazere.core.lang;
 
-import java.util.Iterator;
+import com.trazere.core.imperative.ExIterator;
 import java.util.NoSuchElementException;
 
 /**
@@ -95,8 +95,8 @@ extends BaseIntSequence {
 	// Iterable.
 	
 	@Override
-	public Iterator<Integer> iterator() {
-		return new Iterator<Integer>() {
+	public ExIterator<Integer> iterator() {
+		return new ExIterator<Integer>() {
 			private int _value = _start;
 			
 			@Override
@@ -113,11 +113,6 @@ extends BaseIntSequence {
 					_value += _increment;
 					return value;
 				}
-			}
-			
-			@Override
-			public void remove() {
-				throw new UnsupportedOperationException();
 			}
 		};
 	}

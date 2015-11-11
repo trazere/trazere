@@ -434,7 +434,7 @@ public class CollectionUtils {
 	 * @since 2.0
 	 */
 	public static <E, C extends Collection<? super E>> C take(final Collection<? extends E> collection, final int n, final CollectionFactory<? super E, C> resultFactory) {
-		return IteratorUtils.drain(IteratorUtils.take(collection.iterator(), n), resultFactory.build(n));
+		return IteratorUtils.take(collection.iterator(), n).drain(resultFactory.build(n));
 	}
 	
 	/**
@@ -449,7 +449,7 @@ public class CollectionUtils {
 	 * @since 2.0
 	 */
 	public static <E, C extends Collection<? super E>> C drop(final Collection<? extends E> collection, final int n, final CollectionFactory<? super E, C> resultFactory) {
-		return IteratorUtils.drain(IteratorUtils.drop(collection.iterator(), n), resultFactory.build(Math.max(0, collection.size() - n)));
+		return IteratorUtils.drop(collection.iterator(), n).drain(resultFactory.build(Math.max(0, collection.size() - n)));
 	}
 	
 	/**
@@ -466,7 +466,7 @@ public class CollectionUtils {
 	 * @since 2.0
 	 */
 	public static <E, B extends Collection<? super E>, C extends Collection<? super B>> C group(final Collection<? extends E> collection, final int n, final CollectionFactory<? super E, B> batchFactory, final CollectionFactory<? super B, C> resultFactory) {
-		return IteratorUtils.drain(IteratorUtils.group(collection.iterator(), n, batchFactory), resultFactory.build((collection.size() + n - 1) / n));
+		return IteratorUtils.group(collection.iterator(), n, batchFactory).drain(resultFactory.build((collection.size() + n - 1) / n));
 	}
 	
 	/**
@@ -481,7 +481,7 @@ public class CollectionUtils {
 	 * @since 2.0
 	 */
 	public static <E, C extends Collection<? super E>> C filter(final Collection<? extends E> collection, final Predicate<? super E> filter, final CollectionFactory<? super E, C> resultFactory) {
-		return IteratorUtils.drain(IteratorUtils.filter(collection.iterator(), filter), resultFactory.build());
+		return IteratorUtils.filter(collection.iterator(), filter).drain(resultFactory.build());
 	}
 	
 	/**
@@ -497,7 +497,7 @@ public class CollectionUtils {
 	 * @since 2.0
 	 */
 	public static <E, TE, C extends Collection<? super TE>> C map(final Collection<? extends E> collection, final Function<? super E, ? extends TE> function, final CollectionFactory<? super TE, C> resultFactory) {
-		return IteratorUtils.drain(IteratorUtils.map(collection.iterator(), function), resultFactory.build(collection.size()));
+		return IteratorUtils.map(collection.iterator(), function).drain(resultFactory.build(collection.size()));
 	}
 	
 	/**
@@ -513,7 +513,7 @@ public class CollectionUtils {
 	 * @since 2.0
 	 */
 	public static <E, TE, C extends Collection<? super TE>> C flatMap(final Collection<? extends E> collection, final Function<? super E, ? extends Collection<? extends TE>> function, final CollectionFactory<? super TE, C> resultFactory) {
-		return IteratorUtils.drain(IteratorUtils.flatMap(collection.iterator(), arg -> function.evaluate(arg).iterator()), resultFactory.build());
+		return IteratorUtils.flatMap(collection.iterator(), arg -> function.evaluate(arg).iterator()).drain(resultFactory.build());
 	}
 	
 	/**
@@ -529,7 +529,7 @@ public class CollectionUtils {
 	 * @since 2.0
 	 */
 	public static <E, EE, C extends Collection<? super EE>> C extract(final Collection<? extends E> collection, final Function<? super E, ? extends Maybe<? extends EE>> extractor, final CollectionFactory<? super EE, C> resultFactory) {
-		return IteratorUtils.drain(IteratorUtils.extract(collection.iterator(), extractor), resultFactory.build());
+		return IteratorUtils.extract(collection.iterator(), extractor).drain(resultFactory.build());
 	}
 	
 	// TODO: extractAll(...) ?
@@ -564,7 +564,7 @@ public class CollectionUtils {
 	 * @since 2.0
 	 */
 	public static <E1, E2, C extends Collection<? super Tuple2<? extends E1, ? extends E2>>> C zip(final Collection<? extends E1> collection1, final Collection<? extends E2> collection2, final CollectionFactory<? super Tuple2<? extends E1, ? extends E2>, C> resultFactory) {
-		return IteratorUtils.drain(IteratorUtils.zip(collection1.iterator(), collection2.iterator()), resultFactory.build(Math.min(collection1.size(), collection2.size())));
+		return IteratorUtils.zip(collection1.iterator(), collection2.iterator()).drain(resultFactory.build(Math.min(collection1.size(), collection2.size())));
 	}
 	
 	/**

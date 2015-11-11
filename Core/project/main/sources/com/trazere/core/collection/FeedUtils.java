@@ -71,7 +71,7 @@ public class FeedUtils {
 	 * @since 2.0
 	 */
 	public static <E> void foreach(final Feed<? extends E> feed, final Procedure<? super E> procedure) {
-		IteratorUtils.foreach(feed.iterator(), procedure);
+		feed.iterator().foreach(procedure);
 	}
 	
 	/**
@@ -86,7 +86,7 @@ public class FeedUtils {
 	 * @since 2.0
 	 */
 	public static <E, S> S fold(final Feed<? extends E> feed, final Function2<? super S, ? super E, ? extends S> operator, final S initialState) {
-		return IteratorUtils.fold(feed.iterator(), operator, initialState);
+		return feed.iterator().fold(operator, initialState);
 	}
 	
 	/**
@@ -113,7 +113,7 @@ public class FeedUtils {
 	 * @since 2.0
 	 */
 	public static <E, EE> Maybe<EE> extractFirst(final Feed<? extends E> feed, final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
-		return IteratorUtils.extractFirst(feed.iterator(), extractor);
+		return feed.iterator().extractFirst(extractor);
 	}
 	
 	/**
@@ -126,7 +126,7 @@ public class FeedUtils {
 	 * @since 2.0
 	 */
 	public static <E> boolean isAny(final Feed<? extends E> feed, final Predicate<? super E> filter) {
-		return IteratorUtils.isAny(feed.iterator(), filter);
+		return feed.iterator().isAny(filter);
 	}
 	
 	/**
@@ -139,7 +139,7 @@ public class FeedUtils {
 	 * @since 2.0
 	 */
 	public static <E> boolean areAll(final Feed<? extends E> feed, final Predicate<? super E> filter) {
-		return IteratorUtils.areAll(feed.iterator(), filter);
+		return feed.iterator().areAll(filter);
 	}
 	
 	/**
@@ -152,7 +152,7 @@ public class FeedUtils {
 	 * @since 2.0
 	 */
 	public static <E> int count(final Feed<? extends E> feed, final Predicate<? super E> filter) {
-		return IteratorUtils.count(feed.iterator(), filter);
+		return feed.iterator().count(filter);
 	}
 	
 	/**

@@ -15,6 +15,7 @@
  */
 package com.trazere.core.collection;
 
+import com.trazere.core.imperative.ExIterator;
 import com.trazere.core.imperative.Iterators;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
@@ -110,7 +111,7 @@ public class Feeds {
 		// Iterable.
 		
 		@Override
-		public Iterator<Object> iterator() {
+		public ExIterator<Object> iterator() {
 			return Iterators.empty();
 		}
 	};

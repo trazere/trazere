@@ -15,6 +15,7 @@
  */
 package com.trazere.util.feed;
 
+import com.trazere.core.imperative.ExIterator;
 import com.trazere.core.lang.ThrowableFactory;
 import com.trazere.util.collection.CheckedIterators;
 import com.trazere.util.collection.CollectionUtils;
@@ -22,7 +23,6 @@ import com.trazere.util.lang.WrapException;
 import com.trazere.util.type.Maybe;
 import com.trazere.util.type.Tuple2;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
@@ -175,9 +175,9 @@ public class FeedUtils {
 			
 			// Note: project is still 1.6
 			@Override
-			public Iterator<T> iterator() {
+			public ExIterator<T> iterator() {
 				final com.trazere.core.collection.Feed<? extends T> this_ = this;
-				return new Iterator<T>() {
+				return new ExIterator<T>() {
 					private com.trazere.core.collection.Feed<? extends T> _tail = this_;
 					
 					@Override

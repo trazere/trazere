@@ -33,12 +33,9 @@ public class IterableFunctions {
 	 * @return The built function.
 	 * @since 2.0
 	 */
-	@SuppressWarnings("unchecked")
 	public static <E> Function<Iterable<? extends E>, Iterator<? extends E>> iterator() {
-		return (Function<Iterable<? extends E>, Iterator<? extends E>>) ITERATOR;
+		return Iterable::iterator;
 	}
-	
-	private static final Function<? extends Iterable<?>, ? extends Iterator<?>> ITERATOR = arg -> arg.iterator();
 	
 	private IterableFunctions() {
 		// Prevent instantiation.

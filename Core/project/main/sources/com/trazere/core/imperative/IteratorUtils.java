@@ -802,7 +802,7 @@ public class IteratorUtils {
 		
 		return new LookAheadPairIterator<E1, E2>() {
 			@Override
-			protected Maybe<? extends Tuple2<? extends E1, ? extends E2>> pull() {
+			protected Maybe<Tuple2<E1, E2>> pull() {
 				return IteratorUtils.first(iterator, filter);
 			}
 		};
@@ -1060,9 +1060,9 @@ public class IteratorUtils {
 	}
 	
 	private static class UnmodifiablePairIterator<E1, E2>
-	extends UnmodifiableIterator<Tuple2<? extends E1, ? extends E2>>
+	extends UnmodifiableIterator<Tuple2<E1, E2>>
 	implements PairIterator<E1, E2> {
-		public UnmodifiablePairIterator(final Iterator<Tuple2<? extends E1, ? extends E2>> decorated) {
+		public UnmodifiablePairIterator(final Iterator<Tuple2<E1, E2>> decorated) {
 			super(decorated);
 		}
 	}

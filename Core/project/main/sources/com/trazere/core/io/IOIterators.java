@@ -15,6 +15,7 @@
  */
 package com.trazere.core.io;
 
+import com.trazere.core.imperative.ExIterator;
 import com.trazere.core.imperative.LookAheadIterator;
 import com.trazere.core.lang.ThrowableFactory;
 import com.trazere.core.util.Maybe;
@@ -38,7 +39,7 @@ public class IOIterators {
 	 * @return The built iterator.
 	 * @since 2.0
 	 */
-	public Iterator<Byte> fromStream(final InputStream stream, final ThrowableFactory<? extends RuntimeException> failureFactory) {
+	public ExIterator<Byte> fromStream(final InputStream stream, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		assert null != stream;
 		assert null != failureFactory;
 		
@@ -63,7 +64,7 @@ public class IOIterators {
 	 * @return The built iterator.
 	 * @since 2.0
 	 */
-	public Iterator<Character> fromReader(final Reader reader, final ThrowableFactory<? extends RuntimeException> failureFactory) {
+	public ExIterator<Character> fromReader(final Reader reader, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		assert null != reader;
 		assert null != failureFactory;
 		
