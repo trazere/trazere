@@ -66,7 +66,7 @@ public class MapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V> Maybe<Tuple2<K, V>> any(final Map<K, V> map) {
-		return IteratorUtils.next(bindings(map).iterator());
+		return IteratorUtils.poll(bindings(map).iterator());
 	}
 	
 	/**

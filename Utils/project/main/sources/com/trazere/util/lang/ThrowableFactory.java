@@ -28,8 +28,10 @@ extends Factory<T, InternalException> {
 	 * Build a new throwable instance.
 	 * 
 	 * @return The built throwable.
+	 * @deprecated Use {@link com.trazere.core.lang.ThrowableFactory#build()}.
 	 */
 	@Override
+	@Deprecated
 	public T build();
 	
 	/**

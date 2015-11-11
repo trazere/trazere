@@ -69,7 +69,7 @@ public class MultimapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V> Maybe<Tuple2<K, V>> any(final Multimap<K, V, ?> multimap) {
-		return IteratorUtils.next(bindings(multimap).iterator());
+		return IteratorUtils.poll(bindings(multimap).iterator());
 	}
 	
 	/**

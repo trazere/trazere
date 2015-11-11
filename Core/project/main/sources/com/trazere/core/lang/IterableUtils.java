@@ -48,7 +48,7 @@ public class IterableUtils {
 	 * @since 2.0
 	 */
 	public static <E> Maybe<E> any(final Iterable<? extends E> iterable) {
-		return IteratorUtils.next(iterable.iterator());
+		return IteratorUtils.poll(iterable.iterator());
 	}
 	
 	// TODO: drain equivalent
@@ -504,7 +504,7 @@ public class IterableUtils {
 		
 		@Override
 		public ExIterator<E> iterator() {
-			return IteratorUtils.unmodifiable(ExIterator.fromIterator(_decorated.iterator()));
+			return IteratorUtils.unmodifiable(ExIterator.build(_decorated.iterator()));
 		}
 		
 		// Object.

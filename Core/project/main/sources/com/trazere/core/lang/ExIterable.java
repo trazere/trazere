@@ -27,7 +27,7 @@ extends Iterable<E> {
 	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
-	public static <E> ExIterable<E> fromIterable(final Iterable<? extends E> iterable) {
+	public static <E> ExIterable<E> build(final Iterable<? extends E> iterable) {
 		assert null != iterable;
 		
 		if (iterable instanceof ExIterable) {
@@ -36,7 +36,7 @@ extends Iterable<E> {
 			return new ExIterable<E>() {
 				@Override
 				public ExIterator<E> iterator() {
-					return ExIterator.fromIterator(iterable.iterator());
+					return ExIterator.build(iterable.iterator());
 				}
 			};
 		}

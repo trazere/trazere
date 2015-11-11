@@ -26,7 +26,7 @@ extends Iterator<E> {
 	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
-	public static <E> ExIterator<E> fromIterator(final Iterator<? extends E> iterator) {
+	public static <E> ExIterator<E> build(final Iterator<? extends E> iterator) {
 		assert null != iterator;
 		
 		if (iterator instanceof ExIterator) {
@@ -53,13 +53,13 @@ extends Iterator<E> {
 	
 	// TODO: make name coherent with Utils -> getNext() ? => inverse tail and getTail in Feed ?
 	/**
-	 * Gets the next element provided by this iterator.
+	 * Polls the next element provided by this iterator.
 	 * 
-	 * @return The next element.
+	 * @return The next element, or nothing when the iterator is exhausted.
 	 * @since 2.0
 	 */
-	default Maybe<E> pop() {
-		return IteratorUtils.next(this);
+	default Maybe<E> poll() {
+		return IteratorUtils.poll(this);
 	}
 	
 	/**

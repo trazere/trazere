@@ -46,7 +46,7 @@ public class CollectionUtils {
 	 * @since 2.0
 	 */
 	public static <E> Maybe<E> any(final Collection<? extends E> collection) {
-		return IteratorUtils.next(collection.iterator());
+		return IteratorUtils.poll(collection.iterator());
 	}
 	
 	// TODO: add(Collection, Maybe)

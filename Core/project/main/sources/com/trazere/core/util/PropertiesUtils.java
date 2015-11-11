@@ -127,7 +127,7 @@ public class PropertiesUtils {
 	 */
 	public static <T> Maybe<T> get(final Properties properties, final String name, final Serializer<? extends T, ? super String> deserializer)
 	throws InvalidFieldException {
-		return get(properties, name, SerializerFunctions.deserialize(deserializer));
+		return get(properties, name, deserializer::deserialize);
 	}
 	
 	/**
@@ -319,7 +319,7 @@ public class PropertiesUtils {
 	 */
 	public static <T> T getOptional(final Properties properties, final String name, final Serializer<? extends T, ? super String> deserializer, final T defaultValue)
 	throws InvalidFieldException {
-		return getOptional(properties, name, SerializerFunctions.deserialize(deserializer), defaultValue);
+		return getOptional(properties, name, deserializer::deserialize, defaultValue);
 	}
 	
 	/**
@@ -769,7 +769,7 @@ public class PropertiesUtils {
 	 */
 	public static <T> T getMandatory(final Properties properties, final String name, final Serializer<? extends T, ? super String> deserializer)
 	throws MissingFieldException, InvalidFieldException {
-		return getMandatory(properties, name, SerializerFunctions.deserialize(deserializer));
+		return getMandatory(properties, name, deserializer::deserialize);
 	}
 	
 	/**
