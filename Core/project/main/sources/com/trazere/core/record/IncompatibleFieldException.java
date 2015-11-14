@@ -13,17 +13,15 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.record;
+package com.trazere.core.record;
 
-import com.trazere.util.lang.BaseThrowableFactory;
-import com.trazere.util.lang.ThrowableFactory;
+import com.trazere.core.lang.ThrowableFactory;
 
 /**
- * {@link IncompatibleFieldException} exceptions are thrown when some record field does not have the appropriate type.
+ * {@link IncompatibleFieldException} exceptions are thrown when the value of some field does not have the appropriate type.
  * 
- * @deprecated Use {@link com.trazere.core.record.IncompatibleFieldException}.
+ * @since 2.0
  */
-@Deprecated
 public class IncompatibleFieldException
 extends RecordException {
 	private static final long serialVersionUID = 1L;
@@ -31,9 +29,8 @@ extends RecordException {
 	/**
 	 * Instantiates a new exception.
 	 * 
-	 * @deprecated Use {@link com.trazere.core.record.IncompatibleFieldException}.
+	 * @since 2.0
 	 */
-	@Deprecated
 	public IncompatibleFieldException() {
 		super();
 	}
@@ -42,9 +39,8 @@ extends RecordException {
 	 * Instantiates a new exception using the given message.
 	 * 
 	 * @param message Details about the exception.
-	 * @deprecated Use {@link com.trazere.core.record.IncompatibleFieldException}.
+	 * @since 2.0
 	 */
-	@Deprecated
 	public IncompatibleFieldException(final String message) {
 		super(message);
 	}
@@ -53,9 +49,8 @@ extends RecordException {
 	 * Instantiates a new exception using the given cause.
 	 * 
 	 * @param cause Cause of the exception.
-	 * @deprecated Use {@link com.trazere.core.record.IncompatibleFieldException}.
+	 * @since 2.0
 	 */
-	@Deprecated
 	public IncompatibleFieldException(final Throwable cause) {
 		super(cause);
 	}
@@ -65,39 +60,37 @@ extends RecordException {
 	 * 
 	 * @param message Details about the exception.
 	 * @param cause Cause of the exception.
-	 * @deprecated Use {@link com.trazere.core.record.IncompatibleFieldException}.
+	 * @since 2.0
 	 */
-	@Deprecated
 	public IncompatibleFieldException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 	
 	/**
-	 * Factory of {@link NullFieldException}.
+	 * Factory of {@link IncompatibleFieldException}.
 	 * 
-	 * @deprecated Use {@link com.trazere.core.record.IncompatibleFieldException}.
+	 * @since 2.0
 	 */
-	@Deprecated
 	@SuppressWarnings("hiding")
-	public static final ThrowableFactory<NullFieldException> FACTORY = new BaseThrowableFactory<NullFieldException>() {
+	public static final ThrowableFactory<IncompatibleFieldException> FACTORY = new ThrowableFactory<IncompatibleFieldException>() {
 		@Override
-		public NullFieldException build() {
-			return new NullFieldException();
+		public IncompatibleFieldException build() {
+			return new IncompatibleFieldException();
 		}
 		
 		@Override
-		public NullFieldException build(final String message) {
-			return new NullFieldException(message);
+		public IncompatibleFieldException build(final String message) {
+			return new IncompatibleFieldException(message);
 		}
 		
 		@Override
-		public NullFieldException build(final Throwable cause) {
-			return new NullFieldException(cause);
+		public IncompatibleFieldException build(final Throwable cause) {
+			return new IncompatibleFieldException(cause);
 		}
 		
 		@Override
-		public NullFieldException build(final String message, final Throwable cause) {
-			return new NullFieldException(message, cause);
+		public IncompatibleFieldException build(final String message, final Throwable cause) {
+			return new IncompatibleFieldException(message, cause);
 		}
 	};
 }

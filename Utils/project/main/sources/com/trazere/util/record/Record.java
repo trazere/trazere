@@ -211,7 +211,7 @@ public interface Record<K, V> {
 	 * 
 	 * @return An unmodiable map of the values of the fields identified by their keys.
 	 * @throws InvalidFieldException When some field cannot be read.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link com.trazere.core.record.Record#fields()}.
 	 */
 	@Deprecated
 	public Map<K, V> asMap()

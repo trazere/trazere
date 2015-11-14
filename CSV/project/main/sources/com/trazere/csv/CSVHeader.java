@@ -55,6 +55,7 @@ extends FieldKey<CSVHeader<V>, V> {
 	 * Gets the serializer of the value of the field.
 	 * 
 	 * @return The serializer.
+	 * @since 2.0
 	 */
 	public Serializer<V, String> getSerializer() {
 		return _serializer;

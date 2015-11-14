@@ -15,6 +15,7 @@
  */
 package com.trazere.core.record;
 
+import com.trazere.core.functional.Thunk;
 import com.trazere.core.util.Maybe;
 import java.util.Collection;
 import java.util.Set;
@@ -79,10 +80,12 @@ public interface Record<K extends FieldKey<? extends K, ?>> {
 	 * @param key Key of the field to get.
 	 * @return The value of the field, or nothing when the record contains no fields are identified by the key.
 	 * @throws InvalidFieldException When the value of the field cannot be read.
+	 * @throws NullFieldException When the value of the field is <code>null</code> and whereas the field is not nullable.
+	 * @throws IncompatibleFieldException When the value of the field is not compatible with the type of the field.
 	 * @since 2.0
 	 */
 	<V> Maybe<V> get(FieldKey<? extends K, V> key)
-	throws InvalidFieldException;
+	throws InvalidFieldException, NullFieldException, IncompatibleFieldException;
 	
 	/**
 	 * Gets the value of the optional field of this record identified by the given key.
@@ -92,10 +95,29 @@ public interface Record<K extends FieldKey<? extends K, ?>> {
 	 * @param defaultValue Default value of the field. May be <code>null</code>.
 	 * @return The value of the field, or the given default value when no fields are identified by the given key. May be <code>null</code>.
 	 * @throws InvalidFieldException When the value of the field cannot be read.
+	 * @throws NullFieldException When the value of the field is <code>null</code> and whereas the field is not nullable.
+	 * @throws IncompatibleFieldException When the value of the field is not compatible with the type of the field.
 	 * @since 2.0
 	 */
 	default <V> V getOptional(final FieldKey<? extends K, V> key, final V defaultValue)
-	throws InvalidFieldException {
+	throws InvalidFieldException, NullFieldException, IncompatibleFieldException {
+		return get(key).get(defaultValue);
+	}
+	
+	/**
+	 * Gets the value of the optional field of this record identified by the given key.
+	 * 
+	 * @param <V> Type of the value of the field.
+	 * @param key Key of the field to get.
+	 * @param defaultValue Default value of the field. May be <code>null</code>.
+	 * @return The value of the field, or the given default value when no fields are identified by the given key. May be <code>null</code>.
+	 * @throws InvalidFieldException When the value of the field cannot be read.
+	 * @throws NullFieldException When the value of the field is <code>null</code> and whereas the field is not nullable.
+	 * @throws IncompatibleFieldException When the value of the field is not compatible with the type of the field.
+	 * @since 2.0
+	 */
+	default <V> V getOptional(final FieldKey<? extends K, V> key, final Thunk<? extends V> defaultValue)
+	throws InvalidFieldException, NullFieldException, IncompatibleFieldException {
 		return get(key).get(defaultValue);
 	}
 	
@@ -107,10 +129,12 @@ public interface Record<K extends FieldKey<? extends K, ?>> {
 	 * @return The value of the field. May be <code>null</code>.
 	 * @throws MissingFieldException When no fields are identified by the given key in the record.
 	 * @throws InvalidFieldException When the value of the field cannot be read.
+	 * @throws NullFieldException When the value of the field is <code>null</code> and whereas the field is not nullable.
+	 * @throws IncompatibleFieldException When the value of the field is not compatible with the type of the field.
 	 * @since 2.0
 	 */
 	default <V> V getMandatory(final FieldKey<? extends K, V> key)
-	throws MissingFieldException, InvalidFieldException {
+	throws MissingFieldException, InvalidFieldException, NullFieldException, IncompatibleFieldException {
 		final Maybe<V> value = get(key);
 		if (value.isSome()) {
 			return value.asSome().getValue();

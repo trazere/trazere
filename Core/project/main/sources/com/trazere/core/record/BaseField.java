@@ -43,7 +43,7 @@ implements Field<K, V> {
 			return true;
 		} else if (null != object && object instanceof Field<?, ?>) {
 			final Field<?, ?> field = (Field<?, ?>) object;
-			return getKey() == field.getKey() && ObjectUtils.safeEquals(getValue(), field.getValue());
+			return getKey().equals(field.getKey()) && ObjectUtils.safeEquals(getValue(), field.getValue());
 		} else {
 			return false;
 		}

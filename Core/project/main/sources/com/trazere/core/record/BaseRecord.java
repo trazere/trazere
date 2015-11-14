@@ -52,10 +52,9 @@ implements Record<K> {
 	}
 	
 	@Override
-	@SuppressWarnings("unchecked")
 	public <V> Maybe<V> get(final FieldKey<? extends K, V> key)
-	throws InvalidFieldException {
-		return CollectionUtils.first(fields(), field -> field.getKey() == key).map(field -> (V) field.getValue());
+	throws NullFieldException, IncompatibleFieldException {
+		return CollectionUtils.first(fields(), field -> field.getKey().equals(key)).map(field -> key.checkValue(field.getValue()));
 	}
 	
 	// Object.

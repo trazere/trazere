@@ -67,30 +67,30 @@ extends RecordException {
 	}
 	
 	/**
-	 * Factory of {@link NullFieldException}.
+	 * Factory of {@link DuplicateFieldException}.
 	 * 
 	 * @since 2.0
 	 */
 	@SuppressWarnings("hiding")
-	public static final ThrowableFactory<NullFieldException> FACTORY = new ThrowableFactory<NullFieldException>() {
+	public static final ThrowableFactory<DuplicateFieldException> FACTORY = new ThrowableFactory<DuplicateFieldException>() {
 		@Override
-		public NullFieldException build() {
-			return new NullFieldException();
+		public DuplicateFieldException build() {
+			return new DuplicateFieldException();
 		}
 		
 		@Override
-		public NullFieldException build(final String message) {
-			return new NullFieldException(message);
+		public DuplicateFieldException build(final String message) {
+			return new DuplicateFieldException(message);
 		}
 		
 		@Override
-		public NullFieldException build(final Throwable cause) {
-			return new NullFieldException(cause);
+		public DuplicateFieldException build(final Throwable cause) {
+			return new DuplicateFieldException(cause);
 		}
 		
 		@Override
-		public NullFieldException build(final String message, final Throwable cause) {
-			return new NullFieldException(message, cause);
+		public DuplicateFieldException build(final String message, final Throwable cause) {
+			return new DuplicateFieldException(message, cause);
 		}
 	};
 }

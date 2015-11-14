@@ -72,34 +72,9 @@ extends BaseRecord<K> {
 	@Override
 	public <V> Maybe<V> get(final FieldKey<? extends K, V> key) {
 		if (_fields.containsKey(key)) {
-			@SuppressWarnings("unchecked")
-			final V value = (V) _fields.get(key).getValue();
-			return Maybe.some(value);
+			return Maybe.some(key.checkValue(_fields.get(key).getValue()));
 		} else {
 			return Maybe.none();
-		}
-	}
-	
-	@Override
-	public <V> V getOptional(final FieldKey<? extends K, V> key, final V defaultValue) {
-		if (_fields.containsKey(key)) {
-			@SuppressWarnings("unchecked")
-			final V value = (V) _fields.get(key).getValue();
-			return value;
-		} else {
-			return defaultValue;
-		}
-	}
-	
-	@Override
-	public <V> V getMandatory(final FieldKey<? extends K, V> key)
-	throws MissingFieldException {
-		if (_fields.containsKey(key)) {
-			@SuppressWarnings("unchecked")
-			final V value = (V) _fields.get(key).getValue();
-			return value;
-		} else {
-			throw new MissingFieldException("Missing field \"" + key + "\" in record " + this);
 		}
 	}
 	

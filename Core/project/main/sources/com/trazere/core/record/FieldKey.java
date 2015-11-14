@@ -15,17 +15,21 @@
  */
 package com.trazere.core.record;
 
+// TODO: interface ?
+
 /**
  * The {@link FieldKey} class represents keys of {@link Field fields}.
  * <p>
  * Field keys identify fields. They are caracterized by :
  * <ul>
- * <li>the label of the field (for display purpose),
+ * <li>the label of the field,
  * <li>the type of the value of the field,
  * <li>the nullability of the value of the field.
  * </ul>
  * <p>
- * Field key equality relies on their physical identity.
+ * By default, field key equality relies on their physical identity. That provides a lot of safety when reading records because constraints over the value are
+ * checked on the construction of the records. Sub-classes may however override the behaviour when more flexibility is required (when the keys are dynamically
+ * derived at runtime for instance).
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the value of the field.
@@ -69,7 +73,7 @@ public abstract class FieldKey<K extends FieldKey<K, V>, V> {
 	/**
 	 * Gets the label of the field identified by this key.
 	 * 
-	 * @return The key.
+	 * @return The label.
 	 * @since 2.0
 	 */
 	public String getLabel() {
@@ -106,19 +110,38 @@ public abstract class FieldKey<K extends FieldKey<K, V>, V> {
 		return _nullable;
 	}
 	
+	// Signature.
+	
+	/**
+	 * Checks the given value against this key.
+	 * <p>
+	 * The value is accepted when its type nullability are compatible with the constraints of the key.
+	 * 
+	 * @param value Value to check.
+	 * @return The checked value.
+	 * @throws NullFieldException When the value of the field is <code>null</code> and whereas the field is not nullable.
+	 * @throws IncompatibleFieldException When the value of the field is not compatible with the type of the field.
+	 * @since 2.0
+	 */
+	public V checkValue(final Object value)
+	throws NullFieldException, IncompatibleFieldException {
+		if (null == value) {
+			if (isNullable()) {
+				return null;
+			} else {
+				throw new NullFieldException("Null value is not compatible with field \"" + this + "\"");
+			}
+		} else {
+			final Class<V> type = getType();
+			if (type.isInstance(value)) {
+				return type.cast(value);
+			} else {
+				throw new IncompatibleFieldException("Value \"" + value + "\" of type " + value.getClass() + " is not compatible with field \"" + this + "\"");
+			}
+		}
+	}
+	
 	// Object.
-	
-	// Note: prevents overriding
-	@Override
-	public final int hashCode() {
-		return super.hashCode();
-	}
-	
-	// Note: prevents overriding
-	@Override
-	public final boolean equals(final Object obj) {
-		return super.equals(obj);
-	}
 	
 	@Override
 	public String toString() {
@@ -127,34 +150,6 @@ public abstract class FieldKey<K extends FieldKey<K, V>, V> {
 	
 	// TODO
 	//	// Signature.
-	//
-	//	/**
-	//	 * Casts the given value to a value compatible with this field signature.
-	//	 * <p>
-	//	 * A value is accepted when its type and nullability are compatible with the constraints of the signature.
-	//	 *
-	//	 * @param value Value to cast.
-	//	 * @return The casted value.
-	//	 * @throws NullFieldException When the value is <code>null</code> and the field signature is not nullable.
-	//	 * @throws IncompatibleFieldException When the value is not compatible with the value type of the field signature.
-	//	 */
-	//	// TODO: find a better method name
-	//	public V cast(final Object value) {
-	//		if (null == value) {
-	//			if (isNullable()) {
-	//				return null;
-	//			} else {
-	//				throw new NullFieldException("Value is null");
-	//			}
-	//		} else {
-	//			final Class<V> type = getType();
-	//			if (type.isInstance(value)) {
-	//				return type.cast(value);
-	//			} else {
-	//				throw new IncompatibleFieldException("Value \"" + value + "\" has not type \"" + type + "\"");
-	//			}
-	//		}
-	//	}
 	//
 	//	/**
 	//	 * Tests whether the given value is compatible with this field signature.
