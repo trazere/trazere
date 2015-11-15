@@ -25,7 +25,7 @@ import com.trazere.core.design.Factory;
  * @see Record
  * @since 2.0
  */
-public interface RecordFactory<K extends FieldKey<? extends K, ?>, R extends Record<K>>
+public interface RecordFactory<K extends FieldKey<K, ?>, R extends Record<K>>
 extends Factory<R> {
 	/**
 	 * Builds a new empty record.

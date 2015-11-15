@@ -30,7 +30,7 @@ public class RecordFactories {
 	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
-	public static <K extends FieldKey<? extends K, ?>> RecordFactory<K, Record<K>> simple() {
+	public static <K extends FieldKey<K, ?>> RecordFactory<K, Record<K>> simple() {
 		return (RecordFactory<K, Record<K>>) SIMPLE;
 	}
 	

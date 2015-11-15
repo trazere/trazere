@@ -26,7 +26,7 @@ import java.util.Set;
  * @see Record
  * @since 2.0
  */
-public interface RecordBuilder<K extends FieldKey<? extends K, ?>, R extends Record<K>>
+public interface RecordBuilder<K extends FieldKey<K, ?>, R extends Record<K>>
 extends Factory<R> {
 	/**
 	 * Gets the current size of the record being built by this builder.
@@ -234,7 +234,6 @@ extends Factory<R> {
 	}
 	
 	// TODO: replace (MissingFieldException)
-	// TODO: complete (set if missing)
 	
 	/**
 	 * Removes the field identified by the given key from the record being built by this builder.

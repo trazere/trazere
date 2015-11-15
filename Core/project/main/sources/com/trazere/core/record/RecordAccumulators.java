@@ -36,7 +36,7 @@ public class RecordAccumulators {
 	 * @see RecordBuilder#addAll(Iterable)
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>, B extends RecordBuilder<K, ?>> Accumulator<Field<? extends K, ?>, B> add(final B builder) {
+	public static <K extends FieldKey<K, ?>, B extends RecordBuilder<K, ?>> Accumulator<Field<? extends K, ?>, B> add(final B builder) {
 		assert null != builder;
 		
 		return new Accumulator<Field<? extends K, ?>, B>() {
@@ -68,7 +68,7 @@ public class RecordAccumulators {
 	 * @see RecordBuilder#completeAll(Iterable)
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>, B extends RecordBuilder<K, ?>> Accumulator<Field<? extends K, ?>, B> complete(final B builder) {
+	public static <K extends FieldKey<K, ?>, B extends RecordBuilder<K, ?>> Accumulator<Field<? extends K, ?>, B> complete(final B builder) {
 		assert null != builder;
 		
 		return new Accumulator<Field<? extends K, ?>, B>() {
@@ -99,7 +99,7 @@ public class RecordAccumulators {
 	 * @see RecordBuilder#set(Field)
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>, B extends RecordBuilder<K, ?>> Accumulator<Field<? extends K, ?>, B> set(final B builder) {
+	public static <K extends FieldKey<K, ?>, B extends RecordBuilder<K, ?>> Accumulator<Field<? extends K, ?>, B> set(final B builder) {
 		assert null != builder;
 		
 		return new Accumulator<Field<? extends K, ?>, B>() {

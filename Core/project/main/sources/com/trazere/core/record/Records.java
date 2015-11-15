@@ -37,7 +37,7 @@ public class Records {
 	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
-	public static <K extends FieldKey<? extends K, ?>> Record<K> empty() {
+	public static <K extends FieldKey<K, ?>> Record<K> empty() {
 		return (Record<K>) EMPTY;
 	}
 	
@@ -72,23 +72,23 @@ public class Records {
 		}
 		
 		@Override
-		public <V> Maybe<V> get(final FieldKey<? extends DummyKey<?>, V> key) {
+		public <V> Maybe<V> get(final FieldKey<? extends DummyKey<?>, ? extends V> key) {
 			return Maybe.none();
 		}
 		
 		@Override
-		public <V> V getOptional(final FieldKey<? extends DummyKey<?>, V> key, final V defaultValue) {
+		public <V> V getOptional(final FieldKey<? extends DummyKey<?>, ? extends V> key, final V defaultValue) {
 			return defaultValue;
 		}
 		
 		@Override
-		public <V> V getMandatory(final FieldKey<? extends DummyKey<?>, V> key)
+		public <V> V getMandatory(final FieldKey<? extends DummyKey<?>, ? extends V> key)
 		throws MissingFieldException {
 			throw new MissingFieldException("Missing field \"" + key + "\" in record " + this);
 		}
 		
 		@Override
-		public Collection<Field<? extends DummyKey<?>, ?>> fields() {
+		public Collection<Field<DummyKey<?>, ?>> fields() {
 			return Collections.emptyList();
 		}
 	};
@@ -104,7 +104,7 @@ public class Records {
 	 * @throws NullFieldException When the value is <code>null</code> and the field is not nullable.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>, V> Record<K> fromKeyAndValue(final FieldKey<? extends K, V> key, final V value) {
+	public static <K extends FieldKey<K, ?>, V> Record<K> fromKeyAndValue(final FieldKey<? extends K, V> key, final V value) {
 		return fromField(Fields.fromKeyAndValue(key, value));
 	}
 	
@@ -123,7 +123,7 @@ public class Records {
 	 * @throws DuplicateFieldException When sereval fields have the same key.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>, V1, V2> Record<K> fromKeysAndValues(final FieldKey<? extends K, V1> key1, final V1 value1, final FieldKey<? extends K, V2> key2, final V2 value2)
+	public static <K extends FieldKey<K, ?>, V1, V2> Record<K> fromKeysAndValues(final FieldKey<? extends K, V1> key1, final V1 value1, final FieldKey<? extends K, V2> key2, final V2 value2)
 	throws DuplicateFieldException {
 		return fromFields(Fields.fromKeyAndValue(key1, value1), Fields.fromKeyAndValue(key2, value2));
 	}
@@ -146,7 +146,7 @@ public class Records {
 	 * @throws DuplicateFieldException When sereval fields have the same key.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>, V1, V2, V3> Record<K> fromKeysAndValues(final FieldKey<? extends K, V1> key1, final V1 value1, final FieldKey<? extends K, V2> key2, final V2 value2, final FieldKey<? extends K, V3> key3, final V3 value3)
+	public static <K extends FieldKey<K, ?>, V1, V2, V3> Record<K> fromKeysAndValues(final FieldKey<? extends K, V1> key1, final V1 value1, final FieldKey<? extends K, V2> key2, final V2 value2, final FieldKey<? extends K, V3> key3, final V3 value3)
 	throws DuplicateFieldException {
 		return fromFields(Fields.fromKeyAndValue(key1, value1), Fields.fromKeyAndValue(key2, value2), Fields.fromKeyAndValue(key3, value3));
 	}
@@ -159,7 +159,7 @@ public class Records {
 	 * @return The built record.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>> Record<K> fromField(final Field<? extends K, ?> field) {
+	public static <K extends FieldKey<K, ?>> Record<K> fromField(final Field<? extends K, ?> field) {
 		return fromFields(Lists.fromElement(field));
 	}
 	
@@ -173,7 +173,7 @@ public class Records {
 	 * @throws DuplicateFieldException When sereval fields have the same key.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>> Record<K> fromFields(final Field<? extends K, ?> field1, final Field<? extends K, ?> field2)
+	public static <K extends FieldKey<K, ?>> Record<K> fromFields(final Field<? extends K, ?> field1, final Field<? extends K, ?> field2)
 	throws DuplicateFieldException {
 		return fromFields(Lists.fromElements(field1, field2));
 	}
@@ -189,7 +189,7 @@ public class Records {
 	 * @throws DuplicateFieldException When sereval fields have the same key.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>> Record<K> fromFields(final Field<? extends K, ?> field1, final Field<? extends K, ?> field2, final Field<? extends K, ?> field3)
+	public static <K extends FieldKey<K, ?>> Record<K> fromFields(final Field<? extends K, ?> field1, final Field<? extends K, ?> field2, final Field<? extends K, ?> field3)
 	throws DuplicateFieldException {
 		return fromFields(Lists.fromElements(field1, field2, field3));
 	}
@@ -204,7 +204,7 @@ public class Records {
 	 * @since 2.0
 	 */
 	@SafeVarargs
-	public static <K extends FieldKey<? extends K, ?>> Record<K> fromFields(final Field<? extends K, ?>... fields)
+	public static <K extends FieldKey<K, ?>> Record<K> fromFields(final Field<? extends K, ?>... fields)
 	throws DuplicateFieldException {
 		return fromFields(Arrays.asList(fields));
 	}
@@ -220,7 +220,7 @@ public class Records {
 	 * @throws DuplicateFieldException When sereval fields have the same key.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>> Record<K> fromFields(final Iterable<? extends Field<? extends K, ?>> fields)
+	public static <K extends FieldKey<K, ?>> Record<K> fromFields(final Iterable<? extends Field<? extends K, ?>> fields)
 	throws DuplicateFieldException {
 		final RecordBuilder<K, ?> builder = new SimpleRecordBuilder<>();
 		builder.addAll(fields);

@@ -15,6 +15,7 @@
  */
 package com.trazere.core.record;
 
+import com.trazere.core.collection.MapUtils;
 import com.trazere.core.util.Maybe;
 import java.util.Collection;
 import java.util.Collections;
@@ -27,7 +28,7 @@ import java.util.Set;
  * @param <K> Witness type of the field keys.
  * @since 2.0
  */
-public class SimpleRecord<K extends FieldKey<? extends K, ?>>
+public class SimpleRecord<K extends FieldKey<K, ?>>
 extends BaseRecord<K> {
 	/**
 	 * Fields identified by their keys.
@@ -70,12 +71,8 @@ extends BaseRecord<K> {
 	}
 	
 	@Override
-	public <V> Maybe<V> get(final FieldKey<? extends K, V> key) {
-		if (_fields.containsKey(key)) {
-			return Maybe.some(key.checkValue(_fields.get(key).getValue()));
-		} else {
-			return Maybe.none();
-		}
+	public <V> Maybe<V> get(final FieldKey<? extends K, ? extends V> key) {
+		return MapUtils.get(_fields, key).map(field -> key.checkValue(field.getValue()));
 	}
 	
 	@Override

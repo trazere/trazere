@@ -26,7 +26,7 @@ import java.util.Set;
  * @param <R> Type of the records.
  * @since 2.0
  */
-public abstract class BaseRecordBuilder<K extends FieldKey<? extends K, ?>, R extends Record<K>>
+public abstract class BaseRecordBuilder<K extends FieldKey<K, ?>, R extends Record<K>>
 implements RecordBuilder<K, R> {
 	/**
 	 * Fields identified by their keys.

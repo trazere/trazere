@@ -34,7 +34,7 @@ import java.util.Set;
  * @param <K> Type of the field keys.
  * @since 2.0
  */
-public abstract class BaseRecord<K extends FieldKey<? extends K, ?>>
+public abstract class BaseRecord<K extends FieldKey<K, ?>>
 implements Record<K> {
 	@Override
 	public Set<? extends FieldKey<? extends K, ?>> keys() {
@@ -44,6 +44,8 @@ implements Record<K> {
 				return BaseRecord.this.size();
 			}
 			
+			// TODO: optimize contains
+			
 			@Override
 			public Iterator<FieldKey<? extends K, ?>> iterator() {
 				return IteratorUtils.map(fields().iterator(), Field::getKey);
@@ -52,7 +54,7 @@ implements Record<K> {
 	}
 	
 	@Override
-	public <V> Maybe<V> get(final FieldKey<? extends K, V> key)
+	public <V> Maybe<V> get(final FieldKey<? extends K, ? extends V> key)
 	throws NullFieldException, IncompatibleFieldException {
 		return CollectionUtils.first(fields(), field -> field.getKey().equals(key)).map(field -> key.checkValue(field.getValue()));
 	}

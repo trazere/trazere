@@ -29,7 +29,7 @@ import java.util.Set;
  * @see Field
  * @since 2.0
  */
-public interface Record<K extends FieldKey<? extends K, ?>> {
+public interface Record<K extends FieldKey<K, ?>> {
 	/**
 	 * Gets the size of this record.
 	 * <p>
@@ -84,7 +84,7 @@ public interface Record<K extends FieldKey<? extends K, ?>> {
 	 * @throws IncompatibleFieldException When the value of the field is not compatible with the type of the field.
 	 * @since 2.0
 	 */
-	<V> Maybe<V> get(FieldKey<? extends K, V> key)
+	<V> Maybe<V> get(FieldKey<? extends K, ? extends V> key)
 	throws InvalidFieldException, NullFieldException, IncompatibleFieldException;
 	
 	/**
@@ -99,9 +99,9 @@ public interface Record<K extends FieldKey<? extends K, ?>> {
 	 * @throws IncompatibleFieldException When the value of the field is not compatible with the type of the field.
 	 * @since 2.0
 	 */
-	default <V> V getOptional(final FieldKey<? extends K, V> key, final V defaultValue)
+	default <V> V getOptional(final FieldKey<? extends K, ? extends V> key, final V defaultValue)
 	throws InvalidFieldException, NullFieldException, IncompatibleFieldException {
-		return get(key).get(defaultValue);
+		return this.<V>get(key).get(defaultValue);
 	}
 	
 	/**
@@ -116,9 +116,9 @@ public interface Record<K extends FieldKey<? extends K, ?>> {
 	 * @throws IncompatibleFieldException When the value of the field is not compatible with the type of the field.
 	 * @since 2.0
 	 */
-	default <V> V getOptional(final FieldKey<? extends K, V> key, final Thunk<? extends V> defaultValue)
+	default <V> V getOptional(final FieldKey<? extends K, ? extends V> key, final Thunk<? extends V> defaultValue)
 	throws InvalidFieldException, NullFieldException, IncompatibleFieldException {
-		return get(key).get(defaultValue);
+		return this.<V>get(key).get(defaultValue);
 	}
 	
 	/**
@@ -133,7 +133,7 @@ public interface Record<K extends FieldKey<? extends K, ?>> {
 	 * @throws IncompatibleFieldException When the value of the field is not compatible with the type of the field.
 	 * @since 2.0
 	 */
-	default <V> V getMandatory(final FieldKey<? extends K, V> key)
+	default <V> V getMandatory(final FieldKey<? extends K, ? extends V> key)
 	throws MissingFieldException, InvalidFieldException, NullFieldException, IncompatibleFieldException {
 		final Maybe<V> value = get(key);
 		if (value.isSome()) {
@@ -149,7 +149,7 @@ public interface Record<K extends FieldKey<? extends K, ?>> {
 	 * @return An unmodiable collection of the fields.
 	 * @since 2.0
 	 */
-	Collection<Field<? extends K, ?>> fields();
+	Collection<? extends Field<? extends K, ?>> fields();
 	
 	// TODO
 	//	/**

@@ -22,7 +22,7 @@ package com.trazere.core.record;
  * @since 2.0
  */
 public class SimpleFieldKey<V>
-extends FieldKey<SimpleFieldKey<V>, V> {
+extends StrongFieldKey<SimpleFieldKey<V>, V> {
 	/**
 	 * Instantiates a new non-nullable field key.
 	 * 

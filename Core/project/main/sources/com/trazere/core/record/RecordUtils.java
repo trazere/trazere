@@ -144,7 +144,7 @@ public class RecordUtils {
 	 * @return A record containing the union of the fields.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>> Record<K> union(final Record<K> record1, final Record<K> record2) {
+	public static <K extends FieldKey<K, ?>> Record<K> union(final Record<K> record1, final Record<K> record2) {
 		final Set<? extends FieldKey<? extends K, ?>> keys1 = record1.keys();
 		final Set<FieldKey<? extends K, ?>> duplicateKeys = CollectionUtils.filter(record2.keys(), key -> keys1.contains(key), CollectionFactories.hashSet());
 		return new BaseRecord<K>() {
@@ -179,7 +179,7 @@ public class RecordUtils {
 			}
 			
 			@Override
-			public <V> Maybe<V> get(final FieldKey<? extends K, V> key)
+			public <V> Maybe<V> get(final FieldKey<? extends K, ? extends V> key)
 			throws InvalidFieldException {
 				final Maybe<V> value1 = record1.get(key);
 				if (value1.isSome()) {
@@ -220,7 +220,7 @@ public class RecordUtils {
 	 * @return A record containing the union of the fields.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>, R extends Record<K>> R union(final Record<? extends K> record1, final Record<? extends K> record2, final RecordFactory<K, R> resultFactory) {
+	public static <K extends FieldKey<K, ?>, R extends Record<K>> R union(final Record<? extends K> record1, final Record<? extends K> record2, final RecordFactory<K, R> resultFactory) {
 		final RecordBuilder<K, R> builder = resultFactory.newBuilder();
 		builder.setAll(record1);
 		builder.completeAll(record2);
@@ -242,7 +242,7 @@ public class RecordUtils {
 	 * @return A record containing the filtered fields.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>, R extends Record<K>> R filter(final Record<? extends K> record, final Predicate<? super Field<? extends K, ?>> filter, final RecordFactory<K, R> resultFactory) {
+	public static <K extends FieldKey<K, ?>, R extends Record<K>> R filter(final Record<? extends K> record, final Predicate<? super Field<? extends K, ?>> filter, final RecordFactory<K, R> resultFactory) {
 		final RecordBuilder<K, R> builder = resultFactory.newBuilder();
 		for (final Field<? extends K, ?> field : record.fields()) {
 			if (filter.evaluate(field)) {

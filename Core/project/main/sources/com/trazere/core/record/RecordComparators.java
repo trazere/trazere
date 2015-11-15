@@ -38,7 +38,7 @@ public class RecordComparators {
 	 * @return The built comparator.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>, V> Comparator<Record<K>> fieldValue(final FieldKey<? extends K, V> key, final Comparator<? super V> comparator) {
+	public static <K extends FieldKey<K, ?>, V> Comparator<Record<K>> fieldValue(final FieldKey<? extends K, V> key, final Comparator<? super V> comparator) {
 		assert null != key;
 		
 		return new MapComparator<Record<K>, Maybe<V>>(MaybeComparators.maybe(comparator)) {
@@ -60,7 +60,7 @@ public class RecordComparators {
 	 * @return The built comparator.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>, V> Comparator<Record<K>> optionalFieldValue(final FieldKey<? extends K, V> key, final V defaultValue, final Comparator<? super V> comparator) {
+	public static <K extends FieldKey<K, ?>, V> Comparator<Record<K>> optionalFieldValue(final FieldKey<? extends K, V> key, final V defaultValue, final Comparator<? super V> comparator) {
 		assert null != key;
 		
 		return new MapComparator<Record<K>, V>(comparator) {
@@ -81,7 +81,7 @@ public class RecordComparators {
 	 * @return The built comparator.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>, V> Comparator<Record<K>> mandatoryFieldValue(final FieldKey<? extends K, V> key, final Comparator<? super V> comparator) {
+	public static <K extends FieldKey<K, ?>, V> Comparator<Record<K>> mandatoryFieldValue(final FieldKey<? extends K, V> key, final Comparator<? super V> comparator) {
 		assert null != key;
 		
 		return new MapComparator<Record<K>, V>(comparator) {

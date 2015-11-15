@@ -27,7 +27,7 @@ package com.trazere.core.record;
  * @see FieldKey
  * @since 2.0
  */
-public interface Field<K extends FieldKey<? extends K, ?>, V> {
+public interface Field<K extends FieldKey<K, ?>, V> {
 	/**
 	 * Gets the key of this field.
 	 * 

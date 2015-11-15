@@ -54,7 +54,7 @@ public class Fields {
 	 * @throws NullFieldException When the value is <code>null</code> and the field is not nullable.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>, V> Field<K, V> fromKeyAndValue(final FieldKey<? extends K, V> key, final V value)
+	public static <K extends FieldKey<K, ?>, V> Field<K, V> fromKeyAndValue(final FieldKey<? extends K, V> key, final V value)
 	throws NullFieldException {
 		assert null != key;
 		assert null != value;

@@ -23,17 +23,8 @@ import java.util.HashMap;
  * @param <K> Type of the keys.
  * @since 2.0
  */
-public class SimpleRecordBuilder<K extends FieldKey<? extends K, ?>>
+public class SimpleRecordBuilder<K extends FieldKey<K, ?>>
 extends BaseRecordBuilder<K, Record<K>> {
-	/**
-	 * Instantiates a new empty record builder.
-	 * 
-	 * @since 2.0
-	 */
-	public SimpleRecordBuilder() {
-		super();
-	}
-	
 	@Override
 	@SuppressWarnings("unused")
 	public Record<K> build() {
