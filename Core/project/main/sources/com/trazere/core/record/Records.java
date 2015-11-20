@@ -16,10 +16,10 @@
 package com.trazere.core.record;
 
 import com.trazere.core.collection.Lists;
+import com.trazere.core.collection.Sets;
 import com.trazere.core.util.Maybe;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Set;
 
 /**
@@ -41,14 +41,7 @@ public class Records {
 		return (Record<K>) EMPTY;
 	}
 	
-	private static final class DummyKey<V>
-	extends FieldKey<DummyKey<V>, V> {
-		private DummyKey(final String label, final Class<V> type, final boolean nullable) {
-			super(label, type, nullable);
-		}
-	}
-	
-	private static final Record<?> EMPTY = new BaseRecord<DummyKey<?>>() {
+	private static final Record<?> EMPTY = new BaseRecord<SimpleFieldKey<?>>() {
 		// Record.
 		
 		@Override
@@ -62,34 +55,34 @@ public class Records {
 		}
 		
 		@Override
-		public boolean contains(final FieldKey<? extends DummyKey<?>, ?> key) {
+		public boolean contains(final FieldKey<? extends SimpleFieldKey<?>, ?> key) {
 			return false;
 		}
 		
 		@Override
-		public Set<DummyKey<?>> keys() {
-			return Collections.emptySet();
+		public Set<SimpleFieldKey<?>> keys() {
+			return Sets.empty();
 		}
 		
 		@Override
-		public <V> Maybe<V> get(final FieldKey<? extends DummyKey<?>, ? extends V> key) {
+		public <V> Maybe<V> get(final FieldKey<? extends SimpleFieldKey<?>, ? extends V> key) {
 			return Maybe.none();
 		}
 		
 		@Override
-		public <V> V getOptional(final FieldKey<? extends DummyKey<?>, ? extends V> key, final V defaultValue) {
+		public <V> V getOptional(final FieldKey<? extends SimpleFieldKey<?>, ? extends V> key, final V defaultValue) {
 			return defaultValue;
 		}
 		
 		@Override
-		public <V> V getMandatory(final FieldKey<? extends DummyKey<?>, ? extends V> key)
+		public <V> V getMandatory(final FieldKey<? extends SimpleFieldKey<?>, ? extends V> key)
 		throws MissingFieldException {
 			throw new MissingFieldException("Missing field \"" + key + "\" in record " + this);
 		}
 		
 		@Override
-		public Collection<Field<DummyKey<?>, ?>> fields() {
-			return Collections.emptyList();
+		public Collection<Field<SimpleFieldKey<?>, ?>> fields() {
+			return Lists.empty();
 		}
 	};
 	

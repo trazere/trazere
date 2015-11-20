@@ -24,7 +24,7 @@ import java.util.Map;
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  * @see SimpleRecordSignature
- * @deprecated To be removed.
+ * @deprecated Use {@link com.trazere.core.record.SimpleRecordSignatureBuilder}.
  */
 @Deprecated
 public class SimpleRecordSignatureBuilder<K, V>
@@ -32,7 +32,7 @@ extends BaseRecordSignatureBuilder<K, V, SimpleRecordSignature<K, V>> {
 	/**
 	 * Instantiates a new empty builder.
 	 * 
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link com.trazere.core.record.SimpleRecordSignatureBuilder#SimpleRecordSignatureBuilder()}.
 	 */
 	@Deprecated
 	public SimpleRecordSignatureBuilder() {
@@ -55,7 +55,7 @@ extends BaseRecordSignatureBuilder<K, V, SimpleRecordSignature<K, V>> {
 	 * 
 	 * @param signature Record signature containing the initial field signatures.
 	 * @throws InvalidFieldException When some field signature cannot be read.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link com.trazere.core.record.RecordSignatureBuilder#addAll(com.trazere.core.record.RecordSignature)}.
 	 */
 	@Deprecated
 	public SimpleRecordSignatureBuilder(final RecordSignature<K, ? extends V> signature)

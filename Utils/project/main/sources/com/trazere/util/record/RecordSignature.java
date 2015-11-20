@@ -15,6 +15,7 @@
  */
 package com.trazere.util.record;
 
+import com.trazere.core.record.FieldKey;
 import com.trazere.util.type.Maybe;
 import java.util.Map;
 import java.util.Set;
@@ -26,7 +27,7 @@ import java.util.Set;
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
- * @deprecated To be removed.
+ * @deprecated Use {@link com.trazere.core.record.RecordSignature}.
  */
 @Deprecated
 public interface RecordSignature<K, V> {
@@ -34,7 +35,7 @@ public interface RecordSignature<K, V> {
 	 * Tests whether the receiver record signature is empty or not.
 	 * 
 	 * @return <code>true</code> when empty, <code>false</code> otherwise.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link com.trazere.core.record.RecordSignature#isEmpty()}.
 	 */
 	@Deprecated
 	public boolean isEmpty();
@@ -44,7 +45,7 @@ public interface RecordSignature<K, V> {
 	 * 
 	 * @param key Key of the field to test.
 	 * @return <code>true</code> when the field is signed, <code>false</code> otherwise.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link com.trazere.core.record.RecordSignature#contains(FieldKey)}.
 	 */
 	@Deprecated
 	public boolean contains(final K key);
@@ -53,7 +54,7 @@ public interface RecordSignature<K, V> {
 	 * Gets the keys identifying the fields signed in the receiver record signature.
 	 * 
 	 * @return An unmodiable set of the keys.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link com.trazere.core.record.RecordSignature#keys()}.
 	 */
 	@Deprecated
 	public Set<K> getKeys();
@@ -94,7 +95,6 @@ public interface RecordSignature<K, V> {
 	public Map<K, FieldSignature<K, ? extends V>> asMap()
 	throws InvalidFieldException;
 	
-	// TODO: should return a reason in case of failure
 	/**
 	 * Checks whether the receiver record signature accepts the given record.
 	 * <p>
@@ -103,7 +103,7 @@ public interface RecordSignature<K, V> {
 	 * @param record Record to test.
 	 * @return <code>true</code> when the record is accepted, <code>false</code> otherwise.
 	 * @throws InvalidFieldException When some field of the record cannot be read.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link com.trazere.core.record.RecordSignature#checkValues(com.trazere.core.record.Record)}.
 	 */
 	@Deprecated
 	public boolean accepts(final Record<? super K, ? extends V> record)
@@ -118,7 +118,7 @@ public interface RecordSignature<K, V> {
 	 * @param signature Signature to test.
 	 * @return <code>true</code> when the signature is accepted, <code>false</code> otherwise.
 	 * @throws InvalidFieldException When some field of the record cannot be read.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link com.trazere.core.record.RecordSignature#checkAssignableFrom(com.trazere.core.record.RecordSignature)}.
 	 */
 	@Deprecated
 	public boolean accepts(final RecordSignature<? super K, ? extends V> signature)

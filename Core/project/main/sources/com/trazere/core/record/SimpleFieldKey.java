@@ -16,7 +16,7 @@
 package com.trazere.core.record;
 
 /**
- * The {@link SimpleFieldKey} class provides a simple implementation of field keys.
+ * The {@link SimpleFieldKey} class provides a simple implementation of {@link FieldKey field keys}.
  * 
  * @param <V> Type of the value of the field.
  * @since 2.0
@@ -44,5 +44,10 @@ extends StrongFieldKey<SimpleFieldKey<V>, V> {
 	 */
 	public SimpleFieldKey(final String label, final Class<V> type, final boolean nullable) {
 		super(label, type, nullable);
+	}
+	
+	@Override
+	public SimpleFieldKey<V> self() {
+		return this;
 	}
 }

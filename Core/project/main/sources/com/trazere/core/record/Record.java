@@ -15,9 +15,14 @@
  */
 package com.trazere.core.record;
 
+import com.trazere.core.collection.CollectionUtils;
 import com.trazere.core.functional.Thunk;
+import com.trazere.core.imperative.IteratorUtils;
 import com.trazere.core.util.Maybe;
+import java.util.AbstractSet;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -71,7 +76,19 @@ public interface Record<K extends FieldKey<K, ?>> {
 	 * @return An unmodiable set of the field keys.
 	 * @since 2.0
 	 */
-	Set<? extends FieldKey<? extends K, ?>> keys();
+	default Set<? extends FieldKey<? extends K, ?>> keys() {
+		return Collections.unmodifiableSet(new AbstractSet<FieldKey<? extends K, ?>>() {
+			@Override
+			public int size() {
+				return fields().size();
+			}
+			
+			@Override
+			public Iterator<FieldKey<? extends K, ?>> iterator() {
+				return IteratorUtils.map(fields().iterator(), Field::getKey);
+			}
+		});
+	}
 	
 	/**
 	 * Gets the value of the field of this record identified by the given key.
@@ -84,8 +101,10 @@ public interface Record<K extends FieldKey<K, ?>> {
 	 * @throws IncompatibleFieldException When the value of the field is not compatible with the type of the field.
 	 * @since 2.0
 	 */
-	<V> Maybe<V> get(FieldKey<? extends K, ? extends V> key)
-	throws InvalidFieldException, NullFieldException, IncompatibleFieldException;
+	default <V> Maybe<V> get(final FieldKey<? extends K, ? extends V> key)
+	throws InvalidFieldException, NullFieldException, IncompatibleFieldException {
+		return CollectionUtils.first(fields(), field -> field.getKey().equals(key)).map(field -> key.castValue(field.getValue()));
+	}
 	
 	/**
 	 * Gets the value of the optional field of this record identified by the given key.

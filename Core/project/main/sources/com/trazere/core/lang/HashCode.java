@@ -68,7 +68,7 @@ implements Describable {
 	 * Appends the given boolean value to the computation of this hash code.
 	 * 
 	 * @param value Value to append.
-	 * @return this hash code.
+	 * @return This hash code.
 	 * @since 2.0
 	 */
 	public HashCode append(final boolean value) {
@@ -80,7 +80,7 @@ implements Describable {
 	 * Appends the given byte value to the computation of this hash code.
 	 * 
 	 * @param value Value to append.
-	 * @return this hash code.
+	 * @return This hash code.
 	 * @since 2.0
 	 */
 	public HashCode append(final byte value) {
@@ -92,7 +92,7 @@ implements Describable {
 	 * Appends the given int value to the computation of this hash code.
 	 * 
 	 * @param value Value to append.
-	 * @return this hash code.
+	 * @return This hash code.
 	 * @since 2.0
 	 */
 	public HashCode append(final int value) {
@@ -104,7 +104,7 @@ implements Describable {
 	 * Appends the given long value to the computation of this hash code.
 	 * 
 	 * @param value Value to append.
-	 * @return this hash code.
+	 * @return This hash code.
 	 * @since 2.0
 	 */
 	public HashCode append(final long value) {
@@ -117,11 +117,25 @@ implements Describable {
 	 * Appends the given object value to the computation of this hash code.
 	 * 
 	 * @param value Value to append. May be <code>null</code>.
-	 * @return this hash code.
+	 * @return This hash code.
 	 * @since 2.0
 	 */
 	public HashCode append(final Object value) {
 		_hashCode = _hashCode * 31 + (null != value ? value.hashCode() : 0);
+		return this;
+	}
+	
+	/**
+	 * Appends the given object values to the computation of this hash code.
+	 * 
+	 * @param values Values to append.
+	 * @return This hash code.
+	 * @since 2.0
+	 */
+	public HashCode appendAll(final Iterable<?> values) {
+		for (final Object value : values) {
+			_hashCode = _hashCode * 31 + (null != value ? value.hashCode() : 0);
+		}
 		return this;
 	}
 	

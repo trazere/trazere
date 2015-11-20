@@ -17,15 +17,13 @@ package com.trazere.core.record;
 
 import com.trazere.core.lang.HashCode;
 
-// TODO: remove, define in erp4it
-
 /**
  * The {@link LabelFieldKey} class implements keys of {@link Field fields} whose equality relies on their label.
  * 
  * @param <V> Type of the value of the field.
  * @since 2.0
  */
-public abstract class LabelFieldKey<V>
+public final class LabelFieldKey<V>
 extends FieldKey<LabelFieldKey<V>, V> {
 	/**
 	 * Instantiates a new non-nullable field key.
@@ -50,6 +48,49 @@ extends FieldKey<LabelFieldKey<V>, V> {
 		super(label, type, nullable);
 	}
 	
+	@Override
+	public LabelFieldKey<V> self() {
+		return this;
+	}
+	
+	// Signature.
+	
+	/**
+	 * Unifier of {@link LabelFieldKey}s.
+	 * 
+	 * @since 2.0
+	 */
+	public static final FieldKeyUnifier<LabelFieldKey<?>> UNIFIER = new FieldKeyUnifier<LabelFieldKey<?>>() {
+		@Override
+		public <V1, V2> FieldKey<? extends LabelFieldKey<?>, ?> unify(final FieldKey<? extends LabelFieldKey<?>, V1> key1, final FieldKey<? extends LabelFieldKey<?>, V2> key2) {
+			// Compute the label.
+			final String label1 = key1.getLabel();
+			final String label2 = key2.getLabel();
+			if (!label1.equals(label2)) {
+				throw new IncompatibleFieldException("Cannot unify field key + \"" + key1 + "\" with fueld key \"" + key2 + "\" (incompatible labels)");
+			}
+			final String unifiedLabel = label1;
+			
+			// Compute the type.
+			final Class<V1> type1 = key1.getType();
+			final Class<V2> type2 = key2.getType();
+			final Class<?> unifiedType;
+			if (type1.isAssignableFrom(type2)) {
+				unifiedType = type2;
+			} else if (type2.isAssignableFrom(type1)) {
+				unifiedType = type1;
+			} else {
+				throw new IncompatibleFieldException("Cannot unify field key + \"" + key1 + "\" with fueld key \"" + key2 + "\" (incompatible types)");
+			}
+			
+			// Compute the nullabilty.
+			final boolean unifiedNullable = key1.isNullable() && key2.isNullable();
+			
+			// Build the unified key.
+			return new LabelFieldKey<>(unifiedLabel, unifiedType, unifiedNullable);
+		}
+	};
+	
 	// Object.
 	
 	@Override
@@ -69,5 +110,13 @@ extends FieldKey<LabelFieldKey<V>, V> {
 		} else {
 			return false;
 		}
+	}
+	
+	public static void main(final String[] args) {
+		final RecordSignatureBuilder<LabelFieldKey<?>, ?> builder = new SimpleRecordSignatureBuilder<>();
+		builder.add(new LabelFieldKey<>("A", Object.class, false));
+		builder.unify(new LabelFieldKey<>("A", String.class, true), UNIFIER);
+		builder.unify(new LabelFieldKey<>("B", Integer.class, true), UNIFIER);
+		System.out.println(builder.build());
 	}
 }

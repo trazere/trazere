@@ -15,19 +15,19 @@
  */
 package com.trazere.core.record;
 
-import java.util.HashMap;
+import java.util.HashSet;
 
 /**
- * The {@link SimpleRecordBuilder} class provides a simple implementation of {@link RecordBuilder record builders}.
+ * The {@link SimpleRecordSignatureBuilder} class provides a simple implementation of {@link RecordSignatureBuilder record signature builders}.
  * 
  * @param <K> Type of the field keys.
  * @since 2.0
  */
-public class SimpleRecordBuilder<K extends FieldKey<K, ?>>
-extends BaseRecordBuilder<K, Record<K>> {
+public class SimpleRecordSignatureBuilder<K extends FieldKey<K, ?>>
+extends BaseRecordSignatureBuilder<K, RecordSignature<K>> {
 	@Override
 	@SuppressWarnings("unused")
-	public Record<K> build() {
-		return new SimpleRecord<K>(new HashMap<>(_fields)); // HACK: explicit type arguments to work around a bug of javac
+	public RecordSignature<K> build() {
+		return new SimpleRecordSignature<K>(new HashSet<>(_keys.keySet())); // HACK: explicit type arguments to work around a bug of javac
 	}
 }

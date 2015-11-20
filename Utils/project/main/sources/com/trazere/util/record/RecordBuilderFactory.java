@@ -35,7 +35,9 @@ extends Factory<B, RecordException> {
 	 * 
 	 * @return The built record builder.
 	 * @throws RecordException When the record builder cannot be built.
+	 * @deprecated To be removed.
 	 */
+	@Deprecated
 	@Override
 	public B build()
 	throws RecordException;

@@ -22,25 +22,6 @@ package com.trazere.core.record;
  * @since 2.0
  */
 public class Fields {
-	// TODO
-	//	/**
-	//	 * Builds a field with the given value according to the given signature.
-	//	 * <p>
-	//	 * The given value must be compatible with the constraints of the signature.
-	//	 *
-	//	 * @param <K> Type of the key.
-	//	 * @param <V> Type of the value.
-	//	 * @param signature Signature of the field.
-	//	 * @param value Value of the field.
-	//	 * @return The built field.
-	//	 * @throws NullFieldException When the value is <code>null</code> and the field signature is not nullable.
-	//	 * @throws IncompatibleFieldException When the value is not compatible with the value type of the field signature.
-	//	 */
-	//	public static <K, V> Field<K, V> cast(final FieldSignature<K, V> signature, final Object value)
-	//	throws NullFieldException, IncompatibleFieldException {
-	//		return fromValue(signature.getKey(), signature.cast(value));
-	//	}
-	
 	/**
 	 * Builds a field with the given value according to the given signature.
 	 * <p>

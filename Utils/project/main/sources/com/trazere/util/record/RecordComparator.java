@@ -34,7 +34,12 @@ import java.util.Comparator;
 public class RecordComparator<K, V, R extends Record<? super K, ? extends V>>
 extends MapComparator<R, V>
 implements Describable {
-	/** Key identifying the field used for comparison. */
+	/**
+	 * Key identifying the field used for comparison.
+	 * 
+	 * @deprecated To be removed.
+	 */
+	@Deprecated
 	protected final K _key;
 	
 	/**

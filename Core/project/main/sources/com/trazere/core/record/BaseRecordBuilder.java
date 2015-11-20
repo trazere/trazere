@@ -19,6 +19,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+// TODO: rename to MapRecordBuilder ?
+
 /**
  * The {@link BaseRecordBuilder} class provides a skeleton implementation of {@link RecordBuilder record builders}.
  * 
@@ -116,17 +118,5 @@ implements RecordBuilder<K, R> {
 	//		}
 	//
 	//		return builder;
-	//	}
-	//
-	//	@Override
-	//	public String toString() {
-	//		return TextUtils.description(this);
-	//	}
-	//
-	//	@Override
-	//	public void appendDescription(final Description description) {
-	//		for (final Map.Entry<K, V> entry : _fields.entrySet()) {
-	//			description.append(entry.getKey().toString(), entry.getValue());
-	//		}
 	//	}
 }

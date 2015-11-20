@@ -15,6 +15,7 @@
  */
 package com.trazere.util.record;
 
+import com.trazere.core.record.RecordSignatureUtils;
 import com.trazere.util.function.Predicate1;
 import java.util.Collection;
 import java.util.Set;
@@ -26,7 +27,7 @@ import java.util.Set;
  * @param <V> Type of the values.
  * @param <R> Type of the records.
  * @see RecordSignature
- * @deprecated To be removed.
+ * @deprecated Use {@link com.trazere.core.record.RecordSignatureBuilder}.
  */
 @Deprecated
 public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
@@ -52,7 +53,7 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * 
 	 * @param field Field signature to add.
 	 * @throws DuplicateFieldException When the field is already signed.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link com.trazere.core.record.RecordSignatureBuilder#add(com.trazere.core.record.FieldKey)}.
 	 */
 	@Deprecated
 	public void add(final FieldSignature<K, ? extends V> field)
@@ -65,7 +66,7 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * 
 	 * @param fields Field signatures to add.
 	 * @throws DuplicateFieldException When some field is already signed.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link com.trazere.core.record.RecordSignatureBuilder#addAll(Iterable)}.
 	 */
 	@Deprecated
 	public void addAll(final Collection<? extends FieldSignature<K, ? extends V>> fields)
@@ -79,7 +80,7 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * @param signature Record signature containing the field signatures to add.
 	 * @throws InvalidFieldException When the some field of the given signature record cannot be read.
 	 * @throws DuplicateFieldException When some field is already signed.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link com.trazere.core.record.RecordSignatureBuilder#addAll(com.trazere.core.record.RecordSignature)}.
 	 */
 	@Deprecated
 	public void addAll(final RecordSignature<K, ? extends V> signature)
@@ -107,7 +108,7 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * 
 	 * @param field Field signature to unify.
 	 * @throws IncompatibleFieldException When the given and current signature of the field are not compatible.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link com.trazere.core.record.RecordSignatureBuilder#unify(com.trazere.core.record.FieldKey, com.trazere.core.record.FieldKeyUnifier)}.
 	 */
 	@Deprecated
 	public void unify(final FieldSignature<K, ? extends V> field)
@@ -120,7 +121,7 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * 
 	 * @param fields Field signatures to unify.
 	 * @throws IncompatibleFieldException When the given and current signature of some field are not compatible.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link com.trazere.core.record.RecordSignatureBuilder#unifyAll(Iterable, com.trazere.core.record.FieldKeyUnifier)}.
 	 */
 	@Deprecated
 	public void unifyAll(final Collection<? extends FieldSignature<K, ? extends V>> fields)
@@ -134,7 +135,9 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * @param signature Record signature to unify.
 	 * @throws InvalidFieldException When the some field of the given signature record cannot be read.
 	 * @throws IncompatibleFieldException When the given and current signature of some field are not compatible.
-	 * @deprecated To be removed.
+	 * @deprecated Use
+	 *             {@link com.trazere.core.record.RecordSignatureBuilder#unifyAll(com.trazere.core.record.RecordSignature, com.trazere.core.record.FieldKeyUnifier)}
+	 *             .
 	 */
 	@Deprecated
 	public void unifyAll(final RecordSignature<K, ? extends V> signature)
@@ -152,7 +155,9 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * @throws InvalidFieldException When the some field of the given signature record cannot be read.
 	 * @throws IncompatibleFieldException When the given and current signature of some field are not compatible.
 	 * @throws FX When some filter evaluation fails.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link RecordSignatureUtils#filter(com.trazere.core.record.RecordSignature, com.trazere.core.functional.Predicate)} and
+	 *             {@link com.trazere.core.record.RecordSignatureBuilder#unifyAll(com.trazere.core.record.RecordSignature, com.trazere.core.record.FieldKeyUnifier)}
+	 *             .
 	 */
 	@Deprecated
 	public <FX extends Exception> void unifyAll(final Predicate1<? super FieldSignature<K, ? extends V>, FX> filter, final RecordSignature<K, ? extends V> signature)
@@ -162,7 +167,7 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * Test whether the receiver record signature builder is empty or not.
 	 * 
 	 * @return <code>true</code> when empty, <code>false</code> otherwise.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link com.trazere.core.record.RecordSignatureBuilder#isEmpty()}.
 	 */
 	@Deprecated
 	public boolean isEmpty();
@@ -172,7 +177,7 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * 
 	 * @param key Key of the field.
 	 * @return <code>true</code> when the field is signed, <code>false</code> otherwise.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link com.trazere.core.record.RecordSignatureBuilder#contains(com.trazere.core.record.FieldKey)}.
 	 */
 	@Deprecated
 	public boolean contains(final K key);
@@ -193,7 +198,7 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * 
 	 * @param key Key of the field signature to remove.
 	 * @throws MissingFieldException When the field identified by the given key is not signed.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link com.trazere.core.record.RecordSignatureBuilder#remove(com.trazere.core.record.FieldKey)}.
 	 */
 	@Deprecated
 	public void remove(final K key)
@@ -202,7 +207,7 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	/**
 	 * Remove all field signatures from the receiver record signature builder.
 	 * 
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link com.trazere.core.record.RecordSignatureBuilder#clear()}.
 	 */
 	@Deprecated
 	public void clear();
@@ -212,7 +217,7 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * 
 	 * @return The built record signature.
 	 * @throws RecordException When the record signature cannot be built.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link com.trazere.core.record.RecordSignatureBuilder#build()}.
 	 */
 	@Deprecated
 	public R build()

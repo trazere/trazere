@@ -15,6 +15,7 @@
  */
 package com.trazere.util.record;
 
+import com.trazere.core.record.RecordSignatures;
 import com.trazere.util.collection.CollectionUtils;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.text.Describable;
@@ -27,22 +28,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-// TODO: rename to MapRecordSignature ?
-
 /**
  * The {@link SimpleRecordSignature} class implements simple record signatures.
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
- * @deprecated To be removed.
+ * @deprecated Use {@link com.trazere.core.record.SimpleRecordSignature}.
  */
 @Deprecated
 public class SimpleRecordSignature<K, V>
 implements RecordSignature<K, V>, Describable {
 	private static final SimpleRecordSignature<?, ?> EMPTY = new SimpleRecordSignature<Object, Object>(Collections.<Object, FieldSignature<Object, Object>>emptyMap());
 	
-	// TODO: move to RecordSignatures
-	@Deprecated
 	/**
 	 * Builds an empty record signature.
 	 * <p>
@@ -51,14 +48,14 @@ implements RecordSignature<K, V>, Describable {
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @return The record signature.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link RecordSignatures#empty()}.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <K, V> SimpleRecordSignature<K, V> build() {
 		return (SimpleRecordSignature<K, V>) EMPTY;
 	}
 	
-	// TODO: move to RecordSignatures
 	/**
 	 * Builds a record signature with the given field signatures.
 	 * 
@@ -66,7 +63,7 @@ implements RecordSignature<K, V>, Describable {
 	 * @param <V> Type of the values.
 	 * @param fields Signatures of the fields.
 	 * @return The record signature.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link RecordSignatures#fromKey(com.trazere.core.record.FieldKey)}.
 	 */
 	@Deprecated
 	public static <K, V> SimpleRecordSignature<K, V> build(final Collection<? extends FieldSignature<K, ? extends V>> fields) {
@@ -80,7 +77,6 @@ implements RecordSignature<K, V>, Describable {
 		return new SimpleRecordSignature<K, V>(fieldsByKeys);
 	}
 	
-	// TODO: move to RecordSignatures
 	/**
 	 * Builds a record signature with the given field signatures.
 	 * 
@@ -88,7 +84,7 @@ implements RecordSignature<K, V>, Describable {
 	 * @param <V> Type of the values.
 	 * @param fields Signatures of the fields.
 	 * @return The record signature.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link RecordSignatures#fromKeys(com.trazere.core.record.FieldKey...)}.
 	 */
 	@Deprecated
 	public static <K, V> SimpleRecordSignature<K, V> build(final FieldSignature<K, ? extends V>... fields) {
@@ -102,14 +98,19 @@ implements RecordSignature<K, V>, Describable {
 		return new SimpleRecordSignature<K, V>(fieldsByKeys);
 	}
 	
-	/** Signatures of the fields identified by their keys. */
+	/**
+	 * Signatures of the fields identified by their keys.
+	 * 
+	 * @deprecated Use {@link com.trazere.core.record.SimpleRecordSignature}.
+	 */
+	@Deprecated
 	protected final Map<K, FieldSignature<K, ? extends V>> _fields;
 	
 	/**
 	 * Instantiates a new record signature with the given field signatures.
 	 * 
 	 * @param signatures Signatures of the fields identified by their keys.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link com.trazere.core.record.SimpleRecordSignature}.
 	 */
 	@Deprecated
 	protected SimpleRecordSignature(final Map<K, ? extends FieldSignature<K, ? extends V>> signatures) {

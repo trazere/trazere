@@ -32,7 +32,7 @@ import java.util.Set;
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
  * @param <R> Type of the records.
- * @deprecated To be removed.
+ * @deprecated Use {@link com.trazere.core.record.BaseRecordSignatureBuilder}.
  */
 @Deprecated
 public abstract class BaseRecordSignatureBuilder<K, V, R extends SimpleRecordSignature<K, V>>
@@ -43,7 +43,7 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 	/**
 	 * Instantiate a new empty builder.
 	 * 
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link com.trazere.core.record.BaseRecordSignatureBuilder#BaseRecordSignatureBuilder()}.
 	 */
 	@Deprecated
 	public BaseRecordSignatureBuilder() {
@@ -70,7 +70,7 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 	 * 
 	 * @param signature Record signature containing the initial field signatures.
 	 * @throws InvalidFieldException When some field signature cannot be read.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link com.trazere.core.record.RecordSignatureBuilder#addAll(com.trazere.core.record.RecordSignature)}.
 	 */
 	@Deprecated
 	public BaseRecordSignatureBuilder(final RecordSignature<K, ? extends V> signature)

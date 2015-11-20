@@ -21,7 +21,7 @@ import java.util.Set;
 /**
  * The {@link RecordBuilder} interface defines builders of {@link Record records}.
  * 
- * @param <K> Witness type of the field keys.
+ * @param <K> Type of the field keys.
  * @param <R> Type of the records.
  * @see Record
  * @since 2.0
@@ -56,7 +56,7 @@ extends Factory<R> {
 	 * Indicates whether the record being built by this builder contains a field identified by the given key or not.
 	 * 
 	 * @param key Key of the field to look for.
-	 * @return <code>true</code> when the record contains a field identified by the given key, <code>false</code> otherwise.
+	 * @return <code>true</code> when the record contains a field identified by the key, <code>false</code> otherwise.
 	 * @since 2.0
 	 */
 	default boolean contains(final FieldKey<? extends K, ?> key) {
@@ -77,8 +77,8 @@ extends Factory<R> {
 	 * The record must not already contain a field identified by the given key.
 	 * 
 	 * @param <V> Type of the value of the field.
-	 * @param key The key identifying the field to add.
-	 * @param value The value of the field to add.
+	 * @param key Key identifying the field to add.
+	 * @param value Value of the field to add.
 	 * @throws NullFieldException When the value is <code>null</code> and the field is not nullable.
 	 * @throws DuplicateFieldException When some field is already identified by the given key.
 	 * @since 2.0
@@ -97,8 +97,15 @@ extends Factory<R> {
 	 * @throws DuplicateFieldException When some field is already identified by the key of the given field.
 	 * @since 2.0
 	 */
-	void add(Field<? extends K, ?> field)
-	throws DuplicateFieldException;
+	default void add(final Field<? extends K, ?> field)
+	throws DuplicateFieldException {
+		final FieldKey<? extends K, ?> key = field.getKey();
+		if (!contains(key)) {
+			set(field);
+		} else {
+			throw new DuplicateFieldException("Conflicting field for \"" + key + "\"");
+		}
+	}
 	
 	/**
 	 * Adds the given fields to the record being built by this builder.
@@ -130,6 +137,8 @@ extends Factory<R> {
 		addAll(record.fields());
 	}
 	
+	// TODO: replace (MissingFieldException)
+	
 	/**
 	 * Completes the record being built by this builder with the field corresponding to the given key and value.
 	 * <p>
@@ -154,7 +163,11 @@ extends Factory<R> {
 	 * @param field Field to complete the record with.
 	 * @since 2.0
 	 */
-	void complete(Field<? extends K, ?> field);
+	default void complete(final Field<? extends K, ?> field) {
+		if (!contains(field.getKey())) {
+			set(field);
+		}
+	}
 	
 	/**
 	 * Complete the record being built by this builder with the given fields.
@@ -232,8 +245,6 @@ extends Factory<R> {
 	default void setAll(final Record<? extends K> record) {
 		addAll(record.fields());
 	}
-	
-	// TODO: replace (MissingFieldException)
 	
 	/**
 	 * Removes the field identified by the given key from the record being built by this builder.

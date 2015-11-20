@@ -15,6 +15,7 @@
  */
 package com.trazere.util.record;
 
+import com.trazere.core.record.FieldKey;
 import com.trazere.util.function.Function1;
 import com.trazere.util.function.Predicate1;
 import com.trazere.util.lang.HashCode;
@@ -206,13 +207,12 @@ implements Describable {
 		}
 	};
 	
-	// TODO: should return a reason in case of failure
 	/**
 	 * Check whether the receiver field signature accepts the given value.
 	 * 
 	 * @param value The value. May be <code>null</code>.
 	 * @return <code>true</code> when the value is accepted, <code>false</code> otherwise.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link FieldKey#checkValue(Object)}.
 	 */
 	@Deprecated
 	public boolean acceptsValue(final Object value) {
@@ -223,16 +223,13 @@ implements Describable {
 		}
 	}
 	
-	// TODO: accepts(FieldSignature)
-	
-	// TODO: should return a reason in case of failure
 	/**
 	 * Check whether the receiver field signature accepts a value with the given type and nullability.
 	 * 
 	 * @param type The type.
 	 * @param nullable The flag indicating whether the value of the field can be <code>null</code> or not.
 	 * @return <code>true</code> when the type is accepted, <code>false</code> otherwise.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link FieldKey#isAssignableFrom(FieldKey)}.
 	 */
 	@Deprecated
 	public boolean accepts(final Class<?> type, final boolean nullable) {

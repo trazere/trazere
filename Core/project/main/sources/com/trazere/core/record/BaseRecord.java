@@ -15,18 +15,12 @@
  */
 package com.trazere.core.record;
 
-import com.trazere.core.collection.CollectionUtils;
-import com.trazere.core.imperative.IteratorUtils;
 import com.trazere.core.lang.HashCode;
 import com.trazere.core.lang.ObjectUtils;
 import com.trazere.core.text.DescriptionBuilder;
 import com.trazere.core.text.DescriptionFormats;
 import com.trazere.core.util.Maybe;
-import java.util.AbstractSet;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.Set;
 
 /**
  * The {@link BaseRecord} class provides a skeleton implementation of {@link Record records}.
@@ -36,29 +30,6 @@ import java.util.Set;
  */
 public abstract class BaseRecord<K extends FieldKey<K, ?>>
 implements Record<K> {
-	@Override
-	public Set<? extends FieldKey<? extends K, ?>> keys() {
-		return Collections.unmodifiableSet(new AbstractSet<FieldKey<? extends K, ?>>() {
-			@Override
-			public int size() {
-				return BaseRecord.this.size();
-			}
-			
-			// TODO: optimize contains
-			
-			@Override
-			public Iterator<FieldKey<? extends K, ?>> iterator() {
-				return IteratorUtils.map(fields().iterator(), Field::getKey);
-			}
-		});
-	}
-	
-	@Override
-	public <V> Maybe<V> get(final FieldKey<? extends K, ? extends V> key)
-	throws NullFieldException, IncompatibleFieldException {
-		return CollectionUtils.first(fields(), field -> field.getKey().equals(key)).map(field -> key.checkValue(field.getValue()));
-	}
-	
 	// Object.
 	
 	@Override

@@ -15,68 +15,54 @@
  */
 package com.trazere.core.record;
 
-import com.trazere.core.collection.MapUtils;
-import com.trazere.core.util.Maybe;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Map;
 import java.util.Set;
 
 /**
- * The {@link SimpleRecord} class provides a simple implementation of {@link Record records}.
+ * The {@link SimpleRecordSignature} class provides a simple implementation of {@link RecordSignature record signatures}.
  * 
  * @param <K> Type of the field keys.
  * @since 2.0
  */
-public class SimpleRecord<K extends FieldKey<K, ?>>
-extends BaseRecord<K> {
+public class SimpleRecordSignature<K extends FieldKey<K, ?>>
+extends BaseRecordSignature<K> {
 	/**
-	 * Fields identified by their keys.
+	 * Keys the fields.
 	 * 
 	 * @since 2.0
 	 */
-	protected Map<FieldKey<? extends K, ?>, Field<? extends K, ?>> _fields;
+	protected final Set<? extends FieldKey<? extends K, ?>> _keys;
 	
 	/**
-	 * Instantiates a new record with the given fields.
+	 * Instantiates a new record signature with the given field keys.
 	 * 
-	 * @param fields Values of the fields identified by their keys.
+	 * @param keys Keys of the fields.
 	 * @since 2.0
 	 */
-	protected SimpleRecord(final Map<FieldKey<? extends K, ?>, Field<? extends K, ?>> fields) {
-		assert null != fields;
+	protected SimpleRecordSignature(final Set<? extends FieldKey<? extends K, ?>> keys) {
+		assert null != keys;
 		
 		// Initialization.
-		_fields = Collections.unmodifiableMap(fields);
+		_keys = Collections.unmodifiableSet(keys);
 	}
 	
 	@Override
 	public int size() {
-		return _fields.size();
+		return _keys.size();
 	}
 	
 	@Override
 	public boolean isEmpty() {
-		return _fields.isEmpty();
+		return _keys.isEmpty();
 	}
 	
 	@Override
 	public boolean contains(final FieldKey<? extends K, ?> key) {
-		return _fields.containsKey(key);
+		return _keys.contains(key);
 	}
 	
 	@Override
 	public Set<? extends FieldKey<? extends K, ?>> keys() {
-		return _fields.keySet();
-	}
-	
-	@Override
-	public <V> Maybe<V> get(final FieldKey<? extends K, ? extends V> key) {
-		return MapUtils.get(_fields, key).map(field -> key.castValue(field.getValue()));
-	}
-	
-	@Override
-	public Collection<Field<? extends K, ?>> fields() {
-		return _fields.values();
+		return _keys;
 	}
 }

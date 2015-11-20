@@ -15,7 +15,7 @@
  */
 package com.trazere.csv;
 
-import com.trazere.core.record.FieldKey;
+import com.trazere.core.record.StrongFieldKey;
 import com.trazere.core.util.Serializer;
 
 /**
@@ -25,7 +25,7 @@ import com.trazere.core.util.Serializer;
  * @since 2.0
  */
 public final class CSVHeader<V>
-extends FieldKey<CSVHeader<V>, V> {
+extends StrongFieldKey<CSVHeader<V>, V> {
 	/**
 	 * @param label Label of the field.
 	 * @param type Type of the value of the field.
@@ -41,6 +41,50 @@ extends FieldKey<CSVHeader<V>, V> {
 		// Initialization.
 		_serializer = serializer;
 	}
+	
+	@Override
+	public CSVHeader<V> self() {
+		return this;
+	}
+	
+	// Signature.
+	
+	//	/**
+	//	 * Unifier of {@link CSVHeader}s.
+	//	 *
+	//	 * @since 2.0
+	//	 */
+	//	public static final FieldKeyUnifier<CSVHeader<?>> UNIFIER = new FieldKeyUnifier<CSVHeader<?>>() {
+	//		@Override
+	//		@SuppressWarnings("unchecked")
+	//		public <V1, V2> FieldKey<? extends CSVHeader<?>, ?> unify(final FieldKey<? extends CSVHeader<?>, V1> key1, final FieldKey<? extends CSVHeader<?>, V2> key2) {
+	//			// Compute the label.
+	//			final String label1 = key1.getLabel();
+	//			final String label2 = key2.getLabel();
+	//			if (!label1.equals(label2)) {
+	//				throw new IncompatibleFieldException("Cannot unify field key + \"" + key1 + "\" with fueld key \"" + key2 + "\" (incompatible labels)");
+	//			}
+	//			final String unifiedLabel = label1;
+	//
+	//			// Compute the type.
+	//			final Class<V1> type1 = key1.getType();
+	//			final Class<V2> type2 = key2.getType();
+	//			final Class<?> unifiedType;
+	//			final Serializer<?, String> unifiedSerializer;
+	//			if (type1.isAssignableFrom(type2)) {
+	//				unifiedType = type2;
+	//				unifiedSerializer = key2.self().getSerializer();
+	//			} else if (type2.isAssignableFrom(type1)) {
+	//				unifiedType = type1;
+	//				unifiedSerializer = key1.self().getSerializer();
+	//			} else {
+	//				throw new IncompatibleFieldException("Cannot unify field key + \"" + key1 + "\" with fueld key \"" + key2 + "\" (incompatible types)");
+	//			}
+	//
+	//			// Build the unified key.
+	//			return new CSVHeader<>(unifiedLabel, (Class<Object>) unifiedType, (Serializer<Object, String>) unifiedSerializer);
+	//		}
+	//	};
 	
 	// Serializer.
 	
