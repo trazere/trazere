@@ -15,6 +15,7 @@
  */
 package com.trazere.util.record;
 
+import com.trazere.core.record.RecordSignatureUtils;
 import com.trazere.util.function.Function1;
 import com.trazere.util.function.Predicate1;
 import com.trazere.util.function.Predicates;
@@ -97,9 +98,7 @@ public class RecordUtils {
 	 * @throws KX When some key filter evaluation fails.
 	 * @throws InvalidFieldException When some field of the given record cannot be read.
 	 * @throws RecordException When the result record cannot be built.
-	 * @deprecated Use
-	 *             {@link com.trazere.core.record.RecordUtils#filter(com.trazere.core.record.Record, com.trazere.core.functional.Predicate, com.trazere.core.record.RecordFactory)}
-	 *             .
+	 * @deprecated Use {@link com.trazere.core.record.RecordUtils#filter(com.trazere.core.record.Record, com.trazere.core.functional.Predicate)} .
 	 */
 	@Deprecated
 	public static <K, V, KX extends Exception> Record<K, V> sub(final Record<K, V> record, final Predicate1<? super K, KX> keys)
@@ -165,7 +164,7 @@ public class RecordUtils {
 	 * @throws KX When some key filter evaluation fails.
 	 * @throws InvalidFieldException When some field of the given record cannot be read.
 	 * @throws DuplicateFieldException When some field is identified by any given key in the given builder.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link com.trazere.core.record.RecordUtils#filter(com.trazere.core.record.Record, com.trazere.core.functional.Predicate)}.
 	 */
 	@Deprecated
 	public static <K, V, B extends RecordBuilder<? super K, ? super V, ?>, KX extends Exception> B sub(final Record<K, V> record, final Predicate1<? super K, KX> keys, final B builder)
@@ -200,9 +199,7 @@ public class RecordUtils {
 	 * @throws KX When some key filter evaluation fails.
 	 * @throws InvalidFieldException When some field of the given record cannot be read.
 	 * @throws RecordException When the result record cannot be built.
-	 * @deprecated Use
-	 *             {@link com.trazere.core.record.RecordUtils#filter(com.trazere.core.record.Record, com.trazere.core.functional.Predicate, com.trazere.core.record.RecordFactory)}
-	 *             .
+	 * @deprecated Use {@link com.trazere.core.record.RecordUtils#filter(com.trazere.core.record.Record, com.trazere.core.functional.Predicate)} .
 	 */
 	@Deprecated
 	public static <K, V, KX extends Exception> Record<K, V> drop(final Record<K, V> record, final Predicate1<? super K, KX> keys)
@@ -248,7 +245,7 @@ public class RecordUtils {
 	 * @throws KX When some key filter evaluation fails.
 	 * @throws InvalidFieldException When some field of the given record cannot be read.
 	 * @throws DuplicateFieldException When some field is identified by any given key in the given builder.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link com.trazere.core.record.RecordUtils#filter(com.trazere.core.record.Record, com.trazere.core.functional.Predicate)} .
 	 */
 	@Deprecated
 	public static <K, V, B extends RecordBuilder<K, ? super V, ?>, KX extends Exception> B drop(final Record<K, ? extends V> record, final Predicate1<? super K, KX> keys, final B builder)
@@ -338,7 +335,7 @@ public class RecordUtils {
 	 * @throws InvalidFieldException When some field of the given records cannot be read.
 	 * @throws DuplicateFieldException When some fields are identified by a same key in both records.
 	 * @throws DuplicateFieldException When some fields are identified by the keys of unified fields in the given builder.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link RecordBuilder#addAll(Record)}.
 	 */
 	@Deprecated
 	public static <K, V, B extends RecordBuilder<? super K, ? super V, ?>> B union(final Record<? extends K, ? extends V> record1, final Record<? extends K, ? extends V> record2, final B builder)
@@ -363,7 +360,6 @@ public class RecordUtils {
 		return builder;
 	}
 	
-	// TODO: remove ??
 	/**
 	 * Gets the value of the field of the receiver record identified by the given key.
 	 * 
@@ -391,7 +387,6 @@ public class RecordUtils {
 		}
 	}
 	
-	// TODO: remove ??
 	/**
 	 * Gets the value of the field of the receiver record identified by the given signature.
 	 * 
@@ -460,7 +455,8 @@ public class RecordUtils {
 	 * @throws KX When some key filter evaluation fails.
 	 * @throws InvalidFieldException When some requirement cannot be read.
 	 * @throws IncompatibleFieldException When the signature of some requirement is not compatible.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link com.trazere.core.record.Parametrable#getRequirements()} and
+	 *             {@link com.trazere.core.record.RecordSignatureBuilder#unifyAll(Iterable, com.trazere.core.record.FieldKeyUnifier)}.
 	 */
 	@Deprecated
 	public static <K, V, KX extends Exception> void unifyRequirements(final Parametrable<K, V> parametrable, final Predicate1<? super K, KX> keys, final RecordSignatureBuilder<K, V, ?> builder)
@@ -495,7 +491,8 @@ public class RecordUtils {
 	 * @throws InvalidFieldException When some requirement cannot be read.
 	 * @throws EX When some requirement extraction fails.
 	 * @throws IncompatibleFieldException When the signature of some requirement is not compatible.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link com.trazere.core.record.Parametrable#getRequirements()} and
+	 *             {@link com.trazere.core.record.RecordSignatureBuilder#unifyAll(Iterable, com.trazere.core.record.FieldKeyUnifier)}.
 	 */
 	@Deprecated
 	public static <K, V, EX extends Exception> void unifyRequirements(final Parametrable<K, V> parametrable, final Function1<? super FieldSignature<K, ? extends V>, ? extends Maybe<? extends FieldSignature<K, ? extends V>>, EX> extractor, final RecordSignatureBuilder<K, V, ?> builder)
@@ -528,7 +525,7 @@ public class RecordUtils {
 	 * @throws MissingFieldException When some signature field is missing but required.
 	 * @throws InvalidFieldException When some signature field cannot be read.
 	 * @throws IncompatibleFieldException When some signature field is incompatible with the requirement.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link com.trazere.core.record.Parametrable#checkRequirements(com.trazere.core.record.RecordSignature)}.
 	 */
 	@Deprecated
 	public static <K, V> void typeCheck(final Parametrable<K, V> parametrable, final RecordSignature<? super K, ? extends V> signature)
@@ -549,7 +546,7 @@ public class RecordUtils {
 	 * @throws MissingFieldException When some signature field is missing but required.
 	 * @throws InvalidFieldException When some signature field cannot be read.
 	 * @throws IncompatibleFieldException When some signature field is incompatible with the requirement.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link com.trazere.core.record.RecordSignature#checkAssignableFrom(com.trazere.core.record.RecordSignature)}.
 	 */
 	@Deprecated
 	public static <K, V> void typeCheck(final RecordSignature<K, V> requirements, final RecordSignature<? super K, ? extends V> signature)
@@ -571,7 +568,8 @@ public class RecordUtils {
 	 * @throws MissingFieldException When some signature field is missing but required.
 	 * @throws InvalidFieldException When some signature field cannot be read.
 	 * @throws IncompatibleFieldException When some signature field is incompatible with the requirement.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link RecordSignatureUtils#filter(com.trazere.core.record.RecordSignature, com.trazere.core.functional.Predicate)} and
+	 *             {@link com.trazere.core.record.RecordSignature#isAssignableFrom(com.trazere.core.record.RecordSignature)}.
 	 */
 	@Deprecated
 	public static <K, V, KX extends Exception> void typeCheck(final RecordSignature<K, V> requirements, final RecordSignature<? super K, ? extends V> signature, final Predicate1<? super K, KX> keys)
@@ -604,7 +602,6 @@ public class RecordUtils {
 	 * @throws IncompatibleFieldException When some signature field is incompatible with the requirement.
 	 * @deprecated To be removed.
 	 */
-	// TODO: use TypeCheckException
 	@Deprecated
 	public static <K> void typeCheck(final FieldSignature<K, ?> requirement, final RecordSignature<? super K, ?> signature)
 	throws MissingFieldException, InvalidFieldException, IncompatibleFieldException {

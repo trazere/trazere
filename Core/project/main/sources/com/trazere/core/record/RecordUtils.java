@@ -17,6 +17,7 @@ package com.trazere.core.record;
 
 import com.trazere.core.collection.CollectionFactories;
 import com.trazere.core.collection.CollectionUtils;
+import com.trazere.core.collection.SetUtils;
 import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Predicate;
@@ -37,8 +38,6 @@ import java.util.Set;
  * @since 2.0
  */
 public class RecordUtils {
-	// TODO: fields (similar to MapUtils.bindings(...)) for lazy manipulations.
-	
 	/**
 	 * Executes the given procedure with each field of the given record.
 	 * 
@@ -132,7 +131,7 @@ public class RecordUtils {
 		return IterableUtils.count(record.fields(), filter);
 	}
 	
-	// TODO: rename to append
+	// TODO: rename to append ?
 	/**
 	 * Builds the union of the given records.
 	 * <p>
@@ -206,6 +205,8 @@ public class RecordUtils {
 		};
 	}
 	
+	// TODO: lazy union/append
+	
 	// TODO: rename to append
 	/**
 	 * Builds the union of the given records.
@@ -227,9 +228,91 @@ public class RecordUtils {
 		return builder.build();
 	}
 	
-	// TODO: flatten
-	
-	// TODO: add a lazy filter (no factory arg)
+	/**
+	 * Filters the fields of the given record using the given filter.
+	 *
+	 * @param <K> Type of the field keys.
+	 * @param record Record containing the fields to filter.
+	 * @param filter Predicate to use to filter the fields.
+	 * @return A record containing the filtered fields.
+	 * @since 2.0
+	 */
+	public static <K extends FieldKey<K, ?>> Record<K> filter(final Record<K> record, final Predicate<? super Field<K, ?>> filter) {
+		assert null != record;
+		assert null != filter;
+		
+		final Collection<Field<K, ?>> fields = CollectionUtils.unmodifiable(new AbstractCollection<Field<K, ?>>() {
+			@Override
+			public int size() {
+				return IterableUtils.count(record.fields(), filter);
+			}
+			
+			@Override
+			public boolean isEmpty() {
+				return !IterableUtils.isAny(record.fields(), filter);
+			}
+			
+			@Override
+			public Iterator<Field<K, ?>> iterator() {
+				return IteratorUtils.filter(record.fields().iterator(), filter);
+			}
+		});
+		
+		final Set<FieldKey<K, ?>> keys = SetUtils.unmodifiable(new AbstractSet<FieldKey<K, ?>>() {
+			@Override
+			public int size() {
+				return fields.size();
+			}
+			
+			@Override
+			public boolean isEmpty() {
+				return fields.isEmpty();
+			}
+			
+			@Override
+			public Iterator<FieldKey<K, ?>> iterator() {
+				return IteratorUtils.map(fields.iterator(), Field::getKey);
+			}
+		});
+		
+		return new BaseRecord<K>() {
+			@Override
+			public int size() {
+				return fields.size();
+			}
+			
+			@Override
+			public boolean isEmpty() {
+				return fields.isEmpty();
+			}
+			
+			@Override
+			public boolean contains(final FieldKey<K, ?> key) {
+				return innerContains(key);
+			}
+			
+			private <V> boolean innerContains(final FieldKey<K, V> key) {
+				final Maybe<V> value = record.get(key);
+				return value.isSome() && filter.evaluate(Fields.fromKeyAndValue(key, value.asSome().getValue()));
+			}
+			
+			@Override
+			public Set<? extends FieldKey<K, ?>> keys() {
+				return keys;
+			}
+			
+			@Override
+			public <V> Maybe<V> get(final FieldKey<K, V> key)
+			throws InvalidFieldException, NullFieldException, IncompatibleFieldException {
+				return record.get(key).filter(value -> filter.evaluate(Fields.fromKeyAndValue(key, value)));
+			}
+			
+			@Override
+			public Collection<? extends Field<K, ?>> fields() {
+				return fields;
+			}
+		};
+	}
 	
 	/**
 	 * Filters the fields of the given record using the given filter.

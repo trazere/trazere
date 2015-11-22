@@ -197,6 +197,11 @@ public class RecordSignatureUtils {
 			}
 			
 			@Override
+			public boolean isEmpty() {
+				return !IterableUtils.isAny(signature.keys(), filter);
+			}
+			
+			@Override
 			public Iterator<FieldKey<K, ?>> iterator() {
 				return IteratorUtils.filter(signature.keys().iterator(), filter);
 			}
@@ -205,12 +210,12 @@ public class RecordSignatureUtils {
 		return new BaseRecordSignature<K>() {
 			@Override
 			public int size() {
-				return IterableUtils.count(signature.keys(), filter);
+				return keys.size();
 			}
 			
 			@Override
 			public boolean isEmpty() {
-				return !IterableUtils.isAny(signature.keys(), filter);
+				return keys.isEmpty();
 			}
 			
 			@Override
@@ -227,98 +232,6 @@ public class RecordSignatureUtils {
 	
 	// TODO: map ?
 	// TODO: extract ?
-	
-	//	/**
-	//	 * Typechecks the requirements of the given parametrable against the given signature.
-	//	 *
-	//	 * @param <K> Type of the keys.
-	//	 * @param <V> Type of the values.
-	//	 * @param parametrable The parametrable.
-	//	 * @param signature The signature.
-	//	 * @throws InvalidFieldException When some requirement field cannot be read.
-	//	 * @throws MissingFieldException When some signature field is missing but required.
-	//	 * @throws InvalidFieldException When some signature field cannot be read.
-	//	 * @throws IncompatibleFieldException When some signature field is incompatible with the requirement.
-	//	 */
-	//	public static <K, V> void typeCheck(final Parametrable<K, V> parametrable, final RecordSignature<? super K, ? extends V> signature)
-	//	throws InvalidFieldException, MissingFieldException, IncompatibleFieldException {
-	//		assert null != parametrable;
-	//
-	//		typeCheck(parametrable.getRequirements(), signature);
-	//	}
-	//
-	//	/**
-	//	 * Typechecks the given requirements against the given signature.
-	//	 *
-	//	 * @param <K> Type of the keys.
-	//	 * @param <V> Type of the values.
-	//	 * @param requirements The requierements.
-	//	 * @param signature The signature.
-	//	 * @throws InvalidFieldException When some requirement field cannot be read.
-	//	 * @throws MissingFieldException When some signature field is missing but required.
-	//	 * @throws InvalidFieldException When some signature field cannot be read.
-	//	 * @throws IncompatibleFieldException When some signature field is incompatible with the requirement.
-	//	 */
-	//	public static <K, V> void typeCheck(final RecordSignature<K, V> requirements, final RecordSignature<? super K, ? extends V> signature)
-	//	throws InvalidFieldException, MissingFieldException, IncompatibleFieldException {
-	//		typeCheck(requirements, signature, Predicates.<K, InternalException>all());
-	//	}
-	//
-	//	/**
-	//	 * Typechecks the given requirements against the given signature.
-	//	 *
-	//	 * @param <K> Type of the keys.
-	//	 * @param <V> Type of the values.
-	//	 * @param <KX> Type of the key filter exceptions.
-	//	 * @param requirements The requierements.
-	//	 * @param signature The signature.
-	//	 * @param keys The filter of the requirements to typecheck.
-	//	 * @throws KX When some key filter evaluation fails.
-	//	 * @throws InvalidFieldException When some requirement field cannot be read.
-	//	 * @throws MissingFieldException When some signature field is missing but required.
-	//	 * @throws InvalidFieldException When some signature field cannot be read.
-	//	 * @throws IncompatibleFieldException When some signature field is incompatible with the requirement.
-	//	 */
-	//	public static <K, V, KX extends Exception> void typeCheck(final RecordSignature<K, V> requirements, final RecordSignature<? super K, ? extends V> signature, final Predicate1<? super K, KX> keys)
-	//	throws KX, InvalidFieldException, MissingFieldException, IncompatibleFieldException {
-	//		assert null != requirements;
-	//		assert null != signature;
-	//		assert null != keys;
-	//
-	//		for (final K key : requirements.getKeys()) {
-	//			if (keys.evaluate(key)) {
-	//				final FieldSignature<K, ? extends V> requirement;
-	//				try {
-	//					requirement = requirements.get(key);
-	//				} catch (final MissingFieldException exception) {
-	//					throw new InternalException(exception);
-	//				}
-	//				typeCheck(requirement, signature);
-	//			}
-	//		}
-	//	}
-	
-	//	/**
-	//	 * Type checks the given requirement against the given record signature.
-	//	 *
-	//	 * @param <K> Type of the keys.
-	//	 * @param requirement The requierement.
-	//	 * @param signature The signature.
-	//	 * @throws MissingFieldException When some signature field is missing but required.
-	//	 * @throws InvalidFieldException When some signature field cannot be read.
-	//	 * @throws IncompatibleFieldException When some signature field is incompatible with the requirement.
-	//	 */
-	//	public static <K extends FieldKey<K, ?>> void typeCheck(final FieldKey<? extends K, ?> requirement, final RecordSignature<? super K> signature)
-	//	throws MissingFieldException, InvalidFieldException, IncompatibleFieldException {
-	//		final Maybe<? extends FieldSignature<? super K, ?>> maybeFieldSignature = signature.getMaybe(key);
-	//		if (maybeFieldSignature.isNone()) {
-	//			throw new MissingFieldException("Missing field \"" + key + "\" in signature " + signature);
-	//		}
-	//		final FieldSignature<? super K, ?> fieldSignature = maybeFieldSignature.asSome().getValue();
-	//		if (requirement.isSubSignature(fieldSignature).isFailure()) {
-	//			throw new IncompatibleFieldException("Incompatible field \"" + key + "\" with requirement " + requirement + " in signature " + signature);
-	//		}
-	//	}
 	
 	private RecordSignatureUtils() {
 		// Prevent instantiation.

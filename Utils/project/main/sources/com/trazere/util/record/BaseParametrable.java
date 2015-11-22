@@ -22,7 +22,7 @@ import com.trazere.util.lang.InternalException;
  * 
  * @param <K> Type of the keys of the parameters.
  * @param <V> Type of the values of the parameters.
- * @deprecated To be removed.
+ * @deprecated Use {@link com.trazere.core.record.Parametrable}.
  */
 @Deprecated
 public abstract class BaseParametrable<K, V>

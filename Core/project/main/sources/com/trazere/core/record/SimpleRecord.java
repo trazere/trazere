@@ -71,6 +71,11 @@ extends BaseRecord<K> {
 	}
 	
 	@Override
+	public RecordSignature<K> getSignature() {
+		return new SimpleRecordSignature<>(_fields.keySet());
+	}
+	
+	@Override
 	public <V> Maybe<V> get(final FieldKey<K, V> key) {
 		return MapUtils.get(_fields, key).map(field -> key.castValue(field.getValue()));
 	}

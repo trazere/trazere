@@ -15,7 +15,7 @@
  */
 package com.trazere.core.record;
 
-import java.util.Collections;
+import com.trazere.core.collection.SetUtils;
 import java.util.Set;
 
 /**
@@ -43,7 +43,7 @@ extends BaseRecordSignature<K> {
 		assert null != keys;
 		
 		// Initialization.
-		_keys = Collections.unmodifiableSet(keys);
+		_keys = SetUtils.unmodifiable(keys);
 	}
 	
 	@Override

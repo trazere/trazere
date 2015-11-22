@@ -13,22 +13,18 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.util.record;
+package com.trazere.core.record;
 
-import com.trazere.core.record.ParametrableFunction;
-import com.trazere.util.function.Function1;
+import com.trazere.core.functional.Function;
 
 /**
  * The {@link Parametrable} interface defines functions which take a record of parameters as argument.
  * 
- * @param <K> Type of the keys of the parameters.
- * @param <V> Type of the values of the parameters.
- * @param <T> Type of the result values.
- * @param <X> Type of the exceptions.
- * @deprecated Use {@link ParametrableFunction}.
+ * @param <K> Type of the keys of the arguments.
+ * @param <R> Type of the results.
+ * @since 2.0
  */
-@Deprecated
-public interface ParameterFunction<K, V, T, X extends Exception>
-extends Function1<Record<K, V>, T, X>, Parametrable<K, V> {
+public interface ParametrableFunction<K extends FieldKey<K, ?>, R>
+extends Function<Record<K>, R>, Parametrable<K> {
 	// Nothing to do.
 }

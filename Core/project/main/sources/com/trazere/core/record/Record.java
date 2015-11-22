@@ -84,11 +84,23 @@ public interface Record<K extends FieldKey<K, ?>> {
 			}
 			
 			@Override
+			public boolean isEmpty() {
+				return fields().isEmpty();
+			}
+			
+			@Override
 			public Iterator<FieldKey<K, ?>> iterator() {
 				return IteratorUtils.map(fields().iterator(), Field::getKey);
 			}
 		});
 	}
+	
+	/**
+	 * Gets the signature of this record.
+	 * 
+	 * @return The signature of the record.
+	 */
+	RecordSignature<K> getSignature();
 	
 	/**
 	 * Gets the value of the field of this record identified by the given key.

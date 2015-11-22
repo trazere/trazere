@@ -20,7 +20,7 @@ package com.trazere.util.record;
  * 
  * @param <K> Type of the keys of the parameters.
  * @param <V> Type of the values of the parameters.
- * @deprecated To be removed.
+ * @deprecated Use {@link com.trazere.core.record.Parametrable}.
  */
 @Deprecated
 public interface Parametrable<K, V> {
@@ -28,7 +28,7 @@ public interface Parametrable<K, V> {
 	 * Gets the requirements of the receiver parametrable over its parameters.
 	 * 
 	 * @return The signature of the requirements.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link com.trazere.core.record.Parametrable#getRequirements()}.
 	 */
 	@Deprecated
 	public RecordSignature<K, V> getRequirements();
@@ -40,7 +40,7 @@ public interface Parametrable<K, V> {
 	 * @param builder The builder within which the requirements should be unified.
 	 * @return The given signature builder.
 	 * @throws IncompatibleFieldException When the unification fails.
-	 * @deprecated To be removed.
+	 * @deprecated Use {@link com.trazere.core.record.Parametrable#unifyRequirements(com.trazere.core.record.RecordSignatureBuilder)}.
 	 */
 	@Deprecated
 	public <B extends RecordSignatureBuilder<K, V, ?>> B unifyRequirements(final B builder)

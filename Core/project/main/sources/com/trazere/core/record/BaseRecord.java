@@ -21,6 +21,7 @@ import com.trazere.core.text.DescriptionBuilder;
 import com.trazere.core.text.DescriptionFormats;
 import com.trazere.core.util.Maybe;
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * The {@link BaseRecord} class provides a skeleton implementation of {@link Record records}.
@@ -30,6 +31,31 @@ import java.util.Collection;
  */
 public abstract class BaseRecord<K extends FieldKey<K, ?>>
 implements Record<K> {
+	@Override
+	public RecordSignature<K> getSignature() {
+		return new BaseRecordSignature<K>() {
+			@Override
+			public int size() {
+				return BaseRecord.this.size();
+			}
+			
+			@Override
+			public boolean isEmpty() {
+				return BaseRecord.this.isEmpty();
+			}
+			
+			@Override
+			public boolean contains(final FieldKey<K, ?> key) {
+				return BaseRecord.this.contains(key);
+			}
+			
+			@Override
+			public Set<? extends FieldKey<K, ?>> keys() {
+				return BaseRecord.this.keys();
+			}
+		};
+	}
+	
 	// Object.
 	
 	@Override
