@@ -18,6 +18,6 @@ public interface FieldKeyUnifier<K extends FieldKey<K, ?>> {
 	 * @throws IncompatibleFieldException When the field keys are not compatible.
 	 * @since 2.0
 	 */
-	<V1, V2> FieldKey<? extends K, ?> unify(final FieldKey<? extends K, V1> key1, final FieldKey<? extends K, V2> key2)
+	<V1, V2> FieldKey<K, ?> unify(final FieldKey<K, V1> key1, final FieldKey<K, V2> key2)
 	throws IncompatibleFieldException;
 }

@@ -23,8 +23,8 @@ import com.trazere.core.lang.HashCode;
  * @param <V> Type of the value of the field.
  * @since 2.0
  */
-public final class LabelFieldKey<V>
-extends FieldKey<LabelFieldKey<V>, V> {
+public class LabelFieldKey<V>
+extends FieldKey<LabelFieldKey<?>, V> {
 	/**
 	 * Instantiates a new non-nullable field key.
 	 * 
@@ -48,11 +48,6 @@ extends FieldKey<LabelFieldKey<V>, V> {
 		super(label, type, nullable);
 	}
 	
-	@Override
-	public LabelFieldKey<V> self() {
-		return this;
-	}
-	
 	// Signature.
 	
 	/**
@@ -62,7 +57,7 @@ extends FieldKey<LabelFieldKey<V>, V> {
 	 */
 	public static final FieldKeyUnifier<LabelFieldKey<?>> UNIFIER = new FieldKeyUnifier<LabelFieldKey<?>>() {
 		@Override
-		public <V1, V2> FieldKey<? extends LabelFieldKey<?>, ?> unify(final FieldKey<? extends LabelFieldKey<?>, V1> key1, final FieldKey<? extends LabelFieldKey<?>, V2> key2) {
+		public <V1, V2> FieldKey<LabelFieldKey<?>, ?> unify(final FieldKey<LabelFieldKey<?>, V1> key1, final FieldKey<LabelFieldKey<?>, V2> key2) {
 			// Compute the label.
 			final String label1 = key1.getLabel();
 			final String label2 = key2.getLabel();

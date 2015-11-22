@@ -35,7 +35,7 @@ implements Record<K> {
 	@Override
 	public int hashCode() {
 		final HashCode result = new HashCode(Record.class);
-		for (final Field<? extends K, ?> field : fields()) {
+		for (final Field<K, ?> field : fields()) {
 			result.append(field);
 		}
 		return result.get();
@@ -48,11 +48,11 @@ implements Record<K> {
 		} else if (null != object && object instanceof Record) {
 			@SuppressWarnings("unchecked")
 			final Record<K> record = (Record<K>) object;
-			final Collection<? extends Field<? extends K, ?>> fields = fields();
+			final Collection<? extends Field<K, ?>> fields = fields();
 			if (record.size() != fields.size()) {
 				return false;
 			}
-			for (final Field<? extends K, ?> field : fields) {
+			for (final Field<K, ?> field : fields) {
 				final Maybe<?> value = record.get(field.getKey());
 				if (value.isNone() || !ObjectUtils.safeEquals(field.getValue(), value.asSome().getValue())) {
 					return false;

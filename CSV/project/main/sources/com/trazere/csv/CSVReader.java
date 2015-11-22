@@ -620,7 +620,7 @@ implements Iterator<Record<CSVHeader<?>>>, Closeable {
 	 * @return The deserialized value, or nothing when the field is empty.
 	 * @since 2.0
 	 */
-	protected <V> Maybe<Field<CSVHeader<V>, V>> deserializeField(final CSVHeader<V> header, final String representation, final int lineNumber) {
+	protected <V> Maybe<Field<CSVHeader<?>, V>> deserializeField(final CSVHeader<V> header, final String representation, final int lineNumber) {
 		// Trim.
 		final String trimmedRepresentation;
 		if (_options.contains(CSVOption.TRIM_FIELDS)) {

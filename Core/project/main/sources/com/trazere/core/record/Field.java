@@ -34,7 +34,7 @@ public interface Field<K extends FieldKey<K, ?>, V> {
 	 * @return The key.
 	 * @since 2.0
 	 */
-	FieldKey<? extends K, V> getKey();
+	FieldKey<K, V> getKey();
 	
 	/**
 	 * Gets the value of this field.

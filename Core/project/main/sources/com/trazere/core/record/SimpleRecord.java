@@ -35,7 +35,7 @@ extends BaseRecord<K> {
 	 * 
 	 * @since 2.0
 	 */
-	protected Map<FieldKey<? extends K, ?>, Field<? extends K, ?>> _fields;
+	protected Map<FieldKey<K, ?>, Field<K, ?>> _fields;
 	
 	/**
 	 * Instantiates a new record with the given fields.
@@ -43,7 +43,7 @@ extends BaseRecord<K> {
 	 * @param fields Values of the fields identified by their keys.
 	 * @since 2.0
 	 */
-	protected SimpleRecord(final Map<FieldKey<? extends K, ?>, Field<? extends K, ?>> fields) {
+	protected SimpleRecord(final Map<FieldKey<K, ?>, Field<K, ?>> fields) {
 		assert null != fields;
 		
 		// Initialization.
@@ -61,22 +61,22 @@ extends BaseRecord<K> {
 	}
 	
 	@Override
-	public boolean contains(final FieldKey<? extends K, ?> key) {
+	public boolean contains(final FieldKey<K, ?> key) {
 		return _fields.containsKey(key);
 	}
 	
 	@Override
-	public Set<? extends FieldKey<? extends K, ?>> keys() {
+	public Set<? extends FieldKey<K, ?>> keys() {
 		return _fields.keySet();
 	}
 	
 	@Override
-	public <V> Maybe<V> get(final FieldKey<? extends K, ? extends V> key) {
+	public <V> Maybe<V> get(final FieldKey<K, V> key) {
 		return MapUtils.get(_fields, key).map(field -> key.castValue(field.getValue()));
 	}
 	
 	@Override
-	public Collection<Field<? extends K, ?>> fields() {
+	public Collection<Field<K, ?>> fields() {
 		return _fields.values();
 	}
 }

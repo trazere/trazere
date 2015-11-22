@@ -59,7 +59,7 @@ extends Factory<R> {
 	 * @return <code>true</code> when the record contains a field identified by the key, <code>false</code> otherwise.
 	 * @since 2.0
 	 */
-	default boolean contains(final FieldKey<? extends K, ?> key) {
+	default boolean contains(final FieldKey<K, ?> key) {
 		return keys().contains(key);
 	}
 	
@@ -69,7 +69,7 @@ extends Factory<R> {
 	 * @return A set view of the field keys.
 	 * @since 2.0
 	 */
-	Set<? extends FieldKey<? extends K, ?>> keys();
+	Set<? extends FieldKey<K, ?>> keys();
 	
 	/**
 	 * Adds the field corresponding to the given key and value to the record being built by this builder.
@@ -83,7 +83,7 @@ extends Factory<R> {
 	 * @throws DuplicateFieldException When some field is already identified by the given key.
 	 * @since 2.0
 	 */
-	default <V> void add(final FieldKey<? extends K, V> key, final V value)
+	default <V> void add(final FieldKey<K, V> key, final V value)
 	throws NullFieldException, DuplicateFieldException {
 		add(Fields.fromKeyAndValue(key, value));
 	}
@@ -97,9 +97,9 @@ extends Factory<R> {
 	 * @throws DuplicateFieldException When some field is already identified by the key of the given field.
 	 * @since 2.0
 	 */
-	default void add(final Field<? extends K, ?> field)
+	default void add(final Field<K, ?> field)
 	throws DuplicateFieldException {
-		final FieldKey<? extends K, ?> key = field.getKey();
+		final FieldKey<K, ?> key = field.getKey();
 		if (!contains(key)) {
 			set(field);
 		} else {
@@ -116,9 +116,9 @@ extends Factory<R> {
 	 * @throws DuplicateFieldException When some field is already identified by the key of some given field.
 	 * @since 2.0
 	 */
-	default void addAll(final Iterable<? extends Field<? extends K, ?>> fields)
+	default void addAll(final Iterable<? extends Field<K, ?>> fields)
 	throws DuplicateFieldException {
-		for (final Field<? extends K, ?> field : fields) {
+		for (final Field<K, ?> field : fields) {
 			add(field);
 		}
 	}
@@ -132,7 +132,7 @@ extends Factory<R> {
 	 * @throws DuplicateFieldException When some field is already identified by some key of the given record.
 	 * @since 2.0
 	 */
-	default void addAll(final Record<? extends K> record)
+	default void addAll(final Record<K> record)
 	throws DuplicateFieldException {
 		addAll(record.fields());
 	}
@@ -150,7 +150,7 @@ extends Factory<R> {
 	 * @throws NullFieldException When the value is <code>null</code> and the field is not nullable.
 	 * @since 2.0
 	 */
-	default <V> void complete(final FieldKey<? extends K, V> key, final V value)
+	default <V> void complete(final FieldKey<K, V> key, final V value)
 	throws NullFieldException {
 		complete(Fields.fromKeyAndValue(key, value));
 	}
@@ -163,7 +163,7 @@ extends Factory<R> {
 	 * @param field Field to complete the record with.
 	 * @since 2.0
 	 */
-	default void complete(final Field<? extends K, ?> field) {
+	default void complete(final Field<K, ?> field) {
 		if (!contains(field.getKey())) {
 			set(field);
 		}
@@ -177,8 +177,8 @@ extends Factory<R> {
 	 * @param fields Fields to complete the record with.
 	 * @since 2.0
 	 */
-	default void completeAll(final Iterable<? extends Field<? extends K, ?>> fields) {
-		for (final Field<? extends K, ?> field : fields) {
+	default void completeAll(final Iterable<? extends Field<K, ?>> fields) {
+		for (final Field<K, ?> field : fields) {
 			complete(field);
 		}
 	}
@@ -191,7 +191,7 @@ extends Factory<R> {
 	 * @param record Record containing the fields to complete the record with.
 	 * @since 2.0
 	 */
-	default void completeAll(final Record<? extends K> record) {
+	default void completeAll(final Record<K> record) {
 		completeAll(record.fields());
 	}
 	
@@ -206,7 +206,7 @@ extends Factory<R> {
 	 * @throws NullFieldException When the value is <code>null</code> and the field is not nullable.
 	 * @since 2.0
 	 */
-	default <V> void set(final FieldKey<? extends K, V> key, final V value) {
+	default <V> void set(final FieldKey<K, V> key, final V value) {
 		set(Fields.fromKeyAndValue(key, value));
 	}
 	
@@ -218,7 +218,7 @@ extends Factory<R> {
 	 * @param field Field to set.
 	 * @since 2.0
 	 */
-	void set(Field<? extends K, ?> field);
+	void set(Field<K, ?> field);
 	
 	/**
 	 * Sets the given fields in the record being built by this builder.
@@ -228,8 +228,8 @@ extends Factory<R> {
 	 * @param fields Fields to set.
 	 * @since 2.0
 	 */
-	default void setAll(final Iterable<? extends Field<? extends K, ?>> fields) {
-		for (final Field<? extends K, ?> field : fields) {
+	default void setAll(final Iterable<? extends Field<K, ?>> fields) {
+		for (final Field<K, ?> field : fields) {
 			set(field);
 		}
 	}
@@ -242,7 +242,7 @@ extends Factory<R> {
 	 * @param record Record containing the fields to set.
 	 * @since 2.0
 	 */
-	default void setAll(final Record<? extends K> record) {
+	default void setAll(final Record<K> record) {
 		addAll(record.fields());
 	}
 	
@@ -252,7 +252,7 @@ extends Factory<R> {
 	 * @param key Key of the field to remove.
 	 * @since 2.0
 	 */
-	void remove(FieldKey<? extends K, ?> key);
+	void remove(FieldKey<K, ?> key);
 	
 	/**
 	 * Removes the fields identified by the given keys from the record being built by this builder.
@@ -260,8 +260,8 @@ extends Factory<R> {
 	 * @param keys Keys of the fields to remove.
 	 * @since 2.0
 	 */
-	default void removeAll(final Iterable<? extends FieldKey<? extends K, ?>> keys) {
-		for (final FieldKey<? extends K, ?> key : keys) {
+	default void removeAll(final Iterable<? extends FieldKey<K, ?>> keys) {
+		for (final FieldKey<K, ?> key : keys) {
 			remove(key);
 		}
 	}

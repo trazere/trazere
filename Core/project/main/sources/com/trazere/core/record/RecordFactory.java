@@ -45,7 +45,7 @@ extends Factory<R> {
 	 * @return The built record.
 	 * @since 2.0
 	 */
-	default R build(final Record<? extends K> record) {
+	default R build(final Record<K> record) {
 		final RecordBuilder<K, R> builder = newBuilder();
 		builder.addAll(record);
 		return builder.build();

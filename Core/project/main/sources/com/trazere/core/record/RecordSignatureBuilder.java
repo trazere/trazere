@@ -56,7 +56,7 @@ extends Factory<R> {
 	 * @return <code>true</code> when the record signature contains the key, <code>false</code> otherwise.
 	 * @since 2.0
 	 */
-	boolean contains(final FieldKey<? extends K, ?> key);
+	boolean contains(final FieldKey<K, ?> key);
 	
 	/**
 	 * Adds the given field key to the record signature being built by this builder.
@@ -67,7 +67,7 @@ extends Factory<R> {
 	 * @throws DuplicateFieldException When the record signature already contains the field key.
 	 * @since 2.0
 	 */
-	default void add(final FieldKey<? extends K, ?> key)
+	default void add(final FieldKey<K, ?> key)
 	throws DuplicateFieldException {
 		if (!contains(key)) {
 			set(key);
@@ -85,9 +85,9 @@ extends Factory<R> {
 	 * @throws DuplicateFieldException When the record signature already contains some field key.
 	 * @since 2.0
 	 */
-	default void addAll(final Iterable<? extends FieldKey<? extends K, ?>> keys)
+	default void addAll(final Iterable<? extends FieldKey<K, ?>> keys)
 	throws DuplicateFieldException {
-		for (final FieldKey<? extends K, ?> key : keys) {
+		for (final FieldKey<K, ?> key : keys) {
 			add(key);
 		}
 	}
@@ -101,7 +101,7 @@ extends Factory<R> {
 	 * @throws DuplicateFieldException When the record signature already contains some field key.
 	 * @since 2.0
 	 */
-	default void addAll(final RecordSignature<? extends K> signature)
+	default void addAll(final RecordSignature<K> signature)
 	throws DuplicateFieldException {
 		addAll(signature.keys());
 	}
@@ -114,7 +114,7 @@ extends Factory<R> {
 	 * @param key Field key to complete the record signature with.
 	 * @since 2.0
 	 */
-	default void complete(final FieldKey<? extends K, ?> key) {
+	default void complete(final FieldKey<K, ?> key) {
 		if (!contains(key)) {
 			set(key);
 		}
@@ -128,8 +128,8 @@ extends Factory<R> {
 	 * @param keys Field keys to complete the record signature with.
 	 * @since 2.0
 	 */
-	default void completeAll(final Iterable<? extends FieldKey<? extends K, ?>> keys) {
-		for (final FieldKey<? extends K, ?> key : keys) {
+	default void completeAll(final Iterable<? extends FieldKey<K, ?>> keys) {
+		for (final FieldKey<K, ?> key : keys) {
 			complete(key);
 		}
 	}
@@ -142,7 +142,7 @@ extends Factory<R> {
 	 * @param signature Record signature containing the field keys to complete the record signature with.
 	 * @since 2.0
 	 */
-	default void completeAll(final RecordSignature<? extends K> signature) {
+	default void completeAll(final RecordSignature<K> signature) {
 		completeAll(signature.keys());
 	}
 	
@@ -157,7 +157,7 @@ extends Factory<R> {
 	 * @see FieldKeyUnifier
 	 * @since 2.0
 	 */
-	void unify(FieldKey<? extends K, ?> key, FieldKeyUnifier<K> unifier)
+	void unify(FieldKey<K, ?> key, FieldKeyUnifier<K> unifier)
 	throws IncompatibleFieldException;
 	
 	/**
@@ -171,9 +171,9 @@ extends Factory<R> {
 	 * @see FieldKeyUnifier
 	 * @since 2.0
 	 */
-	default void unifyAll(final Iterable<? extends FieldKey<? extends K, ?>> keys, final FieldKeyUnifier<K> unifier)
+	default void unifyAll(final Iterable<? extends FieldKey<K, ?>> keys, final FieldKeyUnifier<K> unifier)
 	throws IncompatibleFieldException {
-		for (final FieldKey<? extends K, ?> key : keys) {
+		for (final FieldKey<K, ?> key : keys) {
 			unify(key, unifier);
 		}
 	}
@@ -189,7 +189,7 @@ extends Factory<R> {
 	 * @see FieldKeyUnifier
 	 * @since 2.0
 	 */
-	default void unifyAll(final RecordSignature<? extends K> signature, final FieldKeyUnifier<K> unifier)
+	default void unifyAll(final RecordSignature<K> signature, final FieldKeyUnifier<K> unifier)
 	throws IncompatibleFieldException {
 		unifyAll(signature.keys(), unifier);
 	}
@@ -202,7 +202,7 @@ extends Factory<R> {
 	 * @param key Field key to set.
 	 * @since 2.0
 	 */
-	void set(FieldKey<? extends K, ?> key);
+	void set(FieldKey<K, ?> key);
 	
 	/**
 	 * Sets the given field keys in the record signature beign built by this builder.
@@ -212,8 +212,8 @@ extends Factory<R> {
 	 * @param keys Field keys to set.
 	 * @since 2.0
 	 */
-	default void setAll(final Iterable<? extends FieldKey<? extends K, ?>> keys) {
-		for (final FieldKey<? extends K, ?> key : keys) {
+	default void setAll(final Iterable<? extends FieldKey<K, ?>> keys) {
+		for (final FieldKey<K, ?> key : keys) {
 			set(key);
 		}
 	}
@@ -226,7 +226,7 @@ extends Factory<R> {
 	 * @param signature Record signature containing the field keys to set.
 	 * @since 2.0
 	 */
-	default void setAll(final RecordSignature<? extends K> signature) {
+	default void setAll(final RecordSignature<K> signature) {
 		setAll(signature.keys());
 	}
 	
@@ -236,7 +236,7 @@ extends Factory<R> {
 	 * @param key Field key to remove.
 	 * @since 2.0
 	 */
-	void remove(FieldKey<? extends K, ?> key);
+	void remove(FieldKey<K, ?> key);
 	
 	/**
 	 * Removes the given field keys from the record signature being built by this builder.
@@ -244,8 +244,8 @@ extends Factory<R> {
 	 * @param keys Field keys to remove.
 	 * @since 2.0
 	 */
-	default void removeAll(final Iterable<? extends FieldKey<? extends K, ?>> keys) {
-		for (final FieldKey<? extends K, ?> key : keys) {
+	default void removeAll(final Iterable<? extends FieldKey<K, ?>> keys) {
+		for (final FieldKey<K, ?> key : keys) {
 			remove(key);
 		}
 	}
@@ -256,7 +256,7 @@ extends Factory<R> {
 	 * @param signature Record signature containing the field keys to remove.
 	 * @since 2.0
 	 */
-	default void removeAll(final RecordSignature<? extends K> signature) {
+	default void removeAll(final RecordSignature<K> signature) {
 		removeAll(signature.keys());
 	}
 	

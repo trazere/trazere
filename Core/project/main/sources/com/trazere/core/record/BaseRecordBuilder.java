@@ -35,7 +35,7 @@ implements RecordBuilder<K, R> {
 	 * 
 	 * @since 2.0
 	 */
-	protected Map<FieldKey<? extends K, ?>, Field<? extends K, ?>> _fields = new HashMap<>();
+	protected Map<FieldKey<K, ?>, Field<K, ?>> _fields = new HashMap<>();
 	
 	@Override
 	public int size() {
@@ -48,19 +48,19 @@ implements RecordBuilder<K, R> {
 	}
 	
 	@Override
-	public boolean contains(final FieldKey<? extends K, ?> key) {
+	public boolean contains(final FieldKey<K, ?> key) {
 		return _fields.containsKey(key);
 	}
 	
 	@Override
-	public Set<? extends FieldKey<? extends K, ?>> keys() {
+	public Set<? extends FieldKey<K, ?>> keys() {
 		return _fields.keySet();
 	}
 	
 	@Override
-	public void add(final Field<? extends K, ?> field)
+	public void add(final Field<K, ?> field)
 	throws DuplicateFieldException {
-		final FieldKey<? extends K, ?> key = field.getKey();
+		final FieldKey<K, ?> key = field.getKey();
 		if (!_fields.containsKey(key)) {
 			set(field);
 		} else {
@@ -69,19 +69,19 @@ implements RecordBuilder<K, R> {
 	}
 	
 	@Override
-	public void complete(final Field<? extends K, ?> field) {
+	public void complete(final Field<K, ?> field) {
 		if (!_fields.containsKey(field.getKey())) {
 			set(field);
 		}
 	}
 	
 	@Override
-	public void set(final Field<? extends K, ?> field) {
+	public void set(final Field<K, ?> field) {
 		_fields.put(field.getKey(), field);
 	}
 	
 	@Override
-	public void remove(final FieldKey<? extends K, ?> key) {
+	public void remove(final FieldKey<K, ?> key) {
 		_fields.remove(key);
 	}
 	
@@ -89,34 +89,4 @@ implements RecordBuilder<K, R> {
 	public void clear() {
 		_fields.clear();
 	}
-	
-	// TODO
-	//	@Override
-	//	public <B extends RecordBuilder<? super K, ? super V, ?>> B populate(final B builder)
-	//	throws DuplicateFieldException {
-	//		assert null != builder;
-	//
-	//		// Populate.
-	//		builder.addAll(Collections.unmodifiableMap(_fields));
-	//
-	//		return builder;
-	//	}
-	//
-	//	@Override
-	//	public <B extends RecordBuilder<? super K, ? super V, ?>> B populate(final B builder, final Set<? extends K> keys)
-	//	throws MissingFieldException, DuplicateFieldException {
-	//		assert null != builder;
-	//		assert null != keys;
-	//
-	//		// Populate.
-	//		for (final K key : keys) {
-	//			if (_fields.containsKey(key)) {
-	//				builder.add(key, _fields.get(key));
-	//			} else {
-	//				throw new MissingFieldException("Field \"" + key + "\" does not exist in builder " + this);
-	//			}
-	//		}
-	//
-	//		return builder;
-	//	}
 }

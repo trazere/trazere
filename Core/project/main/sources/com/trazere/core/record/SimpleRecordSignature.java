@@ -31,7 +31,7 @@ extends BaseRecordSignature<K> {
 	 * 
 	 * @since 2.0
 	 */
-	protected final Set<? extends FieldKey<? extends K, ?>> _keys;
+	protected final Set<? extends FieldKey<K, ?>> _keys;
 	
 	/**
 	 * Instantiates a new record signature with the given field keys.
@@ -39,7 +39,7 @@ extends BaseRecordSignature<K> {
 	 * @param keys Keys of the fields.
 	 * @since 2.0
 	 */
-	protected SimpleRecordSignature(final Set<? extends FieldKey<? extends K, ?>> keys) {
+	protected SimpleRecordSignature(final Set<? extends FieldKey<K, ?>> keys) {
 		assert null != keys;
 		
 		// Initialization.
@@ -57,12 +57,12 @@ extends BaseRecordSignature<K> {
 	}
 	
 	@Override
-	public boolean contains(final FieldKey<? extends K, ?> key) {
+	public boolean contains(final FieldKey<K, ?> key) {
 		return _keys.contains(key);
 	}
 	
 	@Override
-	public Set<? extends FieldKey<? extends K, ?>> keys() {
+	public Set<? extends FieldKey<K, ?>> keys() {
 		return _keys;
 	}
 }

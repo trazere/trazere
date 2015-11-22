@@ -48,6 +48,7 @@
 
 		<tools.org.apache.ant.version>1.9.4</tools.org.apache.ant.version>
 		<tools.org.slf4j.version>1.7.10</tools.org.slf4j.version>
+		<tools.org.testng.version>6.9.4</tools.org.testng.version>
 
 		<build.version>${project.version}</build.version>
 	</properties>

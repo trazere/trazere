@@ -15,6 +15,8 @@
  */
 package com.trazere.core.record;
 
+// TODO: rename to PhysicalFieldKey or something ?
+
 /**
  * The {@link StrongFieldKey} class implements keys of {@link Field fields} whose equality relies on their physical identity.
  * 
@@ -22,7 +24,7 @@ package com.trazere.core.record;
  * @param <V> Type of the value of the field.
  * @since 2.0
  */
-public abstract class StrongFieldKey<K extends StrongFieldKey<K, V>, V>
+public class StrongFieldKey<K extends StrongFieldKey<K, ?>, V>
 extends FieldKey<K, V> {
 	/**
 	 * Instantiates a new non-nullable field key.

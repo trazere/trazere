@@ -25,7 +25,7 @@ import com.trazere.core.util.Serializer;
  * @since 2.0
  */
 public final class CSVHeader<V>
-extends StrongFieldKey<CSVHeader<V>, V> {
+extends StrongFieldKey<CSVHeader<?>, V> {
 	/**
 	 * @param label Label of the field.
 	 * @param type Type of the value of the field.
@@ -40,11 +40,6 @@ extends StrongFieldKey<CSVHeader<V>, V> {
 		
 		// Initialization.
 		_serializer = serializer;
-	}
-	
-	@Override
-	public CSVHeader<V> self() {
-		return this;
 	}
 	
 	// Signature.

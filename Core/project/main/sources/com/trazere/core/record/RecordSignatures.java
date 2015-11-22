@@ -41,7 +41,7 @@ public class RecordSignatures {
 		return (RecordSignature<K>) EMPTY;
 	}
 	
-	private static final RecordSignature<?> EMPTY = new BaseRecordSignature<SimpleFieldKey<?>>() {
+	private static final RecordSignature<?> EMPTY = new BaseRecordSignature<DummyFieldKey<?>>() {
 		@Override
 		public int size() {
 			return 0;
@@ -53,30 +53,37 @@ public class RecordSignatures {
 		}
 		
 		@Override
-		public boolean contains(final FieldKey<? extends SimpleFieldKey<?>, ?> key) {
+		public boolean contains(final FieldKey<DummyFieldKey<?>, ?> key) {
 			return false;
 		}
 		
 		@Override
-		public Set<? extends FieldKey<? extends SimpleFieldKey<?>, ?>> keys() {
+		public Set<? extends FieldKey<DummyFieldKey<?>, ?>> keys() {
 			return Sets.empty();
 		}
 		
 		@Override
-		public boolean isAssignableFrom(final RecordSignature<?> signature) {
+		public boolean isAssignableFrom(final RecordSignature<DummyFieldKey<?>> signature) {
 			return true;
 		}
 		
 		@Override
-		public Result<Unit> checkAssignableFrom(final RecordSignature<?> signature) {
+		public Result<Unit> checkAssignableFrom(final RecordSignature<DummyFieldKey<?>> signature) {
 			return CHECK_SUCCESS;
 		}
 		
 		@Override
-		public Result<Unit> checkValues(final Record<SimpleFieldKey<?>> record) {
+		public Result<Unit> checkValues(final Record<DummyFieldKey<?>> record) {
 			return CHECK_SUCCESS;
 		}
 	};
+	
+	private static abstract class DummyFieldKey<V>
+	extends FieldKey<DummyFieldKey<?>, V> {
+		public DummyFieldKey(final String label, final Class<V> type, final boolean nullable) {
+			super(label, type, nullable);
+		}
+	}
 	
 	private static final Result<Unit> CHECK_SUCCESS = Result.success(Unit.UNIT);
 	
@@ -88,7 +95,7 @@ public class RecordSignatures {
 	 * @return The built record signature.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<K, ?>> RecordSignature<K> fromKey(final FieldKey<? extends K, ?> key) {
+	public static <K extends FieldKey<K, ?>> RecordSignature<K> fromKey(final FieldKey<K, ?> key) {
 		return fromKeys(Lists.fromElement(key));
 	}
 	
@@ -101,7 +108,7 @@ public class RecordSignatures {
 	 * @return The built record signature.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<K, ?>> RecordSignature<K> fromKeys(final FieldKey<? extends K, ?> key1, final FieldKey<? extends K, ?> key2) {
+	public static <K extends FieldKey<K, ?>> RecordSignature<K> fromKeys(final FieldKey<K, ?> key1, final FieldKey<K, ?> key2) {
 		return fromKeys(Lists.fromElements(key1, key2));
 	}
 	
@@ -115,7 +122,7 @@ public class RecordSignatures {
 	 * @return The built record signature.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<K, ?>> RecordSignature<K> fromKeys(final FieldKey<? extends K, ?> key1, final FieldKey<? extends K, ?> key2, final FieldKey<? extends K, ?> key3) {
+	public static <K extends FieldKey<K, ?>> RecordSignature<K> fromKeys(final FieldKey<K, ?> key1, final FieldKey<K, ?> key2, final FieldKey<K, ?> key3) {
 		return fromKeys(Lists.fromElements(key1, key2, key3));
 	}
 	
@@ -128,7 +135,7 @@ public class RecordSignatures {
 	 * @since 2.0
 	 */
 	@SafeVarargs
-	public static <K extends FieldKey<K, ?>> RecordSignature<K> fromKeys(final FieldKey<? extends K, ?>... keys) {
+	public static <K extends FieldKey<K, ?>> RecordSignature<K> fromKeys(final FieldKey<K, ?>... keys) {
 		return fromKeys(Arrays.asList(keys));
 	}
 	
@@ -140,7 +147,7 @@ public class RecordSignatures {
 	 * @return The built record signature.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<K, ?>> RecordSignature<K> fromKeys(final Iterable<? extends FieldKey<? extends K, ?>> keys) {
+	public static <K extends FieldKey<K, ?>> RecordSignature<K> fromKeys(final Iterable<? extends FieldKey<K, ?>> keys) {
 		final RecordSignatureBuilder<K, ?> builder = new SimpleRecordSignatureBuilder<>();
 		builder.addAll(keys);
 		return builder.build();

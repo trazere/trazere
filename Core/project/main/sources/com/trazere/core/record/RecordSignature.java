@@ -62,7 +62,7 @@ public interface RecordSignature<K extends FieldKey<K, ?>> {
 	 * @return <code>true</code> when the record signature contains the field key, <code>false</code> otherwise.
 	 * @since 2.0
 	 */
-	default boolean contains(final FieldKey<? extends K, ?> key) {
+	default boolean contains(final FieldKey<K, ?> key) {
 		return keys().contains(key);
 	}
 	
@@ -72,7 +72,7 @@ public interface RecordSignature<K extends FieldKey<K, ?>> {
 	 * @return An unmodiable set of the field keys.
 	 * @since 2.0
 	 */
-	Set<? extends FieldKey<? extends K, ?>> keys();
+	Set<? extends FieldKey<K, ?>> keys();
 	
 	// Signature.
 	
@@ -89,7 +89,7 @@ public interface RecordSignature<K extends FieldKey<K, ?>> {
 	 * @return <code>true</code> when the record signature is compliant, <code>false</code> otherwise.
 	 * @see FieldKey#checkAssignableFrom(FieldKey)
 	 */
-	boolean isAssignableFrom(RecordSignature<?> signature);
+	boolean isAssignableFrom(RecordSignature<K> signature);
 	
 	/**
 	 * Tests whether records with the given signauture are compatible with this signature.
@@ -104,7 +104,7 @@ public interface RecordSignature<K extends FieldKey<K, ?>> {
 	 * @return A success when the record signature is compliant, a failure otherwise.
 	 * @see FieldKey#checkAssignableFrom(FieldKey)
 	 */
-	Result<Unit> checkAssignableFrom(RecordSignature<?> signature);
+	Result<Unit> checkAssignableFrom(RecordSignature<K> signature);
 	
 	/**
 	 * Tests whether the values of the given record are compatible this signature.

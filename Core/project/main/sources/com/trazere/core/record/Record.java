@@ -66,7 +66,7 @@ public interface Record<K extends FieldKey<K, ?>> {
 	 * @return <code>true</code> when the record contains a field identified by the given key, <code>false</code> otherwise.
 	 * @since 2.0
 	 */
-	default boolean contains(final FieldKey<? extends K, ?> key) {
+	default boolean contains(final FieldKey<K, ?> key) {
 		return keys().contains(key);
 	}
 	
@@ -76,15 +76,15 @@ public interface Record<K extends FieldKey<K, ?>> {
 	 * @return An unmodiable set of the field keys.
 	 * @since 2.0
 	 */
-	default Set<? extends FieldKey<? extends K, ?>> keys() {
-		return Collections.unmodifiableSet(new AbstractSet<FieldKey<? extends K, ?>>() {
+	default Set<? extends FieldKey<K, ?>> keys() {
+		return Collections.unmodifiableSet(new AbstractSet<FieldKey<K, ?>>() {
 			@Override
 			public int size() {
 				return fields().size();
 			}
 			
 			@Override
-			public Iterator<FieldKey<? extends K, ?>> iterator() {
+			public Iterator<FieldKey<K, ?>> iterator() {
 				return IteratorUtils.map(fields().iterator(), Field::getKey);
 			}
 		});
@@ -101,7 +101,7 @@ public interface Record<K extends FieldKey<K, ?>> {
 	 * @throws IncompatibleFieldException When the value of the field is not compatible with the type of the field.
 	 * @since 2.0
 	 */
-	default <V> Maybe<V> get(final FieldKey<? extends K, ? extends V> key)
+	default <V> Maybe<V> get(final FieldKey<K, V> key)
 	throws InvalidFieldException, NullFieldException, IncompatibleFieldException {
 		return CollectionUtils.first(fields(), field -> field.getKey().equals(key)).map(field -> key.castValue(field.getValue()));
 	}
@@ -118,9 +118,9 @@ public interface Record<K extends FieldKey<K, ?>> {
 	 * @throws IncompatibleFieldException When the value of the field is not compatible with the type of the field.
 	 * @since 2.0
 	 */
-	default <V> V getOptional(final FieldKey<? extends K, ? extends V> key, final V defaultValue)
+	default <V> V getOptional(final FieldKey<K, V> key, final V defaultValue)
 	throws InvalidFieldException, NullFieldException, IncompatibleFieldException {
-		return this.<V>get(key).get(defaultValue);
+		return get(key).get(defaultValue);
 	}
 	
 	/**
@@ -135,9 +135,9 @@ public interface Record<K extends FieldKey<K, ?>> {
 	 * @throws IncompatibleFieldException When the value of the field is not compatible with the type of the field.
 	 * @since 2.0
 	 */
-	default <V> V getOptional(final FieldKey<? extends K, ? extends V> key, final Thunk<? extends V> defaultValue)
+	default <V> V getOptional(final FieldKey<K, V> key, final Thunk<? extends V> defaultValue)
 	throws InvalidFieldException, NullFieldException, IncompatibleFieldException {
-		return this.<V>get(key).get(defaultValue);
+		return get(key).get(defaultValue);
 	}
 	
 	/**
@@ -152,7 +152,7 @@ public interface Record<K extends FieldKey<K, ?>> {
 	 * @throws IncompatibleFieldException When the value of the field is not compatible with the type of the field.
 	 * @since 2.0
 	 */
-	default <V> V getMandatory(final FieldKey<? extends K, ? extends V> key)
+	default <V> V getMandatory(final FieldKey<K, V> key)
 	throws MissingFieldException, InvalidFieldException, NullFieldException, IncompatibleFieldException {
 		final Maybe<V> value = get(key);
 		if (value.isSome()) {
@@ -168,20 +168,5 @@ public interface Record<K extends FieldKey<K, ?>> {
 	 * @return An unmodiable collection of the fields.
 	 * @since 2.0
 	 */
-	Collection<? extends Field<? extends K, ?>> fields();
-	
-	// TODO
-	//	/**
-	//	 * Populates the given record builder with the fields of this record.
-	//	 *
-	//	 * @param <B>
-	//	 * @param builder
-	//	 * @return
-	//	 * @throws DuplicateFieldException
-	//	 */
-	//	<B extends RecordBuilder<? super K, ?>> B populate(final B builder)
-	//	throws DuplicateFieldException;
-	//
-	//	<B extends RecordBuilder<? super K, ?>> B populate(final B builder, final Predicate<? super K> keys)
-	//	throws DuplicateFieldException;
+	Collection<? extends Field<K, ?>> fields();
 }

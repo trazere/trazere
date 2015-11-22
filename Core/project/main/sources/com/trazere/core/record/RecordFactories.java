@@ -34,17 +34,24 @@ public class RecordFactories {
 		return (RecordFactory<K, Record<K>>) SIMPLE;
 	}
 	
-	private static final RecordFactory<?, ? extends Record<?>> SIMPLE = new RecordFactory<SimpleFieldKey<?>, Record<SimpleFieldKey<?>>>() {
+	private static final RecordFactory<?, ? extends Record<?>> SIMPLE = new RecordFactory<DummyFieldKey<?>, Record<DummyFieldKey<?>>>() {
 		@Override
-		public Record<SimpleFieldKey<?>> build() {
+		public Record<DummyFieldKey<?>> build() {
 			return Records.empty();
 		}
 		
 		@Override
-		public RecordBuilder<SimpleFieldKey<?>, Record<SimpleFieldKey<?>>> newBuilder() {
+		public RecordBuilder<DummyFieldKey<?>, Record<DummyFieldKey<?>>> newBuilder() {
 			return new SimpleRecordBuilder<>();
 		}
 	};
+	
+	private static abstract class DummyFieldKey<V>
+	extends FieldKey<DummyFieldKey<?>, V> {
+		public DummyFieldKey(final String label, final Class<V> type, final boolean nullable) {
+			super(label, type, nullable);
+		}
+	}
 	
 	private RecordFactories() {
 		// Prevent instantiation.

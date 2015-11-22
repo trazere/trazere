@@ -38,7 +38,7 @@ import com.trazere.core.util.Unit;
  * @param <V> Type of the value of the field.
  * @since 2.0
  */
-public abstract class FieldKey<K extends FieldKey<K, V>, V> {
+public abstract class FieldKey<K extends FieldKey<K, ?>, V> {
 	/**
 	 * Instantiates a new non-nullable field key.
 	 * 
@@ -67,14 +67,6 @@ public abstract class FieldKey<K extends FieldKey<K, V>, V> {
 		_type = type;
 		_nullable = nullable;
 	}
-	
-	/**
-	 * Returns this field key with its concrete type.
-	 *
-	 * @return This field key.
-	 * @since 2.0
-	 */
-	public abstract K self();
 	
 	// Label.
 	
@@ -135,7 +127,7 @@ public abstract class FieldKey<K extends FieldKey<K, V>, V> {
 	 * @param key Key whose compatibility is to be tested.
 	 * @return <code>true</code> when the key is compliant, <code>false</code> otherwise.
 	 */
-	public boolean isAssignableFrom(final FieldKey<?, ?> key) {
+	public boolean isAssignableFrom(final FieldKey<K, ?> key) {
 		if (key == this) {
 			return true;
 		} else if (!isNullable() && key.isNullable()) {
@@ -159,7 +151,7 @@ public abstract class FieldKey<K extends FieldKey<K, V>, V> {
 	 * @param key Key whose compatibility is to be tested.
 	 * @return A success when the key is compliant, a failure otherwise.
 	 */
-	public Result<Unit> checkAssignableFrom(final FieldKey<?, ?> key) {
+	public Result<Unit> checkAssignableFrom(final FieldKey<K, ?> key) {
 		if (key == this) {
 			return CHECK_SUCCESS;
 		} else if (!isNullable() && key.isNullable()) {

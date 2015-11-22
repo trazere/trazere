@@ -38,26 +38,26 @@ implements RecordSignature<K> {
 	// Signature.
 	
 	@Override
-	public boolean isAssignableFrom(final RecordSignature<?> signature) {
-		final Function<FieldKey<?, ?>, Maybe<FieldKey<?, ?>>> signatureKeys = MapExtractors.fromKeys(signature.keys(), Functions.identity());
+	public boolean isAssignableFrom(final RecordSignature<K> signature) {
+		final Function<FieldKey<K, ?>, Maybe<FieldKey<K, ?>>> signatureKeys = MapExtractors.fromKeys(signature.keys(), Functions.identity());
 		//		return IterableUtils.areAll(keys(), key -> signatureKeys.evaluate(key).filter(key::isAssignableFrom).isSome());
-		return IterableUtils.areAll(keys(), (final FieldKey<? extends K, ?> key) -> {
-			final Maybe<FieldKey<?, ?>> signatureKey = signatureKeys.evaluate(key);
+		return IterableUtils.areAll(keys(), (final FieldKey<K, ?> key) -> {
+			final Maybe<FieldKey<K, ?>> signatureKey = signatureKeys.evaluate(key);
 			return signatureKey.isSome() && key.isAssignableFrom(signatureKey.asSome().getValue());
 		});
 	}
 	
 	@Override
-	public Result<Unit> checkAssignableFrom(final RecordSignature<?> signature) {
-		final Function<FieldKey<?, ?>, Maybe<FieldKey<?, ?>>> signatureKeys = MapExtractors.fromKeys(signature.keys(), Functions.identity());
-		//		final Iterable<Result<Unit>> keyChecks = IterableUtils.map(keys(), (final FieldKey<? extends K, ?> key) -> {
+	public Result<Unit> checkAssignableFrom(final RecordSignature<K> signature) {
+		final Function<FieldKey<K, ?>, Maybe<FieldKey<K, ?>>> signatureKeys = MapExtractors.fromKeys(signature.keys(), Functions.identity());
+		//		final Iterable<Result<Unit>> keyChecks = IterableUtils.map(keys(), (final FieldKey<K, ?> key) -> {
 		//			return signatureKeys.evaluate(key) // Get the signature key
 		//			.map(key::checkAssignableFrom) // Check that it is compatible
 		//			.get(Result.failure(new MissingFieldException("Missing key \"" + key + "\""))); // Handle missing key
 		//		});
 		//		return IterableUtils.first(keyChecks, Result::isFailure).get(CHECK_SUCCESS);
-		for (final FieldKey<? extends K, ?> key : keys()) {
-			final Maybe<FieldKey<?, ?>> signatureKey = signatureKeys.evaluate(key);
+		for (final FieldKey<K, ?> key : keys()) {
+			final Maybe<FieldKey<K, ?>> signatureKey = signatureKeys.evaluate(key);
 			if (signatureKey.isNone()) {
 				return Result.failure(new MissingFieldException("Missing key \"" + key + "\""));
 			} else {
@@ -72,7 +72,7 @@ implements RecordSignature<K> {
 	
 	@Override
 	public Result<Unit> checkValues(final Record<K> record) {
-		for (final FieldKey<? extends K, ?> key : keys()) {
+		for (final FieldKey<K, ?> key : keys()) {
 			final Maybe<?> value = record.get(key);
 			if (value.isNone()) {
 				return Result.failure(new MissingFieldException("Missing field \"" + key + "\""));
@@ -112,7 +112,7 @@ implements RecordSignature<K> {
 	@Override
 	public String toString() {
 		final DescriptionBuilder description = new DescriptionBuilder(DescriptionFormats.BASIC);
-		for (final FieldKey<? extends K, ?> key : keys()) {
+		for (final FieldKey<K, ?> key : keys()) {
 			description.append(key.toString());
 		}
 		return description.toString();

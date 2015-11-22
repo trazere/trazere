@@ -35,6 +35,13 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>${tools.org.slf4j.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>${tools.org.testng.version}</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

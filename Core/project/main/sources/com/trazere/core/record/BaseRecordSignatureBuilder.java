@@ -36,7 +36,7 @@ implements RecordSignatureBuilder<K, R> {
 	 * 
 	 * @since 2.0
 	 */
-	protected final Map<FieldKey<? extends K, ?>, FieldKey<? extends K, ?>> _keys = new HashMap<>();
+	protected final Map<FieldKey<K, ?>, FieldKey<K, ?>> _keys = new HashMap<>();
 	
 	@Override
 	public int size() {
@@ -49,12 +49,12 @@ implements RecordSignatureBuilder<K, R> {
 	}
 	
 	@Override
-	public boolean contains(final FieldKey<? extends K, ?> key) {
+	public boolean contains(final FieldKey<K, ?> key) {
 		return _keys.containsKey(key);
 	}
 	
 	@Override
-	public void add(final FieldKey<? extends K, ?> key)
+	public void add(final FieldKey<K, ?> key)
 	throws DuplicateFieldException {
 		if (!_keys.containsKey(key)) {
 			set(key);
@@ -64,16 +64,16 @@ implements RecordSignatureBuilder<K, R> {
 	}
 	
 	@Override
-	public void complete(final FieldKey<? extends K, ?> key) {
+	public void complete(final FieldKey<K, ?> key) {
 		if (!_keys.containsKey(key)) {
 			set(key);
 		}
 	}
 	
 	@Override
-	public void unify(final FieldKey<? extends K, ?> key, final FieldKeyUnifier<K> unifier)
+	public void unify(final FieldKey<K, ?> key, final FieldKeyUnifier<K> unifier)
 	throws IncompatibleFieldException {
-		final Maybe<FieldKey<? extends K, ?>> currentKey = MapUtils.get(_keys, key);
+		final Maybe<FieldKey<K, ?>> currentKey = MapUtils.get(_keys, key);
 		if (currentKey.isSome()) {
 			set(unifier.unify(currentKey.asSome().getValue(), key));
 		} else {
@@ -82,7 +82,7 @@ implements RecordSignatureBuilder<K, R> {
 	}
 	
 	@Override
-	public void set(final FieldKey<? extends K, ?> key) {
+	public void set(final FieldKey<K, ?> key) {
 		assert null != key;
 		
 		_keys.remove(key); // Note: update the key as well
@@ -90,7 +90,7 @@ implements RecordSignatureBuilder<K, R> {
 	}
 	
 	@Override
-	public void remove(final FieldKey<? extends K, ?> key) {
+	public void remove(final FieldKey<K, ?> key) {
 		assert null != key;
 		
 		_keys.remove(key);

@@ -47,7 +47,7 @@ public class RecordUtils {
 	 * @param procedure Procedure to execute.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>> void foreach(final Record<? extends K> record, final Procedure<? super Field<? extends K, ?>> procedure) {
+	public static <K extends FieldKey<K, ?>> void foreach(final Record<K> record, final Procedure<? super Field<K, ?>> procedure) {
 		IterableUtils.foreach(record.fields(), procedure);
 	}
 	
@@ -62,7 +62,7 @@ public class RecordUtils {
 	 * @return The folded state.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>, S> S fold(final Record<? extends K> record, final Function2<? super S, ? super Field<? extends K, ?>, ? extends S> operator, final S initialState) {
+	public static <K extends FieldKey<K, ?>, S> S fold(final Record<K> record, final Function2<? super S, ? super Field<K, ?>, ? extends S> operator, final S initialState) {
 		return IterableUtils.fold(record.fields(), operator, initialState);
 	}
 	
@@ -75,7 +75,7 @@ public class RecordUtils {
 	 * @return The first accepted field.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>> Maybe<Field<? extends K, ?>> first(final Record<? extends K> record, final Predicate<? super Field<? extends K, ?>> filter) {
+	public static <K extends FieldKey<K, ?>> Maybe<Field<K, ?>> first(final Record<K> record, final Predicate<? super Field<K, ?>> filter) {
 		return IterableUtils.first(record.fields(), filter);
 	}
 	
@@ -89,7 +89,7 @@ public class RecordUtils {
 	 * @return The first extracted element.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>, EE> Maybe<? extends EE> extractFirst(final Record<? extends K> record, final Function<? super Field<? extends K, ?>, ? extends Maybe<? extends EE>> extractor) {
+	public static <K extends FieldKey<K, ?>, EE> Maybe<? extends EE> extractFirst(final Record<K> record, final Function<? super Field<K, ?>, ? extends Maybe<? extends EE>> extractor) {
 		return IterableUtils.extractFirst(record.fields(), extractor);
 	}
 	
@@ -102,7 +102,7 @@ public class RecordUtils {
 	 * @return <code>true</code> when some field is accepted, <code>false</code> when all fields are rejected.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>> boolean isAny(final Record<? extends K> record, final Predicate<? super Field<? extends K, ?>> filter) {
+	public static <K extends FieldKey<K, ?>> boolean isAny(final Record<K> record, final Predicate<? super Field<K, ?>> filter) {
 		return IterableUtils.isAny(record.fields(), filter);
 	}
 	
@@ -115,7 +115,7 @@ public class RecordUtils {
 	 * @return <code>true</code> when all fields are accepted, <code>false</code> when some field is rejected.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>> boolean areAll(final Record<? extends K> record, final Predicate<? super Field<? extends K, ?>> filter) {
+	public static <K extends FieldKey<K, ?>> boolean areAll(final Record<K> record, final Predicate<? super Field<K, ?>> filter) {
 		return IterableUtils.areAll(record.fields(), filter);
 	}
 	
@@ -128,7 +128,7 @@ public class RecordUtils {
 	 * @return The number of accepted fields.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>> int count(final Record<? extends K> record, final Predicate<? super Field<? extends K, ?>> filter) {
+	public static <K extends FieldKey<K, ?>> int count(final Record<K> record, final Predicate<? super Field<K, ?>> filter) {
 		return IterableUtils.count(record.fields(), filter);
 	}
 	
@@ -145,8 +145,8 @@ public class RecordUtils {
 	 * @since 2.0
 	 */
 	public static <K extends FieldKey<K, ?>> Record<K> union(final Record<K> record1, final Record<K> record2) {
-		final Set<? extends FieldKey<? extends K, ?>> keys1 = record1.keys();
-		final Set<FieldKey<? extends K, ?>> duplicateKeys = CollectionUtils.filter(record2.keys(), key -> keys1.contains(key), CollectionFactories.hashSet());
+		final Set<? extends FieldKey<K, ?>> keys1 = record1.keys();
+		final Set<FieldKey<K, ?>> duplicateKeys = CollectionUtils.filter(record2.keys(), key -> keys1.contains(key), CollectionFactories.hashSet());
 		return new BaseRecord<K>() {
 			@Override
 			public int size() {
@@ -159,27 +159,27 @@ public class RecordUtils {
 			}
 			
 			@Override
-			public boolean contains(final FieldKey<? extends K, ?> key) {
+			public boolean contains(final FieldKey<K, ?> key) {
 				return record1.contains(key) || record2.contains(key);
 			}
 			
 			@Override
-			public Set<? extends FieldKey<? extends K, ?>> keys() {
-				return new AbstractSet<FieldKey<? extends K, ?>>() {
+			public Set<? extends FieldKey<K, ?>> keys() {
+				return new AbstractSet<FieldKey<K, ?>>() {
 					@Override
 					public int size() {
 						return record1.size() + record2.size() - duplicateKeys.size();
 					}
 					
 					@Override
-					public Iterator<FieldKey<? extends K, ?>> iterator() {
+					public Iterator<FieldKey<K, ?>> iterator() {
 						return IteratorUtils.append(record1.keys().iterator(), IteratorUtils.filter(record2.keys().iterator(), key -> !duplicateKeys.contains(key)));
 					}
 				};
 			}
 			
 			@Override
-			public <V> Maybe<V> get(final FieldKey<? extends K, ? extends V> key)
+			public <V> Maybe<V> get(final FieldKey<K, V> key)
 			throws InvalidFieldException {
 				final Maybe<V> value1 = record1.get(key);
 				if (value1.isSome()) {
@@ -190,15 +190,15 @@ public class RecordUtils {
 			}
 			
 			@Override
-			public Collection<Field<? extends K, ?>> fields() {
-				return new AbstractCollection<Field<? extends K, ?>>() {
+			public Collection<Field<K, ?>> fields() {
+				return new AbstractCollection<Field<K, ?>>() {
 					@Override
 					public int size() {
 						return record1.size() + record2.size() - duplicateKeys.size();
 					}
 					
 					@Override
-					public Iterator<Field<? extends K, ?>> iterator() {
+					public Iterator<Field<K, ?>> iterator() {
 						return IteratorUtils.append(record1.fields().iterator(), IteratorUtils.filter(record2.fields().iterator(), field -> !duplicateKeys.contains(field.getKey())));
 					}
 				};
@@ -220,7 +220,7 @@ public class RecordUtils {
 	 * @return A record containing the union of the fields.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<K, ?>, R extends Record<K>> R union(final Record<? extends K> record1, final Record<? extends K> record2, final RecordFactory<K, R> resultFactory) {
+	public static <K extends FieldKey<K, ?>, R extends Record<K>> R union(final Record<K> record1, final Record<K> record2, final RecordFactory<K, R> resultFactory) {
 		final RecordBuilder<K, R> builder = resultFactory.newBuilder();
 		builder.setAll(record1);
 		builder.completeAll(record2);
@@ -242,9 +242,9 @@ public class RecordUtils {
 	 * @return A record containing the filtered fields.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<K, ?>, R extends Record<K>> R filter(final Record<? extends K> record, final Predicate<? super Field<? extends K, ?>> filter, final RecordFactory<K, R> resultFactory) {
+	public static <K extends FieldKey<K, ?>, R extends Record<K>> R filter(final Record<K> record, final Predicate<? super Field<K, ?>> filter, final RecordFactory<K, R> resultFactory) {
 		final RecordBuilder<K, R> builder = resultFactory.newBuilder();
-		for (final Field<? extends K, ?> field : record.fields()) {
+		for (final Field<K, ?> field : record.fields()) {
 			if (filter.evaluate(field)) {
 				builder.set(field);
 			}
@@ -267,10 +267,10 @@ public class RecordUtils {
 	 * @throws DuplicateFieldException When sereral transformed field are conflicting.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<K, ?>, TK extends FieldKey<TK, ?>, R extends Record<TK>> R map(final Record<? extends K> record, final Function<? super Field<? extends K, ?>, ? extends Field<? extends TK, ?>> function, final RecordFactory<TK, R> resultFactory)
+	public static <K extends FieldKey<K, ?>, TK extends FieldKey<TK, ?>, R extends Record<TK>> R map(final Record<K> record, final Function<? super Field<K, ?>, ? extends Field<TK, ?>> function, final RecordFactory<TK, R> resultFactory)
 	throws DuplicateFieldException {
 		final RecordBuilder<TK, R> builder = resultFactory.newBuilder();
-		for (final Field<? extends K, ?> field : record.fields()) {
+		for (final Field<K, ?> field : record.fields()) {
 			builder.add(function.evaluate(field));
 		}
 		return builder.build();
@@ -291,11 +291,11 @@ public class RecordUtils {
 	 * @throws DuplicateFieldException When sereral extracted field are conflicting.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>, EK extends FieldKey<EK, ?>, R extends Record<EK>> R extract(final Record<? extends K> record, final Function<? super Field<? extends K, ?>, ? extends Maybe<? extends Field<? extends EK, ?>>> extractor, final RecordFactory<EK, R> resultFactory)
+	public static <K extends FieldKey<K, ?>, EK extends FieldKey<EK, ?>, R extends Record<EK>> R extract(final Record<K> record, final Function<? super Field<K, ?>, ? extends Maybe<? extends Field<EK, ?>>> extractor, final RecordFactory<EK, R> resultFactory)
 	throws DuplicateFieldException {
 		final RecordBuilder<EK, R> builder = resultFactory.newBuilder();
-		for (final Field<? extends K, ?> field : record.fields()) {
-			final Maybe<? extends Field<? extends EK, ?>> extractedField = extractor.evaluate(field);
+		for (final Field<K, ?> field : record.fields()) {
+			final Maybe<? extends Field<EK, ?>> extractedField = extractor.evaluate(field);
 			if (extractedField.isSome()) {
 				builder.add(extractedField.asSome().getValue());
 			}

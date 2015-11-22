@@ -36,17 +36,17 @@ public class RecordAccumulators {
 	 * @see RecordBuilder#addAll(Iterable)
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<K, ?>, B extends RecordBuilder<K, ?>> Accumulator<Field<? extends K, ?>, B> add(final B builder) {
+	public static <K extends FieldKey<K, ?>, B extends RecordBuilder<K, ?>> Accumulator<Field<K, ?>, B> add(final B builder) {
 		assert null != builder;
 		
-		return new Accumulator<Field<? extends K, ?>, B>() {
+		return new Accumulator<Field<K, ?>, B>() {
 			@Override
-			public void add(final Field<? extends K, ?> field) {
+			public void add(final Field<K, ?> field) {
 				builder.add(field);
 			}
 			
 			@Override
-			public void addAll(final Iterable<? extends Field<? extends K, ?>> fields) {
+			public void addAll(final Iterable<? extends Field<K, ?>> fields) {
 				builder.addAll(fields);
 			}
 			
@@ -68,17 +68,17 @@ public class RecordAccumulators {
 	 * @see RecordBuilder#completeAll(Iterable)
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<K, ?>, B extends RecordBuilder<K, ?>> Accumulator<Field<? extends K, ?>, B> complete(final B builder) {
+	public static <K extends FieldKey<K, ?>, B extends RecordBuilder<K, ?>> Accumulator<Field<K, ?>, B> complete(final B builder) {
 		assert null != builder;
 		
-		return new Accumulator<Field<? extends K, ?>, B>() {
+		return new Accumulator<Field<K, ?>, B>() {
 			@Override
-			public void add(final Field<? extends K, ?> field) {
+			public void add(final Field<K, ?> field) {
 				builder.complete(field);
 			}
 			
 			@Override
-			public void addAll(final Iterable<? extends Field<? extends K, ?>> fields) {
+			public void addAll(final Iterable<? extends Field<K, ?>> fields) {
 				builder.completeAll(fields);
 			}
 			
@@ -99,17 +99,17 @@ public class RecordAccumulators {
 	 * @see RecordBuilder#set(Field)
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<K, ?>, B extends RecordBuilder<K, ?>> Accumulator<Field<? extends K, ?>, B> set(final B builder) {
+	public static <K extends FieldKey<K, ?>, B extends RecordBuilder<K, ?>> Accumulator<Field<K, ?>, B> set(final B builder) {
 		assert null != builder;
 		
-		return new Accumulator<Field<? extends K, ?>, B>() {
+		return new Accumulator<Field<K, ?>, B>() {
 			@Override
-			public void add(final Field<? extends K, ?> field) {
+			public void add(final Field<K, ?> field) {
 				builder.set(field);
 			}
 			
 			@Override
-			public void addAll(final Iterable<? extends Field<? extends K, ?>> fields) {
+			public void addAll(final Iterable<? extends Field<K, ?>> fields) {
 				builder.setAll(fields);
 			}
 			

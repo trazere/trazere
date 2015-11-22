@@ -36,8 +36,6 @@ import java.util.Set;
  * @since 2.0
  */
 public class RecordSignatureUtils {
-	// TODO: fields (similar to MapUtils.bindings(...)) for lazy manipulations.
-	
 	/**
 	 * Executes the given procedure with each field key of the given record signature.
 	 * 
@@ -46,7 +44,7 @@ public class RecordSignatureUtils {
 	 * @param procedure Procedure to execute.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>> void foreach(final RecordSignature<? extends K> signature, final Procedure<? super FieldKey<? extends K, ?>> procedure) {
+	public static <K extends FieldKey<K, ?>> void foreach(final RecordSignature<K> signature, final Procedure<? super FieldKey<K, ?>> procedure) {
 		IterableUtils.foreach(signature.keys(), procedure);
 	}
 	
@@ -61,7 +59,7 @@ public class RecordSignatureUtils {
 	 * @return The folded state.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>, S> S fold(final RecordSignature<? extends K> signature, final Function2<? super S, ? super FieldKey<? extends K, ?>, ? extends S> operator, final S initialState) {
+	public static <K extends FieldKey<K, ?>, S> S fold(final RecordSignature<K> signature, final Function2<? super S, ? super FieldKey<K, ?>, ? extends S> operator, final S initialState) {
 		return IterableUtils.fold(signature.keys(), operator, initialState);
 	}
 	
@@ -74,7 +72,7 @@ public class RecordSignatureUtils {
 	 * @return The first accepted field key.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>> Maybe<FieldKey<? extends K, ?>> first(final RecordSignature<? extends K> signature, final Predicate<? super FieldKey<? extends K, ?>> filter) {
+	public static <K extends FieldKey<K, ?>> Maybe<FieldKey<K, ?>> first(final RecordSignature<K> signature, final Predicate<? super FieldKey<K, ?>> filter) {
 		return IterableUtils.first(signature.keys(), filter);
 	}
 	
@@ -88,7 +86,7 @@ public class RecordSignatureUtils {
 	 * @return The first extracted element.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>, EE> Maybe<? extends EE> extractFirst(final RecordSignature<? extends K> signature, final Function<? super FieldKey<? extends K, ?>, ? extends Maybe<? extends EE>> extractor) {
+	public static <K extends FieldKey<K, ?>, EE> Maybe<? extends EE> extractFirst(final RecordSignature<K> signature, final Function<? super FieldKey<K, ?>, ? extends Maybe<? extends EE>> extractor) {
 		return IterableUtils.extractFirst(signature.keys(), extractor);
 	}
 	
@@ -101,7 +99,7 @@ public class RecordSignatureUtils {
 	 * @return <code>true</code> when some field key is accepted by the filter, <code>false</code> when all fields are rejected.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>> boolean isAny(final RecordSignature<? extends K> signature, final Predicate<? super FieldKey<? extends K, ?>> filter) {
+	public static <K extends FieldKey<K, ?>> boolean isAny(final RecordSignature<K> signature, final Predicate<? super FieldKey<K, ?>> filter) {
 		return IterableUtils.isAny(signature.keys(), filter);
 	}
 	
@@ -114,7 +112,7 @@ public class RecordSignatureUtils {
 	 * @return <code>true</code> when all field keys are accepted by the filter, <code>false</code> when some field is rejected.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>> boolean areAll(final RecordSignature<? extends K> signature, final Predicate<? super FieldKey<? extends K, ?>> filter) {
+	public static <K extends FieldKey<K, ?>> boolean areAll(final RecordSignature<K> signature, final Predicate<? super FieldKey<K, ?>> filter) {
 		return IterableUtils.areAll(signature.keys(), filter);
 	}
 	
@@ -127,7 +125,7 @@ public class RecordSignatureUtils {
 	 * @return The number of accepted fields.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<? extends K, ?>> int count(final RecordSignature<? extends K> signature, final Predicate<? super FieldKey<? extends K, ?>> filter) {
+	public static <K extends FieldKey<K, ?>> int count(final RecordSignature<K> signature, final Predicate<? super FieldKey<K, ?>> filter) {
 		return IterableUtils.count(signature.keys(), filter);
 	}
 	
@@ -144,8 +142,8 @@ public class RecordSignatureUtils {
 	 * @since 2.0
 	 */
 	public static <K extends FieldKey<K, ?>> RecordSignature<K> union(final RecordSignature<K> signature1, final RecordSignature<K> signature2) {
-		final Set<? extends FieldKey<? extends K, ?>> keys1 = signature1.keys();
-		final Set<FieldKey<? extends K, ?>> duplicateKeys = CollectionUtils.filter(signature2.keys(), key -> keys1.contains(key), CollectionFactories.hashSet());
+		final Set<? extends FieldKey<K, ?>> keys1 = signature1.keys();
+		final Set<FieldKey<K, ?>> duplicateKeys = CollectionUtils.filter(signature2.keys(), key -> keys1.contains(key), CollectionFactories.hashSet());
 		return new BaseRecordSignature<K>() {
 			@Override
 			public int size() {
@@ -158,20 +156,20 @@ public class RecordSignatureUtils {
 			}
 			
 			@Override
-			public boolean contains(final FieldKey<? extends K, ?> key) {
+			public boolean contains(final FieldKey<K, ?> key) {
 				return signature1.contains(key) || signature2.contains(key);
 			}
 			
 			@Override
-			public Set<? extends FieldKey<? extends K, ?>> keys() {
-				return new AbstractSet<FieldKey<? extends K, ?>>() {
+			public Set<? extends FieldKey<K, ?>> keys() {
+				return new AbstractSet<FieldKey<K, ?>>() {
 					@Override
 					public int size() {
 						return signature1.size() + signature2.size() - duplicateKeys.size();
 					}
 					
 					@Override
-					public Iterator<FieldKey<? extends K, ?>> iterator() {
+					public Iterator<FieldKey<K, ?>> iterator() {
 						return IteratorUtils.append(signature1.keys().iterator(), IteratorUtils.filter(signature2.keys().iterator(), key -> !duplicateKeys.contains(key)));
 					}
 				};
@@ -188,18 +186,18 @@ public class RecordSignatureUtils {
 	 * @return A record signature containing the accepted field keys.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<K, ?>> RecordSignature<K> filter(final RecordSignature<K> signature, final Predicate<? super FieldKey<? extends K, ?>> filter) {
+	public static <K extends FieldKey<K, ?>> RecordSignature<K> filter(final RecordSignature<K> signature, final Predicate<? super FieldKey<K, ?>> filter) {
 		assert null != signature;
 		assert null != filter;
 		
-		final Set<FieldKey<? extends K, ?>> keys = SetUtils.unmodifiable(new AbstractSet<FieldKey<? extends K, ?>>() {
+		final Set<FieldKey<K, ?>> keys = SetUtils.unmodifiable(new AbstractSet<FieldKey<K, ?>>() {
 			@Override
 			public int size() {
 				return IterableUtils.count(signature.keys(), filter);
 			}
 			
 			@Override
-			public Iterator<FieldKey<? extends K, ?>> iterator() {
+			public Iterator<FieldKey<K, ?>> iterator() {
 				return IteratorUtils.filter(signature.keys().iterator(), filter);
 			}
 		});
@@ -216,86 +214,19 @@ public class RecordSignatureUtils {
 			}
 			
 			@Override
-			public boolean contains(final FieldKey<? extends K, ?> key) {
+			public boolean contains(final FieldKey<K, ?> key) {
 				return signature.contains(key) && filter.evaluate(key);
 			}
 			
 			@Override
-			public Set<? extends FieldKey<? extends K, ?>> keys() {
+			public Set<? extends FieldKey<K, ?>> keys() {
 				return keys;
 			}
 		};
 	}
 	
 	// TODO: map ?
-	
 	// TODO: extract ?
-	
-	// TODO
-	//	/**
-	//	 * Unifies the requirements of the given parametrable accepted by the given filter into the given record signature builder.
-	//	 *
-	//	 * @param <K> Type of the keys.
-	//	 * @param <V> Type of the values.
-	//	 * @param <KX> Type of the key filter exceptions.
-	//	 * @param parametrable The parametrable.
-	//	 * @param keys The filter.
-	//	 * @param builder The record signature builder.
-	//	 * @throws KX When some key filter evaluation fails.
-	//	 * @throws InvalidFieldException When some requirement cannot be read.
-	//	 * @throws IncompatibleFieldException When the signature of some requirement is not compatible.
-	//	 */
-	//	public static <K, V, KX extends Exception> void unifyRequirements(final Parametrable<K, V> parametrable, final Predicate1<? super K, KX> keys, final RecordSignatureBuilder<K, V, ?> builder)
-	//	throws IncompatibleFieldException, InvalidFieldException, KX {
-	//		assert null != parametrable;
-	//		assert null != keys;
-	//		assert null != builder;
-	//
-	//		final RecordSignature<K, V> requirements = parametrable.getRequirements();
-	//		for (final K key : requirements.getKeys()) {
-	//			if (keys.evaluate(key)) {
-	//				final FieldSignature<K, ? extends V> requirement;
-	//				try {
-	//					requirement = requirements.get(key);
-	//				} catch (final MissingFieldException exception) {
-	//					throw new InternalException(exception);
-	//				}
-	//				builder.unify(requirement);
-	//			}
-	//		}
-	//	}
-	//
-	//	/**
-	//	 * Extracs the requirements of the given parametrable using the given extractor and unifies them into the given record signature builder.
-	//	 *
-	//	 * @param <K> Type of the keys.
-	//	 * @param <V> Type of the values.
-	//	 * @param <EX> Type of the extractor exceptions.
-	//	 * @param parametrable The parametrable.
-	//	 * @param extractor The extractor.
-	//	 * @param builder The record signature builder.
-	//	 * @throws InvalidFieldException When some requirement cannot be read.
-	//	 * @throws EX When some requirement extraction fails.
-	//	 * @throws IncompatibleFieldException When the signature of some requirement is not compatible.
-	//	 */
-	//	public static <K, V, EX extends Exception> void unifyRequirements(final Parametrable<K, V> parametrable, final Function1<? super FieldSignature<K, ? extends V>, ? extends Maybe<? extends FieldSignature<K, ? extends V>>, EX> extractor, final RecordSignatureBuilder<K, V, ?> builder)
-	//	throws InvalidFieldException, EX, IncompatibleFieldException {
-	//		assert null != parametrable;
-	//		assert null != extractor;
-	//		assert null != builder;
-	//
-	//		final RecordSignature<K, V> requirements = parametrable.getRequirements();
-	//		for (final K key : requirements.getKeys()) {
-	//			final FieldSignature<K, ? extends V> requirement;
-	//			try {
-	//				requirement = requirements.get(key);
-	//			} catch (final MissingFieldException exception) {
-	//				throw new InternalException(exception);
-	//			}
-	//			final Maybe<? extends FieldSignature<K, ? extends V>> extractedRequirement = extractor.evaluate(requirement);
-	//			builder.unify(extractedRequirement.asSome().getValue());
-	//		}
-	//	}
 	
 	//	/**
 	//	 * Typechecks the requirements of the given parametrable against the given signature.
@@ -366,9 +297,9 @@ public class RecordSignatureUtils {
 	//			}
 	//		}
 	//	}
-	//
+	
 	//	/**
-	//	 * Typechecks the given requirement against the given signature.
+	//	 * Type checks the given requirement against the given record signature.
 	//	 *
 	//	 * @param <K> Type of the keys.
 	//	 * @param requirement The requierement.
@@ -377,13 +308,8 @@ public class RecordSignatureUtils {
 	//	 * @throws InvalidFieldException When some signature field cannot be read.
 	//	 * @throws IncompatibleFieldException When some signature field is incompatible with the requirement.
 	//	 */
-	//	// TODO: use TypeCheckException
-	//	public static <K> void typeCheck(final FieldSignature<K, ?> requirement, final RecordSignature<? super K, ?> signature)
+	//	public static <K extends FieldKey<K, ?>> void typeCheck(final FieldKey<? extends K, ?> requirement, final RecordSignature<? super K> signature)
 	//	throws MissingFieldException, InvalidFieldException, IncompatibleFieldException {
-	//		assert null != requirement;
-	//		assert null != signature;
-	//
-	//		final K key = requirement.getKey();
 	//		final Maybe<? extends FieldSignature<? super K, ?>> maybeFieldSignature = signature.getMaybe(key);
 	//		if (maybeFieldSignature.isNone()) {
 	//			throw new MissingFieldException("Missing field \"" + key + "\" in signature " + signature);
