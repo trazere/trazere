@@ -40,7 +40,7 @@ public interface Parametrable<K extends FieldKey<K, ?>> {
 	 * @param builder Builder into which the requirements are to be unified.
 	 * @return The given signature builder.
 	 * @throws IncompatibleFieldException When the unification fails.
-	 * @see RecordSignatureBuilder#unify(FieldKey, FieldKeyUnifier)
+	 * @see RecordSignatureBuilder#unify(FieldKey)
 	 */
 	<B extends RecordSignatureBuilder<K, ?>> B unifyRequirements(B builder)
 	throws IncompatibleFieldException;

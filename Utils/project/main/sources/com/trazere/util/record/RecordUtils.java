@@ -456,7 +456,7 @@ public class RecordUtils {
 	 * @throws InvalidFieldException When some requirement cannot be read.
 	 * @throws IncompatibleFieldException When the signature of some requirement is not compatible.
 	 * @deprecated Use {@link com.trazere.core.record.Parametrable#getRequirements()} and
-	 *             {@link com.trazere.core.record.RecordSignatureBuilder#unifyAll(Iterable, com.trazere.core.record.FieldKeyUnifier)}.
+	 *             {@link com.trazere.core.record.RecordSignatureBuilder#unifyAll(Iterable)}.
 	 */
 	@Deprecated
 	public static <K, V, KX extends Exception> void unifyRequirements(final Parametrable<K, V> parametrable, final Predicate1<? super K, KX> keys, final RecordSignatureBuilder<K, V, ?> builder)
@@ -492,7 +492,7 @@ public class RecordUtils {
 	 * @throws EX When some requirement extraction fails.
 	 * @throws IncompatibleFieldException When the signature of some requirement is not compatible.
 	 * @deprecated Use {@link com.trazere.core.record.Parametrable#getRequirements()} and
-	 *             {@link com.trazere.core.record.RecordSignatureBuilder#unifyAll(Iterable, com.trazere.core.record.FieldKeyUnifier)}.
+	 *             {@link com.trazere.core.record.RecordSignatureBuilder#unifyAll(Iterable)}.
 	 */
 	@Deprecated
 	public static <K, V, EX extends Exception> void unifyRequirements(final Parametrable<K, V> parametrable, final Function1<? super FieldSignature<K, ? extends V>, ? extends Maybe<? extends FieldSignature<K, ? extends V>>, EX> extractor, final RecordSignatureBuilder<K, V, ?> builder)

@@ -50,41 +50,38 @@ extends FieldKey<LabelFieldKey<?>, V> {
 	
 	// Signature.
 	
-	/**
-	 * Unifier of {@link LabelFieldKey}s.
-	 * 
-	 * @since 2.0
-	 */
-	public static final FieldKeyUnifier<LabelFieldKey<?>> UNIFIER = new FieldKeyUnifier<LabelFieldKey<?>>() {
-		@Override
-		public <V1, V2> FieldKey<LabelFieldKey<?>, ?> unify(final FieldKey<LabelFieldKey<?>, V1> key1, final FieldKey<LabelFieldKey<?>, V2> key2) {
-			// Compute the label.
-			final String label1 = key1.getLabel();
-			final String label2 = key2.getLabel();
-			if (!label1.equals(label2)) {
-				throw new IncompatibleFieldException("Cannot unify field key + \"" + key1 + "\" with fueld key \"" + key2 + "\" (incompatible labels)");
+	@Override
+	public FieldKey<LabelFieldKey<?>, ?> unifyWith(final FieldKey<LabelFieldKey<?>, ?> key) {
+		if (key == this) {
+			return this;
+		} else {
+			// Unify the label.
+			final String label = getLabel();
+			final String keyLabel = key.getLabel();
+			if (!label.equals(keyLabel)) {
+				throw new IncompatibleFieldException("Cannot unify field key + \"" + this + "\" with fueld key \"" + key + "\" (incompatible labels)");
 			}
-			final String unifiedLabel = label1;
+			final String unifiedLabel = label;
 			
-			// Compute the type.
-			final Class<V1> type1 = key1.getType();
-			final Class<V2> type2 = key2.getType();
+			// Unify the type.
+			final Class<V> type = getType();
+			final Class<?> keyType = key.getType();
 			final Class<?> unifiedType;
-			if (type1.isAssignableFrom(type2)) {
-				unifiedType = type2;
-			} else if (type2.isAssignableFrom(type1)) {
-				unifiedType = type1;
+			if (type.isAssignableFrom(keyType)) {
+				unifiedType = keyType;
+			} else if (keyType.isAssignableFrom(type)) {
+				unifiedType = type;
 			} else {
-				throw new IncompatibleFieldException("Cannot unify field key + \"" + key1 + "\" with fueld key \"" + key2 + "\" (incompatible types)");
+				throw new IncompatibleFieldException("Cannot unify field key + \"" + this + "\" with fueld key \"" + key + "\" (incompatible types)");
 			}
 			
-			// Compute the nullabilty.
-			final boolean unifiedNullable = key1.isNullable() && key2.isNullable();
+			// Unify the nullabilty.
+			final boolean unifiedNullable = isNullable() && key.isNullable();
 			
 			// Build the unified key.
 			return new LabelFieldKey<>(unifiedLabel, unifiedType, unifiedNullable);
 		}
-	};
+	}
 	
 	// Object.
 	
@@ -105,13 +102,5 @@ extends FieldKey<LabelFieldKey<?>, V> {
 		} else {
 			return false;
 		}
-	}
-	
-	public static void main(final String[] args) {
-		final RecordSignatureBuilder<LabelFieldKey<?>, ?> builder = new SimpleRecordSignatureBuilder<>();
-		builder.add(new LabelFieldKey<>("A", Object.class, false));
-		builder.unify(new LabelFieldKey<>("A", String.class, true), UNIFIER);
-		builder.unify(new LabelFieldKey<>("B", Integer.class, true), UNIFIER);
-		System.out.println(builder.build());
 	}
 }

@@ -152,12 +152,11 @@ extends Factory<R> {
 	 * The record signature must either not contain the given field key, or contain a compatible field key.
 	 * 
 	 * @param key Field key to unify.
-	 * @param unifier Field key unifier to use.
 	 * @throws IncompatibleFieldException When the field key is not compatible with the record signature.
-	 * @see FieldKeyUnifier
+	 * @see FieldKey#unifyWith(FieldKey)
 	 * @since 2.0
 	 */
-	void unify(FieldKey<K, ?> key, FieldKeyUnifier<K> unifier)
+	void unify(FieldKey<K, ?> key)
 	throws IncompatibleFieldException;
 	
 	/**
@@ -166,15 +165,14 @@ extends Factory<R> {
 	 * The record signature must either not contain the given field keys, or contain compatible field keys.
 	 * 
 	 * @param keys Field keys to unify.
-	 * @param unifier Field key unifier to use.
 	 * @throws IncompatibleFieldException When some field key is not compatible with the record signature.
-	 * @see FieldKeyUnifier
+	 * @see FieldKey#unifyWith(FieldKey)
 	 * @since 2.0
 	 */
-	default void unifyAll(final Iterable<? extends FieldKey<K, ?>> keys, final FieldKeyUnifier<K> unifier)
+	default void unifyAll(final Iterable<? extends FieldKey<K, ?>> keys)
 	throws IncompatibleFieldException {
 		for (final FieldKey<K, ?> key : keys) {
-			unify(key, unifier);
+			unify(key);
 		}
 	}
 	
@@ -184,14 +182,13 @@ extends Factory<R> {
 	 * The record signature must either not contain the given field keys, or contain compatible field keys.
 	 * 
 	 * @param signature Record signature containing the field keys to unify.
-	 * @param unifier Field key unifier to use.
 	 * @throws IncompatibleFieldException When some field key is not compatible with the record signature.
-	 * @see FieldKeyUnifier
+	 * @see FieldKey#unifyWith(FieldKey)
 	 * @since 2.0
 	 */
-	default void unifyAll(final RecordSignature<K> signature, final FieldKeyUnifier<K> unifier)
+	default void unifyAll(final RecordSignature<K> signature)
 	throws IncompatibleFieldException {
-		unifyAll(signature.keys(), unifier);
+		unifyAll(signature.keys());
 	}
 	
 	/**

@@ -108,7 +108,7 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * 
 	 * @param field Field signature to unify.
 	 * @throws IncompatibleFieldException When the given and current signature of the field are not compatible.
-	 * @deprecated Use {@link com.trazere.core.record.RecordSignatureBuilder#unify(com.trazere.core.record.FieldKey, com.trazere.core.record.FieldKeyUnifier)}.
+	 * @deprecated Use {@link com.trazere.core.record.RecordSignatureBuilder#unify(com.trazere.core.record.FieldKey)}.
 	 */
 	@Deprecated
 	public void unify(final FieldSignature<K, ? extends V> field)
@@ -121,7 +121,7 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * 
 	 * @param fields Field signatures to unify.
 	 * @throws IncompatibleFieldException When the given and current signature of some field are not compatible.
-	 * @deprecated Use {@link com.trazere.core.record.RecordSignatureBuilder#unifyAll(Iterable, com.trazere.core.record.FieldKeyUnifier)}.
+	 * @deprecated Use {@link com.trazere.core.record.RecordSignatureBuilder#unifyAll(Iterable)}.
 	 */
 	@Deprecated
 	public void unifyAll(final Collection<? extends FieldSignature<K, ? extends V>> fields)
@@ -135,9 +135,7 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * @param signature Record signature to unify.
 	 * @throws InvalidFieldException When the some field of the given signature record cannot be read.
 	 * @throws IncompatibleFieldException When the given and current signature of some field are not compatible.
-	 * @deprecated Use
-	 *             {@link com.trazere.core.record.RecordSignatureBuilder#unifyAll(com.trazere.core.record.RecordSignature, com.trazere.core.record.FieldKeyUnifier)}
-	 *             .
+	 * @deprecated Use {@link com.trazere.core.record.RecordSignatureBuilder#unifyAll(com.trazere.core.record.RecordSignature)} .
 	 */
 	@Deprecated
 	public void unifyAll(final RecordSignature<K, ? extends V> signature)
@@ -156,8 +154,7 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * @throws IncompatibleFieldException When the given and current signature of some field are not compatible.
 	 * @throws FX When some filter evaluation fails.
 	 * @deprecated Use {@link RecordSignatureUtils#filter(com.trazere.core.record.RecordSignature, com.trazere.core.functional.Predicate)} and
-	 *             {@link com.trazere.core.record.RecordSignatureBuilder#unifyAll(com.trazere.core.record.RecordSignature, com.trazere.core.record.FieldKeyUnifier)}
-	 *             .
+	 *             {@link com.trazere.core.record.RecordSignatureBuilder#unifyAll(com.trazere.core.record.RecordSignature)} .
 	 */
 	@Deprecated
 	public <FX extends Exception> void unifyAll(final Predicate1<? super FieldSignature<K, ? extends V>, FX> filter, final RecordSignature<K, ? extends V> signature)

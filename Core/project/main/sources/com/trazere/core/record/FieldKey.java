@@ -165,6 +165,8 @@ public abstract class FieldKey<K extends FieldKey<K, ?>, V> {
 	
 	private static final Result<Unit> CHECK_SUCCESS = Result.success(Unit.UNIT);
 	
+	public abstract FieldKey<K, ?> unifyWith(final FieldKey<K, ?> key);
+	
 	/**
 	 * Tests whether the given value is compatible this key.
 	 * <p>

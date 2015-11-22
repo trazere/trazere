@@ -49,6 +49,17 @@ extends FieldKey<K, V> {
 		super(label, type, nullable);
 	}
 	
+	// Signature.
+	
+	@Override
+	public FieldKey<K, ?> unifyWith(final FieldKey<K, ?> key) {
+		if (key == this) {
+			return this;
+		} else {
+			throw new IncompatibleFieldException("Cannot unify field key + \"" + this + "\" with fueld key \"" + key + "\"");
+		}
+	}
+	
 	// Object.
 	
 	// Note: prevents overriding

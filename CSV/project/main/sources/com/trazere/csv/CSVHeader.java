@@ -44,42 +44,39 @@ extends StrongFieldKey<CSVHeader<?>, V> {
 	
 	// Signature.
 	
-	//	/**
-	//	 * Unifier of {@link CSVHeader}s.
-	//	 *
-	//	 * @since 2.0
-	//	 */
-	//	public static final FieldKeyUnifier<CSVHeader<?>> UNIFIER = new FieldKeyUnifier<CSVHeader<?>>() {
-	//		@Override
-	//		@SuppressWarnings("unchecked")
-	//		public <V1, V2> FieldKey<? extends CSVHeader<?>, ?> unify(final FieldKey<? extends CSVHeader<?>, V1> key1, final FieldKey<? extends CSVHeader<?>, V2> key2) {
-	//			// Compute the label.
-	//			final String label1 = key1.getLabel();
-	//			final String label2 = key2.getLabel();
-	//			if (!label1.equals(label2)) {
-	//				throw new IncompatibleFieldException("Cannot unify field key + \"" + key1 + "\" with fueld key \"" + key2 + "\" (incompatible labels)");
+	//	@Override
+	//	@SuppressWarnings("unchecked")
+	//	public FieldKey<CSVHeader<?>, ?> unifyWith(final FieldKey<CSVHeader<?>, ?> key) {
+	//		if (key == this) {
+	//			return this;
+	//		} else {
+	//			// Unify the label.
+	//			final String label = getLabel();
+	//			final String keyLabel = key.getLabel();
+	//			if (!label.equals(keyLabel)) {
+	//				throw new IncompatibleFieldException("Cannot unify field key + \"" + this + "\" with fueld key \"" + key + "\" (incompatible labels)");
 	//			}
-	//			final String unifiedLabel = label1;
-	//
-	//			// Compute the type.
-	//			final Class<V1> type1 = key1.getType();
-	//			final Class<V2> type2 = key2.getType();
+	//			final String unifiedLabel = label;
+	//			
+	//			// Unify the type.
+	//			final Class<V> type = getType();
+	//			final Class<?> keyType = key.getType();
 	//			final Class<?> unifiedType;
 	//			final Serializer<?, String> unifiedSerializer;
-	//			if (type1.isAssignableFrom(type2)) {
-	//				unifiedType = type2;
-	//				unifiedSerializer = key2.self().getSerializer();
-	//			} else if (type2.isAssignableFrom(type1)) {
-	//				unifiedType = type1;
-	//				unifiedSerializer = key1.self().getSerializer();
+	//			if (type.isAssignableFrom(keyType)) {
+	//				unifiedType = keyType;
+	//				unifiedSerializer = key.self().getSerializer();
+	//			} else if (keyType.isAssignableFrom(type)) {
+	//				unifiedType = type;
+	//				unifiedSerializer = this.getSerializer();
 	//			} else {
-	//				throw new IncompatibleFieldException("Cannot unify field key + \"" + key1 + "\" with fueld key \"" + key2 + "\" (incompatible types)");
+	//				throw new IncompatibleFieldException("Cannot unify field key + \"" + this + "\" with fueld key \"" + key + "\" (incompatible types)");
 	//			}
-	//
+	//			
 	//			// Build the unified key.
 	//			return new CSVHeader<>(unifiedLabel, (Class<Object>) unifiedType, (Serializer<Object, String>) unifiedSerializer);
 	//		}
-	//	};
+	//	}
 	
 	// Serializer.
 	
