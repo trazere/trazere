@@ -169,7 +169,11 @@ implements Closeable {
 	 * @since 2.0
 	 */
 	public void writeHeaders() {
-		writeLine(header -> header.getLabel());
+		try {
+			writeLine(header -> header.getLabel());
+		} catch (final Exception exception) {
+			throw new CSVException("Failed writing headers " + _headers, exception);
+		}
 	}
 	
 	/**
@@ -179,7 +183,11 @@ implements Closeable {
 	 * @since 2.0
 	 */
 	public void writeLine(final Record<CSVHeader<?>> line) {
-		writeLine(header -> serializeField(line, header));
+		try {
+			writeLine(header -> serializeField(line, header));
+		} catch (final Exception exception) {
+			throw new CSVException("Failed writing line " + line, exception);
+		}
 	}
 	
 	private static <V> String serializeField(final Record<CSVHeader<?>> line, final CSVHeader<V> header) {
@@ -193,15 +201,15 @@ implements Closeable {
 	 * @since 2.0
 	 */
 	protected void writeLine(final Function<? super CSVHeader<?>, String> representations) {
-		// Write the fields.
-		final Joiner<CSVHeader<?>> joiner = Joiners.joiner(header -> renderField(representations.evaluate(header)), false, _delimiter, CSVException.FACTORY);
-		joiner.join(_headers, _writer);
-		
-		// Write the new line.
 		try {
+			// Write the fields.
+			final Joiner<CSVHeader<?>> joiner = Joiners.joiner(header -> renderField(representations.evaluate(header)), false, _delimiter);
+			joiner.join(_headers, _writer);
+			
+			// Write the new line.
 			_writer.write("\n");
-		} catch (final IOException exception) {
-			throw new CSVException(exception);
+		} catch (final Exception exception) {
+			throw new CSVException("Failed writing line " + representations, exception);
 		}
 	}
 	

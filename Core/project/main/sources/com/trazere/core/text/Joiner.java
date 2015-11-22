@@ -17,7 +17,6 @@ package com.trazere.core.text;
 
 import com.trazere.core.imperative.Accumulator;
 import com.trazere.core.lang.LangAccumulators;
-import com.trazere.core.lang.ThrowableFactory;
 import com.trazere.core.util.Tuple2;
 
 /**
@@ -28,13 +27,6 @@ import com.trazere.core.util.Tuple2;
  */
 public abstract class Joiner<T> {
 	/**
-	 * Factory of the exceptions for the failures.
-	 * 
-	 * @since 2.0
-	 */
-	protected final ThrowableFactory<? extends RuntimeException> _failureFactory;
-	
-	/**
 	 * Instantiates a new joiner.
 	 *
 	 * @param ignoreEmpty Indicates whether the empty token representations are ignored.
@@ -42,25 +34,11 @@ public abstract class Joiner<T> {
 	 * @since 2.0
 	 */
 	public Joiner(final boolean ignoreEmpty, final CharSequence delimiter) {
-		this(ignoreEmpty, delimiter, TextException.FACTORY);
-	}
-	
-	/**
-	 * Instantiates a new joiner.
-	 *
-	 * @param ignoreEmpty Indicates whether the empty token representations are ignored.
-	 * @param delimiter Delimiter to insert between the tokens.
-	 * @param failureFactory Factory of the exceptions for the failures
-	 * @since 2.0
-	 */
-	public Joiner(final boolean ignoreEmpty, final CharSequence delimiter, final ThrowableFactory<? extends RuntimeException> failureFactory) {
 		assert null != delimiter;
-		assert null != failureFactory;
 		
 		// Initialization.
 		_ignoreEmpty = ignoreEmpty;
 		_delimiter = delimiter;
-		_failureFactory = failureFactory;
 	}
 	
 	// Ignore empty.
@@ -149,7 +127,7 @@ public abstract class Joiner<T> {
 			
 			return new Tuple2<>(appendable, joined.get());
 		} catch (final Exception exception) {
-			throw _failureFactory.build("Failed joining tokens " + tokens + " into appendable \"" + appendable + "\"", exception);
+			throw new TextException("Failed joining tokens " + tokens + " into appendable \"" + appendable + "\"", exception);
 		}
 	}
 	
@@ -183,7 +161,7 @@ public abstract class Joiner<T> {
 				return new Tuple2<>(appendable, false);
 			}
 		} catch (final Exception exception) {
-			throw _failureFactory.build("Failed joining token " + token + " into appendable \"" + appendable + "\"", exception);
+			throw new TextException("Failed joining token " + token + " into appendable \"" + appendable + "\"", exception);
 		}
 	}
 	
