@@ -63,7 +63,34 @@ public class ThrowableUtils {
 	}
 	
 	/**
-	 * Gets the first throwable from the chain of the given throwable and its causes accepted by the given filter.
+	 * Tests whether the given throwable has a cause accepted by the given filter.
+	 * 
+	 * @param throwable Throwable to explore.
+	 * @param filter Predicate to use to filter the throwables.
+	 * @return <code>true</code> when the throwable or any of its causes if accepted by the filter, <code>false</code> otherwise.
+	 * @see #getCauseChain(Throwable)
+	 * @since 2.0
+	 */
+	public static boolean hasCause(final Throwable throwable, final Predicate<? super Throwable> filter) {
+		return FeedUtils.isAny(getCauseChain(throwable), filter);
+	}
+	
+	/**
+	 * Tests whether the given throwable has a cause matching the given type.
+	 * 
+	 * @param <T> Type of the throwable to match.
+	 * @param throwable Throwable to explore.
+	 * @param type Type of the throwable to match.
+	 * @return <code>true</code> when the throwable or any of its causes has the type, <code>false</code> otherwise.
+	 * @see #getCauseChain(Throwable)
+	 * @since 2.0
+	 */
+	public static <T extends Throwable> boolean hasCause(final Throwable throwable, final Class<T> type) {
+		return hasCause(throwable, ObjectPredicates.isInstanceOf(type));
+	}
+	
+	/**
+	 * Gets the first throwable from the cause chain of the given throwable accepted by the given filter.
 	 * 
 	 * @param throwable Throwable to explore.
 	 * @param filter Predicate to use to filter the throwables.
@@ -76,12 +103,12 @@ public class ThrowableUtils {
 	}
 	
 	/**
-	 * Gets the first throwable from the chain of the given throwable and its causes matching the given type.
+	 * Gets the first throwable from the cause chain of the given throwable matching the given type.
 	 * 
 	 * @param <T> Type of the throwable to match.
 	 * @param throwable Throwable to explore.
 	 * @param type Type of the throwable to match.
-	 * @return The first extracted throwable.
+	 * @return The first found throwable.
 	 * @see #getCauseChain(Throwable)
 	 * @since 2.0
 	 */
@@ -90,7 +117,7 @@ public class ThrowableUtils {
 	}
 	
 	/**
-	 * Gets the first element extracted from the chain of the given throwable and its causes by the given extractor.
+	 * Gets the first element extracted from the cause chain of the given throwable by the given extractor.
 	 * 
 	 * @param <E> Type of the extracted element.
 	 * @param throwable Throwable to explore.
@@ -104,7 +131,29 @@ public class ThrowableUtils {
 	}
 	
 	/**
-	 * Gets the first throwable from the chain of the given throwable and its causes matching the given type and throws it.
+	 * Throws the first throwable extracted from the cause chain of the given throwable by the given extractor.
+	 * <p>
+	 * This methods does nothing when no throwables are accepted by the extractor.
+	 * 
+	 * @param <T> Type of the extracted throwable.
+	 * @param throwable Throwable to explore.
+	 * @param extractor Function to use to extract the throwable.
+	 * @throws T The first extracted throwable.
+	 * @see #getCauseChain(Throwable)
+	 * @since 2.0
+	 */
+	public static <T extends Throwable> void throwCause(final Throwable throwable, final Function<? super Throwable, ? extends Maybe<? extends T>> extractor)
+	throws T {
+		final Maybe<? extends T> cause = extractCause(throwable, extractor);
+		if (cause.isSome()) {
+			throw cause.asSome().getValue();
+		}
+	}
+	
+	/**
+	 * Throws the first throwable from the cause chain of the given throwable matching the given type.
+	 * <p>
+	 * This methods does nothing when no throwables match the type.
 	 * 
 	 * @param <T> Type of the throwable to match.
 	 * @param throwable Throwable to explore.
@@ -116,24 +165,6 @@ public class ThrowableUtils {
 	public static <T extends Throwable> void throwCause(final Throwable throwable, final Class<T> type)
 	throws T {
 		throwCause(throwable, ObjectExtractors.match(type));
-	}
-	
-	/**
-	 * Gets the first throwable extracted from the chain of the given throwable and its causes by the given extractor and throws it.
-	 * 
-	 * @param <T> Type of the extracted throwable.
-	 * @param throwable Throwable to explore.
-	 * @param extractor Function to use to extract the throwable.
-	 * @throws T The extracted throwable.
-	 * @see #getCauseChain(Throwable)
-	 * @since 2.0
-	 */
-	public static <T extends Throwable> void throwCause(final Throwable throwable, final Function<? super Throwable, ? extends Maybe<? extends T>> extractor)
-	throws T {
-		final Maybe<? extends T> cause = extractCause(throwable, extractor);
-		if (cause.isSome()) {
-			throw cause.asSome().getValue();
-		}
 	}
 	
 	private ThrowableUtils() {
