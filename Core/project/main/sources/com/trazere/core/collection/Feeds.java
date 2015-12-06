@@ -15,10 +15,16 @@
  */
 package com.trazere.core.collection;
 
+import com.trazere.core.functional.Function;
+import com.trazere.core.functional.Function2;
+import com.trazere.core.functional.Predicate;
 import com.trazere.core.imperative.ExIterator;
 import com.trazere.core.imperative.Iterators;
+import com.trazere.core.imperative.Procedure;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -48,6 +54,11 @@ public class Feeds {
 			@Override
 			public boolean isEmpty() {
 				return false;
+			}
+			
+			@Override
+			public Tuple2<? extends E, ? extends Feed<? extends E>> get() {
+				return new Tuple2<E, Feed<? extends E>>(head, tail);
 			}
 			
 			@Override
@@ -81,12 +92,18 @@ public class Feeds {
 		return (Feed<E>) EMPTY;
 	}
 	
-	private static final Feed<?> EMPTY = new Feed<Object>() {
+	private static final Feed<?> EMPTY = new MemoizedFeed<Object>() {
 		// Feed.
 		
 		@Override
 		public boolean isEmpty() {
 			return true;
+		}
+		
+		@Override
+		public Tuple2<? extends Object, ? extends Feed<? extends Object>> get()
+		throws NoSuchElementException {
+			throw new NoSuchElementException();
 		}
 		
 		@Override
@@ -99,6 +116,111 @@ public class Feeds {
 		public Feed<Object> getTail()
 		throws NoSuchElementException {
 			throw new NoSuchElementException();
+		}
+		
+		@Override
+		public void foreach(final Procedure<? super Object> procedure) {
+			// Nothing to do.
+		}
+		
+		@Override
+		public <S> S fold(final Function2<? super S, ? super Object, ? extends S> operator, final S initialState) {
+			return initialState;
+		}
+		
+		@Override
+		public Maybe<Object> first(final Predicate<? super Object> filter) {
+			return Maybe.none();
+		}
+		
+		@Override
+		public <EE> Maybe<EE> extractFirst(final Function<? super Object, ? extends Maybe<? extends EE>> extractor) {
+			return Maybe.none();
+		}
+		
+		@Override
+		public boolean isAny(final Predicate<? super Object> filter) {
+			return false;
+		}
+		
+		@Override
+		public boolean areAll(final Predicate<? super Object> filter) {
+			return true;
+		}
+		
+		@Override
+		public int count(final Predicate<? super Object> filter) {
+			return 0;
+		}
+		
+		@Override
+		public Maybe<Object> least(final Comparator<? super Object> comparator) {
+			return Maybe.none();
+		}
+		
+		@Override
+		public Maybe<Object> greatest(final Comparator<? super Object> comparator) {
+			return Maybe.none();
+		}
+		
+		@Override
+		public Feed<Object> take(final int n) {
+			return this;
+		}
+		
+		@Override
+		public Feed<Object> takeWhile(final Predicate<? super Object> predicate) {
+			return this;
+		}
+		
+		@Override
+		public Feed<Object> drop(final int n) {
+			return this;
+		}
+		
+		@Override
+		public Feed<Object> dropWhile(final Predicate<? super Object> predicate) {
+			return this;
+		}
+		
+		@Override
+		public <B extends Collection<? super Object>> Feed<B> group(final int n, final CollectionFactory<? super Object, B> batchFactory) {
+			return Feeds.empty();
+		}
+		
+		@Override
+		public Feed<Object> filter(final Predicate<? super Object> filter) {
+			return this;
+		}
+		
+		@Override
+		public <TE> Feed<TE> map(final Function<? super Object, ? extends TE> function) {
+			return Feeds.empty();
+		}
+		
+		@Override
+		public <TE> Feed<TE> flatMap(final Function<? super Object, ? extends Feed<? extends TE>> function) {
+			return Feeds.empty();
+		}
+		
+		@Override
+		public <EE> Feed<EE> extract(final Function<? super Object, ? extends Maybe<? extends EE>> extractor) {
+			return Feeds.empty();
+		}
+		
+		@Override
+		public MemoizedFeed<Object> memoized() {
+			return this;
+		}
+		
+		@Override
+		public boolean isMemoized() {
+			return true;
+		}
+		
+		@Override
+		public Maybe<Maybe<? extends Tuple2<? extends Object, ? extends Feed<? extends Object>>>> probe() {
+			return Maybe.none();
 		}
 		
 		// Function.
@@ -125,6 +247,7 @@ public class Feeds {
 	 * @since 2.0
 	 */
 	public static <E> Feed<E> fromElement(final E element) {
+		// TODO: optimize feed
 		return feed(element, Feeds.<E>empty());
 	}
 	
@@ -143,12 +266,23 @@ public class Feeds {
 	
 	// TODO: generalize to any range and make public
 	private static <E> Feed<E> fromElements(final E[] elements, final int index) {
+		// TODO: optimize feed
 		return new Feed<E>() {
 			// Feed.
 			
 			@Override
 			public boolean isEmpty() {
 				return index >= elements.length;
+			}
+			
+			@Override
+			public Tuple2<? extends E, ? extends Feed<? extends E>> get()
+			throws NoSuchElementException {
+				if (index < elements.length) {
+					return new Tuple2<>(elements[index], Feeds.<E>fromElements(elements, index + 1));
+				} else {
+					throw new NoSuchElementException();
+				}
 			}
 			
 			@Override
@@ -181,6 +315,14 @@ public class Feeds {
 					return Maybe.none();
 				}
 			}
+			
+			// Iterable.
+			
+			// TODO: optimzed iterator
+			//			@Override
+			//			public ExIterator<E> iterator() {
+			//				return Iterators.fromElements(elements, index);
+			//			}
 		};
 	}
 	

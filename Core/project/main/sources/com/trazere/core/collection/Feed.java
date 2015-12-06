@@ -55,12 +55,9 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 */
 	default Tuple2<? extends E, ? extends Feed<? extends E>> get()
 	throws NoSuchElementException {
-		final Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> value = evaluate();
-		if (value.isSome()) {
-			return value.asSome().getValue();
-		} else {
+		return evaluate().get(() -> {
 			throw new NoSuchElementException();
-		}
+		});
 	}
 	
 	/**
@@ -79,7 +76,7 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * Gets the head element of this feed.
 	 * <p>
 	 * This method supports empty feeds.
-	 * 
+	 *
 	 * @return The head element, or nothing when the feed is empty.
 	 * @since 2.0
 	 */
@@ -103,37 +100,13 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * Gets the tail of this feed.
 	 * <p>
 	 * This method supports empty feeds.
-	 * 
+	 *
 	 * @return The of the feed, or an empty feed when the feed is empty.
 	 * @since 2.0
 	 */
 	default Feed<? extends E> tail() {
 		return FeedUtils.tail(this);
 	}
-	
-	// Iterable.
-	
-	@Override
-	default ExIterator<E> iterator() {
-		return new ExIterator<E>() {
-			private Feed<? extends E> _tail = Feed.this;
-			
-			@Override
-			public boolean hasNext() {
-				return !_tail.isEmpty();
-			}
-			
-			@Override
-			public E next()
-			throws NoSuchElementException {
-				final E head = _tail.getHead();
-				_tail = _tail.getTail();
-				return head;
-			}
-		};
-	}
-	
-	// Tools.
 	
 	/**
 	 * Executes the given procedure with each element of this feed.
@@ -142,7 +115,7 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @since 2.0
 	 */
 	default void foreach(final Procedure<? super E> procedure) {
-		FeedUtils.foreach(this, procedure);
+		iterator().foreach(procedure);
 	}
 	
 	/**
@@ -155,7 +128,7 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @since 2.0
 	 */
 	default <S> S fold(final Function2<? super S, ? super E, ? extends S> operator, final S initialState) {
-		return FeedUtils.fold(this, operator, initialState);
+		return iterator().fold(operator, initialState);
 	}
 	
 	/**
@@ -166,7 +139,7 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @since 2.0
 	 */
 	default Maybe<E> first(final Predicate<? super E> filter) {
-		return FeedUtils.first(this, filter);
+		return iterator().first(filter);
 	}
 	
 	/**
@@ -178,7 +151,7 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @since 2.0
 	 */
 	default <EE> Maybe<EE> extractFirst(final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
-		return FeedUtils.extractFirst(this, extractor);
+		return iterator().extractFirst(extractor);
 	}
 	
 	/**
@@ -189,7 +162,7 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @since 2.0
 	 */
 	default boolean isAny(final Predicate<? super E> filter) {
-		return FeedUtils.isAny(this, filter);
+		return iterator().isAny(filter);
 	}
 	
 	/**
@@ -200,7 +173,7 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @since 2.0
 	 */
 	default boolean areAll(final Predicate<? super E> filter) {
-		return FeedUtils.areAll(this, filter);
+		return iterator().areAll(filter);
 	}
 	
 	/**
@@ -211,7 +184,7 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @since 2.0
 	 */
 	default int count(final Predicate<? super E> filter) {
-		return FeedUtils.count(this, filter);
+		return iterator().count(filter);
 	}
 	
 	/**
@@ -222,7 +195,7 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @since 2.0
 	 */
 	default Maybe<E> least(final Comparator<? super E> comparator) {
-		return FeedUtils.least(this, comparator);
+		return iterator().least(comparator);
 	}
 	
 	/**
@@ -233,9 +206,10 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @since 2.0
 	 */
 	default Maybe<E> greatest(final Comparator<? super E> comparator) {
-		return FeedUtils.greatest(this, comparator);
+		return iterator().greatest(comparator);
 	}
 	
+	// TODO: remove ?
 	/**
 	 * Appends this feed to this feed.
 	 * 
@@ -255,7 +229,17 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @since 2.0
 	 */
 	default Feed<E> take(final int n) {
-		return FeedUtils.take(this, n);
+		final Feed<E> self = this;
+		return new BaseMemoizedFeed<E>() {
+			@Override
+			protected Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> compute() {
+				if (n > 0) {
+					return self.evaluate().map(item -> new Tuple2<>(item.get1(), item.get2().take(n - 1)));
+				} else {
+					return Maybe.none();
+				}
+			}
+		};
 	}
 	
 	/**
@@ -266,7 +250,22 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @since 2.0
 	 */
 	default Feed<E> takeWhile(final Predicate<? super E> predicate) {
-		return FeedUtils.takeWhile(this, predicate);
+		assert null != predicate;
+		
+		final Feed<E> self = this;
+		return new BaseMemoizedFeed<E>() {
+			@Override
+			protected Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> compute() {
+				return self.evaluate().flatMap((final Tuple2<? extends E, ? extends Feed<? extends E>> item) -> {
+					final E head = item.get1();
+					if (predicate.evaluate(head)) {
+						return Maybe.some(new Tuple2<>(head, item.get2().takeWhile(predicate)));
+					} else {
+						return Maybe.none();
+					}
+				});
+			}
+		};
 	}
 	
 	/**
@@ -277,7 +276,27 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @since 2.0
 	 */
 	default Feed<E> drop(final int n) {
-		return FeedUtils.drop(this, n);
+		final Feed<E> self = this;
+		return new BaseMemoizedFeed<E>() {
+			@Override
+			protected Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> compute() {
+				Feed<? extends E> iterFeed = self;
+				int iterN = n;
+				while (true) {
+					final Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> maybeItem = iterFeed.evaluate();
+					if (maybeItem.isSome()) {
+						if (iterN > 0) {
+							iterFeed = maybeItem.asSome().getValue().get2();
+							iterN -= 1;
+						} else {
+							return maybeItem;
+						}
+					} else {
+						return Maybe.none();
+					}
+				}
+			}
+		};
 	}
 	
 	/**
@@ -288,7 +307,28 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @since 2.0
 	 */
 	default Feed<E> dropWhile(final Predicate<? super E> predicate) {
-		return FeedUtils.dropWhile(this, predicate);
+		assert null != predicate;
+		
+		final Feed<E> self = this;
+		return new BaseMemoizedFeed<E>() {
+			@Override
+			protected Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> compute() {
+				Feed<? extends E> iterFeed = self;
+				while (true) {
+					final Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> maybeItem = iterFeed.evaluate();
+					if (maybeItem.isSome()) {
+						final Tuple2<? extends E, ? extends Feed<? extends E>> item = maybeItem.asSome().getValue();
+						if (predicate.evaluate(item.get1())) {
+							iterFeed = item.get2();
+						} else {
+							return maybeItem;
+						}
+					} else {
+						return Maybe.none();
+					}
+				}
+			}
+		};
 	}
 	
 	/**
@@ -301,7 +341,33 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @since 2.0
 	 */
 	default <B extends Collection<? super E>> Feed<B> group(final int n, final CollectionFactory<? super E, B> batchFactory) {
-		return FeedUtils.group(this, n, batchFactory);
+		assert null != batchFactory;
+		
+		final Feed<E> self = this;
+		return new BaseMemoizedFeed<B>() {
+			@Override
+			protected Maybe<? extends Tuple2<? extends B, ? extends Feed<? extends B>>> compute() {
+				Feed<? extends E> iterFeed = self;
+				int iterN = n;
+				final B batch = batchFactory.build(n);
+				while (iterN > 0) {
+					final Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> maybeItem = iterFeed.evaluate();
+					if (maybeItem.isSome()) {
+						final Tuple2<? extends E, ? extends Feed<? extends E>> item = maybeItem.asSome().getValue();
+						batch.add(item.get1());
+						iterFeed = item.get2();
+						iterN -= 1;
+					} else {
+						break;
+					}
+				}
+				if (batch.isEmpty()) {
+					return Maybe.none();
+				} else {
+					return Maybe.some(new Tuple2<>(batch, iterFeed.group(n, batchFactory)));
+				}
+			}
+		};
 	}
 	
 	/**
@@ -312,7 +378,29 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @since 2.0
 	 */
 	default Feed<E> filter(final Predicate<? super E> filter) {
-		return FeedUtils.filter(this, filter);
+		assert null != filter;
+		
+		final Feed<E> self = this;
+		return new BaseMemoizedFeed<E>() {
+			@Override
+			protected Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> compute() {
+				Feed<? extends E> iterFeed = self;
+				while (true) {
+					final Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> maybeItem = iterFeed.evaluate();
+					if (maybeItem.isSome()) {
+						final Tuple2<? extends E, ? extends Feed<? extends E>> item = maybeItem.asSome().getValue();
+						final E head = item.get1();
+						if (filter.evaluate(head)) {
+							return Maybe.some(new Tuple2<>(head, item.get2().filter(filter)));
+						} else {
+							iterFeed = item.get2();
+						}
+					} else {
+						return Maybe.none();
+					}
+				}
+			}
+		};
 	}
 	
 	/**
@@ -324,7 +412,45 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @since 2.0
 	 */
 	default <TE> Feed<TE> map(final Function<? super E, ? extends TE> function) {
-		return FeedUtils.map(this, function);
+		assert null != function;
+		
+		final Feed<E> self = this;
+		return new Feed<TE>() {
+			// Feed.
+			
+			@Override
+			public boolean isEmpty() {
+				return self.isEmpty();
+			}
+			
+			@Override
+			public TE getHead()
+			throws NoSuchElementException {
+				return function.evaluate(self.getHead());
+			}
+			
+			@Override
+			public Feed<TE> getTail()
+			throws NoSuchElementException {
+				return self.getTail().map(function);
+			}
+			
+			// TODO: optimize defaults
+			
+			// Function.
+			
+			@Override
+			public Maybe<? extends Tuple2<? extends TE, ? extends Feed<? extends TE>>> evaluate() {
+				return self.evaluate().map(item -> new Tuple2<>(function.evaluate(item.get1()), item.get2().map(function)));
+			}
+			
+			// Iterable.
+			
+			@Override
+			public ExIterator<TE> iterator() {
+				return self.iterator().map(function);
+			}
+		};
 	}
 	
 	/**
@@ -336,7 +462,7 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @since 2.0
 	 */
 	default <TE> Feed<TE> flatMap(final Function<? super E, ? extends Feed<? extends TE>> function) {
-		return FeedUtils.flatMap(this, function);
+		return FeedUtils.flatten(map(function));
 	}
 	
 	/**
@@ -348,7 +474,7 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @since 2.0
 	 */
 	default <EE> Feed<EE> extract(final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
-		return FeedUtils.extract(this, extractor);
+		return flatMap(element -> Feeds.fromMaybe(extractor.evaluate(element)));
 	}
 	
 	/**
@@ -358,8 +484,18 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @see MemoizedFeed
 	 * @since 2.0
 	 */
-	default Feed<E> memoized() {
-		return FeedUtils.memoized(this);
+	default MemoizedFeed<E> memoized() {
+		if (this instanceof MemoizedFeed) {
+			return (MemoizedFeed<E>) this;
+		} else {
+			final Feed<E> self = this;
+			return new BaseMemoizedFeed<E>() {
+				@Override
+				protected Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> compute() {
+					return self.evaluate().map(item -> new Tuple2<>(item.get1(), item.get2().memoized()));
+				}
+			};
+		}
 	}
 	
 	/**
@@ -370,21 +506,38 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @since 2.0
 	 */
 	default ResettableFeed<E> resettable() {
-		return FeedUtils.resettable(this);
+		if (this instanceof ResettableFeed) {
+			return (ResettableFeed<E>) this;
+		} else {
+			final Feed<E> self = this;
+			return new ResettableFeed<E>() {
+				@Override
+				protected Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> compute() {
+					return self.evaluate().map(item -> new Tuple2<>(item.get1(), item.get2()));
+				}
+			};
+		}
 	}
 	
-	/**
-	 * Builds a feed of pairs composed with the elements of this feeds and the given feed.
-	 * <p>
-	 * The pairs are composed of an element of each feed according in order. The extra values of the longest feed are dropped when this feeds don't contain the
-	 * same number of elements.
-	 * 
-	 * @param <E2> Type of the second elements.
-	 * @param feed2 Feed containing the second elements of the pairs.
-	 * @return A feed of the pairs of elements.
-	 * @since 2.0
-	 */
-	default <E2> Feed<Tuple2<E, E2>> zip(final Feed<? extends E2> feed2) {
-		return FeedUtils.zip(this, feed2);
+	// Iterable.
+	
+	@Override
+	default ExIterator<E> iterator() {
+		return new ExIterator<E>() {
+			private Feed<? extends E> _tail = Feed.this;
+			
+			@Override
+			public boolean hasNext() {
+				return !_tail.isEmpty();
+			}
+			
+			@Override
+			public E next()
+			throws NoSuchElementException {
+				final Tuple2<? extends E, ? extends Feed<? extends E>> item = _tail.get();
+				_tail = item.get2();
+				return item.get1();
+			}
+		};
 	}
 }

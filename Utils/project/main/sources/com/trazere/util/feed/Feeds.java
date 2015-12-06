@@ -265,7 +265,7 @@ public class Feeds {
 	 * @param <X> Type of the exceptions.
 	 * @param feed The feed.
 	 * @return The built feed.
-	 * @deprecated Use {@link com.trazere.core.collection.FeedUtils#memoized(com.trazere.core.collection.Feed)}.
+	 * @deprecated Use {@link com.trazere.core.collection.Feed#memoized()}.
 	 */
 	@Deprecated
 	public static <T, X extends Exception> Feed<T, X> memoize(final Feed<T, ? extends X> feed) {
@@ -288,7 +288,7 @@ public class Feeds {
 	 * @param predicate The predicate.
 	 * @param feed The feed.
 	 * @return The built feed over the filtered elements.
-	 * @deprecated Use {@link com.trazere.core.collection.FeedUtils#filter(com.trazere.core.collection.Feed, com.trazere.core.functional.Predicate)}.
+	 * @deprecated Use {@link com.trazere.core.collection.Feed#filter(com.trazere.core.functional.Predicate)}.
 	 */
 	@Deprecated
 	public static <T, X extends Exception> Feed<T, X> filter(final Predicate1<? super T, ? extends X> predicate, final Feed<? extends T, ? extends X> feed) {
@@ -324,7 +324,7 @@ public class Feeds {
 	 * @param function The function.
 	 * @param feed The feed.
 	 * @return The built feed over the transformed elements.
-	 * @deprecated Use {@link com.trazere.core.collection.FeedUtils#map(com.trazere.core.collection.Feed, com.trazere.core.functional.Function)}.
+	 * @deprecated Use {@link com.trazere.core.collection.Feed#map(com.trazere.core.functional.Function)}.
 	 */
 	@Deprecated
 	public static <T, R, X extends Exception> Feed<R, X> map(final Function1<? super T, ? extends R, ? extends X> function, final Feed<? extends T, ? extends X> feed) {
@@ -393,7 +393,7 @@ public class Feeds {
 	 * @param extractor The extractor.
 	 * @param feed The feed.
 	 * @return The built feed over the filtered and transformed elements.
-	 * @deprecated Use {@link com.trazere.core.collection.FeedUtils#extract(com.trazere.core.collection.Feed, com.trazere.core.functional.Function)}.
+	 * @deprecated Use {@link com.trazere.core.collection.Feed#extract(com.trazere.core.functional.Function)}.
 	 */
 	@Deprecated
 	public static <T, R, X extends Exception> Feed<R, X> extract(final Function1<? super T, ? extends Maybe<? extends R>, ? extends X> extractor, final Feed<? extends T, ? extends X> feed) {

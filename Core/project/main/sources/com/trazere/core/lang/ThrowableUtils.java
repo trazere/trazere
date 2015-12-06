@@ -16,7 +16,6 @@
 package com.trazere.core.lang;
 
 import com.trazere.core.collection.Feed;
-import com.trazere.core.collection.FeedUtils;
 import com.trazere.core.collection.Feeds;
 import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Predicate;
@@ -54,12 +53,7 @@ public class ThrowableUtils {
 	public static Feed<Throwable> getCauseTail(final Throwable throwable) {
 		assert null != throwable;
 		
-		return new Feed<Throwable>() {
-			@Override
-			public Maybe<? extends Tuple2<? extends Throwable, ? extends Feed<? extends Throwable>>> evaluate() {
-				return MaybeUtils.fromNullable(throwable.getCause()).map(cause -> new Tuple2<>(cause, getCauseTail(cause)));
-			}
-		};
+		return () -> MaybeUtils.fromNullable(throwable.getCause()).map(cause -> new Tuple2<>(cause, getCauseTail(cause)));
 	}
 	
 	/**
@@ -72,7 +66,7 @@ public class ThrowableUtils {
 	 * @since 2.0
 	 */
 	public static boolean hasCause(final Throwable throwable, final Predicate<? super Throwable> filter) {
-		return FeedUtils.isAny(getCauseChain(throwable), filter);
+		return getCauseChain(throwable).isAny(filter);
 	}
 	
 	/**
@@ -99,7 +93,7 @@ public class ThrowableUtils {
 	 * @since 2.0
 	 */
 	public static Maybe<Throwable> findCause(final Throwable throwable, final Predicate<? super Throwable> filter) {
-		return FeedUtils.first(getCauseChain(throwable), filter);
+		return getCauseChain(throwable).first(filter);
 	}
 	
 	/**
@@ -127,7 +121,7 @@ public class ThrowableUtils {
 	 * @since 2.0
 	 */
 	public static <E> Maybe<E> extractCause(final Throwable throwable, final Function<? super Throwable, ? extends Maybe<? extends E>> extractor) {
-		return FeedUtils.extractFirst(getCauseChain(throwable), extractor);
+		return getCauseChain(throwable).extractFirst(extractor);
 	}
 	
 	/**

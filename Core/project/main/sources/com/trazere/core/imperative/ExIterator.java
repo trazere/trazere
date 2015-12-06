@@ -98,6 +98,7 @@ extends Iterator<E> {
 		return IteratorUtils.drain(this, n, results);
 	}
 	
+	// TODO: rename to drainAll
 	/**
 	 * Drains all elements provided by the this iterator.
 	 * 
@@ -107,6 +108,7 @@ extends Iterator<E> {
 		IteratorUtils.drain(this);
 	}
 	
+	// TODO: rename to drainAll
 	/**
 	 * Drains all elements provided by the this iterator and populates the given accumulator with them.
 	 * 
@@ -119,6 +121,7 @@ extends Iterator<E> {
 		return IteratorUtils.drain(this, results);
 	}
 	
+	// TODO: rename to drainAll
 	/**
 	 * Drains all elements provided by the this iterator and adds them to the given collection.
 	 * 

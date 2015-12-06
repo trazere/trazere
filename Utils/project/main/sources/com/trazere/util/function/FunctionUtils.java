@@ -122,7 +122,7 @@ public class FunctionUtils {
 	 * @return <code>true</code> if any value is accepted, <code>false</code> if all values are rejected.
 	 * @throws X When some predicate evaluation fails.
 	 * @throws VX When some feed iteration fails.
-	 * @deprecated Use {@link com.trazere.core.collection.FeedUtils#isAny(com.trazere.core.collection.Feed, com.trazere.core.functional.Predicate)}.
+	 * @deprecated Use {@link com.trazere.core.collection.Feed#isAny(com.trazere.core.functional.Predicate)}.
 	 */
 	@Deprecated
 	public static <V, X extends Exception, VX extends Exception> boolean isAny(final Predicate1<? super V, ? extends X> predicate, final Feed<? extends V, ? extends VX> values)
@@ -268,7 +268,7 @@ public class FunctionUtils {
 	 * @return <code>true</code> if all values are accepted, <code>false</code> if any value is rejected.
 	 * @throws X When some predicate evaluation fails.
 	 * @throws VX When some feed iteration fails.
-	 * @deprecated Use {@link com.trazere.core.collection.FeedUtils#areAll(com.trazere.core.collection.Feed, com.trazere.core.functional.Predicate)}.
+	 * @deprecated Use {@link com.trazere.core.collection.Feed#areAll(com.trazere.core.functional.Predicate)}.
 	 */
 	@Deprecated
 	public static <V, X extends Exception, VX extends Exception> boolean areAll(final Predicate1<? super V, ? extends X> predicate, final Feed<? extends V, ? extends VX> values)
@@ -415,7 +415,7 @@ public class FunctionUtils {
 	 * @return The first accepted value.
 	 * @throws X When some predicate evaluation fails.
 	 * @throws VX When some feed iteration fails.
-	 * @deprecated Use {@link com.trazere.core.collection.FeedUtils#first(com.trazere.core.collection.Feed, com.trazere.core.functional.Predicate)}.
+	 * @deprecated Use {@link com.trazere.core.collection.Feed#first(com.trazere.core.functional.Predicate)}.
 	 */
 	@Deprecated
 	public static <V, X extends Exception, VX extends Exception> Maybe<V> first(final Predicate1<? super V, ? extends X> predicate, final Feed<? extends V, ? extends VX> values)
@@ -573,7 +573,7 @@ public class FunctionUtils {
 	 * @return The first accepted value.
 	 * @throws X When some predicate evaluation fails.
 	 * @throws VX When some feed iteration fails.
-	 * @deprecated Use {@link com.trazere.core.collection.FeedUtils#extractFirst(com.trazere.core.collection.Feed, com.trazere.core.functional.Function)}.
+	 * @deprecated Use {@link com.trazere.core.collection.Feed#extractFirst(com.trazere.core.functional.Function)}.
 	 */
 	@Deprecated
 	public static <V, RV, X extends Exception, VX extends Exception> Maybe<RV> first(final Function1<? super V, ? extends Maybe<? extends RV>, ? extends X> function, final Feed<? extends V, ? extends VX> values)
@@ -662,7 +662,7 @@ public class FunctionUtils {
 	 * @return The result of the fold. May be <code>null</code>.
 	 * @throws X When some operator evaluation fails.
 	 * @throws VX When some feed iteration fails.
-	 * @deprecated Use {@link com.trazere.core.collection.FeedUtils#fold(com.trazere.core.collection.Feed, com.trazere.core.functional.Function2, Object)}.
+	 * @deprecated Use {@link com.trazere.core.collection.Feed#fold(com.trazere.core.functional.Function2, Object)}.
 	 */
 	@Deprecated
 	public static <R, V, X extends Exception, VX extends Exception> R fold(final Function2<? super R, ? super V, ? extends R, ? extends X> operator, final R initialAccumulator, final Feed<? extends V, ? extends VX> values)
@@ -745,7 +745,7 @@ public class FunctionUtils {
 	 * @return The number of accepted values.
 	 * @throws X When some predicate evaluation fails.
 	 * @throws VX When some feed iteration fails.
-	 * @deprecated Use {@link com.trazere.core.collection.FeedUtils#count(com.trazere.core.collection.Feed, com.trazere.core.functional.Predicate)}.
+	 * @deprecated Use {@link com.trazere.core.collection.Feed#count(com.trazere.core.functional.Predicate)}.
 	 */
 	@Deprecated
 	public static <V, X extends Exception, VX extends Exception> int count(final Predicate1<? super V, ? extends X> predicate, final Feed<? extends V, ? extends VX> values)
@@ -2055,7 +2055,7 @@ public class FunctionUtils {
 	 * @param values The feed providing the argument values.
 	 * @throws X When some procedure execution fails.
 	 * @throws VX When some feed iteration fails.
-	 * @deprecated Use {@link com.trazere.core.collection.FeedUtils#foreach(com.trazere.core.collection.Feed, com.trazere.core.imperative.Procedure)}.
+	 * @deprecated Use {@link com.trazere.core.collection.Feed#foreach(com.trazere.core.imperative.Procedure)}.
 	 */
 	@Deprecated
 	public static <V, X extends Exception, VX extends Exception> void execute(final Procedure1<? super V, ? extends X> procedure, final Feed<? extends V, ? extends VX> values)

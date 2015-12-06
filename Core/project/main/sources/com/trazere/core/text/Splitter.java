@@ -16,7 +16,6 @@
 package com.trazere.core.text;
 
 import com.trazere.core.collection.Feed;
-import com.trazere.core.collection.FeedUtils;
 import com.trazere.core.collection.Feeds;
 import com.trazere.core.lang.FiniteIntSequence;
 import com.trazere.core.util.Maybe;
@@ -131,13 +130,13 @@ public abstract class Splitter {
 		final Feed<CharSequence> trimmedTokens;
 		if (_trimFilter.isSome()) {
 			final CharPredicate trimFilter = _trimFilter.asSome().getValue();
-			trimmedTokens = FeedUtils.map(tokens, token -> TextUtils.trim(token, trimFilter));
+			trimmedTokens = tokens.map(token -> TextUtils.trim(token, trimFilter));
 		} else {
 			trimmedTokens = tokens;
 		}
 		
 		// Ignore empty.
-		return _ignoreEmpty ? FeedUtils.filter(trimmedTokens, TextPredicates.isEmpty()) : trimmedTokens;
+		return _ignoreEmpty ? trimmedTokens.filter(TextPredicates.isEmpty()) : trimmedTokens;
 	}
 	
 	/**
@@ -152,24 +151,21 @@ public abstract class Splitter {
 		assert null != s;
 		assert offset >= 0;
 		
-		return new Feed<CharSequence>() {
-			@Override
-			public Maybe<? extends Tuple2<? extends CharSequence, ? extends Feed<? extends CharSequence>>> evaluate() {
-				final Maybe<FiniteIntSequence> maybeDelimiterRange = findDelimiter(s, offset);
-				if (maybeDelimiterRange.isSome()) {
-					final FiniteIntSequence delimiterRange = maybeDelimiterRange.asSome().getValue();
-					final CharSequence token = s.subSequence(offset, delimiterRange.getStart());
-					final Feed<CharSequence> tail = rawSplit(s, delimiterRange.getEnd());
-					if (_includeDelimiters) {
-						final CharSequence delimiter = s.subSequence(delimiterRange.getStart(), delimiterRange.getEnd());
-						return Maybe.some(new Tuple2<>(token, Feeds.feed(delimiter, tail)));
-					} else {
-						return Maybe.some(new Tuple2<>(token, tail));
-					}
+		return () -> {
+			final Maybe<FiniteIntSequence> maybeDelimiterRange = findDelimiter(s, offset);
+			if (maybeDelimiterRange.isSome()) {
+				final FiniteIntSequence delimiterRange = maybeDelimiterRange.asSome().getValue();
+				final CharSequence token = s.subSequence(offset, delimiterRange.getStart());
+				final Feed<CharSequence> tail = rawSplit(s, delimiterRange.getEnd());
+				if (_includeDelimiters) {
+					final CharSequence delimiter = s.subSequence(delimiterRange.getStart(), delimiterRange.getEnd());
+					return Maybe.some(new Tuple2<>(token, Feeds.feed(delimiter, tail)));
 				} else {
-					final CharSequence token = s.subSequence(offset, s.length());
-					return Maybe.some(new Tuple2<>(token, Feeds.empty()));
+					return Maybe.some(new Tuple2<>(token, tail));
 				}
+			} else {
+				final CharSequence token = s.subSequence(offset, s.length());
+				return Maybe.some(new Tuple2<>(token, Feeds.empty()));
 			}
 		};
 	}

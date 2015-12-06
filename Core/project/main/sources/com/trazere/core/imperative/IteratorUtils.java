@@ -164,6 +164,7 @@ public class IteratorUtils {
 	
 	// TODO: drain(Iterator, int, MultimapFactory)
 	
+	// TODO: rename to drainAll
 	/**
 	 * Drains all elements provided by the the given iterator.
 	 * 
@@ -176,6 +177,7 @@ public class IteratorUtils {
 		}
 	}
 	
+	// TODO: rename to drainAll
 	/**
 	 * Drains all elements provided by the the given iterator and populates the given accumulator with them.
 	 * 
@@ -193,6 +195,7 @@ public class IteratorUtils {
 		return results;
 	}
 	
+	// TODO: rename to drainAll
 	/**
 	 * Drains all elements provided by the the given iterator and adds them to the given collection.
 	 * 
@@ -209,6 +212,7 @@ public class IteratorUtils {
 	
 	// TODO: drain(Iterator, CollectionFactory)
 	
+	// TODO: rename to drainAll
 	/**
 	 * Drains all pairs of elements provided by the the given iterator and populates the given accumulator with them.
 	 * 
@@ -227,6 +231,7 @@ public class IteratorUtils {
 		return results;
 	}
 	
+	// TODO: rename to drainAll
 	/**
 	 * Drains all pairs of elements provided by the the given iterator and puts the corresponding bindings into the given map.
 	 * 
@@ -244,6 +249,7 @@ public class IteratorUtils {
 	
 	// TODO: drain(Iterator, MapFactory)
 	
+	// TODO: rename to drainAll
 	/**
 	 * Drains all pairs of elements provided by the the given iterator and puts the corresponding bindings into the given multimap.
 	 * 

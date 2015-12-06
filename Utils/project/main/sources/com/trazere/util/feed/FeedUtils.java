@@ -32,7 +32,6 @@ import java.util.NoSuchElementException;
  */
 @Deprecated
 public class FeedUtils {
-	// TODO: rename to head
 	/**
 	 * Gets the next value from the given feed.
 	 * 
@@ -41,7 +40,7 @@ public class FeedUtils {
 	 * @param feed The feed.
 	 * @return The next value.
 	 * @throws X When the retrieval of the next value fails.
-	 * @deprecated Use {@link com.trazere.core.collection.FeedUtils#head(com.trazere.core.collection.Feed)}.
+	 * @deprecated Use {@link com.trazere.core.collection.Feed#getHead()}.
 	 */
 	@Deprecated
 	public static <T, X extends Exception> Maybe<T> next(final Feed<? extends T, ? extends X> feed)
@@ -51,7 +50,6 @@ public class FeedUtils {
 		return !feed.isEmpty() ? Maybe.<T>some(feed.getHead()) : Maybe.<T>none();
 	}
 	
-	// TODO: rename to take
 	/**
 	 * Drains all elements from the given checked iterator and populates the given collection with them.
 	 * 
@@ -113,6 +111,7 @@ public class FeedUtils {
 		assert null != feed;
 		
 		return new com.trazere.core.collection.Feed<T>() {
+			// Note: default must be implemented, project is still 1.6
 			@Override
 			public boolean isEmpty() {
 				try {
@@ -122,7 +121,7 @@ public class FeedUtils {
 				}
 			}
 			
-			// Note: project is still 1.6
+			// Note: default must be implemented, project is still 1.6
 			@Override
 			public com.trazere.core.util.Tuple2<? extends T, ? extends com.trazere.core.collection.Feed<? extends T>> get()
 			throws NoSuchElementException {
@@ -134,6 +133,7 @@ public class FeedUtils {
 				}
 			}
 			
+			// Note: default must be implemented, project is still 1.6
 			@Override
 			public T getHead()
 			throws NoSuchElementException {
@@ -146,6 +146,7 @@ public class FeedUtils {
 				}
 			}
 			
+			// Note: default must be implemented, project is still 1.6
 			@Override
 			public com.trazere.core.collection.Feed<? extends T> getTail()
 			throws NoSuchElementException {
@@ -157,6 +158,10 @@ public class FeedUtils {
 					throw new WrapException(exception);
 				}
 			}
+			
+			// TODO: defaults
+			
+			// Function.
 			
 			@Override
 			public com.trazere.core.util.Maybe<? extends com.trazere.core.util.Tuple2<? extends T, ? extends com.trazere.core.collection.Feed<? extends T>>> evaluate() {
@@ -173,7 +178,9 @@ public class FeedUtils {
 				}
 			}
 			
-			// Note: project is still 1.6
+			// Iterable.
+			
+			// Note: default must be implemented, project is still 1.6
 			@Override
 			public ExIterator<T> iterator() {
 				final com.trazere.core.collection.Feed<? extends T> this_ = this;
@@ -188,9 +195,9 @@ public class FeedUtils {
 					@Override
 					public T next()
 					throws NoSuchElementException {
-						final T head = _tail.getHead();
-						_tail = _tail.getTail();
-						return head;
+						final com.trazere.core.util.Tuple2<? extends T, ? extends com.trazere.core.collection.Feed<? extends T>> item = _tail.get();
+						_tail = item.get2();
+						return item.get1();
 					}
 				};
 			}
