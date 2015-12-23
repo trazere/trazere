@@ -46,16 +46,6 @@ extends ExIterable<Tuple2<E1, E2>> {
 	PairIterator<E1, E2> iterator();
 	
 	/**
-	 * Executes the given procedure with each pair of elements provided by this iterable.
-	 * 
-	 * @param procedure Procedure to execute.
-	 * @since 2.0
-	 */
-	default void foreach(final Procedure2<? super E1, ? super E2> procedure) {
-		IterableUtils.foreach(this, procedure);
-	}
-	
-	/**
 	 * Left folds over the pairs of elements provided by this iterable using the given operator and initial state.
 	 * 
 	 * @param <S> Type of the state.
@@ -66,29 +56,6 @@ extends ExIterable<Tuple2<E1, E2>> {
 	 */
 	default <S> S fold(final Function3<? super S, ? super E1, ? super E2, ? extends S> operator, final S initialState) {
 		return IterableUtils.fold(this, operator, initialState);
-	}
-	
-	/**
-	 * Gets the first pair of elements provided by this iterable accepted by the given filter.
-	 * 
-	 * @param filter Predicate to use to filter the pairs of elements.
-	 * @return The first accepted pair of elements.
-	 * @since 2.0
-	 */
-	default Maybe<Tuple2<E1, E2>> first(final Predicate2<? super E1, ? super E2> filter) {
-		return IterableUtils.first(this, filter);
-	}
-	
-	/**
-	 * Gets the first element extracted from the pairs of elements provided by this iterable by the given extractor.
-	 * 
-	 * @param <EE> Type of the extracted elements.
-	 * @param extractor Function to use to extract the elements.
-	 * @return The first extracted element.
-	 * @since 2.0
-	 */
-	default <EE> Maybe<? extends EE> extractFirst(final Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor) {
-		return IterableUtils.extractFirst(this, extractor);
 	}
 	
 	/**
@@ -136,6 +103,17 @@ extends ExIterable<Tuple2<E1, E2>> {
 	}
 	
 	/**
+	 * Gets the first pair of elements provided by this iterable accepted by the given filter.
+	 * 
+	 * @param filter Predicate to use to filter the pairs of elements.
+	 * @return The first accepted pair of elements.
+	 * @since 2.0
+	 */
+	default Maybe<Tuple2<E1, E2>> filterFirst(final Predicate2<? super E1, ? super E2> filter) {
+		return IterableUtils.filterFirst(this, filter);
+	}
+	
+	/**
 	 * Transforms the pairs of elements provided by this iterable using the given function.
 	 *
 	 * @param <TE> Type of the transformed elements.
@@ -145,6 +123,42 @@ extends ExIterable<Tuple2<E1, E2>> {
 	 */
 	default <TE> ExIterable<TE> map(final Function2<? super E1, ? super E2, ? extends TE> function) {
 		return IterableUtils.map(this, function);
+	}
+	
+	/**
+	 * Extracts the pairs of elements provided by this iterable using the given extractor.
+	 *
+	 * @param <EE> Type of the extracted elements.
+	 * @param extractor Function to use to extract the pairs of elements.
+	 * @return An iterable of the extracted elements.
+	 * @since 2.0
+	 */
+	default <EE> ExIterable<EE> extract(final Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor) {
+		return IterableUtils.extract(this, extractor);
+	}
+	
+	/**
+	 * Gets the first element extracted from the pairs of elements provided by this iterable by the given extractor.
+	 * 
+	 * @param <EE> Type of the extracted elements.
+	 * @param extractor Function to use to extract the pairs of elements.
+	 * @return The first extracted element.
+	 * @since 2.0
+	 */
+	default <EE> Maybe<EE> extractFirst(final Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor) {
+		return IterableUtils.extractFirst(this, extractor);
+	}
+	
+	/**
+	 * Gets all elements extracted from the pairs of elements provided by this iterable by the given extractor.
+	 * 
+	 * @param <EE> Type of the extracted elements.
+	 * @param extractor Function to use to extract the pairs of elements.
+	 * @return An iterable of the extracted elements.
+	 * @since 2.0
+	 */
+	default <EE> ExIterable<EE> extractAll(final Function2<? super E1, ? super E2, ? extends Iterable<? extends EE>> extractor) {
+		return IterableUtils.extractAll(this, extractor);
 	}
 	
 	/**
@@ -159,7 +173,15 @@ extends ExIterable<Tuple2<E1, E2>> {
 		return IterableUtils.flatMap(this, function);
 	}
 	
-	// TODO: extract(...) and extractAll(...) methods although they are redundant with flatMap(...) ? => optimized version for Maybe
+	/**
+	 * Executes the given procedure with each pair of elements provided by this iterable.
+	 * 
+	 * @param procedure Procedure to execute.
+	 * @since 2.0
+	 */
+	default void foreach(final Procedure2<? super E1, ? super E2> procedure) {
+		IterableUtils.foreach(this, procedure);
+	}
 	
 	/**
 	 * Builds an unmodifiable view of this iterable.

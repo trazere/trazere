@@ -4,6 +4,7 @@ import com.trazere.core.collection.CollectionFactory;
 import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Predicate;
+import com.trazere.core.lang.Traversable;
 import com.trazere.core.util.Maybe;
 import java.util.Collection;
 import java.util.Comparator;
@@ -16,7 +17,7 @@ import java.util.Iterator;
  * @since 2.0
  */
 public interface ExIterator<E>
-extends Iterator<E> {
+extends Iterator<E>, Traversable<E, ExIterator<E>> {
 	/**
 	 * Builds an extended view of the given iterator.
 	 * 
@@ -64,6 +65,7 @@ extends Iterator<E> {
 		return IteratorUtils.optionalNext(this);
 	}
 	
+	// TODO: kill, use take and drain
 	/**
 	 * Drains the next n elements provided by this iterator.
 	 * 
@@ -74,6 +76,7 @@ extends Iterator<E> {
 		IteratorUtils.drain(this, n);
 	}
 	
+	// TODO: kill, use take and drain
 	/**
 	 * Drains the next n elements provided by this iterator and populates the given accumulator with them.
 	 * 
@@ -87,6 +90,7 @@ extends Iterator<E> {
 		return IteratorUtils.drain(this, n, results);
 	}
 	
+	// TODO: kill, use take and drain
 	/**
 	 * Drains the next n elements provided by this iterator and adds them to the given collection.
 	 * 
@@ -137,16 +141,6 @@ extends Iterator<E> {
 	}
 	
 	/**
-	 * Executes the given procedure with each element provided by this iterator.
-	 * 
-	 * @param procedure Procedure to execute.
-	 * @since 2.0
-	 */
-	default void foreach(final Procedure<? super E> procedure) {
-		IteratorUtils.foreach(this, procedure);
-	}
-	
-	/**
 	 * Left folds over the elements provided by this iterator using the given binary operator and initial state.
 	 * 
 	 * @param <S> Type of the state.
@@ -155,31 +149,9 @@ extends Iterator<E> {
 	 * @return The folded state.
 	 * @since 2.0
 	 */
+	@Override
 	default <S> S fold(final Function2<? super S, ? super E, ? extends S> operator, final S initialState) {
 		return IteratorUtils.fold(this, operator, initialState);
-	}
-	
-	/**
-	 * Gets the first element provided by this iterator accepted by the given filter.
-	 * 
-	 * @param filter Predicate to use to filter the elements.
-	 * @return The first accepted element.
-	 * @since 2.0
-	 */
-	default Maybe<E> first(final Predicate<? super E> filter) {
-		return IteratorUtils.first(this, filter);
-	}
-	
-	/**
-	 * Get the first element extracted from the elements provided by this iterator using the given extractor.
-	 * 
-	 * @param <EE> Type of the extracted elements.
-	 * @param extractor Function to use to extract the elements.
-	 * @return The first extracted element.
-	 * @since 2.0
-	 */
-	default <EE> Maybe<EE> extractFirst(final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
-		return IteratorUtils.extractFirst(this, extractor);
 	}
 	
 	/**
@@ -189,6 +161,7 @@ extends Iterator<E> {
 	 * @return <code>true</code> when some element is accepted, <code>false</code> when all elements are rejected.
 	 * @since 2.0
 	 */
+	@Override
 	default boolean isAny(final Predicate<? super E> filter) {
 		return IteratorUtils.isAny(this, filter);
 	}
@@ -200,6 +173,7 @@ extends Iterator<E> {
 	 * @return <code>true</code> when all elements are accepted, <code>false</code> when some element is rejected.
 	 * @since 2.0
 	 */
+	@Override
 	default boolean areAll(final Predicate<? super E> filter) {
 		return IteratorUtils.areAll(this, filter);
 	}
@@ -211,6 +185,7 @@ extends Iterator<E> {
 	 * @return The number of accepted elements.
 	 * @since 2.0
 	 */
+	@Override
 	default int count(final Predicate<? super E> filter) {
 		return IteratorUtils.count(this, filter);
 	}
@@ -222,6 +197,7 @@ extends Iterator<E> {
 	 * @return The least element.
 	 * @since 2.0
 	 */
+	@Override
 	default Maybe<E> least(final Comparator<? super E> comparator) {
 		return IteratorUtils.least(this, comparator);
 	}
@@ -233,6 +209,7 @@ extends Iterator<E> {
 	 * @return The greatest element.
 	 * @since 2.0
 	 */
+	@Override
 	default Maybe<E> greatest(final Comparator<? super E> comparator) {
 		return IteratorUtils.greatest(this, comparator);
 	}
@@ -246,6 +223,7 @@ extends Iterator<E> {
 	 * @return An iterator providing the taken elements.
 	 * @since 2.0
 	 */
+	@Override
 	default ExIterator<E> take(final int n) {
 		return IteratorUtils.take(this, n);
 	}
@@ -259,6 +237,7 @@ extends Iterator<E> {
 	 * @return An iterator providing the remaining elements.
 	 * @since 2.0
 	 */
+	@Override
 	default ExIterator<E> drop(final int n) {
 		return IteratorUtils.drop(this, n);
 	}
@@ -272,6 +251,7 @@ extends Iterator<E> {
 	 * @return An iterator providing the groups of elements.
 	 * @since 2.0
 	 */
+	@Override
 	default <B extends Collection<? super E>> ExIterator<B> group(final int n, final CollectionFactory<? super E, B> batchFactory) {
 		return IteratorUtils.group(this, n, batchFactory);
 	}
@@ -285,8 +265,21 @@ extends Iterator<E> {
 	 * @return An iterator providing the filtered elements.
 	 * @since 2.0
 	 */
+	@Override
 	default ExIterator<E> filter(final Predicate<? super E> filter) {
 		return IteratorUtils.filter(this, filter);
+	}
+	
+	/**
+	 * Gets the first element provided by this iterator accepted by the given filter.
+	 * 
+	 * @param filter Predicate to use to filter the elements.
+	 * @return The first accepted element.
+	 * @since 2.0
+	 */
+	@Override
+	default Maybe<E> filterFirst(final Predicate<? super E> filter) {
+		return IteratorUtils.filterFirst(this, filter);
 	}
 	
 	/**
@@ -299,22 +292,9 @@ extends Iterator<E> {
 	 * @return An iterator providing the transformed elements.
 	 * @since 2.0
 	 */
+	@Override
 	default <TE> ExIterator<TE> map(final Function<? super E, ? extends TE> function) {
 		return IteratorUtils.map(this, function);
-	}
-	
-	/**
-	 * Transforms and flattens the elements provided by this iterator using the given function.
-	 * <p>
-	 * The built iterator feeds from this iterator.
-	 * 
-	 * @param <TE> Type of the transformed elements.
-	 * @param extractor Function to use to transform the elements.
-	 * @return An iterator providing the flatten, transformed elements.
-	 * @since 2.0
-	 */
-	default <TE> ExIterator<TE> flatMap(final Function<? super E, ? extends Iterator<? extends TE>> extractor) {
-		return IteratorUtils.flatMap(this, extractor);
 	}
 	
 	/**
@@ -327,8 +307,22 @@ extends Iterator<E> {
 	 * @return An iterator providing the extracted elements.
 	 * @since 2.0
 	 */
+	@Override
 	default <EE> ExIterator<EE> extract(final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
 		return IteratorUtils.extract(this, extractor);
+	}
+	
+	/**
+	 * Get the first element extracted from the elements provided by this iterator using the given extractor.
+	 * 
+	 * @param <EE> Type of the extracted elements.
+	 * @param extractor Function to use to extract the elements.
+	 * @return The first extracted element.
+	 * @since 2.0
+	 */
+	@Override
+	default <EE> Maybe<EE> extractFirst(final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
+		return IteratorUtils.extractFirst(this, extractor);
 	}
 	
 	/**
@@ -346,13 +340,17 @@ extends Iterator<E> {
 	}
 	
 	/**
-	 * Builds an unmodifiable view of this iterator.
+	 * Transforms and flattens the elements provided by this iterator using the given function.
+	 * <p>
+	 * The built iterator feeds from this iterator.
 	 * 
-	 * @return An unmodifiable view of this iterator, or this iterator when is it already unmodifiable.
+	 * @param <TE> Type of the transformed elements.
+	 * @param extractor Function to use to transform the elements.
+	 * @return An iterator providing the flatten, transformed elements.
 	 * @since 2.0
 	 */
-	default ExIterator<E> unmodifiable() {
-		return IteratorUtils.unmodifiable(this);
+	default <TE> ExIterator<TE> flatMap(final Function<? super E, ? extends Iterator<? extends TE>> extractor) {
+		return IteratorUtils.flatMap(this, extractor);
 	}
 	
 	/**
@@ -368,5 +366,26 @@ extends Iterator<E> {
 	 */
 	default <E2> PairIterator<E, E2> zip(final Iterator<? extends E2> iterator2) {
 		return IteratorUtils.zip(this, iterator2);
+	}
+	
+	/**
+	 * Executes the given procedure with each element provided by this iterator.
+	 * 
+	 * @param procedure Procedure to execute.
+	 * @since 2.0
+	 */
+	@Override
+	default void foreach(final Procedure<? super E> procedure) {
+		IteratorUtils.foreach(this, procedure);
+	}
+	
+	/**
+	 * Builds an unmodifiable view of this iterator.
+	 * 
+	 * @return An unmodifiable view of this iterator, or this iterator when is it already unmodifiable.
+	 * @since 2.0
+	 */
+	default ExIterator<E> unmodifiable() {
+		return IteratorUtils.unmodifiable(this);
 	}
 }

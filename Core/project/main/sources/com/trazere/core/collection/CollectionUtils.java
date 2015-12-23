@@ -196,18 +196,6 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Executes the given procedure with each element of the given collection.
-	 * 
-	 * @param <E> Type of the elements.
-	 * @param collection Collection of elements.
-	 * @param procedure Procedure to execute.
-	 * @since 2.0
-	 */
-	public static <E> void foreach(final Collection<? extends E> collection, final Procedure<? super E> procedure) {
-		IteratorUtils.foreach(collection.iterator(), procedure);
-	}
-	
-	/**
 	 * Left folds over the elements of the given collection using the given binary operator and initial state.
 	 * 
 	 * @param <E> Type of the elements.
@@ -220,33 +208,6 @@ public class CollectionUtils {
 	 */
 	public static <E, S> S fold(final Collection<? extends E> collection, final Function2<? super S, ? super E, ? extends S> operator, final S initialState) {
 		return IteratorUtils.fold(collection.iterator(), operator, initialState);
-	}
-	
-	/**
-	 * Gets the first element of the given collection accepted by the given filter.
-	 * 
-	 * @param <E> Type of the elements.
-	 * @param collection Collection containing the elements to filter.
-	 * @param filter Predicate to use to filter the elements.
-	 * @return The first accepted element.
-	 * @since 2.0
-	 */
-	public static <E> Maybe<E> first(final Collection<? extends E> collection, final Predicate<? super E> filter) {
-		return IteratorUtils.first(collection.iterator(), filter);
-	}
-	
-	/**
-	 * Gets the first element extracted from the given collection by the given extractor.
-	 * 
-	 * @param <E> Type of the elements.
-	 * @param <EE> Type of the extracted elements.
-	 * @param collection Collection containing the elements to extract from.
-	 * @param extractor Function to use to extract the elements.
-	 * @return The first extracted element.
-	 * @since 2.0
-	 */
-	public static <E, EE> Maybe<EE> extractFirst(final Collection<? extends E> collection, final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
-		return IteratorUtils.extractFirst(collection.iterator(), extractor);
 	}
 	
 	/**
@@ -355,90 +316,6 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Appends the given collections together.
-	 * 
-	 * @param <E> Type of the elements.
-	 * @param <C> Type of the result collection.
-	 * @param collection1 First collection containing the elements to append.
-	 * @param collection2 Second collection containing the elements to append.
-	 * @param resultFactory Factory of the result collection.
-	 * @return A collection containing the appended elements.
-	 * @since 2.0
-	 */
-	public static <E, C extends Collection<? super E>> C append(final Collection<? extends E> collection1, final Collection<? extends E> collection2, final CollectionFactory<? super E, C> resultFactory) {
-		final C results = resultFactory.build(collection1.size() + collection2.size());
-		results.addAll(collection1);
-		results.addAll(collection2);
-		return results;
-	}
-	
-	/**
-	 * Flattens the elements of the collections contained in the given collection.
-	 *
-	 * @param <E> Type of the elements.
-	 * @param <C> Type of the result collection.
-	 * @param collection Collection containing the collections containing the elements to flatten.
-	 * @param resultFactory Factory of the result collection.
-	 * @return A collection containing the flatten elements.
-	 * @since 2.0
-	 */
-	public static <E, C extends Collection<? super E>> C flatten(final Collection<? extends Collection<? extends E>> collection, final CollectionFactory<? super E, C> resultFactory) {
-		final C results = resultFactory.build();
-		for (final Collection<? extends E> elements : collection) {
-			results.addAll(elements);
-		}
-		return results;
-	}
-	
-	/**
-	 * Computes the intersection of the given collections.
-	 * <p>
-	 * This method iterates over the first collection and tests the presence of the values within the second collection. Therefore, providing a smaller first
-	 * collection and a second collection with a faster test method is more efficient.
-	 *
-	 * @param <E> Type of the elements.
-	 * @param <C> Type of the result collection.
-	 * @param collection1 First collection.
-	 * @param collection2 Second collection.
-	 * @param resultFactory Factory of the result collection.
-	 * @return A collection containing the common elements.
-	 * @since 2.0
-	 */
-	public static <E, C extends Collection<? super E>> C intersect(final Collection<? extends E> collection1, final Collection<? extends E> collection2, final CollectionFactory<? super E, C> resultFactory) {
-		final C results = resultFactory.build();
-		for (final E value : collection1) {
-			if (collection2.contains(value)) {
-				results.add(value);
-			}
-		}
-		return results;
-	}
-	
-	/**
-	 * Computes the exclusion of given collections (first minus second).
-	 * <p>
-	 * This method iterates over the first collection and tests the presence of the values within the second collection. Therefore, providing a smaller first
-	 * collection and a second collection with a faster test method is more efficient.
-	 *
-	 * @param <E> Type of the elements.
-	 * @param <C> Type of the result collection.
-	 * @param collection1 First collection.
-	 * @param collection2 Second collection.
-	 * @param resultFactory Factory of the result collection.
-	 * @return A collection containing the excluded elements.
-	 * @since 2.0
-	 */
-	public static <E, C extends Collection<? super E>> C exclude(final Collection<? extends E> collection1, final Collection<? extends E> collection2, final CollectionFactory<? super E, C> resultFactory) {
-		final C results = resultFactory.build();
-		for (final E value : collection1) {
-			if (!collection2.contains(value)) {
-				results.add(value);
-			}
-		}
-		return results;
-	}
-	
-	/**
 	 * Takes the n first elements of the given collection.
 	 *
 	 * @param <E> Type of the elements.
@@ -501,6 +378,19 @@ public class CollectionUtils {
 	}
 	
 	/**
+	 * Gets the first element of the given collection accepted by the given filter.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param collection Collection containing the elements to filter.
+	 * @param filter Predicate to use to filter the elements.
+	 * @return The first accepted element.
+	 * @since 2.0
+	 */
+	public static <E> Maybe<E> filterFirst(final Collection<? extends E> collection, final Predicate<? super E> filter) {
+		return IteratorUtils.filterFirst(collection.iterator(), filter);
+	}
+	
+	/**
 	 * Transforms the elements of the given collection using the given function.
 	 *
 	 * @param <E> Type of the elements.
@@ -514,6 +404,88 @@ public class CollectionUtils {
 	 */
 	public static <E, TE, C extends Collection<? super TE>> C map(final Collection<? extends E> collection, final Function<? super E, ? extends TE> function, final CollectionFactory<? super TE, C> resultFactory) {
 		return IteratorUtils.map(collection.iterator(), function).drain(resultFactory.build(collection.size()));
+	}
+	
+	/**
+	 * Extracts the elements of the given collection using the given extractor.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param <EE> Type of the extracted elements.
+	 * @param <C> Type of the result collection.
+	 * @param collection Collection containing the elements to extract from.
+	 * @param extractor Function to use to extract the elements.
+	 * @param resultFactory Factory of the result collection.
+	 * @return A collection containing the extracted elements.
+	 * @since 2.0
+	 */
+	public static <E, EE, C extends Collection<? super EE>> C extract(final Collection<? extends E> collection, final Function<? super E, ? extends Maybe<? extends EE>> extractor, final CollectionFactory<? super EE, C> resultFactory) {
+		return IteratorUtils.extract(collection.iterator(), extractor).drain(resultFactory.build());
+	}
+	
+	/**
+	 * Gets the first element extracted from the given collection by the given extractor.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param <EE> Type of the extracted elements.
+	 * @param collection Collection containing the elements to extract from.
+	 * @param extractor Function to use to extract the elements.
+	 * @return The first extracted element.
+	 * @since 2.0
+	 */
+	public static <E, EE> Maybe<EE> extractFirst(final Collection<? extends E> collection, final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
+		return IteratorUtils.extractFirst(collection.iterator(), extractor);
+	}
+	
+	/**
+	 * Gets all elements extracted from the elements of the given collection by the given extractor.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param <EE> Type of the extracted elements.
+	 * @param <C> Type of the result collection.
+	 * @param collection Collection containing the elements to extract from.
+	 * @param extractor Function to use to extract the elements.
+	 * @param resultFactory Factory of the result collection.
+	 * @return A collection containing the extracted elements.
+	 * @since 2.0
+	 */
+	public static <E, EE, C extends Collection<? super EE>> C extractAll(final Collection<? extends E> collection, final Function<? super E, ? extends Maybe<? extends EE>> extractor, final CollectionFactory<? super EE, C> resultFactory) {
+		return IteratorUtils.extractAll(collection.iterator(), extractor).drain(resultFactory.build());
+	}
+	
+	/**
+	 * Appends the given collections together.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param <C> Type of the result collection.
+	 * @param collection1 First collection containing the elements to append.
+	 * @param collection2 Second collection containing the elements to append.
+	 * @param resultFactory Factory of the result collection.
+	 * @return A collection containing the appended elements.
+	 * @since 2.0
+	 */
+	public static <E, C extends Collection<? super E>> C append(final Collection<? extends E> collection1, final Collection<? extends E> collection2, final CollectionFactory<? super E, C> resultFactory) {
+		final C results = resultFactory.build(collection1.size() + collection2.size());
+		results.addAll(collection1);
+		results.addAll(collection2);
+		return results;
+	}
+	
+	/**
+	 * Flattens the elements of the collections contained in the given collection.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param <C> Type of the result collection.
+	 * @param collection Collection containing the collections containing the elements to flatten.
+	 * @param resultFactory Factory of the result collection.
+	 * @return A collection containing the flatten elements.
+	 * @since 2.0
+	 */
+	public static <E, C extends Collection<? super E>> C flatten(final Collection<? extends Collection<? extends E>> collection, final CollectionFactory<? super E, C> resultFactory) {
+		final C results = resultFactory.build();
+		for (final Collection<? extends E> elements : collection) {
+			results.addAll(elements);
+		}
+		return results;
 	}
 	
 	/**
@@ -533,36 +505,52 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Extracts the elements of the given collection using the given extractor.
+	 * Computes the intersection of the given collections.
+	 * <p>
+	 * This method iterates over the first collection and tests the presence of the values within the second collection. Therefore, providing a smaller first
+	 * collection and a second collection with a faster test method is more efficient.
 	 *
 	 * @param <E> Type of the elements.
-	 * @param <EE> Type of the extracted elements.
 	 * @param <C> Type of the result collection.
-	 * @param collection Collection containing the elements to extract from.
-	 * @param extractor Function to use to extract the elements.
+	 * @param collection1 First collection.
+	 * @param collection2 Second collection.
 	 * @param resultFactory Factory of the result collection.
-	 * @return A collection containing the extracted elements.
+	 * @return A collection containing the common elements.
 	 * @since 2.0
 	 */
-	public static <E, EE, C extends Collection<? super EE>> C extract(final Collection<? extends E> collection, final Function<? super E, ? extends Maybe<? extends EE>> extractor, final CollectionFactory<? super EE, C> resultFactory) {
-		return IteratorUtils.extract(collection.iterator(), extractor).drain(resultFactory.build());
+	public static <E, C extends Collection<? super E>> C intersect(final Collection<? extends E> collection1, final Collection<? extends E> collection2, final CollectionFactory<? super E, C> resultFactory) {
+		final C results = resultFactory.build();
+		for (final E value : collection1) {
+			if (collection2.contains(value)) {
+				results.add(value);
+			}
+		}
+		return results;
 	}
-	
-	// TODO: extractAll(...) ?
 	
 	/**
-	 * Builds an unmodifiable view of the given collection.
-	 * 
+	 * Computes the exclusion of given collections (first minus second).
+	 * <p>
+	 * This method iterates over the first collection and tests the presence of the values within the second collection. Therefore, providing a smaller first
+	 * collection and a second collection with a faster test method is more efficient.
+	 *
 	 * @param <E> Type of the elements.
-	 * @param collection Collection to wrap.
-	 * @return An unmodifiable view of the given collection, or the given collection when is it already unmodifiable.
+	 * @param <C> Type of the result collection.
+	 * @param collection1 First collection.
+	 * @param collection2 Second collection.
+	 * @param resultFactory Factory of the result collection.
+	 * @return A collection containing the excluded elements.
 	 * @since 2.0
 	 */
-	public static <E> Collection<E> unmodifiable(final Collection<E> collection) {
-		return UNMODIFIABLE_COLLECTION_CLASS.isInstance(collection) ? collection : Collections.unmodifiableCollection(collection);
+	public static <E, C extends Collection<? super E>> C exclude(final Collection<? extends E> collection1, final Collection<? extends E> collection2, final CollectionFactory<? super E, C> resultFactory) {
+		final C results = resultFactory.build();
+		for (final E value : collection1) {
+			if (!collection2.contains(value)) {
+				results.add(value);
+			}
+		}
+		return results;
 	}
-	
-	private static Class<?> UNMODIFIABLE_COLLECTION_CLASS = Collections.unmodifiableCollection(Collections.emptyList()).getClass();
 	
 	/**
 	 * Composes pairs with the elements of the given collections.
@@ -605,6 +593,32 @@ public class CollectionUtils {
 		}
 		return new Tuple2<>(results1, results2);
 	}
+
+	/**
+	 * Executes the given procedure with each element of the given collection.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param collection Collection of elements.
+	 * @param procedure Procedure to execute.
+	 * @since 2.0
+	 */
+	public static <E> void foreach(final Collection<? extends E> collection, final Procedure<? super E> procedure) {
+		IteratorUtils.foreach(collection.iterator(), procedure);
+	}
+	
+	/**
+	 * Builds an unmodifiable view of the given collection.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param collection Collection to wrap.
+	 * @return An unmodifiable view of the given collection, or the given collection when is it already unmodifiable.
+	 * @since 2.0
+	 */
+	public static <E> Collection<E> unmodifiable(final Collection<E> collection) {
+		return UNMODIFIABLE_COLLECTION_CLASS.isInstance(collection) ? collection : Collections.unmodifiableCollection(collection);
+	}
+	
+	private static Class<?> UNMODIFIABLE_COLLECTION_CLASS = Collections.unmodifiableCollection(Collections.emptyList()).getClass();
 	
 	private CollectionUtils() {
 		// Prevents instantiation.

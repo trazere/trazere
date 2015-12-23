@@ -21,6 +21,7 @@ import com.trazere.core.functional.Predicate;
 import com.trazere.core.functional.Thunk;
 import com.trazere.core.imperative.ExIterator;
 import com.trazere.core.imperative.Procedure;
+import com.trazere.core.lang.Traversable;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.MaybeUtils;
 import com.trazere.core.util.Tuple2;
@@ -36,7 +37,7 @@ import java.util.NoSuchElementException;
  */
 @FunctionalInterface
 public interface Feed<E>
-extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>, Iterable<E> {
+extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>, Traversable<E, Feed<E>>, Iterable<E> {
 	/**
 	 * Tests whether this feed is empty.
 	 * 
@@ -111,16 +112,6 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	}
 	
 	/**
-	 * Executes the given procedure with each element of this feed.
-	 * 
-	 * @param procedure Procedure to execute.
-	 * @since 2.0
-	 */
-	default void foreach(final Procedure<? super E> procedure) {
-		iterator().foreach(procedure);
-	}
-	
-	/**
 	 * Left folds over the elements of this feed using the given binary operator and initial state.
 	 * 
 	 * @param <S> Type of the state.
@@ -129,31 +120,9 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @return The folded state.
 	 * @since 2.0
 	 */
+	@Override
 	default <S> S fold(final Function2<? super S, ? super E, ? extends S> operator, final S initialState) {
 		return iterator().fold(operator, initialState);
-	}
-	
-	/**
-	 * Gets the first element of this feed accepted by the given filter.
-	 * 
-	 * @param filter Predicate to use to filter the elements.
-	 * @return The first accepted element.
-	 * @since 2.0
-	 */
-	default Maybe<E> first(final Predicate<? super E> filter) {
-		return iterator().first(filter);
-	}
-	
-	/**
-	 * Gets the first element extracted from this feed by the given extractor.
-	 * 
-	 * @param <EE> Type of the extracted elements.
-	 * @param extractor Function to use to extract the elements.
-	 * @return The first extracted element.
-	 * @since 2.0
-	 */
-	default <EE> Maybe<EE> extractFirst(final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
-		return iterator().extractFirst(extractor);
 	}
 	
 	/**
@@ -163,6 +132,7 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @return <code>true</code> when some element is accepted, <code>false</code> when all elements are rejected.
 	 * @since 2.0
 	 */
+	@Override
 	default boolean isAny(final Predicate<? super E> filter) {
 		return iterator().isAny(filter);
 	}
@@ -174,6 +144,7 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @return <code>true</code> when all elements are accepted, <code>false</code> when some element is rejected.
 	 * @since 2.0
 	 */
+	@Override
 	default boolean areAll(final Predicate<? super E> filter) {
 		return iterator().areAll(filter);
 	}
@@ -185,6 +156,7 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @return The number of accepted elements.
 	 * @since 2.0
 	 */
+	@Override
 	default int count(final Predicate<? super E> filter) {
 		return iterator().count(filter);
 	}
@@ -196,6 +168,7 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @return The least element.
 	 * @since 2.0
 	 */
+	@Override
 	default Maybe<E> least(final Comparator<? super E> comparator) {
 		return iterator().least(comparator);
 	}
@@ -207,20 +180,9 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @return The greatest element.
 	 * @since 2.0
 	 */
+	@Override
 	default Maybe<E> greatest(final Comparator<? super E> comparator) {
 		return iterator().greatest(comparator);
-	}
-	
-	// TODO: remove ?
-	/**
-	 * Appends this feed to this feed.
-	 * 
-	 * @param appendedFeed Feed to append.
-	 * @return A feed of the appended elements.
-	 * @since 2.0
-	 */
-	default Feed<E> append(final Feed<? extends E> appendedFeed) {
-		return FeedUtils.append(this, appendedFeed);
 	}
 	
 	/**
@@ -230,6 +192,7 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @return A feed of the taken elements.
 	 * @since 2.0
 	 */
+	@Override
 	default Feed<E> take(final int n) {
 		final Feed<E> self = this;
 		return new BaseMemoizedFeed<E>() {
@@ -277,6 +240,7 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @return A feed of the remaining elements.
 	 * @since 2.0
 	 */
+	@Override
 	default Feed<E> drop(final int n) {
 		final Feed<E> self = this;
 		return new BaseMemoizedFeed<E>() {
@@ -342,6 +306,7 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @return A feed of the groups of elements.
 	 * @since 2.0
 	 */
+	@Override
 	default <B extends Collection<? super E>> Feed<B> group(final int n, final CollectionFactory<? super E, B> batchFactory) {
 		assert null != batchFactory;
 		
@@ -379,6 +344,7 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @return A feed of the filtered elements.
 	 * @since 2.0
 	 */
+	@Override
 	default Feed<E> filter(final Predicate<? super E> filter) {
 		assert null != filter;
 		
@@ -406,6 +372,18 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	}
 	
 	/**
+	 * Gets the first element of this feed accepted by the given filter.
+	 * 
+	 * @param filter Predicate to use to filter the elements.
+	 * @return The first accepted element.
+	 * @since 2.0
+	 */
+	@Override
+	default Maybe<E> filterFirst(final Predicate<? super E> filter) {
+		return iterator().filterFirst(filter);
+	}
+	
+	/**
 	 * Transforms the elements of this feed using the given function.
 	 *
 	 * @param <TE> Type of the transformed elements.
@@ -413,6 +391,7 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @return A feed of the transformed elements.
 	 * @since 2.0
 	 */
+	@Override
 	default <TE> Feed<TE> map(final Function<? super E, ? extends TE> function) {
 		assert null != function;
 		
@@ -466,6 +445,55 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	}
 	
 	/**
+	 * Extracts the elements of this feed using the given extractor.
+	 *
+	 * @param <EE> Type of the extracted elements.
+	 * @param extractor Function to use to extract the elements.
+	 * @return A feed of the extracted elements.
+	 * @since 2.0
+	 */
+	@Override
+	default <EE> Feed<EE> extract(final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
+		return flatMap(element -> Feeds.fromMaybe(extractor.evaluate(element)));
+	}
+	
+	/**
+	 * Gets the first element extracted from this feed by the given extractor.
+	 * 
+	 * @param <EE> Type of the extracted elements.
+	 * @param extractor Function to use to extract the elements.
+	 * @return The first extracted element.
+	 * @since 2.0
+	 */
+	@Override
+	default <EE> Maybe<EE> extractFirst(final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
+		return iterator().extractFirst(extractor);
+	}
+	
+	/**
+	 * Gets all elements extracted from the elements of this feed by the given extractor.
+	 * 
+	 * @param <EE> Type of the extracted elements.
+	 * @param extractor Function to use to extract the elements.
+	 * @return A feed of the extracted elements.
+	 * @since 2.0
+	 */
+	default <EE> Feed<EE> extractAll(final Function<? super E, ? extends Iterable<? extends EE>> extractor) {
+		return flatMap(element -> Feeds.fromIterable(extractor.evaluate(element)));
+	}
+	
+	/**
+	 * Appends this feed to this feed.
+	 * 
+	 * @param appendedFeed Feed to append.
+	 * @return A feed of the appended elements.
+	 * @since 2.0
+	 */
+	default Feed<E> append(final Feed<? extends E> appendedFeed) {
+		return FeedUtils.append(this, appendedFeed);
+	}
+	
+	/**
 	 * Transforms and flattens the elements of this feed using the given function.
 	 * 
 	 * @param <TE> Type of the transformed elements.
@@ -478,15 +506,14 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	}
 	
 	/**
-	 * Extracts the elements of this feed using the given extractor.
-	 *
-	 * @param <EE> Type of the extracted elements.
-	 * @param extractor Function to use to extract the elements.
-	 * @return A feed of the extracted elements.
+	 * Executes the given procedure with each element of this feed.
+	 * 
+	 * @param procedure Procedure to execute.
 	 * @since 2.0
 	 */
-	default <EE> Feed<EE> extract(final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
-		return flatMap(element -> Feeds.fromMaybe(extractor.evaluate(element)));
+	@Override
+	default void foreach(final Procedure<? super E> procedure) {
+		iterator().foreach(procedure);
 	}
 	
 	/**

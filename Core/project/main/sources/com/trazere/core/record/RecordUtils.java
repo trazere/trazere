@@ -39,18 +39,6 @@ import java.util.Set;
  */
 public class RecordUtils {
 	/**
-	 * Executes the given procedure with each field of the given record.
-	 * 
-	 * @param <K> Type of the field keys.
-	 * @param record Record containing the fields over which to iterate.
-	 * @param procedure Procedure to execute.
-	 * @since 2.0
-	 */
-	public static <K extends FieldKey<K, ?>> void foreach(final Record<K> record, final Procedure<? super Field<K, ?>> procedure) {
-		IterableUtils.foreach(record.fields(), procedure);
-	}
-	
-	/**
 	 * Left folds over the fields of the given record using the given binary operator and initial state.
 	 * 
 	 * @param <K> Type of the field keys.
@@ -63,33 +51,6 @@ public class RecordUtils {
 	 */
 	public static <K extends FieldKey<K, ?>, S> S fold(final Record<K> record, final Function2<? super S, ? super Field<K, ?>, ? extends S> operator, final S initialState) {
 		return IterableUtils.fold(record.fields(), operator, initialState);
-	}
-	
-	/**
-	 * Gets the first field of the given record accepted by the given filter.
-	 * 
-	 * @param <K> Type of the field keys.
-	 * @param record Record containing the fields to filter.
-	 * @param filter Predicate to use to filter the fields.
-	 * @return The first accepted field.
-	 * @since 2.0
-	 */
-	public static <K extends FieldKey<K, ?>> Maybe<Field<K, ?>> first(final Record<K> record, final Predicate<? super Field<K, ?>> filter) {
-		return IterableUtils.first(record.fields(), filter);
-	}
-	
-	/**
-	 * Gets the first element extracted from the fields of the given record by the given extractor.
-	 * 
-	 * @param <K> Type of the field keys.
-	 * @param <EE> Type of the extracted elements.
-	 * @param record Record containing the fields from which to extract.
-	 * @param extractor Function to use to extract from the fields.
-	 * @return The first extracted element.
-	 * @since 2.0
-	 */
-	public static <K extends FieldKey<K, ?>, EE> Maybe<? extends EE> extractFirst(final Record<K> record, final Function<? super Field<K, ?>, ? extends Maybe<? extends EE>> extractor) {
-		return IterableUtils.extractFirst(record.fields(), extractor);
 	}
 	
 	/**
@@ -131,102 +92,9 @@ public class RecordUtils {
 		return IterableUtils.count(record.fields(), filter);
 	}
 	
-	// TODO: rename to append ?
-	/**
-	 * Builds the union of the given records.
-	 * <p>
-	 * In case of conflict, the fields of the first record have precedence over the fields of the second record.
-	 * 
-	 * @param <K> Type of the field keys.
-	 * @param record1 First record.
-	 * @param record2 Second record.
-	 * @return A record containing the union of the fields.
-	 * @since 2.0
-	 */
-	public static <K extends FieldKey<K, ?>> Record<K> union(final Record<K> record1, final Record<K> record2) {
-		final Set<? extends FieldKey<K, ?>> keys1 = record1.keys();
-		final Set<FieldKey<K, ?>> duplicateKeys = CollectionUtils.filter(record2.keys(), key -> keys1.contains(key), CollectionFactories.hashSet());
-		return new BaseRecord<K>() {
-			@Override
-			public int size() {
-				return record1.size() + record2.size() - duplicateKeys.size();
-			}
-			
-			@Override
-			public boolean isEmpty() {
-				return record1.isEmpty() && record2.isEmpty();
-			}
-			
-			@Override
-			public boolean contains(final FieldKey<K, ?> key) {
-				return record1.contains(key) || record2.contains(key);
-			}
-			
-			@Override
-			public Set<? extends FieldKey<K, ?>> keys() {
-				return new AbstractSet<FieldKey<K, ?>>() {
-					@Override
-					public int size() {
-						return record1.size() + record2.size() - duplicateKeys.size();
-					}
-					
-					@Override
-					public Iterator<FieldKey<K, ?>> iterator() {
-						return IteratorUtils.append(record1.keys().iterator(), IteratorUtils.filter(record2.keys().iterator(), key -> !duplicateKeys.contains(key)));
-					}
-				};
-			}
-			
-			@Override
-			public <V> Maybe<V> get(final FieldKey<K, V> key)
-			throws InvalidFieldException {
-				final Maybe<V> value1 = record1.get(key);
-				if (value1.isSome()) {
-					return value1;
-				} else {
-					return record2.get(key);
-				}
-			}
-			
-			@Override
-			public Collection<Field<K, ?>> fields() {
-				return new AbstractCollection<Field<K, ?>>() {
-					@Override
-					public int size() {
-						return record1.size() + record2.size() - duplicateKeys.size();
-					}
-					
-					@Override
-					public Iterator<Field<K, ?>> iterator() {
-						return IteratorUtils.append(record1.fields().iterator(), IteratorUtils.filter(record2.fields().iterator(), field -> !duplicateKeys.contains(field.getKey())));
-					}
-				};
-			}
-		};
-	}
+	
 	
 	// TODO: lazy union/append
-	
-	// TODO: rename to append
-	/**
-	 * Builds the union of the given records.
-	 * <p>
-	 * In case of conflict, the fields of the first record have precedence over the fields of the second record.
-	 * 
-	 * @param <K> Type of the field keys.
-	 * @param <R> Type of the result record.
-	 * @param record1 First record.
-	 * @param record2 Second record.
-	 * @param resultFactory Factory of the result record.
-	 * @return A record containing the union of the fields.
-	 * @since 2.0
-	 */
-	public static <K extends FieldKey<K, ?>, R extends Record<K>> R union(final Record<K> record1, final Record<K> record2, final RecordFactory<K, R> resultFactory) {
-		final RecordBuilder<K, R> builder = resultFactory.newBuilder();
-		builder.setAll(record1);
-		builder.completeAll(record2);
-		return builder.build();
-	}
 	
 	/**
 	 * Filters the fields of the given record using the given filter.
@@ -338,6 +206,19 @@ public class RecordUtils {
 	// TODO: add a lazy map (no factory arg)
 	
 	/**
+	 * Gets the first field of the given record accepted by the given filter.
+	 * 
+	 * @param <K> Type of the field keys.
+	 * @param record Record containing the fields to filter.
+	 * @param filter Predicate to use to filter the fields.
+	 * @return The first accepted field.
+	 * @since 2.0
+	 */
+	public static <K extends FieldKey<K, ?>> Maybe<Field<K, ?>> filterFirst(final Record<K> record, final Predicate<? super Field<K, ?>> filter) {
+		return IterableUtils.filterFirst(record.fields(), filter);
+	}
+
+	/**
 	 * Transforms the fields of the given record using the given function.
 	 *
 	 * @param <K> Type of the field keys.
@@ -386,6 +267,129 @@ public class RecordUtils {
 		return builder.build();
 	}
 	
+	/**
+	 * Gets the first element extracted from the fields of the given record by the given extractor.
+	 * 
+	 * @param <K> Type of the field keys.
+	 * @param <EE> Type of the extracted elements.
+	 * @param record Record containing the fields from which to extract.
+	 * @param extractor Function to use to extract from the fields.
+	 * @return The first extracted element.
+	 * @since 2.0
+	 */
+	public static <K extends FieldKey<K, ?>, EE> Maybe<? extends EE> extractFirst(final Record<K> record, final Function<? super Field<K, ?>, ? extends Maybe<? extends EE>> extractor) {
+		return IterableUtils.extractFirst(record.fields(), extractor);
+	}
+
+	// TODO: rename to append ?
+	/**
+	 * Builds the union of the given records.
+	 * <p>
+	 * In case of conflict, the fields of the first record have precedence over the fields of the second record.
+	 * 
+	 * @param <K> Type of the field keys.
+	 * @param record1 First record.
+	 * @param record2 Second record.
+	 * @return A record containing the union of the fields.
+	 * @since 2.0
+	 */
+	public static <K extends FieldKey<K, ?>> Record<K> union(final Record<K> record1, final Record<K> record2) {
+		final Set<? extends FieldKey<K, ?>> keys1 = record1.keys();
+		final Set<FieldKey<K, ?>> duplicateKeys = CollectionUtils.filter(record2.keys(), key -> keys1.contains(key), CollectionFactories.hashSet());
+		return new BaseRecord<K>() {
+			@Override
+			public int size() {
+				return record1.size() + record2.size() - duplicateKeys.size();
+			}
+			
+			@Override
+			public boolean isEmpty() {
+				return record1.isEmpty() && record2.isEmpty();
+			}
+			
+			@Override
+			public boolean contains(final FieldKey<K, ?> key) {
+				return record1.contains(key) || record2.contains(key);
+			}
+			
+			@Override
+			public Set<? extends FieldKey<K, ?>> keys() {
+				return new AbstractSet<FieldKey<K, ?>>() {
+					@Override
+					public int size() {
+						return record1.size() + record2.size() - duplicateKeys.size();
+					}
+					
+					@Override
+					public Iterator<FieldKey<K, ?>> iterator() {
+						return IteratorUtils.append(record1.keys().iterator(), IteratorUtils.filter(record2.keys().iterator(), key -> !duplicateKeys.contains(key)));
+					}
+				};
+			}
+			
+			@Override
+			public <V> Maybe<V> get(final FieldKey<K, V> key)
+			throws InvalidFieldException {
+				final Maybe<V> value1 = record1.get(key);
+				if (value1.isSome()) {
+					return value1;
+				} else {
+					return record2.get(key);
+				}
+			}
+			
+			@Override
+			public Collection<Field<K, ?>> fields() {
+				return new AbstractCollection<Field<K, ?>>() {
+					@Override
+					public int size() {
+						return record1.size() + record2.size() - duplicateKeys.size();
+					}
+					
+					@Override
+					public Iterator<Field<K, ?>> iterator() {
+						return IteratorUtils.append(record1.fields().iterator(), IteratorUtils.filter(record2.fields().iterator(), field -> !duplicateKeys.contains(field.getKey())));
+					}
+				};
+			}
+		};
+	}
+
+	// TODO: lazy union/append
+	
+	// TODO: rename to append
+	/**
+	 * Builds the union of the given records.
+	 * <p>
+	 * In case of conflict, the fields of the first record have precedence over the fields of the second record.
+	 * 
+	 * @param <K> Type of the field keys.
+	 * @param <R> Type of the result record.
+	 * @param record1 First record.
+	 * @param record2 Second record.
+	 * @param resultFactory Factory of the result record.
+	 * @return A record containing the union of the fields.
+	 * @since 2.0
+	 */
+	public static <K extends FieldKey<K, ?>, R extends Record<K>> R union(final Record<K> record1, final Record<K> record2, final RecordFactory<K, R> resultFactory) {
+		final RecordBuilder<K, R> builder = resultFactory.newBuilder();
+		builder.setAll(record1);
+		builder.completeAll(record2);
+		return builder.build();
+	}
+
+	/**
+	 * Executes the given procedure with each field of the given record.
+	 * 
+	 * @param <K> Type of the field keys.
+	 * @param record Record containing the fields over which to iterate.
+	 * @param procedure Procedure to execute.
+	 * @since 2.0
+	 */
+	public static <K extends FieldKey<K, ?>> void foreach(final Record<K> record, final Procedure<? super Field<K, ?>> procedure) {
+		IterableUtils.foreach(record.fields(), procedure);
+	}
+
 	private RecordUtils() {
 		// Prevent instantiation.
 	}

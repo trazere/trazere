@@ -115,7 +115,7 @@ public interface Record<K extends FieldKey<K, ?>> {
 	 */
 	default <V> Maybe<V> get(final FieldKey<K, V> key)
 	throws InvalidFieldException, NullFieldException, IncompatibleFieldException {
-		return CollectionUtils.first(fields(), field -> field.getKey().equals(key)).map(field -> key.castValue(field.getValue()));
+		return CollectionUtils.filterFirst(fields(), field -> field.getKey().equals(key)).map(field -> key.castValue(field.getValue()));
 	}
 	
 	/**

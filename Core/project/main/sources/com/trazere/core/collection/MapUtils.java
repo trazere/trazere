@@ -304,19 +304,6 @@ public class MapUtils {
 	}
 	
 	/**
-	 * Executes the given procedure with each binding of the given map.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param map Map containing the bindings.
-	 * @param procedure Procedure to execute.
-	 * @since 2.0
-	 */
-	public static <K, V> void foreach(final Map<? extends K, ? extends V> map, final Procedure2<? super K, ? super V> procedure) {
-		bindings(map).foreach(procedure);
-	}
-	
-	/**
 	 * Left folds over the bindings of the given map using the given operator and initial state.
 	 *
 	 * @param <K> Type of the keys.
@@ -330,20 +317,6 @@ public class MapUtils {
 	 */
 	public static <K, V, S> S fold(final Map<? extends K, ? extends V> map, final Function3<? super S, ? super K, ? super V, ? extends S> operator, final S initialState) {
 		return bindings(map).fold(operator, initialState);
-	}
-	
-	/**
-	 * Gets the first binding of the given map accepted by the given filter.
-	 *
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param map Map containing the bindings to filter.
-	 * @param filter Predicate to use to filter the binding.
-	 * @return The first accepted binding, or when no binding is accepted.
-	 * @since 2.0
-	 */
-	public static <K, V> Maybe<Tuple2<K, V>> first(final Map<? extends K, ? extends V> map, final Predicate2<? super K, ? super V> filter) {
-		return MapUtils.<K, V>bindings(map).first(filter);
 	}
 	
 	// TODO: extractFirst
@@ -445,52 +418,6 @@ public class MapUtils {
 	}
 	
 	/**
-	 * Appends the given maps together.
-	 * <p>
-	 * The binding of the first map have precedence over the bindings of the second map in case of conflict.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <M> Type of the result map.
-	 * @param map1 First map containing the bindings to append.
-	 * @param map2 Second map containing the bindings to append.
-	 * @param resultFactory Factory of the result map.
-	 * @return A map containing the appended bindings.
-	 * @since 2.0
-	 */
-	public static <K, V, M extends Map<? super K, ? super V>> M append(final Map<? extends K, ? extends V> map1, final Map<? extends K, ? extends V> map2, final MapFactory<? super K, ? super V, M> resultFactory) {
-		final M results = resultFactory.build(map1.size() + map2.size());
-		results.putAll(map2);
-		results.putAll(map1);
-		return results;
-	}
-	
-	/**
-	 * Flattens the bindings of the maps contained in the given map.
-	 * <p>
-	 * The keys of the outer and inner maps are combined.
-	 *
-	 * @param <K1> Type of the keys of the outer map.
-	 * @param <K2> Type of the keys or the inner maps.
-	 * @param <V> Type of the values.
-	 * @param <M> Type of the result map.
-	 * @param map Map containing the maps containing the bindings to flatten.
-	 * @param resultFactory Factory of the result map.
-	 * @return A map containing the flatten bindings.
-	 * @since 2.0
-	 */
-	public static <K1, K2, V, M extends Map<? super Tuple2<K1, K2>, ? super V>> M flatten(final Map<? extends K1, ? extends Map<? extends K2, ? extends V>> map, final MapFactory<? super Tuple2<K1, K2>, ? super V, M> resultFactory) {
-		final M results = resultFactory.build();
-		for (final Map.Entry<? extends K1, ? extends Map<? extends K2, ? extends V>> outerEntry : map.entrySet()) {
-			final K1 outerKey = outerEntry.getKey();
-			for (final Map.Entry<? extends K2, ? extends V> innerEntry : outerEntry.getValue().entrySet()) {
-				results.put(new Tuple2<>(outerKey, innerEntry.getKey()), innerEntry.getValue());
-			}
-		}
-		return results;
-	}
-	
-	/**
 	 * Takes the n first bindings of the given map.
 	 *
 	 * @param <K> Type of the keys.
@@ -549,6 +476,20 @@ public class MapUtils {
 	}
 	
 	/**
+	 * Gets the first binding of the given map accepted by the given filter.
+	 *
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param map Map containing the bindings to filter.
+	 * @param filter Predicate to use to filter the binding.
+	 * @return The first accepted binding, or when no binding is accepted.
+	 * @since 2.0
+	 */
+	public static <K, V> Maybe<Tuple2<K, V>> filterFirst(final Map<? extends K, ? extends V> map, final Predicate2<? super K, ? super V> filter) {
+		return MapUtils.<K, V>bindings(map).filterFirst(filter);
+	}
+	
+	/**
 	 * Transforms the bindings of the given map using the given function.
 	 *
 	 * @param <K> Type of the keys.
@@ -599,7 +540,68 @@ public class MapUtils {
 		return results;
 	}
 	
+	// TODO: extractFirst
+	
 	// TODO: extractAll to Multimap ?
+	
+	/**
+	 * Appends the given maps together.
+	 * <p>
+	 * The binding of the first map have precedence over the bindings of the second map in case of conflict.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <M> Type of the result map.
+	 * @param map1 First map containing the bindings to append.
+	 * @param map2 Second map containing the bindings to append.
+	 * @param resultFactory Factory of the result map.
+	 * @return A map containing the appended bindings.
+	 * @since 2.0
+	 */
+	public static <K, V, M extends Map<? super K, ? super V>> M append(final Map<? extends K, ? extends V> map1, final Map<? extends K, ? extends V> map2, final MapFactory<? super K, ? super V, M> resultFactory) {
+		final M results = resultFactory.build(map1.size() + map2.size());
+		results.putAll(map2);
+		results.putAll(map1);
+		return results;
+	}
+	
+	/**
+	 * Flattens the bindings of the maps contained in the given map.
+	 * <p>
+	 * The keys of the outer and inner maps are combined.
+	 *
+	 * @param <K1> Type of the keys of the outer map.
+	 * @param <K2> Type of the keys or the inner maps.
+	 * @param <V> Type of the values.
+	 * @param <M> Type of the result map.
+	 * @param map Map containing the maps containing the bindings to flatten.
+	 * @param resultFactory Factory of the result map.
+	 * @return A map containing the flatten bindings.
+	 * @since 2.0
+	 */
+	public static <K1, K2, V, M extends Map<? super Tuple2<K1, K2>, ? super V>> M flatten(final Map<? extends K1, ? extends Map<? extends K2, ? extends V>> map, final MapFactory<? super Tuple2<K1, K2>, ? super V, M> resultFactory) {
+		final M results = resultFactory.build();
+		for (final Map.Entry<? extends K1, ? extends Map<? extends K2, ? extends V>> outerEntry : map.entrySet()) {
+			final K1 outerKey = outerEntry.getKey();
+			for (final Map.Entry<? extends K2, ? extends V> innerEntry : outerEntry.getValue().entrySet()) {
+				results.put(new Tuple2<>(outerKey, innerEntry.getKey()), innerEntry.getValue());
+			}
+		}
+		return results;
+	}
+	
+	/**
+	 * Executes the given procedure with each binding of the given map.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param map Map containing the bindings.
+	 * @param procedure Procedure to execute.
+	 * @since 2.0
+	 */
+	public static <K, V> void foreach(final Map<? extends K, ? extends V> map, final Procedure2<? super K, ? super V> procedure) {
+		bindings(map).foreach(procedure);
+	}
 	
 	/**
 	 * Builds an unmodifiable view of the given map.

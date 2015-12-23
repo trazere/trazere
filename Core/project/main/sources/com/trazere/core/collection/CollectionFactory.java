@@ -48,6 +48,8 @@ extends Factory<C> {
 		return build();
 	}
 	
+	// TODO: build(E)
+	
 	/**
 	 * Builds a collection containing the given elements.
 	 * 

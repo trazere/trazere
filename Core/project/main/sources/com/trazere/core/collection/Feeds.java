@@ -139,23 +139,8 @@ public class Feeds {
 		}
 		
 		@Override
-		public void foreach(final Procedure<? super Object> procedure) {
-			// Nothing to do.
-		}
-		
-		@Override
 		public <S> S fold(final Function2<? super S, ? super Object, ? extends S> operator, final S initialState) {
 			return initialState;
-		}
-		
-		@Override
-		public Maybe<Object> first(final Predicate<? super Object> filter) {
-			return Maybe.none();
-		}
-		
-		@Override
-		public <EE> Maybe<EE> extractFirst(final Function<? super Object, ? extends Maybe<? extends EE>> extractor) {
-			return Maybe.none();
 		}
 		
 		@Override
@@ -214,7 +199,27 @@ public class Feeds {
 		}
 		
 		@Override
+		public Maybe<Object> filterFirst(final Predicate<? super Object> filter) {
+			return Maybe.none();
+		}
+		
+		@Override
 		public <TE> Feed<TE> map(final Function<? super Object, ? extends TE> function) {
+			return Feeds.empty();
+		}
+		
+		@Override
+		public <EE> Feed<EE> extract(final Function<? super Object, ? extends Maybe<? extends EE>> extractor) {
+			return Feeds.empty();
+		}
+		
+		@Override
+		public <EE> Maybe<EE> extractFirst(final Function<? super Object, ? extends Maybe<? extends EE>> extractor) {
+			return Maybe.none();
+		}
+		
+		@Override
+		public <EE> Feed<EE> extractAll(final Function<? super Object, ? extends Iterable<? extends EE>> extractor) {
 			return Feeds.empty();
 		}
 		
@@ -224,9 +229,11 @@ public class Feeds {
 		}
 		
 		@Override
-		public <EE> Feed<EE> extract(final Function<? super Object, ? extends Maybe<? extends EE>> extractor) {
-			return Feeds.empty();
+		public void foreach(final Procedure<? super Object> procedure) {
+			// Nothing to do.
 		}
+		
+		// Thunk.
 		
 		@Override
 		public MemoizedFeed<Object> memoized() {

@@ -50,6 +50,8 @@ extends Factory<M> {
 		return build();
 	}
 	
+	// TODO: build(K, V)
+	
 	/**
 	 * Builds a map containing the given bindings.
 	 * 

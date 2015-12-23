@@ -71,31 +71,6 @@ public class IterableUtils {
 	// TODO: drain equivalent
 	
 	/**
-	 * Executes the given procedure with each element provided by the given iterable.
-	 * 
-	 * @param <E> Type of the elements.
-	 * @param iterable Iterable providing the elements.
-	 * @param procedure Procedure to execute.
-	 * @since 2.0
-	 */
-	public static <E> void foreach(final Iterable<? extends E> iterable, final Procedure<? super E> procedure) {
-		IteratorUtils.foreach(iterable.iterator(), procedure);
-	}
-	
-	/**
-	 * Executes the given procedure with each pair of elements provided by the given iterable.
-	 * 
-	 * @param <E1> Type of the first element of the pairs.
-	 * @param <E2> Type of the second element of the pairs.
-	 * @param iterable Iterable providing the pairs of elements.
-	 * @param procedure Procedure to execute.
-	 * @since 2.0
-	 */
-	public static <E1, E2> void foreach(final Iterable<? extends Tuple2<? extends E1, ? extends E2>> iterable, final Procedure2<? super E1, ? super E2> procedure) {
-		IteratorUtils.foreach(iterable.iterator(), procedure);
-	}
-	
-	/**
 	 * Left folds over the elements provided by the given iterable using the given binary operator and initial state.
 	 * 
 	 * @param <E> Type of the elements.
@@ -124,62 +99,6 @@ public class IterableUtils {
 	 */
 	public static <E1, E2, S> S fold(final Iterable<? extends Tuple2<? extends E1, ? extends E2>> iterable, final Function3<? super S, ? super E1, ? super E2, ? extends S> operator, final S initialState) {
 		return IteratorUtils.fold(iterable.iterator(), operator, initialState);
-	}
-	
-	/**
-	 * Gets the first element provided by the given iterable accepted by the given filter.
-	 * 
-	 * @param <E> Type of the elements.
-	 * @param iterable Iterable providing the elements to filter.
-	 * @param filter Predicate to use to filter the elements.
-	 * @return The first accepted element.
-	 * @since 2.0
-	 */
-	public static <E> Maybe<E> first(final Iterable<? extends E> iterable, final Predicate<? super E> filter) {
-		return IteratorUtils.first(iterable.iterator(), filter);
-	}
-	
-	/**
-	 * Gets the first pair of elements provided by the given iterable accepted by the given filter.
-	 * 
-	 * @param <E1> Type of the first element of the pairs.
-	 * @param <E2> Type of the second element of the pairs.
-	 * @param iterable Iterable providing the pairs of elements to filter.
-	 * @param filter Predicate to use to filter the pairs of elements.
-	 * @return The first accepted pair of elements.
-	 * @since 2.0
-	 */
-	public static <E1, E2> Maybe<Tuple2<E1, E2>> first(final Iterable<? extends Tuple2<? extends E1, ? extends E2>> iterable, final Predicate2<? super E1, ? super E2> filter) {
-		return IteratorUtils.first(iterable.iterator(), filter);
-	}
-	
-	/**
-	 * Gets the first element extracted from the elements provided by the given iterable by the given extractor.
-	 * 
-	 * @param <E> Type of the elements.
-	 * @param <EE> Type of the extracted elements.
-	 * @param iterable Iterable providing the elements to extract from.
-	 * @param extractor Function to use to extract the elements.
-	 * @return The first extracted element.
-	 * @since 2.0
-	 */
-	public static <E, EE> Maybe<? extends EE> extractFirst(final Iterable<? extends E> iterable, final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
-		return IteratorUtils.extractFirst(iterable.iterator(), extractor);
-	}
-	
-	/**
-	 * Gets the first element extracted from the pairs of elements provided by the given iterable by the given extractor.
-	 * 
-	 * @param <E1> Type of the first element of the pairs.
-	 * @param <E2> Type of the second element of the pairs.
-	 * @param <EE> Type of the extracted elements.
-	 * @param iterable Iterable providing the pairs of elements to extract from.
-	 * @param extractor Function to use to extract the elements.
-	 * @return The first extracted element.
-	 * @since 2.0
-	 */
-	public static <E1, E2, EE> Maybe<? extends EE> extractFirst(final Iterable<? extends Tuple2<? extends E1, ? extends E2>> iterable, final Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor) {
-		return IteratorUtils.extractFirst(iterable.iterator(), extractor);
 	}
 	
 	/**
@@ -314,36 +233,6 @@ public class IterableUtils {
 	}
 	
 	/**
-	 * Appends the given iterables together.
-	 * 
-	 * @param <E> Type of the elements.
-	 * @param iterable1 First iterable providing the elements to append.
-	 * @param iterable2 Second iterable providing the elements to append.
-	 * @return An iterable providing the appended elements.
-	 * @since 2.0
-	 */
-	public static <E> ExIterable<E> append(final Iterable<? extends E> iterable1, final Iterable<? extends E> iterable2) {
-		assert null != iterable1;
-		assert null != iterable2;
-		
-		return () -> IteratorUtils.append(iterable1.iterator(), iterable2.iterator());
-	}
-	
-	/**
-	 * Flattens the elements provided by the iterables provided by the given iterable.
-	 *
-	 * @param <E> Type of the elements.
-	 * @param iterable Iterable providing the iterables providing the elements to flatten.
-	 * @return An iterable providing the flatten elements.
-	 * @since 2.0
-	 */
-	public static <E> ExIterable<E> flatten(final Iterable<? extends Iterable<? extends E>> iterable) {
-		assert null != iterable;
-		
-		return () -> IteratorUtils.flatten(IteratorUtils.map(iterable.iterator(), IterableFunctions.iterator()));
-	}
-	
-	/**
 	 * Takes the n first elements provided by the given iterable.
 	 * 
 	 * @param <E> Type of the elements.
@@ -425,6 +314,33 @@ public class IterableUtils {
 	}
 	
 	/**
+	 * Gets the first element provided by the given iterable accepted by the given filter.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param iterable Iterable providing the elements to filter.
+	 * @param filter Predicate to use to filter the elements.
+	 * @return The first accepted element.
+	 * @since 2.0
+	 */
+	public static <E> Maybe<E> filterFirst(final Iterable<? extends E> iterable, final Predicate<? super E> filter) {
+		return IteratorUtils.filterFirst(iterable.iterator(), filter);
+	}
+	
+	/**
+	 * Gets the first pair of elements provided by the given iterable accepted by the given filter.
+	 * 
+	 * @param <E1> Type of the first element of the pairs.
+	 * @param <E2> Type of the second element of the pairs.
+	 * @param iterable Iterable providing the pairs of elements to filter.
+	 * @param filter Predicate to use to filter the pairs of elements.
+	 * @return The first accepted pair of elements.
+	 * @since 2.0
+	 */
+	public static <E1, E2> Maybe<Tuple2<E1, E2>> filterFirst(final Iterable<? extends Tuple2<? extends E1, ? extends E2>> iterable, final Predicate2<? super E1, ? super E2> filter) {
+		return IteratorUtils.filterFirst(iterable.iterator(), filter);
+	}
+	
+	/**
 	 * Transforms the elements provided by the given iterable using the given function.
 	 *
 	 * @param <E> Type of the elements.
@@ -457,6 +373,135 @@ public class IterableUtils {
 		assert null != function;
 		
 		return () -> IteratorUtils.map(iterable.iterator(), function);
+	}
+	
+	/**
+	 * Extracts the elements provided by the given iterable using the given extractor.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param <EE> Type of the extracted elements.
+	 * @param iterable Iterable providing the elements to extract from.
+	 * @param extractor Function to use to extract the elements.
+	 * @return An iterable providing the extracted elements.
+	 * @since 2.0
+	 */
+	public static <E, EE> ExIterable<EE> extract(final Iterable<? extends E> iterable, final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
+		assert null != iterable;
+		assert null != extractor;
+		
+		return () -> IteratorUtils.extract(iterable.iterator(), extractor);
+	}
+	
+	/**
+	 * Extracts the pairs of elements provided by the given iterable using the given extractor.
+	 *
+	 * @param <E1> Type of the first element of the pairs.
+	 * @param <E2> Type of the second element of the pairs.
+	 * @param <EE> Type of the extracted elements.
+	 * @param iterable Iterable providing the pairs of elements to extract from.
+	 * @param extractor Function to use to extract the pairs of elements.
+	 * @return An iterable providing the extracted elements.
+	 * @since 2.0
+	 */
+	public static <E1, E2, EE> ExIterable<EE> extract(final Iterable<? extends Tuple2<? extends E1, ? extends E2>> iterable, final Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor) {
+		assert null != iterable;
+		assert null != extractor;
+		
+		return () -> IteratorUtils.extract(iterable.iterator(), extractor);
+	}
+	
+	/**
+	 * Gets the first element extracted from the elements provided by the given iterable by the given extractor.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param <EE> Type of the extracted elements.
+	 * @param iterable Iterable providing the elements to extract from.
+	 * @param extractor Function to use to extract the elements.
+	 * @return The first extracted element.
+	 * @since 2.0
+	 */
+	public static <E, EE> Maybe<EE> extractFirst(final Iterable<? extends E> iterable, final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
+		return IteratorUtils.extractFirst(iterable.iterator(), extractor);
+	}
+	
+	/**
+	 * Gets the first element extracted from the pairs of elements provided by the given iterable by the given extractor.
+	 * 
+	 * @param <E1> Type of the first element of the pairs.
+	 * @param <E2> Type of the second element of the pairs.
+	 * @param <EE> Type of the extracted elements.
+	 * @param iterable Iterable providing the pairs of elements to extract from.
+	 * @param extractor Function to use to extract the elements.
+	 * @return The first extracted element.
+	 * @since 2.0
+	 */
+	public static <E1, E2, EE> Maybe<EE> extractFirst(final Iterable<? extends Tuple2<? extends E1, ? extends E2>> iterable, final Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor) {
+		return IteratorUtils.extractFirst(iterable.iterator(), extractor);
+	}
+	
+	/**
+	 * Gets all elements extracted from the elements provided by the given iterable using the given extractor.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param <TE> Type of the extracted elements.
+	 * @param iterable Iterable providing the elements to extract from.
+	 * @param extractor Function to use to extract the elements.
+	 * @return An iterable providing the extracted elements.
+	 * @since 2.0
+	 */
+	public static <E, TE> ExIterable<TE> extractAll(final Iterable<? extends E> iterable, final Function<? super E, ? extends Iterable<? extends TE>> extractor) {
+		assert null != iterable;
+		assert null != extractor;
+		
+		return () -> IteratorUtils.extractAll(iterable.iterator(), extractor);
+	}
+	
+	/**
+	 * Gets all elements extracted from the pairs of elements provided by the given iterable using the given extractor.
+	 *
+	 * @param <E1> Type of the first element of the pairs.
+	 * @param <E2> Type of the second element of the pairs.
+	 * @param <EE> Type of the extracted elements.
+	 * @param iterable Iterable providing the pairs of elements to extract from.
+	 * @param extractor Function to use to extract the pairs of elements.
+	 * @return An iterable providing the extracted elements.
+	 * @since 2.0
+	 */
+	public static <E1, E2, EE> ExIterable<EE> extractAll(final Iterable<? extends Tuple2<? extends E1, ? extends E2>> iterable, final Function2<? super E1, ? super E2, ? extends Iterable<? extends EE>> extractor) {
+		assert null != iterable;
+		assert null != extractor;
+		
+		return () -> IteratorUtils.extractAll(iterable.iterator(), extractor);
+	}
+	
+	/**
+	 * Appends the given iterables together.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param iterable1 First iterable providing the elements to append.
+	 * @param iterable2 Second iterable providing the elements to append.
+	 * @return An iterable providing the appended elements.
+	 * @since 2.0
+	 */
+	public static <E> ExIterable<E> append(final Iterable<? extends E> iterable1, final Iterable<? extends E> iterable2) {
+		assert null != iterable1;
+		assert null != iterable2;
+		
+		return () -> IteratorUtils.append(iterable1.iterator(), iterable2.iterator());
+	}
+	
+	/**
+	 * Flattens the elements provided by the iterables provided by the given iterable.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param iterable Iterable providing the iterables providing the elements to flatten.
+	 * @return An iterable providing the flatten elements.
+	 * @since 2.0
+	 */
+	public static <E> ExIterable<E> flatten(final Iterable<? extends Iterable<? extends E>> iterable) {
+		assert null != iterable;
+		
+		return () -> IteratorUtils.flatten(IteratorUtils.map(iterable.iterator(), IterableFunctions.iterator()));
 	}
 	
 	/**
@@ -495,6 +540,53 @@ public class IterableUtils {
 	}
 	
 	// TODO: extract(...) and extractAll(...) methods
+	
+	// TODO: drain equivalent
+	
+	/**
+	 * Composes pairs with the elements provided by the given iterables.
+	 * <p>
+	 * The pairs are composed of an element provided by each iterable in order. The extra values of the longest iterable are dropped when the given iterables
+	 * don't provide the same number of elements.
+	 * 
+	 * @param <E1> Type of the first elements.
+	 * @param <E2> Type of the second elements.
+	 * @param iterable1 Iterable providing the first elements of the pairs.
+	 * @param iterable2 Iterable providing the second elements of the pairs.
+	 * @return An iterable providing the pairs of elements.
+	 * @since 2.0
+	 */
+	public static <E1, E2> PairIterable<E1, E2> zip(final Iterable<? extends E1> iterable1, final Iterable<? extends E2> iterable2) {
+		assert null != iterable1;
+		assert null != iterable2;
+		
+		return () -> IteratorUtils.zip(iterable1.iterator(), iterable2.iterator());
+	}
+	
+	/**
+	 * Executes the given procedure with each element provided by the given iterable.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param iterable Iterable providing the elements.
+	 * @param procedure Procedure to execute.
+	 * @since 2.0
+	 */
+	public static <E> void foreach(final Iterable<? extends E> iterable, final Procedure<? super E> procedure) {
+		IteratorUtils.foreach(iterable.iterator(), procedure);
+	}
+	
+	/**
+	 * Executes the given procedure with each pair of elements provided by the given iterable.
+	 * 
+	 * @param <E1> Type of the first element of the pairs.
+	 * @param <E2> Type of the second element of the pairs.
+	 * @param iterable Iterable providing the pairs of elements.
+	 * @param procedure Procedure to execute.
+	 * @since 2.0
+	 */
+	public static <E1, E2> void foreach(final Iterable<? extends Tuple2<? extends E1, ? extends E2>> iterable, final Procedure2<? super E1, ? super E2> procedure) {
+		IteratorUtils.foreach(iterable.iterator(), procedure);
+	}
 	
 	/**
 	 * Builds an unmodifiable view of the given iterable.
@@ -565,26 +657,6 @@ public class IterableUtils {
 		public PairIterator<E1, E2> iterator() {
 			return IteratorUtils.unmodifiable(PairIterator.build(_decorated.iterator()));
 		}
-	}
-	
-	/**
-	 * Composes pairs with the elements provided by the given iterables.
-	 * <p>
-	 * The pairs are composed of an element provided by each iterable in order. The extra values of the longest iterable are dropped when the given iterables
-	 * don't provide the same number of elements.
-	 * 
-	 * @param <E1> Type of the first elements.
-	 * @param <E2> Type of the second elements.
-	 * @param iterable1 Iterable providing the first elements of the pairs.
-	 * @param iterable2 Iterable providing the second elements of the pairs.
-	 * @return An iterable providing the pairs of elements.
-	 * @since 2.0
-	 */
-	public static <E1, E2> PairIterable<E1, E2> zip(final Iterable<? extends E1> iterable1, final Iterable<? extends E2> iterable2) {
-		assert null != iterable1;
-		assert null != iterable2;
-		
-		return () -> IteratorUtils.zip(iterable1.iterator(), iterable2.iterator());
 	}
 	
 	private IterableUtils() {

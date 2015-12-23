@@ -157,19 +157,6 @@ public class MultimapUtils {
 	// TODO: retain(Multimap, Predicate2), requires Iterator.remove support for entrySet
 	
 	/**
-	 * Executes the given procedure with each binding of the given multimap.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param multimap Multimap containing the bindings.
-	 * @param procedure Procedure to execute.
-	 * @since 2.0
-	 */
-	public static <K, V> void foreach(final Multimap<? extends K, ? extends V, ?> multimap, final Procedure2<? super K, ? super V> procedure) {
-		bindings(multimap).foreach(procedure);
-	}
-	
-	/**
 	 * Left folds over the bindings of the given multimap using the given operator and initial state.
 	 *
 	 * @param <K> Type of the keys.
@@ -183,20 +170,6 @@ public class MultimapUtils {
 	 */
 	public static <K, V, S> S fold(final Multimap<? extends K, ? extends V, ?> multimap, final Function3<? super S, ? super K, ? super V, ? extends S> operator, final S initialState) {
 		return bindings(multimap).fold(operator, initialState);
-	}
-	
-	/**
-	 * Gets the first binding of the given multimap accepted by the given filter.
-	 *
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param multimap Multimap containing the bindings to filter.
-	 * @param filter Predicate to use to filter the binding.
-	 * @return The first accepted binding, or when no binding is accepted.
-	 * @since 2.0
-	 */
-	public static <K, V> Maybe<Tuple2<K, V>> first(final Multimap<? extends K, ? extends V, ?> multimap, final Predicate2<? super K, ? super V> filter) {
-		return MultimapUtils.<K, V>bindings(multimap).first(filter);
 	}
 	
 	/**
@@ -357,6 +330,20 @@ public class MultimapUtils {
 	}
 	
 	/**
+	 * Gets the first binding of the given multimap accepted by the given filter.
+	 *
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param multimap Multimap containing the bindings to filter.
+	 * @param filter Predicate to use to filter the binding.
+	 * @return The first accepted binding, or when no binding is accepted.
+	 * @since 2.0
+	 */
+	public static <K, V> Maybe<Tuple2<K, V>> filterFirst(final Multimap<? extends K, ? extends V, ?> multimap, final Predicate2<? super K, ? super V> filter) {
+		return MultimapUtils.<K, V>bindings(multimap).filterFirst(filter);
+	}
+	
+	/**
 	 * Transforms the bindings of the given multimap using the given function.
 	 *
 	 * @param <K> Type of the keys.
@@ -407,7 +394,24 @@ public class MultimapUtils {
 		return results;
 	}
 	
+	// TODO: extractFirst
+	
 	// TODO: extractAll
+	
+	// TODO: retain(Multimap, Predicate2), requires Iterator.remove support for entrySet
+	
+	/**
+	 * Executes the given procedure with each binding of the given multimap.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param multimap Multimap containing the bindings.
+	 * @param procedure Procedure to execute.
+	 * @since 2.0
+	 */
+	public static <K, V> void foreach(final Multimap<? extends K, ? extends V, ?> multimap, final Procedure2<? super K, ? super V> procedure) {
+		bindings(multimap).foreach(procedure);
+	}
 	
 	/**
 	 * Builds an unmodifiable view of the given multimap.

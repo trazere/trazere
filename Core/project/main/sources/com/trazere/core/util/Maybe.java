@@ -15,6 +15,7 @@
  */
 package com.trazere.core.util;
 
+import com.trazere.core.collection.CollectionFactory;
 import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Functions;
@@ -25,10 +26,13 @@ import com.trazere.core.imperative.Iterators;
 import com.trazere.core.imperative.Procedure;
 import com.trazere.core.lang.HashCode;
 import com.trazere.core.lang.ObjectUtils;
+import com.trazere.core.lang.Traversable;
 import com.trazere.core.text.Describable;
 import com.trazere.core.text.DescriptionBuilder;
 import com.trazere.core.text.TextUtils;
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Comparator;
 
 /**
  * The {@link Maybe} class encodes a tagged union data type which represents an optional value.
@@ -42,7 +46,7 @@ import java.io.Serializable;
  * @since 2.0
  */
 public abstract class Maybe<T>
-implements Iterable<T>, Serializable, Describable {
+implements Traversable<T, Maybe<T>>, Iterable<T>, Serializable, Describable {
 	private static final long serialVersionUID = 1L;
 	
 	// TODO: move to Maybes ?
@@ -118,14 +122,7 @@ implements Iterable<T>, Serializable, Describable {
 			return matcher.none(this);
 		}
 		
-		// Imperative.
-		
-		@Override
-		public void foreach(final Procedure<? super T> procedure) {
-			// Nothing to do.
-		}
-		
-		// Functional.
+		// Traversable.
 		
 		@Override
 		public <S> S fold(final Function2<? super S, ? super T, ? extends S> operator, final S initialState) {
@@ -148,7 +145,27 @@ implements Iterable<T>, Serializable, Describable {
 		}
 		
 		@Override
+		public Maybe<T> take(final int n) {
+			return none();
+		}
+		
+		@Override
+		public Maybe<T> drop(final int n) {
+			return none();
+		}
+		
+		@Override
+		public <B extends Collection<? super T>> Maybe<B> group(final int n, final CollectionFactory<? super T, B> batchFactory) {
+			return none();
+		}
+		
+		@Override
 		public Maybe<T> filter(final Predicate<? super T> filter) {
+			return none();
+		}
+		
+		@Override
+		public Maybe<T> filterFirst(final Predicate<? super T> filter) {
 			return none();
 		}
 		
@@ -158,8 +175,23 @@ implements Iterable<T>, Serializable, Describable {
 		}
 		
 		@Override
+		public <R> Maybe<R> extract(final Function<? super T, ? extends Maybe<? extends R>> extractor) {
+			return none();
+		}
+		
+		@Override
+		public <R> Maybe<R> extractFirst(final Function<? super T, ? extends Maybe<? extends R>> extractor) {
+			return none();
+		}
+		
+		@Override
 		public <R> Maybe<R> flatMap(final Function<? super T, ? extends Maybe<? extends R>> extractor) {
 			return none();
+		}
+		
+		@Override
+		public void foreach(final Procedure<? super T> procedure) {
+			// Nothing to do.
 		}
 		
 		// Iterable.
@@ -282,14 +314,7 @@ implements Iterable<T>, Serializable, Describable {
 			return matcher.some(this);
 		}
 		
-		// Imperative.
-		
-		@Override
-		public void foreach(final Procedure<? super T> procedure) {
-			procedure.execute(_value);
-		}
-		
-		// Functional.
+		// Traversable.
 		
 		@Override
 		public <S> S fold(final Function2<? super S, ? super T, ? extends S> operator, final S initialState) {
@@ -312,18 +337,54 @@ implements Iterable<T>, Serializable, Describable {
 		}
 		
 		@Override
+		public Maybe<T> take(final int n) {
+			return n > 0 ? this : none();
+		}
+		
+		@Override
+		public Maybe<T> drop(final int n) {
+			return n > 0 ? none() : this;
+		}
+		
+		@Override
+		@SuppressWarnings("unchecked")
+		public <B extends Collection<? super T>> Maybe<B> group(final int n, final CollectionFactory<? super T, B> batchFactory) {
+			return Maybe.some(batchFactory.build(_value));
+		}
+		
+		@Override
 		public Maybe<T> filter(final Predicate<? super T> predicate) {
 			return predicate.evaluate(_value) ? this : Maybe.<T>none();
 		}
 		
 		@Override
+		public Maybe<T> filterFirst(final Predicate<? super T> filter) {
+			return filter(filter);
+		}
+		
+		@Override
 		public <R> Maybe<R> map(final Function<? super T, ? extends R> function) {
-			return Maybe.<R>some(function.evaluate(_value));
+			return Maybe.some(function.evaluate(_value));
+		}
+		
+		@Override
+		public <R> Maybe<R> extract(final Function<? super T, ? extends Maybe<? extends R>> extractor) {
+			return flatMap(extractor);
+		}
+		
+		@Override
+		public <R> Maybe<R> extractFirst(final Function<? super T, ? extends Maybe<? extends R>> extractor) {
+			return flatMap(extractor);
 		}
 		
 		@Override
 		public <R> Maybe<R> flatMap(final Function<? super T, ? extends Maybe<? extends R>> function) {
 			return function.evaluate(_value).map(Functions.<R>identity()); // HACK: explicit type arguments to work around a bug of javac
+		}
+		
+		@Override
+		public void foreach(final Procedure<? super T> procedure) {
+			procedure.execute(_value);
 		}
 		
 		// Iterable.
@@ -448,17 +509,7 @@ implements Iterable<T>, Serializable, Describable {
 	 */
 	public abstract <R> R match(final Matcher<? super T, ? extends R> matcher);
 	
-	// Imperative.
-	
-	/**
-	 * Executes the given procedure with the value wrapped in this {@link Maybe} instance.
-	 * 
-	 * @param procedure Procedure to execute.
-	 * @since 2.0
-	 */
-	public abstract void foreach(final Procedure<? super T> procedure);
-	
-	// Functional.
+	// Traversable.
 	
 	/**
 	 * Left folds over the value wrapped in this {@link Maybe} instance using the given binary operator and initial state.
@@ -469,6 +520,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * @return The folded state.
 	 * @since 2.0
 	 */
+	@Override
 	public abstract <S> S fold(final Function2<? super S, ? super T, ? extends S> operator, final S initialState);
 	
 	/**
@@ -478,6 +530,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * @return <code>true</code> when the wrapped value is accepted, <code>false</code> when no value is wrapped and when the wrapped value is rejected.
 	 * @since 2.0
 	 */
+	@Override
 	public abstract boolean isAny(final Predicate<? super T> filter);
 	
 	/**
@@ -487,6 +540,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * @return <code>true</code> when no value is wrapped and when the wrapped value is accepted, <code>false</code> when the wrapped value is rejected.
 	 * @since 2.0
 	 */
+	@Override
 	public abstract boolean areAll(final Predicate<? super T> filter);
 	
 	/**
@@ -496,7 +550,21 @@ implements Iterable<T>, Serializable, Describable {
 	 * @return <tt>1</tt> when the wrapped value is accepted by the filter, <tt>0</tt> when no value is wrapped and when the wrapped value is rejected.
 	 * @since 2.0
 	 */
+	@Override
 	public abstract int count(final Predicate<? super T> filter);
+	
+	@Override
+	public Maybe<T> least(final Comparator<? super T> comparator) {
+		return this;
+	}
+	
+	@Override
+	public Maybe<T> greatest(final Comparator<? super T> comparator) {
+		return this;
+	}
+	
+	@Override
+	public abstract <B extends Collection<? super T>> Maybe<B> group(final int n, final CollectionFactory<? super T, B> batchFactory);
 	
 	/**
 	 * Filters the value wrapped by this {@link Maybe} instance using the given filter.
@@ -505,6 +573,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * @return The {@link Maybe} instance wrapping the filtered value.
 	 * @since 2.0
 	 */
+	@Override
 	public abstract Maybe<T> filter(final Predicate<? super T> filter);
 	
 	/**
@@ -515,7 +584,14 @@ implements Iterable<T>, Serializable, Describable {
 	 * @return The {@link Maybe} instance wrapping the mapped value.
 	 * @since 2.0
 	 */
+	@Override
 	public abstract <R> Maybe<R> map(final Function<? super T, ? extends R> function);
+	
+	@Override
+	public abstract <R> Maybe<R> extract(final Function<? super T, ? extends Maybe<? extends R>> extractor);
+	
+	@Override
+	public abstract <R> Maybe<R> extractFirst(Function<? super T, ? extends Maybe<? extends R>> extractor);
 	
 	/**
 	 * Transforms and flattens the value wrapped by this {@link Maybe} instance using the given function.
@@ -526,6 +602,15 @@ implements Iterable<T>, Serializable, Describable {
 	 * @since 2.0
 	 */
 	public abstract <R> Maybe<R> flatMap(final Function<? super T, ? extends Maybe<? extends R>> function);
+	
+	/**
+	 * Executes the given procedure with the value wrapped in this {@link Maybe} instance.
+	 * 
+	 * @param procedure Procedure to execute.
+	 * @since 2.0
+	 */
+	@Override
+	public abstract void foreach(final Procedure<? super T> procedure);
 	
 	// Object.
 	
