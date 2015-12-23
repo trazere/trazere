@@ -20,7 +20,7 @@ import java.util.NoSuchElementException;
 public interface ExIterable<E>
 extends Iterable<E> {
 	/**
-	 * Builds an extended view of this iterable.
+	 * Builds an extended view of the given iterable.
 	 * 
 	 * @param <E> Type of the elements.
 	 * @param iterable Iterable to wrap.

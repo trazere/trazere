@@ -19,16 +19,16 @@ import java.util.Map;
 public interface PairIterator<E1, E2>
 extends ExIterator<Tuple2<E1, E2>> {
 	/**
-	 * Builds an extended iterator that wraps this iterator.
+	 * Builds an extended view of the given iterator of pairs of elements.
 	 * 
 	 * @param <E1> Type of the first element of the pairs.
 	 * @param <E2> Type of the second element of the pairs.
 	 * @param iterator Iterator to wrap.
-	 * @return The extended iterator.
+	 * @return The extended view of the given iterator, or the given iterator when it is already an extended view.
 	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
-	public static <E1, E2> PairIterator<E1, E2> fromIterator(final Iterator<? extends Tuple2<E1, E2>> iterator) {
+	public static <E1, E2> PairIterator<E1, E2> build(final Iterator<? extends Tuple2<E1, E2>> iterator) {
 		assert null != iterator;
 		
 		if (iterator instanceof PairIterator) {

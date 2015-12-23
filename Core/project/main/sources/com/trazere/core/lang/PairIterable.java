@@ -18,7 +18,7 @@ import com.trazere.core.util.Tuple2;
 public interface PairIterable<E1, E2>
 extends ExIterable<Tuple2<E1, E2>> {
 	/**
-	 * Builds an extended view of the given iterable.
+	 * Builds an extended view of the given iterable of pairs of elements.
 	 * 
 	 * @param <E1> Type of the first element of the pairs.
 	 * @param <E2> Type of the second element of the pairs.
@@ -27,7 +27,7 @@ extends ExIterable<Tuple2<E1, E2>> {
 	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
-	public static <E1, E2> PairIterable<E1, E2> fromIterable(final Iterable<? extends Tuple2<E1, E2>> iterable) {
+	public static <E1, E2> PairIterable<E1, E2> build(final Iterable<? extends Tuple2<E1, E2>> iterable) {
 		assert null != iterable;
 		
 		if (iterable instanceof PairIterable) {
@@ -36,7 +36,7 @@ extends ExIterable<Tuple2<E1, E2>> {
 			return new PairIterable<E1, E2>() {
 				@Override
 				public PairIterator<E1, E2> iterator() {
-					return PairIterator.fromIterator(iterable.iterator());
+					return PairIterator.build(iterable.iterator());
 				}
 			};
 		}

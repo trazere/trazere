@@ -563,7 +563,7 @@ public class IterableUtils {
 		
 		@Override
 		public PairIterator<E1, E2> iterator() {
-			return IteratorUtils.unmodifiable(PairIterator.fromIterator(_decorated.iterator()));
+			return IteratorUtils.unmodifiable(PairIterator.build(_decorated.iterator()));
 		}
 	}
 	
