@@ -48,7 +48,7 @@ public class CollectionUtils {
 	 * @param <T> Type of the values.
 	 * @param iterator The iterator.
 	 * @return The next value.
-	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#poll(Iterator)}.
+	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#optionalNext(Iterator)}.
 	 */
 	@Deprecated
 	public static <T> Maybe<T> next(final Iterator<? extends T> iterator) {
@@ -116,7 +116,7 @@ public class CollectionUtils {
 	 * @param iterator The iterator.
 	 * @return The next value.
 	 * @throws X When the retrieval of the next value fails.
-	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#poll(Iterator)}.
+	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#optionalNext(Iterator)}.
 	 */
 	@Deprecated
 	public static <T, X extends Exception> Maybe<T> next(final CheckedIterator<? extends T, ? extends X> iterator)
@@ -189,7 +189,7 @@ public class CollectionUtils {
 	 * @param <T> Type of the values.
 	 * @param values Values to read.
 	 * @return Some value if any.
-	 * @deprecated Use {@link com.trazere.core.lang.IterableUtils#any(Iterable)}.
+	 * @deprecated Use {@link com.trazere.core.lang.IterableUtils#optionalAny(Iterable)}.
 	 */
 	@Deprecated
 	public static <T> Maybe<T> any(final Iterable<? extends T> values) {

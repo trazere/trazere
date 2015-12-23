@@ -31,6 +31,7 @@ import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.NoSuchElementException;
 
 /**
  * The {@link IterableUtils} class provides various utilities regarding {@link Iterable iterables}.
@@ -40,15 +41,31 @@ import java.util.Comparator;
  */
 public class IterableUtils {
 	/**
-	 * Gets an element provided by the given iterable.
+	 * Gets any element provided by the given iterable.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param iterable Iterable providing the element to read.
+	 * @return An element provided by the iterable.
+	 * @throws NoSuchElementException When the iterable is empty.
+	 * @since 2.0
+	 */
+	public static <E> E any(final Iterable<? extends E> iterable)
+	throws NoSuchElementException {
+		return iterable.iterator().next();
+	}
+	
+	/**
+	 * Gets any element provided by the given iterable.
+	 * <p>
+	 * This methods support empty iterables.
 	 *
 	 * @param <E> Type of the elements.
 	 * @param iterable Iterable providing the element to read.
 	 * @return An element provided by the iterable, or nothing when the iterable is empty.
 	 * @since 2.0
 	 */
-	public static <E> Maybe<E> any(final Iterable<? extends E> iterable) {
-		return IteratorUtils.poll(iterable.iterator());
+	public static <E> Maybe<E> optionalAny(final Iterable<? extends E> iterable) {
+		return IteratorUtils.optionalNext(iterable.iterator());
 	}
 	
 	// TODO: drain equivalent

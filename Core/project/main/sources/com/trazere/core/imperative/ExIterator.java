@@ -51,15 +51,17 @@ extends Iterator<E> {
 		}
 	}
 	
-	// TODO: make name coherent with Utils -> getNext() ? => inverse tail and getTail in Feed ?
 	/**
-	 * Polls the next element provided by this iterator.
+	 * Gets the next element provided by this iterator.
+	 * <p>
+	 * This methods supports exhausted iterators.
 	 * 
 	 * @return The next element, or nothing when the iterator is exhausted.
+	 * @see IteratorUtils#optionalNext(Iterator)
 	 * @since 2.0
 	 */
-	default Maybe<E> poll() {
-		return IteratorUtils.poll(this);
+	default Maybe<E> optionalNext() {
+		return IteratorUtils.optionalNext(this);
 	}
 	
 	/**

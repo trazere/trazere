@@ -28,34 +28,6 @@ import com.trazere.core.util.Tuples;
  */
 public class FeedUtils {
 	/**
-	 * Gets the head element of the given feed.
-	 * <p>
-	 * This method supports empty feeds.
-	 * 
-	 * @param <E> Type of the elements.
-	 * @param feed Feed to read.
-	 * @return The head element, or nothing when the feed is empty.
-	 * @since 2.0
-	 */
-	public static <E> Maybe<E> head(final Feed<? extends E> feed) {
-		return !feed.isEmpty() ? Maybe.<E>some(feed.getHead()) : Maybe.<E>none();
-	}
-	
-	/**
-	 * Gets the tail of the given feed.
-	 * <p>
-	 * This method supports empty feeds.
-	 * 
-	 * @param <E> Type of the elements.
-	 * @param feed Feed to read.
-	 * @return The of the feed, or an empty feed when the feed is empty.
-	 * @since 2.0
-	 */
-	public static <E> Feed<? extends E> tail(final Feed<? extends E> feed) {
-		return !feed.isEmpty() ? feed.getTail() : Feeds.<E>empty();
-	}
-	
-	/**
 	 * Gets the least element of the given feed according to their natural order.
 	 *
 	 * @param <E> Type of the elements.

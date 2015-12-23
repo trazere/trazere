@@ -62,12 +62,22 @@ public class Feeds {
 			}
 			
 			@Override
-			public E getHead() {
+			public E head() {
 				return head;
 			}
 			
 			@Override
-			public Feed<? extends E> getTail() {
+			public Maybe<E> optionalHead() {
+				return Maybe.some(head);
+			}
+			
+			@Override
+			public Feed<? extends E> tail() {
+				return tail;
+			}
+			
+			@Override
+			public Feed<? extends E> optionalTail() {
 				return tail;
 			}
 			
@@ -107,15 +117,25 @@ public class Feeds {
 		}
 		
 		@Override
-		public Object getHead()
+		public Object head()
 		throws NoSuchElementException {
 			throw new NoSuchElementException();
 		}
 		
 		@Override
-		public Feed<Object> getTail()
+		public Maybe<Object> optionalHead() {
+			return Maybe.none();
+		}
+		
+		@Override
+		public Feed<Object> tail()
 		throws NoSuchElementException {
 			throw new NoSuchElementException();
+		}
+		
+		@Override
+		public Feed<Object> optionalTail() {
+			return this;
 		}
 		
 		@Override
@@ -286,7 +306,7 @@ public class Feeds {
 			}
 			
 			@Override
-			public E getHead()
+			public E head()
 			throws NoSuchElementException {
 				if (index < elements.length) {
 					return elements[index];
@@ -296,12 +316,30 @@ public class Feeds {
 			}
 			
 			@Override
-			public Feed<E> getTail()
+			public Maybe<E> optionalHead() {
+				if (index < elements.length) {
+					return Maybe.some(elements[index]);
+				} else {
+					return Maybe.none();
+				}
+			}
+			
+			@Override
+			public Feed<E> tail()
 			throws NoSuchElementException {
 				if (index < elements.length) {
 					return Feeds.fromElements(elements, index + 1);
 				} else {
 					throw new NoSuchElementException();
+				}
+			}
+			
+			@Override
+			public Feed<E> optionalTail() {
+				if (index < elements.length) {
+					return Feeds.fromElements(elements, index + 1);
+				} else {
+					return Feeds.empty();
 				}
 			}
 			

@@ -32,6 +32,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 /**
@@ -63,11 +64,26 @@ public class MultimapUtils {
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param multimap Multimap to read.
+	 * @return A binding of the multimap.
+	 * @throws NoSuchElementException When the multimap is empty.
+	 * @since 2.0
+	 */
+	public static <K, V> Tuple2<K, V> any(final Multimap<K, V, ?> multimap)
+	throws NoSuchElementException {
+		return bindings(multimap).any();
+	}
+	
+	/**
+	 * Gets a binding from the given multimap.
+	 *
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param multimap Multimap to read.
 	 * @return A binding of the multimap, or nothing when the multimap is empty.
 	 * @since 2.0
 	 */
-	public static <K, V> Maybe<Tuple2<K, V>> any(final Multimap<K, V, ?> multimap) {
-		return bindings(multimap).any();
+	public static <K, V> Maybe<Tuple2<K, V>> optionalAny(final Multimap<K, V, ?> multimap) {
+		return bindings(multimap).optionalAny();
 	}
 	
 	/**

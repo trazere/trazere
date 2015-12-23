@@ -22,6 +22,7 @@ import com.trazere.core.functional.Thunk;
 import com.trazere.core.imperative.ExIterator;
 import com.trazere.core.imperative.Procedure;
 import com.trazere.core.util.Maybe;
+import com.trazere.core.util.MaybeUtils;
 import com.trazere.core.util.Tuple2;
 import java.util.Collection;
 import java.util.Comparator;
@@ -67,7 +68,7 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @throws NoSuchElementException When the feed is empty.
 	 * @since 2.0
 	 */
-	default E getHead()
+	default E head()
 	throws NoSuchElementException {
 		return get().get1();
 	}
@@ -78,10 +79,11 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * This method supports empty feeds.
 	 *
 	 * @return The head element, or nothing when the feed is empty.
+	 * @see #head()
 	 * @since 2.0
 	 */
-	default Maybe<E> head() {
-		return FeedUtils.head(this);
+	default Maybe<E> optionalHead() {
+		return evaluate().map(Tuple2::get1);
 	}
 	
 	/**
@@ -91,7 +93,7 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @throws NoSuchElementException When the feed is empty.
 	 * @since 2.0
 	 */
-	default Feed<? extends E> getTail()
+	default Feed<? extends E> tail()
 	throws NoSuchElementException {
 		return get().get2();
 	}
@@ -101,11 +103,11 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * <p>
 	 * This method supports empty feeds.
 	 *
-	 * @return The of the feed, or an empty feed when the feed is empty.
+	 * @return The tail of the feed, or an empty feed when the feed is empty.
 	 * @since 2.0
 	 */
-	default Feed<? extends E> tail() {
-		return FeedUtils.tail(this);
+	default Feed<? extends E> optionalTail() {
+		return MaybeUtils.<Feed<? extends E>>get(evaluate().map(Tuple2::get2), Feeds.empty()); // HACK: explicit type argument to work around a bug of javac
 	}
 	
 	/**
@@ -424,15 +426,25 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 			}
 			
 			@Override
-			public TE getHead()
+			public TE head()
 			throws NoSuchElementException {
-				return function.evaluate(self.getHead());
+				return function.evaluate(self.head());
 			}
 			
 			@Override
-			public Feed<TE> getTail()
+			public Maybe<TE> optionalHead() {
+				return self.optionalHead().map(function);
+			}
+			
+			@Override
+			public Feed<TE> tail()
 			throws NoSuchElementException {
-				return self.getTail().map(function);
+				return self.tail().map(function);
+			}
+			
+			@Override
+			public Feed<? extends TE> optionalTail() {
+				return self.optionalTail().map(function);
 			}
 			
 			// TODO: optimize defaults

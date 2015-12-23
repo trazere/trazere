@@ -9,6 +9,7 @@ import com.trazere.core.imperative.Procedure;
 import com.trazere.core.util.Maybe;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.NoSuchElementException;
 
 /**
  * The {@link ExIterable} interface defines extended iterables.
@@ -46,13 +47,27 @@ extends Iterable<E> {
 	ExIterator<E> iterator();
 	
 	/**
-	 * Gets an element provided by this iterable.
+	 * Gets any element provided by this iterable.
 	 *
-	 * @return An element provided by the iterable, or nothing when the iterable is empty.
+	 * @return An element provided by the iterable..
+	 * @throws NoSuchElementException When the iterable is empty.
+	 * @see IterableUtils#any(Iterable)
 	 * @since 2.0
 	 */
-	default Maybe<E> any() {
+	default E any()
+	throws NoSuchElementException {
 		return IterableUtils.any(this);
+	}
+	
+	/**
+	 * Gets any element provided by this iterable.
+	 *
+	 * @return An element provided by the iterable, or nothing when the iterable is empty.
+	 * @see IterableUtils#optionalAny(Iterable)
+	 * @since 2.0
+	 */
+	default Maybe<E> optionalAny() {
+		return IterableUtils.optionalAny(this);
 	}
 	
 	/**

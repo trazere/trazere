@@ -47,7 +47,7 @@ extends Function0<Maybe<? extends Tuple2<? extends T, ? extends Feed<? extends T
 	 * @return The element.
 	 * @throws NoSuchElementException When the feed is empty.
 	 * @throws X When the head element cannot be computed.
-	 * @deprecated Use {@link com.trazere.core.collection.Feed#getHead()}.
+	 * @deprecated Use {@link com.trazere.core.collection.Feed#head()}.
 	 */
 	@Deprecated
 	public T getHead()
@@ -59,7 +59,7 @@ extends Function0<Maybe<? extends Tuple2<? extends T, ? extends Feed<? extends T
 	 * @return The tail.
 	 * @throws NoSuchElementException When the feed is empty.
 	 * @throws X When the tail cannot be computed.
-	 * @deprecated Use {@link com.trazere.core.collection.Feed#getTail()}.
+	 * @deprecated Use {@link com.trazere.core.collection.Feed#tail()}.
 	 */
 	@Deprecated
 	public Feed<? extends T, ? extends X> getTail()
