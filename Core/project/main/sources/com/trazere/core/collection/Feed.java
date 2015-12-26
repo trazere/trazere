@@ -37,7 +37,7 @@ import java.util.NoSuchElementException;
  */
 @FunctionalInterface
 public interface Feed<E>
-extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>, Traversable<E, Feed<E>>, Iterable<E> {
+extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>, Traversable<E>, Iterable<E> {
 	/**
 	 * Tests whether this feed is empty.
 	 * 

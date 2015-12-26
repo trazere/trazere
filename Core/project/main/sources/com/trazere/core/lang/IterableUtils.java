@@ -310,7 +310,14 @@ public class IterableUtils {
 		assert null != iterable;
 		assert null != filter;
 		
-		return () -> IteratorUtils.filter(iterable.iterator(), filter);
+		// HACK: not a lambda to work around a bug of Eclipse
+		//		return () -> IteratorUtils.filter(iterable.iterator(), filter);
+		return new PairIterable<E1, E2>() {
+			@Override
+			public PairIterator<E1, E2> iterator() {
+				return IteratorUtils.filter(iterable.iterator(), filter);
+			}
+		};
 	}
 	
 	/**
@@ -560,7 +567,14 @@ public class IterableUtils {
 		assert null != iterable1;
 		assert null != iterable2;
 		
-		return () -> IteratorUtils.zip(iterable1.iterator(), iterable2.iterator());
+		// HACK: not a lambda to work around a bug of Eclipse
+		//		return () -> IteratorUtils.zip(iterable1.iterator(), iterable2.iterator());
+		return new PairIterable<E1, E2>() {
+			@Override
+			public PairIterator<E1, E2> iterator() {
+				return IteratorUtils.zip(iterable1.iterator(), iterable2.iterator());
+			}
+		};
 	}
 	
 	/**

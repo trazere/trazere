@@ -46,7 +46,7 @@ import java.util.Comparator;
  * @since 2.0
  */
 public abstract class Maybe<T>
-implements Traversable<T, Maybe<T>>, Iterable<T>, Serializable, Describable {
+implements Traversable<T>, Iterable<T>, Serializable, Describable {
 	private static final long serialVersionUID = 1L;
 	
 	// TODO: move to Maybes ?

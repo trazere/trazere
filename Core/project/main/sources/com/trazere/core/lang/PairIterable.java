@@ -16,7 +16,7 @@ import com.trazere.core.util.Tuple2;
  * @since 2.0
  */
 public interface PairIterable<E1, E2>
-extends ExIterable<Tuple2<E1, E2>> {
+extends ExIterable<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	/**
 	 * Builds an extended view of the given iterable of pairs of elements.
 	 * 
@@ -33,6 +33,7 @@ extends ExIterable<Tuple2<E1, E2>> {
 		if (iterable instanceof PairIterable) {
 			return (PairIterable<E1, E2>) iterable;
 		} else {
+			// HACK: not a lambda to work around a bug of Eclipse
 			return new PairIterable<E1, E2>() {
 				@Override
 				public PairIterator<E1, E2> iterator() {
@@ -54,6 +55,7 @@ extends ExIterable<Tuple2<E1, E2>> {
 	 * @return The folded state.
 	 * @since 2.0
 	 */
+	@Override
 	default <S> S fold(final Function3<? super S, ? super E1, ? super E2, ? extends S> operator, final S initialState) {
 		return IterableUtils.fold(this, operator, initialState);
 	}
@@ -65,6 +67,7 @@ extends ExIterable<Tuple2<E1, E2>> {
 	 * @return <code>true</code> when some pair of elements is accepted, <code>false</code> when all pairs of elements are rejected.
 	 * @since 2.0
 	 */
+	@Override
 	default boolean isAny(final Predicate2<? super E1, ? super E2> filter) {
 		return IterableUtils.isAny(this, filter);
 	}
@@ -76,6 +79,7 @@ extends ExIterable<Tuple2<E1, E2>> {
 	 * @return <code>true</code> when all pairs of elements are accepted, <code>false</code> when some pair of elements is rejected.
 	 * @since 2.0
 	 */
+	@Override
 	default boolean areAll(final Predicate2<? super E1, ? super E2> filter) {
 		return IterableUtils.areAll(this, filter);
 	}
@@ -87,6 +91,7 @@ extends ExIterable<Tuple2<E1, E2>> {
 	 * @return The number of accepted pairs of elements.
 	 * @since 2.0
 	 */
+	@Override
 	default int count(final Predicate2<? super E1, ? super E2> filter) {
 		return IterableUtils.count(this, filter);
 	}
@@ -98,6 +103,7 @@ extends ExIterable<Tuple2<E1, E2>> {
 	 * @return An iterable providing the filtered pairs of elements.
 	 * @since 2.0
 	 */
+	@Override
 	default PairIterable<E1, E2> filter(final Predicate2<? super E1, ? super E2> filter) {
 		return IterableUtils.filter(this, filter);
 	}
@@ -109,6 +115,7 @@ extends ExIterable<Tuple2<E1, E2>> {
 	 * @return The first accepted pair of elements.
 	 * @since 2.0
 	 */
+	@Override
 	default Maybe<Tuple2<E1, E2>> filterFirst(final Predicate2<? super E1, ? super E2> filter) {
 		return IterableUtils.filterFirst(this, filter);
 	}
@@ -121,6 +128,7 @@ extends ExIterable<Tuple2<E1, E2>> {
 	 * @return An iterable providing the transformed elements.
 	 * @since 2.0
 	 */
+	@Override
 	default <TE> ExIterable<TE> map(final Function2<? super E1, ? super E2, ? extends TE> function) {
 		return IterableUtils.map(this, function);
 	}
@@ -133,6 +141,7 @@ extends ExIterable<Tuple2<E1, E2>> {
 	 * @return An iterable of the extracted elements.
 	 * @since 2.0
 	 */
+	@Override
 	default <EE> ExIterable<EE> extract(final Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor) {
 		return IterableUtils.extract(this, extractor);
 	}
@@ -145,6 +154,7 @@ extends ExIterable<Tuple2<E1, E2>> {
 	 * @return The first extracted element.
 	 * @since 2.0
 	 */
+	@Override
 	default <EE> Maybe<EE> extractFirst(final Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor) {
 		return IterableUtils.extractFirst(this, extractor);
 	}
@@ -179,6 +189,7 @@ extends ExIterable<Tuple2<E1, E2>> {
 	 * @param procedure Procedure to execute.
 	 * @since 2.0
 	 */
+	@Override
 	default void foreach(final Procedure2<? super E1, ? super E2> procedure) {
 		IterableUtils.foreach(this, procedure);
 	}

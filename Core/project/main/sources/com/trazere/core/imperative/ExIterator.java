@@ -17,7 +17,7 @@ import java.util.Iterator;
  * @since 2.0
  */
 public interface ExIterator<E>
-extends Iterator<E>, Traversable<E, ExIterator<E>> {
+extends Iterator<E>, Traversable<E> {
 	/**
 	 * Builds an extended view of the given iterator.
 	 * 

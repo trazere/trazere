@@ -17,8 +17,9 @@ import java.util.NoSuchElementException;
  * @param <E> Type of the elements.
  * @since 2.0
  */
+@FunctionalInterface
 public interface ExIterable<E>
-extends Iterable<E>, Traversable<E, ExIterable<E>> {
+extends Iterable<E>, Traversable<E> {
 	/**
 	 * Builds an extended view of the given iterable.
 	 * 

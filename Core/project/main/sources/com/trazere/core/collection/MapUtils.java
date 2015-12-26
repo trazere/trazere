@@ -50,6 +50,7 @@ public class MapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V> PairIterable<K, V> bindings(final Map<? extends K, ? extends V> map) {
+		// HACK: not a lambda to work around a bug of Eclipse
 		return new PairIterable<K, V>() {
 			@Override
 			public PairIterator<K, V> iterator() {
