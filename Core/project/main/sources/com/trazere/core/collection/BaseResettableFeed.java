@@ -15,23 +15,21 @@
  */
 package com.trazere.core.collection;
 
-import com.trazere.core.functional.ResettableThunk;
-import com.trazere.core.util.Maybe;
-import com.trazere.core.util.Tuple2;
-
 /**
- * The {@link ResettableFeed} interface defines memoized feeds that can be re-evaluated.
+ * The {@link BaseResettableFeed} class provides a skeleton implementation of {@link ResettableFeed resettable feeds}.
  * 
  * @param <E> Type of the elements.
  * @since 2.0
  */
-public interface ResettableFeed<E>
-extends MemoizedFeed<E>, ResettableThunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>> {
-	/**
-	 * Resets this feed, discarding its possibly memoized head and tail. The head and tail will be computed (again) the next time this feed is evaluated.
-	 * 
-	 * @since 2.0
-	 */
+public abstract class BaseResettableFeed<E>
+extends BaseMemoizedFeed<E>
+implements ResettableFeed<E> {
 	@Override
-	void reset();
+	public void reset() {
+		if (_evaluated) {
+			// Reset.
+			_evaluated = false;
+			_value = null;
+		}
+	}
 }

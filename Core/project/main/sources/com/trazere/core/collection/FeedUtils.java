@@ -584,21 +584,25 @@ public class FeedUtils {
 	 * @see ResettableFeed
 	 * @since 2.0
 	 */
-	public static <E> ResettableFeed<E> resettable(final Feed<? extends E> feed) {
+	public static <E> Feed<E> resettable(final Feed<E> feed) {
 		assert null != feed;
 		
-		return new ResettableFeed<E>() {
-			@Override
-			protected Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> compute() {
-				final Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> maybeItem = feed.evaluate();
-				if (maybeItem.isSome()) {
-					final Tuple2<? extends E, ? extends Feed<? extends E>> item = maybeItem.asSome().getValue();
-					return Maybe.some(new Tuple2<>(item.get1(), memoized(item.get2())));
-				} else {
-					return Maybe.none();
+		if (feed instanceof ResettableFeed) {
+			return feed;
+		} else {
+			return new BaseResettableFeed<E>() {
+				@Override
+				protected Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> compute() {
+					final Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> maybeItem = feed.evaluate();
+					if (maybeItem.isSome()) {
+						final Tuple2<? extends E, ? extends Feed<? extends E>> item = maybeItem.asSome().getValue();
+						return Maybe.some(new Tuple2<>(item.get1(), memoized(item.get2())));
+					} else {
+						return Maybe.none();
+					}
 				}
-			}
-		};
+			};
+		}
 	}
 	
 	/**

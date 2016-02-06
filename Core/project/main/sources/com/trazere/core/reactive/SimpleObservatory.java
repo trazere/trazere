@@ -15,6 +15,7 @@
  */
 package com.trazere.core.reactive;
 
+import com.trazere.core.functional.BaseResettableFunction;
 import com.trazere.core.functional.ResettableFunction;
 import com.trazere.core.reactive.Broadcaster.BroadcasterObservable;
 import com.trazere.core.util.Maybe;
@@ -35,7 +36,7 @@ implements Observatory<S, E> {
 	 * 
 	 * @since 2.0
 	 */
-	protected final ResettableFunction<S, Broadcaster<E>> _subjectBroadcasters = new ResettableFunction<S, Broadcaster<E>>() {
+	protected final ResettableFunction<S, Broadcaster<E>> _subjectBroadcasters = new BaseResettableFunction<S, Broadcaster<E>>() {
 		@Override
 		protected Broadcaster<E> compute(final S subject) {
 			return new Broadcaster<>(new BroadcasterObservable<E>() {

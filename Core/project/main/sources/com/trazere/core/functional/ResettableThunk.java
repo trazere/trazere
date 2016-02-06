@@ -16,67 +16,26 @@
 package com.trazere.core.functional;
 
 import com.trazere.core.lang.Releasable;
-import com.trazere.core.text.Describable;
-import com.trazere.core.text.DescriptionBuilder;
-import com.trazere.core.text.TextUtils;
 
 /**
- * The {@link ResettableThunk} class implements memoized thunks that can be re-evaluated.
+ * The {@link ResettableThunk} interface defines memoized thunks that can be re-evaluated.
  * 
  * @param <T> Type of the value.
  * @since 2.0
  */
-public abstract class ResettableThunk<T>
-extends BaseMemoizedThunk<T>
-implements Releasable, Describable {
+public interface ResettableThunk<T>
+extends MemoizedThunk<T>, Releasable {
 	/**
 	 * Resets this thunk, discarding its possibly memoized value. The value will be computed (again) the next time this thunk is evaluated.
 	 * 
 	 * @since 2.0
 	 */
-	public void reset() {
-		if (_evaluated) {
-			// Dispose.
-			dispose(_value);
-			
-			// Reset.
-			_evaluated = false;
-			_value = null;
-		}
-	}
-	
-	/**
-	 * Disposes the given current value of this thunk.
-	 * <p>
-	 * This methods is called when this evaluated thunk is reset. The defaut implementation does nothing.
-	 * 
-	 * @param value Value to dispose.
-	 * @since 2.0
-	 */
-	protected void dispose(final T value) {
-		// Nothing to do.
-	}
+	void reset();
 	
 	// Releasable.
 	
 	@Override
-	public void release() {
+	default void release() {
 		reset();
-	}
-	
-	// Object.
-	
-	@Override
-	public String toString() {
-		if (_evaluated) {
-			return String.valueOf(_value);
-		} else {
-			return TextUtils.description(this);
-		}
-	}
-	
-	@Override
-	public void appendDescription(final DescriptionBuilder description) {
-		// Nothing to do.
 	}
 }

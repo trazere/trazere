@@ -119,7 +119,7 @@ public class FunctionUtils {
 	public static <A, R> ResettableFunction<A, R> resettable(final Function<? super A, ? extends R> function) {
 		assert null != function;
 		
-		return new ResettableFunction<A, R>() {
+		return new BaseResettableFunction<A, R>() {
 			@Override
 			protected R compute(final A arg) {
 				return function.evaluate(arg);

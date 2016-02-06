@@ -15,6 +15,9 @@
  */
 package com.trazere.core.functional;
 
+import com.trazere.core.text.Describable;
+import com.trazere.core.text.DescriptionBuilder;
+import com.trazere.core.text.TextUtils;
 import com.trazere.core.util.Maybe;
 
 /**
@@ -24,7 +27,7 @@ import com.trazere.core.util.Maybe;
  * @since 2.0
  */
 public abstract class BaseMemoizedThunk<T>
-implements MemoizedThunk<T> {
+implements MemoizedThunk<T>, Describable {
 	/**
 	 * Indicates whether the value has been computed or not.
 	 * 
@@ -64,5 +67,21 @@ implements MemoizedThunk<T> {
 	@Override
 	public Maybe<T> probe() {
 		return _evaluated ? Maybe.some(_value) : Maybe.none();
+	}
+	
+	// Object.
+	
+	@Override
+	public String toString() {
+		if (_evaluated) {
+			return String.valueOf(_value);
+		} else {
+			return TextUtils.description(this);
+		}
+	}
+	
+	@Override
+	public void appendDescription(final DescriptionBuilder description) {
+		// Nothing to do.
 	}
 }

@@ -111,7 +111,7 @@ public class ThunkUtils {
 	public static <T> ResettableThunk<T> resettable(final Thunk<? extends T> thunk) {
 		assert null != thunk;
 		
-		return new ResettableThunk<T>() {
+		return new BaseResettableThunk<T>() {
 			@Override
 			protected T compute() {
 				return thunk.evaluate();

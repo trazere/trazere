@@ -16,30 +16,24 @@
 package com.trazere.core.functional;
 
 import com.trazere.core.lang.Releasable;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 
 /**
- * The {@link ResettableFunction} class implements memoized functions that can be re-evaluated.
+ * The {@link ResettableFunction} interface defines memoized functions that can be re-evaluated.
  * 
  * @param <A> Type of the arguments.
  * @param <R> Type of the results.
  * @since 2.0
  */
-public abstract class ResettableFunction<A, R>
-extends BaseMemoizedFunction<A, R>
-implements Releasable {
+public interface ResettableFunction<A, R>
+extends MemoizedFunction<A, R>, Releasable {
 	/**
 	 * Gets the arguments whose evaluation has been memoized.
 	 * 
 	 * @return An unmodifiable set of the arguments.
 	 * @since 2.0
 	 */
-	public Set<A> memoizedArgs() {
-		return Collections.unmodifiableSet(_results.keySet());
-	}
+	Set<A> memoizedArgs();
 	
 	/**
 	 * Resets the evaluation of this function with the given argument, discarding the possibly memoized result. The result will be computed (again) the next
@@ -48,11 +42,7 @@ implements Releasable {
 	 * @param arg Argument whose evaluation should be reset.
 	 * @since 2.0
 	 */
-	public void reset(final A arg) {
-		if (_results.containsKey(arg)) {
-			dispose(arg, _results.remove(arg));
-		}
-	}
+	void reset(final A arg);
 	
 	/**
 	 * Resets the evaluations of this function with the arguments accepted by the given filter, discarding the possibly memoized results. The results will be
@@ -61,17 +51,7 @@ implements Releasable {
 	 * @param filter Predicate to use to filter the arguments whose evaluation should be reset.
 	 * @since 2.0
 	 */
-	public void reset(final Predicate<? super A> filter) {
-		final Iterator<Map.Entry<A, R>> entries = _results.entrySet().iterator();
-		while (entries.hasNext()) {
-			final Map.Entry<A, R> entry = entries.next();
-			final A arg = entry.getKey();
-			if (filter.evaluate(arg)) {
-				dispose(arg, entry.getValue());
-				entries.remove();
-			}
-		}
-	}
+	void reset(Predicate<? super A> filter);
 	
 	/**
 	 * Resets all evaluations of this function, discarding the possibly memoized results. The results will be computed (again) the next time this function is
@@ -79,32 +59,12 @@ implements Releasable {
 	 * 
 	 * @since 2.0
 	 */
-	public void resetAll() {
-		final Iterator<Map.Entry<A, R>> entries = _results.entrySet().iterator();
-		while (entries.hasNext()) {
-			final Map.Entry<A, R> entry = entries.next();
-			dispose(entry.getKey(), entry.getValue());
-			entries.remove();
-		}
-	}
-	
-	/**
-	 * Disposes the given result corresponding to the evaluation of this function with the given argument.
-	 * <p>
-	 * This methods is called when some memoized result is reset. The defaut implementation does nothing.
-	 * 
-	 * @param arg Argument whose evaluation produced the result to dispose.
-	 * @param result Result to dispose.
-	 * @since 2.0
-	 */
-	protected void dispose(final A arg, final R result) {
-		// Nothing to do.
-	}
+	void resetAll();
 	
 	// Releasable.
 	
 	@Override
-	public void release() {
+	default void release() {
 		resetAll();
 	}
 }

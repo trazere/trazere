@@ -69,7 +69,8 @@ implements Function1<K, V, X> {
 	/**
 	 * Instantiates a new empty lazy map.
 	 * 
-	 * @deprecated Use {@link com.trazere.core.functional.MemoizedFunction} or {@link com.trazere.core.functional.ResettableFunction#ResettableFunction()}.
+	 * @deprecated Use {@link com.trazere.core.functional.MemoizedFunction} or
+	 *             {@link com.trazere.core.functional.BaseResettableFunction#BaseResettableFunction()}.
 	 */
 	@Deprecated
 	public LazyMap() {
