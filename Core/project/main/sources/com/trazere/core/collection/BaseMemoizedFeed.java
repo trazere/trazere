@@ -15,9 +15,12 @@
  */
 package com.trazere.core.collection;
 
-import com.trazere.core.functional.BaseMemoizedThunk;
+import com.trazere.core.text.Describable;
+import com.trazere.core.text.DescriptionBuilder;
+import com.trazere.core.text.TextUtils;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
+import java.util.NoSuchElementException;
 
 /**
  * The {@link BaseMemoizedFeed} class provides a skeleton implementation of feeds that memoize their head and tail.
@@ -26,14 +29,106 @@ import com.trazere.core.util.Tuple2;
  * @since 2.0
  */
 public abstract class BaseMemoizedFeed<E>
-extends BaseMemoizedThunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
-implements MemoizedFeed<E> {
+implements MemoizedFeed<E>, Describable {
+	/**
+	 * Indicates whether the head and tail have been computed or not.
+	 * 
+	 * @since 2.0
+	 */
+	protected boolean _evaluated = false;
+	
+	/**
+	 * Memoized head and tail of the feed.
+	 * 
+	 * @since 2.0
+	 */
+	protected Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> _item = null;
+	
+	/**
+	 * Evaluates and memoizes the head and tail of this feed.
+	 * 
+	 * @return The head and tail.
+	 * @since 2.0
+	 */
+	protected Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> evaluate() {
+		if (!_evaluated) {
+			_item = compute();
+			_evaluated = true;
+		}
+		return _item;
+	}
+	
 	/**
 	 * Computes the head and tail of this feed.
 	 * 
 	 * @return The computed head and tail.
 	 * @since 2.0
 	 */
-	@Override
 	protected abstract Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> compute();
+	
+	@Override
+	public boolean isEmpty() {
+		return evaluate().isNone();
+	}
+	
+	@Override
+	public E head()
+	throws NoSuchElementException {
+		return item().get1();
+	}
+	
+	@Override
+	public Maybe<E> optionalHead() {
+		return optionalItem().map(Tuple2::get1);
+	}
+	
+	@Override
+	public Feed<? extends E> tail()
+	throws NoSuchElementException {
+		return item().get2();
+	}
+	
+	@Override
+	public Maybe<? extends Feed<? extends E>> optionalTail() {
+		return optionalItem().map(Tuple2::get2);
+	}
+	
+	@Override
+	public Tuple2<? extends E, ? extends Feed<? extends E>> item()
+	throws NoSuchElementException {
+		return evaluate().get(() -> {
+			throw new NoSuchElementException();
+		});
+	}
+	
+	@Override
+	public Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> optionalItem() {
+		return evaluate();
+	}
+	
+	@Override
+	public boolean isMemoized() {
+		return _evaluated;
+	}
+	
+	@Override
+	public Maybe<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>> probe() {
+		return _evaluated ? Maybe.some(_item) : Maybe.none();
+	}
+	
+	// Object.
+	
+	@Override
+	public String toString() {
+		if (_evaluated) {
+			return String.valueOf(_item);
+		} else {
+			return TextUtils.description(this);
+		}
+	}
+	
+	@Override
+	public void appendDescription(final DescriptionBuilder description) {
+		// Nothing to do.
+	}
 }

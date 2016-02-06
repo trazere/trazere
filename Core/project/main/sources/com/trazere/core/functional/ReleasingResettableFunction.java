@@ -25,7 +25,7 @@ import com.trazere.core.lang.Releasable;
  * @since 2.0
  */
 public abstract class ReleasingResettableFunction<A, R extends Releasable>
-extends ResettableFunction<A, R> {
+extends BaseResettableFunction<A, R> {
 	@Override
 	protected void dispose(final A arg, final R result) {
 		// Release.

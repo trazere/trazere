@@ -15,7 +15,6 @@
  */
 package com.trazere.core.collection;
 
-import com.trazere.core.functional.MemoizedThunk;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 
@@ -26,6 +25,20 @@ import com.trazere.core.util.Tuple2;
  * @since 2.0
  */
 public interface MemoizedFeed<E>
-extends Feed<E>, MemoizedThunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>> {
-	// Nothing to do.
+extends Feed<E> {
+	/**
+	 * Indicates whether the head and tail of this feed has already been evaluated and memoized.
+	 * 
+	 * @return <code>true</code> when the head and tail have been evaluated and memoized, <code>false</code> otherwise.
+	 * @since 2.0
+	 */
+	boolean isMemoized();
+	
+	/**
+	 * Probes the memoized head and tail of this feed.
+	 * 
+	 * @return The memoized head and tail, or nothing when the head and tail have not been evaluated and memoized yet.
+	 * @since 2.0
+	 */
+	Maybe<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>> probe();
 }

@@ -16,22 +16,24 @@
 package com.trazere.util.feed;
 
 import com.trazere.core.collection.CollectionFactory;
+import com.trazere.core.collection.MemoizedFeed;
+import com.trazere.core.collection.ResettableFeed;
 import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Predicate;
-import com.trazere.core.imperative.Accumulator;
 import com.trazere.core.imperative.ExIterator;
-import com.trazere.core.imperative.PairIterator;
 import com.trazere.core.imperative.Procedure;
 import com.trazere.core.lang.ThrowableFactory;
 import com.trazere.util.collection.CheckedIterators;
 import com.trazere.util.collection.CollectionUtils;
+import com.trazere.util.lang.InternalException;
 import com.trazere.util.lang.WrapException;
 import com.trazere.util.type.Maybe;
+import com.trazere.util.type.Tuple1;
 import com.trazere.util.type.Tuple2;
+import com.trazere.util.type.TypeUtils;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
@@ -120,7 +122,8 @@ public class FeedUtils {
 		assert null != feed;
 		
 		return new com.trazere.core.collection.Feed<T>() {
-			// Note: default must be implemented, project is still 1.6
+			// Feed.
+			
 			@Override
 			public boolean isEmpty() {
 				try {
@@ -130,38 +133,87 @@ public class FeedUtils {
 				}
 			}
 			
-			// Note: default must be implemented, project is still 1.6
-			@Override
-			public com.trazere.core.util.Tuple2<? extends T, ? extends com.trazere.core.collection.Feed<? extends T>> get()
-			throws NoSuchElementException {
-				return com.trazere.core.collection.Feed.super.get();
-			}
-			
-			// Note: default must be implemented, project is still 1.6
 			@Override
 			public T head()
 			throws NoSuchElementException {
-				return com.trazere.core.collection.Feed.super.head();
+				try {
+					return feed.getHead();
+				} catch (final NoSuchElementException exception) {
+					throw exception;
+				} catch (final Exception exception) {
+					throw new WrapException(exception);
+				}
 			}
 			
-			// Note: default must be implemented, project is still 1.6
 			@Override
 			public com.trazere.core.util.Maybe<T> optionalHead() {
-				return com.trazere.core.collection.Feed.super.optionalHead();
+				try {
+					return TypeUtils.toMaybe(feed.evaluate().map(Tuple1.<T, InternalException>getFirstFunction()));
+				} catch (final Exception exception) {
+					throw new WrapException(exception);
+				}
 			}
 			
-			// Note: default must be implemented, project is still 1.6
 			@Override
 			public com.trazere.core.collection.Feed<? extends T> tail()
 			throws NoSuchElementException {
-				return com.trazere.core.collection.Feed.super.tail();
+				try {
+					return toFeed(feed.getTail());
+				} catch (final NoSuchElementException exception) {
+					throw exception;
+				} catch (final Exception exception) {
+					throw new WrapException(exception);
+				}
 			}
 			
-			// Note: default must be implemented, project is still 1.6
 			@Override
-			public com.trazere.core.collection.Feed<? extends T> optionalTail() {
-				return com.trazere.core.collection.Feed.super.optionalTail();
+			public com.trazere.core.util.Maybe<? extends com.trazere.core.collection.Feed<? extends T>> optionalTail() {
+				try {
+					final Maybe<? extends Tuple2<? extends T, ? extends Feed<? extends T, ?>>> maybeItem = feed.evaluate();
+					if (maybeItem.isSome()) {
+						return com.trazere.core.util.Maybe.some(toFeed(maybeItem.asSome().getValue().getSecond()));
+					} else {
+						return com.trazere.core.util.Maybe.none();
+					}
+				} catch (final Exception exception) {
+					throw new WrapException(exception);
+				}
 			}
+			
+			@Override
+			public com.trazere.core.util.Tuple2<? extends T, ? extends com.trazere.core.collection.Feed<? extends T>> item()
+			throws NoSuchElementException {
+				try {
+					final Maybe<? extends Tuple2<? extends T, ? extends Feed<? extends T, ?>>> maybeItem = feed.evaluate();
+					if (maybeItem.isSome()) {
+						final Tuple2<? extends T, ? extends Feed<? extends T, ?>> item = maybeItem.asSome().getValue();
+						return new com.trazere.core.util.Tuple2<T, com.trazere.core.collection.Feed<T>>(item.getFirst(), toFeed(item.getSecond()));
+					} else {
+						throw new NoSuchElementException();
+					}
+				} catch (final NoSuchElementException exception) {
+					throw exception;
+				} catch (final Exception exception) {
+					throw new WrapException(exception);
+				}
+			}
+			
+			@Override
+			public com.trazere.core.util.Maybe<? extends com.trazere.core.util.Tuple2<? extends T, ? extends com.trazere.core.collection.Feed<? extends T>>> optionalItem() {
+				try {
+					final Maybe<? extends Tuple2<? extends T, ? extends Feed<? extends T, ?>>> maybeItem = feed.evaluate();
+					if (maybeItem.isSome()) {
+						final Tuple2<? extends T, ? extends Feed<? extends T, ?>> item = maybeItem.asSome().getValue();
+						return com.trazere.core.util.Maybe.some(new com.trazere.core.util.Tuple2<T, com.trazere.core.collection.Feed<T>>(item.getFirst(), toFeed(item.getSecond())));
+					} else {
+						return com.trazere.core.util.Maybe.none();
+					}
+				} catch (final Exception exception) {
+					throw new WrapException(exception);
+				}
+			}
+			
+			// Traversable.
 			
 			// Note: default must be implemented, project is still 1.6
 			@Override
@@ -265,26 +317,34 @@ public class FeedUtils {
 				return com.trazere.core.collection.Feed.super.extractAll(extractor);
 			}
 			
+			// Note: default must be implemented, project is still 1.6
+			@Override
+			public com.trazere.core.collection.Feed<T> append(final com.trazere.core.collection.Feed<? extends T> appendedFeed) {
+				return com.trazere.core.collection.Feed.super.append(appendedFeed);
+			}
+			
+			// Note: default must be implemented, project is still 1.6
+			@Override
+			public <TE> com.trazere.core.collection.Feed<TE> flatMap(final Function<? super T, ? extends com.trazere.core.collection.Feed<? extends TE>> function) {
+				return com.trazere.core.collection.Feed.super.flatMap(function);
+			}
+			
+			// Note: default must be implemented, project is still 1.6
 			@Override
 			public void foreach(final Procedure<? super T> procedure) {
 				com.trazere.core.collection.Feed.super.foreach(procedure);
 			}
 			
-			// Function.
-			
+			// Note: default must be implemented, project is still 1.6
 			@Override
-			public com.trazere.core.util.Maybe<? extends com.trazere.core.util.Tuple2<? extends T, ? extends com.trazere.core.collection.Feed<? extends T>>> evaluate() {
-				try {
-					final Maybe<? extends Tuple2<? extends T, ? extends Feed<? extends T, ?>>> maybeItem = feed.evaluate();
-					if (maybeItem.isSome()) {
-						final Tuple2<? extends T, ? extends Feed<? extends T, ?>> item = maybeItem.asSome().getValue();
-						return com.trazere.core.util.Maybe.some(new com.trazere.core.util.Tuple2<T, com.trazere.core.collection.Feed<T>>(item.getFirst(), toFeed(item.getSecond())));
-					} else {
-						return com.trazere.core.util.Maybe.none();
-					}
-				} catch (final Exception exception) {
-					throw new WrapException(exception);
-				}
+			public MemoizedFeed<T> memoized() {
+				return com.trazere.core.collection.Feed.super.memoized();
+			}
+			
+			// Note: default must be implemented, project is still 1.6
+			@Override
+			public ResettableFeed<T> resettable() {
+				return com.trazere.core.collection.Feed.super.resettable();
 			}
 			
 			// Iterable.
@@ -292,153 +352,7 @@ public class FeedUtils {
 			// Note: default must be implemented, project is still 1.6
 			@Override
 			public ExIterator<T> iterator() {
-				final com.trazere.core.collection.Feed<? extends T> this_ = this;
-				return new ExIterator<T>() {
-					private com.trazere.core.collection.Feed<? extends T> _tail = this_;
-					
-					@Override
-					public boolean hasNext() {
-						return !_tail.isEmpty();
-					}
-					
-					@Override
-					public T next()
-					throws NoSuchElementException {
-						final com.trazere.core.util.Tuple2<? extends T, ? extends com.trazere.core.collection.Feed<? extends T>> item = _tail.get();
-						_tail = item.get2();
-						return item.get1();
-					}
-					
-					@Override
-					public com.trazere.core.util.Maybe<T> optionalNext() {
-						return ExIterator.super.optionalNext();
-					}
-					
-					@Override
-					public void drain(final int n) {
-						ExIterator.super.drain(n);
-					}
-					
-					@Override
-					public <A extends Accumulator<? super T, ?>> A drain(final int n, final A results) {
-						return ExIterator.super.drain(n, results);
-					}
-					
-					@Override
-					public <C extends Collection<? super T>> C drain(final int n, final C results) {
-						return ExIterator.super.drain(n, results);
-					}
-					
-					@Override
-					public void drain() {
-						ExIterator.super.drain();
-					}
-					
-					@Override
-					public <A extends Accumulator<? super T, ?>> A drain(final A results) {
-						return ExIterator.super.drain(results);
-					}
-					
-					@Override
-					public <C extends Collection<? super T>> C drain(final C results) {
-						return ExIterator.super.drain(results);
-					}
-					
-					@Override
-					public <S> S fold(final Function2<? super S, ? super T, ? extends S> operator, final S initialState) {
-						return ExIterator.super.fold(operator, initialState);
-					}
-					
-					@Override
-					public boolean isAny(final Predicate<? super T> filter) {
-						return ExIterator.super.isAny(filter);
-					}
-					
-					@Override
-					public boolean areAll(final Predicate<? super T> filter) {
-						return ExIterator.super.areAll(filter);
-					}
-					
-					@Override
-					public int count(final Predicate<? super T> filter) {
-						return ExIterator.super.count(filter);
-					}
-					
-					@Override
-					public com.trazere.core.util.Maybe<T> least(final Comparator<? super T> comparator) {
-						return ExIterator.super.least(comparator);
-					}
-					
-					@Override
-					public com.trazere.core.util.Maybe<T> greatest(final Comparator<? super T> comparator) {
-						return ExIterator.super.greatest(comparator);
-					}
-					
-					@Override
-					public ExIterator<T> take(final int n) {
-						return ExIterator.super.take(n);
-					}
-					
-					@Override
-					public ExIterator<T> drop(final int n) {
-						return ExIterator.super.drop(n);
-					}
-					
-					@Override
-					public <B extends Collection<? super T>> ExIterator<B> group(final int n, final CollectionFactory<? super T, B> batchFactory) {
-						return ExIterator.super.group(n, batchFactory);
-					}
-					
-					@Override
-					public ExIterator<T> filter(final Predicate<? super T> filter) {
-						return ExIterator.super.filter(filter);
-					}
-					
-					@Override
-					public com.trazere.core.util.Maybe<T> filterFirst(final Predicate<? super T> filter) {
-						return ExIterator.super.filterFirst(filter);
-					}
-					
-					@Override
-					public <TE> ExIterator<TE> map(final Function<? super T, ? extends TE> function) {
-						return ExIterator.super.map(function);
-					}
-					
-					@Override
-					public <EE> ExIterator<EE> extract(final Function<? super T, ? extends com.trazere.core.util.Maybe<? extends EE>> extractor) {
-						return ExIterator.super.extract(extractor);
-					}
-					
-					@Override
-					public <EE> com.trazere.core.util.Maybe<EE> extractFirst(final Function<? super T, ? extends com.trazere.core.util.Maybe<? extends EE>> extractor) {
-						return ExIterator.super.extractFirst(extractor);
-					}
-					
-					@Override
-					public <TE> ExIterator<TE> extractAll(final Function<? super T, ? extends Iterable<? extends TE>> extractor) {
-						return ExIterator.super.extractAll(extractor);
-					}
-					
-					@Override
-					public <TE> ExIterator<TE> flatMap(final Function<? super T, ? extends Iterator<? extends TE>> extractor) {
-						return ExIterator.super.flatMap(extractor);
-					}
-					
-					@Override
-					public <E2> PairIterator<T, E2> zip(final Iterator<? extends E2> iterator2) {
-						return ExIterator.super.zip(iterator2);
-					}
-					
-					@Override
-					public void foreach(final Procedure<? super T> procedure) {
-						ExIterator.super.foreach(procedure);
-					}
-					
-					@Override
-					public ExIterator<T> unmodifiable() {
-						return ExIterator.super.unmodifiable();
-					}
-				};
+				return com.trazere.core.collection.Feed.super.iterator();
 			}
 		};
 	}
@@ -475,7 +389,7 @@ public class FeedUtils {
 			
 			@Override
 			public Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E, ? extends RuntimeException>>> evaluate() {
-				final com.trazere.core.util.Maybe<? extends com.trazere.core.util.Tuple2<? extends E, ? extends com.trazere.core.collection.Feed<? extends E>>> maybeItem = feed.evaluate();
+				final com.trazere.core.util.Maybe<? extends com.trazere.core.util.Tuple2<? extends E, ? extends com.trazere.core.collection.Feed<? extends E>>> maybeItem = feed.optionalItem();
 				if (maybeItem.isSome()) {
 					final com.trazere.core.util.Tuple2<? extends E, ? extends com.trazere.core.collection.Feed<? extends E>> item = maybeItem.asSome().getValue();
 					return Maybe.some(new Tuple2<E, Feed<E, RuntimeException>>(item.get1(), fromFeed(item.get2())));
@@ -522,7 +436,7 @@ public class FeedUtils {
 			public Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E, ? extends X>>> evaluate()
 			throws X {
 				try {
-					final com.trazere.core.util.Maybe<? extends com.trazere.core.util.Tuple2<? extends E, ? extends com.trazere.core.collection.Feed<? extends E>>> maybeItem = feed.evaluate();
+					final com.trazere.core.util.Maybe<? extends com.trazere.core.util.Tuple2<? extends E, ? extends com.trazere.core.collection.Feed<? extends E>>> maybeItem = feed.optionalItem();
 					if (maybeItem.isSome()) {
 						final com.trazere.core.util.Tuple2<? extends E, ? extends com.trazere.core.collection.Feed<? extends E>> item = maybeItem.asSome().getValue();
 						return Maybe.some(new Tuple2<E, Feed<E, X>>(item.get1(), fromFeed(item.get2(), throwableFactory)));

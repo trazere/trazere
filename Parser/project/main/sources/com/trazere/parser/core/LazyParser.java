@@ -15,7 +15,7 @@
  */
 package com.trazere.parser.core;
 
-import com.trazere.core.functional.ResettableThunk;
+import com.trazere.core.functional.BaseResettableThunk;
 import com.trazere.core.functional.Thunk;
 import com.trazere.parser.Parser;
 import com.trazere.parser.ParserClosure;
@@ -34,7 +34,7 @@ implements Parser<Token, Result> {
 		};
 	}
 	
-	protected final Thunk<Parser<Token, Result>> _parser = new ResettableThunk<Parser<Token, Result>>() {
+	protected final Thunk<Parser<Token, Result>> _parser = new BaseResettableThunk<Parser<Token, Result>>() {
 		@Override
 		protected Parser<Token, Result> compute() {
 			return LazyParser.this.compute();

@@ -16,52 +16,26 @@
 package com.trazere.core.collection;
 
 import com.trazere.core.lang.Releasable;
-import com.trazere.core.text.Describable;
-import com.trazere.core.text.DescriptionBuilder;
-import com.trazere.core.text.TextUtils;
 
 /**
- * The {@link ResettableFeed} class implements memoized feeds that can be re-evaluated.
+ * The {@link ResettableFeed} interface defines memoized feeds that can be re-evaluated.
  * 
  * @param <E> Type of the elements.
  * @since 2.0
  */
-public abstract class ResettableFeed<E>
-extends BaseMemoizedFeed<E>
-implements Releasable, Describable {
+public interface ResettableFeed<E>
+extends MemoizedFeed<E>, Releasable {
 	/**
 	 * Resets this feed, discarding its possibly memoized head and tail. The head and tail will be computed (again) the next time this feed is evaluated.
 	 * 
 	 * @since 2.0
 	 */
-	public void reset() {
-		if (_evaluated) {
-			// Reset.
-			_evaluated = false;
-			_value = null;
-		}
-	}
+	void reset();
 	
 	// Releasable.
 	
 	@Override
-	public void release() {
+	default void release() {
 		reset();
-	}
-	
-	// Object.
-	
-	@Override
-	public String toString() {
-		if (_evaluated) {
-			return String.valueOf(_value);
-		} else {
-			return TextUtils.description(this);
-		}
-	}
-	
-	@Override
-	public void appendDescription(final DescriptionBuilder description) {
-		// Nothing to do.
 	}
 }

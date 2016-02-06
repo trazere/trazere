@@ -13,24 +13,23 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.trazere.core.functional;
-
-import com.trazere.core.lang.Releasable;
+package com.trazere.core.collection;
 
 /**
- * The {@link ReleasingResettableThunk} class implements resettable thunks that release their memoized value on reset.
+ * The {@link BaseResettableFeed} class provides a skeleton implementation of {@link ResettableFeed resettable feeds}.
  * 
- * @param <T> Type of the value.
+ * @param <E> Type of the elements.
  * @since 2.0
  */
-public abstract class ReleasingResettableThunk<T extends Releasable>
-extends BaseResettableThunk<T> {
+public abstract class BaseResettableFeed<E>
+extends BaseMemoizedFeed<E>
+implements ResettableFeed<E> {
 	@Override
-	protected void dispose(final T value) {
-		// Release.
-		value.release();
-		
-		// Dispose.
-		super.dispose(value);
+	public void reset() {
+		if (_evaluated) {
+			// Reset.
+			_evaluated = false;
+			_item = null;
+		}
 	}
 }

@@ -15,6 +15,7 @@
  */
 package com.trazere.core.text;
 
+import com.trazere.core.collection.BaseMemoizedFeed;
 import com.trazere.core.collection.Feed;
 import com.trazere.core.collection.Feeds;
 import com.trazere.core.lang.FiniteIntSequence;
@@ -151,21 +152,24 @@ public abstract class Splitter {
 		assert null != s;
 		assert offset >= 0;
 		
-		return () -> {
-			final Maybe<FiniteIntSequence> maybeDelimiterRange = findDelimiter(s, offset);
-			if (maybeDelimiterRange.isSome()) {
-				final FiniteIntSequence delimiterRange = maybeDelimiterRange.asSome().getValue();
-				final CharSequence token = s.subSequence(offset, delimiterRange.getStart());
-				final Feed<CharSequence> tail = rawSplit(s, delimiterRange.getEnd());
-				if (_includeDelimiters) {
-					final CharSequence delimiter = s.subSequence(delimiterRange.getStart(), delimiterRange.getEnd());
-					return Maybe.some(new Tuple2<>(token, Feeds.feed(delimiter, tail)));
+		return new BaseMemoizedFeed<CharSequence>() {
+			@Override
+			public Maybe<? extends Tuple2<? extends CharSequence, ? extends Feed<? extends CharSequence>>> compute() {
+				final Maybe<FiniteIntSequence> maybeDelimiterRange = findDelimiter(s, offset);
+				if (maybeDelimiterRange.isSome()) {
+					final FiniteIntSequence delimiterRange = maybeDelimiterRange.asSome().getValue();
+					final CharSequence token = s.subSequence(offset, delimiterRange.getStart());
+					final Feed<CharSequence> tail = rawSplit(s, delimiterRange.getEnd());
+					if (_includeDelimiters) {
+						final CharSequence delimiter = s.subSequence(delimiterRange.getStart(), delimiterRange.getEnd());
+						return Maybe.some(new Tuple2<>(token, Feeds.feed(delimiter, tail)));
+					} else {
+						return Maybe.some(new Tuple2<>(token, tail));
+					}
 				} else {
-					return Maybe.some(new Tuple2<>(token, tail));
+					final CharSequence token = s.subSequence(offset, s.length());
+					return Maybe.some(new Tuple2<>(token, Feeds.empty()));
 				}
-			} else {
-				final CharSequence token = s.subSequence(offset, s.length());
-				return Maybe.some(new Tuple2<>(token, Feeds.empty()));
 			}
 		};
 	}

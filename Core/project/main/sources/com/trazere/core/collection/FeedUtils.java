@@ -158,12 +158,12 @@ public class FeedUtils {
 		return new BaseMemoizedFeed<E>() {
 			@Override
 			protected Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> compute() {
-				final Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> maybeItem1 = feed1.evaluate();
+				final Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> maybeItem1 = feed1.optionalItem();
 				if (maybeItem1.isSome()) {
 					final Tuple2<? extends E, ? extends Feed<? extends E>> item1 = maybeItem1.asSome().getValue();
 					return Maybe.some(Tuples.tuple2(item1.get1(), FeedUtils.append(item1.get2(), feed2)));
 				} else {
-					return feed2.evaluate();
+					return feed2.optionalItem();
 				}
 			}
 		};
@@ -185,10 +185,10 @@ public class FeedUtils {
 			protected Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> compute() {
 				Feed<? extends Feed<? extends E>> iterFeed = feed;
 				while (true) {
-					final Maybe<? extends Tuple2<? extends Feed<? extends E>, ? extends Feed<? extends Feed<? extends E>>>> maybeFeedItem = iterFeed.evaluate();
+					final Maybe<? extends Tuple2<? extends Feed<? extends E>, ? extends Feed<? extends Feed<? extends E>>>> maybeFeedItem = iterFeed.optionalItem();
 					if (maybeFeedItem.isSome()) {
 						final Tuple2<? extends Feed<? extends E>, ? extends Feed<? extends Feed<? extends E>>> feedItem = maybeFeedItem.asSome().getValue();
-						final Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> maybeItem = feedItem.get1().evaluate();
+						final Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> maybeItem = feedItem.get1().optionalItem();
 						if (maybeItem.isSome()) {
 							final Tuple2<? extends E, ? extends Feed<? extends E>> item = maybeItem.asSome().getValue();
 							return Maybe.some(new Tuple2<>(item.get1(), FeedUtils.append(item.get2(), flatten(feedItem.get2()))));
@@ -223,8 +223,8 @@ public class FeedUtils {
 		return new BaseMemoizedFeed<Tuple2<E1, E2>>() {
 			@Override
 			protected Maybe<? extends Tuple2<? extends Tuple2<E1, E2>, ? extends Feed<? extends Tuple2<E1, E2>>>> compute() {
-				final Maybe<? extends Tuple2<? extends E1, ? extends Feed<? extends E1>>> maybeItem1 = feed1.evaluate();
-				final Maybe<? extends Tuple2<? extends E2, ? extends Feed<? extends E2>>> maybeItem2 = feed2.evaluate();
+				final Maybe<? extends Tuple2<? extends E1, ? extends Feed<? extends E1>>> maybeItem1 = feed1.optionalItem();
+				final Maybe<? extends Tuple2<? extends E2, ? extends Feed<? extends E2>>> maybeItem2 = feed2.optionalItem();
 				if (maybeItem1.isSome() && maybeItem2.isSome()) {
 					final Tuple2<? extends E1, ? extends Feed<? extends E1>> item1 = maybeItem1.asSome().getValue();
 					final Tuple2<? extends E2, ? extends Feed<? extends E2>> item2 = maybeItem2.asSome().getValue();

@@ -15,22 +15,36 @@
  */
 package com.trazere.core.functional;
 
-import com.trazere.core.lang.Releasable;
-
 /**
- * The {@link ReleasingResettableThunk} class implements resettable thunks that release their memoized value on reset.
+ * The {@link BaseResettableThunk} class provides a skeleton implementation of {@link ResettableThunk resettable thunks}.
  * 
  * @param <T> Type of the value.
  * @since 2.0
  */
-public abstract class ReleasingResettableThunk<T extends Releasable>
-extends BaseResettableThunk<T> {
+public abstract class BaseResettableThunk<T>
+extends BaseMemoizedThunk<T>
+implements ResettableThunk<T> {
 	@Override
+	public void reset() {
+		if (_evaluated) {
+			// Dispose.
+			dispose(_value);
+			
+			// Reset.
+			_evaluated = false;
+			_value = null;
+		}
+	}
+	
+	/**
+	 * Disposes the given current value of this thunk.
+	 * <p>
+	 * This methods is called when this evaluated thunk is reset. The defaut implementation does nothing.
+	 * 
+	 * @param value Value to dispose.
+	 * @since 2.0
+	 */
 	protected void dispose(final T value) {
-		// Release.
-		value.release();
-		
-		// Dispose.
-		super.dispose(value);
+		// Nothing to do.
 	}
 }

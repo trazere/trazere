@@ -17,9 +17,12 @@ package com.trazere.core.lang;
 
 import com.trazere.core.collection.Feed;
 import com.trazere.core.collection.Feeds;
+import com.trazere.core.imperative.ExIterator;
+import com.trazere.core.text.TextIterables;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 import com.trazere.core.util.Tuples;
+import java.util.NoSuchElementException;
 
 /**
  * The {@link LangFeeds} class provides various factories of {@link Feeds feeds} related to the Java language.
@@ -48,7 +51,51 @@ public class LangFeeds {
 	 * @since 2.0
 	 */
 	public static Feed<Integer> integer(final int start, final int increment) {
-		return () -> Maybe.some(Tuples.tuple2(start, integer(start + increment, increment)));
+		return new Feed<Integer>() {
+			// Feed.
+			
+			@Override
+			public boolean isEmpty() {
+				return false;
+			}
+			
+			@Override
+			public Integer head() {
+				return start;
+			}
+			
+			@Override
+			public Maybe<Integer> optionalHead() {
+				return Maybe.some(head());
+			}
+			
+			@Override
+			public Feed<Integer> tail() {
+				return integer(start + increment, increment);
+			}
+			
+			@Override
+			public Maybe<Feed<Integer>> optionalTail() {
+				return Maybe.some(tail());
+			}
+			
+			@Override
+			public Tuple2<Integer, Feed<Integer>> item() {
+				return Tuples.tuple2(start, integer(start + increment, increment));
+			}
+			
+			@Override
+			public Maybe<Tuple2<Integer, Feed<Integer>>> optionalItem() {
+				return Maybe.some(item());
+			}
+			
+			// Iterable.
+			
+			@Override
+			public ExIterator<Integer> iterator() {
+				return new InfiniteIntSequence(start, increment).iterator();
+			}
+		};
 	}
 	
 	/**
@@ -76,11 +123,74 @@ public class LangFeeds {
 	private static final Feed<Character> fromString(final String s, final int index) {
 		assert null != s;
 		
-		return () -> {
-			if (s.length() > index) {
-				return Maybe.some(new Tuple2<>(s.charAt(index), fromString(s, index + 1)));
-			} else {
-				return Maybe.none();
+		return new Feed<Character>() {
+			@Override
+			public boolean isEmpty() {
+				return index >= s.length();
+			}
+			
+			@Override
+			public Character head()
+			throws NoSuchElementException {
+				if (s.length() > index) {
+					return s.charAt(index);
+				} else {
+					throw new NoSuchElementException();
+				}
+			}
+			
+			@Override
+			public Maybe<Character> optionalHead() {
+				if (s.length() > index) {
+					return Maybe.some(s.charAt(index));
+				} else {
+					return Maybe.none();
+				}
+			}
+			
+			@Override
+			public Feed<Character> tail()
+			throws NoSuchElementException {
+				if (s.length() > index) {
+					return fromString(s, index + 1);
+				} else {
+					throw new NoSuchElementException();
+				}
+			}
+			
+			@Override
+			public Maybe<Feed<Character>> optionalTail() {
+				if (s.length() > index) {
+					return Maybe.some(fromString(s, index + 1));
+				} else {
+					return Maybe.none();
+				}
+			}
+			
+			@Override
+			public Tuple2<Character, Feed<Character>> item()
+			throws NoSuchElementException {
+				if (s.length() > index) {
+					return new Tuple2<>(s.charAt(index), fromString(s, index + 1));
+				} else {
+					throw new NoSuchElementException();
+				}
+			}
+			
+			@Override
+			public Maybe<Tuple2<Character, Feed<Character>>> optionalItem() {
+				if (s.length() > index) {
+					return Maybe.some(new Tuple2<>(s.charAt(index), fromString(s, index + 1)));
+				} else {
+					return Maybe.none();
+				}
+			}
+			
+			// Iterable.
+			
+			@Override
+			public ExIterator<Character> iterator() {
+				return TextIterables.fromCharSequence(s).iterator();
 			}
 		};
 	}
