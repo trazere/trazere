@@ -64,7 +64,7 @@ public class Functions {
 	 * @param g The outer function.
 	 * @param f The inner function.
 	 * @return The built function.
-	 * @deprecated Use {@link com.trazere.core.functional.FunctionUtils#compose(com.trazere.core.functional.Function, com.trazere.core.functional.Function)}.
+	 * @deprecated Use {@link com.trazere.core.functional.Function#compose(com.trazere.core.functional.Function)}.
 	 */
 	@Deprecated
 	public static <T1, T2, T3, X extends Exception> Function1<T1, T3, X> compose(final Function1<? super T2, ? extends T3, ? extends X> g, final Function1<? super T1, ? extends T2, ? extends X> f) {
@@ -400,7 +400,7 @@ public class Functions {
 	 * @param g The outer function.
 	 * @param f The inner function.
 	 * @return The built function.
-	 * @deprecated Use {@link com.trazere.core.functional.ThunkUtils#map(com.trazere.core.functional.Thunk, com.trazere.core.functional.Function)}.
+	 * @deprecated Use {@link com.trazere.core.functional.Thunk#mapppp(com.trazere.core.functional.Function)}.
 	 */
 	@Deprecated
 	public static <T1, T2, X extends Exception> Function0<T2, X> compose(final Function1<? super T1, ? extends T2, ? extends X> g, final Function0<? extends T1, ? extends X> f) {

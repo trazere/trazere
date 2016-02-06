@@ -15,6 +15,8 @@
  */
 package com.trazere.core.functional;
 
+import com.trazere.core.util.Maybe;
+
 /**
  * The {@link Function3} interface defines uncurried functions that take three arguments.
  * 
@@ -36,4 +38,37 @@ public interface Function3<A1, A2, A3, R> {
 	 * @since 2.0
 	 */
 	R evaluate(A1 arg1, A2 arg2, A3 arg3);
+	
+	/**
+	 * Gets a view of this function that filters the results using the given filter.
+	 * 
+	 * @param filter Predicate to use to filter the results.
+	 * @return The built function.
+	 * @since 2.0
+	 */
+	default Function3<A1, A2, A3, Maybe<R>> filtered(final Predicate<? super R> filter) {
+		assert null != filter;
+		
+		final Function3<A1, A2, A3, R> self = this;
+		return (arg1, arg2, arg3) -> Maybe.some(self.evaluate(arg1, arg2, arg3)).filter(filter);
+	}
+	
+	/**
+	 * Gets a view of this function that transforms the results using the given function.
+	 *
+	 * @param
+	 * 		<TR>
+	 *        Type of the transformed results.
+	 * @param function Function to use to transform the results.
+	 * @return The built function.
+	 * @since 2.0
+	 */
+	default <TR> Function3<A1, A2, A3, TR> mapped(final Function<? super R, ? extends TR> function) {
+		assert null != function;
+		
+		final Function3<A1, A2, A3, R> self = this;
+		return (arg1, arg2, arg3) -> function.evaluate(self.evaluate(arg1, arg2, arg3));
+	}
+	
+	// TODO: add uncurry
 }

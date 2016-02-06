@@ -15,6 +15,8 @@
  */
 package com.trazere.core.functional;
 
+import java.util.function.BiPredicate;
+
 /**
  * The {@link Predicate2} interface defines uncurried functions that take two arguments and result to booleans.
  * 
@@ -33,4 +35,19 @@ public interface Predicate2<A1, A2> {
 	 * @since 2.0
 	 */
 	boolean evaluate(A1 arg1, A2 arg2);
+	
+	// TODO: memoized
+	// TODO: resettable
+	// TODO: synchronized_
+	
+	/**
+	 * Lifts this predicate as a Java 8 bi-predicate.
+	 * 
+	 * @return The built Java 8 bi-predicate.
+	 * @since 2.0
+	 */
+	default BiPredicate<A1, A2> toBiPredicate() {
+		final Predicate2<A1, A2> self = this;
+		return (t, u) -> self.evaluate(t, u);
+	}
 }

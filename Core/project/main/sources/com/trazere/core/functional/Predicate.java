@@ -33,4 +33,34 @@ public interface Predicate<A> {
 	 * @since 2.0
 	 */
 	boolean evaluate(A arg);
+	
+	/**
+	 * Composes this predicate with the given function.
+	 * 
+	 * @param <NA> Type of the composition arguments.
+	 * @param function Function to use to transform the arguments.
+	 * @return The built predicate.
+	 * @since 2.0
+	 */
+	default <NA> Predicate<NA> compose(final Function<? super NA, ? extends A> function) {
+		assert null != function;
+		
+		final Predicate<A> self = this;
+		return arg -> self.evaluate(function.evaluate(arg));
+	}
+	
+	// TODO: memoized
+	// TODO: resettable
+	// TODO: synchronized_
+	
+	/**
+	 * Lifts this predicate as a Java 8 predicate.
+	 * 
+	 * @return The built Java 8 predicate.
+	 * @since 2.0
+	 */
+	default java.util.function.Predicate<A> toPredicate() {
+		final Predicate<A> self = this;
+		return t -> self.evaluate(t);
+	}
 }

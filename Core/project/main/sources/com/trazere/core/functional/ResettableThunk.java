@@ -16,6 +16,7 @@
 package com.trazere.core.functional;
 
 import com.trazere.core.lang.Releasable;
+import com.trazere.core.util.Maybe;
 
 /**
  * The {@link ResettableThunk} interface defines memoized thunks that can be re-evaluated.
@@ -31,6 +32,44 @@ extends MemoizedThunk<T>, Releasable {
 	 * @since 2.0
 	 */
 	void reset();
+	
+	/**
+	 * Resets this thunk in a thread safe way.
+	 * 
+	 * @see #reset()
+	 * @since 2.0
+	 */
+	default void synchronizedReset() {
+		synchronized (this) {
+			reset();
+		}
+	}
+	
+	@Override
+	default ResettableThunk<T> synchronized_() {
+		final ResettableThunk<T> self = this;
+		return new ResettableThunk<T>() {
+			@Override
+			public T evaluate() {
+				return self.synchronizedEvaluate();
+			}
+			
+			@Override
+			public boolean isMemoized() {
+				return self.isMemoized();
+			}
+			
+			@Override
+			public Maybe<T> probe() {
+				return self.probe();
+			}
+			
+			@Override
+			public void reset() {
+				synchronizedReset();
+			}
+		};
+	}
 	
 	// Releasable.
 	

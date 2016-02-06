@@ -15,6 +15,10 @@
  */
 package com.trazere.core.functional;
 
+import com.trazere.core.util.Maybe;
+import com.trazere.core.util.Tuple2;
+import java.util.function.BiFunction;
+
 /**
  * The {@link Function2} interface defines uncurried functions that take two arguments.
  * 
@@ -34,4 +38,57 @@ public interface Function2<A1, A2, R> {
 	 * @since 2.0
 	 */
 	R evaluate(A1 arg1, A2 arg2);
+	
+	/**
+	 * Gets a view of this function that filters the results using the given filter.
+	 * 
+	 * @param filter Predicate to use to filter the results.
+	 * @return The built function.
+	 * @since 2.0
+	 */
+	default Function2<A1, A2, Maybe<R>> filtered(final Predicate<? super R> filter) {
+		assert null != filter;
+		
+		final Function2<A1, A2, R> self = this;
+		return (arg1, arg2) -> Maybe.some(self.evaluate(arg1, arg2)).filter(filter);
+	}
+	
+	/**
+	 * Gets a view of this function that transforms the results using the given function.
+	 *
+	 * @param
+	 * 		<TR>
+	 *        Type of the transformed results.
+	 * @param function Function to use to transform the results.
+	 * @return The built function.
+	 * @since 2.0
+	 */
+	default <TR> Function2<A1, A2, TR> mapped(final Function<? super R, ? extends TR> function) {
+		assert null != function;
+		
+		final Function2<A1, A2, R> self = this;
+		return (arg1, arg2) -> function.evaluate(self.evaluate(arg1, arg2));
+	}
+	
+	/**
+	 * Gets an uncurried view of this function (as a function that takes pairs of elements).
+	 *
+	 * @return The built function.
+	 * @since 2.0
+	 */
+	default Function<Tuple2<A1, A2>, R> uncurried() {
+		final Function2<A1, A2, R> self = this;
+		return arg -> self.evaluate(arg.get1(), arg.get2());
+	}
+	
+	/**
+	 * Lifts this function as a Java 8 bi-function.
+	 * 
+	 * @return The built bi-function.
+	 * @since 2.0
+	 */
+	default BiFunction<A1, A2, R> toBiFunction() {
+		final Function2<A1, A2, R> self = this;
+		return (t, u) -> self.evaluate(t, u);
+	}
 }
