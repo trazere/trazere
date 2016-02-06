@@ -15,9 +15,7 @@
  */
 package com.trazere.core.collection;
 
-import com.trazere.core.functional.Thunk;
 import com.trazere.core.util.Maybe;
-import com.trazere.core.util.MaybeUtils;
 import com.trazere.core.util.Tuple2;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -28,35 +26,15 @@ import java.util.NoSuchElementException;
  * @param <E> Type of the elements.
  * @since 2.0
  */
-@FunctionalInterface
 public interface Feed<E>
-extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>, Iterable<E> {
+extends Iterable<E> {
 	/**
 	 * Tests whether this feed is empty.
 	 * 
 	 * @return <code>true</code> when the feed is empty, <code>false</code> otherwise.
 	 * @since 2.0
 	 */
-	default boolean isEmpty() {
-		return evaluate().isNone();
-	}
-	
-	/**
-	 * Gets the head element and tail of this feed.
-	 * 
-	 * @return The head element and tail.
-	 * @throws NoSuchElementException When the feed is emtpy.
-	 * @since 2.0
-	 */
-	default Tuple2<? extends E, ? extends Feed<? extends E>> get()
-	throws NoSuchElementException {
-		final Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> value = evaluate();
-		if (value.isSome()) {
-			return value.asSome().getValue();
-		} else {
-			throw new NoSuchElementException();
-		}
-	}
+	boolean isEmpty();
 	
 	/**
 	 * Gets the head element of this feed.
@@ -65,10 +43,8 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @throws NoSuchElementException When the feed is empty.
 	 * @since 2.0
 	 */
-	default E head()
-	throws NoSuchElementException {
-		return get().get1();
-	}
+	E head()
+	throws NoSuchElementException;
 	
 	/**
 	 * Gets the head element of this feed.
@@ -79,9 +55,7 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @see #head()
 	 * @since 2.0
 	 */
-	default Maybe<E> optionalHead() {
-		return evaluate().map(Tuple2::get1);
-	}
+	Maybe<E> optionalHead();
 	
 	/**
 	 * Gets the tail of this feed.
@@ -90,22 +64,38 @@ extends Thunk<Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>>>
 	 * @throws NoSuchElementException When the feed is empty.
 	 * @since 2.0
 	 */
-	default Feed<? extends E> tail()
-	throws NoSuchElementException {
-		return get().get2();
-	}
+	Feed<? extends E> tail()
+	throws NoSuchElementException;
 	
 	/**
 	 * Gets the tail of this feed.
 	 * <p>
 	 * This method supports empty feeds.
 	 *
-	 * @return The tail of the feed, or an empty feed when the feed is empty.
+	 * @return The tail of the feed, or nothing when the feed is empty.
 	 * @since 2.0
 	 */
-	default Feed<? extends E> optionalTail() {
-		return MaybeUtils.<Feed<? extends E>>get(evaluate().map(Tuple2::get2), Feeds.empty()); // HACK: explicit type argument to work around a bug of javac
-	}
+	Maybe<? extends Feed<? extends E>> optionalTail();
+	
+	/**
+	 * Gets the head and tail of this feed.
+	 * 
+	 * @return The head and tail.
+	 * @throws NoSuchElementException When the feed is emtpy.
+	 * @since 2.0
+	 */
+	Tuple2<? extends E, ? extends Feed<? extends E>> item()
+	throws NoSuchElementException;
+	
+	/**
+	 * Gets the head and tail of this feed.
+	 * <p>
+	 * This method supports empty feeds.
+	 * 
+	 * @return The head and tail, or nothing when the feed is empty.
+	 * @since 2.0
+	 */
+	Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> optionalItem();
 	
 	// Iterable.
 	

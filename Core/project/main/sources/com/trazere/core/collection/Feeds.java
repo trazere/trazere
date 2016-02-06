@@ -50,11 +50,6 @@ public class Feeds {
 			}
 			
 			@Override
-			public Tuple2<? extends E, ? extends Feed<? extends E>> get() {
-				return new Tuple2<E, Feed<? extends E>>(head, tail);
-			}
-			
-			@Override
 			public E head() {
 				return head;
 			}
@@ -70,18 +65,19 @@ public class Feeds {
 			}
 			
 			@Override
-			public Feed<? extends E> optionalTail() {
-				return tail;
+			public Maybe<? extends Feed<? extends E>> optionalTail() {
+				return Maybe.some(tail);
 			}
-			
-			// Thunk.
 			
 			@Override
-			public Maybe<Tuple2<E, Feed<? extends E>>> evaluate() {
-				return Maybe.some(new Tuple2<E, Feed<? extends E>>(head, tail));
+			public Tuple2<? extends E, ? extends Feed<? extends E>> item() {
+				return new Tuple2<E, Feed<? extends E>>(head, tail);
 			}
 			
-			// TODO: optimized iterator()
+			@Override
+			public Maybe<Tuple2<E, Feed<? extends E>>> optionalItem() {
+				return Maybe.some(new Tuple2<E, Feed<? extends E>>(head, tail));
+			}
 		};
 	}
 	
@@ -106,12 +102,6 @@ public class Feeds {
 		}
 		
 		@Override
-		public Tuple2<? extends Object, ? extends Feed<? extends Object>> get()
-		throws NoSuchElementException {
-			throw new NoSuchElementException();
-		}
-		
-		@Override
 		public Object head()
 		throws NoSuchElementException {
 			throw new NoSuchElementException();
@@ -129,14 +119,18 @@ public class Feeds {
 		}
 		
 		@Override
-		public Feed<Object> optionalTail() {
-			return this;
+		public Maybe<? extends Feed<? extends Object>> optionalTail() {
+			return Maybe.none();
 		}
 		
-		// Thunk.
+		@Override
+		public Tuple2<? extends Object, ? extends Feed<? extends Object>> item()
+		throws NoSuchElementException {
+			throw new NoSuchElementException();
+		}
 		
 		@Override
-		public Maybe<Tuple2<Object, Feed<Object>>> evaluate() {
+		public Maybe<? extends Tuple2<? extends Object, ? extends Feed<? extends Object>>> optionalItem() {
 			return Maybe.none();
 		}
 		
@@ -184,16 +178,6 @@ public class Feeds {
 			}
 			
 			@Override
-			public Tuple2<? extends E, ? extends Feed<? extends E>> get()
-			throws NoSuchElementException {
-				if (index < elements.length) {
-					return new Tuple2<>(elements[index], Feeds.<E>fromElements(elements, index + 1));
-				} else {
-					throw new NoSuchElementException();
-				}
-			}
-			
-			@Override
 			public E head()
 			throws NoSuchElementException {
 				if (index < elements.length) {
@@ -223,24 +207,34 @@ public class Feeds {
 			}
 			
 			@Override
-			public Feed<E> optionalTail() {
+			public Maybe<? extends Feed<? extends E>> optionalTail() {
 				if (index < elements.length) {
-					return Feeds.fromElements(elements, index + 1);
-				} else {
-					return Feeds.empty();
-				}
-			}
-			
-			// Thunk.
-			
-			@Override
-			public Maybe<Tuple2<E, Feed<E>>> evaluate() {
-				if (index < elements.length) {
-					return Maybe.some(new Tuple2<>(elements[index], Feeds.<E>fromElements(elements, index + 1)));
+					return Maybe.some(Feeds.fromElements(elements, index + 1));
 				} else {
 					return Maybe.none();
 				}
 			}
+			
+			@Override
+			public Tuple2<? extends E, ? extends Feed<? extends E>> item()
+			throws NoSuchElementException {
+				if (index < elements.length) {
+					return new Tuple2<>(elements[index], Feeds.fromElements(elements, index + 1));
+				} else {
+					throw new NoSuchElementException();
+				}
+			}
+			
+			@Override
+			public Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> optionalItem() {
+				if (index < elements.length) {
+					return Maybe.some(new Tuple2<>(elements[index], Feeds.fromElements(elements, index + 1)));
+				} else {
+					return Maybe.none();
+				}
+			}
+			
+			// Iterable.
 			
 			// TODO: optimized iterator()
 		};

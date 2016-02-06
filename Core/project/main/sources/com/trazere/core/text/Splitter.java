@@ -15,6 +15,7 @@
  */
 package com.trazere.core.text;
 
+import com.trazere.core.collection.BaseMemoizedFeed;
 import com.trazere.core.collection.Feed;
 import com.trazere.core.collection.FeedUtils;
 import com.trazere.core.collection.Feeds;
@@ -152,9 +153,9 @@ public abstract class Splitter {
 		assert null != s;
 		assert offset >= 0;
 		
-		return new Feed<CharSequence>() {
+		return new BaseMemoizedFeed<CharSequence>() {
 			@Override
-			public Maybe<? extends Tuple2<? extends CharSequence, ? extends Feed<? extends CharSequence>>> evaluate() {
+			public Maybe<? extends Tuple2<? extends CharSequence, ? extends Feed<? extends CharSequence>>> compute() {
 				final Maybe<FiniteIntSequence> maybeDelimiterRange = findDelimiter(s, offset);
 				if (maybeDelimiterRange.isSome()) {
 					final FiniteIntSequence delimiterRange = maybeDelimiterRange.asSome().getValue();

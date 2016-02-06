@@ -29,7 +29,7 @@ implements ResettableFeed<E> {
 		if (_evaluated) {
 			// Reset.
 			_evaluated = false;
-			_value = null;
+			_item = null;
 		}
 	}
 }

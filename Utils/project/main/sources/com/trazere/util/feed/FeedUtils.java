@@ -124,18 +124,6 @@ public class FeedUtils {
 				}
 			}
 			
-			// Note: project is still 1.6
-			@Override
-			public com.trazere.core.util.Tuple2<? extends T, ? extends com.trazere.core.collection.Feed<? extends T>> get()
-			throws NoSuchElementException {
-				final com.trazere.core.util.Maybe<? extends com.trazere.core.util.Tuple2<? extends T, ? extends com.trazere.core.collection.Feed<? extends T>>> value = evaluate();
-				if (value.isSome()) {
-					return value.asSome().getValue();
-				} else {
-					throw new NoSuchElementException();
-				}
-			}
-			
 			@Override
 			public T head()
 			throws NoSuchElementException {
@@ -157,7 +145,6 @@ public class FeedUtils {
 				}
 			}
 			
-			// Note: default must be implemented, project is still 1.6
 			@Override
 			public com.trazere.core.collection.Feed<? extends T> tail()
 			throws NoSuchElementException {
@@ -170,27 +157,40 @@ public class FeedUtils {
 				}
 			}
 			
-			// Note: default must be implemented, project is still 1.6
 			@Override
-			public com.trazere.core.collection.Feed<? extends T> optionalTail() {
+			public com.trazere.core.util.Maybe<? extends com.trazere.core.collection.Feed<? extends T>> optionalTail() {
 				try {
 					final Maybe<? extends Tuple2<? extends T, ? extends Feed<? extends T, ?>>> maybeItem = feed.evaluate();
 					if (maybeItem.isSome()) {
-						return toFeed(maybeItem.asSome().getValue().getSecond());
+						return com.trazere.core.util.Maybe.some(toFeed(maybeItem.asSome().getValue().getSecond()));
 					} else {
-						return com.trazere.core.collection.Feeds.empty();
+						return com.trazere.core.util.Maybe.none();
 					}
 				} catch (final Exception exception) {
 					throw new WrapException(exception);
 				}
 			}
 			
-			// TODO: defaults
-			
-			// Thunk.
+			@Override
+			public com.trazere.core.util.Tuple2<? extends T, ? extends com.trazere.core.collection.Feed<? extends T>> item()
+			throws NoSuchElementException {
+				try {
+					final Maybe<? extends Tuple2<? extends T, ? extends Feed<? extends T, ?>>> maybeItem = feed.evaluate();
+					if (maybeItem.isSome()) {
+						final Tuple2<? extends T, ? extends Feed<? extends T, ?>> item = maybeItem.asSome().getValue();
+						return new com.trazere.core.util.Tuple2<T, com.trazere.core.collection.Feed<T>>(item.getFirst(), toFeed(item.getSecond()));
+					} else {
+						throw new NoSuchElementException();
+					}
+				} catch (final NoSuchElementException exception) {
+					throw exception;
+				} catch (final Exception exception) {
+					throw new WrapException(exception);
+				}
+			}
 			
 			@Override
-			public com.trazere.core.util.Maybe<? extends com.trazere.core.util.Tuple2<? extends T, ? extends com.trazere.core.collection.Feed<? extends T>>> evaluate() {
+			public com.trazere.core.util.Maybe<? extends com.trazere.core.util.Tuple2<? extends T, ? extends com.trazere.core.collection.Feed<? extends T>>> optionalItem() {
 				try {
 					final Maybe<? extends Tuple2<? extends T, ? extends Feed<? extends T, ?>>> maybeItem = feed.evaluate();
 					if (maybeItem.isSome()) {
@@ -204,26 +204,14 @@ public class FeedUtils {
 				}
 			}
 			
+			// TODO: defaults
+			
+			// Iterable.
+			
 			// Note: project is still 1.6
 			@Override
 			public Iterator<T> iterator() {
-				final com.trazere.core.collection.Feed<? extends T> this_ = this;
-				return new Iterator<T>() {
-					private com.trazere.core.collection.Feed<? extends T> _tail = this_;
-					
-					@Override
-					public boolean hasNext() {
-						return !_tail.isEmpty();
-					}
-					
-					@Override
-					public T next()
-					throws NoSuchElementException {
-						final T head = _tail.head();
-						_tail = _tail.tail();
-						return head;
-					}
-				};
+				return com.trazere.core.collection.Feed.super.iterator();
 			}
 		};
 	}
@@ -260,7 +248,7 @@ public class FeedUtils {
 			
 			@Override
 			public Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E, ? extends RuntimeException>>> evaluate() {
-				final com.trazere.core.util.Maybe<? extends com.trazere.core.util.Tuple2<? extends E, ? extends com.trazere.core.collection.Feed<? extends E>>> maybeItem = feed.evaluate();
+				final com.trazere.core.util.Maybe<? extends com.trazere.core.util.Tuple2<? extends E, ? extends com.trazere.core.collection.Feed<? extends E>>> maybeItem = feed.optionalItem();
 				if (maybeItem.isSome()) {
 					final com.trazere.core.util.Tuple2<? extends E, ? extends com.trazere.core.collection.Feed<? extends E>> item = maybeItem.asSome().getValue();
 					return Maybe.some(new Tuple2<E, Feed<E, RuntimeException>>(item.get1(), fromFeed(item.get2())));

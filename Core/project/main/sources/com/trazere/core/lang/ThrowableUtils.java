@@ -15,6 +15,7 @@
  */
 package com.trazere.core.lang;
 
+import com.trazere.core.collection.BaseMemoizedFeed;
 import com.trazere.core.collection.Feed;
 import com.trazere.core.collection.FeedUtils;
 import com.trazere.core.collection.Feeds;
@@ -54,9 +55,9 @@ public class ThrowableUtils {
 	public static Feed<Throwable> getCauseTail(final Throwable throwable) {
 		assert null != throwable;
 		
-		return new Feed<Throwable>() {
+		return new BaseMemoizedFeed<Throwable>() {
 			@Override
-			public Maybe<? extends Tuple2<? extends Throwable, ? extends Feed<? extends Throwable>>> evaluate() {
+			protected Maybe<? extends Tuple2<? extends Throwable, ? extends Feed<? extends Throwable>>> compute() {
 				return MaybeUtils.fromNullable(throwable.getCause()).map(cause -> new Tuple2<>(cause, getCauseTail(cause)));
 			}
 		};
