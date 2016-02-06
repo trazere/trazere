@@ -32,6 +32,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 /**
  * The {@link MapUtils} class provides various utilities regarding {@link Map maps}.
@@ -57,7 +58,24 @@ public class MapUtils {
 	private static final Function<? extends Map.Entry<?, ?>, ? extends Tuple2<?, ?>> BINDING = entry -> new Tuple2<>(entry.getKey(), entry.getValue());
 	
 	/**
-	 * Gets a binding from the given map.
+	 * Gets any binding from the given map.
+	 *
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param map Map to read.
+	 * @return A binding of the map.
+	 * @throws NoSuchElementException When the map is empty.
+	 * @since 2.0
+	 */
+	public static <K, V> Tuple2<K, V> any(final Map<K, V> map)
+	throws NoSuchElementException {
+		return IterableUtils.any(bindings(map));
+	}
+	
+	/**
+	 * Gets any binding from the given map.
+	 * <p>
+	 * This methods supports empty maps.
 	 *
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -65,8 +83,8 @@ public class MapUtils {
 	 * @return A binding of the map, or nothing when the map is empty.
 	 * @since 2.0
 	 */
-	public static <K, V> Maybe<Tuple2<K, V>> any(final Map<K, V> map) {
-		return IteratorUtils.next(bindings(map).iterator());
+	public static <K, V> Maybe<Tuple2<K, V>> optionalAny(final Map<K, V> map) {
+		return IterableUtils.optionalAny(bindings(map));
 	}
 	
 	/**

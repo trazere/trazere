@@ -35,34 +35,6 @@ import java.util.NoSuchElementException;
  */
 public class FeedUtils {
 	/**
-	 * Gets the head element of the given feed.
-	 * <p>
-	 * This method supports empty feeds.
-	 * 
-	 * @param <E> Type of the elements.
-	 * @param feed Feed to read.
-	 * @return The head element, or nothing when the feed is empty.
-	 * @since 2.0
-	 */
-	public static <E> Maybe<E> head(final Feed<? extends E> feed) {
-		return !feed.isEmpty() ? Maybe.<E>some(feed.getHead()) : Maybe.<E>none();
-	}
-	
-	/**
-	 * Gets the tail of the given feed.
-	 * <p>
-	 * This method supports empty feeds.
-	 * 
-	 * @param <E> Type of the elements.
-	 * @param feed Feed to read.
-	 * @return The of the feed, or an empty feed when the feed is empty.
-	 * @since 2.0
-	 */
-	public static <E> Feed<? extends E> tail(final Feed<? extends E> feed) {
-		return !feed.isEmpty() ? feed.getTail() : Feeds.<E>empty();
-	}
-	
-	/**
 	 * Executes the given procedure with each element of the given feed.
 	 * 
 	 * @param <E> Type of the elements.
@@ -495,18 +467,18 @@ public class FeedUtils {
 			}
 			
 			@Override
-			public TE getHead()
+			public TE head()
 			throws NoSuchElementException {
-				return function.evaluate(feed.getHead());
+				return function.evaluate(feed.head());
 			}
 			
 			@Override
-			public Feed<TE> getTail()
+			public Feed<TE> tail()
 			throws NoSuchElementException {
-				return map(feed.getTail(), function);
+				return map(feed.tail(), function);
 			}
 			
-			// Function.
+			// Thunk.
 			
 			@Override
 			public Maybe<? extends Tuple2<? extends TE, ? extends Feed<? extends TE>>> evaluate() {

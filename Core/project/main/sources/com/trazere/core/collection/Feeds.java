@@ -50,21 +50,38 @@ public class Feeds {
 			}
 			
 			@Override
-			public E getHead() {
+			public Tuple2<? extends E, ? extends Feed<? extends E>> get() {
+				return new Tuple2<E, Feed<? extends E>>(head, tail);
+			}
+			
+			@Override
+			public E head() {
 				return head;
 			}
 			
 			@Override
-			public Feed<? extends E> getTail() {
+			public Maybe<E> optionalHead() {
+				return Maybe.some(head);
+			}
+			
+			@Override
+			public Feed<? extends E> tail() {
 				return tail;
 			}
 			
-			// Function.
+			@Override
+			public Feed<? extends E> optionalTail() {
+				return tail;
+			}
+			
+			// Thunk.
 			
 			@Override
 			public Maybe<Tuple2<E, Feed<? extends E>>> evaluate() {
 				return Maybe.some(new Tuple2<E, Feed<? extends E>>(head, tail));
 			}
+			
+			// TODO: optimized iterator()
 		};
 	}
 	
@@ -89,18 +106,34 @@ public class Feeds {
 		}
 		
 		@Override
-		public Object getHead()
+		public Tuple2<? extends Object, ? extends Feed<? extends Object>> get()
 		throws NoSuchElementException {
 			throw new NoSuchElementException();
 		}
 		
 		@Override
-		public Feed<Object> getTail()
+		public Object head()
 		throws NoSuchElementException {
 			throw new NoSuchElementException();
 		}
 		
-		// Function.
+		@Override
+		public Maybe<Object> optionalHead() {
+			return Maybe.none();
+		}
+		
+		@Override
+		public Feed<Object> tail()
+		throws NoSuchElementException {
+			throw new NoSuchElementException();
+		}
+		
+		@Override
+		public Feed<Object> optionalTail() {
+			return this;
+		}
+		
+		// Thunk.
 		
 		@Override
 		public Maybe<Tuple2<Object, Feed<Object>>> evaluate() {
@@ -151,7 +184,17 @@ public class Feeds {
 			}
 			
 			@Override
-			public E getHead()
+			public Tuple2<? extends E, ? extends Feed<? extends E>> get()
+			throws NoSuchElementException {
+				if (index < elements.length) {
+					return new Tuple2<>(elements[index], Feeds.<E>fromElements(elements, index + 1));
+				} else {
+					throw new NoSuchElementException();
+				}
+			}
+			
+			@Override
+			public E head()
 			throws NoSuchElementException {
 				if (index < elements.length) {
 					return elements[index];
@@ -161,7 +204,16 @@ public class Feeds {
 			}
 			
 			@Override
-			public Feed<E> getTail()
+			public Maybe<E> optionalHead() {
+				if (index < elements.length) {
+					return Maybe.some(elements[index]);
+				} else {
+					return Maybe.none();
+				}
+			}
+			
+			@Override
+			public Feed<E> tail()
 			throws NoSuchElementException {
 				if (index < elements.length) {
 					return Feeds.fromElements(elements, index + 1);
@@ -170,7 +222,16 @@ public class Feeds {
 				}
 			}
 			
-			// Function.
+			@Override
+			public Feed<E> optionalTail() {
+				if (index < elements.length) {
+					return Feeds.fromElements(elements, index + 1);
+				} else {
+					return Feeds.empty();
+				}
+			}
+			
+			// Thunk.
 			
 			@Override
 			public Maybe<Tuple2<E, Feed<E>>> evaluate() {
@@ -180,6 +241,8 @@ public class Feeds {
 					return Maybe.none();
 				}
 			}
+			
+			// TODO: optimized iterator()
 		};
 	}
 	

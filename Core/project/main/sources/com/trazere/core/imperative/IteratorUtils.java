@@ -48,14 +48,16 @@ import java.util.NoSuchElementException;
 public class IteratorUtils {
 	/**
 	 * Gets the next element provided by the given iterator.
+	 * <p>
+	 * This method supports exhausted iterators.
 	 * 
 	 * @param <E> Type of the elements.
-	 * @param iterator Iterator to consume.
-	 * @return The next element.
+	 * @param iterator Iterator to read.
+	 * @return The next element, or nothing when the iterator is exhausted.
 	 * @since 2.0
 	 */
-	public static <E> Maybe<E> next(final Iterator<? extends E> iterator) {
-		return iterator.hasNext() ? Maybe.<E>some(iterator.next()) : Maybe.<E>none();
+	public static <E> Maybe<E> optionalNext(final Iterator<? extends E> iterator) {
+		return iterator.hasNext() ? Maybe.some(iterator.next()) : Maybe.none();
 	}
 	
 	/**

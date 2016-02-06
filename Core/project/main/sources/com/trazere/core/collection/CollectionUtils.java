@@ -29,6 +29,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * The {@link CollectionUtils} class provides various utilities regarding the manipulation of {@link Collection collections}.
@@ -38,15 +39,30 @@ import java.util.Iterator;
  */
 public class CollectionUtils {
 	/**
-	 * Gets an element of the given collection.
+	 * Gets any element of the given collection.
+	 *
+	 * @param <E> Type of the elements.
+	 * @param collection Collection to read.
+	 * @return An element of the collection.
+	 * @throws NoSuchElementException When the collection is empty.
+	 * @since 2.0
+	 */
+	public static <E> E any(final Collection<? extends E> collection) {
+		return collection.iterator().next();
+	}
+	
+	/**
+	 * Gets any element of the given collection.
+	 * <p>
+	 * This methods support empty collections.
 	 *
 	 * @param <E> Type of the elements.
 	 * @param collection Collection to read.
 	 * @return An element of the collection, or nothing when the collection is empty.
 	 * @since 2.0
 	 */
-	public static <E> Maybe<E> any(final Collection<? extends E> collection) {
-		return IteratorUtils.next(collection.iterator());
+	public static <E> Maybe<E> optionalAny(final Collection<? extends E> collection) {
+		return IteratorUtils.optionalNext(collection.iterator());
 	}
 	
 	// TODO: add(Collection, Maybe)
