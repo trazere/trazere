@@ -15,6 +15,12 @@
  */
 package com.trazere.core.functional;
 
+import com.trazere.core.text.DescriptionBuilder;
+import com.trazere.core.util.Either;
+import com.trazere.core.util.Maybe;
+import java.util.concurrent.Callable;
+import java.util.function.Supplier;
+
 /**
  * The {@link Thunk} interface defines abstract computations of some value.
  * <p>
@@ -32,4 +38,148 @@ public interface Thunk<T> {
 	 * @since 2.0
 	 */
 	T evaluate();
+	
+	/**
+	 * Evaluates this thunk in a thread safe way.
+	 * 
+	 * @return The value of the thunk.
+	 * @see #evaluate()
+	 * @since 2.0
+	 */
+	default T synchronizedEvaluate() {
+		synchronized (this) {
+			return evaluate();
+		}
+	}
+	
+	/**
+	 * Transforms the value of this thunk using the given function.
+	 * 
+	 * @param <R> Type of the transformed value.
+	 * @param function Function to use to transform the value.
+	 * @return A thunk of the transformed value.
+	 * @since 2.0
+	 */
+	default <R> Thunk<R> map(final Function<? super T, ? extends R> function) {
+		assert null != function;
+		
+		final Thunk<T> self = this;
+		return () -> function.evaluate(self.evaluate());
+	}
+	
+	/**
+	 * Builds a memoized view of this thunk.
+	 * 
+	 * @return A memoized view of this thunk, or this thunk when it is already memoized.
+	 * @see MemoizedThunk
+	 * @since 2.0
+	 */
+	default MemoizedThunk<T> memoized() {
+		if (this instanceof MemoizedThunk) {
+			return (MemoizedThunk<T>) this;
+		} else {
+			final Thunk<T> self = this;
+			return new MemoizedThunk<T>() {
+				/** Unevaluated thunk or memoized value. */
+				protected Either<Thunk<? extends T>, T> _value = Either.<Thunk<? extends T>, T>left(self);
+				
+				@Override
+				public T evaluate() {
+					if (_value.isRight()) {
+						return _value.asRight().getValue();
+					} else {
+						final T value = _value.asLeft().getValue().evaluate();
+						_value = Either.right(value);
+						return value;
+					}
+				}
+				
+				@Override
+				public boolean isMemoized() {
+					return _value.isRight();
+				}
+				
+				@Override
+				public Maybe<T> probe() {
+					if (_value.isRight()) {
+						return Maybe.some(_value.asRight().getValue());
+					} else {
+						return Maybe.<T>none();
+					}
+				}
+				
+				// Object.
+				
+				@Override
+				public String toString() {
+					if (_value.isLeft()) {
+						return "=> " + _value.asLeft().getLeft();
+					} else {
+						return String.valueOf(_value.asRight().getRight());
+					}
+				}
+			};
+		}
+	}
+	
+	/**
+	 * Builds a memoized, resettable view of this thunk.
+	 * 
+	 * @return A resettable view of this thunk, or this thunk when it is resettable.
+	 * @see ResettableThunk
+	 * @since 2.0
+	 */
+	default ResettableThunk<T> resettable() {
+		if (this instanceof ResettableThunk) {
+			return (ResettableThunk<T>) this;
+		} else {
+			final Thunk<T> self = this;
+			return new BaseResettableThunk<T>() {
+				@Override
+				protected T compute() {
+					return self.evaluate();
+				}
+				
+				@Override
+				public void appendDescription(final DescriptionBuilder description) {
+					super.appendDescription(description);
+					description.append("Thunk", self);
+				}
+			};
+		}
+	}
+	
+	/**
+	 * Builds a synchronized view of this thunk.
+	 * 
+	 * @return A synchronized view of this thunk.
+	 * @see #synchronizedEvaluate()
+	 * @since 2.0
+	 */
+	default Thunk<T> synchronized_() {
+		final Thunk<T> self = this;
+		return () -> self.synchronizedEvaluate();
+	}
+	
+	/**
+	 * Lifts this thunk as a Java 8 callable.
+	 * 
+	 * @return The built Java 8 callable.
+	 * @since 2.0
+	 */
+	default Callable<T> toCallable() {
+		final Thunk<T> self = this;
+		return () -> self.evaluate();
+	}
+	
+	/**
+	 * Lifts this thunk as a Java 8 supplier.
+	 * 
+	 * @return The built Java 8 supplier.
+	 * @since 2.0
+	 */
+	default Supplier<T> toSupplier() {
+		final Thunk<T> self = this;
+		return () -> self.evaluate();
+	}
 }

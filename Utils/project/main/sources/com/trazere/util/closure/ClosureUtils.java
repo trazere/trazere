@@ -35,7 +35,7 @@ public class ClosureUtils {
 	 * @param closure The closure.
 	 * @return The value of the closure.
 	 * @throws X When the evaluation of the closure fails.
-	 * @deprecated Use {@link com.trazere.core.functional.ThunkUtils#synchronizedEvaluate(com.trazere.core.functional.Thunk)}.
+	 * @deprecated Use {@link com.trazere.core.functional.Thunk#synchronizedEvaluate()}.
 	 */
 	@Deprecated
 	public static <T, X extends Exception> T synchronizedEvaluate(final Closure<T, ? extends X> closure)
@@ -51,7 +51,7 @@ public class ClosureUtils {
 	 * Resets the given closure in a thread safe way.
 	 * 
 	 * @param closure The closure.
-	 * @deprecated Use {@link com.trazere.core.functional.ThunkUtils#synchronizedReset(com.trazere.core.functional.ResettableThunk)}.
+	 * @deprecated Use {@link com.trazere.core.functional.ResettableThunk#synchronizedReset()}.
 	 */
 	@Deprecated
 	public static void synchronizedReset(final ResettableClosure<?, ?> closure) {

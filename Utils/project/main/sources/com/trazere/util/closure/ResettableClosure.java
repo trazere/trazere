@@ -73,7 +73,7 @@ implements Closure<T, X>, Releasable<RuntimeException>, Describable {
 	 * @param <X> Type of the exceptions.
 	 * @param function The function computing the value.
 	 * @return The closure.
-	 * @deprecated {@link com.trazere.core.functional.ThunkUtils#resettable(com.trazere.core.functional.Thunk)}.
+	 * @deprecated {@link com.trazere.core.functional.Thunk#resettable()}.
 	 */
 	@Deprecated
 	public static <T, X extends Exception> ResettableClosure<T, X> build(final Function0<? extends T, ? extends X> function) {

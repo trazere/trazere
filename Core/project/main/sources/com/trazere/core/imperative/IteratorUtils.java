@@ -910,7 +910,7 @@ public class IteratorUtils {
 			}
 		};
 	}
-
+	
 	/**
 	 * Flattens the elements provided by the iterators provided by the given iterator.
 	 * <p>
