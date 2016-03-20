@@ -185,7 +185,7 @@ public class FunctionUtils {
 		assert null != bindings;
 		
 		for (final K key : bindings.keySet()) {
-			for (final V value : bindings.get(key)) {
+			for (final V value : (Collection<? extends V>) bindings.get(key)) { // HACK: explicit cast to work around https://bugs.eclipse.org/bugs/show_bug.cgi?id=488795
 				if (predicate.evaluate(key, value)) {
 					return true;
 				}
@@ -331,7 +331,7 @@ public class FunctionUtils {
 		assert null != bindings;
 		
 		for (final K key : bindings.keySet()) {
-			for (final V value : bindings.get(key)) {
+			for (final V value : (Collection<? extends V>) bindings.get(key)) { // HACK: explicit cast to work around https://bugs.eclipse.org/bugs/show_bug.cgi?id=488795
 				if (!predicate.evaluate(key, value)) {
 					return false;
 				}
@@ -486,7 +486,7 @@ public class FunctionUtils {
 		assert null != bindings;
 		
 		for (final K key : bindings.keySet()) {
-			for (final V value : bindings.get(key)) {
+			for (final V value : (Collection<? extends V>) bindings.get(key)) { // HACK: explicit cast to work around https://bugs.eclipse.org/bugs/show_bug.cgi?id=488795
 				if (predicate.evaluate(key, value)) {
 					return Maybe.some(Tuple2.build(key, value));
 				}
@@ -811,7 +811,7 @@ public class FunctionUtils {
 		
 		final Counter count = new Counter();
 		for (final K key : bindings.keySet()) {
-			for (final V value : bindings.get(key)) {
+			for (final V value : (Collection<? extends V>) bindings.get(key)) { // HACK: explicit cast to work around https://bugs.eclipse.org/bugs/show_bug.cgi?id=488795
 				if (predicate.evaluate(key, value)) {
 					count.inc();
 				}
@@ -984,7 +984,7 @@ public class FunctionUtils {
 		assert null != results;
 		
 		for (final K key : bindings.keySet()) {
-			for (final V value : bindings.get(key)) {
+			for (final V value : (Collection<? extends V>) bindings.get(key)) { // HACK: explicit cast to work around https://bugs.eclipse.org/bugs/show_bug.cgi?id=488795
 				if (predicate.evaluate(key, value)) {
 					results.add(key, value);
 				}
@@ -1291,7 +1291,7 @@ public class FunctionUtils {
 		assert null != results;
 		
 		for (final K key : bindings.keySet()) {
-			for (final V value : bindings.get(key)) {
+			for (final V value : (Collection<? extends V>) bindings.get(key)) { // HACK: explicit cast to work around https://bugs.eclipse.org/bugs/show_bug.cgi?id=488795
 				results.add(key, function.evaluate(key, value));
 			}
 		}
@@ -1616,7 +1616,7 @@ public class FunctionUtils {
 		assert null != results;
 		
 		for (final K key : bindings.keySet()) {
-			for (final V value : bindings.get(key)) {
+			for (final V value : (Collection<? extends V>) bindings.get(key)) { // HACK: explicit cast to work around https://bugs.eclipse.org/bugs/show_bug.cgi?id=488795
 				final Maybe<? extends RV> result = extractor.evaluate(key, value);
 				if (result.isSome()) {
 					results.add(key, result.asSome().getValue());
@@ -2114,7 +2114,7 @@ public class FunctionUtils {
 		assert null != bindings;
 		
 		for (final K key : bindings.keySet()) {
-			for (final V value : bindings.get(key)) {
+			for (final V value : (Collection<? extends V>) bindings.get(key)) { // HACK: explicit cast to work around https://bugs.eclipse.org/bugs/show_bug.cgi?id=488795
 				procedure.execute(key, value);
 			}
 		}
