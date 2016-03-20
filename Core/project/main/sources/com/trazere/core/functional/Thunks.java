@@ -116,7 +116,7 @@ public class Thunks {
 	public static <T> Thunk<T> fromFactory(final Factory<T> factory) {
 		assert null != factory;
 		
-		return () -> factory.build();
+		return factory::build;
 	}
 	
 	/**
@@ -152,7 +152,7 @@ public class Thunks {
 	public static <T> Thunk<T> fromSupplier(final Supplier<? extends T> supplier) {
 		assert null != supplier;
 		
-		return () -> supplier.get();
+		return supplier::get;
 	}
 	
 	private Thunks() {

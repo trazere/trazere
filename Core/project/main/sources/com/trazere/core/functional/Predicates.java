@@ -207,7 +207,7 @@ public class Predicates {
 	public static <A> Predicate<A> values(final Collection<? extends A> values) {
 		assert null != values;
 		
-		return arg -> values.contains(arg);
+		return values::contains;
 	}
 	
 	/**
@@ -221,7 +221,7 @@ public class Predicates {
 	public static <A> Predicate<A> fromPredicate(final java.util.function.Predicate<? super A> predicate) {
 		assert null != predicate;
 		
-		return arg -> predicate.test(arg);
+		return predicate::test;
 	}
 	
 	/**
@@ -396,7 +396,7 @@ public class Predicates {
 	public static <A1, A2> Predicate2<A1, A2> fromBiPredicate(final BiPredicate<? super A1, ? super A2> predicate) {
 		assert null != predicate;
 		
-		return (arg1, arg2) -> predicate.test(arg1, arg2);
+		return predicate::test;
 	}
 	
 	/**

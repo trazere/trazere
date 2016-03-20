@@ -48,9 +48,7 @@ public class Effects {
 	public static Effect fromRunnable(final Runnable runnable) {
 		assert null != runnable;
 		
-		return () -> {
-			runnable.run();
-		};
+		return runnable::run;
 	}
 	
 	private Effects() {

@@ -51,7 +51,7 @@ public class Factories {
 	public static <T> Factory<T> fromThunk(final Thunk<? extends T> thunk) {
 		assert null != thunk;
 		
-		return () -> thunk.evaluate();
+		return thunk::evaluate;
 	}
 	
 	/**
@@ -87,7 +87,7 @@ public class Factories {
 	public static <T> Factory<T> fromSupplier(final Supplier<? extends T> supplier) {
 		assert null != supplier;
 		
-		return () -> supplier.get();
+		return supplier::get;
 	}
 	
 	private Factories() {

@@ -29,5 +29,37 @@ public interface Effect {
 	 * 
 	 * @since 2.0
 	 */
-	public void execute();
+	void execute();
+	
+	/**
+	 * Executes this effect in a thread safe way.
+	 * 
+	 * @since 2.0
+	 */
+	default void synchronizedExecute() {
+		synchronized (this) {
+			execute();
+		}
+	}
+	
+	/**
+	 * Builds a synchronized view of this effect.
+	 * 
+	 * @return The built effect.
+	 * @see #synchronizedExecute()
+	 * @since 2.0
+	 */
+	default Effect synchronized_() {
+		return this::synchronizedExecute;
+	}
+	
+	/**
+	 * Lifts this effect as a runnable.
+	 * 
+	 * @return The built runnable.
+	 * @since 2.0
+	 */
+	default Runnable toRunnable() {
+		return this::execute;
+	}
 }

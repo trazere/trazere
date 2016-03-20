@@ -157,8 +157,7 @@ public interface Thunk<T> {
 	 * @since 2.0
 	 */
 	default Thunk<T> synchronized_() {
-		final Thunk<T> self = this;
-		return () -> self.synchronizedEvaluate();
+		return this::synchronizedEvaluate;
 	}
 	
 	/**
@@ -168,8 +167,7 @@ public interface Thunk<T> {
 	 * @since 2.0
 	 */
 	default Callable<T> toCallable() {
-		final Thunk<T> self = this;
-		return () -> self.evaluate();
+		return this::evaluate;
 	}
 	
 	/**
@@ -179,7 +177,6 @@ public interface Thunk<T> {
 	 * @since 2.0
 	 */
 	default Supplier<T> toSupplier() {
-		final Thunk<T> self = this;
-		return () -> self.evaluate();
+		return this::evaluate;
 	}
 }

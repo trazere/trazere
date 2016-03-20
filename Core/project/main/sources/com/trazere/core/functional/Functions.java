@@ -120,7 +120,7 @@ public class Functions {
 	public static <A, R> Function<A, R> fromFunction(final java.util.function.Function<? super A, ? extends R> function) {
 		assert null != function;
 		
-		return arg -> function.apply(arg);
+		return function::apply;
 	}
 	
 	/**
@@ -134,7 +134,7 @@ public class Functions {
 	public static <V> Function<V, V> fromUnaryOperator(final UnaryOperator<V> operator) {
 		assert null != operator;
 		
-		return arg -> operator.apply(arg);
+		return operator::apply;
 	}
 	
 	/**
@@ -166,7 +166,7 @@ public class Functions {
 	public static <A> Function<A, Boolean> fromPredicate(final Predicate<? super A> predicate) {
 		assert null != predicate;
 		
-		return arg -> predicate.evaluate(arg);
+		return predicate::evaluate;
 	}
 	
 	/**
@@ -336,7 +336,7 @@ public class Functions {
 	public static <A1, A2, R> Function2<A1, A2, R> fromBiFunction(final BiFunction<? super A1, ? super A2, ? extends R> function) {
 		assert null != function;
 		
-		return (arg1, arg2) -> function.apply(arg1, arg2);
+		return function::apply;
 	}
 	
 	/**
@@ -350,7 +350,7 @@ public class Functions {
 	public static <V> Function2<V, V, V> fromBinaryOperator(final BinaryOperator<V> operator) {
 		assert null != operator;
 		
-		return (arg1, arg2) -> operator.apply(arg1, arg2);
+		return operator::apply;
 	}
 	
 	/**
@@ -381,7 +381,7 @@ public class Functions {
 	public static <A1, A2> Function2<A1, A2, Boolean> fromPredicate2(final Predicate2<? super A1, ? super A2> predicate) {
 		assert null != predicate;
 		
-		return (arg1, arg2) -> predicate.evaluate(arg1, arg2);
+		return predicate::evaluate;
 	}
 	
 	/**
@@ -487,7 +487,7 @@ public class Functions {
 	public static <A1, A2, A3> Function3<A1, A2, A3, Boolean> fromPredicate3(final Predicate3<? super A1, ? super A2, ? super A3> predicate) {
 		assert null != predicate;
 		
-		return (arg1, arg2, arg3) -> predicate.evaluate(arg1, arg2, arg3);
+		return predicate::evaluate;
 	}
 	
 	private Functions() {
