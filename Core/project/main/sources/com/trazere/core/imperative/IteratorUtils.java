@@ -25,7 +25,6 @@ import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Function3;
 import com.trazere.core.functional.FunctionAccumulators;
-import com.trazere.core.functional.FunctionUtils;
 import com.trazere.core.functional.Predicate;
 import com.trazere.core.functional.Predicate2;
 import com.trazere.core.lang.ComparableAccumulators;
@@ -847,7 +846,7 @@ public class IteratorUtils {
 	 * @since 2.0
 	 */
 	public static <E, TE> ExIterator<TE> extractAll(final Iterator<? extends E> iterator, final Function<? super E, ? extends Iterable<? extends TE>> extractor) {
-		return flatMap(iterator, FunctionUtils.map(extractor, IterableFunctions.iterator()));
+		return flatMap(iterator, extractor.map(IterableFunctions.iterator()));
 	}
 	
 	/**
@@ -864,7 +863,7 @@ public class IteratorUtils {
 	 * @since 2.0
 	 */
 	public static <E1, E2, EE> ExIterator<EE> extractAll(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Function2<? super E1, ? super E2, ? extends Iterable<? extends EE>> extractor) {
-		return flatMap(iterator, FunctionUtils.map2(extractor, IterableFunctions.iterator()));
+		return flatMap(iterator, extractor.map(IterableFunctions.iterator()));
 	}
 	
 	/**

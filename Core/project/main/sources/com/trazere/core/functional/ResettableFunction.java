@@ -16,6 +16,7 @@
 package com.trazere.core.functional;
 
 import com.trazere.core.lang.Releasable;
+import com.trazere.core.util.Maybe;
 import java.util.Set;
 
 /**
@@ -36,8 +37,9 @@ extends MemoizedFunction<A, R>, Releasable {
 	Set<A> memoizedArgs();
 	
 	/**
-	 * Resets the evaluation of this function with the given argument, discarding the possibly memoized result. The result will be computed (again) the next
-	 * time this function is evaluated with the given argument.
+	 * Resets the evaluation of this function with the given argument, discarding the possibly memoized result.
+	 * <p>
+	 * The result will be computed (again) the next time this function is evaluated with the given argument.
 	 * 
 	 * @param arg Argument whose evaluation should be reset.
 	 * @since 2.0
@@ -45,8 +47,24 @@ extends MemoizedFunction<A, R>, Releasable {
 	void reset(final A arg);
 	
 	/**
-	 * Resets the evaluations of this function with the arguments accepted by the given filter, discarding the possibly memoized results. The results will be
-	 * computed (again) the next time this function is evaluated with the accepted arguments.
+	 * Resets the evaluation of this function with the given argument in a thread safe way, discarding the possibly memoized result.
+	 * <p>
+	 * The result will be computed (again) the next time this function is evaluated with the given argument.
+	 * 
+	 * @param arg Argument corresponding to the evaluation to reset.
+	 * @see #reset(Object)
+	 * @since 2.0
+	 */
+	default void synchronizedReset(final A arg) {
+		synchronized (this) {
+			reset(arg);
+		}
+	}
+	
+	/**
+	 * Resets the evaluations of this function with the arguments accepted by the given filter, discarding the possibly memoized results.
+	 * <p>
+	 * The results will be computed (again) the next time this function is evaluated with the accepted arguments.
 	 * 
 	 * @param filter Predicate to use to filter the arguments whose evaluation should be reset.
 	 * @since 2.0
@@ -54,12 +72,58 @@ extends MemoizedFunction<A, R>, Releasable {
 	void reset(Predicate<? super A> filter);
 	
 	/**
-	 * Resets all evaluations of this function, discarding the possibly memoized results. The results will be computed (again) the next time this function is
-	 * evaluated.
+	 * Resets all evaluations of this function, discarding the possibly memoized results.
+	 * <p>
+	 * The results will be computed (again) the next time this function is evaluated.
 	 * 
 	 * @since 2.0
 	 */
 	void resetAll();
+	
+	@Override
+	default ResettableFunction<A, R> synchronized_() {
+		final ResettableFunction<A, R> self = this;
+		return new ResettableFunction<A, R>() {
+			@Override
+			public R evaluate(final A arg) {
+				return self.synchronizedEvaluate(arg);
+			}
+			
+			@Override
+			public boolean isMemoized(final A arg) {
+				return self.isMemoized(arg);
+			}
+			
+			@Override
+			public Maybe<R> probe(final A arg) {
+				return self.probe(arg);
+			}
+			
+			@Override
+			public Set<A> memoizedArgs() {
+				return self.memoizedArgs();
+			}
+			
+			@Override
+			public void reset(final A arg) {
+				self.synchronizedReset(arg);
+			}
+			
+			@Override
+			public void reset(final Predicate<? super A> filter) {
+				synchronized (self) {
+					self.reset(filter);
+				}
+			}
+			
+			@Override
+			public void resetAll() {
+				synchronized (self) {
+					self.resetAll();
+				}
+			}
+		};
+	}
 	
 	// Releasable.
 	

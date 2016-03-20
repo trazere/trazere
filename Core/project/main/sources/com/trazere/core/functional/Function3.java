@@ -15,6 +15,8 @@
  */
 package com.trazere.core.functional;
 
+import com.trazere.core.util.Tuple3;
+
 /**
  * The {@link Function3} interface defines uncurried functions that take three arguments.
  * 
@@ -36,4 +38,58 @@ public interface Function3<A1, A2, A3, R> {
 	 * @since 2.0
 	 */
 	R evaluate(A1 arg1, A2 arg2, A3 arg3);
+	
+	/**
+	 * Evaluates this function with the given arguments in a thread safe way.
+	 * 
+	 * @param arg1 First argument to evaluate the function with.
+	 * @param arg2 Second argument to evaluate the function with.
+	 * @param arg3 Third argument to evaluate the function with.
+	 * @return The result of the function evaluation.
+	 * @see #evaluate(Object, Object, Object)
+	 * @since 2.0
+	 */
+	default R synchronizedEvaluate(final A1 arg1, final A2 arg2, final A3 arg3) {
+		synchronized (this) {
+			return evaluate(arg1, arg2, arg3);
+		}
+	}
+	
+	/**
+	 * Transforms the results of this function using the given function.
+	 *
+	 * @param <TR> Type of the transformed results.
+	 * @param function Function to use to transform the results.
+	 * @return A function evaluating to the transformed results.
+	 * @since 2.0
+	 */
+	default <TR> Function3<A1, A2, A3, TR> map(final Function<? super R, ? extends TR> function) {
+		assert null != function;
+		
+		final Function3<A1, A2, A3, R> self = this;
+		return (arg1, arg2, arg3) -> function.evaluate(self.evaluate(arg1, arg2, arg3));
+	}
+	
+	/**
+	 * Builds a synchronized view of this function.
+	 * 
+	 * @return The built function.
+	 * @see #synchronizedEvaluate(Object, Object, Object)
+	 * @since 2.0
+	 */
+	default Function3<A1, A2, A3, R> synchronized_() {
+		final Function3<A1, A2, A3, R> self = this;
+		return (arg1, arg2, arg3) -> self.synchronizedEvaluate(arg1, arg2, arg3);
+	}
+	
+	/**
+	 * Gets an uncurried view of this function (as a function that takes triples of elements).
+	 *
+	 * @return The built function.
+	 * @since 2.0
+	 */
+	default Function<Tuple3<A1, A2, A3>, R> uncurried() {
+		final Function3<A1, A2, A3, R> self = this;
+		return arg -> self.evaluate(arg.get1(), arg.get2(), arg.get3());
+	}
 }

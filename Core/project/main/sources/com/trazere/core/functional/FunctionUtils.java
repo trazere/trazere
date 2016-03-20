@@ -15,9 +15,10 @@
  */
 package com.trazere.core.functional;
 
-import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
-import java.util.function.BiFunction;
+import com.trazere.core.util.Tuple3;
+import com.trazere.core.util.Tuple4;
+import com.trazere.core.util.Tuple5;
 import java.util.function.BinaryOperator;
 import java.util.function.UnaryOperator;
 
@@ -32,117 +33,6 @@ import java.util.function.UnaryOperator;
  */
 public class FunctionUtils {
 	/**
-	 * Builds a function corresponding to the composition of the given functions (g . f).
-	 *
-	 * @param <A> Type of the arguments.
-	 * @param <I> Type of the intermediate values
-	 * @param <R> Type of the results.
-	 * @param g Outer function.
-	 * @param f Inner function.
-	 * @return The built function.
-	 * @since 2.0
-	 */
-	public static <A, I, R> Function<A, R> compose(final Function<? super I, ? extends R> g, final Function<? super A, ? extends I> f) {
-		assert null != f;
-		assert null != g;
-		
-		return arg -> g.evaluate(f.evaluate(arg));
-	}
-	
-	/**
-	 * Filters the given function using the given filter.
-	 * 
-	 * @param <A> Type of the arguments.
-	 * @param <R> Type of the results.
-	 * @param function Function to filter.
-	 * @param filter Predicate to use to filter the results.
-	 * @return The built function.
-	 * @since 2.0
-	 */
-	public static <A, R> Function<A, Maybe<R>> filter(final Function<? super A, ? extends R> function, final Predicate<? super R> filter) {
-		assert null != function;
-		assert null != filter;
-		
-		return arg -> Maybe.<R>some(function.evaluate(arg)).filter(filter);
-	}
-	
-	/**
-	 * Transforms the given function using the given function.
-	 * <p>
-	 * This method is equivalent to function composition.
-	 *
-	 * @param <A> Type of the arguments.
-	 * @param <R> Type of the results.
-	 * @param
-	 * 		<TR>
-	 *        Type of the transformed results.
-	 * @param function Function to transform.
-	 * @param mapFunction Function to use to transform the results.
-	 * @return The built function.
-	 * @since 2.0
-	 */
-	public static <A, R, TR> Function<A, TR> map(final Function<? super A, ? extends R> function, final Function<? super R, ? extends TR> mapFunction) {
-		return compose(mapFunction, function);
-	}
-	
-	/**
-	 * Builds a memoized view of the the given function.
-	 * 
-	 * @param <A> Type of the arguments.
-	 * @param <R> Type of the results.
-	 * @param function Function to memoize.
-	 * @return The built thunk.
-	 * @see MemoizedFunction
-	 * @since 2.0
-	 */
-	public static <A, R> MemoizedFunction<A, R> memoized(final Function<? super A, ? extends R> function) {
-		assert null != function;
-		
-		return new BaseMemoizedFunction<A, R>() {
-			@Override
-			protected R compute(final A arg) {
-				return function.evaluate(arg);
-			}
-		};
-	}
-	
-	/**
-	 * Builds a memoized, resettable view of the given function.
-	 * 
-	 * @param <A> Type of the arguments.
-	 * @param <R> Type of the results.
-	 * @param function Function to memoize.
-	 * @return The build function.
-	 * @see ResettableFunction
-	 * @since 2.0
-	 */
-	public static <A, R> ResettableFunction<A, R> resettable(final Function<? super A, ? extends R> function) {
-		assert null != function;
-		
-		return new BaseResettableFunction<A, R>() {
-			@Override
-			protected R compute(final A arg) {
-				return function.evaluate(arg);
-			}
-		};
-	}
-	
-	/**
-	 * Builds a function that evaluates to the given function in a thread safe way.
-	 * 
-	 * @param <A> Type of the arguments.
-	 * @param <R> Type of the results.
-	 * @param function Function to synchronize.
-	 * @return The built function.
-	 * @since 2.0
-	 */
-	public static <A, R> Function<A, R> synchronized_(final Function<? super A, ? extends R> function) {
-		assert null != function;
-		
-		return arg -> synchronizedEvaluate(function, arg);
-	}
-	
-	/**
 	 * Curries the given function which takes pairs of elements into a function that takes two arguments.
 	 *
 	 * @param <A1> Type of the first element of the argument pairs.
@@ -152,31 +42,68 @@ public class FunctionUtils {
 	 * @return The built function.
 	 * @since 2.0
 	 */
-	public static <A1, A2, R> Function2<A1, A2, R> curry(final Function<? super Tuple2<A1, A2>, ? extends R> function) {
+	public static <A1, A2, R> Function2<A1, A2, R> curry2(final Function<? super Tuple2<A1, A2>, ? extends R> function) {
 		assert null != function;
 		
 		return (arg1, arg2) -> function.evaluate(new Tuple2<>(arg1, arg2));
 	}
 	
-	// TODO: add curry for Tuple3 ?
-	
 	/**
-	 * Builds a Java 8 function that lifts the given function.
-	 * 
-	 * @param <A> Type of the arguments.
+	 * Curries the given function which takes triples of elements into a function that takes three arguments.
+	 *
+	 * @param <A1> Type of the first element of the argument triples.
+	 * @param <A2> Type of the second element of the argument triples.
+	 * @param <A3> Type of the third element of the argument triples.
 	 * @param <R> Type of the results.
-	 * @param function Function to lift.
-	 * @return The built Java 8 function.
+	 * @param function Function to curry.
+	 * @return The built function.
 	 * @since 2.0
 	 */
-	public static <A, R> java.util.function.Function<A, R> toFunction(final Function<? super A, ? extends R> function) {
+	public static <A1, A2, A3, R> Function3<A1, A2, A3, R> curry3(final Function<? super Tuple3<A1, A2, A3>, ? extends R> function) {
 		assert null != function;
 		
-		return t -> function.evaluate(t);
+		return (arg1, arg2, arg3) -> function.evaluate(new Tuple3<>(arg1, arg2, arg3));
 	}
 	
 	/**
-	 * Builds an unary operator that lifts the given function.
+	 * Curries the given function which takes quadruples of elements into a function that takes four arguments.
+	 *
+	 * @param <A1> Type of the first element of the argument quadruples.
+	 * @param <A2> Type of the second element of the argument quadruples.
+	 * @param <A3> Type of the third element of the argument quadruples.
+	 * @param <A4> Type of the fourth element of the argument quadruples.
+	 * @param <R> Type of the results.
+	 * @param function Function to curry.
+	 * @return The built function.
+	 * @since 2.0
+	 */
+	public static <A1, A2, A3, A4, R> Function4<A1, A2, A3, A4, R> curry4(final Function<? super Tuple4<A1, A2, A3, A4>, ? extends R> function) {
+		assert null != function;
+		
+		return (arg1, arg2, arg3, arg4) -> function.evaluate(new Tuple4<>(arg1, arg2, arg3, arg4));
+	}
+	
+	/**
+	 * Curries the given function which takes quintuples of elements into a function that takes five arguments.
+	 *
+	 * @param <A1> Type of the first element of the argument quintuples.
+	 * @param <A2> Type of the second element of the argument quintuples.
+	 * @param <A3> Type of the third element of the argument quintuples.
+	 * @param <A4> Type of the fourth element of the argument quintuples.
+	 * @param <A5> Type of the fifth element of the argument quintuples.
+	 * @param <R> Type of the results.
+	 * @param function Function to curry.
+	 * @return The built function.
+	 * @since 2.0
+	 */
+	public static <A1, A2, A3, A4, A5, R> Function5<A1, A2, A3, A4, A5, R> curry5(final Function<? super Tuple5<A1, A2, A3, A4, A5>, ? extends R> function) {
+		assert null != function;
+		
+		return (arg1, arg2, arg3, arg4, arg5) -> function.evaluate(new Tuple5<>(arg1, arg2, arg3, arg4, arg5));
+	}
+	
+	/**
+	 * Lifts the given function as a Java 8 unary operator.
 	 * 
 	 * @param <V> Type of the arguments and results.
 	 * @param function Function to lift.
@@ -190,110 +117,7 @@ public class FunctionUtils {
 	}
 	
 	/**
-	 * Evaluates the given function in a thread safe way.
-	 * 
-	 * @param <A> Type of the arguments.
-	 * @param <R> Type of the results.
-	 * @param function Thunk to evaluate.
-	 * @param arg Argument to evaluate the function with.
-	 * @return The result of the function evaluation.
-	 * @since 2.0
-	 */
-	public static <A, R> R synchronizedEvaluate(final Function<? super A, ? extends R> function, final A arg) {
-		synchronized (function) {
-			return function.evaluate(arg);
-		}
-	}
-	
-	/**
-	 * Resets the given function in a thread safe way.
-	 * 
-	 * @param <A> Type of the arguments.
-	 * @param arg Argument corresponding to the evaluation to reset.
-	 * @param function Function to reset.
-	 * @since 2.0
-	 */
-	public static <A> void synchronizedReset(final ResettableFunction<? super A, ?> function, final A arg) {
-		synchronized (function) {
-			function.reset(arg);
-		}
-	}
-	
-	/**
-	 * Filters the given two arguments function using the given filter.
-	 * 
-	 * @param <A1> Type of the first arguments.
-	 * @param <A2> Type of the second arguments.
-	 * @param <R> Type of the results.
-	 * @param function Function to filter.
-	 * @param filter Predicate to use to filter the results.
-	 * @return The built function.
-	 * @since 2.0
-	 */
-	public static <A1, A2, R> Function2<A1, A2, Maybe<R>> filter2(final Function2<? super A1, ? super A2, ? extends R> function, final Predicate<? super R> filter) {
-		assert null != function;
-		assert null != filter;
-		
-		return (arg1, arg2) -> Maybe.<R>some(function.evaluate(arg1, arg2)).filter(filter);
-	}
-	
-	/**
-	 * Transforms the given two arguments function using the given function.
-	 * <p>
-	 * This method is equivalent to function composition.
-	 *
-	 * @param <A1> Type of the first arguments.
-	 * @param <A2> Type of the second arguments.
-	 * @param <R> Type of the results.
-	 * @param
-	 * 		<TR>
-	 *        Type of the transformed results.
-	 * @param function Function to transform.
-	 * @param mapFunction Function to use to transform the results.
-	 * @return The built function.
-	 * @since 2.0
-	 */
-	public static <A1, A2, R, TR> Function2<A1, A2, TR> map2(final Function2<? super A1, ? super A2, ? extends R> function, final Function<? super R, ? extends TR> mapFunction) {
-		assert null != function;
-		assert null != mapFunction;
-		
-		return (arg1, arg2) -> mapFunction.evaluate(function.evaluate(arg1, arg2));
-	}
-	
-	/**
-	 * Uncurries the given function which takes two arguments into a function that takes pairs of elements.
-	 *
-	 * @param <A1> Type of the first arguments.
-	 * @param <A2> Type of the second arguments.
-	 * @param <R> Type of the results.
-	 * @param function Function to uncurry.
-	 * @return The built function.
-	 * @since 2.0
-	 */
-	public static <A1, A2, R> Function<Tuple2<A1, A2>, R> uncurry(final Function2<? super A1, ? super A2, ? extends R> function) {
-		assert null != function;
-		
-		return (arg) -> function.evaluate(arg.get1(), arg.get2());
-	}
-	
-	/**
-	 * Builds a bi-function that lifts the given two arguments function.
-	 * 
-	 * @param <A1> Type of the first arguments.
-	 * @param <A2> Type of the second arguments.
-	 * @param <R> Type of the results.
-	 * @param function Function to lift.
-	 * @return The built bi-function.
-	 * @since 2.0
-	 */
-	public static <A1, A2, R> BiFunction<A1, A2, R> toBiFunction(final Function2<? super A1, ? super A2, ? extends R> function) {
-		assert null != function;
-		
-		return (t, u) -> function.evaluate(t, u);
-	}
-	
-	/**
-	 * Builds a binary operator that lifts the given two arguments function.
+	 * Lifts the given two arguments function as a Java 8 binary operator.
 	 * 
 	 * @param <V> Type of the arguments and results.
 	 * @param function Function to lift.
@@ -305,51 +129,6 @@ public class FunctionUtils {
 		
 		return (t, u) -> function.evaluate(t, u);
 	}
-	
-	/**
-	 * Filters the given three arguments function using the given filter.
-	 * 
-	 * @param <A1> Type of the first arguments.
-	 * @param <A2> Type of the second arguments.
-	 * @param <A3> Type of the third arguments.
-	 * @param <R> Type of the results.
-	 * @param function Function to filter.
-	 * @param filter Predicate to use to filter the results.
-	 * @return The built function.
-	 * @since 2.0
-	 */
-	public static <A1, A2, A3, R> Function3<A1, A2, A3, Maybe<R>> filter3(final Function3<? super A1, ? super A2, ? super A3, ? extends R> function, final Predicate<? super R> filter) {
-		assert null != function;
-		assert null != filter;
-		
-		return (arg1, arg2, arg3) -> Maybe.<R>some(function.evaluate(arg1, arg2, arg3)).filter(filter);
-	}
-	
-	/**
-	 * Transforms the given three arguments function using the given function.
-	 * <p>
-	 * This method is equivalent to function composition.
-	 *
-	 * @param <A1> Type of the first arguments.
-	 * @param <A2> Type of the second arguments.
-	 * @param <A3> Type of the third arguments.
-	 * @param <R> Type of the results.
-	 * @param
-	 * 		<TR>
-	 *        Type of the transformed results.
-	 * @param function Function to transform.
-	 * @param mapFunction Function to use to transform the results.
-	 * @return The built function.
-	 * @since 2.0
-	 */
-	public static <A1, A2, A3, R, TR> Function3<A1, A2, A3, TR> map3(final Function3<? super A1, ? super A2, ? super A3, ? extends R> function, final Function<? super R, ? extends TR> mapFunction) {
-		assert null != function;
-		assert null != mapFunction;
-		
-		return (arg1, arg2, arg3) -> mapFunction.evaluate(function.evaluate(arg1, arg2, arg3));
-	}
-	
-	// TODO: add uncurry for Function3 ?
 	
 	private FunctionUtils() {
 		// Prevent instantiation.

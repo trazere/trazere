@@ -15,6 +15,8 @@
  */
 package com.trazere.core.functional;
 
+import com.trazere.core.util.Tuple4;
+
 /**
  * The {@link Function4} interface defines uncurried functions that take four arguments.
  * 
@@ -38,4 +40,59 @@ public interface Function4<A1, A2, A3, A4, R> {
 	 * @since 2.0
 	 */
 	R evaluate(A1 arg1, A2 arg2, A3 arg3, A4 arg4);
+	
+	/**
+	 * Evaluates this function with the given arguments in a thread safe way.
+	 * 
+	 * @param arg1 First argument to evaluate the function with.
+	 * @param arg2 Second argument to evaluate the function with.
+	 * @param arg3 Third argument to evaluate the function with.
+	 * @param arg4 Fourth argument to evaluate the function with.
+	 * @return The result of the function evaluation.
+	 * @see #evaluate(Object, Object, Object, Object)
+	 * @since 2.0
+	 */
+	default R synchronizedEvaluate(final A1 arg1, final A2 arg2, final A3 arg3, final A4 arg4) {
+		synchronized (this) {
+			return evaluate(arg1, arg2, arg3, arg4);
+		}
+	}
+	
+	/**
+	 * Transforms the results of this function using the given function.
+	 *
+	 * @param <TR> Type of the transformed results.
+	 * @param function Function to use to transform the results.
+	 * @return A function evaluating to the transformed results.
+	 * @since 2.0
+	 */
+	default <TR> Function4<A1, A2, A3, A4, TR> map(final Function<? super R, ? extends TR> function) {
+		assert null != function;
+		
+		final Function4<A1, A2, A3, A4, R> self = this;
+		return (arg1, arg2, arg3, arg4) -> function.evaluate(self.evaluate(arg1, arg2, arg3, arg4));
+	}
+	
+	/**
+	 * Builds a synchronized view of this function.
+	 * 
+	 * @return The built function.
+	 * @see #synchronizedEvaluate(Object, Object, Object, Object)
+	 * @since 2.0
+	 */
+	default Function4<A1, A2, A3, A4, R> synchronized_() {
+		final Function4<A1, A2, A3, A4, R> self = this;
+		return (arg1, arg2, arg3, arg4) -> self.synchronizedEvaluate(arg1, arg2, arg3, arg4);
+	}
+	
+	/**
+	 * Gets an uncurried view of this function (as a function that takes quadruples of elements).
+	 *
+	 * @return The built function.
+	 * @since 2.0
+	 */
+	default Function<Tuple4<A1, A2, A3, A4>, R> uncurried() {
+		final Function4<A1, A2, A3, A4, R> self = this;
+		return arg -> self.evaluate(arg.get1(), arg.get2(), arg.get3(), arg.get4());
+	}
 }

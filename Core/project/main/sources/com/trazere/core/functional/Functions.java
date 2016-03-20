@@ -163,7 +163,7 @@ public class Functions {
 	 * @return The built function.
 	 * @since 2.0
 	 */
-	public static final <A> Function<A, Boolean> fromPredicate(final Predicate<? super A> predicate) {
+	public static <A> Function<A, Boolean> fromPredicate(final Predicate<? super A> predicate) {
 		assert null != predicate;
 		
 		return arg -> predicate.evaluate(arg);
