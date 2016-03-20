@@ -55,10 +55,10 @@ public class Factories {
 	}
 	
 	/**
-	 * Builds a factory that lifts the given callable.
+	 * Builds a factory that lifts the given Java 8 callable.
 	 * 
 	 * @param <T> Type of the built values.
-	 * @param callable Callable to lift.
+	 * @param callable Java 8 callable to lift.
 	 * @param failureFactory Factory of the exceptions for the failures.
 	 * @return The built factory.
 	 * @since 2.0
@@ -77,10 +77,10 @@ public class Factories {
 	}
 	
 	/**
-	 * Builds a factory that lifts the given supplier.
+	 * Builds a factory that lifts the given Java 8 supplier.
 	 * 
 	 * @param <T> Type of the built values.
-	 * @param supplier Supplier to lift.
+	 * @param supplier Java 8 supplier to lift.
 	 * @return The build factory.
 	 * @since 2.0
 	 */

@@ -15,6 +15,8 @@
  */
 package com.trazere.core.imperative;
 
+import com.trazere.core.util.Tuple3;
+
 /**
  * The {@link Procedure3} interface defines uncurried procedures (functions which return no results) that take three arguments.
  * 
@@ -34,4 +36,40 @@ public interface Procedure3<A1, A2, A3> {
 	 * @since 2.0
 	 */
 	void execute(A1 arg1, A2 arg2, A3 arg3);
+	
+	/**
+	 * Executes this procedure in a thread safe way.
+	 * 
+	 * @param arg1 First argument to execute the procedure with.
+	 * @param arg2 Second argument to execute the procedure with.
+	 * @param arg3 Third argument to execute the procedure with.
+	 * @since 2.0
+	 */
+	default void synchronizedExecute(final A1 arg1, final A2 arg2, final A3 arg3) {
+		synchronized (this) {
+			execute(arg1, arg2, arg3);
+		}
+	}
+	
+	/**
+	 * Builds a synchronized view of this procedure.
+	 * 
+	 * @return The built procedure.
+	 * @see #synchronizedExecute(Object, Object, Object)
+	 * @since 2.0
+	 */
+	default Procedure3<A1, A2, A3> synchronized_() {
+		return this::synchronizedExecute;
+	}
+	
+	/**
+	 * Gets an uncurried view of this procedure (as a procedure that takes triples of elements).
+	 *
+	 * @return The built procedure.
+	 * @since 2.0
+	 */
+	default Procedure<Tuple3<A1, A2, A3>> uncurried() {
+		final Procedure3<A1, A2, A3> self = this;
+		return arg -> self.execute(arg.get1(), arg.get2(), arg.get3());
+	}
 }

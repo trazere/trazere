@@ -45,19 +45,17 @@ public class Procedures {
 	// TODO: sequence
 	
 	/**
-	 * Builds a procedure that lifts the given consumer.
+	 * Builds a procedure that lifts the given Java 8 consumer.
 	 * 
 	 * @param <A> Type of the arguments.
-	 * @param consumer Consumer to lift.
+	 * @param consumer Java 8 consumer to lift.
 	 * @return The built procedure.
 	 * @since 2.0
 	 */
 	public static <A> Procedure<A> fromConsumer(final Consumer<? super A> consumer) {
 		assert null != consumer;
 		
-		return arg -> {
-			consumer.accept(arg);
-		};
+		return consumer::accept;
 	}
 	
 	/**
@@ -160,20 +158,18 @@ public class Procedures {
 	// TODO: sequence2
 	
 	/**
-	 * Builds a two arguments procedure that lifts the given bi-consumer.
+	 * Builds a two arguments procedure that lifts the given Java 8 bi-consumer.
 	 * 
 	 * @param <A1> Type of the first arguments.
 	 * @param <A2> Type of the second arguments.
-	 * @param consumer Bi-consumer to lift.
+	 * @param consumer Java 8 bi-consumer to lift.
 	 * @return The built procedure.
 	 * @since 2.0
 	 */
 	public static <A1, A2> Procedure2<A1, A2> fromBiConsumer(final BiConsumer<? super A1, ? super A2> consumer) {
 		assert null != consumer;
 		
-		return (arg1, arg2) -> {
-			consumer.accept(arg1, arg2);
-		};
+		return consumer::accept;
 	}
 	
 	private Procedures() {

@@ -127,7 +127,7 @@ public class Functions {
 	 * Builds a function that lifts the given unary operator.
 	 * 
 	 * @param <V> Type of the arguments and results.
-	 * @param operator Unary operator to lift.
+	 * @param operator Java 8 unary operator to lift.
 	 * @return The built function.
 	 * @since 2.0
 	 */
@@ -324,12 +324,12 @@ public class Functions {
 	}
 	
 	/**
-	 * Builds a two arguments function that lifts the given bi-function.
+	 * Builds a two arguments function that lifts the given Java 8 bi-function.
 	 * 
 	 * @param <A1> Type of the first arguments.
 	 * @param <A2> Type of the second arguments.
 	 * @param <R> Type of the results.
-	 * @param function Bi-function to lift.
+	 * @param function Java 8 bi-function to lift.
 	 * @return The built function.
 	 * @since 2.0
 	 */
@@ -340,10 +340,10 @@ public class Functions {
 	}
 	
 	/**
-	 * Builds a two arguments function that lifts the given binary operator.
+	 * Builds a two arguments function that lifts the given Java 8 binary operator.
 	 * 
 	 * @param <V> Type of the arguments and results.
-	 * @param operator Binary operator to lift.
+	 * @param operator Java 8 binary operator to lift.
 	 * @return The built function.
 	 * @since 2.0
 	 */

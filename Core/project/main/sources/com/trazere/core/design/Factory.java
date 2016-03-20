@@ -53,7 +53,7 @@ public interface Factory<T> {
 	}
 	
 	/**
-	 * Lifts this factory as a Java 8 callable.
+	 * Lifts this factory as a callable.
 	 * 
 	 * @return The built Java 8 callable.
 	 * @since 2.0
