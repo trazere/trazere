@@ -56,7 +56,7 @@ public interface Function<A, R> {
 	 *
 	 * @param <CA> Type of the composition arguments.
 	 * @param function Function to use to transform the arguments.
-	 * @return The built function.
+	 * @return The composition function.
 	 * @since 2.0
 	 */
 	default <CA> Function<CA, R> compose(final Function<? super CA, ? extends A> function) {
@@ -131,8 +131,7 @@ public interface Function<A, R> {
 	 * @since 2.0
 	 */
 	default Function<A, R> synchronized_() {
-		final Function<A, R> self = this;
-		return arg -> self.synchronizedEvaluate(arg);
+		return this::synchronizedEvaluate;
 	}
 	
 	/**
@@ -142,7 +141,6 @@ public interface Function<A, R> {
 	 * @since 2.0
 	 */
 	default java.util.function.Function<A, R> toFunction() {
-		final Function<A, R> self = this;
-		return t -> self.evaluate(t);
+		return this::evaluate;
 	}
 }

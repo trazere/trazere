@@ -418,7 +418,7 @@ public class Predicates {
 	 * @param function The (inner) function.
 	 * @param predicate The (outer) predicate.
 	 * @return The built function.
-	 * @deprecated Use {@link com.trazere.core.functional.PredicateUtils#map(com.trazere.core.functional.Predicate, com.trazere.core.functional.Function)}.
+	 * @deprecated Use {@link com.trazere.core.functional.Predicate#compose(com.trazere.core.functional.Function)}.
 	 */
 	@Deprecated
 	public static <T1, T2, X extends Exception> Predicate1<T1, X> map(final Function1<? super T1, ? extends T2, ? extends X> function, final Predicate1<? super T2, ? extends X> predicate) {

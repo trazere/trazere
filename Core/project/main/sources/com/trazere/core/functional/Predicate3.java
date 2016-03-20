@@ -15,6 +15,8 @@
  */
 package com.trazere.core.functional;
 
+import com.trazere.core.util.Tuple3;
+
 /**
  * The {@link Predicate3} interface defines uncurried functions that take three arguments and result to booleans.
  * 
@@ -35,4 +37,41 @@ public interface Predicate3<A1, A2, A3> {
 	 * @since 2.0
 	 */
 	boolean evaluate(A1 arg1, A2 arg2, A3 arg3);
+	
+	/**
+	 * Evaluates this predicate with the given arguments.
+	 * 
+	 * @param arg1 First argument to evaluate the predicate with.
+	 * @param arg2 Second argument to evaluate the predicate with.
+	 * @param arg3 Third argument to evaluate the predicate with.
+	 * @return The result of the predicate evaluation.
+	 * @since 2.0
+	 */
+	default boolean synchronizedEvaluate(final A1 arg1, final A2 arg2, final A3 arg3) {
+		synchronized (this) {
+			return evaluate(arg1, arg2, arg3);
+		}
+	}
+	
+	/**
+	 * Builds a synchronized view of this predicate.
+	 * 
+	 * @return The built predicate.
+	 * @see #synchronizedEvaluate(Object, Object, Object)
+	 * @since 2.0
+	 */
+	default Predicate3<A1, A2, A3> synchronized_() {
+		return this::synchronizedEvaluate;
+	}
+	
+	/**
+	 * Gets an uncurried view of this predicate (as a predicate that takes triples of elements).
+	 *
+	 * @return The built predicate.
+	 * @since 2.0
+	 */
+	default Predicate<Tuple3<A1, A2, A3>> uncurried() {
+		final Predicate3<A1, A2, A3> self = this;
+		return arg -> self.evaluate(arg.get1(), arg.get2(), arg.get3());
+	}
 }

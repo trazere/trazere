@@ -33,4 +33,58 @@ public interface Predicate<A> {
 	 * @since 2.0
 	 */
 	boolean evaluate(A arg);
+	
+	/**
+	 * Evaluates this predicate with the given argument in a thread safe way.
+	 * 
+	 * @param arg Argument to evaluate the predicate with.
+	 * @return The result of the predicate evaluation.
+	 * @since 2.0
+	 */
+	default boolean synchronizedEvaluate(final A arg) {
+		synchronized (this) {
+			return evaluate(arg);
+		}
+	}
+	
+	/**
+	 * Composes this predicate with the given function.
+	 * <p>
+	 * TODO: detail function composition
+	 * 
+	 * @param <CA> Type of the composition arguments.
+	 * @param function Function to use to transform the arguments.
+	 * @return The composition predicate.
+	 * @since 2.0
+	 */
+	default <CA> Predicate<CA> compose(final Function<? super CA, ? extends A> function) {
+		assert null != function;
+		
+		final Predicate<A> self = this;
+		return arg -> self.evaluate(function.evaluate(arg));
+	}
+	
+	// TODO: memoized
+	// TODO: resettable
+	
+	/**
+	 * Builds a synchronized view of this predicate.
+	 * 
+	 * @return The built predicate.
+	 * @see #synchronizedEvaluate(Object)
+	 * @since 2.0
+	 */
+	default Predicate<A> synchronized_() {
+		return this::synchronizedEvaluate;
+	}
+	
+	/**
+	 * Lifts this predicate as a Java 8 predicate.
+	 * 
+	 * @return The built Java 8 predicate.
+	 * @since 2.0
+	 */
+	default java.util.function.Predicate<A> toPredicate() {
+		return this::evaluate;
+	}
 }

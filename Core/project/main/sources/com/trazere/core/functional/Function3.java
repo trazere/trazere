@@ -78,8 +78,7 @@ public interface Function3<A1, A2, A3, R> {
 	 * @since 2.0
 	 */
 	default Function3<A1, A2, A3, R> synchronized_() {
-		final Function3<A1, A2, A3, R> self = this;
-		return (arg1, arg2, arg3) -> self.synchronizedEvaluate(arg1, arg2, arg3);
+		return this::synchronizedEvaluate;
 	}
 	
 	/**

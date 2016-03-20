@@ -19,7 +19,6 @@ import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Predicate;
 import com.trazere.core.functional.Predicate2;
-import com.trazere.core.functional.PredicateUtils;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 import java.util.function.BiConsumer;
@@ -236,7 +235,7 @@ public class AccumulatorUtils {
 	 * @since 2.0
 	 */
 	public static <E, H, S> Accumulator<E, S> normalized(final Accumulator<? super E, ? extends S> accumulator, final Function<? super E, H> hashFunction) {
-		return AccumulatorUtils.filter(accumulator, PredicateUtils.map(ImperativePredicates.normalizer(), hashFunction));
+		return AccumulatorUtils.filter(accumulator, ImperativePredicates.normalizer().compose(hashFunction));
 	}
 	
 	// TODO: rename to something else (covariant vs contravariant)

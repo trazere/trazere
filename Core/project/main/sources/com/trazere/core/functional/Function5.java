@@ -84,8 +84,7 @@ public interface Function5<A1, A2, A3, A4, A5, R> {
 	 * @since 2.0
 	 */
 	default Function5<A1, A2, A3, A4, A5, R> synchronized_() {
-		final Function5<A1, A2, A3, A4, A5, R> self = this;
-		return (arg1, arg2, arg3, arg4, arg5) -> self.synchronizedEvaluate(arg1, arg2, arg3, arg4, arg5);
+		return this::synchronizedEvaluate;
 	}
 	
 	/**

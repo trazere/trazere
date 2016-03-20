@@ -385,11 +385,11 @@ public class Predicates {
 	}
 	
 	/**
-	 * Builds a two arguments predicate that lifts the given bi-predicate.
+	 * Builds a two arguments predicate that lifts the given Java 8 bi-predicate.
 	 * 
 	 * @param <A1> Type of the first arguments.
 	 * @param <A2> Type of the second arguments.
-	 * @param predicate Bi-predicate to lift.
+	 * @param predicate Java 8 bi-predicate to lift.
 	 * @return The built predicate.
 	 * @since 2.0
 	 */

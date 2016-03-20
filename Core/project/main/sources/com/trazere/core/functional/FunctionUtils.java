@@ -113,7 +113,7 @@ public class FunctionUtils {
 	public static <V> UnaryOperator<V> toUnaryOperator(final Function<? super V, ? extends V> function) {
 		assert null != function;
 		
-		return t -> function.evaluate(t);
+		return function::evaluate;
 	}
 	
 	/**
@@ -127,7 +127,7 @@ public class FunctionUtils {
 	public static <V> BinaryOperator<V> toBinaryOperator(final Function2<? super V, ? super V, ? extends V> function) {
 		assert null != function;
 		
-		return (t, u) -> function.evaluate(t, u);
+		return function::evaluate;
 	}
 	
 	private FunctionUtils() {

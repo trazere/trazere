@@ -76,8 +76,7 @@ public interface Function2<A1, A2, R> {
 	 * @since 2.0
 	 */
 	default Function2<A1, A2, R> synchronized_() {
-		final Function2<A1, A2, R> self = this;
-		return (arg1, arg2) -> self.synchronizedEvaluate(arg1, arg2);
+		return this::synchronizedEvaluate;
 	}
 	
 	/**
@@ -98,7 +97,6 @@ public interface Function2<A1, A2, R> {
 	 * @since 2.0
 	 */
 	default BiFunction<A1, A2, R> toBiFunction() {
-		final Function2<A1, A2, R> self = this;
-		return (t, u) -> self.evaluate(t, u);
+		return this::evaluate;
 	}
 }
