@@ -104,6 +104,7 @@ public class Thunks {
 		};
 	}
 	
+	// TODO: replace by Factory.toThunk ?
 	/**
 	 * Builds a thunk that lifts the given factory.
 	 * 

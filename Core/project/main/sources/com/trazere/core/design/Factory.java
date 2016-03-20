@@ -15,6 +15,10 @@
  */
 package com.trazere.core.design;
 
+import com.trazere.core.functional.Function;
+import java.util.concurrent.Callable;
+import java.util.function.Supplier;
+
 /**
  * The {@link Factory} interface defines factories.
  * <p>
@@ -32,4 +36,39 @@ public interface Factory<T> {
 	 * @since 2.0
 	 */
 	T build();
+	
+	/**
+	 * Transforms the values built by this factory using the given function.
+	 * 
+	 * @param <R> Type of the transformed values.
+	 * @param function Function to use to transform the values.
+	 * @return A factory of the transformed values.
+	 * @since 2.0
+	 */
+	default <R> Factory<R> map(final Function<? super T, ? extends R> function) {
+		assert null != function;
+		
+		final Factory<T> self = this;
+		return () -> function.evaluate(self.build());
+	}
+	
+	/**
+	 * Lifts this factory as a Java 8 callable.
+	 * 
+	 * @return The built Java 8 callable.
+	 * @since 2.0
+	 */
+	default Callable<T> toCallable() {
+		return this::build;
+	}
+	
+	/**
+	 * Lifts this factory as a Java 8 supplier.
+	 * 
+	 * @return The built Java 8 supplier.
+	 * @since 2.0
+	 */
+	default Supplier<T> toSupplier() {
+		return this::build;
+	}
 }

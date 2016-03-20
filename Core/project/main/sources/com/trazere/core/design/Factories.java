@@ -39,6 +39,7 @@ public class Factories {
 		return () -> value;
 	}
 	
+	// TODO: replace by Thunk.toFactory ?
 	/**
 	 * Builds a factory that lifts the given thunks.
 	 * 
