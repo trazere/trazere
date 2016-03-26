@@ -18,7 +18,6 @@ package com.trazere.core.cache;
 import com.trazere.core.collection.CollectionAccumulators;
 import com.trazere.core.functional.Predicates;
 import com.trazere.core.imperative.Accumulator;
-import com.trazere.core.imperative.AccumulatorUtils;
 import java.time.Duration;
 import java.util.HashSet;
 import java.util.Set;
@@ -142,14 +141,14 @@ public class CachePolicies {
 					@Override
 					public <A extends Accumulator<? super K, ?>> A updatedEntry(final K key, final A dirtyEntries) {
 						final Set<K> dirtyEntries1 = state1.updatedEntry(key, CollectionAccumulators.add(new HashSet<K>())).get();
-						state2.updatedEntry(key, AccumulatorUtils.filter(dirtyEntries, Predicates.values(dirtyEntries1)));
+						state2.updatedEntry(key, dirtyEntries.filtering(Predicates.values(dirtyEntries1)));
 						return dirtyEntries;
 					}
 					
 					@Override
 					public <A extends Accumulator<? super K, ?>> A accessedEntry(final K key, final A dirtyEntries) {
 						final Set<K> dirtyEntries1 = state1.accessedEntry(key, CollectionAccumulators.add(new HashSet<K>())).get();
-						state2.accessedEntry(key, AccumulatorUtils.filter(dirtyEntries, Predicates.values(dirtyEntries1)));
+						state2.accessedEntry(key, dirtyEntries.filtering(Predicates.values(dirtyEntries1)));
 						return dirtyEntries;
 					}
 					

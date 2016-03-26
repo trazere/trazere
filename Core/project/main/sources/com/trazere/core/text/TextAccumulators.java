@@ -18,7 +18,6 @@ package com.trazere.core.text;
 import com.trazere.core.functional.Functions;
 import com.trazere.core.imperative.Accumulator;
 import com.trazere.core.imperative.Accumulator2;
-import com.trazere.core.imperative.AccumulatorUtils;
 import com.trazere.core.lang.LangAccumulators;
 import com.trazere.core.lang.ThrowableFactory;
 import java.io.IOException;
@@ -79,7 +78,7 @@ public class TextAccumulators {
 	 * @since 2.0
 	 */
 	public static Accumulator<CharSequence, CharSequence> concat(final CharSequence initialState) {
-		return AccumulatorUtils.mapState(append(new StringBuilder(initialState)), Functions.identity());
+		return append(new StringBuilder(initialState)).map(Functions.identity());
 	}
 	
 	/**

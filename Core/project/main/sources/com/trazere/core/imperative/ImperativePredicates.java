@@ -16,6 +16,8 @@
 package com.trazere.core.imperative;
 
 import com.trazere.core.functional.Predicate;
+import com.trazere.core.functional.Predicate2;
+import com.trazere.core.util.Tuple2;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,7 +37,20 @@ public class ImperativePredicates {
 	 */
 	public static <A> Predicate<A> normalizer() {
 		final Set<A> visited = new HashSet<>();
-		return arg -> visited.add(arg);
+		return visited::add;
+	}
+	
+	/**
+	 * Builds a predicate that evaluates to <code>true</code> for each pair of values only the first time they are tested.
+	 *
+	 * @param <A1> Type of the first value of the pair arguments.
+	 * @param <A2> Type of the second value of the pair arguments.
+	 * @return The built predicate.
+	 * @since 2.0
+	 */
+	public static <A1, A2> Predicate2<A1, A2> normalizer2() {
+		final Set<Tuple2<A1, A2>> visited = new HashSet<>();
+		return (arg1, arg2) -> visited.add(new Tuple2<>(arg1, arg2));
 	}
 	
 	private ImperativePredicates() {

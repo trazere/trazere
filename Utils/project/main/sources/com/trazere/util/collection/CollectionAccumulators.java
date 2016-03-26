@@ -72,7 +72,7 @@ public class CollectionAccumulators {
 	 * @param collectionFactory The collection factory to use to copy the collections.
 	 * @return The built accumulator.
 	 * @deprecated Use {@link com.trazere.core.collection.CollectionAccumulators#add(Collection)} and
-	 *             {@link com.trazere.core.imperative.AccumulatorUtils#mapState(com.trazere.core.imperative.Accumulator, com.trazere.core.functional.Function)}.
+	 *             {@link com.trazere.core.imperative.Accumulator#map(com.trazere.core.functional.Function)}.
 	 */
 	@Deprecated
 	public static <T, C extends Collection<? super T>, X extends Exception> Accumulator1<T, C, X> add(final Collection<T> collection, final CollectionFactory<T, ? extends C> collectionFactory) {
