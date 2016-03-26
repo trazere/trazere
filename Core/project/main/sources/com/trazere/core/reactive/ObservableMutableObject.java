@@ -18,6 +18,7 @@ package com.trazere.core.reactive;
 import com.trazere.core.lang.MutableObject;
 import com.trazere.core.lang.ObjectUtils;
 import com.trazere.core.util.Tuple2;
+import org.slf4j.Logger;
 
 /**
  * The {@link ObservableMutableObject} class represents mutable object values whose changes can be observed.
@@ -35,7 +36,18 @@ implements ObservableValue<T> {
 	 * @since 2.0
 	 */
 	public ObservableMutableObject(final T value) {
-		this(value, new Broadcaster<T>());
+		this(value, ObservableUtils.LOGGER);
+	}
+	
+	/**
+	 * Instantiates a new observable object with the given initial value.
+	 * 
+	 * @param value Initial value.
+	 * @param logger Logger to use.
+	 * @since 2.0
+	 */
+	public ObservableMutableObject(final T value, final Logger logger) {
+		this(value, new Broadcaster<T>(logger));
 	}
 	
 	/**
@@ -83,6 +95,17 @@ implements ObservableValue<T> {
 	@Override
 	public ObserverSubscription subscribe(final Observer<? super T> observer) {
 		return _broadcaster.getObservable().subscribe(observer);
+	}
+	
+	@Override
+	public ObserverSubscription subscribeAndNotify(final Observer<? super T> observer) {
+		// Subscribe.
+		final Tuple2<T, ObserverSubscription> subscription = subscribeToValue(observer);
+		
+		// Notify.
+		ObservableUtils.notify(observer, subscription.get1(), _broadcaster._observable.getLogger());
+		
+		return subscription.get2();
 	}
 	
 	@Override

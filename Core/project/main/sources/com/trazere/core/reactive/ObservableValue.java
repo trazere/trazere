@@ -34,15 +34,7 @@ extends Observable<T> {
 	 * @return The corresponding subcription.
 	 * @since 2.0
 	 */
-	default ObserverSubscription subscribeAndNotify(final Observer<? super T> observer) {
-		// Subscribe.
-		final Tuple2<T, ObserverSubscription> subscription = subscribeToValue(observer);
-		
-		// Notify.
-		ObservableUtils.notify(observer, subscription.get1());
-		
-		return subscription.get2();
-	}
+	ObserverSubscription subscribeAndNotify(Observer<? super T> observer);
 	
 	/**
 	 * Subscribes the given observer to this observable value for all events.

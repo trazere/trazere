@@ -19,6 +19,7 @@ import com.trazere.core.functional.BaseResettableFunction;
 import com.trazere.core.functional.ResettableFunction;
 import com.trazere.core.reactive.Broadcaster.BroadcasterObservable;
 import com.trazere.core.util.Maybe;
+import org.slf4j.Logger;
 
 /**
  * The {@link SimpleObservatory} class provides a simple implementation of observatories.
@@ -32,6 +33,36 @@ import com.trazere.core.util.Maybe;
 public class SimpleObservatory<S, E>
 implements Observatory<S, E> {
 	/**
+	 * Logger to use.
+	 * 
+	 * @since 2.0
+	 */
+	protected final Logger _logger;
+	
+	/**
+	 * Instantiates a new observatory.
+	 * 
+	 * @since 2.0
+	 */
+	public SimpleObservatory() {
+		this(ObservableUtils.LOGGER);
+	}
+	
+	/**
+	 * Instantiates a new observatory.
+	 * 
+	 * @param logger Logger to use.
+	 * @since 2.0
+	 */
+	public SimpleObservatory(final Logger logger) {
+		assert null != logger;
+		
+		// Initialization.
+		_logger = logger;
+		_allBroadcaster = new Broadcaster<>(_logger);
+	}
+	
+	/**
 	 * Event broadcasters by subjects.
 	 * 
 	 * @since 2.0
@@ -39,7 +70,7 @@ implements Observatory<S, E> {
 	protected final ResettableFunction<S, Broadcaster<E>> _subjectBroadcasters = new BaseResettableFunction<S, Broadcaster<E>>() {
 		@Override
 		protected Broadcaster<E> compute(final S subject) {
-			return new Broadcaster<>(new BroadcasterObservable<E>() {
+			return new Broadcaster<>(new BroadcasterObservable<E>(_logger) {
 				@Override
 				protected synchronized void unsubscribe(final BaseObservable<E>.ObserverRef observer) {
 					super.unsubscribe(observer);
@@ -88,7 +119,7 @@ implements Observatory<S, E> {
 	 * 
 	 * @since 2.0
 	 */
-	protected final Broadcaster<E> _allBroadcaster = new Broadcaster<>();
+	protected final Broadcaster<E> _allBroadcaster;
 	
 	@Override
 	public Observable<E> observeAll() {

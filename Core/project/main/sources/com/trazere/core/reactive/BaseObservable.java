@@ -19,6 +19,7 @@ import com.trazere.core.lang.IterableUtils;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
 
 /**
  * The {@link BaseObservable} class provides a skeleton implementation of {@link Observable observables}.
@@ -28,6 +29,35 @@ import java.util.List;
  */
 public abstract class BaseObservable<E>
 implements Observable<E> {
+	/**
+	 * Logger to use.
+	 * 
+	 * @since 2.0
+	 */
+	protected final Logger _logger;
+	
+	/**
+	 * Instantiates a new observable.
+	 * 
+	 * @since 2.0
+	 */
+	public BaseObservable() {
+		this(ObservableUtils.LOGGER);
+	}
+	
+	/**
+	 * Instantiates a new observable.
+	 * 
+	 * @param logger Logger to use.
+	 * @since 2.0
+	 */
+	public BaseObservable(final Logger logger) {
+		assert null != logger;
+		
+		// Initialization.
+		_logger = logger;
+	}
+	
 	// Observers.
 	
 	/**
@@ -236,6 +266,6 @@ implements Observable<E> {
 	 * @since 2.0
 	 */
 	protected boolean notify(final Observer<? super E> observer, final E event) {
-		return ObservableUtils.notify(observer, event);
+		return ObservableUtils.notify(observer, event, _logger);
 	}
 }

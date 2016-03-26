@@ -16,6 +16,7 @@
 package com.trazere.core.reactive;
 
 import com.trazere.core.util.Maybe;
+import org.slf4j.Logger;
 
 /**
  * The {@link Futures} class provides various factories of {@link Future futures}.
@@ -33,11 +34,26 @@ public class Futures {
 	 * @since 2.0
 	 */
 	public static <T> Future<T> simple(final T value) {
+		return simple(value, ObservableUtils.LOGGER);
+	}
+	
+	/**
+	 * Builds a future providing the given value.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param value Value of the future.
+	 * @param logger Logger to use.
+	 * @return The built future.
+	 * @since 2.0
+	 */
+	public static <T> Future<T> simple(final T value, final Logger logger) {
+		assert null != logger;
+		
 		return new Future<T>() {
 			@Override
 			public ObserverSubscription subscribe(final Observer<? super T> observer) {
 				// Notify immediately.
-				ObservableUtils.notify(observer, value);
+				ObservableUtils.notify(observer, value, logger);
 				
 				// Build an nop subscription.
 				return ObserverSubscriptions.nop();

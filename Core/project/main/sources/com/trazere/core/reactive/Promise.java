@@ -16,6 +16,7 @@
 package com.trazere.core.reactive;
 
 import com.trazere.core.reference.ReferenceAlreadySetException;
+import org.slf4j.Logger;
 
 // TODO: subclass Future ?
 // TODO: add some observer factory that forwards to a broadcaster
@@ -33,7 +34,17 @@ public class Promise<T> {
 	 * @since 2.0
 	 */
 	public Promise() {
-		this(new PromiseFuture<>());
+		this(ObservableUtils.LOGGER);
+	}
+	
+	/**
+	 * Instantiates a new promise.
+	 * 
+	 * @param logger Logger to use.
+	 * @since 2.0
+	 */
+	public Promise(final Logger logger) {
+		this(new PromiseFuture<>(logger));
 	}
 	
 	/**
@@ -59,7 +70,15 @@ public class Promise<T> {
 	 */
 	public static class PromiseFuture<T>
 	extends BaseFuture<T> {
-		// Nothing to do.
+		/**
+		 * Instantiates a new future.
+		 * 
+		 * @param logger Logger to use.
+		 * @since 2.0
+		 */
+		public PromiseFuture(final Logger logger) {
+			super(logger);
+		}
 	}
 	
 	/**

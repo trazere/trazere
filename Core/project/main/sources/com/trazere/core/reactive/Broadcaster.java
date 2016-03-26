@@ -15,6 +15,8 @@
  */
 package com.trazere.core.reactive;
 
+import org.slf4j.Logger;
+
 // TODO: subclass Observable ?
 // TODO: add some observer factory that forwards to a broadcaster
 
@@ -31,7 +33,17 @@ public class Broadcaster<E> {
 	 * @since 2.0
 	 */
 	public Broadcaster() {
-		this(new BroadcasterObservable<>());
+		this(ObservableUtils.LOGGER);
+	}
+	
+	/**
+	 * Instantiates a new broadcaster.
+	 * 
+	 * @param logger Logger to use.
+	 * @since 2.0
+	 */
+	public Broadcaster(final Logger logger) {
+		this(new BroadcasterObservable<>(logger));
 	}
 	
 	/**
@@ -57,7 +69,27 @@ public class Broadcaster<E> {
 	 */
 	public static class BroadcasterObservable<E>
 	extends BaseObservable<E> {
-		// Nothing to do.
+		/**
+		 * Instantiates a new observable.
+		 * 
+		 * @param logger Logger to use.
+		 * @since 2.0
+		 */
+		public BroadcasterObservable(final Logger logger) {
+			super(logger);
+		}
+		
+		// Logger.
+		
+		/**
+		 * Gets the logger used by this observable.
+		 * 
+		 * @return The logger.
+		 * @since 2.0
+		 */
+		public Logger getLogger() {
+			return _logger;
+		}
 	}
 	
 	/**

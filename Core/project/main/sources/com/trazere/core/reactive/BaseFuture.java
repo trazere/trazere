@@ -20,6 +20,7 @@ import com.trazere.core.reference.ReferenceAlreadySetException;
 import com.trazere.core.util.Maybe;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
 
 /**
  * The {@link BaseFuture} class provides a skeleton implementation of {@link Future futures}.
@@ -33,6 +34,25 @@ import java.util.List;
 public abstract class BaseFuture<T>
 extends BaseObservable<T>
 implements Future<T> {
+	/**
+	 * Instantiates a new future.
+	 * 
+	 * @since 2.0
+	 */
+	public BaseFuture() {
+		super();
+	}
+	
+	/**
+	 * Instantiates a new future.
+	 * 
+	 * @param logger Logger to use.
+	 * @since 2.0
+	 */
+	public BaseFuture(final Logger logger) {
+		super(logger);
+	}
+	
 	// Observers.
 	
 	@Override

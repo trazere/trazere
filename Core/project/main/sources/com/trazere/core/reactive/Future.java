@@ -15,6 +15,7 @@
  */
 package com.trazere.core.reactive;
 
+import com.trazere.core.functional.Function;
 import com.trazere.core.util.Maybe;
 
 /**
@@ -53,4 +54,35 @@ extends Observable<T> {
 	 * @since 2.0
 	 */
 	Maybe<T> get();
+	
+	/**
+	 * Builds a view of this future that transforms the provided value using the given function.
+	 *
+	 * @param <TT> Type of the transformed value.
+	 * @param function Function to use to transform the value.
+	 * @return The built view.
+	 * @since 2.0
+	 */
+	@Override
+	default <TT> Future<TT> map(final Function<? super T, ? extends TT> function) {
+		assert null != function;
+		
+		final Future<T> self = this;
+		return new Future<TT>() {
+			@Override
+			public ObserverSubscription subscribe(final Observer<? super TT> observer) {
+				return self.subscribe(value -> observer.onEvent(function.evaluate(value)));
+			}
+			
+			@Override
+			public boolean isAvailable() {
+				return self.isAvailable();
+			}
+			
+			@Override
+			public Maybe<TT> get() {
+				return self.get().map(function);
+			}
+		};
+	}
 }

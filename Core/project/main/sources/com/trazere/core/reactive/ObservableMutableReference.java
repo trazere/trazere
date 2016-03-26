@@ -20,6 +20,7 @@ import com.trazere.core.reference.MutableReference;
 import com.trazere.core.reference.ReferenceAlreadySetException;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
+import org.slf4j.Logger;
 
 /**
  * The {@link ObservableMutableReference} class represents mutable, observable refererences.
@@ -36,27 +37,17 @@ implements ObservableReference<T> {
 	 * @since 2.0
 	 */
 	public ObservableMutableReference() {
-		this(new Broadcaster<>());
+		this(ObservableUtils.LOGGER);
 	}
 	
 	/**
-	 * Instantiates a reference set to the given value.
+	 * Instantiates an unset reference.
 	 * 
-	 * @param value Value to set.
+	 * @param logger Logger to use.
 	 * @since 2.0
 	 */
-	public ObservableMutableReference(final T value) {
-		this(value, new Broadcaster<>());
-	}
-	
-	/**
-	 * Instantiates a reference set to the given value.
-	 * 
-	 * @param value Value to set.
-	 * @since 2.0
-	 */
-	public ObservableMutableReference(final Maybe<T> value) {
-		this(value, new Broadcaster<>());
+	public ObservableMutableReference(final Logger logger) {
+		this(new Broadcaster<>(logger));
 	}
 	
 	/**
@@ -79,6 +70,27 @@ implements ObservableReference<T> {
 	 * Instantiates a reference set to the given value.
 	 * 
 	 * @param value Value to set.
+	 * @since 2.0
+	 */
+	public ObservableMutableReference(final T value) {
+		this(value, ObservableUtils.LOGGER);
+	}
+	
+	/**
+	 * Instantiates a reference set to the given value.
+	 * 
+	 * @param value Value to set.
+	 * @param logger Logger to use.
+	 * @since 2.0
+	 */
+	public ObservableMutableReference(final T value, final Logger logger) {
+		this(value, new Broadcaster<>(logger));
+	}
+	
+	/**
+	 * Instantiates a reference set to the given value.
+	 * 
+	 * @param value Value to set.
 	 * @param broadcaster Broadcaster to use to fire the change events.
 	 * @since 2.0
 	 */
@@ -90,6 +102,27 @@ implements ObservableReference<T> {
 		
 		// Initialization.
 		_broadcaster = broadcaster;
+	}
+	
+	/**
+	 * Instantiates a reference set to the given value.
+	 * 
+	 * @param value Value to set.
+	 * @since 2.0
+	 */
+	public ObservableMutableReference(final Maybe<T> value) {
+		this(value, ObservableUtils.LOGGER);
+	}
+	
+	/**
+	 * Instantiates a reference set to the given value.
+	 * 
+	 * @param value Value to set.
+	 * @param logger Logger to use.
+	 * @since 2.0
+	 */
+	public ObservableMutableReference(final Maybe<T> value, final Logger logger) {
+		this(value, new Broadcaster<>(logger));
 	}
 	
 	/**
@@ -161,6 +194,17 @@ implements ObservableReference<T> {
 	@Override
 	public ObserverSubscription subscribe(final Observer<? super Maybe<T>> observer) {
 		return _broadcaster.getObservable().subscribe(observer);
+	}
+	
+	@Override
+	public ObserverSubscription subscribeAndNotify(final Observer<? super Maybe<T>> observer) {
+		// Subscribe.
+		final Tuple2<Maybe<T>, ObserverSubscription> subscription = subscribeToValue(observer);
+		
+		// Notify.
+		ObservableUtils.notify(observer, subscription.get1(), _broadcaster._observable.getLogger());
+		
+		return subscription.get2();
 	}
 	
 	@Override

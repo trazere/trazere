@@ -49,7 +49,7 @@ public interface Observable<T> {
 	 * @param observer The observer.
 	 * @return The corresponding subcription.
 	 * @deprecated Use {@link com.trazere.core.reactive.Observable#subscribe(com.trazere.core.reactive.Observer)} and
-	 *             {@link com.trazere.core.reactive.ObserverUtils#once(com.trazere.core.reactive.Observer)}.
+	 *             {@link com.trazere.core.reactive.Observer#once()}.
 	 */
 	@Deprecated
 	public ObserverSubscription subscribeOnce(final Observer<? super T> observer);
@@ -61,7 +61,7 @@ public interface Observable<T> {
 	 * @param condition The condition.
 	 * @return The corresponding subcription.
 	 * @deprecated Use {@link com.trazere.core.reactive.Observable#subscribe(com.trazere.core.reactive.Observer)} and
-	 *             {@link com.trazere.core.reactive.ObserverUtils#while_(com.trazere.core.reactive.Observer, com.trazere.core.functional.Predicate)}.
+	 *             {@link com.trazere.core.reactive.Observer#while_(com.trazere.core.functional.Predicate)}.
 	 */
 	@Deprecated
 	public ObserverSubscription subscribeWhile(final Observer<? super T> observer, final Predicate1<? super T, RuntimeException> condition);

@@ -15,6 +15,7 @@
  */
 package com.trazere.core.reactive;
 
+import com.trazere.core.functional.Predicate;
 import java.util.Observable;
 
 /**
@@ -33,4 +34,69 @@ public interface Observer<E> {
 	 * @since 2.0
 	 */
 	boolean onEvent(final E event);
+	
+	/**
+	 * Builds a view of this observer that handles a single event and cancels the subscription.
+	 * 
+	 * @return The built view.
+	 * @since 2.0
+	 */
+	default Observer<E> once() {
+		final Observer<E> self = this;
+		return new Observer<E>() {
+			@Override
+			public boolean onEvent(final E event) {
+				self.onEvent(event);
+				return false;
+			}
+		};
+	}
+	
+	/**
+	 * Builds a view of this observer that handles the events as long as the given condition holds.
+	 * 
+	 * @param condition Predicate representing the condition.
+	 * @return The built view.
+	 * @since 2.0
+	 */
+	default Observer<E> while_(final Predicate<? super E> condition) {
+		assert null != condition;
+		
+		final Observer<E> self = this;
+		return new Observer<E>() {
+			@Override
+			public boolean onEvent(final E event) {
+				if (condition.evaluate(event)) {
+					return self.onEvent(event);
+				} else {
+					return false;
+				}
+			}
+		};
+	}
+	
+	/**
+	 * Builds a view of this observer that filters the handled events.
+	 * <p>
+	 * The subscription is hold when ignoring events.
+	 * 
+	 * @param filter Predicate to use to filter of the events.
+	 * @return The built view.
+	 * @since 2.0
+	 */
+	default Observer<E> filter(final Predicate<? super E> filter) {
+		assert null != filter;
+		
+		final Observer<E> self = this;
+		return new Observer<E>() {
+			@Override
+			public boolean onEvent(final E event) {
+				if (filter.evaluate(event)) {
+					return self.onEvent(event);
+				} else {
+					return true;
+				}
+			}
+		};
+	}
 }
