@@ -481,7 +481,7 @@ extends Traversable<E>, Iterable<E> {
 	}
 	
 	/**
-	 * Appends this feed to this feed.
+	 * Appends the given feed to this feed.
 	 * 
 	 * @param appendedFeed Feed to append.
 	 * @return A feed of the appended elements.

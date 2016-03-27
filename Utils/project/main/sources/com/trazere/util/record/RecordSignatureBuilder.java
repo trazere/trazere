@@ -15,7 +15,6 @@
  */
 package com.trazere.util.record;
 
-import com.trazere.core.record.RecordSignatureUtils;
 import com.trazere.util.function.Predicate1;
 import java.util.Collection;
 import java.util.Set;
@@ -153,7 +152,7 @@ public interface RecordSignatureBuilder<K, V, R extends RecordSignature<K, V>> {
 	 * @throws InvalidFieldException When the some field of the given signature record cannot be read.
 	 * @throws IncompatibleFieldException When the given and current signature of some field are not compatible.
 	 * @throws FX When some filter evaluation fails.
-	 * @deprecated Use {@link RecordSignatureUtils#filter(com.trazere.core.record.RecordSignature, com.trazere.core.functional.Predicate)} and
+	 * @deprecated Use {@link com.trazere.core.record.RecordSignature#filter(com.trazere.core.functional.Predicate)} and
 	 *             {@link com.trazere.core.record.RecordSignatureBuilder#unifyAll(com.trazere.core.record.RecordSignature)} .
 	 */
 	@Deprecated

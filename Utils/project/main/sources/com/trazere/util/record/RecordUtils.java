@@ -15,7 +15,6 @@
  */
 package com.trazere.util.record;
 
-import com.trazere.core.record.RecordSignatureUtils;
 import com.trazere.util.function.Function1;
 import com.trazere.util.function.Predicate1;
 import com.trazere.util.function.Predicates;
@@ -98,7 +97,7 @@ public class RecordUtils {
 	 * @throws KX When some key filter evaluation fails.
 	 * @throws InvalidFieldException When some field of the given record cannot be read.
 	 * @throws RecordException When the result record cannot be built.
-	 * @deprecated Use {@link com.trazere.core.record.RecordUtils#filter(com.trazere.core.record.Record, com.trazere.core.functional.Predicate)} .
+	 * @deprecated Use {@link com.trazere.core.record.Record#filter(com.trazere.core.functional.Predicate)} .
 	 */
 	@Deprecated
 	public static <K, V, KX extends Exception> Record<K, V> sub(final Record<K, V> record, final Predicate1<? super K, KX> keys)
@@ -122,9 +121,7 @@ public class RecordUtils {
 	 * @throws KX When some key filter evaluation fails.
 	 * @throws InvalidFieldException When some field of the given record cannot be read.
 	 * @throws RecordException When the result record cannot be built.
-	 * @deprecated Use
-	 *             {@link com.trazere.core.record.RecordUtils#filter(com.trazere.core.record.Record, com.trazere.core.functional.Predicate, com.trazere.core.record.RecordFactory)}
-	 *             .
+	 * @deprecated Use {@link com.trazere.core.record.Record#filter(com.trazere.core.functional.Predicate, com.trazere.core.record.RecordFactory)} .
 	 */
 	@Deprecated
 	public static <K, V, R extends Record<K, V>, KX extends Exception> R sub(final Record<K, V> record, final Predicate1<? super K, KX> keys, final RecordFactory<K, V, R> factory)
@@ -164,7 +161,7 @@ public class RecordUtils {
 	 * @throws KX When some key filter evaluation fails.
 	 * @throws InvalidFieldException When some field of the given record cannot be read.
 	 * @throws DuplicateFieldException When some field is identified by any given key in the given builder.
-	 * @deprecated Use {@link com.trazere.core.record.RecordUtils#filter(com.trazere.core.record.Record, com.trazere.core.functional.Predicate)}.
+	 * @deprecated Use {@link com.trazere.core.record.Record#filter(com.trazere.core.functional.Predicate)}.
 	 */
 	@Deprecated
 	public static <K, V, B extends RecordBuilder<? super K, ? super V, ?>, KX extends Exception> B sub(final Record<K, V> record, final Predicate1<? super K, KX> keys, final B builder)
@@ -199,7 +196,7 @@ public class RecordUtils {
 	 * @throws KX When some key filter evaluation fails.
 	 * @throws InvalidFieldException When some field of the given record cannot be read.
 	 * @throws RecordException When the result record cannot be built.
-	 * @deprecated Use {@link com.trazere.core.record.RecordUtils#filter(com.trazere.core.record.Record, com.trazere.core.functional.Predicate)} .
+	 * @deprecated Use {@link com.trazere.core.record.Record#filter(com.trazere.core.functional.Predicate)} .
 	 */
 	@Deprecated
 	public static <K, V, KX extends Exception> Record<K, V> drop(final Record<K, V> record, final Predicate1<? super K, KX> keys)
@@ -221,9 +218,7 @@ public class RecordUtils {
 	 * @throws KX When some key filter evaluation fails.
 	 * @throws InvalidFieldException When some field of the given record cannot be read.
 	 * @throws RecordException When the result record cannot be built.
-	 * @deprecated Use
-	 *             {@link com.trazere.core.record.RecordUtils#filter(com.trazere.core.record.Record, com.trazere.core.functional.Predicate, com.trazere.core.record.RecordFactory)}
-	 *             .
+	 * @deprecated Use {@link com.trazere.core.record.Record#filter(com.trazere.core.functional.Predicate, com.trazere.core.record.RecordFactory)} .
 	 */
 	@Deprecated
 	public static <K, V, R extends Record<K, V>, KX extends Exception> R drop(final Record<K, V> record, final Predicate1<? super K, KX> keys, final RecordFactory<K, V, R> factory)
@@ -245,7 +240,7 @@ public class RecordUtils {
 	 * @throws KX When some key filter evaluation fails.
 	 * @throws InvalidFieldException When some field of the given record cannot be read.
 	 * @throws DuplicateFieldException When some field is identified by any given key in the given builder.
-	 * @deprecated Use {@link com.trazere.core.record.RecordUtils#filter(com.trazere.core.record.Record, com.trazere.core.functional.Predicate)} .
+	 * @deprecated Use {@link com.trazere.core.record.Record#filter(com.trazere.core.functional.Predicate)} .
 	 */
 	@Deprecated
 	public static <K, V, B extends RecordBuilder<K, ? super V, ?>, KX extends Exception> B drop(final Record<K, ? extends V> record, final Predicate1<? super K, KX> keys, final B builder)
@@ -266,7 +261,7 @@ public class RecordUtils {
 	 * @throws InvalidFieldException When some field of the given record cannot be read.
 	 * @throws DuplicateFieldException When some fields are identified by a same key in both records.
 	 * @throws RecordException When the result record cannot be built.
-	 * @deprecated Use {@link com.trazere.core.record.RecordUtils#union(com.trazere.core.record.Record, com.trazere.core.record.Record)}.
+	 * @deprecated Use {@link com.trazere.core.record.Record#append(com.trazere.core.record.Record)}.
 	 */
 	@Deprecated
 	public static <K, V> Record<K, V> union(final Record<? extends K, ? extends V> record1, final Record<? extends K, ? extends V> record2)
@@ -289,9 +284,7 @@ public class RecordUtils {
 	 * @throws InvalidFieldException When some field of the given record cannot be read.
 	 * @throws DuplicateFieldException When some fields are identified by a same key in both records.
 	 * @throws RecordException When the result record cannot be built.
-	 * @deprecated Use
-	 *             {@link com.trazere.core.record.RecordUtils#union(com.trazere.core.record.Record, com.trazere.core.record.Record, com.trazere.core.record.RecordFactory)}
-	 *             .
+	 * @deprecated Use {@link com.trazere.core.record.Record#append(com.trazere.core.record.Record, com.trazere.core.record.RecordFactory)} .
 	 */
 	@Deprecated
 	public static <K, V, R extends Record<K, V>> R union(final Record<? extends K, ? extends V> record1, final Record<? extends K, ? extends V> record2, final RecordFactory<K, V, R> factory)
@@ -568,7 +561,7 @@ public class RecordUtils {
 	 * @throws MissingFieldException When some signature field is missing but required.
 	 * @throws InvalidFieldException When some signature field cannot be read.
 	 * @throws IncompatibleFieldException When some signature field is incompatible with the requirement.
-	 * @deprecated Use {@link RecordSignatureUtils#filter(com.trazere.core.record.RecordSignature, com.trazere.core.functional.Predicate)} and
+	 * @deprecated Use {@link com.trazere.core.record.RecordSignature#filter(com.trazere.core.functional.Predicate)} and
 	 *             {@link com.trazere.core.record.RecordSignature#isAssignableFrom(com.trazere.core.record.RecordSignature)}.
 	 */
 	@Deprecated
