@@ -17,6 +17,7 @@ package com.trazere.core.collection;
 
 import com.trazere.core.imperative.Accumulator;
 import com.trazere.core.imperative.IteratorUtils;
+import com.trazere.core.lang.IterableUtils;
 import com.trazere.core.lang.LangAccumulators;
 import com.trazere.core.lang.MutableInt;
 import java.util.AbstractMap;
@@ -24,7 +25,6 @@ import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -56,13 +56,9 @@ implements Multimap<K, V, C> {
 	
 	@Override
 	public boolean putAll(final Multimap<? extends K, ? extends V, ?> multimap) {
-		return innerPutAll(multimap);
-	}
-	
-	private <MK extends K> boolean innerPutAll(final Multimap<MK, ? extends V, ?> multimap) {
 		final Accumulator<Boolean, Boolean> changed = LangAccumulators.or(false);
-		for (final MK key : multimap.keySet()) {
-			changed.add(putAll(key, multimap.get(key)));
+		for (final Map.Entry<? extends K, ? extends Collection<? extends V>> entry : multimap.collectionEntrySet()) {
+			changed.add(putAll(entry.getKey(), entry.getValue()));
 		}
 		return changed.get().booleanValue();
 	}
@@ -82,7 +78,6 @@ implements Multimap<K, V, C> {
 		return get(key).contains(value);
 	}
 	
-	// TODO: add support for Iterator.remove
 	@Override
 	public Set<Map.Entry<K, V>> entrySet() {
 		return new AbstractSet<Map.Entry<K, V>>() {
@@ -119,6 +114,7 @@ implements Multimap<K, V, C> {
 			
 			@Override
 			public void clear() {
+				// TODO: add support
 				throw new UnsupportedOperationException();
 			}
 			
@@ -139,6 +135,7 @@ implements Multimap<K, V, C> {
 			
 			@Override
 			public Iterator<Map.Entry<K, V>> iterator() {
+				// TODO: add support for Iterator.remove
 				return IteratorUtils.flatMap(BaseMultimap.this.keySet().iterator(), (final K key) -> {
 					return IteratorUtils.map(BaseMultimap.this.get(key).iterator(), (final V value) -> {
 						return new AbstractMap.SimpleEntry<>(key, value);
@@ -148,9 +145,8 @@ implements Multimap<K, V, C> {
 		};
 	}
 	
-	// TODO: add support for Iterator.remove
 	@Override
-	public Set<Entry<K, C>> collectionEntrySet() {
+	public Set<Map.Entry<K, C>> collectionEntrySet() {
 		return new AbstractSet<Map.Entry<K, C>>() {
 			@Override
 			public boolean add(final Map.Entry<K, C> e) {
@@ -185,6 +181,7 @@ implements Multimap<K, V, C> {
 			
 			@Override
 			public void clear() {
+				// TODO: add support
 				throw new UnsupportedOperationException();
 			}
 			
@@ -205,11 +202,17 @@ implements Multimap<K, V, C> {
 			
 			@Override
 			public Iterator<Map.Entry<K, C>> iterator() {
+				// TODO: add support for Iterator.remove
 				return IteratorUtils.map(BaseMultimap.this.keySet().iterator(), (final K key) -> {
 					return new AbstractMap.SimpleEntry<>(key, BaseMultimap.this.get(key));
 				});
 			}
 		};
+	}
+	
+	@Override
+	public boolean containsValue(final V value) {
+		return IterableUtils.isAny(collectionEntrySet(), entry -> entry.getValue().contains(value));
 	}
 	
 	// Object.

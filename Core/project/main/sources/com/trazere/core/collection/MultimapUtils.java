@@ -52,10 +52,7 @@ public class MultimapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V> PairIterable<K, V> bindings(final Multimap<? extends K, ? extends V, ?> multimap) {
-		return PairIterable.build(IterableUtils.flatMap(multimap.collectionEntrySet(), (final Map.Entry<? extends K, ? extends Collection<? extends V>> entry) -> {
-			final K key = entry.getKey();
-			return IterableUtils.map(entry.getValue(), value -> new Tuple2<>(key, value));
-		}));
+		return PairIterable.build(IterableUtils.map(multimap.entrySet(), (final Map.Entry<? extends K, ? extends V> entry) -> new Tuple2<>(entry.getKey(), entry.getValue())));
 	}
 	
 	/**
