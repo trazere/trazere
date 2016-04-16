@@ -165,7 +165,7 @@ implements Traversable<T>, Iterable<T>, Serializable, Describable {
 		}
 		
 		@Override
-		public Maybe<T> filterFirst(final Predicate<? super T> filter) {
+		public Maybe<T> filterAny(final Predicate<? super T> filter) {
 			return none();
 		}
 		
@@ -180,7 +180,7 @@ implements Traversable<T>, Iterable<T>, Serializable, Describable {
 		}
 		
 		@Override
-		public <R> Maybe<R> extractFirst(final Function<? super T, ? extends Maybe<? extends R>> extractor) {
+		public <R> Maybe<R> extractAny(final Function<? super T, ? extends Maybe<? extends R>> extractor) {
 			return none();
 		}
 		
@@ -358,7 +358,7 @@ implements Traversable<T>, Iterable<T>, Serializable, Describable {
 		}
 		
 		@Override
-		public Maybe<T> filterFirst(final Predicate<? super T> filter) {
+		public Maybe<T> filterAny(final Predicate<? super T> filter) {
 			return filter(filter);
 		}
 		
@@ -373,7 +373,7 @@ implements Traversable<T>, Iterable<T>, Serializable, Describable {
 		}
 		
 		@Override
-		public <R> Maybe<R> extractFirst(final Function<? super T, ? extends Maybe<? extends R>> extractor) {
+		public <R> Maybe<R> extractAny(final Function<? super T, ? extends Maybe<? extends R>> extractor) {
 			return flatMap(extractor);
 		}
 		
@@ -587,11 +587,17 @@ implements Traversable<T>, Iterable<T>, Serializable, Describable {
 	@Override
 	public abstract <R> Maybe<R> map(final Function<? super T, ? extends R> function);
 	
+	/**
+	 * @since 2.0
+	 */
 	@Override
 	public abstract <R> Maybe<R> extract(final Function<? super T, ? extends Maybe<? extends R>> extractor);
 	
+	/**
+	 * @since 2.0
+	 */
 	@Override
-	public abstract <R> Maybe<R> extractFirst(Function<? super T, ? extends Maybe<? extends R>> extractor);
+	public abstract <R> Maybe<R> extractAny(Function<? super T, ? extends Maybe<? extends R>> extractor);
 	
 	/**
 	 * Transforms and flattens the value wrapped by this {@link Maybe} instance using the given function.

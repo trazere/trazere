@@ -254,7 +254,7 @@ public class ListUtils {
 		// Sort.
 		while (!pendingElements.isEmpty()) {
 			// Iterate the pending elements.
-			final Maybe<E> maybeLeaf = CollectionUtils.removeFirst(pendingElements, element -> !pendingDependencies.containsKey(element));
+			final Maybe<E> maybeLeaf = CollectionUtils.removeAny(pendingElements, element -> !pendingDependencies.containsKey(element));
 			if (maybeLeaf.isNone()) {
 				throw new IllegalArgumentException("Cyclic or external dependencies for elements " + pendingElements);
 			}

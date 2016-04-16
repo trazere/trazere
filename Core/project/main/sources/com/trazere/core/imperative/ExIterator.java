@@ -18,6 +18,7 @@ import java.util.Iterator;
  */
 public interface ExIterator<E>
 extends Iterator<E>, Traversable<E> {
+	// TODO: rename -> fromIterator ?
 	/**
 	 * Builds an extended view of the given iterator.
 	 * 
@@ -70,6 +71,7 @@ extends Iterator<E>, Traversable<E> {
 	 * Drains the next n elements provided by this iterator.
 	 * 
 	 * @param n Number of elements to drain.
+	 * @see IteratorUtils#drain(Iterator, int)
 	 * @since 2.0
 	 */
 	default void drain(final int n) {
@@ -84,6 +86,7 @@ extends Iterator<E>, Traversable<E> {
 	 * @param n Number of elements to drain.
 	 * @param results Accumulator to populate with the drained elements.
 	 * @return The given result accumulator.
+	 * @see IteratorUtils#drain(Iterator, int, Accumulator)
 	 * @since 2.0
 	 */
 	default <A extends Accumulator<? super E, ?>> A drain(final int n, final A results) {
@@ -98,6 +101,7 @@ extends Iterator<E>, Traversable<E> {
 	 * @param n Number of elements to drain.
 	 * @param results Collection to populate with the drained elements.
 	 * @return The given result collection.
+	 * @see IteratorUtils#drain(Iterator, int, Collection)
 	 * @since 2.0
 	 */
 	default <C extends Collection<? super E>> C drain(final int n, final C results) {
@@ -108,6 +112,7 @@ extends Iterator<E>, Traversable<E> {
 	/**
 	 * Drains all elements provided by the this iterator.
 	 * 
+	 * @see IteratorUtils#drain(Iterator)
 	 * @since 2.0
 	 */
 	default void drain() {
@@ -121,6 +126,7 @@ extends Iterator<E>, Traversable<E> {
 	 * @param <A> Type of the accumulator to populate.
 	 * @param results Accumulator to populate with the drained elements.
 	 * @return The given result accumulator.
+	 * @see IteratorUtils#drain(Iterator, Accumulator)
 	 * @since 2.0
 	 */
 	default <A extends Accumulator<? super E, ?>> A drain(final A results) {
@@ -134,6 +140,7 @@ extends Iterator<E>, Traversable<E> {
 	 * @param <C> Type of the collection to populate.
 	 * @param results Collection to populate with the drained elements.
 	 * @return The given result collection.
+	 * @see IteratorUtils#drain(Iterator, Collection)
 	 * @since 2.0
 	 */
 	default <C extends Collection<? super E>> C drain(final C results) {
@@ -143,10 +150,7 @@ extends Iterator<E>, Traversable<E> {
 	/**
 	 * Left folds over the elements provided by this iterator using the given binary operator and initial state.
 	 * 
-	 * @param <S> Type of the state.
-	 * @param operator Binary operator to use.
-	 * @param initialState Initial state.
-	 * @return The folded state.
+	 * @see IteratorUtils#fold(Iterator, Function2, Object)
 	 * @since 2.0
 	 */
 	@Override
@@ -157,8 +161,8 @@ extends Iterator<E>, Traversable<E> {
 	/**
 	 * Tests whether any element provided by this iterator is accepted by the given filter.
 	 * 
-	 * @param filter Predicate to use to filter the elements.
-	 * @return <code>true</code> when some element is accepted, <code>false</code> when all elements are rejected.
+	 * @return <code>true</code> when some element is accepted, <code>false</code> when all elements are rejected or when the iterator is exhausted.
+	 * @see IteratorUtils#isAny(Iterator, Predicate)
 	 * @since 2.0
 	 */
 	@Override
@@ -169,8 +173,8 @@ extends Iterator<E>, Traversable<E> {
 	/**
 	 * Tests whether all elements provided by this iterator are accepted by the given filter.
 	 * 
-	 * @param filter Predicate to use to filter the elements.
-	 * @return <code>true</code> when all elements are accepted, <code>false</code> when some element is rejected.
+	 * @return <code>true</code> when all elements are accepted or when the iterator is exhausted, <code>false</code> when some element is rejected.
+	 * @see IteratorUtils#areAll(Iterator, Predicate)
 	 * @since 2.0
 	 */
 	@Override
@@ -181,8 +185,7 @@ extends Iterator<E>, Traversable<E> {
 	/**
 	 * Counts the elements provided by this iterator accepted by the given filter.
 	 * 
-	 * @param filter Predicate to use to filter the elements.
-	 * @return The number of accepted elements.
+	 * @see IteratorUtils#count(Iterator, Predicate)
 	 * @since 2.0
 	 */
 	@Override
@@ -192,9 +195,8 @@ extends Iterator<E>, Traversable<E> {
 	
 	/**
 	 * Gets the least element provided by this iterator according to the given comparator.
-	 *
-	 * @param comparator Comparator to use.
-	 * @return The least element.
+	 * 
+	 * @see IteratorUtils#least(Iterator, Comparator)
 	 * @since 2.0
 	 */
 	@Override
@@ -204,9 +206,8 @@ extends Iterator<E>, Traversable<E> {
 	
 	/**
 	 * Gets the greatest element provided by this iterator according to the given comparator.
-	 *
-	 * @param comparator Comparator to use.
-	 * @return The greatest element.
+	 * 
+	 * @see IteratorUtils#greatest(Iterator, Comparator)
 	 * @since 2.0
 	 */
 	@Override
@@ -215,12 +216,14 @@ extends Iterator<E>, Traversable<E> {
 	}
 	
 	/**
-	 * Takes the n first elements provided by this iterator.
+	 * Takes n elements provided by this iterator.
 	 * <p>
-	 * The built iterator feeds from this iterator.
+	 * The elements are taken according their iteration order.
+	 * <p>
+	 * The built iterator feeds lazyly from this iterator.
 	 * 
-	 * @param n Number of elements to take.
 	 * @return An iterator providing the taken elements.
+	 * @see IteratorUtils#take(Iterator, int)
 	 * @since 2.0
 	 */
 	@Override
@@ -231,10 +234,12 @@ extends Iterator<E>, Traversable<E> {
 	/**
 	 * Drops the n first elements provided by this iterator.
 	 * <p>
-	 * The built iterator feeds from this iterator.
+	 * The elements are dropped according their iteration order.
+	 * <p>
+	 * The built iterator feeds lazyly from this iterator.
 	 * 
-	 * @param n Number of elements to drop.
 	 * @return An iterator providing the remaining elements.
+	 * @see IteratorUtils#drop(Iterator, int)
 	 * @since 2.0
 	 */
 	@Override
@@ -244,11 +249,9 @@ extends Iterator<E>, Traversable<E> {
 	
 	/**
 	 * Groups the elements provided by this iterator into batches of the given size.
-	 *
-	 * @param <B> Type of the batch collections.
-	 * @param n Number of elements of each batch.
-	 * @param batchFactory Factory of the batch collections.
-	 * @return An iterator providing the groups of elements.
+	 * 
+	 * @return An iterator providing the batches of elements.
+	 * @see IteratorUtils#group(Iterator, int, CollectionFactory)
 	 * @since 2.0
 	 */
 	@Override
@@ -259,10 +262,10 @@ extends Iterator<E>, Traversable<E> {
 	/**
 	 * Filters the elements provided by this iterator using the given filter.
 	 * <p>
-	 * The built iterator feeds from this iterator.
-	 *
-	 * @param filter Predicate to use to filter the elements.
+	 * The built iterator feeds lazyly from this iterator.
+	 * 
 	 * @return An iterator providing the filtered elements.
+	 * @see IteratorUtils#filter(Iterator, Predicate)
 	 * @since 2.0
 	 */
 	@Override
@@ -271,25 +274,23 @@ extends Iterator<E>, Traversable<E> {
 	}
 	
 	/**
-	 * Gets the first element provided by this iterator accepted by the given filter.
+	 * Gets any element provided by this iterator accepted by the given filter.
 	 * 
-	 * @param filter Predicate to use to filter the elements.
-	 * @return The first accepted element.
+	 * @see IteratorUtils#filterAny(Iterator, Predicate)
 	 * @since 2.0
 	 */
 	@Override
-	default Maybe<E> filterFirst(final Predicate<? super E> filter) {
-		return IteratorUtils.filterFirst(this, filter);
+	default Maybe<E> filterAny(final Predicate<? super E> filter) {
+		return IteratorUtils.filterAny(this, filter);
 	}
 	
 	/**
 	 * Transforms the elements provided by this iterator using the given function.
 	 * <p>
-	 * The built iterator feeds from this iterator.
-	 *
-	 * @param <TE> Type of the transformed elements.
-	 * @param function Function to use to transform the elements.
+	 * The built iterator feeds lazyly from this iterator.
+	 * 
 	 * @return An iterator providing the transformed elements.
+	 * @see IteratorUtils#map(Iterator, Function)
 	 * @since 2.0
 	 */
 	@Override
@@ -298,13 +299,12 @@ extends Iterator<E>, Traversable<E> {
 	}
 	
 	/**
-	 * Extracts the elements provided by this iterator using the given extractor.
+	 * Extracts the elements from the elements provided by this iterator using the given extractor.
 	 * <p>
-	 * The built iterator feeds from this iterator.
-	 *
-	 * @param <EE> Type of the extracted elements.
-	 * @param extractor Function to use to extract the elements.
+	 * The built iterator feeds lazyly from this iterator.
+	 * 
 	 * @return An iterator providing the extracted elements.
+	 * @see IteratorUtils#extract(Iterator, Function)
 	 * @since 2.0
 	 */
 	@Override
@@ -313,26 +313,27 @@ extends Iterator<E>, Traversable<E> {
 	}
 	
 	/**
-	 * Get the first element extracted from the elements provided by this iterator using the given extractor.
+	 * Get the element extracted from any elements provided by this iterator using the given extractor.
+	 * <p>
+	 * The elements are extracted from according to their iteration order.
 	 * 
-	 * @param <EE> Type of the extracted elements.
-	 * @param extractor Function to use to extract the elements.
-	 * @return The first extracted element.
+	 * @see IteratorUtils#extractAny(Iterator, Function)
 	 * @since 2.0
 	 */
 	@Override
-	default <EE> Maybe<EE> extractFirst(final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
-		return IteratorUtils.extractFirst(this, extractor);
+	default <EE> Maybe<EE> extractAny(final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
+		return IteratorUtils.extractAny(this, extractor);
 	}
 	
 	/**
-	 * Extracts and flattens the elements provided by this iterator using the given extractor.
+	 * Gets all elements extracted from the elements provided by this iterator using the given extractor.
 	 * <p>
-	 * The built iterator feeds from this iterator.
-	 *
+	 * The built iterator feeds lazyly from this iterator.
+	 * 
 	 * @param <TE> Type of the extracted elements.
-	 * @param extractor Function to use to extract the elements.
+	 * @param extractor Function to use to extract from the elements.
 	 * @return An iterator providing the extracted elements.
+	 * @see IteratorUtils#extractAll(Iterator, Function)
 	 * @since 2.0
 	 */
 	default <TE> ExIterator<TE> extractAll(final Function<? super E, ? extends Iterable<? extends TE>> extractor) {
@@ -342,11 +343,12 @@ extends Iterator<E>, Traversable<E> {
 	/**
 	 * Transforms and flattens the elements provided by this iterator using the given function.
 	 * <p>
-	 * The built iterator feeds from this iterator.
+	 * The built iterator feeds lazyly from this iterator.
 	 * 
 	 * @param <TE> Type of the transformed elements.
 	 * @param extractor Function to use to transform the elements.
 	 * @return An iterator providing the flatten, transformed elements.
+	 * @see IteratorUtils#flatMap(Iterator, Function)
 	 * @since 2.0
 	 */
 	default <TE> ExIterator<TE> flatMap(final Function<? super E, ? extends Iterator<? extends TE>> extractor) {
@@ -358,10 +360,13 @@ extends Iterator<E>, Traversable<E> {
 	 * <p>
 	 * The pairs are composed of an element provided by each iterator in order. The extra values of the longest iterator are dropped when this iterators don't
 	 * provide the same number of elements.
+	 * <p>
+	 * The built iterator feeds lazyly from this iterator and the given iterator.
 	 * 
 	 * @param <E2> Type of the second elements.
 	 * @param iterator2 Iterator providing the second elements of the pairs.
 	 * @return An iterator providing the pairs of elements.
+	 * @see IteratorUtils#zip(Iterator, Iterator)
 	 * @since 2.0
 	 */
 	default <E2> PairIterator<E, E2> zip(final Iterator<? extends E2> iterator2) {
@@ -371,7 +376,7 @@ extends Iterator<E>, Traversable<E> {
 	/**
 	 * Executes the given procedure with each element provided by this iterator.
 	 * 
-	 * @param procedure Procedure to execute.
+	 * @see IteratorUtils#foreach(Iterator, Procedure)
 	 * @since 2.0
 	 */
 	@Override
@@ -383,6 +388,7 @@ extends Iterator<E>, Traversable<E> {
 	 * Builds an unmodifiable view of this iterator.
 	 * 
 	 * @return An unmodifiable view of this iterator, or this iterator when is it already unmodifiable.
+	 * @see IteratorUtils#unmodifiable(Iterator)
 	 * @since 2.0
 	 */
 	default ExIterator<E> unmodifiable() {

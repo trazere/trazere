@@ -109,10 +109,6 @@ extends Traversable<E>, Iterable<E> {
 	/**
 	 * Left folds over the elements of this feed using the given binary operator and initial state.
 	 * 
-	 * @param <S> Type of the state.
-	 * @param operator Binary operator to use.
-	 * @param initialState Initial state.
-	 * @return The folded state.
 	 * @since 2.0
 	 */
 	@Override
@@ -123,8 +119,6 @@ extends Traversable<E>, Iterable<E> {
 	/**
 	 * Tests whether any element of this feed is accepted by the given filter.
 	 * 
-	 * @param filter Predicate to use to filter the elements.
-	 * @return <code>true</code> when some element is accepted, <code>false</code> when all elements are rejected.
 	 * @since 2.0
 	 */
 	@Override
@@ -135,8 +129,6 @@ extends Traversable<E>, Iterable<E> {
 	/**
 	 * Tests whether all elements of this feed are accepted by the given filter.
 	 * 
-	 * @param filter Predicate to use to filter the elements.
-	 * @return <code>true</code> when all elements are accepted, <code>false</code> when some element is rejected.
 	 * @since 2.0
 	 */
 	@Override
@@ -147,8 +139,6 @@ extends Traversable<E>, Iterable<E> {
 	/**
 	 * Counts the elements of this feed accepted by the given filter.
 	 * 
-	 * @param filter Predicate to use to filter the elements.
-	 * @return The number of accepted elements.
 	 * @since 2.0
 	 */
 	@Override
@@ -159,8 +149,6 @@ extends Traversable<E>, Iterable<E> {
 	/**
 	 * Gets the least element of this feed according to the given comparator.
 	 *
-	 * @param comparator Comparator to use.
-	 * @return The least element.
 	 * @since 2.0
 	 */
 	@Override
@@ -171,8 +159,6 @@ extends Traversable<E>, Iterable<E> {
 	/**
 	 * Gets the greatest element of this feed according to the given comparator.
 	 *
-	 * @param comparator Comparator to use.
-	 * @return The greatest element.
 	 * @since 2.0
 	 */
 	@Override
@@ -181,9 +167,8 @@ extends Traversable<E>, Iterable<E> {
 	}
 	
 	/**
-	 * Takes the n first elements of this feed.
+	 * Takes n elements of this feed.
 	 * 
-	 * @param n Number of elements to take.
 	 * @return A feed of the taken elements.
 	 * @since 2.0
 	 */
@@ -203,7 +188,7 @@ extends Traversable<E>, Iterable<E> {
 	}
 	
 	/**
-	 * Takes the first elements of this feed while the given predicates holds.
+	 * Takes the elements of this feed while the given predicates holds.
 	 * 
 	 * @param predicate Filter predicate.
 	 * @return A feed of the taken elements.
@@ -229,9 +214,8 @@ extends Traversable<E>, Iterable<E> {
 	}
 	
 	/**
-	 * Drops the n first elements of this feed.
+	 * Drops n elements of this feed.
 	 * 
-	 * @param n Number of elements to drop.
 	 * @return A feed of the remaining elements.
 	 * @since 2.0
 	 */
@@ -261,7 +245,7 @@ extends Traversable<E>, Iterable<E> {
 	}
 	
 	/**
-	 * Drops the first elements of this feed while the given predicates holds.
+	 * Drops the elements of this feed while the given predicates holds.
 	 * 
 	 * @param predicate Filter predicate.
 	 * @return A feed of the remaining elements.
@@ -295,10 +279,7 @@ extends Traversable<E>, Iterable<E> {
 	/**
 	 * Groups the elements of this feed into batches of the given size.
 	 *
-	 * @param <B> Type of the batch collections.
-	 * @param n Number of elements of each batch.
-	 * @param batchFactory Factory of the batch collections.
-	 * @return A feed of the groups of elements.
+	 * @return A feed of the batches of elements.
 	 * @since 2.0
 	 */
 	@Override
@@ -335,7 +316,6 @@ extends Traversable<E>, Iterable<E> {
 	/**
 	 * Filters the elements of this feed using the given filter.
 	 *
-	 * @param filter Predicate to use to filter the elements.
 	 * @return A feed of the filtered elements.
 	 * @since 2.0
 	 */
@@ -367,22 +347,18 @@ extends Traversable<E>, Iterable<E> {
 	}
 	
 	/**
-	 * Gets the first element of this feed accepted by the given filter.
+	 * Gets any element of this feed accepted by the given filter.
 	 * 
-	 * @param filter Predicate to use to filter the elements.
-	 * @return The first accepted element.
 	 * @since 2.0
 	 */
 	@Override
-	default Maybe<E> filterFirst(final Predicate<? super E> filter) {
-		return iterator().filterFirst(filter);
+	default Maybe<E> filterAny(final Predicate<? super E> filter) {
+		return iterator().filterAny(filter);
 	}
 	
 	/**
 	 * Transforms the elements of this feed using the given function.
 	 *
-	 * @param <TE> Type of the transformed elements.
-	 * @param function Function to use to transform the elements.
 	 * @return A feed of the transformed elements.
 	 * @since 2.0
 	 */
@@ -443,10 +419,8 @@ extends Traversable<E>, Iterable<E> {
 	}
 	
 	/**
-	 * Extracts the elements of this feed using the given extractor.
+	 * Extracts the elements from the elements of this feed using the given extractor.
 	 *
-	 * @param <EE> Type of the extracted elements.
-	 * @param extractor Function to use to extract the elements.
 	 * @return A feed of the extracted elements.
 	 * @since 2.0
 	 */
@@ -456,20 +430,17 @@ extends Traversable<E>, Iterable<E> {
 	}
 	
 	/**
-	 * Gets the first element extracted from this feed by the given extractor.
+	 * Gets the element extracted from any element of this feed using the given extractor.
 	 * 
-	 * @param <EE> Type of the extracted elements.
-	 * @param extractor Function to use to extract the elements.
-	 * @return The first extracted element.
 	 * @since 2.0
 	 */
 	@Override
-	default <EE> Maybe<EE> extractFirst(final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
-		return iterator().extractFirst(extractor);
+	default <EE> Maybe<EE> extractAny(final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
+		return iterator().extractAny(extractor);
 	}
 	
 	/**
-	 * Gets all elements extracted from the elements of this feed by the given extractor.
+	 * Gets all elements extracted from the elements of this feed using the given extractor.
 	 * 
 	 * @param <EE> Type of the extracted elements.
 	 * @param extractor Function to use to extract the elements.
@@ -485,6 +456,7 @@ extends Traversable<E>, Iterable<E> {
 	 * 
 	 * @param appendedFeed Feed to append.
 	 * @return A feed of the appended elements.
+	 * @see FeedUtils#append(Feed, Feed)
 	 * @since 2.0
 	 */
 	default Feed<E> append(final Feed<? extends E> appendedFeed) {
@@ -497,6 +469,7 @@ extends Traversable<E>, Iterable<E> {
 	 * @param <TE> Type of the transformed elements.
 	 * @param function Function to use to transform the elements.
 	 * @return An feed of the flatten, transformed elements.
+	 * @see FeedUtils#flatten(Feed)
 	 * @since 2.0
 	 */
 	default <TE> Feed<TE> flatMap(final Function<? super E, ? extends Feed<? extends TE>> function) {
@@ -506,7 +479,6 @@ extends Traversable<E>, Iterable<E> {
 	/**
 	 * Executes the given procedure with each element of this feed.
 	 * 
-	 * @param procedure Procedure to execute.
 	 * @since 2.0
 	 */
 	@Override

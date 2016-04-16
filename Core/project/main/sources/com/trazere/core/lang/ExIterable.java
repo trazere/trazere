@@ -2,13 +2,10 @@ package com.trazere.core.lang;
 
 import com.trazere.core.collection.CollectionFactory;
 import com.trazere.core.functional.Function;
-import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Predicate;
 import com.trazere.core.imperative.ExIterator;
-import com.trazere.core.imperative.Procedure;
 import com.trazere.core.util.Maybe;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.NoSuchElementException;
 
 /**
@@ -19,13 +16,14 @@ import java.util.NoSuchElementException;
  */
 @FunctionalInterface
 public interface ExIterable<E>
-extends Iterable<E>, Traversable<E> {
+extends TraversableIterable<E> {
+	// TODO: rename -> fromIterable ?
 	/**
 	 * Builds an extended view of the given iterable.
 	 * 
 	 * @param <E> Type of the elements.
 	 * @param iterable Iterable to wrap.
-	 * @return The extended view of this iterable, or this iterable when it is already an extended view.
+	 * @return The extended view of the given iterable, or the given iterable when it is already an extended view.
 	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
@@ -44,6 +42,9 @@ extends Iterable<E>, Traversable<E> {
 		}
 	}
 	
+	/**
+	 * @since 2.0
+	 */
 	@Override
 	ExIterator<E> iterator();
 	
@@ -72,84 +73,12 @@ extends Iterable<E>, Traversable<E> {
 	}
 	
 	/**
-	 * Left folds over the elements provided by this iterable using the given binary operator and initial state.
+	 * Takes n elements provided by this iterable.
+	 * <p>
+	 * The elements are taken according their iteration order.
 	 * 
-	 * @param <S> Type of the state.
-	 * @param operator Binary operator to use.
-	 * @param initialState Initial state.
-	 * @return The folded state.
-	 * @since 2.0
-	 */
-	@Override
-	default <S> S fold(final Function2<? super S, ? super E, ? extends S> operator, final S initialState) {
-		return IterableUtils.fold(this, operator, initialState);
-	}
-	
-	/**
-	 * Tests whether any element provided by this iterable is accepted by the given filter.
-	 * 
-	 * @param filter Predicate to use to filter the elements.
-	 * @return <code>true</code> when some element is accepted, <code>false</code> when all elements are rejected.
-	 * @since 2.0
-	 */
-	@Override
-	default boolean isAny(final Predicate<? super E> filter) {
-		return IterableUtils.isAny(this, filter);
-	}
-	
-	/**
-	 * Tests whether all elements provided by this iterable are accepted by the given filter.
-	 * 
-	 * @param filter Predicate to use to filter the elements.
-	 * @return <code>true</code> when all elements are accepted, <code>false</code> when some element is rejected.
-	 * @since 2.0
-	 */
-	@Override
-	default boolean areAll(final Predicate<? super E> filter) {
-		return IterableUtils.areAll(this, filter);
-	}
-	
-	/**
-	 * Counts the elements provided by this iterable accepted by the given filter.
-	 * 
-	 * @param filter Predicate to use to filter the elements.
-	 * @return The number of accepted elements.
-	 * @since 2.0
-	 */
-	@Override
-	default int count(final Predicate<? super E> filter) {
-		return IterableUtils.count(this, filter);
-	}
-	
-	/**
-	 * Gets the least element provided by this iterable according to the given comparator.
-	 *
-	 * @param comparator Comparator to use.
-	 * @return The least element.
-	 * @since 2.0
-	 */
-	@Override
-	default Maybe<E> least(final Comparator<? super E> comparator) {
-		return IterableUtils.least(this, comparator);
-	}
-	
-	/**
-	 * Gets the greatest element provided by this iterable according to the given comparator.
-	 *
-	 * @param comparator Comparator to use.
-	 * @return The greatest element.
-	 * @since 2.0
-	 */
-	@Override
-	default Maybe<E> greatest(final Comparator<? super E> comparator) {
-		return IterableUtils.greatest(this, comparator);
-	}
-	
-	/**
-	 * Takes the n first elements provided by this iterable.
-	 * 
-	 * @param n Number of elements to take.
 	 * @return An iterable providing the taken elements.
+	 * @see IterableUtils#take(Iterable, int)
 	 * @since 2.0
 	 */
 	@Override
@@ -158,10 +87,12 @@ extends Iterable<E>, Traversable<E> {
 	}
 	
 	/**
-	 * Drops the n first elements provided by this iterable.
+	 * Drops n elements provided by this iterable.
+	 * <p>
+	 * The elements are dropped according their iteration order.
 	 * 
-	 * @param n Number of elements to drop.
 	 * @return An iterable providing the remaining elements.
+	 * @see IterableUtils#drop(Iterable, int)
 	 * @since 2.0
 	 */
 	@Override
@@ -171,11 +102,8 @@ extends Iterable<E>, Traversable<E> {
 	
 	/**
 	 * Groups the elements provided by this iterable into batches of the given size.
-	 *
-	 * @param <B> Type of the batch collections.
-	 * @param n Number of elements of each batch.
-	 * @param batchFactory Factory of the batch collections.
-	 * @return An iterable providing the groups of elements.
+	 * 
+	 * @return An iterable providing the batches of elements.
 	 * @since 2.0
 	 */
 	@Override
@@ -186,8 +114,8 @@ extends Iterable<E>, Traversable<E> {
 	/**
 	 * Filters the elements provided by this iterable using the given filter.
 	 *
-	 * @param filter Predicate to use to filter the elements.
 	 * @return An iterable providing the filtered elements.
+	 * @see IterableUtils#filter(Iterable, Predicate)
 	 * @since 2.0
 	 */
 	@Override
@@ -196,23 +124,10 @@ extends Iterable<E>, Traversable<E> {
 	}
 	
 	/**
-	 * Gets the first element provided by this iterable accepted by the given filter.
-	 * 
-	 * @param filter Predicate to use to filter the elements.
-	 * @return The first accepted element.
-	 * @since 2.0
-	 */
-	@Override
-	default Maybe<E> filterFirst(final Predicate<? super E> filter) {
-		return IterableUtils.filterFirst(this, filter);
-	}
-	
-	/**
 	 * Transforms the elements provided by this iterable using the given function.
 	 *
-	 * @param <TE> Type of the transformed elements.
-	 * @param function Function to use to transform the elements.
 	 * @return An iterable providing the transformed elements.
+	 * @see IterableUtils#map(Iterable, Function)
 	 * @since 2.0
 	 */
 	@Override
@@ -223,9 +138,8 @@ extends Iterable<E>, Traversable<E> {
 	/**
 	 * Extracts the elements provided by this iterable using the given extractor.
 	 *
-	 * @param <EE> Type of the extracted elements.
-	 * @param extractor Function to use to extract the elements.
 	 * @return An iterable of the extracted elements.
+	 * @see IterableUtils#extract(Iterable, Function)
 	 * @since 2.0
 	 */
 	@Override
@@ -234,24 +148,12 @@ extends Iterable<E>, Traversable<E> {
 	}
 	
 	/**
-	 * Gets the first element extracted from the elements provided by this iterable by the given extractor.
-	 * 
-	 * @param <EE> Type of the extracted elements.
-	 * @param extractor Function to use to extract the elements.
-	 * @return The first extracted element.
-	 * @since 2.0
-	 */
-	@Override
-	default <EE> Maybe<EE> extractFirst(final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
-		return IterableUtils.extractFirst(this, extractor);
-	}
-	
-	/**
-	 * Gets all elements extracted from the elements provided by this iterable by the given extractor.
+	 * Gets all elements extracted from the elements provided by this iterable using the given extractor.
 	 * 
 	 * @param <EE> Type of the extracted elements.
 	 * @param extractor Function to use to extract the elements.
 	 * @return An iterable of the extracted elements.
+	 * @see IterableUtils#extractAll(Iterable, Function)
 	 * @since 2.0
 	 */
 	default <EE> ExIterable<EE> extractAll(final Function<? super E, ? extends Iterable<? extends EE>> extractor) {
@@ -264,6 +166,7 @@ extends Iterable<E>, Traversable<E> {
 	 * @param <TE> Type of the transformed elements.
 	 * @param function Function to use to transform the elements.
 	 * @return An iterable providing the flatten, transformed elements.
+	 * @see IterableUtils#flatMap(Iterable, Function)
 	 * @since 2.0
 	 */
 	default <TE> ExIterable<TE> flatMap(final Function<? super E, ? extends Iterable<? extends TE>> function) {
@@ -279,6 +182,7 @@ extends Iterable<E>, Traversable<E> {
 	 * @param <E2> Type of the second elements.
 	 * @param iterable2 Iterable providing the second elements of the pairs.
 	 * @return An iterable providing the pairs of elements.
+	 * @see IterableUtils#zip(Iterable, Iterable)
 	 * @since 2.0
 	 */
 	default <E2> PairIterable<E, E2> zip(final Iterable<? extends E2> iterable2) {
@@ -286,20 +190,10 @@ extends Iterable<E>, Traversable<E> {
 	}
 	
 	/**
-	 * Executes the given procedure with each element provided by this iterable.
-	 * 
-	 * @param procedure Procedure to execute.
-	 * @since 2.0
-	 */
-	@Override
-	default void foreach(final Procedure<? super E> procedure) {
-		IterableUtils.foreach(this, procedure);
-	}
-	
-	/**
 	 * Builds an unmodifiable view of this iterable.
 	 * 
 	 * @return An unmodifiable view of this iterable, or this iterable when is it already unmodifiable.
+	 * @see IterableUtils#unmodifiable(Iterable)
 	 * @since 2.0
 	 */
 	default ExIterable<E> unmodifiable() {

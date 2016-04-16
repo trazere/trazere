@@ -314,7 +314,7 @@ public class IteratorUtils {
 	 * @param <E> Type of the elements.
 	 * @param iterator Iterator providing the elements to test.
 	 * @param filter Predicate to use to filter the elements.
-	 * @return <code>true</code> when some element is accepted, <code>false</code> when all elements are rejected.
+	 * @return <code>true</code> when some element is accepted, <code>false</code> when all elements are rejected or when the iterator is exhausted.
 	 * @since 2.0
 	 */
 	public static <E> boolean isAny(final Iterator<? extends E> iterator, final Predicate<? super E> filter) {
@@ -333,7 +333,8 @@ public class IteratorUtils {
 	 * @param <E2> Type of the second element of the pairs.
 	 * @param iterator Iterator providing the pairs of elements to test.
 	 * @param filter Predicate to use to filter the pairs of elements.
-	 * @return <code>true</code> when some pair of elements is accepted, <code>false</code> when all pairs of elements are rejected.
+	 * @return <code>true</code> when some pair of elements is accepted, <code>false</code> when all pairs of elements are rejected or when the iterator is
+	 *         exhausted.
 	 * @since 2.0
 	 */
 	public static <E1, E2> boolean isAny(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Predicate2<? super E1, ? super E2> filter) {
@@ -352,7 +353,7 @@ public class IteratorUtils {
 	 * @param <E> Type of the elements.
 	 * @param iterator Iterator providing the elements to test.
 	 * @param filter Predicate to use to filter the elements.
-	 * @return <code>true</code> when all elements are accepted, <code>false</code> when some element is rejected.
+	 * @return <code>true</code> when all elements are accepted or when the iterator is exhausted, <code>false</code> when some element is rejected.
 	 * @since 2.0
 	 */
 	public static <E> boolean areAll(final Iterator<? extends E> iterator, final Predicate<? super E> filter) {
@@ -371,7 +372,8 @@ public class IteratorUtils {
 	 * @param <E2> Type of the second element of the pairs.
 	 * @param iterator Iterator providing the pairs of elements to test.
 	 * @param filter Predicate to use to filter the pairs of elements.
-	 * @return <code>true</code> when all pairs of elements are accepted, <code>false</code> when some pair of elements is rejected.
+	 * @return <code>true</code> when all pairs of elements are accepted or when the iterator is exhausted, <code>false</code> when some pair of elements is
+	 *         rejected.
 	 * @since 2.0
 	 */
 	public static <E1, E2> boolean areAll(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Predicate2<? super E1, ? super E2> filter) {
@@ -475,9 +477,11 @@ public class IteratorUtils {
 	}
 	
 	/**
-	 * Takes the n first elements provided by the given iterator.
+	 * Takes n elements provided by the given iterator.
 	 * <p>
-	 * The built iterator feeds from the given iterator.
+	 * The elements are taken according their iteration order.
+	 * <p>
+	 * The built iterator feeds lazyly from the given iterator.
 	 * 
 	 * @param <E> Type of the elements.
 	 * @param iterator Iterator providing the elements to take.
@@ -514,9 +518,53 @@ public class IteratorUtils {
 	}
 	
 	/**
-	 * Drops the n first elements provided by the given iterator.
+	 * Takes n pairs of elements provided by the given iterator.
 	 * <p>
-	 * The built iterator feeds from the given iterator.
+	 * The pairs of elements are taken according their iteration order.
+	 * <p>
+	 * The built iterator feeds lazyly from the given iterator.
+	 * 
+	 * @param <E1> Type of the first element of the pairs.
+	 * @param <E2> Type of the second element of the pairs.
+	 * @param iterator Iterator providing the pairs of elements to take.
+	 * @param n Number of pairs of elements to take.
+	 * @return An iterator providing the taken pairs of elements.
+	 * @since 2.0
+	 */
+	public static <E1, E2> PairIterator<E1, E2> take2(final Iterator<? extends Tuple2<E1, E2>> iterator, final int n) {
+		assert null != iterator;
+		
+		return new PairIterator<E1, E2>() {
+			private int _i = 0;
+			
+			@Override
+			public boolean hasNext() {
+				return iterator.hasNext() && _i < n;
+			}
+			
+			@Override
+			public Tuple2<E1, E2> next() {
+				if (_i < n) {
+					_i += 1;
+					return iterator.next();
+				} else {
+					throw new NoSuchElementException();
+				}
+			}
+			
+			@Override
+			public void remove() {
+				iterator.remove();
+			}
+		};
+	}
+	
+	/**
+	 * Drops n elements provided by the given iterator.
+	 * <p>
+	 * The elements are dropped according their iteration order.
+	 * <p>
+	 * The built iterator feeds lazyly from the given iterator.
 	 * 
 	 * @param <E> Type of the elements.
 	 * @param iterator Iterator providing the elements to drop.
@@ -558,14 +606,63 @@ public class IteratorUtils {
 	}
 	
 	/**
+	 * Drops n pairs of elements provided by the given iterator.
+	 * <p>
+	 * The pairs of elements are dropped according their iteration order.
+	 * <p>
+	 * The built iterator feeds lazyly from the given iterator.
+	 * 
+	 * @param <E1> Type of the first element of the pairs.
+	 * @param <E2> Type of the second element of the pairs.
+	 * @param iterator Iterator providing the pairs of elements to drop.
+	 * @param n Number of pairs of elements to drop.
+	 * @return An iterator providing the remaining pairs of elements.
+	 * @since 2.0
+	 */
+	public static <E1, E2> PairIterator<E1, E2> drop2(final Iterator<? extends Tuple2<E1, E2>> iterator, final int n) {
+		assert null != iterator;
+		
+		return new PairIterator<E1, E2>() {
+			private int _droppedN = 0;
+			
+			@Override
+			public boolean hasNext() {
+				drop();
+				return iterator.hasNext();
+			}
+			
+			@Override
+			public Tuple2<E1, E2> next() {
+				drop();
+				return iterator.next();
+			}
+			
+			@Override
+			public void remove() {
+				drop();
+				iterator.remove();
+			}
+			
+			private void drop() {
+				while (_droppedN < n && iterator.hasNext()) {
+					iterator.next();
+					_droppedN += 1;
+				}
+			}
+		};
+	}
+	
+	/**
 	 * Groups the elements provided by the given iterator into batches of the given size.
+	 * <p>
+	 * The built iterator feeds lazyly from the given iterator.
 	 *
 	 * @param <E> Type of the elements.
 	 * @param <B> Type of the batch collections.
 	 * @param iterator Iterator providing the elements to group.
 	 * @param n Number of elements of each batch.
 	 * @param batchFactory Factory of the batch collections.
-	 * @return An iterator providing the groups of elements.
+	 * @return An iterator providing the batches of elements.
 	 * @since 2.0
 	 */
 	public static <E, B extends Collection<? super E>> ExIterator<B> group(final Iterator<? extends E> iterator, final int n, final CollectionFactory<? super E, B> batchFactory) {
@@ -587,7 +684,7 @@ public class IteratorUtils {
 	/**
 	 * Filters the elements provided by the given iterator using the given filter.
 	 * <p>
-	 * The built iterator feeds from the given iterator.
+	 * The built iterator feeds lazyly from the given iterator.
 	 *
 	 * @param <E> Type of the elements.
 	 * @param iterator Iterator providing the elements to filter.
@@ -602,7 +699,7 @@ public class IteratorUtils {
 		return new LookAheadIterator<E>() {
 			@Override
 			protected Maybe<? extends E> pull() {
-				return IteratorUtils.filterFirst(iterator, filter);
+				return IteratorUtils.filterAny(iterator, filter);
 			}
 		};
 	}
@@ -610,7 +707,7 @@ public class IteratorUtils {
 	/**
 	 * Filters the pairs of elements provided by the given iterator using the given filter.
 	 * <p>
-	 * The built iterator feeds from the given iterator.
+	 * The built iterator feeds lazyly from the given iterator.
 	 *
 	 * @param <E1> Type of the first element of the pairs.
 	 * @param <E2> Type of the second element of the pairs.
@@ -626,21 +723,23 @@ public class IteratorUtils {
 		return new LookAheadPairIterator<E1, E2>() {
 			@Override
 			protected Maybe<Tuple2<E1, E2>> pull() {
-				return IteratorUtils.filterFirst(iterator, filter);
+				return IteratorUtils.filterAny(iterator, filter);
 			}
 		};
 	}
 	
 	/**
-	 * Gets the first element provided by the given iterator accepted by the given filter.
+	 * Gets any element provided by the given iterator accepted by the given filter.
+	 * <p>
+	 * The elements are filtered according to their iteration order.
 	 * 
 	 * @param <E> Type of the elements.
 	 * @param iterator Iterator providing the elements to filter.
 	 * @param filter Predicate to use to filter the elements.
-	 * @return The first accepted element.
+	 * @return The accepted element, or nothing when no elements are accepted by the filter.
 	 * @since 2.0
 	 */
-	public static <E> Maybe<E> filterFirst(final Iterator<? extends E> iterator, final Predicate<? super E> filter) {
+	public static <E> Maybe<E> filterAny(final Iterator<? extends E> iterator, final Predicate<? super E> filter) {
 		while (iterator.hasNext()) {
 			final E element = iterator.next();
 			if (filter.evaluate(element)) {
@@ -651,16 +750,18 @@ public class IteratorUtils {
 	}
 	
 	/**
-	 * Gets the first pair of elements provided by the given iterator accepted by the given filter.
+	 * Gets any pair of elements provided by the given iterator accepted by the given filter.
+	 * <p>
+	 * The pairs of elements are filtered according to their iteration order.
 	 * 
 	 * @param <E1> Type of the first element of the pairs.
 	 * @param <E2> Type of the second element of the pairs.
 	 * @param iterator Iterator providing the pairs of elements to filter.
 	 * @param filter Predicate to use to filter the pairs of elements.
-	 * @return The first accepted pair of elements.
+	 * @return The accepted pair of elements, or nothing when no pairs of elements are accepted by the filter.
 	 * @since 2.0
 	 */
-	public static <E1, E2> Maybe<Tuple2<E1, E2>> filterFirst(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Predicate2<? super E1, ? super E2> filter) {
+	public static <E1, E2> Maybe<Tuple2<E1, E2>> filterAny(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Predicate2<? super E1, ? super E2> filter) {
 		while (iterator.hasNext()) {
 			final Tuple2<? extends E1, ? extends E2> elementPair = iterator.next();
 			final E1 element1 = elementPair.get1();
@@ -675,7 +776,7 @@ public class IteratorUtils {
 	/**
 	 * Transforms the elements provided by the given iterator using the given function.
 	 * <p>
-	 * The built iterator feeds from the given iterator.
+	 * The built iterator feeds lazyly from the given iterator.
 	 *
 	 * @param <E> Type of the elements.
 	 * @param <TE> Type of the transformed elements.
@@ -709,7 +810,7 @@ public class IteratorUtils {
 	/**
 	 * Transforms the pairs of elements provided by the given iterator using the given function.
 	 * <p>
-	 * The built iterator feeds from the given iterator.
+	 * The built iterator feeds lazyly from the given iterator.
 	 *
 	 * @param <E1> Type of the first element of the pairs.
 	 * @param <E2> Type of the second element of the pairs.
@@ -745,12 +846,12 @@ public class IteratorUtils {
 	/**
 	 * Extracts the elements provided by the given iterator using the given extractor.
 	 * <p>
-	 * The built iterator feeds from the given iterator.
+	 * The built iterator feeds lazyly from the given iterator.
 	 *
 	 * @param <E> Type of the elements.
 	 * @param <EE> Type of the extracted elements.
 	 * @param iterator Iterator providing the elements to extract from.
-	 * @param extractor Function to use to extract the elements.
+	 * @param extractor Function to use to extract from the elements.
 	 * @return An iterator providing the extracted elements.
 	 * @since 2.0
 	 */
@@ -761,7 +862,7 @@ public class IteratorUtils {
 		return new LookAheadIterator<EE>() {
 			@Override
 			protected Maybe<? extends EE> pull() {
-				return IteratorUtils.extractFirst(iterator, extractor);
+				return IteratorUtils.extractAny(iterator, extractor);
 			}
 		};
 	}
@@ -769,13 +870,13 @@ public class IteratorUtils {
 	/**
 	 * Extracts the pairs of elements provided by the given iterator using the given extractor.
 	 * <p>
-	 * The built iterator feeds from the given iterator.
+	 * The built iterator feeds lazyly from the given iterator.
 	 *
 	 * @param <E1> Type of the first element of the pairs.
 	 * @param <E2> Type of the second element of the pairs.
 	 * @param <EE> Type of the extracted elements.
 	 * @param iterator Iterator providing the pairs of elements to extract from.
-	 * @param extractor Function to use to extract the pairs of elements.
+	 * @param extractor Function to use to extract from the pairs of elements.
 	 * @return An iterator providing the extracted elements.
 	 * @since 2.0
 	 */
@@ -786,22 +887,24 @@ public class IteratorUtils {
 		return new LookAheadIterator<EE>() {
 			@Override
 			protected Maybe<? extends EE> pull() {
-				return IteratorUtils.extractFirst(iterator, extractor);
+				return IteratorUtils.extractAny(iterator, extractor);
 			}
 		};
 	}
 	
 	/**
-	 * Gets the first element extracted from the elements provided by the given iterator using the given extractor.
+	 * Gets the element extracted from any element provided by the given iterator using the given extractor.
+	 * <p>
+	 * The elements are extracted from according to their iteration order.
 	 * 
 	 * @param <E> Type of the elements.
 	 * @param <EE> Type of the extracted elements.
 	 * @param iterator Iterator providing the elements to extract from.
-	 * @param extractor Function to use to extract the elements.
-	 * @return The first extracted element.
+	 * @param extractor Function to use to extract from the elements.
+	 * @return The extracted element, or nothing when no elements can be extracted from any element.
 	 * @since 2.0
 	 */
-	public static <E, EE> Maybe<EE> extractFirst(final Iterator<? extends E> iterator, final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
+	public static <E, EE> Maybe<EE> extractAny(final Iterator<? extends E> iterator, final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
 		while (iterator.hasNext()) {
 			final Maybe<? extends EE> extractedElement = extractor.evaluate(iterator.next());
 			if (extractedElement.isSome()) {
@@ -812,17 +915,19 @@ public class IteratorUtils {
 	}
 	
 	/**
-	 * Gets the first element extracted from the pairs of elements provided by the given iterator using the given extractor.
+	 * Gets the element extracted from any pair of elements provided by the given iterator using the given extractor.
+	 * <p>
+	 * The pairs of elements are extracted from according to their iteration order.
 	 * 
 	 * @param <E1> Type of the first element of the pairs.
 	 * @param <E2> Type of the second element of the pairs.
 	 * @param <EE> Type of the extracted elements.
-	 * @param iterator Iterator providing the elements to extract from.
-	 * @param extractor Function to use to extract the elements.
-	 * @return The first extracted element.
+	 * @param iterator Iterator providing the pairs of elements to extract from.
+	 * @param extractor Function to use to extract from the pairs of elements.
+	 * @return The extracted element, or nothing when no elements can be extracted from any pair of elements.
 	 * @since 2.0
 	 */
-	public static <E1, E2, EE> Maybe<EE> extractFirst(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor) {
+	public static <E1, E2, EE> Maybe<EE> extractAny(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor) {
 		while (iterator.hasNext()) {
 			final Tuple2<? extends E1, ? extends E2> elementPair = iterator.next();
 			final Maybe<? extends EE> extractedElement = extractor.evaluate(elementPair.get1(), elementPair.get2());
@@ -836,12 +941,12 @@ public class IteratorUtils {
 	/**
 	 * Gets all elements extracted from the elements provided by the given iterator using the given extractor.
 	 * <p>
-	 * The built iterator feeds from the given iterator.
+	 * The built iterator feeds lazyly from the given iterator.
 	 *
 	 * @param <E> Type of the elements.
 	 * @param <TE> Type of the extracted elements.
 	 * @param iterator Iterator providing the elements to extract from.
-	 * @param extractor Function to use to extract the elements.
+	 * @param extractor Function to use to extract from the elements.
 	 * @return An iterator providing the extracted elements.
 	 * @since 2.0
 	 */
@@ -852,13 +957,13 @@ public class IteratorUtils {
 	/**
 	 * Gets all elements extracted from the pairs of elements provided by the given iterator using the given extractor.
 	 * <p>
-	 * The built iterator feeds from the given iterator.
+	 * The built iterator feeds lazyly from the given iterator.
 	 *
 	 * @param <E1> Type of the first element of the pairs.
 	 * @param <E2> Type of the second element of the pairs.
 	 * @param <EE> Type of the extracted elements.
 	 * @param iterator Iterator providing the pairs of elements to extract from.
-	 * @param extractor Function to use to extract the pairs of elements.
+	 * @param extractor Function to use to extract from the pairs of elements.
 	 * @return An iterator providing the extracted elements.
 	 * @since 2.0
 	 */
@@ -869,7 +974,7 @@ public class IteratorUtils {
 	/**
 	 * Appends the given iterators together.
 	 * <p>
-	 * The built iterator feeds from the given iterators.
+	 * The built iterator feeds lazyly from the given iterators.
 	 * 
 	 * @param <E> Type of the elements.
 	 * @param iterator1 First iterator providing the elements to append.
@@ -913,7 +1018,7 @@ public class IteratorUtils {
 	/**
 	 * Flattens the elements provided by the iterators provided by the given iterator.
 	 * <p>
-	 * The built iterator feeds from the given iterators.
+	 * The built iterator feeds lazyly from the given iterators.
 	 *
 	 * @param <E> Type of the elements.
 	 * @param iterator Iterator providing the iterators providing the elements to flatten.
@@ -949,7 +1054,7 @@ public class IteratorUtils {
 	/**
 	 * Transforms and flattens the elements provided by the given iterator using the given function.
 	 * <p>
-	 * The built iterator feeds from the given iterator.
+	 * The built iterator feeds lazyly from the given iterator.
 	 * 
 	 * @param <E> Type of the elements.
 	 * @param <TE> Type of the transformed elements.
@@ -965,7 +1070,7 @@ public class IteratorUtils {
 	/**
 	 * Transforms and flattens the pairs of elements provided by the given iterator using the given function.
 	 * <p>
-	 * The built iterator feeds from the given iterator.
+	 * The built iterator feeds lazyly from the given iterator.
 	 * 
 	 * @param <E1> Type of the first element of the pairs.
 	 * @param <E2> Type of the second element of the pairs.
@@ -984,6 +1089,8 @@ public class IteratorUtils {
 	 * <p>
 	 * The pairs are composed of an element provided by each iterator in order. The extra values of the longest iterator are dropped when the given iterators
 	 * don't provide the same number of elements.
+	 * <p>
+	 * The built iterator feeds lazyly from the given iterators.
 	 * 
 	 * @param <E1> Type of the first elements.
 	 * @param <E2> Type of the second elements.

@@ -107,7 +107,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Removes an element from the given collection.
+	 * Removes any element from the given collection.
 	 * <p>
 	 * The collection must support removal through its iterators.
 	 * <p>
@@ -130,6 +130,31 @@ public class CollectionUtils {
 	}
 	
 	/**
+	 * Removes any element of the given collection accepted by the given filter.
+	 * <p>
+	 * The collection must support removal through its iterators.
+	 * <p>
+	 * This method does modify the given collection.
+	 * 
+	 * @param <E> Type of the elements.
+	 * @param collection Collection containing the elements to filter.
+	 * @param filter Predicate to use to filter the elements.
+	 * @return The removed element, or nothing when no elements are accepted by the filter or when the collection is empty.
+	 * @since 2.0
+	 */
+	public static <E> Maybe<E> removeAny(final Collection<? extends E> collection, final Predicate<? super E> filter) {
+		final Iterator<? extends E> iterator = collection.iterator();
+		while (iterator.hasNext()) {
+			final E element = iterator.next();
+			if (filter.evaluate(element)) {
+				iterator.remove();
+				return Maybe.some(element);
+			}
+		}
+		return Maybe.none();
+	}
+	
+	/**
 	 * Removes all given elements from the given collection.
 	 * <p>
 	 * This method does modify the given collection.
@@ -146,31 +171,6 @@ public class CollectionUtils {
 			changed.add(collection.remove(element));
 		}
 		return changed.get().booleanValue();
-	}
-	
-	/**
-	 * Removes the first element of the given collection accepted by the given filter.
-	 * <p>
-	 * The collection must support removal through its iterators.
-	 * <p>
-	 * This method does modify the given collection.
-	 * 
-	 * @param <E> Type of the elements.
-	 * @param collection Collection containing the elements to filter.
-	 * @param filter Predicate to use to filter the elements.
-	 * @return The first removed element.
-	 * @since 2.0
-	 */
-	public static <E> Maybe<E> removeFirst(final Collection<? extends E> collection, final Predicate<? super E> filter) {
-		final Iterator<? extends E> iterator = collection.iterator();
-		while (iterator.hasNext()) {
-			final E element = iterator.next();
-			if (filter.evaluate(element)) {
-				iterator.remove();
-				return Maybe.some(element);
-			}
-		}
-		return Maybe.none();
 	}
 	
 	/**
@@ -216,7 +216,7 @@ public class CollectionUtils {
 	 * @param <E> Type of the elements.
 	 * @param collection Collection to test.
 	 * @param filter Predicate to use to filter the elements.
-	 * @return <code>true</code> when some element is accepted, <code>false</code> when all elements are rejected.
+	 * @return <code>true</code> when some element is accepted, <code>false</code> when all elements are rejected or when the collection is empty.
 	 * @since 2.0
 	 */
 	public static <E> boolean isAny(final Collection<? extends E> collection, final Predicate<? super E> filter) {
@@ -229,7 +229,7 @@ public class CollectionUtils {
 	 * @param <E> Type of the elements.
 	 * @param collection Collection to test.
 	 * @param filter Predicate to use to filter the elements.
-	 * @return <code>true</code> when all elements are accepted, <code>false</code> when some element is rejected.
+	 * @return <code>true</code> when all elements are accepted or when the collection is empty, <code>false</code> when some element is rejected.
 	 * @since 2.0
 	 */
 	public static <E> boolean areAll(final Collection<? extends E> collection, final Predicate<? super E> filter) {
@@ -316,7 +316,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Takes the n first elements of the given collection.
+	 * Takes n elements of the given collection.
 	 *
 	 * @param <E> Type of the elements.
 	 * @param <C> Type of the result collection.
@@ -331,7 +331,7 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Drops the n first elements of the given collection.
+	 * Drops n elements of the given collection.
 	 *
 	 * @param <E> Type of the elements.
 	 * @param <C> Type of the result collection.
@@ -378,16 +378,16 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Gets the first element of the given collection accepted by the given filter.
+	 * Gets any element of the given collection accepted by the given filter.
 	 * 
 	 * @param <E> Type of the elements.
 	 * @param collection Collection containing the elements to filter.
 	 * @param filter Predicate to use to filter the elements.
-	 * @return The first accepted element.
+	 * @return The accepted element, or nothing when no elements are accepted by the filter.
 	 * @since 2.0
 	 */
-	public static <E> Maybe<E> filterFirst(final Collection<? extends E> collection, final Predicate<? super E> filter) {
-		return IteratorUtils.filterFirst(collection.iterator(), filter);
+	public static <E> Maybe<E> filterAny(final Collection<? extends E> collection, final Predicate<? super E> filter) {
+		return IteratorUtils.filterAny(collection.iterator(), filter);
 	}
 	
 	/**
@@ -423,27 +423,27 @@ public class CollectionUtils {
 	}
 	
 	/**
-	 * Gets the first element extracted from the given collection by the given extractor.
+	 * Gets the element extracted from any element of the given collection using the given extractor.
 	 * 
 	 * @param <E> Type of the elements.
 	 * @param <EE> Type of the extracted elements.
 	 * @param collection Collection containing the elements to extract from.
-	 * @param extractor Function to use to extract the elements.
-	 * @return The first extracted element.
+	 * @param extractor Function to use to extract from the elements.
+	 * @return The extracted element, or nothing when no elements can be extracted from any element.
 	 * @since 2.0
 	 */
-	public static <E, EE> Maybe<EE> extractFirst(final Collection<? extends E> collection, final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
-		return IteratorUtils.extractFirst(collection.iterator(), extractor);
+	public static <E, EE> Maybe<EE> extractAny(final Collection<? extends E> collection, final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
+		return IteratorUtils.extractAny(collection.iterator(), extractor);
 	}
 	
 	/**
-	 * Gets all elements extracted from the elements of the given collection by the given extractor.
+	 * Gets all elements extracted from the elements of the given collection using the given extractor.
 	 * 
 	 * @param <E> Type of the elements.
 	 * @param <EE> Type of the extracted elements.
 	 * @param <C> Type of the result collection.
 	 * @param collection Collection containing the elements to extract from.
-	 * @param extractor Function to use to extract the elements.
+	 * @param extractor Function to use to extract from the elements.
 	 * @param resultFactory Factory of the result collection.
 	 * @return A collection containing the extracted elements.
 	 * @since 2.0
@@ -593,7 +593,7 @@ public class CollectionUtils {
 		}
 		return new Tuple2<>(results1, results2);
 	}
-
+	
 	/**
 	 * Executes the given procedure with each element of the given collection.
 	 * 

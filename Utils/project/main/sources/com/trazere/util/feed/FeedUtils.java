@@ -289,8 +289,8 @@ public class FeedUtils {
 			
 			// Note: default must be implemented, project is still 1.6
 			@Override
-			public com.trazere.core.util.Maybe<T> filterFirst(final Predicate<? super T> filter) {
-				return com.trazere.core.collection.Feed.super.filterFirst(filter);
+			public com.trazere.core.util.Maybe<T> filterAny(final Predicate<? super T> filter) {
+				return com.trazere.core.collection.Feed.super.filterAny(filter);
 			}
 			
 			// Note: default must be implemented, project is still 1.6
@@ -307,8 +307,8 @@ public class FeedUtils {
 			
 			// Note: default must be implemented, project is still 1.6
 			@Override
-			public <EE> com.trazere.core.util.Maybe<EE> extractFirst(final Function<? super T, ? extends com.trazere.core.util.Maybe<? extends EE>> extractor) {
-				return com.trazere.core.collection.Feed.super.extractFirst(extractor);
+			public <EE> com.trazere.core.util.Maybe<EE> extractAny(final Function<? super T, ? extends com.trazere.core.util.Maybe<? extends EE>> extractor) {
+				return com.trazere.core.collection.Feed.super.extractAny(extractor);
 			}
 			
 			// Note: default must be implemented, project is still 1.6

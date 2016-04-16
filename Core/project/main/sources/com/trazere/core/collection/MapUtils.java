@@ -320,7 +320,7 @@ public class MapUtils {
 		return bindings(map).fold(operator, initialState);
 	}
 	
-	// TODO: extractFirst
+	// TODO: extractAny
 	
 	/**
 	 * Tests whether any binding of the given map is accepted by the given filter.
@@ -329,7 +329,7 @@ public class MapUtils {
 	 * @param <V> Type of the values.
 	 * @param map Map containing the bindings to test.
 	 * @param filter Predicate to use to filter the binding.
-	 * @return <code>true</code> when some binding is accepted, <code>false</code> when all bindings are rejected.
+	 * @return <code>true</code> when some binding is accepted, <code>false</code> when all bindings are rejected or when the map is empty.
 	 * @since 2.0
 	 */
 	public static <K, V> boolean isAny(final Map<? extends K, ? extends V> map, final Predicate2<? super K, ? super V> filter) {
@@ -343,7 +343,7 @@ public class MapUtils {
 	 * @param <V> Type of the values.
 	 * @param map Map containing the bindings to test.
 	 * @param filter Predicate to use to filter the binding.
-	 * @return <code>true</code> when all bindings are accepted, <code>false</code> when some binding is rejected.
+	 * @return <code>true</code> when all bindings are accepted or when the map is empty, <code>false</code> when some binding is rejected.
 	 * @since 2.0
 	 */
 	public static <K, V> boolean areAll(final Map<? extends K, ? extends V> map, final Predicate2<? super K, ? super V> filter) {
@@ -419,7 +419,7 @@ public class MapUtils {
 	}
 	
 	/**
-	 * Takes the n first bindings of the given map.
+	 * Takes n bindings of the given map.
 	 *
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -435,7 +435,7 @@ public class MapUtils {
 	}
 	
 	/**
-	 * Drops the n first bindings of the given map.
+	 * Drops n bindings of the given map.
 	 *
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -477,17 +477,17 @@ public class MapUtils {
 	}
 	
 	/**
-	 * Gets the first binding of the given map accepted by the given filter.
+	 * Gets any binding of the given map accepted by the given filter.
 	 *
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param map Map containing the bindings to filter.
 	 * @param filter Predicate to use to filter the binding.
-	 * @return The first accepted binding, or when no binding is accepted.
+	 * @return The accepted binding, or when no bindings are accepted or when the map is empty.
 	 * @since 2.0
 	 */
-	public static <K, V> Maybe<Tuple2<K, V>> filterFirst(final Map<? extends K, ? extends V> map, final Predicate2<? super K, ? super V> filter) {
-		return MapUtils.<K, V>bindings(map).filterFirst(filter);
+	public static <K, V> Maybe<Tuple2<K, V>> filterAny(final Map<? extends K, ? extends V> map, final Predicate2<? super K, ? super V> filter) {
+		return MapUtils.<K, V>bindings(map).filterAny(filter);
 	}
 	
 	/**
@@ -541,7 +541,7 @@ public class MapUtils {
 		return results;
 	}
 	
-	// TODO: extractFirst
+	// TODO: extractAny
 	
 	// TODO: extractAll to Multimap ?
 	

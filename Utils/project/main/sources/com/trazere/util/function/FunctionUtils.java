@@ -368,7 +368,7 @@ public class FunctionUtils {
 	 * @param values The iterator providing the values.
 	 * @return The first accepted value.
 	 * @throws X When some predicate evaluation fails.
-	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#filterFirst(Iterator, com.trazere.core.functional.Predicate)}.
+	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#filterAny(Iterator, com.trazere.core.functional.Predicate)}.
 	 */
 	@Deprecated
 	public static <V, X extends Exception> Maybe<V> first(final Predicate1<? super V, ? extends X> predicate, final Iterator<? extends V> values)
@@ -387,7 +387,7 @@ public class FunctionUtils {
 	 * @return The first accepted value.
 	 * @throws X When some predicate evaluation fails.
 	 * @throws VX When some iteration fails.
-	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#filterFirst(Iterator, com.trazere.core.functional.Predicate)}.
+	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#filterAny(Iterator, com.trazere.core.functional.Predicate)}.
 	 */
 	@Deprecated
 	public static <V, X extends Exception, VX extends Exception> Maybe<V> first(final Predicate1<? super V, ? extends X> predicate, final CheckedIterator<? extends V, ? extends VX> values)
@@ -415,7 +415,7 @@ public class FunctionUtils {
 	 * @return The first accepted value.
 	 * @throws X When some predicate evaluation fails.
 	 * @throws VX When some feed iteration fails.
-	 * @deprecated Use {@link com.trazere.core.collection.Feed#filterFirst(com.trazere.core.functional.Predicate)}.
+	 * @deprecated Use {@link com.trazere.core.collection.Feed#filterAny(com.trazere.core.functional.Predicate)}.
 	 */
 	@Deprecated
 	public static <V, X extends Exception, VX extends Exception> Maybe<V> first(final Predicate1<? super V, ? extends X> predicate, final Feed<? extends V, ? extends VX> values)
@@ -435,7 +435,7 @@ public class FunctionUtils {
 	 * @param bindings The bindings.
 	 * @return The first accepted binding.
 	 * @throws X When some predicate evaluation fails.
-	 * @deprecated Use {@link com.trazere.core.collection.MapUtils#filterFirst(Map, com.trazere.core.functional.Predicate2)}.
+	 * @deprecated Use {@link com.trazere.core.collection.MapUtils#filterAny(Map, com.trazere.core.functional.Predicate2)}.
 	 */
 	@Deprecated
 	public static <K, V, X extends Exception> Maybe<Tuple2<K, V>> first(final Predicate2<? super K, ? super V, ? extends X> predicate, final Map<? extends K, ? extends V> bindings)
@@ -465,8 +465,8 @@ public class FunctionUtils {
 	 * @param bindings The bindings.
 	 * @return The first accepted binding.
 	 * @throws X When some predicate evaluation fails.
-	 * @deprecated Use
-	 *             {@link com.trazere.core.collection.MultimapUtils#filterFirst(com.trazere.core.collection.Multimap, com.trazere.core.functional.Predicate2)}.
+	 * @deprecated Use {@link com.trazere.core.collection.MultimapUtils#filterAny(com.trazere.core.collection.Multimap, com.trazere.core.functional.Predicate2)}
+	 *             .
 	 */
 	@Deprecated
 	public static <K, V, X extends Exception> Maybe<Tuple2<K, V>> first(final Predicate2<? super K, ? super V, ? extends X> predicate, final Multimap<? extends K, ? extends V, ?> bindings)
@@ -505,7 +505,7 @@ public class FunctionUtils {
 	 * @param values The values.
 	 * @return The first extracted value.
 	 * @throws X When some predicate evaluation fails.
-	 * @deprecated Use {@link com.trazere.core.lang.IterableUtils#extractFirst(Iterable, com.trazere.core.functional.Function)}.
+	 * @deprecated Use {@link com.trazere.core.lang.IterableUtils#extractAny(Iterable, com.trazere.core.functional.Function)}.
 	 */
 	@Deprecated
 	public static <V, RV, X extends Exception> Maybe<RV> first(final Function1<? super V, ? extends Maybe<? extends RV>, ? extends X> function, final Iterable<? extends V> values)
@@ -525,7 +525,7 @@ public class FunctionUtils {
 	 * @param values The iterator providing the values.
 	 * @return The first accepted value.
 	 * @throws X When some predicate evaluation fails.
-	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#extractFirst(Iterator, com.trazere.core.functional.Function)}.
+	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#extractAny(Iterator, com.trazere.core.functional.Function)}.
 	 */
 	@Deprecated
 	public static <V, RV, X extends Exception> Maybe<RV> first(final Function1<? super V, ? extends Maybe<? extends RV>, ? extends X> function, final Iterator<? extends V> values)
@@ -545,7 +545,7 @@ public class FunctionUtils {
 	 * @return The first accepted value.
 	 * @throws X When some predicate evaluation fails.
 	 * @throws VX When some iteration fails.
-	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#extractFirst(Iterator, com.trazere.core.functional.Function)}.
+	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#extractAny(Iterator, com.trazere.core.functional.Function)}.
 	 */
 	@Deprecated
 	public static <V, RV, X extends Exception, VX extends Exception> Maybe<RV> first(final Function1<? super V, ? extends Maybe<? extends RV>, ? extends X> function, final CheckedIterator<? extends V, ? extends VX> values)
@@ -574,7 +574,7 @@ public class FunctionUtils {
 	 * @return The first accepted value.
 	 * @throws X When some predicate evaluation fails.
 	 * @throws VX When some feed iteration fails.
-	 * @deprecated Use {@link com.trazere.core.collection.Feed#extractFirst(com.trazere.core.functional.Function)}.
+	 * @deprecated Use {@link com.trazere.core.collection.Feed#extractAny(com.trazere.core.functional.Function)}.
 	 */
 	@Deprecated
 	public static <V, RV, X extends Exception, VX extends Exception> Maybe<RV> first(final Function1<? super V, ? extends Maybe<? extends RV>, ? extends X> function, final Feed<? extends V, ? extends VX> values)

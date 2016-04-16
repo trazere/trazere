@@ -99,7 +99,7 @@ public class ThrowableUtils {
 	 * @since 2.0
 	 */
 	public static Maybe<Throwable> findCause(final Throwable throwable, final Predicate<? super Throwable> filter) {
-		return getCauseChain(throwable).filterFirst(filter);
+		return getCauseChain(throwable).filterAny(filter);
 	}
 	
 	/**
@@ -127,7 +127,7 @@ public class ThrowableUtils {
 	 * @since 2.0
 	 */
 	public static <E> Maybe<E> extractCause(final Throwable throwable, final Function<? super Throwable, ? extends Maybe<? extends E>> extractor) {
-		return getCauseChain(throwable).extractFirst(extractor);
+		return getCauseChain(throwable).extractAny(extractor);
 	}
 	
 	/**

@@ -42,6 +42,7 @@ import java.util.Set;
  * @see Field
  * @since 2.0
  */
+// TODO: implement traversable ?
 public interface Record<K extends FieldKey<K, ?>> {
 	/**
 	 * Gets the size of this record.
@@ -123,7 +124,7 @@ public interface Record<K extends FieldKey<K, ?>> {
 	 */
 	default <V> Maybe<V> get(final FieldKey<K, V> key)
 	throws InvalidFieldException, NullFieldException, IncompatibleFieldException {
-		return CollectionUtils.filterFirst(fields(), field -> field.getKey().equals(key)).map(field -> key.castValue(field.getValue()));
+		return CollectionUtils.filterAny(fields(), field -> field.getKey().equals(key)).map(field -> key.castValue(field.getValue()));
 	}
 	
 	/**
@@ -207,7 +208,7 @@ public interface Record<K extends FieldKey<K, ?>> {
 	 * Tests whether any field of the this is accepted by the given filter.
 	 * 
 	 * @param filter Predicate to use to filter the fields.
-	 * @return <code>true</code> when some field is accepted, <code>false</code> when all fields are rejected.
+	 * @return <code>true</code> when some field is accepted, <code>false</code> when all fields are rejected or when the record is empty.
 	 * @since 2.0
 	 */
 	default boolean isAny(final Predicate<? super Field<K, ?>> filter) {
@@ -218,7 +219,7 @@ public interface Record<K extends FieldKey<K, ?>> {
 	 * Tests whether all fields of this record are accepted by the given filter.
 	 * 
 	 * @param filter Predicate to use to filter the fields.
-	 * @return <code>true</code> when all fields are accepted, <code>false</code> when some field is rejected.
+	 * @return <code>true</code> when all fields are accepted or when the record is empty, <code>false</code> when some field is rejected.
 	 * @since 2.0
 	 */
 	default boolean areAll(final Predicate<? super Field<K, ?>> filter) {
@@ -342,14 +343,14 @@ public interface Record<K extends FieldKey<K, ?>> {
 	}
 	
 	/**
-	 * Gets the first field of this record accepted by the given filter.
+	 * Gets any field of this record accepted by the given filter.
 	 * 
 	 * @param filter Predicate to use to filter the fields.
-	 * @return The first accepted field.
+	 * @return The accepted field, or nothing when no fields are accepted by the filter.
 	 * @since 2.0
 	 */
-	default Maybe<Field<K, ?>> filterFirst(final Predicate<? super Field<K, ?>> filter) {
-		return IterableUtils.filterFirst(fields(), filter);
+	default Maybe<Field<K, ?>> filterAny(final Predicate<? super Field<K, ?>> filter) {
+		return IterableUtils.filterAny(fields(), filter);
 	}
 	
 	// TODO: add a map "view"
@@ -381,7 +382,7 @@ public interface Record<K extends FieldKey<K, ?>> {
 	 *
 	 * @param <EK> Type of the extracted field keys.
 	 * @param <R> Type of the result record.
-	 * @param extractor Function to use to extract the fields.
+	 * @param extractor Function to use to extract from the fields.
 	 * @param resultFactory Factory of the result record.
 	 * @return A record containing the extracted fields.
 	 * @throws DuplicateFieldException When sereral extracted field are conflicting.
@@ -400,15 +401,15 @@ public interface Record<K extends FieldKey<K, ?>> {
 	}
 	
 	/**
-	 * Gets the first element extracted from the fields of this record by the given extractor.
+	 * Gets the element extracted from any field of this record using the given extractor.
 	 * 
 	 * @param <EE> Type of the extracted elements.
 	 * @param extractor Function to use to extract from the fields.
-	 * @return The first extracted element.
+	 * @return The extracted element, or nothing when no elements can be extracted from any field.
 	 * @since 2.0
 	 */
-	default <EE> Maybe<EE> extractFirst(final Function<? super Field<K, ?>, ? extends Maybe<? extends EE>> extractor) {
-		return IterableUtils.extractFirst(fields(), extractor);
+	default <EE> Maybe<EE> extractAny(final Function<? super Field<K, ?>, ? extends Maybe<? extends EE>> extractor) {
+		return IterableUtils.extractAny(fields(), extractor);
 	}
 	
 	// TODO: extractAll

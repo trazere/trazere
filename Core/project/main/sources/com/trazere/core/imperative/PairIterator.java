@@ -19,6 +19,7 @@ import java.util.Map;
  */
 public interface PairIterator<E1, E2>
 extends ExIterator<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
+	// TODO: rename -> fromIterator ?
 	/**
 	 * Builds an extended view of the given iterator of pairs of elements.
 	 * 
@@ -62,6 +63,7 @@ extends ExIterator<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	 * @param n Number of pairs of elements to drain.
 	 * @param results Accumulator to populate with the drained pairs of elements.
 	 * @return The given result accumulator.
+	 * @see IteratorUtils#drain(Iterator, int, Accumulator2)
 	 * @since 2.0
 	 */
 	default <A extends Accumulator2<? super E1, ? super E2, ?>> A drain(final int n, final A results) {
@@ -76,6 +78,7 @@ extends ExIterator<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	 * @param n Number of elements to drain.
 	 * @param results Collection to populate with the drained elements.
 	 * @return The given result collection.
+	 * @see IteratorUtils#drain(Iterator, int, Map)
 	 * @since 2.0
 	 */
 	default <M extends Map<? super E1, ? super E2>> M drain(final int n, final M results) {
@@ -90,6 +93,7 @@ extends ExIterator<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	 * @param n Number of elements to drain.
 	 * @param results Collection to populate with the drained elements.
 	 * @return The given result collection.
+	 * @see IteratorUtils#drain(Iterator, int, Multimap)
 	 * @since 2.0
 	 */
 	default <M extends Multimap<? super E1, ? super E2, ?>> M drain(final int n, final M results) {
@@ -102,6 +106,7 @@ extends ExIterator<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	 * @param <A> Type of the accumulator to populate.
 	 * @param results Accumulator to populate with the drained pairs of elements.
 	 * @return The given result accumulator.
+	 * @see IteratorUtils#drain(Iterator, Accumulator2)
 	 * @since 2.0
 	 */
 	default <A extends Accumulator2<? super E1, ? super E2, ?>> A drain(final A results) {
@@ -114,6 +119,7 @@ extends ExIterator<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	 * @param <M> Type of the map to populate.
 	 * @param results Map to populate with the drained pairs of elements.
 	 * @return The given result collection.
+	 * @see IteratorUtils#drain(Iterator, Map)
 	 * @since 2.0
 	 */
 	default <M extends Map<? super E1, ? super E2>> M drain(final M results) {
@@ -126,6 +132,7 @@ extends ExIterator<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	 * @param <M> Type of the multimap to populate.
 	 * @param results Multimap to populate with the drained pairs of elements.
 	 * @return The given result collection.
+	 * @see IteratorUtils#drain(Iterator, Multimap)
 	 * @since 2.0
 	 */
 	default <M extends Multimap<? super E1, ? super E2, ?>> M drain(final M results) {
@@ -135,10 +142,7 @@ extends ExIterator<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	/**
 	 * Left folds over the pairs of elements provided by this iterator using the given operator and initial state.
 	 * 
-	 * @param <S> Type of the state.
-	 * @param operator Operator to use.
-	 * @param initialState Initial state.
-	 * @return The folded state.
+	 * @see IteratorUtils#fold(Iterator, Function3, Object)
 	 * @since 2.0
 	 */
 	@Override
@@ -149,8 +153,9 @@ extends ExIterator<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	/**
 	 * Tests whether any pair of elements provided by this iterator is accepted by the given filter.
 	 * 
-	 * @param filter Predicate to use to filter the pairs of elements.
-	 * @return <code>true</code> when some pair of elements is accepted, <code>false</code> when all pairs of elements are rejected.
+	 * @return <code>true</code> when some pair of elements is accepted, <code>false</code> when all pairs of elements are rejected or when the iterator is
+	 *         exhausted.
+	 * @see IteratorUtils#isAny(Iterator, Predicate2)
 	 * @since 2.0
 	 */
 	@Override
@@ -161,8 +166,9 @@ extends ExIterator<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	/**
 	 * Tests whether all pairs of elements provided by this iterator are accepted by the given filter.
 	 * 
-	 * @param filter Predicate to use to filter the pairs of elements.
-	 * @return <code>true</code> when all pairs of elements are accepted, <code>false</code> when some pair of elements is rejected.
+	 * @return <code>true</code> when all pairs of elements are accepted or when the iterator is exhausted, <code>false</code> when some pair of elements is
+	 *         rejected.
+	 * @see IteratorUtils#areAll(Iterator, Predicate2)
 	 * @since 2.0
 	 */
 	@Override
@@ -173,8 +179,7 @@ extends ExIterator<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	/**
 	 * Counts the pairs of elements provided by this iterator accepted by the given filter.
 	 * 
-	 * @param filter Predicate to use to filter the pairs of elements.
-	 * @return The number of accepted pairs of elements.
+	 * @see IteratorUtils#count(Iterator, Predicate2)
 	 * @since 2.0
 	 */
 	@Override
@@ -185,10 +190,10 @@ extends ExIterator<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	/**
 	 * Filters the pairs of elements provided by this iterator using the given filter.
 	 * <p>
-	 * The built iterator feeds from this iterator.
+	 * The built iterator feeds lazyly from this iterator.
 	 *
-	 * @param filter Predicate to use to filter the pairs of elements.
 	 * @return An iterator providing the filtered pairs of elements.
+	 * @see IteratorUtils#filter(Iterator, Predicate2)
 	 * @since 2.0
 	 */
 	@Override
@@ -197,25 +202,23 @@ extends ExIterator<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	}
 	
 	/**
-	 * Gets the first pair of elements provided by this iterator accepted by the given filter.
+	 * Gets any pair of elements provided by this iterator accepted by the given filter.
 	 * 
-	 * @param filter Predicate to use to filter the pairs of elements.
-	 * @return The first accepted pair of elements.
+	 * @see IteratorUtils#filterAny(Iterator, Predicate2)
 	 * @since 2.0
 	 */
 	@Override
-	default Maybe<Tuple2<E1, E2>> filterFirst(final Predicate2<? super E1, ? super E2> filter) {
-		return IteratorUtils.filterFirst(this, filter);
+	default Maybe<Tuple2<E1, E2>> filterAny(final Predicate2<? super E1, ? super E2> filter) {
+		return IteratorUtils.filterAny(this, filter);
 	}
 	
 	/**
 	 * Transforms the pairs of elements provided by this iterator using the given function.
 	 * <p>
-	 * The built iterator feeds from this iterator.
+	 * The built iterator feeds lazyly from this iterator.
 	 *
-	 * @param <TE> Type of the transformed elements.
-	 * @param function Function to use to transform the pairs of elements.
 	 * @return An iterator providing the transformed elements.
+	 * @see IteratorUtils#map(Iterator, Function2)
 	 * @since 2.0
 	 */
 	@Override
@@ -224,13 +227,12 @@ extends ExIterator<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	}
 	
 	/**
-	 * Extracts the pairs of elements provided by this iterator using the given extractor.
+	 * Extracts the elements from the pairs of elements provided by this iterator using the given extractor.
 	 * <p>
-	 * The built iterator feeds from this iterator.
+	 * The built iterator feeds lazyly from this iterator.
 	 *
-	 * @param <EE> Type of the extracted elements.
-	 * @param extractor Function to use to extract the pairs of elements.
 	 * @return An iterator providing the extracted elements.
+	 * @see IteratorUtils#extract(Iterator, Function2)
 	 * @since 2.0
 	 */
 	@Override
@@ -239,26 +241,27 @@ extends ExIterator<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	}
 	
 	/**
-	 * Gets the first element extracted from the pairs of elements provided by this iterator using the given extractor.
+	 * Gets the element extracted from any pair of elements provided by this iterator using the given extractor.
+	 * <p>
+	 * The pairs of elements are extracted from according to their iteration order.
 	 * 
-	 * @param <EE> Type of the extracted elements.
-	 * @param extractor Function to use to extract the elements.
-	 * @return The first extracted element.
+	 * @see IteratorUtils#extractAny(Iterator, Function2)
 	 * @since 2.0
 	 */
 	@Override
-	default <EE> Maybe<EE> extractFirst(final Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor) {
-		return IteratorUtils.extractFirst(this, extractor);
+	default <EE> Maybe<EE> extractAny(final Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor) {
+		return IteratorUtils.extractAny(this, extractor);
 	}
 	
 	/**
-	 * Gets all elements extracted form the pairs of elements provided by this iterator using the given extractor.
+	 * Gets all elements extracted from the pairs of elements provided by this iterator using the given extractor.
 	 * <p>
-	 * The built iterator feeds from this iterator.
+	 * The built iterator feeds lazyly from this iterator.
 	 *
 	 * @param <EE> Type of the extracted elements.
-	 * @param extractor Function to use to extract the pairs of elements.
+	 * @param extractor Function to use to extract from the pairs of elements.
 	 * @return An iterator providing the extracted elements.
+	 * @see IteratorUtils#extractAll(Iterator, Function2)
 	 * @since 2.0
 	 */
 	default <EE> ExIterator<EE> extractAll(final Function2<? super E1, ? super E2, ? extends Iterable<? extends EE>> extractor) {
@@ -268,11 +271,12 @@ extends ExIterator<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	/**
 	 * Transforms and flattens the pairs of elements provided by this iterator using the given function.
 	 * <p>
-	 * The built iterator feeds from this iterator.
+	 * The built iterator feeds lazyly from this iterator.
 	 * 
 	 * @param <TE> Type of the transformed elements.
 	 * @param function Function to use to transform the pairs of elements.
 	 * @return An iterator providing the flatten, transformed elements.
+	 * @see IteratorUtils#flatMap(Iterator, Function2)
 	 * @since 2.0
 	 */
 	default <TE> ExIterator<TE> flatMap(final Function2<? super E1, ? super E2, ? extends Iterator<? extends TE>> function) {
@@ -282,7 +286,7 @@ extends ExIterator<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	/**
 	 * Executes the given procedure with each pair of elements provided by this iterator.
 	 * 
-	 * @param procedure Procedure to execute.
+	 * @see IteratorUtils#foreach(Iterator, Procedure2)
 	 * @since 2.0
 	 */
 	@Override
@@ -294,6 +298,7 @@ extends ExIterator<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	 * Builds an unmodifiable view of this iterator.
 	 * 
 	 * @return An unmodifiable view of this iterator, or this iterator when is it already unmodifiable.
+	 * @see IteratorUtils#unmodifiable(PairIterator)
 	 * @since 2.0
 	 */
 	@Override

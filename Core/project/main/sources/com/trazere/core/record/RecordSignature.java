@@ -103,7 +103,8 @@ public interface RecordSignature<K extends FieldKey<K, ?>> {
 	 * Tests whether any field key of this record signature is accepted by the given filter.
 	 * 
 	 * @param filter Predicate to use to filter the field keys.
-	 * @return <code>true</code> when some field key is accepted by the filter, <code>false</code> when all fields are rejected.
+	 * @return <code>true</code> when some field key is accepted by the filter, <code>false</code> when all fields are rejected or when the record signature is
+	 *         empty.
 	 * @since 2.0
 	 */
 	default boolean isAny(final Predicate<? super FieldKey<K, ?>> filter) {
@@ -114,7 +115,8 @@ public interface RecordSignature<K extends FieldKey<K, ?>> {
 	 * Tests whether all field keys of this record signature are accepted by the given filter.
 	 * 
 	 * @param filter Predicate to use to filter the field keys.
-	 * @return <code>true</code> when all field keys are accepted by the filter, <code>false</code> when some field is rejected.
+	 * @return <code>true</code> when all field keys are accepted by the filter or when the record signature is empty, <code>false</code> when some field is
+	 *         rejected.
 	 * @since 2.0
 	 */
 	default boolean areAll(final Predicate<? super FieldKey<K, ?>> filter) {
@@ -188,29 +190,29 @@ public interface RecordSignature<K extends FieldKey<K, ?>> {
 	// TODO: filter with factory
 	
 	/**
-	 * Gets the first field key of this record signature accepted by the given filter.
+	 * Gets any field key of this record signature accepted by the given filter.
 	 * 
 	 * @param filter Predicate to use to filter the field keys.
-	 * @return The first accepted field key.
+	 * @return The accepted field key, or nothing when no field keys are accepted by the filter.
 	 * @since 2.0
 	 */
-	default Maybe<FieldKey<K, ?>> filterFirst(final Predicate<? super FieldKey<K, ?>> filter) {
-		return IterableUtils.filterFirst(keys(), filter);
+	default Maybe<FieldKey<K, ?>> filterAny(final Predicate<? super FieldKey<K, ?>> filter) {
+		return IterableUtils.filterAny(keys(), filter);
 	}
 	
 	// TODO: map ?
 	// TODO: extract ?
 	
 	/**
-	 * Gets the first element extracted from the field keys of this record signature by the given extractor.
+	 * Gets the element extracted from any field key of this record signature using the given extractor.
 	 * 
 	 * @param <EE> Type of the extracted elements.
 	 * @param extractor Function to use to extract from the field keys.
-	 * @return The first extracted element.
+	 * @return The extracted element, or nothing when no elements can be extracted from any field key.
 	 * @since 2.0
 	 */
-	default <EE> Maybe<EE> extractFirst(final Function<? super FieldKey<K, ?>, ? extends Maybe<? extends EE>> extractor) {
-		return IterableUtils.extractFirst(keys(), extractor);
+	default <EE> Maybe<EE> extractAny(final Function<? super FieldKey<K, ?>, ? extends Maybe<? extends EE>> extractor) {
+		return IterableUtils.extractAny(keys(), extractor);
 	}
 	
 	/**

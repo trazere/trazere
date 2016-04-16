@@ -176,7 +176,7 @@ public class MultimapUtils {
 	 * @param <V> Type of the values.
 	 * @param multimap Multimap containing the bindings to test.
 	 * @param filter Predicate to use to filter the binding.
-	 * @return <code>true</code> when some binding is accepted, <code>false</code> when all bindings are rejected.
+	 * @return <code>true</code> when some binding is accepted, <code>false</code> when all bindings are rejected or when the multimap is empty.
 	 * @since 2.0
 	 */
 	public static <K, V> boolean isAny(final Multimap<? extends K, ? extends V, ?> multimap, final Predicate2<? super K, ? super V> filter) {
@@ -190,7 +190,7 @@ public class MultimapUtils {
 	 * @param <V> Type of the values.
 	 * @param multimap Multimap containing the bindings to test.
 	 * @param filter Predicate to use to filter the binding.
-	 * @return <code>true</code> when all bindings are accepted, <code>false</code> when some binding is rejected.
+	 * @return <code>true</code> when all bindings are accepted or when the multimap is empty, <code>false</code> when some binding is rejected.
 	 * @since 2.0
 	 */
 	public static <K, V> boolean areAll(final Multimap<? extends K, ? extends V, ?> multimap, final Predicate2<? super K, ? super V> filter) {
@@ -269,7 +269,7 @@ public class MultimapUtils {
 	// TODO: flatten
 	
 	/**
-	 * Takes the n first bindings of the given multimap.
+	 * Takes n bindings of the given multimap.
 	 *
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -285,7 +285,7 @@ public class MultimapUtils {
 	}
 	
 	/**
-	 * Drops the n first bindings of the given multimap.
+	 * Drops n bindings of the given multimap.
 	 *
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -327,17 +327,17 @@ public class MultimapUtils {
 	}
 	
 	/**
-	 * Gets the first binding of the given multimap accepted by the given filter.
+	 * Gets any binding of the given multimap accepted by the given filter.
 	 *
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param multimap Multimap containing the bindings to filter.
 	 * @param filter Predicate to use to filter the binding.
-	 * @return The first accepted binding, or when no binding is accepted.
+	 * @return The accepted binding, or when no binding is accepted or the the multimap is empty.
 	 * @since 2.0
 	 */
-	public static <K, V> Maybe<Tuple2<K, V>> filterFirst(final Multimap<? extends K, ? extends V, ?> multimap, final Predicate2<? super K, ? super V> filter) {
-		return MultimapUtils.<K, V>bindings(multimap).filterFirst(filter);
+	public static <K, V> Maybe<Tuple2<K, V>> filterAny(final Multimap<? extends K, ? extends V, ?> multimap, final Predicate2<? super K, ? super V> filter) {
+		return MultimapUtils.<K, V>bindings(multimap).filterAny(filter);
 	}
 	
 	/**
@@ -391,7 +391,7 @@ public class MultimapUtils {
 		return results;
 	}
 	
-	// TODO: extractFirst
+	// TODO: extractAny
 	
 	// TODO: extractAll
 	

@@ -221,7 +221,7 @@ public class Feeds {
 		}
 		
 		@Override
-		public Maybe<Object> filterFirst(final Predicate<? super Object> filter) {
+		public Maybe<Object> filterAny(final Predicate<? super Object> filter) {
 			return Maybe.none();
 		}
 		
@@ -236,7 +236,7 @@ public class Feeds {
 		}
 		
 		@Override
-		public <EE> Maybe<EE> extractFirst(final Function<? super Object, ? extends Maybe<? extends EE>> extractor) {
+		public <EE> Maybe<EE> extractAny(final Function<? super Object, ? extends Maybe<? extends EE>> extractor) {
 			return Maybe.none();
 		}
 		
