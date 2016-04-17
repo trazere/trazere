@@ -340,6 +340,8 @@ extends Iterator<E>, Traversable<E> {
 		return IteratorUtils.extractAll(this, extractor);
 	}
 	
+	// TODO: append
+	
 	/**
 	 * Transforms and flattens the elements provided by this iterator using the given function.
 	 * <p>

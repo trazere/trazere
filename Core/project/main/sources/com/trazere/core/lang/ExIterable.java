@@ -42,11 +42,15 @@ extends TraversableIterable<E> {
 		}
 	}
 	
+	// Iterable.
+	
 	/**
 	 * @since 2.0
 	 */
 	@Override
 	ExIterator<E> iterator();
+	
+	// Traversable.
 	
 	/**
 	 * Gets any element provided by this iterable.
@@ -159,6 +163,8 @@ extends TraversableIterable<E> {
 	default <EE> ExIterable<EE> extractAll(final Function<? super E, ? extends Iterable<? extends EE>> extractor) {
 		return IterableUtils.extractAll(this, extractor);
 	}
+	
+	// TODO: append
 	
 	/**
 	 * Transforms and flattens the elements provided by this iterable using the given function.

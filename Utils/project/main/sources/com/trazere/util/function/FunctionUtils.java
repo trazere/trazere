@@ -1074,7 +1074,7 @@ public class FunctionUtils {
 	 * @param collection The collection.
 	 * @return The given collection.
 	 * @throws X When some predicate evaluation fails.
-	 * @deprecated Use {@link com.trazere.core.collection.CollectionUtils#retain(Collection, com.trazere.core.functional.Predicate)}.
+	 * @deprecated Use {@link com.trazere.core.collection.CollectionUtils#retainAll(Collection, com.trazere.core.functional.Predicate)}.
 	 */
 	@Deprecated
 	public static <V, C extends Collection<V>, X extends Exception> C retain(final Predicate1<? super V, ? extends X> predicate, final C collection)

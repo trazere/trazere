@@ -589,7 +589,7 @@ public class IterableUtils {
 		assert null != iterable;
 		assert null != function;
 		
-		return () -> IteratorUtils.flatMap(iterable.iterator(), arg -> function.evaluate(arg).iterator());
+		return () -> IteratorUtils.flatMap(iterable.iterator(), element -> function.evaluate(element).iterator());
 	}
 	
 	/**
@@ -607,7 +607,7 @@ public class IterableUtils {
 		assert null != iterable;
 		assert null != function;
 		
-		return () -> IteratorUtils.flatMap(iterable.iterator(), (arg1, arg2) -> function.evaluate(arg1, arg2).iterator());
+		return () -> IteratorUtils.flatMap(iterable.iterator(), (element1, element2) -> function.evaluate(element1, element2).iterator());
 	}
 	
 	/**
