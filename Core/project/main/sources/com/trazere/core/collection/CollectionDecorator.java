@@ -4,6 +4,8 @@ import com.trazere.core.design.Decorator;
 import com.trazere.core.imperative.ExIterator;
 import java.util.Collection;
 import java.util.Spliterator;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 /**
@@ -66,6 +68,11 @@ implements ExCollection<E> {
 	// Bulk operations.
 	
 	@Override
+	public void forEach(final Consumer<? super E> action) {
+		_decorated.forEach(action);
+	}
+	
+	@Override
 	public boolean containsAll(final Collection<?> c) {
 		return _decorated.containsAll(c);
 	}
@@ -78,6 +85,11 @@ implements ExCollection<E> {
 	@Override
 	public boolean removeAll(final Collection<?> c) {
 		return _decorated.removeAll(c);
+	}
+	
+	@Override
+	public boolean removeIf(final Predicate<? super E> filter) {
+		return _decorated.removeIf(filter);
 	}
 	
 	@Override

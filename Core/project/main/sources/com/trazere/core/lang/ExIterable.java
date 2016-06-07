@@ -2,21 +2,25 @@ package com.trazere.core.lang;
 
 import com.trazere.core.collection.CollectionFactory;
 import com.trazere.core.functional.Function;
+import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Predicate;
 import com.trazere.core.imperative.ExIterator;
+import com.trazere.core.imperative.Procedure;
 import com.trazere.core.util.Maybe;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.NoSuchElementException;
 
 /**
- * The {@link ExIterable} interface defines extended iterables.
+ * The {@link ExIterable} interface defines extended {@link Iterable iterables}.
  * 
  * @param <E> Type of the elements.
  * @since 2.0
  */
 @FunctionalInterface
 public interface ExIterable<E>
-extends TraversableIterable<E> {
+extends Iterable<E>, Traversable<E> {
+	// TODO: move to Iterables
 	// TODO: rename -> fromIterable ?
 	/**
 	 * Builds an extended view of the given iterable.
@@ -50,8 +54,6 @@ extends TraversableIterable<E> {
 	@Override
 	ExIterator<E> iterator();
 	
-	// Traversable.
-	
 	/**
 	 * Gets any element provided by this iterable.
 	 *
@@ -74,6 +76,76 @@ extends TraversableIterable<E> {
 	 */
 	default Maybe<E> optionalAny() {
 		return IterableUtils.optionalAny(this);
+	}
+	
+	// Traversable.
+	
+	/**
+	 * Left folds over the elements provided by this iterable using the given binary operator and initial state.
+	 * <p>
+	 * The elements are folded according their iteration order.
+	 * 
+	 * @see IterableUtils#fold(Iterable, Function2, Object)
+	 * @since 2.0
+	 */
+	@Override
+	default <S> S fold(final Function2<? super S, ? super E, ? extends S> operator, final S initialState) {
+		return IterableUtils.fold(this, operator, initialState);
+	}
+	
+	/**
+	 * Tests whether any element provided by this iterable is accepted by the given filter.
+	 * 
+	 * @see IterableUtils#isAny(Iterable, Predicate)
+	 * @since 2.0
+	 */
+	@Override
+	default boolean isAny(final Predicate<? super E> filter) {
+		return IterableUtils.isAny(this, filter);
+	}
+	
+	/**
+	 * Tests whether all elements provided by this iterable are accepted by the given filter.
+	 * 
+	 * @see IterableUtils#areAll(Iterable, Predicate)
+	 * @since 2.0
+	 */
+	@Override
+	default boolean areAll(final Predicate<? super E> filter) {
+		return IterableUtils.areAll(this, filter);
+	}
+	
+	/**
+	 * Counts the elements provided by this iterable accepted by the given filter.
+	 * 
+	 * @see IterableUtils#count(Iterable, Predicate)
+	 * @since 2.0
+	 */
+	@Override
+	default int count(final Predicate<? super E> filter) {
+		return IterableUtils.count(this, filter);
+	}
+	
+	/**
+	 * Gets the least element provided by this iterable according to the given comparator.
+	 *
+	 * @see IterableUtils#least(Iterable, Comparator)
+	 * @since 2.0
+	 */
+	@Override
+	default Maybe<E> least(final Comparator<? super E> comparator) {
+		return IterableUtils.least(this, comparator);
+	}
+	
+	/**
+	 * Gets the greatest element provided by this iterable according to the given comparator.
+	 *
+	 * @see IterableUtils#greatest(Iterable, Comparator)
+	 * @since 2.0
+	 */
+	@Override
+	default Maybe<E> greatest(final Comparator<? super E> comparator) {
+		return IterableUtils.greatest(this, comparator);
 	}
 	
 	/**
@@ -128,6 +200,19 @@ extends TraversableIterable<E> {
 	}
 	
 	/**
+	 * Gets any element provided by this iterable accepted by the given filter.
+	 * <p>
+	 * The elements are filtered according to their iteration order.
+	 * 
+	 * @see IterableUtils#filterAny(Iterable, Predicate)
+	 * @since 2.0
+	 */
+	@Override
+	default Maybe<E> filterAny(final Predicate<? super E> filter) {
+		return IterableUtils.filterAny(this, filter);
+	}
+	
+	/**
 	 * Transforms the elements provided by this iterable using the given function.
 	 *
 	 * @return An iterable providing the transformed elements.
@@ -152,6 +237,19 @@ extends TraversableIterable<E> {
 	}
 	
 	/**
+	 * Gets the element extracted from any element provided by this iterable using the given extractor.
+	 * <p>
+	 * The elements are extracted from according to their iteration order.
+	 * 
+	 * @see IterableUtils#extractAny(Iterable, Function)
+	 * @since 2.0
+	 */
+	@Override
+	default <EE> Maybe<EE> extractAny(final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
+		return IterableUtils.extractAny(this, extractor);
+	}
+	
+	/**
 	 * Gets all elements extracted from the elements provided by this iterable using the given extractor.
 	 * 
 	 * @param <EE> Type of the extracted elements.
@@ -166,18 +264,19 @@ extends TraversableIterable<E> {
 	
 	// TODO: append
 	
-	/**
-	 * Transforms and flattens the elements provided by this iterable using the given function.
-	 * 
-	 * @param <TE> Type of the transformed elements.
-	 * @param function Function to use to transform the elements.
-	 * @return An iterable providing the flatten, transformed elements.
-	 * @see IterableUtils#flatMap(Iterable, Function)
-	 * @since 2.0
-	 */
-	default <TE> ExIterable<TE> flatMap(final Function<? super E, ? extends Iterable<? extends TE>> function) {
-		return IterableUtils.flatMap(this, function);
-	}
+	// Note: flatMap is not defined here because Java does not support higher order type parameters.
+	//	/**
+	//	 * Transforms and flattens the elements provided by this iterable using the given function.
+	//	 *
+	//	 * @param <TE> Type of the transformed elements.
+	//	 * @param function Function to use to transform the elements.
+	//	 * @return An iterable providing the flatten, transformed elements.
+	//	 * @see IterableUtils#flatMap(Iterable, Function)
+	//	 * @since 2.0
+	//	 */
+	//	default <TE> ExIterable<TE> flatMap(final Function<? super E, ? extends Iterable<? extends TE>> function) {
+	//		return IterableUtils.flatMap(this, function);
+	//	}
 	
 	/**
 	 * Composes pairs with the elements provided by this iterable and the given iterable.
@@ -194,6 +293,19 @@ extends TraversableIterable<E> {
 	default <E2> PairIterable<E, E2> zip(final Iterable<? extends E2> iterable2) {
 		return IterableUtils.zip(this, iterable2);
 	}
+	
+	/**
+	 * Executes the given procedure with each element provided by this iterable.
+	 * 
+	 * @see IterableUtils#foreach(Iterable, Procedure)
+	 * @since 2.0
+	 */
+	@Override
+	default void foreach(final Procedure<? super E> procedure) {
+		IterableUtils.foreach(this, procedure);
+	}
+	
+	// Misc.
 	
 	/**
 	 * Builds an unmodifiable view of this iterable.

@@ -1113,6 +1113,8 @@ public class IteratorUtils {
 			public Tuple2<E1, E2> next() {
 				return new Tuple2<>(iterator1.next(), iterator2.next());
 			}
+			
+			// TODO: remove
 		};
 	}
 	

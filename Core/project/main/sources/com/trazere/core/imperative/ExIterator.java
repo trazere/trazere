@@ -11,13 +11,14 @@ import java.util.Comparator;
 import java.util.Iterator;
 
 /**
- * The {@link ExIterator} interfaces defines extended iterators.
+ * The {@link ExIterator} interfaces defines extended {@link Iterator iterators}.
  * 
  * @param <E> Type of the elements.
  * @since 2.0
  */
 public interface ExIterator<E>
 extends Iterator<E>, Traversable<E> {
+	// TODO: move to Iterators ?
 	// TODO: rename -> fromIterator ?
 	/**
 	 * Builds an extended view of the given iterator.
@@ -52,6 +53,8 @@ extends Iterator<E>, Traversable<E> {
 			};
 		}
 	}
+	
+	// Iterator.
 	
 	/**
 	 * Gets the next element provided by this iterator.
@@ -146,6 +149,8 @@ extends Iterator<E>, Traversable<E> {
 	default <C extends Collection<? super E>> C drain(final C results) {
 		return IteratorUtils.drain(this, results);
 	}
+	
+	// Traversable.
 	
 	/**
 	 * Left folds over the elements provided by this iterator using the given binary operator and initial state.
@@ -385,6 +390,8 @@ extends Iterator<E>, Traversable<E> {
 	default void foreach(final Procedure<? super E> procedure) {
 		IteratorUtils.foreach(this, procedure);
 	}
+	
+	// Misc.
 	
 	/**
 	 * Builds an unmodifiable view of this iterator.

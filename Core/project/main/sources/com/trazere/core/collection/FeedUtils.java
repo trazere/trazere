@@ -39,19 +39,6 @@ public class FeedUtils {
 		return IteratorUtils.least(feed.iterator());
 	}
 	
-	//	/**
-	//	 * Gets the least element of the given feed according to the given comparator.
-	//	 *
-	//	 * @param <E> Type of the elements.
-	//	 * @param feed Feed of the elements.
-	//	 * @param comparator Comparator to use.
-	//	 * @return The least element.
-	//	 * @since 2.0
-	//	 */
-	//	public static <E> Maybe<E> least(final Feed<? extends E> feed, final Comparator<? super E> comparator) {
-	//		return feed.least(comparator);
-	//	}
-	
 	/**
 	 * Gets the greatest element of the given feed according to their natural order.
 	 *
@@ -63,84 +50,6 @@ public class FeedUtils {
 	public static <E extends Comparable<E>> Maybe<E> greatest(final Feed<? extends E> feed) {
 		return IteratorUtils.greatest(feed.iterator());
 	}
-	
-	//	/**
-	//	 * Gets the greatest element of the given feed according to the given comparator.
-	//	 *
-	//	 * @param <E> Type of the elements.
-	//	 * @param feed Feed of the elements.
-	//	 * @param comparator Comparator to use.
-	//	 * @return The greatest element.
-	//	 * @since 2.0
-	//	 */
-	//	public static <E> Maybe<E> greatest(final Feed<? extends E> feed, final Comparator<? super E> comparator) {
-	//		return feed.greatest(comparator);
-	//	}
-	
-	//	/**
-	//	 * Takes the n first elements of the given feed.
-	//	 *
-	//	 * @param <E> Type of the elements.
-	//	 * @param feed Feed to take from.
-	//	 * @param n Number of elements to take.
-	//	 * @return A feed of the taken elements.
-	//	 * @since 2.0
-	//	 */
-	//	public static <E> Feed<E> take(final Feed<? extends E> feed, final int n) {
-	//		return feed.take(n);
-	//	}
-	
-	//	/**
-	//	 * Takes the first elements of the given feed while the given predicates holds.
-	//	 *
-	//	 * @param <E> Type of the elements.
-	//	 * @param feed Feed to take from.
-	//	 * @param predicate Filter predicate.
-	//	 * @return A feed of the taken elements.
-	//	 * @since 2.0
-	//	 */
-	//	public static <E> Feed<E> takeWhile(final Feed<? extends E> feed, final Predicate<? super E> predicate) {
-	//		return feed.takeWhile(predicate);
-	//	}
-	
-	//	/**
-	//	 * Drops the n first elements of the given feed.
-	//	 *
-	//	 * @param <E> Type of the elements.
-	//	 * @param feed Feed to drop from.
-	//	 * @param n Number of elements to drop.
-	//	 * @return A feed of the remaining elements.
-	//	 * @since 2.0
-	//	 */
-	//	public static <E> Feed<E> drop(final Feed<? extends E> feed, final int n) {
-	//		return feed.drop(n);
-	//	}
-	
-	//	/**
-	//	 * Drops the first elements of the given feed while the given predicates holds.
-	//	 *
-	//	 * @param <E> Type of the elements.
-	//	 * @param feed Feed to drop from.
-	//	 * @param predicate Filter predicate.
-	//	 * @return A feed of the remaining elements.
-	//	 * @since 2.0
-	//	 */
-	//	public static <E> Feed<E> dropWhile(final Feed<? extends E> feed, final Predicate<? super E> predicate) {
-	//		return feed.dropWhile(predicate);
-	//	}
-	
-	//	/**
-	//	 * Filters the elements of the given feed using the given filter.
-	//	 *
-	//	 * @param <E> Type of the elements.
-	//	 * @param feed Feed of the elements to filter.
-	//	 * @param filter Predicate to use to filter the elements.
-	//	 * @return A feed of the filtered elements.
-	//	 * @since 2.0
-	//	 */
-	//	public static <E> Feed<E> filter(final Feed<? extends E> feed, final Predicate<? super E> filter) {
-	//		return feed.filter(filter);
-	//	}
 	
 	/**
 	 * Appends the given feeds together.

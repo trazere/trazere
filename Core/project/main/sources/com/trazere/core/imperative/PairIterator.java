@@ -19,6 +19,7 @@ import java.util.Map;
  */
 public interface PairIterator<E1, E2>
 extends ExIterator<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
+	// TODO: move to Iterators
 	// TODO: rename -> fromIterator ?
 	/**
 	 * Builds an extended view of the given iterator of pairs of elements.

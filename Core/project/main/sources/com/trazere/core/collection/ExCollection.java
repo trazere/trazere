@@ -2,21 +2,20 @@ package com.trazere.core.collection;
 
 import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Predicate;
-import com.trazere.core.imperative.ExIterator;
-import com.trazere.core.lang.TraversableIterable;
+import com.trazere.core.lang.ExIterable;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 import java.util.Collection;
-import java.util.NoSuchElementException;
 
 /**
- * The {@link ExCollection} interface defines extended collections.
+ * The {@link ExCollection} interface defines extended {@link Collection collections}.
  * 
  * @param <E> Type of the elements.
  * @since 2.0
  */
 public interface ExCollection<E>
-extends Collection<E>, TraversableIterable<E> {
+extends Collection<E>, ExIterable<E> {
+	// TODO: move to Collections ?
 	// TODO: rename -> fromCollection ?
 	/**
 	 * Builds an extended view of the given collection.
@@ -37,30 +36,6 @@ extends Collection<E>, TraversableIterable<E> {
 	}
 	
 	// Collection.
-	
-	/**
-	 * Gets any element of this collection.
-	 *
-	 * @return An element of the collection.
-	 * @throws NoSuchElementException When the collection is empty.
-	 * @see CollectionUtils#any(Collection)
-	 * @since 2.0
-	 */
-	default E any()
-	throws NoSuchElementException {
-		return CollectionUtils.any(this);
-	}
-	
-	/**
-	 * Gets any element of this collection.
-	 *
-	 * @return An element of the collection, or nothing when the collection is empty.
-	 * @see CollectionUtils#optionalAny(Collection)
-	 * @since 2.0
-	 */
-	default Maybe<E> optionalAny() {
-		return CollectionUtils.optionalAny(this);
-	}
 	
 	// TODO: rename
 	/**
@@ -178,14 +153,6 @@ extends Collection<E>, TraversableIterable<E> {
 	default boolean retainAll(final Predicate<? super E> filter) {
 		return CollectionUtils.retainAll(this, filter);
 	}
-	
-	// Iterable.
-	
-	/**
-	 * @since 2.0
-	 */
-	@Override
-	ExIterator<E> iterator();
 	
 	// Traversable.
 	
@@ -360,12 +327,11 @@ extends Collection<E>, TraversableIterable<E> {
 	/**
 	 * Gets all elements extracted from the elements of this collection using the given extractor.
 	 * 
-	 * @param <EE> Type of the extracted elements.
-	 * @param extractor Function to use to extract from the elements.
 	 * @return A collection of the extracted elements.
 	 * @see CollectionUtils#extractAll(Collection, Function)
 	 * @since 2.0
 	 */
+	@Override
 	default <EE> ExCollection<EE> extractAll(final Function<? super E, ? extends Iterable<? extends EE>> extractor) {
 		return CollectionUtils.extractAll(this, extractor);
 	}
@@ -399,33 +365,35 @@ extends Collection<E>, TraversableIterable<E> {
 		return CollectionUtils.append(this, collection2, resultFactory);
 	}
 	
-	/**
-	 * Transforms and flattens the elements of this collection using the given function.
-	 * 
-	 * @param <TE> Type of the transformed elements.
-	 * @param function Function to use to transform the elements.
-	 * @return A collection of the flatten, transformed elements.
-	 * @see CollectionUtils#flatMap(Collection, Function)
-	 * @since 2.0
-	 */
-	default <TE> ExCollection<TE> flatMap(final Function<? super E, ? extends Collection<? extends TE>> function) {
-		return CollectionUtils.flatMap(this, function);
-	}
+	// Note: flatMap is not defined here because Java does not support higher order type parameters.
+	//	/**
+	//	 * Transforms and flattens the elements of this collection using the given function.
+	//	 *
+	//	 * @param <TE> Type of the transformed elements.
+	//	 * @param function Function to use to transform the elements.
+	//	 * @return A collection of the flatten, transformed elements.
+	//	 * @see CollectionUtils#flatMap(Collection, Function)
+	//	 * @since 2.0
+	//	 */
+	//	default <TE> ExCollection<TE> flatMap(final Function<? super E, ? extends Collection<? extends TE>> function) {
+	//		return CollectionUtils.flatMap(this, function);
+	//	}
 	
-	/**
-	 * Transforms and flattens the elements of this collection using the given function.
-	 * 
-	 * @param <TE> Type of the transformed elements.
-	 * @param <C> Type of the result collection.
-	 * @param function Function to use to transform the elements.
-	 * @param resultFactory Factory of the result collection.
-	 * @return A new collection of the flatten, transformed elements.
-	 * @see CollectionUtils#flatMap(Collection, Function, CollectionFactory)
-	 * @since 2.0
-	 */
-	default <TE, C extends Collection<? super TE>> C flatMap(final Function<? super E, ? extends Collection<? extends TE>> function, final CollectionFactory<? super TE, C> resultFactory) {
-		return CollectionUtils.flatMap(this, function, resultFactory);
-	}
+	// Note: flatMap is not defined here because Java does not support higher order type parameters.
+	//	/**
+	//	 * Transforms and flattens the elements of this collection using the given function.
+	//	 *
+	//	 * @param <TE> Type of the transformed elements.
+	//	 * @param <C> Type of the result collection.
+	//	 * @param function Function to use to transform the elements.
+	//	 * @param resultFactory Factory of the result collection.
+	//	 * @return A new collection of the flatten, transformed elements.
+	//	 * @see CollectionUtils#flatMap(Collection, Function, CollectionFactory)
+	//	 * @since 2.0
+	//	 */
+	//	default <TE, C extends Collection<? super TE>> C flatMap(final Function<? super E, ? extends Collection<? extends TE>> function, final CollectionFactory<? super TE, C> resultFactory) {
+	//		return CollectionUtils.flatMap(this, function, resultFactory);
+	//	}
 	
 	// TODO: intersect(Collection)
 	// TODO: intersect(Collection, CollectionFactory)
@@ -466,6 +434,8 @@ extends Collection<E>, TraversableIterable<E> {
 		return CollectionUtils.zip(this, collection2, resultFactory);
 	}
 	
+	// Misc.
+	
 	/**
 	 * Builds an unmodifiable view of this collection.
 	 * 
@@ -473,6 +443,7 @@ extends Collection<E>, TraversableIterable<E> {
 	 * @see CollectionUtils#unmodifiable(Collection)
 	 * @since 2.0
 	 */
+	@Override
 	default ExCollection<E> unmodifiable() {
 		return CollectionUtils.unmodifiable(this);
 	}

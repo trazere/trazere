@@ -16,15 +16,12 @@
 package com.trazere.core.collection;
 
 import com.trazere.core.functional.Function;
-import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Predicate;
 import com.trazere.core.imperative.ExIterator;
-import com.trazere.core.imperative.Procedure;
-import com.trazere.core.lang.Traversable;
+import com.trazere.core.lang.ExIterable;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.NoSuchElementException;
 
 /**
@@ -34,7 +31,7 @@ import java.util.NoSuchElementException;
  * @since 2.0
  */
 public interface Feed<E>
-extends Traversable<E>, Iterable<E> {
+extends ExIterable<E> {
 	/**
 	 * Tests whether this feed is empty.
 	 * 
@@ -104,67 +101,29 @@ extends Traversable<E>, Iterable<E> {
 	 */
 	Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> optionalItem();
 	
+	// Iterable.
+	
+	@Override
+	default ExIterator<E> iterator() {
+		return new ExIterator<E>() {
+			private Feed<? extends E> _tail = Feed.this;
+			
+			@Override
+			public boolean hasNext() {
+				return !_tail.isEmpty();
+			}
+			
+			@Override
+			public E next()
+			throws NoSuchElementException {
+				final Tuple2<? extends E, ? extends Feed<? extends E>> item = _tail.item();
+				_tail = item.get2();
+				return item.get1();
+			}
+		};
+	}
+	
 	// Traversable.
-	
-	/**
-	 * Left folds over the elements of this feed using the given binary operator and initial state.
-	 * 
-	 * @since 2.0
-	 */
-	@Override
-	default <S> S fold(final Function2<? super S, ? super E, ? extends S> operator, final S initialState) {
-		return iterator().fold(operator, initialState);
-	}
-	
-	/**
-	 * Tests whether any element of this feed is accepted by the given filter.
-	 * 
-	 * @since 2.0
-	 */
-	@Override
-	default boolean isAny(final Predicate<? super E> filter) {
-		return iterator().isAny(filter);
-	}
-	
-	/**
-	 * Tests whether all elements of this feed are accepted by the given filter.
-	 * 
-	 * @since 2.0
-	 */
-	@Override
-	default boolean areAll(final Predicate<? super E> filter) {
-		return iterator().areAll(filter);
-	}
-	
-	/**
-	 * Counts the elements of this feed accepted by the given filter.
-	 * 
-	 * @since 2.0
-	 */
-	@Override
-	default int count(final Predicate<? super E> filter) {
-		return iterator().count(filter);
-	}
-	
-	/**
-	 * Gets the least element of this feed according to the given comparator.
-	 *
-	 * @since 2.0
-	 */
-	@Override
-	default Maybe<E> least(final Comparator<? super E> comparator) {
-		return iterator().least(comparator);
-	}
-	
-	/**
-	 * Gets the greatest element of this feed according to the given comparator.
-	 *
-	 * @since 2.0
-	 */
-	@Override
-	default Maybe<E> greatest(final Comparator<? super E> comparator) {
-		return iterator().greatest(comparator);
-	}
 	
 	/**
 	 * Takes n elements of this feed.
@@ -347,16 +306,6 @@ extends Traversable<E>, Iterable<E> {
 	}
 	
 	/**
-	 * Gets any element of this feed accepted by the given filter.
-	 * 
-	 * @since 2.0
-	 */
-	@Override
-	default Maybe<E> filterAny(final Predicate<? super E> filter) {
-		return iterator().filterAny(filter);
-	}
-	
-	/**
 	 * Transforms the elements of this feed using the given function.
 	 *
 	 * @return A feed of the transformed elements.
@@ -430,16 +379,6 @@ extends Traversable<E>, Iterable<E> {
 	}
 	
 	/**
-	 * Gets the element extracted from any element of this feed using the given extractor.
-	 * 
-	 * @since 2.0
-	 */
-	@Override
-	default <EE> Maybe<EE> extractAny(final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
-		return iterator().extractAny(extractor);
-	}
-	
-	/**
 	 * Gets all elements extracted from the elements of this feed using the given extractor.
 	 * 
 	 * @param <EE> Type of the extracted elements.
@@ -447,6 +386,7 @@ extends Traversable<E>, Iterable<E> {
 	 * @return A feed of the extracted elements.
 	 * @since 2.0
 	 */
+	@Override
 	default <EE> Feed<EE> extractAll(final Function<? super E, ? extends Iterable<? extends EE>> extractor) {
 		return flatMap(element -> Feeds.fromIterable(extractor.evaluate(element)));
 	}
@@ -476,15 +416,9 @@ extends Traversable<E>, Iterable<E> {
 		return FeedUtils.flatten(map(function));
 	}
 	
-	/**
-	 * Executes the given procedure with each element of this feed.
-	 * 
-	 * @since 2.0
-	 */
-	@Override
-	default void foreach(final Procedure<? super E> procedure) {
-		iterator().foreach(procedure);
-	}
+	// TODO: zip
+	
+	// Misc.
 	
 	/**
 	 * Builds a memoized view of this feed.
@@ -526,27 +460,5 @@ extends Traversable<E>, Iterable<E> {
 				}
 			};
 		}
-	}
-	
-	// Iterable.
-	
-	@Override
-	default ExIterator<E> iterator() {
-		return new ExIterator<E>() {
-			private Feed<? extends E> _tail = Feed.this;
-			
-			@Override
-			public boolean hasNext() {
-				return !_tail.isEmpty();
-			}
-			
-			@Override
-			public E next()
-			throws NoSuchElementException {
-				final Tuple2<? extends E, ? extends Feed<? extends E>> item = _tail.item();
-				_tail = item.get2();
-				return item.get1();
-			}
-		};
 	}
 }

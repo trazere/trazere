@@ -28,7 +28,6 @@ import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 /**
  * The {@link CollectionUtils} class provides various utilities regarding the manipulation of {@link Collection collections}.
@@ -37,34 +36,6 @@ import java.util.NoSuchElementException;
  * @since 2.0
  */
 public class CollectionUtils {
-	/**
-	 * Gets any element of the given collection.
-	 *
-	 * @param <E> Type of the elements.
-	 * @param collection Collection to read.
-	 * @return An element of the collection.
-	 * @throws NoSuchElementException When the collection is empty.
-	 * @since 2.0
-	 */
-	public static <E> E any(final Collection<? extends E> collection)
-	throws NoSuchElementException {
-		return collection.iterator().next();
-	}
-	
-	/**
-	 * Gets any element of the given collection.
-	 * <p>
-	 * This methods support empty collections.
-	 *
-	 * @param <E> Type of the elements.
-	 * @param collection Collection to read.
-	 * @return An element of the collection, or nothing when the collection is empty.
-	 * @since 2.0
-	 */
-	public static <E> Maybe<E> optionalAny(final Collection<? extends E> collection) {
-		return IteratorUtils.optionalNext(collection.iterator());
-	}
-	
 	// TODO: rename
 	/**
 	 * Tests whether the given collections contain some common values.
