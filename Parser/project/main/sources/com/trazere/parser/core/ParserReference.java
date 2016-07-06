@@ -62,7 +62,7 @@ implements Parser<Token, Result> {
 		try {
 			get().run(closure, state);
 		} catch (final ReferenceNotSetException exception) {
-			throw new ParserException("Parser reference has not been set");
+			throw new ParserException("Parser reference has not been set", exception);
 		}
 	}
 	
