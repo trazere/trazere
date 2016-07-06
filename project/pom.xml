@@ -30,7 +30,7 @@
 		<plugin.maven-surefire-plugin.version>2.19.1</plugin.maven-surefire-plugin.version>
 
 		<tools.org.apache.ant.version>1.9.4</tools.org.apache.ant.version>
-		<tools.org.slf4j.version>1.7.10</tools.org.slf4j.version>
+		<tools.org.slf4j.version>1.7.21</tools.org.slf4j.version>
 
 		<build.java.version>1.6</build.java.version>
 		<build.version>${project.version}</build.version>
