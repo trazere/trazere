@@ -19,23 +19,31 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-		<plugin.maven-assembly-plugin.version>2.5.3</plugin.maven-assembly-plugin.version>
-		<plugin.maven-clean-plugin.version>2.6.1</plugin.maven-clean-plugin.version>
-		<plugin.maven-compiler-plugin.version>3.2</plugin.maven-compiler-plugin.version>
+		<plugin.maven-assembly-plugin.version>2.6</plugin.maven-assembly-plugin.version>
+		<plugin.maven-clean-plugin.version>3.0.0</plugin.maven-clean-plugin.version>
+		<plugin.maven-compiler-plugin.version>3.5.1</plugin.maven-compiler-plugin.version>
 		<plugin.maven-deploy-plugin.version>2.8.2</plugin.maven-deploy-plugin.version>
-		<plugin.maven-jar-plugin.version>2.6</plugin.maven-jar-plugin.version>
-		<plugin.maven-resources-plugin.version>2.7</plugin.maven-resources-plugin.version>
-		<plugin.maven-source-plugin.version>2.4</plugin.maven-source-plugin.version>
-		<plugin.maven-surefire-plugin.version>2.18.1</plugin.maven-surefire-plugin.version>
+		<plugin.maven-enforcer-plugin.version>1.4.1</plugin.maven-enforcer-plugin.version>
+		<plugin.maven-jar-plugin.version>3.0.1</plugin.maven-jar-plugin.version>
+		<plugin.maven-resources-plugin.version>3.0.1</plugin.maven-resources-plugin.version>
+		<plugin.maven-source-plugin.version>3.0.0</plugin.maven-source-plugin.version>
+		<plugin.maven-surefire-plugin.version>2.19.1</plugin.maven-surefire-plugin.version>
 
 		<tools.org.apache.ant.version>1.9.4</tools.org.apache.ant.version>
 		<tools.org.slf4j.version>1.7.10</tools.org.slf4j.version>
 
+		<build.java.version>1.6</build.java.version>
 		<build.version>${project.version}</build.version>
 	</properties>
 
 	<profiles>
 		<profile>
+			<!--
+				This profile allows to disable the tests during the build.
+				It can be activated manually, or by setting the 'skipTests' property when invoking Maven.
+
+				Example: mvn clean install -P skip-tests
+			-->
 			<id>skip-tests</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
@@ -46,17 +54,6 @@
 			<build>
 				<pluginManagement>
 					<plugins>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-compiler-plugin</artifactId>
-							<executions>
-								<execution>
-									<id>default-testCompile</id>
-									<phase>never</phase>
-								</execution>
-							</executions>
-						</plugin>
-
 						<plugin>
 							<groupId>org.apache.maven.plugins</groupId>
 							<artifactId>maven-resources-plugin</artifactId>
@@ -85,6 +82,12 @@
 	</profiles>
 
 	<build>
+		<!--
+			Setup project main structure :
+
+			- main/
+			|- sources/ : sources and resources
+		-->
 		<sourceDirectory>${basedir}/main/sources</sourceDirectory>
 		<resources>
 			<resource>
@@ -95,6 +98,12 @@
 			</resource>
 		</resources>
 
+		<!--
+			Setup project test structure :
+
+			- test/
+			|- sources/ : sources and resources
+		-->
 		<testSourceDirectory>${basedir}/test/sources</testSourceDirectory>
 		<testResources>
 			<testResource>
@@ -107,6 +116,7 @@
 
 		<pluginManagement>
 			<plugins>
+				<!-- Assembly -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-assembly-plugin</artifactId>
@@ -116,28 +126,39 @@
 					</configuration>
 				</plugin>
 
+				<!-- Cleaning -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-clean-plugin</artifactId>
 					<version>${plugin.maven-clean-plugin.version}</version>
 				</plugin>
 
+				<!-- Java compiler -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>${plugin.maven-compiler-plugin.version}</version>
 					<configuration>
-						<source>1.6</source>
-						<target>1.6</target>
+						<source>${build.java.version}</source>
+						<target>${build.java.version}</target>
 					</configuration>
 				</plugin>
 
+				<!-- Deploy -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-deploy-plugin</artifactId>
 					<version>${plugin.maven-deploy-plugin.version}</version>
 				</plugin>
 
+				<!-- Enforcer -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-enforcer-plugin</artifactId>
+					<version>${plugin.maven-enforcer-plugin.version}</version>
+				</plugin>
+
+				<!-- JAR -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
@@ -146,25 +167,27 @@
 						<archive>
 							<addMavenDescriptor>false</addMavenDescriptor>
 							<manifestEntries>
-								<Specification-Title>${project.name}</Specification-Title>
-								<Specification-Version>${build.version}</Specification-Version>
+								<Specification-Title>${project.name}</Specification-Title><!-- Add project name in the manifest -->
+								<Specification-Version>${build.version}</Specification-Version><!-- Add project version in the manifest -->
 							</manifestEntries>
 						</archive>
 					</configuration>
 				</plugin>
 
+				<!-- Resources -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-resources-plugin</artifactId>
 					<version>${plugin.maven-resources-plugin.version}</version>
 				</plugin>
 
+				<!-- Sources -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-source-plugin</artifactId>
 					<version>${plugin.maven-source-plugin.version}</version>
 					<executions>
-						<execution>
+						<execution><!-- Add source artifact -->
 							<id>attach-sources</id>
 							<phase>verify</phase>
 							<goals>
@@ -174,6 +197,7 @@
 					</executions>
 				</plugin>
 
+				<!-- Surefire -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
@@ -182,9 +206,86 @@
 						<systemPropertyVariables>
 							<org.jboss.logging.provider>slf4j</org.jboss.logging.provider><!-- Note: fix Hibernate logging, https://issues.apache.org/jira/browse/LOG4J2-172 -->
 						</systemPropertyVariables>
+						<properties>
+							<property><!-- Disable reports -->
+								<name>usedefaultlisteners</name>
+								<key>false</key>
+							</property>
+						</properties>
+					</configuration>
+				</plugin>
+
+				<!--
+					M2E
+
+					This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.
+				-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-clean-plugin</artifactId>
+										<versionRange>${plugin.maven-clean-plugin.version}</versionRange>
+										<goals>
+											<goal>clean</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
 					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
+
+		<plugins>
+			<!-- Enforcer -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>enforce</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<requireJavaVersion><!-- Check Java version -->
+									<version>[1.8.0-40,1.9)</version>
+								</requireJavaVersion>
+
+								<requireMavenVersion><!-- Check Maven version -->
+									<version>[3.2,3.4)</version>
+								</requireMavenVersion>
+
+								<requireReleaseDeps><!-- Ensure that release module does not depend on any snapshot module -->
+									<onlyWhenRelease>true</onlyWhenRelease>
+									<message>Snapshots are not allowed for final versions !</message>
+								</requireReleaseDeps>
+
+								<bannedDependencies>
+									<excludes>
+										<exclude>com.sun.xml.bind</exclude><!-- Ban legacy JAXB implementation -->
+										<exclude>commons-logging:commons-logging</exclude><!-- Ban commons logging -->
+									</excludes>
+								</bannedDependencies>
+
+								<dependencyConvergence /><!-- Ensure that there are no dependency conflict -->
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
 	</build>
 </project>
