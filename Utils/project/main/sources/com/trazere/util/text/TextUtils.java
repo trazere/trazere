@@ -680,7 +680,7 @@ public class TextUtils {
 		
 		try {
 			return Maybe.some(UUID.fromString(representation));
-		} catch (final IllegalArgumentException exception) {
+		} catch (@SuppressWarnings("unused") final IllegalArgumentException exception) {
 			return Maybe.none();
 		}
 	}

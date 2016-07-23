@@ -45,7 +45,7 @@ public class BigDecimalExtractors {
 	private static final Function<BigDecimal, Maybe<Byte>> BYTE_VALUE = (final BigDecimal arg) -> {
 		try {
 			return Maybe.some(arg.byteValueExact());
-		} catch (final ArithmeticException exception) {
+		} catch (@SuppressWarnings("unused") final ArithmeticException exception) {
 			return Maybe.none();
 		}
 	};
@@ -65,7 +65,7 @@ public class BigDecimalExtractors {
 	private static final Function<BigDecimal, Maybe<Short>> SHORT_VALUE = (final BigDecimal arg) -> {
 		try {
 			return Maybe.some(arg.shortValueExact());
-		} catch (final ArithmeticException exception) {
+		} catch (@SuppressWarnings("unused") final ArithmeticException exception) {
 			return Maybe.none();
 		}
 	};
@@ -85,7 +85,7 @@ public class BigDecimalExtractors {
 	private static final Function<BigDecimal, Maybe<Integer>> INTEGER_VALUE = (final BigDecimal arg) -> {
 		try {
 			return Maybe.some(arg.intValueExact());
-		} catch (final ArithmeticException exception) {
+		} catch (@SuppressWarnings("unused") final ArithmeticException exception) {
 			return Maybe.none();
 		}
 	};
@@ -105,7 +105,7 @@ public class BigDecimalExtractors {
 	private static final Function<BigDecimal, Maybe<Long>> LONG_VALUE = (final BigDecimal arg) -> {
 		try {
 			return Maybe.some(arg.longValueExact());
-		} catch (final ArithmeticException exception) {
+		} catch (@SuppressWarnings("unused") final ArithmeticException exception) {
 			return Maybe.none();
 		}
 	};
@@ -125,7 +125,7 @@ public class BigDecimalExtractors {
 	private static final Function<BigDecimal, Maybe<Float>> FLOAT_VALUE = (final BigDecimal arg) -> {
 		try {
 			return Maybe.some(arg.floatValue());
-		} catch (final NumberFormatException exception) {
+		} catch (@SuppressWarnings("unused") final NumberFormatException exception) {
 			return Maybe.none();
 		}
 	};
@@ -145,7 +145,7 @@ public class BigDecimalExtractors {
 	private static final Function<BigDecimal, Maybe<Double>> DOUBLE_VALUE = (final BigDecimal arg) -> {
 		try {
 			return Maybe.some(arg.doubleValue());
-		} catch (final NumberFormatException exception) {
+		} catch (@SuppressWarnings("unused") final NumberFormatException exception) {
 			return Maybe.none();
 		}
 	};

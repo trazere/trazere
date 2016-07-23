@@ -160,7 +160,7 @@ public class XMLUtils {
 							try {
 								appendable.append(new String(Character.toChars(Integer.parseInt(codeRepresentation, 16))));
 								scanner.scanChar(';');
-							} catch (final NumberFormatException exception) {
+							} catch (@SuppressWarnings("unused") final NumberFormatException exception) {
 								appendable.append('&').append('#').append('x').append(codeRepresentation);
 							}
 						} else {
@@ -168,7 +168,7 @@ public class XMLUtils {
 							try {
 								appendable.append(new String(Character.toChars(Integer.parseInt(codeRepresentation))));
 								scanner.scanChar(';');
-							} catch (final NumberFormatException exception) {
+							} catch (@SuppressWarnings("unused") final NumberFormatException exception) {
 								appendable.append('&').append('#').append(codeRepresentation);
 							}
 						}
@@ -239,11 +239,11 @@ public class XMLUtils {
 	
 	static {
 		DATE_FORMATTER = new DateTimeFormatterBuilder().parseCaseInsensitive().parseStrict() //
-		.appendValue(ChronoField.YEAR, 4) // Year
-		.appendLiteral('-').appendValue(ChronoField.MONTH_OF_YEAR, 2) // Month
-		.appendLiteral('-').appendValue(ChronoField.DAY_OF_MONTH, 2) // Day
-		.optionalStart().appendOffset("+HH:MM", "Z").optionalEnd() // Time zone
-		.toFormatter();
+			.appendValue(ChronoField.YEAR, 4) // Year
+			.appendLiteral('-').appendValue(ChronoField.MONTH_OF_YEAR, 2) // Month
+			.appendLiteral('-').appendValue(ChronoField.DAY_OF_MONTH, 2) // Day
+			.optionalStart().appendOffset("+HH:MM", "Z").optionalEnd() // Time zone
+			.toFormatter();
 	}
 	
 	/**
@@ -255,15 +255,15 @@ public class XMLUtils {
 	
 	static {
 		DATE_TIME_FORMATTER = new DateTimeFormatterBuilder().parseCaseInsensitive().parseStrict() //
-		.appendValue(ChronoField.YEAR, 4) // Year
-		.appendLiteral('-').appendValue(ChronoField.MONTH_OF_YEAR, 2) // Month
-		.appendLiteral('-').appendValue(ChronoField.DAY_OF_MONTH, 2) // Day
-		.appendLiteral('T').appendValue(ChronoField.HOUR_OF_DAY, 2) // Hour
-		.appendLiteral(':').appendValue(ChronoField.MINUTE_OF_HOUR, 2) // Minute
-		.appendLiteral(':').appendValue(ChronoField.SECOND_OF_MINUTE, 2) // Second
-		.optionalStart().appendFraction(ChronoField.NANO_OF_SECOND, 0, 9, true).optionalEnd() // Fraction of second
-		.optionalStart().appendOffset("+HH:MM", "Z").optionalEnd() // Time zone
-		.toFormatter();
+			.appendValue(ChronoField.YEAR, 4) // Year
+			.appendLiteral('-').appendValue(ChronoField.MONTH_OF_YEAR, 2) // Month
+			.appendLiteral('-').appendValue(ChronoField.DAY_OF_MONTH, 2) // Day
+			.appendLiteral('T').appendValue(ChronoField.HOUR_OF_DAY, 2) // Hour
+			.appendLiteral(':').appendValue(ChronoField.MINUTE_OF_HOUR, 2) // Minute
+			.appendLiteral(':').appendValue(ChronoField.SECOND_OF_MINUTE, 2) // Second
+			.optionalStart().appendFraction(ChronoField.NANO_OF_SECOND, 0, 9, true).optionalEnd() // Fraction of second
+			.optionalStart().appendOffset("+HH:MM", "Z").optionalEnd() // Time zone
+			.toFormatter();
 	}
 	
 	/**
@@ -275,12 +275,12 @@ public class XMLUtils {
 	
 	static {
 		TIME_FORMATTER = new DateTimeFormatterBuilder().parseCaseInsensitive().parseStrict() //
-		.appendValue(ChronoField.HOUR_OF_DAY, 2) // Hour
-		.appendLiteral(':').appendValue(ChronoField.MINUTE_OF_HOUR, 2) // Minute
-		.appendLiteral(':').appendValue(ChronoField.SECOND_OF_MINUTE, 2) // Second
-		.optionalStart().appendFraction(ChronoField.NANO_OF_SECOND, 0, 9, true).optionalEnd() // Fraction of second
-		.optionalStart().appendOffset("+HH:MM", "Z").optionalEnd() // Time zone
-		.toFormatter();
+			.appendValue(ChronoField.HOUR_OF_DAY, 2) // Hour
+			.appendLiteral(':').appendValue(ChronoField.MINUTE_OF_HOUR, 2) // Minute
+			.appendLiteral(':').appendValue(ChronoField.SECOND_OF_MINUTE, 2) // Second
+			.optionalStart().appendFraction(ChronoField.NANO_OF_SECOND, 0, 9, true).optionalEnd() // Fraction of second
+			.optionalStart().appendOffset("+HH:MM", "Z").optionalEnd() // Time zone
+			.toFormatter();
 	}
 	
 	private XMLUtils() {

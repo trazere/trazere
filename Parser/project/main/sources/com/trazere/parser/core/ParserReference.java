@@ -41,7 +41,7 @@ implements Parser<Token, Result> {
 		try {
 			return _parser.get();
 		} catch (final ReferenceNotSetException exception) {
-			throw new ParserException("Parser reference has not been set");
+			throw new ParserException("Parser reference has not been set", exception);
 		}
 	}
 	

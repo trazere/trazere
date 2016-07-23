@@ -133,7 +133,7 @@ implements Input {
 			try {
 				open().close();
 				return true;
-			} catch (final IOException exception) {
+			} catch (@SuppressWarnings("unused") final IOException exception) {
 				return false;
 			}
 		}

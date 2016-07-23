@@ -162,7 +162,7 @@ public class MathExtractors {
 			
 			try {
 				return Maybe.some(value.byteValueExact());
-			} catch (final ArithmeticException exception) {
+			} catch (@SuppressWarnings("unused") final ArithmeticException exception) {
 				return Maybe.none();
 			}
 		}
@@ -190,7 +190,7 @@ public class MathExtractors {
 			
 			try {
 				return Maybe.some(value.shortValueExact());
-			} catch (final ArithmeticException exception) {
+			} catch (@SuppressWarnings("unused") final ArithmeticException exception) {
 				return Maybe.none();
 			}
 		}
@@ -218,7 +218,7 @@ public class MathExtractors {
 			
 			try {
 				return Maybe.some(value.intValueExact());
-			} catch (final ArithmeticException exception) {
+			} catch (@SuppressWarnings("unused") final ArithmeticException exception) {
 				return Maybe.none();
 			}
 		}
@@ -246,7 +246,7 @@ public class MathExtractors {
 			
 			try {
 				return Maybe.some(value.longValueExact());
-			} catch (final ArithmeticException exception) {
+			} catch (@SuppressWarnings("unused") final ArithmeticException exception) {
 				return Maybe.none();
 			}
 		}
@@ -274,7 +274,7 @@ public class MathExtractors {
 			
 			try {
 				return Maybe.some(value.floatValue());
-			} catch (final NumberFormatException exception) {
+			} catch (@SuppressWarnings("unused") final NumberFormatException exception) {
 				return Maybe.none();
 			}
 		}
@@ -302,7 +302,7 @@ public class MathExtractors {
 			
 			try {
 				return Maybe.some(value.doubleValue());
-			} catch (final NumberFormatException exception) {
+			} catch (@SuppressWarnings("unused") final NumberFormatException exception) {
 				return Maybe.none();
 			}
 		}
