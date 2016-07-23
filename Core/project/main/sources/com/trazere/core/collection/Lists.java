@@ -52,16 +52,6 @@ public class Lists {
 		// List.
 		
 		@Override
-		public Object[] toArray() {
-			return new Object[0];
-		}
-		
-		@Override
-		public <T> T[] toArray(final T[] a) {
-			return a;
-		}
-		
-		@Override
 		public Object get(final int index) {
 			throw new IndexOutOfBoundsException("Index: " + index + ", Size: 0");
 		}
@@ -136,6 +126,16 @@ public class Lists {
 		@Override
 		public boolean contains(final Object o) {
 			return false;
+		}
+		
+		@Override
+		public Object[] toArray() {
+			return new Object[0];
+		}
+		
+		@Override
+		public <T> T[] toArray(final T[] a) {
+			return a;
 		}
 		
 		@Override

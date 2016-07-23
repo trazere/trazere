@@ -394,6 +394,8 @@ public class IteratorUtils {
 		return true;
 	}
 	
+	// TODO: count with no filter / size
+	
 	/**
 	 * Counts the elements provided by the given iterator accepted by the given filter.
 	 * 
