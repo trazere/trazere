@@ -51,7 +51,7 @@ public class ObservableUtils {
 			return observer.onEvent(event);
 		} catch (final Exception exception) {
 			// Log.
-			LOGGER.warn("Failed notifying observer \"" + observer + "\" with raised event \"" + event + "\"");
+			LOGGER.warn("Failed notifying observer \"" + observer + "\" with raised event \"" + event + "\"", exception);
 			
 			// Cancel the subscription.
 			return false;
