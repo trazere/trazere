@@ -221,7 +221,7 @@ public class CollectionUtils {
 	 * @param list List to read.
 	 * @param index Index of the element to get.
 	 * @return The element or nothing if the index is out of bound.
-	 * @deprecated Use {@link com.trazere.core.collection.ListUtils#get(List, int)}.
+	 * @deprecated Use {@link com.trazere.core.collection.ListUtils#optionalGet(List, int)}.
 	 */
 	@Deprecated
 	public static <T> Maybe<T> get(final List<? extends T> list, final int index) {
@@ -236,7 +236,7 @@ public class CollectionUtils {
 	 * @param <T> Type of the elements.
 	 * @param list List to read.
 	 * @return The first element.
-	 * @deprecated Use {@link com.trazere.core.collection.ListUtils#first(List)}.
+	 * @deprecated Use {@link com.trazere.core.collection.ListUtils#optionalFirst(List)}.
 	 */
 	@Deprecated
 	public static <T> Maybe<T> first(final List<? extends T> list) {
@@ -249,7 +249,7 @@ public class CollectionUtils {
 	 * @param <T> Type of the elements.
 	 * @param list List to read.
 	 * @return The last element.
-	 * @deprecated Use {@link com.trazere.core.collection.ListUtils#last(List)}.
+	 * @deprecated Use {@link com.trazere.core.collection.ListUtils#optionalLast(List)}.
 	 */
 	@Deprecated
 	public static <T> Maybe<T> last(final List<? extends T> list) {
@@ -433,7 +433,7 @@ public class CollectionUtils {
 	 * @param <L> Type of the list.
 	 * @param list The list.
 	 * @return The given modified list.
-	 * @deprecated Use {@link com.trazere.core.collection.ListUtils#reverse(List)}.
+	 * @deprecated Use {@link Collections#reverse(List)}.
 	 */
 	@Deprecated
 	public static <T, L extends List<T>> L reverse(final L list) {
@@ -452,7 +452,7 @@ public class CollectionUtils {
 	 * @param <L> Type of the list.
 	 * @param list The list.
 	 * @return The given modified list.
-	 * @deprecated Use {@link com.trazere.core.collection.ListUtils#sort(List)}.
+	 * @deprecated Use {@link Collections#sort(List)}.
 	 */
 	@Deprecated
 	public static <T extends Comparable<? super T>, L extends List<T>> L sort(final L list) {
@@ -472,7 +472,7 @@ public class CollectionUtils {
 	 * @param list The list.
 	 * @param comparator The comparator.
 	 * @return The given modified list.
-	 * @deprecated Use {@link com.trazere.core.collection.ListUtils#sort(List, Comparator)}.
+	 * @deprecated Use {@link Collections#sort(List, Comparator)}.
 	 */
 	@Deprecated
 	public static <T, L extends List<T>> L sort(final L list, final Comparator<? super T> comparator) {

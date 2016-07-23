@@ -540,11 +540,37 @@ public class CollectionUtils {
 	 * Appends the given collections together.
 	 * 
 	 * @param <E> Type of the elements.
+	 * @param collection1 First collection of the elements to append.
+	 * @param collection2 Second collection of the elements to append.
+	 * @return A collection of the appended elements.
+	 * @since 2.0
+	 */
+	public static <E> ExCollection<E> append(final Collection<? extends E> collection1, final Collection<? extends E> collection2) {
+		assert null != collection1;
+		assert null != collection2;
+		
+		return new AbstractExCollection<E>() {
+			@Override
+			public int size() {
+				return collection1.size() + collection2.size();
+			}
+			
+			@Override
+			public ExIterator<E> iterator() {
+				return IteratorUtils.append(collection1.iterator(), collection2.iterator());
+			}
+		};
+	}
+	
+	/**
+	 * Appends the given collections together.
+	 * 
+	 * @param <E> Type of the elements.
 	 * @param <C> Type of the result collection.
 	 * @param collection1 First collection of the elements to append.
 	 * @param collection2 Second collection of the elements to append.
 	 * @param resultFactory Factory of the result collection.
-	 * @return A collection of the appended elements.
+	 * @return A new collection of the appended elements.
 	 * @since 2.0
 	 */
 	public static <E, C extends Collection<? super E>> C append(final Collection<? extends E> collection1, final Collection<? extends E> collection2, final CollectionFactory<? super E, C> resultFactory) {
@@ -558,10 +584,34 @@ public class CollectionUtils {
 	 * Flattens the elements of the collections contained in the given collection.
 	 *
 	 * @param <E> Type of the elements.
+	 * @param collection Collection of the collections of the elements to flatten.
+	 * @return A collection of the flatten elements.
+	 * @since 2.0
+	 */
+	public static <E> ExCollection<E> flatten(final Collection<? extends Collection<? extends E>> collection) {
+		assert null != collection;
+		
+		return new AbstractExCollection<E>() {
+			@Override
+			public int size() {
+				return IterableUtils.fold(collection, (s, l) -> s + l.size(), 0);
+			}
+			
+			@Override
+			public ExIterator<E> iterator() {
+				return IteratorUtils.flatten(IterableUtils.map(collection, Iterable::iterator).iterator());
+			}
+		};
+	}
+	
+	/**
+	 * Flattens the elements of the collections contained in the given collection.
+	 *
+	 * @param <E> Type of the elements.
 	 * @param <C> Type of the result collection.
 	 * @param collection Collection of the collections of the elements to flatten.
 	 * @param resultFactory Factory of the result collection.
-	 * @return A collection of the flatten elements.
+	 * @return A new collection of the flatten elements.
 	 * @since 2.0
 	 */
 	public static <E, C extends Collection<? super E>> C flatten(final Collection<? extends Collection<? extends E>> collection, final CollectionFactory<? super E, C> resultFactory) {
@@ -844,7 +894,7 @@ public class CollectionUtils {
 		
 		@Override
 		public ExIterator<E> iterator() {
-			return IteratorUtils.unmodifiable(ExIterator.build(_decorated.iterator()));
+			return IteratorUtils.unmodifiable(_decorated.iterator());
 		}
 		
 		// Object.

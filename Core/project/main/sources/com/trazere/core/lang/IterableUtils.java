@@ -16,7 +16,6 @@
 package com.trazere.core.lang;
 
 import com.trazere.core.collection.CollectionFactory;
-import com.trazere.core.collection.IterableDecorator;
 import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Function3;
@@ -85,6 +84,7 @@ public class IterableUtils {
 		return IteratorUtils.fold(iterable.iterator(), operator, initialState);
 	}
 	
+	// TODO: rename to fold2
 	/**
 	 * Left folds over the pairs of elements provided by the given iterable using the given operator and initial state.
 	 * 
@@ -114,6 +114,7 @@ public class IterableUtils {
 		return IteratorUtils.isAny(iterable.iterator(), filter);
 	}
 	
+	// TODO: rename to isAny2
 	/**
 	 * Tests whether any pair of elements provided by the given iterable is accepted by the given filter.
 	 * 
@@ -142,6 +143,7 @@ public class IterableUtils {
 		return IteratorUtils.areAll(iterable.iterator(), filter);
 	}
 	
+	// TODO: rename to areAll2
 	/**
 	 * Tests whether all pairs of elements provided by the given iterable are accepted by the given filter.
 	 * 
@@ -170,6 +172,7 @@ public class IterableUtils {
 		return IteratorUtils.count(iterable.iterator(), filter);
 	}
 	
+	// TODO: rename to count2
 	/**
 	 * Counts the pairs of elements provided by the given iterable accepted by the given filter.
 	 * 
@@ -352,6 +355,7 @@ public class IterableUtils {
 		return () -> IteratorUtils.filter(iterable.iterator(), filter);
 	}
 	
+	// TODO: rename to filter2
 	/**
 	 * Filters the pairs of elements provided by the given iterable using the given filter.
 	 *
@@ -391,6 +395,7 @@ public class IterableUtils {
 		return IteratorUtils.filterAny(iterable.iterator(), filter);
 	}
 	
+	// TODO: rename to filterAny2
 	/**
 	 * Gets any pair of elements provided by the given iterable accepted by the given filter.
 	 * <p>
@@ -424,6 +429,7 @@ public class IterableUtils {
 		return () -> IteratorUtils.map(iterable.iterator(), function);
 	}
 	
+	// TODO: rename to map2
 	/**
 	 * Transforms the pairs of elements provided by the given iterable using the given function.
 	 *
@@ -459,6 +465,7 @@ public class IterableUtils {
 		return () -> IteratorUtils.extract(iterable.iterator(), extractor);
 	}
 	
+	// TODO: rename to extract2
 	/**
 	 * Extracts the elements from the the pairs of elements provided by the given iterable using the given extractor.
 	 *
@@ -493,6 +500,7 @@ public class IterableUtils {
 		return IteratorUtils.extractAny(iterable.iterator(), extractor);
 	}
 	
+	// TODO: rename to extractAny2
 	/**
 	 * Gets the element extracted from any pair of elements provided by the given iterable by the given extractor.
 	 * <p>
@@ -527,6 +535,7 @@ public class IterableUtils {
 		return () -> IteratorUtils.extractAll(iterable.iterator(), extractor);
 	}
 	
+	// TODO: rename to extractAll2
 	/**
 	 * Gets all elements extracted from the pairs of elements provided by the given iterable using the given extractor.
 	 *
@@ -592,6 +601,7 @@ public class IterableUtils {
 		return () -> IteratorUtils.flatMap(iterable.iterator(), element -> function.evaluate(element).iterator());
 	}
 	
+	// TODO: rename to flatMap2
 	/**
 	 * Transforms and flattens the pairs of elements provided by the given iterable using the given function.
 	 * 
@@ -649,6 +659,7 @@ public class IterableUtils {
 		IteratorUtils.foreach(iterable.iterator(), procedure);
 	}
 	
+	// TODO: rename to foreach2
 	/**
 	 * Executes the given procedure with each pair of elements provided by the given iterable.
 	 * 
@@ -686,7 +697,7 @@ public class IterableUtils {
 		
 		@Override
 		public ExIterator<E> iterator() {
-			return IteratorUtils.unmodifiable(ExIterator.build(_decorated.iterator()));
+			return IteratorUtils.unmodifiable(_decorated.iterator());
 		}
 		
 		// Object.
@@ -702,6 +713,7 @@ public class IterableUtils {
 		}
 	}
 	
+	// TODO: rename to unmodifiable
 	/**
 	 * Builds an unmodifiable view of the given iterable of pairs of elements.
 	 * 

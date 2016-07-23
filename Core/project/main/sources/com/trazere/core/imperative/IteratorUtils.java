@@ -20,7 +20,6 @@ import com.trazere.core.collection.CollectionFactory;
 import com.trazere.core.collection.MapAccumulators;
 import com.trazere.core.collection.Multimap;
 import com.trazere.core.collection.MultimapAccumulators;
-import com.trazere.core.design.Decorator;
 import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Function3;
@@ -114,6 +113,7 @@ public class IteratorUtils {
 	// TODO: drain(Iterator, int, CollectionFactory)
 	
 	// TODO: kill, use take and drain
+	// TODO: rename to drain2
 	/**
 	 * Drains the next n pairs of elements provided by the given iterator and populates the given accumulator with them.
 	 * 
@@ -135,6 +135,7 @@ public class IteratorUtils {
 	}
 	
 	// TODO: kill, use take and drain
+	// TODO: rename to drain2
 	/**
 	 * Drains the next n pairs of elements provided by the given iterator and puts the corresponding bindings into the given map.
 	 * 
@@ -152,9 +153,10 @@ public class IteratorUtils {
 	}
 	
 	// TODO: kill, use take and drain
-	// TODO: drain(Iterator, int, MapFactory)
+	// TODO: drain2(Iterator, int, MapFactory)
 	
 	// TODO: kill, use take and drain
+	// TODO: rename to drain2
 	/**
 	 * Drains the next n pairs of elements provided by the given iterator and puts the corresponding bindings into the given multimap.
 	 * 
@@ -172,7 +174,7 @@ public class IteratorUtils {
 	}
 	
 	// TODO: kill, use take and drain
-	// TODO: drain(Iterator, int, MultimapFactory)
+	// TODO: drain2(Iterator, int, MultimapFactory)
 	
 	// TODO: rename to drainAll ?
 	/**
@@ -223,6 +225,7 @@ public class IteratorUtils {
 	// TODO: drain(Iterator, CollectionFactory)
 	
 	// TODO: rename to drainAll ?
+	// TODO: rename to drain2
 	/**
 	 * Drains all pairs of elements provided by the the given iterator and populates the given accumulator with them.
 	 * 
@@ -242,6 +245,7 @@ public class IteratorUtils {
 	}
 	
 	// TODO: rename to drainAll ?
+	// TODO: rename to drain2
 	/**
 	 * Drains all pairs of elements provided by the the given iterator and puts the corresponding bindings into the given map.
 	 * 
@@ -257,9 +261,10 @@ public class IteratorUtils {
 		return drain(iterator, MapAccumulators.put(results)).get();
 	}
 	
-	// TODO: drain(Iterator, MapFactory)
+	// TODO: drain2(Iterator, MapFactory)
 	
 	// TODO: rename to drainAll ?
+	// TODO: rename to drain2
 	/**
 	 * Drains all pairs of elements provided by the the given iterator and puts the corresponding bindings into the given multimap.
 	 * 
@@ -275,7 +280,7 @@ public class IteratorUtils {
 		return drain(iterator, MultimapAccumulators.put(results)).get();
 	}
 	
-	// TODO: drain(Iterator, MultimapFactory)
+	// TODO: drain2(Iterator, MultimapFactory)
 	
 	/**
 	 * Left folds over the elements provided by the given iterator using the given binary operator and initial state.
@@ -292,6 +297,7 @@ public class IteratorUtils {
 		return drain(iterator, FunctionAccumulators.fold(operator, initialState)).get();
 	}
 	
+	// TODO: rename to fold2
 	/**
 	 * Left folds over the pairs of elements provided by the given iterator using the given operator and initial state.
 	 * 
@@ -326,6 +332,7 @@ public class IteratorUtils {
 		return false;
 	}
 	
+	// TODO: rename to isAny2
 	/**
 	 * Tests whether any pair of elements provided by the given iterator is accepted by the given filter.
 	 * 
@@ -365,6 +372,7 @@ public class IteratorUtils {
 		return true;
 	}
 	
+	// TODO: rename to areAll2
 	/**
 	 * Tests whether all pairs of elements provided by the given iterator are accepted by the given filter.
 	 * 
@@ -405,6 +413,7 @@ public class IteratorUtils {
 		return counter.get();
 	}
 	
+	// TODO: rename to count2
 	/**
 	 * Counts the pairs of elements provided by the given iterator accepted by the given filter.
 	 * 
@@ -494,15 +503,16 @@ public class IteratorUtils {
 		
 		return new ExIterator<E>() {
 			private int _i = 0;
+			private int _n = n;
 			
 			@Override
 			public boolean hasNext() {
-				return iterator.hasNext() && _i < n;
+				return iterator.hasNext() && _i < _n;
 			}
 			
 			@Override
 			public E next() {
-				if (_i < n) {
+				if (_i < _n) {
 					_i += 1;
 					return iterator.next();
 				} else {
@@ -513,6 +523,7 @@ public class IteratorUtils {
 			@Override
 			public void remove() {
 				iterator.remove();
+				_n -= 1;
 			}
 		};
 	}
@@ -536,15 +547,16 @@ public class IteratorUtils {
 		
 		return new PairIterator<E1, E2>() {
 			private int _i = 0;
+			private int _n = n;
 			
 			@Override
 			public boolean hasNext() {
-				return iterator.hasNext() && _i < n;
+				return iterator.hasNext() && _i < _n;
 			}
 			
 			@Override
 			public Tuple2<E1, E2> next() {
-				if (_i < n) {
+				if (_i < _n) {
 					_i += 1;
 					return iterator.next();
 				} else {
@@ -555,6 +567,7 @@ public class IteratorUtils {
 			@Override
 			public void remove() {
 				iterator.remove();
+				_n -= 1;
 			}
 		};
 	}
@@ -667,6 +680,8 @@ public class IteratorUtils {
 	 */
 	public static <E, B extends Collection<? super E>> ExIterator<B> group(final Iterator<? extends E> iterator, final int n, final CollectionFactory<? super E, B> batchFactory) {
 		assert null != iterator;
+		assert n > 0;
+		assert null != batchFactory;
 		
 		return new ExIterator<B>() {
 			@Override
@@ -704,6 +719,7 @@ public class IteratorUtils {
 		};
 	}
 	
+	// TODO: rename to filter2
 	/**
 	 * Filters the pairs of elements provided by the given iterator using the given filter.
 	 * <p>
@@ -749,6 +765,7 @@ public class IteratorUtils {
 		return Maybe.none();
 	}
 	
+	// TODO: rename to filterAny2
 	/**
 	 * Gets any pair of elements provided by the given iterator accepted by the given filter.
 	 * <p>
@@ -807,6 +824,7 @@ public class IteratorUtils {
 		};
 	}
 	
+	// TODO: rename to map2
 	/**
 	 * Transforms the pairs of elements provided by the given iterator using the given function.
 	 * <p>
@@ -867,6 +885,7 @@ public class IteratorUtils {
 		};
 	}
 	
+	// TODO: rename to extract2
 	/**
 	 * Extracts the pairs of elements provided by the given iterator using the given extractor.
 	 * <p>
@@ -914,6 +933,7 @@ public class IteratorUtils {
 		return Maybe.none();
 	}
 	
+	// TODO: rename to extractAny2
 	/**
 	 * Gets the element extracted from any pair of elements provided by the given iterator using the given extractor.
 	 * <p>
@@ -954,6 +974,7 @@ public class IteratorUtils {
 		return flatMap(iterator, extractor.map(IterableFunctions.iterator()));
 	}
 	
+	// TODO: rename to extractAll2
 	/**
 	 * Gets all elements extracted from the pairs of elements provided by the given iterator using the given extractor.
 	 * <p>
@@ -1067,6 +1088,7 @@ public class IteratorUtils {
 		return flatten(map(iterator, function));
 	}
 	
+	// TODO: rename to flatMap2
 	/**
 	 * Transforms and flattens the pairs of elements provided by the given iterator using the given function.
 	 * <p>
@@ -1132,6 +1154,7 @@ public class IteratorUtils {
 		}
 	}
 	
+	// TODO: rename to foreach2
 	/**
 	 * Executes the given procedure with each pair of elements provided by the given iterator.
 	 * 
@@ -1163,23 +1186,12 @@ public class IteratorUtils {
 	}
 	
 	private static class UnmodifiableIterator<E>
-	extends Decorator<Iterator<E>>
-	implements ExIterator<E> {
+	extends IteratorDecorator<E> {
 		public UnmodifiableIterator(final Iterator<E> decorated) {
 			super(decorated);
 		}
 		
 		// Iterator.
-		
-		@Override
-		public boolean hasNext() {
-			return _decorated.hasNext();
-		}
-		
-		@Override
-		public E next() {
-			return _decorated.next();
-		}
 		
 		@Override
 		public void remove() {

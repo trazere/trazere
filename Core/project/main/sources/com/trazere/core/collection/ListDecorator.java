@@ -17,22 +17,26 @@ package com.trazere.core.collection;
 
 import com.trazere.core.design.Decorator;
 import com.trazere.core.imperative.ExIterator;
+import com.trazere.core.imperative.ExListIterator;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
 /**
- * The {@link CollectionDecorator} class implements decorators of {@link Collection collections}.
+ * The {@link ListDecorator} class implements decorators of {@link List lists}.
  * 
  * @param <E> Type of the elements.
  * @since 2.0
  */
-public class CollectionDecorator<E>
-extends Decorator<Collection<E>>
-implements ExCollection<E> {
-	public CollectionDecorator(final Collection<E> decorated) {
+public class ListDecorator<E>
+extends Decorator<List<E>>
+implements ExList<E> {
+	public ListDecorator(final List<E> decorated) {
 		super(decorated);
 	}
 	
@@ -54,8 +58,38 @@ implements ExCollection<E> {
 	}
 	
 	@Override
+	public E get(final int index) {
+		return _decorated.get(index);
+	}
+	
+	@Override
+	public int indexOf(final Object o) {
+		return _decorated.indexOf(o);
+	}
+	
+	@Override
+	public int lastIndexOf(final Object o) {
+		return _decorated.lastIndexOf(o);
+	}
+	
+	@Override
 	public ExIterator<E> iterator() {
 		return ExIterator.build(_decorated.iterator());
+	}
+	
+	@Override
+	public ExListIterator<E> listIterator() {
+		return ExListIterator.build(_decorated.listIterator());
+	}
+	
+	@Override
+	public ExListIterator<E> listIterator(final int index) {
+		return ExListIterator.build(_decorated.listIterator(index));
+	}
+	
+	@Override
+	public ExList<E> subList(final int fromIndex, final int toIndex) {
+		return ExList.build(_decorated.subList(fromIndex, toIndex));
 	}
 	
 	@Override
@@ -71,13 +105,28 @@ implements ExCollection<E> {
 	// Modification operations.
 	
 	@Override
+	public E set(final int index, final E element) {
+		return _decorated.set(index, element);
+	}
+	
+	@Override
 	public boolean add(final E e) {
 		return _decorated.add(e);
 	}
 	
 	@Override
+	public void add(final int index, final E element) {
+		_decorated.add(index, element);
+	}
+	
+	@Override
 	public boolean remove(final Object o) {
 		return _decorated.remove(o);
+	}
+	
+	@Override
+	public E remove(final int index) {
+		return _decorated.remove(index);
 	}
 	
 	// Bulk operations.
@@ -98,6 +147,11 @@ implements ExCollection<E> {
 	}
 	
 	@Override
+	public boolean addAll(final int index, final Collection<? extends E> c) {
+		return _decorated.addAll(index, c);
+	}
+	
+	@Override
 	public boolean removeAll(final Collection<?> c) {
 		return _decorated.removeAll(c);
 	}
@@ -110,6 +164,16 @@ implements ExCollection<E> {
 	@Override
 	public boolean retainAll(final Collection<?> c) {
 		return _decorated.retainAll(c);
+	}
+	
+	@Override
+	public void replaceAll(final UnaryOperator<E> operator) {
+		_decorated.replaceAll(operator);
+	}
+	
+	@Override
+	public void sort(final Comparator<? super E> c) {
+		_decorated.sort(c);
 	}
 	
 	@Override

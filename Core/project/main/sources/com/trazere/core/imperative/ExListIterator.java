@@ -24,39 +24,41 @@ import com.trazere.core.util.Maybe;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 /**
- * The {@link ExIterator} interfaces defines extended {@link Iterator iterators}.
+ * The {@link ExListIterator} interfaces defines extended {@link ListIterator list iterators}.
  * 
  * @param <E> Type of the elements.
  * @since 2.0
  */
-public interface ExIterator<E>
-extends Iterator<E>, Traversable<E> {
-	// TODO: move to Iterators ?
+public interface ExListIterator<E>
+extends ListIterator<E>, Traversable<E> {
+	// TODO: move to ListIterators ?
 	// TODO: rename -> fromIterator ?
 	/**
-	 * Builds an extended view of the given iterator.
+	 * Builds an extended view of the given list iterator.
 	 * 
 	 * @param <E> Type of the elements.
 	 * @param iterator Iterator to wrap.
 	 * @return The extended view of the given iterator, or the given iterator when it is already an extended view.
 	 * @since 2.0
 	 */
-	public static <E> ExIterator<E> build(final Iterator<E> iterator) {
+	public static <E> ExListIterator<E> build(final ListIterator<E> iterator) {
 		assert null != iterator;
 		
-		if (iterator instanceof ExIterator) {
-			return (ExIterator<E>) iterator;
+		if (iterator instanceof ExListIterator) {
+			return (ExListIterator<E>) iterator;
 		} else {
-			return new IteratorDecorator<>(iterator);
+			return new ListIteratorDecorator<>(iterator);
 		}
 	}
 	
-	// Iterator.
+	// List iterator.
 	
 	/**
-	 * Gets the next element provided by this iterator.
+	 * Gets the next element provided by this list iterator.
 	 * <p>
 	 * This methods supports exhausted iterators.
 	 * 
@@ -68,51 +70,22 @@ extends Iterator<E>, Traversable<E> {
 		return IteratorUtils.optionalNext(this);
 	}
 	
-	// TODO: kill, use take and drain
 	/**
-	 * Drains the next n elements provided by this iterator.
+	 * Gets the previous element provided by this list iterator.
+	 * <p>
+	 * This methods supports exhausted iterators.
 	 * 
-	 * @param n Number of elements to drain.
-	 * @see IteratorUtils#drain(Iterator, int)
+	 * @return The previous element, or nothing when the iterator is exhausted.
+	 * @see ListIteratorUtils#optionalPrevious(ListIterator)
 	 * @since 2.0
 	 */
-	default void drain(final int n) {
-		IteratorUtils.drain(this, n);
+	default Maybe<E> optionalPrevious() {
+		return IteratorUtils.optionalNext(this);
 	}
 	
-	// TODO: kill, use take and drain
+	// TODO: rename to drainAll ?
 	/**
-	 * Drains the next n elements provided by this iterator and populates the given accumulator with them.
-	 * 
-	 * @param <A> Type of the accumulator to populate.
-	 * @param n Number of elements to drain.
-	 * @param results Accumulator to populate with the drained elements.
-	 * @return The given result accumulator.
-	 * @see IteratorUtils#drain(Iterator, int, Accumulator)
-	 * @since 2.0
-	 */
-	default <A extends Accumulator<? super E, ?>> A drain(final int n, final A results) {
-		return IteratorUtils.drain(this, n, results);
-	}
-	
-	// TODO: kill, use take and drain
-	/**
-	 * Drains the next n elements provided by this iterator and adds them to the given collection.
-	 * 
-	 * @param <C> Type of the collection to populate.
-	 * @param n Number of elements to drain.
-	 * @param results Collection to populate with the drained elements.
-	 * @return The given result collection.
-	 * @see IteratorUtils#drain(Iterator, int, Collection)
-	 * @since 2.0
-	 */
-	default <C extends Collection<? super E>> C drain(final int n, final C results) {
-		return IteratorUtils.drain(this, n, results);
-	}
-	
-	// TODO: rename to drainAll
-	/**
-	 * Drains all elements provided by the this iterator.
+	 * Drains all next elements provided by the this list iterator.
 	 * 
 	 * @see IteratorUtils#drain(Iterator)
 	 * @since 2.0
@@ -121,9 +94,9 @@ extends Iterator<E>, Traversable<E> {
 		IteratorUtils.drain(this);
 	}
 	
-	// TODO: rename to drainAll
+	// TODO: rename to drainAll ?
 	/**
-	 * Drains all elements provided by the this iterator and populates the given accumulator with them.
+	 * Drains all next elements provided by the this list iterator and populates the given accumulator with them.
 	 * 
 	 * @param <A> Type of the accumulator to populate.
 	 * @param results Accumulator to populate with the drained elements.
@@ -135,9 +108,9 @@ extends Iterator<E>, Traversable<E> {
 		return IteratorUtils.drain(this, results);
 	}
 	
-	// TODO: rename to drainAll
+	// TODO: rename to drainAll ?
 	/**
-	 * Drains all elements provided by the this iterator and adds them to the given collection.
+	 * Drains all next elements provided by the this list iterator and adds them to the given collection.
 	 * 
 	 * @param <C> Type of the collection to populate.
 	 * @param results Collection to populate with the drained elements.
@@ -149,10 +122,27 @@ extends Iterator<E>, Traversable<E> {
 		return IteratorUtils.drain(this, results);
 	}
 	
+	// TODO: backwardDrain ?
+	
+	@Override
+	default void remove() {
+		throw new UnsupportedOperationException("remove");
+	}
+	
+	@Override
+	default void set(final E e) {
+		throw new UnsupportedOperationException("set");
+	}
+	
+	@Override
+	default void add(final E e) {
+		throw new UnsupportedOperationException("add");
+	}
+	
 	// Traversable.
 	
 	/**
-	 * Left folds over the elements provided by this iterator using the given binary operator and initial state.
+	 * Left folds over the next elements provided by this list iterator using the given binary operator and initial state.
 	 * 
 	 * @see IteratorUtils#fold(Iterator, Function2, Object)
 	 * @since 2.0
@@ -162,8 +152,10 @@ extends Iterator<E>, Traversable<E> {
 		return IteratorUtils.fold(this, operator, initialState);
 	}
 	
+	// TODO: backwardFold ?
+	
 	/**
-	 * Tests whether any element provided by this iterator is accepted by the given filter.
+	 * Tests whether any next element provided by this list iterator is accepted by the given filter.
 	 * 
 	 * @return <code>true</code> when some element is accepted, <code>false</code> when all elements are rejected or when the iterator is exhausted.
 	 * @see IteratorUtils#isAny(Iterator, Predicate)
@@ -174,8 +166,10 @@ extends Iterator<E>, Traversable<E> {
 		return IteratorUtils.isAny(this, filter);
 	}
 	
+	// TODO: backwardIsAny ?
+	
 	/**
-	 * Tests whether all elements provided by this iterator are accepted by the given filter.
+	 * Tests whether all next elements provided by this list iterator are accepted by the given filter.
 	 * 
 	 * @return <code>true</code> when all elements are accepted or when the iterator is exhausted, <code>false</code> when some element is rejected.
 	 * @see IteratorUtils#areAll(Iterator, Predicate)
@@ -186,8 +180,10 @@ extends Iterator<E>, Traversable<E> {
 		return IteratorUtils.areAll(this, filter);
 	}
 	
+	// TODO: backwardAreAll ?
+	
 	/**
-	 * Counts the elements provided by this iterator accepted by the given filter.
+	 * Counts the next elements provided by this list iterator accepted by the given filter.
 	 * 
 	 * @see IteratorUtils#count(Iterator, Predicate)
 	 * @since 2.0
@@ -197,8 +193,10 @@ extends Iterator<E>, Traversable<E> {
 		return IteratorUtils.count(this, filter);
 	}
 	
+	// TODO: backwardCount ?
+	
 	/**
-	 * Gets the least element provided by this iterator according to the given comparator.
+	 * Gets the least next element provided by this list iterator according to the given comparator.
 	 * 
 	 * @see IteratorUtils#least(Iterator, Comparator)
 	 * @since 2.0
@@ -208,8 +206,10 @@ extends Iterator<E>, Traversable<E> {
 		return IteratorUtils.least(this, comparator);
 	}
 	
+	// TODO: backwardLeast ?
+	
 	/**
-	 * Gets the greatest element provided by this iterator according to the given comparator.
+	 * Gets the greatest next element provided by this list iterator according to the given comparator.
 	 * 
 	 * @see IteratorUtils#greatest(Iterator, Comparator)
 	 * @since 2.0
@@ -219,66 +219,70 @@ extends Iterator<E>, Traversable<E> {
 		return IteratorUtils.greatest(this, comparator);
 	}
 	
+	// TODO: backwardGreatest ?
+	
 	/**
-	 * Takes n elements provided by this iterator.
+	 * Takes n next elements provided by this list iterator.
 	 * <p>
 	 * The elements are taken according their iteration order.
 	 * <p>
 	 * The built iterator feeds lazyly from this iterator.
 	 * 
 	 * @return An iterator providing the taken elements.
-	 * @see IteratorUtils#take(Iterator, int)
+	 * @see ListIteratorUtils#take(ListIterator, int)
 	 * @since 2.0
 	 */
 	@Override
-	default ExIterator<E> take(final int n) {
-		return IteratorUtils.take(this, n);
+	default ExListIterator<E> take(final int n) {
+		return ListIteratorUtils.take(this, n);
 	}
 	
+	// TODO: backwardTake ?
+	
 	/**
-	 * Drops the n first elements provided by this iterator.
+	 * Drops all previous and the n first next elements provided by this list iterator.
 	 * <p>
 	 * The elements are dropped according their iteration order.
 	 * <p>
 	 * The built iterator feeds lazyly from this iterator.
 	 * 
-	 * @return An iterator providing the remaining elements.
-	 * @see IteratorUtils#drop(Iterator, int)
+	 * @return An iterator providing the remaining mext elements.
+	 * @see ListIteratorUtils#drop(ListIterator, int)
 	 * @since 2.0
 	 */
 	@Override
-	default ExIterator<E> drop(final int n) {
-		return IteratorUtils.drop(this, n);
+	default ExListIterator<E> drop(final int n) {
+		return ListIteratorUtils.drop(this, n);
 	}
 	
 	/**
-	 * Groups the elements provided by this iterator into batches of the given size.
+	 * Groups the elements provided by this list iterator into batches of the given size.
 	 * 
 	 * @return An iterator providing the batches of elements.
-	 * @see IteratorUtils#group(Iterator, int, CollectionFactory)
+	 * @see ListIteratorUtils#group(ListIterator, int, CollectionFactory)
 	 * @since 2.0
 	 */
 	@Override
-	default <B extends Collection<? super E>> ExIterator<B> group(final int n, final CollectionFactory<? super E, B> batchFactory) {
-		return IteratorUtils.group(this, n, batchFactory);
+	default <B extends Collection<? super E>> ExListIterator<B> group(final int n, final CollectionFactory<? super E, B> batchFactory) {
+		return ListIteratorUtils.group(this, n, batchFactory);
 	}
 	
 	/**
-	 * Filters the elements provided by this iterator using the given filter.
+	 * Filters the elements provided by this list iterator using the given filter.
 	 * <p>
 	 * The built iterator feeds lazyly from this iterator.
 	 * 
 	 * @return An iterator providing the filtered elements.
-	 * @see IteratorUtils#filter(Iterator, Predicate)
+	 * @see ListIteratorUtils#filter(ListIterator, Predicate)
 	 * @since 2.0
 	 */
 	@Override
-	default ExIterator<E> filter(final Predicate<? super E> filter) {
-		return IteratorUtils.filter(this, filter);
+	default ExListIterator<E> filter(final Predicate<? super E> filter) {
+		return ListIteratorUtils.filter(this, filter);
 	}
 	
 	/**
-	 * Gets any element provided by this iterator accepted by the given filter.
+	 * Gets any next element provided by this list iterator accepted by the given filter.
 	 * 
 	 * @see IteratorUtils#filterAny(Iterator, Predicate)
 	 * @since 2.0
@@ -288,36 +292,38 @@ extends Iterator<E>, Traversable<E> {
 		return IteratorUtils.filterAny(this, filter);
 	}
 	
+	// TODO: backwardFilterAny ?
+	
 	/**
-	 * Transforms the elements provided by this iterator using the given function.
+	 * Transforms the elements provided by this list iterator using the given function.
 	 * <p>
 	 * The built iterator feeds lazyly from this iterator.
 	 * 
 	 * @return An iterator providing the transformed elements.
-	 * @see IteratorUtils#map(Iterator, Function)
+	 * @see ListIteratorUtils#map(ListIterator, Function)
 	 * @since 2.0
 	 */
 	@Override
-	default <TE> ExIterator<TE> map(final Function<? super E, ? extends TE> function) {
-		return IteratorUtils.map(this, function);
+	default <TE> ExListIterator<TE> map(final Function<? super E, ? extends TE> function) {
+		return ListIteratorUtils.map(this, function);
 	}
 	
 	/**
-	 * Extracts the elements from the elements provided by this iterator using the given extractor.
+	 * Extracts the elements from the elements provided by this list iterator using the given extractor.
 	 * <p>
 	 * The built iterator feeds lazyly from this iterator.
 	 * 
 	 * @return An iterator providing the extracted elements.
-	 * @see IteratorUtils#extract(Iterator, Function)
+	 * @see ListIteratorUtils#extract(ListIterator, Function)
 	 * @since 2.0
 	 */
 	@Override
-	default <EE> ExIterator<EE> extract(final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
-		return IteratorUtils.extract(this, extractor);
+	default <EE> ExListIterator<EE> extract(final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
+		return ListIteratorUtils.extract(this, extractor);
 	}
 	
 	/**
-	 * Get the element extracted from any elements provided by this iterator using the given extractor.
+	 * Get the element extracted from any next elements provided by this list iterator using the given extractor.
 	 * <p>
 	 * The elements are extracted from according to their iteration order.
 	 * 
@@ -329,58 +335,44 @@ extends Iterator<E>, Traversable<E> {
 		return IteratorUtils.extractAny(this, extractor);
 	}
 	
+	// TODO: backwardExtractAny ?
+	
 	/**
-	 * Gets all elements extracted from the elements provided by this iterator using the given extractor.
+	 * Gets all elements extracted from the elements provided by this list iterator using the given extractor.
 	 * <p>
 	 * The built iterator feeds lazyly from this iterator.
 	 * 
 	 * @param <TE> Type of the extracted elements.
 	 * @param extractor Function to use to extract from the elements.
 	 * @return An iterator providing the extracted elements.
-	 * @see IteratorUtils#extractAll(Iterator, Function)
+	 * @see ListIteratorUtils#extractAll(ListIterator, Function)
 	 * @since 2.0
 	 */
-	default <TE> ExIterator<TE> extractAll(final Function<? super E, ? extends Iterable<? extends TE>> extractor) {
-		return IteratorUtils.extractAll(this, extractor);
+	default <TE> ExListIterator<TE> extractAll(final Function<? super E, ? extends List<? extends TE>> extractor) {
+		return ListIteratorUtils.extractAll(this, extractor);
 	}
 	
 	// TODO: append
 	
 	/**
-	 * Transforms and flattens the elements provided by this iterator using the given function.
+	 * Transforms and flattens the elements provided by this list iterator using the given function.
 	 * <p>
 	 * The built iterator feeds lazyly from this iterator.
 	 * 
 	 * @param <TE> Type of the transformed elements.
 	 * @param extractor Function to use to transform the elements.
 	 * @return An iterator providing the flatten, transformed elements.
-	 * @see IteratorUtils#flatMap(Iterator, Function)
+	 * @see ListIteratorUtils#flatMap(ListIterator, Function)
 	 * @since 2.0
 	 */
-	default <TE> ExIterator<TE> flatMap(final Function<? super E, ? extends Iterator<? extends TE>> extractor) {
-		return IteratorUtils.flatMap(this, extractor);
+	default <TE> ExListIterator<TE> flatMap(final Function<? super E, ? extends ListIterator<? extends TE>> extractor) {
+		return ListIteratorUtils.flatMap(this, extractor);
 	}
 	
-	/**
-	 * Composes pairs with the elements provided by this iterator and the given iterator.
-	 * <p>
-	 * The pairs are composed of an element provided by each iterator in order. The extra values of the longest iterator are dropped when this iterators don't
-	 * provide the same number of elements.
-	 * <p>
-	 * The built iterator feeds lazyly from this iterator and the given iterator.
-	 * 
-	 * @param <E2> Type of the second elements.
-	 * @param iterator2 Iterator providing the second elements of the pairs.
-	 * @return An iterator providing the pairs of elements.
-	 * @see IteratorUtils#zip(Iterator, Iterator)
-	 * @since 2.0
-	 */
-	default <E2> PairIterator<E, E2> zip(final Iterator<? extends E2> iterator2) {
-		return IteratorUtils.zip(this, iterator2);
-	}
+	// TODO: zip
 	
 	/**
-	 * Executes the given procedure with each element provided by this iterator.
+	 * Executes the given procedure with each next element provided by this list iterator.
 	 * 
 	 * @see IteratorUtils#foreach(Iterator, Procedure)
 	 * @since 2.0
@@ -390,16 +382,18 @@ extends Iterator<E>, Traversable<E> {
 		IteratorUtils.foreach(this, procedure);
 	}
 	
+	// TODO: backwardForeach ?
+	
 	// Misc.
 	
 	/**
-	 * Builds an unmodifiable view of this iterator.
+	 * Builds an unmodifiable view of this list iterator.
 	 * 
 	 * @return An unmodifiable view of this iterator, or this iterator when is it already unmodifiable.
-	 * @see IteratorUtils#unmodifiable(Iterator)
+	 * @see ListIteratorUtils#unmodifiable(ListIterator)
 	 * @since 2.0
 	 */
-	default ExIterator<E> unmodifiable() {
-		return IteratorUtils.unmodifiable(this);
+	default ExListIterator<E> unmodifiable() {
+		return ListIteratorUtils.unmodifiable(this);
 	}
 }

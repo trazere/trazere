@@ -1,3 +1,18 @@
+/*
+ *  Copyright 2006-2015 Julien Dufour
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
 package com.trazere.core.lang;
 
 import com.trazere.core.collection.CollectionFactory;
@@ -30,19 +45,13 @@ extends Iterable<E>, Traversable<E> {
 	 * @return The extended view of the given iterable, or the given iterable when it is already an extended view.
 	 * @since 2.0
 	 */
-	@SuppressWarnings("unchecked")
-	public static <E> ExIterable<E> build(final Iterable<? extends E> iterable) {
+	public static <E> ExIterable<E> build(final Iterable<E> iterable) {
 		assert null != iterable;
 		
 		if (iterable instanceof ExIterable) {
 			return (ExIterable<E>) iterable;
 		} else {
-			return new ExIterable<E>() {
-				@Override
-				public ExIterator<E> iterator() {
-					return ExIterator.build(iterable.iterator());
-				}
-			};
+			return new IterableDecorator<>(iterable);
 		}
 	}
 	
