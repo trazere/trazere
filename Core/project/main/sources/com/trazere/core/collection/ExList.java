@@ -29,6 +29,7 @@ import java.util.Random;
  * The {@link ExList} interface defines extended {@link List lists}.
  * 
  * @param <E> Type of the elements.
+ * @see List
  * @since 2.0
  */
 public interface ExList<E>

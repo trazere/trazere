@@ -26,6 +26,7 @@ import java.util.Collection;
  * The {@link ExCollection} interface defines extended {@link Collection collections}.
  * 
  * @param <E> Type of the elements.
+ * @see Collection
  * @since 2.0
  */
 public interface ExCollection<E>

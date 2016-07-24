@@ -22,7 +22,7 @@ import java.util.Comparator;
  * 
  * @param <T> Type of the values.
  * @param <V> Type of the mapped values.
- * @deprecated Use {@link com.trazere.core.util.MapComparator}.
+ * @deprecated Use {@link com.trazere.core.util.ComparatorUtils#mapping(Comparator, com.trazere.core.functional.Function)}.
  */
 @Deprecated
 public abstract class MapComparator<T, V>
@@ -34,7 +34,7 @@ implements Comparator<T> {
 	 * Instantiate a new comparator.
 	 * 
 	 * @param comparator The comparator to use. May be <code>null</code>.
-	 * @deprecated Use {@link com.trazere.core.util.MapComparator#MapComparator(Comparator)}.
+	 * @deprecated Use {@link com.trazere.core.util.ComparatorUtils#mapping(Comparator, com.trazere.core.functional.Function)}.
 	 */
 	@Deprecated
 	public MapComparator(final Comparator<? super V> comparator) {
@@ -54,9 +54,6 @@ implements Comparator<T> {
 	 * 
 	 * @param object The object to transform.
 	 * @return The comparison object.
-	 * @deprecated Use {@link com.trazere.core.util.MapComparator#mapValue(Object)}.
 	 */
-	@Deprecated
-	@SuppressWarnings("javadoc")
 	protected abstract V mapValue(final T object);
 }

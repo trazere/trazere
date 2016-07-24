@@ -30,6 +30,7 @@ import java.util.NoSuchElementException;
  * The {@link ExIterable} interface defines extended {@link Iterable iterables}.
  * 
  * @param <E> Type of the elements.
+ * @see Iterable
  * @since 2.0
  */
 @FunctionalInterface

@@ -28,6 +28,12 @@ import java.util.function.Consumer;
 public class ListIteratorDecorator<E>
 extends Decorator<ListIterator<E>>
 implements ExListIterator<E> {
+	/**
+	 * Builds a new decorator.
+	 * 
+	 * @param decorated List iterator to decorate.
+	 * @since 2.0
+	 */
 	public ListIteratorDecorator(final ListIterator<E> decorated) {
 		super(decorated);
 	}

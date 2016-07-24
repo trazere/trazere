@@ -21,7 +21,7 @@ import java.util.Comparator;
  * The {@link InverseComparator} class provides comparators according to the inverse order of some other comparator.
  * 
  * @param <T> Type of the values.
- * @deprecated Use {@link com.trazere.core.util.InverseComparator}.
+ * @deprecated Use {@link com.trazere.core.util.ComparatorUtils#inversed(Comparator)}.
  */
 @Deprecated
 public class InverseComparator<T>
@@ -32,7 +32,7 @@ implements Comparator<T> {
 	 * @param <T> Type of the values.
 	 * @param comparator The comparator to inverse.
 	 * @return The built comparator.
-	 * @deprecated Use {@link com.trazere.core.util.ComparatorUtils#inverse(Comparator)}.
+	 * @deprecated Use {@link com.trazere.core.util.ComparatorUtils#inversed(Comparator)}.
 	 */
 	@Deprecated
 	public static <T> InverseComparator<T> build(final Comparator<? super T> comparator) {
@@ -46,7 +46,7 @@ implements Comparator<T> {
 	 * @param comparator The comparator.
 	 * @param ascending Comparison order, <code>true</code> for ascending order, <code>false</code> for descending order.
 	 * @return The built comparator.
-	 * @deprecated Use {@link com.trazere.core.util.ComparatorUtils#inverse(Comparator, boolean)}. Be careful about the inverse argument.
+	 * @deprecated Use {@link com.trazere.core.util.ComparatorUtils#inversed(Comparator, boolean)}. Be careful about the inverse argument.
 	 */
 	@Deprecated
 	public static <T> Comparator<T> build(final Comparator<T> comparator, final boolean ascending) {
@@ -66,7 +66,7 @@ implements Comparator<T> {
 	 * Instantiates a new inversed comparator.
 	 * 
 	 * @param comparator The comparator to inverse.
-	 * @deprecated Use {@link com.trazere.core.util.InverseComparator#InverseComparator(Comparator)}.
+	 * @deprecated Use {@link com.trazere.core.util.ComparatorUtils#inversed(Comparator)}.
 	 */
 	@Deprecated
 	public InverseComparator(final Comparator<? super T> comparator) {
@@ -80,9 +80,7 @@ implements Comparator<T> {
 	 * Gets the inversed comparator.
 	 * 
 	 * @return The inversed comparator.
-	 * @deprecated Use {@link com.trazere.core.util.InverseComparator#getComparator()}.
 	 */
-	@Deprecated
 	public Comparator<? super T> getComparator() {
 		return _comparator;
 	}

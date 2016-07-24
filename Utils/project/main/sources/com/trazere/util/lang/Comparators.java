@@ -122,7 +122,7 @@ public class Comparators {
 	 * @param comparator The inversed comparator.
 	 * @return The built comparator.
 	 * @see InverseComparator
-	 * @deprecated Use {@link com.trazere.core.util.ComparatorUtils#inverse(Comparator)}.
+	 * @deprecated Use {@link com.trazere.core.util.ComparatorUtils#inversed(Comparator)}.
 	 */
 	@Deprecated
 	public static <T> Comparator<T> inverse(final Comparator<? super T> comparator) {
@@ -170,7 +170,7 @@ public class Comparators {
 	 * @param comparator The comparator.
 	 * @return The built comparator.
 	 * @see MapComparator
-	 * @deprecated Use {@link com.trazere.core.util.ComparatorUtils#map(Comparator, com.trazere.core.functional.Function)}.
+	 * @deprecated Use {@link com.trazere.core.util.ComparatorUtils#mapping(Comparator, com.trazere.core.functional.Function)}.
 	 */
 	@Deprecated
 	public static <T1, T2> Comparator<T1> map(final Function1<? super T1, ? extends T2, ? extends RuntimeException> function, final Comparator<? super T2> comparator) {

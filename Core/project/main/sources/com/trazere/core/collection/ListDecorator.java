@@ -36,6 +36,12 @@ import java.util.stream.Stream;
 public class ListDecorator<E>
 extends Decorator<List<E>>
 implements ExList<E> {
+	/**
+	 * Builds a new decorator.
+	 * 
+	 * @param decorated List to decorate.
+	 * @since 2.0
+	 */
 	public ListDecorator(final List<E> decorated) {
 		super(decorated);
 	}

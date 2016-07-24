@@ -26,6 +26,7 @@ import java.util.Set;
  * The {@link ExSet} interface defines extended {@link Set sets}.
  * 
  * @param <E> Type of the elements.
+ * @see Set
  * @since 2.0
  */
 public interface ExSet<E>

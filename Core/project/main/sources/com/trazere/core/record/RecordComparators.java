@@ -15,8 +15,8 @@
  */
 package com.trazere.core.record;
 
-import com.trazere.core.util.MapComparator;
-import com.trazere.core.util.Maybe;
+import com.trazere.core.util.ComparatorUtils;
+import com.trazere.core.util.ExComparator;
 import com.trazere.core.util.MaybeComparators;
 import java.util.Comparator;
 
@@ -38,15 +38,10 @@ public class RecordComparators {
 	 * @return The built comparator.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<K, ?>, V> Comparator<Record<K>> fieldValue(final FieldKey<K, V> key, final Comparator<? super V> comparator) {
+	public static <K extends FieldKey<K, ?>, V> ExComparator<Record<K>> fieldValue(final FieldKey<K, V> key, final Comparator<? super V> comparator) {
 		assert null != key;
 		
-		return new MapComparator<Record<K>, Maybe<V>>(MaybeComparators.maybe(comparator)) {
-			@Override
-			protected Maybe<V> mapValue(final Record<K> record) {
-				return record.get(key);
-			}
-		};
+		return MaybeComparators.<V>maybe(comparator).mapping(record -> record.get(key));
 	}
 	
 	/**
@@ -60,15 +55,10 @@ public class RecordComparators {
 	 * @return The built comparator.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<K, ?>, V> Comparator<Record<K>> optionalFieldValue(final FieldKey<K, V> key, final V defaultValue, final Comparator<? super V> comparator) {
+	public static <K extends FieldKey<K, ?>, V> ExComparator<Record<K>> optionalFieldValue(final FieldKey<K, V> key, final V defaultValue, final Comparator<? super V> comparator) {
 		assert null != key;
 		
-		return new MapComparator<Record<K>, V>(comparator) {
-			@Override
-			protected V mapValue(final Record<K> record) {
-				return record.getOptional(key, defaultValue);
-			}
-		};
+		return ComparatorUtils.mapping(comparator, record -> record.getOptional(key, defaultValue));
 	}
 	
 	/**
@@ -81,15 +71,10 @@ public class RecordComparators {
 	 * @return The built comparator.
 	 * @since 2.0
 	 */
-	public static <K extends FieldKey<K, ?>, V> Comparator<Record<K>> mandatoryFieldValue(final FieldKey<K, V> key, final Comparator<? super V> comparator) {
+	public static <K extends FieldKey<K, ?>, V> ExComparator<Record<K>> mandatoryFieldValue(final FieldKey<K, V> key, final Comparator<? super V> comparator) {
 		assert null != key;
 		
-		return new MapComparator<Record<K>, V>(comparator) {
-			@Override
-			protected V mapValue(final Record<K> record) {
-				return record.getMandatory(key);
-			}
-		};
+		return ComparatorUtils.mapping(comparator, record -> record.getMandatory(key));
 	}
 	
 	private RecordComparators() {

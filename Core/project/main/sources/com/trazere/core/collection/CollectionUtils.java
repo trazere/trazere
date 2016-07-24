@@ -804,7 +804,7 @@ public class CollectionUtils {
 	public static <E> ExCollection<E> unmodifiable(final Collection<E> collection) {
 		assert null != collection;
 		
-		return collection instanceof UnmodifiableCollection ? (UnmodifiableCollection<E>) collection : new UnmodifiableCollection<>(collection);
+		return collection instanceof UnmodifiableCollection<?> ? (UnmodifiableCollection<E>) collection : new UnmodifiableCollection<>(collection);
 	}
 	
 	private static class UnmodifiableCollection<E>

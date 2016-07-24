@@ -29,6 +29,7 @@ import java.util.Iterator;
  * The {@link ExIterator} interfaces defines extended {@link Iterator iterators}.
  * 
  * @param <E> Type of the elements.
+ * @see Iterator
  * @since 2.0
  */
 public interface ExIterator<E>

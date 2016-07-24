@@ -36,10 +36,10 @@ public class MaybeComparators {
 	 * @see ComparatorUtils#compare(Comparator, Maybe, Maybe)
 	 * @since 2.0
 	 */
-	public static <T> Comparator<Maybe<T>> maybe(final Comparator<? super T> comparator) {
+	public static <T> ExComparator<Maybe<T>> maybe(final Comparator<? super T> comparator) {
 		assert null != comparator;
 		
-		return (value1, value2) -> ComparatorUtils.compare(comparator, value1, value2);
+		return (o1, o2) -> ComparatorUtils.compare(comparator, o1, o2);
 	}
 	
 	private MaybeComparators() {

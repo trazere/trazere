@@ -32,6 +32,12 @@ import java.util.stream.Stream;
 public class CollectionDecorator<E>
 extends Decorator<Collection<E>>
 implements ExCollection<E> {
+	/**
+	 * Builds a new decorator.
+	 * 
+	 * @param decorated Collection to decorate.
+	 * @since 2.0
+	 */
 	public CollectionDecorator(final Collection<E> decorated) {
 		super(decorated);
 	}

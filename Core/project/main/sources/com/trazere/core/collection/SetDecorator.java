@@ -33,6 +33,12 @@ import java.util.stream.Stream;
 public class SetDecorator<E>
 extends Decorator<Set<E>>
 implements ExSet<E> {
+	/**
+	 * Builds a new decorator.
+	 * 
+	 * @param decorated Set to decorate.
+	 * @since 2.0
+	 */
 	public SetDecorator(final Set<E> decorated) {
 		super(decorated);
 	}

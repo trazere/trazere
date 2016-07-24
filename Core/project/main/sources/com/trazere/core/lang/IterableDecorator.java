@@ -29,6 +29,12 @@ import java.util.function.Consumer;
 public class IterableDecorator<E>
 extends Decorator<Iterable<E>>
 implements ExIterable<E> {
+	/**
+	 * Builds a new decorator.
+	 * 
+	 * @param decorated Iterable to decorate.
+	 * @since 2.0
+	 */
 	public IterableDecorator(final Iterable<E> decorated) {
 		super(decorated);
 	}

@@ -16,6 +16,7 @@
 package com.trazere.core.util;
 
 import com.trazere.core.functional.Function;
+import com.trazere.core.lang.HashCode;
 import java.util.Comparator;
 
 /**
@@ -40,10 +41,10 @@ public class ComparatorUtils {
 	 * <p>
 	 * Absent values are considered less than available values. Available values are ordered according to the given comparator.
 	 * 
-	 * @param <T> Type of the values.
-	 * @param comparator Comparator of the values.
-	 * @param value1 First value to compare.
-	 * @param value2 Second value to compare.
+	 * @param <T> Type of compared values.
+	 * @param comparator Comparator to use.
+	 * @param value1 First optional value to compare.
+	 * @param value2 Second optional value to compare.
 	 * @return The result of the comparison as defined by the {@link Comparator#compare(Object, Object)} method.
 	 * @see Comparator#compare(Object, Object)
 	 * @since 2.0
@@ -61,7 +62,7 @@ public class ComparatorUtils {
 	 * <p>
 	 * This method supports comparison of <code>null</code> values. <code>null</code> values are considered less than non <code>null</code> values.
 	 * 
-	 * @param <T> Type of the values.
+	 * @param <T> Type of compared values.
 	 * @param comparator The comparator.
 	 * @param value1 First unsafe value to compare. May be <code>null</code>.
 	 * @param value2 Second unsafe value to compare. May be <code>null</code>.
@@ -108,68 +109,146 @@ public class ComparatorUtils {
 	}
 	
 	/**
-	 * Derives a safe comparator from the given comparator.
+	 * Derives a comparator that supports <code>null</code> values from the given comparator.
 	 * <p>
-	 * The derived comparator supports comparison of <code>null</code> values. <code>null</code> values are considered less than non <code>null</code> values.
+	 * <code>null</code> values are considered less than non <code>null</code> values.
 	 * 
-	 * @param <T> Type of the values.
+	 * @param <T> Type of compared values.
 	 * @param comparator Unsafe comparator to derive.
 	 * @return The built comparator.
 	 * @see ComparatorUtils#safeCompare(Comparator, Object, Object)
 	 * @since 2.0
 	 */
-	public static <T> Comparator<T> safe(final Comparator<? super T> comparator) {
+	@SuppressWarnings("unchecked")
+	public static <T> ExComparator<T> safe(final Comparator<? super T> comparator) {
 		assert null != comparator;
 		
-		return (object1, object2) -> ComparatorUtils.safeCompare(comparator, object1, object2);
+		return comparator instanceof SafeComparator<?> ? (SafeComparator<T>) comparator : new SafeComparator<>(comparator);
+	}
+	
+	private static class SafeComparator<T>
+	implements ExComparator<T> {
+		protected final Comparator<? super T> _comparator;
+		
+		public SafeComparator(final Comparator<? super T> comparator) {
+			assert null != comparator;
+			
+			// Initialization.
+			_comparator = comparator;
+		}
+		
+		// Comparator.
+		
+		@Override
+		public int compare(final T o1, final T o2) {
+			return ComparatorUtils.safeCompare(_comparator, o1, o2);
+		}
+		
+		// Object.
+		
+		@Override
+		public int hashCode() {
+			final HashCode result = new HashCode(this);
+			result.append(_comparator);
+			return result.get();
+		}
+		
+		@Override
+		public boolean equals(final Object object) {
+			if (this == object) {
+				return true;
+			} else if (null != object && getClass().equals(object.getClass())) {
+				final SafeComparator<?> comparator = (SafeComparator<?>) object;
+				return _comparator.equals(comparator._comparator);
+			} else {
+				return false;
+			}
+		}
 	}
 	
 	/**
 	 * Derives a comparator according to the inverse order of the given comparator.
 	 * 
-	 * @param <T> Type of the values.
+	 * @param <T> Type of compared values.
 	 * @param comparator Comparator to inverse.
 	 * @return The built comparator.
-	 * @see InverseComparator
 	 * @since 2.0
 	 */
-	public static <T> Comparator<T> inverse(final Comparator<? super T> comparator) {
-		return new InverseComparator<>(comparator);
+	@SuppressWarnings("unchecked")
+	public static <T> ExComparator<T> inversed(final Comparator<? super T> comparator) {
+		assert null != comparator;
+		
+		return comparator instanceof InversedComparator<?> ? ExComparator.build((Comparator<T>) ((InversedComparator<T>) comparator)._comparator) : new InversedComparator<>(comparator);
+	}
+	
+	private static class InversedComparator<T>
+	implements ExComparator<T> {
+		protected final Comparator<? super T> _comparator;
+		
+		public InversedComparator(final Comparator<? super T> comparator) {
+			assert null != comparator;
+			
+			// Initialization.
+			_comparator = comparator;
+		}
+		
+		// Comparator.
+		
+		@Override
+		public int compare(final T o1, final T o2) {
+			return -(_comparator.compare(o1, o2));
+		}
+		
+		// Object.
+		
+		@Override
+		public int hashCode() {
+			final HashCode result = new HashCode(this);
+			result.append(_comparator);
+			return result.get();
+		}
+		
+		@Override
+		public boolean equals(final Object object) {
+			if (this == object) {
+				return true;
+			} else if (null != object && getClass().equals(object.getClass())) {
+				final InversedComparator<?> comparator = (InversedComparator<?>) object;
+				return _comparator.equals(comparator._comparator);
+			} else {
+				return false;
+			}
+		}
 	}
 	
 	/**
 	 * Derives a comparator according to the direct or inverse order of the given comparator.
 	 * 
-	 * @param <T> Type of the values.
+	 * @param <T> Type of compared values.
 	 * @param comparator Comparator to inverse.
 	 * @param inverse Indicates whether to inverse the order or not.
 	 * @return The built comparator.
 	 * @since 2.0
 	 */
-	public static <T> Comparator<T> inverse(final Comparator<T> comparator, final boolean inverse) {
-		return inverse ? inverse(comparator) : comparator;
+	public static <T> ExComparator<T> inversed(final Comparator<T> comparator, final boolean inverse) {
+		return inverse ? inversed(comparator) : ExComparator.build(comparator);
 	}
 	
 	/**
-	 * Maps the given comparator using the given function.
+	 * Derives a comparator from the given comparator that transforms the values to compare using the given function.
 	 * 
-	 * @param <T1> Type of the values.
-	 * @param <T2> Type of the mapped values.
-	 * @param comparator Comparator to map.
-	 * @param function Mapping function to use.
+	 * @param <T> Type of compared values.
+	 * @param <TT> Type of the transformed compared values.
+	 * @param comparator Comparator to use.
+	 * @param function Function to use to transform the values to compare.
 	 * @return The built comparator.
-	 * @see MapComparator
 	 * @since 2.0
 	 */
-	public static <T1, T2> Comparator<T1> map(final Comparator<? super T2> comparator, final Function<? super T1, ? extends T2> function) {
+	public static <T, TT> ExComparator<TT> mapping(final Comparator<? super T> comparator, final Function<? super TT, ? extends T> function) {
+		assert null != comparator;
 		assert null != function;
 		
-		return new MapComparator<T1, T2>(comparator) {
-			@Override
-			protected T2 mapValue(final T1 object) {
-				return function.evaluate(object);
-			}
-		};
+		return (o1, o2) -> comparator.compare(function.evaluate(o1), function.evaluate(o2));
 	}
 	
 	private ComparatorUtils() {

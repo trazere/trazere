@@ -33,8 +33,8 @@ public class FieldComparators {
 	 * @return The built comparator.
 	 * @since 2.0
 	 */
-	public static <T> Comparator<Field<T>> field(final Comparator<? super T> comparator) {
-		return ComparatorUtils.map(comparator, FieldFunctions.get());
+	public static <T> ExComparator<Field<T>> field(final Comparator<? super T> comparator) {
+		return ComparatorUtils.mapping(comparator, Field::get);
 	}
 	
 	/**
@@ -45,8 +45,8 @@ public class FieldComparators {
 	 * @return The built comparator.
 	 * @since 2.0
 	 */
-	public static <T> Comparator<Field1<T>> field1(final Comparator<? super T> comparator) {
-		return ComparatorUtils.map(comparator, FieldFunctions.get1());
+	public static <T> ExComparator<Field1<T>> field1(final Comparator<? super T> comparator) {
+		return ComparatorUtils.mapping(comparator, Field1::get1);
 	}
 	
 	/**
@@ -57,8 +57,8 @@ public class FieldComparators {
 	 * @return The built comparator.
 	 * @since 2.0
 	 */
-	public static <T> Comparator<Field2<T>> field2(final Comparator<? super T> comparator) {
-		return ComparatorUtils.map(comparator, FieldFunctions.get2());
+	public static <T> ExComparator<Field2<T>> field2(final Comparator<? super T> comparator) {
+		return ComparatorUtils.mapping(comparator, Field2::get2);
 	}
 	
 	/**
@@ -69,8 +69,8 @@ public class FieldComparators {
 	 * @return The built comparator.
 	 * @since 2.0
 	 */
-	public static <T> Comparator<Field3<T>> field3(final Comparator<? super T> comparator) {
-		return ComparatorUtils.map(comparator, FieldFunctions.get3());
+	public static <T> ExComparator<Field3<T>> field3(final Comparator<? super T> comparator) {
+		return ComparatorUtils.mapping(comparator, Field3::get3);
 	}
 	
 	/**
@@ -81,8 +81,8 @@ public class FieldComparators {
 	 * @return The built comparator.
 	 * @since 2.0
 	 */
-	public static <T> Comparator<Field4<T>> field4(final Comparator<? super T> comparator) {
-		return ComparatorUtils.map(comparator, FieldFunctions.get4());
+	public static <T> ExComparator<Field4<T>> field4(final Comparator<? super T> comparator) {
+		return ComparatorUtils.mapping(comparator, Field4::get4);
 	}
 	
 	/**
@@ -93,8 +93,8 @@ public class FieldComparators {
 	 * @return The built comparator.
 	 * @since 2.0
 	 */
-	public static <T> Comparator<Field5<T>> field5(final Comparator<? super T> comparator) {
-		return ComparatorUtils.map(comparator, FieldFunctions.get5());
+	public static <T> ExComparator<Field5<T>> field5(final Comparator<? super T> comparator) {
+		return ComparatorUtils.mapping(comparator, Field5::get5);
 	}
 	
 	/**
@@ -105,8 +105,8 @@ public class FieldComparators {
 	 * @return The built comparator.
 	 * @since 2.0
 	 */
-	public static <T> Comparator<Field6<T>> field6(final Comparator<? super T> comparator) {
-		return ComparatorUtils.map(comparator, FieldFunctions.get6());
+	public static <T> ExComparator<Field6<T>> field6(final Comparator<? super T> comparator) {
+		return ComparatorUtils.mapping(comparator, Field6::get6);
 	}
 	
 	/**
@@ -117,8 +117,8 @@ public class FieldComparators {
 	 * @return The built comparator.
 	 * @since 2.0
 	 */
-	public static <T> Comparator<Field7<T>> field7(final Comparator<? super T> comparator) {
-		return ComparatorUtils.map(comparator, FieldFunctions.get7());
+	public static <T> ExComparator<Field7<T>> field7(final Comparator<? super T> comparator) {
+		return ComparatorUtils.mapping(comparator, Field7::get7);
 	}
 	
 	/**
@@ -129,8 +129,8 @@ public class FieldComparators {
 	 * @return The built comparator.
 	 * @since 2.0
 	 */
-	public static <T> Comparator<Field8<T>> field8(final Comparator<? super T> comparator) {
-		return ComparatorUtils.map(comparator, FieldFunctions.get8());
+	public static <T> ExComparator<Field8<T>> field8(final Comparator<? super T> comparator) {
+		return ComparatorUtils.mapping(comparator, Field8::get8);
 	}
 	
 	/**
@@ -141,8 +141,8 @@ public class FieldComparators {
 	 * @return The built comparator.
 	 * @since 2.0
 	 */
-	public static <T> Comparator<Field9<T>> field9(final Comparator<? super T> comparator) {
-		return ComparatorUtils.map(comparator, FieldFunctions.get9());
+	public static <T> ExComparator<Field9<T>> field9(final Comparator<? super T> comparator) {
+		return ComparatorUtils.mapping(comparator, Field9::get9);
 	}
 	
 	/**
@@ -153,8 +153,8 @@ public class FieldComparators {
 	 * @return The built comparator.
 	 * @since 2.0
 	 */
-	public static <T> Comparator<Field10<T>> field10(final Comparator<? super T> comparator) {
-		return ComparatorUtils.map(comparator, FieldFunctions.get10());
+	public static <T> ExComparator<Field10<T>> field10(final Comparator<? super T> comparator) {
+		return ComparatorUtils.mapping(comparator, Field10::get10);
 	}
 	
 	private FieldComparators() {
