@@ -18,7 +18,7 @@ package com.trazere.core.functional;
 import com.trazere.core.collection.CollectionUtils;
 import com.trazere.core.lang.IterableUtils;
 import com.trazere.core.util.Maybe;
-import com.trazere.core.util.MaybeUtils;
+import com.trazere.core.util.Maybes;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -137,7 +137,7 @@ implements ObjectTypeFunction<T, Maybe<R>> {
 		
 		// Get the super types.
 		final Set<Class<? extends T>> superTypes = new HashSet<>();
-		CollectionUtils.addAll(superTypes, MaybeUtils.fromNullable(type.getSuperclass()).flatMap(filter));
+		CollectionUtils.addAll(superTypes, Maybes.fromNullable(type.getSuperclass()).flatMap(filter));
 		CollectionUtils.addAll(superTypes, IterableUtils.flatMap(Arrays.asList(type.getInterfaces()), filter));
 		return superTypes;
 	}

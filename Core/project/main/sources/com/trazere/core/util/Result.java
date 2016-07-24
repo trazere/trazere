@@ -34,6 +34,9 @@ public abstract class Result<T>
 implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	// Success.
+	
+	// TODO: move to Results ?
 	/**
 	 * Builds a success.
 	 * 
@@ -45,20 +48,6 @@ implements Serializable {
 	public static <T> Result<T> success(final T value) {
 		return new Success<>(value);
 	}
-	
-	/**
-	 * Builds a failure.
-	 * 
-	 * @param <T> Type of the sucess value.
-	 * @param cause Cause of the failure.
-	 * @return The built instance.
-	 * @since 2.0
-	 */
-	public static <T> Result<T> failure(final Throwable cause) {
-		return new Failure<>(cause);
-	}
-	
-	// Success.
 	
 	/**
 	 * The {@link Result.Success} class represents the instances of {@link Result} that encode the successes.
@@ -191,6 +180,19 @@ implements Serializable {
 	}
 	
 	// Failure.
+	
+	// TODO: move to Results ?
+	/**
+	 * Builds a failure.
+	 * 
+	 * @param <T> Type of the sucess value.
+	 * @param cause Cause of the failure.
+	 * @return The built instance.
+	 * @since 2.0
+	 */
+	public static <T> Result<T> failure(final Throwable cause) {
+		return new Failure<>(cause);
+	}
 	
 	/**
 	 * The {@link Result.Failure} class represents the instances of {@link Result} that encode the failures.

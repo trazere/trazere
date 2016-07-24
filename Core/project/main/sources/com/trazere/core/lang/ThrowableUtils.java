@@ -21,7 +21,7 @@ import com.trazere.core.collection.Feeds;
 import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Predicate;
 import com.trazere.core.util.Maybe;
-import com.trazere.core.util.MaybeUtils;
+import com.trazere.core.util.Maybes;
 import com.trazere.core.util.Tuple2;
 
 /**
@@ -57,7 +57,7 @@ public class ThrowableUtils {
 		return new BaseMemoizedFeed<Throwable>() {
 			@Override
 			protected Maybe<? extends Tuple2<? extends Throwable, ? extends Feed<? extends Throwable>>> compute() {
-				return MaybeUtils.fromNullable(throwable.getCause()).map(cause -> new Tuple2<>(cause, getCauseTail(cause)));
+				return Maybes.fromNullable(throwable.getCause()).map(cause -> new Tuple2<>(cause, getCauseTail(cause)));
 			}
 		};
 	}

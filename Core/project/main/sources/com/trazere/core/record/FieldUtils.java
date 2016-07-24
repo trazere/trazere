@@ -23,7 +23,7 @@ import com.trazere.core.functional.Thunk;
 import com.trazere.core.imperative.Accumulator;
 import com.trazere.core.lang.Iterables;
 import com.trazere.core.util.Maybe;
-import com.trazere.core.util.MaybeUtils;
+import com.trazere.core.util.Maybes;
 import com.trazere.core.util.Serializer;
 import com.trazere.core.util.SerializerFunctions;
 import java.util.Collection;
@@ -391,7 +391,7 @@ public class FieldUtils {
 	 * @since 2.0
 	 */
 	public static <V> Maybe<V> readNullable(final String description, final V representation) {
-		return read(description, MaybeUtils.fromNullable(representation));
+		return read(description, Maybes.fromNullable(representation));
 	}
 	
 	/**
@@ -408,7 +408,7 @@ public class FieldUtils {
 	 */
 	public static <R, V> Maybe<V> readNullable(final String description, final R representation, final Function<? super R, ? extends V> deserializer)
 	throws InvalidFieldException {
-		return read(description, MaybeUtils.fromNullable(representation), deserializer);
+		return read(description, Maybes.fromNullable(representation), deserializer);
 	}
 	
 	/**
@@ -425,7 +425,7 @@ public class FieldUtils {
 	 */
 	public static <R, V> Maybe<V> readNullable(final String description, final R representation, final Serializer<? extends V, ? super R> deserializer)
 	throws InvalidFieldException {
-		return read(description, MaybeUtils.fromNullable(representation), deserializer);
+		return read(description, Maybes.fromNullable(representation), deserializer);
 	}
 	
 	/**
@@ -439,7 +439,7 @@ public class FieldUtils {
 	 * @since 2.0
 	 */
 	public static <V> V readOptionalNullable(final String description, final V representation, final V defaultValue) {
-		return readOptional(description, MaybeUtils.fromNullable(representation), defaultValue);
+		return readOptional(description, Maybes.fromNullable(representation), defaultValue);
 	}
 	
 	/**
@@ -457,7 +457,7 @@ public class FieldUtils {
 	 */
 	public static <R, V> V readOptionalNullable(final String description, final R representation, final Function<? super R, ? extends V> deserializer, final V defaultValue)
 	throws InvalidFieldException {
-		return readOptional(description, MaybeUtils.fromNullable(representation), deserializer, defaultValue);
+		return readOptional(description, Maybes.fromNullable(representation), deserializer, defaultValue);
 	}
 	
 	/**
@@ -475,7 +475,7 @@ public class FieldUtils {
 	 */
 	public static <R, V> V readOptionalNullable(final String description, final R representation, final Serializer<? extends V, ? super R> deserializer, final V defaultValue)
 	throws InvalidFieldException {
-		return readOptional(description, MaybeUtils.fromNullable(representation), deserializer, defaultValue);
+		return readOptional(description, Maybes.fromNullable(representation), deserializer, defaultValue);
 	}
 	
 	/**
@@ -489,7 +489,7 @@ public class FieldUtils {
 	 * @since 2.0
 	 */
 	public static <V> V readOptionalNullable(final String description, final V representation, final Thunk<? extends V> defaultValue) {
-		return readOptional(description, MaybeUtils.fromNullable(representation), defaultValue);
+		return readOptional(description, Maybes.fromNullable(representation), defaultValue);
 	}
 	
 	/**
@@ -507,7 +507,7 @@ public class FieldUtils {
 	 */
 	public static <R, V> V readOptionalNullable(final String description, final R representation, final Function<? super R, ? extends V> deserializer, final Thunk<? extends V> defaultValue)
 	throws InvalidFieldException {
-		return readOptional(description, MaybeUtils.fromNullable(representation), deserializer, defaultValue);
+		return readOptional(description, Maybes.fromNullable(representation), deserializer, defaultValue);
 	}
 	
 	/**
@@ -525,7 +525,7 @@ public class FieldUtils {
 	 */
 	public static <R, V> V readOptionalNullable(final String description, final R representation, final Serializer<? extends V, ? super R> deserializer, final Thunk<? extends V> defaultValue)
 	throws InvalidFieldException {
-		return readOptional(description, MaybeUtils.fromNullable(representation), deserializer, defaultValue);
+		return readOptional(description, Maybes.fromNullable(representation), deserializer, defaultValue);
 	}
 	
 	/**
@@ -540,7 +540,7 @@ public class FieldUtils {
 	 */
 	public static <V> V readMandatoryNullable(final String description, final V representation)
 	throws MissingFieldException {
-		return readMandatory(description, MaybeUtils.fromNullable(representation));
+		return readMandatory(description, Maybes.fromNullable(representation));
 	}
 	
 	/**
@@ -558,7 +558,7 @@ public class FieldUtils {
 	 */
 	public static <R, V> V readMandatoryNullable(final String description, final R representation, final Function<? super R, ? extends V> deserializer)
 	throws MissingFieldException, InvalidFieldException {
-		return readMandatory(description, MaybeUtils.fromNullable(representation), deserializer);
+		return readMandatory(description, Maybes.fromNullable(representation), deserializer);
 	}
 	
 	/**
@@ -576,7 +576,7 @@ public class FieldUtils {
 	 */
 	public static <R, V> V readMandatoryNullable(final String description, final R representation, final Serializer<? extends V, ? super R> deserializer)
 	throws MissingFieldException, InvalidFieldException {
-		return readMandatory(description, MaybeUtils.fromNullable(representation), deserializer);
+		return readMandatory(description, Maybes.fromNullable(representation), deserializer);
 	}
 	
 	/**
@@ -591,7 +591,7 @@ public class FieldUtils {
 	 * @since 2.0
 	 */
 	public static <V, C extends Collection<? super V>> C readMultipleNullable(final String description, final Iterable<? extends V> representations, final CollectionFactory<? super V, ? extends C> factory) {
-		return readMultiple(description, MaybeUtils.fromNullable(representations).get(Iterables.empty()), factory);
+		return readMultiple(description, Maybes.fromNullable(representations).get(Iterables.empty()), factory);
 	}
 	
 	/**
@@ -610,7 +610,7 @@ public class FieldUtils {
 	 */
 	public static <R, V, C extends Collection<? super V>> C readMultipleNullable(final String description, final Iterable<? extends R> representations, final Function<? super R, ? extends V> deserializer, final CollectionFactory<? super V, ? extends C> factory)
 	throws InvalidFieldException {
-		return readMultiple(description, MaybeUtils.fromNullable(representations).get(Iterables.empty()), deserializer, factory);
+		return readMultiple(description, Maybes.fromNullable(representations).get(Iterables.empty()), deserializer, factory);
 	}
 	
 	/**
@@ -629,7 +629,7 @@ public class FieldUtils {
 	 */
 	public static <R, V, C extends Collection<? super V>> C readMultipleNullable(final String description, final Iterable<? extends R> representations, final Serializer<? extends V, ? super R> deserializer, final CollectionFactory<? super V, ? extends C> factory)
 	throws InvalidFieldException {
-		return readMultiple(description, MaybeUtils.fromNullable(representations).get(Iterables.empty()), deserializer, factory);
+		return readMultiple(description, Maybes.fromNullable(representations).get(Iterables.empty()), deserializer, factory);
 	}
 	
 	/**
@@ -644,7 +644,7 @@ public class FieldUtils {
 	 * @since 2.0
 	 */
 	public static <V, A extends Accumulator<? super V, ?>> A readMultipleNullable(final String description, final Iterable<? extends V> representations, final A results) {
-		return readMultiple(description, MaybeUtils.fromNullable(representations).get(Iterables.empty()), results);
+		return readMultiple(description, Maybes.fromNullable(representations).get(Iterables.empty()), results);
 	}
 	
 	/**
@@ -663,7 +663,7 @@ public class FieldUtils {
 	 */
 	public static <R, V, A extends Accumulator<? super V, ?>> A readMultipleNullable(final String description, final Iterable<? extends R> representations, final Function<? super R, ? extends V> deserializer, final A results)
 	throws InvalidFieldException {
-		return readMultipleNullable(description, MaybeUtils.fromNullable(representations).get(Iterables.empty()), deserializer, results);
+		return readMultipleNullable(description, Maybes.fromNullable(representations).get(Iterables.empty()), deserializer, results);
 	}
 	
 	/**
@@ -682,7 +682,7 @@ public class FieldUtils {
 	 */
 	public static <R, V, A extends Accumulator<? super V, ?>> A readMultipleNullable(final String description, final Iterable<? extends R> representations, final Serializer<? extends V, ? super R> deserializer, final A results)
 	throws InvalidFieldException {
-		return readMultiple(description, MaybeUtils.fromNullable(representations).get(Iterables.empty()), deserializer, results);
+		return readMultiple(description, Maybes.fromNullable(representations).get(Iterables.empty()), deserializer, results);
 	}
 	
 	private FieldUtils() {

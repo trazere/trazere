@@ -37,6 +37,8 @@ public abstract class Either<L, R>
 implements Serializable, Describable {
 	private static final long serialVersionUID = 1L;
 	
+	// Left.
+	
 	// TODO: move to Eithers ?
 	/**
 	 * Builds a {@link Either} instance using the {@link Left} constructor.
@@ -51,23 +53,6 @@ implements Serializable, Describable {
 	public static <L, R> Either<L, R> left(final L left) {
 		return new Left<>(left);
 	}
-	
-	// TODO: move to Eithers ?
-	/**
-	 * Builds a {@link Either} instance using the {@link Right} constructor.
-	 * 
-	 * @param <L> Type of the left value.
-	 * @param <R> Type of the right value.
-	 * @param right Right value to wrap.
-	 * @return The built instance.
-	 * @see Right
-	 * @since 2.0
-	 */
-	public static <L, R> Either<L, R> right(final R right) {
-		return new Right<>(right);
-	}
-	
-	// Left.
 	
 	/**
 	 * The {@link Either.Left} class represents the instances of {@link Either} that encode the first alternative (left alternative).
@@ -202,6 +187,21 @@ implements Serializable, Describable {
 	}
 	
 	// Right.
+	
+	// TODO: move to Eithers ?
+	/**
+	 * Builds a {@link Either} instance using the {@link Right} constructor.
+	 * 
+	 * @param <L> Type of the left value.
+	 * @param <R> Type of the right value.
+	 * @param right Right value to wrap.
+	 * @return The built instance.
+	 * @see Right
+	 * @since 2.0
+	 */
+	public static <L, R> Either<L, R> right(final R right) {
+		return new Right<>(right);
+	}
 	
 	/**
 	 * The {@link Either.Right} class represents instances of {@link Either} that encode the second alternative (right alternative).

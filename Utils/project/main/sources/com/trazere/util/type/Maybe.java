@@ -105,7 +105,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * @param <T> Type of the value.
 	 * @param value The value to wrap. May be <code>null</code>.
 	 * @return The instance.
-	 * @deprecated Use {@link com.trazere.core.util.MaybeUtils#fromNullable(Object)}.
+	 * @deprecated Use {@link com.trazere.core.util.Maybes#fromNullable(Object)}.
 	 */
 	@Deprecated
 	public static <T> Maybe<T> fromValue(final T value) {
@@ -148,7 +148,7 @@ implements Iterable<T>, Serializable, Describable {
 	 * @param <T> Type of the value.
 	 * @param maybe The instance to unwrap.
 	 * @return The wrapped value or <code>null</code>.
-	 * @deprecated Use {@link com.trazere.core.util.MaybeUtils#toNullable(com.trazere.core.util.Maybe)}.
+	 * @deprecated Use {@link com.trazere.core.util.Maybe#toNullable()}.
 	 */
 	@Deprecated
 	public static <T> T toValue(final Maybe<T> maybe) {

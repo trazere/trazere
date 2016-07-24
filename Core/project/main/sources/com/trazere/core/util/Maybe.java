@@ -33,9 +33,10 @@ import com.trazere.core.text.TextUtils;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Optional;
 
 /**
- * The {@link Maybe} class encodes a tagged union data type which represents an optional value.
+ * The {@link Maybe} class implements a tagged union data type that represents an optional value.
  * <ul>
  * <li>Instances built using the {@link None} constructor encode absent values.
  * <li>Instances built using the {@link Some} constructor encode available values.
@@ -48,6 +49,8 @@ import java.util.Comparator;
 public abstract class Maybe<T>
 implements Traversable<T>, Iterable<T>, Serializable, Describable {
 	private static final long serialVersionUID = 1L;
+	
+	// None.
 	
 	// TODO: move to Maybes ?
 	/**
@@ -64,22 +67,6 @@ implements Traversable<T>, Iterable<T>, Serializable, Describable {
 	}
 	
 	private static final None<?> NONE = new None<>();
-	
-	// TODO: move to Maybes ?
-	/**
-	 * Builds a {@link Maybe} instance using the {@link Some} constructor.
-	 * 
-	 * @param <T> Type of the value.
-	 * @param value Value to wrap.
-	 * @return The built instance.
-	 * @see Some
-	 * @since 2.0
-	 */
-	public static <T> Maybe<T> some(final T value) {
-		return new Some<>(value);
-	}
-	
-	// None.
 	
 	/**
 	 * The {@link Maybe.None} class represents instances of {@link Maybe} that encode absent values.
@@ -113,6 +100,16 @@ implements Traversable<T>, Iterable<T>, Serializable, Describable {
 		@Override
 		public T get(final Thunk<? extends T> defaultValue) {
 			return defaultValue.evaluate();
+		}
+		
+		@Override
+		public T toNullable() {
+			return null;
+		}
+		
+		@Override
+		public Optional<T> toOptional() {
+			return Optional.empty();
 		}
 		
 		// Matching.
@@ -250,6 +247,20 @@ implements Traversable<T>, Iterable<T>, Serializable, Describable {
 	
 	// Some.
 	
+	// TODO: move to Maybes ?
+	/**
+	 * Builds a {@link Maybe} instance using the {@link Some} constructor.
+	 * 
+	 * @param <T> Type of the value.
+	 * @param value Value to wrap.
+	 * @return The built instance.
+	 * @see Some
+	 * @since 2.0
+	 */
+	public static <T> Maybe<T> some(final T value) {
+		return new Some<>(value);
+	}
+	
 	/**
 	 * The {@link Maybe.Some} class represents instances of {@link Maybe} that encode available values.
 	 * 
@@ -282,6 +293,8 @@ implements Traversable<T>, Iterable<T>, Serializable, Describable {
 			return this;
 		}
 		
+		// Value.
+		
 		/** Wrapped value. */
 		private final T _value;
 		
@@ -295,8 +308,6 @@ implements Traversable<T>, Iterable<T>, Serializable, Describable {
 			return _value;
 		}
 		
-		// Getting.
-		
 		@Override
 		public T get(final T defaultValue) {
 			return _value;
@@ -305,6 +316,16 @@ implements Traversable<T>, Iterable<T>, Serializable, Describable {
 		@Override
 		public T get(final Thunk<? extends T> defaultValue) {
 			return _value;
+		}
+		
+		@Override
+		public T toNullable() {
+			return _value;
+		}
+		
+		@Override
+		public Optional<T> toOptional() {
+			return Optional.of(_value);
 		}
 		
 		// Matching.
@@ -468,6 +489,27 @@ implements Traversable<T>, Iterable<T>, Serializable, Describable {
 	 * @since 2.0
 	 */
 	public abstract T get(final Thunk<? extends T> defaultValue);
+	
+	/**
+	 * Converts this {@link Maybe} instance to a nullable value according to the following rules:
+	 * <ul>
+	 * <li>absents values ({@link None}) are translated to <code>null</code>,
+	 * <li>available values ({@link Some}) are unwrapped.
+	 * <p>
+	 * This method aims to simplify the interoperability with legacy Java code.
+	 * 
+	 * @return The resulting value.
+	 * @since 2.0
+	 */
+	public abstract T toNullable();
+	
+	/**
+	 * Converts this instance of {@link Maybe} to an instance of {@link Optional}.
+	 * 
+	 * @return The instance of {@link Optional}.
+	 * @since 2.0
+	 */
+	public abstract Optional<T> toOptional();
 	
 	// Matching.
 	
