@@ -128,7 +128,7 @@ implements Observable<E> {
 	/**
 	 * Unsubscribes the given observer from this observable.
 	 * <p>
-	 * This method is called every time an observer is being unsubscribed (either implicitely or explicitely), unless all observers are unsubscribes at once
+	 * This method is called every time an observer is being unsubscribed (either implicitely or explicitely), unless all observers are unsubscribed at once
 	 * (@see {@link #unsubscribeAll()}).
 	 * 
 	 * @param observer Observer to unsubscribe.

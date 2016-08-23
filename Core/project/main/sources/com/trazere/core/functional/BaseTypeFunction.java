@@ -46,7 +46,7 @@ extends BaseMemoizedFunction<T, Maybe<R>> {
 	protected final Maybe<R> _defaultValue;
 	
 	/**
-	 * Instantiates a new type map with no upper bounds and defaut values.
+	 * Instantiates a new type function with no upper bounds and defaut values.
 	 * 
 	 * @since 2.0
 	 */
@@ -55,7 +55,7 @@ extends BaseMemoizedFunction<T, Maybe<R>> {
 	}
 	
 	/**
-	 * Instantiates a new type map with no upper bounds and the given default value.
+	 * Instantiates a new type function with no upper bounds and the given default value.
 	 * 
 	 * @param defaultValue Default value.
 	 * @since 2.0
@@ -65,7 +65,7 @@ extends BaseMemoizedFunction<T, Maybe<R>> {
 	}
 	
 	/**
-	 * Instantiates a new type map with the given upper bound and default value.
+	 * Instantiates a new type function with the given upper bound and default value.
 	 * 
 	 * @param upperBound Upper bound.
 	 * @param defaultValue Default value.
