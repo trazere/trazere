@@ -25,7 +25,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * The {@link BaseObjectTypeFunction} abstract class provides a skeleton implementation of function from Java class hierarchies to values.
+ * The {@link BaseObjectTypeFunction} abstract class provides a skeleton implementation of functions from Java class hierarchies to values.
  * 
  * @param <T> Upper bound type.
  * @param <R> Type of the results.
@@ -35,11 +35,11 @@ public abstract class BaseObjectTypeFunction<T, R>
 extends BaseTypeFunction<Class<? extends T>, R>
 implements ObjectTypeFunction<T, Maybe<R>> {
 	/**
-	 * Builds a new type map with no upper bounds and defaut values using the given function.
+	 * Builds a new type function with no upper bounds and defaut values using the given function.
 	 *
 	 * @param <R> Type of the values.
 	 * @param function The function.
-	 * @return The built map.
+	 * @return The built function.
 	 * @since 2.0
 	 */
 	public static <R> BaseObjectTypeFunction<Object, R> build(final Function<? super Class<?>, ? extends Maybe<R>> function) {
@@ -47,12 +47,12 @@ implements ObjectTypeFunction<T, Maybe<R>> {
 	}
 	
 	/**
-	 * Builds a new type map with no upper bounds and the given default value using the given function.
+	 * Builds a new type function with no upper bounds and the given default value using the given function.
 	 *
 	 * @param <R> Type of the values.
 	 * @param function The function.
 	 * @param defaultValue The default value.
-	 * @return The built map.
+	 * @return The built function.
 	 * @since 2.0
 	 */
 	public static <R> BaseObjectTypeFunction<Object, R> build(final Function<? super Class<?>, ? extends Maybe<R>> function, final Maybe<R> defaultValue) {
@@ -60,13 +60,13 @@ implements ObjectTypeFunction<T, Maybe<R>> {
 	}
 	
 	/**
-	 * Builds a new type map with the given upper bound and no default values using the given function.
+	 * Builds a new type function with the given upper bound and no default values using the given function.
 	 *
 	 * @param <T> Upper bound type.
 	 * @param <R> Type of the values.
 	 * @param function The function.
 	 * @param upperBound The upper bound.
-	 * @return The built map.
+	 * @return The built function.
 	 * @since 2.0
 	 */
 	public static <T, R> BaseObjectTypeFunction<T, R> build(final Function<? super Class<? extends T>, ? extends Maybe<R>> function, final Class<T> upperBound) {
@@ -74,14 +74,14 @@ implements ObjectTypeFunction<T, Maybe<R>> {
 	}
 	
 	/**
-	 * Builds a new type map with the given upper bound and default value using the given function.
+	 * Builds a new type function with the given upper bound and default value using the given function.
 	 *
 	 * @param <T> Upper bound type.
 	 * @param <R> Type of the values.
 	 * @param function The function.
 	 * @param upperBound The upper bound.
 	 * @param defaultValue The default value.
-	 * @return The built map.
+	 * @return The built function.
 	 * @since 2.0
 	 */
 	public static <T, R> BaseObjectTypeFunction<T, R> build(final Function<? super Class<? extends T>, ? extends Maybe<R>> function, final Class<T> upperBound, final Maybe<R> defaultValue) {
@@ -94,17 +94,17 @@ implements ObjectTypeFunction<T, Maybe<R>> {
 	}
 	
 	/**
-	 * Instantiates a new type map with the given upper bound and no defaut values.
+	 * Instantiates a new type function with the given upper bound and no defaut values.
 	 * 
 	 * @param upperBound Upper bound.
 	 * @since 2.0
 	 */
 	public BaseObjectTypeFunction(final Class<T> upperBound) {
-		this(upperBound, Maybe.<R>none());
+		this(upperBound, Maybe.none());
 	}
 	
 	/**
-	 * Instantiates a new type map with the given upper bound and default value.
+	 * Instantiates a new type function with the given upper bound and default value.
 	 * 
 	 * @param upperBound Upper bound.
 	 * @param defaultValue Default value.
@@ -122,7 +122,7 @@ implements ObjectTypeFunction<T, Maybe<R>> {
 	@Override
 	protected Collection<Class<? extends T>> getSuperTypes(final Class<? extends T> type) {
 		// Filter according to the upper bound.
-		final Class<? extends T> upperBound = _upperBound.asSome().getValue();
+		final Class<? extends T> upperBound = _upperBound.asSome().getValue(); // Note: upper bound is always set
 		final Function<Class<?>, Maybe<Class<? extends T>>> filter = new Function<Class<?>, Maybe<Class<? extends T>>>() {
 			@Override
 			@SuppressWarnings("unchecked")
