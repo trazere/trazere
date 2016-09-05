@@ -42,13 +42,13 @@
 				This profile allows to disable the tests during the build.
 				It can be activated manually, or by setting the 'skipTests' property when invoking Maven.
 
-				Example: mvn clean install -P skip-tests
+				Example: mvn clean install -P no-tests
 			-->
-			<id>skip-tests</id>
+			<id>no-tests</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
 				<property>
-					<name>skipTests</name>
+					<name>noTests</name>
 				</property>
 			</activation>
 			<build>
