@@ -23,7 +23,7 @@ import com.trazere.core.util.Tuple2;
 import java.util.Collection;
 
 /**
- * The {@link ExCollection} interface defines extended {@link Collection collections}.
+ * The {@link ExCollection} interface defines {@link Collection collections} extended with various utilities.
  * 
  * @param <E> Type of the elements.
  * @see Collection
@@ -51,7 +51,7 @@ extends Collection<E>, ExIterable<E> {
 		}
 	}
 	
-	// Collection.
+	// ExCollection.
 	
 	// TODO: rename
 	/**

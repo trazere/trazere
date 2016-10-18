@@ -73,7 +73,7 @@ implements RecordSignatureBuilder<K, R> {
 	@Override
 	public void unify(final FieldKey<K, ?> key)
 	throws IncompatibleFieldException {
-		final Maybe<FieldKey<K, ?>> currentKey = MapUtils.get(_keys, key);
+		final Maybe<FieldKey<K, ?>> currentKey = MapUtils.optionalGet(_keys, key);
 		if (currentKey.isSome()) {
 			set(currentKey.asSome().getValue().unifyWith(key));
 		} else {

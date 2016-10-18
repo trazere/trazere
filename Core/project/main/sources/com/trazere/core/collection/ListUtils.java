@@ -161,6 +161,9 @@ public class ListUtils {
 		return iterIndex > index;
 	}
 	
+	// TODO: safeSet
+	// TODO: optionalSet
+	
 	/**
 	 * Removes the element of the given list at the given position.
 	 * <p>

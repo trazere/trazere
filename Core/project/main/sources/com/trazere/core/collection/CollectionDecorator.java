@@ -33,9 +33,9 @@ public class CollectionDecorator<E>
 extends Decorator<Collection<E>>
 implements ExCollection<E> {
 	/**
-	 * Builds a new decorator.
+	 * Instantiates a new decorator.
 	 * 
-	 * @param decorated Collection to decorate.
+	 * @param decorated Decorated collection.
 	 * @since 2.0
 	 */
 	public CollectionDecorator(final Collection<E> decorated) {
@@ -122,6 +122,9 @@ implements ExCollection<E> {
 	public void clear() {
 		_decorated.clear();
 	}
+	
+	// Comparison and hashing
+	// FIXME ?
 	
 	// Streams.
 	

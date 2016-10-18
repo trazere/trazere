@@ -48,7 +48,8 @@ public class CollectionUtils {
 	 * @param <T> Type of the values.
 	 * @param iterator The iterator.
 	 * @return The next value.
-	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#optionalNext(Iterator)}.
+	 * @deprecated Use {@link com.trazere.core.imperative.ExIterator#optionalNext()} or
+	 *             {@link com.trazere.core.imperative.IteratorUtils#optionalNext(Iterator)}.
 	 */
 	@Deprecated
 	public static <T> Maybe<T> next(final Iterator<? extends T> iterator) {
@@ -66,7 +67,8 @@ public class CollectionUtils {
 	 * @param values The iterator.
 	 * @param results The collection to populate with the values.
 	 * @return The result collection.
-	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#drain(Iterator, Collection)}.
+	 * @deprecated Use {@link com.trazere.core.imperative.ExIterator#drain(Collection)} or
+	 *             {@link com.trazere.core.imperative.IteratorUtils#drain(Iterator, Collection)}.
 	 */
 	@Deprecated
 	public static <T, C extends Collection<? super T>> C drain(final Iterator<? extends T> values, final C results) {
@@ -89,7 +91,8 @@ public class CollectionUtils {
 	 * @param values The iterator.
 	 * @param results The collection to populate with the values.
 	 * @return The result collection.
-	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#drain(Iterator, int, Collection)}.
+	 * @deprecated Use {@link com.trazere.core.imperative.ExIterator#drain(int, Collection)} or
+	 *             {@link com.trazere.core.imperative.IteratorUtils#drain(Iterator, int, Collection)}.
 	 */
 	@Deprecated
 	public static <T, R extends Collection<? super T>> R drain(final int n, final Iterator<? extends T> values, final R results) {
@@ -116,7 +119,8 @@ public class CollectionUtils {
 	 * @param iterator The iterator.
 	 * @return The next value.
 	 * @throws X When the retrieval of the next value fails.
-	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#optionalNext(Iterator)}.
+	 * @deprecated Use {@link com.trazere.core.imperative.ExIterator#optionalNext()} or
+	 *             {@link com.trazere.core.imperative.IteratorUtils#optionalNext(Iterator)}.
 	 */
 	@Deprecated
 	public static <T, X extends Exception> Maybe<T> next(final CheckedIterator<? extends T, ? extends X> iterator)
@@ -137,7 +141,8 @@ public class CollectionUtils {
 	 * @param results The collection to populate with the values.
 	 * @return The result collection.
 	 * @throws X When the retrieval of some value fails.
-	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#drain(Iterator, Collection)}.
+	 * @deprecated Use {@link com.trazere.core.imperative.ExIterator#drain(Collection)} or
+	 *             {@link com.trazere.core.imperative.IteratorUtils#drain(Iterator, Collection)}.
 	 */
 	@Deprecated
 	public static <T, R extends Collection<? super T>, X extends Exception> R drain(final CheckedIterator<? extends T, ? extends X> values, final R results)
@@ -163,7 +168,8 @@ public class CollectionUtils {
 	 * @param results The collection to populate with the values.
 	 * @return The result collection.
 	 * @throws X When the retrieval of some value fails.
-	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#drain(Iterator, int, Collection)}.
+	 * @deprecated Use {@link com.trazere.core.imperative.ExIterator#drain(int, Collection)} or
+	 *             {@link com.trazere.core.imperative.IteratorUtils#drain(Iterator, int, Collection)}.
 	 */
 	@Deprecated
 	public static <T, R extends Collection<? super T>, X extends Exception> R drain(final int n, final CheckedIterator<? extends T, ? extends X> iterator, final R results)
@@ -189,7 +195,7 @@ public class CollectionUtils {
 	 * @param <T> Type of the values.
 	 * @param values Values to read.
 	 * @return Some value if any.
-	 * @deprecated Use {@link com.trazere.core.lang.IterableUtils#optionalAny(Iterable)}.
+	 * @deprecated Use {@link com.trazere.core.lang.ExIterable#optionalAny()} or {@link com.trazere.core.lang.IterableUtils#optionalAny(Iterable)}.
 	 */
 	@Deprecated
 	public static <T> Maybe<T> any(final Iterable<? extends T> values) {
@@ -205,7 +211,7 @@ public class CollectionUtils {
 	 * @param <V> Type of the values.
 	 * @param map Map to read.
 	 * @return Some binding if any.
-	 * @deprecated Use {@link com.trazere.core.collection.MapUtils#any(Map)}.
+	 * @deprecated Use {@link com.trazere.core.collection.ExMap#optionalAny()} or {@link com.trazere.core.collection.MapUtils#any(Map)}.
 	 */
 	@Deprecated
 	public static <K, V> Maybe<Map.Entry<K, V>> any(final Map<K, V> map) {
@@ -221,7 +227,7 @@ public class CollectionUtils {
 	 * @param list List to read.
 	 * @param index Index of the element to get.
 	 * @return The element or nothing if the index is out of bound.
-	 * @deprecated Use {@link com.trazere.core.collection.ListUtils#optionalGet(List, int)}.
+	 * @deprecated Use {@link com.trazere.core.collection.ExList#optionalGet(int)} or {@link com.trazere.core.collection.ListUtils#optionalGet(List, int)}.
 	 */
 	@Deprecated
 	public static <T> Maybe<T> get(final List<? extends T> list, final int index) {
@@ -236,7 +242,7 @@ public class CollectionUtils {
 	 * @param <T> Type of the elements.
 	 * @param list List to read.
 	 * @return The first element.
-	 * @deprecated Use {@link com.trazere.core.collection.ListUtils#optionalFirst(List)}.
+	 * @deprecated Use {@link com.trazere.core.collection.ExList#optionalFirst()} or {@link com.trazere.core.collection.ListUtils#optionalFirst(List)}.
 	 */
 	@Deprecated
 	public static <T> Maybe<T> first(final List<? extends T> list) {
@@ -249,7 +255,7 @@ public class CollectionUtils {
 	 * @param <T> Type of the elements.
 	 * @param list List to read.
 	 * @return The last element.
-	 * @deprecated Use {@link com.trazere.core.collection.ListUtils#optionalLast(List)}.
+	 * @deprecated Use {@link com.trazere.core.collection.ExList#optionalLast()} or {@link com.trazere.core.collection.ListUtils#optionalLast(List)}.
 	 */
 	@Deprecated
 	public static <T> Maybe<T> last(final List<? extends T> list) {
@@ -263,7 +269,8 @@ public class CollectionUtils {
 	 * @param <T> Type of the values.
 	 * @param collection Collection to fill.
 	 * @param values Values to add.
-	 * @deprecated Use {@link com.trazere.core.collection.CollectionUtils#addAll(Collection, Iterable)}.
+	 * @deprecated Use {@link com.trazere.core.collection.ExCollection#addAll(Iterable)} or
+	 *             {@link com.trazere.core.collection.CollectionUtils#addAll(Collection, Iterable)}.
 	 */
 	// TODO: rename to addAll
 	@Deprecated
@@ -284,7 +291,8 @@ public class CollectionUtils {
 	 * @param <T> Type of the elements.
 	 * @param collection The collection.
 	 * @return The removed element.
-	 * @deprecated Use {@link com.trazere.core.collection.CollectionUtils#removeAny(Collection)}.
+	 * @deprecated Use {@link com.trazere.core.collection.ExCollection#removeAny()} or
+	 *             {@link com.trazere.core.collection.CollectionUtils#removeAny(Collection)}.
 	 */
 	@Deprecated
 	public static <T> Maybe<T> removeAny(final Collection<? extends T> collection) {
@@ -308,7 +316,7 @@ public class CollectionUtils {
 	 * @param map The map.
 	 * @param key The key. May be <code>null</code>.
 	 * @return The associated value.
-	 * @deprecated Use {@link com.trazere.core.collection.MapUtils#get(Map, Object)}.
+	 * @deprecated Use {@link com.trazere.core.collection.ExMap#optionalGet(Object)} or {@link com.trazere.core.collection.MapUtils#optionalGet(Map, Object)}.
 	 */
 	@Deprecated
 	public static <K, V> Maybe<V> get(final Map<? super K, ? extends V> map, final K key) {
@@ -326,7 +334,8 @@ public class CollectionUtils {
 	 * @param key The key. May be <code>null</code>.
 	 * @param defaultValue The default value. May be <code>null</code>.
 	 * @return The associated value if any, or the default value. May be <code>null</code>.
-	 * @deprecated Use {@link com.trazere.core.collection.MapUtils#getOptional(Map, Object, Object)}.
+	 * @deprecated Use {@link com.trazere.core.collection.ExMap#getOptional(Object, Object)} or
+	 *             {@link com.trazere.core.collection.MapUtils#getOptional(Map, Object, Object)}.
 	 */
 	@Deprecated
 	public static <K, V> V get(final Map<? super K, ? extends V> map, final K key, final V defaultValue) {
@@ -346,7 +355,8 @@ public class CollectionUtils {
 	 * @param throwableFactory The throwable factory.
 	 * @return The associated value. May be <code>null</code>.
 	 * @throws X When no values is identified by the given key in the map.
-	 * @deprecated Use {@link com.trazere.core.collection.MapUtils#getMandatory(Map, Object, com.trazere.core.lang.ThrowableFactory)}.
+	 * @deprecated Use {@link com.trazere.core.collection.ExMap#getMandatory(Object, com.trazere.core.lang.ThrowableFactory)} or
+	 *             {@link com.trazere.core.collection.MapUtils#getMandatory(Map, Object, com.trazere.core.lang.ThrowableFactory)}.
 	 */
 	@Deprecated
 	public static <K, V, X extends Exception> V get(final Map<? super K, ? extends V> map, final K key, final ThrowableFactory<? extends X> throwableFactory)
@@ -370,7 +380,8 @@ public class CollectionUtils {
 	 * @param key The key. May be <code>null</code>.
 	 * @param value The value. May be <code>null</code>.
 	 * @return The presiously associated value.
-	 * @deprecated Use {@link com.trazere.core.collection.MapUtils#put(Map, Object, Object)}.
+	 * @deprecated Use {@link com.trazere.core.collection.ExMap#safePut(Object, Object)} or
+	 *             {@link com.trazere.core.collection.MapUtils#safePut(Map, Object, Object)}.
 	 */
 	@Deprecated
 	public static <K, V> Maybe<V> put(final Map<? super K, V> map, final K key, final V value) {
@@ -390,7 +401,7 @@ public class CollectionUtils {
 	 * @param map The map.
 	 * @param key The key. May be <code>null</code>.
 	 * @param value The value.
-	 * @deprecated Use {@link com.trazere.core.collection.MapUtils#put(Map, Object, com.trazere.core.util.Maybe)}.
+	 * @deprecated To be removed.
 	 */
 	@Deprecated
 	public static <K, V> void put(final Map<? super K, V> map, final K key, final Maybe<? extends V> value) {
@@ -410,7 +421,7 @@ public class CollectionUtils {
 	 * @param map The map.
 	 * @param key The key. May be <code>null</code>.
 	 * @return The removed value.
-	 * @deprecated Use {@link com.trazere.core.collection.MapUtils#remove(Map, Object)}.
+	 * @deprecated Use {@link com.trazere.core.collection.ExMap#safeRemove(Object)} or {@link com.trazere.core.collection.MapUtils#safeRemove(Map, Object)}.
 	 */
 	@Deprecated
 	public static <K, V> Maybe<V> remove(final Map<? super K, ? extends V> map, final K key) {
@@ -433,7 +444,7 @@ public class CollectionUtils {
 	 * @param <L> Type of the list.
 	 * @param list The list.
 	 * @return The given modified list.
-	 * @deprecated Use {@link Collections#reverse(List)}.
+	 * @deprecated Use {@link com.trazere.core.collection.ExList#reverse()} or {@link Collections#reverse(List)}.
 	 */
 	@Deprecated
 	public static <T, L extends List<T>> L reverse(final L list) {
@@ -472,7 +483,7 @@ public class CollectionUtils {
 	 * @param list The list.
 	 * @param comparator The comparator.
 	 * @return The given modified list.
-	 * @deprecated Use {@link Collections#sort(List, Comparator)}.
+	 * @deprecated Use {@link com.trazere.core.collection.ExList#sort(Comparator)} or {@link Collections#sort(List, Comparator)}.
 	 */
 	@Deprecated
 	public static <T, L extends List<T>> L sort(final L list, final Comparator<? super T> comparator) {
@@ -692,7 +703,8 @@ public class CollectionUtils {
 	 * @param collection2 The second collection.
 	 * @param results The collection to populate with the results.
 	 * @return The given result collection.
-	 * @deprecated Use {@link com.trazere.core.collection.CollectionUtils#append(Collection, Collection, com.trazere.core.collection.CollectionFactory)}.
+	 * @deprecated Use {@link com.trazere.core.collection.ExCollection#append(Collection, com.trazere.core.collection.CollectionFactory)} or
+	 *             {@link com.trazere.core.collection.CollectionUtils#append(Collection, Collection, com.trazere.core.collection.CollectionFactory)}.
 	 */
 	@Deprecated
 	public static <T, C extends Collection<? super T>> C union(final Collection<? extends T> collection1, final Collection<? extends T> collection2, final C results) {
@@ -717,7 +729,8 @@ public class CollectionUtils {
 	 * @param map2 The second map.
 	 * @param results The map to populate with the results.
 	 * @return The given result map.
-	 * @deprecated Use {@link com.trazere.core.collection.MapUtils#append(Map, Map, com.trazere.core.collection.MapFactory)}.
+	 * @deprecated Use {@link com.trazere.core.collection.ExMap#} or
+	 *             {@link com.trazere.core.collection.MapUtils#append(Map, Map, com.trazere.core.collection.MapFactory)}.
 	 */
 	@Deprecated
 	public static <K, V, M extends Map<? super K, ? super V>> M union(final Map<? extends K, ? extends V> map1, final Map<? extends K, ? extends V> map2, final M results) {
@@ -740,7 +753,8 @@ public class CollectionUtils {
 	 * @param collection1 The first collection.
 	 * @param collection2 The second collection.
 	 * @return <code>true</code> if the collections intersect, <code>false</code> otherwise.
-	 * @deprecated Use {@link com.trazere.core.collection.CollectionUtils#intersects(Collection, Collection)}.
+	 * @deprecated Use {@link com.trazere.core.collection.ExCollection#intersects(Collection)} or
+	 *             {@link com.trazere.core.collection.CollectionUtils#intersects(Collection, Collection)}.
 	 */
 	@Deprecated
 	public static <T> boolean intersects(final Collection<? extends T> collection1, final Collection<? extends T> collection2) {
@@ -846,7 +860,8 @@ public class CollectionUtils {
 	 * @param keys The keys of the bindings.
 	 * @param results The map to populate with the results.
 	 * @return The given result map.
-	 * @deprecated Use {@link com.trazere.core.collection.MapUtils#filter(Map, com.trazere.core.functional.Predicate2, com.trazere.core.collection.MapFactory)}.
+	 * @deprecated Use {@link com.trazere.core.collection.ExMap#} or
+	 *             {@link com.trazere.core.collection.MapUtils#filter(Map, com.trazere.core.functional.Predicate2, com.trazere.core.collection.MapFactory)}.
 	 */
 	@Deprecated
 	public static <K, V, M extends Map<? super K, ? super V>> M sub(final Map<? extends K, ? extends V> map, final Iterable<? extends K> keys, final M results) {
@@ -875,7 +890,8 @@ public class CollectionUtils {
 	 * @param keys The keys of the bindings.
 	 * @param results The map to populate with the results.
 	 * @return The given result map.
-	 * @deprecated Use {@link com.trazere.core.collection.MapUtils#filter(Map, com.trazere.core.functional.Predicate2, com.trazere.core.collection.MapFactory)}.
+	 * @deprecated Use {@link com.trazere.core.collection.ExMap#} or
+	 *             {@link com.trazere.core.collection.MapUtils#filter(Map, com.trazere.core.functional.Predicate2, com.trazere.core.collection.MapFactory)}.
 	 */
 	@Deprecated
 	public static <K, V, M extends Map<? super K, ? super V>> M retain(final Map<? extends K, ? extends V> map, final Collection<? extends K> keys, final M results) {
@@ -926,6 +942,8 @@ public class CollectionUtils {
 	 * @param results The collection to populates with the results.
 	 * @return The given result collection.
 	 * @deprecated Use
+	 *             {@link com.trazere.core.collection.ExCollection#group(int, com.trazere.core.collection.CollectionFactory, com.trazere.core.collection.CollectionFactory)}
+	 *             or
 	 *             {@link com.trazere.core.collection.CollectionUtils#group(Collection, int, com.trazere.core.collection.CollectionFactory, com.trazere.core.collection.CollectionFactory)}
 	 *             .
 	 */
@@ -956,7 +974,7 @@ public class CollectionUtils {
 	 * @param list2 The list containing the second values.
 	 * @param results The list to populate with the results.
 	 * @return The given result list.
-	 * @deprecated Use {@link com.trazere.core.lang.IterableUtils#zip(Iterable, Iterable)}.
+	 * @deprecated Use {@link com.trazere.core.lang.ExIterable#zip(Iterable)} or {@link com.trazere.core.lang.IterableUtils#zip(Iterable, Iterable)}.
 	 */
 	@Deprecated
 	public static <T1, T2, L extends List<? super Tuple2<T1, T2>>> L zip(final Iterable<? extends T1> list1, final Iterable<? extends T2> list2, final L results) {
@@ -979,7 +997,8 @@ public class CollectionUtils {
 	 * @param iterator2 The iterator providing the second values.
 	 * @param results The list to populate with the results.
 	 * @return The given result list.
-	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#zip(Iterator, Iterator)}.
+	 * @deprecated Use {@link com.trazere.core.imperative.ExIterator#zip(Iterator)} or
+	 *             {@link com.trazere.core.imperative.IteratorUtils#zip(Iterator, Iterator)}.
 	 */
 	@Deprecated
 	public static <T1, T2, L extends List<? super Tuple2<T1, T2>>> L zip(final Iterator<? extends T1> iterator1, final Iterator<? extends T2> iterator2, final L results) {
@@ -1049,7 +1068,7 @@ public class CollectionUtils {
 	 * @param map The map.
 	 * @param results The collection to populate with the results.
 	 * @return The given result collection.
-	 * @deprecated Use {@link com.trazere.core.collection.MapUtils#bindings(Map)}.
+	 * @deprecated Use {@link com.trazere.core.collection.ExMap#bindings()} or {@link com.trazere.core.collection.MapUtils#bindings(Map)}.
 	 */
 	@Deprecated
 	public static <K, V, C extends Collection<? super Tuple2<K, V>>> C bindings(final Map<? extends K, ? extends V> map, final C results) {

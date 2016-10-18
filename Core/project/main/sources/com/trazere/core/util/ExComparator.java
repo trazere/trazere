@@ -19,7 +19,7 @@ import com.trazere.core.functional.Function;
 import java.util.Comparator;
 
 /**
- * The {@link ExComparator} interfaces defines extended {@link Comparator comparators}.
+ * The {@link ExComparator} interfaces defines {@link Comparator comparators} extended with various utilities.
  * 
  * @param <T> Type of compared values.
  * @see Comparator

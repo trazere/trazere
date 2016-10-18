@@ -23,7 +23,7 @@ import java.util.Collection;
 import java.util.Set;
 
 /**
- * The {@link ExSet} interface defines extended {@link Set sets}.
+ * The {@link ExSet} interface defines {@link Set sets} extended with various utilities.
  * 
  * @param <E> Type of the elements.
  * @see Set

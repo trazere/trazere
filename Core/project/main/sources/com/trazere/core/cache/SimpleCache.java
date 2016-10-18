@@ -102,16 +102,16 @@ extends BaseCache<K, V> {
 	
 	@Override
 	protected Maybe<V> setEntry(final K key, final V value) {
-		return MapUtils.put(_entries, key, value);
+		return MapUtils.optionalPut(_entries, key, value);
 	}
 	
 	@Override
 	protected Maybe<V> getEntry(final K key) {
-		return MapUtils.get(_entries, key);
+		return MapUtils.optionalGet(_entries, key);
 	}
 	
 	@Override
 	protected Maybe<V> removeEntry(final K key) {
-		return MapUtils.remove(_entries, key);
+		return MapUtils.optionalRemove(_entries, key);
 	}
 }

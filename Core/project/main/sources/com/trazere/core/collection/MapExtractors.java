@@ -41,13 +41,13 @@ public class MapExtractors {
 	 * @param <V> Type of the values.
 	 * @param map Map to read.
 	 * @return The built extractor.
-	 * @see MapUtils#get(Map, Object)
+	 * @see MapUtils#optionalGet(Map, Object)
 	 * @since 2.0
 	 */
-	public static <K, V> Function<K, Maybe<V>> get(final Map<? super K, ? extends V> map) {
+	public static <K, V> Function<K, Maybe<V>> optionalGet(final Map<? super K, ? extends V> map) {
 		assert null != map;
 		
-		return key -> MapUtils.get(map, key);
+		return key -> MapUtils.optionalGet(map, key);
 	}
 	
 	/**
@@ -62,7 +62,7 @@ public class MapExtractors {
 	 * @since 2.0
 	 */
 	public static <K, V> Function<K, Maybe<V>> fromBindings(final Iterable<? extends Tuple2<? extends K, ? extends V>> bindings) {
-		return get(Maps.fromBindings(bindings));
+		return optionalGet(Maps.fromBindings(bindings));
 	}
 	
 	/**

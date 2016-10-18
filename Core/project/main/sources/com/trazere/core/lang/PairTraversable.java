@@ -73,6 +73,9 @@ extends Traversable<Tuple2<E1, E2>> {
 	 */
 	int count(Predicate2<? super E1, ? super E2> filter);
 	
+	// TODO: takeWhile
+	// TODO: dropWhile
+	
 	/**
 	 * Filters the pairs of elements of this traversable using the given filter.
 	 * <p>

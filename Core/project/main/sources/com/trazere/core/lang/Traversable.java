@@ -75,7 +75,7 @@ public interface Traversable<E> {
 	 * Gets the least element of this traversable according to the given comparator.
 	 * 
 	 * @param comparator Comparator to use.
-	 * @return The least element.
+	 * @return The least element, or nothing when the traversable is empty.
 	 * @since 2.0
 	 */
 	Maybe<E> least(Comparator<? super E> comparator);
@@ -84,7 +84,7 @@ public interface Traversable<E> {
 	 * Gets the greatest element of this traversable according to the given comparator.
 	 * 
 	 * @param comparator Comparator to use.
-	 * @return The greatest element.
+	 * @return The greatest element, or nothing when the traversable is empty.
 	 * @since 2.0
 	 */
 	Maybe<E> greatest(Comparator<? super E> comparator);

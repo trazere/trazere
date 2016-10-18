@@ -17,7 +17,6 @@ package com.trazere.core.collection;
 
 import com.trazere.core.functional.Function;
 import java.util.Collection;
-import java.util.Map;
 
 /**
  * The {@link MultimapFunctions} class provides various factories of {@link Function functions} related to {@link Multimap multimaps}.
@@ -34,13 +33,13 @@ public class MultimapFunctions {
 	 * @param <C> Type of the collections of values.
 	 * @param multimap Multimap to read.
 	 * @return The built function.
-	 * @see MapUtils#get(Map, Object)
+	 * @see Multimap#get(Object)
 	 * @since 2.0
 	 */
 	public static <K, C extends Collection<?>> Function<K, C> get(final Multimap<? super K, ?, ? extends C> multimap) {
 		assert null != multimap;
 		
-		return key -> multimap.get(key);
+		return multimap::get;
 	}
 	
 	private MultimapFunctions() {

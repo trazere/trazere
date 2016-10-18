@@ -27,7 +27,7 @@ import java.util.Comparator;
 import java.util.NoSuchElementException;
 
 /**
- * The {@link ExIterable} interface defines extended {@link Iterable iterables}.
+ * The {@link ExIterable} interface defines {@link Iterable iterables} extended with various utilities.
  * 
  * @param <E> Type of the elements.
  * @see Iterable

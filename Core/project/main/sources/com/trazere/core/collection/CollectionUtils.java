@@ -201,6 +201,7 @@ public class CollectionUtils {
 		while (elements.hasNext()) {
 			if (filter.evaluate(elements.next())) {
 				elements.remove();
+				changed.add(true);
 			}
 		}
 		return changed.get().booleanValue();
@@ -224,6 +225,7 @@ public class CollectionUtils {
 		while (elements.hasNext()) {
 			if (!filter.evaluate(elements.next())) {
 				elements.remove();
+				changed.add(true);
 			}
 		}
 		return changed.get().booleanValue();
@@ -270,7 +272,8 @@ public class CollectionUtils {
 	 * @since 2.0
 	 */
 	public static <E, C extends Collection<? super E>> C take(final Collection<? extends E> collection, final int n, final CollectionFactory<? super E, C> resultFactory) {
-		return IteratorUtils.take(collection.iterator(), n).drain(resultFactory.build(n));
+		final ExCollection<E> elements = take(collection, n);
+		return elements.iterator().drain(resultFactory.build(elements.size()));
 	}
 	
 	/**
@@ -314,7 +317,8 @@ public class CollectionUtils {
 	 * @since 2.0
 	 */
 	public static <E, C extends Collection<? super E>> C drop(final Collection<? extends E> collection, final int n, final CollectionFactory<? super E, C> resultFactory) {
-		return IteratorUtils.drop(collection.iterator(), n).drain(resultFactory.build(Math.max(0, collection.size() - n)));
+		final ExCollection<E> elements = drop(collection, n);
+		return elements.iterator().drain(resultFactory.build(elements.size()));
 	}
 	
 	/**
@@ -359,7 +363,8 @@ public class CollectionUtils {
 	 * @since 2.0
 	 */
 	public static <E, B extends Collection<? super E>, C extends Collection<? super B>> C group(final Collection<? extends E> collection, final int n, final CollectionFactory<? super E, B> batchFactory, final CollectionFactory<? super B, C> resultFactory) {
-		return IteratorUtils.group(collection.iterator(), n, batchFactory).drain(resultFactory.build((collection.size() + n - 1) / n));
+		final ExCollection<B> groups = group(collection, n, batchFactory);
+		return groups.iterator().drain(resultFactory.build(groups.size()));
 	}
 	
 	/**
@@ -400,7 +405,7 @@ public class CollectionUtils {
 	 * @since 2.0
 	 */
 	public static <E, C extends Collection<? super E>> C filter(final Collection<? extends E> collection, final Predicate<? super E> filter, final CollectionFactory<? super E, C> resultFactory) {
-		return IteratorUtils.filter(collection.iterator(), filter).drain(resultFactory.build());
+		return filter(collection, filter).iterator().drain(resultFactory.build());
 	}
 	
 	/**

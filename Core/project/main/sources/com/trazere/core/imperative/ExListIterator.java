@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * The {@link ExListIterator} interfaces defines extended {@link ListIterator list iterators}.
+ * The {@link ExListIterator} interfaces defines {@link ListIterator list iterators} extended with various utilities.
  * 
  * @param <E> Type of the elements.
  * @see ListIterator

@@ -77,7 +77,7 @@ extends BaseRecord<K> {
 	
 	@Override
 	public <V> Maybe<V> get(final FieldKey<K, V> key) {
-		return MapUtils.get(_fields, key).map(field -> key.castValue(field.getValue()));
+		return MapUtils.optionalGet(_fields, key).map(field -> key.castValue(field.getValue()));
 	}
 	
 	@Override

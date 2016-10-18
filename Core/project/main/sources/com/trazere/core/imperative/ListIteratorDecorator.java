@@ -31,7 +31,7 @@ implements ExListIterator<E> {
 	/**
 	 * Builds a new decorator.
 	 * 
-	 * @param decorated List iterator to decorate.
+	 * @param decorated Decorated list iterator.
 	 * @since 2.0
 	 */
 	public ListIteratorDecorator(final ListIterator<E> decorated) {

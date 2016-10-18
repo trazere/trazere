@@ -36,7 +36,7 @@ implements ExSet<E> {
 	/**
 	 * Builds a new decorator.
 	 * 
-	 * @param decorated Set to decorate.
+	 * @param decorated Decorated set.
 	 * @since 2.0
 	 */
 	public SetDecorator(final Set<E> decorated) {
@@ -123,6 +123,9 @@ implements ExSet<E> {
 	public void clear() {
 		_decorated.clear();
 	}
+	
+	// Comparison and hashing
+	// FIXME ?
 	
 	// Streams.
 	

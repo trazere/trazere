@@ -26,7 +26,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 
 /**
- * The {@link ExIterator} interfaces defines extended {@link Iterator iterators}.
+ * The {@link ExIterator} interfaces defines {@link Iterator iterators} extended with various utilities.
  * 
  * @param <E> Type of the elements.
  * @see Iterator

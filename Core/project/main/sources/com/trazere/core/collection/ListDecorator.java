@@ -39,7 +39,7 @@ implements ExList<E> {
 	/**
 	 * Builds a new decorator.
 	 * 
-	 * @param decorated List to decorate.
+	 * @param decorated Decorated list.
 	 * @since 2.0
 	 */
 	public ListDecorator(final List<E> decorated) {
@@ -186,6 +186,9 @@ implements ExList<E> {
 	public void clear() {
 		_decorated.clear();
 	}
+	
+	// Comparison and hashing
+	// FIXME ?
 	
 	// Streams.
 	
