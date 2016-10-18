@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * The {@link ExListIterator} interfaces defines extended {@link ListIterator list iterators}.
+ * The {@link ExListIterator} interfaces defines {@link ListIterator list iterators} extended with various utilities.
  * 
  * @param <E> Type of the elements.
  * @see ListIterator
@@ -325,8 +325,6 @@ extends ListIterator<E>, Traversable<E> {
 	
 	/**
 	 * Get the element extracted from any next elements provided by this list iterator using the given extractor.
-	 * <p>
-	 * The elements are extracted from according to their iteration order.
 	 * 
 	 * @see IteratorUtils#extractAny(Iterator, Function)
 	 * @since 2.0

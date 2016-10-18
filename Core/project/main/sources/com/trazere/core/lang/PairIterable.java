@@ -17,14 +17,16 @@ package com.trazere.core.lang;
 
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Function3;
+import com.trazere.core.functional.Predicate;
 import com.trazere.core.functional.Predicate2;
+import com.trazere.core.functional.PredicateUtils;
 import com.trazere.core.imperative.PairIterator;
 import com.trazere.core.imperative.Procedure2;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 
 /**
- * The {@link PairIterable} interface defines extended iterables.
+ * The {@link PairIterable} interface defines {@link Iterable iterables} of pairs of elements.
  * 
  * @param <E1> Type of the first element of the pairs.
  * @param <E2> Type of the second element of the pairs.
@@ -69,7 +71,18 @@ extends ExIterable<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	@Override
 	PairIterator<E1, E2> iterator();
 	
-	// Traversable.
+	// ExIterable.
+	
+	/**
+	 * @see IterableUtils#unmodifiable(PairIterable)
+	 * @since 2.0
+	 */
+	@Override
+	default PairIterable<E1, E2> unmodifiable() {
+		return IterableUtils.unmodifiable(this);
+	}
+	
+	// PairTraversable.
 	
 	/**
 	 * Left folds over the pairs of elements provided by this iterable using the given operator and initial state.
@@ -115,34 +128,6 @@ extends ExIterable<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	@Override
 	default int count(final Predicate2<? super E1, ? super E2> filter) {
 		return IterableUtils.count(this, filter);
-	}
-	
-	/**
-	 * Takes n pairs of elements provided by this iterable.
-	 * <p>
-	 * The pairs of elements are taken according their iteration order.
-	 * 
-	 * @return An iterable providing the taken pairs of elements.
-	 * @see IterableUtils#take2(Iterable, int)
-	 * @since 2.0
-	 */
-	@Override
-	default PairIterable<E1, E2> take(final int n) {
-		return IterableUtils.take2(this, n);
-	}
-	
-	/**
-	 * Drops n pairs of elements provided by this iterable.
-	 * <p>
-	 * The pairs of elements are dropped according their iteration order.
-	 * 
-	 * @return An iterable providing the remaining pairs of elements.
-	 * @see IterableUtils#drop2(Iterable, int)
-	 * @since 2.0
-	 */
-	@Override
-	default PairIterable<E1, E2> drop(final int n) {
-		return IterableUtils.drop2(this, n);
 	}
 	
 	/**
@@ -196,8 +181,6 @@ extends ExIterable<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	
 	/**
 	 * Gets the element extracted from any pair of elements provided by this iterable by the given extractor.
-	 * <p>
-	 * The elements are extracted from according to their iteration order.
 	 * 
 	 * @see IterableUtils#extractAny(Iterable, Function2)
 	 * @since 2.0
@@ -245,14 +228,45 @@ extends ExIterable<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 		IterableUtils.foreach(this, procedure);
 	}
 	
-	// Misc.
+	// Traversable.
 	
 	/**
-	 * @see IterableUtils#unmodifiable(PairIterable)
+	 * Takes n pairs of elements provided by this iterable.
+	 * <p>
+	 * The pairs of elements are taken according their iteration order.
+	 * 
+	 * @return An iterable providing the taken pairs of elements.
+	 * @see IterableUtils#take2(Iterable, int)
 	 * @since 2.0
 	 */
 	@Override
-	default PairIterable<E1, E2> unmodifiable() {
-		return IterableUtils.unmodifiable(this);
+	default PairIterable<E1, E2> take(final int n) {
+		return IterableUtils.take2(this, n);
+	}
+	
+	/**
+	 * Drops n pairs of elements provided by this iterable.
+	 * <p>
+	 * The pairs of elements are dropped according their iteration order.
+	 * 
+	 * @return An iterable providing the remaining pairs of elements.
+	 * @see IterableUtils#drop2(Iterable, int)
+	 * @since 2.0
+	 */
+	@Override
+	default PairIterable<E1, E2> drop(final int n) {
+		return IterableUtils.drop2(this, n);
+	}
+	
+	/**
+	 * Filters the pairs of elements provided by this iterable using the given filter.
+	 *
+	 * @return An iterable providing the filtered pairs of elements.
+	 * @see IterableUtils#filter(Iterable, Predicate2)
+	 * @since 2.0
+	 */
+	@Override
+	default PairIterable<E1, E2> filter(final Predicate<? super Tuple2<E1, E2>> filter) {
+		return IterableUtils.filter(this, PredicateUtils.curry2(filter));
 	}
 }

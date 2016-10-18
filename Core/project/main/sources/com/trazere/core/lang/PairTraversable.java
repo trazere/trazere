@@ -17,6 +17,7 @@ package com.trazere.core.lang;
 
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Function3;
+import com.trazere.core.functional.Predicate;
 import com.trazere.core.functional.Predicate2;
 import com.trazere.core.imperative.Procedure2;
 import com.trazere.core.util.Maybe;
@@ -73,6 +74,9 @@ extends Traversable<Tuple2<E1, E2>> {
 	 */
 	int count(Predicate2<? super E1, ? super E2> filter);
 	
+	// TODO: takeWhile
+	// TODO: dropWhile
+	
 	/**
 	 * Filters the pairs of elements of this traversable using the given filter.
 	 * <p>
@@ -120,7 +124,7 @@ extends Traversable<Tuple2<E1, E2>> {
 	/**
 	 * Gets the element extracted from any pair of elements of this traversable using the given extractor.
 	 * 
-	 * @param <EE> Type of the extracted elements.
+	 * @param <EE> Type of the extracted element.
 	 * @param extractor Function to use to extract from the pairs of elements.
 	 * @return The extracted element, or nothing when no elements can be extracted from any pair of elements.
 	 * @since 2.0
@@ -159,4 +163,15 @@ extends Traversable<Tuple2<E1, E2>> {
 	 * @since 2.0
 	 */
 	void foreach(Procedure2<? super E1, ? super E2> procedure);
+	
+	// Traversable.
+	
+	@Override
+	PairTraversable<E1, E2> take(int n);
+	
+	@Override
+	PairTraversable<E1, E2> drop(int n);
+	
+	@Override
+	PairTraversable<E1, E2> filter(Predicate<? super Tuple2<E1, E2>> filter);
 }

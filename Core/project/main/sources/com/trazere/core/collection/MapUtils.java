@@ -15,23 +15,32 @@
  */
 package com.trazere.core.collection;
 
+import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Function3;
+import com.trazere.core.functional.Predicate;
 import com.trazere.core.functional.Predicate2;
 import com.trazere.core.functional.Thunk;
+import com.trazere.core.imperative.Accumulator;
+import com.trazere.core.imperative.ExIterator;
+import com.trazere.core.imperative.IteratorUtils;
 import com.trazere.core.imperative.PairIterator;
 import com.trazere.core.imperative.Procedure2;
+import com.trazere.core.lang.IterableUtils;
+import com.trazere.core.lang.LangAccumulators;
 import com.trazere.core.lang.PairIterable;
 import com.trazere.core.lang.ThrowableFactory;
 import com.trazere.core.util.Comparators;
 import com.trazere.core.util.FieldComparators;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Set;
+import java.util.function.BiFunction;
 
 /**
  * The {@link MapUtils} class provides various utilities regarding {@link Map maps}.
@@ -111,9 +120,9 @@ public class MapUtils {
 	 * @return The associated value, or nothing when the map contains no bindings for the key.
 	 * @since 2.0
 	 */
-	public static <K, V> Maybe<V> get(final Map<? super K, ? extends V> map, final K key) {
+	public static <K, V> Maybe<V> optionalGet(final Map<? super K, ? extends V> map, final K key) {
 		final V value = map.get(key);
-		return null != value || map.containsKey(key) ? Maybe.some(value) : Maybe.<V>none();
+		return null != value || map.containsKey(key) ? Maybe.some(value) : Maybe.none();
 	}
 	
 	/**
@@ -185,26 +194,10 @@ public class MapUtils {
 	 * @return The presiously associated value, or nothing when the map contained no bindings for the key.
 	 * @since 2.0
 	 */
-	public static <K, V> Maybe<V> put(final Map<? super K, V> map, final K key, final V value) {
-		final Maybe<V> currentValue = get(map, key);
+	public static <K, V> Maybe<V> optionalPut(final Map<? super K, V> map, final K key, final V value) {
+		final Maybe<V> currentValue = optionalGet(map, key);
 		map.put(key, value);
 		return currentValue;
-	}
-	
-	/**
-	 * Associates the given value to the given key in the given map, or does nothing when no value is given.
-	 *
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param map Map to modify.
-	 * @param key Key of the binding to set.
-	 * @param value Value of the binding to set.
-	 * @since 2.0
-	 */
-	public static <K, V> void put(final Map<? super K, ? super V> map, final K key, final Maybe<? extends V> value) {
-		if (value.isSome()) {
-			map.put(key, value.asSome().getValue());
-		}
 	}
 	
 	/**
@@ -248,7 +241,7 @@ public class MapUtils {
 	 * @return The associated removed value, or nothing when the map contains no bindings for the key.
 	 * @since 2.0
 	 */
-	public static <K, V> Maybe<V> remove(final Map<? super K, ? extends V> map, final K key) {
+	public static <K, V> Maybe<V> optionalRemove(final Map<? super K, ? extends V> map, final K key) {
 		if (map.containsKey(key)) {
 			return Maybe.some(map.remove(key));
 		} else {
@@ -256,11 +249,12 @@ public class MapUtils {
 		}
 	}
 	
+	// TODO: generalize and move to IterableUtils
 	/**
-	 * Removes a binding from the given map.
+	 * Removes any binding from the given map.
 	 * <p>
 	 * The map must support removal through its iterators.
-	 *
+	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param map Map to modify.
@@ -278,34 +272,47 @@ public class MapUtils {
 		}
 	}
 	
-	// TODO: removeAll
+	// TODO: generalize and move to IterableUtils
+	// TODO: removeAny(Map, Prediate<? super K>)
+	
+	// TODO: generalize and move to IterableUtils
+	// TODO: removeAll(Map, K...)
+	
+	// TODO: generalize and move to IterableUtils
+	// TODO: removeAll(Map, Iterable<? extends K>)
+	
+	// TODO: generalize and move to IterableUtils
+	// TODO: removeAll(Map, Predicate<? super K>)
 	
 	/**
-	 * Retains the bindings in the given map according to the given filter.
+	 * Retains the bindings accepted by the given filter in the given map.
 	 * <p>
 	 * This method does modify the given map.
 	 *
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
-	 * @param <M> Type of the map.
 	 * @param map Map to filter.
 	 * @param filter Predicate to use to filter the bindings to retain.
-	 * @return The given filtered map.
+	 * @return <code>true</code> when the given map is modified, <code>false</code> otherwise.
 	 * @since 2.0
 	 */
-	public static <K, V, M extends Map<? extends K, ? extends V>> M retain(final M map, final Predicate2<? super K, ? super V> filter) {
+	public static <K, V> boolean retainAll(final Map<? extends K, ? extends V> map, final Predicate2<? super K, ? super V> filter) {
+		final Accumulator<Boolean, Boolean> changed = LangAccumulators.or(false);
 		final Iterator<? extends Map.Entry<? extends K, ? extends V>> entries = map.entrySet().iterator();
 		while (entries.hasNext()) {
 			final Map.Entry<? extends K, ? extends V> entry = entries.next();
 			if (!filter.evaluate(entry.getKey(), entry.getValue())) {
 				entries.remove();
+				changed.add(true);
 			}
 		}
-		return map;
+		return changed.get().booleanValue();
 	}
 	
 	/**
 	 * Left folds over the bindings of the given map using the given operator and initial state.
+	 * <p>
+	 * The bindings are folded according their iteration order.
 	 *
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
@@ -319,8 +326,6 @@ public class MapUtils {
 	public static <K, V, S> S fold(final Map<? extends K, ? extends V> map, final Function3<? super S, ? super K, ? super V, ? extends S> operator, final S initialState) {
 		return bindings(map).fold(operator, initialState);
 	}
-	
-	// TODO: extractAny
 	
 	/**
 	 * Tests whether any binding of the given map is accepted by the given filter.
@@ -365,16 +370,44 @@ public class MapUtils {
 	}
 	
 	/**
+	 * Gets the least binding of the given map according to the given comparator.
+	 *
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param map Map containing the values to compare.
+	 * @param comparator Comparator to use.
+	 * @return The least binding, or nothing when the map is empty.
+	 * @since 2.0
+	 */
+	public static <K, V> Maybe<Tuple2<K, V>> least(final Map<? extends K, ? extends V> map, final Comparator<? super Tuple2<K, V>> comparator) {
+		return MapUtils.<K, V>bindings(map).least(comparator);
+	}
+	
+	/**
+	 * Gets the greatest binding of the given map according to the given comparator.
+	 *
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param map Map containing the values to compare.
+	 * @param comparator Comparator to use.
+	 * @return The greatest binding, or nothing when the map is empty.
+	 * @since 2.0
+	 */
+	public static <K, V> Maybe<Tuple2<K, V>> greatest(final Map<? extends K, ? extends V> map, final Comparator<? super Tuple2<K, V>> comparator) {
+		return MapUtils.<K, V>bindings(map).greatest(comparator);
+	}
+	
+	/**
 	 * Gets the binding with the least value of the given map.
 	 *
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param map Map containing the values to compare.
-	 * @return The least element.
+	 * @return The binding with the least value, or nothing when the map is empty.
 	 * @since 2.0
 	 */
-	public static <K, V extends Comparable<V>> Maybe<Tuple2<K, V>> least(final Map<? extends K, ? extends V> map) {
-		return least(map, Comparators.<V>natural());
+	public static <K, V extends Comparable<V>> Maybe<Tuple2<K, V>> leastByValue(final Map<? extends K, ? extends V> map) {
+		return leastByValue(map, Comparators.<V>natural());
 	}
 	
 	/**
@@ -384,11 +417,11 @@ public class MapUtils {
 	 * @param <V> Type of the values.
 	 * @param map Map containing the values to compare.
 	 * @param comparator Comparator to use.
-	 * @return The least element.
+	 * @return The binding with the least value, or nothing when the map is empty.
 	 * @since 2.0
 	 */
-	public static <K, V> Maybe<Tuple2<K, V>> least(final Map<? extends K, ? extends V> map, final Comparator<? super V> comparator) {
-		return MapUtils.<K, V>bindings(map).least(FieldComparators.field2(comparator));
+	public static <K, V> Maybe<Tuple2<K, V>> leastByValue(final Map<? extends K, ? extends V> map, final Comparator<? super V> comparator) {
+		return least(map, FieldComparators.field2(comparator));
 	}
 	
 	/**
@@ -397,11 +430,11 @@ public class MapUtils {
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param map Map containing the values to compare.
-	 * @return The greatest element.
+	 * @return The binding with the greatest value, or nothing when the map is empty.
 	 * @since 2.0
 	 */
-	public static <K, V extends Comparable<V>> Maybe<Tuple2<K, V>> greatest(final Map<? extends K, ? extends V> map) {
-		return greatest(map, Comparators.<V>natural());
+	public static <K, V extends Comparable<V>> Maybe<Tuple2<K, V>> greatestByValue(final Map<? extends K, ? extends V> map) {
+		return greatestByValue(map, Comparators.<V>natural());
 	}
 	
 	/**
@@ -411,43 +444,183 @@ public class MapUtils {
 	 * @param <V> Type of the values.
 	 * @param map Map containing the values to compare.
 	 * @param comparator Comparator to use.
-	 * @return The greatest element.
+	 * @return The binding with the greatest value, or nothing when the map is empty.
 	 * @since 2.0
 	 */
-	public static <K, V> Maybe<Tuple2<K, V>> greatest(final Map<? extends K, ? extends V> map, final Comparator<? super V> comparator) {
-		return MapUtils.<K, V>bindings(map).greatest(FieldComparators.field2(comparator));
+	public static <K, V> Maybe<Tuple2<K, V>> greatestByValue(final Map<? extends K, ? extends V> map, final Comparator<? super V> comparator) {
+		return greatest(map, FieldComparators.field2(comparator));
 	}
 	
 	/**
 	 * Takes n bindings of the given map.
-	 *
+	 * <p>
+	 * The bindings are taken according their iteration order.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param map Map containing the bindings to take.
+	 * @param n Number of bindings to take.
+	 * @return A map containing the taken bindings.
+	 * @since 2.0
+	 */
+	public static <K, V> ExMap<K, V> take(final Map<K, V> map, final int n) {
+		assert null != map;
+		
+		return new AbstractExMap<K, V>() {
+			private final ExSet<Map.Entry<K, V>> _entrySet = SetUtils.take(map.entrySet(), n);
+			
+			@Override
+			public ExSet<Map.Entry<K, V>> entrySet() {
+				return _entrySet;
+			}
+		};
+	}
+	
+	/**
+	 * Takes n bindings of the given map.
+	 * <p>
+	 * The bindings are taken according their iteration order.
+	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param <M> Type of the result map.
 	 * @param map Map containing the bindings to take.
 	 * @param n Number of bindings to take.
 	 * @param resultFactory Factory of the result map.
-	 * @return A map containing the taken bindings.
+	 * @return A new map containing the taken bindings.
 	 * @since 2.0
 	 */
 	public static <K, V, M extends Map<? super K, ? super V>> M take(final Map<? extends K, ? extends V> map, final int n, final MapFactory<? super K, ? super V, M> resultFactory) {
-		return resultFactory.build(bindings(map).take(n));
+		// final ExMap<? extends K, ? extends V> bindings = take(map, n);
+		// return MapUtils.<K, V>bindings(bindings).iterator().drain(resultFactory.build(bindings.size()));
+		// Note: avoids building the bindings
+		final M result = resultFactory.build(Math.min(map.size(), n));
+		for (final Map.Entry<? extends K, ? extends V> entry : IterableUtils.take(map.entrySet(), n)) {
+			result.put(entry.getKey(), entry.getValue());
+		}
+		return result;
 	}
 	
 	/**
 	 * Drops n bindings of the given map.
-	 *
+	 * <p>
+	 * The bindings are dropped according their iteration order.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param map Map containing the bindings to drop.
+	 * @param n Number of bindings to drop.
+	 * @return A map containing the remaining bindings.
+	 * @since 2.0
+	 */
+	public static <K, V> ExMap<K, V> drop(final Map<K, V> map, final int n) {
+		assert null != map;
+		
+		return new AbstractExMap<K, V>() {
+			private final ExSet<Map.Entry<K, V>> _entrySet = SetUtils.drop(map.entrySet(), n);
+			
+			@Override
+			public ExSet<Map.Entry<K, V>> entrySet() {
+				return _entrySet;
+			}
+		};
+	}
+	
+	/**
+	 * Drops n bindings of the given map.
+	 * <p>
+	 * The bindings are dropped according their iteration order.
+	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param <M> Type of the result map.
 	 * @param map Map containing the bindings to drop.
 	 * @param n Number of bindings to drop.
 	 * @param resultFactory Factory of the result map.
-	 * @return A map containing the remaining bindings.
+	 * @return A new map containing the remaining bindings.
 	 * @since 2.0
 	 */
 	public static <K, V, M extends Map<? super K, ? super V>> M drop(final Map<? extends K, ? extends V> map, final int n, final MapFactory<? super K, ? super V, M> resultFactory) {
-		return resultFactory.build(bindings(map).drop(n));
+		// final ExMap<? extends K, ? extends V> bindings = drop(map, n);
+		// return MapUtils.<K, V>bindings(bindings).iterator().drain(resultFactory.build(bindings.size()));
+		// Note: avoids building the bindings
+		final M result = resultFactory.build(Math.min(map.size(), n));
+		for (final Map.Entry<? extends K, ? extends V> entry : IterableUtils.drop(map.entrySet(), n)) {
+			result.put(entry.getKey(), entry.getValue());
+		}
+		return result;
+	}
+	
+	/**
+	 * Groups the bindings of the given map into batches of the given size.
+	 *
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <B> Type of the batch collections.
+	 * @param map Map containing the bindings to group.
+	 * @param n Number of bindings of each batch.
+	 * @param batchFactory Factory of the batch collections.
+	 * @return A collection of the batches of bindings.
+	 * @since 2.0
+	 */
+	public static <K, V, B extends Collection<? super Tuple2<K, V>>> ExCollection<B> group(final Map<? extends K, ? extends V> map, final int n, final CollectionFactory<? super Tuple2<K, V>, B> batchFactory) {
+		assert null != map;
+		assert null != batchFactory;
+		
+		return new AbstractExCollection<B>() {
+			@Override
+			public int size() {
+				return (map.size() + n - 1) / n;
+			}
+			
+			@Override
+			public ExIterator<B> iterator() {
+				return IteratorUtils.group(MapUtils.<K, V>bindings(map).iterator(), n, batchFactory);
+			}
+		};
+	}
+	
+	/**
+	 * Groups the bindings of the given map into batches of the given size.
+	 *
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <B> Type of the batch collections.
+	 * @param <C> Type of the result collection.
+	 * @param map Map containing the bindings to group.
+	 * @param n Number of bindings of each batch.
+	 * @param batchFactory Factory of the batch collections.
+	 * @param resultFactory Factory of the result collection.
+	 * @return A new collection of the batches of bindings.
+	 * @since 2.0
+	 */
+	public static <K, V, B extends Collection<? super Tuple2<K, V>>, C extends Collection<? super B>> C group(final Map<? extends K, ? extends V> map, final int n, final CollectionFactory<? super Tuple2<K, V>, B> batchFactory, final CollectionFactory<? super B, C> resultFactory) {
+		final ExCollection<B> groups = group(map, n, batchFactory);
+		return groups.iterator().drain(resultFactory.build(groups.size()));
+	}
+	
+	/**
+	 * Filters the bindings of the given map using the given filter.
+	 *
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param map Map containing the bindings to filter.
+	 * @param filter Predicate to use to filter the bindings.
+	 * @return A map containing the filtered bindings.
+	 * @since 2.0
+	 */
+	public static <K, V> ExMap<K, V> filter(final Map<K, V> map, final Predicate2<? super K, ? super V> filter) {
+		assert null != map;
+		assert null != filter;
+		
+		return new AbstractExMap<K, V>() {
+			private final ExSet<Map.Entry<K, V>> _entrySet = ExSet.build(map.entrySet()).filter(e -> filter.evaluate(e.getKey(), e.getValue()));
+			
+			@Override
+			public ExSet<Map.Entry<K, V>> entrySet() {
+				return _entrySet;
+			}
+		};
 	}
 	
 	/**
@@ -459,12 +632,12 @@ public class MapUtils {
 	 * @param map Map containing the bindings to filter.
 	 * @param filter Predicate to use to filter the bindings.
 	 * @param resultFactory Factory of the result map.
-	 * @return A map containing the filtered bindings.
+	 * @return A new map containing the filtered bindings.
 	 * @since 2.0
 	 */
 	public static <K, V, M extends Map<? super K, ? super V>> M filter(final Map<? extends K, ? extends V> map, final Predicate2<? super K, ? super V> filter, final MapFactory<? super K, ? super V, M> resultFactory) {
-		//		return resultFactory.build(IterableUtils.filter(bindings(map), filter));
-		
+		// return resultFactory.build(IterableUtils.filter(bindings(map), filter));
+		// Note: avoids building the bindings
 		final M result = resultFactory.build();
 		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
 			final K key = entry.getKey();
@@ -495,21 +668,48 @@ public class MapUtils {
 	 *
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
-	 * @param <TV> Type of the transformed values.
-	 * @param <M> Type of the result map.
+	 * @param <TE> Type of the transformed elements.
 	 * @param map Map containing the bindings to transform.
 	 * @param function Function to use to transform the bindings.
-	 * @param resultFactory Factory of the result map.
-	 * @return A map containing the transformed bindings.
+	 * @return A collection of the transformed elements.
 	 * @since 2.0
 	 */
-	public static <K, V, TV, M extends Map<? super K, ? super TV>> M map(final Map<? extends K, ? extends V> map, final Function2<? super K, ? super V, ? extends TV> function, final MapFactory<? super K, ? super TV, M> resultFactory) {
-		//		return resultFactory.build(IterableUtils.map(bindings(map), (k, v) -> new Tuple2<>(k, function.evaluate(k, v))));
+	public static <K, V, TE> ExCollection<TE> map(final Map<? extends K, ? extends V> map, final Function2<? super K, ? super V, ? extends TE> function) {
+		assert null != map;
+		assert null != function;
 		
-		final M results = resultFactory.build(map.size());
+		return new AbstractExCollection<TE>() {
+			@Override
+			public int size() {
+				return map.size();
+			}
+			
+			@Override
+			public ExIterator<TE> iterator() {
+				return IteratorUtils.map(map.entrySet().iterator(), e -> function.evaluate(e.getKey(), e.getValue()));
+			}
+		};
+	}
+	
+	/**
+	 * Transforms the bindings of the given map using the given function.
+	 *
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <TE> Type of the transformed elements.
+	 * @param <C> Type of the result collection.
+	 * @param map Map containing the bindings to transform.
+	 * @param function Function to use to transform the bindings.
+	 * @param resultFactory Factory of the result collection.
+	 * @return A new collection of the transformed elements.
+	 * @since 2.0
+	 */
+	public static <K, V, TE, C extends Collection<? super TE>> C map(final Map<? extends K, ? extends V> map, final Function2<? super K, ? super V, ? extends TE> function, final CollectionFactory<? super TE, C> resultFactory) {
+		// return IteratorUtils.map(bindings(map).iterator(), function).drain(resultFactory.build(map.size()));
+		// Note: avoids building the bindings
+		final C results = resultFactory.build(map.size());
 		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
-			final K key = entry.getKey();
-			results.put(key, function.evaluate(key, entry.getValue()));
+			results.add(function.evaluate(entry.getKey(), entry.getValue()));
 		}
 		return results;
 	}
@@ -519,31 +719,117 @@ public class MapUtils {
 	 * 
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
-	 * @param <EV> Type of the extracted values.
-	 * @param <M> Type of the result map.
-	 * @param map Map containing the bindings to extract.
-	 * @param extractor Function to use to extract the bindings.
-	 * @param resultFactory Factory of the result map.
-	 * @return A map containing the extracted bindings.
+	 * @param <EE> Type of the extracted elements.
+	 * @param map Map containing the bindings to extract from.
+	 * @param extractor Function to use to extract from the bindings.
+	 * @return A collection of the extracted elements.
 	 * @since 2.0
 	 */
-	public static <K, V, EV, M extends Map<? super K, ? super EV>> M extract(final Map<? extends K, ? extends V> map, final Function2<? super K, ? super V, ? extends Maybe<? extends EV>> extractor, final MapFactory<? super K, ? super EV, M> resultFactory) {
-		//		return resultFactory.build(IterableUtils.extract(bindings(map), (k, v) -> extractor.evaluate(k, v).map(ev -> new Tuple2<>(k, ev))));
+	public static <K, V, EE> ExCollection<EE> extract(final Map<? extends K, ? extends V> map, final Function2<? super K, ? super V, ? extends Maybe<? extends EE>> extractor) {
+		assert null != map;
+		assert null != extractor;
 		
-		final M results = resultFactory.build(map.size());
+		return new AbstractExCollection<EE>() {
+			@Override
+			public int size() {
+				return IteratorUtils.count(map.entrySet().iterator(), e -> extractor.evaluate(e.getKey(), e.getValue()).isSome());
+			}
+			
+			@Override
+			public ExIterator<EE> iterator() {
+				return IteratorUtils.extract(map.entrySet().iterator(), e -> extractor.evaluate(e.getKey(), e.getValue()));
+			}
+		};
+	}
+	
+	/**
+	 * Extracts the bindings of the given map using the given extractor.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <EE> Type of the extracted elements.
+	 * @param <C> Type of the result collection.
+	 * @param map Map containing the bindings to extract from.
+	 * @param extractor Function to use to extract from the bindings.
+	 * @param resultFactory Factory of the result collection.
+	 * @return A new collection of the extracted elements.
+	 * @since 2.0
+	 */
+	public static <K, V, EE, C extends Collection<? super EE>> C extract(final Map<? extends K, ? extends V> map, final Function2<? super K, ? super V, ? extends Maybe<? extends EE>> extractor, final CollectionFactory<? super EE, C> resultFactory) {
+		// return IteratorUtils.extract(bindings(map).iterator(), extractor).drain(resultFactory.build(map.size()));
+		// Note: avoids building the bindings
+		final C results = resultFactory.build(map.size());
 		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
-			final K key = entry.getKey();
-			final Maybe<? extends EV> extractedValue = extractor.evaluate(key, entry.getValue());
-			if (extractedValue.isSome()) {
-				results.put(key, extractedValue.asSome().getValue());
+			final Maybe<? extends EE> extractedElement = extractor.evaluate(entry.getKey(), entry.getValue());
+			if (extractedElement.isSome()) {
+				results.add(extractedElement.asSome().getValue());
 			}
 		}
 		return results;
 	}
 	
-	// TODO: extractAny
+	/**
+	 * Gets the element extracted from any binding provided by the given map using the given extractor.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <EE> Type of the extracted element.
+	 * @param map Map containing the bindings to extract from.
+	 * @param extractor Function to use to extract the bindings.
+	 * @return The extracted element, or nothing when no elements can be extracted from any binding.
+	 * @since 2.0
+	 */
+	public static <K, V, EE> Maybe<EE> extractAny(final Map<? extends K, ? extends V> map, final Function2<? super K, ? super V, ? extends Maybe<? extends EE>> extractor) {
+		// return IteratorUtils.extractAny(bindings(map).iterator(), extractor);
+		// Note: avoids building the bindings
+		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
+			final Maybe<? extends EE> extractedElement = extractor.evaluate(entry.getKey(), entry.getValue());
+			if (extractedElement.isSome()) {
+				return Maybe.some(extractedElement.asSome().getValue());
+			}
+		}
+		return Maybe.none();
+	}
 	
 	// TODO: extractAll to Multimap ?
+	
+	/**
+	 * Appends the given maps together.
+	 * <p>
+	 * The binding of the first map have precedence over the bindings of the second map in case of conflict.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param map1 First map containing the bindings to append.
+	 * @param map2 Second map containing the bindings to append.
+	 * @return A map containing the appended bindings.
+	 * @since 2.0
+	 */
+	public static <K, V> ExMap<K, V> append(final Map<K, V> map1, final Map<K, V> map2) {
+		assert null != map1;
+		assert null != map2;
+		
+		return new AbstractExMap<K, V>() {
+			private final ExSet<Map.Entry<K, V>> _entrySet = new AbstractExSet<Map.Entry<K, V>>() {
+				@Override
+				public int size() {
+					final Set<K> keySet1 = map2.keySet();
+					return map1.size() + IteratorUtils.count(map2.keySet().iterator(), k -> !keySet1.contains(k));
+				}
+				
+				@Override
+				public ExIterator<Map.Entry<K, V>> iterator() {
+					final Set<K> keySet1 = map2.keySet();
+					return IteratorUtils.append(map1.entrySet().iterator(), IteratorUtils.filter(map2.entrySet().iterator(), e -> !keySet1.contains(e.getKey())));
+				}
+			};
+			
+			@Override
+			public ExSet<Map.Entry<K, V>> entrySet() {
+				return _entrySet;
+			}
+		};
+	}
 	
 	/**
 	 * Appends the given maps together.
@@ -567,7 +853,45 @@ public class MapUtils {
 	}
 	
 	/**
-	 * Flattens the bindings of the maps contained in the given map.
+	 * Flattens the bindings contained in the maps contained in the given map.
+	 * <p>
+	 * The keys of the outer and inner maps are combined.
+	 *
+	 * @param <K1> Type of the keys of the outer map.
+	 * @param <K2> Type of the keys or the inner maps.
+	 * @param <V> Type of the values.
+	 * @param map Map containing the maps containing the bindings to flatten.
+	 * @return A map containing the flatten bindings.
+	 * @since 2.0
+	 */
+	public static <K1, K2, V> ExMap<Tuple2<K1, K2>, V> flatten(final Map<? extends K1, ? extends Map<? extends K2, ? extends V>> map) {
+		assert null != map;
+		
+		return new AbstractExMap<Tuple2<K1, K2>, V>() {
+			private final ExSet<Map.Entry<Tuple2<K1, K2>, V>> _entrySet = new AbstractExSet<Map.Entry<Tuple2<K1, K2>, V>>() {
+				@Override
+				public int size() {
+					return IterableUtils.fold(map.values(), (s, m) -> s + m.size(), 0);
+				}
+				
+				@Override
+				public ExIterator<Map.Entry<Tuple2<K1, K2>, V>> iterator() {
+					return IteratorUtils.flatMap(map.entrySet().iterator(), (final Map.Entry<? extends K1, ? extends Map<? extends K2, ? extends V>> outerEntry) -> {
+						final K1 outerKey = outerEntry.getKey();
+						return IteratorUtils.map(outerEntry.getValue().entrySet().iterator(), innerEntry -> new SimpleEntry<>(new Tuple2<>(outerKey, innerEntry.getKey()), innerEntry.getValue()));
+					});
+				}
+			};
+			
+			@Override
+			public ExSet<Map.Entry<Tuple2<K1, K2>, V>> entrySet() {
+				return _entrySet;
+			}
+		};
+	}
+	
+	/**
+	 * Flattens the bindings contained in the maps contained in the given map.
 	 * <p>
 	 * The keys of the outer and inner maps are combined.
 	 *
@@ -577,10 +901,15 @@ public class MapUtils {
 	 * @param <M> Type of the result map.
 	 * @param map Map containing the maps containing the bindings to flatten.
 	 * @param resultFactory Factory of the result map.
-	 * @return A map containing the flatten bindings.
+	 * @return A new map containing the flatten bindings.
 	 * @since 2.0
 	 */
 	public static <K1, K2, V, M extends Map<? super Tuple2<K1, K2>, ? super V>> M flatten(final Map<? extends K1, ? extends Map<? extends K2, ? extends V>> map, final MapFactory<? super Tuple2<K1, K2>, ? super V, M> resultFactory) {
+		// return resultFactory.build(IterableUtils.flatMap(MapUtils.bindings(map), (final Tuple2<? extends K1, ? extends Map<? extends K2, ? extends V>> outerBinding) -> {
+		// final K1 outerKey = outerBinding.get1();
+		// return MapUtils.bindings(outerBinding.get2()).map(innerBinding -> new Tuple2<>(new Tuple2<K1, K2>(outerKey, innerBinding.get1()), innerBinding.get2()));
+		// }));
+		// Note: avoids building the bindings
 		final M results = resultFactory.build();
 		for (final Map.Entry<? extends K1, ? extends Map<? extends K2, ? extends V>> outerEntry : map.entrySet()) {
 			final K1 outerKey = outerEntry.getKey();
@@ -590,6 +919,8 @@ public class MapUtils {
 		}
 		return results;
 	}
+	
+	// TODO: flatMap to Multimap ?
 	
 	/**
 	 * Executes the given procedure with each binding of the given map.
@@ -613,11 +944,210 @@ public class MapUtils {
 	 * @return An unmodifiable view of the given map, or the given map when is it already unmodifiable.
 	 * @since 2.0
 	 */
-	public static <K, V> Map<K, V> unmodifiable(final Map<K, V> map) {
-		return UNMODIFIABLE_MAP_CLASS.isInstance(map) ? map : Collections.unmodifiableMap(map);
+	public static <K, V> ExMap<K, V> unmodifiable(final Map<K, V> map) {
+		assert null != map;
+		
+		return map instanceof UnmodifiableMap<?, ?> ? (UnmodifiableMap<K, V>) map : new UnmodifiableMap<>(map);
 	}
 	
-	private static Class<?> UNMODIFIABLE_MAP_CLASS = Collections.unmodifiableMap(Collections.emptyMap()).getClass();
+	private static class UnmodifiableMap<K, V>
+	extends MapDecorator<K, V> {
+		public UnmodifiableMap(final Map<K, V> decorated) {
+			super(decorated);
+		}
+		
+		// Map.
+		
+		@Override
+		public V put(final K key, final V value) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public V remove(final Object key) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public void putAll(final Map<? extends K, ? extends V> m) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public void clear() {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public ExSet<K> keySet() {
+			return super.keySet().unmodifiable();
+		}
+		
+		@Override
+		public ExCollection<V> values() {
+			return super.values().unmodifiable();
+		}
+		
+		@Override
+		public ExSet<Map.Entry<K, V>> entrySet() {
+			return super.entrySet().unmodifiable();
+		}
+		
+		@Override
+		public void replaceAll(final BiFunction<? super K, ? super V, ? extends V> function) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public V putIfAbsent(final K key, final V value) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean remove(final Object key, final Object value) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean replace(final K key, final V oldValue, final V newValue) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public V replace(final K key, final V value) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public V computeIfAbsent(final K key, final java.util.function.Function<? super K, ? extends V> mappingFunction) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public V computeIfPresent(final K key, final BiFunction<? super K, ? super V, ? extends V> remappingFunction) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public V compute(final K key, final BiFunction<? super K, ? super V, ? extends V> remappingFunction) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public V merge(final K key, final V value, final BiFunction<? super V, ? super V, ? extends V> remappingFunction) {
+			throw new UnsupportedOperationException();
+		}
+		
+		// ExMap.
+		
+		@Override
+		public PairIterable<K, V> bindings() {
+			return super.bindings().unmodifiable();
+		}
+		
+		@Override
+		public Maybe<V> optionalPut(final K key, final V value) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public void putAll(@SuppressWarnings("unchecked") final Tuple2<? extends K, ? extends V>... bindings) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public void putAll(final Iterable<? extends Tuple2<? extends K, ? extends V>> bindings) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public Maybe<V> optionalRemove(final K key) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public Maybe<Tuple2<K, V>> removeAny() {
+			throw new UnsupportedOperationException();
+		}
+		
+		// TODO: removeAny(Prediate<? super K>)
+		// TODO: removeAll(K...)
+		// TODO: removeAll(Iterable<? extends K>)
+		// TODO: removeAll(Predicate<? super K>)
+		
+		@Override
+		public void retainAll(final Predicate2<? super K, ? super V> filter) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public ExMap<K, V> append(final Map<K, V> map) {
+			return super.append(map).unmodifiable();
+		}
+		
+		@Override
+		public ExMap<K, V> unmodifiable() {
+			return this;
+		}
+		
+		// PairTraversable.
+		
+		@Override
+		public ExMap<K, V> filter(final Predicate2<? super K, ? super V> filter) {
+			return super.filter(filter).unmodifiable();
+		}
+		
+		@Override
+		public <TE> ExCollection<TE> map(final Function2<? super K, ? super V, ? extends TE> function) {
+			return super.<TE>map(function).unmodifiable();
+		}
+		
+		// TODO: mapValues
+		
+		@Override
+		public <EE> ExCollection<EE> extract(final Function2<? super K, ? super V, ? extends Maybe<? extends EE>> extractor) {
+			return super.<EE>extract(extractor).unmodifiable();
+		}
+		
+		// TODO: extractAll to Multimap ?
+		
+		// Traversable.
+		
+		@Override
+		public ExMap<K, V> take(final int n) {
+			return super.take(n).unmodifiable();
+		}
+		
+		@Override
+		public ExMap<K, V> drop(final int n) {
+			return super.drop(n).unmodifiable();
+		}
+		
+		@Override
+		public <B extends Collection<? super Tuple2<K, V>>> ExCollection<B> group(final int n, final CollectionFactory<? super Tuple2<K, V>, B> batchFactory) {
+			return super.group(n, batchFactory).unmodifiable();
+		}
+		
+		@Override
+		public ExMap<K, V> filter(final Predicate<? super Tuple2<K, V>> filter) {
+			return super.filter(filter).unmodifiable();
+		}
+		
+		@Override
+		public <TE> ExCollection<TE> map(final Function<? super Tuple2<K, V>, ? extends TE> function) {
+			return super.<TE>map(function).unmodifiable();
+		}
+		
+		// TODO: mapValues
+		
+		@Override
+		public <EE> ExCollection<EE> extract(final Function<? super Tuple2<K, V>, ? extends Maybe<? extends EE>> extractor) {
+			return super.<EE>extract(extractor).unmodifiable();
+		}
+		
+		// TODO: extractAll
+		// TODO: flatMap
+	}
 	
 	private MapUtils() {
 		// Prevent instantiation.

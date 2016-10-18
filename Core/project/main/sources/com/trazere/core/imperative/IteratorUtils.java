@@ -915,11 +915,9 @@ public class IteratorUtils {
 	
 	/**
 	 * Gets the element extracted from any element provided by the given iterator using the given extractor.
-	 * <p>
-	 * The elements are extracted from according to their iteration order.
 	 * 
 	 * @param <E> Type of the elements.
-	 * @param <EE> Type of the extracted elements.
+	 * @param <EE> Type of the extracted element.
 	 * @param iterator Iterator providing the elements to extract from.
 	 * @param extractor Function to use to extract from the elements.
 	 * @return The extracted element, or nothing when no elements can be extracted from any element.
@@ -938,12 +936,10 @@ public class IteratorUtils {
 	// TODO: rename to extractAny2
 	/**
 	 * Gets the element extracted from any pair of elements provided by the given iterator using the given extractor.
-	 * <p>
-	 * The pairs of elements are extracted from according to their iteration order.
 	 * 
 	 * @param <E1> Type of the first element of the pairs.
 	 * @param <E2> Type of the second element of the pairs.
-	 * @param <EE> Type of the extracted elements.
+	 * @param <EE> Type of the extracted element.
 	 * @param iterator Iterator providing the pairs of elements to extract from.
 	 * @param extractor Function to use to extract from the pairs of elements.
 	 * @return The extracted element, or nothing when no elements can be extracted from any pair of elements.
@@ -966,13 +962,13 @@ public class IteratorUtils {
 	 * The built iterator feeds lazyly from the given iterator.
 	 *
 	 * @param <E> Type of the elements.
-	 * @param <TE> Type of the extracted elements.
+	 * @param <EE> Type of the extracted elements.
 	 * @param iterator Iterator providing the elements to extract from.
 	 * @param extractor Function to use to extract from the elements.
 	 * @return An iterator providing the extracted elements.
 	 * @since 2.0
 	 */
-	public static <E, TE> ExIterator<TE> extractAll(final Iterator<? extends E> iterator, final Function<? super E, ? extends Iterable<? extends TE>> extractor) {
+	public static <E, EE> ExIterator<EE> extractAll(final Iterator<? extends E> iterator, final Function<? super E, ? extends Iterable<? extends EE>> extractor) {
 		return flatMap(iterator, extractor.map(IterableFunctions.iterator()));
 	}
 	
@@ -1200,6 +1196,60 @@ public class IteratorUtils {
 			throw new UnsupportedOperationException();
 		}
 		
+		// ExIterator.
+		
+		@Override
+		public <E2> PairIterator<E, E2> zip(final Iterator<? extends E2> iterator2) {
+			return super.<E2>zip(iterator2).unmodifiable();
+		}
+		
+		@Override
+		public ExIterator<E> unmodifiable() {
+			return this;
+		}
+		
+		// Traversable.
+		
+		@Override
+		public ExIterator<E> take(final int n) {
+			return super.take(n).unmodifiable();
+		}
+		
+		@Override
+		public ExIterator<E> drop(final int n) {
+			return super.drop(n).unmodifiable();
+		}
+		
+		@Override
+		public <B extends Collection<? super E>> ExIterator<B> group(final int n, final CollectionFactory<? super E, B> batchFactory) {
+			return super.group(n, batchFactory).unmodifiable();
+		}
+		
+		@Override
+		public ExIterator<E> filter(final Predicate<? super E> filter) {
+			return super.filter(filter).unmodifiable();
+		}
+		
+		@Override
+		public <TE> ExIterator<TE> map(final Function<? super E, ? extends TE> function) {
+			return super.<TE>map(function).unmodifiable();
+		}
+		
+		@Override
+		public <EE> ExIterator<EE> extract(final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
+			return super.<EE>extract(extractor).unmodifiable();
+		}
+		
+		@Override
+		public <EE> ExIterator<EE> extractAll(final Function<? super E, ? extends Iterable<? extends EE>> extractor) {
+			return super.<EE>extractAll(extractor).unmodifiable();
+		}
+		
+		@Override
+		public <TE> ExIterator<TE> flatMap(final Function<? super E, ? extends Iterator<? extends TE>> extractor) {
+			return super.<TE>flatMap(extractor).unmodifiable();
+		}
+		
 		// Object.
 		
 		@Override
@@ -1233,6 +1283,69 @@ public class IteratorUtils {
 	implements PairIterator<E1, E2> {
 		public UnmodifiablePairIterator(final Iterator<Tuple2<E1, E2>> decorated) {
 			super(decorated);
+		}
+		
+		// Iterator.
+		
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
+		
+		// ExIterator.
+		
+		@Override
+		public <E3> PairIterator<Tuple2<E1, E2>, E3> zip(final Iterator<? extends E3> iterator2) {
+			return super.<E3>zip(iterator2).unmodifiable();
+		}
+		
+		@Override
+		public PairIterator<E1, E2> unmodifiable() {
+			return this;
+		}
+		
+		// PairTraversable.
+		
+		@Override
+		public PairIterator<E1, E2> filter(final Predicate2<? super E1, ? super E2> filter) {
+			return PairIterator.super.filter(filter).unmodifiable();
+		}
+		
+		@Override
+		public <TE> ExIterator<TE> map(final Function2<? super E1, ? super E2, ? extends TE> function) {
+			return PairIterator.super.<TE>map(function).unmodifiable();
+		}
+		
+		@Override
+		public <EE> ExIterator<EE> extract(final Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor) {
+			return PairIterator.super.<EE>extract(extractor).unmodifiable();
+		}
+		
+		@Override
+		public <EE> ExIterator<EE> extractAll(final Function2<? super E1, ? super E2, ? extends Iterable<? extends EE>> extractor) {
+			return PairIterator.super.<EE>extractAll(extractor).unmodifiable();
+		}
+		
+		@Override
+		public <TE> ExIterator<TE> flatMap(final Function2<? super E1, ? super E2, ? extends Iterator<? extends TE>> function) {
+			return PairIterator.super.<TE>flatMap(function).unmodifiable();
+		}
+		
+		// Traversable.
+		
+		@Override
+		public PairIterator<E1, E2> take(final int n) {
+			return PairIterator.super.take(n).unmodifiable();
+		}
+		
+		@Override
+		public PairIterator<E1, E2> drop(final int n) {
+			return PairIterator.super.drop(n).unmodifiable();
+		}
+		
+		@Override
+		public PairIterator<E1, E2> filter(final Predicate<? super Tuple2<E1, E2>> filter) {
+			return PairIterator.super.filter(filter).unmodifiable();
 		}
 	}
 	

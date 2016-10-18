@@ -32,7 +32,7 @@ implements ExIterable<E> {
 	/**
 	 * Builds a new decorator.
 	 * 
-	 * @param decorated Iterable to decorate.
+	 * @param decorated Decorated iterable.
 	 * @since 2.0
 	 */
 	public IterableDecorator(final Iterable<E> decorated) {
@@ -55,4 +55,7 @@ implements ExIterable<E> {
 	public Spliterator<E> spliterator() {
 		return _decorated.spliterator();
 	}
+	
+	// Object.
+	// FIXME
 }

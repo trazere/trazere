@@ -63,6 +63,6 @@ implements MemoizedFunction<A, R> {
 	
 	@Override
 	public Maybe<R> probe(final A arg) {
-		return MapUtils.get(_results, arg);
+		return MapUtils.optionalGet(_results, arg);
 	}
 }

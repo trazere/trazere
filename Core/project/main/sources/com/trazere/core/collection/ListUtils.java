@@ -26,6 +26,7 @@ import com.trazere.core.imperative.ImperativePredicates;
 import com.trazere.core.imperative.IteratorUtils;
 import com.trazere.core.lang.IterableUtils;
 import com.trazere.core.lang.LangAccumulators;
+import com.trazere.core.lang.PairIterable;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 import java.util.Collection;
@@ -36,6 +37,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Queue;
+import java.util.Random;
 import java.util.Set;
 import java.util.function.UnaryOperator;
 
@@ -160,6 +162,9 @@ public class ListUtils {
 		}
 		return iterIndex > index;
 	}
+	
+	// TODO: safeSet
+	// TODO: optionalSet
 	
 	/**
 	 * Removes the element of the given list at the given position.
@@ -609,22 +614,7 @@ public class ListUtils {
 		// List.
 		
 		@Override
-		public void add(final int index, final E element) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
 		public boolean addAll(final int index, final Collection<? extends E> c) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public E set(final int index, final E element) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public E remove(final int index) {
 			throw new UnsupportedOperationException();
 		}
 		
@@ -635,6 +625,21 @@ public class ListUtils {
 		
 		@Override
 		public void sort(final Comparator<? super E> c) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public E set(final int index, final E element) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public void add(final int index, final E element) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public E remove(final int index) {
 			throw new UnsupportedOperationException();
 		}
 		
@@ -653,6 +658,48 @@ public class ListUtils {
 			return super.subList(fromIndex, toIndex).unmodifiable();
 		}
 		
+		// ExList.
+		
+		@Override
+		public boolean addAll(final int index, @SuppressWarnings("unchecked") final E... elements) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean addAll(final int index, final Iterable<? extends E> elements) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public Maybe<E> optionalRemove(final int index) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public void reverse() {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public void shuffle() {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public void shuffle(final Random random) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public <E2> ExList<Tuple2<E, E2>> zip(final List<? extends E2> list2) {
+			return super.<E2>zip(list2).unmodifiable();
+		}
+		
+		@Override
+		public ExList<E> reversed() {
+			return super.reversed().unmodifiable();
+		}
+		
 		// Collection.
 		
 		@Override
@@ -661,12 +708,7 @@ public class ListUtils {
 		}
 		
 		@Override
-		public boolean addAll(@SuppressWarnings("unchecked") final E... elements) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean addAll(final Iterable<? extends E> elements) {
+		public boolean remove(final Object o) {
 			throw new UnsupportedOperationException();
 		}
 		
@@ -676,7 +718,34 @@ public class ListUtils {
 		}
 		
 		@Override
-		public boolean remove(final Object o) {
+		public boolean removeAll(final Collection<?> c) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean removeIf(final java.util.function.Predicate<? super E> filter) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean retainAll(final Collection<?> c) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public void clear() {
+			throw new UnsupportedOperationException();
+		}
+		
+		// ExCollection.
+		
+		@Override
+		public boolean addAll(@SuppressWarnings("unchecked") final E... elements) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean addAll(final Iterable<? extends E> elements) {
 			throw new UnsupportedOperationException();
 		}
 		
@@ -701,17 +770,7 @@ public class ListUtils {
 		}
 		
 		@Override
-		public boolean removeAll(final Collection<?> c) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
 		public boolean removeAll(final Predicate<? super E> filter) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean removeIf(final java.util.function.Predicate<? super E> filter) {
 			throw new UnsupportedOperationException();
 		}
 		
@@ -721,13 +780,8 @@ public class ListUtils {
 		}
 		
 		@Override
-		public boolean retainAll(final Collection<?> c) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public void clear() {
-			throw new UnsupportedOperationException();
+		public <E2> ExCollection<Tuple2<E, E2>> zip(final Collection<? extends E2> collection2) {
+			return super.<E2>zip(collection2).unmodifiable();
 		}
 		
 		// Iterable.
@@ -735,6 +789,55 @@ public class ListUtils {
 		@Override
 		public ExIterator<E> iterator() {
 			return IteratorUtils.unmodifiable(_decorated.iterator());
+		}
+		
+		// ExIterable.
+		
+		@Override
+		public <E2> PairIterable<E, E2> zip(final Iterable<? extends E2> iterable2) {
+			return super.<E2>zip(iterable2).unmodifiable();
+		}
+		
+		@Override
+		public ExList<E> unmodifiable() {
+			return this;
+		}
+		
+		// Traversable.
+		
+		@Override
+		public ExList<E> take(final int n) {
+			return super.take(n).unmodifiable();
+		}
+		
+		@Override
+		public ExList<E> drop(final int n) {
+			return super.drop(n).unmodifiable();
+		}
+		
+		@Override
+		public <B extends Collection<? super E>> ExList<B> group(final int n, final CollectionFactory<? super E, B> batchFactory) {
+			return super.group(n, batchFactory).unmodifiable();
+		}
+		
+		@Override
+		public ExList<E> filter(final Predicate<? super E> filter) {
+			return super.filter(filter).unmodifiable();
+		}
+		
+		@Override
+		public <TE> ExList<TE> map(final Function<? super E, ? extends TE> function) {
+			return super.<TE>map(function).unmodifiable();
+		}
+		
+		@Override
+		public <EE> ExList<EE> extract(final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
+			return super.<EE>extract(extractor).unmodifiable();
+		}
+		
+		@Override
+		public <EE> ExList<EE> extractAll(final Function<? super E, ? extends Iterable<? extends EE>> extractor) {
+			return super.<EE>extractAll(extractor).unmodifiable();
 		}
 		
 		// Object.

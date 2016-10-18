@@ -126,7 +126,7 @@ public class Extractors {
 	 * @param <X> Type of the exceptions.
 	 * @param map The map.
 	 * @return The built function.
-	 * @deprecated Use {@link com.trazere.core.collection.MapExtractors#get(Map)}.
+	 * @deprecated Use {@link com.trazere.core.collection.MapExtractors#optionalGet(Map)}.
 	 */
 	@Deprecated
 	public static <K, V, X extends Exception> Function1<K, Maybe<V>, X> fromMap(final Map<? super K, ? extends V> map) {

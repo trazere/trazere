@@ -31,7 +31,7 @@ implements ExIterator<E> {
 	/**
 	 * Builds a new decorator.
 	 * 
-	 * @param decorated Iterator to decorate.
+	 * @param decorated Decorated iterator.
 	 * @since 2.0
 	 */
 	public IteratorDecorator(final Iterator<E> decorated) {
@@ -59,4 +59,7 @@ implements ExIterator<E> {
 	public void forEachRemaining(final Consumer<? super E> action) {
 		_decorated.forEachRemaining(action);
 	}
+	
+	// Object.
+	// FIXME
 }

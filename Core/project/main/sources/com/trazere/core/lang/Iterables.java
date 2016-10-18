@@ -15,8 +15,20 @@
  */
 package com.trazere.core.lang;
 
+import com.trazere.core.collection.CollectionFactory;
+import com.trazere.core.functional.Function;
+import com.trazere.core.functional.Function2;
+import com.trazere.core.functional.Predicate;
 import com.trazere.core.imperative.ExIterator;
 import com.trazere.core.imperative.Iterators;
+import com.trazere.core.imperative.Procedure;
+import com.trazere.core.util.Maybe;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.NoSuchElementException;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.function.Consumer;
 
 /**
  * The {@link Iterables} class provides various factories of {@link Iterable iterables}.
@@ -38,10 +50,130 @@ public class Iterables {
 	}
 	
 	private static final ExIterable<?> EMPTY = new ExIterable<Object>() {
+		// Iterable.
+		
 		@Override
 		public ExIterator<Object> iterator() {
 			return Iterators.empty();
 		}
+		
+		@Override
+		public void forEach(final Consumer<? super Object> action) {
+			// Nothing to do.
+		}
+		
+		@Override
+		public Spliterator<Object> spliterator() {
+			return Spliterators.emptySpliterator();
+		}
+		
+		// ExIterable.
+		
+		@Override
+		public Object any()
+		throws NoSuchElementException {
+			throw new NoSuchElementException();
+		}
+		
+		@Override
+		public Maybe<Object> optionalAny() {
+			return Maybe.none();
+		}
+		
+		@Override
+		public <E2> PairIterable<Object, E2> zip(final Iterable<? extends E2> iterable2) {
+			return PairIterables.empty();
+		}
+		
+		@Override
+		public ExIterable<Object> unmodifiable() {
+			return empty();
+		}
+		
+		// Traversable.
+		
+		@Override
+		public <S> S fold(final Function2<? super S, ? super Object, ? extends S> operator, final S initialState) {
+			return initialState;
+		}
+		
+		@Override
+		public boolean isAny(final Predicate<? super Object> filter) {
+			return false;
+		}
+		
+		@Override
+		public boolean areAll(final Predicate<? super Object> filter) {
+			return true;
+		}
+		
+		@Override
+		public int count(final Predicate<? super Object> filter) {
+			return 0;
+		}
+		
+		@Override
+		public Maybe<Object> least(final Comparator<? super Object> comparator) {
+			return Maybe.none();
+		}
+		
+		@Override
+		public Maybe<Object> greatest(final Comparator<? super Object> comparator) {
+			return Maybe.none();
+		}
+		
+		@Override
+		public ExIterable<Object> take(final int n) {
+			return empty();
+		}
+		
+		@Override
+		public ExIterable<Object> drop(final int n) {
+			return empty();
+		}
+		
+		@Override
+		public <B extends Collection<? super Object>> ExIterable<B> group(final int n, final CollectionFactory<? super Object, B> batchFactory) {
+			return empty();
+		}
+		
+		@Override
+		public ExIterable<Object> filter(final Predicate<? super Object> filter) {
+			return empty();
+		}
+		
+		@Override
+		public Maybe<Object> filterAny(final Predicate<? super Object> filter) {
+			return Maybe.none();
+		}
+		
+		@Override
+		public <TE> ExIterable<TE> map(final Function<? super Object, ? extends TE> function) {
+			return empty();
+		}
+		
+		@Override
+		public <EE> ExIterable<EE> extract(final Function<? super Object, ? extends Maybe<? extends EE>> extractor) {
+			return empty();
+		}
+		
+		@Override
+		public <EE> Maybe<EE> extractAny(final Function<? super Object, ? extends Maybe<? extends EE>> extractor) {
+			return Maybe.none();
+		}
+		
+		@Override
+		public <EE> ExIterable<EE> extractAll(final Function<? super Object, ? extends Iterable<? extends EE>> extractor) {
+			return empty();
+		}
+		
+		@Override
+		public void foreach(final Procedure<? super Object> procedure) {
+			// Nothing to do.
+		}
+		
+		// Object.
+		// FIXME
 	};
 	
 	/**

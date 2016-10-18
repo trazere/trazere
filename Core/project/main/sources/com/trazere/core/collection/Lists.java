@@ -23,11 +23,20 @@ import com.trazere.core.imperative.ExListIterator;
 import com.trazere.core.imperative.Iterators;
 import com.trazere.core.imperative.ListIterators;
 import com.trazere.core.imperative.Procedure;
+import com.trazere.core.lang.PairIterable;
+import com.trazere.core.lang.PairIterables;
 import com.trazere.core.util.Maybe;
+import com.trazere.core.util.Tuple2;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Random;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.function.Consumer;
+import java.util.function.UnaryOperator;
 
 /**
  * The {@link Lists} class provides various factories of {@link List lists}.
@@ -50,6 +59,21 @@ public class Lists {
 	
 	private static final ExList<?> EMPTY = new ExList<Object>() {
 		// List.
+		
+		@Override
+		public boolean addAll(final int index, final Collection<? extends Object> c) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public void replaceAll(final UnaryOperator<Object> operator) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public void sort(final Comparator<? super Object> c) {
+			throw new UnsupportedOperationException();
+		}
 		
 		@Override
 		public Object get(final int index) {
@@ -82,11 +106,6 @@ public class Lists {
 		}
 		
 		@Override
-		public boolean addAll(final int index, final Collection<? extends Object> c) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
 		public ExListIterator<Object> listIterator() {
 			return ListIterators.empty();
 		}
@@ -107,8 +126,77 @@ public class Lists {
 			} else if (toIndex > 0) {
 				throw new IndexOutOfBoundsException("To index: " + toIndex + ", Size: 0");
 			} else {
-				return Lists.empty();
+				return empty();
 			}
+		}
+		
+		// ExList.
+		
+		@Override
+		public Object first()
+		throws IndexOutOfBoundsException {
+			throw new IndexOutOfBoundsException("Index: 0, Size: 0");
+		}
+		
+		@Override
+		public Maybe<Object> optionalFirst() {
+			return Maybe.none();
+		}
+		
+		@Override
+		public Object last()
+		throws IndexOutOfBoundsException {
+			throw new IndexOutOfBoundsException("Index: 0, Size: 0");
+		}
+		
+		@Override
+		public Maybe<Object> optionalLast() {
+			return Maybe.none();
+		}
+		
+		@Override
+		public Maybe<Object> optionalGet(final int index) {
+			return Maybe.none();
+		}
+		
+		@Override
+		public boolean addAll(final int index, final Object... elements) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean addAll(final int index, final Iterable<? extends Object> elements) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public Maybe<Object> optionalRemove(final int index) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public void reverse() {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public void shuffle() {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public void shuffle(final Random random) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public <E2> ExList<Tuple2<Object, E2>> zip(final List<? extends E2> list2) {
+			return empty();
+		}
+		
+		@Override
+		public ExList<Object> reversed() {
+			return empty();
 		}
 		
 		// Collection.
@@ -164,6 +252,11 @@ public class Lists {
 		}
 		
 		@Override
+		public boolean removeIf(final java.util.function.Predicate<? super Object> filter) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
 		public boolean retainAll(final Collection<?> c) {
 			throw new UnsupportedOperationException();
 		}
@@ -173,11 +266,145 @@ public class Lists {
 			throw new UnsupportedOperationException();
 		}
 		
+		// ExCollection.
+		
+		@Override
+		public boolean intersects(final Collection<? extends Object> collection) {
+			return false;
+		}
+		
+		@Override
+		public boolean addAll(final Object... elements) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean addAll(final Iterable<? extends Object> elements) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public Maybe<Object> removeAny() {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public Maybe<Object> removeAny(final Predicate<? super Object> filter) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean removeAll(final Object... elements) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean removeAll(final Iterable<? extends Object> elements) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean removeAll(final Predicate<? super Object> filter) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean retainAll(final Predicate<? super Object> filter) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public <C extends Collection<? super Object>> C take(final int n, final CollectionFactory<? super Object, C> resultFactory) {
+			return resultFactory.build();
+		}
+		
+		@Override
+		public <C extends Collection<? super Object>> C drop(final int n, final CollectionFactory<? super Object, C> resultFactory) {
+			return resultFactory.build();
+		}
+		
+		@Override
+		public <B extends Collection<? super Object>, C extends Collection<? super B>> C group(final int n, final CollectionFactory<? super Object, B> batchFactory, final CollectionFactory<? super B, C> resultFactory) {
+			return resultFactory.build();
+		}
+		
+		@Override
+		public <C extends Collection<? super Object>> C filter(final Predicate<? super Object> filter, final CollectionFactory<? super Object, C> resultFactory) {
+			return resultFactory.build();
+		}
+		
+		@Override
+		public <TE, C extends Collection<? super TE>> C map(final Function<? super Object, ? extends TE> function, final CollectionFactory<? super TE, C> resultFactory) {
+			return resultFactory.build();
+		}
+		
+		@Override
+		public <EE, C extends Collection<? super EE>> C extract(final Function<? super Object, ? extends Maybe<? extends EE>> extractor, final CollectionFactory<? super EE, C> resultFactory) {
+			return resultFactory.build();
+		}
+		
+		@Override
+		public <EE, C extends Collection<? super EE>> C extractAll(final Function<? super Object, ? extends Iterable<? extends EE>> extractor, final CollectionFactory<? super EE, C> resultFactory) {
+			return resultFactory.build();
+		}
+		
+		@Override
+		public <C extends Collection<? super Object>> C append(final Collection<? extends Object> collection2, final CollectionFactory<? super Object, C> resultFactory) {
+			return resultFactory.build();
+		}
+		
+		// TODO: flatMap
+		// TODO: intersect
+		// TODO: exclude
+		
+		@Override
+		public <E2> ExCollection<Tuple2<Object, E2>> zip(final Collection<? extends E2> collection2) {
+			return empty();
+		}
+		
+		@Override
+		public <E2, C extends Collection<? super Tuple2<? extends Object, ? extends E2>>> C zip(final Collection<? extends E2> collection2, final CollectionFactory<? super Tuple2<? extends Object, ? extends E2>, C> resultFactory) {
+			return resultFactory.build();
+		}
+		
 		// Iterable.
 		
 		@Override
 		public ExIterator<Object> iterator() {
 			return Iterators.empty();
+		}
+		
+		@Override
+		public void forEach(final Consumer<? super Object> action) {
+			// Nothing to do.
+		}
+		
+		@Override
+		public Spliterator<Object> spliterator() {
+			return Spliterators.emptySpliterator();
+		}
+		
+		// ExIterable.
+		
+		@Override
+		public Object any()
+		throws NoSuchElementException {
+			throw new NoSuchElementException();
+		}
+		
+		@Override
+		public Maybe<Object> optionalAny() {
+			return Maybe.none();
+		}
+		
+		@Override
+		public <E2> PairIterable<Object, E2> zip(final Iterable<? extends E2> iterable2) {
+			return PairIterables.empty();
+		}
+		
+		@Override
+		public ExList<Object> unmodifiable() {
+			return empty();
 		}
 		
 		// Traversable.
@@ -214,22 +441,22 @@ public class Lists {
 		
 		@Override
 		public ExList<Object> take(final int n) {
-			return Lists.empty();
+			return empty();
 		}
 		
 		@Override
 		public ExList<Object> drop(final int n) {
-			return Lists.empty();
+			return empty();
 		}
 		
 		@Override
 		public <B extends Collection<? super Object>> ExList<B> group(final int n, final CollectionFactory<? super Object, B> batchFactory) {
-			return Lists.empty();
+			return empty();
 		}
 		
 		@Override
 		public ExList<Object> filter(final Predicate<? super Object> filter) {
-			return Lists.empty();
+			return empty();
 		}
 		
 		@Override
@@ -239,12 +466,12 @@ public class Lists {
 		
 		@Override
 		public <TE> ExList<TE> map(final Function<? super Object, ? extends TE> function) {
-			return Lists.empty();
+			return empty();
 		}
 		
 		@Override
 		public <EE> ExList<EE> extract(final Function<? super Object, ? extends Maybe<? extends EE>> extractor) {
-			return Lists.empty();
+			return empty();
 		}
 		
 		@Override
@@ -253,9 +480,17 @@ public class Lists {
 		}
 		
 		@Override
+		public <EE> ExList<EE> extractAll(final Function<? super Object, ? extends Iterable<? extends EE>> extractor) {
+			return empty();
+		}
+		
+		@Override
 		public void foreach(final Procedure<? super Object> procedure) {
 			// Nothing to do.
 		}
+		
+		// Object.
+		// FIXME
 	};
 	
 	/**
@@ -359,9 +594,7 @@ public class Lists {
 	@SafeVarargs
 	public static <E> ExList<E> fromElements(final E... elements) {
 		final ExList<E> list = new SimpleList<>(elements.length);
-		for (final E element : elements) {
-			list.add(element);
-		}
+		list.addAll(elements);
 		return list;
 	}
 	
@@ -375,9 +608,7 @@ public class Lists {
 	 */
 	public static <E> ExList<E> fromIterable(final Iterable<? extends E> iterable) {
 		final ExList<E> list = new SimpleList<>();
-		for (final E element : iterable) {
-			list.add(element);
-		}
+		list.addAll(iterable);
 		return list;
 	}
 	

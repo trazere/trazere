@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * The {@link ExList} interface defines extended {@link List lists}.
+ * The {@link ExList} interface defines {@link List lists} extended with various utilities.
  * 
  * @param <E> Type of the elements.
  * @see List
@@ -73,6 +73,8 @@ extends List<E>, ExCollection<E> {
 	 */
 	@Override
 	ExList<E> subList(int fromIndex, int toIndex);
+	
+	// ExList.
 	
 	/**
 	 * Gets the first element of this list.

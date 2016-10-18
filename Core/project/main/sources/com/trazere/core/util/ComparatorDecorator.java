@@ -15,7 +15,7 @@ implements ExComparator<T> {
 	/**
 	 * Builds a new decorator.
 	 * 
-	 * @param decorated Comparator to decorate.
+	 * @param decorated Decorated comparator.
 	 * @since 2.0
 	 */
 	public ComparatorDecorator(final Comparator<T> decorated) {
