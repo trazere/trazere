@@ -21,10 +21,17 @@ import com.trazere.core.functional.Predicate;
 import com.trazere.core.imperative.ExIterator;
 import com.trazere.core.imperative.Iterators;
 import com.trazere.core.imperative.Procedure;
+import com.trazere.core.lang.PairIterable;
 import com.trazere.core.util.Maybe;
+import com.trazere.core.util.Tuple2;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.NoSuchElementException;
+import java.util.Set;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.function.Consumer;
 
 /**
  * The {@link Sets} class provides various factories of {@link ExSet sets}.
@@ -46,6 +53,13 @@ public class Sets {
 	}
 	
 	private static final ExSet<?> EMPTY = new ExSet<Object>() {
+		// ExSet.
+		
+		@Override
+		public <E2> ExSet<Tuple2<Object, E2>> zip(final Set<? extends E2> set2) {
+			return empty();
+		}
+		
 		// Collection.
 		
 		@Override
@@ -99,6 +113,11 @@ public class Sets {
 		}
 		
 		@Override
+		public boolean removeIf(final java.util.function.Predicate<? super Object> filter) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
 		public boolean retainAll(final Collection<?> c) {
 			throw new UnsupportedOperationException();
 		}
@@ -108,11 +127,145 @@ public class Sets {
 			throw new UnsupportedOperationException();
 		}
 		
+		// ExCollection.
+		
+		@Override
+		public boolean intersects(final Collection<? extends Object> collection) {
+			return false;
+		}
+		
+		@Override
+		public boolean addAll(final Object... elements) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean addAll(final Iterable<? extends Object> elements) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public Maybe<Object> removeAny() {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public Maybe<Object> removeAny(final Predicate<? super Object> filter) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean removeAll(final Object... elements) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean removeAll(final Iterable<? extends Object> elements) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean removeAll(final Predicate<? super Object> filter) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean retainAll(final Predicate<? super Object> filter) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public <C extends Collection<? super Object>> C take(final int n, final CollectionFactory<? super Object, C> resultFactory) {
+			return resultFactory.build();
+		}
+		
+		@Override
+		public <C extends Collection<? super Object>> C drop(final int n, final CollectionFactory<? super Object, C> resultFactory) {
+			return resultFactory.build();
+		}
+		
+		@Override
+		public <B extends Collection<? super Object>, C extends Collection<? super B>> C group(final int n, final CollectionFactory<? super Object, B> batchFactory, final CollectionFactory<? super B, C> resultFactory) {
+			return resultFactory.build();
+		}
+		
+		@Override
+		public <C extends Collection<? super Object>> C filter(final Predicate<? super Object> filter, final CollectionFactory<? super Object, C> resultFactory) {
+			return resultFactory.build();
+		}
+		
+		@Override
+		public <TE, C extends Collection<? super TE>> C map(final Function<? super Object, ? extends TE> function, final CollectionFactory<? super TE, C> resultFactory) {
+			return resultFactory.build();
+		}
+		
+		@Override
+		public <EE, C extends Collection<? super EE>> C extract(final Function<? super Object, ? extends Maybe<? extends EE>> extractor, final CollectionFactory<? super EE, C> resultFactory) {
+			return resultFactory.build();
+		}
+		
+		@Override
+		public <EE, C extends Collection<? super EE>> C extractAll(final Function<? super Object, ? extends Iterable<? extends EE>> extractor, final CollectionFactory<? super EE, C> resultFactory) {
+			return resultFactory.build();
+		}
+		
+		@Override
+		public <C extends Collection<? super Object>> C append(final Collection<? extends Object> collection2, final CollectionFactory<? super Object, C> resultFactory) {
+			return resultFactory.build();
+		}
+		
+		// TODO: flatMap
+		// TODO: intersect
+		// TODO: exclude
+		
+		@Override
+		public <E2> ExCollection<Tuple2<Object, E2>> zip(final Collection<? extends E2> collection2) {
+			return empty();
+		}
+		
+		@Override
+		public <E2, C extends Collection<? super Tuple2<? extends Object, ? extends E2>>> C zip(final Collection<? extends E2> collection2, final CollectionFactory<? super Tuple2<? extends Object, ? extends E2>, C> resultFactory) {
+			return resultFactory.build();
+		}
+		
 		// Iterable.
 		
 		@Override
 		public ExIterator<Object> iterator() {
 			return Iterators.empty();
+		}
+		
+		@Override
+		public void forEach(final Consumer<? super Object> action) {
+			// Nothing to do.
+		}
+		
+		@Override
+		public Spliterator<Object> spliterator() {
+			return Spliterators.emptySpliterator();
+		}
+		
+		// ExIterable.
+		
+		@Override
+		public Object any()
+		throws NoSuchElementException {
+			throw new NoSuchElementException();
+		}
+		
+		@Override
+		public Maybe<Object> optionalAny() {
+			return Maybe.none();
+		}
+		
+		@Override
+		public <E2> PairIterable<Object, E2> zip(final Iterable<? extends E2> iterable2) {
+			return PairIterables.empty();
+		}
+		
+		@Override
+		public ExSet<Object> unmodifiable() {
+			return empty();
 		}
 		
 		// Traversable.
@@ -188,9 +341,17 @@ public class Sets {
 		}
 		
 		@Override
+		public <EE> ExSet<EE> extractAll(final Function<? super Object, ? extends Iterable<? extends EE>> extractor) {
+			return empty();
+		}
+		
+		@Override
 		public void foreach(final Procedure<? super Object> procedure) {
 			// Nothing to do.
 		}
+		
+		// Object.
+		// FIXME
 	};
 	
 	/**

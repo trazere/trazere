@@ -123,7 +123,7 @@ extends Traversable<Tuple2<E1, E2>> {
 	/**
 	 * Gets the element extracted from any pair of elements of this traversable using the given extractor.
 	 * 
-	 * @param <EE> Type of the extracted elements.
+	 * @param <EE> Type of the extracted element.
 	 * @param extractor Function to use to extract from the pairs of elements.
 	 * @return The extracted element, or nothing when no elements can be extracted from any pair of elements.
 	 * @since 2.0

@@ -248,8 +248,6 @@ extends Iterable<E>, Traversable<E> {
 	
 	/**
 	 * Gets the element extracted from any element provided by this iterable using the given extractor.
-	 * <p>
-	 * The elements are extracted from according to their iteration order.
 	 * 
 	 * @see IterableUtils#extractAny(Iterable, Function)
 	 * @since 2.0

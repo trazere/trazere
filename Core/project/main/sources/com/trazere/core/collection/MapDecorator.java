@@ -110,7 +110,7 @@ implements ExMap<K, V> {
 	}
 	
 	// Comparison and hashing
-	// FIXME ?
+	// FIXME
 	
 	// Defaultable methods.
 	

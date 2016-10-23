@@ -15,8 +15,16 @@
  */
 package com.trazere.core.imperative;
 
+import com.trazere.core.collection.CollectionFactory;
+import com.trazere.core.functional.Function;
+import com.trazere.core.functional.Function2;
+import com.trazere.core.functional.Predicate;
+import com.trazere.core.util.Maybe;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.function.Consumer;
 
 /**
  * The {@link Iterators} class provides various factories of {@link Iterator iterators}.
@@ -38,6 +46,8 @@ public class Iterators {
 	}
 	
 	private static final ExIterator<?> EMPTY = new ExIterator<Object>() {
+		// Iterator.
+		
 		@Override
 		public boolean hasNext() {
 			return false;
@@ -47,6 +57,153 @@ public class Iterators {
 		public Object next() {
 			throw new NoSuchElementException();
 		}
+		
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public void forEachRemaining(final Consumer<? super Object> action) {
+			// Nothing to do.
+		}
+		
+		// ExIterator.
+		
+		@Override
+		public Maybe<Object> optionalNext() {
+			return Maybe.none();
+		}
+		
+		@Override
+		public void drain(final int n) {
+			// Nothing to do.
+		}
+		
+		@Override
+		public <A extends Accumulator<? super Object, ?>> A drain(final int n, final A results) {
+			return results;
+		}
+		
+		@Override
+		public <C extends Collection<? super Object>> C drain(final int n, final C results) {
+			return results;
+		}
+		
+		@Override
+		public void drain() {
+			// Nothing to do.
+		}
+		
+		@Override
+		public <A extends Accumulator<? super Object, ?>> A drain(final A results) {
+			return results;
+		}
+		
+		@Override
+		public <C extends Collection<? super Object>> C drain(final C results) {
+			return results;
+		}
+		
+		@Override
+		public <E2> PairIterator<Object, E2> zip(final Iterator<? extends E2> iterator2) {
+			return PairIterators.empty();
+		}
+		
+		@Override
+		public ExIterator<Object> unmodifiable() {
+			return empty();
+		}
+		
+		// Traversable.
+		
+		@Override
+		public <S> S fold(final Function2<? super S, ? super Object, ? extends S> operator, final S initialState) {
+			return initialState;
+		}
+		
+		@Override
+		public boolean isAny(final Predicate<? super Object> filter) {
+			return false;
+		}
+		
+		@Override
+		public boolean areAll(final Predicate<? super Object> filter) {
+			return true;
+		}
+		
+		@Override
+		public int count(final Predicate<? super Object> filter) {
+			return 0;
+		}
+		
+		@Override
+		public Maybe<Object> least(final Comparator<? super Object> comparator) {
+			return Maybe.none();
+		}
+		
+		@Override
+		public Maybe<Object> greatest(final Comparator<? super Object> comparator) {
+			return Maybe.none();
+		}
+		
+		@Override
+		public ExIterator<Object> take(final int n) {
+			return empty();
+		}
+		
+		@Override
+		public ExIterator<Object> drop(final int n) {
+			return empty();
+		}
+		
+		@Override
+		public <B extends Collection<? super Object>> ExIterator<B> group(final int n, final CollectionFactory<? super Object, B> batchFactory) {
+			return empty();
+		}
+		
+		@Override
+		public ExIterator<Object> filter(final Predicate<? super Object> filter) {
+			return empty();
+		}
+		
+		@Override
+		public Maybe<Object> filterAny(final Predicate<? super Object> filter) {
+			return Maybe.none();
+		}
+		
+		@Override
+		public <TE> ExIterator<TE> map(final Function<? super Object, ? extends TE> function) {
+			return empty();
+		}
+		
+		@Override
+		public <EE> ExIterator<EE> extract(final Function<? super Object, ? extends Maybe<? extends EE>> extractor) {
+			return empty();
+		}
+		
+		@Override
+		public <EE> Maybe<EE> extractAny(final Function<? super Object, ? extends Maybe<? extends EE>> extractor) {
+			return Maybe.none();
+		}
+		
+		@Override
+		public <EE> ExIterator<EE> extractAll(final Function<? super Object, ? extends Iterable<? extends EE>> extractor) {
+			return empty();
+		}
+		
+		@Override
+		public <TE> ExIterator<TE> flatMap(final Function<? super Object, ? extends Iterator<? extends TE>> extractor) {
+			return empty();
+		}
+		
+		@Override
+		public void foreach(final Procedure<? super Object> procedure) {
+			// Nothing to do.
+		}
+		
+		// Object.
+		// FIXME
 	};
 	
 	/**

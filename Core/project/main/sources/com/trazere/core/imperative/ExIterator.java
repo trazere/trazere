@@ -319,8 +319,6 @@ extends Iterator<E>, Traversable<E> {
 	
 	/**
 	 * Get the element extracted from any elements provided by this iterator using the given extractor.
-	 * <p>
-	 * The elements are extracted from according to their iteration order.
 	 * 
 	 * @see IteratorUtils#extractAny(Iterator, Function)
 	 * @since 2.0
@@ -335,13 +333,13 @@ extends Iterator<E>, Traversable<E> {
 	 * <p>
 	 * The built iterator feeds lazyly from this iterator.
 	 * 
-	 * @param <TE> Type of the extracted elements.
+	 * @param <EE> Type of the extracted elements.
 	 * @param extractor Function to use to extract from the elements.
 	 * @return An iterator providing the extracted elements.
 	 * @see IteratorUtils#extractAll(Iterator, Function)
 	 * @since 2.0
 	 */
-	default <TE> ExIterator<TE> extractAll(final Function<? super E, ? extends Iterable<? extends TE>> extractor) {
+	default <EE> ExIterator<EE> extractAll(final Function<? super E, ? extends Iterable<? extends EE>> extractor) {
 		return IteratorUtils.extractAll(this, extractor);
 	}
 	

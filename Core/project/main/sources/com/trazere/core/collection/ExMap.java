@@ -715,8 +715,33 @@ extends Map<K, V>, PairTraversable<K, V> {
 		return MapUtils.extract(this, extractor, resultFactory);
 	}
 	
-	// TODO: extractAny
-	// TODO: extractAny
+	/**
+	 * Gets the element extracted from any binding provided by this map using the given extractor.
+	 * 
+	 * @param <EE> Type of the extracted element.
+	 * @param extractor Function to use to extract the bindings.
+	 * @return The extracted element, or nothing when no elements can be extracted from any binding.
+	 * @see MapUtils#extractAny(Map, Function2)
+	 * @since 2.0
+	 */
+	@Override
+	default <EE> Maybe<EE> extractAny(final Function<? super Tuple2<K, V>, ? extends Maybe<? extends EE>> extractor) {
+		return MapUtils.extractAny(this, FunctionUtils.curry2(extractor));
+	}
+	
+	/**
+	 * Gets the element extracted from any binding provided by this map using the given extractor.
+	 * 
+	 * @param <EE> Type of the extracted element.
+	 * @param extractor Function to use to extract the bindings.
+	 * @return The extracted element, or nothing when no elements can be extracted from any binding.
+	 * @see MapUtils#extractAny(Map, Function2)
+	 * @since 2.0
+	 */
+	@Override
+	default <EE> Maybe<EE> extractAny(final Function2<? super K, ? super V, ? extends Maybe<? extends EE>> extractor) {
+		return MapUtils.extractAny(this, extractor);
+	}
 	
 	// TODO: extractAll
 	// TODO: extractAll to Multimap ?
@@ -751,7 +776,7 @@ extends Map<K, V>, PairTraversable<K, V> {
 		return MapUtils.append(this, map, resultFactory);
 	}
 	
-	// Note: flatMap is not defined here because Java does not support higher order type parameters.
+	// TODO: flatMap to Multimap ?
 	
 	/**
 	 * Executes the given procedure with each binding of this map.

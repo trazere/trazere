@@ -196,8 +196,6 @@ extends ExIterable<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	
 	/**
 	 * Gets the element extracted from any pair of elements provided by this iterable by the given extractor.
-	 * <p>
-	 * The elements are extracted from according to their iteration order.
 	 * 
 	 * @see IterableUtils#extractAny(Iterable, Function2)
 	 * @since 2.0

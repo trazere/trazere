@@ -15,8 +15,10 @@
  */
 package com.trazere.core.collection;
 
+import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Function3;
+import com.trazere.core.functional.Predicate;
 import com.trazere.core.functional.Predicate2;
 import com.trazere.core.functional.Thunk;
 import com.trazere.core.imperative.Accumulator;
@@ -39,7 +41,6 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
 /**
  * The {@link MapUtils} class provides various utilities regarding {@link Map maps}.
@@ -325,8 +326,6 @@ public class MapUtils {
 	public static <K, V, S> S fold(final Map<? extends K, ? extends V> map, final Function3<? super S, ? super K, ? super V, ? extends S> operator, final S initialState) {
 		return bindings(map).fold(operator, initialState);
 	}
-	
-	// TODO: extractAny
 	
 	/**
 	 * Tests whether any binding of the given map is accepted by the given filter.
@@ -721,8 +720,8 @@ public class MapUtils {
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param <EE> Type of the extracted elements.
-	 * @param map Map containing the bindings to extract.
-	 * @param extractor Function to use to extract the bindings.
+	 * @param map Map containing the bindings to extract from.
+	 * @param extractor Function to use to extract from the bindings.
 	 * @return A collection of the extracted elements.
 	 * @since 2.0
 	 */
@@ -750,8 +749,8 @@ public class MapUtils {
 	 * @param <V> Type of the values.
 	 * @param <EE> Type of the extracted elements.
 	 * @param <C> Type of the result collection.
-	 * @param map Map containing the bindings to extract.
-	 * @param extractor Function to use to extract the bindings.
+	 * @param map Map containing the bindings to extract from.
+	 * @param extractor Function to use to extract from the bindings.
 	 * @param resultFactory Factory of the result collection.
 	 * @return A new collection of the extracted elements.
 	 * @since 2.0
@@ -769,7 +768,28 @@ public class MapUtils {
 		return results;
 	}
 	
-	// TODO: extractAny
+	/**
+	 * Gets the element extracted from any binding provided by the given map using the given extractor.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param <EE> Type of the extracted element.
+	 * @param map Map containing the bindings to extract from.
+	 * @param extractor Function to use to extract the bindings.
+	 * @return The extracted element, or nothing when no elements can be extracted from any binding.
+	 * @since 2.0
+	 */
+	public static <K, V, EE> Maybe<EE> extractAny(final Map<? extends K, ? extends V> map, final Function2<? super K, ? super V, ? extends Maybe<? extends EE>> extractor) {
+		// return IteratorUtils.extractAny(bindings(map).iterator(), extractor);
+		// Note: avoids building the bindings
+		for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
+			final Maybe<? extends EE> extractedElement = extractor.evaluate(entry.getKey(), entry.getValue());
+			if (extractedElement.isSome()) {
+				return Maybe.some(extractedElement.asSome().getValue());
+			}
+		}
+		return Maybe.none();
+	}
 	
 	// TODO: extractAll to Multimap ?
 	
@@ -900,6 +920,8 @@ public class MapUtils {
 		return results;
 	}
 	
+	// TODO: flatMap to Multimap ?
+	
 	/**
 	 * Executes the given procedure with each binding of the given map.
 	 * 
@@ -922,7 +944,7 @@ public class MapUtils {
 	 * @return An unmodifiable view of the given map, or the given map when is it already unmodifiable.
 	 * @since 2.0
 	 */
-	public static <K, V> Map<K, V> unmodifiable(final Map<K, V> map) {
+	public static <K, V> ExMap<K, V> unmodifiable(final Map<K, V> map) {
 		assert null != map;
 		
 		return map instanceof UnmodifiableMap<?, ?> ? (UnmodifiableMap<K, V>) map : new UnmodifiableMap<>(map);
@@ -942,52 +964,12 @@ public class MapUtils {
 		}
 		
 		@Override
-		public Maybe<V> optionalPut(final K key, final V value) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public void putAll(@SuppressWarnings("unchecked") final Tuple2<? extends K, ? extends V>... bindings) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public void putAll(final Iterable<? extends Tuple2<? extends K, ? extends V>> bindings) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public void putAll(final Map<? extends K, ? extends V> m) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
 		public V remove(final Object key) {
 			throw new UnsupportedOperationException();
 		}
 		
 		@Override
-		public Maybe<V> optionalRemove(final K key) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean remove(final Object key, final Object value) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public Maybe<Tuple2<K, V>> removeAny() {
-			throw new UnsupportedOperationException();
-		}
-		
-		// TODO: removeAny(Prediate<? super K>)
-		// TODO: removeAll(K...)
-		// TODO: removeAll(Iterable<? extends K>)
-		// TODO: removeAll(Predicate<? super K>)
-		
-		@Override
-		public void retainAll(final Predicate2<? super K, ? super V> filter) {
+		public void putAll(final Map<? extends K, ? extends V> m) {
 			throw new UnsupportedOperationException();
 		}
 		
@@ -1008,13 +990,12 @@ public class MapUtils {
 		
 		@Override
 		public ExSet<Map.Entry<K, V>> entrySet() {
-			// unmodifiable entries
-			//			return super.entrySet().unmodifiable();
+			return super.entrySet().unmodifiable();
 		}
 		
 		@Override
-		public PairIterable<K, V> bindings() {
-			return super.bindings().unmodifiable();
+		public void replaceAll(final BiFunction<? super K, ? super V, ? extends V> function) {
+			throw new UnsupportedOperationException();
 		}
 		
 		@Override
@@ -1023,7 +1004,7 @@ public class MapUtils {
 		}
 		
 		@Override
-		public V replace(final K key, final V value) {
+		public boolean remove(final Object key, final Object value) {
 			throw new UnsupportedOperationException();
 		}
 		
@@ -1033,17 +1014,12 @@ public class MapUtils {
 		}
 		
 		@Override
-		public void replaceAll(final BiFunction<? super K, ? super V, ? extends V> function) {
+		public V replace(final K key, final V value) {
 			throw new UnsupportedOperationException();
 		}
 		
 		@Override
-		public V compute(final K key, final BiFunction<? super K, ? super V, ? extends V> remappingFunction) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public V computeIfAbsent(final K key, final Function<? super K, ? extends V> mappingFunction) {
+		public V computeIfAbsent(final K key, final java.util.function.Function<? super K, ? extends V> mappingFunction) {
 			throw new UnsupportedOperationException();
 		}
 		
@@ -1053,9 +1029,124 @@ public class MapUtils {
 		}
 		
 		@Override
+		public V compute(final K key, final BiFunction<? super K, ? super V, ? extends V> remappingFunction) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
 		public V merge(final K key, final V value, final BiFunction<? super V, ? super V, ? extends V> remappingFunction) {
 			throw new UnsupportedOperationException();
 		}
+		
+		// ExMap.
+		
+		@Override
+		public PairIterable<K, V> bindings() {
+			return super.bindings().unmodifiable();
+		}
+		
+		@Override
+		public Maybe<V> optionalPut(final K key, final V value) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public void putAll(@SuppressWarnings("unchecked") final Tuple2<? extends K, ? extends V>... bindings) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public void putAll(final Iterable<? extends Tuple2<? extends K, ? extends V>> bindings) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public Maybe<V> optionalRemove(final K key) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public Maybe<Tuple2<K, V>> removeAny() {
+			throw new UnsupportedOperationException();
+		}
+		
+		// TODO: removeAny(Prediate<? super K>)
+		// TODO: removeAll(K...)
+		// TODO: removeAll(Iterable<? extends K>)
+		// TODO: removeAll(Predicate<? super K>)
+		
+		@Override
+		public void retainAll(final Predicate2<? super K, ? super V> filter) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public ExMap<K, V> append(final Map<K, V> map) {
+			return super.append(map).unmodifiable();
+		}
+		
+		@Override
+		public ExMap<K, V> unmodifiable() {
+			return this;
+		}
+		
+		// PairTraversable.
+		
+		@Override
+		public ExMap<K, V> filter(final Predicate2<? super K, ? super V> filter) {
+			return super.filter(filter).unmodifiable();
+		}
+		
+		@Override
+		public <TE> ExCollection<TE> map(final Function2<? super K, ? super V, ? extends TE> function) {
+			return super.<TE>map(function).unmodifiable();
+		}
+		
+		// TODO: mapValues
+		
+		@Override
+		public <EE> ExCollection<EE> extract(final Function2<? super K, ? super V, ? extends Maybe<? extends EE>> extractor) {
+			return super.<EE>extract(extractor).unmodifiable();
+		}
+		
+		// TODO: extractAll to Multimap ?
+		
+		// Traversable.
+		
+		@Override
+		public ExMap<K, V> take(final int n) {
+			return super.take(n).unmodifiable();
+		}
+		
+		@Override
+		public ExMap<K, V> drop(final int n) {
+			return super.drop(n).unmodifiable();
+		}
+		
+		@Override
+		public <B extends Collection<? super Tuple2<K, V>>> ExCollection<B> group(final int n, final CollectionFactory<? super Tuple2<K, V>, B> batchFactory) {
+			return super.group(n, batchFactory).unmodifiable();
+		}
+		
+		@Override
+		public ExMap<K, V> filter(final Predicate<? super Tuple2<K, V>> filter) {
+			return super.filter(filter).unmodifiable();
+		}
+		
+		@Override
+		public <TE> ExCollection<TE> map(final Function<? super Tuple2<K, V>, ? extends TE> function) {
+			return super.<TE>map(function).unmodifiable();
+		}
+		
+		// TODO: mapValues
+		
+		@Override
+		public <EE> ExCollection<EE> extract(final Function<? super Tuple2<K, V>, ? extends Maybe<? extends EE>> extractor) {
+			return super.<EE>extract(extractor).unmodifiable();
+		}
+		
+		// TODO: extractAll
+		// TODO: flatMap
 	}
 	
 	private MapUtils() {

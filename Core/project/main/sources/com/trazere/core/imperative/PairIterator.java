@@ -71,6 +71,8 @@ extends ExIterator<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 		}
 	}
 	
+	// Iterable.
+	
 	// TODO: kill, use take and drain
 	/**
 	 * Drains the next n pairs of elements provided by this iterator and populates the given accumulator with them.
@@ -155,6 +157,8 @@ extends ExIterator<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 		return IteratorUtils.drain(this, results);
 	}
 	
+	// Traversable.
+	
 	/**
 	 * Left folds over the pairs of elements provided by this iterator using the given operator and initial state.
 	 * 
@@ -201,6 +205,40 @@ extends ExIterator<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	@Override
 	default int count(final Predicate2<? super E1, ? super E2> filter) {
 		return IteratorUtils.count(this, filter);
+	}
+	
+	/**
+	 * Takes n pairs of elements provided by this iterator.
+	 * <p>
+	 * The pairs of elements are taken according their iteration order.
+	 * <p>
+	 * The built iterator feeds lazyly from the given iterator.
+	 * 
+	 * @param n Number of pairs of elements to take.
+	 * @return An iterator providing the taken pairs of elements.
+	 * @see IteratorUtils#take2(Iterator, int)
+	 * @since 2.0
+	 */
+	@Override
+	default PairIterator<E1, E2> take(final int n) {
+		return IteratorUtils.take2(this, n);
+	}
+	
+	/**
+	 * Drops n pairs of elements provided by this iterator.
+	 * <p>
+	 * The pairs of elements are dropped according their iteration order.
+	 * <p>
+	 * The built iterator feeds lazyly from the given iterator.
+	 * 
+	 * @param n Number of pairs of elements to drop.
+	 * @return An iterator providing the remaining pairs of elements.
+	 * @see IteratorUtils#drop2(Iterator, int)
+	 * @since 2.0
+	 */
+	@Override
+	default PairIterator<E1, E2> drop(final int n) {
+		return IteratorUtils.drop2(this, n);
 	}
 	
 	/**
@@ -258,8 +296,6 @@ extends ExIterator<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	
 	/**
 	 * Gets the element extracted from any pair of elements provided by this iterator using the given extractor.
-	 * <p>
-	 * The pairs of elements are extracted from according to their iteration order.
 	 * 
 	 * @see IteratorUtils#extractAny(Iterator, Function2)
 	 * @since 2.0

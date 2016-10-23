@@ -40,13 +40,11 @@ implements ExMap<K, V> {
 	
 	@Override
 	public ExSet<K> keySet() {
+		return ExSet.build(super.keySet());
 	}
 	
 	@Override
 	public ExCollection<V> values() {
-	}
-	
-	@Override
-	public ExSet<java.util.Map.Entry<K, V>> entrySet() {
+		return ExCollection.build(super.values());
 	}
 }

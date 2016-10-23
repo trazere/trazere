@@ -24,6 +24,7 @@ import com.trazere.core.imperative.ExIterator;
 import com.trazere.core.imperative.IteratorUtils;
 import com.trazere.core.lang.IterableUtils;
 import com.trazere.core.lang.LangAccumulators;
+import com.trazere.core.lang.PairIterable;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 import java.util.Collection;
@@ -826,12 +827,7 @@ public class CollectionUtils {
 		}
 		
 		@Override
-		public boolean addAll(@SuppressWarnings("unchecked") final E... elements) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean addAll(final Iterable<? extends E> elements) {
+		public boolean remove(final Object o) {
 			throw new UnsupportedOperationException();
 		}
 		
@@ -841,7 +837,34 @@ public class CollectionUtils {
 		}
 		
 		@Override
-		public boolean remove(final Object o) {
+		public boolean removeAll(final Collection<?> c) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean removeIf(final java.util.function.Predicate<? super E> filter) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean retainAll(final Collection<?> c) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public void clear() {
+			throw new UnsupportedOperationException();
+		}
+		
+		// ExCollection.
+		
+		@Override
+		public boolean addAll(@SuppressWarnings("unchecked") final E... elements) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean addAll(final Iterable<? extends E> elements) {
 			throw new UnsupportedOperationException();
 		}
 		
@@ -866,17 +889,7 @@ public class CollectionUtils {
 		}
 		
 		@Override
-		public boolean removeAll(final Collection<?> c) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
 		public boolean removeAll(final Predicate<? super E> filter) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean removeIf(final java.util.function.Predicate<? super E> filter) {
 			throw new UnsupportedOperationException();
 		}
 		
@@ -886,13 +899,8 @@ public class CollectionUtils {
 		}
 		
 		@Override
-		public boolean retainAll(final Collection<?> c) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public void clear() {
-			throw new UnsupportedOperationException();
+		public <E2> ExCollection<Tuple2<E, E2>> zip(final Collection<? extends E2> collection2) {
+			return super.<E2>zip(collection2).unmodifiable();
 		}
 		
 		// Iterable.
@@ -900,6 +908,50 @@ public class CollectionUtils {
 		@Override
 		public ExIterator<E> iterator() {
 			return IteratorUtils.unmodifiable(_decorated.iterator());
+		}
+		
+		// ExIterable.
+		
+		@Override
+		public <E2> PairIterable<E, E2> zip(final Iterable<? extends E2> iterable2) {
+			return super.<E2>zip(iterable2).unmodifiable();
+		}
+		
+		// Traversable.
+		
+		@Override
+		public ExCollection<E> take(final int n) {
+			return super.take(n).unmodifiable();
+		}
+		
+		@Override
+		public ExCollection<E> drop(final int n) {
+			return super.drop(n).unmodifiable();
+		}
+		
+		@Override
+		public <B extends Collection<? super E>> ExCollection<B> group(final int n, final CollectionFactory<? super E, B> batchFactory) {
+			return super.group(n, batchFactory).unmodifiable();
+		}
+		
+		@Override
+		public ExCollection<E> filter(final Predicate<? super E> filter) {
+			return super.filter(filter).unmodifiable();
+		}
+		
+		@Override
+		public <TE> ExCollection<TE> map(final Function<? super E, ? extends TE> function) {
+			return super.<TE>map(function).unmodifiable();
+		}
+		
+		@Override
+		public <EE> ExCollection<EE> extract(final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
+			return super.<EE>extract(extractor).unmodifiable();
+		}
+		
+		@Override
+		public <EE> ExCollection<EE> extractAll(final Function<? super E, ? extends Iterable<? extends EE>> extractor) {
+			return super.<EE>extractAll(extractor).unmodifiable();
 		}
 		
 		// Object.
