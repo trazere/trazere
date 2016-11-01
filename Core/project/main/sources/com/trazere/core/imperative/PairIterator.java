@@ -18,7 +18,9 @@ package com.trazere.core.imperative;
 import com.trazere.core.collection.Multimap;
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Function3;
+import com.trazere.core.functional.Predicate;
 import com.trazere.core.functional.Predicate2;
+import com.trazere.core.functional.PredicateUtils;
 import com.trazere.core.lang.PairTraversable;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
@@ -70,8 +72,6 @@ extends ExIterator<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 			};
 		}
 	}
-	
-	// Iterable.
 	
 	// TODO: kill, use take and drain
 	/**
@@ -157,7 +157,21 @@ extends ExIterator<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 		return IteratorUtils.drain(this, results);
 	}
 	
-	// Traversable.
+	// ExIterator.
+	
+	/**
+	 * Builds an unmodifiable view of this iterator.
+	 * 
+	 * @return An unmodifiable view of this iterator, or this iterator when is it already unmodifiable.
+	 * @see IteratorUtils#unmodifiable(PairIterator)
+	 * @since 2.0
+	 */
+	@Override
+	default PairIterator<E1, E2> unmodifiable() {
+		return IteratorUtils.unmodifiable(this);
+	}
+	
+	// PairTraversable.
 	
 	/**
 	 * Left folds over the pairs of elements provided by this iterator using the given operator and initial state.
@@ -205,40 +219,6 @@ extends ExIterator<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	@Override
 	default int count(final Predicate2<? super E1, ? super E2> filter) {
 		return IteratorUtils.count(this, filter);
-	}
-	
-	/**
-	 * Takes n pairs of elements provided by this iterator.
-	 * <p>
-	 * The pairs of elements are taken according their iteration order.
-	 * <p>
-	 * The built iterator feeds lazyly from the given iterator.
-	 * 
-	 * @param n Number of pairs of elements to take.
-	 * @return An iterator providing the taken pairs of elements.
-	 * @see IteratorUtils#take2(Iterator, int)
-	 * @since 2.0
-	 */
-	@Override
-	default PairIterator<E1, E2> take(final int n) {
-		return IteratorUtils.take2(this, n);
-	}
-	
-	/**
-	 * Drops n pairs of elements provided by this iterator.
-	 * <p>
-	 * The pairs of elements are dropped according their iteration order.
-	 * <p>
-	 * The built iterator feeds lazyly from the given iterator.
-	 * 
-	 * @param n Number of pairs of elements to drop.
-	 * @return An iterator providing the remaining pairs of elements.
-	 * @see IteratorUtils#drop2(Iterator, int)
-	 * @since 2.0
-	 */
-	@Override
-	default PairIterator<E1, E2> drop(final int n) {
-		return IteratorUtils.drop2(this, n);
 	}
 	
 	/**
@@ -346,15 +326,53 @@ extends ExIterator<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 		IteratorUtils.foreach(this, procedure);
 	}
 	
+	// Traversable.
+	
 	/**
-	 * Builds an unmodifiable view of this iterator.
+	 * Takes n pairs of elements provided by this iterator.
+	 * <p>
+	 * The pairs of elements are taken according their iteration order.
+	 * <p>
+	 * The built iterator feeds lazyly from the given iterator.
 	 * 
-	 * @return An unmodifiable view of this iterator, or this iterator when is it already unmodifiable.
-	 * @see IteratorUtils#unmodifiable(PairIterator)
+	 * @param n Number of pairs of elements to take.
+	 * @return An iterator providing the taken pairs of elements.
+	 * @see IteratorUtils#take2(Iterator, int)
 	 * @since 2.0
 	 */
 	@Override
-	default PairIterator<E1, E2> unmodifiable() {
-		return IteratorUtils.unmodifiable(this);
+	default PairIterator<E1, E2> take(final int n) {
+		return IteratorUtils.take2(this, n);
+	}
+	
+	/**
+	 * Drops n pairs of elements provided by this iterator.
+	 * <p>
+	 * The pairs of elements are dropped according their iteration order.
+	 * <p>
+	 * The built iterator feeds lazyly from the given iterator.
+	 * 
+	 * @param n Number of pairs of elements to drop.
+	 * @return An iterator providing the remaining pairs of elements.
+	 * @see IteratorUtils#drop2(Iterator, int)
+	 * @since 2.0
+	 */
+	@Override
+	default PairIterator<E1, E2> drop(final int n) {
+		return IteratorUtils.drop2(this, n);
+	}
+	
+	/**
+	 * Filters the pairs of elements provided by this iterator using the given filter.
+	 * <p>
+	 * The built iterator feeds lazyly from this iterator.
+	 * 
+	 * @return An iterator providing the filtered pairs of elements.
+	 * @see IteratorUtils#filter(Iterator, Predicate2)
+	 * @since 2.0
+	 */
+	@Override
+	default PairIterator<E1, E2> filter(final Predicate<? super Tuple2<E1, E2>> filter) {
+		return IteratorUtils.filter(this, PredicateUtils.curry2(filter));
 	}
 }

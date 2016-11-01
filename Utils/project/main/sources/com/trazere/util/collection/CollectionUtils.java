@@ -380,8 +380,8 @@ public class CollectionUtils {
 	 * @param key The key. May be <code>null</code>.
 	 * @param value The value. May be <code>null</code>.
 	 * @return The presiously associated value.
-	 * @deprecated Use {@link com.trazere.core.collection.ExMap#safePut(Object, Object)} or
-	 *             {@link com.trazere.core.collection.MapUtils#safePut(Map, Object, Object)}.
+	 * @deprecated Use {@link com.trazere.core.collection.ExMap#optionalPut(Object, Object)} or
+	 *             {@link com.trazere.core.collection.MapUtils#optionalPut(Map, Object, Object)}.
 	 */
 	@Deprecated
 	public static <K, V> Maybe<V> put(final Map<? super K, V> map, final K key, final V value) {
@@ -421,7 +421,8 @@ public class CollectionUtils {
 	 * @param map The map.
 	 * @param key The key. May be <code>null</code>.
 	 * @return The removed value.
-	 * @deprecated Use {@link com.trazere.core.collection.ExMap#safeRemove(Object)} or {@link com.trazere.core.collection.MapUtils#safeRemove(Map, Object)}.
+	 * @deprecated Use {@link com.trazere.core.collection.ExMap#optionalRemove(Object)} or
+	 *             {@link com.trazere.core.collection.MapUtils#optionalRemove(Map, Object)}.
 	 */
 	@Deprecated
 	public static <K, V> Maybe<V> remove(final Map<? super K, ? extends V> map, final K key) {
@@ -729,7 +730,7 @@ public class CollectionUtils {
 	 * @param map2 The second map.
 	 * @param results The map to populate with the results.
 	 * @return The given result map.
-	 * @deprecated Use {@link com.trazere.core.collection.ExMap#} or
+	 * @deprecated Use {@link com.trazere.core.collection.ExMap#append(Map, com.trazere.core.collection.MapFactory)} or
 	 *             {@link com.trazere.core.collection.MapUtils#append(Map, Map, com.trazere.core.collection.MapFactory)}.
 	 */
 	@Deprecated
@@ -860,7 +861,7 @@ public class CollectionUtils {
 	 * @param keys The keys of the bindings.
 	 * @param results The map to populate with the results.
 	 * @return The given result map.
-	 * @deprecated Use {@link com.trazere.core.collection.ExMap#} or
+	 * @deprecated Use {@link com.trazere.core.collection.ExMap#filter(com.trazere.core.functional.Predicate2, com.trazere.core.collection.MapFactory)} or
 	 *             {@link com.trazere.core.collection.MapUtils#filter(Map, com.trazere.core.functional.Predicate2, com.trazere.core.collection.MapFactory)}.
 	 */
 	@Deprecated
@@ -890,7 +891,7 @@ public class CollectionUtils {
 	 * @param keys The keys of the bindings.
 	 * @param results The map to populate with the results.
 	 * @return The given result map.
-	 * @deprecated Use {@link com.trazere.core.collection.ExMap#} or
+	 * @deprecated Use {@link com.trazere.core.collection.ExMap#filter(com.trazere.core.functional.Predicate2, com.trazere.core.collection.MapFactory)} or
 	 *             {@link com.trazere.core.collection.MapUtils#filter(Map, com.trazere.core.functional.Predicate2, com.trazere.core.collection.MapFactory)}.
 	 */
 	@Deprecated

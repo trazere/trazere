@@ -1342,6 +1342,11 @@ public class IteratorUtils {
 		public PairIterator<E1, E2> drop(final int n) {
 			return PairIterator.super.drop(n).unmodifiable();
 		}
+		
+		@Override
+		public PairIterator<E1, E2> filter(final Predicate<? super Tuple2<E1, E2>> filter) {
+			return PairIterator.super.filter(filter).unmodifiable();
+		}
 	}
 	
 	private IteratorUtils() {

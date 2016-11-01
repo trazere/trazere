@@ -22,6 +22,7 @@ import com.trazere.core.imperative.ExIterator;
 import com.trazere.core.imperative.Iterators;
 import com.trazere.core.imperative.Procedure;
 import com.trazere.core.lang.PairIterable;
+import com.trazere.core.lang.PairIterables;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 import java.util.Collection;

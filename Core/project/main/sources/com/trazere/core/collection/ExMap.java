@@ -280,34 +280,8 @@ extends Map<K, V>, PairTraversable<K, V> {
 	 * @since 2.0
 	 */
 	@Override
-	default <S> S fold(final Function2<? super S, ? super Tuple2<K, V>, ? extends S> operator, final S initialState) {
-		return MapUtils.fold(this, (s, k, v) -> operator.evaluate(s, new Tuple2<>(k, v)), initialState);
-	}
-	
-	/**
-	 * Left folds over the bindings of this map using the given operator and initial state.
-	 * <p>
-	 * The bindings are folded according their iteration order.
-	 * 
-	 * @see MapUtils#fold(Map, Function3, Object)
-	 * @since 2.0
-	 */
-	@Override
 	default <S> S fold(final Function3<? super S, ? super K, ? super V, ? extends S> operator, final S initialState) {
 		return MapUtils.fold(this, operator, initialState);
-	}
-	
-	/**
-	 * Tests whether any binding of this map is accepted by the given filter.
-	 * 
-	 * @param filter Predicate to use to filter the binding.
-	 * @return <code>true</code> when some binding is accepted, <code>false</code> when all bindings are rejected or when the map is empty.
-	 * @see MapUtils#isAny(Map, Predicate2)
-	 * @since 2.0
-	 */
-	@Override
-	default boolean isAny(final Predicate<? super Tuple2<K, V>> filter) {
-		return MapUtils.isAny(this, PredicateUtils.curry2(filter));
 	}
 	
 	/**
@@ -332,19 +306,6 @@ extends Map<K, V>, PairTraversable<K, V> {
 	 * @since 2.0
 	 */
 	@Override
-	default boolean areAll(final Predicate<? super Tuple2<K, V>> filter) {
-		return MapUtils.areAll(this, PredicateUtils.curry2(filter));
-	}
-	
-	/**
-	 * Tests whether all bindings of this map are accepted by the given filter.
-	 * 
-	 * @param filter Predicate to use to filter the binding.
-	 * @return <code>true</code> when all bindings are accepted or when the map is empty, <code>false</code> when some binding is rejected.
-	 * @see MapUtils#areAll(Map, Predicate2)
-	 * @since 2.0
-	 */
-	@Override
 	default boolean areAll(final Predicate2<? super K, ? super V> filter) {
 		return MapUtils.areAll(this, filter);
 	}
@@ -358,8 +319,209 @@ extends Map<K, V>, PairTraversable<K, V> {
 	 * @since 2.0
 	 */
 	@Override
-	default int count(final Predicate<? super Tuple2<K, V>> filter) {
-		return MapUtils.count(this, PredicateUtils.curry2(filter));
+	default int count(final Predicate2<? super K, ? super V> filter) {
+		return MapUtils.count(this, filter);
+	}
+	
+	/**
+	 * Filters the bindings of this map using the given filter.
+	 *
+	 * @param filter Predicate to use to filter the bindings.
+	 * @return A map containing the filtered bindings.
+	 * @see MapUtils#filter(Map, Predicate2)
+	 * @since 2.0
+	 */
+	@Override
+	default ExMap<K, V> filter(final Predicate2<? super K, ? super V> filter) {
+		return MapUtils.filter(this, filter);
+	}
+	
+	/**
+	 * Filters the bindings of this map using the given filter.
+	 *
+	 * @param <M> Type of the result map.
+	 * @param filter Predicate to use to filter the bindings.
+	 * @param resultFactory Factory of the result map.
+	 * @return A new map containing the filtered bindings.
+	 * @see MapUtils#filter(Map, Predicate2, MapFactory)
+	 * @since 2.0
+	 */
+	default <M extends Map<? super K, ? super V>> M filter(final Predicate2<? super K, ? super V> filter, final MapFactory<? super K, ? super V, M> resultFactory) {
+		return MapUtils.filter(this, filter, resultFactory);
+	}
+	
+	/**
+	 * Gets any binding of this map accepted by the given filter.
+	 * 
+	 * @param filter Predicate to use to filter the binding.
+	 * @return The accepted binding, or when no bindings are accepted or when the map is empty.
+	 * @see MapUtils#filterAny(Map, Predicate2)
+	 * @since 2.0
+	 */
+	@Override
+	default Maybe<Tuple2<K, V>> filterAny(final Predicate2<? super K, ? super V> filter) {
+		return MapUtils.filterAny(this, filter);
+	}
+	
+	/**
+	 * Transforms the bindings of this map using the given function.
+	 *
+	 * @param <TE> Type of the transformed elements.
+	 * @param function Function to use to transform the bindings.
+	 * @return A collection of the transformed elements.
+	 * @see MapUtils#map(Map, Function2)
+	 * @since 2.0
+	 */
+	@Override
+	default <TE> ExCollection<TE> map(final Function2<? super K, ? super V, ? extends TE> function) {
+		return MapUtils.map(this, function);
+	}
+	
+	/**
+	 * Transforms the bindings of this map using the given function.
+	 *
+	 * @param <TE> Type of the transformed elements.
+	 * @param <C> Type of the result collection.
+	 * @param function Function to use to transform the bindings.
+	 * @param resultFactory Factory of the result collection.
+	 * @return A new collection of the transformed elements.
+	 * @see MapUtils#map(Map, Function2, CollectionFactory)
+	 * @since 2.0
+	 */
+	default <TE, C extends Collection<? super TE>> C map(final Function2<? super K, ? super V, ? extends TE> function, final CollectionFactory<? super TE, C> resultFactory) {
+		return MapUtils.map(this, function, resultFactory);
+	}
+	
+	// TODO: mapValues
+	// TODO: mapValues
+	
+	/**
+	 * Extracts the bindings of this map using the given extractor.
+	 * 
+	 * @param <EE> Type of the extracted elements.
+	 * @param extractor Function to use to extract the bindings.
+	 * @return A collection of the extracted elements.
+	 * @see MapUtils#extract(Map, Function2)
+	 * @since 2.0
+	 */
+	@Override
+	default <EE> ExCollection<EE> extract(final Function2<? super K, ? super V, ? extends Maybe<? extends EE>> extractor) {
+		return MapUtils.extract(this, extractor);
+	}
+	
+	/**
+	 * Extracts the bindings of this map using the given extractor.
+	 * 
+	 * @param <EE> Type of the extracted elements.
+	 * @param <C> Type of the result collection.
+	 * @param extractor Function to use to extract the bindings.
+	 * @param resultFactory Factory of the result collection.
+	 * @return A new collection of the extracted elements.
+	 * @see MapUtils#extract(Map, Function2, CollectionFactory)
+	 * @since 2.0
+	 */
+	default <EE, C extends Collection<? super EE>> C extract(final Function2<? super K, ? super V, ? extends Maybe<? extends EE>> extractor, final CollectionFactory<? super EE, C> resultFactory) {
+		return MapUtils.extract(this, extractor, resultFactory);
+	}
+	
+	/**
+	 * Gets the element extracted from any binding provided by this map using the given extractor.
+	 * 
+	 * @param <EE> Type of the extracted element.
+	 * @param extractor Function to use to extract the bindings.
+	 * @return The extracted element, or nothing when no elements can be extracted from any binding.
+	 * @see MapUtils#extractAny(Map, Function2)
+	 * @since 2.0
+	 */
+	@Override
+	default <EE> Maybe<EE> extractAny(final Function2<? super K, ? super V, ? extends Maybe<? extends EE>> extractor) {
+		return MapUtils.extractAny(this, extractor);
+	}
+	
+	// TODO: extractAll to Multimap ?
+	
+	/**
+	 * Appends this map and the given map together.
+	 * <p>
+	 * The binding of this map have precedence over the bindings of the given map in case of conflict.
+	 * 
+	 * @param map Map containing the bindings to append.
+	 * @return A map containing the appended bindings.
+	 * @see MapUtils#append(Map, Map)
+	 * @since 2.0
+	 */
+	default ExMap<K, V> append(final Map<K, V> map) {
+		return MapUtils.append(this, map);
+	}
+	
+	/**
+	 * Appends this map and the given map together.
+	 * <p>
+	 * The binding of this map have precedence over the bindings of the given map in case of conflict.
+	 * 
+	 * @param <M> Type of the result map.
+	 * @param map Map containing the bindings to append.
+	 * @param resultFactory Factory of the result map.
+	 * @return A new map containing the appended bindings.
+	 * @see MapUtils#append(Map, Map, MapFactory)
+	 * @since 2.0
+	 */
+	default <M extends Map<? super K, ? super V>> M append(final Map<? extends K, ? extends V> map, final MapFactory<? super K, ? super V, M> resultFactory) {
+		return MapUtils.append(this, map, resultFactory);
+	}
+	
+	// TODO: flatMap to Multimap ?
+	
+	/**
+	 * Executes the given procedure with each binding of this map.
+	 * 
+	 * @see MapUtils#foreach(Map, Procedure2)
+	 * @since 2.0
+	 */
+	@Override
+	default void foreach(final Procedure2<? super K, ? super V> procedure) {
+		MapUtils.foreach(this, procedure);
+	}
+	
+	// Traversable.
+	
+	/**
+	 * Left folds over the bindings of this map using the given operator and initial state.
+	 * <p>
+	 * The bindings are folded according their iteration order.
+	 * 
+	 * @see MapUtils#fold(Map, Function3, Object)
+	 * @since 2.0
+	 */
+	@Override
+	default <S> S fold(final Function2<? super S, ? super Tuple2<K, V>, ? extends S> operator, final S initialState) {
+		return MapUtils.fold(this, (s, k, v) -> operator.evaluate(s, new Tuple2<>(k, v)), initialState);
+	}
+	
+	/**
+	 * Tests whether any binding of this map is accepted by the given filter.
+	 * 
+	 * @param filter Predicate to use to filter the binding.
+	 * @return <code>true</code> when some binding is accepted, <code>false</code> when all bindings are rejected or when the map is empty.
+	 * @see MapUtils#isAny(Map, Predicate2)
+	 * @since 2.0
+	 */
+	@Override
+	default boolean isAny(final Predicate<? super Tuple2<K, V>> filter) {
+		return MapUtils.isAny(this, PredicateUtils.curry2(filter));
+	}
+	
+	/**
+	 * Tests whether all bindings of this map are accepted by the given filter.
+	 * 
+	 * @param filter Predicate to use to filter the binding.
+	 * @return <code>true</code> when all bindings are accepted or when the map is empty, <code>false</code> when some binding is rejected.
+	 * @see MapUtils#areAll(Map, Predicate2)
+	 * @since 2.0
+	 */
+	@Override
+	default boolean areAll(final Predicate<? super Tuple2<K, V>> filter) {
+		return MapUtils.areAll(this, PredicateUtils.curry2(filter));
 	}
 	
 	/**
@@ -371,8 +533,8 @@ extends Map<K, V>, PairTraversable<K, V> {
 	 * @since 2.0
 	 */
 	@Override
-	default int count(final Predicate2<? super K, ? super V> filter) {
-		return MapUtils.count(this, filter);
+	default int count(final Predicate<? super Tuple2<K, V>> filter) {
+		return MapUtils.count(this, PredicateUtils.curry2(filter));
 	}
 	
 	/**
@@ -544,33 +706,6 @@ extends Map<K, V>, PairTraversable<K, V> {
 	}
 	
 	/**
-	 * Filters the bindings of this map using the given filter.
-	 *
-	 * @param filter Predicate to use to filter the bindings.
-	 * @return A map containing the filtered bindings.
-	 * @see MapUtils#filter(Map, Predicate2)
-	 * @since 2.0
-	 */
-	@Override
-	default ExMap<K, V> filter(final Predicate2<? super K, ? super V> filter) {
-		return MapUtils.filter(this, filter);
-	}
-	
-	/**
-	 * Filters the bindings of this map using the given filter.
-	 *
-	 * @param <M> Type of the result map.
-	 * @param filter Predicate to use to filter the bindings.
-	 * @param resultFactory Factory of the result map.
-	 * @return A new map containing the filtered bindings.
-	 * @see MapUtils#filter(Map, Predicate2, MapFactory)
-	 * @since 2.0
-	 */
-	default <M extends Map<? super K, ? super V>> M filter(final Predicate2<? super K, ? super V> filter, final MapFactory<? super K, ? super V, M> resultFactory) {
-		return MapUtils.filter(this, filter, resultFactory);
-	}
-	
-	/**
 	 * Gets any binding of this map accepted by the given filter.
 	 * 
 	 * @param filter Predicate to use to filter the binding.
@@ -581,19 +716,6 @@ extends Map<K, V>, PairTraversable<K, V> {
 	@Override
 	default Maybe<Tuple2<K, V>> filterAny(final Predicate<? super Tuple2<K, V>> filter) {
 		return MapUtils.filterAny(this, PredicateUtils.curry2(filter));
-	}
-	
-	/**
-	 * Gets any binding of this map accepted by the given filter.
-	 * 
-	 * @param filter Predicate to use to filter the binding.
-	 * @return The accepted binding, or when no bindings are accepted or when the map is empty.
-	 * @see MapUtils#filterAny(Map, Predicate2)
-	 * @since 2.0
-	 */
-	@Override
-	default Maybe<Tuple2<K, V>> filterAny(final Predicate2<? super K, ? super V> filter) {
-		return MapUtils.filterAny(this, filter);
 	}
 	
 	/**
@@ -626,38 +748,6 @@ extends Map<K, V>, PairTraversable<K, V> {
 	}
 	
 	/**
-	 * Transforms the bindings of this map using the given function.
-	 *
-	 * @param <TE> Type of the transformed elements.
-	 * @param function Function to use to transform the bindings.
-	 * @return A collection of the transformed elements.
-	 * @see MapUtils#map(Map, Function2)
-	 * @since 2.0
-	 */
-	@Override
-	default <TE> ExCollection<TE> map(final Function2<? super K, ? super V, ? extends TE> function) {
-		return MapUtils.map(this, function);
-	}
-	
-	/**
-	 * Transforms the bindings of this map using the given function.
-	 *
-	 * @param <TE> Type of the transformed elements.
-	 * @param <C> Type of the result collection.
-	 * @param function Function to use to transform the bindings.
-	 * @param resultFactory Factory of the result collection.
-	 * @return A new collection of the transformed elements.
-	 * @see MapUtils#map(Map, Function2, CollectionFactory)
-	 * @since 2.0
-	 */
-	default <TE, C extends Collection<? super TE>> C map(final Function2<? super K, ? super V, ? extends TE> function, final CollectionFactory<? super TE, C> resultFactory) {
-		return MapUtils.map(this, function, resultFactory);
-	}
-	
-	// TODO: mapValues
-	// TODO: mapValues
-	
-	/**
 	 * Extracts the bindings of this map using the given extractor.
 	 * 
 	 * @param <EE> Type of the extracted elements.
@@ -687,35 +777,6 @@ extends Map<K, V>, PairTraversable<K, V> {
 	}
 	
 	/**
-	 * Extracts the bindings of this map using the given extractor.
-	 * 
-	 * @param <EE> Type of the extracted elements.
-	 * @param extractor Function to use to extract the bindings.
-	 * @return A collection of the extracted elements.
-	 * @see MapUtils#extract(Map, Function2)
-	 * @since 2.0
-	 */
-	@Override
-	default <EE> ExCollection<EE> extract(final Function2<? super K, ? super V, ? extends Maybe<? extends EE>> extractor) {
-		return MapUtils.extract(this, extractor);
-	}
-	
-	/**
-	 * Extracts the bindings of this map using the given extractor.
-	 * 
-	 * @param <EE> Type of the extracted elements.
-	 * @param <C> Type of the result collection.
-	 * @param extractor Function to use to extract the bindings.
-	 * @param resultFactory Factory of the result collection.
-	 * @return A new collection of the extracted elements.
-	 * @see MapUtils#extract(Map, Function2, CollectionFactory)
-	 * @since 2.0
-	 */
-	default <EE, C extends Collection<? super EE>> C extract(final Function2<? super K, ? super V, ? extends Maybe<? extends EE>> extractor, final CollectionFactory<? super EE, C> resultFactory) {
-		return MapUtils.extract(this, extractor, resultFactory);
-	}
-	
-	/**
 	 * Gets the element extracted from any binding provided by this map using the given extractor.
 	 * 
 	 * @param <EE> Type of the extracted element.
@@ -729,54 +790,7 @@ extends Map<K, V>, PairTraversable<K, V> {
 		return MapUtils.extractAny(this, FunctionUtils.curry2(extractor));
 	}
 	
-	/**
-	 * Gets the element extracted from any binding provided by this map using the given extractor.
-	 * 
-	 * @param <EE> Type of the extracted element.
-	 * @param extractor Function to use to extract the bindings.
-	 * @return The extracted element, or nothing when no elements can be extracted from any binding.
-	 * @see MapUtils#extractAny(Map, Function2)
-	 * @since 2.0
-	 */
-	@Override
-	default <EE> Maybe<EE> extractAny(final Function2<? super K, ? super V, ? extends Maybe<? extends EE>> extractor) {
-		return MapUtils.extractAny(this, extractor);
-	}
-	
 	// TODO: extractAll
-	// TODO: extractAll to Multimap ?
-	
-	/**
-	 * Appends this map and the given map together.
-	 * <p>
-	 * The binding of this map have precedence over the bindings of the given map in case of conflict.
-	 * 
-	 * @param map Map containing the bindings to append.
-	 * @return A map containing the appended bindings.
-	 * @see MapUtils#append(Map, Map)
-	 * @since 2.0
-	 */
-	default ExMap<K, V> append(final Map<K, V> map) {
-		return MapUtils.append(this, map);
-	}
-	
-	/**
-	 * Appends this map and the given map together.
-	 * <p>
-	 * The binding of this map have precedence over the bindings of the given map in case of conflict.
-	 * 
-	 * @param <M> Type of the result map.
-	 * @param map Map containing the bindings to append.
-	 * @param resultFactory Factory of the result map.
-	 * @return A new map containing the appended bindings.
-	 * @see MapUtils#append(Map, Map, MapFactory)
-	 * @since 2.0
-	 */
-	default <M extends Map<? super K, ? super V>> M append(final Map<? extends K, ? extends V> map, final MapFactory<? super K, ? super V, M> resultFactory) {
-		return MapUtils.append(this, map, resultFactory);
-	}
-	
-	// TODO: flatMap to Multimap ?
 	
 	/**
 	 * Executes the given procedure with each binding of this map.
@@ -787,17 +801,6 @@ extends Map<K, V>, PairTraversable<K, V> {
 	@Override
 	default void foreach(final Procedure<? super Tuple2<K, V>> procedure) {
 		MapUtils.foreach(this, ProcedureUtils.curry2(procedure));
-	}
-	
-	/**
-	 * Executes the given procedure with each binding of this map.
-	 * 
-	 * @see MapUtils#foreach(Map, Procedure2)
-	 * @since 2.0
-	 */
-	@Override
-	default void foreach(final Procedure2<? super K, ? super V> procedure) {
-		MapUtils.foreach(this, procedure);
 	}
 	
 	// Misc.

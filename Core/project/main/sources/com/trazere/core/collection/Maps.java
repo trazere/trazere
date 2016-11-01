@@ -24,6 +24,7 @@ import com.trazere.core.functional.Thunk;
 import com.trazere.core.imperative.Procedure;
 import com.trazere.core.imperative.Procedure2;
 import com.trazere.core.lang.PairIterable;
+import com.trazere.core.lang.PairIterables;
 import com.trazere.core.lang.ThrowableFactory;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;

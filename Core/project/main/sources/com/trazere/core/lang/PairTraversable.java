@@ -17,6 +17,7 @@ package com.trazere.core.lang;
 
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Function3;
+import com.trazere.core.functional.Predicate;
 import com.trazere.core.functional.Predicate2;
 import com.trazere.core.imperative.Procedure2;
 import com.trazere.core.util.Maybe;
@@ -162,4 +163,15 @@ extends Traversable<Tuple2<E1, E2>> {
 	 * @since 2.0
 	 */
 	void foreach(Procedure2<? super E1, ? super E2> procedure);
+	
+	// Traversable.
+	
+	@Override
+	PairTraversable<E1, E2> take(int n);
+	
+	@Override
+	PairTraversable<E1, E2> drop(int n);
+	
+	@Override
+	PairTraversable<E1, E2> filter(Predicate<? super Tuple2<E1, E2>> filter);
 }

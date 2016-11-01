@@ -830,6 +830,11 @@ public class IterableUtils {
 			return PairIterable.super.drop(n).unmodifiable();
 		}
 		
+		@Override
+		public PairIterable<E1, E2> filter(final Predicate<? super Tuple2<E1, E2>> filter) {
+			return PairIterable.super.filter(filter).unmodifiable();
+		}
+		
 		// Object.
 		
 		@Override
