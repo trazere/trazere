@@ -101,7 +101,6 @@ extends ListIterator<E>, Traversable<E> {
 		return IteratorUtils.optionalNext(this);
 	}
 	
-	// TODO: rename to drainAll ?
 	/**
 	 * Drains all next elements provided by the this list iterator.
 	 * 
@@ -112,7 +111,6 @@ extends ListIterator<E>, Traversable<E> {
 		IteratorUtils.drain(this);
 	}
 	
-	// TODO: rename to drainAll ?
 	/**
 	 * Drains all next elements provided by the this list iterator and populates the given accumulator with them.
 	 * 
@@ -126,7 +124,6 @@ extends ListIterator<E>, Traversable<E> {
 		return IteratorUtils.drain(this, results);
 	}
 	
-	// TODO: rename to drainAll ?
 	/**
 	 * Drains all next elements provided by the this list iterator and adds them to the given collection.
 	 * 

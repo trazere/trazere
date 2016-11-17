@@ -69,49 +69,6 @@ extends Iterator<E>, Traversable<E> {
 		return IteratorUtils.optionalNext(this);
 	}
 	
-	// TODO: kill, use take and drain
-	/**
-	 * Drains the next n elements provided by this iterator.
-	 * 
-	 * @param n Number of elements to drain.
-	 * @see IteratorUtils#drain(Iterator, int)
-	 * @since 2.0
-	 */
-	default void drain(final int n) {
-		IteratorUtils.drain(this, n);
-	}
-	
-	// TODO: kill, use take and drain
-	/**
-	 * Drains the next n elements provided by this iterator and populates the given accumulator with them.
-	 * 
-	 * @param <A> Type of the accumulator to populate.
-	 * @param n Number of elements to drain.
-	 * @param results Accumulator to populate with the drained elements.
-	 * @return The given result accumulator.
-	 * @see IteratorUtils#drain(Iterator, int, Accumulator)
-	 * @since 2.0
-	 */
-	default <A extends Accumulator<? super E, ?>> A drain(final int n, final A results) {
-		return IteratorUtils.drain(this, n, results);
-	}
-	
-	// TODO: kill, use take and drain
-	/**
-	 * Drains the next n elements provided by this iterator and adds them to the given collection.
-	 * 
-	 * @param <C> Type of the collection to populate.
-	 * @param n Number of elements to drain.
-	 * @param results Collection to populate with the drained elements.
-	 * @return The given result collection.
-	 * @see IteratorUtils#drain(Iterator, int, Collection)
-	 * @since 2.0
-	 */
-	default <C extends Collection<? super E>> C drain(final int n, final C results) {
-		return IteratorUtils.drain(this, n, results);
-	}
-	
-	// TODO: rename to drainAll
 	/**
 	 * Drains all elements provided by the this iterator.
 	 * 
@@ -122,7 +79,6 @@ extends Iterator<E>, Traversable<E> {
 		IteratorUtils.drain(this);
 	}
 	
-	// TODO: rename to drainAll
 	/**
 	 * Drains all elements provided by the this iterator and populates the given accumulator with them.
 	 * 
@@ -136,7 +92,6 @@ extends Iterator<E>, Traversable<E> {
 		return IteratorUtils.drain(this, results);
 	}
 	
-	// TODO: rename to drainAll
 	/**
 	 * Drains all elements provided by the this iterator and adds them to the given collection.
 	 * 

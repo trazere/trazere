@@ -91,8 +91,9 @@ public class CollectionUtils {
 	 * @param values The iterator.
 	 * @param results The collection to populate with the values.
 	 * @return The result collection.
-	 * @deprecated Use {@link com.trazere.core.imperative.ExIterator#drain(int, Collection)} or
-	 *             {@link com.trazere.core.imperative.IteratorUtils#drain(Iterator, int, Collection)}.
+	 * @deprecated Use {@link com.trazere.core.imperative.ExIterator#take(int)} and {@link com.trazere.core.imperative.ExIterator#drain(Collection)}, or
+	 *             {@link com.trazere.core.imperative.IteratorUtils#take(Iterator, int)} and
+	 *             {@link com.trazere.core.imperative.IteratorUtils#drain(Iterator, Collection)}.
 	 */
 	@Deprecated
 	public static <T, R extends Collection<? super T>> R drain(final int n, final Iterator<? extends T> values, final R results) {
@@ -168,8 +169,9 @@ public class CollectionUtils {
 	 * @param results The collection to populate with the values.
 	 * @return The result collection.
 	 * @throws X When the retrieval of some value fails.
-	 * @deprecated Use {@link com.trazere.core.imperative.ExIterator#drain(int, Collection)} or
-	 *             {@link com.trazere.core.imperative.IteratorUtils#drain(Iterator, int, Collection)}.
+	 * @deprecated Use {@link com.trazere.core.imperative.ExIterator#take(int)} and {@link com.trazere.core.imperative.ExIterator#drain(Collection)}, or
+	 *             {@link com.trazere.core.imperative.IteratorUtils#take(Iterator, int)} and
+	 *             {@link com.trazere.core.imperative.IteratorUtils#drain(Iterator, Collection)}.
 	 */
 	@Deprecated
 	public static <T, R extends Collection<? super T>, X extends Exception> R drain(final int n, final CheckedIterator<? extends T, ? extends X> iterator, final R results)

@@ -55,21 +55,6 @@ public class PairIterators {
 		// PairIterator.
 		
 		@Override
-		public <A extends Accumulator2<? super Object, ? super Object, ?>> A drain(final int n, final A results) {
-			return results;
-		}
-		
-		@Override
-		public <M extends Map<? super Object, ? super Object>> M drain(final int n, final M results) {
-			return results;
-		}
-		
-		@Override
-		public <M extends Multimap<? super Object, ? super Object, ?>> M drain(final int n, final M results) {
-			return results;
-		}
-		
-		@Override
 		public <A extends Accumulator2<? super Object, ? super Object, ?>> A drain(final A results) {
 			return results;
 		}
@@ -111,21 +96,6 @@ public class PairIterators {
 		@Override
 		public Maybe<Tuple2<Object, Object>> optionalNext() {
 			return Maybe.none();
-		}
-		
-		@Override
-		public void drain(final int n) {
-			// Nothing to do.
-		}
-		
-		@Override
-		public <A extends Accumulator<? super Tuple2<Object, Object>, ?>> A drain(final int n, final A results) {
-			return results;
-		}
-		
-		@Override
-		public <C extends Collection<? super Tuple2<Object, Object>>> C drain(final int n, final C results) {
-			return results;
 		}
 		
 		@Override

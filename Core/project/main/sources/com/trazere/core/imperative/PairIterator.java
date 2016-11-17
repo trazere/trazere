@@ -75,51 +75,6 @@ extends ExIterator<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	
 	// PairIterator.
 	
-	// TODO: kill, use take and drain
-	/**
-	 * Drains the next n pairs of elements provided by this iterator and populates the given accumulator with them.
-	 * 
-	 * @param <A> Type of the accumulator to populate.
-	 * @param n Number of pairs of elements to drain.
-	 * @param results Accumulator to populate with the drained pairs of elements.
-	 * @return The given result accumulator.
-	 * @see IteratorUtils#drain(Iterator, int, Accumulator2)
-	 * @since 2.0
-	 */
-	default <A extends Accumulator2<? super E1, ? super E2, ?>> A drain(final int n, final A results) {
-		return IteratorUtils.drain(this, n, results);
-	}
-	
-	// TODO: kill, use take and drain
-	/**
-	 * Drains the next n pairs of elements provided by this iterator and puts the corresponding bindings into the given map.
-	 * 
-	 * @param <M> Type of the map to populate.
-	 * @param n Number of elements to drain.
-	 * @param results Collection to populate with the drained elements.
-	 * @return The given result collection.
-	 * @see IteratorUtils#drain(Iterator, int, Map)
-	 * @since 2.0
-	 */
-	default <M extends Map<? super E1, ? super E2>> M drain(final int n, final M results) {
-		return IteratorUtils.drain(this, n, results);
-	}
-	
-	// TODO: kill, use take and drain
-	/**
-	 * Drains the next n pairs of elements provided by this iterator and puts the corresponding bindings into the given multimap.
-	 * 
-	 * @param <M> Type of the multimap to populate.
-	 * @param n Number of elements to drain.
-	 * @param results Collection to populate with the drained elements.
-	 * @return The given result collection.
-	 * @see IteratorUtils#drain(Iterator, int, Multimap)
-	 * @since 2.0
-	 */
-	default <M extends Multimap<? super E1, ? super E2, ?>> M drain(final int n, final M results) {
-		return IteratorUtils.drain(this, n, results);
-	}
-	
 	/**
 	 * Drains all pairs of elements provided by the this iterator and populates the given accumulator with them.
 	 * 

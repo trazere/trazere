@@ -94,7 +94,7 @@ public class FeedUtils {
 	 * @param results The collection to populate with the elements.
 	 * @return The result collection.
 	 * @throws X When the retrieval of some value fails.
-	 * @deprecated Use {@link com.trazere.core.imperative.IteratorUtils#drain(java.util.Iterator, int, Collection)}.
+	 * @deprecated Use {@link com.trazere.core.collection.Feed#take(int)} and {@link com.trazere.core.collection.CollectionUtils#addAll(Collection, Iterable)}.
 	 */
 	@Deprecated
 	public static <T, C extends Collection<? super T>, X extends Exception> C drain(final int n, final Feed<? extends T, ? extends X> feed, final C results)

@@ -58,125 +58,6 @@ public class IteratorUtils {
 		return iterator.hasNext() ? Maybe.some(iterator.next()) : Maybe.none();
 	}
 	
-	// TODO: kill, use take and drain
-	/**
-	 * Drains the next n elements provided by the given iterator.
-	 * 
-	 * @param n Number of elements to drain.
-	 * @param iterator Iterator to drain.
-	 * @since 2.0
-	 */
-	public static void drain(final Iterator<?> iterator, final int n) {
-		final IntCounter counter = new IntCounter();
-		while (iterator.hasNext() && counter.inc() <= n) {
-			iterator.next();
-		}
-	}
-	
-	// TODO: kill, use take and drain
-	/**
-	 * Drains the next n elements provided by the given iterator and populates the given accumulator with them.
-	 * 
-	 * @param <E> Type of the elements.
-	 * @param <A> Type of the accumulator to populate.
-	 * @param n Number of elements to drain.
-	 * @param iterator Iterator to drain.
-	 * @param results Accumulator to populate with the drained elements.
-	 * @return The given result accumulator.
-	 * @since 2.0
-	 */
-	public static <E, A extends Accumulator<? super E, ?>> A drain(final Iterator<? extends E> iterator, final int n, final A results) {
-		final IntCounter counter = new IntCounter();
-		while (iterator.hasNext() && counter.inc() <= n) {
-			results.add(iterator.next());
-		}
-		return results;
-	}
-	
-	// TODO: kill, use take and drain
-	/**
-	 * Drains the next n elements provided by the given iterator and adds them to the given collection.
-	 * 
-	 * @param <E> Type of the elements.
-	 * @param <C> Type of the collection to populate.
-	 * @param n Number of elements to drain.
-	 * @param iterator Iterator to drain.
-	 * @param results Collection to populate with the drained elements.
-	 * @return The given result collection.
-	 * @since 2.0
-	 */
-	public static <E, C extends Collection<? super E>> C drain(final Iterator<? extends E> iterator, final int n, final C results) {
-		return drain(iterator, n, CollectionAccumulators.add(results)).get();
-	}
-	
-	// TODO: kill, use take and drain
-	// TODO: drain(Iterator, int, CollectionFactory)
-	
-	// TODO: kill, use take and drain
-	// TODO: rename to drain2
-	/**
-	 * Drains the next n pairs of elements provided by the given iterator and populates the given accumulator with them.
-	 * 
-	 * @param <E1> Type of the first element of the pairs.
-	 * @param <E2> Type of the second element of the pairs.
-	 * @param <A> Type of the accumulator to populate.
-	 * @param n Number of pairs of elements to drain.
-	 * @param iterator Iterator to drain.
-	 * @param results Accumulator to populate with the drained pairs of elements.
-	 * @return The given result accumulator.
-	 * @since 2.0
-	 */
-	public static <E1, E2, A extends Accumulator2<? super E1, ? super E2, ?>> A drain(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final int n, final A results) {
-		final IntCounter counter = new IntCounter();
-		while (iterator.hasNext() && counter.inc() <= n) {
-			results.add(iterator.next());
-		}
-		return results;
-	}
-	
-	// TODO: kill, use take and drain
-	// TODO: rename to drain2
-	/**
-	 * Drains the next n pairs of elements provided by the given iterator and puts the corresponding bindings into the given map.
-	 * 
-	 * @param <E1> Type of the first element of the pairs.
-	 * @param <E2> Type of the second element of the pairs.
-	 * @param <M> Type of the map to populate.
-	 * @param n Number of elements to drain.
-	 * @param iterator Iterator to drain.
-	 * @param results Collection to populate with the drained elements.
-	 * @return The given result collection.
-	 * @since 2.0
-	 */
-	public static <E1, E2, M extends Map<? super E1, ? super E2>> M drain(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final int n, final M results) {
-		return drain(iterator, n, MapAccumulators.put(results)).get();
-	}
-	
-	// TODO: kill, use take and drain
-	// TODO: drain2(Iterator, int, MapFactory)
-	
-	// TODO: kill, use take and drain
-	// TODO: rename to drain2
-	/**
-	 * Drains the next n pairs of elements provided by the given iterator and puts the corresponding bindings into the given multimap.
-	 * 
-	 * @param <E1> Type of the first element of the pairs.
-	 * @param <E2> Type of the second element of the pairs.
-	 * @param <M> Type of the multimap to populate.
-	 * @param n Number of elements to drain.
-	 * @param iterator Iterator to drain.
-	 * @param results Collection to populate with the drained elements.
-	 * @return The given result collection.
-	 * @since 2.0
-	 */
-	public static <E1, E2, M extends Multimap<? super E1, ? super E2, ?>> M drain(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final int n, final M results) {
-		return drain(iterator, n, MultimapAccumulators.put(results)).get();
-	}
-	
-	// TODO: kill, use take and drain
-	// TODO: drain2(Iterator, int, MultimapFactory)
-	
-	// TODO: rename to drainAll ?
 	/**
 	 * Drains all elements provided by the the given iterator.
 	 * 
@@ -189,7 +70,6 @@ public class IteratorUtils {
 		}
 	}
 	
-	// TODO: rename to drainAll ?
 	/**
 	 * Drains all elements provided by the the given iterator and populates the given accumulator with them.
 	 * 
@@ -207,7 +87,6 @@ public class IteratorUtils {
 		return results;
 	}
 	
-	// TODO: rename to drainAll ?
 	/**
 	 * Drains all elements provided by the the given iterator and adds them to the given collection.
 	 * 
@@ -224,7 +103,6 @@ public class IteratorUtils {
 	
 	// TODO: drain(Iterator, CollectionFactory)
 	
-	// TODO: rename to drainAll ?
 	// TODO: rename to drain2
 	/**
 	 * Drains all pairs of elements provided by the the given iterator and populates the given accumulator with them.
@@ -244,7 +122,6 @@ public class IteratorUtils {
 		return results;
 	}
 	
-	// TODO: rename to drainAll ?
 	// TODO: rename to drain2
 	/**
 	 * Drains all pairs of elements provided by the the given iterator and puts the corresponding bindings into the given map.
@@ -263,7 +140,6 @@ public class IteratorUtils {
 	
 	// TODO: drain2(Iterator, MapFactory)
 	
-	// TODO: rename to drainAll ?
 	// TODO: rename to drain2
 	/**
 	 * Drains all pairs of elements provided by the the given iterator and puts the corresponding bindings into the given multimap.
@@ -693,7 +569,7 @@ public class IteratorUtils {
 			
 			@Override
 			public B next() {
-				return IteratorUtils.drain(iterator, n, batchFactory.build(n));
+				return IteratorUtils.drain(IteratorUtils.take(iterator, n), batchFactory.build(n));
 			}
 		};
 	}

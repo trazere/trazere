@@ -76,21 +76,6 @@ public class Iterators {
 		}
 		
 		@Override
-		public void drain(final int n) {
-			// Nothing to do.
-		}
-		
-		@Override
-		public <A extends Accumulator<? super Object, ?>> A drain(final int n, final A results) {
-			return results;
-		}
-		
-		@Override
-		public <C extends Collection<? super Object>> C drain(final int n, final C results) {
-			return results;
-		}
-		
-		@Override
 		public void drain() {
 			// Nothing to do.
 		}
