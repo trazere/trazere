@@ -51,6 +51,44 @@ extends Set<E>, ExCollection<E> {
 		}
 	}
 	
+	// ExSet.
+	
+	// TODO: append(Set)
+	// TODO: intersect(Set)
+	// TODO: intersect(Set, CollectionFactory)
+	// TODO: exclude(Set)
+	// TODO: exclude(Set, CollectionFactory)
+	
+	/**
+	 * Composes pairs with the elements of this set and the given set.
+	 * <p>
+	 * The pairs are composed of an element of each set according to their iteration order. The extra values of the longest set are dropped when the given sets
+	 * don't contain the same number of elements.
+	 * 
+	 * @param <E2> Type of the second elements.
+	 * @param set2 Set of the second elements of the pairs.
+	 * @return A set of the pairs of elements.
+	 * @see SetUtils#zip(Set, Set)
+	 * @since 2.0
+	 */
+	default <E2> ExSet<Tuple2<E, E2>> zip(final Set<? extends E2> set2) {
+		return SetUtils.zip(this, set2);
+	}
+	
+	// ExIterable.
+	
+	/**
+	 * Builds an unmodifiable view of this set.
+	 * 
+	 * @return An unmodifiable view of this set, or this set when is it already unmodifiable.
+	 * @see SetUtils#unmodifiable(Set)
+	 * @since 2.0
+	 */
+	@Override
+	default ExSet<E> unmodifiable() {
+		return SetUtils.unmodifiable(this);
+	}
+	
 	// Traversable.
 	
 	/**
@@ -156,34 +194,4 @@ extends Set<E>, ExCollection<E> {
 	//	default <TE> ExSet<TE> flatMap(final Function<? super E, ? extends Set<? extends TE>> function) {
 	//		return SetUtils.flatMap(this, function);
 	//	}
-	
-	/**
-	 * Composes pairs with the elements of this set and the given set.
-	 * <p>
-	 * The pairs are composed of an element of each set according to their iteration order. The extra values of the longest set are dropped when the given sets
-	 * don't contain the same number of elements.
-	 * 
-	 * @param <E2> Type of the second elements.
-	 * @param set2 Set of the second elements of the pairs.
-	 * @return A set of the pairs of elements.
-	 * @see SetUtils#zip(Set, Set)
-	 * @since 2.0
-	 */
-	default <E2> ExSet<Tuple2<E, E2>> zip(final Set<? extends E2> set2) {
-		return SetUtils.zip(this, set2);
-	}
-	
-	// Misc.
-	
-	/**
-	 * Builds an unmodifiable view of this set.
-	 * 
-	 * @return An unmodifiable view of this set, or this set when is it already unmodifiable.
-	 * @see SetUtils#unmodifiable(Set)
-	 * @since 2.0
-	 */
-	@Override
-	default ExSet<E> unmodifiable() {
-		return SetUtils.unmodifiable(this);
-	}
 }

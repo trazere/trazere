@@ -54,7 +54,7 @@ extends Iterator<E>, Traversable<E> {
 		}
 	}
 	
-	// Iterator.
+	// ExIterator.
 	
 	/**
 	 * Gets the next element provided by this iterator.
@@ -148,6 +148,35 @@ extends Iterator<E>, Traversable<E> {
 	 */
 	default <C extends Collection<? super E>> C drain(final C results) {
 		return IteratorUtils.drain(this, results);
+	}
+	
+	/**
+	 * Composes pairs with the elements provided by this iterator and the given iterator.
+	 * <p>
+	 * The pairs are composed of an element provided by each iterator in order. The extra values of the longest iterator are dropped when this iterators don't
+	 * provide the same number of elements.
+	 * <p>
+	 * The built iterator feeds lazyly from this iterator and the given iterator.
+	 * 
+	 * @param <E2> Type of the second elements.
+	 * @param iterator2 Iterator providing the second elements of the pairs.
+	 * @return An iterator providing the pairs of elements.
+	 * @see IteratorUtils#zip(Iterator, Iterator)
+	 * @since 2.0
+	 */
+	default <E2> PairIterator<E, E2> zip(final Iterator<? extends E2> iterator2) {
+		return IteratorUtils.zip(this, iterator2);
+	}
+	
+	/**
+	 * Builds an unmodifiable view of this iterator.
+	 * 
+	 * @return An unmodifiable view of this iterator, or this iterator when is it already unmodifiable.
+	 * @see IteratorUtils#unmodifiable(Iterator)
+	 * @since 2.0
+	 */
+	default ExIterator<E> unmodifiable() {
+		return IteratorUtils.unmodifiable(this);
 	}
 	
 	// Traversable.
@@ -361,24 +390,6 @@ extends Iterator<E>, Traversable<E> {
 	}
 	
 	/**
-	 * Composes pairs with the elements provided by this iterator and the given iterator.
-	 * <p>
-	 * The pairs are composed of an element provided by each iterator in order. The extra values of the longest iterator are dropped when this iterators don't
-	 * provide the same number of elements.
-	 * <p>
-	 * The built iterator feeds lazyly from this iterator and the given iterator.
-	 * 
-	 * @param <E2> Type of the second elements.
-	 * @param iterator2 Iterator providing the second elements of the pairs.
-	 * @return An iterator providing the pairs of elements.
-	 * @see IteratorUtils#zip(Iterator, Iterator)
-	 * @since 2.0
-	 */
-	default <E2> PairIterator<E, E2> zip(final Iterator<? extends E2> iterator2) {
-		return IteratorUtils.zip(this, iterator2);
-	}
-	
-	/**
 	 * Executes the given procedure with each element provided by this iterator.
 	 * 
 	 * @see IteratorUtils#foreach(Iterator, Procedure)
@@ -387,18 +398,5 @@ extends Iterator<E>, Traversable<E> {
 	@Override
 	default void foreach(final Procedure<? super E> procedure) {
 		IteratorUtils.foreach(this, procedure);
-	}
-	
-	// Misc.
-	
-	/**
-	 * Builds an unmodifiable view of this iterator.
-	 * 
-	 * @return An unmodifiable view of this iterator, or this iterator when is it already unmodifiable.
-	 * @see IteratorUtils#unmodifiable(Iterator)
-	 * @since 2.0
-	 */
-	default ExIterator<E> unmodifiable() {
-		return IteratorUtils.unmodifiable(this);
 	}
 }

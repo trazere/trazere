@@ -223,6 +223,55 @@ extends List<E>, ExCollection<E> {
 		Collections.shuffle(this, random);
 	}
 	
+	// TODO: append(List)
+	// TODO: intersect(List)
+	// TODO: intersect(List, CollectionFactory)
+	// TODO: exclude(List)
+	// TODO: exclude(List, CollectionFactory)
+	
+	/**
+	 * Builds a view of this list in the reversed order.
+	 * <p>
+	 * The built list is backed by this list, any modification to one list is reported on the other.
+	 * 
+	 * @return A reversed view of this list.
+	 * @see ListUtils#reversed(List)
+	 * @since 2.0
+	 */
+	default ExList<E> reversed() {
+		return ListUtils.reversed(this);
+	}
+	
+	/**
+	 * Composes pairs with the elements of this list and the given list.
+	 * <p>
+	 * The pairs are composed of an element of each list according to their iteration order. The extra values of the longest list are dropped when the given
+	 * lists don't contain the same number of elements.
+	 * 
+	 * @param <E2> Type of the second elements.
+	 * @param list2 List of the second elements of the pairs.
+	 * @return A list of the pairs of elements.
+	 * @see ListUtils#zip(List, List)
+	 * @since 2.0
+	 */
+	default <E2> ExList<Tuple2<E, E2>> zip(final List<? extends E2> list2) {
+		return ListUtils.zip(this, list2);
+	}
+	
+	// ExIterable.
+	
+	/**
+	 * Builds an unmodifiable view of this list.
+	 * 
+	 * @return An unmodifiable view of this list, or this list when is it already unmodifiable.
+	 * @see ListUtils#unmodifiable(List)
+	 * @since 2.0
+	 */
+	@Override
+	default ExList<E> unmodifiable() {
+		return ListUtils.unmodifiable(this);
+	}
+	
 	// Traversable.
 	
 	/**
@@ -328,47 +377,4 @@ extends List<E>, ExCollection<E> {
 	//	default <TE> ExList<TE> flatMap(final Function<? super E, ? extends List<? extends TE>> function) {
 	//		return ListUtils.flatMap(this, function);
 	//	}
-	
-	/**
-	 * Composes pairs with the elements of this list and the given list.
-	 * <p>
-	 * The pairs are composed of an element of each list according to their iteration order. The extra values of the longest list are dropped when the given
-	 * lists don't contain the same number of elements.
-	 * 
-	 * @param <E2> Type of the second elements.
-	 * @param list2 List of the second elements of the pairs.
-	 * @return A list of the pairs of elements.
-	 * @see ListUtils#zip(List, List)
-	 * @since 2.0
-	 */
-	default <E2> ExList<Tuple2<E, E2>> zip(final List<? extends E2> list2) {
-		return ListUtils.zip(this, list2);
-	}
-	
-	// Misc.
-	
-	/**
-	 * Builds an unmodifiable view of this list.
-	 * 
-	 * @return An unmodifiable view of this list, or this list when is it already unmodifiable.
-	 * @see ListUtils#unmodifiable(List)
-	 * @since 2.0
-	 */
-	@Override
-	default ExList<E> unmodifiable() {
-		return ListUtils.unmodifiable(this);
-	}
-	
-	/**
-	 * Builds a view of this list in the reversed order.
-	 * <p>
-	 * The built list is backed by this list, any modification to one list is reported on the other.
-	 * 
-	 * @return A reversed view of this list.
-	 * @see ListUtils#reversed(List)
-	 * @since 2.0
-	 */
-	default ExList<E> reversed() {
-		return ListUtils.reversed(this);
-	}
 }

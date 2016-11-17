@@ -612,6 +612,7 @@ public class Lists {
 		return list;
 	}
 	
+	// TODO: ExArrayList
 	private static class SimpleList<E>
 	extends ArrayList<E>
 	implements ExList<E> {

@@ -188,7 +188,7 @@ implements ExList<E> {
 	}
 	
 	// Comparison and hashing
-	// FIXME ?
+	// FIXME
 	
 	// Streams.
 	

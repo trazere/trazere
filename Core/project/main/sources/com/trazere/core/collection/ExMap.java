@@ -269,6 +269,19 @@ extends Map<K, V>, PairTraversable<K, V> {
 		MapUtils.retainAll(this, filter);
 	}
 	
+	// TODO: zip ?
+	
+	/**
+	 * Builds an unmodifiable view of this map.
+	 * 
+	 * @return An unmodifiable view of this map, or this map when is it already unmodifiable.
+	 * @see MapUtils#unmodifiable(Map)
+	 * @since 2.0
+	 */
+	default ExMap<K, V> unmodifiable() {
+		return MapUtils.unmodifiable(this);
+	}
+	
 	// PairTraversable.
 	
 	/**
@@ -801,18 +814,5 @@ extends Map<K, V>, PairTraversable<K, V> {
 	@Override
 	default void foreach(final Procedure<? super Tuple2<K, V>> procedure) {
 		MapUtils.foreach(this, ProcedureUtils.curry2(procedure));
-	}
-	
-	// Misc.
-	
-	/**
-	 * Builds an unmodifiable view of this map.
-	 * 
-	 * @return An unmodifiable view of this map, or this map when is it already unmodifiable.
-	 * @see MapUtils#unmodifiable(Map)
-	 * @since 2.0
-	 */
-	default ExMap<K, V> unmodifiable() {
-		return MapUtils.unmodifiable(this);
 	}
 }

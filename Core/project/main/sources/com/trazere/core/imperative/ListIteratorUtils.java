@@ -645,7 +645,7 @@ public class ListIteratorUtils {
 			super(decorated);
 		}
 		
-		// List iterator.
+		// ListIterator.
 		
 		@Override
 		public void remove() {
@@ -660,6 +660,55 @@ public class ListIteratorUtils {
 		@Override
 		public void add(final E e) {
 			throw new UnsupportedOperationException();
+		}
+		
+		// ExListIterator.
+		
+		@Override
+		public ExListIterator<E> unmodifiable() {
+			return this;
+		}
+		
+		// Traversable.
+		
+		@Override
+		public ExListIterator<E> take(final int n) {
+			return super.take(n).unmodifiable();
+		}
+		
+		@Override
+		public ExListIterator<E> drop(final int n) {
+			return super.drop(n).unmodifiable();
+		}
+		
+		@Override
+		public <B extends Collection<? super E>> ExListIterator<B> group(final int n, final CollectionFactory<? super E, B> batchFactory) {
+			return super.group(n, batchFactory).unmodifiable();
+		}
+		
+		@Override
+		public ExListIterator<E> filter(final Predicate<? super E> filter) {
+			return super.filter(filter).unmodifiable();
+		}
+		
+		@Override
+		public <TE> ExListIterator<TE> map(final Function<? super E, ? extends TE> function) {
+			return super.<TE>map(function).unmodifiable();
+		}
+		
+		@Override
+		public <EE> ExListIterator<EE> extract(final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
+			return super.<EE>extract(extractor).unmodifiable();
+		}
+		
+		@Override
+		public <EE> ExListIterator<EE> extractAll(final Function<? super E, ? extends List<? extends EE>> extractor) {
+			return super.<EE>extractAll(extractor).unmodifiable();
+		}
+		
+		@Override
+		public <TE> ExListIterator<TE> flatMap(final Function<? super E, ? extends ListIterator<? extends TE>> extractor) {
+			return super.<TE>flatMap(extractor).unmodifiable();
 		}
 		
 		// Object.

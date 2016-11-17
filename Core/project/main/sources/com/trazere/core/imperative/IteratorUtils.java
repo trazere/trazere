@@ -1278,6 +1278,7 @@ public class IteratorUtils {
 		return iterator instanceof UnmodifiablePairIterator ? iterator : new UnmodifiablePairIterator<>(iterator);
 	}
 	
+	// TODO: PairIteratorDecorator ?
 	private static class UnmodifiablePairIterator<E1, E2>
 	extends UnmodifiableIterator<Tuple2<E1, E2>>
 	implements PairIterator<E1, E2> {

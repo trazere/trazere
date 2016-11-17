@@ -56,7 +56,24 @@ extends ListIterator<E>, Traversable<E> {
 		}
 	}
 	
-	// List iterator.
+	// ListIterator.
+	
+	@Override
+	default void remove() {
+		throw new UnsupportedOperationException("remove");
+	}
+	
+	@Override
+	default void set(final E e) {
+		throw new UnsupportedOperationException("set");
+	}
+	
+	@Override
+	default void add(final E e) {
+		throw new UnsupportedOperationException("add");
+	}
+	
+	// ExListIterator.
 	
 	/**
 	 * Gets the next element provided by this list iterator.
@@ -125,19 +142,17 @@ extends ListIterator<E>, Traversable<E> {
 	
 	// TODO: backwardDrain ?
 	
-	@Override
-	default void remove() {
-		throw new UnsupportedOperationException("remove");
-	}
+	// ExIterator.
 	
-	@Override
-	default void set(final E e) {
-		throw new UnsupportedOperationException("set");
-	}
-	
-	@Override
-	default void add(final E e) {
-		throw new UnsupportedOperationException("add");
+	/**
+	 * Builds an unmodifiable view of this list iterator.
+	 * 
+	 * @return An unmodifiable view of this iterator, or this iterator when is it already unmodifiable.
+	 * @see ListIteratorUtils#unmodifiable(ListIterator)
+	 * @since 2.0
+	 */
+	default ExListIterator<E> unmodifiable() {
+		return ListIteratorUtils.unmodifiable(this);
 	}
 	
 	// Traversable.
@@ -341,13 +356,13 @@ extends ListIterator<E>, Traversable<E> {
 	 * <p>
 	 * The built iterator feeds lazyly from this iterator.
 	 * 
-	 * @param <TE> Type of the extracted elements.
+	 * @param <EE> Type of the extracted elements.
 	 * @param extractor Function to use to extract from the elements.
 	 * @return An iterator providing the extracted elements.
 	 * @see ListIteratorUtils#extractAll(ListIterator, Function)
 	 * @since 2.0
 	 */
-	default <TE> ExListIterator<TE> extractAll(final Function<? super E, ? extends List<? extends TE>> extractor) {
+	default <EE> ExListIterator<EE> extractAll(final Function<? super E, ? extends List<? extends EE>> extractor) {
 		return ListIteratorUtils.extractAll(this, extractor);
 	}
 	
@@ -382,17 +397,4 @@ extends ListIterator<E>, Traversable<E> {
 	}
 	
 	// TODO: backwardForeach ?
-	
-	// Misc.
-	
-	/**
-	 * Builds an unmodifiable view of this list iterator.
-	 * 
-	 * @return An unmodifiable view of this iterator, or this iterator when is it already unmodifiable.
-	 * @see ListIteratorUtils#unmodifiable(ListIterator)
-	 * @since 2.0
-	 */
-	default ExListIterator<E> unmodifiable() {
-		return ListIteratorUtils.unmodifiable(this);
-	}
 }

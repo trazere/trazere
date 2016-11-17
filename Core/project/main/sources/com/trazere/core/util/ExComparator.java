@@ -49,7 +49,7 @@ extends Comparator<T> {
 		}
 	}
 	
-	// Comparator.
+	// ExComparator.
 	
 	/**
 	 * Safely compares the given values using this comparator.

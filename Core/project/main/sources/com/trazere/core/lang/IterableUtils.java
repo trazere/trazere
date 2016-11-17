@@ -773,6 +773,7 @@ public class IterableUtils {
 		return iterable instanceof UnmodifiablePairIterable ? (UnmodifiablePairIterable<E1, E2>) iterable : new UnmodifiablePairIterable<>(iterable);
 	}
 	
+	// TODO: PairIterableDecorator ?
 	private static class UnmodifiablePairIterable<E1, E2>
 	extends UnmodifiableIterable<Tuple2<E1, E2>>
 	implements PairIterable<E1, E2> {

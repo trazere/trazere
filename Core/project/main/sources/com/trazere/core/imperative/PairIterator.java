@@ -73,6 +73,8 @@ extends ExIterator<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 		}
 	}
 	
+	// PairIterator.
+	
 	// TODO: kill, use take and drain
 	/**
 	 * Drains the next n pairs of elements provided by this iterator and populates the given accumulator with them.

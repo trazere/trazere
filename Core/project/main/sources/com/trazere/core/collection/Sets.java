@@ -478,6 +478,7 @@ public class Sets {
 		return set;
 	}
 	
+	// TODO: ExHashSet
 	private static class SimpleSet<E>
 	extends HashSet<E>
 	implements ExSet<E> {

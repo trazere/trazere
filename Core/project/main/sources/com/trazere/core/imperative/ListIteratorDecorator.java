@@ -38,7 +38,7 @@ implements ExListIterator<E> {
 		super(decorated);
 	}
 	
-	// List iterator.
+	// ListIterator.
 	
 	@Override
 	public boolean hasNext() {

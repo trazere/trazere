@@ -125,7 +125,7 @@ implements ExSet<E> {
 	}
 	
 	// Comparison and hashing
-	// FIXME ?
+	// FIXME
 	
 	// Streams.
 	

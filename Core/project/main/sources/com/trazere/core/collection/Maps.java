@@ -269,7 +269,7 @@ public class Maps {
 		
 		@Override
 		public ExMap<Object, Object> unmodifiable() {
-			return this;
+			return empty();
 		}
 		
 		// PairTraversable.

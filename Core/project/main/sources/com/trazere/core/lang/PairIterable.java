@@ -63,14 +63,6 @@ extends ExIterable<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 		}
 	}
 	
-	// Iterable.
-	
-	/**
-	 * @since 2.0
-	 */
-	@Override
-	PairIterator<E1, E2> iterator();
-	
 	// ExIterable.
 	
 	/**
@@ -81,6 +73,14 @@ extends ExIterable<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	default PairIterable<E1, E2> unmodifiable() {
 		return IterableUtils.unmodifiable(this);
 	}
+	
+	// Iterable.
+	
+	/**
+	 * @since 2.0
+	 */
+	@Override
+	PairIterator<E1, E2> iterator();
 	
 	// PairTraversable.
 	

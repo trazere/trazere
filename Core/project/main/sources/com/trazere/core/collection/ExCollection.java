@@ -170,6 +170,73 @@ extends Collection<E>, ExIterable<E> {
 		return CollectionUtils.retainAll(this, filter);
 	}
 	
+	/**
+	 * Appends the given collection to this collection.
+	 * 
+	 * @param <C> Type of the result collection.
+	 * @param collection2 Second collection of the elements to append.
+	 * @param resultFactory Factory of the result collection.
+	 * @return A new collection of the appended elements.
+	 * @see CollectionUtils#append(Collection, Collection, CollectionFactory)
+	 * @since 2.0
+	 */
+	default <C extends Collection<? super E>> C append(final Collection<? extends E> collection2, final CollectionFactory<? super E, C> resultFactory) {
+		return CollectionUtils.append(this, collection2, resultFactory);
+	}
+	
+	// TODO: intersect(Collection)
+	// TODO: intersect(Collection, CollectionFactory)
+	// TODO: exclude(Collection)
+	// TODO: exclude(Collection, CollectionFactory)
+	
+	/**
+	 * Composes pairs with the elements of this collection and the given collection.
+	 * <p>
+	 * The pairs are composed of an element of each collection according to their iteration order. The extra values of the longest collection are dropped when
+	 * the given collections don't contain the same number of elements.
+	 * 
+	 * @param <E2> Type of the second elements.
+	 * @param collection2 Collection of the second elements of the pairs.
+	 * @return A collection of the pairs of elements.
+	 * @see CollectionUtils#zip(Collection, Collection)
+	 * @since 2.0
+	 */
+	default <E2> ExCollection<Tuple2<E, E2>> zip(final Collection<? extends E2> collection2) {
+		return CollectionUtils.zip(this, collection2);
+	}
+	
+	/**
+	 * Composes pairs with the elements of this collection and the given collection.
+	 * <p>
+	 * The pairs are composed of an element of each collection according to their iteration order. The extra values of the longest collection are dropped when
+	 * the given collections don't contain the same number of elements.
+	 * 
+	 * @param <E2> Type of the second elements.
+	 * @param <C> Type of the result collection.
+	 * @param collection2 Collection of the second elements of the pairs.
+	 * @param resultFactory Factory of the pair collection.
+	 * @return A new collection of the pairs of elements.
+	 * @see CollectionUtils#zip(Collection, Collection, CollectionFactory)
+	 * @since 2.0
+	 */
+	default <E2, C extends Collection<? super Tuple2<? extends E, ? extends E2>>> C zip(final Collection<? extends E2> collection2, final CollectionFactory<? super Tuple2<? extends E, ? extends E2>, C> resultFactory) {
+		return CollectionUtils.zip(this, collection2, resultFactory);
+	}
+	
+	// ExIterable.
+	
+	/**
+	 * Builds an unmodifiable view of this collection.
+	 * 
+	 * @return An unmodifiable view of this collection, or this collection when is it already unmodifiable.
+	 * @see CollectionUtils#unmodifiable(Collection)
+	 * @since 2.0
+	 */
+	@Override
+	default ExCollection<E> unmodifiable() {
+		return CollectionUtils.unmodifiable(this);
+	}
+	
 	// Traversable.
 	
 	/**
@@ -367,20 +434,6 @@ extends Collection<E>, ExIterable<E> {
 		return CollectionUtils.extractAll(this, extractor, resultFactory);
 	}
 	
-	/**
-	 * Appends the given collection to this collection.
-	 * 
-	 * @param <C> Type of the result collection.
-	 * @param collection2 Second collection of the elements to append.
-	 * @param resultFactory Factory of the result collection.
-	 * @return A new collection of the appended elements.
-	 * @see CollectionUtils#append(Collection, Collection, CollectionFactory)
-	 * @since 2.0
-	 */
-	default <C extends Collection<? super E>> C append(final Collection<? extends E> collection2, final CollectionFactory<? super E, C> resultFactory) {
-		return CollectionUtils.append(this, collection2, resultFactory);
-	}
-	
 	// Note: flatMap is not defined here because Java does not support higher order type parameters.
 	//	/**
 	//	 * Transforms and flattens the elements of this collection using the given function.
@@ -410,57 +463,4 @@ extends Collection<E>, ExIterable<E> {
 	//	default <TE, C extends Collection<? super TE>> C flatMap(final Function<? super E, ? extends Collection<? extends TE>> function, final CollectionFactory<? super TE, C> resultFactory) {
 	//		return CollectionUtils.flatMap(this, function, resultFactory);
 	//	}
-	
-	// TODO: intersect(Collection)
-	// TODO: intersect(Collection, CollectionFactory)
-	// TODO: exclude(Collection)
-	// TODO: exclude(Collection, CollectionFactory)
-	
-	/**
-	 * Composes pairs with the elements of this collection and the given collection.
-	 * <p>
-	 * The pairs are composed of an element of each collection according to their iteration order. The extra values of the longest collection are dropped when
-	 * the given collections don't contain the same number of elements.
-	 * 
-	 * @param <E2> Type of the second elements.
-	 * @param collection2 Collection of the second elements of the pairs.
-	 * @return A collection of the pairs of elements.
-	 * @see CollectionUtils#zip(Collection, Collection)
-	 * @since 2.0
-	 */
-	default <E2> ExCollection<Tuple2<E, E2>> zip(final Collection<? extends E2> collection2) {
-		return CollectionUtils.zip(this, collection2);
-	}
-	
-	/**
-	 * Composes pairs with the elements of this collection and the given collection.
-	 * <p>
-	 * The pairs are composed of an element of each collection according to their iteration order. The extra values of the longest collection are dropped when
-	 * the given collections don't contain the same number of elements.
-	 * 
-	 * @param <E2> Type of the second elements.
-	 * @param <C> Type of the result collection.
-	 * @param collection2 Collection of the second elements of the pairs.
-	 * @param resultFactory Factory of the pair collection.
-	 * @return A new collection of the pairs of elements.
-	 * @see CollectionUtils#zip(Collection, Collection, CollectionFactory)
-	 * @since 2.0
-	 */
-	default <E2, C extends Collection<? super Tuple2<? extends E, ? extends E2>>> C zip(final Collection<? extends E2> collection2, final CollectionFactory<? super Tuple2<? extends E, ? extends E2>, C> resultFactory) {
-		return CollectionUtils.zip(this, collection2, resultFactory);
-	}
-	
-	// Misc.
-	
-	/**
-	 * Builds an unmodifiable view of this collection.
-	 * 
-	 * @return An unmodifiable view of this collection, or this collection when is it already unmodifiable.
-	 * @see CollectionUtils#unmodifiable(Collection)
-	 * @since 2.0
-	 */
-	@Override
-	default ExCollection<E> unmodifiable() {
-		return CollectionUtils.unmodifiable(this);
-	}
 }

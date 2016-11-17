@@ -64,6 +64,8 @@ extends Iterable<E>, Traversable<E> {
 	@Override
 	ExIterator<E> iterator();
 	
+	// ExIterable.
+	
 	/**
 	 * Gets any element provided by this iterable.
 	 *
@@ -86,6 +88,33 @@ extends Iterable<E>, Traversable<E> {
 	 */
 	default Maybe<E> optionalAny() {
 		return IterableUtils.optionalAny(this);
+	}
+	
+	/**
+	 * Composes pairs with the elements provided by this iterable and the given iterable.
+	 * <p>
+	 * The pairs are composed of an element provided by each iterable in order. The extra values of the longest iterable are dropped when this iterables don't
+	 * provide the same number of elements.
+	 * 
+	 * @param <E2> Type of the second elements.
+	 * @param iterable2 Iterable providing the second elements of the pairs.
+	 * @return An iterable providing the pairs of elements.
+	 * @see IterableUtils#zip(Iterable, Iterable)
+	 * @since 2.0
+	 */
+	default <E2> PairIterable<E, E2> zip(final Iterable<? extends E2> iterable2) {
+		return IterableUtils.zip(this, iterable2);
+	}
+	
+	/**
+	 * Builds an unmodifiable view of this iterable.
+	 * 
+	 * @return An unmodifiable view of this iterable, or this iterable when is it already unmodifiable.
+	 * @see IterableUtils#unmodifiable(Iterable)
+	 * @since 2.0
+	 */
+	default ExIterable<E> unmodifiable() {
+		return IterableUtils.unmodifiable(this);
 	}
 	
 	// Traversable.
@@ -287,22 +316,6 @@ extends Iterable<E>, Traversable<E> {
 	//	}
 	
 	/**
-	 * Composes pairs with the elements provided by this iterable and the given iterable.
-	 * <p>
-	 * The pairs are composed of an element provided by each iterable in order. The extra values of the longest iterable are dropped when this iterables don't
-	 * provide the same number of elements.
-	 * 
-	 * @param <E2> Type of the second elements.
-	 * @param iterable2 Iterable providing the second elements of the pairs.
-	 * @return An iterable providing the pairs of elements.
-	 * @see IterableUtils#zip(Iterable, Iterable)
-	 * @since 2.0
-	 */
-	default <E2> PairIterable<E, E2> zip(final Iterable<? extends E2> iterable2) {
-		return IterableUtils.zip(this, iterable2);
-	}
-	
-	/**
 	 * Executes the given procedure with each element provided by this iterable.
 	 * 
 	 * @see IterableUtils#foreach(Iterable, Procedure)
@@ -311,18 +324,5 @@ extends Iterable<E>, Traversable<E> {
 	@Override
 	default void foreach(final Procedure<? super E> procedure) {
 		IterableUtils.foreach(this, procedure);
-	}
-	
-	// Misc.
-	
-	/**
-	 * Builds an unmodifiable view of this iterable.
-	 * 
-	 * @return An unmodifiable view of this iterable, or this iterable when is it already unmodifiable.
-	 * @see IterableUtils#unmodifiable(Iterable)
-	 * @since 2.0
-	 */
-	default ExIterable<E> unmodifiable() {
-		return IterableUtils.unmodifiable(this);
 	}
 }

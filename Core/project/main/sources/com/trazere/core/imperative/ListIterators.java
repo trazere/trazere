@@ -15,8 +15,17 @@
  */
 package com.trazere.core.imperative;
 
+import com.trazere.core.collection.CollectionFactory;
+import com.trazere.core.functional.Function;
+import com.trazere.core.functional.Function2;
+import com.trazere.core.functional.Predicate;
+import com.trazere.core.util.Maybe;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
+import java.util.function.Consumer;
 
 /**
  * The {@link ListIterators} class provides various factories of {@link ListIterator list iterators}.
@@ -38,6 +47,8 @@ public class ListIterators {
 	}
 	
 	private static final ExListIterator<?> EMPTY = new ExListIterator<Object>() {
+		// ListIterator.
+		
 		@Override
 		public boolean hasNext() {
 			return false;
@@ -46,11 +57,6 @@ public class ListIterators {
 		@Override
 		public Object next() {
 			throw new NoSuchElementException();
-		}
-		
-		@Override
-		public int nextIndex() {
-			return 0;
 		}
 		
 		@Override
@@ -64,9 +70,158 @@ public class ListIterators {
 		}
 		
 		@Override
+		public int nextIndex() {
+			return 0;
+		}
+		
+		@Override
 		public int previousIndex() {
 			return -1;
 		}
+		
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public void set(final Object e) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public void add(final Object e) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public void forEachRemaining(final Consumer<? super Object> action) {
+			// Nothing to do.
+		}
+		
+		// ExListIterator.
+		
+		@Override
+		public Maybe<Object> optionalNext() {
+			return Maybe.none();
+		}
+		
+		@Override
+		public Maybe<Object> optionalPrevious() {
+			return Maybe.none();
+		}
+		
+		@Override
+		public void drain() {
+			// Nothing to do.
+		}
+		
+		@Override
+		public <A extends Accumulator<? super Object, ?>> A drain(final A results) {
+			return results;
+		}
+		
+		@Override
+		public <C extends Collection<? super Object>> C drain(final C results) {
+			return results;
+		}
+		
+		// ExIterator.
+		
+		@Override
+		public ExListIterator<Object> unmodifiable() {
+			return empty();
+		}
+		
+		// Traversable.
+		
+		@Override
+		public <S> S fold(final Function2<? super S, ? super Object, ? extends S> operator, final S initialState) {
+			return initialState;
+		}
+		
+		@Override
+		public boolean isAny(final Predicate<? super Object> filter) {
+			return false;
+		}
+		
+		@Override
+		public boolean areAll(final Predicate<? super Object> filter) {
+			return true;
+		}
+		
+		@Override
+		public int count(final Predicate<? super Object> filter) {
+			return 0;
+		}
+		
+		@Override
+		public Maybe<Object> least(final Comparator<? super Object> comparator) {
+			return Maybe.none();
+		}
+		
+		@Override
+		public Maybe<Object> greatest(final Comparator<? super Object> comparator) {
+			return Maybe.none();
+		}
+		
+		@Override
+		public ExListIterator<Object> take(final int n) {
+			return empty();
+		}
+		
+		@Override
+		public ExListIterator<Object> drop(final int n) {
+			return empty();
+		}
+		
+		@Override
+		public <B extends Collection<? super Object>> ExListIterator<B> group(final int n, final CollectionFactory<? super Object, B> batchFactory) {
+			return empty();
+		}
+		
+		@Override
+		public ExListIterator<Object> filter(final Predicate<? super Object> filter) {
+			return empty();
+		}
+		
+		@Override
+		public Maybe<Object> filterAny(final Predicate<? super Object> filter) {
+			return Maybe.none();
+		}
+		
+		@Override
+		public <TE> ExListIterator<TE> map(final Function<? super Object, ? extends TE> function) {
+			return empty();
+		}
+		
+		@Override
+		public <EE> ExListIterator<EE> extract(final Function<? super Object, ? extends Maybe<? extends EE>> extractor) {
+			return empty();
+		}
+		
+		@Override
+		public <EE> Maybe<EE> extractAny(final Function<? super Object, ? extends Maybe<? extends EE>> extractor) {
+			return Maybe.none();
+		}
+		
+		@Override
+		public <TE> ExListIterator<TE> extractAll(final Function<? super Object, ? extends List<? extends TE>> extractor) {
+			return empty();
+		}
+		
+		@Override
+		public <TE> ExListIterator<TE> flatMap(final Function<? super Object, ? extends ListIterator<? extends TE>> extractor) {
+			return empty();
+		}
+		
+		@Override
+		public void foreach(final Procedure<? super Object> procedure) {
+			// Nothing to do.
+		}
+		
+		// Object.
+		// FIXME
 	};
 	
 	/**
