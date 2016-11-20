@@ -15,6 +15,7 @@
  */
 package com.trazere.core.collection;
 
+import com.trazere.core.design.Decorator;
 import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Function3;
@@ -38,6 +39,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.function.BiFunction;
@@ -990,7 +992,7 @@ public class MapUtils {
 		
 		@Override
 		public ExSet<Map.Entry<K, V>> entrySet() {
-			return super.entrySet().unmodifiable();
+			return super.entrySet().map(MapUtils::unmodifiable).unmodifiable();
 		}
 		
 		@Override
@@ -1147,6 +1149,49 @@ public class MapUtils {
 		
 		// TODO: extractAll
 		// TODO: flatMap
+	}
+	
+	/**
+	 * Builds an unmodifiable view of the given map entry.
+	 * 
+	 * @param <K> Type of the keys.
+	 * @param <V> Type of the values.
+	 * @param entry Map entry to wrap.
+	 * @return An unmodifiable view of the given map entry, or the given map entry when is it already unmodifiable.
+	 * @since 2.0
+	 */
+	public static <K, V> Map.Entry<K, V> unmodifiable(final Map.Entry<K, V> entry) {
+		assert null != entry;
+		
+		return entry instanceof UnmodifiableMapEntry<?, ?> ? (UnmodifiableMapEntry<K, V>) entry : new UnmodifiableMapEntry<>(entry);
+	}
+	
+	private static class UnmodifiableMapEntry<K, V>
+	extends Decorator<Map.Entry<K, V>>
+	implements Map.Entry<K, V> {
+		public UnmodifiableMapEntry(final Entry<K, V> decorated) {
+			super(decorated);
+		}
+		
+		// Map.Entry.
+		
+		@Override
+		public K getKey() {
+			return _decorated.getKey();
+		}
+		
+		@Override
+		public V getValue() {
+			return _decorated.getValue();
+		}
+		
+		@Override
+		public V setValue(final V value) {
+			throw new UnsupportedOperationException();
+		}
+		
+		// Object.
+		// TODO
 	}
 	
 	private MapUtils() {
