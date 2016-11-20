@@ -324,7 +324,7 @@ public class MapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V, S> S fold(final Map<? extends K, ? extends V> map, final Function3<? super S, ? super K, ? super V, ? extends S> operator, final S initialState) {
-		return bindings(map).fold(operator, initialState);
+		return bindings(map).fold2(operator, initialState);
 	}
 	
 	/**
@@ -338,7 +338,7 @@ public class MapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V> boolean isAny(final Map<? extends K, ? extends V> map, final Predicate2<? super K, ? super V> filter) {
-		return bindings(map).isAny(filter);
+		return bindings(map).isAny2(filter);
 	}
 	
 	/**
@@ -352,7 +352,7 @@ public class MapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V> boolean areAll(final Map<? extends K, ? extends V> map, final Predicate2<? super K, ? super V> filter) {
-		return bindings(map).areAll(filter);
+		return bindings(map).areAll2(filter);
 	}
 	
 	/**
@@ -366,7 +366,7 @@ public class MapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V> int count(final Map<? extends K, ? extends V> map, final Predicate2<? super K, ? super V> filter) {
-		return bindings(map).count(filter);
+		return bindings(map).count2(filter);
 	}
 	
 	/**
@@ -660,7 +660,7 @@ public class MapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V> Maybe<Tuple2<K, V>> filterAny(final Map<? extends K, ? extends V> map, final Predicate2<? super K, ? super V> filter) {
-		return MapUtils.<K, V>bindings(map).filterAny(filter);
+		return MapUtils.<K, V>bindings(map).filterAny2(filter);
 	}
 	
 	/**
@@ -932,7 +932,7 @@ public class MapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V> void foreach(final Map<? extends K, ? extends V> map, final Procedure2<? super K, ? super V> procedure) {
-		bindings(map).foreach(procedure);
+		bindings(map).foreach2(procedure);
 	}
 	
 	/**
@@ -1093,23 +1093,23 @@ public class MapUtils {
 		// PairTraversable.
 		
 		@Override
-		public ExMap<K, V> filter(final Predicate2<? super K, ? super V> filter) {
-			return super.filter(filter).unmodifiable();
+		public ExMap<K, V> filter2(final Predicate2<? super K, ? super V> filter) {
+			return super.filter2(filter).unmodifiable();
 		}
 		
 		@Override
-		public <TE> ExCollection<TE> map(final Function2<? super K, ? super V, ? extends TE> function) {
-			return super.<TE>map(function).unmodifiable();
+		public <TE> ExCollection<TE> map2(final Function2<? super K, ? super V, ? extends TE> function) {
+			return super.<TE>map2(function).unmodifiable();
 		}
 		
 		// TODO: mapValues
 		
 		@Override
-		public <EE> ExCollection<EE> extract(final Function2<? super K, ? super V, ? extends Maybe<? extends EE>> extractor) {
-			return super.<EE>extract(extractor).unmodifiable();
+		public <EE> ExCollection<EE> extract2(final Function2<? super K, ? super V, ? extends Maybe<? extends EE>> extractor) {
+			return super.<EE>extract2(extractor).unmodifiable();
 		}
 		
-		// TODO: extractAll to Multimap ?
+		// TODO: extractAll2 to Multimap ?
 		
 		// Traversable.
 		

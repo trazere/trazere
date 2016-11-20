@@ -359,6 +359,7 @@ extends ListIterator<E>, Traversable<E> {
 	 * @see ListIteratorUtils#extractAll(ListIterator, Function)
 	 * @since 2.0
 	 */
+	// TODO: rename ? extractMany ? extractN ? extractMultiple ?
 	default <EE> ExListIterator<EE> extractAll(final Function<? super E, ? extends List<? extends EE>> extractor) {
 		return ListIteratorUtils.extractAll(this, extractor);
 	}

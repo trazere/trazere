@@ -323,6 +323,7 @@ extends Iterator<E>, Traversable<E> {
 	 * @see IteratorUtils#extractAll(Iterator, Function)
 	 * @since 2.0
 	 */
+	// TODO: rename ? extractMany ? extractN ? extractMultiple ?
 	default <EE> ExIterator<EE> extractAll(final Function<? super E, ? extends Iterable<? extends EE>> extractor) {
 		return IteratorUtils.extractAll(this, extractor);
 	}

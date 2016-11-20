@@ -333,6 +333,8 @@ public class SetUtils {
 		};
 	}
 	
+	// TODO: unzip
+	
 	/**
 	 * Builds an unmodifiable view of the given set.
 	 * 

@@ -293,7 +293,7 @@ extends Map<K, V>, PairTraversable<K, V> {
 	 * @since 2.0
 	 */
 	@Override
-	default <S> S fold(final Function3<? super S, ? super K, ? super V, ? extends S> operator, final S initialState) {
+	default <S> S fold2(final Function3<? super S, ? super K, ? super V, ? extends S> operator, final S initialState) {
 		return MapUtils.fold(this, operator, initialState);
 	}
 	
@@ -306,7 +306,7 @@ extends Map<K, V>, PairTraversable<K, V> {
 	 * @since 2.0
 	 */
 	@Override
-	default boolean isAny(final Predicate2<? super K, ? super V> filter) {
+	default boolean isAny2(final Predicate2<? super K, ? super V> filter) {
 		return MapUtils.isAny(this, filter);
 	}
 	
@@ -319,7 +319,7 @@ extends Map<K, V>, PairTraversable<K, V> {
 	 * @since 2.0
 	 */
 	@Override
-	default boolean areAll(final Predicate2<? super K, ? super V> filter) {
+	default boolean areAll2(final Predicate2<? super K, ? super V> filter) {
 		return MapUtils.areAll(this, filter);
 	}
 	
@@ -332,7 +332,7 @@ extends Map<K, V>, PairTraversable<K, V> {
 	 * @since 2.0
 	 */
 	@Override
-	default int count(final Predicate2<? super K, ? super V> filter) {
+	default int count2(final Predicate2<? super K, ? super V> filter) {
 		return MapUtils.count(this, filter);
 	}
 	
@@ -345,7 +345,7 @@ extends Map<K, V>, PairTraversable<K, V> {
 	 * @since 2.0
 	 */
 	@Override
-	default ExMap<K, V> filter(final Predicate2<? super K, ? super V> filter) {
+	default ExMap<K, V> filter2(final Predicate2<? super K, ? super V> filter) {
 		return MapUtils.filter(this, filter);
 	}
 	
@@ -359,7 +359,7 @@ extends Map<K, V>, PairTraversable<K, V> {
 	 * @see MapUtils#filter(Map, Predicate2, MapFactory)
 	 * @since 2.0
 	 */
-	default <M extends Map<? super K, ? super V>> M filter(final Predicate2<? super K, ? super V> filter, final MapFactory<? super K, ? super V, M> resultFactory) {
+	default <M extends Map<? super K, ? super V>> M filter2(final Predicate2<? super K, ? super V> filter, final MapFactory<? super K, ? super V, M> resultFactory) {
 		return MapUtils.filter(this, filter, resultFactory);
 	}
 	
@@ -372,7 +372,7 @@ extends Map<K, V>, PairTraversable<K, V> {
 	 * @since 2.0
 	 */
 	@Override
-	default Maybe<Tuple2<K, V>> filterAny(final Predicate2<? super K, ? super V> filter) {
+	default Maybe<Tuple2<K, V>> filterAny2(final Predicate2<? super K, ? super V> filter) {
 		return MapUtils.filterAny(this, filter);
 	}
 	
@@ -386,7 +386,7 @@ extends Map<K, V>, PairTraversable<K, V> {
 	 * @since 2.0
 	 */
 	@Override
-	default <TE> ExCollection<TE> map(final Function2<? super K, ? super V, ? extends TE> function) {
+	default <TE> ExCollection<TE> map2(final Function2<? super K, ? super V, ? extends TE> function) {
 		return MapUtils.map(this, function);
 	}
 	
@@ -401,7 +401,7 @@ extends Map<K, V>, PairTraversable<K, V> {
 	 * @see MapUtils#map(Map, Function2, CollectionFactory)
 	 * @since 2.0
 	 */
-	default <TE, C extends Collection<? super TE>> C map(final Function2<? super K, ? super V, ? extends TE> function, final CollectionFactory<? super TE, C> resultFactory) {
+	default <TE, C extends Collection<? super TE>> C map2(final Function2<? super K, ? super V, ? extends TE> function, final CollectionFactory<? super TE, C> resultFactory) {
 		return MapUtils.map(this, function, resultFactory);
 	}
 	
@@ -418,7 +418,7 @@ extends Map<K, V>, PairTraversable<K, V> {
 	 * @since 2.0
 	 */
 	@Override
-	default <EE> ExCollection<EE> extract(final Function2<? super K, ? super V, ? extends Maybe<? extends EE>> extractor) {
+	default <EE> ExCollection<EE> extract2(final Function2<? super K, ? super V, ? extends Maybe<? extends EE>> extractor) {
 		return MapUtils.extract(this, extractor);
 	}
 	
@@ -433,7 +433,7 @@ extends Map<K, V>, PairTraversable<K, V> {
 	 * @see MapUtils#extract(Map, Function2, CollectionFactory)
 	 * @since 2.0
 	 */
-	default <EE, C extends Collection<? super EE>> C extract(final Function2<? super K, ? super V, ? extends Maybe<? extends EE>> extractor, final CollectionFactory<? super EE, C> resultFactory) {
+	default <EE, C extends Collection<? super EE>> C extract2(final Function2<? super K, ? super V, ? extends Maybe<? extends EE>> extractor, final CollectionFactory<? super EE, C> resultFactory) {
 		return MapUtils.extract(this, extractor, resultFactory);
 	}
 	
@@ -447,11 +447,11 @@ extends Map<K, V>, PairTraversable<K, V> {
 	 * @since 2.0
 	 */
 	@Override
-	default <EE> Maybe<EE> extractAny(final Function2<? super K, ? super V, ? extends Maybe<? extends EE>> extractor) {
+	default <EE> Maybe<EE> extractAny2(final Function2<? super K, ? super V, ? extends Maybe<? extends EE>> extractor) {
 		return MapUtils.extractAny(this, extractor);
 	}
 	
-	// TODO: extractAll to Multimap ?
+	// TODO: extractAll2 to Multimap ?
 	
 	/**
 	 * Appends this map and the given map together.
@@ -492,7 +492,7 @@ extends Map<K, V>, PairTraversable<K, V> {
 	 * @since 2.0
 	 */
 	@Override
-	default void foreach(final Procedure2<? super K, ? super V> procedure) {
+	default void foreach2(final Procedure2<? super K, ? super V> procedure) {
 		MapUtils.foreach(this, procedure);
 	}
 	

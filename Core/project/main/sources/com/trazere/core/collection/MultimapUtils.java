@@ -166,7 +166,7 @@ public class MultimapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V, S> S fold(final Multimap<? extends K, ? extends V, ?> multimap, final Function3<? super S, ? super K, ? super V, ? extends S> operator, final S initialState) {
-		return bindings(multimap).fold(operator, initialState);
+		return bindings(multimap).fold2(operator, initialState);
 	}
 	
 	/**
@@ -180,7 +180,7 @@ public class MultimapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V> boolean isAny(final Multimap<? extends K, ? extends V, ?> multimap, final Predicate2<? super K, ? super V> filter) {
-		return bindings(multimap).isAny(filter);
+		return bindings(multimap).isAny2(filter);
 	}
 	
 	/**
@@ -194,7 +194,7 @@ public class MultimapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V> boolean areAll(final Multimap<? extends K, ? extends V, ?> multimap, final Predicate2<? super K, ? super V> filter) {
-		return bindings(multimap).areAll(filter);
+		return bindings(multimap).areAll2(filter);
 	}
 	
 	/**
@@ -208,7 +208,7 @@ public class MultimapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V> int count(final Multimap<? extends K, ? extends V, ?> multimap, final Predicate2<? super K, ? super V> filter) {
-		return bindings(multimap).count(filter);
+		return bindings(multimap).count2(filter);
 	}
 	
 	/**
@@ -337,7 +337,7 @@ public class MultimapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V> Maybe<Tuple2<K, V>> filterAny(final Multimap<? extends K, ? extends V, ?> multimap, final Predicate2<? super K, ? super V> filter) {
-		return MultimapUtils.<K, V>bindings(multimap).filterAny(filter);
+		return MultimapUtils.<K, V>bindings(multimap).filterAny2(filter);
 	}
 	
 	/**
@@ -407,7 +407,7 @@ public class MultimapUtils {
 	 * @since 2.0
 	 */
 	public static <K, V> void foreach(final Multimap<? extends K, ? extends V, ?> multimap, final Procedure2<? super K, ? super V> procedure) {
-		bindings(multimap).foreach(procedure);
+		bindings(multimap).foreach2(procedure);
 	}
 	
 	/**

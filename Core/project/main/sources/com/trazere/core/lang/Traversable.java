@@ -182,7 +182,7 @@ public interface Traversable<E> {
 	 */
 	<EE> Maybe<EE> extractAny(Function<? super E, ? extends Maybe<? extends EE>> extractor);
 	
-	// Note: flatMap is not defined here because Java does not support higher order type parameters.
+	// Note: extractAll is not defined here because Java does not support higher order type parameters.
 	// TODO: rename ? extractMany ? extractN ? extractMultiple ?
 	//	/**
 	//	 * Gets all elements extracted from the elements of this traversable using the given extractor.

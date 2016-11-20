@@ -148,7 +148,7 @@ public class FunctionUtils {
 	 * @param bindings The bindings to test.
 	 * @return <code>true</code> if any binding is accepted, <code>false</code> if all bindings are rejected.
 	 * @throws X When some predicate evaluation fails.
-	 * @deprecated Use {@link com.trazere.core.collection.ExMap#isAny(com.trazere.core.functional.Predicate2)} or
+	 * @deprecated Use {@link com.trazere.core.collection.ExMap#isAny2(com.trazere.core.functional.Predicate2)} or
 	 *             {@link com.trazere.core.collection.MapUtils#isAny(Map, com.trazere.core.functional.Predicate2)}. (since 2.0)
 	 */
 	@Deprecated
@@ -299,7 +299,7 @@ public class FunctionUtils {
 	 * @param bindings The bindings to test.
 	 * @return <code>true</code> if all bindings are accepted, <code>false</code> if any binding is rejected.
 	 * @throws X When some predicate evaluation fails.
-	 * @deprecated Use {@link com.trazere.core.collection.ExMap#areAll(com.trazere.core.functional.Predicate2)} or
+	 * @deprecated Use {@link com.trazere.core.collection.ExMap#areAll2(com.trazere.core.functional.Predicate2)} or
 	 *             {@link com.trazere.core.collection.MapUtils#areAll(Map, com.trazere.core.functional.Predicate2)}. (since 2.0)
 	 */
 	@Deprecated
@@ -451,7 +451,7 @@ public class FunctionUtils {
 	 * @param bindings The bindings.
 	 * @return The first accepted binding.
 	 * @throws X When some predicate evaluation fails.
-	 * @deprecated Use {@link com.trazere.core.collection.ExMap#filterAny(com.trazere.core.functional.Predicate2)} or
+	 * @deprecated Use {@link com.trazere.core.collection.ExMap#filterAny2(com.trazere.core.functional.Predicate2)} or
 	 *             {@link com.trazere.core.collection.MapUtils#filterAny(Map, com.trazere.core.functional.Predicate2)}. (since 2.0)
 	 */
 	@Deprecated
@@ -793,7 +793,7 @@ public class FunctionUtils {
 	 * @param bindings The bindings to count.
 	 * @return The number of accepted bindings.
 	 * @throws X When some predicate evaluation fails.
-	 * @deprecated Use {@link com.trazere.core.collection.ExMap#count(com.trazere.core.functional.Predicate2)} or
+	 * @deprecated Use {@link com.trazere.core.collection.ExMap#count2(com.trazere.core.functional.Predicate2)} or
 	 *             {@link com.trazere.core.collection.MapUtils#count(Map, com.trazere.core.functional.Predicate2)}. (since 2.0)
 	 */
 	@Deprecated
@@ -913,7 +913,7 @@ public class FunctionUtils {
 	 * @param results The map to populate with the accepted bindings.
 	 * @return The given result map.
 	 * @throws X When some predicate evaluation fails.
-	 * @deprecated Use {@link com.trazere.core.collection.ExMap#filter(com.trazere.core.functional.Predicate2)} or
+	 * @deprecated Use {@link com.trazere.core.collection.ExMap#filter2(com.trazere.core.functional.Predicate2)} or
 	 *             {@link com.trazere.core.collection.MapUtils#filter(Map, com.trazere.core.functional.Predicate2, com.trazere.core.collection.MapFactory)}.
 	 *             (since 2.0)
 	 */
@@ -939,7 +939,7 @@ public class FunctionUtils {
 	 * @return The given accumulator.
 	 * @throws PX When some predicate evaluation fails.
 	 * @throws AX When some accumulation fails.
-	 * @deprecated Use {@link com.trazere.core.collection.ExMap#filter(com.trazere.core.functional.Predicate2)} or
+	 * @deprecated Use {@link com.trazere.core.collection.ExMap#filter2(com.trazere.core.functional.Predicate2)} or
 	 *             {@link com.trazere.core.collection.MapUtils#filter(Map, com.trazere.core.functional.Predicate2, com.trazere.core.collection.MapFactory)}, and
 	 *             {@link com.trazere.core.imperative.Accumulator2#addAll(Iterable)}. (since 2.0)
 	 */
@@ -1042,7 +1042,7 @@ public class FunctionUtils {
 	 * @param results The set to populate with the keys of the accepted bindings.
 	 * @return The given result set.
 	 * @throws X When some predicate evaluation fails.
-	 * @deprecated Use {@link com.trazere.core.collection.ExMap#filter(com.trazere.core.functional.Predicate2)} or
+	 * @deprecated Use {@link com.trazere.core.collection.ExMap#filter2(com.trazere.core.functional.Predicate2)} or
 	 *             {@link com.trazere.core.collection.MapUtils#filter(Map, com.trazere.core.functional.Predicate2, com.trazere.core.collection.MapFactory)} and
 	 *             {@link Map#keySet()}. (since 2.0)
 	 */
@@ -1078,7 +1078,7 @@ public class FunctionUtils {
 	 * @param results The collection to populate with the results.
 	 * @return The given result collection.
 	 * @throws X When some predicate evaluation fails.
-	 * @deprecated Use {@link com.trazere.core.collection.ExMap#filter(com.trazere.core.functional.Predicate2)} or
+	 * @deprecated Use {@link com.trazere.core.collection.ExMap#filter2(com.trazere.core.functional.Predicate2)} or
 	 *             {@link com.trazere.core.collection.MapUtils#filter(Map, com.trazere.core.functional.Predicate2, com.trazere.core.collection.MapFactory)} and
 	 *             {@link Map#values()}. (since 2.0)
 	 */
@@ -1231,7 +1231,7 @@ public class FunctionUtils {
 	 * @param results The map to populate with the result bindings.
 	 * @return The given result map.
 	 * @throws X When some function evaluation fails.
-	 * @deprecated Use {@link com.trazere.core.collection.ExMap#map(com.trazere.core.functional.Function2, com.trazere.core.collection.CollectionFactory)} or
+	 * @deprecated Use {@link com.trazere.core.collection.ExMap#map2(com.trazere.core.functional.Function2, com.trazere.core.collection.CollectionFactory)} or
 	 *             {@link com.trazere.core.collection.MapUtils#map(Map, com.trazere.core.functional.Function2, com.trazere.core.collection.CollectionFactory)}.
 	 *             (since 2.0)
 	 */
@@ -1259,7 +1259,7 @@ public class FunctionUtils {
 	 * @return The given accumulator.
 	 * @throws FX When some function evaluation fails.
 	 * @throws AX When some accumulation fails.
-	 * @deprecated Use {@link com.trazere.core.collection.ExMap#map(com.trazere.core.functional.Function2)} or
+	 * @deprecated Use {@link com.trazere.core.collection.ExMap#map2(com.trazere.core.functional.Function2)} or
 	 *             {@link com.trazere.core.collection.MapUtils#map(Map, com.trazere.core.functional.Function2)}, and
 	 *             {@link com.trazere.core.imperative.Accumulator2#addAll(Iterable)}. (since 2.0)
 	 */
@@ -1481,7 +1481,7 @@ public class FunctionUtils {
 	 * @param results The map to populate with the result bindings.
 	 * @return The given result map.
 	 * @throws X When some extractor evaluation fails.
-	 * @deprecated Use {@link ExMap#extract(com.trazere.core.functional.Function2, com.trazere.core.collection.CollectionFactory)} or
+	 * @deprecated Use {@link ExMap#extract2(com.trazere.core.functional.Function2, com.trazere.core.collection.CollectionFactory)} or
 	 *             {@link com.trazere.core.collection.MapUtils#extract(Map, com.trazere.core.functional.Function2, com.trazere.core.collection.CollectionFactory)}.
 	 *             (since 2.0)
 	 */
@@ -1535,7 +1535,7 @@ public class FunctionUtils {
 	 * @return The given accumulator.
 	 * @throws EX When some extractor evaluation fails.
 	 * @throws AX When some accumulation fails.
-	 * @deprecated Use {@link ExMap#extract(com.trazere.core.functional.Function2)} or
+	 * @deprecated Use {@link ExMap#extract2(com.trazere.core.functional.Function2)} or
 	 *             {@link com.trazere.core.collection.MapUtils#extract(Map, com.trazere.core.functional.Function2)} and
 	 *             {@link com.trazere.core.imperative.Accumulator2#addAll(Iterable)}. (since 2.0)
 	 */
@@ -2131,7 +2131,7 @@ public class FunctionUtils {
 	 * @param procedure The procedure.
 	 * @param bindings The argument bindings.
 	 * @throws X When some procedure execution fails.
-	 * @deprecated Use {@link com.trazere.core.collection.ExMap#foreach(com.trazere.core.imperative.Procedure2)} or
+	 * @deprecated Use {@link com.trazere.core.collection.ExMap#foreach2(com.trazere.core.imperative.Procedure2)} or
 	 *             {@link com.trazere.core.collection.MapUtils#foreach(Map, com.trazere.core.imperative.Procedure2)}. (since 2.0)
 	 */
 	@Deprecated

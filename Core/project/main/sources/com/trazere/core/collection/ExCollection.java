@@ -430,6 +430,7 @@ extends Collection<E>, ExIterable<E> {
 	 * @see CollectionUtils#extractAll(Collection, Function, CollectionFactory)
 	 * @since 2.0
 	 */
+	// TODO: rename ? extractMany ? extractN ? extractMultiple ?
 	default <EE, C extends Collection<? super EE>> C extractAll(final Function<? super E, ? extends Iterable<? extends EE>> extractor, final CollectionFactory<? super EE, C> resultFactory) {
 		return CollectionUtils.extractAll(this, extractor, resultFactory);
 	}

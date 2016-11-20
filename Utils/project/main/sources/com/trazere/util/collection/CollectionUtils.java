@@ -863,7 +863,7 @@ public class CollectionUtils {
 	 * @param keys The keys of the bindings.
 	 * @param results The map to populate with the results.
 	 * @return The given result map.
-	 * @deprecated Use {@link com.trazere.core.collection.ExMap#filter(com.trazere.core.functional.Predicate2, com.trazere.core.collection.MapFactory)} or
+	 * @deprecated Use {@link com.trazere.core.collection.ExMap#filter2(com.trazere.core.functional.Predicate2, com.trazere.core.collection.MapFactory)} or
 	 *             {@link com.trazere.core.collection.MapUtils#filter(Map, com.trazere.core.functional.Predicate2, com.trazere.core.collection.MapFactory)}.
 	 */
 	@Deprecated
@@ -893,7 +893,7 @@ public class CollectionUtils {
 	 * @param keys The keys of the bindings.
 	 * @param results The map to populate with the results.
 	 * @return The given result map.
-	 * @deprecated Use {@link com.trazere.core.collection.ExMap#filter(com.trazere.core.functional.Predicate2, com.trazere.core.collection.MapFactory)} or
+	 * @deprecated Use {@link com.trazere.core.collection.ExMap#filter2(com.trazere.core.functional.Predicate2, com.trazere.core.collection.MapFactory)} or
 	 *             {@link com.trazere.core.collection.MapUtils#filter(Map, com.trazere.core.functional.Predicate2, com.trazere.core.collection.MapFactory)}.
 	 */
 	@Deprecated

@@ -55,17 +55,17 @@ public class PairIterators {
 		// PairIterator.
 		
 		@Override
-		public <A extends Accumulator2<? super Object, ? super Object, ?>> A drain(final A results) {
+		public <A extends Accumulator2<? super Object, ? super Object, ?>> A drain2(final A results) {
 			return results;
 		}
 		
 		@Override
-		public <M extends Map<? super Object, ? super Object>> M drain(final M results) {
+		public <M extends Map<? super Object, ? super Object>> M drain2(final M results) {
 			return results;
 		}
 		
 		@Override
-		public <M extends Multimap<? super Object, ? super Object, ?>> M drain(final M results) {
+		public <M extends Multimap<? super Object, ? super Object, ?>> M drain2(final M results) {
 			return results;
 		}
 		
@@ -126,62 +126,62 @@ public class PairIterators {
 		// PairTraversable.
 		
 		@Override
-		public <S> S fold(final Function3<? super S, ? super Object, ? super Object, ? extends S> operator, final S initialState) {
+		public <S> S fold2(final Function3<? super S, ? super Object, ? super Object, ? extends S> operator, final S initialState) {
 			return initialState;
 		}
 		
 		@Override
-		public boolean isAny(final Predicate2<? super Object, ? super Object> filter) {
+		public boolean isAny2(final Predicate2<? super Object, ? super Object> filter) {
 			return false;
 		}
 		
 		@Override
-		public boolean areAll(final Predicate2<? super Object, ? super Object> filter) {
+		public boolean areAll2(final Predicate2<? super Object, ? super Object> filter) {
 			return true;
 		}
 		
 		@Override
-		public int count(final Predicate2<? super Object, ? super Object> filter) {
+		public int count2(final Predicate2<? super Object, ? super Object> filter) {
 			return 0;
 		}
 		
 		@Override
-		public PairIterator<Object, Object> filter(final Predicate2<? super Object, ? super Object> filter) {
+		public PairIterator<Object, Object> filter2(final Predicate2<? super Object, ? super Object> filter) {
 			return empty();
 		}
 		
 		@Override
-		public Maybe<Tuple2<Object, Object>> filterAny(final Predicate2<? super Object, ? super Object> filter) {
+		public Maybe<Tuple2<Object, Object>> filterAny2(final Predicate2<? super Object, ? super Object> filter) {
 			return Maybe.none();
 		}
 		
 		@Override
-		public <TE> ExIterator<TE> map(final Function2<? super Object, ? super Object, ? extends TE> function) {
+		public <TE> ExIterator<TE> map2(final Function2<? super Object, ? super Object, ? extends TE> function) {
 			return Iterators.empty();
 		}
 		
 		@Override
-		public <EE> ExIterator<EE> extract(final Function2<? super Object, ? super Object, ? extends Maybe<? extends EE>> extractor) {
+		public <EE> ExIterator<EE> extract2(final Function2<? super Object, ? super Object, ? extends Maybe<? extends EE>> extractor) {
 			return Iterators.empty();
 		}
 		
 		@Override
-		public <EE> Maybe<EE> extractAny(final Function2<? super Object, ? super Object, ? extends Maybe<? extends EE>> extractor) {
+		public <EE> Maybe<EE> extractAny2(final Function2<? super Object, ? super Object, ? extends Maybe<? extends EE>> extractor) {
 			return Maybe.none();
 		}
 		
 		@Override
-		public <EE> ExIterator<EE> extractAll(final Function2<? super Object, ? super Object, ? extends Iterable<? extends EE>> extractor) {
+		public <EE> ExIterator<EE> extractAll2(final Function2<? super Object, ? super Object, ? extends Iterable<? extends EE>> extractor) {
 			return Iterators.empty();
 		}
 		
 		@Override
-		public <TE> ExIterator<TE> flatMap(final Function2<? super Object, ? super Object, ? extends java.util.Iterator<? extends TE>> function) {
+		public <TE> ExIterator<TE> flatMap2(final Function2<? super Object, ? super Object, ? extends java.util.Iterator<? extends TE>> function) {
 			return Iterators.empty();
 		}
 		
 		@Override
-		public void foreach(final Procedure2<? super Object, ? super Object> procedure) {
+		public void foreach2(final Procedure2<? super Object, ? super Object> procedure) {
 			// Nothing to do.
 		}
 		

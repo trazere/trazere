@@ -24,6 +24,7 @@ import com.trazere.core.functional.Predicate2;
 import com.trazere.core.imperative.PairIterator;
 import com.trazere.core.imperative.PairIterators;
 import com.trazere.core.imperative.Procedure;
+import com.trazere.core.imperative.Procedure2;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 import java.util.Collection;
@@ -97,59 +98,59 @@ public class PairIterables {
 		// PairTraversable.
 		
 		@Override
-		public <S> S fold(final Function3<? super S, ? super Object, ? super Object, ? extends S> operator, final S initialState) {
+		public <S> S fold2(final Function3<? super S, ? super Object, ? super Object, ? extends S> operator, final S initialState) {
 			return initialState;
 		}
 		
 		@Override
-		public boolean isAny(final Predicate2<? super Object, ? super Object> filter) {
+		public boolean isAny2(final Predicate2<? super Object, ? super Object> filter) {
 			return false;
 		}
 		
 		@Override
-		public boolean areAll(final Predicate2<? super Object, ? super Object> filter) {
+		public boolean areAll2(final Predicate2<? super Object, ? super Object> filter) {
 			return true;
 		}
 		
 		@Override
-		public int count(final Predicate2<? super Object, ? super Object> filter) {
+		public int count2(final Predicate2<? super Object, ? super Object> filter) {
 			return 0;
 		}
 		
 		@Override
-		public PairIterable<Object, Object> filter(final Predicate2<? super Object, ? super Object> filter) {
+		public PairIterable<Object, Object> filter2(final Predicate2<? super Object, ? super Object> filter) {
 			return empty();
 		}
 		
 		@Override
-		public Maybe<Tuple2<Object, Object>> filterAny(final Predicate2<? super Object, ? super Object> filter) {
+		public Maybe<Tuple2<Object, Object>> filterAny2(final Predicate2<? super Object, ? super Object> filter) {
 			return Maybe.none();
 		}
 		
 		@Override
-		public <TE> ExIterable<TE> map(final Function2<? super Object, ? super Object, ? extends TE> function) {
+		public <TE> ExIterable<TE> map2(final Function2<? super Object, ? super Object, ? extends TE> function) {
 			return Iterables.empty();
 		}
 		
 		@Override
-		public <EE> ExIterable<EE> extract(final Function2<? super Object, ? super Object, ? extends Maybe<? extends EE>> extractor) {
+		public <EE> ExIterable<EE> extract2(final Function2<? super Object, ? super Object, ? extends Maybe<? extends EE>> extractor) {
 			return Iterables.empty();
 		}
 		
 		@Override
-		public <EE> Maybe<EE> extractAny(final Function2<? super Object, ? super Object, ? extends Maybe<? extends EE>> extractor) {
+		public <EE> Maybe<EE> extractAny2(final Function2<? super Object, ? super Object, ? extends Maybe<? extends EE>> extractor) {
 			return Maybe.none();
 		}
 		
 		@Override
-		public <EE> ExIterable<EE> extractAll(final Function2<? super Object, ? super Object, ? extends Iterable<? extends EE>> extractor) {
+		public <EE> ExIterable<EE> extractAll2(final Function2<? super Object, ? super Object, ? extends Iterable<? extends EE>> extractor) {
 			return Iterables.empty();
 		}
 		
-		// Note: flatMap is not defined here because Java does not support higher order type parameters.
+		// Note: flatMap2 is not defined here because Java does not support higher order type parameters.
 		
 		@Override
-		public void foreach(final com.trazere.core.imperative.Procedure2<? super Object, ? super Object> procedure) {
+		public void foreach2(final Procedure2<? super Object, ? super Object> procedure) {
 			// Nothing to do.
 		}
 		

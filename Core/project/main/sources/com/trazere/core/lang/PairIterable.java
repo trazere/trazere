@@ -89,57 +89,57 @@ extends ExIterable<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	 * <p>
 	 * The pairs of elements are folded according their iteration order.
 	 * 
-	 * @see IterableUtils#fold(Iterable, Function3, Object)
+	 * @see IterableUtils#fold2(Iterable, Function3, Object)
 	 * @since 2.0
 	 */
 	@Override
-	default <S> S fold(final Function3<? super S, ? super E1, ? super E2, ? extends S> operator, final S initialState) {
-		return IterableUtils.fold(this, operator, initialState);
+	default <S> S fold2(final Function3<? super S, ? super E1, ? super E2, ? extends S> operator, final S initialState) {
+		return IterableUtils.fold2(this, operator, initialState);
 	}
 	
 	/**
 	 * Tests whether any pair of elements provided by this iterable is accepted by the given filter.
 	 * 
-	 * @see IterableUtils#isAny(Iterable, Predicate2)
+	 * @see IterableUtils#isAny2(Iterable, Predicate2)
 	 * @since 2.0
 	 */
 	@Override
-	default boolean isAny(final Predicate2<? super E1, ? super E2> filter) {
-		return IterableUtils.isAny(this, filter);
+	default boolean isAny2(final Predicate2<? super E1, ? super E2> filter) {
+		return IterableUtils.isAny2(this, filter);
 	}
 	
 	/**
 	 * Tests whether all pairs of elements provided by this iterable are accepted by the given filter.
 	 * 
-	 * @see IterableUtils#areAll(Iterable, Predicate2)
+	 * @see IterableUtils#areAll2(Iterable, Predicate2)
 	 * @since 2.0
 	 */
 	@Override
-	default boolean areAll(final Predicate2<? super E1, ? super E2> filter) {
-		return IterableUtils.areAll(this, filter);
+	default boolean areAll2(final Predicate2<? super E1, ? super E2> filter) {
+		return IterableUtils.areAll2(this, filter);
 	}
 	
 	/**
 	 * Counts the pairs of elements provided by this iterable accepted by the given filter.
 	 * 
-	 * @see IterableUtils#count(Iterable, Predicate2)
+	 * @see IterableUtils#count2(Iterable, Predicate2)
 	 * @since 2.0
 	 */
 	@Override
-	default int count(final Predicate2<? super E1, ? super E2> filter) {
-		return IterableUtils.count(this, filter);
+	default int count2(final Predicate2<? super E1, ? super E2> filter) {
+		return IterableUtils.count2(this, filter);
 	}
 	
 	/**
 	 * Filters the pairs of elements provided by this iterable using the given filter.
 	 *
 	 * @return An iterable providing the filtered pairs of elements.
-	 * @see IterableUtils#filter(Iterable, Predicate2)
+	 * @see IterableUtils#filter2(Iterable, Predicate2)
 	 * @since 2.0
 	 */
 	@Override
-	default PairIterable<E1, E2> filter(final Predicate2<? super E1, ? super E2> filter) {
-		return IterableUtils.filter(this, filter);
+	default PairIterable<E1, E2> filter2(final Predicate2<? super E1, ? super E2> filter) {
+		return IterableUtils.filter2(this, filter);
 	}
 	
 	/**
@@ -147,47 +147,47 @@ extends ExIterable<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	 * <p>
 	 * The elements are filtered according to their iteration order.
 	 * 
-	 * @see IterableUtils#filterAny(Iterable, Predicate2)
+	 * @see IterableUtils#filterAny2(Iterable, Predicate2)
 	 * @since 2.0
 	 */
 	@Override
-	default Maybe<Tuple2<E1, E2>> filterAny(final Predicate2<? super E1, ? super E2> filter) {
-		return IterableUtils.filterAny(this, filter);
+	default Maybe<Tuple2<E1, E2>> filterAny2(final Predicate2<? super E1, ? super E2> filter) {
+		return IterableUtils.filterAny2(this, filter);
 	}
 	
 	/**
 	 * Transforms the pairs of elements provided by this iterable using the given function.
 	 *
 	 * @return An iterable providing the transformed elements.
-	 * @see IterableUtils#map(Iterable, Function2)
+	 * @see IterableUtils#map2(Iterable, Function2)
 	 * @since 2.0
 	 */
 	@Override
-	default <TE> ExIterable<TE> map(final Function2<? super E1, ? super E2, ? extends TE> function) {
-		return IterableUtils.map(this, function);
+	default <TE> ExIterable<TE> map2(final Function2<? super E1, ? super E2, ? extends TE> function) {
+		return IterableUtils.map2(this, function);
 	}
 	
 	/**
 	 * Extracts the pairs of elements provided by this iterable using the given extractor.
 	 *
 	 * @return An iterable providing the extracted elements.
-	 * @see IterableUtils#extract(Iterable, Function2)
+	 * @see IterableUtils#extract2(Iterable, Function2)
 	 * @since 2.0
 	 */
 	@Override
-	default <EE> ExIterable<EE> extract(final Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor) {
-		return IterableUtils.extract(this, extractor);
+	default <EE> ExIterable<EE> extract2(final Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor) {
+		return IterableUtils.extract2(this, extractor);
 	}
 	
 	/**
 	 * Gets the element extracted from any pair of elements provided by this iterable by the given extractor.
 	 * 
-	 * @see IterableUtils#extractAny(Iterable, Function2)
+	 * @see IterableUtils#extractAny2(Iterable, Function2)
 	 * @since 2.0
 	 */
 	@Override
-	default <EE> Maybe<EE> extractAny(final Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor) {
-		return IterableUtils.extractAny(this, extractor);
+	default <EE> Maybe<EE> extractAny2(final Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor) {
+		return IterableUtils.extractAny2(this, extractor);
 	}
 	
 	/**
@@ -196,36 +196,37 @@ extends ExIterable<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	 * @param <EE> Type of the extracted elements.
 	 * @param extractor Function to use to extract from the pairs of elements.
 	 * @return An iterable of the extracted elements.
-	 * @see IterableUtils#extractAll(Iterable, Function2)
+	 * @see IterableUtils#extractAll2(Iterable, Function2)
 	 * @since 2.0
 	 */
-	default <EE> ExIterable<EE> extractAll(final Function2<? super E1, ? super E2, ? extends Iterable<? extends EE>> extractor) {
-		return IterableUtils.extractAll(this, extractor);
+	// TODO: rename ? extractMany2 ? extractN2 ? extractMultiple2 ?
+	default <EE> ExIterable<EE> extractAll2(final Function2<? super E1, ? super E2, ? extends Iterable<? extends EE>> extractor) {
+		return IterableUtils.extractAll2(this, extractor);
 	}
 	
-	// Note: flatMap is not defined here because Java does not support higher order type parameters.
+	// Note: flatMap2 is not defined here because Java does not support higher order type parameters.
 	//	/**
 	//	 * Transforms and flattens the pairs of elements provided by this iterable using the given function.
 	//	 *
 	//	 * @param <TE> Type of the transformed elements.
 	//	 * @param function Function to use to transform the pairs of elements.
 	//	 * @return An iterable providing the flatten, transformed elements.
-	//	 * @see IterableUtils#flatMap(Iterable, Function2)
+	//	 * @see IterableUtils#flatMap2(Iterable, Function2)
 	//	 * @since 2.0
 	//	 */
-	//	default <TE> ExIterable<TE> flatMap(final Function2<? super E1, ? super E2, ? extends Iterable<? extends TE>> function) {
-	//		return IterableUtils.flatMap(this, function);
+	//	default <TE> ExIterable<TE> flatMap2(final Function2<? super E1, ? super E2, ? extends Iterable<? extends TE>> function) {
+	//		return IterableUtils.flatMap2(this, function);
 	//	}
 	
 	/**
 	 * Executes the given procedure with each pair of elements provided by this iterable.
 	 * 
-	 * @see IterableUtils#foreach(Iterable, Procedure2)
+	 * @see IterableUtils#foreach2(Iterable, Procedure2)
 	 * @since 2.0
 	 */
 	@Override
-	default void foreach(final Procedure2<? super E1, ? super E2> procedure) {
-		IterableUtils.foreach(this, procedure);
+	default void foreach2(final Procedure2<? super E1, ? super E2> procedure) {
+		IterableUtils.foreach2(this, procedure);
 	}
 	
 	// Traversable.
@@ -262,11 +263,11 @@ extends ExIterable<Tuple2<E1, E2>>, PairTraversable<E1, E2> {
 	 * Filters the pairs of elements provided by this iterable using the given filter.
 	 *
 	 * @return An iterable providing the filtered pairs of elements.
-	 * @see IterableUtils#filter(Iterable, Predicate2)
+	 * @see IterableUtils#filter2(Iterable, Predicate2)
 	 * @since 2.0
 	 */
 	@Override
 	default PairIterable<E1, E2> filter(final Predicate<? super Tuple2<E1, E2>> filter) {
-		return IterableUtils.filter(this, PredicateUtils.curry2(filter));
+		return IterableUtils.filter2(this, PredicateUtils.curry2(filter));
 	}
 }

@@ -103,7 +103,6 @@ public class IteratorUtils {
 	
 	// TODO: drain(Iterator, CollectionFactory)
 	
-	// TODO: rename to drain2
 	/**
 	 * Drains all pairs of elements provided by the the given iterator and populates the given accumulator with them.
 	 * 
@@ -115,14 +114,13 @@ public class IteratorUtils {
 	 * @return The given result accumulator.
 	 * @since 2.0
 	 */
-	public static <E1, E2, A extends Accumulator2<? super E1, ? super E2, ?>> A drain(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final A results) {
+	public static <E1, E2, A extends Accumulator2<? super E1, ? super E2, ?>> A drain2(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final A results) {
 		while (iterator.hasNext()) {
 			results.add(iterator.next());
 		}
 		return results;
 	}
 	
-	// TODO: rename to drain2
 	/**
 	 * Drains all pairs of elements provided by the the given iterator and puts the corresponding bindings into the given map.
 	 * 
@@ -134,13 +132,12 @@ public class IteratorUtils {
 	 * @return The given result collection.
 	 * @since 2.0
 	 */
-	public static <E1, E2, M extends Map<? super E1, ? super E2>> M drain(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final M results) {
-		return drain(iterator, MapAccumulators.put(results)).get();
+	public static <E1, E2, M extends Map<? super E1, ? super E2>> M drain2(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final M results) {
+		return drain2(iterator, MapAccumulators.put(results)).get();
 	}
 	
 	// TODO: drain2(Iterator, MapFactory)
 	
-	// TODO: rename to drain2
 	/**
 	 * Drains all pairs of elements provided by the the given iterator and puts the corresponding bindings into the given multimap.
 	 * 
@@ -152,8 +149,8 @@ public class IteratorUtils {
 	 * @return The given result collection.
 	 * @since 2.0
 	 */
-	public static <E1, E2, M extends Multimap<? super E1, ? super E2, ?>> M drain(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final M results) {
-		return drain(iterator, MultimapAccumulators.put(results)).get();
+	public static <E1, E2, M extends Multimap<? super E1, ? super E2, ?>> M drain2(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final M results) {
+		return drain2(iterator, MultimapAccumulators.put(results)).get();
 	}
 	
 	// TODO: drain2(Iterator, MultimapFactory)
@@ -173,7 +170,6 @@ public class IteratorUtils {
 		return drain(iterator, FunctionAccumulators.fold(operator, initialState)).get();
 	}
 	
-	// TODO: rename to fold2
 	/**
 	 * Left folds over the pairs of elements provided by the given iterator using the given operator and initial state.
 	 * 
@@ -186,8 +182,8 @@ public class IteratorUtils {
 	 * @return The folded state.
 	 * @since 2.0
 	 */
-	public static <E1, E2, S> S fold(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Function3<? super S, ? super E1, ? super E2, ? extends S> operator, final S initialState) {
-		return drain(iterator, FunctionAccumulators.fold2(operator, initialState)).get();
+	public static <E1, E2, S> S fold2(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Function3<? super S, ? super E1, ? super E2, ? extends S> operator, final S initialState) {
+		return drain2(iterator, FunctionAccumulators.fold2(operator, initialState)).get();
 	}
 	
 	/**
@@ -208,7 +204,6 @@ public class IteratorUtils {
 		return false;
 	}
 	
-	// TODO: rename to isAny2
 	/**
 	 * Tests whether any pair of elements provided by the given iterator is accepted by the given filter.
 	 * 
@@ -220,7 +215,7 @@ public class IteratorUtils {
 	 *         exhausted.
 	 * @since 2.0
 	 */
-	public static <E1, E2> boolean isAny(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Predicate2<? super E1, ? super E2> filter) {
+	public static <E1, E2> boolean isAny2(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Predicate2<? super E1, ? super E2> filter) {
 		while (iterator.hasNext()) {
 			final Tuple2<? extends E1, ? extends E2> elementPair = iterator.next();
 			if (filter.evaluate(elementPair.get1(), elementPair.get2())) {
@@ -248,7 +243,6 @@ public class IteratorUtils {
 		return true;
 	}
 	
-	// TODO: rename to areAll2
 	/**
 	 * Tests whether all pairs of elements provided by the given iterator are accepted by the given filter.
 	 * 
@@ -260,7 +254,7 @@ public class IteratorUtils {
 	 *         rejected.
 	 * @since 2.0
 	 */
-	public static <E1, E2> boolean areAll(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Predicate2<? super E1, ? super E2> filter) {
+	public static <E1, E2> boolean areAll2(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Predicate2<? super E1, ? super E2> filter) {
 		while (iterator.hasNext()) {
 			final Tuple2<? extends E1, ? extends E2> elementPair = iterator.next();
 			if (!filter.evaluate(elementPair.get1(), elementPair.get2())) {
@@ -270,7 +264,7 @@ public class IteratorUtils {
 		return true;
 	}
 	
-	// TODO: count with no filter / size
+	// TODO: count with no filter (size)
 	
 	/**
 	 * Counts the elements provided by the given iterator accepted by the given filter.
@@ -291,7 +285,6 @@ public class IteratorUtils {
 		return counter.get();
 	}
 	
-	// TODO: rename to count2
 	/**
 	 * Counts the pairs of elements provided by the given iterator accepted by the given filter.
 	 * 
@@ -302,7 +295,7 @@ public class IteratorUtils {
 	 * @return The number of accepted pairs of elements.
 	 * @since 2.0
 	 */
-	public static <E1, E2> int count(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Predicate2<? super E1, ? super E2> filter) {
+	public static <E1, E2> int count2(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Predicate2<? super E1, ? super E2> filter) {
 		final IntCounter counter = new IntCounter();
 		while (iterator.hasNext()) {
 			final Tuple2<? extends E1, ? extends E2> elementPair = iterator.next();
@@ -597,7 +590,6 @@ public class IteratorUtils {
 		};
 	}
 	
-	// TODO: rename to filter2
 	/**
 	 * Filters the pairs of elements provided by the given iterator using the given filter.
 	 * <p>
@@ -610,14 +602,14 @@ public class IteratorUtils {
 	 * @return An iterator providing the filtered pairs of elements.
 	 * @since 2.0
 	 */
-	public static <E1, E2> PairIterator<E1, E2> filter(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Predicate2<? super E1, ? super E2> filter) {
+	public static <E1, E2> PairIterator<E1, E2> filter2(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Predicate2<? super E1, ? super E2> filter) {
 		assert null != iterator;
 		assert null != filter;
 		
 		return new LookAheadPairIterator<E1, E2>() {
 			@Override
 			protected Maybe<Tuple2<E1, E2>> pull() {
-				return IteratorUtils.filterAny(iterator, filter);
+				return IteratorUtils.filterAny2(iterator, filter);
 			}
 		};
 	}
@@ -643,7 +635,6 @@ public class IteratorUtils {
 		return Maybe.none();
 	}
 	
-	// TODO: rename to filterAny2
 	/**
 	 * Gets any pair of elements provided by the given iterator accepted by the given filter.
 	 * <p>
@@ -656,7 +647,7 @@ public class IteratorUtils {
 	 * @return The accepted pair of elements, or nothing when no pairs of elements are accepted by the filter.
 	 * @since 2.0
 	 */
-	public static <E1, E2> Maybe<Tuple2<E1, E2>> filterAny(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Predicate2<? super E1, ? super E2> filter) {
+	public static <E1, E2> Maybe<Tuple2<E1, E2>> filterAny2(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Predicate2<? super E1, ? super E2> filter) {
 		while (iterator.hasNext()) {
 			final Tuple2<? extends E1, ? extends E2> elementPair = iterator.next();
 			final E1 element1 = elementPair.get1();
@@ -702,7 +693,6 @@ public class IteratorUtils {
 		};
 	}
 	
-	// TODO: rename to map2
 	/**
 	 * Transforms the pairs of elements provided by the given iterator using the given function.
 	 * <p>
@@ -716,7 +706,7 @@ public class IteratorUtils {
 	 * @return An iterator providing the transformed elements.
 	 * @since 2.0
 	 */
-	public static <E1, E2, TE> ExIterator<TE> map(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Function2<? super E1, ? super E2, ? extends TE> function) {
+	public static <E1, E2, TE> ExIterator<TE> map2(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Function2<? super E1, ? super E2, ? extends TE> function) {
 		assert null != iterator;
 		assert null != function;
 		
@@ -763,7 +753,6 @@ public class IteratorUtils {
 		};
 	}
 	
-	// TODO: rename to extract2
 	/**
 	 * Extracts the pairs of elements provided by the given iterator using the given extractor.
 	 * <p>
@@ -777,14 +766,14 @@ public class IteratorUtils {
 	 * @return An iterator providing the extracted elements.
 	 * @since 2.0
 	 */
-	public static <E1, E2, EE> ExIterator<EE> extract(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor) {
+	public static <E1, E2, EE> ExIterator<EE> extract2(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor) {
 		assert null != iterator;
 		assert null != extractor;
 		
 		return new LookAheadIterator<EE>() {
 			@Override
 			protected Maybe<? extends EE> pull() {
-				return IteratorUtils.extractAny(iterator, extractor);
+				return IteratorUtils.extractAny2(iterator, extractor);
 			}
 		};
 	}
@@ -809,7 +798,6 @@ public class IteratorUtils {
 		return Maybe.none();
 	}
 	
-	// TODO: rename to extractAny2
 	/**
 	 * Gets the element extracted from any pair of elements provided by the given iterator using the given extractor.
 	 * 
@@ -821,7 +809,7 @@ public class IteratorUtils {
 	 * @return The extracted element, or nothing when no elements can be extracted from any pair of elements.
 	 * @since 2.0
 	 */
-	public static <E1, E2, EE> Maybe<EE> extractAny(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor) {
+	public static <E1, E2, EE> Maybe<EE> extractAny2(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor) {
 		while (iterator.hasNext()) {
 			final Tuple2<? extends E1, ? extends E2> elementPair = iterator.next();
 			final Maybe<? extends EE> extractedElement = extractor.evaluate(elementPair.get1(), elementPair.get2());
@@ -848,7 +836,6 @@ public class IteratorUtils {
 		return flatMap(iterator, extractor.map(IterableFunctions.iterator()));
 	}
 	
-	// TODO: rename to extractAll2
 	/**
 	 * Gets all elements extracted from the pairs of elements provided by the given iterator using the given extractor.
 	 * <p>
@@ -862,8 +849,8 @@ public class IteratorUtils {
 	 * @return An iterator providing the extracted elements.
 	 * @since 2.0
 	 */
-	public static <E1, E2, EE> ExIterator<EE> extractAll(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Function2<? super E1, ? super E2, ? extends Iterable<? extends EE>> extractor) {
-		return flatMap(iterator, extractor.map(IterableFunctions.iterator()));
+	public static <E1, E2, EE> ExIterator<EE> extractAll2(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Function2<? super E1, ? super E2, ? extends Iterable<? extends EE>> extractor) {
+		return flatMap2(iterator, extractor.map(IterableFunctions.iterator()));
 	}
 	
 	/**
@@ -962,7 +949,6 @@ public class IteratorUtils {
 		return flatten(map(iterator, function));
 	}
 	
-	// TODO: rename to flatMap2
 	/**
 	 * Transforms and flattens the pairs of elements provided by the given iterator using the given function.
 	 * <p>
@@ -976,8 +962,8 @@ public class IteratorUtils {
 	 * @return An iterator providing the flatten, transformed elements.
 	 * @since 2.0
 	 */
-	public static <E1, E2, TE> ExIterator<TE> flatMap(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Function2<? super E1, ? super E2, ? extends Iterator<? extends TE>> function) {
-		return flatten(map(iterator, function));
+	public static <E1, E2, TE> ExIterator<TE> flatMap2(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Function2<? super E1, ? super E2, ? extends Iterator<? extends TE>> function) {
+		return flatten(map2(iterator, function));
 	}
 	
 	/**
@@ -1014,6 +1000,8 @@ public class IteratorUtils {
 		};
 	}
 	
+	// TODO: zip2
+	
 	/**
 	 * Executes the given procedure with each element provided by the given iterator.
 	 * 
@@ -1028,7 +1016,6 @@ public class IteratorUtils {
 		}
 	}
 	
-	// TODO: rename to foreach2
 	/**
 	 * Executes the given procedure with each pair of elements provided by the given iterator.
 	 * 
@@ -1038,7 +1025,7 @@ public class IteratorUtils {
 	 * @param procedure Procedure to execute.
 	 * @since 2.0
 	 */
-	public static <E1, E2> void foreach(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Procedure2<? super E1, ? super E2> procedure) {
+	public static <E1, E2> void foreach2(final Iterator<? extends Tuple2<? extends E1, ? extends E2>> iterator, final Procedure2<? super E1, ? super E2> procedure) {
 		while (iterator.hasNext()) {
 			final Tuple2<? extends E1, ? extends E2> elementPair = iterator.next();
 			procedure.execute(elementPair.get1(), elementPair.get2());
@@ -1184,28 +1171,28 @@ public class IteratorUtils {
 		// PairTraversable.
 		
 		@Override
-		public PairIterator<E1, E2> filter(final Predicate2<? super E1, ? super E2> filter) {
-			return PairIterator.super.filter(filter).unmodifiable();
+		public PairIterator<E1, E2> filter2(final Predicate2<? super E1, ? super E2> filter) {
+			return PairIterator.super.filter2(filter).unmodifiable();
 		}
 		
 		@Override
-		public <TE> ExIterator<TE> map(final Function2<? super E1, ? super E2, ? extends TE> function) {
-			return PairIterator.super.<TE>map(function).unmodifiable();
+		public <TE> ExIterator<TE> map2(final Function2<? super E1, ? super E2, ? extends TE> function) {
+			return PairIterator.super.<TE>map2(function).unmodifiable();
 		}
 		
 		@Override
-		public <EE> ExIterator<EE> extract(final Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor) {
-			return PairIterator.super.<EE>extract(extractor).unmodifiable();
+		public <EE> ExIterator<EE> extract2(final Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor) {
+			return PairIterator.super.<EE>extract2(extractor).unmodifiable();
 		}
 		
 		@Override
-		public <EE> ExIterator<EE> extractAll(final Function2<? super E1, ? super E2, ? extends Iterable<? extends EE>> extractor) {
-			return PairIterator.super.<EE>extractAll(extractor).unmodifiable();
+		public <EE> ExIterator<EE> extractAll2(final Function2<? super E1, ? super E2, ? extends Iterable<? extends EE>> extractor) {
+			return PairIterator.super.<EE>extractAll2(extractor).unmodifiable();
 		}
 		
 		@Override
-		public <TE> ExIterator<TE> flatMap(final Function2<? super E1, ? super E2, ? extends Iterator<? extends TE>> function) {
-			return PairIterator.super.<TE>flatMap(function).unmodifiable();
+		public <TE> ExIterator<TE> flatMap2(final Function2<? super E1, ? super E2, ? extends Iterator<? extends TE>> function) {
+			return PairIterator.super.<TE>flatMap2(function).unmodifiable();
 		}
 		
 		// Traversable.

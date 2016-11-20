@@ -43,7 +43,7 @@ extends Traversable<Tuple2<E1, E2>> {
 	 * @return The folded state.
 	 * @since 2.0
 	 */
-	<S> S fold(Function3<? super S, ? super E1, ? super E2, ? extends S> operator, S initialState);
+	<S> S fold2(Function3<? super S, ? super E1, ? super E2, ? extends S> operator, S initialState);
 	
 	/**
 	 * Tests whether any pair of elements of this traversable is accepted by the given filter.
@@ -53,7 +53,7 @@ extends Traversable<Tuple2<E1, E2>> {
 	 *         empty.
 	 * @since 2.0
 	 */
-	boolean isAny(Predicate2<? super E1, ? super E2> filter);
+	boolean isAny2(Predicate2<? super E1, ? super E2> filter);
 	
 	/**
 	 * Tests whether all pairs of elements of this traversable are accepted by the given filter.
@@ -63,7 +63,7 @@ extends Traversable<Tuple2<E1, E2>> {
 	 *         rejected.
 	 * @since 2.0
 	 */
-	boolean areAll(Predicate2<? super E1, ? super E2> filter);
+	boolean areAll2(Predicate2<? super E1, ? super E2> filter);
 	
 	/**
 	 * Counts the pairs of elements of this traversable accepted by the given filter.
@@ -72,10 +72,10 @@ extends Traversable<Tuple2<E1, E2>> {
 	 * @return The number of accepted pairs of elements.
 	 * @since 2.0
 	 */
-	int count(Predicate2<? super E1, ? super E2> filter);
+	int count2(Predicate2<? super E1, ? super E2> filter);
 	
-	// TODO: takeWhile
-	// TODO: dropWhile
+	// TODO: takeWhile2
+	// TODO: dropWhile2
 	
 	/**
 	 * Filters the pairs of elements of this traversable using the given filter.
@@ -86,7 +86,7 @@ extends Traversable<Tuple2<E1, E2>> {
 	 * @return A traversable of the filtered pairs of elements.
 	 * @since 2.0
 	 */
-	PairTraversable<E1, E2> filter(Predicate2<? super E1, ? super E2> filter);
+	PairTraversable<E1, E2> filter2(Predicate2<? super E1, ? super E2> filter);
 	
 	/**
 	 * Gets any pair of elements of this traversable accepted by the given filter.
@@ -95,7 +95,7 @@ extends Traversable<Tuple2<E1, E2>> {
 	 * @return The accepted pair of elements, or nothing when no pairs of elements are accepted by the filter.
 	 * @since 2.0
 	 */
-	Maybe<Tuple2<E1, E2>> filterAny(Predicate2<? super E1, ? super E2> filter);
+	Maybe<Tuple2<E1, E2>> filterAny2(Predicate2<? super E1, ? super E2> filter);
 	
 	/**
 	 * Transforms the pairs of elements of this traversable using the given function.
@@ -107,7 +107,7 @@ extends Traversable<Tuple2<E1, E2>> {
 	 * @return A traversable of the transformed elements.
 	 * @since 2.0
 	 */
-	<TE> Traversable<TE> map(Function2<? super E1, ? super E2, ? extends TE> function);
+	<TE> Traversable<TE> map2(Function2<? super E1, ? super E2, ? extends TE> function);
 	
 	/**
 	 * Extracts elements from the pairs of elements of this traversable using the given extractor.
@@ -119,7 +119,7 @@ extends Traversable<Tuple2<E1, E2>> {
 	 * @return An iterable of the extracted elements.
 	 * @since 2.0
 	 */
-	<EE> Traversable<EE> extract(Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor);
+	<EE> Traversable<EE> extract2(Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor);
 	
 	/**
 	 * Gets the element extracted from any pair of elements of this traversable using the given extractor.
@@ -129,8 +129,10 @@ extends Traversable<Tuple2<E1, E2>> {
 	 * @return The extracted element, or nothing when no elements can be extracted from any pair of elements.
 	 * @since 2.0
 	 */
-	<EE> Maybe<EE> extractAny(Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor);
+	<EE> Maybe<EE> extractAny2(Function2<? super E1, ? super E2, ? extends Maybe<? extends EE>> extractor);
 	
+	// Note: extractAll2 is not defined here because Java does not support higher order type parameters.
+	// TODO: rename ? extractMany2 ? extractN2 ? extractMultiple2 ?
 	//	/**
 	//	 * Gets all elements extracted from the pairs of elements of this traversable using the given extractor.
 	//	 * <p>
@@ -141,9 +143,9 @@ extends Traversable<Tuple2<E1, E2>> {
 	//	 * @return An iterable of the extracted elements.
 	//	 * @since 2.0
 	//	 */
-	//	<EE> Traversable<EE> extractAll(Function2<? super E1, ? super E2, ? extends Iterable<? extends EE>> extractor);
+	//	<EE> Traversable<EE> extractAll2(Function2<? super E1, ? super E2, ? extends Iterable<? extends EE>> extractor);
 	
-	// Note: flatMap is not defined here because Java does not support higher order type parameters.
+	// Note: flatMap2 is not defined here because Java does not support higher order type parameters.
 	//	/**
 	//	 * Transforms and flattens the pairs of elements of this traversable using the given function.
 	//	 * <p>
@@ -154,7 +156,7 @@ extends Traversable<Tuple2<E1, E2>> {
 	//	 * @return A traversable of the flatten, transformed elements.
 	//	 * @since 2.0
 	//	 */
-	//	<TE> Traversable<TE> flatMap(Function2<? super E1, ? super E2, ? extends Traversable<? extends TE>> function);
+	//	<TE> Traversable<TE> flatMap2(Function2<? super E1, ? super E2, ? extends Traversable<? extends TE>> function);
 	
 	/**
 	 * Executes the given procedure with each pair of elements of this traversable.
@@ -162,7 +164,7 @@ extends Traversable<Tuple2<E1, E2>> {
 	 * @param procedure Procedure to execute.
 	 * @since 2.0
 	 */
-	void foreach(Procedure2<? super E1, ? super E2> procedure);
+	void foreach2(Procedure2<? super E1, ? super E2> procedure);
 	
 	// Traversable.
 	

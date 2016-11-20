@@ -275,71 +275,71 @@ public class Maps {
 		// PairTraversable.
 		
 		@Override
-		public <S> S fold(final Function3<? super S, ? super Object, ? super Object, ? extends S> operator, final S initialState) {
+		public <S> S fold2(final Function3<? super S, ? super Object, ? super Object, ? extends S> operator, final S initialState) {
 			return initialState;
 		}
 		
 		@Override
-		public boolean isAny(final Predicate2<? super Object, ? super Object> filter) {
+		public boolean isAny2(final Predicate2<? super Object, ? super Object> filter) {
 			return false;
 		}
 		
 		@Override
-		public boolean areAll(final Predicate2<? super Object, ? super Object> filter) {
+		public boolean areAll2(final Predicate2<? super Object, ? super Object> filter) {
 			return true;
 		}
 		
 		@Override
-		public int count(final Predicate2<? super Object, ? super Object> filter) {
+		public int count2(final Predicate2<? super Object, ? super Object> filter) {
 			return 0;
 		}
 		
 		@Override
-		public ExMap<Object, Object> filter(final Predicate2<? super Object, ? super Object> filter) {
+		public ExMap<Object, Object> filter2(final Predicate2<? super Object, ? super Object> filter) {
 			return empty();
 		}
 		
 		@Override
-		public <M extends Map<? super Object, ? super Object>> M filter(final Predicate2<? super Object, ? super Object> filter, final MapFactory<? super Object, ? super Object, M> resultFactory) {
+		public <M extends Map<? super Object, ? super Object>> M filter2(final Predicate2<? super Object, ? super Object> filter, final MapFactory<? super Object, ? super Object, M> resultFactory) {
 			return resultFactory.build();
 		}
 		
 		@Override
-		public Maybe<Tuple2<Object, Object>> filterAny(final Predicate2<? super Object, ? super Object> filter) {
+		public Maybe<Tuple2<Object, Object>> filterAny2(final Predicate2<? super Object, ? super Object> filter) {
 			return Maybe.none();
 		}
 		
 		@Override
-		public <TE> ExCollection<TE> map(final Function2<? super Object, ? super Object, ? extends TE> function) {
+		public <TE> ExCollection<TE> map2(final Function2<? super Object, ? super Object, ? extends TE> function) {
 			return Lists.empty();
 		}
 		
 		@Override
-		public <TE, C extends Collection<? super TE>> C map(final Function2<? super Object, ? super Object, ? extends TE> function, final CollectionFactory<? super TE, C> resultFactory) {
+		public <TE, C extends Collection<? super TE>> C map2(final Function2<? super Object, ? super Object, ? extends TE> function, final CollectionFactory<? super TE, C> resultFactory) {
 			return resultFactory.build();
 		}
 		
 		// TODO: mapValues
 		
 		@Override
-		public <EE> ExCollection<EE> extract(final Function2<? super Object, ? super Object, ? extends Maybe<? extends EE>> extractor) {
+		public <EE> ExCollection<EE> extract2(final Function2<? super Object, ? super Object, ? extends Maybe<? extends EE>> extractor) {
 			return Lists.empty();
 		}
 		
 		@Override
-		public <EE, C extends Collection<? super EE>> C extract(final Function2<? super Object, ? super Object, ? extends Maybe<? extends EE>> extractor, final CollectionFactory<? super EE, C> resultFactory) {
+		public <EE, C extends Collection<? super EE>> C extract2(final Function2<? super Object, ? super Object, ? extends Maybe<? extends EE>> extractor, final CollectionFactory<? super EE, C> resultFactory) {
 			return resultFactory.build();
 		}
 		
 		@Override
-		public <EE> Maybe<EE> extractAny(final Function2<? super Object, ? super Object, ? extends Maybe<? extends EE>> extractor) {
+		public <EE> Maybe<EE> extractAny2(final Function2<? super Object, ? super Object, ? extends Maybe<? extends EE>> extractor) {
 			return Maybe.none();
 		}
 		
-		// TODO: extractAll to Multimap ?
+		// TODO: extractAll2 to Multimap ?
 		
 		@Override
-		public void foreach(final Procedure2<? super Object, ? super Object> procedure) {
+		public void foreach2(final Procedure2<? super Object, ? super Object> procedure) {
 			// Nothing to do.
 		}
 		
