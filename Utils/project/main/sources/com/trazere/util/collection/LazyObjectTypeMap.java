@@ -34,7 +34,7 @@ import java.util.Set;
 public abstract class LazyObjectTypeMap<T, V, X extends Exception>
 extends LazyTypeMap<Class<? extends T>, V, X>
 implements ObjectTypeMap<T, Maybe<? extends V>, X> {
-	// HACK: named buildObject to work around javac bug 
+	// HACK: named buildObject to work around javac bug
 	/**
 	 * Builds a new type map with no upper bounds and defaut values using the given function.
 	 * 
@@ -47,7 +47,7 @@ implements ObjectTypeMap<T, Maybe<? extends V>, X> {
 		return buildObject(function, Object.class, Maybe.<V>none());
 	}
 	
-	// HACK: named buildObject to work around javac bug 
+	// HACK: named buildObject to work around javac bug
 	/**
 	 * Builds a new type map with no upper bounds and the given default value using the given function.
 	 * 
@@ -61,7 +61,7 @@ implements ObjectTypeMap<T, Maybe<? extends V>, X> {
 		return buildObject(function, Object.class, defaultValue);
 	}
 	
-	// HACK: named buildObject to work around javac bug 
+	// HACK: named buildObject to work around javac bug
 	/**
 	 * Builds a new type map with the given upper bound and default value using the given function.
 	 * 
@@ -76,7 +76,7 @@ implements ObjectTypeMap<T, Maybe<? extends V>, X> {
 		return buildObject(function, upperBound, Maybe.<V>none());
 	}
 	
-	// HACK: named buildObject to work around javac bug 
+	// HACK: named buildObject to work around javac bug
 	/**
 	 * Builds a new type map with the given upper bound and default value using the given function.
 	 * 
