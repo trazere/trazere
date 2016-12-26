@@ -16,17 +16,18 @@
 package com.trazere.core.collection;
 
 import com.trazere.core.imperative.Accumulator;
-import com.trazere.core.lang.IterableUtils;
+import com.trazere.core.imperative.ExIterator;
+import com.trazere.core.imperative.IteratorUtils;
+import com.trazere.core.imperative.PairIterator;
 import com.trazere.core.lang.LangAccumulators;
+import com.trazere.core.lang.PairIterable;
 import com.trazere.core.util.Tuple2;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 /**
- * The {@link MapMultimap} class provides a skeleton implementation of {@link Multimap} backed by a {@link Map map} of {@link Collection collections}.
+ * The {@link MapMultimap} class implements {@link Multimap multimaps} backed by a {@link Map map} of {@link Collection collections}.
  * 
  * @param <K> Type of the keys.
  * @param <V> Type of the values.
@@ -40,42 +41,43 @@ extends BaseMultimap<K, V, C> {
 	 * Instantiates a new multimap.
 	 * 
 	 * @param mapFactory Factory of the backing map.
-	 * @param valuesFactory Factory of the collections of values.
+	 * @param collectionFactory Factory of the collections of values.
 	 * @since 2.0
 	 */
-	public MapMultimap(final MapFactory<K, CC, ? extends Map<K, CC>> mapFactory, final ExtendedAbstractCollectionFactory<V, C, CC> valuesFactory) {
-		this(mapFactory.build(), valuesFactory);
+	public MapMultimap(final MapFactory<K, CC, ? extends Map<K, CC>> mapFactory, final ExtendedAbstractCollectionFactory<V, C, CC> collectionFactory) {
+		this(mapFactory.build(), collectionFactory);
 	}
 	
 	/**
 	 * Instantiates a new multimap containing the bindings of the given multimap.
 	 * 
 	 * @param mapFactory Factory of the backing map.
-	 * @param valuesFactory Factory of the collections of values.
+	 * @param collectionFactory Factory of the collections of values.
 	 * @param multimap Multimap to copy.
 	 * @since 2.0
 	 */
-	public MapMultimap(final MapFactory<K, CC, ? extends Map<K, CC>> mapFactory, final ExtendedAbstractCollectionFactory<V, C, CC> valuesFactory, final Multimap<? extends K, ? extends V, ?> multimap) {
-		this(mapFactory.build(IterableUtils.map(multimap.collectionEntrySet(), entry -> new Tuple2<>(entry.getKey(), valuesFactory.build(entry.getValue())))), valuesFactory);
+	public MapMultimap(final MapFactory<K, CC, ? extends Map<K, CC>> mapFactory, final ExtendedAbstractCollectionFactory<V, C, CC> collectionFactory, final Multimap<? extends K, ? extends V, ?> multimap) {
+		this(mapFactory.build(multimap.collectionBindings().map(b -> new Tuple2<>(b.get1(), collectionFactory.build(b.get2())))), collectionFactory);
 	}
 	
 	/**
 	 * Instantiates a new multimap.
 	 * 
-	 * @param bindings Backing map of the bindings.
+	 * @param collectionBindings Backing map of the bindings.
 	 * @param collectionFactory Factory of the collections of values.
 	 * @since 2.0
 	 */
-	protected MapMultimap(final Map<K, CC> bindings, final ExtendedAbstractCollectionFactory<V, C, CC> collectionFactory) {
-		assert null != bindings;
+	protected MapMultimap(final Map<K, CC> collectionBindings, final ExtendedAbstractCollectionFactory<V, C, CC> collectionFactory) {
+		assert null != collectionBindings;
 		assert null != collectionFactory;
 		
 		// Initialization.
-		_bindings = bindings;
+		_collectionBindings = ExMap.build(collectionBindings);
+		_collectionBindings.retainAll((k, c) -> !c.isEmpty());
 		_collectionFactory = collectionFactory;
 	}
 	
-	// Values factory.
+	// Collection factory.
 	
 	/**
 	 * Factory of the collections of values.
@@ -94,33 +96,101 @@ extends BaseMultimap<K, V, C> {
 		return _collectionFactory;
 	}
 	
-	// Bindings.
+	// Multimap.
 	
 	/**
-	 * Backing map of the bindings.
+	 * Collection bindings.
+	 * <p>
+	 * Should
 	 * 
 	 * @since 2.0
 	 */
-	protected final Map<K, CC> _bindings;
+	protected final ExMap<K, CC> _collectionBindings;
 	
 	/**
 	 * Gets the collection of values associated to the given key, creating it if necessary.
-	 * 
-	 * @param key Key of the bindings.
+	 *
+	 * @param key Key of the collection of values to get.
 	 * @return The collection of values.
 	 * @since 2.0
 	 */
 	protected C getCollection(final K key) {
 		// Look for the current collection.
-		final C values = _bindings.get(key);
+		final C values = _collectionBindings.get(key);
 		if (null != values) {
 			return values;
 		}
 		
 		// Create a new collection.
 		final CC collection = _collectionFactory.build();
-		_bindings.put(key, collection);
+		_collectionBindings.put(key, collection);
 		return collection;
+	}
+	
+	@Override
+	public ExSet<K> keys() {
+		return _collectionBindings.keySet();
+	}
+	
+	@Override
+	public ExCollection<V> values() {
+		return new AbstractExCollection<V>() {
+			@Override
+			public int size() {
+				return MapMultimap.this.size();
+			}
+			
+			@Override
+			public ExIterator<V> iterator() {
+				return _collectionBindings.values().iterator().flatMap(Iterable::iterator);
+			}
+		};
+	}
+	
+	@Override
+	public PairIterable<K, V> bindings() {
+		// FIXME: should be a lambda interface, bug eclipse ?
+		return new PairIterable<K, V>() {
+			@Override
+			public PairIterator<K, V> iterator() {
+				return PairIterator.build(_collectionBindings.bindings().iterator().flatMap2((k, c) -> IteratorUtils.map(c.iterator(), v -> new Tuple2<>(k, v))));
+			}
+		};
+	}
+	
+	@Override
+	public PairIterable<K, C> collectionBindings() {
+		return MapUtils.bindings(_collectionBindings);
+	}
+	
+	@Override
+	public int size() {
+		return _collectionBindings.values().fold((a, c) -> a + c.size(), 0);
+	}
+	
+	@Override
+	public boolean isEmpty() {
+		return _collectionBindings.isEmpty();
+	}
+	
+	@Override
+	public boolean containsKey(final K key) {
+		return _collectionBindings.containsKey(key);
+	}
+	
+	@Override
+	public boolean containsValue(final V value) {
+		return _collectionBindings.values().isAny(c -> c.contains(value));
+	}
+	
+	@Override
+	public boolean contains(final K key, final V value) {
+		return _collectionBindings.containsKey(key) && _collectionBindings.get(key).contains(value);
+	}
+	
+	@Override
+	public C get(final K key) {
+		return _collectionFactory.unmodifiable(_collectionBindings.optionalGet(key).get(_collectionFactory::build));
 	}
 	
 	@Override
@@ -129,66 +199,66 @@ extends BaseMultimap<K, V, C> {
 	}
 	
 	@Override
+	public boolean putAll(final K key, @SuppressWarnings("unchecked") final V... values) {
+		return CollectionUtils.addAll(getCollection(key), values);
+	}
+	
+	@Override
 	public boolean putAll(final K key, final Iterable<? extends V> values) {
 		return CollectionUtils.addAll(getCollection(key), values);
 	}
 	
 	@Override
-	public boolean isEmpty() {
-		return _bindings.isEmpty();
-	}
-	
-	@Override
-	public int size() {
-		final Accumulator<Integer, Integer> size = LangAccumulators.sum(0);
-		for (final C values : _bindings.values()) {
-			size.add(values.size());
+	public boolean putAll(final Multimap<? extends K, ? extends V, ?> multimap) {
+		final Accumulator<Boolean, Boolean> changed = LangAccumulators.or(false);
+		for (final Tuple2<? extends K, ? extends Collection<? extends V>> collectionBinding : multimap.collectionBindings()) {
+			changed.add(putAll(collectionBinding.get1(), collectionBinding.get2()));
 		}
-		return size.get().intValue();
+		return changed.get();
 	}
 	
 	@Override
-	public boolean containsKey(final K key) {
-		return _bindings.containsKey(key);
+	public C removeKey(final K key) {
+		return _collectionFactory.unmodifiable(_collectionBindings.optionalRemove(key).get(_collectionFactory::build));
 	}
 	
 	@Override
-	public Set<K> keySet() {
-		return Collections.unmodifiableSet(_bindings.keySet());
-	}
-	
-	@Override
-	public boolean contains(final K key, final V value) {
-		return _bindings.containsKey(key) && _bindings.get(key).contains(value);
-	}
-	
-	@Override
-	public C get(final K key) {
-		return _collectionFactory.unmodifiable(_bindings.containsKey(key) ? _bindings.get(key) : _collectionFactory.build());
-	}
-	
-	@Override
-	public boolean containsValue(final V value) {
-		for (final C values : _bindings.values()) {
-			if (values.contains(value)) {
-				return true;
+	public boolean removeValue(final V value) {
+		final Accumulator<Boolean, Boolean> changed = LangAccumulators.or(false);
+		final Iterator<? extends C> collections = _collectionBindings.values().iterator();
+		while (collections.hasNext()) {
+			final C collection = collections.next();
+			if (collection.remove(value)) {
+				changed.add(true);
+				if (collection.isEmpty()) {
+					collections.remove();
+				}
 			}
 		}
-		return false;
-	}
-	
-	@Override
-	public void clear() {
-		_bindings.clear();
+		return changed.get();
 	}
 	
 	@Override
 	public boolean remove(final K key, final V value) {
-		if (_bindings.containsKey(key)) {
-			final C collection = _bindings.get(key);
+		if (_collectionBindings.containsKey(key)) {
+			final C collection = _collectionBindings.get(key);
 			final boolean result = collection.remove(value);
 			if (collection.isEmpty()) {
-				_bindings.remove(key);
+				_collectionBindings.remove(key);
+			}
+			return result;
+		} else {
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean removeAll(final K key, @SuppressWarnings("unchecked") final V... values) {
+		if (_collectionBindings.containsKey(key)) {
+			final C collection = _collectionBindings.get(key);
+			final boolean result = CollectionUtils.removeAll(collection, values);
+			if (collection.isEmpty()) {
+				_collectionBindings.remove(key);
 			}
 			return result;
 		} else {
@@ -198,11 +268,11 @@ extends BaseMultimap<K, V, C> {
 	
 	@Override
 	public boolean removeAll(final K key, final Iterable<? extends V> values) {
-		if (_bindings.containsKey(key)) {
-			final C collection = _bindings.get(key);
+		if (_collectionBindings.containsKey(key)) {
+			final C collection = _collectionBindings.get(key);
 			final boolean result = CollectionUtils.removeAll(collection, values);
 			if (collection.isEmpty()) {
-				_bindings.remove(key);
+				_collectionBindings.remove(key);
 			}
 			return result;
 		} else {
@@ -211,30 +281,14 @@ extends BaseMultimap<K, V, C> {
 	}
 	
 	@Override
-	public C removeKey(final K key) {
-		return _collectionFactory.unmodifiable(_bindings.containsKey(key) ? _bindings.remove(key) : _collectionFactory.build());
-	}
-	
-	@Override
-	public boolean removeValue(final V value) {
-		final Accumulator<Boolean, Boolean> result = LangAccumulators.or(false);
-		final Iterator<CC> bindings = _bindings.values().iterator();
-		while (bindings.hasNext()) {
-			final CC values = bindings.next();
-			if (values.remove(value)) {
-				result.add(true);
-				if (values.isEmpty()) {
-					bindings.remove();
-				}
-			}
-		}
-		return result.get();
+	public void clear() {
+		_collectionBindings.clear();
 	}
 	
 	// Object.
 	
 	@Override
 	public String toString() {
-		return _bindings.toString();
+		return _collectionBindings.toString();
 	}
 }

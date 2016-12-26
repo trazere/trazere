@@ -51,6 +51,7 @@ extends Factory<M> {
 	}
 	
 	// TODO: build(K, V)
+	// TODO: build(Tuple2)
 	
 	/**
 	 * Builds a map containing the given bindings.

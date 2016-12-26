@@ -40,6 +40,9 @@ extends Factory<M> {
 	@Override
 	M build();
 	
+	// TODO: build(K, V)
+	// TODO: build(Tuple2)
+	
 	/**
 	 * Builds a multimap containing the given bindings.
 	 * 
@@ -49,7 +52,7 @@ extends Factory<M> {
 	 */
 	default M build(@SuppressWarnings("unchecked") final Tuple2<? extends K, ? extends V>... bindings) {
 		final M multimap = build();
-		MultimapUtils.putAll(multimap, bindings);
+		multimap.putAll(bindings);
 		return multimap;
 	}
 	
@@ -62,7 +65,7 @@ extends Factory<M> {
 	 */
 	default M build(final Iterable<? extends Tuple2<? extends K, ? extends V>> bindings) {
 		final M multimap = build();
-		MultimapUtils.putAll(multimap, bindings);
+		multimap.putAll(bindings);
 		return multimap;
 	}
 	

@@ -177,8 +177,7 @@ public class FunctionUtils {
 	 * @param bindings The bindings to test.
 	 * @return <code>true</code> if any binding is accepted, <code>false</code> if all bindings are rejected.
 	 * @throws X When some predicate evaluation fails.
-	 * @deprecated Use {@link com.trazere.core.collection.MultimapUtils#isAny(com.trazere.core.collection.Multimap, com.trazere.core.functional.Predicate2)}.
-	 *             (since 2.0)
+	 * @deprecated Use {@link com.trazere.core.collection.Multimap#isAny2(com.trazere.core.functional.Predicate2)}. (since 2.0)
 	 */
 	@Deprecated
 	public static <K, V, X extends Exception> boolean isAny(final Predicate2<? super K, ? super V, ? extends X> predicate, final Multimap<? extends K, ? extends V, ?> bindings)
@@ -328,8 +327,7 @@ public class FunctionUtils {
 	 * @param bindings The bindings to test.
 	 * @return <code>true</code> if all bindings are accepted, <code>false</code> if any binding is rejected.
 	 * @throws X When some predicate evaluation fails.
-	 * @deprecated Use {@link com.trazere.core.collection.MultimapUtils#areAll(com.trazere.core.collection.Multimap, com.trazere.core.functional.Predicate2)}.
-	 *             (since 2.0)
+	 * @deprecated Use {@link com.trazere.core.collection.Multimap#areAll2(com.trazere.core.functional.Predicate2)}. (since 2.0)
 	 */
 	@Deprecated
 	public static <K, V, X extends Exception> boolean areAll(final Predicate2<? super K, ? super V, ? extends X> predicate, final Multimap<? extends K, ? extends V, ?> bindings)
@@ -482,9 +480,7 @@ public class FunctionUtils {
 	 * @param bindings The bindings.
 	 * @return The first accepted binding.
 	 * @throws X When some predicate evaluation fails.
-	 * @deprecated Use
-	 *             {@link com.trazere.core.collection.MultimapUtils#filterAny(com.trazere.core.collection.Multimap, com.trazere.core.functional.Predicate2)}.
-	 *             (since 2.0)
+	 * @deprecated Use {@link com.trazere.core.collection.Multimap#filterAny2(com.trazere.core.functional.Predicate2)}. (since 2.0)
 	 */
 	@Deprecated
 	public static <K, V, X extends Exception> Maybe<Tuple2<K, V>> first(final Predicate2<? super K, ? super V, ? extends X> predicate, final Multimap<? extends K, ? extends V, ?> bindings)
@@ -823,8 +819,7 @@ public class FunctionUtils {
 	 * @param bindings The bindings to count.
 	 * @return The number of accepted bindings.
 	 * @throws X When some predicate evaluation fails.
-	 * @deprecated Use {@link com.trazere.core.collection.MultimapUtils#count(com.trazere.core.collection.Multimap, com.trazere.core.functional.Predicate2)}.
-	 *             (since 2.0)
+	 * @deprecated Use {@link com.trazere.core.collection.Multimap#count2(com.trazere.core.functional.Predicate2)}. (since 2.0)
 	 */
 	@Deprecated
 	public static <K, V, X extends Exception> int count(final Predicate2<? super K, ? super V, ? extends X> predicate, final Multimap<? extends K, ? extends V, ?> bindings)
@@ -974,9 +969,7 @@ public class FunctionUtils {
 	 * @param results The map to populate with the accepted bindings.
 	 * @return The given result map.
 	 * @throws X When some predicate evaluation fails.
-	 * @deprecated Use
-	 *             {@link com.trazere.core.collection.MultimapUtils#filter(com.trazere.core.collection.Multimap, com.trazere.core.functional.Predicate2, com.trazere.core.collection.MultimapFactory)}.
-	 *             (since 2.0)
+	 * @deprecated Use {@link com.trazere.core.collection.Multimap#filter2(com.trazere.core.functional.Predicate2)} and {XXX}. (since 2.0)
 	 */
 	@Deprecated
 	public static <K, V, M extends Multimap<? super K, ? super V, ?>, X extends Exception> M filter(final Predicate2<? super K, ? super V, ? extends X> predicate, final Multimap<? extends K, ? extends V, ?> bindings, final M results)
@@ -1000,9 +993,8 @@ public class FunctionUtils {
 	 * @return The given accumulator.
 	 * @throws PX When some predicate evaluation fails.
 	 * @throws AX When some accumulation fails.
-	 * @deprecated Use
-	 *             {@link com.trazere.core.collection.MultimapUtils#filter(com.trazere.core.collection.Multimap, com.trazere.core.functional.Predicate2, com.trazere.core.collection.MultimapFactory)}
-	 *             and {@link com.trazere.core.imperative.Accumulator2#addAll(Iterable)}. (since 2.0)
+	 * @deprecated Use {@link com.trazere.core.collection.Multimap#filter2(com.trazere.core.functional.Predicate2)} and
+	 *             {@link com.trazere.core.imperative.Accumulator2#addAll(Iterable)}. (since 2.0)
 	 */
 	@Deprecated
 	@SuppressWarnings("unchecked")
@@ -1293,9 +1285,7 @@ public class FunctionUtils {
 	 * @param results The map to populate with the result bindings.
 	 * @return The given result map.
 	 * @throws X When some function evaluation fails.
-	 * @deprecated Use
-	 *             {@link com.trazere.core.collection.MultimapUtils#map(com.trazere.core.collection.Multimap, com.trazere.core.functional.Function2, com.trazere.core.collection.MultimapFactory)}.
-	 *             (since 2.0)
+	 * @deprecated Use {@link com.trazere.core.collection.Multimap#map2(com.trazere.core.functional.Function2)} and {XXX}. (since 2.0)
 	 */
 	@Deprecated
 	public static <K, V, RV, M extends Multimap<? super K, ? super RV, ?>, X extends Exception> M map(final Function2<? super K, ? super V, ? extends RV, ? extends X> function, final Multimap<? extends K, ? extends V, ?> bindings, final M results)
@@ -1321,9 +1311,8 @@ public class FunctionUtils {
 	 * @return The given accumulator.
 	 * @throws FX When some function evaluation fails.
 	 * @throws AX When some accumulation fails.
-	 * @deprecated Use
-	 *             {@link com.trazere.core.collection.MultimapUtils#map(com.trazere.core.collection.Multimap, com.trazere.core.functional.Function2, com.trazere.core.collection.MultimapFactory)}.
-	 *             (since 2.0)
+	 * @deprecated Use {@link com.trazere.core.collection.Multimap#map2(com.trazere.core.functional.Function2)} and
+	 *             {@link com.trazere.core.imperative.Accumulator2#addAll(Iterable)}. (since 2.0)
 	 */
 	@Deprecated
 	@SuppressWarnings("unchecked")
@@ -1596,9 +1585,7 @@ public class FunctionUtils {
 	 * @param results The map to populate with the result bindings.
 	 * @return The given result map.
 	 * @throws X When some extractor evaluation fails.
-	 * @deprecated Use
-	 *             {@link com.trazere.core.collection.MultimapUtils#extract(com.trazere.core.collection.Multimap, com.trazere.core.functional.Function2, com.trazere.core.collection.MultimapFactory)}.
-	 *             (since 2.0)
+	 * @deprecated Use {@link com.trazere.core.collection.Multimap#extract2(com.trazere.core.functional.Function2)} and {XXX}. (since 2.0)
 	 */
 	@Deprecated
 	public static <K, V, RV, M extends Multimap<? super K, ? super RV, ?>, X extends Exception> M extract(final Function2<? super K, ? super V, ? extends Maybe<? extends RV>, ? extends X> extractor, final Multimap<? extends K, ? extends V, ?> bindings, final M results)
@@ -1650,9 +1637,8 @@ public class FunctionUtils {
 	 * @return The given accumulator.
 	 * @throws EX When some extractor evaluation fails.
 	 * @throws AX When some accumulation fails.
-	 * @deprecated Use
-	 *             {@link com.trazere.core.collection.MultimapUtils#extract(com.trazere.core.collection.Multimap, com.trazere.core.functional.Function2, com.trazere.core.collection.MultimapFactory)}.
-	 *             (since 2.0)
+	 * @deprecated Use {@link com.trazere.core.collection.Multimap#extract2(com.trazere.core.functional.Function2)} and
+	 *             {@link com.trazere.core.imperative.Accumulator2#addAll(Iterable)}. (since 2.0)
 	 */
 	@Deprecated
 	@SuppressWarnings("unchecked")
@@ -2156,8 +2142,7 @@ public class FunctionUtils {
 	 * @param procedure The procedure.
 	 * @param bindings The argument bindings.
 	 * @throws X When some procedure execution fails.
-	 * @deprecated Use {@link com.trazere.core.collection.MultimapUtils#foreach(com.trazere.core.collection.Multimap, com.trazere.core.imperative.Procedure2)}.
-	 *             (since 2.0)
+	 * @deprecated Use {@link com.trazere.core.collection.Multimap#foreach2(com.trazere.core.imperative.Procedure2)}. (since 2.0)
 	 */
 	@Deprecated
 	public static <K, V, X extends Exception> void execute(final Procedure2<? super K, ? super V, ? extends X> procedure, final Multimap<? extends K, ? extends V, ?> bindings)

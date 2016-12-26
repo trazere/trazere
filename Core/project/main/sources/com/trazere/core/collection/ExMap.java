@@ -95,6 +95,8 @@ extends Map<K, V>, PairTraversable<K, V> {
 	 * @see MapUtils#bindings(Map)
 	 * @since 2.0
 	 */
+	// TODO: ExSet & PairIterable => BindingSet ?
+	// TODO: PairCollection
 	default PairIterable<K, V> bindings() {
 		return MapUtils.bindings(this);
 	}
@@ -256,6 +258,8 @@ extends Map<K, V>, PairTraversable<K, V> {
 	// TODO: generalize and move to ExIterable
 	// TODO: removeAll(Predicate<? super K>)
 	
+	// TODO: retainAll(Predicate)
+	
 	/**
 	 * Retains the bindings accepted by the given filter in this map.
 	 * <p>
@@ -267,6 +271,36 @@ extends Map<K, V>, PairTraversable<K, V> {
 	 */
 	default void retainAll(final Predicate2<? super K, ? super V> filter) {
 		MapUtils.retainAll(this, filter);
+	}
+	
+	/**
+	 * Appends this map and the given map together.
+	 * <p>
+	 * The binding of this map have precedence over the bindings of the given map in case of conflict.
+	 * 
+	 * @param map Map containing the bindings to append.
+	 * @return A map containing the appended bindings.
+	 * @see MapUtils#append(Map, Map)
+	 * @since 2.0
+	 */
+	default ExMap<K, V> append(final Map<K, V> map) {
+		return MapUtils.append(this, map);
+	}
+	
+	/**
+	 * Appends this map and the given map together.
+	 * <p>
+	 * The binding of this map have precedence over the bindings of the given map in case of conflict.
+	 * 
+	 * @param <M> Type of the result map.
+	 * @param map Map containing the bindings to append.
+	 * @param resultFactory Factory of the result map.
+	 * @return A new map containing the appended bindings.
+	 * @see MapUtils#append(Map, Map, MapFactory)
+	 * @since 2.0
+	 */
+	default <M extends Map<? super K, ? super V>> M append(final Map<? extends K, ? extends V> map, final MapFactory<? super K, ? super V, M> resultFactory) {
+		return MapUtils.append(this, map, resultFactory);
 	}
 	
 	// TODO: zip ?
@@ -452,36 +486,6 @@ extends Map<K, V>, PairTraversable<K, V> {
 	}
 	
 	// TODO: extractAll2 to Multimap ?
-	
-	/**
-	 * Appends this map and the given map together.
-	 * <p>
-	 * The binding of this map have precedence over the bindings of the given map in case of conflict.
-	 * 
-	 * @param map Map containing the bindings to append.
-	 * @return A map containing the appended bindings.
-	 * @see MapUtils#append(Map, Map)
-	 * @since 2.0
-	 */
-	default ExMap<K, V> append(final Map<K, V> map) {
-		return MapUtils.append(this, map);
-	}
-	
-	/**
-	 * Appends this map and the given map together.
-	 * <p>
-	 * The binding of this map have precedence over the bindings of the given map in case of conflict.
-	 * 
-	 * @param <M> Type of the result map.
-	 * @param map Map containing the bindings to append.
-	 * @param resultFactory Factory of the result map.
-	 * @return A new map containing the appended bindings.
-	 * @see MapUtils#append(Map, Map, MapFactory)
-	 * @since 2.0
-	 */
-	default <M extends Map<? super K, ? super V>> M append(final Map<? extends K, ? extends V> map, final MapFactory<? super K, ? super V, M> resultFactory) {
-		return MapUtils.append(this, map, resultFactory);
-	}
 	
 	// TODO: flatMap to Multimap ?
 	

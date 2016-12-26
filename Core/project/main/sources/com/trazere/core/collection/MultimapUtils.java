@@ -15,25 +15,16 @@
  */
 package com.trazere.core.collection;
 
-import com.trazere.core.design.Decorator;
+import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Function2;
-import com.trazere.core.functional.Function3;
+import com.trazere.core.functional.Predicate;
 import com.trazere.core.functional.Predicate2;
-import com.trazere.core.imperative.Accumulator;
-import com.trazere.core.imperative.Procedure2;
-import com.trazere.core.lang.IterableUtils;
-import com.trazere.core.lang.LangAccumulators;
 import com.trazere.core.lang.PairIterable;
 import com.trazere.core.util.Comparators;
-import com.trazere.core.util.FieldComparators;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.NoSuchElementException;
-import java.util.Set;
 
 /**
  * The {@link MultimapUtils} class provides various utilities regarding {@link Multimap multimaps}.
@@ -43,199 +34,16 @@ import java.util.Set;
  */
 public class MultimapUtils {
 	/**
-	 * Gets a view of the bindings corresponding to the given multimap.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param multimap Multimap to read.
-	 * @return The bindings.
-	 * @since 2.0
-	 */
-	public static <K, V> PairIterable<K, V> bindings(final Multimap<? extends K, ? extends V, ?> multimap) {
-		return PairIterable.build(IterableUtils.map(multimap.entrySet(), (final Map.Entry<? extends K, ? extends V> entry) -> new Tuple2<>(entry.getKey(), entry.getValue())));
-	}
-	
-	/**
-	 * Gets a binding from the given multimap.
-	 *
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param multimap Multimap to read.
-	 * @return A binding of the multimap.
-	 * @throws NoSuchElementException When the multimap is empty.
-	 * @since 2.0
-	 */
-	public static <K, V> Tuple2<K, V> any(final Multimap<K, V, ?> multimap)
-	throws NoSuchElementException {
-		return bindings(multimap).any();
-	}
-	
-	/**
-	 * Gets a binding from the given multimap.
-	 *
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param multimap Multimap to read.
-	 * @return A binding of the multimap, or nothing when the multimap is empty.
-	 * @since 2.0
-	 */
-	public static <K, V> Maybe<Tuple2<K, V>> optionalAny(final Multimap<K, V, ?> multimap) {
-		return bindings(multimap).optionalAny();
-	}
-	
-	/**
-	 * Puts the given binding in the given multimap, or does nothing when no value is given.
-	 *
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param multimap Multimap to modify.
-	 * @param key Key which the value should be associated to.
-	 * @param value Value to associate to the key.
-	 * @since 2.0
-	 */
-	public static <K, V> void put(final Multimap<? super K, ? super V, ?> multimap, final K key, final Maybe<? extends V> value) {
-		if (value.isSome()) {
-			multimap.put(key, value.asSome().getValue());
-		}
-	}
-	
-	/**
-	 * Puts all given bindings into the given multimap.
-	 *
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param multimap Multimap to modify.
-	 * @param bindings Bindings to put in the multimap.
-	 * @since 2.0
-	 */
-	@SafeVarargs
-	public static <K, V> void putAll(final Multimap<? super K, ? super V, ?> multimap, final Tuple2<? extends K, ? extends V>... bindings) {
-		for (final Tuple2<? extends K, ? extends V> binding : bindings) {
-			multimap.put(binding.get1(), binding.get2());
-		}
-	}
-	
-	/**
-	 * Puts all given bindings into the given multimap.
-	 *
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param multimap Multimap to modify.
-	 * @param bindings Bindings to put in the multimap.
-	 * @since 2.0
-	 */
-	public static <K, V> void putAll(final Multimap<? super K, ? super V, ?> multimap, final Iterable<? extends Tuple2<? extends K, ? extends V>> bindings) {
-		for (final Tuple2<? extends K, ? extends V> binding : bindings) {
-			multimap.put(binding.get1(), binding.get2());
-		}
-	}
-	
-	// TODO: removeAny(Multimap) ?
-	// TODO: removeAny(Multimap, K) ?
-	
-	/**
-	 * Removes all given bindings from the given multimap.
-	 *
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param multimap Multimap to modify.
-	 * @param bindings Bindings to remove from the multimap.
-	 * @return <code>true</code> when the multimap has changed, <code>false</code> otherwise.
-	 * @since 2.0
-	 */
-	public static <K, V> boolean removeAll(final Multimap<? super K, ? super V, ?> multimap, final Iterable<? extends Tuple2<? extends K, ? extends V>> bindings) {
-		final Accumulator<Boolean, Boolean> changed = LangAccumulators.or(false);
-		for (final Tuple2<? extends K, ? extends V> binding : bindings) {
-			changed.add(multimap.remove(binding.get1(), binding.get2()));
-		}
-		return changed.get().booleanValue();
-	}
-	
-	// TODO: retain(Multimap, Predicate2), requires Iterator.remove support for entrySet
-	
-	/**
-	 * Left folds over the bindings of the given multimap using the given operator and initial state.
-	 *
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <S> Type of the state.
-	 * @param multimap Multimap containing the bindings to fold over.
-	 * @param operator Operator to use.
-	 * @param initialState Initial state.
-	 * @return The folded state.
-	 * @since 2.0
-	 */
-	public static <K, V, S> S fold(final Multimap<? extends K, ? extends V, ?> multimap, final Function3<? super S, ? super K, ? super V, ? extends S> operator, final S initialState) {
-		return bindings(multimap).fold2(operator, initialState);
-	}
-	
-	/**
-	 * Tests whether any binding of the given multimap is accepted by the given filter.
-	 *
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param multimap Multimap containing the bindings to test.
-	 * @param filter Predicate to use to filter the binding.
-	 * @return <code>true</code> when some binding is accepted, <code>false</code> when all bindings are rejected or when the multimap is empty.
-	 * @since 2.0
-	 */
-	public static <K, V> boolean isAny(final Multimap<? extends K, ? extends V, ?> multimap, final Predicate2<? super K, ? super V> filter) {
-		return bindings(multimap).isAny2(filter);
-	}
-	
-	/**
-	 * Tests whether all bindings of the given multimap are accepted by the given filter.
-	 *
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param multimap Multimap containing the bindings to test.
-	 * @param filter Predicate to use to filter the binding.
-	 * @return <code>true</code> when all bindings are accepted or when the multimap is empty, <code>false</code> when some binding is rejected.
-	 * @since 2.0
-	 */
-	public static <K, V> boolean areAll(final Multimap<? extends K, ? extends V, ?> multimap, final Predicate2<? super K, ? super V> filter) {
-		return bindings(multimap).areAll2(filter);
-	}
-	
-	/**
-	 * Counts the bindings of the given multimap accepted by the given filter.
-	 *
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param multimap Multimap containing the bindings to count.
-	 * @param filter Predicate to use to filter the binding.
-	 * @return The number of accepted bindings.
-	 * @since 2.0
-	 */
-	public static <K, V> int count(final Multimap<? extends K, ? extends V, ?> multimap, final Predicate2<? super K, ? super V> filter) {
-		return bindings(multimap).count2(filter);
-	}
-	
-	/**
 	 * Gets the binding with the least value of the given multimap.
 	 *
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param multimap Multimap containing the values to compare.
-	 * @return The least element.
+	 * @return The binding with the least value, or nothing when the map is empty.
 	 * @since 2.0
 	 */
-	public static <K, V extends Comparable<V>> Maybe<Tuple2<K, V>> least(final Multimap<? extends K, ? extends V, ?> multimap) {
-		return least(multimap, Comparators.<V>natural());
-	}
-	
-	/**
-	 * Gets the binding with the least value of the given multimap according to the given comparator.
-	 *
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param multimap Multimap containing the values to compare.
-	 * @param comparator Comparator to use.
-	 * @return The least element.
-	 * @since 2.0
-	 */
-	public static <K, V> Maybe<Tuple2<K, V>> least(final Multimap<? extends K, ? extends V, ?> multimap, final Comparator<? super V> comparator) {
-		return MultimapUtils.<K, V>bindings(multimap).least(FieldComparators.field2(comparator));
+	public static <K, V extends Comparable<V>> Maybe<Tuple2<K, V>> leastByValue(final Multimap<K, V, ?> multimap) {
+		return multimap.leastByValue(Comparators.<V>natural());
 	}
 	
 	/**
@@ -244,171 +52,14 @@ public class MultimapUtils {
 	 * @param <K> Type of the keys.
 	 * @param <V> Type of the values.
 	 * @param multimap Multimap containing the values to compare.
-	 * @return The greatest element.
+	 * @return The binding with the greatest value, or nothing when the map is empty.
 	 * @since 2.0
 	 */
-	public static <K, V extends Comparable<V>> Maybe<Tuple2<K, V>> greatest(final Multimap<? extends K, ? extends V, ?> multimap) {
-		return greatest(multimap, Comparators.<V>natural());
+	public static <K, V extends Comparable<V>> Maybe<Tuple2<K, V>> greatestByValue(final Multimap<K, V, ?> multimap) {
+		return multimap.greatestByValue(Comparators.<V>natural());
 	}
 	
-	/**
-	 * Gets the binding with the greatest value of the given multimap according to the given comparator.
-	 *
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param multimap Multimap containing the values to compare.
-	 * @param comparator Comparator to use.
-	 * @return The greatest element.
-	 * @since 2.0
-	 */
-	public static <K, V> Maybe<Tuple2<K, V>> greatest(final Multimap<? extends K, ? extends V, ?> multimap, final Comparator<? super V> comparator) {
-		return MultimapUtils.<K, V>bindings(multimap).greatest(FieldComparators.field2(comparator));
-	}
-	
-	// TODO: append
 	// TODO: flatten
-	
-	/**
-	 * Takes n bindings of the given multimap.
-	 *
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <M> Type of the result multimap.
-	 * @param multimap Multimap containing the bindings to take.
-	 * @param n Number of bindings to take.
-	 * @param resultFactory Factory of the result multimap.
-	 * @return A multimap containing the taken bindings.
-	 * @since 2.0
-	 */
-	public static <K, V, M extends Multimap<? super K, ? super V, ?>> M take(final Multimap<? extends K, ? extends V, ?> multimap, final int n, final MultimapFactory<? super K, ? super V, ?, M> resultFactory) {
-		return resultFactory.build(bindings(multimap).take(n));
-	}
-	
-	/**
-	 * Drops n bindings of the given multimap.
-	 *
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <M> Type of the result multimap.
-	 * @param multimap Multimap containing the bindings to drop.
-	 * @param n Number of bindings to drop.
-	 * @param resultFactory Factory of the result multimap.
-	 * @return A multimap containing the remaining bindings.
-	 * @since 2.0
-	 */
-	public static <K, V, M extends Multimap<? super K, ? super V, ?>> M drop(final Multimap<? extends K, ? extends V, ?> multimap, final int n, final MultimapFactory<? super K, ? super V, ?, M> resultFactory) {
-		return resultFactory.build(bindings(multimap).drop(n));
-	}
-	
-	/**
-	 * Filters the bindings of the given multimap using the given filter.
-	 *
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <M> Type of the result multimap.
-	 * @param multimap Multimap containing the bindings to filter.
-	 * @param filter Predicate to use to filter the bindings.
-	 * @param resultFactory Factory of the result multimap.
-	 * @return A multimap containing the filtered bindings.
-	 * @since 2.0
-	 */
-	public static <K, V, M extends Multimap<? super K, ? super V, ?>> M filter(final Multimap<? extends K, ? extends V, ?> multimap, final Predicate2<? super K, ? super V> filter, final MultimapFactory<? super K, ? super V, ?, M> resultFactory) {
-		//		return resultFactory.build(IterableUtils.filter(bindings(multimap), filter));
-		
-		final M result = resultFactory.build();
-		for (final Map.Entry<? extends K, ? extends V> entry : multimap.entrySet()) {
-			final K key = entry.getKey();
-			final V value = entry.getValue();
-			if (filter.evaluate(key, value)) {
-				result.put(key, value);
-			}
-		}
-		return result;
-	}
-	
-	/**
-	 * Gets any binding of the given multimap accepted by the given filter.
-	 *
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param multimap Multimap containing the bindings to filter.
-	 * @param filter Predicate to use to filter the binding.
-	 * @return The accepted binding, or when no binding is accepted or the the multimap is empty.
-	 * @since 2.0
-	 */
-	public static <K, V> Maybe<Tuple2<K, V>> filterAny(final Multimap<? extends K, ? extends V, ?> multimap, final Predicate2<? super K, ? super V> filter) {
-		return MultimapUtils.<K, V>bindings(multimap).filterAny2(filter);
-	}
-	
-	/**
-	 * Transforms the bindings of the given multimap using the given function.
-	 *
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <TV> Type of the transformed values.
-	 * @param <M> Type of the result multimap.
-	 * @param multimap Multimap containing the bindings to transform.
-	 * @param function Function to use to transform the bindings.
-	 * @param resultFactory Factory of the result multimap.
-	 * @return A multimap containing the transformed bindings.
-	 * @since 2.0
-	 */
-	public static <K, V, TV, M extends Multimap<? super K, ? super TV, ?>> M map(final Multimap<? extends K, ? extends V, ?> multimap, final Function2<? super K, ? super V, ? extends TV> function, final MultimapFactory<? super K, ? super TV, ?, M> resultFactory) {
-		//		return resultFactory.build(IterableUtils.map(bindings(multimap), (k, v) -> new Tuple2<>(k, function.evaluate(k, v))));
-		
-		final M results = resultFactory.build();
-		for (final Map.Entry<? extends K, ? extends V> entry : multimap.entrySet()) {
-			final K key = entry.getKey();
-			results.put(key, function.evaluate(key, entry.getValue()));
-		}
-		return results;
-	}
-	
-	/**
-	 * Extracts the bindings of the given multimap using the given extractor.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param <EV> Type of the extracted values.
-	 * @param <M> Type of the result multimap.
-	 * @param multimap Multimap containing the bindings to extract.
-	 * @param extractor Function to use to extract the bindings.
-	 * @param resultFactory Factory of the result multimap.
-	 * @return A multimap containing the extracted bindings.
-	 * @since 2.0
-	 */
-	public static <K, V, EV, M extends Multimap<? super K, ? super EV, ?>> M extract(final Multimap<? extends K, ? extends V, ?> multimap, final Function2<? super K, ? super V, ? extends Maybe<? extends EV>> extractor, final MultimapFactory<? super K, ? super EV, ?, M> resultFactory) {
-		//		return resultFactory.build(IterableUtils.extract(bindings(multimap), (k, v) -> extractor.evaluate(k, v).map(ev -> new Tuple2<>(k, ev))));
-		
-		final M results = resultFactory.build();
-		for (final Map.Entry<? extends K, ? extends V> entry : multimap.entrySet()) {
-			final K key = entry.getKey();
-			final Maybe<? extends EV> extractedValue = extractor.evaluate(key, entry.getValue());
-			if (extractedValue.isSome()) {
-				results.put(key, extractedValue.asSome().getValue());
-			}
-		}
-		return results;
-	}
-	
-	// TODO: extractAny
-	
-	// TODO: extractAll
-	
-	// TODO: retain(Multimap, Predicate2), requires Iterator.remove support for entrySet
-	
-	/**
-	 * Executes the given procedure with each binding of the given multimap.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param multimap Multimap containing the bindings.
-	 * @param procedure Procedure to execute.
-	 * @since 2.0
-	 */
-	public static <K, V> void foreach(final Multimap<? extends K, ? extends V, ?> multimap, final Procedure2<? super K, ? super V> procedure) {
-		bindings(multimap).foreach2(procedure);
-	}
 	
 	/**
 	 * Builds an unmodifiable view of the given multimap.
@@ -427,8 +78,7 @@ public class MultimapUtils {
 	}
 	
 	private static class UnmodifiableMutimap<K, V, C extends Collection<V>>
-	extends Decorator<Multimap<K, V, C>>
-	implements Multimap<K, V, C> {
+	extends MultimapDecorator<K, V, C> {
 		public UnmodifiableMutimap(final Multimap<K, V, C> decorated) {
 			super(decorated);
 		}
@@ -436,7 +86,37 @@ public class MultimapUtils {
 		// Multimap.
 		
 		@Override
+		public ExSet<K> keys() {
+			return super.keys().unmodifiable();
+		}
+		
+		@Override
+		public ExCollection<V> values() {
+			return super.values().unmodifiable();
+		}
+		
+		@Override
+		public PairIterable<K, V> bindings() {
+			return super.bindings().unmodifiable();
+		}
+		
+		@Override
+		public PairIterable<K, C> collectionBindings() {
+			return super.collectionBindings().unmodifiable();
+		}
+		
+		@Override
 		public boolean put(final K key, final V value) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean put(final Tuple2<? extends K, ? extends V> binding) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean putAll(final K key, @SuppressWarnings("unchecked") final V... values) {
 			throw new UnsupportedOperationException();
 		}
 		
@@ -446,67 +126,22 @@ public class MultimapUtils {
 		}
 		
 		@Override
+		public boolean putAll(@SuppressWarnings("unchecked") final Tuple2<? extends K, ? extends V>... bindings) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean putAll(final Iterable<? extends Tuple2<? extends K, ? extends V>> bindings) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean putAll(final Map<? extends K, ? extends V> map) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
 		public boolean putAll(final Multimap<? extends K, ? extends V, ?> multimap_) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean isEmpty() {
-			return _decorated.isEmpty();
-		}
-		
-		@Override
-		public int size() {
-			return _decorated.size();
-		}
-		
-		@Override
-		public boolean containsKey(final K key) {
-			return _decorated.containsKey(key);
-		}
-		
-		@Override
-		public Set<K> keySet() {
-			return _decorated.keySet();
-		}
-		
-		@Override
-		public boolean contains(final K key, final V value) {
-			return _decorated.contains(key, value);
-		}
-		
-		@Override
-		public Set<Map.Entry<K, V>> entrySet() {
-			return _decorated.entrySet();
-		}
-		
-		@Override
-		public Set<Entry<K, C>> collectionEntrySet() {
-			return _decorated.collectionEntrySet();
-		}
-		
-		@Override
-		public C get(final K key) {
-			return _decorated.get(key);
-		}
-		
-		@Override
-		public boolean containsValue(final V value) {
-			return _decorated.containsValue(value);
-		}
-		
-		@Override
-		public void clear() {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean remove(final K key, final V value) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean removeAll(final K key, final Iterable<? extends V> values) {
 			throw new UnsupportedOperationException();
 		}
 		
@@ -520,21 +155,83 @@ public class MultimapUtils {
 			throw new UnsupportedOperationException();
 		}
 		
-		// Object.
-		
 		@Override
-		public int hashCode() {
-			return _decorated.hashCode();
+		public boolean remove(final K key, final V value) {
+			throw new UnsupportedOperationException();
 		}
 		
 		@Override
-		public boolean equals(final Object o) {
-			return _decorated.equals(o);
+		public boolean removeAll(final K key, @SuppressWarnings("unchecked") final V... values) {
+			throw new UnsupportedOperationException();
 		}
 		
 		@Override
-		public String toString() {
-			return _decorated.toString();
+		public boolean removeAll(final K key, final Iterable<? extends V> values) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean removeAll(@SuppressWarnings("unchecked") final Tuple2<? extends K, ? extends V>... bindings) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public boolean removeAll(final Iterable<? extends Tuple2<? extends K, ? extends V>> bindings) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public void clear() {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public Multimap<K, V, C> unmodifiable() {
+			return this;
+		}
+		
+		// PairTranversable.
+		
+		@Override
+		public Multimap<K, V, C> filter2(final Predicate2<? super K, ? super V> filter) {
+			return super.filter2(filter).unmodifiable();
+		}
+		
+		@Override
+		public <TE> ExCollection<TE> map2(final Function2<? super K, ? super V, ? extends TE> function) {
+			return super.<TE>map2(function).unmodifiable();
+		}
+		
+		@Override
+		public <EE> ExCollection<EE> extract2(final Function2<? super K, ? super V, ? extends Maybe<? extends EE>> extractor) {
+			return super.<EE>extract2(extractor).unmodifiable();
+		}
+		
+		// Traversable.
+		
+		@Override
+		public Multimap<K, V, C> take(final int n) {
+			return super.take(n).unmodifiable();
+		}
+		
+		@Override
+		public Multimap<K, V, C> drop(final int n) {
+			return super.drop(n).unmodifiable();
+		}
+		
+		@Override
+		public Multimap<K, V, C> filter(final Predicate<? super Tuple2<K, V>> filter) {
+			return super.filter(filter).unmodifiable();
+		}
+		
+		@Override
+		public <TE> ExCollection<TE> map(final Function<? super Tuple2<K, V>, ? extends TE> function) {
+			return super.<TE>map(function).unmodifiable();
+		}
+		
+		@Override
+		public <EE> ExCollection<EE> extract(final Function<? super Tuple2<K, V>, ? extends Maybe<? extends EE>> extractor) {
+			return super.<EE>extract(extractor).unmodifiable();
 		}
 	}
 	

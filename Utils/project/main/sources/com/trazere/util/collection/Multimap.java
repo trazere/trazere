@@ -95,7 +95,7 @@ public interface Multimap<K, V, C extends Collection<V>> {
 	 * Gets the keys associated to some values in the receiver multimap.
 	 * 
 	 * @return The keys.
-	 * @deprecated Use {@link com.trazere.core.collection.Multimap#keySet()}.
+	 * @deprecated Use {@link com.trazere.core.collection.Multimap#keys()}.
 	 */
 	@Deprecated
 	public Set<K> keySet();
