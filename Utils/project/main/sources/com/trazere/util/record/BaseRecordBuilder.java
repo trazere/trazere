@@ -46,7 +46,7 @@ implements RecordBuilder<K, V, R>, Describable {
 	@Deprecated
 	public BaseRecordBuilder() {
 		// Initialization.
-		_fields = new HashMap<K, V>();
+		_fields = new HashMap<>();
 	}
 	
 	/**
@@ -60,7 +60,7 @@ implements RecordBuilder<K, V, R>, Describable {
 		assert null != fields;
 		
 		// Initialization.
-		_fields = new HashMap<K, V>(fields);
+		_fields = new HashMap<>(fields);
 	}
 	
 	/**
@@ -76,7 +76,7 @@ implements RecordBuilder<K, V, R>, Describable {
 		assert null != record;
 		
 		// Initialization.
-		_fields = new HashMap<K, V>(record.asMap());
+		_fields = new HashMap<>(record.asMap());
 	}
 	
 	/**
@@ -90,7 +90,7 @@ implements RecordBuilder<K, V, R>, Describable {
 		assert null != builder;
 		
 		// Populate.
-		_fields = new HashMap<K, V>();
+		_fields = new HashMap<>();
 		try {
 			builder.populate(this);
 		} catch (final DuplicateFieldException exception) {

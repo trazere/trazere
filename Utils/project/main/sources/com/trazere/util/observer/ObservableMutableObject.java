@@ -62,7 +62,7 @@ implements ObservableValue<T> {
 	protected final SimpleObservable<T> _observable = buildObservable();
 	
 	protected SimpleObservable<T> buildObservable() {
-		return new SimpleObservable<T>();
+		return new SimpleObservable<>();
 	}
 	
 	@Override

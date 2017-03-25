@@ -48,7 +48,7 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 	@Deprecated
 	public BaseRecordSignatureBuilder() {
 		// Initialization.
-		_fields = new HashMap<K, FieldSignature<K, ? extends V>>();
+		_fields = new HashMap<>();
 	}
 	
 	/**
@@ -62,7 +62,7 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 		assert null != fields;
 		
 		// Initialization.
-		_fields = new HashMap<K, FieldSignature<K, ? extends V>>(fields);
+		_fields = new HashMap<>(fields);
 	}
 	
 	/**
@@ -78,7 +78,7 @@ implements RecordSignatureBuilder<K, V, R>, Describable {
 		assert null != signature;
 		
 		// Initialization.
-		_fields = new HashMap<K, FieldSignature<K, ? extends V>>(signature.asMap());
+		_fields = new HashMap<>(signature.asMap());
 	}
 	
 	@Override

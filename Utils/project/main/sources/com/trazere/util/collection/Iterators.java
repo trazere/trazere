@@ -108,6 +108,7 @@ public class Iterators {
 	 * @deprecated Use {@link com.trazere.core.imperative.Iterators#fromElements(Object...)}.
 	 */
 	@Deprecated
+	@SafeVarargs
 	public static <T> Iterator<T> fromValues(final T... values) {
 		assert null != values;
 		

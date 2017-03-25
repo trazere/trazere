@@ -48,7 +48,7 @@ implements RecordReader<K, V> {
 	throws ValueException {
 		assert null != reader;
 		
-		final SimpleRecordReaderBuilder<K, V> builder = new SimpleRecordReaderBuilder<K, V>();
+		final SimpleRecordReaderBuilder<K, V> builder = new SimpleRecordReaderBuilder<>();
 		for (final K key : getKeys()) {
 			try {
 				builder.add(key, get(key).compose(reader));

@@ -130,7 +130,7 @@ public class RecordUtils {
 		assert null != keys;
 		assert null != factory;
 		
-		final Map<K, V> fields = new HashMap<K, V>();
+		final Map<K, V> fields = new HashMap<>();
 		for (final K key : record.getKeys()) {
 			if (keys.evaluate(key)) {
 				final V value;
@@ -294,7 +294,7 @@ public class RecordUtils {
 		assert null != factory;
 		
 		// Copy the fields of the first record.
-		final Map<K, V> fields = new HashMap<K, V>(record1.asMap());
+		final Map<K, V> fields = new HashMap<>(record1.asMap());
 		
 		// Copy the fields of the second record.
 		for (final Map.Entry<? extends K, ? extends V> entry : record2.asMap().entrySet()) {

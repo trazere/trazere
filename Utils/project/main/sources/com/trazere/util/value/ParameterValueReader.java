@@ -47,7 +47,7 @@ extends BaseValueReader<T> {
 	 */
 	@Deprecated
 	public static <T> ParameterValueReader<T> build(final String name, final Class<T> type) {
-		return new ParameterValueReader<T>(name, type, true);
+		return new ParameterValueReader<>(name, type, true);
 	}
 	
 	/**
@@ -62,7 +62,7 @@ extends BaseValueReader<T> {
 	 */
 	@Deprecated
 	public static <T> ParameterValueReader<T> build(final String name, final Class<T> type, final boolean nullable) {
-		return new ParameterValueReader<T>(name, type, nullable);
+		return new ParameterValueReader<>(name, type, nullable);
 	}
 	
 	/**
@@ -75,7 +75,7 @@ extends BaseValueReader<T> {
 	 */
 	@Deprecated
 	public static <T> ParameterValueReader<T> build(final FieldSignature<String, T> signature) {
-		return new ParameterValueReader<T>(signature);
+		return new ParameterValueReader<>(signature);
 	}
 	
 	/** The name of the parameter to read. */

@@ -17,6 +17,7 @@ package com.trazere.util.function;
 
 import com.trazere.util.collection.CollectionUtils;
 import com.trazere.util.lang.LangUtils;
+import com.trazere.util.type.Maybe;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -245,7 +246,7 @@ public class Predicates {
 		assert null != predicates;
 		
 		if (predicates.size() < 2) {
-			return (Predicate1<T, X>) CollectionUtils.any(predicates).get(Predicates.<T, X>all());
+			return (Predicate1<T, X>) Maybe.get(CollectionUtils.any(predicates), Predicates.<T, X>all());
 		} else {
 			return new Predicate1<T, X>() {
 				@Override
@@ -278,7 +279,7 @@ public class Predicates {
 		assert null != predicates;
 		
 		if (predicates.size() < 2) {
-			return (Predicate2<T1, T2, X>) CollectionUtils.any(predicates).get(Predicates.<T1, T2, X>none2());
+			return (Predicate2<T1, T2, X>) Maybe.get(CollectionUtils.any(predicates), Predicates.<T1, T2, X>none2());
 		} else {
 			return new Predicate2<T1, T2, X>() {
 				@Override
@@ -359,7 +360,7 @@ public class Predicates {
 		assert null != predicates;
 		
 		if (predicates.size() < 2) {
-			return (Predicate1<T, X>) CollectionUtils.any(predicates).get(Predicates.<T, X>none());
+			return (Predicate1<T, X>) Maybe.get(CollectionUtils.any(predicates), Predicates.none());
 		} else {
 			return new Predicate1<T, X>() {
 				@Override
@@ -392,7 +393,7 @@ public class Predicates {
 		assert null != predicates;
 		
 		if (predicates.size() < 2) {
-			return (Predicate2<T1, T2, X>) CollectionUtils.any(predicates).get(Predicates.<T1, T2, X>none2());
+			return (Predicate2<T1, T2, X>) Maybe.get(CollectionUtils.any(predicates), Predicates.<T1, T2, X>none2());
 		} else {
 			return new Predicate2<T1, T2, X>() {
 				@Override
@@ -463,10 +464,11 @@ public class Predicates {
 	 * @deprecated Use {@link com.trazere.core.functional.Predicates#values(Object...)}.
 	 */
 	@Deprecated
+	@SafeVarargs
 	public static <T, X extends Exception> Predicate1<T, X> values(final T... values) {
 		assert null != values;
 		
-		return values(new HashSet<T>(Arrays.asList(values)));
+		return values(new HashSet<>(Arrays.asList(values)));
 	}
 	
 	/**
@@ -501,7 +503,7 @@ public class Predicates {
 	@Deprecated
 	public static <T, X extends Exception> Predicate1<T, X> normalizer() {
 		return new Predicate1<T, X>() {
-			private final Set<T> _visitedValues = new HashSet<T>();
+			private final Set<T> _visitedValues = new HashSet<>();
 			
 			@Override
 			public boolean evaluate(final T value)

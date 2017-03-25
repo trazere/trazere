@@ -16,7 +16,6 @@
 package com.trazere.util.type;
 
 import com.trazere.util.function.Function1;
-import com.trazere.util.function.Function3;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.LangUtils;
 
@@ -47,31 +46,32 @@ extends Tuple2<T1, T2> {
 	 */
 	@Deprecated
 	public static <T1, T2, T3> Tuple3<T1, T2, T3> build(final T1 first, final T2 second, final T3 third) {
-		return new Tuple3<T1, T2, T3>(first, second, third);
+		return new Tuple3<>(first, second, third);
 	}
 	
-	/**
-	 * Builds a function which wraps its arguments in {@link Tuple3} instances (currying).
-	 * 
-	 * @param <T1> Type of the first value.
-	 * @param <T2> Type of the second value.
-	 * @param <T3> Type of the third value.
-	 * @param <X> Type of the exceptions.
-	 * @return The built function.
-	 * @deprecated Use {@link com.trazere.core.util.TupleFunctions#tuple3()}.
-	 */
-	@Deprecated
-	@SuppressWarnings("unchecked")
-	public static <T1, T2, T3, X extends Exception> Function3<T1, T2, T3, Tuple3<T1, T2, T3>, X> buildFunction() {
-		return (Function3<T1, T2, T3, Tuple3<T1, T2, T3>, X>) _BUILD_FUNCTION;
-	}
-	
-	private static final Function3<?, ?, ?, ?, ?> _BUILD_FUNCTION = new Function3<Object, Object, Object, Tuple3<Object, Object, Object>, RuntimeException>() {
-		@Override
-		public Tuple3<Object, Object, Object> evaluate(final Object first, final Object second, final Object third) {
-			return Tuple3.build(first, second, third);
-		}
-	};
+	// TODO: name clash
+	//	/**
+	//	 * Builds a function which wraps its arguments in {@link Tuple3} instances (currying).
+	//	 *
+	//	 * @param <T1> Type of the first value.
+	//	 * @param <T2> Type of the second value.
+	//	 * @param <T3> Type of the third value.
+	//	 * @param <X> Type of the exceptions.
+	//	 * @return The built function.
+	//	 * @deprecated Use {@link com.trazere.core.util.TupleFunctions#tuple3()}.
+	//	 */
+	//	@Deprecated
+	//	@SuppressWarnings("unchecked")
+	//	public static <T1, T2, T3, X extends Exception> Function3<T1, T2, T3, Tuple3<T1, T2, T3>, X> buildFunction() {
+	//		return (Function3<T1, T2, T3, Tuple3<T1, T2, T3>, X>) _BUILD_FUNCTION;
+	//	}
+	//
+	//	private static final Function3<?, ?, ?, ?, ?> _BUILD_FUNCTION = new Function3<Object, Object, Object, Tuple3<Object, Object, Object>, RuntimeException>() {
+	//		@Override
+	//		public Tuple3<Object, Object, Object> evaluate(final Object first, final Object second, final Object third) {
+	//			return Tuple3.build(first, second, third);
+	//		}
+	//	};
 	
 	/**
 	 * Instantiates a new instance with the given values.

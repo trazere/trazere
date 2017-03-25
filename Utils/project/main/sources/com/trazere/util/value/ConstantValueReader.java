@@ -45,7 +45,7 @@ extends BaseValueReader<T> {
 	 */
 	@Deprecated
 	public static <T> ConstantValueReader<T> build(final T value, final Class<T> type) {
-		return new ConstantValueReader<T>(value, type);
+		return new ConstantValueReader<>(value, type);
 	}
 	
 	/** The produced value. May be <code>null</code>. */

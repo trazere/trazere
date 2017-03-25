@@ -49,7 +49,7 @@ implements Serializable, Describable {
 	 */
 	@Deprecated
 	public static <L, R> Either<L, R> left(final L left) {
-		return new Left<L, R>(left);
+		return new Left<>(left);
 	}
 	
 	/**
@@ -85,7 +85,7 @@ implements Serializable, Describable {
 	 */
 	@Deprecated
 	public static <L, R> Either<L, R> right(final R right) {
-		return new Right<L, R>(right);
+		return new Right<>(right);
 	}
 	
 	/**

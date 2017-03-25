@@ -76,6 +76,6 @@ extends BaseRecordBuilder<K, V, SimpleRecord<K, V>> {
 	
 	@Override
 	public SimpleRecord<K, V> build() {
-		return new SimpleRecord<K, V>(new HashMap<K, V>(_fields));
+		return new SimpleRecord<>(new HashMap<>(_fields));
 	}
 }

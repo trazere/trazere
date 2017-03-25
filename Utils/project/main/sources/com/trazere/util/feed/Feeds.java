@@ -143,12 +143,14 @@ public class Feeds {
 	 * @deprecated Use {@link com.trazere.core.collection.Feeds#fromElements(Object...)}.
 	 */
 	@Deprecated
+	@SafeVarargs
 	public static <T, X extends Exception> Feed<T, X> fromValues(final T... values) {
 		assert null != values;
 		
 		return fromValues(0, values);
 	}
 	
+	@SafeVarargs
 	private static <T, X extends Exception> Feed<T, X> fromValues(final int index, final T... values) {
 		return new Feed<T, X>() {
 			// Feed.

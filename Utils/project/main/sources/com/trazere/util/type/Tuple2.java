@@ -16,7 +16,6 @@
 package com.trazere.util.type;
 
 import com.trazere.util.function.Function1;
-import com.trazere.util.function.Function2;
 import com.trazere.util.lang.HashCode;
 import com.trazere.util.lang.LangUtils;
 
@@ -44,30 +43,31 @@ extends Tuple1<T1> {
 	 */
 	@Deprecated
 	public static <T1, T2> Tuple2<T1, T2> build(final T1 first, final T2 second) {
-		return new Tuple2<T1, T2>(first, second);
+		return new Tuple2<>(first, second);
 	}
 	
-	/**
-	 * Builds a function which wraps its arguments in {@link Tuple2} instances (currying).
-	 * 
-	 * @param <T1> Type of the first value.
-	 * @param <T2> Type of the second value.
-	 * @param <X> Type of the exceptions.
-	 * @return The built function.
-	 * @deprecated {@link com.trazere.core.util.TupleFunctions#tuple2()}.
-	 */
-	@Deprecated
-	@SuppressWarnings("unchecked")
-	public static <T1, T2, X extends Exception> Function2<T1, T2, Tuple2<T1, T2>, X> buildFunction() {
-		return (Function2<T1, T2, Tuple2<T1, T2>, X>) _BUILD_FUNCTION;
-	}
-	
-	private static final Function2<?, ?, ?, ?> _BUILD_FUNCTION = new Function2<Object, Object, Tuple2<Object, Object>, RuntimeException>() {
-		@Override
-		public Tuple2<Object, Object> evaluate(final Object first, final Object second) {
-			return Tuple2.build(first, second);
-		}
-	};
+	// TODO: name clash
+	//	/**
+	//	 * Builds a function which wraps its arguments in {@link Tuple2} instances (currying).
+	//	 *
+	//	 * @param <T1> Type of the first value.
+	//	 * @param <T2> Type of the second value.
+	//	 * @param <X> Type of the exceptions.
+	//	 * @return The built function.
+	//	 * @deprecated {@link com.trazere.core.util.TupleFunctions#tuple2()}.
+	//	 */
+	//	@Deprecated
+	//	@SuppressWarnings("unchecked")
+	//	public static <T1, T2, X extends Exception> Function2<T1, T2, Tuple2<T1, T2>, X> buildFunction() {
+	//		return (Function2<T1, T2, Tuple2<T1, T2>, X>) _BUILD_FUNCTION;
+	//	}
+	//
+	//	private static final Function2<?, ?, ?, ?> _BUILD_FUNCTION = new Function2<Object, Object, Tuple2<Object, Object>, RuntimeException>() {
+	//		@Override
+	//		public Tuple2<Object, Object> evaluate(final Object first, final Object second) {
+	//			return Tuple2.build(first, second);
+	//		}
+	//	};
 	
 	/**
 	 * Instantiates a new instance with the given values.

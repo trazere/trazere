@@ -485,10 +485,10 @@ public class FunctionUtils {
 	@Deprecated
 	public static <K, V, X extends Exception> Maybe<Tuple2<K, V>> first(final Predicate2<? super K, ? super V, ? extends X> predicate, final Multimap<? extends K, ? extends V, ?> bindings)
 	throws X {
-		return first_(predicate, bindings).map(new Function1<Tuple2<? extends K, V>, Tuple2<K, V>, InternalException>() {
+		return first_(predicate, bindings).map(new Function1<Tuple2<? extends K, ? extends V>, Tuple2<K, V>, X>() {
 			@Override
-			public Tuple2<K, V> evaluate(final Tuple2<? extends K, V> value) {
-				return new Tuple2<K, V>(value.getFirst(), value.getSecond());
+			public Tuple2<K, V> evaluate(final Tuple2<? extends K, ? extends V> value) {
+				return new Tuple2<>(value.getFirst(), value.getSecond());
 			}
 		});
 	}

@@ -74,7 +74,7 @@ implements Function1<K, V, X> {
 	@Deprecated
 	public LazyMap() {
 		// Initialization.
-		_mappings = new HashMap<K, V>();
+		_mappings = new HashMap<>();
 	}
 	
 	/**
@@ -88,7 +88,7 @@ implements Function1<K, V, X> {
 		assert null != mappings;
 		
 		// Initialization.
-		_mappings = new HashMap<K, V>(mappings);
+		_mappings = new HashMap<>(mappings);
 	}
 	
 	/**

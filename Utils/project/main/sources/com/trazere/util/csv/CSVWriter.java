@@ -64,7 +64,7 @@ public class CSVWriter {
 		// Initialization.
 		_writer = writer;
 		_delimiter = delimiter;
-		_headers = Collections.unmodifiableList(new ArrayList<String>(headers));
+		_headers = Collections.unmodifiableList(new ArrayList<>(headers));
 		_options = Collections.unmodifiableSet(EnumSet.copyOf((Collection<CSVWriterOption>) options)); // FIXME: useless cast, eclipse bug workaround
 	}
 	

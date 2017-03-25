@@ -49,11 +49,11 @@ public class RecordComparators {
 		assert null != comparator;
 		
 		// Build the comparator.
-		final List<Comparator<R>> comparators = new ArrayList<Comparator<R>>();
+		final List<Comparator<R>> comparators = new ArrayList<>();
 		for (final K criteria : criterion) {
 			comparators.add(InverseComparator.build(new RecordComparator<K, V, R>(criteria, comparator), ascending));
 		}
-		return new SequenceComparator<R>(comparators);
+		return new SequenceComparator<>(comparators);
 	}
 	
 	/**
@@ -74,11 +74,11 @@ public class RecordComparators {
 		assert null != criterion;
 		
 		// Build the comparator.
-		final List<Comparator<R>> comparators = new ArrayList<Comparator<R>>();
+		final List<Comparator<R>> comparators = new ArrayList<>();
 		for (final Tuple2<K, Boolean> criteria : criterion) {
 			comparators.add(InverseComparator.build(new RecordComparator<K, V, R>(criteria.getFirst(), comparator), criteria.getSecond().booleanValue()));
 		}
-		return new SequenceComparator<R>(comparators);
+		return new SequenceComparator<>(comparators);
 	}
 	
 	private RecordComparators() {

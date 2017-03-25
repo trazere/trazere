@@ -49,7 +49,7 @@ extends Tuple3<T1, T2, T3> {
 	 */
 	@Deprecated
 	public static <T1, T2, T3, T4> Tuple4<T1, T2, T3, T4> build(final T1 first, final T2 second, final T3 third, final T4 fourth) {
-		return new Tuple4<T1, T2, T3, T4>(first, second, third, fourth);
+		return new Tuple4<>(first, second, third, fourth);
 	}
 	
 	/**

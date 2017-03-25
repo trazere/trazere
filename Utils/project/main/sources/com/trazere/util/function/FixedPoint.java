@@ -60,7 +60,7 @@ implements Function1<T, T, X> {
 	@Override
 	public T evaluate(final T initial)
 	throws X {
-		final MutableObject<T> accumulator = new MutableObject<T>(initial);
+		final MutableObject<T> accumulator = new MutableObject<>(initial);
 		while (true) {
 			final T previousValue = accumulator.get();
 			final T value = evaluateStep(previousValue);

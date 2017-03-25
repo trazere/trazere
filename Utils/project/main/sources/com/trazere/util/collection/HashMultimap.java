@@ -96,7 +96,7 @@ implements Multimap<K, V, C> {
 	// Values.
 	
 	/** The collections of values associated to their keys. */
-	protected final Map<K, C> _values = new HashMap<K, C>();
+	protected final Map<K, C> _values = new HashMap<>();
 	
 	/**
 	 * Gets the collection of values associated to the given key, making it if necessary.

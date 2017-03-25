@@ -47,7 +47,7 @@ implements Describable {
 	 */
 	@Deprecated
 	public static <K, V> FieldSignature<K, V> build(final K key, final Class<V> type) {
-		return new FieldSignature<K, V>(key, type);
+		return new FieldSignature<>(key, type);
 	}
 	
 	/**
@@ -63,7 +63,7 @@ implements Describable {
 	 */
 	@Deprecated
 	public static <K, V> FieldSignature<K, V> build(final K key, final Class<V> type, final boolean nullable) {
-		return new FieldSignature<K, V>(key, type, nullable);
+		return new FieldSignature<>(key, type, nullable);
 	}
 	
 	/** The key of the field. */

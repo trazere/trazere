@@ -15,14 +15,6 @@
  */
 package com.trazere.util.feed;
 
-import com.trazere.core.collection.CollectionFactory;
-import com.trazere.core.collection.MemoizedFeed;
-import com.trazere.core.collection.ResettableFeed;
-import com.trazere.core.functional.Function;
-import com.trazere.core.functional.Function2;
-import com.trazere.core.functional.Predicate;
-import com.trazere.core.imperative.ExIterator;
-import com.trazere.core.imperative.Procedure;
 import com.trazere.core.lang.ThrowableFactory;
 import com.trazere.util.collection.CheckedIterators;
 import com.trazere.util.collection.CollectionUtils;
@@ -33,7 +25,6 @@ import com.trazere.util.type.Tuple1;
 import com.trazere.util.type.Tuple2;
 import com.trazere.util.type.TypeUtils;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.NoSuchElementException;
 
 /**
@@ -211,148 +202,6 @@ public class FeedUtils {
 				} catch (final Exception exception) {
 					throw new WrapException(exception);
 				}
-			}
-			
-			// Traversable.
-			
-			// Note: default must be implemented, project is still 1.6
-			@Override
-			public <S> S fold(final Function2<? super S, ? super T, ? extends S> operator, final S initialState) {
-				return com.trazere.core.collection.Feed.super.fold(operator, initialState);
-			}
-			
-			// Note: default must be implemented, project is still 1.6
-			@Override
-			public boolean isAny(final Predicate<? super T> filter) {
-				return com.trazere.core.collection.Feed.super.isAny(filter);
-			}
-			
-			// Note: default must be implemented, project is still 1.6
-			@Override
-			public boolean areAll(final Predicate<? super T> filter) {
-				return com.trazere.core.collection.Feed.super.areAll(filter);
-			}
-			
-			// Note: default must be implemented, project is still 1.6
-			@Override
-			public int count(final Predicate<? super T> filter) {
-				return com.trazere.core.collection.Feed.super.count(filter);
-			}
-			
-			// Note: default must be implemented, project is still 1.6
-			@Override
-			public com.trazere.core.util.Maybe<T> least(final Comparator<? super T> comparator) {
-				return com.trazere.core.collection.Feed.super.least(comparator);
-			}
-			
-			// Note: default must be implemented, project is still 1.6
-			@Override
-			public com.trazere.core.util.Maybe<T> greatest(final Comparator<? super T> comparator) {
-				return com.trazere.core.collection.Feed.super.greatest(comparator);
-			}
-			
-			// Note: default must be implemented, project is still 1.6
-			@Override
-			public com.trazere.core.collection.Feed<T> take(final int n) {
-				return com.trazere.core.collection.Feed.super.take(n);
-			}
-			
-			// Note: default must be implemented, project is still 1.6
-			@Override
-			public com.trazere.core.collection.Feed<T> takeWhile(final Predicate<? super T> predicate) {
-				return com.trazere.core.collection.Feed.super.takeWhile(predicate);
-			}
-			
-			// Note: default must be implemented, project is still 1.6
-			@Override
-			public com.trazere.core.collection.Feed<T> drop(final int n) {
-				return com.trazere.core.collection.Feed.super.drop(n);
-			}
-			
-			// Note: default must be implemented, project is still 1.6
-			@Override
-			public com.trazere.core.collection.Feed<T> dropWhile(final Predicate<? super T> predicate) {
-				return com.trazere.core.collection.Feed.super.dropWhile(predicate);
-			}
-			
-			// Note: default must be implemented, project is still 1.6
-			@Override
-			public <B extends Collection<? super T>> com.trazere.core.collection.Feed<B> group(final int n, final CollectionFactory<? super T, B> batchFactory) {
-				return com.trazere.core.collection.Feed.super.group(n, batchFactory);
-			}
-			
-			// Note: default must be implemented, project is still 1.6
-			@Override
-			public com.trazere.core.collection.Feed<T> filter(final Predicate<? super T> filter) {
-				return com.trazere.core.collection.Feed.super.filter(filter);
-			}
-			
-			// Note: default must be implemented, project is still 1.6
-			@Override
-			public com.trazere.core.util.Maybe<T> filterAny(final Predicate<? super T> filter) {
-				return com.trazere.core.collection.Feed.super.filterAny(filter);
-			}
-			
-			// Note: default must be implemented, project is still 1.6
-			@Override
-			public <TE> com.trazere.core.collection.Feed<TE> map(final Function<? super T, ? extends TE> function) {
-				return com.trazere.core.collection.Feed.super.map(function);
-			}
-			
-			// Note: default must be implemented, project is still 1.6
-			@Override
-			public <EE> com.trazere.core.collection.Feed<EE> extract(final Function<? super T, ? extends com.trazere.core.util.Maybe<? extends EE>> extractor) {
-				return com.trazere.core.collection.Feed.super.extract(extractor);
-			}
-			
-			// Note: default must be implemented, project is still 1.6
-			@Override
-			public <EE> com.trazere.core.util.Maybe<EE> extractAny(final Function<? super T, ? extends com.trazere.core.util.Maybe<? extends EE>> extractor) {
-				return com.trazere.core.collection.Feed.super.extractAny(extractor);
-			}
-			
-			// Note: default must be implemented, project is still 1.6
-			@Override
-			public <EE> com.trazere.core.collection.Feed<EE> extractAll(final Function<? super T, ? extends Iterable<? extends EE>> extractor) {
-				return com.trazere.core.collection.Feed.super.extractAll(extractor);
-			}
-			
-			// Note: default must be implemented, project is still 1.6
-			@Override
-			public com.trazere.core.collection.Feed<T> append(final com.trazere.core.collection.Feed<? extends T> appendedFeed) {
-				return com.trazere.core.collection.Feed.super.append(appendedFeed);
-			}
-			
-			// Note: default must be implemented, project is still 1.6
-			@Override
-			public <TE> com.trazere.core.collection.Feed<TE> flatMap(final Function<? super T, ? extends com.trazere.core.collection.Feed<? extends TE>> function) {
-				return com.trazere.core.collection.Feed.super.flatMap(function);
-			}
-			
-			// Note: default must be implemented, project is still 1.6
-			@Override
-			public void foreach(final Procedure<? super T> procedure) {
-				com.trazere.core.collection.Feed.super.foreach(procedure);
-			}
-			
-			// Note: default must be implemented, project is still 1.6
-			@Override
-			public MemoizedFeed<T> memoized() {
-				return com.trazere.core.collection.Feed.super.memoized();
-			}
-			
-			// Note: default must be implemented, project is still 1.6
-			@Override
-			public ResettableFeed<T> resettable() {
-				return com.trazere.core.collection.Feed.super.resettable();
-			}
-			
-			// Iterable.
-			
-			// Note: default must be implemented, project is still 1.6
-			@Override
-			public ExIterator<T> iterator() {
-				return com.trazere.core.collection.Feed.super.iterator();
 			}
 		};
 	}

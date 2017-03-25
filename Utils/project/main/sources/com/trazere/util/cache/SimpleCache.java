@@ -72,7 +72,7 @@ implements Cache<K, V>, Describable {
 	// Entries.
 	
 	/** Cache entries identified by their keys. */
-	protected final Map<K, V> _entries = new HashMap<K, V>();
+	protected final Map<K, V> _entries = new HashMap<>();
 	
 	@Override
 	public boolean contains(final K key) {

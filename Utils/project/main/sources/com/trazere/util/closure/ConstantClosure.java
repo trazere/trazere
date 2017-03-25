@@ -38,7 +38,7 @@ implements Closure<T, X> {
 	 */
 	@Deprecated
 	public static <T, X extends Exception> ConstantClosure<T, X> build(final T value) {
-		return new ConstantClosure<T, X>(value);
+		return new ConstantClosure<>(value);
 	}
 	
 	/** The value. May be <code>null</code>. */

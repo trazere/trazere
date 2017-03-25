@@ -109,7 +109,7 @@ extends BaseRecordReader<K, V> {
 	
 	@Override
 	public RecordSignature<K, V> getSignature() {
-		final SimpleRecordSignatureBuilder<K, V> builder = new SimpleRecordSignatureBuilder<K, V>();
+		final SimpleRecordSignatureBuilder<K, V> builder = new SimpleRecordSignatureBuilder<>();
 		for (final Map.Entry<K, ValueReader<? extends V>> entry : _fields.entrySet()) {
 			try {
 				builder.add(FieldSignature.build(entry.getKey(), entry.getValue().getValueClass(), entry.getValue().isNullable()));

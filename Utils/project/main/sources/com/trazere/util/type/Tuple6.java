@@ -55,7 +55,7 @@ extends Tuple5<T1, T2, T3, T4, T5> {
 	 */
 	@Deprecated
 	public static <T1, T2, T3, T4, T5, T6> Tuple6<T1, T2, T3, T4, T5, T6> build(final T1 first, final T2 second, final T3 third, final T4 fourth, final T5 fifth, final T6 sixth) {
-		return new Tuple6<T1, T2, T3, T4, T5, T6>(first, second, third, fourth, fifth, sixth);
+		return new Tuple6<>(first, second, third, fourth, fifth, sixth);
 	}
 	
 	/**

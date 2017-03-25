@@ -45,7 +45,7 @@ implements Observable<T> {
 			assert null != observer;
 			
 			// Initialization.
-			_observer = new WeakReference<Observer<? super T>>(observer);
+			_observer = new WeakReference<>(observer);
 		}
 		
 		// Observer.
@@ -69,7 +69,7 @@ implements Observable<T> {
 	}
 	
 	/** Subscribed observers. */
-	protected final List<LiveObserver> _observers = new ArrayList<LiveObserver>();
+	protected final List<LiveObserver> _observers = new ArrayList<>();
 	
 	/**
 	 * Indicates whether the receiver observable is being observed.
@@ -239,7 +239,7 @@ implements Observable<T> {
 	@SuppressWarnings("javadoc")
 	protected void notify(final T value) {
 		// Note: copy the observers to prevent concurrent modifications.
-		for (final LiveObserver observer : new ArrayList<LiveObserver>(_observers)) {
+		for (final LiveObserver observer : new ArrayList<>(_observers)) {
 			if (!observer.notify(value)) {
 				unsubscribe(observer);
 			}

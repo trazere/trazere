@@ -63,7 +63,7 @@ implements CheckedIterator<R, X> {
 	private final MutableBoolean _lookAhead = new MutableBoolean(false);
 	
 	/** Next element from the feed. */
-	private final MutableReference<R> _next = new MutableReference<R>();
+	private final MutableReference<R> _next = new MutableReference<>();
 	
 	private boolean lookAhead()
 	throws X {

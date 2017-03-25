@@ -42,7 +42,7 @@ public class Maps {
 	 */
 	@Deprecated
 	public static <K, V> Map<K, V> fromBinding(final K key, final V value) {
-		final Map<K, V> result = new HashMap<K, V>();
+		final Map<K, V> result = new HashMap<>();
 		result.put(key, value);
 		return result;
 	}
@@ -63,7 +63,7 @@ public class Maps {
 	 */
 	@Deprecated
 	public static <K, V> Map<K, V> fromBindings(final K key1, final V value1, final K key2, final V value2) {
-		final Map<K, V> result = new HashMap<K, V>();
+		final Map<K, V> result = new HashMap<>();
 		result.put(key1, value1);
 		result.put(key2, value2);
 		return result;
@@ -87,7 +87,7 @@ public class Maps {
 	 */
 	@Deprecated
 	public static <K, V> Map<K, V> fromBindings(final K key1, final V value1, final K key2, final V value2, final K key3, final V value3) {
-		final Map<K, V> result = new HashMap<K, V>();
+		final Map<K, V> result = new HashMap<>();
 		result.put(key1, value1);
 		result.put(key2, value2);
 		result.put(key3, value3);
@@ -106,6 +106,7 @@ public class Maps {
 	 * @deprecated Use {@link com.trazere.core.collection.Maps#fromBindings(com.trazere.core.util.Tuple2...)}.
 	 */
 	@Deprecated
+	@SafeVarargs
 	public static <K, V> Map<K, V> fromBindings(final Tuple2<? extends K, ? extends V>... bindings) {
 		assert null != bindings;
 		
@@ -127,7 +128,7 @@ public class Maps {
 	public static <K, V> Map<K, V> fromBindings(final Collection<? extends Tuple2<? extends K, ? extends V>> bindings) {
 		assert null != bindings;
 		
-		final Map<K, V> results = new HashMap<K, V>(bindings.size());
+		final Map<K, V> results = new HashMap<>(bindings.size());
 		for (final Tuple2<? extends K, ? extends V> binding : bindings) {
 			results.put(binding.getFirst(), binding.getSecond());
 		}

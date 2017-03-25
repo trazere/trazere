@@ -114,7 +114,7 @@ implements ObservableReference<T> {
 	@Deprecated
 	@SuppressWarnings("javadoc")
 	protected SimpleObservable<Maybe<T>> buildObservable() {
-		return new SimpleObservable<Maybe<T>>();
+		return new SimpleObservable<>();
 	}
 	
 	@Override

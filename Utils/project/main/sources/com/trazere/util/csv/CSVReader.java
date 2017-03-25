@@ -107,7 +107,7 @@ public class CSVReader {
 		final List<String> headers = readLine();
 		if (null != headers) {
 			_nextEntryLine += 1;
-			_headers = Collections.unmodifiableList(new ArrayList<String>(headers));
+			_headers = Collections.unmodifiableList(new ArrayList<>(headers));
 		} else {
 			throw new EOFException("Missing header line");
 		}
@@ -136,7 +136,7 @@ public class CSVReader {
 		_delimiter = delimiter;
 		_delimiterChar = delimiter.charAt(0);
 		_specialChars = _delimiterChar + "\"\n\r";
-		_headers = Collections.unmodifiableList(new ArrayList<String>(headers));
+		_headers = Collections.unmodifiableList(new ArrayList<>(headers));
 		_options = Collections.unmodifiableSet(EnumSet.copyOf(options));
 	}
 	
@@ -242,7 +242,7 @@ public class CSVReader {
 		}
 		
 		// Read the line.
-		final List<String> line = new ArrayList<String>();
+		final List<String> line = new ArrayList<>();
 		readLine(line);
 		return line;
 	}

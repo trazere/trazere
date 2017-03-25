@@ -58,7 +58,7 @@ implements Iterable<T>, Serializable, Describable {
 		return (None<Value>) _NONE;
 	}
 	
-	private static final None<?> _NONE = new None<Object>();
+	private static final None<?> _NONE = new None<>();
 	
 	/**
 	 * Builds an instance using the <code>Some</code> constructor wrapping the given value.
@@ -70,7 +70,7 @@ implements Iterable<T>, Serializable, Describable {
 	 */
 	@Deprecated
 	public static <Value> Some<Value> some(final Value value) {
-		return new Some<Value>(value);
+		return new Some<>(value);
 	}
 	
 	/**

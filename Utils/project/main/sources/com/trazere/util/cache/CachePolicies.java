@@ -41,7 +41,7 @@ public class CachePolicies {
 	}
 	
 	@Deprecated
-	private static final CachePolicy<?> _ALL = new AllCachePolicy<Object>();
+	private static final CachePolicy<?> _ALL = new AllCachePolicy<>();
 	
 	/**
 	 * Builds a cache policy that combines the given cache policies by disjunction.

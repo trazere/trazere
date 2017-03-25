@@ -90,7 +90,7 @@ implements Observatory<S, E> {
 		};
 	}
 	
-	protected final SimpleObservable<E> _allObservable = new SimpleObservable<E>();
+	protected final SimpleObservable<E> _allObservable = new SimpleObservable<>();
 	
 	@Override
 	public Observable<E> observeAll() {

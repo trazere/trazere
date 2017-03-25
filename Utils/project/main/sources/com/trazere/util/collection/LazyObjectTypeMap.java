@@ -156,8 +156,8 @@ implements ObjectTypeMap<T, Maybe<? extends V>, X> {
 		};
 		
 		// Get the super types.
-		final Set<Class<? extends T>> superTypes = new HashSet<Class<? extends T>>();
-		CollectionUtils.add(superTypes, Maybe.fromValue(type.getSuperclass()).extract(filter));
+		final Set<Class<? extends T>> superTypes = new HashSet<>();
+		CollectionUtils.add(superTypes, Maybe.fromValue(type.getSuperclass()).<Class<? extends T>, InternalException>extract(filter)); // HACK: explicit type arguments to work around a bug of javac
 		FunctionUtils.extract(filter, Arrays.asList(type.getInterfaces()), superTypes);
 		return superTypes;
 	}

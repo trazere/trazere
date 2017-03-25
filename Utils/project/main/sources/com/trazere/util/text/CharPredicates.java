@@ -16,6 +16,7 @@
 package com.trazere.util.text;
 
 import com.trazere.util.collection.CollectionUtils;
+import com.trazere.util.type.Maybe;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -137,7 +138,7 @@ public class CharPredicates {
 		assert null != predicates;
 		
 		if (predicates.size() < 2) {
-			return (CharPredicate<X>) CollectionUtils.any(predicates).get(CharPredicates.<X>all());
+			return (CharPredicate<X>) Maybe.get(CollectionUtils.any(predicates), CharPredicates.<X>all());
 		} else {
 			return new CharPredicate<X>() {
 				@Override
@@ -192,7 +193,7 @@ public class CharPredicates {
 		assert null != predicates;
 		
 		if (predicates.size() < 2) {
-			return (CharPredicate<X>) CollectionUtils.any(predicates).get(CharPredicates.<X>none());
+			return (CharPredicate<X>) Maybe.get(CollectionUtils.any(predicates), CharPredicates.<X>none());
 		} else {
 			return new CharPredicate<X>() {
 				@Override
@@ -239,7 +240,7 @@ public class CharPredicates {
 	public static <X extends Exception> CharPredicate<X> values(final char... values) {
 		assert null != values;
 		
-		final Set<Character> values_ = new HashSet<Character>();
+		final Set<Character> values_ = new HashSet<>();
 		for (final char value : values) {
 			values_.add(value);
 		}
@@ -258,7 +259,7 @@ public class CharPredicates {
 	public static <X extends Exception> CharPredicate<X> values(final Character... values) {
 		assert null != values;
 		
-		return values(new HashSet<Character>(Arrays.asList(values)));
+		return values(new HashSet<>(Arrays.asList(values)));
 	}
 	
 	/**

@@ -41,7 +41,7 @@ import java.util.Set;
 @Deprecated
 public class SimpleRecord<K, V>
 implements Record<K, V>, Describable {
-	private static final SimpleRecord<?, ?> EMPTY = new SimpleRecord<Object, Object>(Collections.emptyMap());
+	private static final SimpleRecord<?, ?> EMPTY = new SimpleRecord<>(Collections.emptyMap());
 	
 	// TODO: move to Records
 	/**
@@ -76,7 +76,7 @@ implements Record<K, V>, Describable {
 		assert null != key;
 		
 		// Build.
-		return new SimpleRecord<K, V>(Maps.fromBinding(key, value));
+		return new SimpleRecord<>(Maps.fromBinding(key, value));
 	}
 	
 	// TODO: move to Records
@@ -100,10 +100,10 @@ implements Record<K, V>, Describable {
 		assert null != key2;
 		
 		// Build.
-		final Map<K, V> fields = new HashMap<K, V>();
+		final Map<K, V> fields = new HashMap<>();
 		fields.put(key1, value1);
 		fields.put(key2, value2);
-		return new SimpleRecord<K, V>(fields);
+		return new SimpleRecord<>(fields);
 	}
 	
 	/**
@@ -120,7 +120,7 @@ implements Record<K, V>, Describable {
 		assert null != fields;
 		
 		// Build.
-		return new SimpleRecord<K, V>(new HashMap<K, V>(fields));
+		return new SimpleRecord<>(new HashMap<K, V>(fields));
 	}
 	
 	/**
@@ -139,7 +139,7 @@ implements Record<K, V>, Describable {
 		assert null != record;
 		
 		// Build.
-		return new SimpleRecord<K, V>(new HashMap<K, V>(record.asMap()));
+		return new SimpleRecord<>(new HashMap<K, V>(record.asMap()));
 	}
 	
 	/** Values of the fields identified by their keys. */

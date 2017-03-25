@@ -43,7 +43,7 @@ implements Closure<T, X> {
 	 */
 	@Deprecated
 	public static <T, X extends Exception> LinearClosure<T, X> build(final Function0<? extends T, ? extends X> function) {
-		return new LinearClosure<T, X>(function);
+		return new LinearClosure<>(function);
 	}
 	
 	/** The value. */

@@ -57,7 +57,7 @@ implements Releasable<X> {
 	// References.
 	
 	/** The references. */
-	protected final Set<Releasable<X>> _references = new HashSet<Releasable<X>>();
+	protected final Set<Releasable<X>> _references = new HashSet<>();
 	
 	/**
 	 * Gets a new reference to the value of the receiver umbrella.

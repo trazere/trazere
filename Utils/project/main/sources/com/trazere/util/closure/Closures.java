@@ -36,7 +36,7 @@ public class Closures {
 	 */
 	@Deprecated
 	public static <T, X extends Exception> Closure<T, X> constant(final T value) {
-		return new ConstantClosure<T, X>(value);
+		return new ConstantClosure<>(value);
 	}
 	
 	/**
@@ -50,7 +50,7 @@ public class Closures {
 	 */
 	@Deprecated
 	public static <T, X extends Exception> Closure<T, X> fromFunction(final Function0<? extends T, ? extends X> function) {
-		return new LinearClosure<T, X>(function);
+		return new LinearClosure<>(function);
 	}
 	
 	/**

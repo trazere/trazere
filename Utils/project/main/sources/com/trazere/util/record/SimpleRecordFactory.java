@@ -30,7 +30,7 @@ import java.util.Map;
 public class SimpleRecordFactory<K, V>
 extends BaseFactory<SimpleRecord<K, V>, RecordException>
 implements RecordFactory<K, V, SimpleRecord<K, V>> {
-	private static final SimpleRecordFactory<?, ?> _FACTORY = new SimpleRecordFactory<Object, Object>();
+	private static final SimpleRecordFactory<?, ?> _FACTORY = new SimpleRecordFactory<>();
 	
 	/**
 	 * Builds a simple record factory.

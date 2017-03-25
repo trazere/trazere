@@ -61,7 +61,7 @@ implements CachePolicy<K> {
 	// Entries.
 	
 	/** Access dates of the entries. */
-	protected final LinkedHashMap<K, Long> _dates = new LinkedHashMap<K, Long>();
+	protected final LinkedHashMap<K, Long> _dates = new LinkedHashMap<>();
 	
 	@Override
 	public <C extends Collection<? super K>> C accessedEntry(final K key, final C dirtyEntries) {

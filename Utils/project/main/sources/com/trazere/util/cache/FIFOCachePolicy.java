@@ -59,7 +59,7 @@ implements CachePolicy<K> {
 	
 	// Entries.
 	
-	protected final LinkedList<K> _uses = new LinkedList<K>();
+	protected final LinkedList<K> _uses = new LinkedList<>();
 	
 	@Override
 	public <C extends Collection<? super K>> C accessedEntry(final K key, final C dirtyEntries) {

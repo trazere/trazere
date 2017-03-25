@@ -99,6 +99,7 @@ public class CheckedIterators {
 	 * @deprecated Use {@link com.trazere.core.imperative.Iterators#fromElements(Object...)}.
 	 */
 	@Deprecated
+	@SafeVarargs
 	public static <V, X extends Exception> CheckedIterator<V, X> fromValues(final V... values) {
 		assert null != values;
 		

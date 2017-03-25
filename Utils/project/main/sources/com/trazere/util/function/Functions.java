@@ -921,7 +921,7 @@ public class Functions {
 		assert null != hash;
 		
 		return new Function1<T, T, X>() {
-			private final Map<H, T> _values = new HashMap<H, T>();
+			private final Map<H, T> _values = new HashMap<>();
 			
 			@Override
 			public T evaluate(final T value)

@@ -52,6 +52,7 @@ implements Comparator<T> {
 	 * @deprecated Use {@link com.trazere.core.util.Comparators#sequence(Comparator...)}.
 	 */
 	@Deprecated
+	@SafeVarargs
 	public SequenceComparator(final Comparator<? super T>... comparators) {
 		this(Arrays.asList(comparators));
 	}

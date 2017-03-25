@@ -95,11 +95,8 @@ public class PropertiesUtils {
 		assert null != input;
 		
 		if (!optional || input.exists()) {
-			final InputStream stream = input.open();
-			try {
+			try (final InputStream stream = input.open()) {
 				properties.load(stream);
-			} finally {
-				stream.close();
 			}
 		}
 		return properties;

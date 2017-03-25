@@ -497,7 +497,7 @@ public class Accumulators {
 	@Deprecated
 	public static <T, X extends Exception> Accumulator1<T, Maybe<T>, X> first() {
 		return new BaseAccumulator1<T, Maybe<T>, X>() {
-			private final MutableReference<T> _value = new MutableReference<T>();
+			private final MutableReference<T> _value = new MutableReference<>();
 			
 			@Override
 			public void add(final T value)

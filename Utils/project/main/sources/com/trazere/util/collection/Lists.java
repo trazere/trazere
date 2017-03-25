@@ -45,7 +45,7 @@ public class Lists {
 	public static <V> List<V> fromValue(final Maybe<V> value) {
 		assert null != value;
 		
-		final List<V> list = new ArrayList<V>();
+		final List<V> list = new ArrayList<>();
 		if (value.isSome()) {
 			list.add(value.asSome().getValue());
 		}
@@ -64,7 +64,7 @@ public class Lists {
 	 */
 	@Deprecated
 	public static <V> List<V> fromValue(final V value) {
-		final List<V> list = new ArrayList<V>(1);
+		final List<V> list = new ArrayList<>(1);
 		list.add(value);
 		return list;
 	}
@@ -82,7 +82,7 @@ public class Lists {
 	 */
 	@Deprecated
 	public static <V> List<V> fromValues(final V value1, final V value2) {
-		final List<V> list = new ArrayList<V>(2);
+		final List<V> list = new ArrayList<>(2);
 		list.add(value1);
 		list.add(value2);
 		return list;
@@ -102,7 +102,7 @@ public class Lists {
 	 */
 	@Deprecated
 	public static <V> List<V> fromValues(final V value1, final V value2, final V value3) {
-		final List<V> list = new ArrayList<V>(3);
+		final List<V> list = new ArrayList<>(3);
 		list.add(value1);
 		list.add(value2);
 		list.add(value3);
@@ -120,10 +120,11 @@ public class Lists {
 	 * @deprecated Use {@link com.trazere.core.collection.Lists#fromElements(Object...)}.
 	 */
 	@Deprecated
+	@SafeVarargs
 	public static <V> List<V> fromValues(final V... values) {
 		assert null != values;
 		
-		final List<V> list = new ArrayList<V>(values.length);
+		final List<V> list = new ArrayList<>(values.length);
 		for (final V value : values) {
 			list.add(value);
 		}

@@ -215,7 +215,7 @@ public class TypeUtils {
 	 */
 	@Deprecated
 	public static <T1> com.trazere.core.util.Tuple1<T1> toTuple1(final Tuple1<? extends T1> tuple) {
-		return new com.trazere.core.util.Tuple1<T1>(tuple.getFirst());
+		return new com.trazere.core.util.Tuple1<>(tuple.getFirst());
 	}
 	
 	/**
@@ -228,7 +228,7 @@ public class TypeUtils {
 	 */
 	@Deprecated
 	public static <E1> Tuple1<E1> fromTuple1(final com.trazere.core.util.Tuple1<? extends E1> tuple) {
-		return new Tuple1<E1>(tuple.get1());
+		return new Tuple1<>(tuple.get1());
 	}
 	
 	/**
@@ -242,7 +242,7 @@ public class TypeUtils {
 	 */
 	@Deprecated
 	public static <T1, T2> com.trazere.core.util.Tuple2<T1, T2> toTuple2(final Tuple2<? extends T1, ? extends T2> tuple) {
-		return new com.trazere.core.util.Tuple2<T1, T2>(tuple.getFirst(), tuple.getSecond());
+		return new com.trazere.core.util.Tuple2<>(tuple.getFirst(), tuple.getSecond());
 	}
 	
 	/**
@@ -256,7 +256,7 @@ public class TypeUtils {
 	 */
 	@Deprecated
 	public static <E1, E2> Tuple2<E1, E2> fromTuple2(final com.trazere.core.util.Tuple2<? extends E1, ? extends E2> tuple) {
-		return new Tuple2<E1, E2>(tuple.get1(), tuple.get2());
+		return new Tuple2<>(tuple.get1(), tuple.get2());
 	}
 	
 	/**
@@ -271,7 +271,7 @@ public class TypeUtils {
 	 */
 	@Deprecated
 	public static <T1, T2, T3> com.trazere.core.util.Tuple3<T1, T2, T3> toTuple3(final Tuple3<? extends T1, ? extends T2, ? extends T3> tuple) {
-		return new com.trazere.core.util.Tuple3<T1, T2, T3>(tuple.getFirst(), tuple.getSecond(), tuple.getThird());
+		return new com.trazere.core.util.Tuple3<>(tuple.getFirst(), tuple.getSecond(), tuple.getThird());
 	}
 	
 	/**
@@ -286,7 +286,7 @@ public class TypeUtils {
 	 */
 	@Deprecated
 	public static <E1, E2, E3> Tuple3<E1, E2, E3> fromTuple3(final com.trazere.core.util.Tuple3<? extends E1, ? extends E2, ? extends E3> tuple) {
-		return new Tuple3<E1, E2, E3>(tuple.get1(), tuple.get2(), tuple.get3());
+		return new Tuple3<>(tuple.get1(), tuple.get2(), tuple.get3());
 	}
 	
 	/**
@@ -302,7 +302,7 @@ public class TypeUtils {
 	 */
 	@Deprecated
 	public static <T1, T2, T3, T4> com.trazere.core.util.Tuple4<T1, T2, T3, T4> toTuple4(final Tuple4<? extends T1, ? extends T2, ? extends T3, ? extends T4> tuple) {
-		return new com.trazere.core.util.Tuple4<T1, T2, T3, T4>(tuple.getFirst(), tuple.getSecond(), tuple.getThird(), tuple.getFourth());
+		return new com.trazere.core.util.Tuple4<>(tuple.getFirst(), tuple.getSecond(), tuple.getThird(), tuple.getFourth());
 	}
 	
 	/**
@@ -318,7 +318,7 @@ public class TypeUtils {
 	 */
 	@Deprecated
 	public static <E1, E2, E3, E4> Tuple4<E1, E2, E3, E4> fromTuple4(final com.trazere.core.util.Tuple4<? extends E1, ? extends E2, ? extends E3, ? extends E4> tuple) {
-		return new Tuple4<E1, E2, E3, E4>(tuple.get1(), tuple.get2(), tuple.get3(), tuple.get4());
+		return new Tuple4<>(tuple.get1(), tuple.get2(), tuple.get3(), tuple.get4());
 	}
 	
 	/**
@@ -335,7 +335,7 @@ public class TypeUtils {
 	 */
 	@Deprecated
 	public static <T1, T2, T3, T4, T5> com.trazere.core.util.Tuple5<T1, T2, T3, T4, T5> toTuple5(final Tuple5<? extends T1, ? extends T2, ? extends T3, ? extends T4, ? extends T5> tuple) {
-		return new com.trazere.core.util.Tuple5<T1, T2, T3, T4, T5>(tuple.getFirst(), tuple.getSecond(), tuple.getThird(), tuple.getFourth(), tuple.getFifth());
+		return new com.trazere.core.util.Tuple5<>(tuple.getFirst(), tuple.getSecond(), tuple.getThird(), tuple.getFourth(), tuple.getFifth());
 	}
 	
 	/**
@@ -352,7 +352,7 @@ public class TypeUtils {
 	 */
 	@Deprecated
 	public static <E1, E2, E3, E4, E5> Tuple5<E1, E2, E3, E4, E5> fromTuple5(final com.trazere.core.util.Tuple5<? extends E1, ? extends E2, ? extends E3, ? extends E4, ? extends E5> tuple) {
-		return new Tuple5<E1, E2, E3, E4, E5>(tuple.get1(), tuple.get2(), tuple.get3(), tuple.get4(), tuple.get5());
+		return new Tuple5<>(tuple.get1(), tuple.get2(), tuple.get3(), tuple.get4(), tuple.get5());
 	}
 	
 	/**
@@ -370,7 +370,7 @@ public class TypeUtils {
 	 */
 	@Deprecated
 	public static <T1, T2, T3, T4, T5, T6> com.trazere.core.util.Tuple6<T1, T2, T3, T4, T5, T6> toTuple6(final Tuple6<? extends T1, ? extends T2, ? extends T3, ? extends T4, ? extends T5, ? extends T6> tuple) {
-		return new com.trazere.core.util.Tuple6<T1, T2, T3, T4, T5, T6>(tuple.getFirst(), tuple.getSecond(), tuple.getThird(), tuple.getFourth(), tuple.getFifth(), tuple.getSixth());
+		return new com.trazere.core.util.Tuple6<>(tuple.getFirst(), tuple.getSecond(), tuple.getThird(), tuple.getFourth(), tuple.getFifth(), tuple.getSixth());
 	}
 	
 	/**
@@ -388,7 +388,7 @@ public class TypeUtils {
 	 */
 	@Deprecated
 	public static <E1, E2, E3, E4, E5, E6> Tuple6<E1, E2, E3, E4, E5, E6> fromTuple6(final com.trazere.core.util.Tuple6<? extends E1, ? extends E2, ? extends E3, ? extends E4, ? extends E5, ? extends E6> tuple) {
-		return new Tuple6<E1, E2, E3, E4, E5, E6>(tuple.get1(), tuple.get2(), tuple.get3(), tuple.get4(), tuple.get5(), tuple.get6());
+		return new Tuple6<>(tuple.get1(), tuple.get2(), tuple.get3(), tuple.get4(), tuple.get5(), tuple.get6());
 	}
 	
 	/**
@@ -407,7 +407,7 @@ public class TypeUtils {
 	 */
 	@Deprecated
 	public static <T1, T2, T3, T4, T5, T6, T7> com.trazere.core.util.Tuple7<T1, T2, T3, T4, T5, T6, T7> toTuple7(final Tuple7<? extends T1, ? extends T2, ? extends T3, ? extends T4, ? extends T5, ? extends T6, ? extends T7> tuple) {
-		return new com.trazere.core.util.Tuple7<T1, T2, T3, T4, T5, T6, T7>(tuple.getFirst(), tuple.getSecond(), tuple.getThird(), tuple.getFourth(), tuple.getFifth(), tuple.getSixth(), tuple.getSeventh());
+		return new com.trazere.core.util.Tuple7<>(tuple.getFirst(), tuple.getSecond(), tuple.getThird(), tuple.getFourth(), tuple.getFifth(), tuple.getSixth(), tuple.getSeventh());
 	}
 	
 	/**
@@ -426,7 +426,7 @@ public class TypeUtils {
 	 */
 	@Deprecated
 	public static <E1, E2, E3, E4, E5, E6, E7> Tuple7<E1, E2, E3, E4, E5, E6, E7> fromTuple7(final com.trazere.core.util.Tuple7<? extends E1, ? extends E2, ? extends E3, ? extends E4, ? extends E5, ? extends E6, ? extends E7> tuple) {
-		return new Tuple7<E1, E2, E3, E4, E5, E6, E7>(tuple.get1(), tuple.get2(), tuple.get3(), tuple.get4(), tuple.get5(), tuple.get6(), tuple.get7());
+		return new Tuple7<>(tuple.get1(), tuple.get2(), tuple.get3(), tuple.get4(), tuple.get5(), tuple.get6(), tuple.get7());
 	}
 	
 	/**
@@ -446,7 +446,7 @@ public class TypeUtils {
 	 */
 	@Deprecated
 	public static <T1, T2, T3, T4, T5, T6, T7, T8> com.trazere.core.util.Tuple8<T1, T2, T3, T4, T5, T6, T7, T8> toTuple8(final Tuple8<? extends T1, ? extends T2, ? extends T3, ? extends T4, ? extends T5, ? extends T6, ? extends T7, ? extends T8> tuple) {
-		return new com.trazere.core.util.Tuple8<T1, T2, T3, T4, T5, T6, T7, T8>(tuple.getFirst(), tuple.getSecond(), tuple.getThird(), tuple.getFourth(), tuple.getFifth(), tuple.getSixth(), tuple.getSeventh(), tuple.getEighth());
+		return new com.trazere.core.util.Tuple8<>(tuple.getFirst(), tuple.getSecond(), tuple.getThird(), tuple.getFourth(), tuple.getFifth(), tuple.getSixth(), tuple.getSeventh(), tuple.getEighth());
 	}
 	
 	/**
@@ -466,7 +466,7 @@ public class TypeUtils {
 	 */
 	@Deprecated
 	public static <E1, E2, E3, E4, E5, E6, E7, E8> Tuple8<E1, E2, E3, E4, E5, E6, E7, E8> fromTuple8(final com.trazere.core.util.Tuple8<? extends E1, ? extends E2, ? extends E3, ? extends E4, ? extends E5, ? extends E6, ? extends E7, ? extends E8> tuple) {
-		return new Tuple8<E1, E2, E3, E4, E5, E6, E7, E8>(tuple.get1(), tuple.get2(), tuple.get3(), tuple.get4(), tuple.get5(), tuple.get6(), tuple.get7(), tuple.get8());
+		return new Tuple8<>(tuple.get1(), tuple.get2(), tuple.get3(), tuple.get4(), tuple.get5(), tuple.get6(), tuple.get7(), tuple.get8());
 	}
 	
 	/**

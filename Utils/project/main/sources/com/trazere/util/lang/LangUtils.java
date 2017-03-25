@@ -62,7 +62,7 @@ public class LangUtils {
 	@Deprecated
 	public static <T, X extends Exception> T rec(final Function1<? super Reference<T>, ? extends T, ? extends X> factory)
 	throws X {
-		final MutableReference<T> ref = new MutableReference<T>();
+		final MutableReference<T> ref = new MutableReference<>();
 		return ref.set(factory.evaluate(ref));
 	}
 	
@@ -397,7 +397,7 @@ public class LangUtils {
 		}
 		
 		// Get the least value.
-		final MutableObject<T> least = new MutableObject<T>(values.next());
+		final MutableObject<T> least = new MutableObject<>(values.next());
 		while (values.hasNext()) {
 			final T value = values.next();
 			if (comparator.compare(value, least.get()) < 0) {
@@ -463,7 +463,7 @@ public class LangUtils {
 		}
 		
 		// Get the greatest value.
-		final MutableObject<T> greatest = new MutableObject<T>(values.next());
+		final MutableObject<T> greatest = new MutableObject<>(values.next());
 		while (values.hasNext()) {
 			final T value = values.next();
 			if (comparator.compare(value, greatest.get()) > 0) {

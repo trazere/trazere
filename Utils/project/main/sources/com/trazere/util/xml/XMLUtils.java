@@ -67,7 +67,7 @@ public class XMLUtils {
 	
 	private static final Map<Character, String> _ENTITIES;
 	static {
-		final Map<Character, String> entities = new HashMap<Character, String>();
+		final Map<Character, String> entities = new HashMap<>();
 		entities.put('&', "amp");
 		//		entities.put('\'', "apos");
 		entities.put('>', "gt");
@@ -126,7 +126,7 @@ public class XMLUtils {
 	
 	private static final Map<String, Character> _CHARACTERS;
 	static {
-		final Map<String, Character> chars = new HashMap<String, Character>();
+		final Map<String, Character> chars = new HashMap<>();
 		chars.put("amp", '&');
 		//		entities.put("apos", '\'');
 		chars.put("gt", '>');

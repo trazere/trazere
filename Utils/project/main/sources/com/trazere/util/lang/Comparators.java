@@ -128,7 +128,7 @@ public class Comparators {
 	public static <T> Comparator<T> inverse(final Comparator<? super T> comparator) {
 		assert null != comparator;
 		
-		return new InverseComparator<T>(comparator);
+		return new InverseComparator<>(comparator);
 	}
 	
 	/**
@@ -144,7 +144,7 @@ public class Comparators {
 	public static <T> Comparator<T> sequence(final List<? extends Comparator<? super T>> comparators) {
 		assert null != comparators;
 		
-		return new SequenceComparator<T>(comparators);
+		return new SequenceComparator<>(comparators);
 	}
 	
 	/**
@@ -157,8 +157,9 @@ public class Comparators {
 	 * @deprecated Use {@link com.trazere.core.util.Comparators#sequence(Comparator...)}.
 	 */
 	@Deprecated
+	@SafeVarargs
 	public static <T> Comparator<T> sequence(final Comparator<? super T>... comparators) {
-		return new SequenceComparator<T>(comparators);
+		return new SequenceComparator<>(comparators);
 	}
 	
 	/**

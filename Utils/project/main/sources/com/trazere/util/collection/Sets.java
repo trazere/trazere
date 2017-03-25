@@ -40,7 +40,7 @@ public class Sets {
 	public static <T> Set<T> fromValue(final Maybe<T> value) {
 		assert null != value;
 		
-		final Set<T> set = new HashSet<T>();
+		final Set<T> set = new HashSet<>();
 		if (value.isSome()) {
 			set.add(value.asSome().getValue());
 		}
@@ -59,7 +59,7 @@ public class Sets {
 	 */
 	@Deprecated
 	public static <T> Set<T> fromValue(final T value) {
-		final Set<T> set = new HashSet<T>(1);
+		final Set<T> set = new HashSet<>(1);
 		set.add(value);
 		return set;
 	}
@@ -77,7 +77,7 @@ public class Sets {
 	 */
 	@Deprecated
 	public static <T> Set<T> fromValues(final T value1, final T value2) {
-		final Set<T> set = new HashSet<T>(2);
+		final Set<T> set = new HashSet<>(2);
 		set.add(value1);
 		set.add(value2);
 		return set;
@@ -97,7 +97,7 @@ public class Sets {
 	 */
 	@Deprecated
 	public static <T> Set<T> fromValues(final T value1, final T value2, final T value3) {
-		final Set<T> set = new HashSet<T>(3);
+		final Set<T> set = new HashSet<>(3);
 		set.add(value1);
 		set.add(value2);
 		set.add(value3);
@@ -115,10 +115,11 @@ public class Sets {
 	 * @deprecated Use {@link com.trazere.core.collection.Sets#fromElements(Object...)}.
 	 */
 	@Deprecated
+	@SafeVarargs
 	public static <T> Set<T> fromValues(final T... values) {
 		assert null != values;
 		
-		final Set<T> set = new HashSet<T>(values.length);
+		final Set<T> set = new HashSet<>(values.length);
 		for (final T value : values) {
 			set.add(value);
 		}

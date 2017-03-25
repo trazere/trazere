@@ -528,7 +528,7 @@ public class CollectionUtils {
 		assert null != results;
 		
 		// Compute the dependencies.
-		final List<T> pendingValues = new ArrayList<T>(values.size());
+		final List<T> pendingValues = new ArrayList<>(values.size());
 		final Collection<Tuple2<T, T>> dependencies = computeTopologicalSortDependencies(dependencyFunction, close, values, pendingValues, new ArrayList<Tuple2<T, T>>());
 		
 		// Sort the values.
@@ -582,7 +582,7 @@ public class CollectionUtils {
 		assert null != results;
 		
 		// Compute the dependencies.
-		final List<T> pendingValues = new ArrayList<T>(values.size());
+		final List<T> pendingValues = new ArrayList<>(values.size());
 		final Collection<Tuple2<T, T>> dependencies = computeTopologicalSortDependencies(dependencyFunction, close, values, pendingValues, new ArrayList<Tuple2<T, T>>());
 		
 		// Sort the values.
@@ -624,7 +624,7 @@ public class CollectionUtils {
 		
 		for (final T value : values) {
 			for (final T dependencyValue : dependencyFunction.evaluate(value)) {
-				dependencies.add(new Tuple2<T, T>(value, dependencyValue));
+				dependencies.add(new Tuple2<>(value, dependencyValue));
 			}
 		}
 		return dependencies;
@@ -636,8 +636,8 @@ public class CollectionUtils {
 		assert null != values;
 		assert null != dependencies;
 		
-		final Queue<T> pendingValues = new LinkedList<T>(values);
-		final Set<T> visitedValues = new HashSet<T>();
+		final Queue<T> pendingValues = new LinkedList<>(values);
+		final Set<T> visitedValues = new HashSet<>();
 		while (!pendingValues.isEmpty()) {
 			final T value = pendingValues.poll();
 			if (visitedValues.add(value)) {
@@ -646,7 +646,7 @@ public class CollectionUtils {
 				
 				// Add the dependencies.
 				for (final T dependencyValue : dependencyFunction.evaluate(value)) {
-					dependencies.add(new Tuple2<T, T>(value, dependencyValue));
+					dependencies.add(new Tuple2<>(value, dependencyValue));
 					pendingValues.add(dependencyValue); // Note: must queued in order to keep the closed value stable
 				}
 			}
@@ -658,7 +658,7 @@ public class CollectionUtils {
 		assert null != values;
 		assert null != dependencies;
 		
-		final Set<T> leafValues = new HashSet<T>(values);
+		final Set<T> leafValues = new HashSet<>(values);
 		for (final Tuple2<T, T> dependency : dependencies) {
 			leafValues.remove(dependency.getFirst());
 		}

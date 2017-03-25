@@ -36,7 +36,7 @@ implements Comparator<T> {
 	 */
 	@Deprecated
 	public static <T> InverseComparator<T> build(final Comparator<? super T> comparator) {
-		return new InverseComparator<T>(comparator);
+		return new InverseComparator<>(comparator);
 	}
 	
 	/**

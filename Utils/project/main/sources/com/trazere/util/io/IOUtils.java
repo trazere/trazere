@@ -147,17 +147,11 @@ public class IOUtils {
 					if (transformation.exists()) {
 						// Transform the input.
 						final ByteArrayOutputStream resultStream = new ByteArrayOutputStream();
-						final InputStream inputStream = input.open();
-						try {
-							final InputStream transformationStream = transformation.open();
-							try {
+						try (final InputStream inputStream = input.open()) {
+							try (final InputStream transformationStream = transformation.open()) {
 								final Transformer transformer = _transformerFactory.newTransformer(new StreamSource(transformationStream));
 								transformer.transform(new StreamSource(inputStream), new StreamResult(resultStream));
-							} finally {
-								transformationStream.close();
 							}
-						} finally {
-							inputStream.close();
 						}
 						
 						// Build the result.

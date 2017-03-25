@@ -42,7 +42,7 @@ public class Automaton<S> {
 		assert null != initialState;
 		
 		// Initialization.
-		_state = new MutableObject<S>(initialState);
+		_state = new MutableObject<>(initialState);
 	}
 	
 	// State.

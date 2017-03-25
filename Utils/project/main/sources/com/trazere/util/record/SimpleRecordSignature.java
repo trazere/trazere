@@ -38,7 +38,7 @@ import java.util.Set;
 @Deprecated
 public class SimpleRecordSignature<K, V>
 implements RecordSignature<K, V>, Describable {
-	private static final SimpleRecordSignature<?, ?> EMPTY = new SimpleRecordSignature<Object, Object>(Collections.<Object, FieldSignature<Object, Object>>emptyMap());
+	private static final SimpleRecordSignature<?, ?> EMPTY = new SimpleRecordSignature<>(Collections.<Object, FieldSignature<Object, Object>>emptyMap());
 	
 	/**
 	 * Builds an empty record signature.
@@ -70,11 +70,11 @@ implements RecordSignature<K, V>, Describable {
 		assert null != fields;
 		
 		// Build.
-		final Map<K, FieldSignature<K, ? extends V>> fieldsByKeys = new HashMap<K, FieldSignature<K, ? extends V>>();
+		final Map<K, FieldSignature<K, ? extends V>> fieldsByKeys = new HashMap<>();
 		for (final FieldSignature<K, ? extends V> field : fields) {
 			fieldsByKeys.put(field.getKey(), field);
 		}
-		return new SimpleRecordSignature<K, V>(fieldsByKeys);
+		return new SimpleRecordSignature<>(fieldsByKeys);
 	}
 	
 	/**
@@ -87,15 +87,16 @@ implements RecordSignature<K, V>, Describable {
 	 * @deprecated Use {@link RecordSignatures#fromKeys(com.trazere.core.record.FieldKey...)}.
 	 */
 	@Deprecated
+	@SafeVarargs
 	public static <K, V> SimpleRecordSignature<K, V> build(final FieldSignature<K, ? extends V>... fields) {
 		assert null != fields;
 		
 		// Build.
-		final Map<K, FieldSignature<K, ? extends V>> fieldsByKeys = new HashMap<K, FieldSignature<K, ? extends V>>();
+		final Map<K, FieldSignature<K, ? extends V>> fieldsByKeys = new HashMap<>();
 		for (final FieldSignature<K, ? extends V> field : fields) {
 			fieldsByKeys.put(field.getKey(), field);
 		}
-		return new SimpleRecordSignature<K, V>(fieldsByKeys);
+		return new SimpleRecordSignature<>(fieldsByKeys);
 	}
 	
 	/**

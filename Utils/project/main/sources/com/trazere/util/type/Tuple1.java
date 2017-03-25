@@ -41,29 +41,30 @@ implements Serializable {
 	 */
 	@Deprecated
 	public static <T1> Tuple1<T1> build(final T1 first) {
-		return new Tuple1<T1>(first);
+		return new Tuple1<>(first);
 	}
 	
-	/**
-	 * Builds a function which wraps its arguments in {@link Tuple1} instances (currying).
-	 * 
-	 * @param <T1> Type of the first value.
-	 * @param <X> Type of the exceptions.
-	 * @return The built function.
-	 * @deprecated Use {@link com.trazere.core.util.TupleFunctions#tuple1()}.
-	 */
-	@Deprecated
-	@SuppressWarnings("unchecked")
-	public static <T1, X extends Exception> Function1<T1, Tuple1<T1>, X> buildFunction() {
-		return (Function1<T1, Tuple1<T1>, X>) _BUILD_FUNCTION;
-	}
-	
-	private static final Function1<?, ?, ?> _BUILD_FUNCTION = new Function1<Object, Tuple1<Object>, RuntimeException>() {
-		@Override
-		public Tuple1<Object> evaluate(final Object first) {
-			return Tuple1.build(first);
-		}
-	};
+	// TODO: name clash
+	//	/**
+	//	 * Builds a function which wraps its arguments in {@link Tuple1} instances (currying).
+	//	 * 
+	//	 * @param <T1> Type of the first value.
+	//	 * @param <X> Type of the exceptions.
+	//	 * @return The built function.
+	//	 * @deprecated Use {@link com.trazere.core.util.TupleFunctions#tuple1()}.
+	//	 */
+	//	@Deprecated
+	//	@SuppressWarnings("unchecked")
+	//	public static <T1, X extends Exception> Function1<T1, Tuple1<T1>, X> buildFunction() {
+	//		return (Function1<T1, Tuple1<T1>, X>) _BUILD_FUNCTION;
+	//	}
+	//	
+	//	private static final Function1<?, ?, ?> _BUILD_FUNCTION = new Function1<Object, Tuple1<Object>, RuntimeException>() {
+	//		@Override
+	//		public Tuple1<Object> evaluate(final Object first) {
+	//			return Tuple1.build(first);
+	//		}
+	//	};
 	
 	/**
 	 * Instantiates a new instance with the given value.

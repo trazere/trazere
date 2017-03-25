@@ -135,7 +135,7 @@ public class LangAccumulators {
 		assert null != comparator;
 		
 		return new BaseAccumulator1<T, Maybe<T>, X>() {
-			private final MutableReference<T> _result = new MutableReference<T>();
+			private final MutableReference<T> _result = new MutableReference<>();
 			
 			@Override
 			public void add(final T value)
@@ -171,7 +171,7 @@ public class LangAccumulators {
 		assert null != comparator;
 		
 		return new BaseAccumulator1<T, Maybe<T>, X>() {
-			private final MutableReference<T> _result = new MutableReference<T>();
+			private final MutableReference<T> _result = new MutableReference<>();
 			
 			@Override
 			public void add(final T value)

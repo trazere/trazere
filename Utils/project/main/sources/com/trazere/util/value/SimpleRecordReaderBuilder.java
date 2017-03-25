@@ -47,7 +47,7 @@ implements RecordReaderBuilder<K, V, SimpleRecordReader<K, V>> {
 	@Deprecated
 	public SimpleRecordReaderBuilder() {
 		// Initialization.
-		_fields = new HashMap<K, ValueReader<? extends V>>();
+		_fields = new HashMap<>();
 	}
 	
 	/**
@@ -61,7 +61,7 @@ implements RecordReaderBuilder<K, V, SimpleRecordReader<K, V>> {
 		assert null != fields;
 		
 		// Initialization.
-		_fields = new HashMap<K, ValueReader<? extends V>>(fields);
+		_fields = new HashMap<>(fields);
 	}
 	
 	/**
@@ -75,7 +75,7 @@ implements RecordReaderBuilder<K, V, SimpleRecordReader<K, V>> {
 		assert null != builder;
 		
 		// Populate.
-		_fields = new HashMap<K, ValueReader<? extends V>>();
+		_fields = new HashMap<>();
 		try {
 			builder.populate(this);
 		} catch (final DuplicateFieldException exception) {
@@ -148,6 +148,6 @@ implements RecordReaderBuilder<K, V, SimpleRecordReader<K, V>> {
 	
 	@Override
 	public SimpleRecordReader<K, V> build() {
-		return new SimpleRecordReader<K, V>(new HashMap<K, ValueReader<? extends V>>(_fields));
+		return new SimpleRecordReader<>(new HashMap<>(_fields));
 	}
 }

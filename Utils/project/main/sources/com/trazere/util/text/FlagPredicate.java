@@ -98,9 +98,9 @@ implements Predicate1<Collection<String>, RuntimeException>, Describable {
 		assert null != flags;
 		
 		// Compute the flags.
-		final Set<String> required = new HashSet<String>();
-		final Set<String> enabled = new HashSet<String>();
-		final Set<String> excluded = new HashSet<String>();
+		final Set<String> required = new HashSet<>();
+		final Set<String> enabled = new HashSet<>();
+		final Set<String> excluded = new HashSet<>();
 		for (final String flag : flags) {
 			if (flag.startsWith("-")) {
 				final String flagName = flag.substring(1);
