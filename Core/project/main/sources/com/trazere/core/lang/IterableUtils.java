@@ -730,18 +730,6 @@ public class IterableUtils {
 		public <EE> ExIterable<EE> extractAll(final Function<? super E, ? extends Iterable<? extends EE>> extractor) {
 			return super.<EE>extractAll(extractor).unmodifiable();
 		}
-		
-		// Object.
-		
-		@Override
-		public int hashCode() {
-			return _decorated.hashCode();
-		}
-		
-		@Override
-		public boolean equals(final Object o) {
-			return _decorated.equals(o);
-		}
 	}
 	
 	/**
@@ -820,18 +808,6 @@ public class IterableUtils {
 		@Override
 		public PairIterable<E1, E2> filter(final Predicate<? super Tuple2<E1, E2>> filter) {
 			return PairIterable.super.filter(filter).unmodifiable();
-		}
-		
-		// Object.
-		
-		@Override
-		public int hashCode() {
-			return _decorated.hashCode();
-		}
-		
-		@Override
-		public boolean equals(final Object o) {
-			return _decorated.equals(o);
 		}
 	}
 	

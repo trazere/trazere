@@ -452,7 +452,28 @@ public class Maps {
 		}
 		
 		// Object.
-		// FIXME
+		
+		@Override
+		public int hashCode() {
+			return 0;
+		}
+		
+		@Override
+		public boolean equals(final Object object) {
+			if (this == object) {
+				return true;
+			} else if (null != object && object instanceof Map<?, ?>) {
+				final Map<?, ?> map = (Map<?, ?>) object;
+				return map.isEmpty();
+			} else {
+				return false;
+			}
+		}
+		
+		@Override
+		public String toString() {
+			return "{}";
+		}
 	};
 	
 	/**

@@ -124,9 +124,6 @@ implements ExSet<E> {
 		_decorated.clear();
 	}
 	
-	// Comparison and hashing
-	// FIXME
-	
 	// Streams.
 	
 	@Override

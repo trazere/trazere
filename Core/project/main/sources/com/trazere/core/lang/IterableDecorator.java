@@ -55,7 +55,4 @@ implements ExIterable<E> {
 	public Spliterator<E> spliterator() {
 		return _decorated.spliterator();
 	}
-	
-	// Object.
-	// FIXME
 }

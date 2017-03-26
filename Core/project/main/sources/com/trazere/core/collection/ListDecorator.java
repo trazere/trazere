@@ -187,9 +187,6 @@ implements ExList<E> {
 		_decorated.clear();
 	}
 	
-	// Comparison and hashing
-	// FIXME
-	
 	// Streams.
 	
 	@Override

@@ -116,7 +116,4 @@ implements Multimap<K, V, C> {
 	public void clear() {
 		_decorated.clear();
 	}
-	
-	// Object.
-	// TODO
 }

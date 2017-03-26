@@ -710,18 +710,6 @@ public class ListIteratorUtils {
 		public <TE> ExListIterator<TE> flatMap(final Function<? super E, ? extends ListIterator<? extends TE>> extractor) {
 			return super.<TE>flatMap(extractor).unmodifiable();
 		}
-		
-		// Object.
-		
-		@Override
-		public int hashCode() {
-			return _decorated.hashCode();
-		}
-		
-		@Override
-		public boolean equals(final Object o) {
-			return _decorated.equals(o);
-		}
 	}
 	
 	private ListIteratorUtils() {

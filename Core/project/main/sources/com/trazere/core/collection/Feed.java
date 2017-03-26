@@ -24,6 +24,8 @@ import com.trazere.core.util.Tuple2;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 
+// TODO: comparison and hashing ?
+
 /**
  * The {@link Feed} interface defines lazy sequences of elements.
  * 

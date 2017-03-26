@@ -17,6 +17,8 @@ package com.trazere.core.design;
 
 /**
  * The {@link Decorator} class provides a skeleton implementation of decorators.
+ * <p>
+ * By default, the decorator delegates the equality logic to the decorated object.
  * 
  * @param <T> Type of the decorated object.
  * @since 2.0
@@ -43,6 +45,16 @@ public abstract class Decorator<T> {
 	}
 	
 	// Object.
+	
+	@Override
+	public int hashCode() {
+		return _decorated.hashCode();
+	}
+	
+	@Override
+	public boolean equals(final Object obj) {
+		return _decorated.equals(obj);
+	}
 	
 	@Override
 	public String toString() {

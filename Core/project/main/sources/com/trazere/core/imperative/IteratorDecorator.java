@@ -59,7 +59,4 @@ implements ExIterator<E> {
 	public void forEachRemaining(final Consumer<? super E> action) {
 		_decorated.forEachRemaining(action);
 	}
-	
-	// Object.
-	// FIXME
 }

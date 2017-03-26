@@ -1189,9 +1189,6 @@ public class MapUtils {
 		public V setValue(final V value) {
 			throw new UnsupportedOperationException();
 		}
-		
-		// Object.
-		// TODO
 	}
 	
 	private MapUtils() {

@@ -501,18 +501,6 @@ public class SetUtils {
 		public <EE> ExSet<EE> extractAll(final Function<? super E, ? extends Iterable<? extends EE>> extractor) {
 			return super.<EE>extractAll(extractor).unmodifiable();
 		}
-		
-		// Object.
-		
-		@Override
-		public int hashCode() {
-			return _decorated.hashCode();
-		}
-		
-		@Override
-		public boolean equals(final Object o) {
-			return _decorated.equals(o);
-		}
 	}
 	
 	private SetUtils() {

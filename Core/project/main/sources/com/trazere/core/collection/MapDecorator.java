@@ -109,9 +109,6 @@ implements ExMap<K, V> {
 		return ExSet.build(_decorated.entrySet());
 	}
 	
-	// Comparison and hashing
-	// FIXME
-	
 	// Defaultable methods.
 	
 	@Override

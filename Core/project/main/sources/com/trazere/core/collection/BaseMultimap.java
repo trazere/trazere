@@ -18,6 +18,7 @@ package com.trazere.core.collection;
 import com.trazere.core.lang.HashCode;
 import com.trazere.core.util.Tuple2;
 import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * The {@link BaseMultimap} class provides a skeleton implementation of {@link Multimap multimaps}.
@@ -55,7 +56,7 @@ implements Multimap<K, V, C> {
 	
 	@Override
 	public int hashCode() {
-		final HashCode result = new HashCode(Multimap.class);
+		final HashCode result = new HashCode(0);
 		collectionBindings().foreach(result::append);
 		return result.get();
 	}
@@ -79,5 +80,21 @@ implements Multimap<K, V, C> {
 		} else {
 			return false;
 		}
+	}
+	
+	@Override
+	public String toString() {
+		final StringBuilder result = new StringBuilder();
+		result.append("{");
+		final Iterator<Tuple2<K, C>> collectionBindings = collectionBindings().iterator();
+		while (collectionBindings.hasNext()) {
+			final Tuple2<K, C> collectionBinding = collectionBindings.next();
+			result.append(collectionBinding.get1().toString()).append("=").append(collectionBinding.get2());
+			if (collectionBindings.hasNext()) {
+				result.append(", ");
+			}
+		}
+		result.append("}");
+		return result.toString();
 	}
 }

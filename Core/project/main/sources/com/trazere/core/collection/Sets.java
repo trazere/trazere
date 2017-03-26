@@ -352,7 +352,28 @@ public class Sets {
 		}
 		
 		// Object.
-		// FIXME
+		
+		@Override
+		public int hashCode() {
+			return 1;
+		}
+		
+		@Override
+		public boolean equals(final Object object) {
+			if (this == object) {
+				return true;
+			} else if (null != object && object instanceof Set<?>) {
+				final Set<?> set = (Set<?>) object;
+				return set.isEmpty();
+			} else {
+				return false;
+			}
+		}
+		
+		@Override
+		public String toString() {
+			return "[]";
+		}
 	};
 	
 	/**
