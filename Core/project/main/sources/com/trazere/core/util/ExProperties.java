@@ -3,6 +3,7 @@ package com.trazere.core.util;
 import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Thunk;
 import com.trazere.core.io.Input;
+import com.trazere.core.lang.PairIterable;
 import com.trazere.core.record.InvalidFieldException;
 import com.trazere.core.record.MissingFieldException;
 import java.io.File;
@@ -42,6 +43,8 @@ extends Properties {
 		super(defaults);
 	}
 	
+	// Properties.
+	
 	/**
 	 * Loads the properties from the given input in a simple line-oriented format into this properties table.
 	 * 
@@ -66,6 +69,19 @@ extends Properties {
 	public void loadFromXML(final Input input)
 	throws IOException {
 		PropertiesUtils.loadFromXML(this, input);
+	}
+	
+	/**
+	 * Gets a view of the properties corresponding to this property table.
+	 * 
+	 * @return The properties.
+	 * @see PropertiesUtils#properties(Properties)
+	 * @since 2.0
+	 */
+	// TODO: ExSet & PairIterable => BindingSet ?
+	// TODO: PairCollection
+	public PairIterable<String, String> properties() {
+		return PropertiesUtils.properties(this);
 	}
 	
 	/**

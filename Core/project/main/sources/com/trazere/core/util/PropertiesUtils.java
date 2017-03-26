@@ -17,7 +17,9 @@ package com.trazere.core.util;
 
 import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Thunk;
+import com.trazere.core.imperative.PairIterator;
 import com.trazere.core.io.Input;
+import com.trazere.core.lang.PairIterable;
 import com.trazere.core.record.FieldUtils;
 import com.trazere.core.record.InvalidFieldException;
 import com.trazere.core.record.MissingFieldException;
@@ -27,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
+import java.util.Iterator;
 import java.util.Properties;
 
 /**
@@ -69,10 +72,41 @@ public class PropertiesUtils {
 	}
 	
 	/**
+	 * Gets a view of the properties corresponding to the given property table.
+	 * 
+	 * @param properties Property table to read.
+	 * @return The properties.
+	 * @since 2.0
+	 */
+	// TODO: ExSet & PairIterable => BindingSet ?
+	// TODO: PairCollection
+	public static PairIterable<String, String> properties(final Properties properties) {
+		// HACK: not a lambda to work around a bug of Eclipse
+		return new PairIterable<String, String>() {
+			@Override
+			public PairIterator<String, String> iterator() {
+				final Iterator<String> names = properties.stringPropertyNames().iterator();
+				return new PairIterator<String, String>() {
+					@Override
+					public boolean hasNext() {
+						return names.hasNext();
+					}
+					
+					@Override
+					public Tuple2<String, String> next() {
+						final String name = names.next();
+						return new Tuple2<>(name, properties.getProperty(name));
+					}
+				};
+			}
+		};
+	}
+	
+	/**
 	 * Gets the value of the property with the given name from the given property table.
 	 * 
 	 * @param <T> Type of the value.
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @param deserializer Function to use to deserialize the representation.
 	 * @return The value of the property, or nothing when the property does not exist.
@@ -88,7 +122,7 @@ public class PropertiesUtils {
 	 * Gets the value of the property with the given name from the given property table.
 	 * 
 	 * @param <T> Type of the value.
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @param deserializer Serializer to use to deserialize the representation.
 	 * @return The value of the property, or nothing when the property does not exist.
@@ -103,7 +137,7 @@ public class PropertiesUtils {
 	/**
 	 * Gets the value of the string property with the given name from the given property table.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
@@ -117,7 +151,7 @@ public class PropertiesUtils {
 	/**
 	 * Gets the value of the boolean property with the given name from the given property table.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
@@ -131,7 +165,7 @@ public class PropertiesUtils {
 	/**
 	 * Gets the value of the integer property with the given name from the given property table.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
@@ -145,7 +179,7 @@ public class PropertiesUtils {
 	/**
 	 * Gets the value of the unsigned integer property with the given name from the given property table.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
@@ -159,7 +193,7 @@ public class PropertiesUtils {
 	/**
 	 * Gets the value of the long integer property with the given name from the given property table.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
@@ -173,7 +207,7 @@ public class PropertiesUtils {
 	/**
 	 * Gets the value of the unsigned long integer property with the given name from the given property table.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
@@ -187,7 +221,7 @@ public class PropertiesUtils {
 	/**
 	 * Gets the value of the float property with the given name from the given property table.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
@@ -201,7 +235,7 @@ public class PropertiesUtils {
 	/**
 	 * Gets the value of the double property with the given name from the given property table.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
@@ -215,7 +249,7 @@ public class PropertiesUtils {
 	/**
 	 * Gets the value of the file property with the given name from the given property table.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
@@ -229,7 +263,7 @@ public class PropertiesUtils {
 	/**
 	 * Gets the value of the URI property with the given name from the given property table.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
@@ -243,7 +277,7 @@ public class PropertiesUtils {
 	/**
 	 * Gets the value of the URL property with the given name from the given property table.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
@@ -260,7 +294,7 @@ public class PropertiesUtils {
 	 * The given default value is returned when the property does not exist.
 	 * 
 	 * @param <T> Type of the value.
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @param deserializer Function to use to deserialize the representation.
 	 * @param defaultValue Default value when the property does not exist.
@@ -279,7 +313,7 @@ public class PropertiesUtils {
 	 * The given default value is returned when the property does not exist.
 	 * 
 	 * @param <T> Type of the value.
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @param deserializer Serializer to use to deserialize the representation.
 	 * @param defaultValue Default value when the property does not exist.
@@ -297,7 +331,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
@@ -314,7 +348,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
@@ -331,7 +365,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
@@ -348,7 +382,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
@@ -365,7 +399,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
@@ -382,7 +416,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
@@ -399,7 +433,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
@@ -416,7 +450,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
@@ -433,7 +467,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
@@ -450,7 +484,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
@@ -467,7 +501,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
@@ -485,7 +519,7 @@ public class PropertiesUtils {
 	 * The given default value is returned when the property does not exist.
 	 * 
 	 * @param <T> Type of the value.
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @param deserializer Function to use to deserialize the representation.
 	 * @param defaultValue Default value when the property does not exist.
@@ -504,7 +538,7 @@ public class PropertiesUtils {
 	 * The given default value is returned when the property does not exist.
 	 * 
 	 * @param <T> Type of the value.
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @param deserializer Serializer to use to deserialize the representation.
 	 * @param defaultValue Default value when the property does not exist.
@@ -522,7 +556,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
@@ -539,7 +573,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
@@ -556,7 +590,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
@@ -573,7 +607,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
@@ -590,7 +624,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
@@ -607,7 +641,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
@@ -624,7 +658,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
@@ -641,7 +675,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
@@ -658,7 +692,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
@@ -675,7 +709,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
@@ -692,7 +726,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
@@ -710,7 +744,7 @@ public class PropertiesUtils {
 	 * An exception is raised when the property does not exist.
 	 * 
 	 * @param <T> Type of the value.
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @param deserializer Function to use to deserialize the representation.
 	 * @return The value of the property.
@@ -729,7 +763,7 @@ public class PropertiesUtils {
 	 * An exception is raised when the property does not exist.
 	 * 
 	 * @param <T> Type of the value.
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @param deserializer Serializer to use to deserialize the representation.
 	 * @return The value of the property.
@@ -747,7 +781,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * An exception is raised when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
@@ -764,7 +798,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * An exception is raised if the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
@@ -781,7 +815,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * An exception is raised if the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
@@ -798,7 +832,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * An exception is raised if the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
@@ -815,7 +849,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * An exception is raised if the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
@@ -832,7 +866,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * An exception is raised if the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
@@ -849,7 +883,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * An exception is raised if the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
@@ -866,7 +900,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * An exception is raised if the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
@@ -883,7 +917,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * An exception is raised if the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
@@ -900,7 +934,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * An exception is raised if the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
@@ -917,7 +951,7 @@ public class PropertiesUtils {
 	 * <p>
 	 * An exception is raised if the property does not exist.
 	 * 
-	 * @param properties Properties to read.
+	 * @param properties Property table to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
