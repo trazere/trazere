@@ -1,935 +1,931 @@
-/*
- *  Copyright 2006-2015 Julien Dufour
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
 package com.trazere.core.util;
 
 import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Thunk;
 import com.trazere.core.io.Input;
-import com.trazere.core.record.FieldUtils;
 import com.trazere.core.record.InvalidFieldException;
 import com.trazere.core.record.MissingFieldException;
-import com.trazere.core.text.TextSerializers;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
 import java.util.Properties;
 
+// TODO: UUID
+
 /**
- * The {@link PropertiesUtils} class provides various utilities regarding {@link Properties properties}.
+ * The {@link ExProperties} class implements {@link Properties property tables} extended with various utilities.
  * 
  * @see Properties
  * @since 2.0
  */
-public class PropertiesUtils {
+public class ExProperties
+extends Properties {
+	private static final long serialVersionUID = 1L;
+	
 	/**
-	 * Loads the properties from the given input in a simple line-oriented format into the given properties table.
+	 * Instantiates a new property table with no default values.
 	 * 
-	 * @param properties Property table to populate.
-	 * @param input Input providing the properties to load.
-	 * @throws IOException When the input cannot be read.
-	 * @see Properties#load(InputStream)
 	 * @since 2.0
 	 */
-	public static void load(final Properties properties, final Input input)
+	public ExProperties() {
+		super();
+	}
+	
+	/**
+	 * Instantiates a new property table with the given default values.
+	 * 
+	 * @param defaults Default properties.
+	 * @since 2.0
+	 */
+	public ExProperties(@SuppressWarnings("hiding") final Properties defaults) {
+		super(defaults);
+	}
+	
+	/**
+	 * Loads the properties from the given input in a simple line-oriented format into this properties table.
+	 * 
+	 * @param input Input providing the properties to load.
+	 * @throws IOException When the input cannot be read.
+	 * @see PropertiesUtils#load(Properties, Input)
+	 * @since 2.0
+	 */
+	public void load(final Input input)
 	throws IOException {
-		try (final InputStream stream = input.open()) {
-			properties.load(stream);
-		}
+		PropertiesUtils.load(this, input);
 	}
 	
 	/**
 	 * Loads the properties represented by the XML document from the given input into this properties table.
 	 * 
-	 * @param properties Property table to populate.
 	 * @param input Input providing the properties to load.
 	 * @throws IOException When the input cannot be read.
-	 * @see Properties#load(InputStream)
+	 * @see PropertiesUtils#loadFromXML(Properties, Input)
 	 * @since 2.0
 	 */
-	public static void loadFromXML(final Properties properties, final Input input)
+	public void loadFromXML(final Input input)
 	throws IOException {
-		try (final InputStream stream = input.open()) {
-			properties.loadFromXML(stream);
-		}
+		PropertiesUtils.loadFromXML(this, input);
 	}
 	
 	/**
-	 * Gets the value of the property with the given name from the given property table.
+	 * Gets the value of the property with the given name from this property table.
 	 * 
 	 * @param <T> Type of the value.
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param deserializer Function to use to deserialize the representation.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#get(Properties, String, Function)
 	 * @since 2.0
 	 */
-	public static <T> Maybe<T> get(final Properties properties, final String name, final Function<? super String, ? extends T> deserializer)
+	public <T> Maybe<T> get(final String name, final Function<? super String, ? extends T> deserializer)
 	throws InvalidFieldException {
-		return FieldUtils.readNullable(name, properties.getProperty(name), deserializer);
+		return PropertiesUtils.get(this, name, deserializer);
 	}
 	
 	/**
-	 * Gets the value of the property with the given name from the given property table.
+	 * Gets the value of the property with the given name from this property table.
 	 * 
 	 * @param <T> Type of the value.
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param deserializer Serializer to use to deserialize the representation.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#get(Properties, String, Serializer)
 	 * @since 2.0
 	 */
-	public static <T> Maybe<T> get(final Properties properties, final String name, final Serializer<? extends T, ? super String> deserializer)
+	public <T> Maybe<T> get(final String name, final Serializer<? extends T, ? super String> deserializer)
 	throws InvalidFieldException {
-		return get(properties, name, deserializer::deserialize);
+		return PropertiesUtils.get(this, name, deserializer);
 	}
 	
 	/**
-	 * Gets the value of the string property with the given name from the given property table.
+	 * Gets the value of the string property with the given name from this property table.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getString(Properties, String)
 	 * @since 2.0
 	 */
-	public static Maybe<String> getString(final Properties properties, final String name)
+	public Maybe<String> getString(final String name)
 	throws InvalidFieldException {
-		return get(properties, name, TextSerializers.string());
+		return PropertiesUtils.getString(this, name);
 	}
 	
 	/**
-	 * Gets the value of the boolean property with the given name from the given property table.
+	 * Gets the value of the boolean property with the given name from this property table.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getBoolean(Properties, String)
 	 * @since 2.0
 	 */
-	public static Maybe<Boolean> getBoolean(final Properties properties, final String name)
+	public Maybe<Boolean> getBoolean(final String name)
 	throws InvalidFieldException {
-		return get(properties, name, TextSerializers.boolean_());
+		return PropertiesUtils.getBoolean(this, name);
 	}
 	
 	/**
-	 * Gets the value of the integer property with the given name from the given property table.
+	 * Gets the value of the integer property with the given name from this property table.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getInteger(Properties, String)
 	 * @since 2.0
 	 */
-	public static Maybe<Integer> getInteger(final Properties properties, final String name)
+	public Maybe<Integer> getInteger(final String name)
 	throws InvalidFieldException {
-		return get(properties, name, TextSerializers.integer());
+		return PropertiesUtils.getInteger(this, name);
 	}
 	
 	/**
-	 * Gets the value of the unsigned integer property with the given name from the given property table.
+	 * Gets the value of the unsigned integer property with the given name from this property table.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getUnsignedInteger(Properties, String)
 	 * @since 2.0
 	 */
-	public static Maybe<Integer> getUnsignedInteger(final Properties properties, final String name)
+	public Maybe<Integer> getUnsignedInteger(final String name)
 	throws InvalidFieldException {
-		return get(properties, name, TextSerializers.unsignedInteger());
+		return PropertiesUtils.getUnsignedInteger(this, name);
 	}
 	
 	/**
-	 * Gets the value of the long integer property with the given name from the given property table.
+	 * Gets the value of the long integer property with the given name from this property table.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getLong(Properties, String)
 	 * @since 2.0
 	 */
-	public static Maybe<Long> getLong(final Properties properties, final String name)
+	public Maybe<Long> getLong(final String name)
 	throws InvalidFieldException {
-		return get(properties, name, TextSerializers.long_());
+		return PropertiesUtils.getLong(this, name);
 	}
 	
 	/**
-	 * Gets the value of the unsigned long integer property with the given name from the given property table.
+	 * Gets the value of the unsigned long integer property with the given name from this property table.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getUnsignedLong(Properties, String)
 	 * @since 2.0
 	 */
-	public static Maybe<Long> getUnsignedLong(final Properties properties, final String name)
+	public Maybe<Long> getUnsignedLong(final String name)
 	throws InvalidFieldException {
-		return get(properties, name, TextSerializers.unsignedLong());
+		return PropertiesUtils.getUnsignedLong(this, name);
 	}
 	
 	/**
-	 * Gets the value of the float property with the given name from the given property table.
+	 * Gets the value of the float property with the given name from this property table.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getFloat(Properties, String)
 	 * @since 2.0
 	 */
-	public static Maybe<Float> getFloat(final Properties properties, final String name)
+	public Maybe<Float> getFloat(final String name)
 	throws InvalidFieldException {
-		return get(properties, name, TextSerializers.float_());
+		return PropertiesUtils.getFloat(this, name);
 	}
 	
 	/**
-	 * Gets the value of the double property with the given name from the given property table.
+	 * Gets the value of the double property with the given name from this property table.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getDouble(Properties, String)
 	 * @since 2.0
 	 */
-	public static Maybe<Double> getDouble(final Properties properties, final String name)
+	public Maybe<Double> getDouble(final String name)
 	throws InvalidFieldException {
-		return get(properties, name, TextSerializers.double_());
+		return PropertiesUtils.getDouble(this, name);
 	}
 	
 	/**
-	 * Gets the value of the file property with the given name from the given property table.
+	 * Gets the value of the file property with the given name from this property table.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getFile(Properties, String)
 	 * @since 2.0
 	 */
-	public static Maybe<File> getFile(final Properties properties, final String name)
+	public Maybe<File> getFile(final String name)
 	throws InvalidFieldException {
-		return get(properties, name, TextSerializers.file());
+		return PropertiesUtils.getFile(this, name);
 	}
 	
 	/**
-	 * Gets the value of the URI property with the given name from the given property table.
+	 * Gets the value of the URI property with the given name from this property table.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getUri(Properties, String)
 	 * @since 2.0
 	 */
-	public static Maybe<URI> getUri(final Properties properties, final String name)
+	public Maybe<URI> getUri(final String name)
 	throws InvalidFieldException {
-		return get(properties, name, TextSerializers.uri());
+		return PropertiesUtils.getUri(this, name);
 	}
 	
 	/**
-	 * Gets the value of the URL property with the given name from the given property table.
+	 * Gets the value of the URL property with the given name from this property table.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property, or nothing when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getUrl(Properties, String)
 	 * @since 2.0
 	 */
-	public static Maybe<URL> getUrl(final Properties properties, final String name)
+	public Maybe<URL> getUrl(final String name)
 	throws InvalidFieldException {
-		return get(properties, name, TextSerializers.url());
+		return PropertiesUtils.getUrl(this, name);
 	}
 	
 	/**
-	 * Gets the value of the optional property with the given name from the given property table.
+	 * Gets the value of the optional property with the given name from this property table.
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
 	 * @param <T> Type of the value.
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param deserializer Function to use to deserialize the representation.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getOptional(Properties, String, Function, Object)
 	 * @since 2.0
 	 */
-	public static <T> T getOptional(final Properties properties, final String name, final Function<? super String, ? extends T> deserializer, final T defaultValue)
+	public <T> T getOptional(final String name, final Function<? super String, ? extends T> deserializer, final T defaultValue)
 	throws InvalidFieldException {
-		return FieldUtils.readOptionalNullable(name, properties.getProperty(name), deserializer, defaultValue);
+		return PropertiesUtils.getOptional(this, name, deserializer, defaultValue);
 	}
 	
 	/**
-	 * Gets the value of the optional property with the given name from the given property table.
+	 * Gets the value of the optional property with the given name from this property table.
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
 	 * @param <T> Type of the value.
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param deserializer Serializer to use to deserialize the representation.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getOptional(Properties, String, Serializer, Object)
 	 * @since 2.0
 	 */
-	public static <T> T getOptional(final Properties properties, final String name, final Serializer<? extends T, ? super String> deserializer, final T defaultValue)
+	public <T> T getOptional(final String name, final Serializer<? extends T, ? super String> deserializer, final T defaultValue)
 	throws InvalidFieldException {
-		return getOptional(properties, name, deserializer::deserialize, defaultValue);
+		return PropertiesUtils.getOptional(this, name, deserializer, defaultValue);
 	}
 	
 	/**
-	 * Gets the value of the optional string property with the given name from the given property table.
+	 * Gets the value of the optional string property with the given name from this property table.
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getOptionalString(Properties, String, String)
 	 * @since 2.0
 	 */
-	public static String getOptionalString(final Properties properties, final String name, final String defaultValue)
+	public String getOptionalString(final String name, final String defaultValue)
 	throws InvalidFieldException {
-		return getOptional(properties, name, TextSerializers.string(), defaultValue);
+		return PropertiesUtils.getOptionalString(this, name, defaultValue);
 	}
 	
 	/**
-	 * Gets the value of the optional boolean property with the given name from the given property table.
+	 * Gets the value of the optional boolean property with the given name from this property table.
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getOptionalBoolean(Properties, String, boolean)
 	 * @since 2.0
 	 */
-	public static boolean getOptionalBoolean(final Properties properties, final String name, final boolean defaultValue)
+	public boolean getOptionalBoolean(final String name, final boolean defaultValue)
 	throws InvalidFieldException {
-		return getOptional(properties, name, TextSerializers.boolean_(), defaultValue);
+		return PropertiesUtils.getOptionalBoolean(this, name, defaultValue);
 	}
 	
 	/**
-	 * Gets the value of the optional integer property with the given name from the given property table.
+	 * Gets the value of the optional integer property with the given name from this property table.
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getOptionalInteger(Properties, String, int)
 	 * @since 2.0
 	 */
-	public static int getOptionalInteger(final Properties properties, final String name, final int defaultValue)
+	public int getOptionalInteger(final String name, final int defaultValue)
 	throws InvalidFieldException {
-		return getOptional(properties, name, TextSerializers.integer(), defaultValue);
+		return PropertiesUtils.getOptionalInteger(this, name, defaultValue);
 	}
 	
 	/**
-	 * Gets the value of the optional unsigned integer property with the given name from the given property table.
+	 * Gets the value of the optional unsigned integer property with the given name from this property table.
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getOptionalUnsignedInteger(Properties, String, int)
 	 * @since 2.0
 	 */
-	public static int getOptionalUnsignedInteger(final Properties properties, final String name, final int defaultValue)
+	public int getOptionalUnsignedInteger(final String name, final int defaultValue)
 	throws InvalidFieldException {
-		return getOptional(properties, name, TextSerializers.unsignedInteger(), defaultValue);
+		return PropertiesUtils.getOptionalUnsignedInteger(this, name, defaultValue);
 	}
 	
 	/**
-	 * Gets the value of the optional long integer property with the given name from the given property table.
+	 * Gets the value of the optional long integer property with the given name from this property table.
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getOptionalLong(Properties, String, long)
 	 * @since 2.0
 	 */
-	public static long getOptionalLong(final Properties properties, final String name, final long defaultValue)
+	public long getOptionalLong(final String name, final long defaultValue)
 	throws InvalidFieldException {
-		return getOptional(properties, name, TextSerializers.long_(), defaultValue);
+		return PropertiesUtils.getOptionalLong(this, name, defaultValue);
 	}
 	
 	/**
-	 * Gets the value of the optional unsigned long integer property with the given name from the given property table.
+	 * Gets the value of the optional unsigned long integer property with the given name from this property table.
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getOptionalUnsignedLong(Properties, String, long)
 	 * @since 2.0
 	 */
-	public static long getOptionalUnsignedLong(final Properties properties, final String name, final long defaultValue)
+	public long getOptionalUnsignedLong(final String name, final long defaultValue)
 	throws InvalidFieldException {
-		return getOptional(properties, name, TextSerializers.unsignedLong(), defaultValue);
+		return PropertiesUtils.getOptionalLong(this, name, defaultValue);
 	}
 	
 	/**
-	 * Gets the value of the optional float property with the given name from the given property table.
+	 * Gets the value of the optional float property with the given name from this property table.
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getOptionalFloat(Properties, String, float)
 	 * @since 2.0
 	 */
-	public static float getOptionalFloat(final Properties properties, final String name, final float defaultValue)
+	public float getOptionalFloat(final String name, final float defaultValue)
 	throws InvalidFieldException {
-		return getOptional(properties, name, TextSerializers.float_(), defaultValue);
+		return PropertiesUtils.getOptionalFloat(this, name, defaultValue);
 	}
 	
 	/**
-	 * Gets the value of the optional double property with the given name from the given property table.
+	 * Gets the value of the optional double property with the given name from this property table.
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getOptionalDouble(Properties, String, double)
 	 * @since 2.0
 	 */
-	public static double getOptionalDouble(final Properties properties, final String name, final double defaultValue)
+	public double getOptionalDouble(final String name, final double defaultValue)
 	throws InvalidFieldException {
-		return getOptional(properties, name, TextSerializers.double_(), defaultValue);
+		return PropertiesUtils.getOptionalDouble(this, name, defaultValue);
 	}
 	
 	/**
-	 * Gets the value of the optional file property with the given name from the given property table.
+	 * Gets the value of the optional file property with the given name from this property table.
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getOptionalFile(Properties, String, File)
 	 * @since 2.0
 	 */
-	public static File getOptionalFile(final Properties properties, final String name, final File defaultValue)
+	public File getOptionalFile(final String name, final File defaultValue)
 	throws InvalidFieldException {
-		return getOptional(properties, name, TextSerializers.file(), defaultValue);
+		return PropertiesUtils.getOptionalFile(this, name, defaultValue);
 	}
 	
 	/**
-	 * Gets the value of the optional URI property with the given name from the given property table.
+	 * Gets the value of the optional URI property with the given name from this property table.
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getOptionalUri(Properties, String, URI)
 	 * @since 2.0
 	 */
-	public static URI getOptionalUri(final Properties properties, final String name, final URI defaultValue)
+	public URI getOptionalUri(final String name, final URI defaultValue)
 	throws InvalidFieldException {
-		return getOptional(properties, name, TextSerializers.uri(), defaultValue);
+		return PropertiesUtils.getOptionalUri(this, name, defaultValue);
 	}
 	
 	/**
-	 * Gets the value of the optional URL property with the given name from the given property table.
+	 * Gets the value of the optional URL property with the given name from this property table.
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getOptionalUrl(Properties, String, URL)
 	 * @since 2.0
 	 */
-	public static URL getOptionalUrl(final Properties properties, final String name, final URL defaultValue)
+	public URL getOptionalUrl(final String name, final URL defaultValue)
 	throws InvalidFieldException {
-		return getOptional(properties, name, TextSerializers.url(), defaultValue);
+		return PropertiesUtils.getOptionalUrl(this, name, defaultValue);
 	}
 	
 	/**
-	 * Gets the value of the optional property with the given name from the given property table.
+	 * Gets the value of the optional property with the given name from this property table.
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
 	 * @param <T> Type of the value.
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param deserializer Function to use to deserialize the representation.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getOptional(Properties, String, Function, Thunk)
 	 * @since 2.0
 	 */
-	public static <T> T getOptional(final Properties properties, final String name, final Function<? super String, ? extends T> deserializer, final Thunk<? extends T> defaultValue)
+	public <T> T getOptional(final String name, final Function<? super String, ? extends T> deserializer, final Thunk<? extends T> defaultValue)
 	throws InvalidFieldException {
-		return FieldUtils.readOptionalNullable(name, properties.getProperty(name), deserializer, defaultValue);
+		return PropertiesUtils.getOptional(this, name, deserializer, defaultValue);
 	}
 	
 	/**
-	 * Gets the value of the optional property with the given name from the given property table.
+	 * Gets the value of the optional property with the given name from this property table.
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
 	 * @param <T> Type of the value.
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param deserializer Serializer to use to deserialize the representation.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getOptional(Properties, String, Serializer, Thunk)
 	 * @since 2.0
 	 */
-	public static <T> T getOptional(final Properties properties, final String name, final Serializer<? extends T, ? super String> deserializer, final Thunk<? extends T> defaultValue)
+	public <T> T getOptional(final String name, final Serializer<? extends T, ? super String> deserializer, final Thunk<? extends T> defaultValue)
 	throws InvalidFieldException {
-		return FieldUtils.readOptionalNullable(name, properties.getProperty(name), deserializer, defaultValue);
+		return PropertiesUtils.getOptional(this, name, deserializer, defaultValue);
 	}
 	
 	/**
-	 * Gets the value of the optional string property with the given name from the given property table.
+	 * Gets the value of the optional string property with the given name from this property table.
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getOptionalString(Properties, String, Thunk)
 	 * @since 2.0
 	 */
-	public static String getOptionalString(final Properties properties, final String name, final Thunk<? extends String> defaultValue)
+	public String getOptionalString(final String name, final Thunk<? extends String> defaultValue)
 	throws InvalidFieldException {
-		return getOptional(properties, name, TextSerializers.string(), defaultValue);
+		return PropertiesUtils.getOptionalString(this, name, defaultValue);
 	}
 	
 	/**
-	 * Gets the value of the optional boolean property with the given name from the given property table.
+	 * Gets the value of the optional boolean property with the given name from this property table.
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getOptionalBoolean(Properties, String, Thunk)
 	 * @since 2.0
 	 */
-	public static boolean getOptionalBoolean(final Properties properties, final String name, final Thunk<? extends Boolean> defaultValue)
+	public boolean getOptionalBoolean(final String name, final Thunk<? extends Boolean> defaultValue)
 	throws InvalidFieldException {
-		return getOptional(properties, name, TextSerializers.boolean_(), defaultValue);
+		return PropertiesUtils.getOptionalBoolean(this, name, defaultValue);
 	}
 	
 	/**
-	 * Gets the value of the optional integer property with the given name from the given property table.
+	 * Gets the value of the optional integer property with the given name from this property table.
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getOptionalInteger(Properties, String, Thunk)
 	 * @since 2.0
 	 */
-	public static int getOptionalInteger(final Properties properties, final String name, final Thunk<? extends Integer> defaultValue)
+	public int getOptionalInteger(final String name, final Thunk<? extends Integer> defaultValue)
 	throws InvalidFieldException {
-		return getOptional(properties, name, TextSerializers.integer(), defaultValue);
+		return PropertiesUtils.getOptionalInteger(this, name, defaultValue);
 	}
 	
 	/**
-	 * Gets the value of the optional unsigned integer property with the given name from the given property table.
+	 * Gets the value of the optional unsigned integer property with the given name from this property table.
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getOptionalUnsignedInteger(Properties, String, Thunk)
 	 * @since 2.0
 	 */
-	public static int getOptionalUnsignedInteger(final Properties properties, final String name, final Thunk<? extends Integer> defaultValue)
+	public int getOptionalUnsignedInteger(final String name, final Thunk<? extends Integer> defaultValue)
 	throws InvalidFieldException {
-		return getOptional(properties, name, TextSerializers.unsignedInteger(), defaultValue);
+		return PropertiesUtils.getOptionalUnsignedInteger(this, name, defaultValue);
 	}
 	
 	/**
-	 * Gets the value of the optional long integer property with the given name from the given property table.
+	 * Gets the value of the optional long integer property with the given name from this property table.
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getOptionalLong(Properties, String, Thunk)
 	 * @since 2.0
 	 */
-	public static long getOptionalLong(final Properties properties, final String name, final Thunk<? extends Long> defaultValue)
+	public long getOptionalLong(final String name, final Thunk<? extends Long> defaultValue)
 	throws InvalidFieldException {
-		return getOptional(properties, name, TextSerializers.long_(), defaultValue);
+		return PropertiesUtils.getOptionalLong(this, name, defaultValue);
 	}
 	
 	/**
-	 * Gets the value of the optional unsigned long integer property with the given name from the given property table.
+	 * Gets the value of the optional unsigned long integer property with the given name from this property table.
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getOptionalUnsignedLong(Properties, String, Thunk)
 	 * @since 2.0
 	 */
-	public static long getOptionalUnsignedLong(final Properties properties, final String name, final Thunk<? extends Long> defaultValue)
+	public long getOptionalUnsignedLong(final String name, final Thunk<? extends Long> defaultValue)
 	throws InvalidFieldException {
-		return getOptional(properties, name, TextSerializers.unsignedLong(), defaultValue);
+		return PropertiesUtils.getOptionalUnsignedLong(this, name, defaultValue);
 	}
 	
 	/**
-	 * Gets the value of the optional float property with the given name from the given property table.
+	 * Gets the value of the optional float property with the given name from this property table.
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getOptionalFloat(Properties, String, Thunk)
 	 * @since 2.0
 	 */
-	public static float getOptionalFloat(final Properties properties, final String name, final Thunk<? extends Float> defaultValue)
+	public float getOptionalFloat(final String name, final Thunk<? extends Float> defaultValue)
 	throws InvalidFieldException {
-		return getOptional(properties, name, TextSerializers.float_(), defaultValue);
+		return PropertiesUtils.getOptionalFloat(this, name, defaultValue);
 	}
 	
 	/**
-	 * Gets the value of the optional double property with the given name from the given property table.
+	 * Gets the value of the optional double property with the given name from this property table.
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getOptionalDouble(Properties, String, Thunk)
 	 * @since 2.0
 	 */
-	public static double getOptionalDouble(final Properties properties, final String name, final Thunk<? extends Double> defaultValue)
+	public double getOptionalDouble(final String name, final Thunk<? extends Double> defaultValue)
 	throws InvalidFieldException {
-		return getOptional(properties, name, TextSerializers.double_(), defaultValue);
+		return PropertiesUtils.getOptionalDouble(this, name, defaultValue);
 	}
 	
 	/**
-	 * Gets the value of the optional file property with the given name from the given property table.
+	 * Gets the value of the optional file property with the given name from this property table.
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getOptionalFile(Properties, String, Thunk)
 	 * @since 2.0
 	 */
-	public static File getOptionalFile(final Properties properties, final String name, final Thunk<? extends File> defaultValue)
+	public File getOptionalFile(final String name, final Thunk<? extends File> defaultValue)
 	throws InvalidFieldException {
-		return getOptional(properties, name, TextSerializers.file(), defaultValue);
+		return PropertiesUtils.getOptionalFile(this, name, defaultValue);
 	}
 	
 	/**
-	 * Gets the value of the optional URI property with the given name from the given property table.
+	 * Gets the value of the optional URI property with the given name from this property table.
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getOptionalUri(Properties, String, Thunk)
 	 * @since 2.0
 	 */
-	public static URI getOptionalUri(final Properties properties, final String name, final Thunk<? extends URI> defaultValue)
+	public URI getOptionalUri(final String name, final Thunk<? extends URI> defaultValue)
 	throws InvalidFieldException {
-		return getOptional(properties, name, TextSerializers.uri(), defaultValue);
+		return PropertiesUtils.getOptionalUri(this, name, defaultValue);
 	}
 	
 	/**
-	 * Gets the value of the optional URL property with the given name from the given property table.
+	 * Gets the value of the optional URL property with the given name from this property table.
 	 * <p>
 	 * The given default value is returned when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param defaultValue Default value when the property does not exist.
 	 * @return The value of the property, or the default value when the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getOptionalUrl(Properties, String, Thunk)
 	 * @since 2.0
 	 */
-	public static URL getOptionalUrl(final Properties properties, final String name, final Thunk<? extends URL> defaultValue)
+	public URL getOptionalUrl(final String name, final Thunk<? extends URL> defaultValue)
 	throws InvalidFieldException {
-		return getOptional(properties, name, TextSerializers.url(), defaultValue);
+		return PropertiesUtils.getOptionalUrl(this, name, defaultValue);
 	}
 	
 	/**
-	 * Gets the value of the mandatory property with the given name from the given property table.
+	 * Gets the value of the mandatory property with the given name from this property table.
 	 * <p>
 	 * An exception is raised when the property does not exist.
 	 * 
 	 * @param <T> Type of the value.
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param deserializer Function to use to deserialize the representation.
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getMandatory(Properties, String, Function)
 	 * @since 2.0
 	 */
-	public static <T> T getMandatory(final Properties properties, final String name, final Function<? super String, ? extends T> deserializer)
+	public <T> T getMandatory(final String name, final Function<? super String, ? extends T> deserializer)
 	throws MissingFieldException, InvalidFieldException {
-		return FieldUtils.readMandatoryNullable(name, properties.getProperty(name), deserializer);
+		return PropertiesUtils.getMandatory(this, name, deserializer);
 	}
 	
 	/**
-	 * Gets the value of the mandatory property with the given name from the given property table.
+	 * Gets the value of the mandatory property with the given name from this property table.
 	 * <p>
 	 * An exception is raised when the property does not exist.
 	 * 
 	 * @param <T> Type of the value.
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @param deserializer Serializer to use to deserialize the representation.
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getMandatory(Properties, String, Serializer)
 	 * @since 2.0
 	 */
-	public static <T> T getMandatory(final Properties properties, final String name, final Serializer<? extends T, ? super String> deserializer)
+	public <T> T getMandatory(final String name, final Serializer<? extends T, ? super String> deserializer)
 	throws MissingFieldException, InvalidFieldException {
-		return getMandatory(properties, name, deserializer::deserialize);
+		return PropertiesUtils.getMandatory(this, name, deserializer);
 	}
 	
 	/**
-	 * Gets the value of the mandatory string property with the given name from the given property table.
+	 * Gets the value of the mandatory string property with the given name from this property table.
 	 * <p>
 	 * An exception is raised when the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getMandatoryString(Properties, String)
 	 * @since 2.0
 	 */
-	public static String getMandatoryString(final Properties properties, final String name)
+	public String getMandatoryString(final String name)
 	throws MissingFieldException, InvalidFieldException {
-		return getMandatory(properties, name, TextSerializers.string());
+		return PropertiesUtils.getMandatoryString(this, name);
 	}
 	
 	/**
-	 * Gets the value of the mandatory boolean property with the given name from the given property table.
+	 * Gets the value of the mandatory boolean property with the given name from this property table.
 	 * <p>
 	 * An exception is raised if the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getMandatoryBoolean(Properties, String)
 	 * @since 2.0
 	 */
-	public static boolean getMandatoryBoolean(final Properties properties, final String name)
+	public boolean getMandatoryBoolean(final String name)
 	throws MissingFieldException, InvalidFieldException {
-		return getMandatory(properties, name, TextSerializers.boolean_()).booleanValue();
+		return PropertiesUtils.getMandatoryBoolean(this, name);
 	}
 	
 	/**
-	 * Gets the value of the mandatory integer property with the given name from the given property table.
+	 * Gets the value of the mandatory integer property with the given name from this property table.
 	 * <p>
 	 * An exception is raised if the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getMandatoryInteger(Properties, String)
 	 * @since 2.0
 	 */
-	public static int getMandatoryInteger(final Properties properties, final String name)
+	public int getMandatoryInteger(final String name)
 	throws MissingFieldException, InvalidFieldException {
-		return getMandatory(properties, name, TextSerializers.integer()).intValue();
+		return PropertiesUtils.getMandatoryInteger(this, name);
 	}
 	
 	/**
-	 * Gets the value of the mandatory unsigned integer property with the given name from the given property table.
+	 * Gets the value of the mandatory unsigned integer property with the given name from this property table.
 	 * <p>
 	 * An exception is raised if the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getMandatoryUnsignedInteger(Properties, String)
 	 * @since 2.0
 	 */
-	public static int getMandatoryUnsignedInteger(final Properties properties, final String name)
+	public int getMandatoryUnsignedInteger(final String name)
 	throws MissingFieldException, InvalidFieldException {
-		return getMandatory(properties, name, TextSerializers.unsignedInteger()).intValue();
+		return PropertiesUtils.getMandatoryUnsignedInteger(this, name);
 	}
 	
 	/**
-	 * Gets the value of the mandatory long integer property with the given name from the given property table.
+	 * Gets the value of the mandatory long integer property with the given name from this property table.
 	 * <p>
 	 * An exception is raised if the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getMandatoryLong(Properties, String)
 	 * @since 2.0
 	 */
-	public static long getMandatoryLong(final Properties properties, final String name)
+	public long getMandatoryLong(final String name)
 	throws MissingFieldException, InvalidFieldException {
-		return getMandatory(properties, name, TextSerializers.long_()).longValue();
+		return PropertiesUtils.getMandatoryLong(this, name);
 	}
 	
 	/**
-	 * Gets the value of the mandatory unsigned long integer property with the given name from the given property table.
+	 * Gets the value of the mandatory unsigned long integer property with the given name from this property table.
 	 * <p>
 	 * An exception is raised if the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getMandatoryUnsignedLong(Properties, String)
 	 * @since 2.0
 	 */
-	public static long getMandatoryUnsignedLong(final Properties properties, final String name)
+	public long getMandatoryUnsignedLong(final String name)
 	throws MissingFieldException, InvalidFieldException {
-		return getMandatory(properties, name, TextSerializers.unsignedLong()).longValue();
+		return PropertiesUtils.getMandatoryLong(this, name);
 	}
 	
 	/**
-	 * Gets the value of the mandatory float property with the given name from the given property table.
+	 * Gets the value of the mandatory float property with the given name from this property table.
 	 * <p>
 	 * An exception is raised if the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getMandatoryFloat(Properties, String)
 	 * @since 2.0
 	 */
-	public static float getMandatoryFloat(final Properties properties, final String name)
+	public float getMandatoryFloat(final String name)
 	throws MissingFieldException, InvalidFieldException {
-		return getMandatory(properties, name, TextSerializers.float_()).floatValue();
+		return PropertiesUtils.getMandatoryFloat(this, name);
 	}
 	
 	/**
-	 * Gets the value of the mandatory double property with the given name from the given property table.
+	 * Gets the value of the mandatory double property with the given name from this property table.
 	 * <p>
 	 * An exception is raised if the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getMandatoryDouble(Properties, String)
 	 * @since 2.0
 	 */
-	public static double getMandatoryDouble(final Properties properties, final String name)
+	public double getMandatoryDouble(final String name)
 	throws MissingFieldException, InvalidFieldException {
-		return getMandatory(properties, name, TextSerializers.double_()).doubleValue();
+		return PropertiesUtils.getMandatoryDouble(this, name);
 	}
 	
 	/**
-	 * Gets the value of the mandatory file property with the given name from the given property table.
+	 * Gets the value of the mandatory file property with the given name from this property table.
 	 * <p>
 	 * An exception is raised if the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getMandatoryFile(Properties, String)
 	 * @since 2.0
 	 */
-	public static File getMandatoryFile(final Properties properties, final String name)
+	public File getMandatoryFile(final String name)
 	throws MissingFieldException, InvalidFieldException {
-		return getMandatory(properties, name, TextSerializers.file());
+		return PropertiesUtils.getMandatoryFile(this, name);
 	}
 	
 	/**
-	 * Gets the value of the mandatory URI property with the given name from the given property table.
+	 * Gets the value of the mandatory URI property with the given name from this property table.
 	 * <p>
 	 * An exception is raised if the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getMandatoryUri(Properties, String)
 	 * @since 2.0
 	 */
-	public static URI getMandatoryUri(final Properties properties, final String name)
+	public URI getMandatoryUri(final String name)
 	throws MissingFieldException, InvalidFieldException {
-		return getMandatory(properties, name, TextSerializers.uri());
+		return PropertiesUtils.getMandatoryUri(this, name);
 	}
 	
 	/**
-	 * Gets the value of the mandatory URL property with the given name from the given property table.
+	 * Gets the value of the mandatory URL property with the given name from this property table.
 	 * <p>
 	 * An exception is raised if the property does not exist.
 	 * 
-	 * @param properties Properties to read.
 	 * @param name Name of the property to read.
 	 * @return The value of the property.
 	 * @throws MissingFieldException When the property does not exist.
 	 * @throws InvalidFieldException When the representation is invalid.
+	 * @see PropertiesUtils#getMandatoryUrl(Properties, String)
 	 * @since 2.0
 	 */
-	public static URL getMandatoryUrl(final Properties properties, final String name)
+	public URL getMandatoryUrl(final String name)
 	throws MissingFieldException, InvalidFieldException {
-		return getMandatory(properties, name, TextSerializers.url());
-	}
-	
-	private PropertiesUtils() {
-		// Prevents instantiation.
+		return PropertiesUtils.getMandatoryUrl(this, name);
 	}
 }

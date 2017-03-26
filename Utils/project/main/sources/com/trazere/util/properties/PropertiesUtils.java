@@ -45,7 +45,7 @@ public class PropertiesUtils {
 	 * @param inputs Input of the property files to load paired with flags indicating whether they are optional.
 	 * @return The loaded properties.
 	 * @throws IOException When the property file cannot be loaded.
-	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#loadProperties(Iterable)}.
+	 * @deprecated To be removed.
 	 */
 	@Deprecated
 	public static Properties loadProperties(final Iterable<? extends Tuple2<? extends Input, Boolean>> inputs)
@@ -62,7 +62,7 @@ public class PropertiesUtils {
 	 * @param inputs Inputs of the property files to load paired with flags indicating whether they are optional.
 	 * @return The given properties.
 	 * @throws IOException When the property file cannot be loaded.
-	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#loadProperties(Properties, Iterable)}.
+	 * @deprecated To be removed.
 	 */
 	@Deprecated
 	public static Properties loadProperties(final Properties properties, final Iterable<? extends Tuple2<? extends Input, Boolean>> inputs)
@@ -86,7 +86,7 @@ public class PropertiesUtils {
 	 * @param optional Flag indicating whether the property file is optional.
 	 * @return The given properties.
 	 * @throws IOException When the property file cannot be loaded.
-	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#loadProperties(Properties, com.trazere.core.io.Input, boolean)}.
+	 * @deprecated To be removed.
 	 */
 	@Deprecated
 	public static Properties loadProperties(final Properties properties, final Input input, final boolean optional)
@@ -275,7 +275,7 @@ public class PropertiesUtils {
 	 * @param name The name of the property.
 	 * @return The value of the property.
 	 * @throws InvalidPropertyException When the value of the property is invalid.
-	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getUrlProperty(Properties, String)}.
+	 * @deprecated Use {@link com.trazere.core.util.PropertiesUtils#getUrl(Properties, String)}.
 	 */
 	@Deprecated
 	public static Maybe<URL> getUrlProperty(final Properties properties, final String name)
