@@ -81,34 +81,6 @@ public class ComparatorUtils {
 	}
 	
 	/**
-	 * Gets the least of the given values according to the given comparator.
-	 *
-	 * @param <T> Type of the values.
-	 * @param comparator Comparator to use.
-	 * @param value1 First value.
-	 * @param value2 Second value.
-	 * @return The least value.
-	 * @since 2.0
-	 */
-	public static <T> T least(final Comparator<? super T> comparator, final T value1, final T value2) {
-		return comparator.compare(value1, value2) <= 0 ? value1 : value2;
-	}
-	
-	/**
-	 * Gets the greatest of the given values according to the given comparator.
-	 *
-	 * @param <T> Type of the values.
-	 * @param comparator Comparator to use.
-	 * @param value1 First value.
-	 * @param value2 Second value.
-	 * @return The greatest value.
-	 * @since 2.0
-	 */
-	public static <T> T greatest(final Comparator<? super T> comparator, final T value1, final T value2) {
-		return comparator.compare(value1, value2) >= 0 ? value1 : value2;
-	}
-	
-	/**
 	 * Derives a comparator that supports <code>null</code> values from the given comparator.
 	 * <p>
 	 * <code>null</code> values are considered less than non <code>null</code> values.

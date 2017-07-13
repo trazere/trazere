@@ -42,32 +42,6 @@ public class ComparableUtils {
 		}
 	}
 	
-	/**
-	 * Gets the least given values according to their natural order.
-	 *
-	 * @param <T> Type of the values.
-	 * @param value1 First value.
-	 * @param value2 Second value.
-	 * @return The least value.
-	 * @since 2.0
-	 */
-	public static <T extends Comparable<T>> T least(final T value1, final T value2) {
-		return value1.compareTo(value2) <= 0 ? value1 : value2;
-	}
-	
-	/**
-	 * Gets the greatest given values according to their natural order.
-	 *
-	 * @param <T> Type of the values.
-	 * @param value1 First value.
-	 * @param value2 Second value.
-	 * @return The greatest value.
-	 * @since 2.0
-	 */
-	public static <T extends Comparable<T>> T greatest(final T value1, final T value2) {
-		return value1.compareTo(value2) >= 0 ? value1 : value2;
-	}
-	
 	private ComparableUtils() {
 		// Prevent instantiation.
 	}

@@ -18,7 +18,6 @@ package com.trazere.core.collection;
 import com.trazere.core.imperative.IteratorUtils;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
-import com.trazere.core.util.Tuples;
 
 /**
  * The {@link FeedUtils} class provides various utilities regarding {@link Feed feeds}.
@@ -49,67 +48,6 @@ public class FeedUtils {
 	 */
 	public static <E extends Comparable<E>> Maybe<E> greatest(final Feed<? extends E> feed) {
 		return IteratorUtils.greatest(feed.iterator());
-	}
-	
-	/**
-	 * Appends the given feeds together.
-	 * 
-	 * @param <E> Type of the elements.
-	 * @param feed1 First feed.
-	 * @param feed2 Second feed.
-	 * @return A feed of the appended elements.
-	 * @since 2.0
-	 */
-	public static <E> Feed<E> append(final Feed<? extends E> feed1, final Feed<? extends E> feed2) {
-		assert null != feed1;
-		assert null != feed2;
-		
-		return new BaseMemoizedFeed<E>() {
-			@Override
-			protected Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> compute() {
-				final Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> maybeItem1 = feed1.optionalItem();
-				if (maybeItem1.isSome()) {
-					final Tuple2<? extends E, ? extends Feed<? extends E>> item1 = maybeItem1.asSome().getValue();
-					return Maybe.some(Tuples.tuple2(item1.get1(), FeedUtils.append(item1.get2(), feed2)));
-				} else {
-					return feed2.optionalItem();
-				}
-			}
-		};
-	}
-	
-	/**
-	 * Flattens the elements of the feeds of the given feed.
-	 *
-	 * @param <E> Type of the elements.
-	 * @param feed Feed of the feeds of the elements to flatten.
-	 * @return A feed of the flatten elements.
-	 * @since 2.0
-	 */
-	public static <E> Feed<E> flatten(final Feed<? extends Feed<? extends E>> feed) {
-		assert null != feed;
-		
-		return new BaseMemoizedFeed<E>() {
-			@Override
-			protected Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> compute() {
-				Feed<? extends Feed<? extends E>> iterFeed = feed;
-				while (true) {
-					final Maybe<? extends Tuple2<? extends Feed<? extends E>, ? extends Feed<? extends Feed<? extends E>>>> maybeFeedItem = iterFeed.optionalItem();
-					if (maybeFeedItem.isSome()) {
-						final Tuple2<? extends Feed<? extends E>, ? extends Feed<? extends Feed<? extends E>>> feedItem = maybeFeedItem.asSome().getValue();
-						final Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> maybeItem = feedItem.get1().optionalItem();
-						if (maybeItem.isSome()) {
-							final Tuple2<? extends E, ? extends Feed<? extends E>> item = maybeItem.asSome().getValue();
-							return Maybe.some(new Tuple2<>(item.get1(), FeedUtils.append(item.get2(), flatten(feedItem.get2()))));
-						} else {
-							iterFeed = feedItem.get2();
-						}
-					} else {
-						return Maybe.none();
-					}
-				}
-			}
-		};
 	}
 	
 	/**

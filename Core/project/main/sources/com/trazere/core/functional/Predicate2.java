@@ -16,7 +16,6 @@
 package com.trazere.core.functional;
 
 import com.trazere.core.util.Tuple2;
-import java.util.function.BiPredicate;
 
 /**
  * The {@link Predicate2} interface defines uncurried functions that take two arguments and result to booleans.
@@ -38,31 +37,6 @@ public interface Predicate2<A1, A2> {
 	boolean evaluate(A1 arg1, A2 arg2);
 	
 	/**
-	 * Evaluates this predicate with the given arguments.
-	 * 
-	 * @param arg1 First argument to evaluate the predicate with.
-	 * @param arg2 Second argument to evaluate the predicate with.
-	 * @return The result of the predicate evaluation.
-	 * @since 2.0
-	 */
-	default boolean synchronizedEvaluate(final A1 arg1, final A2 arg2) {
-		synchronized (this) {
-			return evaluate(arg1, arg2);
-		}
-	}
-	
-	/**
-	 * Builds a synchronized view of this predicate.
-	 * 
-	 * @return The built predicate.
-	 * @see #synchronizedEvaluate(Object, Object)
-	 * @since 2.0
-	 */
-	default Predicate2<A1, A2> synchronized_() {
-		return this::synchronizedEvaluate;
-	}
-	
-	/**
 	 * Gets an uncurried view of this predicate (as a predicate that takes pairs of elements).
 	 *
 	 * @return The built predicate.
@@ -71,15 +45,5 @@ public interface Predicate2<A1, A2> {
 	default Predicate<Tuple2<A1, A2>> uncurried() {
 		final Predicate2<A1, A2> self = this;
 		return arg -> self.evaluate(arg.get1(), arg.get2());
-	}
-	
-	/**
-	 * Lifts this predicate as a Java 8 bi-predicate.
-	 * 
-	 * @return The built Java 8 bi-predicate.
-	 * @since 2.0
-	 */
-	default BiPredicate<A1, A2> toBiPredicate() {
-		return this::evaluate;
 	}
 }

@@ -22,11 +22,6 @@ import com.trazere.core.text.Scanner;
 import com.trazere.core.text.TextException;
 import java.io.IOException;
 import java.io.Reader;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.time.temporal.ChronoField;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -199,88 +194,6 @@ public class XMLUtils {
 		values.put("lt", '<');
 		values.put("quot", '"');
 		ENTITY_VALUES = values;
-	}
-	
-	// Dates.
-	
-	/**
-	 * Format of dates.
-	 * <p>
-	 * Not strict, not thread safe !
-	 * 
-	 * @since 2.0
-	 */
-	public static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-ddX");
-	
-	/**
-	 * Format of date and times.
-	 * <p>
-	 * Not strict, not thread safe !
-	 * 
-	 * @since 2.0
-	 */
-	public static final DateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
-	
-	/**
-	 * Format of times.
-	 * <p>
-	 * Not strict, not thread safe !
-	 * 
-	 * @since 2.0
-	 */
-	public static final DateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm:ss.SSSX");
-	
-	/**
-	 * Formatter of dates.
-	 * 
-	 * @since 2.0
-	 */
-	public static final DateTimeFormatter DATE_FORMATTER;
-	
-	static {
-		DATE_FORMATTER = new DateTimeFormatterBuilder().parseCaseInsensitive().parseStrict() //
-			.appendValue(ChronoField.YEAR, 4) // Year
-			.appendLiteral('-').appendValue(ChronoField.MONTH_OF_YEAR, 2) // Month
-			.appendLiteral('-').appendValue(ChronoField.DAY_OF_MONTH, 2) // Day
-			.optionalStart().appendOffset("+HH:MM", "Z").optionalEnd() // Time zone
-			.toFormatter();
-	}
-	
-	/**
-	 * Formatter of date and times.
-	 * 
-	 * @since 2.0
-	 */
-	public static final DateTimeFormatter DATE_TIME_FORMATTER;
-	
-	static {
-		DATE_TIME_FORMATTER = new DateTimeFormatterBuilder().parseCaseInsensitive().parseStrict() //
-			.appendValue(ChronoField.YEAR, 4) // Year
-			.appendLiteral('-').appendValue(ChronoField.MONTH_OF_YEAR, 2) // Month
-			.appendLiteral('-').appendValue(ChronoField.DAY_OF_MONTH, 2) // Day
-			.appendLiteral('T').appendValue(ChronoField.HOUR_OF_DAY, 2) // Hour
-			.appendLiteral(':').appendValue(ChronoField.MINUTE_OF_HOUR, 2) // Minute
-			.appendLiteral(':').appendValue(ChronoField.SECOND_OF_MINUTE, 2) // Second
-			.optionalStart().appendFraction(ChronoField.NANO_OF_SECOND, 0, 9, true).optionalEnd() // Fraction of second
-			.optionalStart().appendOffset("+HH:MM", "Z").optionalEnd() // Time zone
-			.toFormatter();
-	}
-	
-	/**
-	 * Formatter of times.
-	 * 
-	 * @since 2.0
-	 */
-	public static final DateTimeFormatter TIME_FORMATTER;
-	
-	static {
-		TIME_FORMATTER = new DateTimeFormatterBuilder().parseCaseInsensitive().parseStrict() //
-			.appendValue(ChronoField.HOUR_OF_DAY, 2) // Hour
-			.appendLiteral(':').appendValue(ChronoField.MINUTE_OF_HOUR, 2) // Minute
-			.appendLiteral(':').appendValue(ChronoField.SECOND_OF_MINUTE, 2) // Second
-			.optionalStart().appendFraction(ChronoField.NANO_OF_SECOND, 0, 9, true).optionalEnd() // Fraction of second
-			.optionalStart().appendOffset("+HH:MM", "Z").optionalEnd() // Time zone
-			.toFormatter();
 	}
 	
 	private XMLUtils() {

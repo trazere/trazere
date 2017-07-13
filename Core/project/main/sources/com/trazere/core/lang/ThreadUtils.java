@@ -26,47 +26,6 @@ import java.time.Duration;
  */
 public class ThreadUtils {
 	/**
-	 * Puts the current thread to sleep for the given amount of time.
-	 * <p>
-	 * This method throws an exception when the sleep is interrupted.
-	 * 
-	 * @param timeout Timeout.
-	 * @param interruptionFactory Factory of the exceptions for the interruptions.
-	 * @throws RuntimeException When the sleep is interrupted.
-	 * @see Thread#sleep(long)
-	 * @since 2.0
-	 */
-	public static void sleep(final Duration timeout, final ThrowableFactory<? extends RuntimeException> interruptionFactory) {
-		try {
-			Thread.sleep(timeout.toMillis());
-		} catch (final InterruptedException exception) {
-			throw interruptionFactory.build(exception);
-		}
-	}
-	
-	/**
-	 * Puts the current thread to sleep for the given amount of time or until the given object is notified.
-	 * <p>
-	 * This method throws an exception when the sleep is interrupted.
-	 * 
-	 * @param object Object to monitor.
-	 * @param timeout Timeout.
-	 * @param interruptionFactory Factory of the exceptions for the interruptions.
-	 * @throws RuntimeException When the sleep is interrupted.
-	 * @see Object#wait(long)
-	 * @since 2.0
-	 */
-	public static void wait(final Object object, final Duration timeout, final ThrowableFactory<? extends RuntimeException> interruptionFactory) {
-		try {
-			synchronized (object) {
-				object.wait(timeout.toMillis());
-			}
-		} catch (final InterruptedException exception) {
-			throw interruptionFactory.build(exception);
-		}
-	}
-	
-	/**
 	 * Puts the current thread to sleep for the given amount of time or until the given object is notified.
 	 * <p>
 	 * This method throws an exception when the sleep is interrupted.

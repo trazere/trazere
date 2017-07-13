@@ -25,48 +25,6 @@ import com.trazere.core.functional.Function;
  * @since 2.0
  */
 public class ObjectFunctions {
-	/**
-	 * Builds a function that gets the concrete Java class of objects.
-	 * 
-	 * @param <T> Type of the values.
-	 * @return The built function.
-	 * @since 2.0
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T> Function<T, Class<? extends T>> getClass_() {
-		return (Function<T, Class<? extends T>>) GET_CLASS;
-	}
-	
-	private static final Function<?, ? extends Class<?>> GET_CLASS = Object::getClass;
-	
-	/**
-	 * Builds a function that computes the hash code of objects.
-	 * 
-	 * @param <T> Type of the values.
-	 * @return The built function.
-	 * @since 2.0
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T> Function<T, Integer> hashCode_() {
-		return (Function<T, Integer>) HASH_CODE;
-	}
-	
-	private static final Function<?, Integer> HASH_CODE = Object::hashCode;
-	
-	/**
-	 * Builds a function that computes the string representation of objects.
-	 * 
-	 * @param <T> Type of the values.
-	 * @return The built function.
-	 * @since 2.0
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T> Function<T, String> toString_() {
-		return (Function<T, String>) TO_STRING;
-	}
-	
-	private static final Function<?, String> TO_STRING = Object::toString;
-	
 	// TODO: move to LangFunctions ?
 	/**
 	 * Builds a function that matches objects against the given type.

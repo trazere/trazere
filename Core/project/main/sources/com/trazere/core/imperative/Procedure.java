@@ -15,8 +15,7 @@
  */
 package com.trazere.core.imperative;
 
-import com.trazere.core.functional.Function;
-import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * The {@link Procedure} interface defines procedures (functions that return no results).
@@ -35,18 +34,6 @@ public interface Procedure<A> {
 	void execute(A arg);
 	
 	/**
-	 * Executes this procedure in a thread safe way.
-	 * 
-	 * @param arg Argument to execute the procedure with.
-	 * @since 2.0
-	 */
-	default void synchronizedExecute(final A arg) {
-		synchronized (this) {
-			execute(arg);
-		}
-	}
-	
-	/**
 	 * Composes this procedure with the given function.
 	 * <p>
 	 * TODO: detail function composition
@@ -61,26 +48,5 @@ public interface Procedure<A> {
 		
 		final Procedure<A> self = this;
 		return arg -> self.execute(function.evaluate(arg));
-	}
-	
-	/**
-	 * Builds a synchronized view of this procedure.
-	 * 
-	 * @return The built procedure.
-	 * @see #synchronizedExecute(Object)
-	 * @since 2.0
-	 */
-	default Procedure<A> synchronized_() {
-		return this::synchronizedExecute;
-	}
-	
-	/**
-	 * Lifts this procedure as a Java 8 consumer.
-	 * 
-	 * @return The built Java 8 consumer.
-	 * @since 2.0
-	 */
-	default Consumer<A> toConsumer() {
-		return this::execute;
 	}
 }

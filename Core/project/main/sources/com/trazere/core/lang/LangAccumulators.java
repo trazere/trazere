@@ -16,7 +16,6 @@
 package com.trazere.core.lang;
 
 import com.trazere.core.imperative.Accumulator;
-import com.trazere.core.imperative.FoldAccumulator;
 
 /**
  * The {@link LangAccumulators} class provides various factories of {@link Accumulator accumulators} related to the Java language.
@@ -25,40 +24,6 @@ import com.trazere.core.imperative.FoldAccumulator;
  * @since 2.0
  */
 public class LangAccumulators {
-	// TODO: version with true initialState
-	/**
-	 * Builds a logical accumulator corresponding to a conjonction.
-	 * 
-	 * @param initialState Initial state.
-	 * @return The built accumulator.
-	 * @since 2.0
-	 */
-	public static Accumulator<Boolean, Boolean> and(final boolean initialState) {
-		return new FoldAccumulator<Boolean, Boolean>(initialState) {
-			@Override
-			protected Boolean fold(final Boolean accumulator, final Boolean value) {
-				return LangUtils.safeUnbox(accumulator) && LangUtils.safeUnbox(value);
-			}
-		};
-	}
-	
-	// TODO: version with false initialState
-	/**
-	 * Builds a logical accumulator corresponding to a disjunction.
-	 * 
-	 * @param initialState Initial value.
-	 * @return The built accumulator.
-	 * @since 2.0
-	 */
-	public static Accumulator<Boolean, Boolean> or(final boolean initialState) {
-		return new FoldAccumulator<Boolean, Boolean>(initialState) {
-			@Override
-			protected Boolean fold(final Boolean accumulator, final Boolean value) {
-				return LangUtils.safeUnbox(accumulator) || LangUtils.safeUnbox(value);
-			}
-		};
-	}
-	
 	/**
 	 * Builds an arithmetic accumulator corresponding to a sum.
 	 *

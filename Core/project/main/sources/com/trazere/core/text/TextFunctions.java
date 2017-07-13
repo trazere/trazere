@@ -23,7 +23,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 import java.time.temporal.TemporalQuery;
 import java.util.Date;
-import java.util.UUID;
 
 /**
  * The {@link TextFunctions} class provides various factories of {@link Function functions} related to text.
@@ -33,32 +32,6 @@ import java.util.UUID;
  */
 public class TextFunctions {
 	// Strings.
-	
-	/**
-	 * Builds a function that converts strings to lower case.
-	 * 
-	 * @return The built function.
-	 * @see String#toLowerCase()
-	 * @since 2.0
-	 */
-	public static Function<String, String> toLowerCase() {
-		return TO_LOWER_CASE;
-	}
-	
-	private static final Function<String, String> TO_LOWER_CASE = s -> s.toLowerCase();
-	
-	/**
-	 * Builds a function that converts strings to upper case.
-	 * 
-	 * @return The built function.
-	 * @see String#toUpperCase()
-	 * @since 2.0
-	 */
-	public static Function<String, String> toUpperCase() {
-		return TO_UPPER_CASE;
-	}
-	
-	private static final Function<String, String> TO_UPPER_CASE = s -> s.toUpperCase();
 	
 	/**
 	 * Builds a function that capitalizes strings.
@@ -204,34 +177,6 @@ public class TextFunctions {
 		
 		return representation -> TextUtils.parseTemporal(formatter, query, representation);
 	}
-	
-	// UUIDs.
-	
-	/**
-	 * Builds a function that formats UUIDs.
-	 *
-	 * @return The built function.
-	 * @see TextUtils#formatUuid(UUID)
-	 * @since 2.0
-	 */
-	public static Function<UUID, String> formatUuid() {
-		return FORMAT_UUID;
-	}
-	
-	private static final Function<UUID, String> FORMAT_UUID = TextUtils::formatUuid;
-	
-	/**
-	 * Builds a function that parses UUID representations.
-	 *
-	 * @return The built function.
-	 * @see TextUtils#parseUuid(String)
-	 * @since 2.0
-	 */
-	public static Function<String, Result<UUID>> parseUuid() {
-		return PARSE_UUID;
-	}
-	
-	private static final Function<String, Result<UUID>> PARSE_UUID = TextUtils::parseUuid;
 	
 	private TextFunctions() {
 		// Prevents instantiation.

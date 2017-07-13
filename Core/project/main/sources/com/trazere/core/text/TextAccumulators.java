@@ -15,12 +15,9 @@
  */
 package com.trazere.core.text;
 
-import com.trazere.core.functional.Functions;
 import com.trazere.core.imperative.Accumulator;
 import com.trazere.core.imperative.Accumulator2;
 import com.trazere.core.lang.LangAccumulators;
-import com.trazere.core.lang.ThrowableFactory;
-import java.io.IOException;
 
 /**
  * The {@link TextAccumulators} class provides various factories of {@link Accumulator accumulators} related to text.
@@ -29,58 +26,6 @@ import java.io.IOException;
  * @since 2.0
  */
 public class TextAccumulators {
-	/**
-	 * Builds an accumulator that appends to the given appendable.
-	 * 
-	 * @param <A> Type of the appendable.
-	 * @param appendable Appendable that should be appended to.
-	 * @return The built accumulator.
-	 * @see Appendable#append(CharSequence)
-	 * @since 2.0
-	 */
-	public static <A extends Appendable> Accumulator<CharSequence, A> append(final A appendable) {
-		return append(appendable, TextException.FACTORY);
-	}
-	
-	/**
-	 * Builds an accumulator that appends to the given appendable.
-	 * 
-	 * @param <A> Type of the appendable.
-	 * @param appendable Appendable that should be appended to.
-	 * @param failureFactory Factory of the exceptions for the failures while appending.
-	 * @return The built accumulator.
-	 * @see Appendable#append(CharSequence)
-	 * @since 2.0
-	 */
-	public static <A extends Appendable> Accumulator<CharSequence, A> append(final A appendable, final ThrowableFactory<? extends RuntimeException> failureFactory) {
-		return new Accumulator<CharSequence, A>() {
-			@Override
-			public void add(final CharSequence s) {
-				try {
-					appendable.append(s);
-				} catch (final IOException exception) {
-					throw failureFactory.build("Failed appending \"" + s + "\"", exception);
-				}
-			}
-			
-			@Override
-			public A get() {
-				return appendable;
-			}
-		};
-	}
-	
-	/**
-	 * Builds an accumulator that concatenate character sequences.
-	 * 
-	 * @param initialState The initial character sequence.
-	 * @return The built accumulator.
-	 * @since 2.0
-	 */
-	public static Accumulator<CharSequence, CharSequence> concat(final CharSequence initialState) {
-		return append(new StringBuilder(initialState)).map(Functions.identity());
-	}
-	
 	/**
 	 * Builds an accumulator that joins the text representation of the accumulated tokens into the given appendable.
 	 * 

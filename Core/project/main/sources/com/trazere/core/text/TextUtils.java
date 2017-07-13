@@ -17,20 +17,8 @@ package com.trazere.core.text;
 
 import com.trazere.core.collection.Feed;
 import com.trazere.core.functional.Function;
-import com.trazere.core.imperative.IntCounter;
 import com.trazere.core.lang.FiniteIntSequence;
 import com.trazere.core.util.Maybe;
-import com.trazere.core.util.Result;
-import java.text.DateFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.ParsePosition;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.time.temporal.TemporalAccessor;
-import java.time.temporal.TemporalQuery;
-import java.util.Date;
-import java.util.UUID;
 import java.util.regex.Pattern;
 
 /**
@@ -60,23 +48,6 @@ public class TextUtils {
 	}
 	
 	/**
-	 * Tests whether the given sequence contains the given character.
-	 *
-	 * @param s Sequence of characters to test.
-	 * @param c Character to look for.
-	 * @return <code>true</code> when the sequence contains the character, <code>false</code> otherwise.
-	 * @since 2.0
-	 */
-	public static boolean contains(final CharSequence s, final char c) {
-		for (final int i : new FiniteIntSequence(0, s.length())) {
-			if (c == s.charAt(i)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	/**
 	 * Tests whether any character of the given sequence is accepted by the given filter.
 	 *
 	 * @param s Sequence of characters to test.
@@ -87,23 +58,6 @@ public class TextUtils {
 	public static boolean contains(final CharSequence s, final CharPredicate filter) {
 		for (final int i : new FiniteIntSequence(0, s.length())) {
 			if (filter.evaluate(s.charAt(i))) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	/**
-	 * Tests whether the given sequence of characters contains the given sub-sequence.
-	 *
-	 * @param s Sequence of characters to test.
-	 * @param sub Sub-sequence of characters to look for.
-	 * @return <code>true</code> when the sequence contains the sub-sequence, <code>false</code> otherwise.
-	 * @since 2.0
-	 */
-	public static boolean contains(final CharSequence s, final CharSequence sub) {
-		for (final int i : new FiniteIntSequence(0, s.length())) {
-			if (equals(s, i, sub, 0, sub.length())) {
 				return true;
 			}
 		}
@@ -125,36 +79,6 @@ public class TextUtils {
 			}
 		}
 		return true;
-	}
-	
-	/**
-	 * Finds the first index of the given character in the given sequence.
-	 *
-	 * @param s Sequence of characters to test.
-	 * @param c Character to look for.
-	 * @return The index of the first accepted character, or <code>-1</code> when no characters is accepted by the filter.
-	 * @since 2.0
-	 */
-	public static int indexOf(final CharSequence s, final char c) {
-		return indexOf(s, c, 0);
-	}
-	
-	/**
-	 * Finds the first index of the given character in the given sequence.
-	 *
-	 * @param s Sequence of characters to test.
-	 * @param c Character to look for.
-	 * @param offset Index at which the search should start.
-	 * @return The index of the first accepted character, or <code>-1</code> when no characters is accepted by the filter.
-	 * @since 2.0
-	 */
-	public static int indexOf(final CharSequence s, final char c, final int offset) {
-		for (final int i : new FiniteIntSequence(offset, s.length())) {
-			if (c == s.charAt(i)) {
-				return i;
-			}
-		}
-		return -1;
 	}
 	
 	/**
@@ -185,65 +109,6 @@ public class TextUtils {
 			}
 		}
 		return -1;
-	}
-	
-	/**
-	 * Finds the first index of the given sub-sequence in the given sequence of characters.
-	 *
-	 * @param s Sequence of characters to test.
-	 * @param sub Sub-sequence of characters to look for.
-	 * @return The index of the first accepted character, or <code>-1</code> when no characters is accepted by the filter.
-	 * @since 2.0
-	 */
-	public static int indexOf(final CharSequence s, final CharSequence sub) {
-		return indexOf(s, sub, 0);
-	}
-	
-	/**
-	 * Finds the first index of the given sub-sequence in the given sequence of characters.
-	 *
-	 * @param s Sequence of characters to test.
-	 * @param sub Character to look for.
-	 * @param offset Index at which the search should start.
-	 * @return The index of the first accepted character, or <code>-1</code> when no characters is accepted by the filter.
-	 * @since 2.0
-	 */
-	public static int indexOf(final CharSequence s, final CharSequence sub, final int offset) {
-		for (final int i : new FiniteIntSequence(0, s.length())) {
-			if (equals(s, i, sub, 0, sub.length())) {
-				return i;
-			}
-		}
-		return -1;
-	}
-	
-	/**
-	 * Counts the number of occurences of the given sub-sequence in the given sequence of characters.
-	 * <p>
-	 * The occurences may overlap.
-	 *
-	 * @param s String containing the substring occurences to count.
-	 * @param sub Substring whose occurences should be counter.
-	 * @return The number of occurences.
-	 * @since 2.0
-	 */
-	public static int count(final CharSequence s, final CharSequence sub) {
-		final IntCounter count = new IntCounter();
-		for (final int i : new FiniteIntSequence(0, Math.max(0, s.length() - sub.length()))) {
-			if (equals(s, i, sub, 0, sub.length())) {
-				count.inc();
-			}
-		}
-		return count.get();
-	}
-	
-	private static boolean equals(final CharSequence s1, final int offset1, final CharSequence s2, final int offset2, final int n) {
-		for (final int i : new FiniteIntSequence(0, n)) {
-			if (s1.charAt(offset1 + i) != s2.charAt(offset2 + i)) {
-				return false;
-			}
-		}
-		return true;
 	}
 	
 	/**
@@ -499,152 +364,6 @@ public class TextUtils {
 			builder.append(HEX_DIGITS[b & 0xF]);
 		}
 		return builder;
-	}
-	
-	// Numbers.
-	
-	/**
-	 * Formats the given number using the given format.
-	 * <p>
-	 * This method synchronizes the format to ensure reentrancy.
-	 *
-	 * @param format Format of the number.
-	 * @param value Number to format.
-	 * @return The representation of the number.
-	 * @since 2.0
-	 */
-	public static String formatNumber(final NumberFormat format, final Number value) {
-		synchronized (format) {
-			return format.format(value);
-		}
-	}
-	
-	/**
-	 * Parses the given number representation according to the given format.
-	 * <p>
-	 * This method synchronizes the format to ensure reentrancy.
-	 *
-	 * @param <N> Type of the number to parse.
-	 * @param format Format of the number.
-	 * @param converter Function to use to convert the parsed number to the excepted type.
-	 * @param representation Representation of the number to parse.
-	 * @return The parsed number, or nothing when the representation is not valid.
-	 * @since 2.0
-	 */
-	public static <N extends Number> Result<N> parseNumber(final NumberFormat format, final Function<? super Number, ? extends N> converter, final String representation) {
-		synchronized (format) {
-			final ParsePosition position = new ParsePosition(0);
-			final Number number = format.parse(representation, position);
-			if (null != number && position.getIndex() == representation.length()) {
-				return Result.success(converter.evaluate(number));
-			} else {
-				return Result.failure(new ParseException("Invalid number \"" + representation + "\"", position.getIndex()));
-			}
-		}
-	}
-	
-	// Dates.
-	
-	/**
-	 * Formats the given date using the given format.
-	 * <p>
-	 * This method synchronizes the format to ensure reentrancy.
-	 *
-	 * @param format Format of the date.
-	 * @param value Date to format.
-	 * @return The representation of the date.
-	 * @since 2.0
-	 */
-	public static String formatDate(final DateFormat format, final Date value) {
-		synchronized (format) {
-			return format.format(value);
-		}
-	}
-	
-	/**
-	 * Parses the given date representation according to the given format.
-	 * <p>
-	 * This method synchronizes the format to ensure reentrancy.
-	 *
-	 * @param format Format of the date.
-	 * @param representation Representation of the date to parse.
-	 * @return The parsed date, or nothing when the representation is not valid.
-	 * @since 2.0
-	 */
-	public static Result<Date> parseDate(final DateFormat format, final String representation) {
-		synchronized (format) {
-			final ParsePosition position = new ParsePosition(0);
-			final Date date = format.parse(representation, position);
-			if (null != date && position.getIndex() == representation.length()) {
-				return Result.success(date);
-			} else {
-				return Result.failure(new ParseException("Invalid date \"" + representation + "\"", position.getIndex()));
-			}
-		}
-	}
-	
-	// Temporals.
-	
-	/**
-	 * Formats the given temporal using the given format.
-	 * <p>
-	 * This method synchronizes the format to ensure reentrancy.
-	 *
-	 * @param formatter Format of the temporal.
-	 * @param value Temporal to format.
-	 * @return The representation of the temporal.
-	 * @since 2.0
-	 */
-	public static String formatTemporal(final DateTimeFormatter formatter, final TemporalAccessor value) {
-		return formatter.format(value);
-	}
-	
-	/**
-	 * Parses the given temporal representation according to the given format.
-	 * <p>
-	 * This method synchronizes the format to ensure reentrancy.
-	 * 
-	 * @param <T> Type of the temporal.
-	 * @param formatter Formatter of the temporal.
-	 * @param query Query that defines the type of the temporal.
-	 * @param representation Representation of the temporal to parse.
-	 * @return The parsed temporal, or nothing when the representation is not valid.
-	 * @since 2.0
-	 */
-	public static <T extends TemporalAccessor> Result<T> parseTemporal(final DateTimeFormatter formatter, final TemporalQuery<T> query, final String representation) {
-		try {
-			return Result.success(formatter.parse(representation, query));
-		} catch (final DateTimeParseException exception) {
-			return Result.failure(exception);
-		}
-	}
-	
-	// UUIDs.
-	
-	/**
-	 * Formats the given UUID using the standard format.
-	 *
-	 * @param value UUID to format.
-	 * @return The representation of the UUID.
-	 * @since 2.0
-	 */
-	public static String formatUuid(final UUID value) {
-		return value.toString();
-	}
-	
-	/**
-	 * Parses the given UUID representation according to the standard format.
-	 *
-	 * @param representation Representation of the UUID to parse.
-	 * @return The parsed UUID, or nothing when the representation is not valid.
-	 * @since 2.0
-	 */
-	public static Result<UUID> parseUuid(final String representation) {
-		try {
-			return Result.success(UUID.fromString(representation));
-		} catch (final IllegalArgumentException exception) {
-			return Result.failure(exception);
-		}
 	}
 	
 	private TextUtils() {

@@ -17,7 +17,6 @@ package com.trazere.core.functional;
 
 import com.trazere.core.imperative.Accumulator;
 import com.trazere.core.imperative.Accumulator2;
-import com.trazere.core.imperative.FoldAccumulator;
 import com.trazere.core.imperative.FoldAccumulator2;
 
 /**
@@ -28,27 +27,6 @@ import com.trazere.core.imperative.FoldAccumulator2;
  * @since 2.0
  */
 public class FunctionAccumulators {
-	/**
-	 * Builds an accumulator that left folds over the accumulated elements using the given binary operator and initial state.
-	 *
-	 * @param <E> Type of the accumulated elements.
-	 * @param <S> Type of the state.
-	 * @param operator Binary operator.
-	 * @param initialState Initial state.
-	 * @return The built accumulator.
-	 * @since 2.0
-	 */
-	public static <E, S> Accumulator<E, S> fold(final Function2<? super S, ? super E, ? extends S> operator, final S initialState) {
-		assert null != operator;
-		
-		return new FoldAccumulator<E, S>(initialState) {
-			@Override
-			protected S fold(final S state, final E value) {
-				return operator.evaluate(state, value);
-			}
-		};
-	}
-	
 	// TODO
 	//	/**
 	//	 * Builds an accumulator that populates the given map by projecting the values.

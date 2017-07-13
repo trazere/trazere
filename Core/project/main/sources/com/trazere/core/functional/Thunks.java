@@ -15,11 +15,7 @@
  */
 package com.trazere.core.functional;
 
-import com.trazere.core.design.Factory;
-import com.trazere.core.lang.ThrowableFactory;
 import com.trazere.core.util.Maybe;
-import java.util.concurrent.Callable;
-import java.util.function.Supplier;
 
 /**
  * The {@link Thunks} class provides various factories of {@link Thunk thunks}.
@@ -69,90 +65,6 @@ public class Thunks {
 		return () -> {
 			throw exception;
 		};
-	}
-	
-	/**
-	 * Builds a thunk that throws an exception.
-	 *
-	 * @param <T> Type of the values.
-	 * @param failureFactory Factory of the exceptions for the failures.
-	 * @return The built thunk.
-	 * @since 2.0
-	 */
-	public static <T> Thunk<T> failure(final ThrowableFactory<? extends RuntimeException> failureFactory) {
-		assert null != failureFactory;
-		
-		return () -> {
-			throw failureFactory.build();
-		};
-	}
-	
-	/**
-	 * Builds a thunk that throws an exception.
-	 *
-	 * @param <T> Type of the values.
-	 * @param failureFactory Factory of the exceptions for the failures.
-	 * @param message Message of the throwable.
-	 * @return The built thunk.
-	 * @since 2.0
-	 */
-	public static <T> Thunk<T> failure(final ThrowableFactory<? extends RuntimeException> failureFactory, final String message) {
-		assert null != failureFactory;
-		
-		return () -> {
-			throw failureFactory.build(message);
-		};
-	}
-	
-	// TODO: replace by Factory.toThunk ?
-	/**
-	 * Builds a thunk that lifts the given factory.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param factory Factory to lift.
-	 * @return The built thunk.
-	 * @since 2.0
-	 */
-	public static <T> Thunk<T> fromFactory(final Factory<T> factory) {
-		assert null != factory;
-		
-		return factory::build;
-	}
-	
-	/**
-	 * Builds a thunk that lifts the given Java 8 callable.
-	 * 
-	 * @param <T> Type of the built values.
-	 * @param callable Java 8 callable to lift.
-	 * @param failureFactory Factory of the exceptions for the failures.
-	 * @return The built thunk.
-	 * @since 2.0
-	 */
-	public static <T> Thunk<T> fromCallable(final Callable<? extends T> callable, final ThrowableFactory<? extends RuntimeException> failureFactory) {
-		assert null != callable;
-		assert null != failureFactory;
-		
-		return () -> {
-			try {
-				return callable.call();
-			} catch (final Exception exception) {
-				throw failureFactory.build(exception);
-			}
-		};
-	}
-	
-	/**
-	 * Builds a thunk that lifts the given Java 8 supplier.
-	 * 
-	 * @param <T> Type of the values.
-	 * @param supplier Java 8 supplier to lift.
-	 * @return The built thunk.
-	 * @since 2.0
-	 */
-	public static <T> Thunk<T> fromSupplier(final Supplier<? extends T> supplier) {
-		assert null != supplier;
-		
-		return supplier::get;
 	}
 	
 	private Thunks() {

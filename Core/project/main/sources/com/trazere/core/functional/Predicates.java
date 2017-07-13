@@ -15,10 +15,7 @@
  */
 package com.trazere.core.functional;
 
-import com.trazere.core.collection.Sets;
-import com.trazere.core.lang.ObjectUtils;
 import java.util.Collection;
-import java.util.function.BiPredicate;
 
 /**
  * The {@link Predicates} class provides various factories of {@link Predicate predicates}.
@@ -69,36 +66,6 @@ public class Predicates {
 	}
 	
 	/**
-	 * Builds a predicate corresponding to the logical negation of the given predicate.
-	 * 
-	 * @param <A> Type of the arguments.
-	 * @param predicate Predicate to inverse.
-	 * @return The built predicate.
-	 * @since 2.0
-	 */
-	public static <A> Predicate<A> not(final Predicate<? super A> predicate) {
-		assert null != predicate;
-		
-		return arg -> !predicate.evaluate(arg);
-	}
-	
-	/**
-	 * Builds a predicate corresponding to the logical conjunction of the given predicates.
-	 * 
-	 * @param <A> Type of the arguments.
-	 * @param predicate1 First predicate to combine.
-	 * @param predicate2 Second predicate to combine.
-	 * @return The built predicate.
-	 * @since 2.0
-	 */
-	public static <A> Predicate<A> and(final Predicate<? super A> predicate1, final Predicate<? super A> predicate2) {
-		assert null != predicate1;
-		assert null != predicate2;
-		
-		return arg -> predicate1.evaluate(arg) && predicate2.evaluate(arg);
-	}
-	
-	/**
 	 * Builds a predicate corresponding to the logical conjunction of the given predicates.
 	 * 
 	 * @param <A> Type of the arguments.
@@ -128,22 +95,6 @@ public class Predicates {
 	 * Builds a predicate corresponding to the logical disjunction of the given predicates.
 	 * 
 	 * @param <A> Type of the arguments.
-	 * @param predicate1 First predicate to combine.
-	 * @param predicate2 Second predicate to combine.
-	 * @return The built predicate.
-	 * @since 2.0
-	 */
-	public static <A> Predicate<A> or(final Predicate<? super A> predicate1, final Predicate<? super A> predicate2) {
-		assert null != predicate1;
-		assert null != predicate2;
-		
-		return arg -> predicate1.evaluate(arg) || predicate2.evaluate(arg);
-	}
-	
-	/**
-	 * Builds a predicate corresponding to the logical disjunction of the given predicates.
-	 * 
-	 * @param <A> Type of the arguments.
 	 * @param predicates Predicates to combine.
 	 * @return The built predicate.
 	 * @since 2.0
@@ -164,19 +115,6 @@ public class Predicates {
 				return false;
 			};
 		}
-	}
-	
-	// TODO: rename to fromValue ?
-	/**
-	 * Builds a predicate that evaluates to <code>true</code> for the given value.
-	 * 
-	 * @param <A> Type of the arguments.
-	 * @param value Value to accept.
-	 * @return The built predicate.
-	 * @since 2.0
-	 */
-	public static <A> Predicate<A> value(final A value) {
-		return arg -> ObjectUtils.safeEquals(arg, value);
 	}
 	
 	// TODO: rename to fromValues ?
@@ -208,34 +146,6 @@ public class Predicates {
 		assert null != values;
 		
 		return values::contains;
-	}
-	
-	/**
-	 * Builds a predicate that lifts the given Java 8 predicate.
-	 * 
-	 * @param <A> Type of the arguments.
-	 * @param predicate Java 8 predicate to lift.
-	 * @return The build predicate.
-	 * @since 2.0
-	 */
-	public static <A> Predicate<A> fromPredicate(final java.util.function.Predicate<? super A> predicate) {
-		assert null != predicate;
-		
-		return predicate::test;
-	}
-	
-	/**
-	 * Builds a predicate that lifts the given function.
-	 * 
-	 * @param <A> Type of the arguments.
-	 * @param function Function to lift.
-	 * @return The built predicate.
-	 * @since 2.0
-	 */
-	public static <A> Predicate<A> fromFunction(final Function<? super A, Boolean> function) {
-		assert null != function;
-		
-		return arg -> function.evaluate(arg).booleanValue();
 	}
 	
 	/**
@@ -282,38 +192,6 @@ public class Predicates {
 	private static final Predicate2<?, ?> NONE2 = (arg1, arg2) -> false;
 	
 	/**
-	 * Builds a two argument predicate corresponding to the logical inverse of the given two arguments predicate.
-	 * 
-	 * @param <A1> Type of the first arguments.
-	 * @param <A2> Type of the second arguments.
-	 * @param predicate Predicate to inverse.
-	 * @return The built predicate.
-	 * @since 2.0
-	 */
-	public static <A1, A2> Predicate2<A1, A2> not2(final Predicate2<? super A1, ? super A2> predicate) {
-		assert null != predicate;
-		
-		return (arg1, arg2) -> !predicate.evaluate(arg1, arg2);
-	}
-	
-	/**
-	 * Builds a two arguments predicate corresponding to the logical conjunction of the given two arguments predicates.
-	 * 
-	 * @param <A1> Type of the first arguments.
-	 * @param <A2> Type of the second arguments.
-	 * @param predicate1 First predicate to combine.
-	 * @param predicate2 Second predicate to combine.
-	 * @return The built predicate.
-	 * @since 2.0
-	 */
-	public static <A1, A2> Predicate2<A1, A2> and2(final Predicate2<? super A1, ? super A2> predicate1, final Predicate2<? super A1, ? super A2> predicate2) {
-		assert null != predicate1;
-		assert null != predicate2;
-		
-		return (arg1, arg2) -> predicate1.evaluate(arg1, arg2) && predicate2.evaluate(arg1, arg2);
-	}
-	
-	/**
 	 * Builds a two arguments predicate corresponding to the logical conjunction of the given two arguments predicates.
 	 * 
 	 * @param <A1> Type of the first arguments.
@@ -345,23 +223,6 @@ public class Predicates {
 	 * 
 	 * @param <A1> Type of the first arguments.
 	 * @param <A2> Type of the second arguments.
-	 * @param predicate1 First predicate to combine.
-	 * @param predicate2 Second predicate to combine.
-	 * @return The built predicate.
-	 * @since 2.0
-	 */
-	public static <A1, A2> Predicate2<A1, A2> or2(final Predicate2<? super A1, ? super A2> predicate1, final Predicate2<? super A1, ? super A2> predicate2) {
-		assert null != predicate1;
-		assert null != predicate2;
-		
-		return (arg1, arg2) -> predicate1.evaluate(arg1, arg2) || predicate2.evaluate(arg1, arg2);
-	}
-	
-	/**
-	 * Builds a two arguments predicate corresponding to the logical disjunction of the given two arguments predicates.
-	 * 
-	 * @param <A1> Type of the first arguments.
-	 * @param <A2> Type of the second arguments.
 	 * @param predicates Predicates to combine.
 	 * @return The built predicate.
 	 * @since 2.0
@@ -382,36 +243,6 @@ public class Predicates {
 				return false;
 			};
 		}
-	}
-	
-	/**
-	 * Builds a two arguments predicate that lifts the given Java 8 bi-predicate.
-	 * 
-	 * @param <A1> Type of the first arguments.
-	 * @param <A2> Type of the second arguments.
-	 * @param predicate Java 8 bi-predicate to lift.
-	 * @return The built predicate.
-	 * @since 2.0
-	 */
-	public static <A1, A2> Predicate2<A1, A2> fromBiPredicate(final BiPredicate<? super A1, ? super A2> predicate) {
-		assert null != predicate;
-		
-		return predicate::test;
-	}
-	
-	/**
-	 * Builds a two arguments predicate that lifts the given two arguments function.
-	 * 
-	 * @param <A1> Type of the first arguments.
-	 * @param <A2> Type of the second arguments.
-	 * @param function Function to lift.
-	 * @return The built predicate.
-	 * @since 2.0
-	 */
-	public static <A1, A2> Predicate2<A1, A2> fromFunction2(final Function2<? super A1, ? super A2, Boolean> function) {
-		assert null != function;
-		
-		return (arg1, arg2) -> function.evaluate(arg1, arg2).booleanValue();
 	}
 	
 	private Predicates() {

@@ -38,19 +38,6 @@ public class Effects {
 	
 	// TODO: sequence
 	
-	/**
-	 * Builds an effect that lifts the given runnable.
-	 * 
-	 * @param runnable Runnable to lift.
-	 * @return The built effect.
-	 * @since 2.0
-	 */
-	public static Effect fromRunnable(final Runnable runnable) {
-		assert null != runnable;
-		
-		return runnable::run;
-	}
-	
 	private Effects() {
 		// Prevents instantiation.
 	}
