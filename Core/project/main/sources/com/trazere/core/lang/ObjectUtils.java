@@ -25,22 +25,6 @@ import com.trazere.core.functional.Thunk;
  */
 public class ObjectUtils {
 	/**
-	 * Casts the given object to some other type.
-	 * <p>
-	 * This methods aims to work around various limitations of the Java type system where regular casts cannot be used. It performs no verifications whatsoever
-	 * and should be used as seldom as possible because it is inherently unsafe.
-	 *
-	 * @param <R> Target type.
-	 * @param object Object to cast. May be <code>null</code>.
-	 * @return The given casted object. May be <code>null</code>.
-	 * @since 2.0
-	 */
-	@SuppressWarnings("unchecked")
-	public static <R> R cast(final Object object) {
-		return (R) object;
-	}
-	
-	/**
 	 * Makes the given object safe by replacing <code>null</code>.
 	 *
 	 * @param <T> Type of the object.
