@@ -15,7 +15,6 @@
  */
 package com.trazere.core.collection;
 
-import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Predicate;
 import com.trazere.core.imperative.Accumulator;
 import com.trazere.core.imperative.Accumulator2;
@@ -26,20 +25,17 @@ import com.trazere.core.imperative.ImperativePredicates;
 import com.trazere.core.imperative.IteratorUtils;
 import com.trazere.core.lang.IterableUtils;
 import com.trazere.core.lang.LangAccumulators;
-import com.trazere.core.lang.PairIterable;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Queue;
-import java.util.Random;
 import java.util.Set;
-import java.util.function.UnaryOperator;
+import java.util.function.Function;
 
 /**
  * The {@link ListUtils} class provides various utilities regarding {@link List lists}.
@@ -118,49 +114,6 @@ public class ListUtils {
 	 */
 	public static <E> Maybe<E> optionalGet(final List<? extends E> list, final int index) {
 		return index < list.size() ? Maybe.<E>some(list.get(index)) : Maybe.<E>none();
-	}
-	
-	/**
-	 * Inserts all given elements in the given list at the given position.
-	 * <p>
-	 * This method does modify the given list.
-	 *
-	 * @param <E> Type of the elements.
-	 * @param list List to modify.
-	 * @param index Index at which the elements should be inserted.
-	 * @param elements Elements to insert.
-	 * @return <code>true</code> when the given list is modified, <code>false</code> otherwise.
-	 * @since 2.0
-	 */
-	@SafeVarargs
-	public static <E> boolean addAll(final List<? super E> list, final int index, final E... elements) {
-		int iterIndex = index;
-		for (final E element : elements) {
-			list.add(iterIndex, element);
-			iterIndex += 1;
-		}
-		return iterIndex > index;
-	}
-	
-	/**
-	 * Inserts all given elements in the given list at the given position.
-	 * <p>
-	 * This method does modify the given list.
-	 *
-	 * @param <E> Type of the elements.
-	 * @param list List to modify.
-	 * @param index Index at which the elements should be inserted.
-	 * @param elements Elements to insert.
-	 * @return <code>true</code> when the given list is modified, <code>false</code> otherwise.
-	 * @since 2.0
-	 */
-	public static <E> boolean addAll(final List<? super E> list, final int index, final Iterable<? extends E> elements) {
-		int iterIndex = index;
-		for (final E element : elements) {
-			list.add(iterIndex, element);
-			iterIndex += 1;
-		}
-		return iterIndex > index;
 	}
 	
 	// TODO: safeSet
@@ -592,256 +545,6 @@ public class ListUtils {
 	}
 	
 	// TODO: unzip
-	
-	/**
-	 * Builds an unmodifiable view of the given list.
-	 * 
-	 * @param <E> Type of the elements.
-	 * @param list List to wrap.
-	 * @return An unmodifiable view of the given list, or the given list when is it already unmodifiable.
-	 * @since 2.0
-	 */
-	public static <E> ExList<E> unmodifiable(final List<E> list) {
-		assert null != list;
-		
-		return list instanceof UnmodifiableList ? (UnmodifiableList<E>) list : new UnmodifiableList<>(list);
-	}
-	
-	private static class UnmodifiableList<E>
-	extends ListDecorator<E> {
-		public UnmodifiableList(final List<E> decorated) {
-			super(decorated);
-		}
-		
-		// List.
-		
-		@Override
-		public boolean addAll(final int index, final Collection<? extends E> c) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public void replaceAll(final UnaryOperator<E> operator) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public void sort(final Comparator<? super E> c) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public E set(final int index, final E element) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public void add(final int index, final E element) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public E remove(final int index) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public ExListIterator<E> listIterator() {
-			return super.listIterator().unmodifiable();
-		}
-		
-		@Override
-		public ExListIterator<E> listIterator(final int index) {
-			return super.listIterator(index).unmodifiable();
-		}
-		
-		@Override
-		public ExList<E> subList(final int fromIndex, final int toIndex) {
-			return super.subList(fromIndex, toIndex).unmodifiable();
-		}
-		
-		// ExList.
-		
-		@Override
-		public boolean addAll(final int index, @SuppressWarnings("unchecked") final E... elements) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean addAll(final int index, final Iterable<? extends E> elements) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public Maybe<E> optionalRemove(final int index) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public void reverse() {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public void shuffle() {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public void shuffle(final Random random) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public <E2> ExList<Tuple2<E, E2>> zip(final List<? extends E2> list2) {
-			return super.<E2>zip(list2).unmodifiable();
-		}
-		
-		@Override
-		public ExList<E> reversed() {
-			return super.reversed().unmodifiable();
-		}
-		
-		// Collection.
-		
-		@Override
-		public boolean add(final E e) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean remove(final Object o) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean addAll(final Collection<? extends E> c) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean removeAll(final Collection<?> c) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean removeIf(final java.util.function.Predicate<? super E> filter) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean retainAll(final Collection<?> c) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public void clear() {
-			throw new UnsupportedOperationException();
-		}
-		
-		// ExCollection.
-		
-		@Override
-		public boolean addAll(@SuppressWarnings("unchecked") final E... elements) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean addAll(final Iterable<? extends E> elements) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public Maybe<E> removeAny() {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public Maybe<E> removeAny(final Predicate<? super E> filter) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean removeAll(@SuppressWarnings("unchecked") final E... elements) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean removeAll(final Iterable<? extends E> elements) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean removeAll(final Predicate<? super E> filter) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean retainAll(final Predicate<? super E> filter) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public <E2> ExCollection<Tuple2<E, E2>> zip(final Collection<? extends E2> collection2) {
-			return super.<E2>zip(collection2).unmodifiable();
-		}
-		
-		// Iterable.
-		
-		@Override
-		public ExIterator<E> iterator() {
-			return IteratorUtils.unmodifiable(_decorated.iterator());
-		}
-		
-		// ExIterable.
-		
-		@Override
-		public <E2> PairIterable<E, E2> zip(final Iterable<? extends E2> iterable2) {
-			return super.<E2>zip(iterable2).unmodifiable();
-		}
-		
-		@Override
-		public ExList<E> unmodifiable() {
-			return this;
-		}
-		
-		// Traversable.
-		
-		@Override
-		public ExList<E> take(final int n) {
-			return super.take(n).unmodifiable();
-		}
-		
-		@Override
-		public ExList<E> drop(final int n) {
-			return super.drop(n).unmodifiable();
-		}
-		
-		@Override
-		public <B extends Collection<? super E>> ExList<B> group(final int n, final CollectionFactory<? super E, B> batchFactory) {
-			return super.group(n, batchFactory).unmodifiable();
-		}
-		
-		@Override
-		public ExList<E> filter(final Predicate<? super E> filter) {
-			return super.filter(filter).unmodifiable();
-		}
-		
-		@Override
-		public <TE> ExList<TE> map(final Function<? super E, ? extends TE> function) {
-			return super.<TE>map(function).unmodifiable();
-		}
-		
-		@Override
-		public <EE> ExList<EE> extract(final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
-			return super.<EE>extract(extractor).unmodifiable();
-		}
-		
-		@Override
-		public <EE> ExList<EE> extractAll(final Function<? super E, ? extends Iterable<? extends EE>> extractor) {
-			return super.<EE>extractAll(extractor).unmodifiable();
-		}
-	}
 	
 	/**
 	 * Builds a view of the given list in the reversed order.

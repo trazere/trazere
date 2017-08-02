@@ -15,14 +15,7 @@
  */
 package com.trazere.core.text;
 
-import com.trazere.core.functional.Function;
-import com.trazere.core.util.Result;
-import java.text.DateFormat;
-import java.text.NumberFormat;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
-import java.time.temporal.TemporalQuery;
-import java.util.Date;
+import java.util.function.Function;
 
 /**
  * The {@link TextFunctions} class provides various factories of {@link Function functions} related to text.
@@ -77,105 +70,6 @@ public class TextFunctions {
 	 */
 	public static Function<String, String> trimTrailing(final CharPredicate filter) {
 		return s -> TextUtils.trimTrailing(s, filter).toString();
-	}
-	
-	// Numbers.
-	
-	/**
-	 * Builds a function that formats numbers.
-	 *
-	 * @param <N> Type of the numbers to format.
-	 * @param format Format of the numbers.
-	 * @return The built function.
-	 * @see TextUtils#formatNumber(NumberFormat, Number)
-	 * @since 2.0
-	 */
-	public static <N extends Number> Function<N, String> formatNumber(final NumberFormat format) {
-		assert null != format;
-		
-		return value -> TextUtils.formatNumber(format, value);
-	}
-	
-	/**
-	 * Builds a function that parses number representations.
-	 *
-	 * @param <N> Type of the numbers to parse.
-	 * @param format Format of the numbers.
-	 * @param converter Function to use to convert the parsed numbers to the excepted type.
-	 * @return The built function.
-	 * @see TextUtils#parseNumber(NumberFormat, Function, String)
-	 * @since 2.0
-	 */
-	public static <N extends Number> Function<String, Result<N>> parseNumber(final NumberFormat format, final Function<Number, N> converter) {
-		assert null != format;
-		assert null != converter;
-		
-		return representation -> TextUtils.parseNumber(format, converter, representation);
-	}
-	
-	// Dates.
-	
-	/**
-	 * Builds a function that formats dates.
-	 *
-	 * @param <D> Type of the dates.
-	 * @param format Format of the dates.
-	 * @return The built function.
-	 * @see TextUtils#formatDate(DateFormat, Date)
-	 * @since 2.0
-	 */
-	public static <D extends Date> Function<D, String> formatDate(final DateFormat format) {
-		assert null != format;
-		
-		return value -> TextUtils.formatDate(format, value);
-	}
-	
-	/**
-	 * Builds a function that parses date representations.
-	 *
-	 * @param format Format of the dates.
-	 * @return The built function.
-	 * @see TextUtils#parseDate(DateFormat, String)
-	 * @since 2.0
-	 */
-	public static Function<String, Result<Date>> parseDate(final DateFormat format) {
-		assert null != format;
-		
-		return representation -> TextUtils.parseDate(format, representation);
-	}
-	
-	// Temporals.
-	
-	/**
-	 * Builds a function that formats temporals.
-	 *
-	 * @param <T> Type of the temporals.
-	 * @param formatter Formatter of the temporals.
-	 * @return The built function.
-	 * @see TextUtils#formatTemporal(DateTimeFormatter, TemporalAccessor)
-	 * @since 2.0
-	 */
-	public static <T extends TemporalAccessor> Function<T, String> formatTemporal(final DateTimeFormatter formatter) {
-		assert null != formatter;
-		
-		return value -> TextUtils.formatTemporal(formatter, value);
-	}
-	
-	/**
-	 * Builds a function that parses temporal representations.
-	 *
-	 * @param <T> Type of the temporals.
-	 * @param formatter Formatter of the temporals.
-	 * @param query Query that defines the type of the temporal.
-	 * @return The built function.
-	 * @see TextUtils#parseTemporal(DateTimeFormatter, TemporalQuery, String)
-	 * @since 2.0
-	 */
-	public static <T extends TemporalAccessor> Function<String, Result<T>> parseTemporal(final DateTimeFormatter formatter, final TemporalQuery<T> query) {
-		assert null != formatter;
-		assert null != query;
-		
-		return representation -> TextUtils.parseTemporal(formatter, query, representation);
 	}
 	
 	private TextFunctions() {

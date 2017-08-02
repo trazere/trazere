@@ -15,13 +15,11 @@
  */
 package com.trazere.core.collection;
 
-import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Predicate;
 import com.trazere.core.lang.ExIterable;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 import java.util.Collection;
-import java.util.NoSuchElementException;
 
 // TODO: comparison and hashing ?
 
@@ -33,26 +31,6 @@ import java.util.NoSuchElementException;
  */
 public interface Feed<E>
 extends ExIterable<E> {
-	/**
-	 * Gets the head and tail of this feed.
-	 * 
-	 * @return The head and tail.
-	 * @throws NoSuchElementException When the feed is emtpy.
-	 * @since 2.0
-	 */
-	Tuple2<? extends E, ? extends Feed<? extends E>> item()
-	throws NoSuchElementException;
-	
-	/**
-	 * Gets the head and tail of this feed.
-	 * <p>
-	 * This method supports empty feeds.
-	 * 
-	 * @return The head and tail, or nothing when the feed is empty.
-	 * @since 2.0
-	 */
-	Maybe<? extends Tuple2<? extends E, ? extends Feed<? extends E>>> optionalItem();
-	
 	// Traversable.
 	
 	/**
@@ -149,30 +127,4 @@ extends ExIterable<E> {
 			}
 		};
 	}
-	
-	/**
-	 * Extracts the elements from the elements of this feed using the given extractor.
-	 *
-	 * @return A feed of the extracted elements.
-	 * @since 2.0
-	 */
-	@Override
-	default <EE> Feed<EE> extract(final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
-		return flatMap(element -> Feeds.fromMaybe(extractor.evaluate(element)));
-	}
-	
-	/**
-	 * Gets all elements extracted from the elements of this feed using the given extractor.
-	 * 
-	 * @param <EE> Type of the extracted elements.
-	 * @param extractor Function to use to extract the elements.
-	 * @return A feed of the extracted elements.
-	 * @since 2.0
-	 */
-	@Override
-	default <EE> Feed<EE> extractAll(final Function<? super E, ? extends Iterable<? extends EE>> extractor) {
-		return flatMap(element -> Feeds.fromIterable(extractor.evaluate(element)));
-	}
-	
-	// TODO: zip
 }

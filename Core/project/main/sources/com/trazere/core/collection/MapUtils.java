@@ -16,10 +16,8 @@
 package com.trazere.core.collection;
 
 import com.trazere.core.design.Decorator;
-import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Function2;
 import com.trazere.core.functional.Function3;
-import com.trazere.core.functional.Predicate;
 import com.trazere.core.functional.Predicate2;
 import com.trazere.core.functional.Thunk;
 import com.trazere.core.imperative.Accumulator;
@@ -35,6 +33,7 @@ import com.trazere.core.util.Comparators;
 import com.trazere.core.util.FieldComparators;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -42,7 +41,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.Set;
-import java.util.function.BiFunction;
 
 /**
  * The {@link MapUtils} class provides various utilities regarding {@link Map maps}.
@@ -935,220 +933,6 @@ public class MapUtils {
 	 */
 	public static <K, V> void foreach(final Map<? extends K, ? extends V> map, final Procedure2<? super K, ? super V> procedure) {
 		bindings(map).foreach2(procedure);
-	}
-	
-	/**
-	 * Builds an unmodifiable view of the given map.
-	 * 
-	 * @param <K> Type of the keys.
-	 * @param <V> Type of the values.
-	 * @param map Map to wrap.
-	 * @return An unmodifiable view of the given map, or the given map when is it already unmodifiable.
-	 * @since 2.0
-	 */
-	public static <K, V> ExMap<K, V> unmodifiable(final Map<K, V> map) {
-		assert null != map;
-		
-		return map instanceof UnmodifiableMap<?, ?> ? (UnmodifiableMap<K, V>) map : new UnmodifiableMap<>(map);
-	}
-	
-	private static class UnmodifiableMap<K, V>
-	extends MapDecorator<K, V> {
-		public UnmodifiableMap(final Map<K, V> decorated) {
-			super(decorated);
-		}
-		
-		// Map.
-		
-		@Override
-		public V put(final K key, final V value) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public V remove(final Object key) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public void putAll(final Map<? extends K, ? extends V> m) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public void clear() {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public ExSet<K> keySet() {
-			return super.keySet().unmodifiable();
-		}
-		
-		@Override
-		public ExCollection<V> values() {
-			return super.values().unmodifiable();
-		}
-		
-		@Override
-		public ExSet<Map.Entry<K, V>> entrySet() {
-			return super.entrySet().map(MapUtils::unmodifiable).unmodifiable();
-		}
-		
-		@Override
-		public void replaceAll(final BiFunction<? super K, ? super V, ? extends V> function) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public V putIfAbsent(final K key, final V value) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean remove(final Object key, final Object value) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean replace(final K key, final V oldValue, final V newValue) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public V replace(final K key, final V value) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public V computeIfAbsent(final K key, final java.util.function.Function<? super K, ? extends V> mappingFunction) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public V computeIfPresent(final K key, final BiFunction<? super K, ? super V, ? extends V> remappingFunction) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public V compute(final K key, final BiFunction<? super K, ? super V, ? extends V> remappingFunction) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public V merge(final K key, final V value, final BiFunction<? super V, ? super V, ? extends V> remappingFunction) {
-			throw new UnsupportedOperationException();
-		}
-		
-		// ExMap.
-		
-		@Override
-		public PairIterable<K, V> bindings() {
-			return super.bindings().unmodifiable();
-		}
-		
-		@Override
-		public Maybe<V> optionalPut(final K key, final V value) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public void putAll(@SuppressWarnings("unchecked") final Tuple2<? extends K, ? extends V>... bindings) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public void putAll(final Iterable<? extends Tuple2<? extends K, ? extends V>> bindings) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public Maybe<V> optionalRemove(final K key) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public Maybe<Tuple2<K, V>> removeAny() {
-			throw new UnsupportedOperationException();
-		}
-		
-		// TODO: removeAny(Prediate<? super K>)
-		// TODO: removeAll(K...)
-		// TODO: removeAll(Iterable<? extends K>)
-		// TODO: removeAll(Predicate<? super K>)
-		
-		@Override
-		public void retainAll(final Predicate2<? super K, ? super V> filter) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public ExMap<K, V> append(final Map<K, V> map) {
-			return super.append(map).unmodifiable();
-		}
-		
-		@Override
-		public ExMap<K, V> unmodifiable() {
-			return this;
-		}
-		
-		// PairTraversable.
-		
-		@Override
-		public ExMap<K, V> filter2(final Predicate2<? super K, ? super V> filter) {
-			return super.filter2(filter).unmodifiable();
-		}
-		
-		@Override
-		public <TE> ExCollection<TE> map2(final Function2<? super K, ? super V, ? extends TE> function) {
-			return super.<TE>map2(function).unmodifiable();
-		}
-		
-		// TODO: mapValues
-		
-		@Override
-		public <EE> ExCollection<EE> extract2(final Function2<? super K, ? super V, ? extends Maybe<? extends EE>> extractor) {
-			return super.<EE>extract2(extractor).unmodifiable();
-		}
-		
-		// TODO: extractAll2 to Multimap ?
-		
-		// Traversable.
-		
-		@Override
-		public ExMap<K, V> take(final int n) {
-			return super.take(n).unmodifiable();
-		}
-		
-		@Override
-		public ExMap<K, V> drop(final int n) {
-			return super.drop(n).unmodifiable();
-		}
-		
-		@Override
-		public <B extends Collection<? super Tuple2<K, V>>> ExCollection<B> group(final int n, final CollectionFactory<? super Tuple2<K, V>, B> batchFactory) {
-			return super.group(n, batchFactory).unmodifiable();
-		}
-		
-		@Override
-		public ExMap<K, V> filter(final Predicate<? super Tuple2<K, V>> filter) {
-			return super.filter(filter).unmodifiable();
-		}
-		
-		@Override
-		public <TE> ExCollection<TE> map(final Function<? super Tuple2<K, V>, ? extends TE> function) {
-			return super.<TE>map(function).unmodifiable();
-		}
-		
-		// TODO: mapValues
-		
-		@Override
-		public <EE> ExCollection<EE> extract(final Function<? super Tuple2<K, V>, ? extends Maybe<? extends EE>> extractor) {
-			return super.<EE>extract(extractor).unmodifiable();
-		}
-		
-		// TODO: extractAll
-		// TODO: flatMap
 	}
 	
 	/**

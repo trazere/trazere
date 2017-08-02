@@ -15,17 +15,16 @@
  */
 package com.trazere.core.collection;
 
-import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Predicate;
 import com.trazere.core.imperative.ExIterator;
 import com.trazere.core.imperative.ImperativePredicates;
 import com.trazere.core.imperative.IteratorUtils;
 import com.trazere.core.lang.IterableUtils;
-import com.trazere.core.lang.PairIterable;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 import java.util.Collection;
 import java.util.Set;
+import java.util.function.Function;
 
 /**
  * The {@link SetUtils} class provides various utilities regarding {@link Set sets}.
@@ -334,174 +333,6 @@ public class SetUtils {
 	}
 	
 	// TODO: unzip
-	
-	/**
-	 * Builds an unmodifiable view of the given set.
-	 * 
-	 * @param <E> Type of the elements.
-	 * @param set Set to wrap.
-	 * @return An unmodifiable view of the given set, or the given set when is it already unmodifiable.
-	 * @since 2.0
-	 */
-	public static <E> ExSet<E> unmodifiable(final Set<E> set) {
-		assert null != set;
-		
-		return set instanceof UnmodifiableSet ? (UnmodifiableSet<E>) set : new UnmodifiableSet<>(set);
-	}
-	
-	private static class UnmodifiableSet<E>
-	extends SetDecorator<E> {
-		public UnmodifiableSet(final Set<E> decorated) {
-			super(decorated);
-		}
-		
-		// ExSet.
-		
-		@Override
-		public <E2> ExSet<Tuple2<E, E2>> zip(final Set<? extends E2> set2) {
-			return super.<E2>zip(set2).unmodifiable();
-		}
-		
-		// Collection.
-		
-		@Override
-		public boolean add(final E e) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean remove(final Object o) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean addAll(final Collection<? extends E> c) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean removeAll(final Collection<?> c) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean removeIf(final java.util.function.Predicate<? super E> filter) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean retainAll(final Collection<?> c) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public void clear() {
-			throw new UnsupportedOperationException();
-		}
-		
-		// ExCollection.
-		
-		@Override
-		public boolean addAll(@SuppressWarnings("unchecked") final E... elements) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean addAll(final Iterable<? extends E> elements) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public Maybe<E> removeAny() {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public Maybe<E> removeAny(final Predicate<? super E> filter) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean removeAll(@SuppressWarnings("unchecked") final E... elements) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean removeAll(final Iterable<? extends E> elements) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean removeAll(final Predicate<? super E> filter) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean retainAll(final Predicate<? super E> filter) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public <E2> ExCollection<Tuple2<E, E2>> zip(final Collection<? extends E2> collection2) {
-			return super.<E2>zip(collection2).unmodifiable();
-		}
-		
-		// Iterable.
-		
-		@Override
-		public ExIterator<E> iterator() {
-			return IteratorUtils.unmodifiable(_decorated.iterator());
-		}
-		
-		// ExIterable.
-		
-		@Override
-		public <E2> PairIterable<E, E2> zip(final Iterable<? extends E2> iterable2) {
-			return super.<E2>zip(iterable2).unmodifiable();
-		}
-		
-		@Override
-		public ExSet<E> unmodifiable() {
-			return this;
-		}
-		
-		// Traversable.
-		
-		@Override
-		public ExSet<E> take(final int n) {
-			return super.take(n).unmodifiable();
-		}
-		
-		@Override
-		public ExSet<E> drop(final int n) {
-			return super.drop(n).unmodifiable();
-		}
-		
-		@Override
-		public <B extends Collection<? super E>> ExSet<B> group(final int n, final CollectionFactory<? super E, B> batchFactory) {
-			return super.group(n, batchFactory).unmodifiable();
-		}
-		
-		@Override
-		public ExSet<E> filter(final Predicate<? super E> filter) {
-			return super.filter(filter).unmodifiable();
-		}
-		
-		@Override
-		public <TE> ExSet<TE> map(final Function<? super E, ? extends TE> function) {
-			return super.<TE>map(function).unmodifiable();
-		}
-		
-		@Override
-		public <EE> ExSet<EE> extract(final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
-			return super.<EE>extract(extractor).unmodifiable();
-		}
-		
-		@Override
-		public <EE> ExSet<EE> extractAll(final Function<? super E, ? extends Iterable<? extends EE>> extractor) {
-			return super.<EE>extractAll(extractor).unmodifiable();
-		}
-	}
 	
 	private SetUtils() {
 		// Prevent instantiation.

@@ -15,7 +15,6 @@
  */
 package com.trazere.core.collection;
 
-import com.trazere.core.functional.Function;
 import com.trazere.core.functional.Predicate;
 import com.trazere.core.functional.Predicates;
 import com.trazere.core.imperative.Accumulator;
@@ -24,11 +23,11 @@ import com.trazere.core.imperative.ExIterator;
 import com.trazere.core.imperative.IteratorUtils;
 import com.trazere.core.lang.IterableUtils;
 import com.trazere.core.lang.LangAccumulators;
-import com.trazere.core.lang.PairIterable;
 import com.trazere.core.util.Maybe;
 import com.trazere.core.util.Tuple2;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.function.Function;
 
 /**
  * The {@link CollectionUtils} class provides various utilities regarding the manipulation of {@link Collection collections}.
@@ -52,47 +51,6 @@ public class CollectionUtils {
 	 */
 	public static <E> boolean intersects(final Collection<? extends E> collection1, final Collection<? extends E> collection2) {
 		return IterableUtils.isAny(collection1, Predicates.values(collection2));
-	}
-	
-	// TODO: add(Collection, Maybe)
-	
-	/**
-	 * Adds all given elements to the given collection.
-	 * <p>
-	 * This method does modify the given collection.
-	 *
-	 * @param <E> Type of the elements.
-	 * @param collection Collection to modify.
-	 * @param elements Elements to add.
-	 * @return <code>true</code> when the given collection is modified, <code>false</code> otherwise.
-	 * @since 2.0
-	 */
-	@SafeVarargs
-	public static <E> boolean addAll(final Collection<? super E> collection, final E... elements) {
-		final Accumulator<Boolean, Boolean> changed = LangAccumulators.or(false);
-		for (final E element : elements) {
-			changed.add(collection.add(element));
-		}
-		return changed.get().booleanValue();
-	}
-	
-	/**
-	 * Adds all given elements to the given collection.
-	 * <p>
-	 * This method does modify the given collection.
-	 *
-	 * @param <E> Type of the elements.
-	 * @param collection Collection to modify.
-	 * @param elements Iterable providing the elements to add.
-	 * @return <code>true</code> when the given collection is modified, <code>false</code> otherwise.
-	 * @since 2.0
-	 */
-	public static <E> boolean addAll(final Collection<? super E> collection, final Iterable<? extends E> elements) {
-		final Accumulator<Boolean, Boolean> changed = LangAccumulators.or(false);
-		for (final E element : elements) {
-			changed.add(collection.add(element));
-		}
-		return changed.get().booleanValue();
 	}
 	
 	// TODO: generalize and move to IterableUtils
@@ -143,93 +101,6 @@ public class CollectionUtils {
 			}
 		}
 		return Maybe.none();
-	}
-	
-	/**
-	 * Removes all given elements from the given collection.
-	 * <p>
-	 * This method does modify the given collection.
-	 *
-	 * @param <E> Type of the elements.
-	 * @param collection Collection to modify.
-	 * @param elements Elements to remove.
-	 * @return <code>true</code> when the given collection is modified, <code>false</code> otherwise.
-	 * @since 2.0
-	 */
-	@SafeVarargs
-	public static <E> boolean removeAll(final Collection<? super E> collection, final E... elements) {
-		final Accumulator<Boolean, Boolean> changed = LangAccumulators.or(false);
-		for (final E element : elements) {
-			changed.add(collection.remove(element));
-		}
-		return changed.get().booleanValue();
-	}
-	
-	/**
-	 * Removes all given elements from the given collection.
-	 * <p>
-	 * This method does modify the given collection.
-	 *
-	 * @param <E> Type of the elements.
-	 * @param collection Collection to modify.
-	 * @param elements Iterable providing the elements to remove.
-	 * @return <code>true</code> when the given collection is modified, <code>false</code> otherwise.
-	 * @since 2.0
-	 */
-	public static <E> boolean removeAll(final Collection<? super E> collection, final Iterable<? extends E> elements) {
-		final Accumulator<Boolean, Boolean> changed = LangAccumulators.or(false);
-		for (final E element : elements) {
-			changed.add(collection.remove(element));
-		}
-		return changed.get().booleanValue();
-	}
-	
-	// TODO: generalize and move to IterableUtils
-	/**
-	 * Removes all elements accepted by the given filter from the given collection.
-	 * <p>
-	 * This method does modify the given collection.
-	 *
-	 * @param <E> Type of the elements.
-	 * @param collection Collection to modify.
-	 * @param filter Predicate to use to filter the elements to remove.
-	 * @return <code>true</code> when the given collection is modified, <code>false</code> otherwise.
-	 * @since 2.0
-	 */
-	public static <E> boolean removeAll(final Collection<? extends E> collection, final Predicate<? super E> filter) {
-		final Accumulator<Boolean, Boolean> changed = LangAccumulators.or(false);
-		final Iterator<? extends E> elements = collection.iterator();
-		while (elements.hasNext()) {
-			if (filter.evaluate(elements.next())) {
-				elements.remove();
-				changed.add(true);
-			}
-		}
-		return changed.get().booleanValue();
-	}
-	
-	// TODO: generalize and move to IterableUtils
-	/**
-	 * Retains the elements accepted by the given filter in the given collection.
-	 * <p>
-	 * This method does modify the given collection.
-	 *
-	 * @param <E> Type of the elements.
-	 * @param collection Collection to filter.
-	 * @param filter Predicate to use to filter the elements to retain.
-	 * @return <code>true</code> when the given collection is modified, <code>false</code> otherwise.
-	 * @since 2.0
-	 */
-	public static <E> boolean retainAll(final Collection<? extends E> collection, final Predicate<? super E> filter) {
-		final Accumulator<Boolean, Boolean> changed = LangAccumulators.or(false);
-		final Iterator<? extends E> elements = collection.iterator();
-		while (elements.hasNext()) {
-			if (!filter.evaluate(elements.next())) {
-				elements.remove();
-				changed.add(true);
-			}
-		}
-		return changed.get().booleanValue();
 	}
 	
 	/**
@@ -797,162 +668,6 @@ public class CollectionUtils {
 			results2.add(pair.get2());
 		}
 		return new Tuple2<>(results1, results2);
-	}
-	
-	/**
-	 * Builds an unmodifiable view of the given collection.
-	 * 
-	 * @param <E> Type of the elements.
-	 * @param collection Collection to wrap.
-	 * @return An unmodifiable view of the given collection, or the given collection when is it already unmodifiable.
-	 * @since 2.0
-	 */
-	public static <E> ExCollection<E> unmodifiable(final Collection<E> collection) {
-		assert null != collection;
-		
-		return collection instanceof UnmodifiableCollection<?> ? (UnmodifiableCollection<E>) collection : new UnmodifiableCollection<>(collection);
-	}
-	
-	private static class UnmodifiableCollection<E>
-	extends CollectionDecorator<E> {
-		public UnmodifiableCollection(final Collection<E> decorated) {
-			super(decorated);
-		}
-		
-		// Collection.
-		
-		@Override
-		public boolean add(final E e) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean remove(final Object o) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean addAll(final Collection<? extends E> c) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean removeAll(final Collection<?> c) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean removeIf(final java.util.function.Predicate<? super E> filter) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean retainAll(final Collection<?> c) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public void clear() {
-			throw new UnsupportedOperationException();
-		}
-		
-		// ExCollection.
-		
-		@Override
-		public boolean addAll(@SuppressWarnings("unchecked") final E... elements) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean addAll(final Iterable<? extends E> elements) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public Maybe<E> removeAny() {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public Maybe<E> removeAny(final Predicate<? super E> filter) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean removeAll(@SuppressWarnings("unchecked") final E... elements) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean removeAll(final Iterable<? extends E> elements) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean removeAll(final Predicate<? super E> filter) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public boolean retainAll(final Predicate<? super E> filter) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public <E2> ExCollection<Tuple2<E, E2>> zip(final Collection<? extends E2> collection2) {
-			return super.<E2>zip(collection2).unmodifiable();
-		}
-		
-		// Iterable.
-		
-		@Override
-		public ExIterator<E> iterator() {
-			return IteratorUtils.unmodifiable(_decorated.iterator());
-		}
-		
-		// ExIterable.
-		
-		@Override
-		public <E2> PairIterable<E, E2> zip(final Iterable<? extends E2> iterable2) {
-			return super.<E2>zip(iterable2).unmodifiable();
-		}
-		
-		// Traversable.
-		
-		@Override
-		public ExCollection<E> take(final int n) {
-			return super.take(n).unmodifiable();
-		}
-		
-		@Override
-		public ExCollection<E> drop(final int n) {
-			return super.drop(n).unmodifiable();
-		}
-		
-		@Override
-		public <B extends Collection<? super E>> ExCollection<B> group(final int n, final CollectionFactory<? super E, B> batchFactory) {
-			return super.group(n, batchFactory).unmodifiable();
-		}
-		
-		@Override
-		public ExCollection<E> filter(final Predicate<? super E> filter) {
-			return super.filter(filter).unmodifiable();
-		}
-		
-		@Override
-		public <TE> ExCollection<TE> map(final Function<? super E, ? extends TE> function) {
-			return super.<TE>map(function).unmodifiable();
-		}
-		
-		@Override
-		public <EE> ExCollection<EE> extract(final Function<? super E, ? extends Maybe<? extends EE>> extractor) {
-			return super.<EE>extract(extractor).unmodifiable();
-		}
-		
-		@Override
-		public <EE> ExCollection<EE> extractAll(final Function<? super E, ? extends Iterable<? extends EE>> extractor) {
-			return super.<EE>extractAll(extractor).unmodifiable();
-		}
 	}
 	
 	private CollectionUtils() {
